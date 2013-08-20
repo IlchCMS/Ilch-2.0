@@ -9,8 +9,14 @@ defined('ACCESS') or die('no direct access');
 
 class Ilch_Page
 {
+    /**
+     * @var boolean ilchInstalled
+     */
     protected $_ilchInstalled = false;
 
+    /**
+     * Loads the config, if already created. 
+     */
     public function loadConfig()
     {
         if(file_exists(CONFIG_PATH.'/config.php'))
@@ -25,7 +31,6 @@ class Ilch_Page
         $layout = new Ilch_Layout();
         $layout->disabled = FALSE;
         $view = new Ilch_View();
-
 
         $db = new Ilch_Database_Mysql();
         
@@ -53,10 +58,14 @@ class Ilch_Page
 
         if($controller->layout->disabled != TRUE)
         {
-            if(empty($controller->layout->name)
-                && file_exists(APPLICATION_PATH.'/content/layouts/'.$controller->modulName.'_index.php'))
+            if
+            (
+                empty($controller->layout->name)
+                &&
+                file_exists(APPLICATION_PATH.'/layouts/'.$controller->modulName.'/index.php')
+            )
             {
-                $layout->load($controller->modulName.'_index');
+                $layout->load($controller->modulName.'/index');
             }
             elseif(!empty($controller->layout->name))
             {
@@ -76,6 +85,12 @@ class Ilch_Page
         }
     }
 
+    /**
+     * @param Ilch_Layout $layout
+     * @param Ilch_View $view
+     * @return Ilch_Controller
+     * @throws InvalidArgumentException
+     */
     protected function _loadController(Ilch_Layout $layout, Ilch_View $view)
     {
         if(!$this->_ilchInstalled)

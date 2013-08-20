@@ -44,14 +44,7 @@ abstract class Ilch_Design_Abstract
                 $pars .= '&'.$key.'='.$val;
             }
 
-            if($modul == 'opac')
-            {
-                $s = '';
-            }
-            else
-            {
-                 $s = 'admin/';
-            }
+            $s = '';
 
             return BASE_URL.'/'.$s.'index.php?modul='.$modul.'&controller='.$controller.'&action='.$action.$pars;
         }

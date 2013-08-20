@@ -15,9 +15,9 @@ class Ilch_Layout extends Ilch_Design_Abstract
         {
             echo $file;
         }
-        elseif(file_exists(APPLICATION_PATH.'/content/layouts/'.$file.'.php'))
+        elseif(file_exists(APPLICATION_PATH.'/layouts/'.$file.'.php'))
         {
-            include_once(APPLICATION_PATH.'/content/layouts/'.$file.'.php');
+            require_once APPLICATION_PATH.'/layouts/'.$file.'.php';
         }
     }
 }
