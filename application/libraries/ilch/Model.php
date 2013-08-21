@@ -39,5 +39,4 @@ class Ilch_Model
     {
         $this->$name = $value;
     }
-
 }

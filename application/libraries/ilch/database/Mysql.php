@@ -63,6 +63,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Execute sql query.
+     *
      * @param string $sql
      * @return mysqli_result
      */
@@ -74,6 +76,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Select on cell from table.
+     *
      * @param string $sql
      * @return string|int
      */
@@ -84,6 +88,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Select one cell from table.
+     *
      * @param string $cell
      * @param string $table
      * @param array $where
@@ -94,8 +100,9 @@ class Ilch_Database_Mysql
         $sql = 'SELECT `' . $cell . '`
                 FROM `' . $this->prefix . $table . '` ';
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
+        if($where != null)
+        {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
         }
 
         $sql .= ' LIMIT 1';
@@ -104,6 +111,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Select one row from table.
+     *
      * @param string $sql
      * @return array
      */
@@ -114,6 +123,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Select one row from table.
+     *
      * @param array $fields
      * @param string $table
      * @param array $where
@@ -121,11 +132,12 @@ class Ilch_Database_Mysql
      */
     public function selectRow($fields, $table, $where = null)
     {
-        $sql = 'SELECT `' . $this->getFieldsSql($fields) . '`
+        $sql = 'SELECT `' . $this->_getFieldsSql($fields) . '`
                 FROM `' . $this->prefix . $table . '` ';
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
+        if($where != null)
+        {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
         }
 
         $sql .= ' LIMIT 1';
@@ -134,6 +146,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Select an array from db-table.
+     *
      * @param string $sql
      * @return array
      */
@@ -142,7 +156,8 @@ class Ilch_Database_Mysql
         $rows = array();
         $result = $this->query($sql);
 
-        while ($row = mysqli_fetch_assoc($result)) {
+        while($row = mysqli_fetch_assoc($result))
+        {
             $rows[] = $row;
         }
 
@@ -150,6 +165,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Select an array from db-table.
+     *
      * @param array $fields
      * @param string $table
      * @param array $where
@@ -157,17 +174,20 @@ class Ilch_Database_Mysql
      */
     public function selectArray($fields, $table, $where = null)
     {
-        $sql = 'SELECT `' . $this->getFieldsSql($fields) . '`
+        $sql = 'SELECT `' . $this->_getFieldsSql($fields) . '`
                 FROM `' . $this->prefix . $table . '` ';
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
+        if($where != null)
+        {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
         }
 
         return $this->queryArray($sql);
     }
 
     /**
+     * Update entries from the table.
+     *
      * @param array $fields
      * @param string $table
      * @param array $where
@@ -176,20 +196,24 @@ class Ilch_Database_Mysql
     {
         $sql = 'UPDATE `' . $this->prefix . $table . '` SET ';
 
-        foreach ($fields as $key => $value) {
+        foreach($fields as $key => $value)
+        {
             $up[] = '`' . $key . '` = "' . $value . '"';
         }
 
         $sql .= implode(',', $up);
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
+        if($where != null)
+        {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
         }
 
         $this->query($sql);
     }
 
     /**
+     * Insert entries to the table.
+     *
      * @param array $fields
      * @param string $table
      */
@@ -199,14 +223,16 @@ class Ilch_Database_Mysql
         $sqlFields = array();
         $sqlValues = array();
         
-        foreach ($fields as $key => $value) {
+        foreach($fields as $key => $value)
+        {
             $sqlFields[] = '`' . $key . '`';
         }
 
         $sql .= implode(',', $sqlFields);
         $sql .= ') VALUES (';
 
-        foreach ($fields as $key => $value) {
+        foreach($fields as $key => $value)
+        {
             $sqlValues[] = '"' . $this->escape($value) . '"';
         }
 
@@ -215,6 +241,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Deletes entries from the table.
+     *
      * @param string $table
      * @param array $where
      */
@@ -222,31 +250,37 @@ class Ilch_Database_Mysql
     {
         $sql = 'DELETE FROM `' . $this->prefix . $table . '` ';
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
+        if($where != null)
+        {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
         }
 
         $this->query($sql);
     }
 
     /**
+     * Create the field part for the given array.
+     *
      * @param array $fields
      * @return string
      */
-    protected function getFieldsSql($fields)
+    protected function _getFieldsSql($fields)
     {
         return implode('`,`', (array) $fields);
     }
 
     /**
+     * Create the where part for the given array.
+     *
      * @param array $where
      * @return string
      */
-    protected function getWhereSql($where)
+    protected function _getWhereSql($where)
     {
         $sql = '';
 
-        foreach ($where as $key => $value) {
+        foreach ($where as $key => $value)
+        {
             $sql .= 'AND `' . $key . '` = "' . $this->escape($value) . '" ';
         }
 
@@ -254,6 +288,8 @@ class Ilch_Database_Mysql
     }
 
     /**
+     * Escape the given value for a sql query.
+     *
      * @param string $value
      * @return string
      */

@@ -10,6 +10,8 @@ defined('ACCESS') or die('no direct access');
 class Ilch_Controller extends Ilch_Design_Abstract
 {
     /**
+     * Injects the layout/view to the controller.
+     *
      * Ilch_Layout $layout
      * Ilch_View type $view 
      */
@@ -20,7 +22,7 @@ class Ilch_Controller extends Ilch_Design_Abstract
     }
 
     /**
-     * redirect to given params
+     * Redirect to given params.
      * 
      * @param string $modul
      * @param string $controller
@@ -31,30 +33,5 @@ class Ilch_Controller extends Ilch_Design_Abstract
     {
         header("location: ".$this->url($modul, $controller, $action, $params)); 
         exit;
-    }
-
-    public function message($msg)
-    {
-        $_SESSION['layout_messages'][] = $msg;
-    }
-
-    /**
-     * adds a menuitem to the left menu
-     * 
-     * @param array $array 
-     */
-    public function addMenuHeader($array)
-    {
-        $this->layout->menu->headers[] = $array;
-    }
-
-    /**
-     * adds a menudiver to the left menu
-     * 
-     * @param array $array 
-     */
-    public function addMenuDivider($array)
-    {
-        $this->layout->menu->dividers[] = $array;
     }
 }

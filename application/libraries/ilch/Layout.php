@@ -9,6 +9,12 @@ defined('ACCESS') or die('no direct access');
 
 class Ilch_Layout extends Ilch_Design_Abstract
 {
+    /**
+     * Loads the given file. 
+     *
+     * @param string $file
+     * @param integer $noFile
+     */
     public function load($file, $noFile = 0)
     {
         if($noFile == 1)

@@ -12,6 +12,7 @@ class Ilch_View extends Ilch_Design_Abstract
     public function load($modul, $controller, $action = '')
     {
         ob_start();
+
         if(empty($action))
         {
             $view = APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'.php';
@@ -19,6 +20,7 @@ class Ilch_View extends Ilch_Design_Abstract
         else
         {
             $view = APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'/'.$action.'.php';
+
             if(file_exists(APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'Helper.php'))
             {
                 include_once(APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'Helper.php');

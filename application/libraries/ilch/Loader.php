@@ -8,10 +8,12 @@
 defined('ACCESS') or die('no direct access');
 
 /**
+ * Loads all needed files for the given class.
+ *
  * @param string $class
  * @throws InvalidArgumentException
  */
-function __autoload($class)
+spl_autoload_register(function($class)
 {
     $path = APPLICATION_PATH;
     
@@ -39,4 +41,4 @@ function __autoload($class)
     {
         throw new InvalidArgumentException('couldnt find file "'. $path.'/'. $class . '.php"');
     }
-}
+});

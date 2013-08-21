@@ -37,7 +37,7 @@ class Ilch_Page
         Ilch_Registry::set('db', $db);
         $controller = $this->_loadController($layout, $view);
 
-        if(file_exists(APPLICATION_PATH.'/content/modules/'.$controller->modulName.'/views/'.$controller->name.'.php'))
+        if(file_exists(APPLICATION_PATH.'/modules/'.$controller->modulName.'/views/'.$controller->name.'.php'))
         {
             $viewOutput = $view->load($controller->modulName, $controller->name);
         }

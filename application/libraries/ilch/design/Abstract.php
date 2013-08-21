@@ -9,11 +9,23 @@ defined('ACCESS') or die('no direct access');
 
 abstract class Ilch_Design_Abstract
 {
+    /**
+     * Gets the base url.
+     *
+     * @param sting $url
+     * @return string
+     */
     public function baseUrl($url = '')
     {
         return BASE_URL.'/'.$url;
     }
 
+    /**
+     * Gets the static url.
+     *
+     * @param string $url
+     * @return string
+     */
     public function staticUrl($url = '')
     {
         if(empty($url))
@@ -24,11 +36,26 @@ abstract class Ilch_Design_Abstract
         return STATIC_URL.'/'.$url;
     }
 
+    /**
+     * Escape the given string.
+     *
+     * @param string $string
+     * @return type
+     */
     function escape($string)
     {
         return htmlspecialchars($string);
     }
 
+    /**
+     * Creates a full url for the given parts.
+     *
+     * @param string $modul
+     * @param string $controller
+     * @param string $action
+     * @param array $params
+     * @return string
+     */
     public function url($modul = '', $controller = '', $action = '', $params = array())
     {
         if(empty($modul))
@@ -50,19 +77,35 @@ abstract class Ilch_Design_Abstract
         }
     }
 
+    /**
+     * Gets the page loading time in microsecond.
+     *
+     * @return float
+     */
     public function loadTime()
     {
         $startTime = Ilch_Registry::get('startTime');
         return microtime(true) - $startTime;
     }
 
+    /**
+     * Gets the page queries.
+     *
+     * @return integer
+     */
     public function queryCount()
     {
         $db = Ilch_Registry::get('db');
         return $db->queryCount();
     }
 
-
+    /**
+     * Limit the given string to the given length. 
+     *
+     * @param string $str
+     * @param integer $length
+     * @return string
+     */
     public function limitString($str, $length)
     {
         if(strlen($str) <= $length)
