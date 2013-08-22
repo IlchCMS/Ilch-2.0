@@ -29,7 +29,7 @@ class Ilch_Page
     public function loadCms()
     {
         $layout = new Ilch_Layout();
-        $layout->disabled = FALSE;
+        $layout->disabled = false;
         $view = new Ilch_View();
 
         $db = new Ilch_Database_Mysql();

@@ -17,7 +17,7 @@ spl_autoload_register(function($class)
 {
     $path = APPLICATION_PATH;
     
-    if(strpos($class, 'Ilch_') !== FALSE)
+    if(strpos($class, 'Ilch_') !== false)
     {
         $class = str_replace('_', '/' , $class);
         $path = $path.'/libraries';

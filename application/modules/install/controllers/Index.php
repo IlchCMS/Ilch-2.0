@@ -11,6 +11,5 @@ class Install_IndexController extends Ilch_Controller
 {
     public function indexAction()
     {
-        //install..
     }
 }
