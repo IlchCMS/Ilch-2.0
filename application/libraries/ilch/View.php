@@ -15,15 +15,15 @@ class Ilch_View extends Ilch_Design_Abstract
 
         if(empty($action))
         {
-            $view = APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'.php';
+            $view = APPLICATION_PATH.'/modules/'.$modul.'/views/'.$controller.'.php';
         }
         else
         {
-            $view = APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'/'.$action.'.php';
+            $view = APPLICATION_PATH.'/modules/'.$modul.'/views/'.$controller.'/'.$action.'.php';
 
-            if(file_exists(APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'Helper.php'))
+            if(file_exists(APPLICATION_PATH.'/modules/'.$modul.'/views/'.$controller.'Helper.php'))
             {
-                include_once(APPLICATION_PATH.'/content/modules/'.$modul.'/views/'.$controller.'Helper.php');
+                include_once(APPLICATION_PATH.'/modules/'.$modul.'/views/'.$controller.'Helper.php');
                 $this->helper = new Helper($this);
             }
         }

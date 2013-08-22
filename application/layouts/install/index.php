@@ -42,6 +42,8 @@
           <div class="hero-unit">
             <h2>Willkommen zur Ilch CMS <?php echo VERSION; ?> - Installation!</h2>
             <p>Bitte führen Sie nun die Installations - Schritte durch.</p>
+            
+            <?php echo $this->content; ?>
           </div>
         </div>
       </div>
