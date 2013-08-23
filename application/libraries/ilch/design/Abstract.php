@@ -50,15 +50,15 @@ abstract class Ilch_Design_Abstract
     /**
      * Creates a full url for the given parts.
      *
-     * @param string $modul
+     * @param string $module
      * @param string $controller
      * @param string $action
      * @param array $params
      * @return string
      */
-    public function url($modul = '', $controller = '', $action = '', $params = array())
+    public function url($module = '', $controller = '', $action = '', $params = array())
     {
-        if(empty($modul))
+        if(empty($module))
         {
             return BASE_URL;
         }
@@ -73,7 +73,7 @@ abstract class Ilch_Design_Abstract
 
             $s = '';
 
-            return BASE_URL.'/'.$s.'index.php?modul='.$modul.'&controller='.$controller.'&action='.$action.$pars;
+            return BASE_URL.'/'.$s.'index.php?module='.$module.'&controller='.$controller.'&action='.$action.$pars;
         }
     }
 

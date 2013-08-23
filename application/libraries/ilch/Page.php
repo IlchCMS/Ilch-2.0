@@ -33,16 +33,16 @@ class Ilch_Page
         $layout = new Ilch_Layout();
         $view = new Ilch_View();
 	$plugin = new Ilch_Plugin();
+	$request = new Ilch_Request();
 
 	$dbClass = 'Ilch_Database_'.DB_ENGINE;
 	$db = new $dbClass();
-
         Ilch_Registry::set('db', $db);
 
 	/*
 	 * Load controller as first.
 	 */
-        $controller = $this->_loadController($layout, $view, $plugin);
+        $controller = $this->_loadController($layout, $view, $plugin, $request);
 
 	/*
 	 * Load controller view, if exists.
@@ -101,22 +101,24 @@ class Ilch_Page
     /**
      * @param Ilch_Layout $layout
      * @param Ilch_View $view
+     * @param Ilch_Plugin $plugin
+     * @param Ilch_Request $request
      * @return Ilch_Controller
      * @throws InvalidArgumentException
      */
-    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin)
+    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request)
     {
         if(!$this->_ilchInstalled)
         {
-            $modulName = 'Install';
+            $moduleName = 'Install';
         }
-        elseif(empty($_GET['modul']))
+        elseif(empty($_GET['module']))
         {
-            $modulName = 'Start';
+            $moduleName = 'Start';
         }
         else
         {
-            $modulName = ucfirst($_GET['modul']);
+            $moduleName = ucfirst($_GET['module']);
         }
 
         if(empty($_GET['controller']))
@@ -137,10 +139,21 @@ class Ilch_Page
             $actionName = $_GET['action'];
         }
 
-        $controller = $modulName.'_'.$controllerName.'Controller';
-        $controller = new $controller($layout, $view);
+	$request->setModuleName(strtolower($moduleName));
+	$request->setControllerName(strtolower($controllerName));
+	$request->setActionName(strtolower($actionName));
+
+	foreach(array('module', 'controller', 'action') as $name)
+	{
+	    unset($_REQUEST[$name]);
+	}
+
+	$request->setParams($_REQUEST);
+
+        $controller = $moduleName.'_'.$controllerName.'Controller';
+        $controller = new $controller($layout, $view, $plugin, $request);
         $controller->actionName = $actionName;
-        $controller->modulName = strtolower($modulName);
+        $controller->modulName = strtolower($moduleName);
         $controller->name = strtolower($controllerName);
         $action = $actionName.'Action';
 

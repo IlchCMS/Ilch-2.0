@@ -12,26 +12,29 @@ class Ilch_Controller extends Ilch_Design_Abstract
     /**
      * Injects the layout/view to the controller.
      *
-     * Ilch_Layout $layout
-     * Ilch_View type $view 
+     * @param Ilch_Layout $layout
+     * @param Ilch_View $view
+     * @param Ilch_Plugin $plugin
+     * @param Ilch_Request $request
      */
-    public function __construct($layout, $view)
+    public function __construct(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request)
     {
         $this->layout = $layout;
         $this->view = $view;
+	$this->request = $request;
     }
 
     /**
      * Redirect to given params.
      * 
-     * @param string $modul
+     * @param string $module
      * @param string $controller
      * @param string $action
      * @param string $params 
      */
-    public function redirect($modul = '', $controller = '', $action = '', $params = array())
+    public function redirect($module = '', $controller = '', $action = '', $params = array())
     {
-        header("location: ".$this->url($modul, $controller, $action, $params)); 
+        header("location: ".$this->url($module, $controller, $action, $params)); 
         exit;
     }
 }
