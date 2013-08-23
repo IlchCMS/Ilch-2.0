@@ -33,6 +33,7 @@ class Ilch_Page
         $layout = new Ilch_Layout();
         $view = new Ilch_View();
 	$plugin = new Ilch_Plugin();
+	$plugin->detectPlugins();
 	$request = new Ilch_Request();
 
 	$dbClass = 'Ilch_Database_'.DB_ENGINE;
