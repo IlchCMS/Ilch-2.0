@@ -1,6 +1,6 @@
 Ilch CMS 2.0
 ------------------------------------
-Copyright (c) by Ilch 2.0
+Copyright (c) by Ilch CMS 2.0
 
 Installation
 ------------------------------------
