@@ -46,8 +46,4 @@ spl_autoload_register(function($class)
     {
         require_once($path.'/'. $class . '.php');
     }
-    else
-    {
-        throw new InvalidArgumentException('couldnt find file "'. $path.'/'. $class . '.php"');
-    }
 });
