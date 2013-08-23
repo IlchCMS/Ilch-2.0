@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Dominik Meyer <kinimodmeyer@gmail.com>
+ * @author Dominik Meyer
  * @copyright Ilch CMS 2.0
  * @package ilch
  */
