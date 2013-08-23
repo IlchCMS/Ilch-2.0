@@ -43,7 +43,7 @@
             <h2>Willkommen zur Ilch CMS <?php echo VERSION; ?> - Installation!</h2>
             <p>Bitte führen Sie nun die Installations - Schritte durch.</p>
             
-            <?php echo $this->content; ?>
+            <?php echo $this->getContent(); ?>
           </div>
         </div>
       </div>

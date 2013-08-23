@@ -10,12 +10,14 @@ defined('ACCESS') or die('no direct access');
 class Ilch_Page
 {
     /**
+     * Defines if cms is installed.
+     *
      * @var boolean ilchInstalled
      */
     protected $_ilchInstalled = false;
 
     /**
-     * Loads the config, if already created. 
+     * Loads the config, if already created.
      */
     public function loadConfig()
     {
@@ -29,20 +31,31 @@ class Ilch_Page
     public function loadCms()
     {
         $layout = new Ilch_Layout();
-        $layout->disabled = false;
         $view = new Ilch_View();
+	$plugin = new Ilch_Plugin();
 
-        $db = new Ilch_Database_Mysql();
-        
+	$dbClass = 'Ilch_Database_'.DB_ENGINE;
+	$db = new $dbClass();
+
         Ilch_Registry::set('db', $db);
-        $controller = $this->_loadController($layout, $view);
 
+	/*
+	 * Load controller as first.
+	 */
+        $controller = $this->_loadController($layout, $view, $plugin);
+
+	/*
+	 * Load controller view, if exists.
+	 */
         if(file_exists(APPLICATION_PATH.'/modules/'.$controller->modulName.'/views/'.$controller->name.'.php'))
         {
             $viewOutput = $view->load($controller->modulName, $controller->name);
         }
         else
         {
+	    /*
+	     * Load action views if no controller view exists.
+	     */
             if(empty($controller->view->name))
             {
                 $viewOutput = $view->load($controller->modulName ,$controller->name , $controller->actionName);
@@ -53,10 +66,10 @@ class Ilch_Page
             }
         }
 
-        $controller->layout->content = $viewOutput;
+        $controller->layout->setContent($viewOutput);
         $controller->layout->controller = $controller;
 
-        if($controller->layout->disabled != TRUE)
+        if($controller->layout->getDisabled() === false)
         {
             if
             (
@@ -91,7 +104,7 @@ class Ilch_Page
      * @return Ilch_Controller
      * @throws InvalidArgumentException
      */
-    protected function _loadController(Ilch_Layout $layout, Ilch_View $view)
+    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin)
     {
         if(!$this->_ilchInstalled)
         {
@@ -131,8 +144,10 @@ class Ilch_Page
         $controller->name = strtolower($controllerName);
         $action = $actionName.'Action';
 
-        //$plugin = new BeforeControllerPlugin($controller, $layout, $view);
-        //$plugin->execute();
+	/*
+	 * Load "BeforeControllerLoad" - plugins.
+	 */
+        $plugin->execute('BeforeControllerLoad');
 
         if(method_exists($controller, 'init'))
         {
@@ -148,8 +163,10 @@ class Ilch_Page
             throw new InvalidArgumentException('action "'.$action.'" not known');
         }
 
-        //$plugin = new AfterControllerPlugin();
-        //$plugin->execute();
+	/*
+	 * Load "AfterControllerLoad" - plugins.
+	 */
+        $plugin->execute('AfterControllerLoad');
 
         return $controller;
     }
