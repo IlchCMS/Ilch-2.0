@@ -19,5 +19,4 @@ require_once APPLICATION_PATH.'/libraries/ilch/Functions.php';
 Ilch_Registry::set('startTime', microtime(true));
 
 $page = new Ilch_Page();
-$page->loadConfig();
 $page->loadCms();

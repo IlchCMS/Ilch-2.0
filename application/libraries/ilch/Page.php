@@ -16,24 +16,17 @@ class Ilch_Page
      */
     protected $_ilchInstalled = false;
 
-    /**
-     * Loads the config, if already created.
-     */
-    public function loadConfig()
-    {
-        if(file_exists(CONFIG_PATH.'/config.php'))
-        {
-            require_once CONFIG_PATH.'/config.php';
-            $this->_ilchInstalled = true;
-        }
-    }
-
     public function loadCms()
     {
+	$config = new Ilch_Config();
+	$this->_loadConfig($config);
+
         $layout = new Ilch_Layout();
         $view = new Ilch_View();
+
 	$plugin = new Ilch_Plugin();
 	$plugin->detectPlugins();
+
 	$request = new Ilch_Request();
 
 	$dbClass = 'Ilch_Database_'.DB_ENGINE;
@@ -96,6 +89,18 @@ class Ilch_Page
             {
                 $layout->load($viewOutput, 1);
             }
+        }
+    }
+    
+    /**
+     * Loads the config, if already created.
+     */
+    protected function _loadConfig(Ilch_Config $config)
+    {
+        if(file_exists(CONFIG_PATH.'/config.php'))
+        {
+	    $config->loadConfigFromFile(CONFIG_PATH.'/config.php');
+            $this->_ilchInstalled = true;
         }
     }
 
