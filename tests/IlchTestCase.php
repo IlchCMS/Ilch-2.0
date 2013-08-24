@@ -2,14 +2,14 @@
 /**
  * Holds class IlchTestCase.
  *
- * @author Martin Jainta
+ * @author Jainta Martin
  * @package ilch_phpunit
  */
 
 /**
  * Base class for test cases for Ilch.
  *
- * @author Martin Jainta
+ * @author Jainta Martin
  * @package ilch_phpunit
  */
 class IlchTestCase extends PHPUnit_Framework_TestCase

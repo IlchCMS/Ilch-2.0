@@ -2,14 +2,14 @@
 /**
  * Holds class Libraries_Ilch_RequestTest.
  *
- * @author Martin Jainta
+ * @author Jainta Martin
  * @package ilch_phpunit
  */
 
 /**
  * Tests the request object.
  *
- * @author Martin Jainta
+ * @author Jainta Martin
  * @package ilch_phpunit
  */
 class Libraries_Ilch_RequestTest extends IlchTestCase

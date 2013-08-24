@@ -2,7 +2,7 @@
 /**
  * Bootstrap file for the PHPUnit implementation.
  *
- * @author Martin Jainta
+ * @author Jainta Martin
  * @package ilch_phpunit
  */
 
