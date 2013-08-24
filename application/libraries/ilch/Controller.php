@@ -17,11 +17,12 @@ class Ilch_Controller extends Ilch_Design_Abstract
      * @param Ilch_Plugin $plugin
      * @param Ilch_Request $request
      */
-    public function __construct(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request)
+    public function __construct(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Translator $translator)
     {
         $this->layout = $layout;
         $this->view = $view;
 	$this->request = $request;
+	$this->translator = $translator;
     }
 
     /**

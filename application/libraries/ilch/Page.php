@@ -21,13 +21,14 @@ class Ilch_Page
 	$config = new Ilch_Config();
 	$this->_loadConfig($config);
 
-        $layout = new Ilch_Layout();
-        $view = new Ilch_View();
+	$request = new Ilch_Request();
+	$translator = new Ilch_Translator();
+
+        $layout = new Ilch_Layout($request, $translator);
+        $view = new Ilch_View($request, $translator);
 
 	$plugin = new Ilch_Plugin();
 	$plugin->detectPlugins();
-
-	$request = new Ilch_Request();
 
 	$dbClass = 'Ilch_Database_'.DB_ENGINE;
 	$db = new $dbClass();
@@ -36,7 +37,7 @@ class Ilch_Page
 	/*
 	 * Load controller as first.
 	 */
-        $controller = $this->_loadController($layout, $view, $plugin, $request);
+        $controller = $this->_loadController($layout, $view, $plugin, $request, $translator);
 
 	/*
 	 * Load controller view, if exists.
@@ -109,10 +110,11 @@ class Ilch_Page
      * @param Ilch_View $view
      * @param Ilch_Plugin $plugin
      * @param Ilch_Request $request
+     * @param Ilch_Translator $translator
      * @return Ilch_Controller
      * @throws InvalidArgumentException
      */
-    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request)
+    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Translator $translator)
     {
         if(!$this->_ilchInstalled)
         {
@@ -157,7 +159,7 @@ class Ilch_Page
 	$request->setParams($_REQUEST);
 
         $controller = $moduleName.'_'.$controllerName.'Controller';
-        $controller = new $controller($layout, $view, $plugin, $request);
+        $controller = new $controller($layout, $view, $plugin, $request, $translator);
         $controller->actionName = $actionName;
         $controller->modulName = strtolower($moduleName);
         $controller->name = strtolower($controllerName);

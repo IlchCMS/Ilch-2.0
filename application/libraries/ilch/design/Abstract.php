@@ -10,6 +10,48 @@ defined('ACCESS') or die('no direct access');
 abstract class Ilch_Design_Abstract
 {
     /**
+     * @var Ilch_Request 
+     */
+    private $_request;
+    
+    /**
+     * @var Ilch_Translator 
+     */
+    private $_translator;
+
+    /**
+     * Injects request and translator to layout/view.
+     *
+     * @param Ilch_Request $request
+     * @param Ilch_Translator $translator
+     */
+    public function __construct(Ilch_Request $request, Ilch_Translator $translator)
+    {
+	$this->_request = $request;
+	$this->_translator = $translator;
+    }
+
+    /**
+     * Gets the request object.
+     *
+     * @return Ilch_Request
+     */
+    public function getRequest()
+    {
+	return $this->_request;
+    }
+    
+    /**
+     * Gets the translator object.
+     *
+     * @return Ilch_Translator
+     */
+    public function getTranslator()
+    {
+	return $this->_translator;
+    }
+
+    /**
      * Gets the base url.
      *
      * @param sting $url
