@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class LibrariesIlchRequestTest.
+ * Holds class Libraries_Ilch_RequestTest.
  *
  * @author Martin Jainta
  * @package ilch_phpunit
@@ -12,7 +12,7 @@
  * @author Martin Jainta
  * @package ilch_phpunit
  */
-class LibrariesIlchRequestTest extends IlchTestCase
+class Libraries_Ilch_RequestTest extends IlchTestCase
 {
     /**
      * The object to test with.
