@@ -12,6 +12,7 @@ define('CONFIG_PATH', __DIR__);
 define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].str_replace(array('/index.php', 'index.php'), '', $_SERVER['PHP_SELF']));
 define('STATIC_URL', BASE_URL);
 
+session_start();
 error_reporting(E_ALL);
 
 require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';
