@@ -36,7 +36,7 @@ class Ilch_Request
      */
     public function getModuleName()
     {
-	return $this->_moduleName;
+		return $this->_moduleName;
     }
 
     /**
@@ -46,7 +46,7 @@ class Ilch_Request
      */
     public function setModuleName($name)
     {
-	$this->_moduleName = $name;
+		$this->_moduleName = $name;
     }
 
     /**
@@ -56,7 +56,7 @@ class Ilch_Request
      */
     public function getControllerName()
     {
-	return $this->_controllerName;
+		return $this->_controllerName;
     }
 
     /**
@@ -66,7 +66,7 @@ class Ilch_Request
      */
     public function setControllerName($name)
     {
-	$this->_controllerName = $name;
+		$this->_controllerName = $name;
     }
 
     /**
@@ -76,7 +76,7 @@ class Ilch_Request
      */
     public function getActionName()
     {
-	return $this->_actionName;
+		return $this->_actionName;
     }
 
     /**
@@ -86,7 +86,7 @@ class Ilch_Request
      */
     public function setActionName($name)
     {
-	$this->_actionName = $name;
+		$this->_actionName = $name;
     }
 
     /**
@@ -96,7 +96,7 @@ class Ilch_Request
      */
     public function getParam($key)
     {
-	return $this->_params[$key];
+		return $this->_params[$key];
     }
 
     /**
@@ -107,7 +107,7 @@ class Ilch_Request
      */
     public function setParam($key, $value)
     {
-	$this->_params[$key] = $value;
+		$this->_params[$key] = $value;
     }
 
     /**
@@ -117,7 +117,7 @@ class Ilch_Request
      */
     public function getParams()
     {
-	return $this->_params;
+		return $this->_params;
     }
     
     /**
@@ -127,7 +127,7 @@ class Ilch_Request
      */
     public function setParams($params)
     {
-	$this->_params = $params;
+		$this->_params = $params;
     }
 
     /**
@@ -137,7 +137,7 @@ class Ilch_Request
      */
     public function isPost()
     {
-	return !empty($_POST);
+		return !empty($_POST);
     }
 
     /**
@@ -147,14 +147,14 @@ class Ilch_Request
      */
     public function getPost($key)
     {
-	if(isset($_POST[$key]))
-	{
-	    return $_POST[$key];
-	}
-	else
-	{
-	    return null;
-	}
+		if(isset($_POST[$key]))
+		{
+			return $_POST[$key];
+		}
+		else
+		{
+			return null;
+		}
     }
 
     /**
@@ -164,13 +164,13 @@ class Ilch_Request
      */
     public function getQuery($key)
     {
-	if(isset($_GET[$key]))
-	{
-	    return $_GET[$key];
-	}
-	else
-	{
-	    return null;
-	}
+		if(isset($_GET[$key]))
+		{
+			return $_GET[$key];
+		}
+		else
+		{
+			return null;
+		}
     }
 }

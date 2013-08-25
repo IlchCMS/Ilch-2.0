@@ -27,8 +27,8 @@ abstract class Ilch_Design_Abstract
      */
     public function __construct(Ilch_Request $request, Ilch_Translator $translator)
     {
-	$this->_request = $request;
-	$this->_translator = $translator;
+		$this->_request = $request;
+		$this->_translator = $translator;
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class Ilch_Design_Abstract
      */
     public function getRequest()
     {
-	return $this->_request;
+		return $this->_request;
     }
     
     /**
@@ -48,7 +48,7 @@ abstract class Ilch_Design_Abstract
      */
     public function getTranslator()
     {
-	return $this->_translator;
+		return $this->_translator;
     }
 
     /**

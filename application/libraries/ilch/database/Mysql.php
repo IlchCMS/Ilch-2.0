@@ -46,10 +46,10 @@ class Ilch_Database_Mysql
      */
     public function setDatabase($db)
     {
-	if($this->conn->select_db($db) === false)
-	{
-	    throw new InvalidArgumentException('could not find database with name "'.$db.'"');
-	}
+		if($this->conn->select_db($db) === false)
+		{
+			throw new InvalidArgumentException('could not find database with name "'.$db.'"');
+		}
     }
 
     /**

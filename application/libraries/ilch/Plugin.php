@@ -19,13 +19,13 @@ class Ilch_Plugin
      */
     public function detectPlugins()
     {
-	foreach(glob(APPLICATION_PATH.'/plugins/*/*') as $pluginPath)
-	{
-	    $pluginName = str_replace('.php', '', basename($pluginPath));
-	    $pluginPathParts = explode('/', $pluginPath);
-	    $pluginPathPartsCount = count($pluginPathParts);
-	    $this->_detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-2];
-	}
+		foreach(glob(APPLICATION_PATH.'/plugins/*/*') as $pluginPath)
+		{
+			$pluginName = str_replace('.php', '', basename($pluginPath));
+			$pluginPathParts = explode('/', $pluginPath);
+			$pluginPathPartsCount = count($pluginPathParts);
+			$this->_detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-2];
+		}
     }
 
     /**
@@ -35,15 +35,15 @@ class Ilch_Plugin
      */
     public function execute($pluginName)
     {
-	if(!isset($this->_detectedPlugins[$pluginName]))
-	{
-	    return;
-	}
+		if(!isset($this->_detectedPlugins[$pluginName]))
+		{
+			return;
+		}
 
-	foreach($this->_detectedPlugins[$pluginName] as $module)
-	{
-	    $pluginClass = $module.'_'.$pluginName.'Plugin';
-	    $plugin = new $pluginClass();
-	}
+		foreach($this->_detectedPlugins[$pluginName] as $module)
+		{
+			$pluginClass = $module.'_'.$pluginName.'Plugin';
+			$plugin = new $pluginClass();
+		}
     }
 }

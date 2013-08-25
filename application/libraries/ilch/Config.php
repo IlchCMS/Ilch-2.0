@@ -22,7 +22,7 @@ class Ilch_Config
      */
     public function getConfig($key)
     {
-	return $this->_configData[$key];
+		return $this->_configData[$key];
     }
 
     /**
@@ -33,7 +33,7 @@ class Ilch_Config
      */
     public function setConfig($key, $value)
     {
-	$this->_configData[$key] = $value;
+		$this->_configData[$key] = $value;
     }
 
     /**
@@ -43,17 +43,17 @@ class Ilch_Config
      */
     public function saveConfigToFile($fileName)
     {
-	$fileString = '<?php';
-	$fileString .= "\n";
+		$fileString = '<?php';
+		$fileString .= "\n";
 
-	foreach($this->_configData as $key => $value)
-	{
-	    $fileString .= '$config["'.$key.'"] = "'.$value.'";';
-	    $fileString .= "\n";
-	}
+		foreach($this->_configData as $key => $value)
+		{
+			$fileString .= '$config["'.$key.'"] = "'.$value.'";';
+			$fileString .= "\n";
+		}
 
-	$fileString .= '?>';
-	file_put_contents($fileName, $fileString);
+		$fileString .= '?>';
+		file_put_contents($fileName, $fileString);
     }
     
     /**
@@ -63,11 +63,11 @@ class Ilch_Config
      */
     public function loadConfigFromFile($fileName)
     {
-	require_once $fileName;
-	
-	foreach($config as $key => $value)
-	{
-	    $this->setConfig($key, $value);
-	}
+		require_once $fileName;
+
+		foreach($config as $key => $value)
+		{
+			$this->setConfig($key, $value);
+		}
     }
 }

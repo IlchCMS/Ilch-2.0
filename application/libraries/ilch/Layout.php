@@ -30,7 +30,7 @@ class Ilch_Layout extends Ilch_Design_Abstract
      */
     public function setDisabled($disabled)
     {
-	$this->_disabled = $disabled;
+		$this->_disabled = $disabled;
     }
 
     /**
@@ -40,7 +40,7 @@ class Ilch_Layout extends Ilch_Design_Abstract
      */
     public function getDisabled()
     {
-	return $this->_disabled;
+		return $this->_disabled;
     }
 
     /**
@@ -50,7 +50,7 @@ class Ilch_Layout extends Ilch_Design_Abstract
      */
     public function setContent($content)
     {
-	$this->_content = $content;
+		$this->_content = $content;
     }
 
     /**
@@ -60,7 +60,7 @@ class Ilch_Layout extends Ilch_Design_Abstract
      */
     public function getContent()
     {
-	return $this->_content;
+		return $this->_content;
     }
 
     /**

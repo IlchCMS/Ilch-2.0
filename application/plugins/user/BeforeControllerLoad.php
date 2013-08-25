@@ -11,6 +11,6 @@ class User_BeforeControllerLoadPlugin
 {
     public function __construct()
     {
-	//TBD
+		//TBD
     }
 }

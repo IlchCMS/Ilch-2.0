@@ -10,22 +10,22 @@ defined('ACCESS') or die('no direct access');
 class Ilch_Controller
 {
     /**
-     * @var Ilch_Request 
+     * @var Ilch_Request
      */
     private $_request;
-    
+
     /**
-     * @var Ilch_Translator 
+     * @var Ilch_Translator
      */
     private $_translator;
-    
+
     /**
-     * @var Ilch_Layout 
+     * @var Ilch_Layout
      */
     private $_layout;
-    
+
     /**
-     * @var Ilch_View 
+     * @var Ilch_View
      */
     private $_view;
 
@@ -41,8 +41,8 @@ class Ilch_Controller
     {
         $this->_layout = $layout;
         $this->_view = $view;
-	$this->_request = $request;
-	$this->_translator = $translator;
+		$this->_request = $request;
+		$this->_translator = $translator;
     }
 
     /**
@@ -51,14 +51,14 @@ class Ilch_Controller
      * @param string $module
      * @param string $controller
      * @param string $action
-     * @param string $params 
+     * @param string $params
      */
     public function redirect($module = '', $controller = '', $action = '', $params = array())
     {
-        header("location: ".$this->getLayout()->url($module, $controller, $action, $params)); 
+        header("location: ".$this->getLayout()->url($module, $controller, $action, $params));
         exit;
     }
-    
+
     /**
      * Gets the request object.
      *
@@ -66,9 +66,9 @@ class Ilch_Controller
      */
     public function getRequest()
     {
-	return $this->_request;
+		return $this->_request;
     }
-    
+
     /**
      * Gets the translator object.
      *
@@ -76,9 +76,9 @@ class Ilch_Controller
      */
     public function getTranslator()
     {
-	return $this->_translator;
+		return $this->_translator;
     }
-    
+
     /**
      * Gets the layout object.
      *
@@ -86,9 +86,9 @@ class Ilch_Controller
      */
     public function getLayout()
     {
-	return $this->_layout;
+		return $this->_layout;
     }
-    
+
     /**
      * Gets the view object.
      *
@@ -96,6 +96,6 @@ class Ilch_Controller
      */
     public function getView()
     {
-	return $this->_view;
+		return $this->_view;
     }
 }

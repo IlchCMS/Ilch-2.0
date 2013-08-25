@@ -31,7 +31,6 @@ class Ilch_Mapper
      */
     public function getDatabase()
     {
-	return $this->_db;
+		return $this->_db;
     }
-	    
 }

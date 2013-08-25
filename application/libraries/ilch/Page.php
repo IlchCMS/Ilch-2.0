@@ -18,42 +18,42 @@ class Ilch_Page
 
     public function loadCms()
     {
-	$config = new Ilch_Config();
-	$this->_loadConfig($config);
+		$config = new Ilch_Config();
+		$this->_loadConfig($config);
 
-	$request = new Ilch_Request();
-	$translator = new Ilch_Translator();
+		$request = new Ilch_Request();
+		$translator = new Ilch_Translator();
 
         $layout = new Ilch_Layout($request, $translator);
         $view = new Ilch_View($request, $translator);
 
-	$plugin = new Ilch_Plugin();
-	$plugin->detectPlugins();
+		$plugin = new Ilch_Plugin();
+		$plugin->detectPlugins();
 
-	if($this->_ilchInstalled)
-	{
-	    $this->_setupDatabaseAdapter($config);
-	}
-	
-	$this->_loadRouting($request);
+		if($this->_ilchInstalled)
+		{
+			$this->_setupDatabaseAdapter($config);
+		}
 
-	/*
-	 * Load controller as first.
-	 */
-        $controller = $this->_loadController($layout, $view, $plugin, $request, $translator);
+		$this->_loadRouting($request);
 
-	/*
-	 * Load controller view, if exists.
-	 */
+		/*
+		 * Load controller as first.
+		 */
+		$controller = $this->_loadController($layout, $view, $plugin, $request, $translator);
+
+		/*
+		 * Load controller view, if exists.
+		 */
         if(file_exists(APPLICATION_PATH.'/modules/'.$controller->modulName.'/views/'.$controller->name.'.php'))
         {
             $viewOutput = $view->load($controller->modulName, $controller->name);
         }
         else
         {
-	    /*
-	     * Load action views if no controller view exists.
-	     */
+			/*
+			 * Load action views if no controller view exists.
+			 */
             if(empty($controller->getView()->name))
             {
                 $viewOutput = $view->load($controller->modulName ,$controller->name , $controller->actionName);
@@ -101,13 +101,13 @@ class Ilch_Page
      */
     protected function _setupDatabaseAdapter(Ilch_Config $config)
     {
-	$dbClass = 'Ilch_Database_'.$config->getConfig('dbEngine');
-	$db = new $dbClass();
-	$db->connect($config->getConfig('dbHost'), $config->getConfig('dbUser'), $config->getConfig('dbPassword'));
-	$db->setDatabase($config->getConfig('dbName'));
-	$db->setPrefix($config->getConfig('dbPrefix'));
-	
-	Ilch_Registry::set('db', $db);
+		$dbClass = 'Ilch_Database_'.$config->getConfig('dbEngine');
+		$db = new $dbClass();
+		$db->connect($config->getConfig('dbHost'), $config->getConfig('dbUser'), $config->getConfig('dbPassword'));
+		$db->setDatabase($config->getConfig('dbName'));
+		$db->setPrefix($config->getConfig('dbPrefix'));
+
+		Ilch_Registry::set('db', $db);
     }
 
     /**
@@ -148,15 +148,15 @@ class Ilch_Page
             $actionName = $_GET['action'];
         }
 
-	foreach(array('module', 'controller', 'action') as $name)
-	{
-	    unset($_REQUEST[$name]);
-	}
+		foreach(array('module', 'controller', 'action') as $name)
+		{
+			unset($_REQUEST[$name]);
+		}
 
-	$request->setModuleName(strtolower($moduleName));
-	$request->setControllerName(strtolower($controllerName));
-	$request->setActionName(strtolower($actionName));
-	$request->setParams($_REQUEST);
+		$request->setModuleName(strtolower($moduleName));
+		$request->setControllerName(strtolower($controllerName));
+		$request->setActionName(strtolower($actionName));
+		$request->setParams($_REQUEST);
     }
 
     /**
@@ -166,7 +166,7 @@ class Ilch_Page
     {
         if(file_exists(CONFIG_PATH.'/config.php'))
         {
-	    $config->loadConfigFromFile(CONFIG_PATH.'/config.php');
+			$config->loadConfigFromFile(CONFIG_PATH.'/config.php');
             $this->_ilchInstalled = true;
         }
     }
@@ -189,9 +189,9 @@ class Ilch_Page
         $controller->name = strtolower($request->getControllerName());
         $action = $request->getActionName().'Action';
 
-	/*
-	 * Load "BeforeControllerLoad" - plugins.
-	 */
+		/*
+		 * Load "BeforeControllerLoad" - plugins.
+		 */
         $plugin->execute('BeforeControllerLoad');
 
         if(method_exists($controller, 'init'))
@@ -208,11 +208,11 @@ class Ilch_Page
             throw new InvalidArgumentException('action "'.$action.'" not known');
         }
 
-	$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
+		$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
 
-	/*
-	 * Load "AfterControllerLoad" - plugins.
-	 */
+		/*
+		 * Load "AfterControllerLoad" - plugins.
+		 */
         $plugin->execute('AfterControllerLoad');
 
         return $controller;
