@@ -17,7 +17,7 @@
     
 		    if($this->getTranslator()->getLocale() == $key)
 		    {
-			$selected = 'selected="selected"';
+				$selected = 'selected="selected"';
 		    }
 
 		    echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
@@ -30,10 +30,10 @@
 <script>
     $('#languageInput').change
     (
-	this,
-	function()
-	{
-	    top.location.href = '<?php echo $this->url('install', 'index', 'index'); ?>&language='+$(this).val();
-	}
+		this,
+		function()
+		{
+			top.location.href = '<?php echo $this->url('install', 'index', 'index'); ?>&language='+$(this).val();
+		}
     );
 </script>
