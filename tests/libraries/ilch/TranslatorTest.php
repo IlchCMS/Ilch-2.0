@@ -113,7 +113,7 @@ class Libraries_Ilch_TranslatorTest extends IlchTestCase
         $translator = new Ilch_Translator('en_EN');
         $translator->load($this->_getFilesFolder());
 
-        $expectedTranslations = require __DIR__.DIRECTORY_SEPARATOR.'_files'.DIRECTORY_SEPARATOR.'translations_en.php';
+        $expectedTranslations = require __DIR__.'/_files/translations_en.php';
         $this->assertEquals($expectedTranslations, $translator->getTranslations(), 'The translations array was returned wrongly.');
     }
 

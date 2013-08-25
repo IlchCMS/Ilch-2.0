@@ -67,7 +67,7 @@ class Ilch_Translator
         }
 
         $localeShort = $this->shortenLocale($this->_locale);
-        $transFile = $transDir.DIRECTORY_SEPARATOR.'translations_'.$localeShort.'.php';
+        $transFile = $transDir.'/translations_'.$localeShort.'.php';
 
         if(is_file($transFile))
         {

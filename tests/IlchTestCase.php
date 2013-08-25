@@ -22,8 +22,8 @@ class IlchTestCase extends PHPUnit_Framework_TestCase
      */
     protected function _getFilesFolder()
     {
-        $pathToClass = dirname(strtolower(str_replace('_', DIRECTORY_SEPARATOR, get_class($this))));
-        $filesDir = __DIR__.DIRECTORY_SEPARATOR.$pathToClass.DIRECTORY_SEPARATOR.'_files';
+        $pathToClass = dirname(strtolower(str_replace('_', '/', get_class($this))));
+        $filesDir = __DIR__.'/'.$pathToClass.'/_files';
 
         if(!is_dir($filesDir))
         {
