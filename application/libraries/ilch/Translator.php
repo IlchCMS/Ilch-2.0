@@ -141,4 +141,14 @@ class Ilch_Translator
     {
         return $this->_locale;
     }
+    
+    /**
+     * Sets the locale used for the translation.
+     *
+     * @param string
+     */
+    public function setLocale($locale)
+    {
+        $this->_locale = $locale;
+    }
 }

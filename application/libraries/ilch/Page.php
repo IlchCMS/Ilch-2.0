@@ -54,33 +54,33 @@ class Ilch_Page
 	    /*
 	     * Load action views if no controller view exists.
 	     */
-            if(empty($controller->view->name))
+            if(empty($controller->getView()->name))
             {
                 $viewOutput = $view->load($controller->modulName ,$controller->name , $controller->actionName);
             }
             else
             {
-                $viewOutput = $view->load($controller->modulName ,$controller->name , $controller->view->name);
+                $viewOutput = $view->load($controller->modulName ,$controller->name , $controller->getView()->name);
             }
         }
 
-        $controller->layout->setContent($viewOutput);
-        $controller->layout->controller = $controller;
+        $controller->getLayout()->setContent($viewOutput);
+        $controller->getLayout()->controller = $controller;
 
-        if($controller->layout->getDisabled() === false)
+        if($controller->getLayout()->getDisabled() === false)
         {
             if
             (
-                empty($controller->layout->name)
+                empty($controller->getLayout()->name)
                 &&
                 file_exists(APPLICATION_PATH.'/layouts/'.$controller->modulName.'/index.php')
             )
             {
                 $layout->load($controller->modulName.'/index');
             }
-            elseif(!empty($controller->layout->name))
+            elseif(!empty($controller->getLayout()->name))
             {
-                $layout->load($controller->layout->name);
+                $layout->load($controller->getLayout()->name);
             }
             else
             {
@@ -189,8 +189,6 @@ class Ilch_Page
         $controller->name = strtolower($request->getControllerName());
         $action = $request->getActionName().'Action';
 
-	$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
-
 	/*
 	 * Load "BeforeControllerLoad" - plugins.
 	 */
@@ -209,6 +207,8 @@ class Ilch_Page
         {
             throw new InvalidArgumentException('action "'.$action.'" not known');
         }
+
+	$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
 
 	/*
 	 * Load "AfterControllerLoad" - plugins.

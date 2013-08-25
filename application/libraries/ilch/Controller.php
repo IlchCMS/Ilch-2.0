@@ -7,8 +7,28 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Controller extends Ilch_Design_Abstract
+class Ilch_Controller
 {
+    /**
+     * @var Ilch_Request 
+     */
+    private $_request;
+    
+    /**
+     * @var Ilch_Translator 
+     */
+    private $_translator;
+    
+    /**
+     * @var Ilch_Layout 
+     */
+    private $_layout;
+    
+    /**
+     * @var Ilch_View 
+     */
+    private $_view;
+
     /**
      * Injects the layout/view to the controller.
      *
@@ -19,15 +39,15 @@ class Ilch_Controller extends Ilch_Design_Abstract
      */
     public function __construct(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Translator $translator)
     {
-        $this->layout = $layout;
-        $this->view = $view;
-	$this->request = $request;
-	$this->translator = $translator;
+        $this->_layout = $layout;
+        $this->_view = $view;
+	$this->_request = $request;
+	$this->_translator = $translator;
     }
 
     /**
      * Redirect to given params.
-     * 
+     *
      * @param string $module
      * @param string $controller
      * @param string $action
@@ -35,7 +55,47 @@ class Ilch_Controller extends Ilch_Design_Abstract
      */
     public function redirect($module = '', $controller = '', $action = '', $params = array())
     {
-        header("location: ".$this->url($module, $controller, $action, $params)); 
+        header("location: ".$this->getLayout()->url($module, $controller, $action, $params)); 
         exit;
+    }
+    
+    /**
+     * Gets the request object.
+     *
+     * @return Ilch_Request
+     */
+    public function getRequest()
+    {
+	return $this->_request;
+    }
+    
+    /**
+     * Gets the translator object.
+     *
+     * @return Ilch_Translator
+     */
+    public function getTranslator()
+    {
+	return $this->_translator;
+    }
+    
+    /**
+     * Gets the layout object.
+     *
+     * @return Ilch_Layout
+     */
+    public function getLayout()
+    {
+	return $this->_layout;
+    }
+    
+    /**
+     * Gets the view object.
+     *
+     * @return Ilch_Request
+     */
+    public function getView()
+    {
+	return $this->_view;
     }
 }
