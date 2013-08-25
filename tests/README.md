@@ -6,11 +6,7 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
 
 ## Installation/Verwendung
 
-1. **PHPUnit installieren. z. B. über PHAR:**
-
-        wget http://pear.phpunit.de/get/phpunit.phar
-        chmod +x phpunit.phar
-        mv phpunit.phar /usr/local/bin/phpunit
+1. **PHPUnit installieren.** Eine gute Anleitung für Xampp ist [hier](http://web-union.de/484) zu finden.
 
 2. **xDebug auf dem Server aktivieren.**
 In Xampp muss man dafür, je nach Installation, nur die Kommentare in folgendem Teil in der php.ini rausnehmen bzw. den Teil einfügen:
