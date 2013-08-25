@@ -1,4 +1,4 @@
-# PHPUnit in Ilch2.0
+# PHPUnit in Ilch CMS 2.0
 
 ## Fragen bzgl. PHPUnit?
 Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
