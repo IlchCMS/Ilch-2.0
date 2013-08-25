@@ -13,7 +13,6 @@ class Install_IndexController extends Ilch_Controller
 	{
 		if($_POST)
 		{
-			echo 'hier';
 			$this->redirect('install', 'index', 'license');
 		}
 	}
@@ -55,5 +54,5 @@ class Install_IndexController extends Ilch_Controller
 		{
 			// finish
 		}
-	}    
+	}
 }

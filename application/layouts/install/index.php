@@ -14,42 +14,62 @@
 			}
 
 			#install_steps {
-				width:100%;
+				width: 100%;
+			}
+
+			#install_container {
+				box-sizing:border-box;
+				height: 100%;
+			}
+
+			.content {
+				margin-left:200px;
+				border:1px solid #ddd;
+			}
+
+			.content .install_content{
+				height: 350px;
+				border-radius: 6px 6px 0px 0px;
+				margin-bottom: 0px;
+			}
+
+			.content .save_box {
+				background-color: #EEE;
+				border-radius: 0px 0px 6px 6px;
+			}
+
+			.menu {
+				padding-top: 10px;
+				float: left;
+				width: 200px;
 			}
 		</style>
 </head>
 <body>
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<a class="brand" href="#">Ilch CMS <?php echo VERSION; ?></a>
-			</div>
-		</div>
-	</div>
-	<div class="container-fluid">
-		<div class="row-fluid">
-			<div class="span3">
+	<div class="container">
+			<div class="menu">
 				<div class="tabbable tabs-left">
 					<ul class="nav nav-tabs" id="install_steps">
-						<li class="<?=(!isset($_GET['action'])|| $_GET['action'] == 'index') ? 'active': ''?>"><a data-toggle="tab">Willkommen / Sprache</a></li>
-						<li class="<?=$_GET['action'] == 'license' ? 'active': ''?>"><a data-toggle="tab">Lizenz</a></li>
-						<li class="<?=$_GET['action'] == 'systemcheck' ? 'active': ''?>"><a data-toggle="tab">System überprüfung</a></li>
-						<li class="<?=$_GET['action'] == 'database' ? 'active': ''?>"><a data-toggle="tab">Datenbank</a></li>
-						<li class="<?=$_GET['action'] == 'config' ? 'active': ''?>"><a data-toggle="tab">Konfiguration</a></li>
-						<li class="<?=$_GET['action'] == 'finish' ? 'active': ''?>"><a data-toggle="tab">Fertig</a></li>
+						<li class="<?=$this->getRequest()->getActionName() == 'index' ? 'active': ''?>"><a data-toggle="tab">Willkommen / Sprache</a></li>
+						<li class="<?=$this->getRequest()->getActionName() == 'license' ? 'active': ''?>"><a data-toggle="tab">Lizenz</a></li>
+						<li class="<?=$this->getRequest()->getActionName() == 'systemcheck' ? 'active': ''?>"><a data-toggle="tab">System überprüfung</a></li>
+						<li class="<?=$this->getRequest()->getActionName() == 'database' ? 'active': ''?>"><a data-toggle="tab">Datenbank</a></li>
+						<li class="<?=$this->getRequest()->getActionName() == 'config' ? 'active': ''?>"><a data-toggle="tab">Konfiguration</a></li>
+						<li class="<?=$this->getRequest()->getActionName() == 'finish' ? 'active': ''?>"><a data-toggle="tab">Fertig</a></li>
 					</ul>
 				</div>
 			</div>
-			<div class="span9">
-				<div class="hero-unit">
-					<?php echo $this->getContent(); ?>
-				</div>
+			<div class="content hero-unit">
+				<form method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
+					<div class="install_content">
+						<input type="hidden" value="1" name="save" />
+						<?php echo $this->getContent(); ?>
+					</div>
+					<div class="save_box">
+						<button type="submit" class="btn">Next</button>
+					</div>
+				</form>
 			</div>
-		</div>
-		<hr>
-		<footer>
-			<p>&copy; Ilch 2013</p>
-		</footer>
 	</div>
 </body>
 </html>
