@@ -25,14 +25,29 @@ class Libraries_Ilch_TranslatorTest extends IlchTestCase
     }
 
     /**
-     * Tests if an exception gets thrown when a translation file was not found.
-     *
-     * @expectedException Exception
+     * Tests if load returns false if a translation file was not found.
      */
     public function testLoadTranslationFileNotExists()
     {
         $translator = new Ilch_Translator('xx_xx');
-        $translator->load($this->_getFilesFolder());
+        $this->assertFalse
+        (
+            $translator->load($this->_getFilesFolder()),
+            'The translator didn\'t return false when the translation file doesn\'t exist.'
+        );
+    }
+
+    /**
+     * Tests if load returns false if a translation dir was not found.
+     */
+    public function testLoadTranslationDirNotExists()
+    {
+        $translator = new Ilch_Translator('de_DE');
+        $this->assertFalse
+        (
+            $translator->load('someImaginaryFolder'),
+            'The translator didn\'t return false when the given translation directory doesn\'t exist.'
+        );
     }
 
     /**
@@ -123,6 +138,6 @@ class Libraries_Ilch_TranslatorTest extends IlchTestCase
     public function testShortenLocale()
     {
         $translator = new Ilch_Translator();
-        $this->assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn´t trimmed correctly.');
+        $this->assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn\'t trimmed correctly.');
     }
 }

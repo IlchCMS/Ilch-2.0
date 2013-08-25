@@ -74,6 +74,10 @@ class Ilch_Translator
             $this->_translations = require $transFile;
             return true;
         }
+        else
+        {
+            return false;
+        }
     }
 
     /**
