@@ -9,8 +9,8 @@
 /**
  * Handles translations for ilch.
  *
- * Loads translations from a Translation object, searches for translations in
- * the runtime and returns translations.
+ * Loads a translations array from a translation file, searches for translations
+ * in the translation array and returns translations.
  *
  * @author Jainta Martin
  * @package ilch
@@ -35,11 +35,11 @@ class Ilch_Translator
     private $_translations = array();
 
     /**
-     * The locale which the translations take as its base to translate.
+     * The locale in which the texts should be translated.
      *
      * @var string
      */
-    private $_baseLocale = 'de_DE';
+    private $_locale = 'de_DE';
 
     /**
      * The request locale which should be used by default for the translation.
@@ -56,91 +56,65 @@ class Ilch_Translator
     public function __construct($locale = null)
     {
         /*
-         * If no setting is given, take the base locale as the one for the
-         * current request.
+         * If a setting is given, set the locale to the given one.
          */
-        if($locale === null)
+        if($locale !== null)
         {
-            $this->_requestLocale = $this->_baseLocale;
-        }
-        else
-        {
-            $this->_requestLocale = $locale;
+            $this->_locale = $locale;
         }
     }
 
     /**
-     * Sets the directory in which the translation files reside.
+     * Loads a translation array for the set locale from the given directory.
      *
-     * @param string $dir
-     * @throws InvalidArgumentException If the given directory doesn`t exist.
-     */
-    public function setTranslationsDir($dir)
-    {
-        if(is_dir($dir))
-        {
-            $this->_translationsDir = $dir;
-        }
-        else
-        {
-            throw InvalidArgumentException('Directory "'.$dir.'" does not exist.');
-        }
-    }
-
-    /**
-     * Loads translations from a translations file for the given locale.
-     *
-     * @param string $locale
+     * @param string $transDirectory The directory where the translation resides.
      * @return boolean True if the translations got loaded, false if not.
-     * @throws Exception If the translation file was not found.
+     * @throws Exception If the translation directory or translation file was not found.
      */
-    public function load($locale)
+    public function load($transDir)
     {
-        $localeShort = $this->shortenLocale($locale);
-        $transFile = $this->_translationsDir.DIRECTORY_SEPARATOR.'translations_'.$localeShort.'.php';
+        if(!is_dir($transDir))
+        {
+            throw new Exception('The translation directory doesn´t exist.');
+        }
+
+        $localeShort = $this->shortenLocale($this->_locale);
+        $transFile = $transDir.DIRECTORY_SEPARATOR.'translations_'.$localeShort.'.php';
 
         if(is_file($transFile))
         {
-            $this->_translations[$localeShort] = require $transFile;
+            $this->_translations = require $transFile;
             return true;
         }
         else
         {
-            throw new Exception('Translation file "'.$transFile.'" for locale "'.$locale.'" not found.');
+            throw new Exception('Translation file "'.$transFile.'" for locale "'.$this->_locale.'" not found.');
         }
     }
 
     /**
-     * Returns the translation for a specific text.
+     * Returns the translated text for a specific key.
      *
      * Can also replace placeholders with a given string e. g. for names. As
-     * default, trans() uses the request locale. If a locale is given this one
-     * will be used.
+     * default, trans() uses the request locale.
      *
-     * @param string $text
+     * @param string $key
      * @param mixed[] $placeholders Key as the placeholder, value as the text which
      * the placeholder gonna be replaced with.
-     * @param string $locale
      * @return string
      */
-    public function trans($text, $placeholders = array(), $locale = null)
+    public function trans($key, $placeholders = array())
     {
-        if($locale === null)
+        if(isset($this->_translations[$key]))
         {
-            $localeShort = $this->shortenLocale($this->_requestLocale);
+            $translatedText = $this->_translations[$key];
         }
         else
         {
-            $localeShort = $this->shortenLocale($locale);
-        }
-
-        if(isset($this->_translations[$localeShort][$text]))
-        {
-            $translatedText = $this->_translations[$localeShort][$text];
-        }
-        else
-        {
-            $translatedText = $text;
+            /*
+             * If no translation exists, return the key as fallback.
+             */
+            $translatedText = $key;
         }
 
         foreach($placeholders as $placeholder => $value)
@@ -152,32 +126,11 @@ class Ilch_Translator
     }
 
     /**
-     * Returns a specific or all translation arrays.
-     *
-     * @param string $locale
+     * Returns the translation array.
      */
-    public function getTranslations($locale = null, $shortenLocales = true)
+    public function getTranslations()
     {
-        $localeShort = $this->shortenLocale($locale);
-
-        if(isset($locale, $this->_translations[$localeShort]))
-        {
-            return $this->_translations[$localeShort];
-        }
-        else
-        {
-            return $this->_translations;
-        }
-    }
-
-    /**
-     * Returns the request locale.
-     *
-     * @return string
-     */
-    public function getRequestLocale()
-    {
-        return $this->_requestLocale;
+        return $this->_translations;
     }
 
     /**
@@ -189,5 +142,15 @@ class Ilch_Translator
     public function shortenLocale($locale)
     {
         return substr($locale, 0, 2);
+    }
+
+    /**
+     * Returns the locale used for the translation.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->_locale;
     }
 }

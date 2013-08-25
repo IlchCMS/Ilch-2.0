@@ -8,6 +8,6 @@
 
 return array
 (
-    'userGetsWhatHeWants' => 'The user gets what he wants!',
-    'welcomeUser' => 'Welcome, %name%',
+    'userGetsWhatHeWants' => 'Der Benutzer bekommt was er will!',
+    'welcomeUser' => 'Willkommen, %name%',
 );
