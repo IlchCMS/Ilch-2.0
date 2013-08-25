@@ -12,6 +12,6 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'welcomeToInstall' => 'Welcome to Ilch CMS [VERSION] installation',
-    'chooseLanguage'   => 'Please choose the language at first',
+    'chooseLanguage'   => 'Please choose the language',
     'language'	       => 'Language'
 );
