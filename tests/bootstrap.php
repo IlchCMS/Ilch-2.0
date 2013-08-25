@@ -12,7 +12,7 @@
 define('ACCESS', 1);
 define('VERSION', '2.0');
 define('APPLICATION_PATH', __DIR__.'/../application');
-define('CONFIG_PATH', '/../');
+define('CONFIG_PATH', __DIR__.'/../');
 define('BASE_URL', 'http://localhost/ilch');
 define('STATIC_URL', BASE_URL);
 

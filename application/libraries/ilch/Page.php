@@ -30,9 +30,10 @@ class Ilch_Page
 	$plugin = new Ilch_Plugin();
 	$plugin->detectPlugins();
 
-	$dbClass = 'Ilch_Database_'.DB_ENGINE;
-	$db = new $dbClass();
-        Ilch_Registry::set('db', $db);
+	if($this->_ilchInstalled)
+	{
+	    $this->_setupDatabaseAdapter($config);
+	}
 	
 	$this->_loadRouting($request);
 
@@ -94,6 +95,20 @@ class Ilch_Page
             }
         }
     }
+ 
+    /**
+     * Setup the database adapter, create instance and connect to database.
+     */
+    protected function _setupDatabaseAdapter(Ilch_Config $config)
+    {
+	$dbClass = 'Ilch_Database_'.$config->getConfig('dbEngine');
+	$db = new $dbClass();
+	$db->connect($config->getConfig('dbHost'), $config->getConfig('dbUser'), $config->getConfig('dbPassword'));
+	$db->setDatabase($config->getConfig('dbName'));
+	$db->setPrefix($config->getConfig('dbPrefix'));
+	
+	Ilch_Registry::set('db', $db);
+    }
 
     /**
      * Create and load a specific route.
@@ -108,7 +123,7 @@ class Ilch_Page
         }
         elseif(empty($_GET['module']))
         {
-            $moduleName = 'Start';
+            $moduleName = 'News';
         }
         else
         {
