@@ -47,29 +47,29 @@
 </head>
 <body>
 	<div class="container">
-			<div class="menu">
-				<div class="tabbable tabs-left">
-					<ul class="nav nav-tabs" id="install_steps">
-						<li class="<?=$this->getRequest()->getActionName() == 'index' ? 'active': ''?>"><a data-toggle="tab">Willkommen / Sprache</a></li>
-						<li class="<?=$this->getRequest()->getActionName() == 'license' ? 'active': ''?>"><a data-toggle="tab">Lizenz</a></li>
-						<li class="<?=$this->getRequest()->getActionName() == 'systemcheck' ? 'active': ''?>"><a data-toggle="tab">System überprüfung</a></li>
-						<li class="<?=$this->getRequest()->getActionName() == 'database' ? 'active': ''?>"><a data-toggle="tab">Datenbank</a></li>
-						<li class="<?=$this->getRequest()->getActionName() == 'config' ? 'active': ''?>"><a data-toggle="tab">Konfiguration</a></li>
-						<li class="<?=$this->getRequest()->getActionName() == 'finish' ? 'active': ''?>"><a data-toggle="tab">Fertig</a></li>
-					</ul>
+		<div class="menu">
+			<div class="tabbable tabs-left">
+				<ul class="nav nav-tabs" id="install_steps">
+					<li class="<?=$this->getRequest()->getActionName() == 'index' ? 'active': ''?>"><a data-toggle="tab">Willkommen / Sprache</a></li>
+					<li class="<?=$this->getRequest()->getActionName() == 'license' ? 'active': ''?>"><a data-toggle="tab">Lizenz</a></li>
+					<li class="<?=$this->getRequest()->getActionName() == 'systemcheck' ? 'active': ''?>"><a data-toggle="tab">System überprüfung</a></li>
+					<li class="<?=$this->getRequest()->getActionName() == 'database' ? 'active': ''?>"><a data-toggle="tab">Datenbank</a></li>
+					<li class="<?=$this->getRequest()->getActionName() == 'config' ? 'active': ''?>"><a data-toggle="tab">Konfiguration</a></li>
+					<li class="<?=$this->getRequest()->getActionName() == 'finish' ? 'active': ''?>"><a data-toggle="tab">Fertig</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="content hero-unit">
+			<form method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
+				<div class="install_content">
+					<input type="hidden" value="1" name="save" />
+					<?php echo $this->getContent(); ?>
 				</div>
-			</div>
-			<div class="content hero-unit">
-				<form method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
-					<div class="install_content">
-						<input type="hidden" value="1" name="save" />
-						<?php echo $this->getContent(); ?>
-					</div>
-					<div class="save_box">
-						<button type="submit" class="btn">Next</button>
-					</div>
-				</form>
-			</div>
+				<div class="save_box">
+					<button type="submit" class="btn">Next</button>
+				</div>
+			</form>
+		</div>
 	</div>
 </body>
 </html>

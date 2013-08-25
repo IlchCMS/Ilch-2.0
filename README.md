@@ -14,4 +14,4 @@ http://www.ilch.de
 ### Team
 - Meyer Dominik	    (Core)
 - Jainta Martin	    (Core & QA)
-- Harald Schneider  (Frontend)
+- Schneider Harald  (Frontend)
