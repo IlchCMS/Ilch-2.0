@@ -13,6 +13,8 @@ define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].str_replace(array('/index.php
 define('STATIC_URL', BASE_URL);
 define('DB_ENGINE', 'Mysql');
 
+error_reporting(E_ALL);
+
 require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';
 require_once APPLICATION_PATH.'/libraries/ilch/Functions.php';
 

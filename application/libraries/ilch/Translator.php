@@ -3,8 +3,11 @@
  * Holds class Ilch_Translator.
  *
  * @author Jainta Martin
+ * @copyright Ilch CMS 2.0
  * @package ilch
  */
+
+defined('ACCESS') or die('no direct access');
 
 /**
  * Handles translations for ilch.
@@ -17,13 +20,6 @@
  */
 class Ilch_Translator
 {
-    /**
-     * The directory in which the translation files reside.
-     *
-     * @var string
-     */
-    private $_translationsDir;
-
     /**
      * Holds the translations for each loaded translation file.
      *
@@ -40,13 +36,6 @@ class Ilch_Translator
      * @var string
      */
     private $_locale = 'de_DE';
-
-    /**
-     * The request locale which should be used by default for the translation.
-     *
-     * @var string
-     */
-    private $_requestLocale = '';
 
     /**
      * Sets the locale to use for the request.
@@ -69,13 +58,12 @@ class Ilch_Translator
      *
      * @param string $transDirectory The directory where the translation resides.
      * @return boolean True if the translations got loaded, false if not.
-     * @throws Exception If the translation directory or translation file was not found.
      */
     public function load($transDir)
     {
         if(!is_dir($transDir))
         {
-            throw new Exception('The translation directory doesn´t exist.');
+            return false;
         }
 
         $localeShort = $this->shortenLocale($this->_locale);
@@ -85,10 +73,6 @@ class Ilch_Translator
         {
             $this->_translations = require $transFile;
             return true;
-        }
-        else
-        {
-            throw new Exception('Translation file "'.$transFile.'" for locale "'.$this->_locale.'" not found.');
         }
     }
 

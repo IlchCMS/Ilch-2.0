@@ -33,6 +33,8 @@ class Ilch_Page
 	$dbClass = 'Ilch_Database_'.DB_ENGINE;
 	$db = new $dbClass();
         Ilch_Registry::set('db', $db);
+	
+	$this->_loadRouting($request);
 
 	/*
 	 * Load controller as first.
@@ -92,29 +94,13 @@ class Ilch_Page
             }
         }
     }
-    
-    /**
-     * Loads the config, if already created.
-     */
-    protected function _loadConfig(Ilch_Config $config)
-    {
-        if(file_exists(CONFIG_PATH.'/config.php'))
-        {
-	    $config->loadConfigFromFile(CONFIG_PATH.'/config.php');
-            $this->_ilchInstalled = true;
-        }
-    }
 
     /**
-     * @param Ilch_Layout $layout
-     * @param Ilch_View $view
-     * @param Ilch_Plugin $plugin
+     * Create and load a specific route.
+     *
      * @param Ilch_Request $request
-     * @param Ilch_Translator $translator
-     * @return Ilch_Controller
-     * @throws InvalidArgumentException
      */
-    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Translator $translator)
+    protected function _loadRouting(Ilch_Request $request)
     {
         if(!$this->_ilchInstalled)
         {
@@ -147,23 +133,48 @@ class Ilch_Page
             $actionName = $_GET['action'];
         }
 
-	$request->setModuleName(strtolower($moduleName));
-	$request->setControllerName(strtolower($controllerName));
-	$request->setActionName(strtolower($actionName));
-
 	foreach(array('module', 'controller', 'action') as $name)
 	{
 	    unset($_REQUEST[$name]);
 	}
 
+	$request->setModuleName(strtolower($moduleName));
+	$request->setControllerName(strtolower($controllerName));
+	$request->setActionName(strtolower($actionName));
 	$request->setParams($_REQUEST);
+    }
 
-        $controller = $moduleName.'_'.$controllerName.'Controller';
+    /**
+     * Loads the config, if already created.
+     */
+    protected function _loadConfig(Ilch_Config $config)
+    {
+        if(file_exists(CONFIG_PATH.'/config.php'))
+        {
+	    $config->loadConfigFromFile(CONFIG_PATH.'/config.php');
+            $this->_ilchInstalled = true;
+        }
+    }
+
+    /**
+     * @param Ilch_Layout $layout
+     * @param Ilch_View $view
+     * @param Ilch_Plugin $plugin
+     * @param Ilch_Request $request
+     * @param Ilch_Translator $translator
+     * @return Ilch_Controller
+     * @throws InvalidArgumentException
+     */
+    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Translator $translator)
+    {
+        $controller = $request->getModuleName().'_'.$request->getControllerName().'Controller';
         $controller = new $controller($layout, $view, $plugin, $request, $translator);
-        $controller->actionName = $actionName;
-        $controller->modulName = strtolower($moduleName);
-        $controller->name = strtolower($controllerName);
-        $action = $actionName.'Action';
+        $controller->actionName = $request->getActionName();
+        $controller->modulName = strtolower($request->getModuleName());
+        $controller->name = strtolower($request->getControllerName());
+        $action = $request->getActionName().'Action';
+
+	$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
 
 	/*
 	 * Load "BeforeControllerLoad" - plugins.
