@@ -40,21 +40,31 @@ class Install_IndexController extends Ilch_Controller
 		}
     }
 
+    public function licenseAction()
+    {
+		$this->getView()->licenceText = file_get_contents(APPLICATION_PATH.'/../licence.txt');
+
+		if($_POST)
+		{
+			if($this->getRequest()->getPost('licenceAccepted'))
+			{
+				$this->redirect('install', 'index', 'systemcheck');
+			}
+			else
+			{
+				$this->getView()->error = true;
+			}
+		}
+    }
+
     public function systemcheckAction()
     {
 		if($_POST)
 		{
-			$this->redirect('install', 'index', 'database');
+				$this->redirect('install', 'index', 'database');
 		}
     }
 
-    public function licenseAction()
-    {
-		if($_POST)
-		{
-			$this->redirect('install', 'index', 'systemcheck');
-		}
-    }
 
     public function databaseAction()
     {

@@ -13,5 +13,6 @@ return array
 (
     'welcomeToInstall' => 'Welcome to Ilch CMS [VERSION] installation',
     'chooseLanguage'   => 'Please choose the language',
-    'language'	       => 'Language'
+    'language'	       => 'Language',
+	'acceptLicence'	   => 'Read licence and accepted'
 );
