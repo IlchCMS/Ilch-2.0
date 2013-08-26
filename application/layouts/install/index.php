@@ -11,7 +11,7 @@
 			body {
 				padding-top: 60px;
 				padding-bottom: 40px;
-				background-image: url(<?php echo $this->staticUrl('img/bg_grey.png'); ?>);
+				background-image: url(<?php echo $this->staticUrl('img/install/bg_grey.png'); ?>);
 			}
 
 			#install_steps {
