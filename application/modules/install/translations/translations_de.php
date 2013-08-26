@@ -11,8 +11,14 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'welcomeToInstall' => 'Willkommen zur Ilch CMS [VERSION] installation',
-    'chooseLanguage'   => 'Bitte wählen Sie eine Sprache',
-    'language'	       => 'Sprache',
-	'acceptLicence'	   => 'Nutzungslizenz gelesen und akzeptiert'
+	'menuWelcomeAndLanguage' => 'Willkommen / Sprache',
+	'menuLicence'			 => 'Lizenz',
+	'menuSystemCheck'		 => 'Systemüberprüfung',
+	'menuDatabase'			 => 'Datenbank',
+	'menuConfig'			 => 'Konfiguration',
+	'menuFinish'			 => 'Installieren',
+    'welcomeToInstall'   => 'Willkommen zur Ilch CMS [VERSION] installation',
+    'chooseLanguage'     => 'Bitte wählen Sie eine Sprache',
+    'language'	         => 'Sprache',
+	'acceptLicence'	     => 'Nutzungslizenz gelesen und akzeptiert'
 );

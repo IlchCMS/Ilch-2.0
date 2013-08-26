@@ -70,12 +70,24 @@
 		<div class="menu">
 			<div class="tabbable tabs-left">
 				<ul class="nav nav-tabs" id="install_steps">
-					<li class="<?=$this->getRequest()->getActionName() == 'index' ? 'active': ''?>"><a data-toggle="tab">Willkommen / Sprache</a></li>
-					<li class="<?=$this->getRequest()->getActionName() == 'license' ? 'active': ''?>"><a data-toggle="tab">Lizenz</a></li>
-					<li class="<?=$this->getRequest()->getActionName() == 'systemcheck' ? 'active': ''?>"><a data-toggle="tab">System überprüfung</a></li>
-					<li class="<?=$this->getRequest()->getActionName() == 'database' ? 'active': ''?>"><a data-toggle="tab">Datenbank</a></li>
-					<li class="<?=$this->getRequest()->getActionName() == 'config' ? 'active': ''?>"><a data-toggle="tab">Konfiguration</a></li>
-					<li class="<?=$this->getRequest()->getActionName() == 'finish' ? 'active': ''?>"><a data-toggle="tab">Fertig</a></li>
+					<li class="<?=$this->getRequest()->getActionName() == 'index' ? 'active': ''?>">
+						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuWelcomeAndLanguage'); ?></a>
+					</li>
+					<li class="<?=$this->getRequest()->getActionName() == 'license' ? 'active': ''?>">
+						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuLicence'); ?></a>
+					</li>
+					<li class="<?=$this->getRequest()->getActionName() == 'systemcheck' ? 'active': ''?>">
+						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuSystemCheck'); ?></a>
+					</li>
+					<li class="<?=$this->getRequest()->getActionName() == 'database' ? 'active': ''?>">
+						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuDatabase'); ?></a>
+					</li>
+					<li class="<?=$this->getRequest()->getActionName() == 'config' ? 'active': ''?>">
+						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuConfig'); ?></a>
+					</li>
+					<li class="<?=$this->getRequest()->getActionName() == 'finish' ? 'active': ''?>">
+						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuFinish'); ?></a>
+					</li>
 				</ul>
 			</div>
 		</div>

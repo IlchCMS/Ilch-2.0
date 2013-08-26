@@ -11,6 +11,12 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+	'menuWelcomeAndLanguage' => 'Welcome',
+	'menuLicence'			 => 'License',
+	'menuSystemCheck'		 => 'Systemcheck',
+	'menuDatabase'			 => 'Database',
+	'menuConfig'			 => 'Configuration',
+	'menuFinish'			 => 'Install',
     'welcomeToInstall' => 'Welcome to Ilch CMS [VERSION] installation',
     'chooseLanguage'   => 'Please choose the language',
     'language'	       => 'Language',
