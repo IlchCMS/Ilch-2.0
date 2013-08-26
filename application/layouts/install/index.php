@@ -11,10 +11,12 @@
 			body {
 				padding-top: 60px;
 				padding-bottom: 40px;
+				background-image: url(<?php echo $this->staticUrl('img/bg_grey.png'); ?>);
 			}
 
 			#install_steps {
 				width: 100%;
+				margin-bottom: 0px;
 			}
 
 			#install_container {
@@ -23,8 +25,13 @@
 			}
 
 			.content {
+				width:600px;
 				margin-left:200px;
 				border:1px solid #ddd;
+				position: absolute;
+				-webkit-box-shadow: 15px 15px 30px #222;
+				-moz-box-shadow: 15px 15px 30px #222;
+				box-shadow: 15px 15px 30px #222;
 			}
 
 			.content .install_content{
@@ -40,8 +47,21 @@
 
 			.menu {
 				padding-top: 10px;
-				float: left;
+				/*loat: left;*/
 				width: 200px;
+				position: absolute;
+			}
+
+			.tabs-left .nav-tabs > li > a {
+				background-color: white;
+				-webkit-box-shadow: 15px 15px 30px #222;
+				-moz-box-shadow: 15px 15px 30px #222;
+				box-shadow: 15px 15px 30px #222;
+				
+			}
+
+			#install_steps .active a {
+				background-color: #EEE;
 			}
 		</style>
 </head>
