@@ -20,5 +20,8 @@ return array
 	'nextButton'			 => 'Next Step',
     'welcomeToInstall' => 'Welcome to Ilch CMS [VERSION] installation',
     'chooseLanguage'   => 'Please choose the language',
-	'acceptLicence'	   => 'Read licence and accepted'
+	'acceptLicence'	   => 'Read licence and accepted',
+	'required'		   => 'Required',
+	'available'		   => 'Available',
+	'phpVersion'	   => 'PHP Version',
 );

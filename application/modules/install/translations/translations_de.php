@@ -20,5 +20,8 @@ return array
 	'nextButton'			 => 'Nächster Schritt',
     'welcomeToInstall'   => 'Willkommen zur Ilch CMS [VERSION] installation',
     'chooseLanguage'     => 'Bitte wählen Sie eine Sprache',
-	'acceptLicence'	     => 'Nutzungslizenz gelesen und akzeptiert'
+	'acceptLicence'	     => 'Nutzungslizenz gelesen und akzeptiert',
+	'required'			 => 'Erforderlich',
+	'available'			 => 'Vorhanden',
+	'phpVersion'		 => 'PHP Version',
 );

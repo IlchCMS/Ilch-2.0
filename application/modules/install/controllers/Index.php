@@ -99,9 +99,14 @@ class Install_IndexController extends Ilch_Controller
 
     public function systemcheckAction()
     {
+		$this->getView()->phpVersion = phpversion();
+
 		if($_POST)
 		{
+			if(version_compare(phpversion(), '5.3.0', '>'))
+			{
 				$this->redirect('install', 'index', 'database');
+			}
 		}
     }
 
