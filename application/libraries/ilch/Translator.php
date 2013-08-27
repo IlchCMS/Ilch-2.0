@@ -35,7 +35,7 @@ class Ilch_Translator
      *
      * @var string
      */
-    private $_locale = 'en_En';
+    private $_locale = 'en_EN';
 
     /**
      * Sets the locale to use for the request.

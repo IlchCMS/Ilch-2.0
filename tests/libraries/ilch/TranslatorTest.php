@@ -117,7 +117,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
     public function testRequestLocaleDefinitionDefault()
     {
         $translator = new Ilch_Translator();
-        $this->assertEquals('de_DE', $translator->getLocale());
+        $this->assertEquals('en_EN', $translator->getLocale());
     }
 
     /**
