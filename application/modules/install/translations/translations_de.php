@@ -17,8 +17,8 @@ return array
 	'menuDatabase'			 => 'Datenbank',
 	'menuConfig'			 => 'Konfiguration',
 	'menuFinish'			 => 'Installieren',
+	'nextButton'			 => 'Nächster Schritt',
     'welcomeToInstall'   => 'Willkommen zur Ilch CMS [VERSION] installation',
     'chooseLanguage'     => 'Bitte wählen Sie eine Sprache',
-    'language'	         => 'Sprache',
 	'acceptLicence'	     => 'Nutzungslizenz gelesen und akzeptiert'
 );

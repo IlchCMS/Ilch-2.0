@@ -15,6 +15,46 @@ class Install_IndexController extends Ilch_Controller
 		{
 			$this->getTranslator()->setLocale($_SESSION['language']);
 		}
+		
+		$menu = array
+		(
+			'index' => array
+			(
+				'langKey' => 'menuWelcomeAndLanguage'
+			),
+			'license' => array
+			(
+				'langKey' => 'menuLicence'
+			),
+			'systemcheck' => array
+			(
+				'langKey' => 'menuSystemCheck'
+			),
+			'database' => array
+			(
+				'langKey' => 'menuDatabase'
+			),
+			'config' => array
+			(
+				'langKey' => 'menuConfig'
+			),
+			'finish' => array
+			(
+				'langKey' => 'menuFinish'
+			),
+		);
+
+		foreach($menu as $key => $values)
+		{
+			if($this->getRequest()->getActionName() === $key)
+			{
+				break;
+			}
+
+			$menu[$key]['done'] = true;
+		}
+
+		$this->getLayout()->menu = $menu;
     }
 
     public function indexAction()

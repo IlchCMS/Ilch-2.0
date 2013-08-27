@@ -63,6 +63,7 @@
 			#install_steps .active a {
 				background-color: #EEE;
 			}
+			
 		</style>
 </head>
 <body>
@@ -70,35 +71,35 @@
 		<div class="menu">
 			<div class="tabbable tabs-left">
 				<ul class="nav nav-tabs" id="install_steps">
-					<li class="<?=$this->getRequest()->getActionName() == 'index' ? 'active': ''?>">
-						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuWelcomeAndLanguage'); ?></a>
-					</li>
-					<li class="<?=$this->getRequest()->getActionName() == 'license' ? 'active': ''?>">
-						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuLicence'); ?></a>
-					</li>
-					<li class="<?=$this->getRequest()->getActionName() == 'systemcheck' ? 'active': ''?>">
-						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuSystemCheck'); ?></a>
-					</li>
-					<li class="<?=$this->getRequest()->getActionName() == 'database' ? 'active': ''?>">
-						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuDatabase'); ?></a>
-					</li>
-					<li class="<?=$this->getRequest()->getActionName() == 'config' ? 'active': ''?>">
-						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuConfig'); ?></a>
-					</li>
-					<li class="<?=$this->getRequest()->getActionName() == 'finish' ? 'active': ''?>">
-						<a data-toggle="tab"><?php echo $this->getTranslator()->trans('menuFinish'); ?></a>
-					</li>
+					<?php
+						foreach($this->menu as $key => $values)
+						{
+							?>
+								<li class="<?=$this->getRequest()->getActionName() == $key ? 'active': ''?>">
+									<a data-toggle="tab">
+										<?php
+											echo $this->getTranslator()->trans($values['langKey']);
+
+											if(isset($values['done']))
+											{
+												echo ' (Done)';
+											}
+										?>
+									</a>
+								</li>
+						<?php
+						}
+					?>
 				</ul>
 			</div>
 		</div>
 		<div class="content hero-unit">
-			<form method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
+			<form class="form-inline" method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
 				<div class="install_content">
-					<input type="hidden" value="1" name="save" />
 					<?php echo $this->getContent(); ?>
 				</div>
 				<div class="save_box">
-					<button type="submit" class="btn">Next</button>
+					<button type="submit" name="save" class="btn"><?php echo $this->getTranslator()->trans('nextButton'); ?></button>
 				</div>
 			</form>
 		</div>

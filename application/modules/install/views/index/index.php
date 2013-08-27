@@ -2,11 +2,9 @@
     <?php echo $this->getTranslator()->trans('welcomeToInstall', array('[VERSION]' => VERSION)); ?>
 </h2>
 <br />
-<?php echo $this->getTranslator()->trans('chooseLanguage'); ?>
-
 <div class="control-group">
     <label for="languageInput" class="control-label">
-	<?php echo $this->getTranslator()->trans('language'); ?>:
+		<?php echo $this->getTranslator()->trans('chooseLanguage'); ?>:
     </label>
     <div class="controls">
 	<select name="language" id="languageInput">

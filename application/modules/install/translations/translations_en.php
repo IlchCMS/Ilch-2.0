@@ -17,8 +17,8 @@ return array
 	'menuDatabase'			 => 'Database',
 	'menuConfig'			 => 'Configuration',
 	'menuFinish'			 => 'Install',
+	'nextButton'			 => 'Next Step',
     'welcomeToInstall' => 'Welcome to Ilch CMS [VERSION] installation',
     'chooseLanguage'   => 'Please choose the language',
-    'language'	       => 'Language',
 	'acceptLicence'	   => 'Read licence and accepted'
 );
