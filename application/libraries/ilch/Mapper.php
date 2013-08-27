@@ -33,4 +33,14 @@ class Ilch_Mapper
     {
 		return $this->_db;
     }
+
+    /**
+     * Sets the database adapter.
+     *
+     * @param Ilch_Database_*
+     */
+    public function setDatabase($db)
+    {
+		$this->_db = $db;
+    }
 }

@@ -22,7 +22,7 @@ class User_UserModel extends Ilch_Model
      *
      * @var int
      */
-    protected $_id = 0;
+    protected $_id = null;
 
     /**
      * The username.
