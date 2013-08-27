@@ -54,7 +54,7 @@ Weiter unten folgt dann eine Zusammenfassung unter welchen Regeln die Klasse und
  * @author <author>
  * @package ilch_phpunit
  */
-class Libraries_Ilch_SomeObjectTest extends IlchTestCase
+class Libraries_Ilch_SomeObjectTest extends PHPUnit_Ilch_TestCase
 {
     /**
      * Tests if some function from some object returns null.
@@ -70,7 +70,7 @@ class Libraries_Ilch_SomeObjectTest extends IlchTestCase
 #### Klassennamen
 
 * Der Name von Testklassen endet mit "Test".
-* Testklassen sollten von IlchTestCase ableiten (liegt im Ordner "tests/"). (Evtl. kommen in Zukunft noch mehr Basisklassen hinzu z. B. für Tests mit Datenbanken)
+* Testklassen sollten von PHPUnit_Ilch_TestCase ableiten (liegt im Ordner "tests/"). (Evtl. kommen in Zukunft noch mehr Basisklassen hinzu z. B. für Tests mit Datenbanken)
 * Testklassen werden nach deren Pfad ab "tests/" benannt.
 * Im Klassennamen Trennung der Ordner durch Unterstriche.
 * Klassenname fängt groß an, nach jedem Unterstrich wieder groß.
