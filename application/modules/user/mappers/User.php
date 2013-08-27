@@ -20,8 +20,8 @@ class User_UserMapper extends Ilch_Mapper
     /**
      * Returns user model found by the id or false if none found.
      *
-     * @param mixed[] $where
-     * @return boolean|User_UserModel
+     * @param mixed[] $id
+     * @return null|User_UserModel
      */
     public function getUserById($id)
     {
@@ -31,38 +31,34 @@ class User_UserMapper extends Ilch_Mapper
         );
         $users = $this->_getBy($where);
 
-        if($users)
+        if(!empty($users))
         {
             return current($users);
         }
-        else
-        {
-            return false;
-        }
+
+		return null;
     }
 
     /**
      * Returns user model found by the username or false if none found.
      *
-     * @param mixed[] $where
-     * @return boolean|User_UserModel
+     * @param string $name
+     * @return null|User_UserModel
      */
     public function getUserByName($name)
     {
         $where = array
         (
-            'username' => (string)$name,
+            'name' => (string)$name,
         );
         $users = $this->_getBy($where);
 
-        if($users)
+        if(!empty($users))
         {
             return current($users);
         }
-        else
-        {
-            return false;
-        }
+
+		return null;
     }
 
     /**
@@ -70,7 +66,7 @@ class User_UserMapper extends Ilch_Mapper
      * none found.
      *
      * @param mixed[] $where
-     * @return boolean|User_UserModel
+     * @return null|User_UserModel
      */
     protected function _getBy($where = null)
     {
@@ -81,7 +77,7 @@ class User_UserMapper extends Ilch_Mapper
             $where
         );
 
-        if($userRows)
+        if(!empty($userRows))
         {
             $users = array();
 
@@ -92,10 +88,8 @@ class User_UserMapper extends Ilch_Mapper
 
             return $users;
         }
-        else
-        {
-            return false;
-        }
+
+		return null;
     }
 
     /**
@@ -113,9 +107,9 @@ class User_UserMapper extends Ilch_Mapper
             $user->setId($userRow['id']);
         }
 
-        if(isset($userRow['username']))
+        if(isset($userRow['name']))
         {
-            $user->setUsername($userRow['username']);
+            $user->setName($userRow['name']);
         }
 
         if(isset($userRow['email']))
@@ -145,7 +139,7 @@ class User_UserMapper extends Ilch_Mapper
     {
         $fields = array
         (
-            'username' => $user->getUsername(),
+            'name' => $user->getName(),
             'email' => $user->getEmail(),
             'date_created' => $user->getDateCreated(),
             'date_confirmed' => $user->getDateConfirmed(),

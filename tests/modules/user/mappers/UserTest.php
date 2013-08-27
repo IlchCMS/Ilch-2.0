@@ -29,7 +29,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             (
                 'id' => 2,
                 'email' => 'testmail2@test.de',
-                'username' => 'testUsername2',
+                'name' => 'testUsername2',
                 'date_created' => 1377037200,
                 'date_confirmed' => 1377037210,
             ),
@@ -45,7 +45,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
         $this->assertTrue($user !== false);
         $this->assertEquals(2, $user->getId());
         $this->assertEquals('testmail2@test.de', $user->getEmail());
-        $this->assertEquals('testUsername2', $user->getUsername());
+        $this->assertEquals('testUsername2', $user->getName());
         $this->assertEquals(1377037200, $user->getDateCreated());
         $this->assertEquals(1377037210, $user->getDateConfirmed());
     }
@@ -62,7 +62,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             (
                 'id' => 2,
                 'email' => 'testmail2@test.de',
-                'username' => 'testUsername2',
+                'name' => 'testUsername2',
                 'date_created' => 1377037200,
                 'date_confirmed' => 1377037210,
             ),
@@ -78,7 +78,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
         $this->assertTrue($user !== false);
         $this->assertEquals(2, $user->getId());
         $this->assertEquals('testmail2@test.de', $user->getEmail());
-        $this->assertEquals('testUsername2', $user->getUsername());
+        $this->assertEquals('testUsername2', $user->getName());
         $this->assertEquals(1377037200, $user->getDateCreated());
         $this->assertEquals(1377037210, $user->getDateConfirmed());
     }
@@ -95,7 +95,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             (
                 'id' => 2,
                 'email' => 'testmail2@test.de',
-                'username' => 'testUsername2',
+                'name' => 'testUsername2',
                 'date_created' => 1377037200,
                 'date_confirmed' => 1377037210,
             ),
@@ -111,7 +111,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
         $this->assertTrue($user !== false);
         $this->assertEquals(2, $user->getId());
         $this->assertEquals('testmail2@test.de', $user->getEmail());
-        $this->assertEquals('testUsername2', $user->getUsername());
+        $this->assertEquals('testUsername2', $user->getName());
         $this->assertEquals(1377037200, $user->getDateCreated());
         $this->assertEquals(1377037210, $user->getDateConfirmed());
     }
@@ -128,7 +128,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             (
                 'id' => 2,
                 'email' => 'testmail2@test.de',
-                'username' => 'testUsername2',
+                'name' => 'testUsername2',
                 'date_created' => 1377037200,
                 'date_confirmed' => 1377037210,
             ),
@@ -144,7 +144,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
         $this->assertTrue($user !== false);
         $this->assertEquals(2, $user->getId());
         $this->assertEquals('testmail2@test.de', $user->getEmail());
-        $this->assertEquals('testUsername2', $user->getUsername());
+        $this->assertEquals('testUsername2', $user->getName());
         $this->assertEquals(1377037200, $user->getDateCreated());
         $this->assertEquals(1377037210, $user->getDateConfirmed());
     }
@@ -165,12 +165,12 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             array
             (
                 'email' => 'testmail2@test.de',
-                'username' => 'testUsername2',
+                'name' => 'testUsername2',
                 'date_created' => 1377037200,
                 'date_confirmed' => 1377037210,
             )
         );
-        $user->setUsername('testUsername2Modified');
+        $user->setName('testUsername2Modified');
         $user->setEmail('testmail2@test.deModified');
         $user->setDateCreated(1377037220);
         $user->setDateConfirmed(1377037230);
@@ -192,7 +192,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             (
                 'id' => 1,
                 'email' => 'testmail1@test.de',
-                'username' => 'testUsername1',
+                'name' => 'testUsername1',
                 'date_created' => 1377037100,
                 'date_confirmed' => 1377037110,
             ),
@@ -200,7 +200,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             (
                 'id' => 2,
                 'email' => 'testmail2@test.de',
-                'username' => 'testUsername2',
+                'name' => 'testUsername2',
                 'date_created' => 1377037200,
                 'date_confirmed' => 1377037210,
             ),
@@ -221,12 +221,12 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
             (
                 'id' => 2,
                 'email' => 'testmail2@test.de',
-                'username' => 'testUsername2',
+                'name' => 'testUsername2',
                 'date_created' => 1377037200,
                 'date_confirmed' => 1377037210,
             )
         );
-        $user->setUsername('testUsername2Modified');
+        $user->setName('testUsername2Modified');
         $user->setEmail('testmail2@test.deModified');
         $user->setDateCreated(1377037220);
         $user->setDateConfirmed(1377037230);

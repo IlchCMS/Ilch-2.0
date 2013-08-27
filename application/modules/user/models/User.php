@@ -29,7 +29,7 @@ class User_UserModel extends Ilch_Model
      *
      * @var string
      */
-    protected $_username = '';
+    protected $_name = '';
 
     /**
      * The email address of the user.
@@ -77,9 +77,9 @@ class User_UserModel extends Ilch_Model
      *
      * @return string
      */
-    public function getUsername()
+    public function getName()
     {
-        return $this->_username;
+        return $this->_name;
     }
 
     /**
@@ -87,9 +87,9 @@ class User_UserModel extends Ilch_Model
      *
      * @param string $username
      */
-    public function setUsername($username)
+    public function setName($username)
     {
-        $this->_username = (string)$username;
+        $this->_name = (string)$username;
     }
 
     /**

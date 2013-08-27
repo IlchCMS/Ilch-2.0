@@ -33,8 +33,8 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
     public function testSetGetUsername()
     {
         $user = new User_UserModel();
-        $user->setUsername('username');
-        $this->assertEquals('username', $user->getUsername(), 'The username wasnt saved or returned correctly.');
+        $user->setName('username');
+        $this->assertEquals('username', $user->getName(), 'The username wasnt saved or returned correctly.');
     }
 
     /**
