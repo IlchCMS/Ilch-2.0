@@ -15,7 +15,7 @@ defined('ACCESS') or die('no direct access');
  * @author Jainta Martin
  * @package ilch_phpunit
  */
-class Modules_User_Models_UserTest extends IlchTestCase
+class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 {
     /**
      * Tests if the user id can be set and returned again.
