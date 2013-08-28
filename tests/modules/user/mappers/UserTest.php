@@ -34,9 +34,16 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
                 'date_confirmed' => 1377037210,
             ),
         );
+        $where = array
+        (
+            'id' => 2
+        );
         $dbMock = $this->getMock('Ilch_Database', array('selectArray'));
         $dbMock->expects($this->once())
                 ->method('selectArray')
+                ->with('*',
+                       'users',
+                       $where)
                 ->will($this->returnValue($userRows));
         $mapper = new User_UserMapper();
         $mapper->setDatabase($dbMock);
@@ -67,9 +74,16 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
                 'date_confirmed' => 1377037210,
             ),
         );
+        $where = array
+        (
+            'id' => 2
+        );
         $dbMock = $this->getMock('Ilch_Database', array('selectArray'));
         $dbMock->expects($this->once())
                 ->method('selectArray')
+                ->with('*',
+                       'users',
+                       $where)
                 ->will($this->returnValue($userRows));
         $mapper = new User_UserMapper();
         $mapper->setDatabase($dbMock);
@@ -100,9 +114,16 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
                 'date_confirmed' => 1377037210,
             ),
         );
+        $where = array
+        (
+            'name' => 'testUsername2'
+        );
         $dbMock = $this->getMock('Ilch_Database', array('selectArray'));
         $dbMock->expects($this->once())
                 ->method('selectArray')
+                ->with('*',
+                       'users',
+                       $where)
                 ->will($this->returnValue($userRows));
         $mapper = new User_UserMapper();
         $mapper->setDatabase($dbMock);
@@ -133,9 +154,16 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
                 'date_confirmed' => 1377037210,
             ),
         );
+        $where = array
+        (
+            'name' => 'testUsername2'
+        );
         $dbMock = $this->getMock('Ilch_Database', array('selectArray'));
         $dbMock->expects($this->once())
                 ->method('selectArray')
+                ->with('*',
+                       'users',
+                       $where)
                 ->will($this->returnValue($userRows));
         $mapper = new User_UserMapper();
         $mapper->setDatabase($dbMock);
@@ -154,9 +182,18 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testSaveInsertUser()
     {
+        $newUser = array
+        (
+            'email' => 'testmail2@test.deModified',
+            'name' => 'testUsername2Modified',
+            'date_created' => 1377037220,
+            'date_confirmed' => 1377037230,
+        );
         $dbMock = $this->getMock('Ilch_Database', array('insert'));
         $dbMock->expects($this->once())
                 ->method('insert')
+                ->with($newUser,
+                       'users')
                 ->will($this->returnValue(null));
         $mapper = new User_UserMapper();
         $mapper->setDatabase($dbMock);
@@ -205,6 +242,13 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
                 'date_confirmed' => 1377037210,
             ),
         );
+        $modifiedUser = array
+        (
+            'email' => 'testmail2@test.deModified',
+            'name' => 'testUsername2Modified',
+            'date_created' => 1377037220,
+            'date_confirmed' => 1377037230,
+        );
 
         $dbMock = $this->getMock('Ilch_Database', array('selectArray', 'update'));
         $dbMock->expects($this->once())
@@ -212,6 +256,9 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
                 ->will($this->returnValue($userRows));
         $dbMock->expects($this->once())
                 ->method('update')
+                ->with($modifiedUser,
+                       'users',
+                       array('id' => 2))
                 ->will($this->returnValue(null));
         $mapper = new User_UserMapper();
         $mapper->setDatabase($dbMock);
