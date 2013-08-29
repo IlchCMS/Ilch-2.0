@@ -13,7 +13,7 @@
 		<?php echo $this->getTranslator()->trans('dbHost'); ?>:
     </label>
     <div class="controls">
-		<input value="<?php if(!empty($this->dbHost)){ echo $this->dbHost; } ?>"
+		<input value="<?php if(!empty($this->dbHost)){ echo $this->dbHost; }else{ echo 'localhost'; } ?>"
 			   type="text"
 			   name="dbHost"
 			   id="dbHost" />

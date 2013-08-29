@@ -13,6 +13,10 @@
 				padding-bottom: 40px;
 				background-image: url(<?php echo $this->staticUrl('img/install/bg_grey.png'); ?>);
 			}
+			
+			.form-horizontal .control-group .control-label {
+				text-align: left;
+			}
 
 			.install_container {
 				border:1px solid #ddd;
@@ -52,7 +56,7 @@
 		</style>
 </head>
 <body>
-	<form class="form-inline" method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
+	<form class="form-horizontal" method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
 		<div class="container hero-unit install_container">
 			<ul class="nav nav-tabs" id="install_steps">
 				<?php
@@ -67,13 +71,9 @@
 									<?php
 										if(isset($values['done']))
 										{
-											//echo '<i class="icon-ok"></i> ';
 											$done++;
 										}
-										else
-										{
-											//echo '<i class="icon"></i>';
-										}
+
 										echo $this->getTranslator()->trans($values['langKey']);
 
 									?>

@@ -20,7 +20,7 @@ return array
 	'nextButton'			 => 'Next Step',
 	'installButton'			 => 'Install',
     'welcomeToInstall' => 'Welcome to Ilch CMS [VERSION] installation',
-    'chooseLanguage'   => 'Please choose the language',
+    'chooseLanguage'   => 'language',
 	'acceptLicence'	   => 'Read licence and accepted',
 	'required'		   => 'Required',
 	'available'		   => 'Available',
