@@ -113,8 +113,23 @@ class Install_IndexController extends Ilch_Controller
 
     public function databaseAction()
     {
+		foreach(array('dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $name)
+		{
+			if(!empty($_SESSION['install'][$name]))
+			{
+				$this->getView()->$name = $_SESSION['install'][$name];
+			}
+		}
+
 		if($_POST)
 		{
+			$_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
+			$_SESSION['install']['dbHost'] = $this->getRequest()->getPost('dbHost');
+			$_SESSION['install']['dbUser'] = $this->getRequest()->getPost('dbUser');
+			$_SESSION['install']['dbPassword'] = $this->getRequest()->getPost('dbPassword');
+			$_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
+			$_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
+
 			$this->redirect('install', 'index', 'config');
 		}
     }
@@ -123,15 +138,20 @@ class Install_IndexController extends Ilch_Controller
     {
 		if($_POST)
 		{
+			$_SESSION['install']['cmsType'] = $this->getRequest()->getPost('cmsType');
 			$this->redirect('install', 'index', 'finish');
 		}
     }
 
     public function finishAction()
     {
-		if($_POST)
-		{
-			// finish
-		}
+		$config = new Ilch_Config();
+		$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
+		$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
+		$config->setConfig('dbUser', $_SESSION['install']['dbUser']);
+		$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
+		$config->setConfig('dbName', $_SESSION['install']['dbName']);
+		$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
+		$config->saveConfigToFile(CONFIG_PATH.'/config.php');
     }
 }

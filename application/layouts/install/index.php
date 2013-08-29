@@ -93,7 +93,25 @@
 				</div>
 		</div>
 		<div class="save_box container hero-unit">
-			<button type="submit" name="save" class="btn"><?php echo $this->getTranslator()->trans('nextButton'); ?></button>
+			<?php
+				if($this->getRequest()->getActionName() != 'finish')
+				{
+			?>
+					<button type="submit" name="save" class="btn pull-right">
+						<?php 
+							$buttonTrans = 'nextButton';
+
+							if($this->getRequest()->getActionName() == 'config')
+							{
+								$buttonTrans = 'installButton';
+							}
+
+							echo $this->getTranslator()->trans($buttonTrans);
+						?>
+					</button>
+			<?php
+				}
+			?>
 		</div>
 	</form>
 </body>
