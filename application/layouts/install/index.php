@@ -14,95 +14,87 @@
 				background-image: url(<?php echo $this->staticUrl('img/install/bg_grey.png'); ?>);
 			}
 
-			#install_steps {
-				width: 100%;
-				margin-bottom: 0px;
-			}
-
-			#install_container {
-				box-sizing:border-box;
-				height: 100%;
-			}
-
-			.content {
-				width:600px;
-				margin-left:200px;
+			.install_container {
 				border:1px solid #ddd;
-				position: absolute;
 				-webkit-box-shadow: 15px 15px 30px #222;
 				-moz-box-shadow: 15px 15px 30px #222;
 				box-shadow: 15px 15px 30px #222;
+				width: 900px;
+				background-color: white;
+				min-height: 500px;
+				margin-bottom: 0px;
+				border-bottom-right-radius: 0px;
+				border-bottom-left-radius: 0px;
+			}
+
+			#install_steps {
+				padding-left: 120px;
 			}
 
 			.content .install_content{
 				height: 350px;
 				border-radius: 6px 6px 0px 0px;
-				margin-bottom: 0px;
-			}
-
-			.content .save_box {
-				background-color: #EEE;
-				border-radius: 0px 0px 6px 6px;
-			}
-
-			.menu {
-				padding-top: 10px;
-				/*loat: left;*/
-				width: 200px;
-				position: absolute;
-			}
-
-			.tabs-left .nav-tabs > li > a {
-				background-color: white;
-				-webkit-box-shadow: 15px 15px 30px #222;
-				-moz-box-shadow: 15px 15px 30px #222;
-				box-shadow: 15px 15px 30px #222;
 				
 			}
 
-			#install_steps .active a {
-				background-color: #EEE;
+			.save_box {
+				padding:20px;
+				position: relative;
+				border:1px solid #ddd;
+				width: 980px;
+				-webkit-box-shadow: 15px 15px 30px #222;
+				-moz-box-shadow: 15px 15px 30px #222;
+				box-shadow: 15px 15px 30px #222;
+				background-color: white;
+				border-radius: 0px 0px 6px 6px;
 			}
 			
 		</style>
 </head>
 <body>
-	<div class="container">
-		<div class="menu">
-			<div class="tabbable tabs-left">
-				<ul class="nav nav-tabs" id="install_steps">
-					<?php
-						foreach($this->menu as $key => $values)
-						{
-							?>
-								<li class="<?=$this->getRequest()->getActionName() == $key ? 'active': ''?>">
-									<a data-toggle="tab">
-										<?php
-											echo $this->getTranslator()->trans($values['langKey']);
+	<form class="form-inline" method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
+		<div class="container hero-unit install_container">
+			<ul class="nav nav-tabs" id="install_steps">
+				<?php
+					$done = 1;
+					$menuCounter = count($this->menu);
 
-											if(isset($values['done']))
-											{
-												echo ' (Done)';
-											}
-										?>
-									</a>
-								</li>
-						<?php
-						}
-					?>
-				</ul>
+					foreach($this->menu as $key => $values)
+					{
+						?>
+							<li class="<?=$this->getRequest()->getActionName() == $key ? 'active': ''?>">
+								<a data-toggle="tab">
+									<?php
+										if(isset($values['done']))
+										{
+											//echo '<i class="icon-ok"></i> ';
+											$done++;
+										}
+										else
+										{
+											//echo '<i class="icon"></i>';
+										}
+										echo $this->getTranslator()->trans($values['langKey']);
+
+									?>
+								</a>
+							</li>
+					<?php
+					}
+
+					$progress = 100 / $menuCounter * $done;
+				?>
+			</ul>
+			<div class="progress progress-success progress-striped">
+				<div class="bar" style="width: <?=$progress?>%"></div>
 			</div>
-		</div>
-		<div class="content hero-unit">
-			<form class="form-inline" method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
 				<div class="install_content">
 					<?php echo $this->getContent(); ?>
 				</div>
-				<div class="save_box">
-					<button type="submit" name="save" class="btn"><?php echo $this->getTranslator()->trans('nextButton'); ?></button>
-				</div>
-			</form>
 		</div>
-	</div>
+		<div class="save_box container hero-unit">
+			<button type="submit" name="save" class="btn"><?php echo $this->getTranslator()->trans('nextButton'); ?></button>
+		</div>
+	</form>
 </body>
 </html>
