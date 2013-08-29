@@ -12,7 +12,7 @@
  * @author Jainta Martin
  * @package ilch_phpunit
  */
-class Libraries_Ilch_TranslatorTest extends IlchTestCase
+class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 {
     /**
      * Tests if the translator can handle a directory which is filled with
@@ -117,7 +117,7 @@ class Libraries_Ilch_TranslatorTest extends IlchTestCase
     public function testRequestLocaleDefinitionDefault()
     {
         $translator = new Ilch_Translator();
-        $this->assertEquals('de_DE', $translator->getLocale());
+        $this->assertEquals('en_EN', $translator->getLocale());
     }
 
     /**

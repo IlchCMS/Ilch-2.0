@@ -12,7 +12,7 @@
  * @author Jainta Martin
  * @package ilch_phpunit
  */
-class Libraries_Ilch_RequestTest extends IlchTestCase
+class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
 {
     /**
      * The object to test with.

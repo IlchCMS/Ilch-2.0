@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class IlchTestCase.
+ * Holds class PHPUnit_Ilch_TestCase.
  *
  * @author Jainta Martin
  * @package ilch_phpunit
@@ -12,7 +12,7 @@
  * @author Jainta Martin
  * @package ilch_phpunit
  */
-class IlchTestCase extends PHPUnit_Framework_TestCase
+class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * Returns the _files folder path for this test.
@@ -22,10 +22,9 @@ class IlchTestCase extends PHPUnit_Framework_TestCase
      */
     protected function _getFilesFolder()
     {
-        $pathToClass = dirname(strtolower(str_replace('_', '/', get_class($this))));
-        $filesDir = __DIR__.'/'.$pathToClass.'/_files';
+        $filesDir = APPLICATION_PATH.'/../tests/libraries/ilch/_files';
 
-        if(!is_dir($filesDir))
+		if(!is_dir($filesDir))
         {
             throw new Exception('_files directory "'.$filesDir.'" does not exist.');
         }
