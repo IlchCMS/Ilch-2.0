@@ -12,15 +12,28 @@ class Ilch_Page
     /**
      * Defines if cms is installed.
      *
+	 * @param Ilch_Config $config
      * @var boolean ilchInstalled
      */
     protected $_ilchInstalled = false;
 
-    public function loadCms()
-    {
-		$config = new Ilch_Config();
-		$this->_loadConfig($config);
+	/**
+	 * Sets the installed flag.
+	 *
+	 * @param boolean $installed
+	 */
+	public function setInstalled($installed)
+	{
+		$this->_ilchInstalled = (bool)$installed;
+	}
 
+	/**
+	 * Load and initialize cms.
+	 *
+	 * @param Ilch_Config $config
+	 */
+	public function loadCms(Ilch_Config $config)
+    {
 		$request = new Ilch_Request();
 		$translator = new Ilch_Translator();
 
@@ -160,18 +173,6 @@ class Ilch_Page
     }
 
     /**
-     * Loads the config, if already created.
-     */
-    protected function _loadConfig(Ilch_Config $config)
-    {
-        if(file_exists(CONFIG_PATH.'/config.php'))
-        {
-			$config->loadConfigFromFile(CONFIG_PATH.'/config.php');
-            $this->_ilchInstalled = true;
-        }
-    }
-
-    /**
      * @param Ilch_Layout $layout
      * @param Ilch_View $view
      * @param Ilch_Plugin $plugin
@@ -182,7 +183,7 @@ class Ilch_Page
      */
     protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Translator $translator)
     {
-        $controller = $request->getModuleName().'_'.$request->getControllerName().'Controller';
+        $controller = ucfirst($request->getModuleName()).'_'.ucfirst($request->getControllerName()).'Controller';
         $controller = new $controller($layout, $view, $plugin, $request, $translator);
         $controller->actionName = $request->getActionName();
         $controller->modulName = strtolower($request->getModuleName());

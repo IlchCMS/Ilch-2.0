@@ -18,11 +18,16 @@ class Ilch_Config
      * Gets the config for given key.
      *
      * @param string $key
-     * @return mixed
+     * @return mixed|null
      */
     public function getConfig($key)
     {
-		return $this->_configData[$key];
+		if(isset($this->_configData[$key]))
+		{
+			return $this->_configData[$key];
+		}
+
+		return null;
     }
 
     /**

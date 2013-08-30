@@ -7,6 +7,8 @@
 
 defined('ACCESS') or die('no direct access');
 
+require_once APPLICATION_PATH.'/libraries/ilch/Functions.php';
+
 /**
  * Loads all needed files for the given class.
  *
@@ -16,27 +18,29 @@ defined('ACCESS') or die('no direct access');
 spl_autoload_register(function($class)
 {
     $path = APPLICATION_PATH;
+	$class = str_replace('_', '/' , $class);
+	$classParts = explode('/', $class);
 
-    if(strpos($class, 'Ilch_') !== false)
+	if(strpos($class, 'Ilch/') !== false)
     {
-        $class = str_replace('_', '/' , $class);
-        $path = $path.'/libraries';
+		$class = end($classParts);
+		$classPartsCount = count($classParts) - 1;
+		unset($classParts[$classPartsCount]);
+        $path = strtolower($path.'/libraries/'.implode('/', $classParts));
     }
     else
     {
-        $class = str_replace('_', '/' , $class);
-        $classParts = explode('/', $class);
         $camels = preg_split('/(?<=\\w)(?=[A-Z])/', $class);
 
-	if(end($camels) === 'Plugin')
-	{
-	    $path = $path.'/plugins/'.strtolower($classParts[0]);
-	}
-	else
-	{
-	    $path = $path.'/modules/'.strtolower($classParts[0]);
-	    $path = $path.'/'.strtolower(end($camels).'s');
-	}
+		if(end($camels) === 'Plugin')
+		{
+			$path = $path.'/plugins/'.strtolower($classParts[0]);
+		}
+		else
+		{
+			$path = $path.'/modules/'.strtolower($classParts[0]);
+			$path = $path.'/'.strtolower(end($camels).'s');
+		}
 
         $class = str_replace(end($camels), '', $class);
         $class = str_replace($classParts[0].'/', '', $class);
