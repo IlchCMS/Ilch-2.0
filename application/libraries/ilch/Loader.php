@@ -26,7 +26,7 @@ spl_autoload_register(function($class)
 		$class = end($classParts);
 		$classPartsCount = count($classParts) - 1;
 		unset($classParts[$classPartsCount]);
-		$path = strtolower($path.'/libraries/'.implode('/', $classParts));
+		$path = $path.'/libraries/'.strtolower(implode('/', $classParts));
 	}
 	else
 	{

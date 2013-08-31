@@ -5,6 +5,11 @@
  * @package ilch
  */
 
+@ini_set('display_errors', 'on');
+error_reporting(-1);
+
+session_start();
+
 define('ACCESS', 1);
 define('VERSION', '2.0');
 define('APPLICATION_PATH', __DIR__.'/application');
@@ -23,18 +28,12 @@ if(file_exists(CONFIG_PATH.'/config.php'))
 {
 	$config->loadConfigFromFile(CONFIG_PATH.'/config.php');
 	$page->setInstalled(true);
+
+	if($config->getConfig('debugModus') === false)
+	{
+		@ini_set('display_errors', 'off');
+		error_reporting(0);
+	}
 }
 
-if($config->getConfig('debugModus') === false)
-{
-	@ini_set('display_errors', 'off');
-	error_reporting(0);
-}
-else
-{
-	@ini_set('display_errors', 'on');
-	error_reporting(-1);
-}
-
-session_start();
 $page->loadCms($config);
