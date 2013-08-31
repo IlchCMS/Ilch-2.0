@@ -104,19 +104,25 @@ abstract class Ilch_Design_Abstract
 		{
 			return BASE_URL;
 		}
-		else
+		
+		$urlParts = array();
+
+		if(!empty($controller))
 		{
-			$s = '';
-			$pars = '';
-			foreach($params as $key => $val)
-			{
-				$pars .= '&'.$key.'='.$val;
-			}
-
-			$s = '';
-
-			return BASE_URL.'/'.$s.'index.php?module='.$module.'&controller='.$controller.'&action='.$action.$pars;
+			$urlParts[] = 'controller='.$controller;
 		}
+
+		if(!empty($action))
+		{
+			$urlParts[] = 'action='.$action;
+		}
+		
+		foreach($params as $key => $val)
+		{
+			$urlParts[] = $key.'='.$val;
+		}
+
+		return BASE_URL.'/index.php?module='.$module.implode('&', $urlParts);
 	}
 
 	/**
