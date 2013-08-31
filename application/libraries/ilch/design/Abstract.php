@@ -82,11 +82,11 @@ abstract class Ilch_Design_Abstract
 	 * Escape the given string.
 	 *
 	 * @param string $string
-	 * @return type
+	 * @return string
 	 */
 	function escape($string)
 	{
-		return htmlspecialchars($string);
+		return htmlspecialchars($string, ENT_QUOTES);
 	}
 
 	/**
