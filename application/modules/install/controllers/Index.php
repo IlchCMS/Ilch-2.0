@@ -9,8 +9,8 @@ defined('ACCESS') or die('no direct access');
 
 class Install_IndexController extends Ilch_Controller
 {
-    public function init()
-    {
+	public function init()
+	{
 		if(isset($_SESSION['language']))
 		{
 			$this->getTranslator()->setLocale($_SESSION['language']);
@@ -55,10 +55,10 @@ class Install_IndexController extends Ilch_Controller
 		}
 
 		$this->getLayout()->menu = $menu;
-    }
+	}
 
-    public function indexAction()
-    {
+	public function indexAction()
+	{
 		$languages = array
 		(
 			'en_EN' => 'English',
@@ -78,10 +78,10 @@ class Install_IndexController extends Ilch_Controller
 		{
 			$this->redirect('install', 'index', 'license');
 		}
-    }
+	}
 
-    public function licenseAction()
-    {
+	public function licenseAction()
+	{
 		$this->getView()->licenceText = file_get_contents(APPLICATION_PATH.'/../licence.txt');
 
 		if($_POST)
@@ -95,10 +95,10 @@ class Install_IndexController extends Ilch_Controller
 				$this->getView()->error = true;
 			}
 		}
-    }
+	}
 
-    public function systemcheckAction()
-    {
+	public function systemcheckAction()
+	{
 		$this->getView()->phpVersion = phpversion();
 
 		if($_POST)
@@ -108,11 +108,11 @@ class Install_IndexController extends Ilch_Controller
 				$this->redirect('install', 'index', 'database');
 			}
 		}
-    }
+	}
 
 
-    public function databaseAction()
-    {
+	public function databaseAction()
+	{
 		foreach(array('dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $name)
 		{
 			if(!empty($_SESSION['install'][$name]))
@@ -132,19 +132,19 @@ class Install_IndexController extends Ilch_Controller
 
 			$this->redirect('install', 'index', 'config');
 		}
-    }
+	}
 
-    public function configAction()
-    {
+	public function configAction()
+	{
 		if($_POST)
 		{
 			$_SESSION['install']['cmsType'] = $this->getRequest()->getPost('cmsType');
 			$this->redirect('install', 'index', 'finish');
 		}
-    }
+	}
 
-    public function finishAction()
-    {
+	public function finishAction()
+	{
 		$config = new Ilch_Config();
 		$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
 		$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
@@ -166,5 +166,5 @@ class Install_IndexController extends Ilch_Controller
 		{
 			$db->query($query);
 		}
-    }
+	}
 }

@@ -12,6 +12,6 @@ Copyright (c) by Ilch CMS 2.0
 http://www.ilch.de
 
 ### Team
-- Meyer Dominik	    (Core)
-- Jainta Martin	    (Core & QA)
+- Meyer Dominik		(Core)
+- Jainta Martin		(Core & QA)
 - Schneider Harald  (Frontend)

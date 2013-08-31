@@ -9,16 +9,16 @@ defined('ACCESS') or die('no direct access');
 
 class Ilch_Plugin
 {
-    /**
-     * @var array
-     */
-    protected $_detectedPlugins;
+	/**
+	 * @var array
+	 */
+	protected $_detectedPlugins;
 
-    /**
-     * Searching for plugins.
-     */
-    public function detectPlugins()
-    {
+	/**
+	 * Searching for plugins.
+	 */
+	public function detectPlugins()
+	{
 		foreach(glob(APPLICATION_PATH.'/plugins/*/*') as $pluginPath)
 		{
 			$pluginName = str_replace('.php', '', basename($pluginPath));
@@ -26,15 +26,15 @@ class Ilch_Plugin
 			$pluginPathPartsCount = count($pluginPathParts);
 			$this->_detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-2];
 		}
-    }
+	}
 
-    /**
-     * Execute all plugins with the given name.
-     *
-     * @param string $pluginName
-     */
-    public function execute($pluginName)
-    {
+	/**
+	 * Execute all plugins with the given name.
+	 *
+	 * @param string $pluginName
+	 */
+	public function execute($pluginName)
+	{
 		if(!isset($this->_detectedPlugins[$pluginName]))
 		{
 			return;
@@ -45,5 +45,5 @@ class Ilch_Plugin
 			$pluginClass = $module.'_'.$pluginName.'Plugin';
 			$plugin = new $pluginClass();
 		}
-    }
+	}
 }

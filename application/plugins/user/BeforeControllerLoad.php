@@ -9,8 +9,8 @@ defined('ACCESS') or die('no direct access');
 
 class User_BeforeControllerLoadPlugin
 {
-    public function __construct()
-    {
+	public function __construct()
+	{
 		//TBD
-    }
+	}
 }

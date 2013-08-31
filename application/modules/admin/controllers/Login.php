@@ -9,11 +9,11 @@ defined('ACCESS') or die('no direct access');
 
 class Admin_LoginController extends Ilch_Controller
 {
-    public function init()
-    {
-    }
+	public function init()
+	{
+	}
 
-    public function indexAction()
-    {
-    }
+	public function indexAction()
+	{
+	}
 }

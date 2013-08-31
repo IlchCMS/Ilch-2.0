@@ -9,144 +9,144 @@ defined('ACCESS') or die('no direct access');
 
 class Ilch_Request
 {
-    /**
-     * @var string
-     */
-    protected $_moduleName;
+	/**
+	 * @var string
+	 */
+	protected $_moduleName;
 
-    /**
-     * @var string
-     */
-    protected $_controllerName;
+	/**
+	 * @var string
+	 */
+	protected $_controllerName;
 
-    /**
-     * @var string
-     */
-    protected $_actionName;
+	/**
+	 * @var string
+	 */
+	protected $_actionName;
 
-    /**
-     * @var array
-     */
-    protected $_params;
+	/**
+	 * @var array
+	 */
+	protected $_params;
 
-    /**
-     * Gets the current module name.
-     *
-     * @return string
-     */
-    public function getModuleName()
-    {
+	/**
+	 * Gets the current module name.
+	 *
+	 * @return string
+	 */
+	public function getModuleName()
+	{
 		return $this->_moduleName;
-    }
+	}
 
-    /**
-     * Sets the current module name.
-     *
-     * @param string $name
-     */
-    public function setModuleName($name)
-    {
+	/**
+	 * Sets the current module name.
+	 *
+	 * @param string $name
+	 */
+	public function setModuleName($name)
+	{
 		$this->_moduleName = $name;
-    }
+	}
 
-    /**
-     * Gets the current controller name.
-     *
-     * @return string
-     */
-    public function getControllerName()
-    {
+	/**
+	 * Gets the current controller name.
+	 *
+	 * @return string
+	 */
+	public function getControllerName()
+	{
 		return $this->_controllerName;
-    }
+	}
 
-    /**
-     * Sets the current controller name.
-     *
-     * @param string $name
-     */
-    public function setControllerName($name)
-    {
+	/**
+	 * Sets the current controller name.
+	 *
+	 * @param string $name
+	 */
+	public function setControllerName($name)
+	{
 		$this->_controllerName = $name;
-    }
+	}
 
-    /**
-     * Gets the current action name.
-     *
-     * @return string
-     */
-    public function getActionName()
-    {
+	/**
+	 * Gets the current action name.
+	 *
+	 * @return string
+	 */
+	public function getActionName()
+	{
 		return $this->_actionName;
-    }
+	}
 
-    /**
-     * Sets the current action name.
-     *
-     * @param string $name
-     */
-    public function setActionName($name)
-    {
+	/**
+	 * Sets the current action name.
+	 *
+	 * @param string $name
+	 */
+	public function setActionName($name)
+	{
 		$this->_actionName = $name;
-    }
+	}
 
-    /**
-     * Gets param with given key.
-     *
-     * @return string
-     */
-    public function getParam($key)
-    {
+	/**
+	 * Gets param with given key.
+	 *
+	 * @return string
+	 */
+	public function getParam($key)
+	{
 		return $this->_params[$key];
-    }
+	}
 
-    /**
-     * Sets the param with the given key / value.
-     *
-     * @param string $name
-     * @param string $value
-     */
-    public function setParam($key, $value)
-    {
+	/**
+	 * Sets the param with the given key / value.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 */
+	public function setParam($key, $value)
+	{
 		$this->_params[$key] = $value;
-    }
+	}
 
-    /**
-     * Get all key/value params.
-     *
-     * @return array
-     */
-    public function getParams()
-    {
+	/**
+	 * Get all key/value params.
+	 *
+	 * @return array
+	 */
+	public function getParams()
+	{
 		return $this->_params;
-    }
-    
-    /**
-     * Set key/value params.
-     *
-     * @param array $params
-     */
-    public function setParams($params)
-    {
+	}
+	
+	/**
+	 * Set key/value params.
+	 *
+	 * @param array $params
+	 */
+	public function setParams($params)
+	{
 		$this->_params = $params;
-    }
+	}
 
-    /**
-     * Checks if request is a POST - request.
-     *
-     * @return boolean
-     */
-    public function isPost()
-    {
+	/**
+	 * Checks if request is a POST - request.
+	 *
+	 * @return boolean
+	 */
+	public function isPost()
+	{
 		return !empty($_POST);
-    }
+	}
 
-    /**
-     * Get post-value by key.
-     *
-     * @return array
-     */
-    public function getPost($key)
-    {
+	/**
+	 * Get post-value by key.
+	 *
+	 * @return array
+	 */
+	public function getPost($key)
+	{
 		if(isset($_POST[$key]))
 		{
 			return $_POST[$key];
@@ -155,15 +155,15 @@ class Ilch_Request
 		{
 			return null;
 		}
-    }
+	}
 
-    /**
-     * Get get-value by key.
-     *
-     * @return array
-     */
-    public function getQuery($key)
-    {
+	/**
+	 * Get get-value by key.
+	 *
+	 * @return array
+	 */
+	public function getQuery($key)
+	{
 		if(isset($_GET[$key]))
 		{
 			return $_GET[$key];
@@ -172,5 +172,5 @@ class Ilch_Request
 		{
 			return null;
 		}
-    }
+	}
 }

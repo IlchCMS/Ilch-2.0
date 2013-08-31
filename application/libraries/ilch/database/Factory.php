@@ -9,14 +9,14 @@ defined('ACCESS') or die('no direct access');
 
 class Ilch_Database_Factory
 {
-    /**
-     * Gets database adapter by config.
-     *
-     * @param Ilch_Config $config
-     * @return Ilch_Database_*
-     */
-    public function getInstanceByConfig(Ilch_Config $config)
-    {
+	/**
+	 * Gets database adapter by config.
+	 *
+	 * @param Ilch_Config $config
+	 * @return Ilch_Database_*
+	 */
+	public function getInstanceByConfig(Ilch_Config $config)
+	{
 		$dbClass = 'Ilch_Database_'.$config->getConfig('dbEngine');
 		$db = new $dbClass();
 		$db->connect($config->getConfig('dbHost'), $config->getConfig('dbUser'), $config->getConfig('dbPassword'));
@@ -24,5 +24,5 @@ class Ilch_Database_Factory
 		$db->setPrefix($config->getConfig('dbPrefix'));
 		
 		return $db;
-    }
+	}
 }

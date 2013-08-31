@@ -11,6 +11,6 @@ class News_IndexController extends Ilch_Controller
 {
 	public function indexAction()
 	{
-	    var_dump('News Modul erfolgreich geladen');
+		var_dump('News Modul erfolgreich geladen');
 	}
 }

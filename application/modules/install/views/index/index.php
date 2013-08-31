@@ -1,37 +1,37 @@
 <h2>
-    <?php echo $this->getTranslator()->trans('welcomeToInstall', array('[VERSION]' => VERSION)); ?>
+	<?php echo $this->getTranslator()->trans('welcomeToInstall', array('[VERSION]' => VERSION)); ?>
 </h2>
 <br />
 <div class="control-group">
-    <label for="languageInput" class="control-label">
+	<label for="languageInput" class="control-label">
 		<?php echo $this->getTranslator()->trans('chooseLanguage'); ?>:
-    </label>
-    <div class="controls">
+	</label>
+	<div class="controls">
 	<select name="language" id="languageInput">
-	    <?php
+		<?php
 		foreach($this->languages as $key => $value)
 		{
-		    $selected = '';
-    
-		    if($this->getTranslator()->getLocale() == $key)
-		    {
+			$selected = '';
+	
+			if($this->getTranslator()->getLocale() == $key)
+			{
 				$selected = 'selected="selected"';
-		    }
+			}
 
-		    echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
+			echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
 		}
-	    ?>
+		?>
 	</select>
-    </div>
+	</div>
 </div>
 
 <script>
-    $('#languageInput').change
-    (
+	$('#languageInput').change
+	(
 		this,
 		function()
 		{
 			top.location.href = '<?php echo $this->url('install', 'index', 'index'); ?>&language='+$(this).val();
 		}
-    );
+	);
 </script>
