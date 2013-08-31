@@ -17,6 +17,7 @@ return array
 	'menuDatabase'			 => 'Datenbank',
 	'menuConfig'			 => 'Konfiguration',
 	'menuFinish'			 => 'Installieren',
+	'backButton'			 => 'Schritt zurück',
 	'nextButton'			 => 'Nächster Schritt',
 	'installButton'			 => 'Installieren',
     'welcomeToInstall'   => 'Willkommen zur Ilch CMS [VERSION] installation',
@@ -31,4 +32,7 @@ return array
 	'dbPassword'	     => 'Password',
 	'dbName'		     => 'Name',
 	'dbPrefix'		     => 'Prefix',
+	'writableConfig'	 => 'Schreibrechte Ordner',
+	'cmsType'		     => 'CMS Typ',
+	'successInstalled'	 => 'Ilch CMS wurde erfolgreich installiert'
 );

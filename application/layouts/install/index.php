@@ -18,27 +18,23 @@
 				text-align: left;
 			}
 
-			.install_container {
-				border:1px solid #ddd;
-				-webkit-box-shadow: 15px 15px 30px #222;
-				-moz-box-shadow: 15px 15px 30px #222;
-				box-shadow: 15px 15px 30px #222;
-				width: 900px;
-				background-color: white;
-				min-height: 500px;
-				margin-bottom: 0px;
-				border-bottom-right-radius: 0px;
-				border-bottom-left-radius: 0px;
-			}
-
 			#install_steps {
 				padding-left: 120px;
 			}
 
-			.content .install_content{
-				height: 350px;
+			.container {
+				padding: 60px;
+				background-color: white;
+			}
+			
+			.install_container {
+				border:1px solid #ddd;
+				width: 900px;
+				min-height: 500px;
+				-webkit-box-shadow: 15px 15px 30px #222;
+				-moz-box-shadow: 15px 15px 30px #222;
+				box-shadow: 15px 15px 30px #222;
 				border-radius: 6px 6px 0px 0px;
-				
 			}
 
 			.save_box {
@@ -49,7 +45,6 @@
 				-webkit-box-shadow: 15px 15px 30px #222;
 				-moz-box-shadow: 15px 15px 30px #222;
 				box-shadow: 15px 15px 30px #222;
-				background-color: white;
 				border-radius: 0px 0px 6px 6px;
 			}
 			
@@ -57,26 +52,24 @@
 </head>
 <body>
 	<form class="form-horizontal" method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
-		<div class="container hero-unit install_container">
+		<div class="container install_container">
 			<ul class="nav nav-tabs" id="install_steps">
 				<?php
 					$done = 1;
 					$menuCounter = count($this->menu);
+					$lastAction = '';
 
 					foreach($this->menu as $key => $values)
 					{
+						if(isset($values['done']))
+						{
+							$done++;
+							$lastAction = $key;
+						}
 						?>
-							<li class="<?=$this->getRequest()->getActionName() == $key ? 'active': ''?>">
+							<li class="<?php echo $this->getRequest()->getActionName() == $key ? 'active': ''; ?>">
 								<a data-toggle="tab">
-									<?php
-										if(isset($values['done']))
-										{
-											$done++;
-										}
-
-										echo $this->getTranslator()->trans($values['langKey']);
-
-									?>
+									<?php echo $this->getTranslator()->trans($values['langKey']); ?>
 								</a>
 							</li>
 					<?php
@@ -92,7 +85,18 @@
 					<?php echo $this->getContent(); ?>
 				</div>
 		</div>
-		<div class="save_box container hero-unit">
+		<div class="container save_box">
+			<?php
+				if(!in_array($this->getRequest()->getActionName(), array('index', 'finish')))
+				{
+			?>
+					<a href="<?php echo $this->url('install', 'index', $lastAction); ?>" class="btn pull-left">
+						<?php echo $this->getTranslator()->trans('backButton'); ?>
+					</a>
+			<?php
+				}
+			?>
+
 			<?php
 				if($this->getRequest()->getActionName() != 'finish')
 				{

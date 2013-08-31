@@ -17,6 +17,7 @@ return array
 	'menuDatabase'			 => 'Database',
 	'menuConfig'			 => 'Configuration',
 	'menuFinish'			 => 'Install',
+	'backButton'			 => 'Step back',
 	'nextButton'			 => 'Next Step',
 	'installButton'			 => 'Install',
     'welcomeToInstall' => 'Welcome to Ilch CMS [VERSION] installation',
@@ -31,4 +32,7 @@ return array
 	'dbPassword'	   => 'password',
 	'dbName'		   => 'name',
 	'dbPrefix'		   => 'prefix',
+	'writableConfig'   => 'writable directory',
+	'cmsType'		   => 'cms type',
+	'successInstalled'	 => 'Ilch CMS  successfully installed'
 );

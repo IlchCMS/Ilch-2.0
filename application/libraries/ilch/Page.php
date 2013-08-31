@@ -45,7 +45,9 @@ class Ilch_Page
 
 		if($this->_ilchInstalled)
 		{
-			$this->_setupDatabaseAdapter($config);
+			$dbFactory = new Ilch_Database_Factory();
+			$db = $dbFactory->getInstanceByConfig($config);
+			Ilch_Registry::set('db', $db);
 		}
 
 		$this->_loadRouting($request);
@@ -107,20 +109,6 @@ class Ilch_Page
                 $layout->load($viewOutput, 1);
             }
         }
-    }
- 
-    /**
-     * Setup the database adapter, create instance and connect to database.
-     */
-    protected function _setupDatabaseAdapter(Ilch_Config $config)
-    {
-		$dbClass = 'Ilch_Database_'.$config->getConfig('dbEngine');
-		$db = new $dbClass();
-		$db->connect($config->getConfig('dbHost'), $config->getConfig('dbUser'), $config->getConfig('dbPassword'));
-		$db->setDatabase($config->getConfig('dbName'));
-		$db->setPrefix($config->getConfig('dbPrefix'));
-
-		Ilch_Registry::set('db', $db);
     }
 
     /**

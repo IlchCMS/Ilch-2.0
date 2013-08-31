@@ -153,5 +153,18 @@ class Install_IndexController extends Ilch_Controller
 		$config->setConfig('dbName', $_SESSION['install']['dbName']);
 		$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
 		$config->saveConfigToFile(CONFIG_PATH.'/config.php');
+		
+		$cmsType = $_SESSION['install']['cmsType'];
+		
+		$dbFactory = new Ilch_Database_Factory();
+		$db = $dbFactory->getInstanceByConfig($config);
+
+		$sqlString = file_get_contents(__DIR__.'/../files/install_'.$cmsType.'.sql');
+		$queryParts = explode(';', $sqlString);
+
+		foreach($queryParts as $query)
+		{
+			$db->query($query);
+		}
     }
 }
