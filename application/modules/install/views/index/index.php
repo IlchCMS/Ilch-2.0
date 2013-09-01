@@ -31,7 +31,7 @@
 		this,
 		function()
 		{
-			top.location.href = '<?php echo $this->url('install'); ?>&language='+$(this).val();
+			top.location.href = '<?php echo $this->url(array('module' => 'install')); ?>&language='+$(this).val();
 		}
 	);
 </script>

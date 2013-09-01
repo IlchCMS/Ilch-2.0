@@ -10,7 +10,7 @@ defined('ACCESS') or die('no direct access');
 abstract class Ilch_Design_Abstract
 {
 	/**
-	 * @var Ilch_Request 
+	 * @var Ilch_Request
 	 */
 	private $_request;
 	
@@ -18,17 +18,31 @@ abstract class Ilch_Design_Abstract
 	 * @var Ilch_Translator 
 	 */
 	private $_translator;
+	
+	/**
+	 * @var Ilch_Config
+	 */
+	private $_config;
+
+	/**
+	 * @var Ilch_Router 
+	 */
+	private $_router;
 
 	/**
 	 * Injects request and translator to layout/view.
 	 *
 	 * @param Ilch_Request $request
 	 * @param Ilch_Translator $translator
+	 * @param Ilch_Config $config
+	 * @param Ilch_Router $router
 	 */
-	public function __construct(Ilch_Request $request, Ilch_Translator $translator)
+	public function __construct(Ilch_Request $request, Ilch_Translator $translator, Ilch_Config $config, Ilch_Router $router)
 	{
 		$this->_request = $request;
 		$this->_translator = $translator;
+		$this->_config = $config;
+		$this->_router = $router;
 	}
 
 	/**
@@ -92,37 +106,69 @@ abstract class Ilch_Design_Abstract
 	/**
 	 * Creates a full url for the given parts.
 	 *
-	 * @param string $module
-	 * @param string $controller
-	 * @param string $action
-	 * @param array $params
+	 * @param arry $module
+	 * @param string $route
+	 * @param boolean $rewrite
 	 * @return string
 	 */
-	public function url($module = '', $controller = '', $action = '', $params = array())
+	public function url($urlArray = array(), $route = 'default', $rewrite  = false)
 	{
-		if(empty($module))
+		if(empty($urlArray))
 		{
 			return BASE_URL;
 		}
-		
+
 		$urlParts = array();
 
-		if(!empty($controller))
+		if($rewrite || $this->_config->getConfig('rewrite') == true)
 		{
-			$urlParts[] = 'controller='.$controller;
-		}
+			if(isset($urlArray['module']))
+			{
+				$urlParts[] = $urlArray['module'];
+				unset($urlArray['module']);
+			}
+			else
+			{
+				$urlParts[] = 'index';
+			}
+			
+			if(isset($urlArray['controller']))
+			{
+				$urlParts[] = $urlArray['controller'];
+				unset($urlArray['controller']);
+			}
+			else
+			{
+				$urlParts[] = 'index';
+			}
+			
+			if(isset($urlArray['action']))
+			{
+				$urlParts[] = $urlArray['action'];
+				unset($urlArray['action']);
+			}
+			else
+			{
+				$urlParts[] = 'index';
+			}
+			
+			foreach($urlArray as $key => $value)
+			{
+				$urlParts[] = $key;
+				$urlParts[] = $value;
+			}
 
-		if(!empty($action))
-		{
-			$urlParts[] = 'action='.$action;
+			return BASE_URL.'/'.implode('/', $urlParts);
 		}
-		
-		foreach($params as $key => $val)
+		else
 		{
-			$urlParts[] = $key.'='.$val;
-		}
+			foreach($urlArray as $key => $value)
+			{
+				$urlParts[] = $key.'='.$value;
+			}
 
-		return BASE_URL.'/index.php?module='.$module.implode('&', $urlParts);
+			return BASE_URL.'/index.php?'.implode('&', $urlParts);
+		}
 	}
 
 	/**

@@ -48,14 +48,13 @@ class Ilch_Controller
 	/**
 	 * Redirect to given params.
 	 *
-	 * @param string $module
-	 * @param string $controller
-	 * @param string $action
-	 * @param string $params
+	 * @param array $urlArray
+	 * @param string $route
+	 * @param boolean $rewrite
 	 */
-	public function redirect($module = '', $controller = '', $action = '', $params = array())
+	public function redirect($urlArray, $route = 'default', $rewrite = false)
 	{
-		header("location: ".$this->getLayout()->url($module, $controller, $action, $params));
+		header("location: ".$this->getLayout()->url($urlArray, $route, $rewrite));
 		exit;
 	}
 

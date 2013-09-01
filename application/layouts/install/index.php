@@ -51,7 +51,7 @@
 		</style>
 </head>
 <body>
-	<form class="form-horizontal" method="POST" action="<?php echo $this->url('install', 'index', $this->getRequest()->getActionName()); ?>">
+	<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('module' => 'install', 'action' => $this->getRequest()->getActionName())); ?>">
 		<div class="container install_container">
 			<ul class="nav nav-tabs" id="install_steps">
 				<?php
@@ -90,7 +90,7 @@
 				if(!in_array($this->getRequest()->getActionName(), array('index', 'finish')))
 				{
 			?>
-					<a href="<?php echo $this->url('install', 'index', $lastAction); ?>" class="btn pull-left">
+					<a href="<?php echo $this->url(array('module' => 'install', 'action' => $lastAction)); ?>" class="btn pull-left">
 						<?php echo $this->getTranslator()->trans('backButton'); ?>
 					</a>
 			<?php

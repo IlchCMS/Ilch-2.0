@@ -57,7 +57,7 @@
 		<?php echo $this->getTranslator()->trans('dbPrefix'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->dbPrefix)){ echo $this->dbPrefix; } ?>"
+		<input value="<?php if(!empty($this->dbPrefix)){ echo $this->dbPrefix; } else { echo 'ilch'; } ?>"
 			   type="text"
 			   name="dbPrefix"
 			   id="dbPrefix" />

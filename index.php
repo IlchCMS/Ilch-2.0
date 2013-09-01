@@ -14,7 +14,8 @@ define('ACCESS', 1);
 define('VERSION', '2.0');
 define('APPLICATION_PATH', __DIR__.'/application');
 define('CONFIG_PATH', APPLICATION_PATH.'/config');
-define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].str_replace(array('/index.php', 'index.php'), '', $_SERVER['PHP_SELF']));
+define('REWRITE_BASE', str_replace(array('/index.php', 'index.php'), '', $_SERVER['PHP_SELF']));
+define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 define('STATIC_URL', BASE_URL);
 
 require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';

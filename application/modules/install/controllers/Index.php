@@ -76,7 +76,7 @@ class Install_IndexController extends Ilch_Controller
 
 		if($_POST)
 		{
-			$this->redirect('install', 'index', 'license');
+			$this->redirect(array('module' => 'install', 'action' => 'license'));
 		}
 	}
 
@@ -88,7 +88,7 @@ class Install_IndexController extends Ilch_Controller
 		{
 			if($this->getRequest()->getPost('licenceAccepted'))
 			{
-				$this->redirect('install', 'index', 'systemcheck');
+				$this->redirect(array('module' => 'install', 'action' => 'systemcheck'));
 			}
 			else
 			{
@@ -105,7 +105,7 @@ class Install_IndexController extends Ilch_Controller
 		{
 			if(version_compare(phpversion(), '5.3.0', '>'))
 			{
-				$this->redirect('install', 'index', 'database');
+				$this->redirect(array('module' => 'install', 'action' => 'database'));
 			}
 		}
 	}
@@ -130,7 +130,7 @@ class Install_IndexController extends Ilch_Controller
 			$_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
 			$_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
 
-			$this->redirect('install', 'index', 'config');
+			$this->redirect(array('module' => 'install', 'action' => 'config'));
 		}
 	}
 
@@ -139,32 +139,47 @@ class Install_IndexController extends Ilch_Controller
 		if($_POST)
 		{
 			$_SESSION['install']['cmsType'] = $this->getRequest()->getPost('cmsType');
-			$this->redirect('install', 'index', 'finish');
+
+			/*
+			 * @todo we should test mod_rewrite before setting it to true.
+			 */
+			$_SESSION['install']['rewrite'] = true;
+			
+			$config = new Ilch_Config();
+			$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
+			$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
+			$config->setConfig('dbUser', $_SESSION['install']['dbUser']);
+			$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
+			$config->setConfig('dbName', $_SESSION['install']['dbName']);
+			$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
+			$config->setConfig('rewrite', $_SESSION['install']['rewrite']);
+			$config->saveConfigToFile(CONFIG_PATH.'/config.php');
+
+			$cmsType = $_SESSION['install']['cmsType'];
+
+			$dbFactory = new Ilch_Database_Factory();
+			$db = $dbFactory->getInstanceByConfig($config);
+
+			$sqlString = file_get_contents(__DIR__.'/../files/install_'.$cmsType.'.sql');
+			$queryParts = explode(';', $sqlString);
+
+			foreach($queryParts as $query)
+			{
+				$db->query($query);
+			}
+
+			if($_SESSION['install']['rewrite'] === true)
+			{
+				$htaccessString = "RewriteEngine on\nRewriteBase ".REWRITE_BASE."\nRewriteRule !\.(js|ico|gif|jpg|png|css|html)$ index.php\n";
+				file_put_contents(APPLICATION_PATH.'/../.htaccess', $htaccessString);
+				$this->redirect(array('module' => 'install', 'action' => 'finish'), null, true);
+			}
+
+			$this->redirect(array('module' => 'install', 'action' => 'finish'));
 		}
 	}
 
 	public function finishAction()
 	{
-		$config = new Ilch_Config();
-		$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
-		$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
-		$config->setConfig('dbUser', $_SESSION['install']['dbUser']);
-		$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
-		$config->setConfig('dbName', $_SESSION['install']['dbName']);
-		$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
-		$config->saveConfigToFile(CONFIG_PATH.'/config.php');
-		
-		$cmsType = $_SESSION['install']['cmsType'];
-		
-		$dbFactory = new Ilch_Database_Factory();
-		$db = $dbFactory->getInstanceByConfig($config);
-
-		$sqlString = file_get_contents(__DIR__.'/../files/install_'.$cmsType.'.sql');
-		$queryParts = explode(';', $sqlString);
-
-		foreach($queryParts as $query)
-		{
-			$db->query($query);
-		}
 	}
 }

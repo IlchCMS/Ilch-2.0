@@ -36,9 +36,7 @@ class Ilch_Page
 	{
 		$request = new Ilch_Request();
 		$translator = new Ilch_Translator();
-
-		$layout = new Ilch_Layout($request, $translator);
-		$view = new Ilch_View($request, $translator);
+		$router = new Ilch_Router($request, $config);
 
 		$plugin = new Ilch_Plugin();
 		$plugin->detectPlugins();
@@ -50,7 +48,15 @@ class Ilch_Page
 			Ilch_Registry::set('db', $db);
 		}
 
-		$this->_loadRouting($request);
+		$router->execute();
+	
+		if(!$this->_ilchInstalled)
+		{
+			$request->setModuleName('install');
+		}
+
+		$layout = new Ilch_Layout($request, $translator, $config, $router);
+		$view = new Ilch_View($request, $translator, $config, $router);
 
 		/*
 		 * Load controller as first.
