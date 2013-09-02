@@ -177,7 +177,7 @@ class Ilch_Database_Mysql
 	 */
 	public function selectArray($fields, $table, $where = null)
 	{
-		$sql = 'SELECT `' . $this->_getFieldsSql($fields) . '`
+		$sql = 'SELECT ' . $this->_getFieldsSql($fields) . '
 				FROM `' . $this->prefix . $table . '` ';
 
 		if($where != null)
@@ -225,7 +225,7 @@ class Ilch_Database_Mysql
 		$sql = 'INSERT INTO `' . $this->prefix . $table . '` ( ';
 		$sqlFields = array();
 		$sqlValues = array();
-		
+
 		foreach($fields as $key => $value)
 		{
 			$sqlFields[] = '`' . $key . '`';
