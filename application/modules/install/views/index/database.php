@@ -63,3 +63,8 @@
 			   id="dbPrefix" />
 	</div>
 </div>
+<script>
+	$.get('<?php echo BASE_URL.'/rewrite/test.php'; ?>', function(data)
+	{
+	});
+</script>

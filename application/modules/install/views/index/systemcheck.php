@@ -13,7 +13,7 @@
 			<td><?php echo $this->phpVersion; ?></td>
 		</tr>
 		<tr>
-			<td><?php echo $this->getTranslator()->trans('writableConfig').' "'.CONFIG_PATH.'"' ?></td>
+			<td><?php echo $this->getTranslator()->trans('writable').' "/application/config"' ?></td>
 			<td class="text-success">writable</td>
 			<td>
 				<?php
@@ -28,10 +28,37 @@
 				?>
 			</td>
 		</tr>
+		<tr>
+			<td><?php echo $this->getTranslator()->trans('writable').' "/rewrite"' ?></td>
+			<td class="text-success">writable</td>
+			<td>
+				<?php
+					if(is_writable(APPLICATION_PATH.'/../rewrite'))
+					{
+						echo '<span class="text-success">writable</span>';
+					}
+					else
+					{
+						echo '<span class="text-error">not writable</span>';
+					}
+				?>
+			</td>
+		</tr>
+		<tr>
+			<td><?php echo $this->getTranslator()->trans('writable').' ".htaccess"' ?></td>
+			<td class="text-success">writable</td>
+			<td>
+				<?php
+					if(is_writable(APPLICATION_PATH.'/../.htaccess'))
+					{
+						echo '<span class="text-success">writable</span>';
+					}
+					else
+					{
+						echo '<span class="text-error">not writable</span>';
+					}
+				?>
+			</td>
+		</tr>
 	</tbody>
 </table>
-<script>
-	$.get('<?php echo BASE_URL.'/rewrite/test.php'; ?>', function(data)
-	{
-	});
-</script>

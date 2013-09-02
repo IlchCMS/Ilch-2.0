@@ -74,7 +74,7 @@ class Install_IndexController extends Ilch_Controller
 			$_SESSION['language'] = $local;
 		}
 
-		if($_POST)
+		if($this->getRequest()->isPost())
 		{
 			$this->redirect(array('module' => 'install', 'action' => 'license'));
 		}
@@ -84,7 +84,7 @@ class Install_IndexController extends Ilch_Controller
 	{
 		$this->getView()->licenceText = file_get_contents(APPLICATION_PATH.'/../licence.txt');
 
-		if($_POST)
+		if($this->getRequest()->isPost())
 		{
 			if($this->getRequest()->getPost('licenceAccepted'))
 			{
@@ -99,15 +99,18 @@ class Install_IndexController extends Ilch_Controller
 
 	public function systemcheckAction()
 	{
-		$htaccessString = "RewriteEngine on\nRewriteBase ".REWRITE_BASE."/rewrite\nRewriteRule !\.(js|ico|gif|jpg|png|css|html)$ index.php\n";
-		file_put_contents(APPLICATION_PATH.'/../rewrite/.htaccess', $htaccessString);
-
 		$this->getView()->phpVersion = phpversion();
 
-		if($_POST)
+		if($this->getRequest()->isPost())
 		{
-			if(version_compare(phpversion(), '5.3.0', '>'))
+			if(version_compare(phpversion(), '5.3.0', '>')
+				&& is_writable(APPLICATION_PATH.'/../rewrite')
+				&& is_writable(CONFIG_PATH)
+				&& is_writable(APPLICATION_PATH.'/../.htaccess'))
 			{
+				$htaccessString = "RewriteEngine on\nRewriteBase ".REWRITE_BASE."/rewrite\nRewriteRule !\.(js|ico|gif|jpg|png|css|html)$ index.php\n";
+				file_put_contents(APPLICATION_PATH.'/../rewrite/.htaccess', $htaccessString);
+
 				$this->redirect(array('module' => 'install', 'action' => 'database'));
 			}
 		}
@@ -124,7 +127,7 @@ class Install_IndexController extends Ilch_Controller
 			}
 		}
 
-		if($_POST)
+		if($this->getRequest()->isPost())
 		{
 			$_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
 			$_SESSION['install']['dbHost'] = $this->getRequest()->getPost('dbHost');
@@ -139,7 +142,7 @@ class Install_IndexController extends Ilch_Controller
 
 	public function configAction()
 	{
-		if($_POST)
+		if($this->getRequest()->isPost())
 		{
 			$cmsType = $this->getRequest()->getPost('cmsType');
 
