@@ -99,6 +99,9 @@ class Install_IndexController extends Ilch_Controller
 
 	public function systemcheckAction()
 	{
+		$htaccessString = "RewriteEngine on\nRewriteBase ".REWRITE_BASE."/rewrite\nRewriteRule !\.(js|ico|gif|jpg|png|css|html)$ index.php\n";
+		file_put_contents(APPLICATION_PATH.'/../rewrite/.htaccess', $htaccessString);
+
 		$this->getView()->phpVersion = phpversion();
 
 		if($_POST)
@@ -138,13 +141,15 @@ class Install_IndexController extends Ilch_Controller
 	{
 		if($_POST)
 		{
-			$_SESSION['install']['cmsType'] = $this->getRequest()->getPost('cmsType');
+			$cmsType = $this->getRequest()->getPost('cmsType');
 
-			/*
-			 * @todo we should test mod_rewrite before setting it to true.
-			 */
-			$_SESSION['install']['rewrite'] = true;
-			
+			$rewrite = false;
+
+			if(isset($_SESSION['install']['rewrite']))
+			{
+				$rewrite = true;
+			}
+
 			$config = new Ilch_Config();
 			$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
 			$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
@@ -152,10 +157,8 @@ class Install_IndexController extends Ilch_Controller
 			$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
 			$config->setConfig('dbName', $_SESSION['install']['dbName']);
 			$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
-			$config->setConfig('rewrite', $_SESSION['install']['rewrite']);
+			$config->setConfig('rewrite', $rewrite);
 			$config->saveConfigToFile(CONFIG_PATH.'/config.php');
-
-			$cmsType = $_SESSION['install']['cmsType'];
 
 			$dbFactory = new Ilch_Database_Factory();
 			$db = $dbFactory->getInstanceByConfig($config);
@@ -168,7 +171,9 @@ class Install_IndexController extends Ilch_Controller
 				$db->query($query);
 			}
 
-			if($_SESSION['install']['rewrite'] === true)
+			unset($_SESSION['install']);
+
+			if($rewrite === true)
 			{
 				$htaccessString = "RewriteEngine on\nRewriteBase ".REWRITE_BASE."\nRewriteRule !\.(js|ico|gif|jpg|png|css|html)$ index.php\n";
 				file_put_contents(APPLICATION_PATH.'/../.htaccess', $htaccessString);

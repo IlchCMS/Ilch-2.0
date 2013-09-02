@@ -1,3 +1,4 @@
 /nbproject/private/
 /application/config/config.php
 .htaccess
+/rewrite/.htaccess

@@ -10,11 +10,6 @@ defined('ACCESS') or die('no direct access');
 class Ilch_Router
 {
 	/**
-	 * @var array
-	 */
-	protected $_routes;
-
-	/**
 	 * Injects request and config object.
 	 *
 	 * @param Ilch_Request $request
@@ -24,17 +19,6 @@ class Ilch_Router
 	{
 		$this->_request = $request;
 		$this->_config = $config;
-	}
-
-	/**
-	 * Adds a route to router object.
-	 *
-	 * @param string $name
-	 * @param array $routingArray
-	 */
-	public function addRoute($name, $routingArray)
-	{
-		$this->_routes[$name] = $routingArray;
 	}
 
 	/**

@@ -30,3 +30,8 @@
 		</tr>
 	</tbody>
 </table>
+<script>
+	$.get('<?php echo BASE_URL.'/rewrite/test.php'; ?>', function(data)
+	{
+	});
+</script>
