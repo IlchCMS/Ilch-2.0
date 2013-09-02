@@ -32,7 +32,7 @@ return array
 	'dbPassword'	   => 'password',
 	'dbName'		   => 'name',
 	'dbPrefix'		   => 'prefix',
-	'writableConfig'   => 'writable directory',
+	'writable'		   => 'writable',
 	'cmsType'		   => 'cms type',
-	'successInstalled'	 => 'Ilch CMS  successfully installed'
+	'successInstalled' => 'Ilch CMS  successfully installed'
 );
