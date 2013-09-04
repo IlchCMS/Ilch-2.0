@@ -9,6 +9,7 @@
 error_reporting(-1);
 
 session_start();
+header('Content-Type: text/html; charset=utf-8');
 
 define('ACCESS', 1);
 define('VERSION', '2.0');
