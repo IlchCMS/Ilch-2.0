@@ -30,6 +30,13 @@ class Ilch_Controller
 	private $_view;
 
 	/**
+	 * The currently logged in user or null if the user is a guest.
+	 *
+	 * @var User_UserModel
+	 */
+	private $_user;
+
+	/**
 	 * Injects the layout/view to the controller.
 	 *
 	 * @param Ilch_Layout $layout
@@ -43,6 +50,7 @@ class Ilch_Controller
 		$this->_view = $view;
 		$this->_request = $request;
 		$this->_translator = $translator;
+		$this->_user = Ilch_Registry::get('user');
 	}
 
 	/**

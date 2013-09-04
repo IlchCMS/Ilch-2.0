@@ -35,13 +35,6 @@ class User_BeforeControllerLoadPlugin
 		$mapper = new User_UserMapper();
 		$user = $mapper->getUserById($userId);
 
-		if($user === null)
-		{
-			$user = new User_UserModel();
-			$user->setId(0);
-			$user->setName('Guest');
-		}
-
 		Ilch_Registry::set('user', $user);
 	}
 }
