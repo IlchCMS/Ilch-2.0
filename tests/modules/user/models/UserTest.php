@@ -70,6 +70,16 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	}
 
 	/**
+	 * Tests if the date_created can be set and returned again if using a string.
+	 */
+	public function testSetDateCreatedFromString()
+	{
+		$user = new User_UserModel();
+		$user->setDateCreated('2013-09-02 22:13:52');
+		$this->assertEquals(1378152832, $user->getDateCreated(), 'The date_created does not got saved correctly with using a String.');
+	}
+
+	/**
 	 * Tests if the date_confirmed can be set and returned again.
 	 */
 	public function testSetGetDateConfirmed()
@@ -89,5 +99,15 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 		$date = new DateTime();
 		$user->setDateConfirmed($date);
 		$this->assertEquals($date->getTimestamp(), $user->getDateConfirmed(), 'The date_confirmed wasnt saved or returned correctly using a date object.');
+	}
+
+	/**
+	 * Tests if the date_confirmed can be set and returned again if using a string.
+	 */
+	public function testSetDateConfirmedFromString()
+	{
+		$user = new User_UserModel();
+		$user->setDateConfirmed('2013-09-02 22:15:45');
+		$this->assertEquals(1378152945, $user->getDateConfirmed(), 'The date_confirmed does not got saved correctly with using a String.');
 	}
 }

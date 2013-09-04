@@ -30,8 +30,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				'id' => 2,
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
-				'date_created' => 1377037200,
-				'date_confirmed' => 1377037210,
+				'date_created' => '2013-09-02 22:13:52',
+				'date_confirmed' => '2013-09-02 22:15:45',
 			),
 		);
 		$where = array
@@ -53,48 +53,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		$this->assertEquals(2, $user->getId());
 		$this->assertEquals('testmail2@test.de', $user->getEmail());
 		$this->assertEquals('testUsername2', $user->getName());
-		$this->assertEquals(1377037200, $user->getDateCreated());
-		$this->assertEquals(1377037210, $user->getDateConfirmed());
-	}
-
-	/**
-	 * Tests if the user mapper returns the right user model using an id for the
-	 * search if multiple entries exist.
-	 */
-	public function testGetUserByIdMultipleEntries()
-	{
-		$userRows = array
-		(
-			array
-			(
-				'id' => 2,
-				'email' => 'testmail2@test.de',
-				'name' => 'testUsername2',
-				'date_created' => 1377037200,
-				'date_confirmed' => 1377037210,
-			),
-		);
-		$where = array
-		(
-			'id' => 2
-		);
-		$dbMock = $this->getMock('Ilch_Database', array('selectArray'));
-		$dbMock->expects($this->once())
-				->method('selectArray')
-				->with('*',
-					   'users',
-					   $where)
-				->will($this->returnValue($userRows));
-		$mapper = new User_UserMapper();
-		$mapper->setDatabase($dbMock);
-		$user = $mapper->getUserById(2);
-
-		$this->assertTrue($user !== false);
-		$this->assertEquals(2, $user->getId());
-		$this->assertEquals('testmail2@test.de', $user->getEmail());
-		$this->assertEquals('testUsername2', $user->getName());
-		$this->assertEquals(1377037200, $user->getDateCreated());
-		$this->assertEquals(1377037210, $user->getDateConfirmed());
+		$this->assertEquals(1378152832, $user->getDateCreated());
+		$this->assertEquals(1378152945, $user->getDateConfirmed());
 	}
 
 	/**
@@ -110,8 +70,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				'id' => 2,
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
-				'date_created' => 1377037200,
-				'date_confirmed' => 1377037210,
+				'date_created' => '2013-09-02 22:13:52',
+				'date_confirmed' => '2013-09-02 22:15:45',
 			),
 		);
 		$where = array
@@ -133,48 +93,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		$this->assertEquals(2, $user->getId());
 		$this->assertEquals('testmail2@test.de', $user->getEmail());
 		$this->assertEquals('testUsername2', $user->getName());
-		$this->assertEquals(1377037200, $user->getDateCreated());
-		$this->assertEquals(1377037210, $user->getDateConfirmed());
-	}
-
-	/**
-	 * Tests if the user mapper returns the right user model using a name for the
-	 * search if multiple entries exist.
-	 */
-	public function testGetUserByNameMultipleEntries()
-	{
-		$userRows = array
-		(
-			array
-			(
-				'id' => 2,
-				'email' => 'testmail2@test.de',
-				'name' => 'testUsername2',
-				'date_created' => 1377037200,
-				'date_confirmed' => 1377037210,
-			),
-		);
-		$where = array
-		(
-			'name' => 'testUsername2'
-		);
-		$dbMock = $this->getMock('Ilch_Database', array('selectArray'));
-		$dbMock->expects($this->once())
-				->method('selectArray')
-				->with('*',
-					   'users',
-					   $where)
-				->will($this->returnValue($userRows));
-		$mapper = new User_UserMapper();
-		$mapper->setDatabase($dbMock);
-		$user = $mapper->getUserByName('testUsername2');
-
-		$this->assertTrue($user !== false);
-		$this->assertEquals(2, $user->getId());
-		$this->assertEquals('testmail2@test.de', $user->getEmail());
-		$this->assertEquals('testUsername2', $user->getName());
-		$this->assertEquals(1377037200, $user->getDateCreated());
-		$this->assertEquals(1377037210, $user->getDateConfirmed());
+		$this->assertEquals(1378152832, $user->getDateCreated());
+		$this->assertEquals(1378152945, $user->getDateConfirmed());
 	}
 
 	/**
@@ -203,14 +123,14 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 			(
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
-				'date_created' => 1377037200,
-				'date_confirmed' => 1377037210,
+				'date_created' => '2013-09-02 22:13:52',
+				'date_confirmed' => '2013-09-02 22:15:45',
 			)
 		);
 		$user->setName('testUsername2Modified');
 		$user->setEmail('testmail2@test.deModified');
 		$user->setDateCreated(1377037220);
-		$user->setDateConfirmed(1377037230);
+-		$user->setDateConfirmed(1377037230);
 
 		$mapper->save($user);
 	}
@@ -230,16 +150,16 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				'id' => 1,
 				'email' => 'testmail1@test.de',
 				'name' => 'testUsername1',
-				'date_created' => 1377037100,
-				'date_confirmed' => 1377037110,
+				'date_created' => '2013-08-02 20:12:42',
+				'date_confirmed' => '2013-08-12 22:23:52',
 			),
 			array
 			(
 				'id' => 2,
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
-				'date_created' => 1377037200,
-				'date_confirmed' => 1377037210,
+				'date_created' => '2013-09-02 22:13:52',
+				'date_confirmed' => '2013-09-02 22:15:45',
 			),
 		);
 		$modifiedUser = array
@@ -269,14 +189,14 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				'id' => 2,
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
-				'date_created' => 1377037200,
-				'date_confirmed' => 1377037210,
+				'date_created' => '2013-09-02 22:13:52',
+				'date_confirmed' => '2013-09-02 22:15:45',
 			)
 		);
 		$user->setName('testUsername2Modified');
 		$user->setEmail('testmail2@test.deModified');
 		$user->setDateCreated(1377037220);
-		$user->setDateConfirmed(1377037230);
+-		$user->setDateConfirmed(1377037230);
 
 		$mapper->save($user);
 	}

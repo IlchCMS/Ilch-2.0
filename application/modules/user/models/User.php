@@ -125,13 +125,21 @@ class User_UserModel extends Ilch_Model
 	/**
 	 * Saves the date_created timestamp of the user.
 	 *
-	 * @param int|DateTime $dateCreated
+	 * @param int|DateTime|string $dateCreated
 	 */
 	public function setDateCreated($dateCreated)
 	{
 		if(is_a($dateCreated, 'DateTime'))
 		{
 			$dateCreated = $dateCreated->getTimestamp();
+		}
+		elseif(is_numeric($dateCreated))
+		{
+			$dateCreated = (int)$dateCreated;
+		}
+		elseif(is_string($dateCreated))
+		{
+			$dateCreated = strtotime($dateCreated);
 		}
 
 		$this->_dateCreated = (int)$dateCreated;
@@ -150,13 +158,21 @@ class User_UserModel extends Ilch_Model
 	/**
 	 * Saves the date_confirmed timestamp of the user.
 	 *
-	 * @param int|DateTime $dateConfirmed
+	 * @param int|DateTime|string $dateConfirmed
 	 */
 	public function setDateConfirmed($dateConfirmed)
 	{
 		if(is_a($dateConfirmed, 'DateTime'))
 		{
 			$dateConfirmed = $dateConfirmed->getTimestamp();
+		}
+		elseif(is_numeric($dateConfirmed))
+		{
+			$dateConfirmed = (int)$dateConfirmed;
+		}
+		elseif(is_string($dateConfirmed))
+		{
+			$dateConfirmed = strtotime($dateConfirmed);
 		}
 
 		$this->_dateConfirmed = (int)$dateConfirmed;
