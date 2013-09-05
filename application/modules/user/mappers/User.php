@@ -33,7 +33,7 @@ class User_UserMapper extends Ilch_Mapper
 
 		if(!empty($users))
 		{
-			return current($users);
+			return reset($users);
 		}
 
 		return null;
@@ -55,7 +55,7 @@ class User_UserMapper extends Ilch_Mapper
 
 		if(!empty($users))
 		{
-			return current($users);
+			return reset($users);
 		}
 
 		return null;

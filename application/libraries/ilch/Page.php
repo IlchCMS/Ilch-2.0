@@ -46,6 +46,7 @@ class Ilch_Page
 			$dbFactory = new Ilch_Database_Factory();
 			$db = $dbFactory->getInstanceByConfig($config);
 			Ilch_Registry::set('db', $db);
+			Ilch_Registry::set('cmsInstalled', true);
 		}
 
 		$router->execute();

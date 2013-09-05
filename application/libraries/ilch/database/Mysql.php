@@ -74,7 +74,6 @@ class Ilch_Database_Mysql
 	public function query($sql)
 	{
 		$sql = str_replace('[prefix]', $this->prefix, $sql);
-
 		return mysqli_query($this->conn, $sql);
 	}
 

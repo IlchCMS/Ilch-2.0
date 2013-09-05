@@ -25,6 +25,11 @@ class User_BeforeControllerLoadPlugin
 	 */
 	public function __construct()
 	{
+		if(!Ilch_Registry::get('cmsInstalled'))
+		{
+			return;
+		}
+
 		$userId = null;
 
 		if(isset($_SESSION['user_id']))
