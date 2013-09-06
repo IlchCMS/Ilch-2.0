@@ -70,9 +70,12 @@ class Ilch_Config
 	{
 		require_once $fileName;
 
-		foreach($config as $key => $value)
+		if(!empty($config))
 		{
-			$this->setConfig($key, $value);
+			foreach($config as $key => $value)
+			{
+				$this->setConfig($key, $value);
+			}
 		}
 	}
 }

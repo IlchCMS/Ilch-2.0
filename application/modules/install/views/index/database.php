@@ -57,14 +57,9 @@
 		<?php echo $this->getTranslator()->trans('dbPrefix'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->dbPrefix)){ echo $this->dbPrefix; } else { echo 'ilch'; } ?>"
+		<input value="<?php if(!empty($this->dbPrefix)){ echo $this->dbPrefix; } else { echo 'ilch_'; } ?>"
 			   type="text"
 			   name="dbPrefix"
 			   id="dbPrefix" />
 	</div>
 </div>
-<script>
-	$.get('<?php echo BASE_URL.'/rewrite/test.php'; ?>', function(data)
-	{
-	});
-</script>

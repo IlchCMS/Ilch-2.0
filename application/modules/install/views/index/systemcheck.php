@@ -13,27 +13,11 @@
 			<td><?php echo $this->phpVersion; ?></td>
 		</tr>
 		<tr>
-			<td><?php echo $this->getTranslator()->trans('writable').' "/application/config"' ?></td>
+			<td><?php echo $this->getTranslator()->trans('writable').' "config.php"' ?></td>
 			<td class="text-success">writable</td>
 			<td>
 				<?php
-					if(is_writable(CONFIG_PATH))
-					{
-						echo '<span class="text-success">writable</span>';
-					}
-					else
-					{
-						echo '<span class="text-error">not writable</span>';
-					}
-				?>
-			</td>
-		</tr>
-		<tr>
-			<td><?php echo $this->getTranslator()->trans('writable').' "/rewrite"' ?></td>
-			<td class="text-success">writable</td>
-			<td>
-				<?php
-					if(is_writable(APPLICATION_PATH.'/../rewrite'))
+					if(is_writable(CONFIG_PATH.'/config.php'))
 					{
 						echo '<span class="text-success">writable</span>';
 					}

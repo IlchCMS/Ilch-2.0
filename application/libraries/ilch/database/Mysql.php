@@ -73,7 +73,7 @@ class Ilch_Database_Mysql
 	 */
 	public function query($sql)
 	{
-		$sql = str_replace('[prefix]', $this->prefix, $sql);
+		$sql = str_replace('[prefix]_', $this->prefix, $sql);
 		return mysqli_query($this->conn, $sql);
 	}
 
@@ -100,7 +100,7 @@ class Ilch_Database_Mysql
 	public function selectCell($cell, $table, $where = null)
 	{
 		$sql = 'SELECT `' . $cell . '`
-				FROM `' . $this->prefix . $table . '` ';
+				FROM `[prefix]_'.$table . '` ';
 
 		if($where != null)
 		{
@@ -135,7 +135,7 @@ class Ilch_Database_Mysql
 	public function selectRow($fields, $table, $where = null)
 	{
 		$sql = 'SELECT `' . $this->_getFieldsSql($fields) . '`
-				FROM `' . $this->prefix . $table . '` ';
+				FROM `[prefix]_'. $table . '` ';
 
 		if($where != null)
 		{
@@ -177,7 +177,7 @@ class Ilch_Database_Mysql
 	public function selectArray($fields, $table, $where = null)
 	{
 		$sql = 'SELECT ' . $this->_getFieldsSql($fields) . '
-				FROM `' . $this->prefix . $table . '` ';
+				FROM `[prefix]_'.$table . '` ';
 
 		if($where != null)
 		{
@@ -196,7 +196,7 @@ class Ilch_Database_Mysql
 	 */
 	public function update($fields, $table, $where = null)
 	{
-		$sql = 'UPDATE `' . $this->prefix . $table . '` SET ';
+		$sql = 'UPDATE `[prefix]_'.$table . '` SET ';
 
 		foreach($fields as $key => $value)
 		{
@@ -221,7 +221,7 @@ class Ilch_Database_Mysql
 	 */
 	public function insert($fields, $table)
 	{
-		$sql = 'INSERT INTO `' . $this->prefix . $table . '` ( ';
+		$sql = 'INSERT INTO `[prefix]_'.$table.'` ( ';
 		$sqlFields = array();
 		$sqlValues = array();
 
@@ -250,7 +250,7 @@ class Ilch_Database_Mysql
 	 */
 	public function delete($table, $where = null)
 	{
-		$sql = 'DELETE FROM `' . $this->prefix . $table . '` ';
+		$sql = 'DELETE FROM `[prefix]_'.$table . '` ';
 
 		if($where != null)
 		{

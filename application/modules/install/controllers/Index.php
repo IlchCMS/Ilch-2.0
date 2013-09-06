@@ -104,13 +104,9 @@ class Install_IndexController extends Ilch_Controller
 		if($this->getRequest()->isPost())
 		{
 			if(version_compare(phpversion(), '5.3.0', '>')
-				&& is_writable(APPLICATION_PATH.'/../rewrite')
 				&& is_writable(CONFIG_PATH)
 				&& is_writable(APPLICATION_PATH.'/../.htaccess'))
 			{
-				$htaccessString = "RewriteEngine on\nRewriteBase ".REWRITE_BASE."/rewrite\nRewriteRule !\.(js|ico|gif|jpg|png|css|html)$ index.php\n";
-				file_put_contents(APPLICATION_PATH.'/../rewrite/.htaccess', $htaccessString);
-
 				$this->redirect(array('module' => 'install', 'action' => 'database'));
 			}
 		}
@@ -145,14 +141,6 @@ class Install_IndexController extends Ilch_Controller
 		if($this->getRequest()->isPost())
 		{
 			$cmsType = $this->getRequest()->getPost('cmsType');
-
-			$rewrite = false;
-
-			if(isset($_SESSION['install']['rewrite']))
-			{
-				$rewrite = true;
-			}
-
 			$config = new Ilch_Config();
 			$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
 			$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
@@ -160,13 +148,12 @@ class Install_IndexController extends Ilch_Controller
 			$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
 			$config->setConfig('dbName', $_SESSION['install']['dbName']);
 			$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
-			$config->setConfig('rewrite', $rewrite);
 			$config->saveConfigToFile(CONFIG_PATH.'/config.php');
 
 			$dbFactory = new Ilch_Database_Factory();
 			$db = $dbFactory->getInstanceByConfig($config);
 
-			$sqlString = file_get_contents(__DIR__.'/../files/install_'.$cmsType.'.sql');
+			$sqlString = file_get_contents(__DIR__.'/../files/install_general.sql');
 			$queryParts = explode(';', $sqlString);
 
 			foreach($queryParts as $query)
@@ -175,13 +162,6 @@ class Install_IndexController extends Ilch_Controller
 			}
 
 			unset($_SESSION['install']);
-
-			if($rewrite === true)
-			{
-				$htaccessString = "RewriteEngine on\nRewriteBase ".REWRITE_BASE."\nRewriteRule !\.(js|ico|gif|jpg|png|css|html)$ index.php\n";
-				file_put_contents(APPLICATION_PATH.'/../.htaccess', $htaccessString);
-				$this->redirect(array('module' => 'install', 'action' => 'finish'), null, true);
-			}
 
 			$this->redirect(array('module' => 'install', 'action' => 'finish'));
 		}
