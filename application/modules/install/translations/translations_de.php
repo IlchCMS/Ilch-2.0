@@ -32,6 +32,8 @@ return array
 	'dbPassword'		 => 'Password',
 	'dbName'			 => 'Name',
 	'dbPrefix'			 => 'Prefix',
+	'dbConnectionError'  => 'Konnte keine Verbindung zur Datenbank herstellen',
+	'dbDatabaseError'  => 'Die Datenbank existiert nicht',
 	'writable'			 => 'Beschreibar',
 	'cmsType'			 => 'CMS Typ',
 	'successInstalled'	 => 'Ilch CMS wurde erfolgreich installiert'

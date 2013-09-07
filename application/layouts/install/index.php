@@ -69,7 +69,7 @@
 						?>
 							<li class="<?php echo $this->getRequest()->getActionName() == $key ? 'active': ''; ?>">
 								<a data-toggle="tab">
-									<?php echo $this->getTranslator()->trans($values['langKey']); ?>
+									<?php echo $this->trans($values['langKey']); ?>
 								</a>
 							</li>
 					<?php
@@ -91,7 +91,7 @@
 				{
 			?>
 					<a href="<?php echo $this->url(array('module' => 'install', 'action' => $lastAction)); ?>" class="btn pull-left">
-						<?php echo $this->getTranslator()->trans('backButton'); ?>
+						<?php echo $this->trans('backButton'); ?>
 					</a>
 			<?php
 				}
@@ -110,7 +110,7 @@
 								$buttonTrans = 'installButton';
 							}
 
-							echo $this->getTranslator()->trans($buttonTrans);
+							echo $this->trans($buttonTrans);
 						?>
 					</button>
 			<?php

@@ -7,7 +7,7 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Layout extends Ilch_Design_Abstract
+class Ilch_Layout extends Ilch_Design_Base
 {
 	/**
 	 * Defines if layout is disabled.

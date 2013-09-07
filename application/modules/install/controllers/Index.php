@@ -15,7 +15,7 @@ class Install_IndexController extends Ilch_Controller
 		{
 			$this->getTranslator()->setLocale($_SESSION['language']);
 		}
-		
+
 		$menu = array
 		(
 			'index' => array
@@ -99,29 +99,33 @@ class Install_IndexController extends Ilch_Controller
 
 	public function systemcheckAction()
 	{
+		$errors = array();
 		$this->getView()->phpVersion = phpversion();
 
-		if($this->getRequest()->isPost())
+		if(!version_compare(phpversion(), '5.3.0', '>'))
 		{
-			if(version_compare(phpversion(), '5.3.0', '>')
-				&& is_writable(CONFIG_PATH)
-				&& is_writable(APPLICATION_PATH.'/../.htaccess'))
-			{
-				$this->redirect(array('module' => 'install', 'action' => 'database'));
-			}
+			$errors['version'] = true;
+		}
+
+		if(!is_writable(CONFIG_PATH))
+		{
+			$errors['writableConfig'] = true;
+		}
+
+		if(!is_writable(APPLICATION_PATH.'/../.htaccess'))
+		{
+			$errors['writableHtaccess'] = true;
+		}
+
+		if($this->getRequest()->isPost() && empty($errors))
+		{
+			$this->redirect(array('module' => 'install', 'action' => 'database'));
 		}
 	}
 
-
 	public function databaseAction()
 	{
-		foreach(array('dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $name)
-		{
-			if(!empty($_SESSION['install'][$name]))
-			{
-				$this->getView()->$name = $_SESSION['install'][$name];
-			}
-		}
+		$errors = array();
 
 		if($this->getRequest()->isPost())
 		{
@@ -132,7 +136,34 @@ class Install_IndexController extends Ilch_Controller
 			$_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
 			$_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
 
-			$this->redirect(array('module' => 'install', 'action' => 'config'));
+			$ilch = new Ilch_Database_Factory();
+			$db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
+			$dbConnect = $db->connect($this->getRequest()->getPost('dbHost'), $this->getRequest()->getPost('dbUser'), $this->getRequest()->getPost('dbPassword'));
+
+			if(!$dbConnect)
+			{
+				$errors['dbConnection'] = true;
+			}
+
+			if($dbConnect && !$db->setDatabase($this->getRequest()->getPost('dbName')))
+			{
+				$errors['dbDatabase'] = true;
+			}
+
+			if(empty($errors))
+			{
+				$this->redirect(array('module' => 'install', 'action' => 'config'));
+			}
+
+			$this->getView()->errors = $errors;
+		}
+
+		foreach(array('dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $name)
+		{
+			if(!empty($_SESSION['install'][$name]))
+			{
+				$this->getView()->$name = $_SESSION['install'][$name];
+			}
 		}
 	}
 

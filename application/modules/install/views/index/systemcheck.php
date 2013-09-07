@@ -2,18 +2,18 @@
 	<thead>
 		<tr>
 			<th></th>
-			<th><?php echo $this->getTranslator()->trans('required'); ?></th>
-			<th><?php echo $this->getTranslator()->trans('available'); ?></th>
+			<th><?php echo $this->trans('required'); ?></th>
+			<th><?php echo $this->trans('available'); ?></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td><?php echo $this->getTranslator()->trans('phpVersion'); ?></td>
+			<td><?php echo $this->trans('phpVersion'); ?></td>
 			<td class="text-success">>= 5.3</td>
 			<td><?php echo $this->phpVersion; ?></td>
 		</tr>
 		<tr>
-			<td><?php echo $this->getTranslator()->trans('writable').' "config.php"' ?></td>
+			<td><?php echo $this->trans('writable').' "config.php"' ?></td>
 			<td class="text-success">writable</td>
 			<td>
 				<?php
@@ -29,7 +29,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><?php echo $this->getTranslator()->trans('writable').' ".htaccess"' ?></td>
+			<td><?php echo $this->trans('writable').' ".htaccess"' ?></td>
 			<td class="text-success">writable</td>
 			<td>
 				<?php

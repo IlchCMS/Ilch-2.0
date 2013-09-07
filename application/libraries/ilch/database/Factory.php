@@ -25,4 +25,18 @@ class Ilch_Database_Factory
 		
 		return $db;
 	}
+
+	/**
+	 * Gets database adapter by engine name.
+	 *
+	 * @param string $engine
+	 * @return Ilch_Database_*
+	 */
+	public function getInstanceByEngine($engine)
+	{
+		$dbClass = 'Ilch_Database_'.$engine;
+		$db = new $dbClass();
+
+		return $db;
+	}
 }

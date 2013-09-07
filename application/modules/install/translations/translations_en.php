@@ -32,6 +32,8 @@ return array
 	'dbPassword'	   => 'password',
 	'dbName'		   => 'name',
 	'dbPrefix'		   => 'prefix',
+	'dbConnectionError' => 'could not connect to database-server',
+	'dbDatabaseError'  => 'database do not exists',
 	'writable'		   => 'writable',
 	'cmsType'		   => 'cms type',
 	'successInstalled' => 'Ilch CMS  successfully installed'

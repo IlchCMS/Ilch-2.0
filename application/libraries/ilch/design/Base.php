@@ -7,7 +7,7 @@
 
 defined('ACCESS') or die('no direct access');
 
-abstract class Ilch_Design_Abstract
+abstract class Ilch_Design_Base
 {
 	/**
 	 * @var Ilch_Request
@@ -63,6 +63,18 @@ abstract class Ilch_Design_Abstract
 	public function getTranslator()
 	{
 		return $this->_translator;
+	}
+
+	/**
+	 * Returns the translated text for a specific key.
+	 *
+	 * @param string $key
+	 * @param mixed[]
+	 * @return string
+	 */
+	public function trans($key, $placeholders = array())
+	{
+		return $this->getTranslator()->trans($key, $placeholders);
 	}
 
 	/**

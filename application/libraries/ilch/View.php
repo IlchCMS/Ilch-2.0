@@ -7,7 +7,7 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Ilch_View extends Ilch_Design_Abstract
+class Ilch_View extends Ilch_Design_Base
 {
 	public function load($module, $controller, $action = '')
 	{

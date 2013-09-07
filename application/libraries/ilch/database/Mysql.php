@@ -46,10 +46,12 @@ class Ilch_Database_Mysql
 	 */
 	public function setDatabase($db)
 	{
-		if($this->conn->select_db($db) === false)
+		if($this->conn->connect_error)
 		{
-			throw new InvalidArgumentException('could not find database with name "'.$db.'"');
+			return false;
 		}
+
+		return $this->conn->select_db($db);
 	}
 
 	/**
@@ -62,7 +64,15 @@ class Ilch_Database_Mysql
 	public function connect($host, $name, $password)
 	{
 		$this->conn = @new mysqli($host, $name, $password);
+
+		if($this->conn->connect_error)
+		{
+			return false;
+		}
+
 		$this->conn->set_charset('utf8');
+
+		return true;
 	}
 
 	/**
