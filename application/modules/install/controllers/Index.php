@@ -206,17 +206,17 @@ class Install_IndexController extends Ilch_Controller
 
 			if(empty($errors))
 			{
-				$config = new Ilch_Config();
-				$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
-				$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
-				$config->setConfig('dbUser', $_SESSION['install']['dbUser']);
-				$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
-				$config->setConfig('dbName', $_SESSION['install']['dbName']);
-				$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
-				$config->saveConfigToFile(CONFIG_PATH.'/config.php');
+				$fileConfig = new Ilch_Config_File();
+				$fileConfig->set('dbEngine', $_SESSION['install']['dbEngine']);
+				$fileConfig->set('dbHost', $_SESSION['install']['dbHost']);
+				$fileConfig->set('dbUser', $_SESSION['install']['dbUser']);
+				$fileConfig->set('dbPassword', $_SESSION['install']['dbPassword']);
+				$fileConfig->set('dbName', $_SESSION['install']['dbName']);
+				$fileConfig->set('dbPrefix', $_SESSION['install']['dbPrefix']);
+				$fileConfig->saveConfigToFile(CONFIG_PATH.'/config.php');
 
 				$dbFactory = new Ilch_Database_Factory();
-				$db = $dbFactory->getInstanceByConfig($config);
+				$db = $dbFactory->getInstanceByConfig($fileConfig);
 				Ilch_Registry::set('db', $db);
 
 				$sqlString = file_get_contents(__DIR__.'/../files/install_general.sql');
@@ -236,16 +236,10 @@ class Install_IndexController extends Ilch_Controller
 				$userMapper->save($user);
 
 				$date = new DateTime();
-				$db->insert
-				(
-					array
-					(
-						'version' => VERSION,
-						'locale' => $this->getTranslator()->getLocale(),
-						'date_cms_installed' => $date->format('Y-m-d H:i:s')
-					),
-					'config'
-				);
+				$databaseConfig = new Ilch_Config_Database($db);
+				$databaseConfig->set('version', VERSION, 1);
+				$databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
+				$databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
 
 				unset($_SESSION['install']);
 

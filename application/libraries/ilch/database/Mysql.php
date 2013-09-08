@@ -186,7 +186,7 @@ class Ilch_Database_Mysql
 	 */
 	public function selectArray($fields, $table, $where = null)
 	{
-		$sql = 'SELECT ' . $this->_getFieldsSql($fields) . '
+		$sql = 'SELECT '. $this->_getFieldsSql($fields).'
 				FROM `[prefix]_'.$table . '` ';
 
 		if($where != null)
@@ -281,7 +281,12 @@ class Ilch_Database_Mysql
 	 */
 	protected function _getFieldsSql($fields)
 	{
-		return implode('`,`', (array) $fields);
+		if($fields === '*')
+		{
+			return $fields;
+		}
+
+		return '`'.implode('`,`', (array) $fields).'`';
 	}
 
 	/**

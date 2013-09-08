@@ -77,6 +77,16 @@ class Ilch_Controller
 	}
 
 	/**
+	 * Gets the config object.
+	 *
+	 * @return Ilch_Config
+	 */
+	public function getConfig()
+	{
+		return Ilch_Registry::get('config');
+	}
+
+	/**
 	 * Gets the translator object.
 	 *
 	 * @return Ilch_Translator

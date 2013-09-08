@@ -12,7 +12,6 @@ class Ilch_Page
 	/**
 	 * Defines if cms is installed.
 	 *
-	 * @param Ilch_Config $config
 	 * @var boolean ilchInstalled
 	 */
 	protected $_ilchInstalled = false;
@@ -30,13 +29,13 @@ class Ilch_Page
 	/**
 	 * Load and initialize cms.
 	 *
-	 * @param Ilch_Config $config
+	 * @param Ilch_Config_File $fileConfig
 	 */
-	public function loadCms(Ilch_Config $config)
+	public function loadCms(Ilch_Config_File $fileConfig)
 	{
 		$request = new Ilch_Request();
 		$translator = new Ilch_Translator();
-		$router = new Ilch_Router($request, $config);
+		$router = new Ilch_Router($request, $fileConfig);
 
 		$plugin = new Ilch_Plugin();
 		$plugin->detectPlugins();
@@ -44,9 +43,11 @@ class Ilch_Page
 		if($this->_ilchInstalled)
 		{
 			$dbFactory = new Ilch_Database_Factory();
-			$db = $dbFactory->getInstanceByConfig($config);
+			$db = $dbFactory->getInstanceByConfig($fileConfig);
+			$databaseConfig = new Ilch_Config_Database($db);
+			$databaseConfig->loadConfigFromDatabase();
 			Ilch_Registry::set('db', $db);
-			Ilch_Registry::set('cmsInstalled', true);
+			Ilch_Registry::set('config', $databaseConfig);
 		}
 
 		$router->execute();
@@ -56,8 +57,8 @@ class Ilch_Page
 			$request->setModuleName('install');
 		}
 
-		$layout = new Ilch_Layout($request, $translator, $config, $router);
-		$view = new Ilch_View($request, $translator, $config, $router);
+		$layout = new Ilch_Layout($request, $translator, $router);
+		$view = new Ilch_View($request, $translator, $router);
 
 		/*
 		 * Load controller as first.

@@ -25,7 +25,7 @@ class User_BeforeControllerLoadPlugin
 	 */
 	public function __construct()
 	{
-		if(!Ilch_Registry::get('cmsInstalled'))
+		if(!Ilch_Registry::get('config'))
 		{
 			return;
 		}

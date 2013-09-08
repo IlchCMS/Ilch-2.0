@@ -7,7 +7,7 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Config
+class Ilch_Config_File
 {
 	/**
 	 * @var array
@@ -20,7 +20,7 @@ class Ilch_Config
 	 * @param string $key
 	 * @return mixed|null
 	 */
-	public function getConfig($key)
+	public function get($key)
 	{
 		if(isset($this->_configData[$key]))
 		{
@@ -28,6 +28,7 @@ class Ilch_Config
 		}
 
 		return null;
+
 	}
 
 	/**
@@ -36,14 +37,32 @@ class Ilch_Config
 	 * @param string $key
 	 * @param string|integer $value
 	 */
-	public function setConfig($key, $value)
+	public function set($key, $value)
 	{
 		$this->_configData[$key] = $value;
 	}
 
 	/**
+	 * Loads the config from the given path.
+	 *
+	 * @param string $fileName
+	 */
+	public function loadConfigFromFile($fileName)
+	{
+		require_once $fileName;
+
+		if(!empty($config))
+		{
+			foreach($config as $key => $value)
+			{
+				$this->set($key, $value);
+			}
+		}
+	}
+
+	/**
 	 * Saves the whole config in a file.
-	 * 
+	 *
 	 * @param string $fileName
 	 */
 	public function saveConfigToFile($fileName)
@@ -59,23 +78,5 @@ class Ilch_Config
 
 		$fileString .= '?>';
 		file_put_contents($fileName, $fileString);
-	}
-	
-	/**
-	 * Loads the config from the given path.
-	 * 
-	 * @param string $fileName
-	 */
-	public function loadConfigFromFile($fileName)
-	{
-		require_once $fileName;
-
-		if(!empty($config))
-		{
-			foreach($config as $key => $value)
-			{
-				$this->setConfig($key, $value);
-			}
-		}
 	}
 }

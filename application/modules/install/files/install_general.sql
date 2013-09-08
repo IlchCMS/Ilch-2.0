@@ -21,12 +21,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `[prefix]_config` (
-  `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `timezone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `date_cms_installed` datetime NOT NULL
+  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `value` text COLLATE utf8_unicode_ci NOT NULL,
+  `autoload` tinyint(1) NOT NULL,
+  UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- --------------------------------------------------------
 
 --

@@ -18,11 +18,6 @@ abstract class Ilch_Design_Base
 	 * @var Ilch_Translator 
 	 */
 	private $_translator;
-	
-	/**
-	 * @var Ilch_Config
-	 */
-	private $_config;
 
 	/**
 	 * @var Ilch_Router 
@@ -34,14 +29,12 @@ abstract class Ilch_Design_Base
 	 *
 	 * @param Ilch_Request $request
 	 * @param Ilch_Translator $translator
-	 * @param Ilch_Config $config
 	 * @param Ilch_Router $router
 	 */
-	public function __construct(Ilch_Request $request, Ilch_Translator $translator, Ilch_Config $config, Ilch_Router $router)
+	public function __construct(Ilch_Request $request, Ilch_Translator $translator, Ilch_Router $router)
 	{
 		$this->_request = $request;
 		$this->_translator = $translator;
-		$this->_config = $config;
 		$this->_router = $router;
 	}
 
@@ -54,7 +47,7 @@ abstract class Ilch_Design_Base
 	{
 		return $this->_request;
 	}
-	
+
 	/**
 	 * Gets the translator object.
 	 *
@@ -131,8 +124,9 @@ abstract class Ilch_Design_Base
 		}
 
 		$urlParts = array();
+		$config = Ilch_Registry::get('config');
 
-		if($rewrite || $this->_config->getConfig('rewrite') == true)
+		if($rewrite || ($config && $config->get('rewrite') == true))
 		{
 			if(isset($urlArray['module']))
 			{

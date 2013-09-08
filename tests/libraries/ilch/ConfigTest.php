@@ -26,7 +26,7 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_config = new Ilch_Config();
+		$this->_config = new Ilch_Config_File();
 	}
 
 	/**
@@ -34,11 +34,11 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetAndGetConfig()
 	{
-		$this->_config->setConfig('email', 'testuser@testmail.com');
+		$this->_config->set('email', 'testuser@testmail.com');
 		$this->assertEquals
 		(
 				'testuser@testmail.com',
-				$this->_config->getConfig('email'),
+				$this->_config->get('email'),
 				'Config value got manipulated unexpectedly.'
 		);
 	}
@@ -62,9 +62,9 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
 				$configArray,
 				array
 				(
-					'dbHost' => $this->_config->getConfig('dbHost'),
-					'dbUser' => $this->_config->getConfig('dbUser'),
-					'dbPassword' => $this->_config->getConfig('dbPassword')
+					'dbHost' => $this->_config->get('dbHost'),
+					'dbUser' => $this->_config->get('dbUser'),
+					'dbPassword' => $this->_config->get('dbPassword')
 				),
 				'Config array from file differs with defined array.'
 		);

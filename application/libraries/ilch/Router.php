@@ -13,12 +13,10 @@ class Ilch_Router
 	 * Injects request and config object.
 	 *
 	 * @param Ilch_Request $request
-	 * @param Ilch_Config $config
 	 */
-	public function __construct(Ilch_Request $request, Ilch_Config $config)
+	public function __construct(Ilch_Request $request)
 	{
 		$this->_request = $request;
-		$this->_config = $config;
 	}
 
 	/**
@@ -31,7 +29,7 @@ class Ilch_Router
 		$this->_request->setControllerName('index');
 		$this->_request->setActionName('index');
 
-		if($this->_config->getConfig('rewrite') == true)
+		if(Ilch_Registry::get('config') && Ilch_Registry::get('config')->get('rewrite') == true)
 		{
 			$this->_executeRewrite($query);
 		}

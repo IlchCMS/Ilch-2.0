@@ -106,6 +106,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		(
 			'email' => 'testmail2@test.deModified',
 			'name' => 'testUsername2Modified',
+			'password' => 'testPassword2Modified',
 			'date_created' => 1377037220,
 			'date_confirmed' => 1377037230,
 		);
@@ -123,14 +124,16 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 			(
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
+				'password' => 'testPassword2',
 				'date_created' => '2013-09-02 22:13:52',
 				'date_confirmed' => '2013-09-02 22:15:45',
 			)
 		);
 		$user->setName('testUsername2Modified');
+		$user->setPassword('testPassword2Modified');
 		$user->setEmail('testmail2@test.deModified');
 		$user->setDateCreated(1377037220);
--		$user->setDateConfirmed(1377037230);
+		$user->setDateConfirmed(1377037230);
 
 		$mapper->save($user);
 	}
@@ -150,6 +153,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				'id' => 1,
 				'email' => 'testmail1@test.de',
 				'name' => 'testUsername1',
+				'password' => 'testPassword1',
 				'date_created' => '2013-08-02 20:12:42',
 				'date_confirmed' => '2013-08-12 22:23:52',
 			),
@@ -158,6 +162,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				'id' => 2,
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
+				'password' => 'testPassword2',
 				'date_created' => '2013-09-02 22:13:52',
 				'date_confirmed' => '2013-09-02 22:15:45',
 			),
@@ -166,6 +171,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		(
 			'email' => 'testmail2@test.deModified',
 			'name' => 'testUsername2Modified',
+			'password' => 'testPassword2Modified',
 			'date_created' => 1377037220,
 			'date_confirmed' => 1377037230,
 		);
@@ -189,14 +195,16 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				'id' => 2,
 				'email' => 'testmail2@test.de',
 				'name' => 'testUsername2',
+				'password' => 'testPassword2',
 				'date_created' => '2013-09-02 22:13:52',
 				'date_confirmed' => '2013-09-02 22:15:45',
 			)
 		);
 		$user->setName('testUsername2Modified');
+		$user->setPassword('testPassword2Modified');
 		$user->setEmail('testmail2@test.deModified');
 		$user->setDateCreated(1377037220);
--		$user->setDateConfirmed(1377037230);
+		$user->setDateConfirmed(1377037230);
 
 		$mapper->save($user);
 	}

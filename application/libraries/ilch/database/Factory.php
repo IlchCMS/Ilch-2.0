@@ -12,16 +12,16 @@ class Ilch_Database_Factory
 	/**
 	 * Gets database adapter by config.
 	 *
-	 * @param Ilch_Config $config
+	 * @param Ilch_Config_File $config
 	 * @return Ilch_Database_*
 	 */
-	public function getInstanceByConfig(Ilch_Config $config)
+	public function getInstanceByConfig(Ilch_Config_File $config)
 	{
-		$dbClass = 'Ilch_Database_'.$config->getConfig('dbEngine');
+		$dbClass = 'Ilch_Database_'.$config->get('dbEngine');
 		$db = new $dbClass();
-		$db->connect($config->getConfig('dbHost'), $config->getConfig('dbUser'), $config->getConfig('dbPassword'));
-		$db->setDatabase($config->getConfig('dbName'));
-		$db->setPrefix($config->getConfig('dbPrefix'));
+		$db->connect($config->get('dbHost'), $config->get('dbUser'), $config->get('dbPassword'));
+		$db->setDatabase($config->get('dbName'));
+		$db->setPrefix($config->get('dbPrefix'));
 		
 		return $db;
 	}
