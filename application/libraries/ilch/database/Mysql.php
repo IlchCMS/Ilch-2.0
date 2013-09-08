@@ -144,7 +144,7 @@ class Ilch_Database_Mysql
 	 */
 	public function selectRow($fields, $table, $where = null)
 	{
-		$sql = 'SELECT `' . $this->_getFieldsSql($fields) . '`
+		$sql = 'SELECT '. $this->_getFieldsSql($fields) .'
 				FROM `[prefix]_'. $table . '` ';
 
 		if($where != null)
