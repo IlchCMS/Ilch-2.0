@@ -45,7 +45,15 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 	 */
 	protected function _getFilesFolder()
 	{
-		$filesDir = APPLICATION_PATH.'/../tests/libraries/ilch/_files';
+		$classname = get_class($this);
+		/*
+		 * Generating the path from tests/ to the _files folder using the classname.
+		 * With the Classname Libraries_Ilch_ConfigTest the path would be "libraries/ilch".
+		 */
+		$classPathPart = str_replace('_', '/', $classname);
+		$classPathPart = strtolower(dirname($classPathPart));
+
+		$filesDir = APPLICATION_PATH.'/../tests/'.$classPathPart.'/_files';
 
 		if(!is_dir($filesDir))
 		{
