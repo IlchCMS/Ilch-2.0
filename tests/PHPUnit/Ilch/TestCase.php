@@ -15,6 +15,29 @@
 class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 {
 	/**
+	 * A data array which will be used to create a config object for the registry.
+	 *
+	 * @var Array
+	 */
+	protected $_configData = array();
+
+	/**
+	 * Filling an initial config object and giving it to the registry.
+	 */
+	public function setUp()
+	{
+		$config = new Ilch_Config_File();
+
+		foreach($this->_configData as $configKey => $configValue)
+		{
+			$config->set($configKey, $configValue);
+		}
+
+		Ilch_Registry::remove('config');
+		Ilch_Registry::set('config', $config);
+	}
+
+	/**
 	 * Returns the _files folder path for this test.
 	 *
 	 * @return string |false
@@ -22,7 +45,15 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 	 */
 	protected function _getFilesFolder()
 	{
-		$filesDir = APPLICATION_PATH.'/../tests/libraries/ilch/_files';
+		$classname = get_class($this);
+		/*
+		 * Generating the path from tests/ to the _files folder using the classname.
+		 * With the Classname Libraries_Ilch_ConfigTest the path would be "libraries/ilch".
+		 */
+		$classPathPart = str_replace('_', '/', $classname);
+		$classPathPart = strtolower(dirname($classPathPart));
+
+		$filesDir = APPLICATION_PATH.'/../tests/'.$classPathPart.'/_files';
 
 		if(!is_dir($filesDir))
 		{
