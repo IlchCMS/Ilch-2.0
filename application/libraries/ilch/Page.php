@@ -101,9 +101,9 @@ class Ilch_Page
 			{
 				$layout->load($controller->modulName.'/index');
 			}
-			elseif(!empty($controller->getLayout()->name))
+			elseif($controller->getLayout()->getFile() != '')
 			{
-				$layout->load($controller->getLayout()->name);
+				$layout->load($controller->getLayout()->getFile());
 			}
 			else
 			{

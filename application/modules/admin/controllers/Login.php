@@ -11,6 +11,7 @@ class Admin_LoginController extends Ilch_Controller
 {
 	public function init()
 	{
+		$this->getLayout()->setFile('admin/login');
 	}
 
 	public function indexAction()

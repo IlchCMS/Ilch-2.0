@@ -24,6 +24,13 @@ class Ilch_Layout extends Ilch_Design_Base
 	protected $_content = '';
 
 	/**
+	 * File of the layout.
+	 *
+	 * @var string
+	 */
+	protected $_file;
+
+	/**
 	 * Set layout disabled flag.
 	 *
 	 * @param boolean $disabled
@@ -79,5 +86,25 @@ class Ilch_Layout extends Ilch_Design_Base
 		{
 			require_once APPLICATION_PATH.'/layouts/'.$file.'.php';
 		}
+	}
+
+	/**
+	 * Sets the file of the layout.
+	 *
+	 * @param string $file
+	 */
+	public function setFile($file)
+	{
+		$this->_file = $file;
+	}
+
+	/**
+	 * Gets the file of the layout.
+	 *
+	 * @return string
+	 */
+	public function getFile()
+	{
+		return $this->_file;
 	}
 }
