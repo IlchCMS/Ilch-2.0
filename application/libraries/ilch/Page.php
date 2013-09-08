@@ -77,13 +77,13 @@ class Ilch_Page
 			/*
 			 * Load action views if no controller view exists.
 			 */
-			if($controller->getView()->get('name') == '')
+			if($controller->getView()->getFile() == '')
 			{
 				$viewOutput = $view->load($controller->modulName ,$controller->name , $controller->actionName);
 			}
 			else
 			{
-				$viewOutput = $view->load($controller->modulName ,$controller->name , $controller->getView()->get('name'));
+				$viewOutput = $view->load($controller->modulName ,$controller->name , $controller->getView()->getFile());
 			}
 		}
 
@@ -94,7 +94,7 @@ class Ilch_Page
 		{
 			if
 			(
-				empty($controller->getLayout()->name)
+				$controller->getLayout()->getFile() == ''
 				&&
 				file_exists(APPLICATION_PATH.'/layouts/'.$controller->modulName.'/index.php')
 			)
