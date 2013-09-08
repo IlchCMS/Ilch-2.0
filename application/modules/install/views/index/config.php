@@ -33,7 +33,7 @@
 	</label>
 	<div class="controls">
 		<input value="<?php if(!empty($this->adminPassword)){ echo $this->adminPassword; } ?>"
-			   type="text"
+			   type="password"
 			   name="adminPassword"
 			   id="adminPassword" />
 		<?php
@@ -50,7 +50,7 @@
 	</label>
 	<div class="controls">
 		<input value="<?php if(!empty($this->adminPassword2)){ echo $this->adminPassword2; } ?>"
-			   type="text"
+			   type="password"
 			   name="adminPassword2"
 			   id="adminPassword2" />
 		<?php

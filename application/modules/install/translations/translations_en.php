@@ -43,5 +43,6 @@ return array
 	'successInstalled' => 'Ilch CMS  successfully installed',
 	'fieldEmpty'	   => 'field must be filled',
 	'fieldDiffersPassword' => 'passwords are different',
+	'fieldEmail'	   => 'email is not valid',
 	'timezone'		   => 'timezone',
 );

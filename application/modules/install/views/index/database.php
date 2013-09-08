@@ -42,7 +42,7 @@
 	</label>
 	<div class="controls">
 		<input value="<?php if(!empty($this->dbPassword)){ echo $this->dbPassword; } ?>"
-			   type="text"
+			   type="password"
 			   name="dbPassword"
 			   id="dbPassword" />
 	</div>

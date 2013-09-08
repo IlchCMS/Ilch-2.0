@@ -215,6 +215,10 @@ class Install_IndexController extends Ilch_Controller
 			{
 				$errors['adminEmail'] = 'fieldEmpty';
 			}
+			elseif(!filter_var($_SESSION['install']['adminEmail'], FILTER_VALIDATE_EMAIL))
+			{
+				$errors['adminEmail'] = 'fieldEmail';
+			}
 
 			if(empty($errors))
 			{
