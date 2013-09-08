@@ -9,6 +9,14 @@ defined('ACCESS') or die('no direct access');
 
 class Ilch_View extends Ilch_Design_Base
 {
+	/**
+	 * Loads a view script.
+	 *
+	 * @param string $module
+	 * @param string $controller
+	 * @param string $action
+	 * @return string
+	 */
 	public function load($module, $controller, $action = '')
 	{
 		ob_start();

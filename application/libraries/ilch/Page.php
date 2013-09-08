@@ -77,13 +77,13 @@ class Ilch_Page
 			/*
 			 * Load action views if no controller view exists.
 			 */
-			if(empty($controller->getView()->name))
+			if($controller->getView()->get('name') == '')
 			{
 				$viewOutput = $view->load($controller->modulName ,$controller->name , $controller->actionName);
 			}
 			else
 			{
-				$viewOutput = $view->load($controller->modulName ,$controller->name , $controller->getView()->name);
+				$viewOutput = $view->load($controller->modulName ,$controller->name , $controller->getView()->get('name'));
 			}
 		}
 

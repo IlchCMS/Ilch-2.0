@@ -1,3 +1,6 @@
+<?php
+$errors = $this->get('errors');
+?>
 <div class="control-group">
 	<label for="type" class="control-label">
 		<?php echo $this->trans('cmsType'); ?>:
@@ -10,70 +13,70 @@
 	</div>
 </div>
 <hr />
-<div class="control-group <?php if(!empty($this->errors['adminName'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['adminName'])){ echo 'error'; }; ?>">
 	<label for="adminName" class="control-label">
 		<?php echo $this->trans('adminName'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->adminName)){ echo $this->adminName; } ?>"
+		<input value="<?php if($this->get('adminName') != ''){ echo $this->get('adminName'); } ?>"
 			   type="text"
 			   name="adminName"
 			   id="adminName" />
 		<?php
-			if(!empty($this->errors['adminName']))
+			if(!empty($errors['adminName']))
 			{
-				echo '<span class="help-inline">'.$this->trans($this->errors['adminName']).'</span>';
+				echo '<span class="help-inline">'.$this->trans($errors['adminName']).'</span>';
 			}
 		?>
 	</div>
 </div>
-<div class="control-group <?php if(!empty($this->errors['adminPassword'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['adminPassword'])){ echo 'error'; }; ?>">
 	<label for="adminPassword" class="control-label">
 		<?php echo $this->trans('adminPassword'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->adminPassword)){ echo $this->adminPassword; } ?>"
+		<input value="<?php if($this->get('adminPassword') != ''){ echo $this->get('adminPassword'); } ?>"
 			   type="password"
 			   name="adminPassword"
 			   id="adminPassword" />
 		<?php
-			if(!empty($this->errors['adminPassword']))
+			if(!empty($errors['adminPassword']))
 			{
-				echo '<span class="help-inline">'.$this->trans($this->errors['adminPassword']).'</span>';
+				echo '<span class="help-inline">'.$this->trans($errors['adminPassword']).'</span>';
 			}
 		?>
 	</div>
 </div>
-<div class="control-group <?php if(!empty($this->errors['adminPassword2'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['adminPassword2'])){ echo 'error'; }; ?>">
 	<label for="adminPassword2" class="control-label">
 		<?php echo $this->trans('adminPassword2'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->adminPassword2)){ echo $this->adminPassword2; } ?>"
+		<input value="<?php if($this->get('adminPassword2') != ''){ echo $this->get('adminPassword2'); } ?>"
 			   type="password"
 			   name="adminPassword2"
 			   id="adminPassword2" />
 		<?php
-			if(!empty($this->errors['adminPassword2']))
+			if(!empty($errors['adminPassword2']))
 			{
-				echo '<span class="help-inline">'.$this->trans($this->errors['adminPassword2']).'</span>';
+				echo '<span class="help-inline">'.$this->trans($errors['adminPassword2']).'</span>';
 			}
 		?>
 	</div>
 </div>
-<div class="control-group <?php if(!empty($this->errors['adminEmail'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['adminEmail'])){ echo 'error'; }; ?>">
 	<label for="adminEmail" class="control-label">
 		<?php echo $this->trans('adminEmail'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->adminEmail)){ echo $this->adminEmail; } ?>"
+		<input value="<?php if($this->get('adminEmail') != ''){ echo $this->get('adminEmail'); } ?>"
 			   type="text"
 			   name="adminEmail"
 			   id="adminEmail" />
 		<?php
-			if(!empty($this->errors['adminEmail']))
+			if(!empty($errors['adminEmail']))
 			{
-				echo '<span class="help-inline">'.$this->trans($this->errors['adminEmail']).'</span>';
+				echo '<span class="help-inline">'.$this->trans($errors['adminEmail']).'</span>';
 			}
 		?>
 	</div>

@@ -13,7 +13,7 @@ abstract class Ilch_Design_Base
 	 * @var Ilch_Request
 	 */
 	private $_request;
-	
+
 	/**
 	 * @var Ilch_Translator 
 	 */
@@ -23,6 +23,38 @@ abstract class Ilch_Design_Base
 	 * @var Ilch_Router 
 	 */
 	private $_router;
+
+	/**
+	 * @var array
+	 */
+	private $_data = array();
+
+	/**
+	 * Gets view data.
+	 *
+	 * @param string $key
+	 * @return mixed|null
+	 */
+	public function get($key)
+	{
+		if(isset($this->_data[$key]))
+		{
+			return $this->_data[$key];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Set view data.
+	 *
+	 * @param sting $key
+	 * @param mixed $value
+	 */
+	public function set($key, $value)
+	{
+		$this->_data[$key] = $value;
+	}
 
 	/**
 	 * Injects request and translator to layout/view.

@@ -14,10 +14,10 @@
 				<ul class="nav nav-tabs" id="install_steps">
 					<?php
 						$done = 1;
-						$menuCounter = count($this->menu);
+						$menuCounter = count($this->get('menu'));
 						$lastAction = '';
 
-						foreach($this->menu as $key => $values)
+						foreach($this->get('menu') as $key => $values)
 						{
 							if(isset($values['done']))
 							{
@@ -37,7 +37,7 @@
 					?>
 				</ul>
 				<div class="progress progress-success progress-striped">
-					<div class="bar" style="width: <?=$progress?>%"></div>
+					<div class="bar" style="width: <?php echo $progress; ?>%"></div>
 				</div>
 					<div class="install_content">
 						<?php echo $this->getContent(); ?>

@@ -10,7 +10,7 @@
 		<tr>
 			<td><?php echo $this->trans('phpVersion'); ?></td>
 			<td class="text-success">>= 5.3</td>
-			<td><?php echo $this->phpVersion; ?></td>
+			<td><?php echo $this->get('phpVersion'); ?></td>
 		</tr>
 		<tr>
 			<td><?php echo $this->trans('writable').' "config.php"' ?></td>

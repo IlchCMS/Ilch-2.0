@@ -1,3 +1,6 @@
+<?php
+$errors = $this->get('errors');
+?>
 <div class="control-group">
 	<label for="dbEngine" class="control-label">
 		<?php echo $this->trans('dbEngine'); ?>:
@@ -8,58 +11,58 @@
 		</select>
 	</div>
 </div>
-<div class="control-group <?php if(!empty($this->errors['dbConnection'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['dbConnection'])){ echo 'error'; }; ?>">
 	<label for="dbHost" class="control-label">
 		<?php echo $this->trans('dbHost'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->dbHost)){ echo $this->dbHost; }else{ echo 'localhost'; } ?>"
+		<input value="<?php if($this->get('dbHost') != ''){ echo $this->get('dbHost'); }else{ echo 'localhost'; } ?>"
 			   type="text"
 			   name="dbHost"
 			   id="dbHost" />
 		<?php
-			if(!empty($this->errors['dbConnection']))
+			if(!empty($errors['dbConnection']))
 			{
-				echo '<span class="help-inline">'.$this->trans($this->errors['dbConnection']).'</span>';
+				echo '<span class="help-inline">'.$this->trans($errors['dbConnection']).'</span>';
 			}
 		?>
 	</div>
 </div>
-<div class="control-group <?php if(!empty($this->errors['dbConnection'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['dbConnection'])){ echo 'error'; }; ?>">
 	<label for="dbUser" class="control-label">
 		<?php echo $this->trans('dbUser'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->dbUser)){ echo $this->dbUser; } ?>"
+		<input value="<?php if($this->get('dbUser') != ''){ echo $this->get('dbUser'); } ?>"
 			   type="text"
 			   name="dbUser"
 			   id="dbUser" />
 	</div>
 </div>
-<div class="control-group <?php if(!empty($this->errors['dbConnection'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['dbConnection'])){ echo 'error'; }; ?>">
 	<label for="dbPassword" class="control-label">
 		<?php echo $this->trans('dbPassword'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->dbPassword)){ echo $this->dbPassword; } ?>"
+		<input value="<?php if($this->get('dbPassword') != ''){ echo $this->get('dbPassword'); } ?>"
 			   type="password"
 			   name="dbPassword"
 			   id="dbPassword" />
 	</div>
 </div>
-<div class="control-group <?php if(!empty($this->errors['dbDatabase'])){ echo 'error'; }; ?>">
+<div class="control-group <?php if(!empty($errors['dbDatabase'])){ echo 'error'; }; ?>">
 	<label for="dbName" class="control-label">
 		<?php echo $this->trans('dbName'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->dbName)){ echo $this->dbName; } ?>"
+		<input value="<?php if($this->get('dbName') != ''){ echo $this->get('dbName'); } ?>"
 			   type="text"
 			   name="dbName"
 			   id="dbName" />
 		<?php
-			if(!empty($this->errors['dbDatabase']))
+			if(!empty($errors['dbDatabase']))
 			{
-				echo '<span class="help-inline">'.$this->trans($this->errors['dbDatabase']).'</span>';
+				echo '<span class="help-inline">'.$this->trans($errors['dbDatabase']).'</span>';
 			}
 		?>
 	</div>
@@ -69,7 +72,7 @@
 		<?php echo $this->trans('dbPrefix'); ?>:
 	</label>
 	<div class="controls">
-		<input value="<?php if(!empty($this->dbPrefix)){ echo $this->dbPrefix; } else { echo 'ilch_'; } ?>"
+		<input value="<?php if($this->get('dbPrefix') != ''){ echo $this->get('dbPrefix'); } else { echo 'ilch_'; } ?>"
 			   type="text"
 			   name="dbPrefix"
 			   id="dbPrefix" />

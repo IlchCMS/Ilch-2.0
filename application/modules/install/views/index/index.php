@@ -9,7 +9,7 @@
 	<div class="controls">
 	<select name="language" id="languageInput">
 		<?php
-		foreach($this->languages as $key => $value)
+		foreach($this->get('languages') as $key => $value)
 		{
 			$selected = '';
 	
@@ -31,16 +31,17 @@
 	<div class="controls">
 		<select id="timezone" name="timezone">
 			<?php 
-				for($i = 0; $i < count($this->timezones); $i++)
+				$timezones = $this->get('timezones');
+
+				for($i = 0; $i < count($timezones); $i++)
 				{
 					$sel = '';
-
-					if($this->timezone == $this->timezones[$i])
+					if($this->get('timezone') == $timezones[$i])
 					{
 						$sel = 'selected="selected"';
 					}
 
-					echo '<option '.$sel.' value="'.$this->timezones[$i].'">'.$this->timezones[$i].'</option>';
+					echo '<option '.$sel.' value="'.$timezones[$i].'">'.$timezones[$i].'</option>';
 				}
 			?>
 		</select>

@@ -59,7 +59,7 @@ class Install_IndexController extends Ilch_Controller
 			$menu[$key]['done'] = true;
 		}
 
-		$this->getLayout()->menu = $menu;
+		$this->getLayout()->set('menu', $menu);
 	}
 
 	public function indexAction()
@@ -70,7 +70,7 @@ class Install_IndexController extends Ilch_Controller
 			'de_DE' => 'German'
 		);
 
-		$this->getView()->languages = $languages;
+		$this->getView()->set('languages', $languages);
 		$local = $this->getRequest()->getQuery('language');
 
 		if($local)
@@ -87,19 +87,19 @@ class Install_IndexController extends Ilch_Controller
 		
 		if(!empty($_SESSION['install']['timezone']))
 		{
-			$this->getView()->timezone = $_SESSION['install']['timezone'];
+			$this->getView()->set('timezone', $_SESSION['install']['timezone']);
 		}
 		else
 		{
-			$this->getView()->timezone = SERVER_TIMEZONE;
+			$this->getView()->set('timezone', SERVER_TIMEZONE);
 		}
 
-		$this->getView()->timezones = DateTimeZone::listIdentifiers();
+		$this->getView()->set('timezones', DateTimeZone::listIdentifiers());
 	}
 
 	public function licenseAction()
 	{
-		$this->getView()->licenceText = file_get_contents(APPLICATION_PATH.'/../licence.txt');
+		$this->getView()->set('licenceText', file_get_contents(APPLICATION_PATH.'/../licence.txt'));
 
 		if($this->getRequest()->isPost())
 		{
@@ -109,7 +109,7 @@ class Install_IndexController extends Ilch_Controller
 			}
 			else
 			{
-				$this->getView()->error = true;
+				$this->getView()->set('error', true);
 			}
 		}
 	}
@@ -117,7 +117,7 @@ class Install_IndexController extends Ilch_Controller
 	public function systemcheckAction()
 	{
 		$errors = array();
-		$this->getView()->phpVersion = phpversion();
+		$this->getView()->set('phpVersion', phpversion());
 
 		if(!version_compare(phpversion(), '5.3.0', '>'))
 		{
@@ -172,14 +172,14 @@ class Install_IndexController extends Ilch_Controller
 				$this->redirect(array('module' => 'install', 'action' => 'config'));
 			}
 
-			$this->getView()->errors = $errors;
+			$this->getView()->set('errors', $errors);
 		}
 
 		foreach(array('dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $name)
 		{
 			if(!empty($_SESSION['install'][$name]))
 			{
-				$this->getView()->$name = $_SESSION['install'][$name];
+				$this->getView()->set($name, $_SESSION['install'][$name]);
 			}
 		}
 	}
@@ -263,14 +263,14 @@ class Install_IndexController extends Ilch_Controller
 				$this->redirect(array('module' => 'install', 'action' => 'finish'));
 			}
 
-			$this->getView()->errors = $errors;
+			$this->getView()->set('errors', $errors);
 		}
 
 		foreach(array('adminName', 'adminPassword', 'adminPassword2', 'adminEmail') as $name)
 		{
 			if(!empty($_SESSION['install'][$name]))
 			{
-				$this->getView()->$name = $_SESSION['install'][$name];
+				$this->getView()->set($name, $_SESSION['install'][$name]);
 			}
 		}
 	}
