@@ -1,0 +1,23 @@
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+	background-color: #EEE;
+}
+
+.box_shadow {
+	-webkit-box-shadow: 0px 0px 3px #222;
+	-moz-box-shadow: 0px 0px 3px #222;
+	box-shadow: 0px 0px 3px #222;
+}
+
+.container {
+	padding: 60px;
+	background-color: white;
+}
+
+.login_container {
+	border: 1px solid #ddd;
+	width: 300px;
+	height: 200px;
+	border-radius: 6px 6px 6px 6px;
+}
