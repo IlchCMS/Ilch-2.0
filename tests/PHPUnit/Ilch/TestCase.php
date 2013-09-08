@@ -15,6 +15,30 @@
 class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 {
 	/**
+	 * A data array which will be used to create a config object for the registry.
+	 *
+	 * @var Array
+	 */
+	protected $_configData = array();
+
+	/**
+	 * Filling an initial config object and giving it to the registry.
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$config = new Ilch_Config_File();
+
+		foreach($this->_configData as $configKey => $configValue)
+		{
+			$config->set($configKey, $configValue);
+		}
+
+		Ilch_Registry::remove('config');
+		Ilch_Registry::set('config', $config);
+	}
+
+	/**
 	 * Returns the _files folder path for this test.
 	 *
 	 * @return string |false
