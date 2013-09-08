@@ -1,0 +1,59 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#sidebar {
+	width:300px;
+	background-color: #ECECFB;
+	position: fixed;
+	height: 100%;
+	border-right: 1px solid silver;
+}
+
+#app {
+	height:100%;
+	margin-left: 300px;
+}
+
+#app .app_content{
+	padding:40px;
+}
+
+.navbar-inner {
+	border-radius: 0px;
+	border:none;
+	height: 40px;
+	box-shadow: 0 1px 4px #666;
+}
+
+.navbar-sidebar {
+	background-color: #CACAD9;
+	background-image: none;
+}
+
+
+.navbar-app {
+	background-color: #CCCCCC;
+	background-image: none;
+}
+
+.navbar .brand,
+.navbar .nav > li > a {
+	text-shadow: none;
+}
+
+.nav-tabs > .active > a {
+	color: black;
+}
+
+.nav-tabs.nav-stacked > li:first-child > a,
+.nav-tabs.nav-stacked > li:last-child > a {
+	border-radius: 0px;
+	border:none;
+}
+
+.nav-tabs.nav-stacked > li > a {
+	border-right: none;
+}
