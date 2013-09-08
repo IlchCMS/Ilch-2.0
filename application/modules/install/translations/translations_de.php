@@ -36,5 +36,11 @@ return array
 	'dbDatabaseError'  => 'Die Datenbank existiert nicht',
 	'writable'			 => 'Beschreibar',
 	'cmsType'			 => 'CMS Typ',
-	'successInstalled'	 => 'Ilch CMS wurde erfolgreich installiert'
+	'successInstalled'	 => 'Ilch CMS wurde erfolgreich installiert',
+	'adminName'		   => 'Admin Name',
+	'adminPassword'	   => 'Admin Passwort',
+	'adminPassword2'   => 'Passwort Wiederholung',
+	'adminEmail'       => 'Admin Email',
+	'fieldEmpty'	   => 'Feld darf nicht leer sein',
+	'fieldDiffersPassword' => 'Passwortfelder müssen gleich sein',
 );

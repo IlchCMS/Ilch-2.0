@@ -228,6 +228,7 @@ class Ilch_Database_Mysql
 	 *
 	 * @param array $fields
 	 * @param string $table
+	 * @return integer
 	 */
 	public function insert($fields, $table)
 	{
@@ -250,6 +251,8 @@ class Ilch_Database_Mysql
 
 		$sql .= implode(',', $sqlValues) . ')';
 		$this->query($sql);
+
+		return $this->conn->insert_id;
 	}
 
 	/**

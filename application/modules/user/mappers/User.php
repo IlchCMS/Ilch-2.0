@@ -140,12 +140,15 @@ class User_UserMapper extends Ilch_Mapper
 		$fields = array
 		(
 			'name' => $user->getName(),
+			'password' => $user->getPassword(),
 			'email' => $user->getEmail(),
 			'date_created' => $user->getDateCreated(),
 			'date_confirmed' => $user->getDateConfirmed(),
 		);
 
-		if($user->getId() && $this->getUserById($user->getId()))
+		$userId = $user->getId();
+
+		if($userId && $this->getUserById($userId))
 		{
 			/*
 			 * User does exist already, update.
@@ -156,7 +159,7 @@ class User_UserMapper extends Ilch_Mapper
 				'users',
 				array
 				(
-					'id' => $user->getId(),
+					'id' => $userId,
 				)
 			);
 		}
@@ -165,11 +168,33 @@ class User_UserMapper extends Ilch_Mapper
 			/*
 			 * User does not exist yet, insert.
 			 */
-			$this->getDatabase()->insert
+			$userId = $this->getDatabase()->insert
 			(
 				$fields,
 				'users'
 			);
+		}
+
+		if($user->getGroups())
+		{
+			$this->getDatabase()->delete
+			(
+				'users_groups',
+				array('user_id' => $userId)
+			);
+
+			foreach($user->getGroups() as $groupId)
+			{
+				$this->getDatabase()->insert
+				(
+					array
+					(
+						'user_id' => $userId,
+						'group_id' => $groupId
+					),
+					'users_groups'
+				);
+			}
 		}
 	}
 }

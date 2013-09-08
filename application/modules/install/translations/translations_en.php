@@ -36,5 +36,11 @@ return array
 	'dbDatabaseError'  => 'database do not exists',
 	'writable'		   => 'writable',
 	'cmsType'		   => 'cms type',
-	'successInstalled' => 'Ilch CMS  successfully installed'
+	'adminName'		   => 'admin name',
+	'adminPassword'	   => 'admin password',
+	'adminPassword2'   => 'admin password confirm',
+	'adminEmail'       => 'admin email',
+	'successInstalled' => 'Ilch CMS  successfully installed',
+	'fieldEmpty'	   => 'field must be filled',
+	'fieldDiffersPassword' => 'passwords are different',
 );

@@ -142,12 +142,12 @@ class Install_IndexController extends Ilch_Controller
 
 			if(!$dbConnect)
 			{
-				$errors['dbConnection'] = true;
+				$errors['dbConnection'] = 'dbConnectionError';
 			}
 
 			if($dbConnect && !$db->setDatabase($this->getRequest()->getPost('dbName')))
 			{
-				$errors['dbDatabase'] = true;
+				$errors['dbDatabase'] = 'dbDatabaseError';
 			}
 
 			if(empty($errors))
@@ -169,32 +169,83 @@ class Install_IndexController extends Ilch_Controller
 
 	public function configAction()
 	{
+		$errors = array();
+
 		if($this->getRequest()->isPost())
 		{
-			$cmsType = $this->getRequest()->getPost('cmsType');
-			$config = new Ilch_Config();
-			$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
-			$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
-			$config->setConfig('dbUser', $_SESSION['install']['dbUser']);
-			$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
-			$config->setConfig('dbName', $_SESSION['install']['dbName']);
-			$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
-			$config->saveConfigToFile(CONFIG_PATH.'/config.php');
+			$_SESSION['install']['adminName'] = $this->getRequest()->getPost('adminName');
+			$_SESSION['install']['adminPassword'] = $this->getRequest()->getPost('adminPassword');
+			$_SESSION['install']['adminPassword2'] = $this->getRequest()->getPost('adminPassword2');
+			$_SESSION['install']['adminEmail'] = $this->getRequest()->getPost('adminEmail');
+			$_SESSION['install']['cmsType'] = $this->getRequest()->getPost('cmsType');
 
-			$dbFactory = new Ilch_Database_Factory();
-			$db = $dbFactory->getInstanceByConfig($config);
-
-			$sqlString = file_get_contents(__DIR__.'/../files/install_general.sql');
-			$queryParts = explode(';', $sqlString);
-
-			foreach($queryParts as $query)
+			if(empty($_SESSION['install']['adminName']))
 			{
-				$db->query($query);
+				$errors['adminName'] = 'fieldEmpty';
 			}
 
-			unset($_SESSION['install']);
+			if(empty($_SESSION['install']['adminPassword']))
+			{
+				$errors['adminPassword'] = 'fieldEmpty';
+			}
 
-			$this->redirect(array('module' => 'install', 'action' => 'finish'));
+			if($_SESSION['install']['adminPassword'] !== $_SESSION['install']['adminPassword2'])
+			{
+				$errors['adminPassword2'] = 'fieldDiffersPassword';
+			}
+
+			if(empty($_SESSION['install']['adminEmail']))
+			{
+				$errors['adminEmail'] = 'fieldEmpty';
+			}
+
+			if(empty($errors))
+			{
+				$config = new Ilch_Config();
+				$config->setConfig('dbEngine', $_SESSION['install']['dbEngine']);
+				$config->setConfig('dbHost', $_SESSION['install']['dbHost']);
+				$config->setConfig('dbUser', $_SESSION['install']['dbUser']);
+				$config->setConfig('dbPassword', $_SESSION['install']['dbPassword']);
+				$config->setConfig('dbName', $_SESSION['install']['dbName']);
+				$config->setConfig('dbPrefix', $_SESSION['install']['dbPrefix']);
+				$config->saveConfigToFile(CONFIG_PATH.'/config.php');
+
+				$dbFactory = new Ilch_Database_Factory();
+				$db = $dbFactory->getInstanceByConfig($config);
+				Ilch_Registry::set('db', $db);
+
+				$sqlString = file_get_contents(__DIR__.'/../files/install_general.sql');
+				$queryParts = explode(';', $sqlString);
+
+				foreach($queryParts as $query)
+				{
+					$db->query($query);
+				}
+				
+				$hashPassword = crypt($_SESSION['install']['adminPassword']);
+				
+				$userMapper = new User_UserMapper();
+				$user = new User_UserModel();
+				$user->setName($_SESSION['install']['adminName']);
+				$user->setPassword($hashPassword);
+				$user->setEmail($_SESSION['install']['adminEmail']);
+				$user->setGroups(array(1));
+				$userMapper->save($user);
+
+				unset($_SESSION['install']);
+
+				$this->redirect(array('module' => 'install', 'action' => 'finish'));
+			}
+
+			$this->getView()->errors = $errors;
+		}
+
+		foreach(array('adminName', 'adminPassword', 'adminPassword2', 'adminEmail') as $name)
+		{
+			if(!empty($_SESSION['install'][$name]))
+			{
+				$this->getView()->$name = $_SESSION['install'][$name];
+			}
 		}
 	}
 

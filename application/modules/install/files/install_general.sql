@@ -55,6 +55,7 @@ INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `[prefix]_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date_created` datetime NOT NULL,
   `date_confirmed` datetime NOT NULL,

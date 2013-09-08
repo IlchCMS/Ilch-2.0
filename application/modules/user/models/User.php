@@ -39,6 +39,13 @@ class User_UserModel extends Ilch_Model
 	protected $_email = '';
 
 	/**
+	 * The password of the user.
+	 *
+	 * @var string
+	 */
+	protected $_password = '';
+
+	/**
 	 * The timestamp of when the user got created.
 	 *
 	 * @var int
@@ -51,6 +58,13 @@ class User_UserModel extends Ilch_Model
 	 * @var int
 	 */
 	protected $_dateConfirmed = 0;
+
+	/**
+	 * The groups as id of the user.
+	 *
+	 * @var array
+	 */
+	protected $_groups = array();
 
 	/**
 	 * Returns the id of the user.
@@ -110,6 +124,46 @@ class User_UserModel extends Ilch_Model
 	public function setEmail($email)
 	{
 		$this->_email = (string)$email;
+	}
+
+	/**
+	 * Returns the password of the user.
+	 *
+	 * @return string
+	 */
+	public function getPassword()
+	{
+		return $this->_password;
+	}
+
+	/**
+	 * Saves the password of the user.
+	 *
+	 * @param string $password
+	 */
+	public function setPassword($password)
+	{
+		$this->_password = (string)$password;
+	}
+
+	/**
+	 * Saves the groups of the user.
+	 *
+	 * @return array
+	 */
+	public function getGroups()
+	{
+		return $this->_groups;
+	}
+
+	/**
+	 * Saves the groups of the user.
+	 *
+	 * @param array $groups
+	 */
+	public function setGroups($groups)
+	{
+		$this->_groups = (array)$groups;
 	}
 
 	/**

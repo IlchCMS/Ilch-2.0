@@ -20,7 +20,7 @@
 		<?php
 			if(!empty($this->errors['dbConnection']))
 			{
-				echo '<span class="help-inline">'.$this->trans('dbConnectionError').'</span>';
+				echo '<span class="help-inline">'.$this->trans($this->errors['dbConnection']).'</span>';
 			}
 		?>
 	</div>
@@ -59,7 +59,7 @@
 		<?php
 			if(!empty($this->errors['dbDatabase']))
 			{
-				echo '<span class="help-inline">'.$this->trans('dbDatabaseError').'</span>';
+				echo '<span class="help-inline">'.$this->trans($this->errors['dbDatabase']).'</span>';
 			}
 		?>
 	</div>
