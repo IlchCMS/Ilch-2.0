@@ -23,7 +23,7 @@ class Ilch_Date extends DateTime
 	 *
 	 * @var DateTimeZone
 	 */
-	private $_timeZoneDb;
+	private $_timeZone;
 
 	/**
 	 * The local DateTimeZone.
@@ -49,32 +49,34 @@ class Ilch_Date extends DateTime
 	/**
 	 * Generates a DateTime object using the given parameters.
 	 *
-	 * @param string $time     A string which represents the current time.
-	 * @param string $timezone The locale to set the timezone.
+	 * @param string $time        A string which represents the current time.
+	 * @param string|DateTimeZone $timezone The locale to set the timezone.
 	 */
-	public function __construct($time = 'now', DateTimeZone $timezone = null)
+	public function __construct($time = 'now', $timezone = 'UTC')
 	{
-		if($timezone === null)
+		if(Ilch_Registry::has('config'))
 		{
-			if(Ilch_Registry::has('config'))
-			{
-				$timezone = new DateTimeZone(Ilch_Registry::get('config')->get('timezone'));
-			}
-			else
-			{
-				$timezone = new DateTimeZone(date_default_timezone_get());
-			}
+			$this->_timeZoneLocal = new DateTimeZone(Ilch_Registry::get('config')->get('timezone'));
+		}
+		else
+		{
+			$this->_timeZoneLocal = new DateTimeZone(SERVER_TIMEZONE);
 		}
 
+		if(is_string($timezone))
+		{
+			$timezone = new DateTimeZone($timezone);
+		}
+
+		$this->_timeZone = $timezone;
 		parent::__construct($time, $timezone);
-		$this->_timeZoneDb = new DateTimeZone('UTC');
-		$this->_timeZoneLocal = $timezone;
 	}
 
 	/**
 	 * Returns the datetime string for the db.
 	 *
-	 * @return string A string formatted like 'Y-m-d H:i:s'.
+	 * @param  boolean $local
+	 * @return string  A formatted date string.
 	 */
 	public function toDb($local = false)
 	{
@@ -84,19 +86,10 @@ class Ilch_Date extends DateTime
 		}
 		else
 		{
-			$timezone = $this->_timeZoneDb;
+			$timezone = $this->_timeZone;
 		}
 
-		if(is_string($timezone))
-		{
-			$timezone = new DateTimeZone($timezone);
-		}
-
-		$this->setTimezone($timezone);
-		$formattedTime = $this->format($this->_dbFormat);
-		$this->setTimezone($this->_timeZoneLocal);
-
-		return $formattedTime;
+		return $this->_format($this->_dbFormat, $local);
 	}
 
 	/**
@@ -115,16 +108,40 @@ class Ilch_Date extends DateTime
 	 * If no format is given, the default format will be used.
 	 *
 	 * @param  string $format See http://www.php.net/manual/en/function.date.php
+	 * @param  boolean $local
 	 * @return string
 	 */
-	public function format($format = null)
+	public function format($format = null, $local = false)
 	{
 		if($format === null)
 		{
 			$format = $this->_defaultFormat;
 		}
 
-		return parent::format($format);
+		return $this->_format($format, $local);
+	}
+
+	/**
+	 * Formats and returns the date considering local.
+	 *
+	 * @param  string  $format
+	 * @param  boolean $local
+	 * @return string
+	 */
+	protected function _format($format, $local)
+	{
+		if($local)
+		{
+			$this->setTimezone($this->_timeZoneLocal);
+			$formattedTime = parent::format($format);
+			$this->setTimezone($this->_timeZone);
+		}
+		else
+		{
+			$formattedTime = parent::format($format);
+		}
+
+		return $formattedTime;
 	}
 
 	/**

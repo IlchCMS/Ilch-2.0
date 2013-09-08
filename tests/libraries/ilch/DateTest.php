@@ -41,11 +41,11 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	/**
 	 * Tests if the class creates the right db datetime string in UTC using the given time.
 	 */
-	public function testToDbToUTC()
+	public function testToDb()
 	{
 		$ilchDate = new Ilch_Date('2013-09-24 15:44:53');
 
-		$this->assertEquals('2013-09-24 13:44:53', $ilchDate->toDb(), 'The date was not converted to UTC.');
+		$this->assertEquals('2013-09-24 15:44:53', $ilchDate->toDb(), 'The date was not returned in UTC.');
 	}
 
 	/**
@@ -55,7 +55,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	{
 		$ilchDate = new Ilch_Date('2013-09-24 15:44:53');
 
-		$this->assertEquals('2013-09-24 15:44:53', $ilchDate->toDb(true), 'The date was not in the local timezone returned.');
+		$this->assertEquals('2013-09-24 17:44:53', $ilchDate->toDb(true), 'The date was not in the local timezone returned.');
 	}
 
 	/**
@@ -66,7 +66,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 		$ilchDate = new Ilch_Date('2013-09-24 15:44:53');
 		$ilchDate->setDbFormat('d.m.Y H:i:s');
 
-		$this->assertEquals('24.09.2013 13:44:53', $ilchDate->toDb(), 'The date was not returned with the correct format.');
+		$this->assertEquals('24.09.2013 15:44:53', $ilchDate->toDb(), 'The date was not returned with the correct format.');
 	}
 
 	/**
