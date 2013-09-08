@@ -24,9 +24,8 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 	/**
 	 * Filling an initial config object and giving it to the registry.
 	 */
-	public function __construct()
+	public function setUp()
 	{
-		parent::__construct();
 		$config = new Ilch_Config_File();
 
 		foreach($this->_configData as $configKey => $configValue)

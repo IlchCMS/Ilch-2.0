@@ -29,17 +29,6 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	);
 
 	/**
-	 * Sets the current locale for the tests.
-	 *
-	 * The Ilch_Date object should return UTC time for the database
-	 * so it should convert an other locale to UTC.
-	 */
-	public function setUp()
-	{
-		setlocale(LC_TIME, 'de_de');
-	}
-
-	/**
 	 * Tests if Ilch_Date extends from DateTime.
 	 */
 	public function testExtendFromDateTime()
