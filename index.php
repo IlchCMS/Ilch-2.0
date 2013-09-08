@@ -10,10 +10,12 @@ error_reporting(-1);
 
 session_start();
 header('Content-Type: text/html; charset=utf-8');
+$serverTimeZone = date_default_timezone_get();
 date_default_timezone_set('UTC');
 
 define('ACCESS', 1);
 define('VERSION', '2.0');
+define('SERVER_TIMEZONE', $serverTimeZone);
 define('APPLICATION_PATH', __DIR__.'/application');
 define('CONFIG_PATH', APPLICATION_PATH.'/../');
 define('REWRITE_BASE', str_replace(array('/index.php', 'index.php'), '', $_SERVER['PHP_SELF']));

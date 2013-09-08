@@ -80,9 +80,21 @@ class Install_IndexController extends Ilch_Controller
 		}
 
 		if($this->getRequest()->isPost())
-		{
+		{	
+			$_SESSION['install']['timezone'] = $this->getRequest()->getPost('timezone');
 			$this->redirect(array('module' => 'install', 'action' => 'license'));
 		}
+		
+		if(!empty($_SESSION['install']['timezone']))
+		{
+			$this->getView()->timezone = $_SESSION['install']['timezone'];
+		}
+		else
+		{
+			$this->getView()->timezone = SERVER_TIMEZONE;
+		}
+
+		$this->getView()->timezones = DateTimeZone::listIdentifiers();
 	}
 
 	public function licenseAction()
@@ -240,6 +252,7 @@ class Install_IndexController extends Ilch_Controller
 				$databaseConfig->set('version', VERSION, 1);
 				$databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
 				$databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
+				$databaseConfig->set('timezone', $_SESSION['install']['timezone']);
 
 				unset($_SESSION['install']);
 
