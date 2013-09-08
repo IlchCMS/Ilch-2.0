@@ -11,6 +11,11 @@ class Install_IndexController extends Ilch_Controller
 {
 	public function init()
 	{
+		/*
+		 * Dont set a time limit for installer.
+		 */
+		set_time_limit(0);
+
 		if(isset($_SESSION['language']))
 		{
 			$this->getTranslator()->setLocale($_SESSION['language']);
@@ -221,16 +226,26 @@ class Install_IndexController extends Ilch_Controller
 				{
 					$db->query($query);
 				}
-				
-				$hashPassword = crypt($_SESSION['install']['adminPassword']);
-				
+
 				$userMapper = new User_UserMapper();
 				$user = new User_UserModel();
 				$user->setName($_SESSION['install']['adminName']);
-				$user->setPassword($hashPassword);
+				$user->setPassword(crypt($_SESSION['install']['adminPassword']));
 				$user->setEmail($_SESSION['install']['adminEmail']);
 				$user->setGroups(array(1));
 				$userMapper->save($user);
+
+				$date = new DateTime();
+				$db->insert
+				(
+					array
+					(
+						'version' => VERSION,
+						'locale' => $this->getTranslator()->getLocale(),
+						'date_cms_installed' => $date->format('Y-m-d H:i:s')
+					),
+					'config'
+				);
 
 				unset($_SESSION['install']);
 
