@@ -38,6 +38,7 @@ class Ilch_Page
 		$router = new Ilch_Router($request, $fileConfig);
 
 		$plugin = new Ilch_Plugin();
+		$plugin->addPluginData('request', $request);
 		$plugin->detectPlugins();
 
 		if($this->_ilchInstalled)
@@ -51,7 +52,7 @@ class Ilch_Page
 		}
 
 		$router->execute();
-	
+
 		if(!$this->_ilchInstalled)
 		{
 			$request->setModuleName('install');
@@ -188,8 +189,11 @@ class Ilch_Page
 
 		/*
 		 * Load "BeforeControllerLoad" - plugins.
+		 * Also load "UserLoaded" - plugins.
 		 */
+		$plugin->addPluginData('controller', $controller);
 		$plugin->execute('BeforeControllerLoad');
+		$plugin->execute('UserLoaded');
 
 		if(method_exists($controller, 'init'))
 		{

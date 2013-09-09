@@ -15,6 +15,13 @@ class Ilch_Plugin
 	protected $_detectedPlugins;
 
 	/**
+	 * Data hold by for passing to the plugins.
+	 *
+	 * @var Array
+	 */
+	protected $_pluginData = array();
+
+	/**
 	 * Searching for plugins.
 	 */
 	public function detectPlugins()
@@ -43,7 +50,20 @@ class Ilch_Plugin
 		foreach($this->_detectedPlugins[$pluginName] as $module)
 		{
 			$pluginClass = $module.'_'.$pluginName.'Plugin';
-			$plugin = new $pluginClass();
+			$plugin = new $pluginClass($this->_pluginData);
 		}
+	}
+
+	/**
+	 * Adds data for the plugins.
+	 *
+	 * If data with the key already exists, it will get overwritten.
+	 *
+	 * @param string $key
+	 * @param mixed  $value
+	 */
+	public function addPluginData($key, $value)
+	{
+		$this->_pluginData[$key] = $value;
 	}
 }

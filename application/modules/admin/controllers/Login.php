@@ -16,5 +16,6 @@ class Admin_LoginController extends Ilch_Controller
 
 	public function indexAction()
 	{
+
 	}
 }
