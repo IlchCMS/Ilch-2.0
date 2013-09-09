@@ -235,13 +235,7 @@ class Install_IndexController extends Ilch_Controller
 				$db = $dbFactory->getInstanceByConfig($fileConfig);
 				Ilch_Registry::set('db', $db);
 
-				$sqlString = file_get_contents(__DIR__.'/../files/install_general.sql');
-				$queryParts = explode(';', $sqlString);
-
-				foreach($queryParts as $query)
-				{
-					$db->query($query);
-				}
+				$db->executeQueries(file_get_contents(__DIR__.'/../files/install_general.sql'));
 
 				$userMapper = new User_UserMapper();
 				$user = new User_UserModel();

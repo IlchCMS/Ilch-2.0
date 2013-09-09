@@ -317,4 +317,22 @@ class Ilch_Database_Mysql
 	{
 		return mysqli_real_escape_string($this->conn, $value);
 	}
+
+	/**
+	 * Execute given query string.
+	 *
+	 * @param string $sqlString
+	 */
+	public function executeQueries($sqlString)
+	{
+		/*
+		 * @fixme we should not use ";" as delimiter.
+		 */
+		$queryParts = explode(';', $sqlString);
+
+		foreach($queryParts as $query)
+		{
+			$this->query($query);
+		}
+	}
 }
