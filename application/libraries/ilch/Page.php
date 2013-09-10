@@ -51,6 +51,7 @@ class Ilch_Page
 			Ilch_Registry::set('config', $databaseConfig);
 		}
 
+		$plugin->execute('AfterDatabaseLoad');
 		$router->execute();
 
 		if(!$this->_ilchInstalled)
@@ -61,10 +62,9 @@ class Ilch_Page
 		$layout = new Ilch_Layout($request, $translator, $router);
 		$view = new Ilch_View($request, $translator, $router);
 
-		/*
-		 * Load controller as first.
-		 */
 		$controller = $this->_loadController($layout, $view, $plugin, $request, $translator);
+		$plugin->addPluginData('controller', $controller);
+		$plugin->execute('AfterControllerLoad');
 
 		/*
 		 * Load controller view, if exists.
@@ -187,13 +187,8 @@ class Ilch_Page
 		$controller->name = strtolower($request->getControllerName());
 		$action = $request->getActionName().'Action';
 
-		/*
-		 * Load "BeforeControllerLoad" - plugins.
-		 * Also load "UserLoaded" - plugins.
-		 */
 		$plugin->addPluginData('controller', $controller);
 		$plugin->execute('BeforeControllerLoad');
-		$plugin->execute('UserLoaded');
 
 		if(method_exists($controller, 'init'))
 		{

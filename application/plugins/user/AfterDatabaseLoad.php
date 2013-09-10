@@ -16,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch CMS 2.0
  * @package ilch
  */
-class User_BeforeControllerLoadPlugin
+class User_AfterDatabaseLoadPlugin
 {
 	/**
 	 * Checks if a user id was given in the request and sets the user.

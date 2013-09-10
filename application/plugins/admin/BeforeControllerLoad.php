@@ -16,21 +16,18 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch CMS 2.0
  * @package ilch
  */
-class Admin_UserLoadedPlugin
+class Admin_BeforeControllerLoadPlugin
 {
 	/**
 	 * Redirects the user to the admin login page, if the user is not logged in, yet.
 	 */
-	public function __construct(Array $pluginData)
+	public function __construct(array $pluginData)
 	{
 		$request = $pluginData['request'];
 
-		if($request->getModuleName() == 'admin' && $request->getControllerName() == 'index')
+		if($request->getModuleName() == 'admin' && $request->getControllerName() !== 'login' && !Ilch_Registry::get('user'))
 		{
-			if(!Ilch_Registry::get('user'))
-			{
-				$pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'login'));
-			}
+			$pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'login'));
 		}
 	}
 }
