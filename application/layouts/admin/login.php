@@ -24,25 +24,25 @@
 				$email = $this->get('email');
 				$error = empty($errors) ? '' : 'error';
 			?>
-			<form method="POST" action="<?=$this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'login'))?>">
-				<h3 class="form-signin-heading"><?=$this->trans('loginWelcome')?></h3>
+			<form method="POST" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'login'))?>">
+				<h3 class="form-signin-heading"><?php echo$this->trans('loginWelcome')?></h3>
 				<div class="control-group <?php if(!empty($errors)){ echo 'error'; }; ?>">
 					<div class="controls">
 						<input type="text"
 							   name="email"
-							   class="input-block-level <?=$error?>"
-							   placeholder="<?=$this->trans('email')?>"
-							   value="<?=$email?>">
+							   class="input-block-level <?php echo $error?>"
+							   placeholder="<?php echo $this->trans('email')?>"
+							   value="<?php echo $email?>">
 					</div>
 
 					<div class="controls">
 						<input type="password"
 							   name="password"
-							   class="input-block-level <?=$error?>"
-							   placeholder="<?=$this->trans('password')?>">
+							   class="input-block-level <?php echo $error?>"
+							   placeholder="<?php echo $this->trans('password')?>">
 					</div>
 
-					<button class="btn" type="submit"><?=$this->trans('signIn')?></button>
+					<button class="btn" type="submit"><?php echo $this->trans('signIn')?></button>
 					<?php
 						if(!empty($errors))
 						{

@@ -10,9 +10,7 @@
 	</head>
 	<body>
 		<div class="container box_shadow">
-
-			<?=$this->getContent()?>
-
+			<?php echo $this->getContent()?>
 		</div>
 	</body>
 </html>

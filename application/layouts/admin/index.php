@@ -37,8 +37,8 @@
 				<div class="navbar-inner navbar-app">
 					<ul class="nav">
 						<li>
-							<a href="<?=$this->url(array('module' => 'admin', 'controller' => 'logout', 'action' => 'logout'))?>">
-								<i class="icon-off"></i> <?=$this->trans('logout');?>
+							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'logout', 'action' => 'logout'))?>">
+								<i class="icon-off"></i> <?php echo $this->trans('logout');?>
 							</a>
 						</li>
 					</ul>
