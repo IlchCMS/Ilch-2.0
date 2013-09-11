@@ -1,8 +1,8 @@
 <?php
 /**
- * Holds class User_BeforeControllerLoadPlugin.
+ * Holds User_AfterDatabaseLoadPlugin.
  *
- * @author Meyer Dominik
+ * @author Jainta Martin
  * @copyright Ilch CMS 2.0
  * @package ilch
  */
@@ -12,7 +12,7 @@ defined('ACCESS') or die('no direct access');
 /**
  * Does user operations before the controller loads.
  *
- * @author  Martin Jainta
+ * @author  Jainta Martin
  * @copyright Ilch CMS 2.0
  * @package ilch
  */

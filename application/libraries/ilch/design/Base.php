@@ -143,7 +143,7 @@ abstract class Ilch_Design_Base
 	/**
 	 * Creates a full url for the given parts.
 	 *
-	 * @param arry $module
+	 * @param array $urlArray
 	 * @param string $route
 	 * @param boolean $rewrite
 	 * @return string
@@ -160,46 +160,79 @@ abstract class Ilch_Design_Base
 
 		if($rewrite || ($config && $config->get('rewrite') == true))
 		{
-			if(isset($urlArray['module']))
-			{
-				$urlParts[] = $urlArray['module'];
-				unset($urlArray['module']);
-			}
-			else
-			{
-				$urlParts[] = 'index';
-			}
-			
-			if(isset($urlArray['controller']))
-			{
-				$urlParts[] = $urlArray['controller'];
-				unset($urlArray['controller']);
-			}
-			else
-			{
-				$urlParts[] = 'index';
-			}
-			
-			if(isset($urlArray['action']))
-			{
-				$urlParts[] = $urlArray['action'];
-				unset($urlArray['action']);
-			}
-			else
-			{
-				$urlParts[] = 'index';
-			}
-			
-			foreach($urlArray as $key => $value)
-			{
-				$urlParts[] = $key;
-				$urlParts[] = $value;
-			}
-
+			/*
+			 * @fixme use here logic for mod_rewrite.
+			 */
 			return BASE_URL.'/'.implode('/', $urlParts);
 		}
 		else
 		{
+			if(!isset($urlArray['module']))
+			{
+				$urlParts[] = 'module='.$this->getRequest()->getModuleName();
+			}
+			else
+			{
+				$urlParts[] = 'module='.$urlArray['module'];
+				unset($urlArray['module']);
+			}
+			
+			if(!isset($urlArray['controller']))
+			{
+				$urlParts[] = 'controller='.$this->getRequest()->getControllerName();
+			}
+			else
+			{
+				$urlParts[] = 'controller='.$urlArray['controller']; 
+				unset($urlArray['controller']);
+			}
+
+			if(!isset($urlArray['action']))
+			{
+				$urlParts[] = 'action='.$this->getRequest()->getActionName();
+			}
+			else
+			{
+				$urlParts[] = 'action='.$urlArray['action'];
+				unset($urlArray['action']);
+			}
+
+			/*
+			 * Submodul handling.
+			 */
+			if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'module' && $this->getRequest()->getActionName() == 'load')
+			{
+				if(!isset($urlArray['submodule']))
+				{
+					$urlParts[] = 'submodule='.$this->getRequest()->getQuery('submodule');
+				}
+				else
+				{
+					$urlParts[] = 'submodule='.$urlArray['submodule'];
+					unset($urlArray['submodule']);
+				}
+
+				if(!isset($urlArray['subcontroller']))
+				{
+					$urlParts[] = 'subcontroller='.$this->getRequest()->getQuery('subcontroller');
+				}
+				else
+				{
+					$urlParts[] = 'subcontroller='.$urlArray['subcontroller']; 
+					unset($urlArray['subcontroller']);
+				}
+
+				if(!isset($urlArray['subaction']))
+				{
+					$urlParts[] = 'subaction='.$this->getRequest()->getQuery('subaction');
+				}
+				else
+				{
+					$urlParts[] = 'subaction='.$urlArray['subaction'];
+					unset($urlArray['subaction']);
+				}
+			}
+
 			foreach($urlArray as $key => $value)
 			{
 				$urlParts[] = $key.'='.$value;

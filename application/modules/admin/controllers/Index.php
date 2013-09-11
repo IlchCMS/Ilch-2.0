@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Harald Schneider
+ * @author Meyer Dominik
  * @copyright Ilch CMS 2.0
  * @package ilch
  */

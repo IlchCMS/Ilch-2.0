@@ -71,20 +71,16 @@ class Ilch_Layout extends Ilch_Design_Base
 	}
 
 	/**
-	 * Loads the given file.
+	 * Loads a view script.
 	 *
-	 * @param string $file
-	 * @param integer $noFile
+	 * @param string $loadScript
+	 * @return string
 	 */
-	public function load($file, $noFile = 0)
+	public function loadScript($loadScript)
 	{
-		if($noFile == 1)
+		if(file_exists($loadScript))
 		{
-			echo $file;
-		}
-		elseif(file_exists(APPLICATION_PATH.'/layouts/'.$file.'.php'))
-		{
-			require_once APPLICATION_PATH.'/layouts/'.$file.'.php';
+			include_once($loadScript);
 		}
 	}
 

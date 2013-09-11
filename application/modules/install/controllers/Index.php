@@ -82,7 +82,7 @@ class Install_IndexController extends Ilch_Controller
 		if($this->getRequest()->isPost())
 		{	
 			$_SESSION['install']['timezone'] = $this->getRequest()->getPost('timezone');
-			$this->redirect(array('module' => 'install', 'action' => 'license'));
+			$this->redirect(array('action' => 'license'));
 		}
 		
 		if(!empty($_SESSION['install']['timezone']))
@@ -105,7 +105,7 @@ class Install_IndexController extends Ilch_Controller
 		{
 			if($this->getRequest()->getPost('licenceAccepted'))
 			{
-				$this->redirect(array('module' => 'install', 'action' => 'systemcheck'));
+				$this->redirect(array('action' => 'systemcheck'));
 			}
 			else
 			{
@@ -136,7 +136,7 @@ class Install_IndexController extends Ilch_Controller
 
 		if($this->getRequest()->isPost() && empty($errors))
 		{
-			$this->redirect(array('module' => 'install', 'action' => 'database'));
+			$this->redirect(array('action' => 'database'));
 		}
 	}
 
@@ -169,7 +169,7 @@ class Install_IndexController extends Ilch_Controller
 
 			if(empty($errors))
 			{
-				$this->redirect(array('module' => 'install', 'action' => 'config'));
+				$this->redirect(array('action' => 'config'));
 			}
 
 			$this->getView()->set('errors', $errors);
@@ -254,7 +254,7 @@ class Install_IndexController extends Ilch_Controller
 
 				unset($_SESSION['install']);
 
-				$this->redirect(array('module' => 'install', 'action' => 'finish'));
+				$this->redirect(array('action' => 'finish'));
 			}
 
 			$this->getView()->set('errors', $errors);

@@ -1,8 +1,8 @@
 <?php
 /**
- * Holds class Admin_UserLoadedPlugin.
+ * Holds Admin_BeforeControllerLoadPlugin.
  *
- * @author Meyer Dominik
+ * @author Jainta Martin
  * @copyright Ilch CMS 2.0
  * @package ilch
  */

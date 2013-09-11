@@ -41,14 +41,16 @@ class Ilch_Controller
 	 *
 	 * @param Ilch_Layout $layout
 	 * @param Ilch_View $view
-	 * @param Ilch_Plugin $plugin
 	 * @param Ilch_Request $request
+	 * @param Ilch_Router $router
+	 * @param Ilch_Translator $translator
 	 */
-	public function __construct(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Translator $translator)
+	public function __construct(Ilch_Layout $layout, Ilch_View $view, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
 	{
 		$this->_layout = $layout;
 		$this->_view = $view;
 		$this->_request = $request;
+		$this->_router = $router;
 		$this->_translator = $translator;
 		$this->_user = Ilch_Registry::get('user');
 	}
@@ -74,6 +76,16 @@ class Ilch_Controller
 	public function getRequest()
 	{
 		return $this->_request;
+	}
+	
+	/**
+	 * Gets the router object.
+	 *
+	 * @return Ilch_Router
+	 */
+	public function getRouter()
+	{
+		return $this->_router;
 	}
 
 	/**
