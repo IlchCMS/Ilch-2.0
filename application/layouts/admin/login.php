@@ -1,3 +1,12 @@
+<?php
+/**
+ * View script for the admin login page.
+ *
+ * @author Jainta Martin
+ * @copyright Ilch CMS 2.0
+ * @package ilch
+ */
+?>
 <!DOCTYPE html>
 <html lang="de">
 	<head>
@@ -10,17 +19,41 @@
 	</head>
 	<body>
 		<div class="container login_container box_shadow">
+			<?php
+				$errors = $this->get('errors');
+				$email = $this->get('email');
+				$error = empty($errors) ? '' : 'error';
+			?>
+			<form method="POST" action="<?=$this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'login'))?>">
+				<h3 class="form-signin-heading"><?=$this->trans('loginWelcome')?></h3>
+				<div class="control-group <?php if(!empty($errors)){ echo 'error'; }; ?>">
+					<div class="controls">
+						<input type="text"
+							   name="email"
+							   class="input-block-level <?=$error?>"
+							   placeholder="<?=$this->trans('email')?>"
+							   value="<?=$email?>">
+					</div>
 
-			<form class="">
-				<h3 class="form-signin-heading">Please sign in</h3>
-				<input type="text" class="input-block-level" placeholder="Email address">
-				<input type="password" class="input-block-level" placeholder="Password">
-				<label class="checkbox">
-				<input type="checkbox" value="remember-me"> Remember me
-				</label>
-				<button class="btn" type="submit">Sign in</button>
+					<div class="controls">
+						<input type="password"
+							   name="password"
+							   class="input-block-level <?=$error?>"
+							   placeholder="<?=$this->trans('password')?>">
+					</div>
+
+					<button class="btn" type="submit"><?=$this->trans('signIn')?></button>
+					<?php
+						if(!empty($errors))
+						{
+							foreach($errors as $transKey)
+							{
+								echo '<span class="help-inline">'.$this->trans($transKey).'</span>';
+							}
+						}
+					?>
+				</div>
 			</form>
-
 		</div>
 	</body>
 </html>

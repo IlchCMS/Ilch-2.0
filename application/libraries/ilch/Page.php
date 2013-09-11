@@ -165,7 +165,7 @@ class Ilch_Page
 		}
 		else
 		{
-			throw new InvalidArgumentException('action "'.$action.'" not known');
+			throw new InvalidArgumentException('action "'.$action.'" not known for controller "'.$request->getControllerName().'"');
 		}
 
 		$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');

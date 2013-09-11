@@ -15,12 +15,12 @@ abstract class Ilch_Design_Base
 	private $_request;
 
 	/**
-	 * @var Ilch_Translator 
+	 * @var Ilch_Translator
 	 */
 	private $_translator;
 
 	/**
-	 * @var Ilch_Router 
+	 * @var Ilch_Router
 	 */
 	private $_router;
 
@@ -176,14 +176,14 @@ abstract class Ilch_Design_Base
 				$urlParts[] = 'module='.$urlArray['module'];
 				unset($urlArray['module']);
 			}
-			
+
 			if(!isset($urlArray['controller']))
 			{
 				$urlParts[] = 'controller='.$this->getRequest()->getControllerName();
 			}
 			else
 			{
-				$urlParts[] = 'controller='.$urlArray['controller']; 
+				$urlParts[] = 'controller='.$urlArray['controller'];
 				unset($urlArray['controller']);
 			}
 
@@ -218,7 +218,7 @@ abstract class Ilch_Design_Base
 				}
 				else
 				{
-					$urlParts[] = 'subcontroller='.$urlArray['subcontroller']; 
+					$urlParts[] = 'subcontroller='.$urlArray['subcontroller'];
 					unset($urlArray['subcontroller']);
 				}
 
@@ -265,7 +265,7 @@ abstract class Ilch_Design_Base
 	}
 
 	/**
-	 * Limit the given string to the given length. 
+	 * Limit the given string to the given length.
 	 *
 	 * @param string $str
 	 * @param integer $length

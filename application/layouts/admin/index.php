@@ -35,6 +35,13 @@
 		<div id="app">
 			<div class="navbar">
 				<div class="navbar-inner navbar-app">
+					<ul class="nav">
+						<li>
+							<a href="<?=$this->url(array('module' => 'admin', 'controller' => 'logout', 'action' => 'logout'))?>">
+								<i class="icon-off"></i> <?=$this->trans('logout');?>
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div class="app_content">

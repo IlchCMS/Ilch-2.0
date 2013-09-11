@@ -98,6 +98,49 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 	}
 
 	/**
+	 * Tests if the user mapper returns the right user model using an email and
+	 * password for the search.
+	 */
+	public function testGetUserByEmailAndPassword()
+	{
+		$passwordHash = crypt('password');
+		$userRows = array
+		(
+			array
+			(
+				'id' => 2,
+				'email' => 'testmail2@test.de',
+				'name' => 'testUsername2',
+				'password' => $passwordHash,
+				'date_created' => '2013-09-02 22:13:52',
+				'date_confirmed' => '2013-09-02 22:15:45',
+			),
+		);
+		$where = array
+		(
+			'email' => 'testmail2@test.de',
+		);
+		$dbMock = $this->getMock('Ilch_Database', array('selectArray'));
+		$dbMock->expects($this->once())
+				->method('selectArray')
+				->with('*',
+					   'users',
+					   $where)
+				->will($this->returnValue($userRows));
+		$mapper = new User_UserMapper();
+		$mapper->setDatabase($dbMock);
+		$user = $mapper->getUserByEmailAndPassword('testmail2@test.de', 'password');
+
+		$this->assertTrue($user !== false);
+		$this->assertEquals(2, $user->getId());
+		$this->assertEquals('testmail2@test.de', $user->getEmail());
+		$this->assertEquals('testUsername2', $user->getName());
+		$this->assertEquals($passwordHash, $user->getPassword());
+		$this->assertEquals(1378152832, $user->getDateCreated());
+		$this->assertEquals(1378152945, $user->getDateConfirmed());
+	}
+
+	/**
 	 * Tests if a user gets inserted if it is a new one.
 	 */
 	public function testSaveInsertUser()

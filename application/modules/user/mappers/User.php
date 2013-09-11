@@ -62,6 +62,39 @@ class User_UserMapper extends Ilch_Mapper
 	}
 
 	/**
+	 * Returns user model found by the email and password or false if none found.
+	 *
+	 * @param string $email
+	 * @param string $password
+	 * @return null|User_UserModel
+	 */
+	public function getUserByEmailAndPassword($email, $password)
+	{
+		$where = array
+		(
+			'email' => (string)$email,
+		);
+		$users = $this->_getBy($where);
+
+		if(empty($users))
+		{
+			return false;
+		}
+		else
+		{
+			foreach($users as $user)
+			{
+				if($user->getPassword() == crypt($password, $user->getPassword()))
+				{
+					return $user;
+				}
+			}
+
+			return false;
+		}
+	}
+
+	/**
 	 * Returns an array with user models found by the where clause of false if
 	 * none found.
 	 *
@@ -115,6 +148,11 @@ class User_UserMapper extends Ilch_Mapper
 		if(isset($userRow['email']))
 		{
 			$user->setEmail($userRow['email']);
+		}
+
+		if(isset($userRow['password']))
+		{
+			$user->setPassword($userRow['password']);
 		}
 
 		if(isset($userRow['date_created']))
