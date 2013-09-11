@@ -18,7 +18,7 @@ defined('ACCESS') or die('no direct access');
 class User_UserMapper extends Ilch_Mapper
 {
 	/**
-	 * Returns user model found by the id or false if none found.
+	 * Returns user model found by the id.
 	 *
 	 * @param mixed[] $id
 	 * @return null|User_UserModel
@@ -29,6 +29,7 @@ class User_UserMapper extends Ilch_Mapper
 		(
 			'id' => (int)$id,
 		);
+
 		$users = $this->_getBy($where);
 
 		if(!empty($users))
@@ -40,7 +41,7 @@ class User_UserMapper extends Ilch_Mapper
 	}
 
 	/**
-	 * Returns user model found by the username or false if none found.
+	 * Returns user model found by the username.
 	 *
 	 * @param string $name
 	 * @return null|User_UserModel
@@ -51,6 +52,7 @@ class User_UserMapper extends Ilch_Mapper
 		(
 			'name' => (string)$name,
 		);
+
 		$users = $this->_getBy($where);
 
 		if(!empty($users))
@@ -62,36 +64,26 @@ class User_UserMapper extends Ilch_Mapper
 	}
 
 	/**
-	 * Returns user model found by the email and password or false if none found.
+	 * Returns user model found by the email.
 	 *
 	 * @param string $email
-	 * @param string $password
 	 * @return null|User_UserModel
 	 */
-	public function getUserByEmailAndPassword($email, $password)
+	public function getUserByEmail($email)
 	{
 		$where = array
 		(
 			'email' => (string)$email,
 		);
+
 		$users = $this->_getBy($where);
 
-		if(empty($users))
+		if(!empty($users))
 		{
-			return false;
+			return reset($users);
 		}
-		else
-		{
-			foreach($users as $user)
-			{
-				if($user->getPassword() == crypt($password, $user->getPassword()))
-				{
-					return $user;
-				}
-			}
 
-			return false;
-		}
+		return null;
 	}
 
 	/**

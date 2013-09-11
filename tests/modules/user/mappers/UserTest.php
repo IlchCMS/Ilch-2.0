@@ -98,10 +98,9 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 	}
 
 	/**
-	 * Tests if the user mapper returns the right user model using an email and
-	 * password for the search.
+	 * Tests if the user mapper returns the right user model using an email for the search.
 	 */
-	public function testGetUserByEmailAndPassword()
+	public function testGetUserByEmail()
 	{
 		$passwordHash = crypt('password');
 		$userRows = array
@@ -129,7 +128,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				->will($this->returnValue($userRows));
 		$mapper = new User_UserMapper();
 		$mapper->setDatabase($dbMock);
-		$user = $mapper->getUserByEmailAndPassword('testmail2@test.de', 'password');
+		$user = $mapper->getUserByEmail('testmail2@test.de');
 
 		$this->assertTrue($user !== false);
 		$this->assertEquals(2, $user->getId());

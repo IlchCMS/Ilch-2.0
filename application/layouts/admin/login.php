@@ -32,7 +32,7 @@
 							   name="email"
 							   class="input-block-level <?php echo $error?>"
 							   placeholder="<?php echo $this->trans('email')?>"
-							   value="<?php echo $email?>">
+							   value="<?php echo $this->escape($email); ?>">
 					</div>
 
 					<div class="controls">

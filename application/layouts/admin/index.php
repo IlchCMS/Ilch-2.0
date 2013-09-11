@@ -35,7 +35,7 @@
 		<div id="app">
 			<div class="navbar">
 				<div class="navbar-inner navbar-app">
-					<ul class="nav">
+					<ul class="nav pull-right">
 						<li>
 							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'logout', 'action' => 'logout'))?>">
 								<i class="icon-off"></i> <?php echo $this->trans('logout');?>

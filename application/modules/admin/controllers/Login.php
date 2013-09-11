@@ -54,12 +54,10 @@ class Admin_LoginController extends Ilch_Controller
 		}
 		else
 		{
-			$password = $this->getRequest()->getPost('password');
-
 			$mapper = new User_UserMapper();
-			$user = $mapper->getUserByEmailAndPassword($email, $password);
+			$user = $mapper->getUserByEmail($email);
 
-			if(empty($user))
+			if($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('password'), $user->getPassword()))
 			{
 				$errors['userNotFound'] = 'userNotFound';
 			}
@@ -69,7 +67,7 @@ class Admin_LoginController extends Ilch_Controller
 				 * A use was found. Set his id in the session and redirect to the admincenter.
 				 */
 				$_SESSION['user_id'] = $user->getId();
-				$this->redirect(array('module' => 'admin', 'controller' => 'index', 'action' => 'index'));
+				$this->redirect(array('controller' => 'index', 'action' => 'index'));
 			}
 		}
 
