@@ -9,29 +9,29 @@ defined('ACCESS') or die('no direct access');
 
 class Ilch_Page
 {
-    /**
-     * Defines if cms is installed.
-     *
-     * @var boolean ilchInstalled
-     */
-    protected $_ilchInstalled = false;
+	/**
+	 * Defines if cms is installed.
+	 *
+	 * @var boolean ilchInstalled
+	 */
+	protected $_ilchInstalled = false;
 
-    /**
-     * Sets the installed flag.
-     *
-     * @param boolean $installed
-     */
-    public function setInstalled($installed)
-    {
+	/**
+	 * Sets the installed flag.
+	 *
+	 * @param boolean $installed
+	 */
+	public function setInstalled($installed)
+	{
 		$this->_ilchInstalled = (bool)$installed;
-    }
+	}
 
-    /**
-     * Load and initialize cms.
-     *
-     * @param Ilch_Config_File $fileConfig
-     */
-    public function loadCms(Ilch_Config_File $fileConfig)
+	/**
+	 * Load and initialize cms.
+	 *
+	 * @param Ilch_Config_File $fileConfig
+	 */
+	public function loadCms(Ilch_Config_File $fileConfig)
 	{
 		$request = new Ilch_Request();
 		$translator = new Ilch_Translator();
@@ -84,15 +84,15 @@ class Ilch_Page
 				$layout->loadScript(APPLICATION_PATH.'/layouts/'.$request->getModuleName().'/index.php');
 			}
 		}
-    }
+	}
 
-    /**
-     * Create and load a specific route.
-     *
-     * @param Ilch_Request $request
-     */
-    protected function _loadRouting(Ilch_Request $request)
-    {
+	/**
+	 * Create and load a specific route.
+	 *
+	 * @param Ilch_Request $request
+	 */
+	protected function _loadRouting(Ilch_Request $request)
+	{
 		if(!$this->_ilchInstalled)
 		{
 			$moduleName = 'Install';
@@ -133,20 +133,20 @@ class Ilch_Page
 		$request->setControllerName(strtolower($controllerName));
 		$request->setActionName(strtolower($actionName));
 		$request->setParams($_REQUEST);
-    }
+	}
 
-    /**
-     * @param Ilch_Layout $layout
-     * @param Ilch_View $view
-     * @param Ilch_Plugin $plugin
-     * @param Ilch_Request $request
-     * @param Ilch_Router $router
-     * @param Ilch_Translator $translator
-     * @return Ilch_Controller
-     * @throws InvalidArgumentException
-     */
-    protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
-    {
+	/**
+	 * @param Ilch_Layout $layout
+	 * @param Ilch_View $view
+	 * @param Ilch_Plugin $plugin
+	 * @param Ilch_Request $request
+	 * @param Ilch_Router $router
+	 * @param Ilch_Translator $translator
+	 * @return Ilch_Controller
+	 * @throws InvalidArgumentException
+	 */
+	protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
+	{
 		$controller = ucfirst($request->getModuleName()).'_'.ucfirst($request->getControllerName()).'Controller';
 		$controller = new $controller($layout, $view, $request, $router, $translator);
 		$action = $request->getActionName().'Action';
@@ -173,5 +173,5 @@ class Ilch_Page
 		$plugin->execute('AfterControllerLoad');
 
 		return $controller;
-    }
+	}
 }
