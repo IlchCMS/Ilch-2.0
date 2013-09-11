@@ -23,7 +23,7 @@ class Ilch_Page
      */
     public function setInstalled($installed)
     {
-	$this->_ilchInstalled = (bool)$installed;
+		$this->_ilchInstalled = (bool)$installed;
     }
 
     /**
@@ -32,58 +32,58 @@ class Ilch_Page
      * @param Ilch_Config_File $fileConfig
      */
     public function loadCms(Ilch_Config_File $fileConfig)
-    {
-	$request = new Ilch_Request();
-	$translator = new Ilch_Translator();
-	$router = new Ilch_Router($request, $fileConfig);
-
-	$plugin = new Ilch_Plugin();
-	$plugin->addPluginData('request', $request);
-	$plugin->detectPlugins();
-
-	if($this->_ilchInstalled)
 	{
-	    $dbFactory = new Ilch_Database_Factory();
-	    $db = $dbFactory->getInstanceByConfig($fileConfig);
-	    $databaseConfig = new Ilch_Config_Database($db);
-	    $databaseConfig->loadConfigFromDatabase();
-	    Ilch_Registry::set('db', $db);
-	    Ilch_Registry::set('config', $databaseConfig);
-	}
+		$request = new Ilch_Request();
+		$translator = new Ilch_Translator();
+		$router = new Ilch_Router($request, $fileConfig);
 
-	$plugin->execute('AfterDatabaseLoad');
-	$router->execute();
+		$plugin = new Ilch_Plugin();
+		$plugin->addPluginData('request', $request);
+		$plugin->detectPlugins();
 
-	if(!$this->_ilchInstalled)
-	{
-		$request->setModuleName('install');
-	}
+		if($this->_ilchInstalled)
+		{
+			$dbFactory = new Ilch_Database_Factory();
+			$db = $dbFactory->getInstanceByConfig($fileConfig);
+			$databaseConfig = new Ilch_Config_Database($db);
+			$databaseConfig->loadConfigFromDatabase();
+			Ilch_Registry::set('db', $db);
+			Ilch_Registry::set('config', $databaseConfig);
+		}
 
-	$layout = new Ilch_Layout($request, $translator, $router);
-	$view = new Ilch_View($request, $translator, $router);
+		$plugin->execute('AfterDatabaseLoad');
+		$router->execute();
 
-	$controller = $this->_loadController($layout, $view, $plugin, $request, $router, $translator);
-	$plugin->addPluginData('controller', $controller);
-	$plugin->execute('AfterControllerLoad');
+		if(!$this->_ilchInstalled)
+		{
+			$request->setModuleName('install');
+		}
 
-	$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$request->getControllerName().'/'.$request->getActionName().'.php');
+		$layout = new Ilch_Layout($request, $translator, $router);
+		$view = new Ilch_View($request, $translator, $router);
 
-	if(!empty($viewOutput))
-	{
-	    $controller->getLayout()->setContent($viewOutput);
-	}
+		$controller = $this->_loadController($layout, $view, $plugin, $request, $router, $translator);
+		$plugin->addPluginData('controller', $controller);
+		$plugin->execute('AfterControllerLoad');
 
-	if($controller->getLayout()->getDisabled() === false)
-	{
-	    if($controller->getLayout()->getFile() != '')
-	    {
-		$layout->loadScript(APPLICATION_PATH.'/layouts/'.$controller->getLayout()->getFile().'.php');
-	    }
-	    elseif(file_exists(APPLICATION_PATH.'/layouts/'.$request->getModuleName().'/index.php'))
-	    {
-		$layout->loadScript(APPLICATION_PATH.'/layouts/'.$request->getModuleName().'/index.php');
-	    }
-	}
+		$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$request->getControllerName().'/'.$request->getActionName().'.php');
+
+		if(!empty($viewOutput))
+		{
+			$controller->getLayout()->setContent($viewOutput);
+		}
+
+		if($controller->getLayout()->getDisabled() === false)
+		{
+			if($controller->getLayout()->getFile() != '')
+			{
+				$layout->loadScript(APPLICATION_PATH.'/layouts/'.$controller->getLayout()->getFile().'.php');
+			}
+			elseif(file_exists(APPLICATION_PATH.'/layouts/'.$request->getModuleName().'/index.php'))
+			{
+				$layout->loadScript(APPLICATION_PATH.'/layouts/'.$request->getModuleName().'/index.php');
+			}
+		}
     }
 
     /**
@@ -93,46 +93,46 @@ class Ilch_Page
      */
     protected function _loadRouting(Ilch_Request $request)
     {
-	if(!$this->_ilchInstalled)
-	{
-	    $moduleName = 'Install';
-	}
-	elseif(empty($_GET['module']))
-	{
-	    $moduleName = 'News';
-	}
-	else
-	{
-	    $moduleName = ucfirst($_GET['module']);
-	}
+		if(!$this->_ilchInstalled)
+		{
+			$moduleName = 'Install';
+		}
+		elseif(empty($_GET['module']))
+		{
+			$moduleName = 'News';
+		}
+		else
+		{
+			$moduleName = ucfirst($_GET['module']);
+		}
 
-	if(empty($_GET['controller']))
-	{
-	    $controllerName = 'Index';
-	}
-	else
-	{
-	    $controllerName = ucfirst($_GET['controller']);
-	}
+		if(empty($_GET['controller']))
+		{
+			$controllerName = 'Index';
+		}
+		else
+		{
+			$controllerName = ucfirst($_GET['controller']);
+		}
 
-	if(empty($_GET['action']))
-	{
-	    $actionName = 'index';
-	}
-	else
-	{
-	    $actionName = $_GET['action'];
-	}
+		if(empty($_GET['action']))
+		{
+			$actionName = 'index';
+		}
+		else
+		{
+			$actionName = $_GET['action'];
+		}
 
-	foreach(array('module', 'controller', 'action') as $name)
-	{
-	    unset($_REQUEST[$name]);
-	}
-	
-	$request->setModuleName(strtolower($moduleName));
-	$request->setControllerName(strtolower($controllerName));
-	$request->setActionName(strtolower($actionName));
-	$request->setParams($_REQUEST);
+		foreach(array('module', 'controller', 'action') as $name)
+		{
+			unset($_REQUEST[$name]);
+		}
+
+		$request->setModuleName(strtolower($moduleName));
+		$request->setControllerName(strtolower($controllerName));
+		$request->setActionName(strtolower($actionName));
+		$request->setParams($_REQUEST);
     }
 
     /**
@@ -147,31 +147,31 @@ class Ilch_Page
      */
     protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
     {
-	$controller = ucfirst($request->getModuleName()).'_'.ucfirst($request->getControllerName()).'Controller';
-	$controller = new $controller($layout, $view, $request, $router, $translator);
-	$action = $request->getActionName().'Action';
+		$controller = ucfirst($request->getModuleName()).'_'.ucfirst($request->getControllerName()).'Controller';
+		$controller = new $controller($layout, $view, $request, $router, $translator);
+		$action = $request->getActionName().'Action';
 
-	$plugin->addPluginData('controller', $controller);
-	$plugin->execute('BeforeControllerLoad');
+		$plugin->addPluginData('controller', $controller);
+		$plugin->execute('BeforeControllerLoad');
 
-	if(method_exists($controller, 'init'))
-	{
-	    $controller->init();
-	}
+		if(method_exists($controller, 'init'))
+		{
+			$controller->init();
+		}
 
-	if(method_exists($controller, $action))
-	{
-	    $controller->$action();
-	}
-	else
-	{
-	    throw new InvalidArgumentException('action "'.$action.'" not known');
-	}
+		if(method_exists($controller, $action))
+		{
+			$controller->$action();
+		}
+		else
+		{
+			throw new InvalidArgumentException('action "'.$action.'" not known');
+		}
 
-	$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
+		$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
 
-	$plugin->execute('AfterControllerLoad');
+		$plugin->execute('AfterControllerLoad');
 
-	return $controller;
+		return $controller;
     }
 }
