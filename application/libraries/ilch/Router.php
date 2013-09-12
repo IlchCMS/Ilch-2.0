@@ -25,7 +25,7 @@ class Ilch_Router
 	public function execute()
 	{
 		$query = ltrim(substr($_SERVER['REQUEST_URI'], strlen(REWRITE_BASE)), '/');
-		$this->_request->setModuleName('news');
+		$this->_request->setModuleName('page');
 		$this->_request->setControllerName('index');
 		$this->_request->setActionName('index');
 

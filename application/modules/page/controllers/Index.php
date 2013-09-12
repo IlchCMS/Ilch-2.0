@@ -7,10 +7,6 @@
 
 defined('ACCESS') or die('no direct access');
 
-class News_IndexController extends Ilch_Controller
+class Page_IndexController extends Ilch_Controller
 {
-	public function indexAction()
-	{
-		var_dump('News Modul erfolgreich geladen');
-	}
 }

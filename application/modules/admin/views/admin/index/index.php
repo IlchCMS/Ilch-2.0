@@ -1,0 +1,1 @@
+<a href="<?php echo $this->url(array('module' => 'page')); ?>">Seiten Modul</a>
