@@ -24,7 +24,7 @@
 				$email = $this->get('email');
 				$error = empty($errors) ? '' : 'error';
 			?>
-			<form method="POST" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'login'))?>">
+			<form method="POST" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'))?>">
 				<h3 class="form-signin-heading"><?php echo$this->trans('loginWelcome')?></h3>
 				<div class="control-group <?php if(!empty($errors)){ echo 'error'; }; ?>">
 					<div class="controls">

@@ -66,7 +66,15 @@ class Ilch_Page
 		$plugin->addPluginData('controller', $controller);
 		$plugin->execute('AfterControllerLoad');
 
-		$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$request->getControllerName().'/'.$request->getActionName().'.php');
+		if($request->isAdmin())
+		{
+			$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/admin/'.$request->getControllerName().'/'.$request->getActionName().'.php');
+		}
+		else
+		{
+			$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$request->getControllerName().'/'.$request->getActionName().'.php');
+		}
+		
 
 		if(!empty($viewOutput))
 		{
@@ -87,55 +95,6 @@ class Ilch_Page
 	}
 
 	/**
-	 * Create and load a specific route.
-	 *
-	 * @param Ilch_Request $request
-	 */
-	protected function _loadRouting(Ilch_Request $request)
-	{
-		if(!$this->_ilchInstalled)
-		{
-			$moduleName = 'Install';
-		}
-		elseif(empty($_GET['module']))
-		{
-			$moduleName = 'News';
-		}
-		else
-		{
-			$moduleName = ucfirst($_GET['module']);
-		}
-
-		if(empty($_GET['controller']))
-		{
-			$controllerName = 'Index';
-		}
-		else
-		{
-			$controllerName = ucfirst($_GET['controller']);
-		}
-
-		if(empty($_GET['action']))
-		{
-			$actionName = 'index';
-		}
-		else
-		{
-			$actionName = $_GET['action'];
-		}
-
-		foreach(array('module', 'controller', 'action') as $name)
-		{
-			unset($_REQUEST[$name]);
-		}
-
-		$request->setModuleName(strtolower($moduleName));
-		$request->setControllerName(strtolower($controllerName));
-		$request->setActionName(strtolower($actionName));
-		$request->setParams($_REQUEST);
-	}
-
-	/**
 	 * @param Ilch_Layout $layout
 	 * @param Ilch_View $view
 	 * @param Ilch_Plugin $plugin
@@ -147,7 +106,15 @@ class Ilch_Page
 	 */
 	protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
 	{
-		$controller = ucfirst($request->getModuleName()).'_'.ucfirst($request->getControllerName()).'Controller';
+		if($request->isAdmin())
+		{
+			$controller = ucfirst($request->getModuleName()).'_Admin_'.ucfirst($request->getControllerName()).'Controller';
+		}
+		else
+		{
+			$controller = ucfirst($request->getModuleName()).'_'.ucfirst($request->getControllerName()).'Controller';
+		}
+
 		$controller = new $controller($layout, $view, $request, $router, $translator);
 		$action = $request->getActionName().'Action';
 

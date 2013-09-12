@@ -7,13 +7,9 @@
 
 defined('ACCESS') or die('no direct access');
 
-class News_Admin_IndexController extends Ilch_Controller_Admin
+class Admin_Admin_ModuleController extends Ilch_Controller_Admin
 {
-	public function indexAction()
-	{
-	}
-	
-	public function testAction()
+	public function loadAction()
 	{
 	}
 }

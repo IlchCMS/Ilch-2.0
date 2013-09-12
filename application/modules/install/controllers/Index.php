@@ -124,7 +124,7 @@ class Install_IndexController extends Ilch_Controller
 			$errors['version'] = true;
 		}
 
-		if(!is_writable(CONFIG_PATH))
+		if(!is_writable(CONFIG_PATH.'/config.php'))
 		{
 			$errors['writableConfig'] = true;
 		}

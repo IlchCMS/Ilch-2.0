@@ -27,14 +27,14 @@ class Admin_BeforeControllerLoadPlugin
 	{
 		$request = $pluginData['request'];
 
-		if($request->getModuleName() === 'admin' && $request->getControllerName() !== 'login' && !Ilch_Registry::get('user'))
+		if($request->isAdmin() && $request->getControllerName() !== 'login' && !Ilch_Registry::get('user'))
 		{
 			/*
 			 * User is not logged in yet but wants to go to the admincenter, redirect him to the login.
 			 */
 			$pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));
 		}
-		elseif($request->getModuleName() === 'admin' && $request->getControllerName() === 'login' && Ilch_Registry::get('user'))
+		elseif($request->getModuleName() === 'admin' && $request->getControllerName() === 'login' && $request->getActionName() !== 'logout' && Ilch_Registry::get('user'))
 		{
 			/*
 			 * User is logged in but wants to go to the login, redirect him to the admincenter.

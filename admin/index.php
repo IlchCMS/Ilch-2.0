@@ -8,6 +8,6 @@
  * @copyright Ilch CMS 2.0
  * @package ilch
  */
-header("Location: ../index.php?module=admin");
+header("Location: ../index.php?admin&module=admin");
 exit;
 ?>

@@ -12,6 +12,11 @@ class Ilch_Request
 	/**
 	 * @var string
 	 */
+	protected $_isAdmin = false;
+
+	/**
+	 * @var string
+	 */
 	protected $_moduleName;
 
 	/**
@@ -28,6 +33,26 @@ class Ilch_Request
 	 * @var array
 	 */
 	protected $_params;
+	
+	/**
+	 * Gets admin request flag.
+	 *
+	 * @return string
+	 */
+	public function isAdmin()
+	{
+		return $this->_isAdmin;
+	}
+
+	/**
+	 * Sets admin request flag.
+	 *
+	 * @param string $name
+	 */
+	public function setIsAdmin($admin)
+	{
+		$this->_isAdmin = $admin;
+	}
 
 	/**
 	 * Gets the current module name.

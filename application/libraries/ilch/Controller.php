@@ -62,7 +62,7 @@ class Ilch_Controller
 	 * @param string $route
 	 * @param boolean $rewrite
 	 */
-	public function redirect($urlArray, $route = 'default', $rewrite = false)
+	public function redirect($urlArray, $route = null, $rewrite = false)
 	{
 		header("location: ".$this->getLayout()->url($urlArray, $route, $rewrite));
 		exit;

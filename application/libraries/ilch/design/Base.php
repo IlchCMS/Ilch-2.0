@@ -148,7 +148,7 @@ abstract class Ilch_Design_Base
 	 * @param boolean $rewrite
 	 * @return string
 	 */
-	public function url($urlArray = array(), $route = 'default', $rewrite  = false)
+	public function url($urlArray = array(), $route = null, $rewrite  = false)
 	{
 		if(empty($urlArray))
 		{
@@ -197,48 +197,19 @@ abstract class Ilch_Design_Base
 				unset($urlArray['action']);
 			}
 
-			/*
-			 * Submodul handling.
-			 */
-			if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'module' && $this->getRequest()->getActionName() == 'load')
-			{
-				if(!isset($urlArray['submodule']))
-				{
-					$urlParts[] = 'submodule='.$this->getRequest()->getQuery('submodule');
-				}
-				else
-				{
-					$urlParts[] = 'submodule='.$urlArray['submodule'];
-					unset($urlArray['submodule']);
-				}
-
-				if(!isset($urlArray['subcontroller']))
-				{
-					$urlParts[] = 'subcontroller='.$this->getRequest()->getQuery('subcontroller');
-				}
-				else
-				{
-					$urlParts[] = 'subcontroller='.$urlArray['subcontroller'];
-					unset($urlArray['subcontroller']);
-				}
-
-				if(!isset($urlArray['subaction']))
-				{
-					$urlParts[] = 'subaction='.$this->getRequest()->getQuery('subaction');
-				}
-				else
-				{
-					$urlParts[] = 'subaction='.$urlArray['subaction'];
-					unset($urlArray['subaction']);
-				}
-			}
-
 			foreach($urlArray as $key => $value)
 			{
 				$urlParts[] = $key.'='.$value;
 			}
 
-			return BASE_URL.'/index.php?'.implode('&', $urlParts);
+			$s = '';
+
+			if(($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin'))
+			{
+				$s = 'admin&';
+			}
+
+			return BASE_URL.'/index.php?'.$s.implode('&', $urlParts);
 		}
 	}
 

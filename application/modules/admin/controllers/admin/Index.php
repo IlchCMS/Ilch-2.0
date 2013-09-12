@@ -7,12 +7,10 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Admin_IndexController extends Ilch_Controller
+class Admin_Admin_IndexController extends Ilch_Controller_Admin
 {
 	public function init()
 	{
-		$menu = array();
-		$this->getLayout()->set('menu', $menu);
 	}
 
 	public function indexAction()

@@ -36,16 +36,19 @@ spl_autoload_register(function($class)
 		{
 			$path = $path.'/plugins/'.strtolower($classParts[0]);
 		}
+		elseif(end($camels) === 'Controller' && $classParts[0] == 'Admin')
+		{
+			$path = $path.'/modules/'.strtolower($classParts[0]).'/'.strtolower(end($camels).'s').'/admin';
+		}
 		else
 		{
-			$path = $path.'/modules/'.strtolower($classParts[0]);
-			$path = $path.'/'.strtolower(end($camels).'s');
+			$path = $path.'/modules/'.strtolower($classParts[0]).'/'.strtolower(end($camels).'s');
 		}
 
 		$class = str_replace(end($camels), '', $class);
 		$class = str_replace($classParts[0].'/', '', $class);
 	}
-
+			
 	if(file_exists($path.'/'. $class . '.php'))
 	{
 		require_once($path.'/'. $class . '.php');

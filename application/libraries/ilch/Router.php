@@ -108,7 +108,11 @@ class Ilch_Router
 		{
 			$get = explode('=', $value);
 
-			if($get[0] == 'module')
+			if($get[0] == 'admin')
+			{
+				$this->_request->setIsAdmin(true);
+			}
+			elseif($get[0] == 'module')
 			{
 				$this->_request->setModuleName($get[1]);
 			}
@@ -123,7 +127,7 @@ class Ilch_Router
 			elseif(!empty($get[1]))
 			{
 				$this->_request->setParam($get[0], $get[1]);
-			}
+			}		
 		}
 	}
 }
