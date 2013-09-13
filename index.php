@@ -18,7 +18,12 @@ define('VERSION', '2.0');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('APPLICATION_PATH', __DIR__.'/application');
 define('CONFIG_PATH', APPLICATION_PATH.'/../');
-define('REWRITE_BASE', str_replace(array('/index.php', 'index.php'), '', $_SERVER['PHP_SELF']));
+
+$rewriteBaseParts = $_SERVER['PHP_SELF'];
+$rewriteBaseParts = explode('index.php', $rewriteBaseParts);
+$rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
+
+define('REWRITE_BASE', $rewriteBaseParts);
 define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 define('STATIC_URL', BASE_URL);
 

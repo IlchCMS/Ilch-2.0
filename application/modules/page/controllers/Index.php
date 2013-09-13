@@ -17,7 +17,7 @@ class Page_IndexController extends Ilch_Controller_Frontend
 	public function showAction()
 	{
 		$pageMapper = new Page_PageMapper();
-		$pageKey = $this->getRequest()->getQuery('page');
+		$pageKey = $this->getRequest()->getParam('page');
 		$page = $pageMapper->getPageByKey($pageKey);
 
 		if($page == null)

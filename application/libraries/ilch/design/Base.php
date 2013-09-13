@@ -156,61 +156,50 @@ abstract class Ilch_Design_Base
 		}
 
 		$urlParts = array();
-		$config = Ilch_Registry::get('config');
 
-		if($rewrite || ($config && $config->get('rewrite') == true))
+		if(!isset($urlArray['module']))
 		{
-			/*
-			 * @fixme use here logic for mod_rewrite.
-			 */
-			return BASE_URL.'/'.implode('/', $urlParts);
+			$urlParts[] = $this->getRequest()->getModuleName();
 		}
 		else
 		{
-			if(!isset($urlArray['module']))
-			{
-				$urlParts[] = 'module='.$this->getRequest()->getModuleName();
-			}
-			else
-			{
-				$urlParts[] = 'module='.$urlArray['module'];
-				unset($urlArray['module']);
-			}
-
-			if(!isset($urlArray['controller']))
-			{
-				$urlParts[] = 'controller='.$this->getRequest()->getControllerName();
-			}
-			else
-			{
-				$urlParts[] = 'controller='.$urlArray['controller'];
-				unset($urlArray['controller']);
-			}
-
-			if(!isset($urlArray['action']))
-			{
-				$urlParts[] = 'action='.$this->getRequest()->getActionName();
-			}
-			else
-			{
-				$urlParts[] = 'action='.$urlArray['action'];
-				unset($urlArray['action']);
-			}
-
-			foreach($urlArray as $key => $value)
-			{
-				$urlParts[] = $key.'='.$value;
-			}
-
-			$s = '';
-
-			if(($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin'))
-			{
-				$s = 'admin&';
-			}
-
-			return BASE_URL.'/index.php?'.$s.implode('&', $urlParts);
+			$urlParts[] = $urlArray['module'];
+			unset($urlArray['module']);
 		}
+
+		if(!isset($urlArray['controller']))
+		{
+			$urlParts[] = $this->getRequest()->getControllerName();
+		}
+		else
+		{
+			$urlParts[] = $urlArray['controller'];
+			unset($urlArray['controller']);
+		}
+
+		if(!isset($urlArray['action']))
+		{
+			$urlParts[] = $this->getRequest()->getActionName();
+		}
+		else
+		{
+			$urlParts[] = $urlArray['action'];
+			unset($urlArray['action']);
+		}
+
+		foreach($urlArray as $key => $value)
+		{
+			$urlParts[] = $key.'/'.$value;
+		}
+
+		$s = '';
+
+		if(($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin'))
+		{
+			$s = 'admin/';
+		}
+
+		return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
 	}
 
 	/**

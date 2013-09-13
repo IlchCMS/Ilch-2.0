@@ -74,7 +74,6 @@ class Ilch_Page
 		{
 			$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$request->getControllerName().'/'.$request->getActionName().'.php');
 		}
-		
 
 		if(!empty($viewOutput))
 		{

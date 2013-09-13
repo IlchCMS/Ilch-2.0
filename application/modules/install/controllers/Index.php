@@ -11,6 +11,8 @@ class Install_IndexController extends Ilch_Controller_Frontend
 {
 	public function init()
 	{
+		$this->getLayout()->setFile('install/index');
+
 		/*
 		 * Dont set a time limit for installer.
 		 */
@@ -71,7 +73,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 		);
 
 		$this->getView()->set('languages', $languages);
-		$local = $this->getRequest()->getQuery('language');
+		$local = $this->getRequest()->getParam('language');
 
 		if($local)
 		{

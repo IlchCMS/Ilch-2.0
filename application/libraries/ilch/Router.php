@@ -24,18 +24,17 @@ class Ilch_Router
 	 */
 	public function execute()
 	{
-		$query = ltrim(substr($_SERVER['REQUEST_URI'], strlen(REWRITE_BASE)), '/');
+		$query = substr($_SERVER['REQUEST_URI'], strlen(REWRITE_BASE));
+		$query = str_replace('index.php/', '', $query);
+		$query = trim(str_replace('index.php', '', $query), '/');
+		
 		$this->_request->setModuleName('page');
 		$this->_request->setControllerName('index');
 		$this->_request->setActionName('index');
 
-		if(Ilch_Registry::get('config') && Ilch_Registry::get('config')->get('rewrite') == true)
+		if(!empty($query))
 		{
 			$this->_executeRewrite($query);
-		}
-		else
-		{
-			$this->_executeNonRewrite($query);
 		}
 	}
 
@@ -46,29 +45,37 @@ class Ilch_Router
 	 */
 	protected function _executeRewrite($query)
 	{
-		if(empty($query))
-		{
-			return;
-		}
-
 		$queryParts = explode('/', $query);
 
-		if(isset($queryParts[0]))
+		$i = 0;
+
+		if($queryParts[0] == 'admin')
 		{
-			$this->_request->setModuleName($queryParts[0]);
+			$this->_request->setIsAdmin(true);
 			unset($queryParts[0]);
+			$i = 1;
 		}
 
-		if(isset($queryParts[1]))
+		if(isset($queryParts[$i]))
 		{
-			$this->_request->setControllerName($queryParts[1]);
-			unset($queryParts[1]);
+			$this->_request->setModuleName($queryParts[$i]);
+			unset($queryParts[$i]);
 		}
 
-		if(isset($queryParts[2]))
+		$i++;
+
+		if(isset($queryParts[$i]))
 		{
-			$this->_request->setActionName($queryParts[2]);
-			unset($queryParts[2]);
+			$this->_request->setControllerName($queryParts[$i]);
+			unset($queryParts[$i]);
+		}
+
+		$i++;
+
+		if(isset($queryParts[$i]))
+		{
+			$this->_request->setActionName($queryParts[$i]);
+			unset($queryParts[$i]);
 		}
 
 		if(!empty($queryParts))
@@ -85,49 +92,6 @@ class Ilch_Router
 
 				$paramKey = $value;
 			}
-		}
-	}
-
-	/**
-	 * Fills the request object if no rewrite is possible.
-	 *
-	 * @param string $query
-	 */
-	protected function _executeNonRewrite($query)
-	{
-		$query = str_replace('index.php?', '', $query);
-		$query = str_replace('index.php', '', $query);
-		$queryParts = explode('&', $query);
-
-		if(empty($queryParts))
-		{
-			return;
-		}
-
-		foreach($queryParts as $value)
-		{
-			$get = explode('=', $value);
-
-			if($get[0] == 'admin')
-			{
-				$this->_request->setIsAdmin(true);
-			}
-			elseif($get[0] == 'module')
-			{
-				$this->_request->setModuleName($get[1]);
-			}
-			elseif($get[0] == 'controller')
-			{
-				$this->_request->setControllerName($get[1]);
-			}
-			elseif($get[0] == 'action')
-			{
-				$this->_request->setActionName($get[1]);
-			}
-			elseif(!empty($get[1]))
-			{
-				$this->_request->setParam($get[0], $get[1]);
-			}		
 		}
 	}
 }
