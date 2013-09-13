@@ -51,7 +51,7 @@ class Ilch_Database_Mysql
 			return false;
 		}
 
-		return $this->conn->select_db($db);
+		return @$this->conn->select_db($db);
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Ilch_Database_Mysql
 			return false;
 		}
 
-		$this->conn->set_charset('utf8');
+		@$this->conn->set_charset('utf8');
 
 		return true;
 	}
