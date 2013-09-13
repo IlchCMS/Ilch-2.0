@@ -7,7 +7,7 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Install_IndexController extends Ilch_Controller
+class Install_IndexController extends Ilch_Controller_Frontend
 {
 	public function init()
 	{
@@ -222,6 +222,8 @@ class Install_IndexController extends Ilch_Controller
 
 			if(empty($errors))
 			{
+				$modulesToInstall = array('install', 'user', 'page');
+
 				$fileConfig = new Ilch_Config_File();
 				$fileConfig->set('dbEngine', $_SESSION['install']['dbEngine']);
 				$fileConfig->set('dbHost', $_SESSION['install']['dbHost']);
@@ -235,7 +237,10 @@ class Install_IndexController extends Ilch_Controller
 				$db = $dbFactory->getInstanceByConfig($fileConfig);
 				Ilch_Registry::set('db', $db);
 
-				$db->executeQueries(file_get_contents(__DIR__.'/../files/install_general.sql'));
+				foreach($modulesToInstall as $module)
+				{
+					$db->executeQueries(file_get_contents(APPLICATION_PATH.'/modules/'.$module.'/install/install.sql'));
+				}
 
 				$userMapper = new User_UserMapper();
 				$user = new User_UserModel();

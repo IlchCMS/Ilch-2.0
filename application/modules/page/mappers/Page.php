@@ -18,91 +18,32 @@ defined('ACCESS') or die('no direct access');
 class Page_PageMapper extends Ilch_Mapper
 {
 	/**
-	 * Returns page model found by the id.
+	 * Returns page model found by the key.
 	 *
-	 * @param integer $id
+	 * @param string $key
 	 * @return Page_PageModel|null
 	 */
-	public function getPageById($id)
+	public function getPageByKey($key = '')
 	{
-		$where = array
-		(
-			'id' => (int)$id,
-		);
+		$sql = 'SELECT * FROM [prefix]_pages as p
+				INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+				WHERE pc.`key` = "'.$this->getDatabase()->escape($key).'"';
+		$pageRow = $this->getDatabase()->queryRow($sql);
 
-		$pages = $this->_getBy($where);
-
-		if(!empty($pages))
+		if(empty($pageRow))
 		{
-			return reset($pages);
+			return null;
 		}
 
-		return null;
+		$pageModel = new Page_PageModel(); 
+		$pageModel->setId($pageRow['id']);
+		$pageModel->setTitle($pageRow['title']);
+		$pageModel->setContent($pageRow['content']);
+		$pageModel->setLocale($pageRow['locale']);
+		$pageModel->setKey($pageRow['key']);
+
+		return $pageModel;
 	}
-
-	/**
-	 * Returns an array with page models found by the where clause.
-	 *
-	 * @param mixed[] $where
-	 * @return Page_PageModel[]|null
-	 */
-	protected function _getBy($where = null)
-	{
-		$pageRows = $this->getDatabase()->selectArray
-		(
-			'*',
-			'pages',
-			$where
-		);
-
-		if(!empty($pageRows))
-		{
-			$pages = array();
-
-			foreach($pageRows as $pageRow)
-			{
-				$pages[] = $this->loadFromArray($pageRow);
-			}
-
-			return $pages;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns a page model created using an array with page data.
-	 *
-	 * @param mixed[] $pageRow
-	 * @return Page_PageModel
-	 */
-	public function loadFromArray($pageRow = array())
-	{
-		$page = new Page_PageModel();
-
-		if(isset($pageRow['id']))
-		{
-			$page->setId($pageRow['id']);
-		}
-
-		if(isset($pageRow['title']))
-		{
-			$page->setTitle($pageRow['title']);
-		}
-
-		if(isset($pageRow['content']))
-		{
-			$page->setContent($pageRow['content']);
-		}
-
-		if(isset($pageRow['date_created']))
-		{
-			$page->setDateCreated($pageRow['date_created']);
-		}
-
-		return $page;
-	}
-
 	/**
 	 * Inserts or updates a page model in the database.
 	 *

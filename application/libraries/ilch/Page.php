@@ -101,7 +101,7 @@ class Ilch_Page
 	 * @param Ilch_Request $request
 	 * @param Ilch_Router $router
 	 * @param Ilch_Translator $translator
-	 * @return Ilch_Controller
+	 * @return Ilch_Controller_Base
 	 * @throws InvalidArgumentException
 	 */
 	protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)

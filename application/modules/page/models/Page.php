@@ -23,6 +23,13 @@ class Page_PageModel extends Ilch_Model
 	 * @var int
 	 */
 	protected $_id;
+	
+	/**
+	 * The key of the page.
+	 *
+	 * @var string
+	 */
+	protected $_key;
 
 	/**
 	 * The title of the page.
@@ -37,6 +44,13 @@ class Page_PageModel extends Ilch_Model
 	 * @var string
 	 */
 	protected $_content;
+
+	/**
+	 * The locale of the page.
+	 *
+	 * @var string
+	 */
+	protected $_locale;
 
 	/**
 	 * The datetime when the page got created.
@@ -63,6 +77,26 @@ class Page_PageModel extends Ilch_Model
 	public function setId($id)
 	{
 		$this->_id = (int)$id;
+	}
+	
+	/**
+	 * Gets the key of the page.
+	 *
+	 * @return string
+	 */
+	public function getKey()
+	{
+		return $this->_key;
+	}
+
+	/**
+	 * Sets the key of the page.
+	 *
+	 * @param int $key
+	 */
+	public function setKey($key)
+	{
+		$this->_key = (int)$key;
 	}
 
 	/**
@@ -103,6 +137,26 @@ class Page_PageModel extends Ilch_Model
 	public function setContent($content)
 	{
 		$this->_content = (string)$content;
+	}
+	
+	/**
+	 * Gets the locale of the page.
+	 *
+	 * @return string
+	 */
+	public function getLocale()
+	{
+		return $this->_locale;
+	}
+
+	/**
+	 * Sets the locale of the page.
+	 *
+	 * @param string $locale
+	 */
+	public function setLocale($locale)
+	{
+		$this->_locale = (string)$locale;
 	}
 
 	/**

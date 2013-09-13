@@ -7,7 +7,7 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Controller
+class Ilch_Controller_Base
 {
 	/**
 	 * @var Ilch_Request

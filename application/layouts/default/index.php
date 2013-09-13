@@ -11,6 +11,7 @@
 		<div id="app">
 			<div class="navbar">
 				<div class="navbar-inner navbar-app">
+					Default Seite
 				</div>
 			</div>
 			<div class="app_content">
