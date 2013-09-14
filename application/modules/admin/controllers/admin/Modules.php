@@ -7,9 +7,9 @@
 
 defined('ACCESS') or die('no direct access');
 
-class Admin_Admin_ModuleController extends Ilch_Controller_Admin
+class Admin_Admin_ModulesController extends Ilch_Controller_Admin
 {
-	public function loadAction()
+	public function indexAction()
 	{
 	}
 }

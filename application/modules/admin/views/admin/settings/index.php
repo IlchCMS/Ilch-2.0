@@ -1,3 +1,4 @@
+<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
 <div class="control-group">
 	<label for="timezone" class="control-label">
 		<?php echo $this->trans('timezone'); ?>:
@@ -21,3 +22,4 @@
 		</select>
 	</div>
 </div>
+</form>

@@ -4,6 +4,10 @@ html, body {
     height: 100%;
 }
 
+.form-horizontal .control-group .control-label {
+	text-align: left;
+}
+
 #sidebar {
 	width:300px;
 	background-color: #ECECFB;

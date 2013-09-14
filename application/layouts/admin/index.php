@@ -7,6 +7,7 @@
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/admin/main.css'); ?>" rel="stylesheet">
 		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
 	</head>
 	<body>
 		<div id="sidebar">
@@ -37,10 +38,27 @@
 				<div class="navbar-inner navbar-app">
 					<ul class="nav">
 						<li class="active"><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">Startseite</a></li>
-						<li><a href="#">Navigation</a></li>
-						<li><a href="#">Module</a></li>
-						<li><a href="#">Layouts</a></li>
-						<li><a href="<?php echo $this->url(array('controller' => 'settings')); ?>">System</a></li>
+						<li><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">Navigation</a></li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
+								Module
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<?php
+									foreach($this->get('modules') as $module)
+									{
+										echo '<li>
+												<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">'
+													.$module->getKey()
+												.'</a>
+											</li>';
+									}
+								?>
+							</ul>
+						</li>
+						<li><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">Layout</a></li>
+						<li><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">System</a></li>
 					</ul>
 					<ul class="nav pull-right">
 						<li>

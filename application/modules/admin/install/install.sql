@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_config` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `[prefix]_module` (
+CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
