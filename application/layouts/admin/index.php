@@ -13,9 +13,9 @@
 			<div class="navbar">
 				<div class="navbar-inner navbar-sidebar">
 					<span class="brand">Ilch 2.0</span>
-					<ul class="nav">
+					<ul class="nav pull-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">TBD<b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Suche<b class="caret"></b></a>
 						</li>
 					</ul>
 				</div>
@@ -35,6 +35,13 @@
 		<div id="app">
 			<div class="navbar">
 				<div class="navbar-inner navbar-app">
+					<ul class="nav">
+						<li class="active"><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">Startseite</a></li>
+						<li><a href="#">Navigation</a></li>
+						<li><a href="#">Module</a></li>
+						<li><a href="#">Layouts</a></li>
+						<li><a href="<?php echo $this->url(array('controller' => 'settings')); ?>">System</a></li>
+					</ul>
 					<ul class="nav pull-right">
 						<li>
 							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
