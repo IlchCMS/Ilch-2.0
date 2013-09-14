@@ -224,8 +224,9 @@ class Install_IndexController extends Ilch_Controller_Frontend
 
 			if(empty($errors))
 			{
-				$modulesToInstall = array('install', 'user', 'page');
-
+				/*
+				 * Write install config.
+				 */
 				$fileConfig = new Ilch_Config_File();
 				$fileConfig->set('dbEngine', $_SESSION['install']['dbEngine']);
 				$fileConfig->set('dbHost', $_SESSION['install']['dbHost']);
@@ -235,32 +236,38 @@ class Install_IndexController extends Ilch_Controller_Frontend
 				$fileConfig->set('dbPrefix', $_SESSION['install']['dbPrefix']);
 				$fileConfig->saveConfigToFile(CONFIG_PATH.'/config.php');
 
+				/*
+				 * Initialize install database.
+				 */
 				$dbFactory = new Ilch_Database_Factory();
 				$db = $dbFactory->getInstanceByConfig($fileConfig);
 				Ilch_Registry::set('db', $db);
 
+				/*
+				 * Install every registered module.
+				 */
+				$modulesToInstall = array('admin', 'user', 'page');
+				$moduleMapper = new Admin_ModuleMapper();
+
 				foreach($modulesToInstall as $module)
 				{
 					$db->executeQueries(file_get_contents(APPLICATION_PATH.'/modules/'.$module.'/install/install.sql'));
+					
+					if(file_exists(APPLICATION_PATH.'/modules/'.$module.'/install/install.php'))
+					{
+						$config = array();
+						require_once APPLICATION_PATH.'/modules/'.$module.'/install/install.php';
+
+						if(!empty($config))
+						{
+							$moduleModel = new Admin_ModuleModel();
+							$moduleModel->setKey($config['key']);
+							$moduleMapper->save($moduleModel);
+						}
+					}
 				}
 
-				$userMapper = new User_UserMapper();
-				$user = new User_UserModel();
-				$user->setName($_SESSION['install']['adminName']);
-				$user->setPassword(crypt($_SESSION['install']['adminPassword']));
-				$user->setEmail($_SESSION['install']['adminEmail']);
-				$user->setGroups(array(1));
-				$userMapper->save($user);
-
-				$date = new DateTime();
-				$databaseConfig = new Ilch_Config_Database($db);
-				$databaseConfig->set('version', VERSION, 1);
-				$databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
-				$databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
-				$databaseConfig->set('timezone', $_SESSION['install']['timezone']);
-
 				unset($_SESSION['install']);
-
 				$this->redirect(array('action' => 'finish'));
 			}
 
