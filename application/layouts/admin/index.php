@@ -61,10 +61,17 @@
 						<li><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">System</a></li>
 					</ul>
 					<ul class="nav pull-right">
-						<li>
-							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-								<i class="icon-off"></i> <?php echo $this->trans('logout');?>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?> <b class="caret"></b>
 							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
+										<i class="icon-off"></i> <?php echo $this->trans('logout');?>
+									</a>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</div>

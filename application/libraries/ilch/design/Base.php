@@ -91,6 +91,16 @@ abstract class Ilch_Design_Base
 	}
 
 	/**
+	 * Gets the user object.
+	 *
+	 * @return User_UserModel
+	 */
+	public function getUser()
+	{
+		return Ilch_Registry::get('user');
+	}
+
+	/**
 	 * Returns the translated text for a specific key.
 	 *
 	 * @param string $key
