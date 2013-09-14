@@ -262,6 +262,12 @@ class Install_IndexController extends Ilch_Controller_Frontend
 						{
 							$moduleModel = new Admin_ModuleModel();
 							$moduleModel->setKey($config['key']);
+							
+							foreach($config['name'] as $key => $value)
+							{
+								$moduleModel->addName($key, $value);
+							}
+								
 							$moduleMapper->save($moduleModel);
 						}
 					}

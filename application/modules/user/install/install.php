@@ -2,6 +2,11 @@
 $config = array
 (
 	'key' => 'user',
+	'name' => array
+	(
+		'en_EN' => 'User',
+		'de_DE' => 'Benutzer',
+	)
 );
 
 $userMapper = new User_UserMapper();

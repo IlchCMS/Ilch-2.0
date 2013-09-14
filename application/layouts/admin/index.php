@@ -50,7 +50,7 @@
 									{
 										echo '<li>
 												<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">'
-													.$module->getKey()
+													.$module->getName($this->getTranslator()->getLocale())
 												.'</a>
 											</li>';
 									}

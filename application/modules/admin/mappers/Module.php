@@ -41,6 +41,13 @@ class Admin_ModuleMapper extends Ilch_Mapper
 			$moduleModel = new Admin_ModuleModel();
 			$moduleModel->setId($moduleRow['id']);
 			$moduleModel->setKey($moduleRow['key']);
+			$nameRows = $this->getDatabase()->selectArray('*', 'modules_names', array('module_id' => $moduleRow['id']));
+
+			foreach($nameRows as $nameRow)
+			{
+				$moduleModel->addName($nameRow['locale'], $nameRow['name']);
+			}
+
 			$modules[] = $moduleModel;
 		}
 
@@ -53,12 +60,21 @@ class Admin_ModuleMapper extends Ilch_Mapper
 	 */
 	public function save(Admin_ModuleModel $module)
 	{
-		$userId = $this->getDatabase()->insert
+		$moduleId = $this->getDatabase()->insert
 		(
 			array('key' => $module->getKey()),
 			'modules'
 		);
 
-		return $userId;
+		foreach($module->getNames() as $key => $value)
+		{
+			$this->getDatabase()->insert
+			(
+				array('module_id' => $moduleId, 'locale' => $key, 'name' => $value),
+				'modules_names'
+			);
+		}
+
+		return $moduleId;
 	}
 }
