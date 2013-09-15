@@ -120,6 +120,20 @@ class Ilch_Translator
 	{
 		return $this->_translations;
 	}
+	
+	/**
+	 * Gets list of all supported locales.
+	 *
+	 * @return array
+	 */
+	public function getLocaleList()
+	{
+		return array
+		(
+			'en_EN' => 'English',
+			'de_DE' => 'German'
+		);
+	}
 
 	/**
 	 * Shortens the locale so only the first to characters get returned.

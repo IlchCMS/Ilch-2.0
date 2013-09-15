@@ -21,4 +21,6 @@ return array
 	'userNotFound' => 'No user found with this email or password.',
 	'logout' => 'Logout',
 	'noEmailGiven' => 'No email address was provided.',
+	'chooseLanguage' => 'Language',
+	'saveButton'     => 'Save'
 );

@@ -66,13 +66,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 
 	public function indexAction()
 	{
-		$languages = array
-		(
-			'en_EN' => 'English',
-			'de_DE' => 'German'
-		);
-
-		$this->getView()->set('languages', $languages);
+		$this->getView()->set('languages', $this->getTranslator()->getLocaleList());
 		$local = $this->getRequest()->getParam('language');
 
 		if($local)

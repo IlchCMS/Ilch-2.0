@@ -1,25 +1,27 @@
 <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
-<div class="control-group">
-	<label for="timezone" class="control-label">
-		<?php echo $this->trans('timezone'); ?>:
-	</label>
-	<div class="controls">
-		<select id="timezone" name="timezone">
-			<?php 
-				$timezones = $this->get('timezones');
-
-				for($i = 0; $i < count($timezones); $i++)
+	<div class="control-group">
+		<label for="languageInput" class="control-label">
+			<?php echo $this->trans('chooseLanguage'); ?>:
+		</label>
+		<div class="controls">
+			<select name="language" id="languageInput">
+				<?php
+				foreach($this->get('languages') as $key => $value)
 				{
-					$sel = '';
-					if($this->get('timezone') == $timezones[$i])
+					$selected = '';
+
+					if($this->getTranslator()->getLocale() == $key)
 					{
-						$sel = 'selected="selected"';
+						$selected = 'selected="selected"';
 					}
 
-					echo '<option '.$sel.' value="'.$timezones[$i].'">'.$timezones[$i].'</option>';
+					echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
 				}
-			?>
-		</select>
+				?>
+			</select>
+		</div>
 	</div>
-</div>
+	<button type="submit" name="save" class="btn">
+		<?php echo $this->trans('saveButton'); ?>
+	</button>
 </form>

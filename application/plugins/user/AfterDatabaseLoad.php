@@ -22,10 +22,12 @@ class User_AfterDatabaseLoadPlugin
 	 * Checks if a user id was given in the request and sets the user.
 	 *
 	 * If no user id is given a default user will be created.
+	 *
+	 * @param array $pluginData
 	 */
-	public function __construct()
+	public function __construct(array $pluginData)
 	{
-		if(!Ilch_Registry::get('config'))
+		if(!isset($pluginData['config']))
 		{
 			return;
 		}
@@ -41,5 +43,7 @@ class User_AfterDatabaseLoadPlugin
 		$user = $mapper->getUserById($userId);
 
 		Ilch_Registry::set('user', $user);
+		
+		$pluginData['translator']->setLocale($pluginData['config']->get('locale'));
 	}
 }

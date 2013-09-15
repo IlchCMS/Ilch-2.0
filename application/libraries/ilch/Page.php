@@ -49,6 +49,10 @@ class Ilch_Page
 			$databaseConfig->loadConfigFromDatabase();
 			Ilch_Registry::set('db', $db);
 			Ilch_Registry::set('config', $databaseConfig);
+
+			$plugin->addPluginData('db', $db);
+			$plugin->addPluginData('config', $databaseConfig);
+			$plugin->addPluginData('translator', $translator);
 		}
 
 		$plugin->execute('AfterDatabaseLoad');

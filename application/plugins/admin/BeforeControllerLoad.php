@@ -22,6 +22,8 @@ class Admin_BeforeControllerLoadPlugin
 	 * Redirects the user to the admin login page, if the user is not logged in, yet.
 	 *
 	 * If the user is logged in already redirect the user to the Admincenter.
+	 * 
+	 * @param array $pluginData
 	 */
 	public function __construct(array $pluginData)
 	{
