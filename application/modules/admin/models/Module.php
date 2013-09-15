@@ -39,6 +39,11 @@ class Admin_ModuleModel extends Ilch_Model
 	protected $_names;
 
 	/**
+	 * Small icon of the module.
+	 */
+	protected $_iconSmall;
+
+	/**
 	 * Gets the id.
 	 *
 	 * @return int
@@ -76,6 +81,26 @@ class Admin_ModuleModel extends Ilch_Model
 	public function setKey($key)
 	{
 		$this->_key = (string)$key;
+	}
+
+	/**
+	 * Gets the small icon.
+	 *
+	 * @return string
+	 */
+	public function getIconSmall()
+	{
+		return $this->_iconSmall;
+	}
+
+	/**
+	 * Sets the small icon.
+	 *
+	 * @param string $icon
+	 */
+	public function setIconSmall($icon)
+	{
+		$this->_iconSmall = (string)$icon;
 	}
 
 	/**

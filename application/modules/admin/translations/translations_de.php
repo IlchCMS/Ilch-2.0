@@ -11,7 +11,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-	'loginWelcome' => 'Bitte loggen Sie siche in',
+	'loginWelcome' => 'Bitte loggen Sie sich ein',
 	'email' => 'E-mail Adresse',
 	'password' => 'Passwort',
 	'rememberMe' => 'Eingeloggt bleiben',

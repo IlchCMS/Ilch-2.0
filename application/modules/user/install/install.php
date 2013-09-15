@@ -6,7 +6,8 @@ $config = array
 	(
 		'en_EN' => 'User',
 		'de_DE' => 'Benutzer',
-	)
+	),
+	'icon_small' => 'user.png',
 );
 
 $userMapper = new User_UserMapper();

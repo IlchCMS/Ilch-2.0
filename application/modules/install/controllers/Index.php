@@ -261,7 +261,8 @@ class Install_IndexController extends Ilch_Controller_Frontend
 							{
 								$moduleModel->addName($key, $value);
 							}
-								
+							
+							$moduleModel->setIconSmall($config['icon_small']);
 							$moduleMapper->save($moduleModel);
 						}
 					}

@@ -70,9 +70,9 @@
 									foreach($this->get('modules') as $module)
 									{
 										echo '<li>
-												<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">'
-													.$module->getName($this->getTranslator()->getLocale())
-												.'</a>
+												<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+													<img style="padding-right: 5px;" src="'.$this->staticUrl('img/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
+													.$module->getName($this->getTranslator()->getLocale()).'</a>
 											</li>';
 									}
 								?>

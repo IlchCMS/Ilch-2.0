@@ -41,6 +41,7 @@ class Admin_ModuleMapper extends Ilch_Mapper
 			$moduleModel = new Admin_ModuleModel();
 			$moduleModel->setId($moduleRow['id']);
 			$moduleModel->setKey($moduleRow['key']);
+			$moduleModel->setIconSmall($moduleRow['icon_small']);
 			$nameRows = $this->getDatabase()->selectArray('*', 'modules_names', array('module_id' => $moduleRow['id']));
 
 			foreach($nameRows as $nameRow)
@@ -62,7 +63,11 @@ class Admin_ModuleMapper extends Ilch_Mapper
 	{
 		$moduleId = $this->getDatabase()->insert
 		(
-			array('key' => $module->getKey()),
+			array
+			(
+				'key' => $module->getKey(),
+				'icon_small' => $module->getIconSmall(),
+			),
 			'modules'
 		);
 
