@@ -69,25 +69,26 @@
 								</a>
 							</li>
 						</ul>
-						<ul class="nav pull-right">
-							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-									<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?> <b class="caret"></b>
-								</a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-											<i class="icon-off"></i> <?php echo $this->trans('logout');?>
-										</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
+						<div class="btn-group pull-right">
+							<a class="btn" href="<?php echo $this->url(); ?>" title="neues Fenster öffnen" target="_blank"><i class="icon-share"></i></a>
+							<a href="#" data-toggle="dropdown" class="btn dropdown-toggle">
+								<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Profil</a></li>
+								<li class="divider"></li>
+								<li>
+									<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
+										<i class="icon-off"></i> <?php echo $this->trans('logout');?>
+									</a>
+								</li>
+							</ul>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 		<div id="app">
 					<?php
 						if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')

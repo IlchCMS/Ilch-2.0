@@ -14,25 +14,19 @@ body {
 }
 
 .install_container {
-	border: 1px solid #ddd;
+	border: 1px solid #BBB;
 	width: 900px;
 	min-height: 500px;
-	border-radius: 0px 0px 0px 0px;
+	border-bottom: none;
 }
 
 .save_box {
 	background-color: #ECECFB;
 	padding: 20px;
 	position: relative;
-	border: 1px solid #ddd;
+	border: 1px solid #BBB;
 	width: 980px;
 	border-radius: 0px 0px 0px 0px;
-}
-
-.install_shadow {
-	-webkit-box-shadow: 0px 0px 2px #222;
-	-moz-box-shadow: 0px 0px 2px #222;
-	box-shadow: 0px 0px 2px #222;
 }
 
 .logo {

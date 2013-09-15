@@ -28,6 +28,16 @@ class Admin_BeforeControllerLoadPlugin
 	public function __construct(array $pluginData)
 	{
 		$request = $pluginData['request'];
+		
+		if(isset($pluginData['config']))
+		{
+			$config = $pluginData['config'];
+
+			if(!$request->isAdmin() && $config->get('maintenance_mode'))
+			{
+				$pluginData['layout']->setFile('maintenance/index');
+			}
+		}
 
 		if($request->isAdmin() && $request->getControllerName() !== 'login' && !Ilch_Registry::get('user'))
 		{

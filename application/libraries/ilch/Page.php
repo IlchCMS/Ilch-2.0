@@ -64,6 +64,7 @@ class Ilch_Page
 		}
 
 		$layout = new Ilch_Layout($request, $translator, $router);
+		$plugin->addPluginData('layout', $layout);
 		$view = new Ilch_View($request, $translator, $router);
 
 		$controller = $this->_loadController($layout, $view, $plugin, $request, $router, $translator);

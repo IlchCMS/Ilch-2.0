@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
-			<div class="container install_shadow install_container">
+			<div class="container install_container">
 				<img class="logo" src="<?php echo $this->staticUrl('img/ilch_logo.png'); ?>" />
 				<ul class="nav nav-tabs" id="install_steps">
 					<?php
@@ -45,7 +45,7 @@
 						<?php echo $this->getContent(); ?>
 					</div>
 			</div>
-			<div class="container install_shadow save_box">
+			<div class="container save_box">
 				<?php
 					if(!in_array($this->getRequest()->getActionName(), array('index', 'finish')))
 					{

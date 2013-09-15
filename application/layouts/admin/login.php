@@ -19,7 +19,7 @@
 		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
 	</head>
 	<body>
-		<div class="container login_container box_shadow">
+		<div class="container login_container">
 			<img class="logo" src="<?php echo $this->staticUrl('img/ilch_logo.png'); ?>" />
 			<?php
 				$errors = $this->get('errors');
