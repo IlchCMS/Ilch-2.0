@@ -22,5 +22,10 @@ return array
 	'logout' => 'Ausloggen',
 	'noEmailGiven' => 'Es wurde keine E-Mail Adresse angegeben.',
 	'chooseLanguage' => 'Sprache',
-	'saveButton'     => 'Speichern'
+	'saveButton'     => 'Speichern',
+	'home'			 => 'Startseite',
+	'navigation'	 => 'Menüs',
+	'modules'		 => 'Module',
+	'layouts'		 => 'Layouts',
+	'system'		 => 'Einstellungen',
 );

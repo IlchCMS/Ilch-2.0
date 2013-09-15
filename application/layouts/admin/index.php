@@ -16,7 +16,7 @@
 					<span class="brand">Ilch 2.0</span>
 					<ul class="nav pull-right">
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Suche<b class="caret"></b></a>
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> Suche<b class="caret"></b></a>
 						</li>
 					</ul>
 				</div>
@@ -37,11 +37,19 @@
 			<div class="navbar">
 				<div class="navbar-inner navbar-app">
 					<ul class="nav">
-						<li class="active"><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">Startseite</a></li>
-						<li><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">Navigation</a></li>
+						<li>
+							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
+								<i class="icon-home"></i> <?php echo $this->trans('home'); ?>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
+								<i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
+							</a>
+						</li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
-								Module
+								<i class="icon-lock"></i> <?php echo $this->trans('modules'); ?>
 								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
@@ -57,8 +65,16 @@
 								?>
 							</ul>
 						</li>
-						<li><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">Layout</a></li>
-						<li><a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">System</a></li>
+						<li>
+							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
+								<i class="icon-picture"></i> <?php echo $this->trans('layouts'); ?>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
+								<i class="icon-wrench"></i> <?php echo $this->trans('system'); ?>
+							</a>
+						</li>
 					</ul>
 					<ul class="nav pull-right">
 						<li class="dropdown">

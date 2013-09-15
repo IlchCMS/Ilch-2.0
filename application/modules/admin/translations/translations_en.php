@@ -22,5 +22,10 @@ return array
 	'logout' => 'Logout',
 	'noEmailGiven' => 'No email address was provided.',
 	'chooseLanguage' => 'Language',
-	'saveButton'     => 'Save'
+	'saveButton'     => 'Save',
+	'home'			 => 'Start',
+	'navigation'	 => 'Navigation',
+	'modules'		 => 'Modules',
+	'layouts'		 => 'Layouts',
+	'system'		 => 'Settings',
 );
