@@ -9,6 +9,8 @@
 		<link href="<?php echo $this->staticUrl('css/admin/main.css'); ?>" rel="stylesheet">
 		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/admin/functions.js'); ?>"></script>
+
 	</head>
 	<body>
 		<div class="topmenu">
@@ -18,7 +20,7 @@
 						<span class="brand">Ilch 2.0</span>
 						<ul class="nav pull-right">
 							<li class="dropdown">
-								 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> Suche<b class="caret"></b></a>
+								 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> Suche<b class="caret"></b></a>
 							</li>
 						</ul>
 					</div>
@@ -87,32 +89,39 @@
 		</div>
 
 		<div id="app">
-			<div class="app_left">
-				<?php
-					if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')
-					{
-				?>
-						<div id="sidebar_content">
-							<ul class="nav nav-tabs nav-stacked">
-								<li class="nav-header">
-									Navigation
-								</li>
-								<?php
-									foreach($this->get('menu') as $menu)
-									{
-										echo '<li><a href="#">Library</a></li>';
-									}
-								?>
-							</ul>
+					<?php
+						if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')
+						{
+					?>
+						<div class="app_left">
+							<i class="icon-chevron-left toggleSidebar slideLeft"></i>
+							<div id="sidebar_content">
+								<ul class="nav nav-tabs nav-stacked">
+									<li class="nav-header">
+										Navigation
+									</li>
+									<?php
+										foreach($this->get('menu') as $menu)
+										{
+											echo '<li><a href="#">Library</a></li>';
+										}
+									?>
+								</ul>
+								<img class="watermark" src="<?php echo $this->staticUrl('img/ilch_logo_sw.png'); ?>" />
+							</div>
 						</div>
-				<?php
-					}
-				?>
-			</div>
+					<?php
+						}
+					?>
 
 			<div class="app_right">
+				<i class="toggleSidebar slideRight"></i>
 				<?php echo $this->getContent(); ?>
 			</div>
 		</div>
+
+		<script>
+			$('.toggleSidebar').on('click', toggleSidebar);
+		</script>
 	</body>
 </html>

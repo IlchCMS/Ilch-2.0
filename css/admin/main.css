@@ -1,3 +1,5 @@
+/* main */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -12,8 +14,13 @@ html, body {
 	padding-top: 10px;
 	width:300px;
 	height: 100%;
-	background-color: #ECECFB;
-	border-right: 1px solid silver;
+}
+
+.watermark {
+	left: -95px;
+	opacity: 0.2;
+	position: fixed;
+	bottom: -78px;
 }
 
 #app {
@@ -59,10 +66,13 @@ html, body {
 	margin-bottom: 0px;
 }
 
+/* top menu */
+
 .topmenu {
+	z-index: 1000;
 	position: fixed;
 	width:100%;
-	box-shadow: 0 1px 2px #666666;
+	border-bottom: 1px solid silver;
 }
 
 .leftmenu {
@@ -76,10 +86,13 @@ html, body {
 	margin-right: 300px;
 }
 
+/* content */
+
 .app_left {
-	margin-top: 40px;
+	margin-top: 41px;
 	background-color: #ECECFB;
-	float: left;
+	border-right: 1px solid silver;
+	position: fixed;
 	width: 300px;
 	height: 100%;
 }
@@ -88,5 +101,24 @@ html, body {
 	margin-left: 300px;
 	padding: 20px;
 	padding-top: 50px;
-	width: 100%;
+}
+
+/* sidebar toggle */
+
+.toggleSidebar {
+	cursor: pointer;
+	position: fixed;
+	top: 40px;
+	left:0px;
+	z-index: 20;
+}
+
+.slideLeft {
+	left:288px;
+}
+
+.slideRight {
+	background-color: #ECECFB;
+	border-right: 1px solid silver;
+	border-bottom: 1px solid silver;
 }
