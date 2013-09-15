@@ -122,6 +122,9 @@
 				<i class="toggleSidebar slideRight"></i>
 				<?php echo $this->getContent(); ?>
 			</div>
+			<div class="content_savebox">
+				<button class="btn">Save</button>
+			</div>
 		</div>
 
 		<script>

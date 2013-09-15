@@ -126,3 +126,14 @@ html, body {
 	border-right: 1px solid silver;
 	border-bottom: 1px solid silver;
 }
+
+.content_savebox {
+	border-top: 1px solid silver;
+	border-left: 1px solid silver;
+	bottom: 0px;
+	width:100%;
+	position: fixed;
+	margin-left: 300px;
+	padding: 5px 15px 5px 15px;
+	background-color: #EEEEEE;
+}
