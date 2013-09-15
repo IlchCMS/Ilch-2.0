@@ -79,10 +79,11 @@ class Ilch_Config_Database
 			array('key' => $key)
 		);
 
-		if($oldValue)
+		if($oldValue != null)
 		{
 			if($value !== $oldValue)
 			{
+
 				$this->_db->update
 				(
 					array

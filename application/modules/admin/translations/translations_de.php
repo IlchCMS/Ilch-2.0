@@ -28,4 +28,7 @@ return array
 	'modules'		 => 'Module',
 	'layouts'		 => 'Layouts',
 	'system'		 => 'Einstellungen',
+	'maintenanceMode' => 'Wartungsmodus',
+	'on'			  => 'An',
+	'off'			  => 'Aus'
 );

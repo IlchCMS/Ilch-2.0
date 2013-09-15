@@ -21,6 +21,28 @@
 			</select>
 		</div>
 	</div>
+	<div class="control-group">
+		<label for="maintenanceMode" class="control-label">
+			<?php echo $this->trans('maintenanceMode'); ?>:
+		</label>
+		<div class="controls">
+			<label class="radio">
+				<input type="radio"
+					   name="maintenanceMode"
+					   id="maintenanceMode"
+					   value="1"
+				<?php if($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> />
+				<?php echo $this->trans('on'); ?>
+			</label>
+			<label class="radio">
+				<input type="radio"
+					   name="maintenanceMode"
+					   value="0"
+				<?php if($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>>
+				<?php echo $this->trans('off'); ?>
+			</label>
+		</div>
+	</div>
 	<button type="submit" name="save" class="btn">
 		<?php echo $this->trans('saveButton'); ?>
 	</button>
