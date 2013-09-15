@@ -5,6 +5,7 @@
 		<title>Ilch <?php echo VERSION; ?> - Admincenter</title>
 		<meta name="description" content="Ilch - Login">
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/admin/main.css'); ?>" rel="stylesheet">
 		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>

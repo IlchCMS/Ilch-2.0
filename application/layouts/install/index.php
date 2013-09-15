@@ -5,12 +5,14 @@
 		<title>Ilch <?php echo VERSION; ?> - Installation</title>
 		<meta name="description" content="Ilch - Installation">
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/install/install.css'); ?>" rel="stylesheet">
 		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
 	</head>
 	<body>
 		<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
 			<div class="container install_shadow install_container">
+				<img class="logo" src="<?php echo $this->staticUrl('img/ilch_logo.png'); ?>" />
 				<ul class="nav nav-tabs" id="install_steps">
 					<?php
 						$done = 1;

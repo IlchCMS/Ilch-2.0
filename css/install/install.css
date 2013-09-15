@@ -1,5 +1,5 @@
 body {
-	padding-top: 60px;
+	padding-top: 65px;
 	padding-bottom: 40px;
 	background-color: #EEE;
 }
@@ -17,19 +17,34 @@ body {
 	border: 1px solid #ddd;
 	width: 900px;
 	min-height: 500px;
-	border-radius: 6px 6px 0px 0px;
+	border-radius: 0px 0px 0px 0px;
 }
 
 .save_box {
+	background-color: #ECECFB;
 	padding: 20px;
 	position: relative;
 	border: 1px solid #ddd;
 	width: 980px;
-	border-radius: 0px 0px 6px 6px;
+	border-radius: 0px 0px 0px 0px;
 }
 
 .install_shadow {
-	-webkit-box-shadow: 0px 0px 3px #222;
-	-moz-box-shadow: 0px 0px 3px #222;
-	box-shadow: 0px 0px 3px #222;
+	-webkit-box-shadow: 0px 0px 2px #222;
+	-moz-box-shadow: 0px 0px 2px #222;
+	box-shadow: 0px 0px 2px #222;
+}
+
+.logo {
+	margin-top: -180px;
+	margin-left: -141px;
+	position: relative;
+	width: 220px;
+}
+
+.logo_text {
+	margin-top: -180px;
+	margin-left: -141px;
+	position: relative;
+	width: 220px;
 }

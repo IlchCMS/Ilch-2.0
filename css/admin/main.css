@@ -67,6 +67,11 @@ html, body {
 	border-right: none;
 }
 
+.watermark {
+  margin:20px 20px 20px 250px; border:1px solid red; 
+  background-image:url(background5.gif); background-repeat:no-repeat; background-position:center center;
+  background-attachment:fixed;
+}
 .navbar {
 	margin-bottom: 0px;
 }
