@@ -103,6 +103,10 @@ html, body {
 	padding-top: 50px;
 }
 
+.app_right_full {
+	margin-left: 0px;
+}
+
 /* sidebar toggle */
 
 .toggleSidebar {

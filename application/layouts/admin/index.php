@@ -89,32 +89,35 @@
 		</div>
 
 		<div id="app">
-					<?php
-						if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')
-						{
-					?>
-						<div class="app_left">
-							<i class="icon-chevron-left toggleSidebar slideLeft"></i>
-							<div id="sidebar_content">
-								<ul class="nav nav-tabs nav-stacked">
-									<li class="nav-header">
-										Navigation
-									</li>
-									<?php
-										foreach($this->get('menu') as $menu)
-										{
-											echo '<li><a href="#">Library</a></li>';
-										}
-									?>
-								</ul>
-								<img class="watermark" src="<?php echo $this->staticUrl('img/ilch_logo_sw.png'); ?>" />
-							</div>
-						</div>
-					<?php
-						}
-					?>
+				<?php
+					$contentFullClass = 'app_right_full';
 
-			<div class="app_right">
+					if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')
+					{
+						$contentFullClass = '';
+				?>
+					<div class="app_left">
+						<i class="icon-chevron-left toggleSidebar slideLeft"></i>
+						<div id="sidebar_content">
+							<ul class="nav nav-tabs nav-stacked">
+								<li class="nav-header">
+									Navigation
+								</li>
+								<?php
+									foreach($this->get('menu') as $menu)
+									{
+										echo '<li><a href="#">Library</a></li>';
+									}
+								?>
+							</ul>
+							<img class="watermark" src="<?php echo $this->staticUrl('img/ilch_logo_sw.png'); ?>" />
+						</div>
+					</div>
+				<?php
+					}
+				?>
+
+			<div class="app_right <?php echo $contentFullClass?>">
 				<i class="toggleSidebar slideRight"></i>
 				<?php echo $this->getContent(); ?>
 			</div>
