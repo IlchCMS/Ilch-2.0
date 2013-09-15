@@ -11,8 +11,8 @@
 		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
 	</head>
 	<body>
-		<div id="sidebar">
-			<div id="sidebar_head">
+		<div class="topmenu">
+			<div class="leftmenu">
 				<div class="navbar">
 					<div class="navbar-inner navbar-sidebar">
 						<span class="brand">Ilch 2.0</span>
@@ -24,88 +24,93 @@
 					</div>
 				</div>
 			</div>
-			<?php
-				if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')
-				{
-			?>
-					<div id="sidebar_content">
-						<ul class="nav nav-tabs nav-stacked">
-							<li class="nav-header">
-								Navigation
+			<div class="rightmenu">
+				<div class="navbar">
+					<div class="navbar-inner navbar-app">
+						<ul class="nav">
+							<li>
+								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
+									<i class="icon-home"></i> <?php echo $this->trans('home'); ?>
+								</a>
 							</li>
-							<?php
-								foreach($this->get('menu') as $menu)
-								{
-									echo '<li><a href="#">Library</a></li>';
-								}
-							?>
+							<li>
+								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
+									<i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
+								</a>
+							</li>
+							<li class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
+									<i class="icon-lock"></i> <?php echo $this->trans('modules'); ?>
+									<b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu">
+									<?php
+										foreach($this->get('modules') as $module)
+										{
+											echo '<li>
+													<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+														<img style="padding-right: 5px;" src="'.$this->staticUrl('img/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
+														.$module->getName($this->getTranslator()->getLocale()).'</a>
+												</li>';
+										}
+									?>
+								</ul>
+							</li>
+							<li>
+								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
+									<i class="icon-picture"></i> <?php echo $this->trans('layouts'); ?>
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
+									<i class="icon-wrench"></i> <?php echo $this->trans('system'); ?>
+								</a>
+							</li>
+						</ul>
+						<ul class="nav pull-right">
+							<li class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+									<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?> <b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
+											<i class="icon-off"></i> <?php echo $this->trans('logout');?>
+										</a>
+									</li>
+								</ul>
+							</li>
 						</ul>
 					</div>
-			<?php
-				}
-			?>
-
+				</div>
+			</div>
 		</div>
+
 		<div id="app">
-			<div class="navbar">
-				<div class="navbar-inner navbar-app">
-					<ul class="nav">
-						<li>
-							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
-								<i class="icon-home"></i> <?php echo $this->trans('home'); ?>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
-								<i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
-							</a>
-						</li>
-						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
-								<i class="icon-lock"></i> <?php echo $this->trans('modules'); ?>
-								<b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
+			<div class="app_left">
+				<?php
+					if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')
+					{
+				?>
+						<div id="sidebar_content">
+							<ul class="nav nav-tabs nav-stacked">
+								<li class="nav-header">
+									Navigation
+								</li>
 								<?php
-									foreach($this->get('modules') as $module)
+									foreach($this->get('menu') as $menu)
 									{
-										echo '<li>
-												<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
-													<img style="padding-right: 5px;" src="'.$this->staticUrl('img/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
-													.$module->getName($this->getTranslator()->getLocale()).'</a>
-											</li>';
+										echo '<li><a href="#">Library</a></li>';
 									}
 								?>
 							</ul>
-						</li>
-						<li>
-							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
-								<i class="icon-picture"></i> <?php echo $this->trans('layouts'); ?>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
-								<i class="icon-wrench"></i> <?php echo $this->trans('system'); ?>
-							</a>
-						</li>
-					</ul>
-					<ul class="nav pull-right">
-						<li class="dropdown">
-							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
-								<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?> <b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-										<i class="icon-off"></i> <?php echo $this->trans('logout');?>
-									</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+						</div>
+				<?php
+					}
+				?>
 			</div>
-			<div class="app_content">
+
+			<div class="app_right">
 				<?php echo $this->getContent(); ?>
 			</div>
 		</div>

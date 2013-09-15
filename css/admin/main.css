@@ -8,20 +8,9 @@ html, body {
 	text-align: left;
 }
 
-#sidebar {
-	width:300px;
-	position: fixed;
-	border-right: 1px solid silver;
-}
-
-#sidebar_head {
-	background-color: #ECECFB;
-	border-bottom: 1px solid silver;
-}
-
 #sidebar_content {
+	padding-top: 10px;
 	width:300px;
-	position: fixed;
 	height: 100%;
 	background-color: #ECECFB;
 	border-right: 1px solid silver;
@@ -29,22 +18,21 @@ html, body {
 
 #app {
 	height:100%;
-	margin-left: 300px;
 }
 
 #app .app_content{
-	padding:40px;
+	padding: 20px;
 }
 
 .navbar-inner {
 	border-radius: 0px;
 	border:none;
 	height: 40px;
-	box-shadow: 0 1px 4px #666;
+	box-shadow: none;
 }
 
 .navbar-app {
-	background-color: #CCCCCC;
+	background-color: #EEEEEE;
 	background-image: none;
 }
 
@@ -67,11 +55,38 @@ html, body {
 	border-right: none;
 }
 
-.watermark {
-  margin:20px 20px 20px 250px; border:1px solid red; 
-  background-image:url(background5.gif); background-repeat:no-repeat; background-position:center center;
-  background-attachment:fixed;
-}
 .navbar {
 	margin-bottom: 0px;
+}
+
+.topmenu {
+	position: fixed;
+	width:100%;
+	box-shadow: 0 1px 2px #666666;
+}
+
+.leftmenu {
+	border-right: 1px solid silver;
+	float: left;
+	width: 300px;
+}
+
+.rightmenu {
+	width: 100%;
+	margin-right: 300px;
+}
+
+.app_left {
+	margin-top: 40px;
+	background-color: #ECECFB;
+	float: left;
+	width: 300px;
+	height: 100%;
+}
+
+.app_right {
+	margin-left: 300px;
+	padding: 20px;
+	padding-top: 50px;
+	width: 100%;
 }
