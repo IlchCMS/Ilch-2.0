@@ -30,5 +30,6 @@ return array
 	'system'		 => 'Einstellungen',
 	'maintenanceMode' => 'Wartungsmodus',
 	'on'			  => 'An',
-	'off'			  => 'Aus'
+	'off'			  => 'Aus',
+	'systemSettings'  => 'System - Einstellungen'
 );

@@ -1,4 +1,5 @@
 <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
+	<legend><?php echo $this->trans('systemSettings'); ?></legend>
 	<div class="control-group">
 		<label for="languageInput" class="control-label">
 			<?php echo $this->trans('chooseLanguage'); ?>:
