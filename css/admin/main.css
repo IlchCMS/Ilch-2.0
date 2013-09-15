@@ -10,9 +10,20 @@ html, body {
 
 #sidebar {
 	width:300px;
+	position: fixed;
+	border-right: 1px solid silver;
+}
+
+#sidebar_head {
 	background-color: #ECECFB;
+	border-bottom: 1px solid silver;
+}
+
+#sidebar_content {
+	width:300px;
 	position: fixed;
 	height: 100%;
+	background-color: #ECECFB;
 	border-right: 1px solid silver;
 }
 
@@ -31,12 +42,6 @@ html, body {
 	height: 40px;
 	box-shadow: 0 1px 4px #666;
 }
-
-.navbar-sidebar {
-	background-color: #CACAD9;
-	background-image: none;
-}
-
 
 .navbar-app {
 	background-color: #CCCCCC;
@@ -60,4 +65,8 @@ html, body {
 
 .nav-tabs.nav-stacked > li > a {
 	border-right: none;
+}
+
+.navbar {
+	margin-bottom: 0px;
 }

@@ -11,27 +11,39 @@
 	</head>
 	<body>
 		<div id="sidebar">
-			<div class="navbar">
-				<div class="navbar-inner navbar-sidebar">
-					<span class="brand">Ilch 2.0</span>
-					<ul class="nav pull-right">
-						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> Suche<b class="caret"></b></a>
-						</li>
-					</ul>
+			<div id="sidebar_head">
+				<div class="navbar">
+					<div class="navbar-inner navbar-sidebar">
+						<span class="brand">Ilch 2.0</span>
+						<ul class="nav pull-right">
+							<li class="dropdown">
+								 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> Suche<b class="caret"></b></a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
-			<ul class="nav nav-tabs nav-stacked">
-				<li class="nav-header">
-					Navigation
-				</li>
-				<?php
-					foreach($this->get('menu') as $menu)
-					{
-						echo '<li><a href="#">Library</a></li>';
-					}
-				?>
-			</ul>
+			<?php
+				if(($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin')
+				{
+			?>
+					<div id="sidebar_content">
+						<ul class="nav nav-tabs nav-stacked">
+							<li class="nav-header">
+								Navigation
+							</li>
+							<?php
+								foreach($this->get('menu') as $menu)
+								{
+									echo '<li><a href="#">Library</a></li>';
+								}
+							?>
+						</ul>
+					</div>
+			<?php
+				}
+			?>
+
 		</div>
 		<div id="app">
 			<div class="navbar">
