@@ -44,7 +44,9 @@
 			</label>
 		</div>
 	</div>
-	<button type="submit" name="save" class="btn">
-		<?php echo $this->trans('saveButton'); ?>
-	</button>
+	<div class="content_savebox">
+		<button type="submit" name="save" class="btn">
+			<?php echo $this->trans('saveButton'); ?>
+		</button>
+	</div>
 </form>
