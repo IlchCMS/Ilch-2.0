@@ -18,6 +18,16 @@ defined('ACCESS') or die('no direct access');
 class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 {
 	/**
+	 * Filling the timezone which the Ilch_Date object will use.
+	 *
+	 * @var Array
+	 */
+	protected $_configData = array
+	(
+		'timezone' => 'Europe/Berlin'
+	);
+
+	/**
 	 * Tests if the user mapper returns the right user model using an id for the
 	 * search.
 	 */
@@ -53,8 +63,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		$this->assertEquals(2, $user->getId());
 		$this->assertEquals('testmail2@test.de', $user->getEmail());
 		$this->assertEquals('testUsername2', $user->getName());
-		$this->assertEquals(1378152832, $user->getDateCreated());
-		$this->assertEquals(1378152945, $user->getDateConfirmed());
+		$this->assertEquals(1378160032, $user->getDateCreated()->getTimestamp());
+		$this->assertEquals(1378160145, $user->getDateConfirmed()->getTimestamp());
 	}
 
 	/**
@@ -93,8 +103,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		$this->assertEquals(2, $user->getId());
 		$this->assertEquals('testmail2@test.de', $user->getEmail());
 		$this->assertEquals('testUsername2', $user->getName());
-		$this->assertEquals(1378152832, $user->getDateCreated());
-		$this->assertEquals(1378152945, $user->getDateConfirmed());
+		$this->assertEquals(1378160032, $user->getDateCreated()->getTimestamp());
+		$this->assertEquals(1378160145, $user->getDateConfirmed()->getTimestamp());
 	}
 
 	/**
@@ -135,8 +145,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		$this->assertEquals('testmail2@test.de', $user->getEmail());
 		$this->assertEquals('testUsername2', $user->getName());
 		$this->assertEquals($passwordHash, $user->getPassword());
-		$this->assertEquals(1378152832, $user->getDateCreated());
-		$this->assertEquals(1378152945, $user->getDateConfirmed());
+		$this->assertEquals(1378160032, $user->getDateCreated()->getTimestamp());
+		$this->assertEquals(1378160145, $user->getDateConfirmed()->getTimestamp());
 	}
 
 	/**
@@ -149,8 +159,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 			'email' => 'testmail2@test.deModified',
 			'name' => 'testUsername2Modified',
 			'password' => 'testPassword2Modified',
-			'date_created' => 1377037220,
-			'date_confirmed' => 1377037230,
+			'date_created' => '2013-08-20 22:20:20',
+			'date_confirmed' => '2013-08-20 22:20:30',
 		);
 		$dbMock = $this->getMock('Ilch_Database', array('insert'));
 		$dbMock->expects($this->once())
@@ -214,8 +224,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 			'email' => 'testmail2@test.deModified',
 			'name' => 'testUsername2Modified',
 			'password' => 'testPassword2Modified',
-			'date_created' => 1377037220,
-			'date_confirmed' => 1377037230,
+			'date_created' => '2013-08-20 22:20:20',
+			'date_confirmed' => '2013-08-20 22:20:30',
 		);
 
 		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'update'));

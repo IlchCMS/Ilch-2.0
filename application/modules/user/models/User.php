@@ -46,18 +46,18 @@ class User_UserModel extends Ilch_Model
 	protected $_password = '';
 
 	/**
-	 * The timestamp of when the user got created.
+	 * The Ilch_Date of when the user got created.
 	 *
-	 * @var int
+	 * @var Ilch_Date
 	 */
-	protected $_dateCreated = 0;
+	protected $_dateCreated;
 
 	/**
-	 * The timestamp of when the user got confirmed.
+	 * The Ilch_Date of when the user got confirmed.
 	 *
-	 * @var int
+	 * @var Ilch_Date
 	 */
-	protected $_dateConfirmed = 0;
+	protected $_dateConfirmed;
 
 	/**
 	 * The groups as id of the user.
@@ -167,9 +167,9 @@ class User_UserModel extends Ilch_Model
 	}
 
 	/**
-	 * Returns the date_created timestamp of the user.
+	 * Returns the date_created Ilch_Date of the user.
 	 *
-	 * @return int
+	 * @return Ilch_Date
 	 */
 	public function getDateCreated()
 	{
@@ -177,32 +177,34 @@ class User_UserModel extends Ilch_Model
 	}
 
 	/**
-	 * Saves the date_created timestamp of the user.
+	 * Saves the date_created Ilch_Date of the user.
 	 *
-	 * @param int|DateTime|string $dateCreated
+	 * @param int|Ilch_Date|string $dateCreated
 	 */
 	public function setDateCreated($dateCreated)
 	{
-		if(is_a($dateCreated, 'DateTime'))
+		if(is_numeric($dateCreated))
 		{
-			$dateCreated = $dateCreated->getTimestamp();
-		}
-		elseif(is_numeric($dateCreated))
-		{
-			$dateCreated = (int)$dateCreated;
+			$timestamp = (int)$dateCreated;
+			$dateCreated = new Ilch_Date();
+			$dateCreated->SetTimestamp($timestamp);
 		}
 		elseif(is_string($dateCreated))
 		{
-			$dateCreated = strtotime($dateCreated);
+			$dateCreated = new Ilch_Date($dateCreated);
+		}
+		elseif(!is_a($dateCreated, 'Ilch_Date'))
+		{
+			throw new InvalidArgumentException('DateCreated must be a timestamp, date-string or Ilch_Date, "'.$dateCreated.'" given.');
 		}
 
-		$this->_dateCreated = (int)$dateCreated;
+		$this->_dateCreated = $dateCreated;
 	}
 
 	/**
 	 * Returns the date_confirmed timestamp of the user.
 	 *
-	 * @return int
+	 * @return Ilch_Date
 	 */
 	public function getDateConfirmed()
 	{
@@ -212,23 +214,25 @@ class User_UserModel extends Ilch_Model
 	/**
 	 * Saves the date_confirmed timestamp of the user.
 	 *
-	 * @param int|DateTime|string $dateConfirmed
+	 * @param int|Ilch_Date|string $dateConfirmed
 	 */
 	public function setDateConfirmed($dateConfirmed)
 	{
-		if(is_a($dateConfirmed, 'DateTime'))
+		if(is_numeric($dateConfirmed))
 		{
-			$dateConfirmed = $dateConfirmed->getTimestamp();
-		}
-		elseif(is_numeric($dateConfirmed))
-		{
-			$dateConfirmed = (int)$dateConfirmed;
+			$timestamp = (int)$dateConfirmed;
+			$dateConfirmed = new Ilch_Date();
+			$dateConfirmed->SetTimestamp($timestamp);
 		}
 		elseif(is_string($dateConfirmed))
 		{
-			$dateConfirmed = strtotime($dateConfirmed);
+			$dateConfirmed = new Ilch_Date($dateConfirmed);
+		}
+		elseif(!is_a($dateConfirmed, 'Ilch_Date'))
+		{
+			throw new InvalidArgumentException('DateConfirmed must be a timestamp, date-string or Ilch_Date, "'.$dateConfirmed.'" given.');
 		}
 
-		$this->_dateConfirmed = (int)$dateConfirmed;
+		$this->_dateConfirmed = $dateConfirmed;
 	}
 }

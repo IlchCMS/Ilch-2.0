@@ -149,12 +149,16 @@ class User_UserMapper extends Ilch_Mapper
 
 		if(isset($userRow['date_created']))
 		{
-			$user->setDateCreated($userRow['date_created']);
+			$dateCreated = new Ilch_Date($userRow['date_created']);
+			$users['date_created'] = $dateCreated;
+			$user->setDateCreated($dateCreated);
 		}
 
 		if(isset($userRow['date_confirmed']))
 		{
-			$user->setDateConfirmed($userRow['date_confirmed']);
+			$dateConfirmed = new Ilch_Date($userRow['date_confirmed']);
+			$users['date_confirmed'] = $dateConfirmed;
+			$user->setDateConfirmed($dateConfirmed);
 		}
 
 		return $user;
@@ -167,14 +171,37 @@ class User_UserMapper extends Ilch_Mapper
 	 */
 	public function save(User_UserModel $user)
 	{
-		$fields = array
-		(
-			'name' => $user->getName(),
-			'password' => $user->getPassword(),
-			'email' => $user->getEmail(),
-			'date_created' => $user->getDateCreated(),
-			'date_confirmed' => $user->getDateConfirmed(),
-		);
+		$fields = array();
+		$name = $user->getName();
+		$password = $user->getPassword();
+		$email = $user->getEmail();
+		$dateCreated = $user->getDateCreated();
+		$dateConfirmed = $user->getDateConfirmed();
+
+		if(!empty($name))
+		{
+			$fields['name'] = $user->getName();
+		}
+
+		if(!empty($password))
+		{
+			$fields['password'] = $user->getPassword();
+		}
+
+		if(!empty($email))
+		{
+			$fields['email'] = $user->getEmail();
+		}
+
+		if(!empty($dateCreated))
+		{
+			$fields['date_created'] = $user->getDateCreated()->toDb();
+		}
+
+		if(!empty($dateConfirmed))
+		{
+			$fields['date_confirmed'] = $user->getDateConfirmed()->toDb();
+		}
 
 		$userId = $user->getId();
 

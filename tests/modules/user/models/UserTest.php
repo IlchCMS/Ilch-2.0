@@ -18,6 +18,16 @@ defined('ACCESS') or die('no direct access');
 class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 {
 	/**
+	 * Filling the timezone which the Ilch_Date object will use.
+	 *
+	 * @var Array
+	 */
+	protected $_configData = array
+	(
+		'timezone' => 'Europe/Berlin'
+	);
+
+	/**
 	 * Tests if the user id can be set and returned again.
 	 */
 	public function testSetGetId()
@@ -48,13 +58,16 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	}
 
 	/**
-	 * Tests if the date_created can be set and returned again.
+	 * Tests if the date_created can be set and returned again using a timestamp.
 	 */
-	public function testSetGetDateCreated()
+	public function testSetGetDateCreatedFromStamp()
 	{
 		$user = new User_UserModel();
 		$user->setDateCreated(123456789);
-		$this->assertEquals(123456789, $user->getDateCreated(), 'The date_created wasnt saved or returned correctly.');
+		$actualDate = $user->getDateCreated();
+
+		$this->assertInstanceOf('Ilch_Date', $actualDate, 'The date_created was not created using Ilch_Date.');
+		$this->assertEquals(123456789, $actualDate->getTimestamp(), 'The timestamp of the date_created wasnt saved or returned correctly.');
 	}
 
 	/**
@@ -64,9 +77,12 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	public function testSetGetDateCreatedFromDate()
 	{
 		$user = new User_UserModel();
-		$date = new DateTime();
+		$date = new Ilch_Date();
+		$expectedTimestamp = $date->getTimestamp();
 		$user->setDateCreated($date);
-		$this->assertEquals($date->getTimestamp(), $user->getDateCreated(), 'The date_created wasnt saved or returned correctly using a date object.');
+		$actualDate = $user->getDateCreated();
+
+		$this->assertEquals($expectedTimestamp, $actualDate->getTimestamp(), 'The date_created wasnt saved or returned correctly using a Ilch_Date object.');
 	}
 
 	/**
@@ -76,17 +92,23 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	{
 		$user = new User_UserModel();
 		$user->setDateCreated('2013-09-02 22:13:52');
-		$this->assertEquals(1378152832, $user->getDateCreated(), 'The date_created does not got saved correctly with using a String.');
+		$actualDate = $user->getDateCreated();
+
+		$this->assertInstanceOf('Ilch_Date', $actualDate, 'The date_created was not created using Ilch_Date.');
+		$this->assertEquals('2013-09-02 22:13:52', $actualDate->format('Y-m-d H:i:s'), 'The date_created does not got saved correctly using a String.');
 	}
 
 	/**
-	 * Tests if the date_confirmed can be set and returned again.
+	 * Tests if the date_confirmed can be set and returned again using a timestamp.
 	 */
-	public function testSetGetDateConfirmed()
+	public function testSetGetDateConfirmedFromStamp()
 	{
 		$user = new User_UserModel();
 		$user->setDateConfirmed(987654321);
-		$this->assertEquals(987654321, $user->getDateConfirmed(), 'The date_confirmed wasnt saved or returned correctly.');
+		$actualDate = $user->getDateConfirmed();
+
+		$this->assertInstanceOf('Ilch_Date', $actualDate, 'The date_confirmed was not created using Ilch_Date.');
+		$this->assertEquals(987654321, $actualDate->getTimestamp(), 'The timestamp of the date_confirmed wasnt saved or returned correctly.');
 	}
 
 	/**
@@ -96,9 +118,12 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	public function testSetGetDateConfirmedFromDate()
 	{
 		$user = new User_UserModel();
-		$date = new DateTime();
+		$date = new Ilch_Date();
+		$expectedTimestamp = $date->getTimestamp();
 		$user->setDateConfirmed($date);
-		$this->assertEquals($date->getTimestamp(), $user->getDateConfirmed(), 'The date_confirmed wasnt saved or returned correctly using a date object.');
+		$actualDate = $user->getDateConfirmed();
+
+		$this->assertEquals($expectedTimestamp, $actualDate->getTimestamp(), 'The date_confirmed wasnt saved or returned correctly using a Ilch_Date object.');
 	}
 
 	/**
@@ -108,6 +133,9 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	{
 		$user = new User_UserModel();
 		$user->setDateConfirmed('2013-09-02 22:15:45');
-		$this->assertEquals(1378152945, $user->getDateConfirmed(), 'The date_confirmed does not got saved correctly with using a String.');
+		$actualDate = $user->getDateConfirmed();
+
+		$this->assertInstanceOf('Ilch_Date', $actualDate, 'The date_confirmed was not created using Ilch_Date.');
+		$this->assertEquals('2013-09-02 22:15:45', $actualDate->format('Y-m-d H:i:s'), 'The date_confirmed does not got saved correctly using a String.');
 	}
 }

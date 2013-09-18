@@ -29,6 +29,16 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	);
 
 	/**
+	 * Tests if the timezone with an empty Registry-Key 'timezone'.
+	 */
+	public function testNewEmptyDateWithoutRegistry()
+	{
+		Ilch_Registry::remove('timezone');
+		$date = new Ilch_Date();
+		$this->assertEquals('UTC', $date->getTimeZone()->getName(), 'Timezone is not UTC as expected when creating Ilch_Date without a paramter.');
+	}
+
+	/**
 	 * Tests if Ilch_Date extends from DateTime.
 	 */
 	public function testExtendFromDateTime()
@@ -101,5 +111,50 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 		$ilchDate->setDefaultFormat('d.m.Y H:i:s');
 
 		$this->assertEquals('24.09.2013 22:32:46', (string)$ilchDate, 'The object could not be typecasted correctly to string using a custom format.');
+	}
+
+	/**
+	 * Tests if the timestamp always stays the same no matter if the local timezone gets requested.
+	 */
+	public function testTimestampDoesNotChange()
+	{
+		$date = new Ilch_Date();
+		$date->setTimestamp(1379521501);
+
+		$this->assertEquals(1379521501, $date->getTimestamp(), 'The timestamp was not returned in UTC.');
+		$this->assertEquals(1379521501, $date->format('U', true), 'The timestamp was not returned in UTC.');
+		$this->assertEquals(1379521501, $date->format('U', false), 'The timestamp was not returned in UTC.');
+	}
+
+	/**
+	 * Tests if the format function returns the correct local time.
+	 */
+	public function testFormatToLocal()
+	{
+		$date = new Ilch_Date();
+		$date->setTimestamp(1379521501);
+
+		$this->assertEquals('2013-09-18 18:25:01', $date->format('Y-m-d H:i:s', true), 'The time was not returned in local time.');
+	}
+
+	/**
+	 * Tests if the format function returns the correct UTC time.
+	 */
+	public function testFormatToUTC()
+	{
+		$date = new Ilch_Date();
+		$date->setTimestamp(1379521501);
+
+		$this->assertEquals('2013-09-18 16:25:01', $date->format('Y-m-d H:i:s'), 'The time was not returned in UTC.');
+	}
+
+	/**
+	 * Tests if Ilch_Date saves a date in the local time if the local timezone is given in the constructor.
+	 */
+	public function testConstructLocalTime()
+	{
+		$date = new Ilch_Date('2013-09-18 18:25:01', 'Europe/Berlin');
+
+		$this->assertEquals('2013-09-18 18:25:01', $date->format('Y-m-d H:i:s', true), 'The time was not returned in local time.');
 	}
 }
