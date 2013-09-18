@@ -16,4 +16,6 @@ $user->setName($_SESSION['install']['adminName']);
 $user->setPassword(crypt($_SESSION['install']['adminPassword']));
 $user->setEmail($_SESSION['install']['adminEmail']);
 $user->setGroups(array(1));
+$dateCreated = new Ilch_Date();
+$user->setDateCreated($dateCreated);
 $userMapper->save($user);
