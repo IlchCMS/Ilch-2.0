@@ -84,6 +84,7 @@ class Ilch_Database_Mysql
 	public function query($sql)
 	{
 		$sql = str_replace('[prefix]_', $this->prefix, $sql);
+
 		return mysqli_query($this->conn, $sql);
 	}
 
@@ -319,20 +320,35 @@ class Ilch_Database_Mysql
 	}
 
 	/**
-	 * Execute given query string.
+	 * Executes multiple queries given in one string within a single request.
 	 *
-	 * @param string $sqlString
+	 * @param  string $sql The string with the multiple queries.
+	 * @return boolean false if the first statement failed. Otherwise true.
 	 */
-	public function executeQueries($sqlString)
+	public function queryMulti($sql)
 	{
-		/*
-		 * @fixme we should not use ";" as delimiter.
-		 */
-		$queryParts = explode(';', $sqlString);
+		$sql = str_replace('[prefix]_', $this->prefix, $sql);
 
-		foreach($queryParts as $query)
+		/*
+		 * Executing the multiple queries.
+		 */
+		if($this->conn->multi_query($sql))
 		{
-			$this->query($query);
+		    while($this->conn->more_results())
+		    {
+		    	/*
+		    	 * If more results are available from the multi_query call we go
+		    	 * to the next result and free its memory usage.
+		    	 */
+		    	$this->conn->next_result();
+
+		        if($result = $this->conn->store_result())
+		        {
+		            $result->free();
+		        }
+		    }
 		}
+
+		return $result;
 	}
 }

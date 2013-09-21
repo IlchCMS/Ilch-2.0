@@ -76,11 +76,11 @@ class Install_IndexController extends Ilch_Controller_Frontend
 		}
 
 		if($this->getRequest()->isPost())
-		{	
+		{
 			$_SESSION['install']['timezone'] = $this->getRequest()->getPost('timezone');
 			$this->redirect(array('action' => 'license'));
 		}
-		
+
 		if(!empty($_SESSION['install']['timezone']))
 		{
 			$this->getView()->set('timezone', $_SESSION['install']['timezone']);
@@ -245,8 +245,8 @@ class Install_IndexController extends Ilch_Controller_Frontend
 
 				foreach($modulesToInstall as $module)
 				{
-					$db->executeQueries(file_get_contents(APPLICATION_PATH.'/modules/'.$module.'/install/install.sql'));
-					
+					$db->queryMulti(file_get_contents(APPLICATION_PATH.'/modules/'.$module.'/install/install.sql'));
+
 					if(file_exists(APPLICATION_PATH.'/modules/'.$module.'/install/install.php'))
 					{
 						$config = array();
@@ -256,12 +256,12 @@ class Install_IndexController extends Ilch_Controller_Frontend
 						{
 							$moduleModel = new Admin_ModuleModel();
 							$moduleModel->setKey($config['key']);
-							
+
 							foreach($config['name'] as $key => $value)
 							{
 								$moduleModel->addName($key, $value);
 							}
-							
+
 							$moduleModel->setIconSmall($config['icon_small']);
 							$moduleMapper->save($moduleModel);
 						}
