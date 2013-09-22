@@ -243,6 +243,11 @@ class Install_IndexController extends Ilch_Controller_Frontend
 				$modulesToInstall = array('admin', 'user', 'page');
 				$moduleMapper = new Admin_ModuleMapper();
 
+				/*
+				 * Clear old tables.
+				 */
+				$db->dropTablesByPrefix($db->getPrefix());
+
 				foreach($modulesToInstall as $module)
 				{
 					$db->queryMulti(file_get_contents(APPLICATION_PATH.'/modules/'.$module.'/install/install.sql'));

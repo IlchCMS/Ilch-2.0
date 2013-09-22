@@ -30,6 +30,16 @@ class Ilch_Database_Mysql
 	}
 
 	/**
+	 * Gets the table prefix.
+	 *
+	 * @return string
+	 */
+	public function getPrefix()
+	{
+		return $this->prefix;
+	}
+
+	/**
 	 * Get the mysqli object.
 	 *
 	 * @return Mysqli
@@ -271,7 +281,19 @@ class Ilch_Database_Mysql
 			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
 		}
 
-		$this->query($sql);
+		return $this->query($sql);
+	}
+
+	/**
+	 * Drops the table from database.
+	 *
+	 * @param string $table
+	 */
+	public function drop($table)
+	{
+		$sql = 'DROP TABLE `'.$table . '`';
+
+		return $this->query($sql);
 	}
 
 	/**
@@ -342,7 +364,9 @@ class Ilch_Database_Mysql
 		    	 */
 		    	$this->conn->next_result();
 
-		        if($result = $this->conn->store_result())
+				$result = $this->conn->store_result();
+
+		        if($result)
 		        {
 		            $result->free();
 		        }
@@ -350,5 +374,22 @@ class Ilch_Database_Mysql
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Drop all tables for given prefix.
+	 *
+	 * @param string $prefix
+	 */
+	public function dropTablesByPrefix($prefix)
+	{
+		$sql = 'SHOW TABLES LIKE "'.$prefix.'%"';
+		$tables = $this->queryArray($sql);
+
+		foreach($tables as $table)
+		{
+			$tableName = array_values($table);
+			$this->drop(reset($tableName));
+		}
 	}
 }
