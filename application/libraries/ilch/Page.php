@@ -10,74 +10,117 @@ defined('ACCESS') or die('no direct access');
 class Ilch_Page
 {
 	/**
-	 * Defines if cms is installed.
-	 *
-	 * @var boolean ilchInstalled
+	 * @var Ilch_Request
 	 */
-	protected $_ilchInstalled = false;
+	private $_request;
 
 	/**
-	 * Sets the installed flag.
-	 *
-	 * @param boolean $installed
+	 * @var Ilch_Translator
 	 */
-	public function setInstalled($installed)
+	private $_translator;
+
+	/**
+	 * @var Ilch_Router
+	 */
+	private $_router;
+
+	/**
+	 * @var Ilch_Plugin
+	 */
+	private $_plugin;
+
+	/**
+	 * @var Ilch_Layout
+	 */
+	private $_layout;
+
+	/**
+	 * @var Ilch_View
+	 */
+	private $_view;
+
+	/**
+	 * @var Ilch_Config_File
+	 */
+	private $_fileConfig;
+
+	/**
+	 * Initialize all needed objects.
+	 */
+	public function __construct()
 	{
-		$this->_ilchInstalled = (bool)$installed;
+		$this->_request = new Ilch_Request();
+		$this->_translator = new Ilch_Translator();
+		$this->_router = new Ilch_Router($this->_request);
+		$this->_plugin = new Ilch_Plugin();
+		$this->_layout = new Ilch_Layout($this->_request, $this->_translator, $this->_router);
+		$this->_view = new Ilch_View($this->_request, $this->_translator, $this->_router);
+		$this->_fileConfig = new Ilch_Config_File();
+
+		$this->_plugin->detectPlugins();
+		$this->_plugin->addPluginData('request', $this->_request);
+		$this->_plugin->addPluginData('layout', $this->_layout);
+
+		$this->_router->execute();
 	}
 
 	/**
-	 * Load and initialize cms.
-	 *
-	 * @param Ilch_Config_File $fileConfig
+	 * Load all specific cms data.
 	 */
-	public function loadCms(Ilch_Config_File $fileConfig)
+	public function loadCms()
 	{
-		$request = new Ilch_Request();
-		$translator = new Ilch_Translator();
-		$router = new Ilch_Router($request, $fileConfig);
-
-		$plugin = new Ilch_Plugin();
-		$plugin->addPluginData('request', $request);
-		$plugin->detectPlugins();
-
-		if($this->_ilchInstalled)
+		if(file_get_contents(CONFIG_PATH.'/config.php') != '')
 		{
+			/*
+			 * Cms is installed
+			 */
+			$this->_fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+
+			if($this->_fileConfig->get('debugModus') === false)
+			{
+				@ini_set('display_errors', 'off');
+				error_reporting(0);
+			}
+
 			$dbFactory = new Ilch_Database_Factory();
-			$db = $dbFactory->getInstanceByConfig($fileConfig);
+			$db = $dbFactory->getInstanceByConfig($this->_fileConfig);
 			$databaseConfig = new Ilch_Config_Database($db);
 			$databaseConfig->loadConfigFromDatabase();
 			Ilch_Registry::set('db', $db);
 			Ilch_Registry::set('config', $databaseConfig);
 
-			$plugin->addPluginData('db', $db);
-			$plugin->addPluginData('config', $databaseConfig);
-			$plugin->addPluginData('translator', $translator);
-		}
-
-		$plugin->execute('AfterDatabaseLoad');
-		$router->execute();
-
-		if(!$this->_ilchInstalled)
-		{
-			$request->setModuleName('install');
-		}
-
-		$layout = new Ilch_Layout($request, $translator, $router);
-		$plugin->addPluginData('layout', $layout);
-		$view = new Ilch_View($request, $translator, $router);
-
-		$controller = $this->_loadController($layout, $view, $plugin, $request, $router, $translator);
-		$plugin->addPluginData('controller', $controller);
-		$plugin->execute('AfterControllerLoad');
-
-		if($request->isAdmin())
-		{
-			$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/admin/'.$request->getControllerName().'/'.$request->getActionName().'.php');
+			$this->_plugin->addPluginData('db', $db);
+			$this->_plugin->addPluginData('config', $databaseConfig);
+			$this->_plugin->addPluginData('translator', $this->_translator);
+			$this->_plugin->execute('AfterDatabaseLoad');
 		}
 		else
 		{
-			$viewOutput = $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$request->getControllerName().'/'.$request->getActionName().'.php');
+			/*
+			 * Cms not installed yet.
+			 */
+			$this->_request->setModuleName('install');
+		}
+	}
+
+	/**
+	 * Loads the page.
+	 */
+	public function loadPage()
+	{
+		$controller = $this->_loadController();
+		
+		$this->_translator->load(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/translations');
+		$this->_plugin->addPluginData('controller', $controller);
+		$this->_plugin->execute('AfterControllerLoad');
+
+		if($this->_request->isAdmin())
+		{
+			$viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/admin/'.$this->_request->getControllerName().'/'.$this->_request->getActionName().'.php');
+		}
+		else
+		{
+			$viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/'.$this->_request->getControllerName().'/'.$this->_request->getActionName().'.php');
 		}
 
 		if(!empty($viewOutput))
@@ -89,41 +132,36 @@ class Ilch_Page
 		{
 			if($controller->getLayout()->getFile() != '')
 			{
-				$layout->loadScript(APPLICATION_PATH.'/layouts/'.$controller->getLayout()->getFile().'.php');
+				$this->_layout->loadScript(APPLICATION_PATH.'/layouts/'.$controller->getLayout()->getFile().'.php');
 			}
-			elseif(file_exists(APPLICATION_PATH.'/layouts/'.$request->getModuleName().'/index.php'))
+			elseif(file_exists(APPLICATION_PATH.'/layouts/'.$this->_request->getModuleName().'/index.php'))
 			{
-				$layout->loadScript(APPLICATION_PATH.'/layouts/'.$request->getModuleName().'/index.php');
+				$this->_layout->loadScript(APPLICATION_PATH.'/layouts/'.$this->_request->getModuleName().'/index.php');
 			}
 		}
 	}
 
 	/**
-	 * @param Ilch_Layout $layout
-	 * @param Ilch_View $view
-	 * @param Ilch_Plugin $plugin
-	 * @param Ilch_Request $request
-	 * @param Ilch_Router $router
-	 * @param Ilch_Translator $translator
+	 * Loads controller defined by the request object.
+	 *
 	 * @return Ilch_Controller_Base
-	 * @throws InvalidArgumentException
 	 */
-	protected function _loadController(Ilch_Layout $layout, Ilch_View $view, Ilch_Plugin $plugin, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
+	protected function _loadController()
 	{
-		if($request->isAdmin())
+		if($this->_request->isAdmin())
 		{
-			$controller = ucfirst($request->getModuleName()).'_Admin_'.ucfirst($request->getControllerName()).'Controller';
+			$controller = ucfirst($this->_request->getModuleName()).'_Admin_'.ucfirst($this->_request->getControllerName()).'Controller';
 		}
 		else
 		{
-			$controller = ucfirst($request->getModuleName()).'_'.ucfirst($request->getControllerName()).'Controller';
+			$controller = ucfirst($this->_request->getModuleName()).'_'.ucfirst($this->_request->getControllerName()).'Controller';
 		}
 
-		$controller = new $controller($layout, $view, $request, $router, $translator);
-		$action = $request->getActionName().'Action';
+		$controller = new $controller($this->_layout, $this->_view, $this->_request, $this->_router, $this->_translator);
+		$action = $this->_request->getActionName().'Action';
 
-		$plugin->addPluginData('controller', $controller);
-		$plugin->execute('BeforeControllerLoad');
+		$this->_plugin->addPluginData('controller', $controller);
+		$this->_plugin->execute('BeforeControllerLoad');
 
 		if(method_exists($controller, 'init'))
 		{
@@ -134,14 +172,6 @@ class Ilch_Page
 		{
 			$controller->$action();
 		}
-		else
-		{
-			throw new InvalidArgumentException('action "'.$action.'" not known for controller "'.$request->getControllerName().'"');
-		}
-
-		$translator->load(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/translations');
-
-		$plugin->execute('AfterControllerLoad');
 
 		return $controller;
 	}

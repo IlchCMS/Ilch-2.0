@@ -31,19 +31,6 @@ require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';
 
 Ilch_Registry::set('startTime', microtime(true));
 
-$fileConfig = new Ilch_Config_File();
 $page = new Ilch_Page();
-
-if(file_get_contents(CONFIG_PATH.'/config.php') != '')
-{
-	$fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
-	$page->setInstalled(true);
-
-	if($fileConfig->get('debugModus') === false)
-	{
-		@ini_set('display_errors', 'off');
-		error_reporting(0);
-	}
-}
-
-$page->loadCms($fileConfig);
+$page->loadCms();
+$page->loadPage();
