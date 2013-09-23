@@ -11,7 +11,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 {
 	public function init()
 	{
-		$this->getLayout()->setFile('install/index');
+		$this->getLayout()->setFile('modules/install/index');
 
 		/*
 		 * Dont set a time limit for installer.

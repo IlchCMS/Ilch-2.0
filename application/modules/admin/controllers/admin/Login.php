@@ -23,7 +23,7 @@ class Admin_Admin_LoginController extends Ilch_Controller_Admin
 	 */
 	public function init()
 	{
-		$this->getLayout()->setFile('admin/login');
+		$this->getLayout()->setFile('modules/admin/login');
 	}
 
 	/**

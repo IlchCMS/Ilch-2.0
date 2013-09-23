@@ -16,7 +16,7 @@ class Ilch_Controller_Admin extends Ilch_Controller_Base
 		$menu = array();
 		
 		$this->getLayout()->set('menu', $menu);
-		$this->getLayout()->setFile('admin/index');
+		$this->getLayout()->setFile('modules/admin/index');
 		
 		$moduleMapper = new Admin_ModuleMapper();
 		$this->getLayout()->set('modules', $moduleMapper->getModules());
