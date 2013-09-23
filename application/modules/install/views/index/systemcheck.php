@@ -10,7 +10,18 @@
 		<tr>
 			<td><?php echo $this->trans('phpVersion'); ?></td>
 			<td class="text-success">>= 5.3</td>
-			<td><?php echo $this->get('phpVersion'); ?></td>
+			<td class="<?php
+						if(version_compare(phpversion(), '5.3.0', '>'))
+						{
+							echo 'text-success';
+						}
+						else
+						{
+							echo 'text-error';
+						} 
+						?>">
+				<?php echo $this->get('phpVersion'); ?>
+			</td>
 		</tr>
 		<tr>
 			<td><?php echo $this->trans('writable').' "config.php"' ?></td>
