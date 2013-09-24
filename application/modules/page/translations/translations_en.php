@@ -11,25 +11,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-	'loginWelcome' => 'Please sign in',
-	'email' => 'Email address',
-	'password' => 'Password',
-	'rememberMe' => 'Remember me',
-	'signIn' => 'Sign in',
-	'logoutMsg' => 'You got successfully logged out.',
-	'alreadyLoggedIn' => 'You are already logged in.',
-	'userNotFound' => 'No user found with this email or password.',
-	'logout' => 'Logout',
-	'noEmailGiven' => 'No email address was provided.',
-	'chooseLanguage' => 'Language',
-	'saveButton'     => 'Save',
-	'home'			 => 'Start',
-	'navigation'	 => 'Navigation',
-	'modules'		 => 'Modules',
-	'layouts'		 => 'Layouts',
-	'system'		 => 'Settings',
-	'maintenanceMode' => 'Maintenance mode',
-	'on'			  => 'On',
-	'off'			  => 'Off',
-	'systemSettings'  => 'System - Settings'
+	'menuSite' => 'Site',
+	'menuSites' => 'Sites',
+	'menuActionNewSite' => 'Create new site',
 );
