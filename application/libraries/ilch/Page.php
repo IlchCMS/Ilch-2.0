@@ -30,7 +30,7 @@ class Ilch_Page
 	private $_plugin;
 
 	/**
-	 * @var Ilch_Layout
+	 * @var Ilch_Layout_Base
 	 */
 	private $_layout;
 
@@ -53,15 +53,22 @@ class Ilch_Page
 		$this->_translator = new Ilch_Translator();
 		$this->_router = new Ilch_Router($this->_request);
 		$this->_plugin = new Ilch_Plugin();
-		$this->_layout = new Ilch_Layout($this->_request, $this->_translator, $this->_router);
 		$this->_view = new Ilch_View($this->_request, $this->_translator, $this->_router);
 		$this->_fileConfig = new Ilch_Config_File();
+		$this->_router->execute();
+		
+		if($this->_request->isAdmin())
+		{
+			$this->_layout = new Ilch_Layout_Admin($this->_request, $this->_translator, $this->_router);
+		}
+		else
+		{
+			$this->_layout = new Ilch_Layout_Frontend($this->_request, $this->_translator, $this->_router);
+		}
 
 		$this->_plugin->detectPlugins();
 		$this->_plugin->addPluginData('request', $this->_request);
 		$this->_plugin->addPluginData('layout', $this->_layout);
-
-		$this->_router->execute();
 	}
 
 	/**

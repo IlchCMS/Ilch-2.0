@@ -51,7 +51,7 @@
 										{
 											echo '<li>
 													<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
-														<img style="padding-right: 5px;" src="'.$this->staticUrl('img/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
+														<img style="padding-right: 5px;" src="'.$this->staticUrl('img/modules/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
 														.$module->getName($this->getTranslator()->getLocale()).'</a>
 												</li>';
 										}
@@ -100,14 +100,39 @@
 					<div class="app_left">
 						<i class="icon-chevron-left toggleSidebar slideLeft"></i>
 						<div id="sidebar_content">
-							<ul class="nav nav-tabs nav-stacked">
-								<li class="nav-header">
-									Navigation
-								</li>
+							<ul class="nav nav-list">
 								<?php
-									foreach($this->get('menu') as $menu)
+									foreach($this->getMenus() as $key => $items)
 									{
-										echo '<li><a href="#">Library</a></li>';
+										echo '<li class="nav-header">'.$this->trans($key).'</li>';
+
+										foreach($items as $key)
+										{
+											$class = '';
+
+											if($key['active'])
+											{
+												$class = 'active';
+											}
+
+											echo '<li class="'.$class.'">
+												      <a href="'.$key['url'].'"><i class="'.$key['icon'].'"></i> '.$this->trans($key['name']).'</a>
+												  </li>';
+										}
+									}
+
+									$actions = $this->getMenuAction();
+
+									if(!empty($actions))
+									{
+										echo '<li class="divider"></li>';
+
+										foreach($actions as $action)
+										{
+											echo '<li>
+													  <a href="'.$action['url'].'"><i class="'.$action['icon'].'"></i> '.$this->trans($action['name']).'</a>
+												  </li>';
+										}
 									}
 								?>
 							</ul>

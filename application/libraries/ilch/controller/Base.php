@@ -20,7 +20,7 @@ class Ilch_Controller_Base
 	private $_translator;
 
 	/**
-	 * @var Ilch_Layout
+	 * @var Ilch_Layout_Base
 	 */
 	private $_layout;
 
@@ -39,13 +39,13 @@ class Ilch_Controller_Base
 	/**
 	 * Injects the layout/view to the controller.
 	 *
-	 * @param Ilch_Layout $layout
+	 * @param Ilch_Layout_Base $layout
 	 * @param Ilch_View $view
 	 * @param Ilch_Request $request
 	 * @param Ilch_Router $router
 	 * @param Ilch_Translator $translator
 	 */
-	public function __construct(Ilch_Layout $layout, Ilch_View $view, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
+	public function __construct(Ilch_Layout_Base $layout, Ilch_View $view, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
 	{
 		$this->_layout = $layout;
 		$this->_view = $view;
@@ -111,7 +111,7 @@ class Ilch_Controller_Base
 	/**
 	 * Gets the layout object.
 	 *
-	 * @return Ilch_Layout
+	 * @return Ilch_Layout_Base
 	 */
 	public function getLayout()
 	{
