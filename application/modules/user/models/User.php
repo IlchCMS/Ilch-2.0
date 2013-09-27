@@ -3,7 +3,7 @@
  * Holds class User_UserModel.
  *
  * @author Jainta Martin
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 

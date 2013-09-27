@@ -3,7 +3,7 @@
  * Holds class Admin_LoginController.
  *
  * @author Meyer Dominik
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 
@@ -13,7 +13,7 @@ defined('ACCESS') or die('no direct access');
  * Handles the login functionality.
  *
  * @author Jainta Martin
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 class Admin_Admin_LoginController extends Ilch_Controller_Admin

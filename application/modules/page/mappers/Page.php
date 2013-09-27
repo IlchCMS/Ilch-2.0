@@ -3,7 +3,7 @@
  * Holds Page_PageMapper.
  *
  * @author Meyer Dominik
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 

@@ -5,7 +5,7 @@
  * Workaround for server with no mod_rewrite.
  *
  * @author Meyer Dominik
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 header("Location: ../index.php/admin/admin");

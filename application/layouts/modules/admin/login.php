@@ -3,7 +3,7 @@
  * View script for the admin login page.
  *
  * @author Jainta Martin
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 ?>

@@ -3,7 +3,7 @@
  * Translations file for the admin module.
  *
  * @author Martin Jainta
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 

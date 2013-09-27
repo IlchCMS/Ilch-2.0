@@ -3,7 +3,7 @@
  * Holds class Modules_User_Models_UserTest.
  *
  * @author Jainta Martin
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch_phpunit
  */
 

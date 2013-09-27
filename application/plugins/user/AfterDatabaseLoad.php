@@ -3,7 +3,7 @@
  * Holds User_AfterDatabaseLoadPlugin.
  *
  * @author Jainta Martin
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 
@@ -13,7 +13,7 @@ defined('ACCESS') or die('no direct access');
  * Does user operations before the controller loads.
  *
  * @author  Jainta Martin
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 class User_AfterDatabaseLoadPlugin

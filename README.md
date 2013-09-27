@@ -1,6 +1,8 @@
-## Ilch CMS 2.0
+## Ilch Pluto
 
-Copyright (c) by Ilch CMS 2.0
+Copyright (c) by Ilch Pluto
+
+Ilch Pluto ist der direkte Nachfolger von Ilch (Version 1.2) und ist auch unter der Versionsnumer 2.0 bekannt.
 
 ### Installation
 
@@ -9,9 +11,9 @@ Copyright (c) by Ilch CMS 2.0
 - Mysql
 
 ### Support
-http://www.ilch.de
+http://www.ilch-pluto.de
 
 ### Team
-- Meyer Dominik		(Core)
-- Jainta Martin		(Core & QA)
-- Schneider Harald  (Frontend)
+- Meyer Dominik
+- Jainta Martin
+- Schneider Harald

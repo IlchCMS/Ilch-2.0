@@ -3,7 +3,7 @@
  * Holds Admin_BeforeControllerLoadPlugin.
  *
  * @author Jainta Martin
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 
@@ -13,7 +13,7 @@ defined('ACCESS') or die('no direct access');
  * Does admin operations before the controller loads.
  *
  * @author  Martin Jainta
- * @copyright Ilch CMS 2.0
+ * @copyright Ilch Pluto
  * @package ilch
  */
 class Admin_BeforeControllerLoadPlugin
