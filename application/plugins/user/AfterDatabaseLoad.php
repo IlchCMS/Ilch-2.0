@@ -43,7 +43,7 @@ class User_AfterDatabaseLoadPlugin
 		$user = $mapper->getUserById($userId);
 
 		Ilch_Registry::set('user', $user);
-		
+
 		$pluginData['translator']->setLocale($pluginData['config']->get('locale'));
 	}
 }

@@ -18,16 +18,48 @@ defined('ACCESS') or die('no direct access');
 class Page_PageMapper extends Ilch_Mapper
 {
 	/**
-	 * Returns page model found by the key.
+	 * Get page lists for overview.
 	 *
-	 * @param string $key
-	 * @return Page_PageModel|null
+	 * @return Page_PageModel[]|null
 	 */
-	public function getPageByKey($key = '')
+	public function getPageList()
 	{
 		$sql = 'SELECT * FROM [prefix]_pages as p
 				INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
-				WHERE pc.`key` = "'.$this->getDatabase()->escape($key).'"';
+				GROUP BY p.id';
+		$pageArray = $this->getDatabase()->queryArray($sql);
+
+		if(empty($pageArray))
+		{
+			return null;
+		}
+
+		$pages = array();
+
+		foreach($pageArray as $pageRow)
+		{
+			$pageModel = new Page_PageModel(); 
+			$pageModel->setId($pageRow['id']);
+			$pageModel->setTitle($pageRow['title']);
+			$pageModel->setPerma($pageRow['perma']);
+			$pages[] = $pageModel;
+		}
+
+		return $pages;
+	}
+
+	/**
+	 * Returns page model found by the key.
+	 *
+	 * @param string $id
+	 * @param string $locale
+	 * @return Page_PageModel|null
+	 */
+	public function getPageByIdLocale($id, $locale = '')
+	{
+		$sql = 'SELECT * FROM [prefix]_pages as p
+				INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+				WHERE p.`id` = "'.(int)$id.'" AND pc.locale = "'.$this->getDatabase()->escape($locale).'"';
 		$pageRow = $this->getDatabase()->queryRow($sql);
 
 		if(empty($pageRow))
@@ -40,10 +72,36 @@ class Page_PageMapper extends Ilch_Mapper
 		$pageModel->setTitle($pageRow['title']);
 		$pageModel->setContent($pageRow['content']);
 		$pageModel->setLocale($pageRow['locale']);
-		$pageModel->setKey($pageRow['key']);
+		$pageModel->setPerma($pageRow['perma']);
 
 		return $pageModel;
 	}
+
+	/**
+	 * Returns all page permas.
+	 *
+	 * @return array|null
+	 */
+	public function getPagePermas()
+	{
+		$sql = 'SELECT page_id, locale, perma FROM [prefix]_pages_content';
+		$permas = $this->getDatabase()->queryArray($sql);
+		$permaArray = array();
+
+		if(empty($permas))
+		{
+			return null;
+		}
+
+		
+		foreach($permas as $perma)
+		{
+			$permaArray[$perma['perma']] = $perma;
+		}
+
+		return $permaArray;
+	}
+
 	/**
 	 * Inserts or updates a page model in the database.
 	 *
@@ -51,39 +109,65 @@ class Page_PageMapper extends Ilch_Mapper
 	 */
 	public function save(Page_PageModel $page)
 	{
-		$fields = array
-		(
-			'title' => $page->getTitle(),
-			'content' => $page->getContent(),
-			'date_created' => $page->getDateCreated(),
-		);
-
-		$pageId = $page->getId();
-
-		if($pageId && $this->getPageById($pageId))
+		if($page->getId() && $page->getLocale())
 		{
-			/*
-			 * Page does exist already, update.
-			 */
-			$this->getDatabase()->update
-			(
-				$fields,
-				'pages',
-				array
+			if($this->getPageByIdLocale($page->getId(), $page->getLocale()))
+			{
+				$this->getDatabase()->update
 				(
-					'id' => $pageId,
-				)
-			);
+					array
+					(
+						'title' => $page->getTitle(),
+						'content' => $page->getContent(),
+						'perma' => $page->getPerma(),
+					),
+					'pages_content',
+					array
+					(
+						'page_id' => $page->getId(),
+						'locale' => $page->getLocale(),
+					)
+				);
+			}
+			else
+			{
+				$this->getDatabase()->insert
+				(
+					array
+					(
+						'page_id' => $page->getId(),
+						'title' => $page->getTitle(),
+						'content' => $page->getContent(),
+						'perma' => $page->getPerma(),
+						'locale' => $page->getLocale()
+					),
+					'pages_content'
+				);
+			}
 		}
 		else
 		{
-			/*
-			 * Page does not exist yet, insert.
-			 */
+			$date = new Ilch_Date();
 			$pageId = $this->getDatabase()->insert
 			(
-				$fields,
+				array
+				(
+					'date_created' => $date->toDb()
+				),
 				'pages'
+			);
+			
+			$this->getDatabase()->insert
+			(
+				array
+				(
+					'page_id' => $pageId,
+					'title' => $page->getTitle(),
+					'content' => $page->getContent(),
+					'perma' => $page->getPerma(),
+					'locale' => $page->getLocale()
+				),
+				'pages_content'
 			);
 		}
 	}

@@ -117,11 +117,16 @@ class Ilch_Request
 	/**
 	 * Gets param with given key.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public function getParam($key)
 	{
-		return $this->_params[$key];
+		if(isset($this->_params[$key]))
+		{
+			return $this->_params[$key];
+		}
+
+		return null;
 	}
 
 	/**

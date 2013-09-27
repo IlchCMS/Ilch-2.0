@@ -9,7 +9,5 @@ CREATE TABLE IF NOT EXISTS `[prefix]_pages_content` (
   `content` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `page_id` (`page_id`),
-  UNIQUE KEY `key` (`key`)
+  `perma` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

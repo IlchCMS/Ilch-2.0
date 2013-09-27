@@ -2,7 +2,7 @@
 <html lang="de">
 	<head>
 		<meta charset="utf-8">
-		<title>Ilch <?php echo VERSION; ?> - Installation</title>
+		<title>Ilch Pluto <?php echo VERSION; ?> - Installation</title>
 		<meta name="description" content="Ilch - Installation">
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">

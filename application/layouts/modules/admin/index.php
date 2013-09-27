@@ -2,7 +2,7 @@
 <html lang="de">
 	<head>
 		<meta charset="utf-8">
-		<title>Ilch <?php echo VERSION; ?> - Admincenter</title>
+		<title>Ilch Pluto <?php echo VERSION; ?> - Admincenter</title>
 		<meta name="description" content="Ilch - Login">
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
@@ -17,7 +17,7 @@
 			<div class="leftmenu">
 				<div class="navbar">
 					<div class="navbar-inner navbar-sidebar">
-						<span class="brand">Ilch 2.0</span>
+						<span class="brand">Ilch Pluto</span>
 						<ul class="nav pull-right">
 							<li class="dropdown">
 								 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> Suche<b class="caret"></b></a>
@@ -36,7 +36,7 @@
 								</a>
 							</li>
 							<li>
-								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
+								<a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
 									<i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
 								</a>
 							</li>
@@ -59,7 +59,7 @@
 								</ul>
 							</li>
 							<li>
-								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
+								<a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
 									<i class="icon-picture"></i> <?php echo $this->trans('layouts'); ?>
 								</a>
 							</li>

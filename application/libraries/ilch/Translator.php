@@ -71,7 +71,7 @@ class Ilch_Translator
 
 		if(is_file($transFile))
 		{
-			$this->_translations = require $transFile;
+			$this->_translations = array_merge($this->_translations, require $transFile);
 			return true;
 		}
 		else

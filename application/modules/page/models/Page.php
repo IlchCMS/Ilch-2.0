@@ -25,11 +25,11 @@ class Page_PageModel extends Ilch_Model
 	protected $_id;
 	
 	/**
-	 * The key of the page.
+	 * The perma of the page.
 	 *
 	 * @var string
 	 */
-	protected $_key;
+	protected $_perma;
 
 	/**
 	 * The title of the page.
@@ -80,23 +80,23 @@ class Page_PageModel extends Ilch_Model
 	}
 	
 	/**
-	 * Gets the key of the page.
+	 * Gets the perma of the page.
 	 *
 	 * @return string
 	 */
-	public function getKey()
+	public function getPerma()
 	{
-		return $this->_key;
+		return $this->_perma;
 	}
 
 	/**
-	 * Sets the key of the page.
+	 * Sets the perma of the page.
 	 *
-	 * @param int $key
+	 * @param int $perma
 	 */
-	public function setKey($key)
+	public function setPerma($perma)
 	{
-		$this->_key = (int)$key;
+		$this->_perma = $perma;
 	}
 
 	/**

@@ -56,7 +56,7 @@ class Ilch_Page
 		$this->_view = new Ilch_View($this->_request, $this->_translator, $this->_router);
 		$this->_fileConfig = new Ilch_Config_File();
 		$this->_router->execute();
-		
+
 		if($this->_request->isAdmin())
 		{
 			$this->_layout = new Ilch_Layout_Admin($this->_request, $this->_translator, $this->_router);
@@ -69,6 +69,7 @@ class Ilch_Page
 		$this->_plugin->detectPlugins();
 		$this->_plugin->addPluginData('request', $this->_request);
 		$this->_plugin->addPluginData('layout', $this->_layout);
+		$this->_plugin->addPluginData('router', $this->_router);
 	}
 
 	/**
@@ -123,6 +124,7 @@ class Ilch_Page
 
 		if($this->_request->isAdmin())
 		{
+			$this->_translator->load(APPLICATION_PATH.'/modules/admin/translations');
 			$viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/admin/'.$this->_request->getControllerName().'/'.$this->_request->getActionName().'.php');
 		}
 		else

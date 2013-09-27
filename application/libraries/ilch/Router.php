@@ -18,6 +18,11 @@ class Ilch_Router
 	{
 		$this->_request = $request;
 	}
+	
+	public function getQuery()
+	{
+		return $this->_query;
+	}
 
 	/**
 	 * Fills the request object with the best matched route.
@@ -27,7 +32,8 @@ class Ilch_Router
 		$query = substr($_SERVER['REQUEST_URI'], strlen(REWRITE_BASE));
 		$query = str_replace('index.php/', '', $query);
 		$query = trim(str_replace('index.php', '', $query), '/');
-		
+		$this->_query = $query;
+
 		$this->_request->setModuleName('page');
 		$this->_request->setControllerName('index');
 		$this->_request->setActionName('index');
