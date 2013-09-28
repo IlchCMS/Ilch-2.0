@@ -31,5 +31,8 @@ return array
 	'maintenanceMode' => 'Maintenance mode',
 	'on'			  => 'On',
 	'off'			  => 'Off',
-	'systemSettings'  => 'System - Settings'
+	'systemSettings'  => 'System - Settings',
+	'search' => 'Search',
+	'welcomeBack' => 'Welcome back [user]',
+	'welcomeBackDescripton' => 'To find your target, please choose on the top menu or on the search on the left top corner',
 );

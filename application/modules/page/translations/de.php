@@ -21,4 +21,5 @@ return array
 	'addButton' => 'Seite anlegen',
 	'editButton' => 'Seite ändern',
 	'permaLink' => 'Permalink',
+	'pageAdress' => 'Seitenadresse'
 );

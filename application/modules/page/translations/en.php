@@ -21,4 +21,5 @@ return array
 	'addButton' => 'Site add',
 	'editButton' => 'Site edit',
 	'permaLink' => 'Perma link',
+	'pageAdress' => 'Page adress'
 );

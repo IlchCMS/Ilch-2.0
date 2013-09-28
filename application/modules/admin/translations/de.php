@@ -31,5 +31,8 @@ return array
 	'maintenanceMode' => 'Wartungsmodus',
 	'on'			  => 'An',
 	'off'			  => 'Aus',
-	'systemSettings'  => 'System - Einstellungen'
+	'systemSettings'  => 'System - Einstellungen',
+	'search' => 'Suche',
+	'welcomeBack' => 'Willkommen zurück [user]',
+	'welcomeBackDescripton' => 'Um zu Ihrem gewünschten Ziel zu kommen, benutzen Sie entweder die Navigation oben oder die umfangreiche Suche auf der linken oberen Seite',
 );

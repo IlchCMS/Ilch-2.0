@@ -6,8 +6,8 @@ if($this->get('pages') != '')
 	<thead>
 		<tr>
 			<th></th>
-			<th>Seitentitel</th>
-			<th>URL</th>
+			<th><?php echo $this->trans('pageTitle'); ?></th>
+			<th><?php echo $this->trans('pageAdress'); ?></th>
 		</tr>
 	</thead>
 	<tbody>

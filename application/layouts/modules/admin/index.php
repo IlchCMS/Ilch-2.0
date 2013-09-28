@@ -20,7 +20,7 @@
 						<span class="brand">Ilch Pluto</span>
 						<ul class="nav pull-right">
 							<li class="dropdown">
-								 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> Suche<b class="caret"></b></a>
+								 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
 							</li>
 						</ul>
 					</div>
@@ -70,7 +70,7 @@
 							</li>
 						</ul>
 						<div class="btn-group pull-right">
-							<a class="btn" href="<?php echo $this->url(); ?>" title="neues Fenster öffnen" target="_blank"><i class="icon-share"></i></a>
+							<a class="btn" href="<?php echo $this->url(); ?>" title="neues Fenster Ã¶ffnen" target="_blank"><i class="icon-share"></i></a>
 							<a href="#" data-toggle="dropdown" class="btn dropdown-toggle">
 								<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?>
 								<span class="caret"></span>
