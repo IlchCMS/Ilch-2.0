@@ -4,10 +4,6 @@ body {
 	background-color: #EEE;
 }
 
-.form-horizontal .control-group .control-label {
-	text-align: left;
-}
-
 .container {
 	padding: 60px;
 	background-color: white;
@@ -25,7 +21,7 @@ body {
 	padding: 20px;
 	position: relative;
 	border: 1px solid #BBB;
-	width: 980px;
+	width: 900px;
 	border-radius: 0px 0px 0px 0px;
 }
 

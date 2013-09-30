@@ -2,34 +2,34 @@
 	<?php echo $this->trans('welcomeToInstall', array('[VERSION]' => VERSION)); ?>
 </h2>
 <br />
-<div class="control-group">
-	<label for="languageInput" class="control-label">
+<div class="form-group">
+	<label for="languageInput" class="col-lg-2 control-label">
 		<?php echo $this->trans('chooseLanguage'); ?>:
 	</label>
-	<div class="controls">
-	<select name="language" id="languageInput">
-		<?php
-		foreach($this->get('languages') as $key => $value)
-		{
-			$selected = '';
-	
-			if($this->getTranslator()->getLocale() == $key)
+	<div class="col-lg-3">
+		<select name="language" id="languageInput" class="form-control">
+			<?php
+			foreach($this->get('languages') as $key => $value)
 			{
-				$selected = 'selected="selected"';
-			}
+				$selected = '';
 
-			echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
-		}
-		?>
-	</select>
+				if($this->getTranslator()->getLocale() == $key)
+				{
+					$selected = 'selected="selected"';
+				}
+
+				echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
+			}
+			?>
+		</select>
 	</div>
 </div>
-<div class="control-group">
-	<label for="timezone" class="control-label">
+<div class="form-group">
+	<label for="timezone" class="col-lg-2 control-label">
 		<?php echo $this->trans('timezone'); ?>:
 	</label>
-	<div class="controls">
-		<select id="timezone" name="timezone">
+	<div class="col-lg-3">
+		<select id="timezone" name="timezone" class="form-control">
 			<?php 
 				$timezones = $this->get('timezones');
 

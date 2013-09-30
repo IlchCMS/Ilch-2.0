@@ -70,7 +70,7 @@
 							</li>
 						</ul>
 						<div class="btn-group pull-right">
-							<a class="btn" href="<?php echo $this->url(); ?>" title="neues Fenster Ã¶ffnen" target="_blank"><i class="icon-share"></i></a>
+							<a class="btn" href="<?php echo $this->url(); ?>" title="neues Fenster ÃƒÂ¶ffnen" target="_blank"><i class="icon-share"></i></a>
 							<a href="#" data-toggle="dropdown" class="btn dropdown-toggle">
 								<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?>
 								<span class="caret"></span>

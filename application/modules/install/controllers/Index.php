@@ -115,7 +115,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 		$errors = array();
 		$this->getView()->set('phpVersion', phpversion());
 
-		if(!version_compare(phpversion(), '5.3.0', '>'))
+		if(!version_compare(phpversion(), '5.4.0', '>'))
 		{
 			$errors['version'] = true;
 		}

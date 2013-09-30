@@ -38,12 +38,19 @@
 						$progress = 100 / $menuCounter * $done;
 					?>
 				</ul>
-				<div class="progress progress-success progress-striped">
-					<div class="bar" style="width: <?php echo $progress; ?>%"></div>
-				</div>
-					<div class="install_content">
-						<?php echo $this->getContent(); ?>
+				<br />
+				<div class="progress  progress-striped">
+					<div class="progress-bar progress-bar-success"
+						role="progressbar"
+						aria-valuenow="<?php echo $progress; ?>"
+						aria-valuemin="0"
+						aria-valuemax="100"
+						style="width: <?php echo $progress; ?>%;">
 					</div>
+				</div>
+				<div class="install_content">
+					<?php echo $this->getContent(); ?>
+				</div>
 			</div>
 			<div class="container save_box">
 				<?php
@@ -62,7 +69,7 @@
 					{
 				?>
 						<button type="submit" name="save" class="btn pull-right">
-							<?php 
+							<?php
 								$buttonTrans = 'nextButton';
 
 								if($this->getRequest()->getActionName() == 'config')

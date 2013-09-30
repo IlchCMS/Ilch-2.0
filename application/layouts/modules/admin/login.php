@@ -26,21 +26,21 @@
 				$email = $this->get('email');
 				$error = empty($errors) ? '' : 'error';
 			?>
-			<form method="POST" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'))?>">
+			<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'))?>">
 				<h3 class="form-signin-heading"><?php echo$this->trans('loginWelcome')?></h3>
-				<div class="control-group <?php if(!empty($errors)){ echo 'error'; }; ?>">
-					<div class="controls">
+				<div class="form-group <?php if(!empty($errors)){ echo 'error'; }; ?>">
+					<div class="col-lg-12">
 						<input type="text"
 							   name="email"
-							   class="input-block-level <?php echo $error?>"
+							   class="form-control <?php echo $error?>"
 							   placeholder="<?php echo $this->trans('email')?>"
 							   value="<?php echo $this->escape($email); ?>">
 					</div>
 
-					<div class="controls">
+					<div class="col-lg-12">
 						<input type="password"
 							   name="password"
-							   class="input-block-level <?php echo $error?>"
+							   class="form-control <?php echo $error?>"
 							   placeholder="<?php echo $this->trans('password')?>">
 					</div>
 
@@ -50,7 +50,7 @@
 						{
 							foreach($errors as $transKey)
 							{
-								echo '<span class="help-inline">'.$this->trans($transKey).'</span>';
+								echo '<span class="help-block">'.$this->trans($transKey).'</span>';
 							}
 						}
 					?>

@@ -7,34 +7,13 @@
 			border-radius: 0px;
 }
 
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-.uneditable-input {
-  -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
+.form-horizontal .form-group .control-label {
+    text-align: left;
 }
 
-.nav-tabs>li>a {
-	-webkit-border-radius: 0px 0px 0 0;
-	   -moz-border-radius: 0px 0px 0 0;
-			border-radius: 0px 0px 0 0;
+label {
+	font-weight: normal;
 }
-
 legend {
 	font-size: 18px;
 }
