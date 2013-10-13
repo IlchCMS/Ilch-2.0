@@ -69,7 +69,6 @@ html, body {
 .navbar {
 	margin-bottom: 0px;
 	border-radius: 0px;
-	position:none;
 }
 
 .topnavbar {
@@ -105,9 +104,10 @@ html, body {
 /* sidebar toggle */
 
 .toggleSidebar {
+	font-size: 20px;
 	cursor: pointer;
 	position: fixed;
-	top: 40px;
+	top: 51px;
 	left:0px;
 	z-index: 20;
 }

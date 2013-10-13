@@ -18,11 +18,11 @@ function toggleSidebar(){
 
 	if(state == 'hide')
 	{
-		$('.slideLeft').removeClass('icon-chevron-left');
+		$('.slideLeft').removeClass('icon-angle-left');
 	}
 	else
 	{
-		$('.slideRight').removeClass('icon-chevron-right');
+		$('.slideRight').removeClass('icon-angle-right');
 	}
 
 	$sidebar.animate({
@@ -35,11 +35,11 @@ function toggleSidebar(){
 	}, speed, function() {
 		if(state == 'hide')
 		{
-			$('.slideRight').addClass('icon-chevron-right');
+			$('.slideRight').addClass('icon-angle-right');
 		}
 		else
 		{
-			$('.slideLeft').addClass('icon-chevron-left');
+			$('.slideLeft').addClass('icon-angle-left');
 		}
 	});
 

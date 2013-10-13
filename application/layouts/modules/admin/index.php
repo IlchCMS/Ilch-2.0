@@ -8,7 +8,6 @@
 		<link href="<?php echo $this->staticUrl('css/font-awesome.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
-		<link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
 
 		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
@@ -94,7 +93,7 @@
 						$contentFullClass = '';
 				?>
 					<div class="app_left">
-						<i class="glyphicon glyphicon-step-backward toggleSidebar slideLeft"></i>
+						<i class="icon-angle-left toggleSidebar slideLeft"></i>
 						<div id="sidebar_content">
 							<ul class="nav nav-list">
 								<?php
