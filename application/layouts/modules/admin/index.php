@@ -13,83 +13,75 @@
 
 	</head>
 	<body>
-		<div class="topmenu">
-			<div class="leftmenu">
-				<nav class="navbar navbar-default">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#">Ilch Pluto</a>
-						<ul class="nav navbar-nav">
-							<li class="dropdown">
-								 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
-							</li>
-						</ul>
-					</div>
-				</nav>
+		<nav class="navbar navbar-default navbar-fixed-top topnavbar">
+			<div class="navbar-header leftbar">
+				<a class="navbar-brand" href="#">Ilch Pluto</a>
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
+					</li>
+				</ul>
 			</div>
-			<div class="rightmenu">
-				<nav class="navbar navbar-default">
-					<div class="collapse navbar-collapse navbar-ex1-collapse">
-						<ul class="nav navbar-nav">
+			<div class="collapse navbar-collapse navbar-ex1-collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
+							<i class="icon-home"></i> <?php echo $this->trans('home'); ?>
+						</a>
+					</li>
+					<li>
+						<a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
+							<i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
+						</a>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
+							<i class="icon-lock"></i> <?php echo $this->trans('modules'); ?>
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<?php
+								foreach($this->get('modules') as $module)
+								{
+									echo '<li>
+											<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+												<img style="padding-right: 5px;" src="'.$this->staticUrl('img/modules/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
+												.$module->getName($this->getTranslator()->getLocale()).'</a>
+										</li>';
+								}
+							?>
+						</ul>
+					</li>
+					<li>
+						<a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
+							<i class="icon-picture"></i> <?php echo $this->trans('layouts'); ?>
+						</a>
+					</li>
+					<li>
+						<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
+							<i class="icon-wrench"></i> <?php echo $this->trans('system'); ?>
+						</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-user"></span> <?php echo $this->getUser()->getName(); ?>
+						<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Profil</a></li>
+							<li class="divider"></li>
 							<li>
-								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
-									<i class="icon-home"></i> <?php echo $this->trans('home'); ?>
-								</a>
-							</li>
-							<li>
-								<a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
-									<i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
-								</a>
-							</li>
-							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
-									<i class="icon-lock"></i> <?php echo $this->trans('modules'); ?>
-									<b class="caret"></b>
-								</a>
-								<ul class="dropdown-menu">
-									<?php
-										foreach($this->get('modules') as $module)
-										{
-											echo '<li>
-													<a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
-														<img style="padding-right: 5px;" src="'.$this->staticUrl('img/modules/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
-														.$module->getName($this->getTranslator()->getLocale()).'</a>
-												</li>';
-										}
-									?>
-								</ul>
-							</li>
-							<li>
-								<a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
-									<i class="icon-picture"></i> <?php echo $this->trans('layouts'); ?>
-								</a>
-							</li>
-							<li>
-								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
-									<i class="icon-wrench"></i> <?php echo $this->trans('system'); ?>
+								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
+									<i class="icon-off"></i> <?php echo $this->trans('logout');?>
 								</a>
 							</li>
 						</ul>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?>
-								<span class="caret"></span>
-							</a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Profil</a></li>
-									<li class="divider"></li>
-									<li>
-										<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-											<i class="icon-off"></i> <?php echo $this->trans('logout');?>
-										</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				</nav>
+					</li>
+				</ul>
 			</div>
-		</div>
+		</nav>
 		<div id="app">
 				<?php
 					$contentFullClass = 'app_right_full';
@@ -99,7 +91,7 @@
 						$contentFullClass = '';
 				?>
 					<div class="app_left">
-						<i class="icon-chevron-left toggleSidebar slideLeft"></i>
+						<span class="glyphicon glyphicon-step-backward toggleSidebar slideLeft"></span>
 						<div id="sidebar_content">
 							<ul class="nav nav-list">
 								<?php

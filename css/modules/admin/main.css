@@ -68,26 +68,17 @@ html, body {
 
 .navbar {
 	margin-bottom: 0px;
+	border-radius: 0px;
+	position:none;
 }
 
-/* top menu */
-
-.topmenu {
-	z-index: 1000;
-	position: fixed;
-	width:100%;
+.topnavbar {
 	border-bottom: 1px solid silver;
 }
 
-.leftmenu {
-	border-right: 1px solid silver;
-	float: left;
+.leftbar {
 	width: 300px;
-}
-
-.rightmenu {
-	width: 100%;
-	margin-right: 300px;
+	border-right: 1px solid silver;
 }
 
 /* content */
@@ -132,7 +123,7 @@ html, body {
 }
 
 .content_savebox {
-	margin-left: -20px;
+	margin-left: -21px;
 	border-top: 1px solid silver;
 	border-left: 1px solid silver;
 	bottom: 0px;
