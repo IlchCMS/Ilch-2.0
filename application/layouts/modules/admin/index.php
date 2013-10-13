@@ -94,7 +94,7 @@
 						$contentFullClass = '';
 				?>
 					<div class="app_left">
-						<span class="glyphicon glyphicon-step-backward toggleSidebar slideLeft"></span>
+						<i class="glyphicon glyphicon-step-backward toggleSidebar slideLeft"></i>
 						<div id="sidebar_content">
 							<ul class="nav nav-list">
 								<?php
