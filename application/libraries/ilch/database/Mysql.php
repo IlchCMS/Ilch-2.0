@@ -209,6 +209,46 @@ class Ilch_Database_Mysql
 	}
 
 	/**
+	 * Select a list from db-table.
+	 *
+	 * @param string $sql
+	 * @return array
+	 */
+	public function queryList($sql)
+	{
+		$list = array();
+		$result = $this->query($sql);
+
+		while($row = mysqli_fetch_assoc($result))
+		{
+			$list[] = reset($row);
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Select a list from a db-table.
+	 *
+	 * @param array $fields
+	 * @param string $table
+	 * @param array $where
+	 * @return array
+	 */
+	public function selectList($fields, $table, $where = null)
+	{
+		$sql = 'SELECT '. $this->_getFieldsSql($fields).'
+				FROM `[prefix]_'.$table . '` ';
+
+		if($where != null)
+		{
+			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+		}
+
+		return $this->queryList($sql);
+	}
+
+	/**
 	 * Update entries from the table.
 	 *
 	 * @param array $fields
