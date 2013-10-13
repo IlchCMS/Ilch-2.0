@@ -1,11 +1,11 @@
 <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
 	<legend><?php echo $this->trans('systemSettings'); ?></legend>
-	<div class="control-group">
-		<label for="languageInput" class="control-label">
+	<div class="form-group">
+		<label for="languageInput" class="col-lg-2 control-label">
 			<?php echo $this->trans('chooseLanguage'); ?>:
 		</label>
-		<div class="controls">
-			<select name="language" id="languageInput">
+		<div class="col-lg-2">
+			<select class="form-control" name="language" id="languageInput">
 				<?php
 				foreach($this->get('languages') as $key => $value)
 				{
@@ -22,26 +22,28 @@
 			</select>
 		</div>
 	</div>
-	<div class="control-group">
-		<label for="maintenanceMode" class="control-label">
+	<div class="form-group">
+		<label for="maintenanceMode" class="col-lg-2 control-label">
 			<?php echo $this->trans('maintenanceMode'); ?>:
 		</label>
-		<div class="controls">
-			<label class="radio">
-				<input type="radio"
+		<div class="col-lg-2">
+			<div class="checkbox">
+				<label>
+					<input type="radio"
 					   name="maintenanceMode"
 					   id="maintenanceMode"
 					   value="1"
-				<?php if($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> />
-				<?php echo $this->trans('on'); ?>
-			</label>
-			<label class="radio">
-				<input type="radio"
+				<?php if($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->trans('on'); ?>
+				</label>
+			</div>
+			<div class="checkbox">
+				<label>
+					<input type="radio"
 					   name="maintenanceMode"
 					   value="0"
-				<?php if($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>>
-				<?php echo $this->trans('off'); ?>
-			</label>
+				<?php if($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->trans('off'); ?>
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="content_savebox">
