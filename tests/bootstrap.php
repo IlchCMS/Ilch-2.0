@@ -13,8 +13,6 @@ define('ACCESS', 1);
 define('VERSION', '2.0');
 define('APPLICATION_PATH', __DIR__.'/../application');
 define('CONFIG_PATH', APPLICATION_PATH.'/config');
-define('BASE_URL', '');
-define('STATIC_URL', BASE_URL);
 define('SERVER_TIMEZONE', 'Europe/Berlin');
 
 /*

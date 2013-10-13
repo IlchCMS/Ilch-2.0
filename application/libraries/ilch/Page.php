@@ -117,7 +117,7 @@ class Ilch_Page
 	public function loadPage()
 	{
 		$controller = $this->_loadController();
-		
+
 		$this->_translator->load(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/translations');
 		$this->_plugin->addPluginData('controller', $controller);
 		$this->_plugin->execute('AfterControllerLoad');
@@ -183,5 +183,25 @@ class Ilch_Page
 		}
 
 		return $controller;
+	}
+
+	/**
+	 * Returns the view object.
+	 *
+	 * @return Ilch_View
+	 */
+	public function getView()
+	{
+		return $this->_view;
+	}
+
+	/**
+	 * Returns the request object.
+	 *
+	 * @return Ilch_Request
+	 */
+	public function getRequest()
+	{
+		return $this->_request;
 	}
 }

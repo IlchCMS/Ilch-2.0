@@ -18,7 +18,7 @@ class Ilch_Router
 	{
 		$this->_request = $request;
 	}
-	
+
 	public function getQuery()
 	{
 		return $this->_query;
