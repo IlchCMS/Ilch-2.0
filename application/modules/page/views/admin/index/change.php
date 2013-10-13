@@ -11,26 +11,27 @@
 		}
 	?>
 	</legend>
-	<div class="control-group">
-		<label for="pageTitleInput" class="control-label">
+	<div class="form-group">
+		<label for="pageTitleInput" class="col-lg-2 control-label">
 			<?php echo $this->trans('pageTitle'); ?>:
 		</label>
-		<div class="controls">
-			<input type="text"
+		<div class="col-lg-2">
+			<input class="form-control"
+				   type="text"
 				   name="pageTitle"
 				   id="pageTitleInput"
 				   value="<?php if($this->get('page') != ''){ echo $this->get('page')->getTitle(); } ?>" />
 		</div>
 	</div>
-	<div class="control-group">
-		<textarea name="pageContent"><?php if($this->get('page') != ''){ echo $this->get('page')->getContent(); } ?></textarea>
+	<div class="form-group">
+		<textarea class="form-control" name="pageContent"><?php if($this->get('page') != ''){ echo $this->get('page')->getContent(); } ?></textarea>
 	</div>
-	<div class="control-group">
-		<label for="pageLanguageInput" class="control-label">
+	<div class="form-group">
+		<label for="pageLanguageInput" class="col-lg-2 control-label">
 			<?php echo $this->trans('pageLanguage'); ?>:
 		</label>
-		<div class="controls">
-			<select name="pageLanguage" id="pageLanguageInput">
+		<div class="col-lg-2">
+			<select class="form-control" name="pageLanguage" id="pageLanguageInput">
 				<?php
 				foreach($this->get('languages') as $key => $value)
 				{
@@ -54,12 +55,13 @@
 			</select>
 		</div>
 	</div>
-	<div class="control-group">
-		<label for="pagePerma" class="control-label">
+	<div class="form-group">
+		<label for="pagePerma" class="col-lg-2 control-label">
 			<?php echo $this->trans('permaLink'); ?>:
 		</label>
-		<div class="controls">
-			<?php echo $this->url(); ?>/index.php/<input type="text"
+		<div class="col-lg-5">
+			<?php echo $this->url(); ?>/index.php/<input
+				   type="text"
 				   name="pagePerma"
 				   id="pagePerma"
 				   value="<?php if($this->get('page') != ''){ echo $this->get('page')->getPerma(); } ?>" />

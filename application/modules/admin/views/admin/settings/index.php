@@ -27,7 +27,7 @@
 			<?php echo $this->trans('maintenanceMode'); ?>:
 		</label>
 		<div class="col-lg-2">
-			<div class="checkbox">
+			<div class="radio">
 				<label>
 					<input type="radio"
 					   name="maintenanceMode"
@@ -36,7 +36,7 @@
 				<?php if($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->trans('on'); ?>
 				</label>
 			</div>
-			<div class="checkbox">
+			<div class="radio">
 				<label>
 					<input type="radio"
 					   name="maintenanceMode"
