@@ -22,19 +22,23 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 	protected $_configData = array();
 
 	/**
-	 * Filling an initial config object and giving it to the registry.
+	 * Filling the config object with individual testcase data.
 	 */
 	public function setUp()
 	{
-		$config = new Ilch_Config_File();
+		if(!Ilch_Registry::has('config') && file_exists(__DIR__.'/../../config.php'))
+		{
+		    $config = new Ilch_Config_File();
+		    $config->loadConfigFromFile(__DIR__.'/../../config.php');
+		    Ilch_Registry::set('config', $config);
+		}
+
+		$config = Ilch_Registry::get('config');
 
 		foreach($this->_configData as $configKey => $configValue)
 		{
 			$config->set($configKey, $configValue);
 		}
-
-		Ilch_Registry::remove('config');
-		Ilch_Registry::set('config', $config);
 	}
 
 	/**
