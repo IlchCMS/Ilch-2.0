@@ -5,8 +5,11 @@
 		<title>Ilch Pluto <?php echo VERSION; ?> - Admincenter</title>
 		<meta name="description" content="Ilch - Login">
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/font-awesome.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
+
 		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/modules/admin/functions.js'); ?>"></script>
@@ -66,7 +69,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<span class="glyphicon glyphicon-user"></span> <?php echo $this->getUser()->getName(); ?>
+						<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?>
 						<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
