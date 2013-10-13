@@ -38,7 +38,7 @@
 					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
-							<i class="icon-lock"></i> <?php echo $this->trans('modules'); ?>
+							<i class="icon-puzzle-piece"></i> <?php echo $this->trans('modules'); ?>
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
