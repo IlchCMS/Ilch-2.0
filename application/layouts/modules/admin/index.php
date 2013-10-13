@@ -15,21 +15,21 @@
 	<body>
 		<div class="topmenu">
 			<div class="leftmenu">
-				<div class="navbar">
-					<div class="navbar-inner navbar-sidebar">
-						<span class="brand">Ilch Pluto</span>
-						<ul class="nav pull-right">
+				<nav class="navbar navbar-default">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#">Ilch Pluto</a>
+						<ul class="nav navbar-nav">
 							<li class="dropdown">
 								 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
 							</li>
 						</ul>
 					</div>
-				</div>
+				</nav>
 			</div>
 			<div class="rightmenu">
-				<div class="navbar">
-					<div class="navbar-inner navbar-app">
-						<ul class="nav">
+				<nav class="navbar navbar-default">
+					<div class="collapse navbar-collapse navbar-ex1-collapse">
+						<ul class="nav navbar-nav">
 							<li>
 								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
 									<i class="icon-home"></i> <?php echo $this->trans('home'); ?>
@@ -69,24 +69,25 @@
 								</a>
 							</li>
 						</ul>
-						<div class="btn-group pull-right">
-							<a class="btn" href="<?php echo $this->url(); ?>" title="neues Fenster ÃƒÂ¶ffnen" target="_blank"><i class="icon-share"></i></a>
-							<a href="#" data-toggle="dropdown" class="btn dropdown-toggle">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 								<i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?>
 								<span class="caret"></span>
 							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Profil</a></li>
-								<li class="divider"></li>
-								<li>
-									<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-										<i class="icon-off"></i> <?php echo $this->trans('logout');?>
-									</a>
-								</li>
-							</ul>
-						</div>
+								<ul class="dropdown-menu">
+									<li><a href="#">Profil</a></li>
+									<li class="divider"></li>
+									<li>
+										<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
+											<i class="icon-off"></i> <?php echo $this->trans('logout');?>
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
-				</div>
+				</nav>
 			</div>
 		</div>
 		<div id="app">
