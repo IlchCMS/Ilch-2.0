@@ -8,11 +8,13 @@
 		<link href="<?php echo $this->staticUrl('css/font-awesome.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui-1.10.3.custom.min.css'); ?>" rel="stylesheet">
 
-		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
-		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/jquery-1.9.1.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/jquery-ui-1.10.3.min.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/jquery.mjs.nestedSortable.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/bootstrap.min.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/modules/admin/functions.js'); ?>"></script>
-
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top topnavbar">
@@ -32,7 +34,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'navigation', 'action' => 'index')); ?>">
+						<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'menu', 'action' => 'index')); ?>">
 							<i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
 						</a>
 					</li>
@@ -72,7 +74,6 @@
 						<span class="caret"></span>
 					</a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Profil</a></li>
 							<li class="divider"></li>
 							<li>
 								<a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">

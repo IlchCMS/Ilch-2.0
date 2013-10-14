@@ -7,7 +7,9 @@
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/modules/install/install.css'); ?>" rel="stylesheet">
-		<script src="<?php echo $this->staticUrl('js/jquery-1.7.min.js'); ?>"></script>
+		<link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui-1.10.3.custom.min.css'); ?>" rel="stylesheet">
+		<script src="<?php echo $this->staticUrl('js/jquery-1.9.1.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/jquery-ui-1.10.3.min.js'); ?>"></script>
 	</head>
 	<body>
 		<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
