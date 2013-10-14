@@ -3,7 +3,7 @@
  * Holds Page_PageMapper.
  *
  * @author Meyer Dominik
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -170,5 +170,20 @@ class Page_PageMapper extends Ilch_Mapper
 				'pages_content'
 			);
 		}
+	}
+
+	public function delete($id)
+	{
+		$this->getDatabase()->delete
+		(
+			'pages',
+			array('id' => $id)
+		);
+
+		$this->getDatabase()->delete
+		(
+			'pages_content',
+			array('page_id' => $id)
+		);
 	}
 }

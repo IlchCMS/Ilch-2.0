@@ -2,7 +2,7 @@
 <html lang="de">
 	<head>
 		<meta charset="utf-8">
-		<title>Ilch Pluto <?php echo VERSION; ?> - Admincenter</title>
+		<title>Ilch <?php echo VERSION; ?> - Admincenter</title>
 		<meta name="description" content="Ilch - Login">
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/font-awesome.min.css'); ?>" rel="stylesheet">
@@ -17,7 +17,7 @@
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top topnavbar">
 			<div class="navbar-header leftbar">
-				<a class="navbar-brand" href="#">Ilch Pluto</a>
+				<a class="navbar-brand" href="#">Ilch</a>
 				<ul class="nav navbar-nav">
 					<li class="dropdown">
 						 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>

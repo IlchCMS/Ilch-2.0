@@ -3,7 +3,7 @@
  * Holds class Ilch_Translator.
  *
  * @author Jainta Martin
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 

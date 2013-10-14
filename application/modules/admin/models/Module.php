@@ -3,7 +3,7 @@
  * Holds class Admin_ModuleModel.
  *
  * @author Meyer Dominik
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 

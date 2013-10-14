@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Meyer Dominik
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -41,11 +41,16 @@ class Page_Admin_IndexController extends Ilch_Controller_Admin
 	{
 		$pageMapper = new Page_PageMapper();
 		$pages = $pageMapper->getPageList();
-
 		$this->getView()->set('pages', $pages);
-
 	}
-	
+
+	public function deleteAction()
+	{
+		$pageMapper = new Page_PageMapper();
+		$pageMapper->delete($this->getRequest()->getParam('id'));
+		$this->redirect(array('action' => 'index'));
+	}
+
 	public function changeAction()
 	{
 		$pageMapper = new Page_PageMapper();

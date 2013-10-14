@@ -3,7 +3,7 @@
  * Holds class Libraries_Ilch_ConfigTest.
  *
  * @author Martin Jainta
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 
@@ -13,7 +13,7 @@ defined('ACCESS') or die('no direct access');
  * Tests the config object.
  *
  * @author Martin Jainta
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase

@@ -3,7 +3,7 @@
  * Holds Admin_ModuleMapper.
  *
  * @author Meyer Dominik
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 

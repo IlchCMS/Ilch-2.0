@@ -3,7 +3,7 @@
  * Holds class Ilch_Date.
  *
  * @author Martin Jainta
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -13,7 +13,7 @@ defined('ACCESS') or die('no direct access');
  * Tests the Ilch_Date class.
  *
  * @author Martin Jainta
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 class Ilch_Date extends DateTime

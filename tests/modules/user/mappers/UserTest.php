@@ -3,7 +3,7 @@
  * Holds class Modules_User_Mappers_UserTest.
  *
  * @author Jainta Martin
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 

@@ -2,7 +2,7 @@
 <html lang="de">
 	<head>
 		<meta charset="utf-8">
-		<title>Ilch Pluto <?php echo VERSION; ?> Frontend</title>
+		<title>Ilch <?php echo VERSION; ?> Frontend</title>
 		<meta name="description" content="Ilch - Frontend">
 		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
