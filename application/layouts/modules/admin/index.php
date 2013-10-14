@@ -19,8 +19,8 @@
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top topnavbar">
 			<div class="navbar-header leftbar">
-				<a class="navbar-brand" href="#">Ilch</a>
-				<ul class="nav navbar-nav">
+				<img class="brand" src="<?php echo $this->staticUrl('img/ilch_logo_brand.png'); ?>" />
+				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
 						 <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
 					</li>

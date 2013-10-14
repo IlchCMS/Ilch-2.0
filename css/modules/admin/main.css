@@ -102,8 +102,7 @@ html, body {
 
 .app_right {
 	margin-left: 300px;
-	padding: 20px;
-	padding-top: 60px;
+	padding: 60px 20px 60px 20px;
 }
 
 .app_right_full {
@@ -140,4 +139,10 @@ html, body {
 	position: fixed;
 	padding: 5px 15px 5px 15px;
 	background-color: #EEEEEE;
+}
+
+.brand {
+	height: 50px;
+	padding-left: 15px;
+	float: left;
 }
