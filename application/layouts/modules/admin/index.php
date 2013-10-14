@@ -4,16 +4,16 @@
 		<meta charset="utf-8">
 		<title>Ilch <?php echo VERSION; ?> - Admincenter</title>
 		<meta name="description" content="Ilch - Login">
-		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
-		<link href="<?php echo $this->staticUrl('css/font-awesome.min.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
-		<link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui-1.10.3.custom.min.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
 
-		<script src="<?php echo $this->staticUrl('js/jquery-1.9.1.js'); ?>"></script>
-		<script src="<?php echo $this->staticUrl('js/jquery-ui-1.10.3.min.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/jquery.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/jquery-ui.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/jquery.mjs.nestedSortable.js'); ?>"></script>
-		<script src="<?php echo $this->staticUrl('js/bootstrap.min.js'); ?>"></script>
+		<script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
 		<script src="<?php echo $this->staticUrl('js/modules/admin/functions.js'); ?>"></script>
 	</head>
 	<body>
