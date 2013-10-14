@@ -96,11 +96,11 @@
 					<div class="app_left">
 						<i class="icon-angle-left toggleSidebar slideLeft"></i>
 						<div id="sidebar_content">
-							<ul class="nav nav-list">
+							<ul class="nav">
 								<?php
 									foreach($this->getMenus() as $key => $items)
 									{
-										echo '<li class="nav-header">'.$this->trans($key).'</li>';
+										echo '<li>'.$this->trans($key).'</li>';
 
 										foreach($items as $key)
 										{

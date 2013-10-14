@@ -15,9 +15,27 @@ html, body {
 }
 
 #sidebar_content {
-	padding-top: 10px;
 	width:300px;
 	height: 100%;
+}
+
+#sidebar_content {
+	color: #777777;
+	padding: 10px 15px 0 15px;
+}
+
+#sidebar_content .nav > li > a:hover,
+#sidebar_content .nav > li > a:focus {
+	background-color: #ECECFB;
+	color: black;
+}
+
+#sidebar_content .nav > li > a {
+	color: #777;
+}
+
+#sidebar_content .divider {
+	border-bottom: 1px solid silver;
 }
 
 .watermark {
@@ -47,11 +65,6 @@ html, body {
 	background-image: none;
 }
 
-.navbar .brand,
-.navbar .nav > li > a {
-	text-shadow: none;
-}
-
 .nav-tabs > .active > a {
 	color: black;
 }
@@ -60,10 +73,6 @@ html, body {
 .nav-tabs.nav-stacked > li:last-child > a {
 	border-radius: 0px;
 	border:none;
-}
-
-.nav-tabs.nav-stacked > li > a {
-	border-right: none;
 }
 
 .navbar {
@@ -83,7 +92,7 @@ html, body {
 /* content */
 
 .app_left {
-	margin-top: 41px;
+	margin-top: 51px;
 	background-color: #ECECFB;
 	border-right: 1px solid silver;
 	position: fixed;
