@@ -8,6 +8,7 @@
  */
 
 namespace Page\Plugins;
+use Page\Mappers\Page as PageMapper;
 defined('ACCESS') or die('no direct access');
 
 class AfterDatabaseLoad
@@ -17,7 +18,7 @@ class AfterDatabaseLoad
 		$request = $pluginData['request'];
 		$router = $pluginData['router'];
 
-		$pageMapper = new \Page\Mappers\Page();
+		$pageMapper = new PageMapper();
 		$permas = $pageMapper->getPagePermas();
 		$url = $router->getQuery();
 

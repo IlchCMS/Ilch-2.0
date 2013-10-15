@@ -6,13 +6,14 @@
  */
 
 namespace Page\Controllers;
+use Page\Mappers\Page as PageMapper;
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
 {
 	public function showAction()
 	{
-		$pageMapper = new \Page\Mappers\Page();
+		$pageMapper = new PageMapper();
 		$id = $this->getRequest()->getParam('id');
 		$locale = $this->getRequest()->getParam('locale');
 		$page = $pageMapper->getPageByIdLocale($id, $locale);
