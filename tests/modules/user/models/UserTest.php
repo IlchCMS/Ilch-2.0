@@ -32,7 +32,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetGetId()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$user->setId(123);
 		$this->assertEquals(123, $user->getId(), 'The id wasnt saved or returned correctly.');
 	}
@@ -42,7 +42,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetGetUsername()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$user->setName('username');
 		$this->assertEquals('username', $user->getName(), 'The username wasnt saved or returned correctly.');
 	}
@@ -52,7 +52,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetGetEmail()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$user->setEmail('email');
 		$this->assertEquals('email', $user->getEmail(), 'The email wasnt saved or returned correctly.');
 	}
@@ -62,7 +62,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetGetDateCreatedFromStamp()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$user->setDateCreated(123456789);
 		$actualDate = $user->getDateCreated();
 
@@ -76,7 +76,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetGetDateCreatedFromDate()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$date = new \Ilch\Date();
 		$expectedTimestamp = $date->getTimestamp();
 		$user->setDateCreated($date);
@@ -90,7 +90,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetDateCreatedFromString()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$user->setDateCreated('2013-09-02 22:13:52');
 		$actualDate = $user->getDateCreated();
 
@@ -103,7 +103,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetGetDateConfirmedFromStamp()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$user->setDateConfirmed(987654321);
 		$actualDate = $user->getDateConfirmed();
 
@@ -117,7 +117,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetGetDateConfirmedFromDate()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$date = new \Ilch\Date();
 		$expectedTimestamp = $date->getTimestamp();
 		$user->setDateConfirmed($date);
@@ -131,7 +131,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSetDateConfirmedFromString()
 	{
-		$user = new \User\UserModel();
+		$user = new \User\Models\User();
 		$user->setDateConfirmed('2013-09-02 22:15:45');
 		$actualDate = $user->getDateConfirmed();
 

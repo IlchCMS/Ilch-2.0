@@ -5,10 +5,10 @@
  * @package ilch
  */
 
-namespace Install;
+namespace Install\Controllers;
 defined('ACCESS') or die('no direct access');
 
-class IndexController extends \Ilch\Controller\Frontend
+class Index extends \Ilch\Controller\Frontend
 {
 	public function init()
 	{
@@ -242,7 +242,7 @@ class IndexController extends \Ilch\Controller\Frontend
 				 * Install every registered module.
 				 */
 				$modulesToInstall = array('admin', 'user', 'page');
-				$moduleMapper = new \Admin\ModuleMapper();
+				$moduleMapper = new \Admin\Mappers\Module();
 
 				/*
 				 * Clear old tables.
@@ -260,7 +260,7 @@ class IndexController extends \Ilch\Controller\Frontend
 
 						if(!empty($config))
 						{
-							$moduleModel = new \Admin\ModuleModel();
+							$moduleModel = new \Admin\Models\Module();
 							$moduleModel->setKey($config['key']);
 
 							foreach($config['name'] as $key => $value)

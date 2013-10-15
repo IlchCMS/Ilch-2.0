@@ -26,23 +26,7 @@ spl_autoload_register(function($class)
 	}
 	else
 	{
-		$camels = preg_split('/(?<=\\w)(?=[A-Z])/', $class);
-
-		if(end($camels) === 'Plugin')
-		{
-			$path = $path.'/plugins/'.strtolower($classParts[0]);
-		}
-		elseif(end($camels) === 'Controller' && $classParts[0] == 'Admin')
-		{
-			$path = $path.'/modules/'.strtolower($classParts[0]).'/'.strtolower(end($camels).'s').'/admin';
-		}
-		else
-		{
-			$path = $path.'/modules/'.strtolower($classParts[0]).'/'.strtolower(end($camels).'s');
-		}
-		
-		$class = str_replace(end($camels), '', $class);
-		$class = str_replace($classParts[0].'/', '', $class);
+		$path = $path.'/modules';
 	}
 
 	if(file_exists($path.'/'. $class . '.php'))

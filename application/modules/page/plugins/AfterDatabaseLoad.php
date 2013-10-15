@@ -1,23 +1,23 @@
 <?php
 /**
- * Holds Page_AfterDatabaseLoadPlugin.
+ * Holds AfterDatabaseLoad.
  *
  * @author Meyer Dominik
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Page;
+namespace Page\Plugins;
 defined('ACCESS') or die('no direct access');
 
-class AfterDatabaseLoadPlugin
+class AfterDatabaseLoad
 {
 	public function __construct(array $pluginData)
 	{
 		$request = $pluginData['request'];
 		$router = $pluginData['router'];
 
-		$pageMapper = new PageMapper();
+		$pageMapper = new \Page\Mappers\Page();
 		$permas = $pageMapper->getPagePermas();
 		$url = $router->getQuery();
 

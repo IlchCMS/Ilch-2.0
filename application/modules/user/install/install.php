@@ -10,8 +10,8 @@ $config = array
 	'icon_small' => 'user.png',
 );
 
-$userMapper = new \User\UserMapper();
-$user = new \User\UserModel();
+$userMapper = new \User\Mappers\User();
+$user = new \User\Models\User();
 $user->setName($_SESSION['install']['adminName']);
 $user->setPassword(crypt($_SESSION['install']['adminPassword']));
 $user->setEmail($_SESSION['install']['adminEmail']);

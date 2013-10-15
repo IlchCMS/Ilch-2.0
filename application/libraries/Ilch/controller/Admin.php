@@ -17,7 +17,7 @@ class Admin extends Base
 		$this->getLayout()->set('menu', array());
 		$this->getLayout()->setFile('modules/admin/index');
 
-		$moduleMapper = new \Admin\ModuleMapper();
+		$moduleMapper = new \Admin\Mappers\Module();
 		$this->getLayout()->set('modules', $moduleMapper->getModules());
 	}
 }

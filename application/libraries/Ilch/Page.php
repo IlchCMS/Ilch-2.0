@@ -161,11 +161,11 @@ class Page
 	{
 		if($this->_request->isAdmin())
 		{
-			$controller = ucfirst($this->_request->getModuleName()).'\\Admin\\'.ucfirst($this->_request->getControllerName()).'Controller';
+			$controller = ucfirst($this->_request->getModuleName()).'\\Controllers\\Admin\\'.ucfirst($this->_request->getControllerName());
 		}
 		else
 		{
-			$controller = ucfirst($this->_request->getModuleName()).'\\'.ucfirst($this->_request->getControllerName()).'Controller';
+			$controller = ucfirst($this->_request->getModuleName()).'\\Controllers\\'.ucfirst($this->_request->getControllerName());
 		}
 
 		$controller = new $controller($this->_layout, $this->_view, $this->_request, $this->_router, $this->_translator);

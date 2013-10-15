@@ -7,7 +7,8 @@
  * @package ilch
  */
 
-namespace User;
+namespace User\Mappers;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @author Jainta Martin
  * @package ilch
  */
-class UserMapper extends \Ilch\Mapper
+class User extends \Ilch\Mapper
 {
 	/**
 	 * Returns user model found by the id.
@@ -122,11 +123,11 @@ class UserMapper extends \Ilch\Mapper
 	 * Returns a user created using an array with user data.
 	 *
 	 * @param mixed[] $userRow
-	 * @return User_UserModel
+	 * @return \User\Models\User
 	 */
 	public function loadFromArray($userRow = array())
 	{
-		$user = new UserModel();
+		$user = new \User\Models\User();
 
 		if(isset($userRow['id']))
 		{
@@ -168,9 +169,9 @@ class UserMapper extends \Ilch\Mapper
 	/**
 	 * Inserts or updates a user model in the database.
 	 *
-	 * @param UserModel $user
+	 * @param \User\Models\User $user
 	 */
-	public function save(UserModel $user)
+	public function save(\User\Models\User $user)
 	{
 		$fields = array();
 		$name = $user->getName();

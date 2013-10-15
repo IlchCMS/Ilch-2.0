@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace Admin\Admin;
+namespace Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -17,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch
  */
-class LoginController extends \Ilch\Controller\Admin
+class Login extends \Ilch\Controller\Admin
 {
 	/**
 	 * Sets the layout file for this controller.

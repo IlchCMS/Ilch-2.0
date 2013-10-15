@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace Page;
+namespace Page\Models;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @author Meyer Dominik
  * @package ilch
  */
-class PageModel extends \Ilch\Model
+class Page extends \Ilch\Model
 {
 	/**
 	 * The id of the page.

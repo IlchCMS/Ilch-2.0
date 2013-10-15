@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace User;
+namespace User\Plugins;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -17,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch
  */
-class AfterDatabaseLoadPlugin
+class AfterDatabaseLoad
 {
 	/**
 	 * Checks if a user id was given in the request and sets the user.
@@ -40,7 +40,7 @@ class AfterDatabaseLoadPlugin
 			$userId = (int)$_SESSION['user_id'];
 		}
 
-		$mapper = new UserMapper();
+		$mapper = new \User\Mappers\User();
 		$user = $mapper->getUserById($userId);
 
 		\Ilch\Registry::set('user', $user);

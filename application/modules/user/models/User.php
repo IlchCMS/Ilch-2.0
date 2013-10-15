@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace User;
+namespace User\Models;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @author Jainta Martin
  * @package ilch
  */
-class UserModel extends \Ilch\Model
+class User extends \Ilch\Model
 {
 	/**
 	 * The id of the user.

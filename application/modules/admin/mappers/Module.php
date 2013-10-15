@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace Admin;
+namespace Admin\Mappers;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @author Meyer Dominik
  * @package ilch
  */
-class ModuleMapper extends \Ilch\Mapper
+class Module extends \Ilch\Mapper
 {
 	/**
 	 * Gets all modules.
@@ -39,7 +39,7 @@ class ModuleMapper extends \Ilch\Mapper
 
 		foreach($modulesRows as $moduleRow)
 		{
-			$moduleModel = new ModuleModel();
+			$moduleModel = new \Admin\Models\Module();
 			$moduleModel->setId($moduleRow['id']);
 			$moduleModel->setKey($moduleRow['key']);
 			$moduleModel->setIconSmall($moduleRow['icon_small']);
@@ -58,9 +58,9 @@ class ModuleMapper extends \Ilch\Mapper
 	/**
 	 * Inserts a module model in the database.
 	 *
-	 * @param ModuleModel $module
+	 * @param \Admin\Models\Module $module
 	 */
-	public function save(ModuleModel $module)
+	public function save(\Admin\Models\Module $module)
 	{
 		$moduleId = $this->getDatabase()->insert
 		(

@@ -7,7 +7,9 @@
  * @package ilch
  */
 
-namespace Page;
+namespace Page\Mappers;
+use Page\Models\Page as PageModel;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +18,7 @@ defined('ACCESS') or die('no direct access');
  * @author Meyer Dominik
  * @package ilch
  */
-class PageMapper extends \Ilch\Mapper
+class Page extends \Ilch\Mapper
 {
 	/**
 	 * Get page lists for overview.
@@ -106,9 +108,9 @@ class PageMapper extends \Ilch\Mapper
 	/**
 	 * Inserts or updates a page model in the database.
 	 *
-	 * @param \Page\PageModel $page
+	 * @param PageModel $page
 	 */
-	public function save(\Page\PageModel $page)
+	public function save(PageModel $page)
 	{
 		if($page->getId() && $page->getLocale())
 		{

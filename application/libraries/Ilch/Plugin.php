@@ -27,12 +27,12 @@ class Plugin
 	 */
 	public function detectPlugins()
 	{
-		foreach(glob(APPLICATION_PATH.'/plugins/*/*') as $pluginPath)
+		foreach(glob(APPLICATION_PATH.'/modules/*/plugins/*') as $pluginPath)
 		{
 			$pluginName = str_replace('.php', '', basename($pluginPath));
 			$pluginPathParts = explode('/', $pluginPath);
 			$pluginPathPartsCount = count($pluginPathParts);
-			$this->_detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-2];
+			$this->_detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-3];
 		}
 	}
 
@@ -50,7 +50,7 @@ class Plugin
 
 		foreach($this->_detectedPlugins[$pluginName] as $module)
 		{
-			$pluginClass = $module.'\\'.$pluginName.'Plugin';
+			$pluginClass = $module.'\\Plugins\\'.$pluginName.'';
 			$plugin = new $pluginClass($this->_pluginData);
 		}
 	}

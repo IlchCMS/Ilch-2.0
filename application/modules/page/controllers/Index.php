@@ -5,14 +5,14 @@
  * @package ilch
  */
 
-namespace Page;
+namespace Page\Controllers;
 defined('ACCESS') or die('no direct access');
 
-class IndexController extends \Ilch\Controller\Frontend
+class Index extends \Ilch\Controller\Frontend
 {
 	public function showAction()
 	{
-		$pageMapper = new PageMapper();
+		$pageMapper = new \Page\Mappers\Page();
 		$id = $this->getRequest()->getParam('id');
 		$locale = $this->getRequest()->getParam('locale');
 		$page = $pageMapper->getPageByIdLocale($id, $locale);

@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace Admin;
+namespace Admin\Plugins;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -17,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch
  */
-class BeforeControllerLoadPlugin
+class BeforeControllerLoad
 {
 	/**
 	 * Redirects the user to the admin login page, if the user is not logged in, yet.

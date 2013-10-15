@@ -5,10 +5,10 @@
  * @package ilch
  */
 
-namespace Admin\Admin;
+namespace Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
-class IndexController extends \Ilch\Controller\Admin
+class Index extends \Ilch\Controller\Admin
 {
 	public function indexAction()
 	{

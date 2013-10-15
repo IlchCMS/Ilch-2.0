@@ -5,10 +5,10 @@
  * @package ilch
  */
 
-namespace Admin\Admin;
+namespace Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
-class MenuController extends \Ilch\Controller\Admin
+class Menu extends \Ilch\Controller\Admin
 {
 	public function indexAction()
 	{
