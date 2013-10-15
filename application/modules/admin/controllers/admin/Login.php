@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class Admin_LoginController.
+ * Holds class Login.
  *
  * @author Meyer Dominik
  * @copyright Ilch 2.0
@@ -8,6 +8,7 @@
  */
 
 namespace Admin\Controllers\Admin;
+use User\Mappers\User as UserMapper;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -50,7 +51,7 @@ class Login extends \Ilch\Controller\Admin
 			}
 			else
 			{
-				$mapper = new \User\UserMapper();
+				$mapper = new UserMapper();
 				$user = $mapper->getUserByEmail($email);
 
 				if($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('password'), $user->getPassword()))
