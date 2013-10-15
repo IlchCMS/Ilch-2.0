@@ -27,6 +27,10 @@ spl_autoload_register(function($class)
 	else
 	{
 		$path = $path.'/modules';
+
+		$classParts = array_map('strtolower', $classParts);
+		$classParts[count($classParts)-1] = ucfirst($classParts[count($classParts) -1]);
+		$class = implode('/', $classParts);
 	}
 
 	if(file_exists($path.'/'. $class . '.php'))
