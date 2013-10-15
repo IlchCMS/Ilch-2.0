@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Mapper
+class Mapper
 {
 	/**
 	 * Hold the database adapter.
@@ -21,7 +22,7 @@ class Ilch_Mapper
 	 */
 	public function __construct()
 	{
-		$this->_db = Ilch_Registry::get('db');
+		$this->_db = Registry::get('db');
 	}
 
 	/**

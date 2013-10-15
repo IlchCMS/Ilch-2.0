@@ -8,7 +8,6 @@
  */
 
 defined('ACCESS') or die('no direct access');
-
 /**
  * Tests the config object.
  *
@@ -33,8 +32,8 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testNewEmptyDateWithoutRegistry()
 	{
-		Ilch_Registry::remove('timezone');
-		$date = new Ilch_Date();
+		\Ilch\Registry::remove('timezone');
+		$date = new \Ilch\Date();
 		$this->assertEquals('UTC', $date->getTimeZone()->getName(), 'Timezone is not UTC as expected when creating Ilch_Date without a paramter.');
 	}
 
@@ -43,7 +42,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testExtendFromDateTime()
 	{
-		$ilchDate = new Ilch_Date('2013-09-24 13:44:53');
+		$ilchDate = new \Ilch\Date('2013-09-24 13:44:53');
 
 		$this->assertInstanceOf('DateTime', $ilchDate, 'No DateTime object was created by the constructor.');
 	}
@@ -53,7 +52,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testToDb()
 	{
-		$ilchDate = new Ilch_Date('2013-09-24 15:44:53');
+		$ilchDate = new \Ilch\Date('2013-09-24 15:44:53');
 
 		$this->assertEquals('2013-09-24 15:44:53', $ilchDate->toDb(), 'The date was not returned in UTC.');
 	}
@@ -63,7 +62,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testToDbLocal()
 	{
-		$ilchDate = new Ilch_Date('2013-09-24 15:44:53');
+		$ilchDate = new \Ilch\Date('2013-09-24 15:44:53');
 
 		$this->assertEquals('2013-09-24 17:44:53', $ilchDate->toDb(true), 'The date was not in the local timezone returned.');
 	}
@@ -73,7 +72,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testToDbCustomFormat()
 	{
-		$ilchDate = new Ilch_Date('2013-09-24 15:44:53');
+		$ilchDate = new \Ilch\Date('2013-09-24 15:44:53');
 		$ilchDate->setDbFormat('d.m.Y H:i:s');
 
 		$this->assertEquals('24.09.2013 15:44:53', $ilchDate->toDb(), 'The date was not returned with the correct format.');
@@ -86,7 +85,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testGetDateTimeAfterToDb()
 	{
-		$ilchDate = new Ilch_Date('2013-09-24 22:32:46');
+		$ilchDate = new \Ilch\Date('2013-09-24 22:32:46');
 		$ilchDate->toDb();
 
 		$this->assertEquals('2013-09-24 22:32:46', $ilchDate->format('Y-m-d H:i:s'), 'A time with the wrong timezone was returned.');
@@ -97,7 +96,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testTypeCast()
 	{
-		$ilchDate = new Ilch_Date('2013-09-24 22:32:46');
+		$ilchDate = new \Ilch\Date('2013-09-24 22:32:46');
 
 		$this->assertEquals('2013-09-24 22:32:46', (string)$ilchDate, 'The object could not be typecasted correctly to string.');
 	}
@@ -107,7 +106,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testTypeCastCustomFormat()
 	{
-		$ilchDate = new Ilch_Date('2013-09-24 22:32:46');
+		$ilchDate = new \Ilch\Date('2013-09-24 22:32:46');
 		$ilchDate->setDefaultFormat('d.m.Y H:i:s');
 
 		$this->assertEquals('24.09.2013 22:32:46', (string)$ilchDate, 'The object could not be typecasted correctly to string using a custom format.');
@@ -118,7 +117,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testTimestampDoesNotChange()
 	{
-		$date = new Ilch_Date();
+		$date = new \Ilch\Date();
 		$date->setTimestamp(1379521501);
 
 		$this->assertEquals(1379521501, $date->getTimestamp(), 'The timestamp was not returned in UTC.');
@@ -131,7 +130,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testFormatToLocal()
 	{
-		$date = new Ilch_Date();
+		$date = new \Ilch\Date();
 		$date->setTimestamp(1379521501);
 
 		$this->assertEquals('2013-09-18 18:25:01', $date->format('Y-m-d H:i:s', true), 'The time was not returned in local time.');
@@ -142,7 +141,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testFormatToUTC()
 	{
-		$date = new Ilch_Date();
+		$date = new \Ilch\Date();
 		$date->setTimestamp(1379521501);
 
 		$this->assertEquals('2013-09-18 16:25:01', $date->format('Y-m-d H:i:s'), 'The time was not returned in UTC.');
@@ -153,7 +152,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testConstructLocalTime()
 	{
-		$date = new Ilch_Date('2013-09-18 18:25:01', 'Europe/Berlin');
+		$date = new \Ilch\Date('2013-09-18 18:25:01', 'Europe/Berlin');
 
 		$this->assertEquals('2013-09-18 18:25:01', $date->format('Y-m-d H:i:s', true), 'The time was not returned in local time.');
 	}

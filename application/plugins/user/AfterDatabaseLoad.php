@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace User;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch
  */
-class User_AfterDatabaseLoadPlugin
+class AfterDatabaseLoadPlugin
 {
 	/**
 	 * Checks if a user id was given in the request and sets the user.
@@ -39,10 +40,10 @@ class User_AfterDatabaseLoadPlugin
 			$userId = (int)$_SESSION['user_id'];
 		}
 
-		$mapper = new User_UserMapper();
+		$mapper = new UserMapper();
 		$user = $mapper->getUserById($userId);
 
-		Ilch_Registry::set('user', $user);
+		\Ilch\Registry::set('user', $user);
 
 		$pluginData['translator']->setLocale($pluginData['config']->get('locale'));
 	}

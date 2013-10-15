@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch\Layout;
 defined('ACCESS') or die('no direct access');
 
-abstract class Ilch_Layout_Base extends Ilch_Design_Base
+abstract class Base extends \Ilch\Design\Base
 {
 	/**
 	 * Defines if layout is disabled.

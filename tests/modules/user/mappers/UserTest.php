@@ -55,7 +55,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
-		$mapper = new User_UserMapper();
+		$mapper = new \User\UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserById(2);
 
@@ -95,7 +95,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
-		$mapper = new User_UserMapper();
+		$mapper = new \User\UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserByName('testUsername2');
 
@@ -136,7 +136,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
-		$mapper = new User_UserMapper();
+		$mapper = new \User\UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserByEmail('testmail2@test.de');
 
@@ -168,7 +168,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				->with($newUser,
 					   'users')
 				->will($this->returnValue(null));
-		$mapper = new User_UserMapper();
+		$mapper = new \User\UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->loadFromArray
 		(
@@ -238,7 +238,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   array('id' => 2))
 				->will($this->returnValue(null));
-		$mapper = new User_UserMapper();
+		$mapper = new \User\UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->loadFromArray
 		(

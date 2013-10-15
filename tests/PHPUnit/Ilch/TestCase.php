@@ -26,14 +26,14 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 	 */
 	public function setUp()
 	{
-		if(!Ilch_Registry::has('config') && file_exists(__DIR__.'/../../config.php'))
+		if(!\Ilch\Registry::has('config') && file_exists(__DIR__.'/../../../config.php'))
 		{
-		    $config = new Ilch_Config_File();
-		    $config->loadConfigFromFile(__DIR__.'/../../config.php');
-		    Ilch_Registry::set('config', $config);
+		    $config = new \Ilch\Config\File();
+		    $config->loadConfigFromFile(__DIR__.'/../../../config.php');
+		    \Ilch\Registry::set('config', $config);
 		}
 
-		$config = Ilch_Registry::get('config');
+		$config = \Ilch\Registry::get('config');
 
 		foreach($this->_configData as $configKey => $configValue)
 		{

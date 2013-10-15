@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace User;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -15,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @author Jainta Martin
  * @package ilch
  */
-class User_UserMapper extends Ilch_Mapper
+class UserMapper extends \Ilch\Mapper
 {
 	/**
 	 * Returns user model found by the id.
@@ -125,7 +126,7 @@ class User_UserMapper extends Ilch_Mapper
 	 */
 	public function loadFromArray($userRow = array())
 	{
-		$user = new User_UserModel();
+		$user = new UserModel();
 
 		if(isset($userRow['id']))
 		{
@@ -149,14 +150,14 @@ class User_UserMapper extends Ilch_Mapper
 
 		if(isset($userRow['date_created']))
 		{
-			$dateCreated = new Ilch_Date($userRow['date_created']);
+			$dateCreated = new \Ilch\Date($userRow['date_created']);
 			$users['date_created'] = $dateCreated;
 			$user->setDateCreated($dateCreated);
 		}
 
 		if(isset($userRow['date_confirmed']))
 		{
-			$dateConfirmed = new Ilch_Date($userRow['date_confirmed']);
+			$dateConfirmed = new \Ilch\Date($userRow['date_confirmed']);
 			$users['date_confirmed'] = $dateConfirmed;
 			$user->setDateConfirmed($dateConfirmed);
 		}
@@ -167,9 +168,9 @@ class User_UserMapper extends Ilch_Mapper
 	/**
 	 * Inserts or updates a user model in the database.
 	 *
-	 * @param User_UserModel $user
+	 * @param UserModel $user
 	 */
-	public function save(User_UserModel $user)
+	public function save(UserModel $user)
 	{
 		$fields = array();
 		$name = $user->getName();

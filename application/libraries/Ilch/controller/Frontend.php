@@ -5,11 +5,12 @@
  * @package ilch
  */
 
+namespace Ilch\Controller;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Controller_Frontend extends Ilch_Controller_Base
+class Frontend extends Base
 {
-	public function __construct(Ilch_Layout_Base $layout, Ilch_View $view, Ilch_Request $request, Ilch_Router $router, Ilch_Translator $translator)
+	public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
 	{
 		parent::__construct($layout, $view, $request, $router, $translator);
 

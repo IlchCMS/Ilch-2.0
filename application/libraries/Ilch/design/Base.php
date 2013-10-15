@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch\Design;
 defined('ACCESS') or die('no direct access');
 
-abstract class Ilch_Design_Base
+abstract class Base
 {
 	/**
 	 * @var Ilch_Request
@@ -59,11 +60,11 @@ abstract class Ilch_Design_Base
 	/**
 	 * Injects request and translator to layout/view.
 	 *
-	 * @param Ilch_Request $request
-	 * @param Ilch_Translator $translator
-	 * @param Ilch_Router $router
+	 * @param \Ilch\Request $request
+	 * @param \Ilch\Translator $translator
+	 * @param \Ilch\Router $router
 	 */
-	public function __construct(Ilch_Request $request, Ilch_Translator $translator, Ilch_Router $router)
+	public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
 	{
 		$this->_request = $request;
 		$this->_translator = $translator;
@@ -97,7 +98,7 @@ abstract class Ilch_Design_Base
 	 */
 	public function getUser()
 	{
-		return Ilch_Registry::get('user');
+		return \Ilch\Registry::get('user');
 	}
 
 	/**
@@ -219,7 +220,7 @@ abstract class Ilch_Design_Base
 	 */
 	public function loadTime()
 	{
-		$startTime = Ilch_Registry::get('startTime');
+		$startTime = \Ilch\Registry::get('startTime');
 		return microtime(true) - $startTime;
 	}
 
@@ -230,7 +231,7 @@ abstract class Ilch_Design_Base
 	 */
 	public function queryCount()
 	{
-		$db = Ilch_Registry::get('db');
+		$db = \Ilch\Registry::get('db');
 		return $db->queryCount();
 	}
 

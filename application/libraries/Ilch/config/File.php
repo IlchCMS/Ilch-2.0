@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch\Config;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Config_File
+class File
 {
 	/**
 	 * @var array

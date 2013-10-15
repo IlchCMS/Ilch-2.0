@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>Ilch <?php echo VERSION; ?> - Installation</title>
 		<meta name="description" content="Ilch - Installation">
-		<link href="<?php echo $this->staticUrl('css/bootstrap.min.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/modules/install/install.css'); ?>" rel="stylesheet">
 		<link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">

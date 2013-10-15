@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Session
+class Session
 {
 	/**
 	 * @var mysqli $mysqli The MySQLi object used to access the database

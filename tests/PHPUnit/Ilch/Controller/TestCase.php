@@ -125,7 +125,7 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_TestCase
 		/*
 		 * Loading page and controller.
 		 */
-		$page = new Ilch_Page();
+		$page = new \Ilch\Page();
 		$page->loadCms();
 
 		/*

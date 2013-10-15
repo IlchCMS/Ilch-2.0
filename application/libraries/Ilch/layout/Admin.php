@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch\Layout;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Layout_Admin extends Ilch_Layout_Base
+class Admin extends Base
 {
 	/**
 	 * @var array

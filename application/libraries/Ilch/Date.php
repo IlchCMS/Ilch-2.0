@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch
  */
-class Ilch_Date extends DateTime
+class Date extends \DateTime
 {
 	/**
 	 * The DateTimeZone used by the database.
@@ -54,18 +55,18 @@ class Ilch_Date extends DateTime
 	 */
 	public function __construct($time = 'now', $timezone = 'UTC')
 	{
-		if(Ilch_Registry::has('config'))
+		if(Registry::has('config'))
 		{
-			$this->_timeZoneLocal = new DateTimeZone(Ilch_Registry::get('config')->get('timezone'));
+			$this->_timeZoneLocal = new \DateTimeZone(Registry::get('config')->get('timezone'));
 		}
 		else
 		{
-			$this->_timeZoneLocal = new DateTimeZone(SERVER_TIMEZONE);
+			$this->_timeZoneLocal = new \DateTimeZone(SERVER_TIMEZONE);
 		}
 
 		if(is_string($timezone))
 		{
-			$timezone = new DateTimeZone($timezone);
+			$timezone = new \DateTimeZone($timezone);
 		}
 
 		$this->_timeZone = $timezone;

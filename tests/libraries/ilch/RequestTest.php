@@ -26,7 +26,7 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_request = new Ilch_Request();
+		$this->_request = new \Ilch\Request();
 		$_REQUEST = array();
 		$_GET = array();
 		$_POST = array();

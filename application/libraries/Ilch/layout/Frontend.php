@@ -5,8 +5,9 @@
  * @package ilch
  */
 
+namespace Ilch\Layout;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Layout_Frontend extends Ilch_Layout_Base
+class Frontend extends Base
 {
 }

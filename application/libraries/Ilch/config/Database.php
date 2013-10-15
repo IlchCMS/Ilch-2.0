@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch\Config;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Config_Database
+class Database
 {
 	/**
 	 * @var Ilch_Database_*

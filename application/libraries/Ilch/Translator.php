@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -18,7 +19,7 @@ defined('ACCESS') or die('no direct access');
  * @author Jainta Martin
  * @package ilch
  */
-class Ilch_Translator
+class Translator
 {
 	/**
 	 * Holds the translations for each loaded translation file.

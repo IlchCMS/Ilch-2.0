@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace Admin;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -15,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @author Meyer Dominik
  * @package ilch
  */
-class Admin_ModuleModel extends Ilch_Model
+class ModuleModel extends \Ilch\Model
 {
 	/**
 	 * Id of the module.

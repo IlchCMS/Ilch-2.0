@@ -10,12 +10,12 @@ $config = array
 	'icon_small' => 'user.png',
 );
 
-$userMapper = new User_UserMapper();
-$user = new User_UserModel();
+$userMapper = new \User\UserMapper();
+$user = new \User\UserModel();
 $user->setName($_SESSION['install']['adminName']);
 $user->setPassword(crypt($_SESSION['install']['adminPassword']));
 $user->setEmail($_SESSION['install']['adminEmail']);
 $user->setGroups(array(1));
-$dateCreated = new Ilch_Date();
+$dateCreated = new \Ilch\Date();
 $user->setDateCreated($dateCreated);
 $userMapper->save($user);

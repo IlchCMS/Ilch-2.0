@@ -29,8 +29,8 @@ define('STATIC_URL', BASE_URL);
 
 require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';
 
-Ilch_Registry::set('startTime', microtime(true));
+\Ilch\Registry::set('startTime', microtime(true));
 
-$page = new Ilch_Page();
+$page = new \Ilch\Page();
 $page->loadCms();
 $page->loadPage();

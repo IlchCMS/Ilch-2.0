@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Model
+class Model
 {
 	public function __construct($options = '')
 	{

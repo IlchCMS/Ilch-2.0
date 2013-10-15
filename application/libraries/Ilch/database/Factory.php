@@ -5,19 +5,20 @@
  * @package ilch
  */
 
+namespace Ilch\Database;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Database_Factory
+class Factory
 {
 	/**
 	 * Gets database adapter by config.
 	 *
-	 * @param Ilch_Config_File $config
-	 * @return Ilch_Database_*
+	 * @param \Ilch\Config\File $config
+	 * @return \Ilch\Database\*
 	 */
-	public function getInstanceByConfig(Ilch_Config_File $config)
+	public function getInstanceByConfig(\Ilch\Config\File $config)
 	{
-		$dbClass = 'Ilch_Database_'.$config->get('dbEngine');
+		$dbClass = '\\Ilch\\Database\\'.$config->get('dbEngine');
 		$db = new $dbClass();
 		$db->connect($config->get('dbHost'), $config->get('dbUser'), $config->get('dbPassword'));
 		$db->setDatabase($config->get('dbName'));
@@ -30,13 +31,12 @@ class Ilch_Database_Factory
 	 * Gets database adapter by engine name.
 	 *
 	 * @param string $engine
-	 * @return Ilch_Database_*
+	 * @return \Ilch\Database\*
 	 */
 	public function getInstanceByEngine($engine)
 	{
-		$dbClass = 'Ilch_Database_'.$engine;
-		$db = new $dbClass();
-
+		$engine = '\\Ilch\\Database\\'.$engine;
+		$db = new $engine();
 		return $db;
 	}
 }

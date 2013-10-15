@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace Page;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -15,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @author Meyer Dominik
  * @package ilch
  */
-class Page_PageMapper extends Ilch_Mapper
+class PageMapper extends \Ilch\Mapper
 {
 	/**
 	 * Get page lists for overview.
@@ -38,7 +39,7 @@ class Page_PageMapper extends Ilch_Mapper
 
 		foreach($pageArray as $pageRow)
 		{
-			$pageModel = new Page_PageModel(); 
+			$pageModel = new PageModel(); 
 			$pageModel->setId($pageRow['id']);
 			$pageModel->setTitle($pageRow['title']);
 			$pageModel->setPerma($pageRow['perma']);
@@ -67,7 +68,7 @@ class Page_PageMapper extends Ilch_Mapper
 			return null;
 		}
 
-		$pageModel = new Page_PageModel(); 
+		$pageModel = new PageModel(); 
 		$pageModel->setId($pageRow['id']);
 		$pageModel->setTitle($pageRow['title']);
 		$pageModel->setContent($pageRow['content']);
@@ -105,9 +106,9 @@ class Page_PageMapper extends Ilch_Mapper
 	/**
 	 * Inserts or updates a page model in the database.
 	 *
-	 * @param Page_PageModel $page
+	 * @param \Page\PageModel $page
 	 */
-	public function save(Page_PageModel $page)
+	public function save(\Page\PageModel $page)
 	{
 		if($page->getId() && $page->getLocale())
 		{
@@ -147,7 +148,7 @@ class Page_PageMapper extends Ilch_Mapper
 		}
 		else
 		{
-			$date = new Ilch_Date();
+			$date = new \Ilch\Date();
 			$pageId = $this->getDatabase()->insert
 			(
 				array

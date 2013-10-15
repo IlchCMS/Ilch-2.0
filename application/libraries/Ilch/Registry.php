@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-abstract class Ilch_Registry
+abstract class Registry
 {
 	/**
 	 * Store the registry entries.
@@ -33,7 +34,7 @@ abstract class Ilch_Registry
 		}
 		else
 		{
-			throw new Exception('Unable to set variable `' . $key . '`. It was already set.');
+			throw new \Exception('Unable to set variable `' . $key . '`. It was already set.');
 		}
 	}
 

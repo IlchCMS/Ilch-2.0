@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch\Database;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Database_Mysql
+class Mysql
 {
 	/**
 	 * @var string|null
@@ -73,7 +74,7 @@ class Ilch_Database_Mysql
 	 */
 	public function connect($host, $name, $password)
 	{
-		$this->conn = @new mysqli($host, $name, $password);
+		$this->conn = @new \mysqli($host, $name, $password);
 
 		if($this->conn->connect_error)
 		{

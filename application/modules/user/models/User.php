@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace User;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -15,7 +16,7 @@ defined('ACCESS') or die('no direct access');
  * @author Jainta Martin
  * @package ilch
  */
-class User_UserModel extends Ilch_Model
+class UserModel extends \Ilch\Model
 {
 	/**
 	 * The id of the user.
@@ -186,16 +187,16 @@ class User_UserModel extends Ilch_Model
 		if(is_numeric($dateCreated))
 		{
 			$timestamp = (int)$dateCreated;
-			$dateCreated = new Ilch_Date();
+			$dateCreated = new \Ilch\Date();
 			$dateCreated->SetTimestamp($timestamp);
 		}
 		elseif(is_string($dateCreated))
 		{
-			$dateCreated = new Ilch_Date($dateCreated);
+			$dateCreated = new \Ilch\Date($dateCreated);
 		}
-		elseif(!is_a($dateCreated, 'Ilch_Date'))
+		elseif(!is_a($dateCreated, '\\Ilch\\Date'))
 		{
-			throw new InvalidArgumentException('DateCreated must be a timestamp, date-string or Ilch_Date, "'.$dateCreated.'" given.');
+			throw new \InvalidArgumentException('DateCreated must be a timestamp, date-string or Ilch_Date, "'.$dateCreated.'" given.');
 		}
 
 		$this->_dateCreated = $dateCreated;
@@ -221,16 +222,16 @@ class User_UserModel extends Ilch_Model
 		if(is_numeric($dateConfirmed))
 		{
 			$timestamp = (int)$dateConfirmed;
-			$dateConfirmed = new Ilch_Date();
+			$dateConfirmed = new \Ilch\Date();
 			$dateConfirmed->SetTimestamp($timestamp);
 		}
 		elseif(is_string($dateConfirmed))
 		{
-			$dateConfirmed = new Ilch_Date($dateConfirmed);
+			$dateConfirmed = new \Ilch\Date($dateConfirmed);
 		}
-		elseif(!is_a($dateConfirmed, 'Ilch_Date'))
+		elseif(!is_a($dateConfirmed, '\\Ilch\\Date'))
 		{
-			throw new InvalidArgumentException('DateConfirmed must be a timestamp, date-string or Ilch_Date, "'.$dateConfirmed.'" given.');
+			throw new \InvalidArgumentException('DateConfirmed must be a timestamp, date-string or Ilch_Date, "'.$dateConfirmed.'" given.');
 		}
 
 		$this->_dateConfirmed = $dateConfirmed;

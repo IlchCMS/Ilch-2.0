@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_View extends Ilch_Design_Base
+class View extends Design\Base
 {
 	/**
 	 * Loads a view script.

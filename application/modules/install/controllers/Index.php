@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Install;
 defined('ACCESS') or die('no direct access');
 
-class Install_IndexController extends Ilch_Controller_Frontend
+class IndexController extends \Ilch\Controller\Frontend
 {
 	public function init()
 	{
@@ -90,7 +91,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 			$this->getView()->set('timezone', SERVER_TIMEZONE);
 		}
 
-		$this->getView()->set('timezones', DateTimeZone::listIdentifiers());
+		$this->getView()->set('timezones', \DateTimeZone::listIdentifiers());
 	}
 
 	public function licenseAction()
@@ -149,7 +150,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 			$_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
 			$_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
 
-			$ilch = new Ilch_Database_Factory();
+			$ilch = new \Ilch\Database\Factory();
 			$db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
 			$dbConnect = $db->connect($this->getRequest()->getPost('dbHost'), $this->getRequest()->getPost('dbUser'), $this->getRequest()->getPost('dbPassword'));
 
@@ -221,7 +222,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 				/*
 				 * Write install config.
 				 */
-				$fileConfig = new Ilch_Config_File();
+				$fileConfig = new \Ilch\Config\File();
 				$fileConfig->set('dbEngine', $_SESSION['install']['dbEngine']);
 				$fileConfig->set('dbHost', $_SESSION['install']['dbHost']);
 				$fileConfig->set('dbUser', $_SESSION['install']['dbUser']);
@@ -233,15 +234,15 @@ class Install_IndexController extends Ilch_Controller_Frontend
 				/*
 				 * Initialize install database.
 				 */
-				$dbFactory = new Ilch_Database_Factory();
+				$dbFactory = new \Ilch\Database\Factory();
 				$db = $dbFactory->getInstanceByConfig($fileConfig);
-				Ilch_Registry::set('db', $db);
+				\Ilch\Registry::set('db', $db);
 
 				/*
 				 * Install every registered module.
 				 */
 				$modulesToInstall = array('admin', 'user', 'page');
-				$moduleMapper = new Admin_ModuleMapper();
+				$moduleMapper = new \Admin\ModuleMapper();
 
 				/*
 				 * Clear old tables.
@@ -259,7 +260,7 @@ class Install_IndexController extends Ilch_Controller_Frontend
 
 						if(!empty($config))
 						{
-							$moduleModel = new Admin_ModuleModel();
+							$moduleModel = new \Admin\ModuleModel();
 							$moduleModel->setKey($config['key']);
 
 							foreach($config['name'] as $key => $value)

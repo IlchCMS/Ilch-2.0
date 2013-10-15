@@ -7,6 +7,7 @@
  * @package ilch
  */
 
+namespace Admin\Admin;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch
  */
-class Admin_Admin_LoginController extends Ilch_Controller_Admin
+class LoginController extends \Ilch\Controller\Admin
 {
 	/**
 	 * Sets the layout file for this controller.
@@ -36,7 +37,7 @@ class Admin_Admin_LoginController extends Ilch_Controller_Admin
 
 		if($this->getRequest()->isPost())
 		{
-			if(Ilch_Registry::get('user'))
+			if(\Ilch\Registry::get('user'))
 			{
 				$errors['alreadyLoggedIn'] = 'alreadyLoggedIn';
 			}
@@ -49,7 +50,7 @@ class Admin_Admin_LoginController extends Ilch_Controller_Admin
 			}
 			else
 			{
-				$mapper = new User_UserMapper();
+				$mapper = new \User\UserMapper();
 				$user = $mapper->getUserByEmail($email);
 
 				if($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('password'), $user->getPassword()))
@@ -79,7 +80,7 @@ class Admin_Admin_LoginController extends Ilch_Controller_Admin
 	{
 		session_destroy();
 		unset($_SESSION);
-		Ilch_Registry::remove('user');
+		\Ilch\Registry::remove('user');
 
 		/*
 		 * @todo flash message helper for show logout message on next site. 

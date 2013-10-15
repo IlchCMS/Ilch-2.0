@@ -6,8 +6,7 @@
  */
 
 defined('ACCESS') or die('no direct access');
-
-require_once APPLICATION_PATH.'/libraries/ilch/Functions.php';
+require_once APPLICATION_PATH.'/libraries/Ilch/Functions.php';
 
 /**
  * Loads all needed files for the given class.
@@ -17,16 +16,13 @@ require_once APPLICATION_PATH.'/libraries/ilch/Functions.php';
  */
 spl_autoload_register(function($class)
 {
-	$path = APPLICATION_PATH;
-	$class = str_replace('_', '/' , $class);
+	$class = str_replace('\\', '/', $class);
 	$classParts = explode('/', $class);
+	$path = APPLICATION_PATH;
 
-	if(strpos($class, 'Ilch/') !== false)
+	if(strpos($classParts[0], 'Ilch') !== false)
 	{
-		$class = end($classParts);
-		$classPartsCount = count($classParts) - 1;
-		unset($classParts[$classPartsCount]);
-		$path = $path.'/libraries/'.strtolower(implode('/', $classParts));
+		$path = $path.'/libraries';
 	}
 	else
 	{
@@ -44,11 +40,11 @@ spl_autoload_register(function($class)
 		{
 			$path = $path.'/modules/'.strtolower($classParts[0]).'/'.strtolower(end($camels).'s');
 		}
-
+		
 		$class = str_replace(end($camels), '', $class);
 		$class = str_replace($classParts[0].'/', '', $class);
 	}
-			
+
 	if(file_exists($path.'/'. $class . '.php'))
 	{
 		require_once($path.'/'. $class . '.php');

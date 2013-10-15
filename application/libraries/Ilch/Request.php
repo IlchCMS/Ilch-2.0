@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Request
+class Request
 {
 	/**
 	 * @var string

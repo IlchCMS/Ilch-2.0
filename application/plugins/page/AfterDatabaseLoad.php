@@ -7,16 +7,17 @@
  * @package ilch
  */
 
+namespace Page;
 defined('ACCESS') or die('no direct access');
 
-class Page_AfterDatabaseLoadPlugin
+class AfterDatabaseLoadPlugin
 {
 	public function __construct(array $pluginData)
 	{
 		$request = $pluginData['request'];
 		$router = $pluginData['router'];
 
-		$pageMapper = new Page_PageMapper();
+		$pageMapper = new PageMapper();
 		$permas = $pageMapper->getPagePermas();
 		$url = $router->getQuery();
 

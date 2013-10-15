@@ -1,12 +1,13 @@
 <?php
 /**
- * Holds Admin_BeforeControllerLoadPlugin.
+ * Holds BeforeControllerLoadPlugin.
  *
  * @author Jainta Martin
  * @copyright Ilch 2.0
  * @package ilch
  */
 
+namespace Admin;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -16,7 +17,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch
  */
-class Admin_BeforeControllerLoadPlugin
+class BeforeControllerLoadPlugin
 {
 	/**
 	 * Redirects the user to the admin login page, if the user is not logged in, yet.
@@ -39,14 +40,14 @@ class Admin_BeforeControllerLoadPlugin
 			}
 		}
 
-		if($request->isAdmin() && $request->getControllerName() !== 'login' && !Ilch_Registry::get('user'))
+		if($request->isAdmin() && $request->getControllerName() !== 'login' && !\Ilch\Registry::get('user'))
 		{
 			/*
 			 * User is not logged in yet but wants to go to the admincenter, redirect him to the login.
 			 */
 			$pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));
 		}
-		elseif($request->getModuleName() === 'admin' && $request->getControllerName() === 'login' && $request->getActionName() !== 'logout' && Ilch_Registry::get('user'))
+		elseif($request->getModuleName() === 'admin' && $request->getControllerName() === 'login' && $request->getActionName() !== 'logout' && \Ilch\Registry::get('user'))
 		{
 			/*
 			 * User is logged in but wants to go to the login, redirect him to the admincenter.

@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Page\Admin;
 defined('ACCESS') or die('no direct access');
 
-class Page_Admin_IndexController extends Ilch_Controller_Admin
+class IndexController extends \Ilch\Controller\Admin
 {
 	public function init()
 	{
@@ -39,21 +40,21 @@ class Page_Admin_IndexController extends Ilch_Controller_Admin
 
 	public function indexAction()
 	{
-		$pageMapper = new Page_PageMapper();
+		$pageMapper = new \Page\PageMapper();
 		$pages = $pageMapper->getPageList();
 		$this->getView()->set('pages', $pages);
 	}
 
 	public function deleteAction()
 	{
-		$pageMapper = new Page_PageMapper();
+		$pageMapper = new \Page\PageMapper();
 		$pageMapper->delete($this->getRequest()->getParam('id'));
 		$this->redirect(array('action' => 'index'));
 	}
 
 	public function changeAction()
 	{
-		$pageMapper = new Page_PageMapper();
+		$pageMapper = new \Page\PageMapper();
 
 		if($this->getRequest()->getParam('id'))
 		{
@@ -73,7 +74,7 @@ class Page_Admin_IndexController extends Ilch_Controller_Admin
 		
 		if($this->getRequest()->isPost())
 		{
-			$model = new Page_PageModel();
+			$model = new \Page\PageModel();
 
 			if($this->getRequest()->getParam('id'))
 			{

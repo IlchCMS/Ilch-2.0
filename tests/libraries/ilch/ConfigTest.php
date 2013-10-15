@@ -26,7 +26,7 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function setUp()
 	{
-		$this->_config = new Ilch_Config_File();
+		$this->_config = new \Ilch\Config\File();
 	}
 
 	/**

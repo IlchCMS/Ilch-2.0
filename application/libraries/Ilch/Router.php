@@ -5,16 +5,17 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Router
+class Router
 {
 	/**
 	 * Injects request and config object.
 	 *
 	 * @param Ilch_Request $request
 	 */
-	public function __construct(Ilch_Request $request)
+	public function __construct(Request $request)
 	{
 		$this->_request = $request;
 	}

@@ -20,7 +20,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testLoadTranslationsFile()
 	{
-		$translator = new Ilch_Translator('de_DE');
+		$translator = new \Ilch\Translator('de_DE');
 		$this->assertTrue($translator->load($this->_getFilesFolder()));
 	}
 
@@ -29,7 +29,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testLoadTranslationFileNotExists()
 	{
-		$translator = new Ilch_Translator('xx_xx');
+		$translator = new \Ilch\Translator('xx_xx');
 		$this->assertFalse
 		(
 			$translator->load($this->_getFilesFolder()),
@@ -42,7 +42,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testLoadTranslationDirNotExists()
 	{
-		$translator = new Ilch_Translator('de_DE');
+		$translator = new \Ilch\Translator('de_DE');
 		$this->assertFalse
 		(
 			$translator->load('someImaginaryFolder'),
@@ -56,7 +56,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testTrans()
 	{
-		$translator = new Ilch_Translator('en_EN');
+		$translator = new \Ilch\Translator('en_EN');
 		$translator->load($this->_getFilesFolder());
 
 		$this->assertEquals
@@ -73,7 +73,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testTransNotTranslated()
 	{
-		$translator = new Ilch_Translator('en_EN');
+		$translator = new \Ilch\Translator('en_EN');
 		$translator->load($this->_getFilesFolder());
 
 		$this->assertEquals
@@ -90,7 +90,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testTransPlaceholder()
 	{
-		$translator = new Ilch_Translator('en_EN');
+		$translator = new \Ilch\Translator('en_EN');
 		$translator->load($this->_getFilesFolder());
 
 		$this->assertEquals
@@ -106,7 +106,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testRequestLocaleDefinition()
 	{
-		$translator = new Ilch_Translator('en_EN');
+		$translator = new \Ilch\Translator('en_EN');
 		$this->assertEquals('en_EN', $translator->getLocale());
 	}
 
@@ -116,7 +116,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testRequestLocaleDefinitionDefault()
 	{
-		$translator = new Ilch_Translator();
+		$translator = new \Ilch\Translator();
 		$this->assertEquals('en_EN', $translator->getLocale());
 	}
 
@@ -125,7 +125,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testGetTranslationsArray()
 	{
-		$translator = new Ilch_Translator('en_EN');
+		$translator = new \Ilch\Translator('en_EN');
 		$translator->load($this->_getFilesFolder());
 
 		$expectedTranslations = require __DIR__.'/_files/en.php';
@@ -137,7 +137,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testShortenLocale()
 	{
-		$translator = new Ilch_Translator();
+		$translator = new \Ilch\Translator();
 		$this->assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn\'t trimmed correctly.');
 	}
 }

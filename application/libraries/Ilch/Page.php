@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Page
+class Page
 {
 	/**
 	 * @var Ilch_Request
@@ -49,21 +50,22 @@ class Ilch_Page
 	 */
 	public function __construct()
 	{
-		$this->_request = new Ilch_Request();
-		$this->_translator = new Ilch_Translator();
-		$this->_router = new Ilch_Router($this->_request);
-		$this->_plugin = new Ilch_Plugin();
-		$this->_view = new Ilch_View($this->_request, $this->_translator, $this->_router);
-		$this->_fileConfig = new Ilch_Config_File();
+		$this->_request = new Request();
+		$this->_translator = new Translator();
+		$this->_router = new Router($this->_request);
+		$this->_plugin = new Plugin();
+		$this->_view = new View($this->_request, $this->_translator, $this->_router);
+
+		$this->_fileConfig = new Config\File();
 		$this->_router->execute();
 
 		if($this->_request->isAdmin())
 		{
-			$this->_layout = new Ilch_Layout_Admin($this->_request, $this->_translator, $this->_router);
+			$this->_layout = new Layout\Admin($this->_request, $this->_translator, $this->_router);
 		}
 		else
 		{
-			$this->_layout = new Ilch_Layout_Frontend($this->_request, $this->_translator, $this->_router);
+			$this->_layout = new Layout\Frontend($this->_request, $this->_translator, $this->_router);
 		}
 
 		$this->_plugin->detectPlugins();
@@ -90,12 +92,12 @@ class Ilch_Page
 				error_reporting(0);
 			}
 
-			$dbFactory = new Ilch_Database_Factory();
+			$dbFactory = new Database\Factory();
 			$db = $dbFactory->getInstanceByConfig($this->_fileConfig);
-			$databaseConfig = new Ilch_Config_Database($db);
+			$databaseConfig = new Config\Database($db);
 			$databaseConfig->loadConfigFromDatabase();
-			Ilch_Registry::set('db', $db);
-			Ilch_Registry::set('config', $databaseConfig);
+			Registry::set('db', $db);
+			Registry::set('config', $databaseConfig);
 
 			$this->_plugin->addPluginData('db', $db);
 			$this->_plugin->addPluginData('config', $databaseConfig);
@@ -159,11 +161,11 @@ class Ilch_Page
 	{
 		if($this->_request->isAdmin())
 		{
-			$controller = ucfirst($this->_request->getModuleName()).'_Admin_'.ucfirst($this->_request->getControllerName()).'Controller';
+			$controller = ucfirst($this->_request->getModuleName()).'\\Admin\\'.ucfirst($this->_request->getControllerName()).'Controller';
 		}
 		else
 		{
-			$controller = ucfirst($this->_request->getModuleName()).'_'.ucfirst($this->_request->getControllerName()).'Controller';
+			$controller = ucfirst($this->_request->getModuleName()).'\\'.ucfirst($this->_request->getControllerName()).'Controller';
 		}
 
 		$controller = new $controller($this->_layout, $this->_view, $this->_request, $this->_router, $this->_translator);

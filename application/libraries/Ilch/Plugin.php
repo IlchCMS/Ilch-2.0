@@ -5,9 +5,10 @@
  * @package ilch
  */
 
+namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Ilch_Plugin
+class Plugin
 {
 	/**
 	 * @var array
@@ -49,7 +50,7 @@ class Ilch_Plugin
 
 		foreach($this->_detectedPlugins[$pluginName] as $module)
 		{
-			$pluginClass = $module.'_'.$pluginName.'Plugin';
+			$pluginClass = $module.'\\'.$pluginName.'Plugin';
 			$plugin = new $pluginClass($this->_pluginData);
 		}
 	}
