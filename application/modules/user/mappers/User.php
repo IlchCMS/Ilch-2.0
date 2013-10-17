@@ -220,18 +220,17 @@ class User extends \Ilch\Mapper
 			$fields['date_confirmed'] = $user->getDateConfirmed()->toDb();
 		}
 
-		$userId = $user->getId();
-		$userExists = (boolean)$this->getDatabase()->selectCell
+		$userId = (int)$this->getDatabase()->selectCell
 		(
-			'COUNT(*)',
+			'id',
 			'users',
 			array
 			(
-				'id' => $userId,
+				'id' => $user->getId(),
 			)
 		);
 
-		if($userId && $userExists)
+		if($userId)
 		{
 			/*
 			 * User does exist already, update.
