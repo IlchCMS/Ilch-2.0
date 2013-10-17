@@ -110,7 +110,22 @@ class User extends \Ilch\Mapper
 
 			foreach($userRows as $userRow)
 			{
-				$users[] = $this->loadFromArray($userRow);
+				$groups = array();
+				$sql = 'SELECT g.*
+						FROM groups AS g
+						INNER JOIN users_groups AS ug ON ug.user_id = '.$userRow['id'];
+				$groupRows = $this->getDatabase()->queryArray($sql);
+				$groupMapper = new Group();
+
+				foreach($groupRows as $groupRow)
+				{
+					$groups[] = $groupMapper->loadFromArray($groupRow);
+				}
+
+				$user = $this->loadFromArray($userRow);
+				$user->setGroups($groups);
+
+				$users[] = $user;
 			}
 
 			return $users;
@@ -206,8 +221,17 @@ class User extends \Ilch\Mapper
 		}
 
 		$userId = $user->getId();
+		$userExists = (boolean)$this->getDatabase()->selectCell
+		(
+			'COUNT(*)',
+			'users',
+			array
+			(
+				'id' => $userId,
+			)
+		);
 
-		if($userId && $this->getUserById($userId))
+		if($userId && $userExists)
 		{
 			/*
 			 * User does exist already, update.

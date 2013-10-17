@@ -42,17 +42,6 @@ class Modules_User_Models_GroupTest extends PHPUnit_Ilch_TestCase
 	}
 
 	/**
-	 * Tests if the count of users can be set and get from the model.
-	 */
-	public function testUsers()
-	{
-		$group = new GroupModel();
-		$group->setUsers(array(3, 4, 5));
-
-		$this->assertEquals(array(3, 4, 5), $group->getUsers(), 'The users of the group did not save correctly.');
-	}
-
-	/**
 	 * Tests if the count of users can be set and get from the model using an Integer.
 	 */
 	public function testUsersInteger()

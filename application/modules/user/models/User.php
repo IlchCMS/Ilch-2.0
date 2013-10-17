@@ -61,9 +61,9 @@ class User extends \Ilch\Model
 	protected $_dateConfirmed;
 
 	/**
-	 * The ids of the associated user groups.
+	 * The associated user group object.
 	 *
-	 * @var int[]
+	 * @var User\Models\Group[]
 	 */
 	protected $_groups = array();
 

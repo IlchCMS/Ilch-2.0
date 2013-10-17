@@ -84,7 +84,6 @@ class Group extends \Ilch\Mapper
 		if(!empty($groupRows))
 		{
 			$groups = array_map(array($this, 'loadFromArray'), $groupRows);
-			$groups = array_map(array($this, 'loadUsers'), $groups);
 
 			return $groups;
 		}
@@ -116,21 +115,20 @@ class Group extends \Ilch\Mapper
 	}
 
 	/**
-	 * Loads the user ids associated with a user group to the group model.
+	 * Loads the user ids associated with a user group.
 	 *
-	 * @param  GroupModel $group
+	 * @param int $groupId
 	 */
-	public function loadUsers(GroupModel $group)
+	public function getUsersForGroup($groupId)
 	{
-		$users = $this->getDatabase()->selectList
+		$userIds = $this->getDatabase()->selectList
 		(
 			'user_id',
 			'users_groups',
-			array('user_id' => $group->getId())
+			array('id' => $groupId)
 		);
-		$group->setUsers($users);
 
-		return $group;
+		return $userIds;
 	}
 
 	/**
@@ -142,39 +140,15 @@ class Group extends \Ilch\Mapper
 	{
 		$fields = array();
 		$name = $group->getName();
-		$password = $group->getPassword();
-		$email = $group->getEmail();
-		$dateCreated = $group->getDateCreated();
-		$dateConfirmed = $group->getDateConfirmed();
 
 		if(!empty($name))
 		{
 			$fields['name'] = $group->getName();
 		}
 
-		if(!empty($password))
-		{
-			$fields['password'] = $group->getPassword();
-		}
+		$groupId = $group->getId();
 
-		if(!empty($email))
-		{
-			$fields['email'] = $group->getEmail();
-		}
-
-		if(!empty($dateCreated))
-		{
-			$fields['date_created'] = $group->getDateCreated()->toDb();
-		}
-
-		if(!empty($dateConfirmed))
-		{
-			$fields['date_confirmed'] = $group->getDateConfirmed()->toDb();
-		}
-
-		$userId = $group->getId();
-
-		if($userId && $this->getUserById($userId))
+		if($groupId && $this->getUserById($groupId))
 		{
 			/*
 			 * Group does exist already, update.
@@ -185,7 +159,7 @@ class Group extends \Ilch\Mapper
 				'groups',
 				array
 				(
-					'id' => $userId,
+					'id' => $groupId,
 				)
 			);
 		}
@@ -194,22 +168,22 @@ class Group extends \Ilch\Mapper
 			/*
 			 * Group does not exist yet, insert.
 			 */
-			$userId = $this->getDatabase()->insert
+			$groupId = $this->getDatabase()->insert
 			(
 				$fields,
 				'groups'
 			);
 		}
 
-		if($group->getGroups())
+		if($group->getUsers())
 		{
 			$this->getDatabase()->delete
 			(
 				'users_groups',
-				array('user_id' => $userId)
+				array('group_id' => $groupId)
 			);
 
-			foreach($group->getGroups() as $groupId)
+			foreach($group->getUsers() as $userId)
 			{
 				$this->getDatabase()->insert
 				(

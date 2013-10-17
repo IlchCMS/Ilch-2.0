@@ -30,6 +30,34 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 	);
 
 	/**
+	 * Groups which will be returned by the mock object when the user mapper tries to get its groups.
+	 *
+	 * @var mixed[]
+	 */
+	protected $_groupRows = array
+	(
+		array
+		(
+			'id' => 1,
+			'name' => 'Administrator',
+		),
+		array
+		(
+			'id' => 2,
+			'name' => 'Member',
+		),
+	);
+
+	/**
+	 * A part of the sql which checks if groups for a user exist.
+	 *
+	 * @var string
+	 */
+	protected $_groupSqlPart = 'SELECT g.*
+						FROM groups AS g
+						INNER JOIN users_groups AS ug ON ug.user_id = ';
+
+	/**
 	 * Tests if the user mapper returns the right user model using an id for the
 	 * search.
 	 */
@@ -50,13 +78,17 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		(
 			'id' => 2
 		);
-		$dbMock = $this->getMock('Ilch_Database', array('selectArray'));
+		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'queryArray'));
 		$dbMock->expects($this->once())
 				->method('selectArray')
 				->with('*',
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
+		$dbMock->expects($this->once())
+				->method('queryArray')
+				->with($this->stringContains($this->_groupSqlPart))
+				->will($this->returnValue($this->_groupRows));
 		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserById(2);
@@ -90,13 +122,17 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		(
 			'name' => 'testUsername2'
 		);
-		$dbMock = $this->getMock('Ilch_Database', array('selectArray'));
+		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'queryArray'));
 		$dbMock->expects($this->once())
 				->method('selectArray')
 				->with('*',
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
+		$dbMock->expects($this->once())
+				->method('queryArray')
+				->with($this->stringContains($this->_groupSqlPart))
+				->will($this->returnValue($this->_groupRows));
 		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserByName('testUsername2');
@@ -131,13 +167,17 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		(
 			'email' => 'testmail2@test.de',
 		);
-		$dbMock = $this->getMock('Ilch_Database', array('selectArray'));
+		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'queryArray'));
 		$dbMock->expects($this->once())
 				->method('selectArray')
 				->with('*',
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
+		$dbMock->expects($this->once())
+				->method('queryArray')
+				->with($this->stringContains($this->_groupSqlPart))
+				->will($this->returnValue($this->_groupRows));
 		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserByEmail('testmail2@test.de');
@@ -164,12 +204,18 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 			'date_created' => '2013-08-20 22:20:20',
 			'date_confirmed' => '2013-08-20 22:20:30',
 		);
-		$dbMock = $this->getMock('Ilch_Database', array('insert'));
+		$dbMock = $this->getMock('Ilch_Database', array('insert', 'selectCell'));
 		$dbMock->expects($this->once())
 				->method('insert')
 				->with($newUser,
 					   'users')
 				->will($this->returnValue(null));
+		$dbMock->expects($this->once())
+				->method('selectCell')
+				->with('COUNT(*)',
+					   'users',
+					   array('id' => null))
+				->will($this->returnValue(0));
 		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->loadFromArray
@@ -197,30 +243,6 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testSaveUpdateUser()
 	{
-		/*
-		 * Current rows in the db.
-		 */
-		$userRows = array
-		(
-			array
-			(
-				'id' => 1,
-				'email' => 'testmail1@test.de',
-				'name' => 'testUsername1',
-				'password' => 'testPassword1',
-				'date_created' => '2013-08-02 20:12:42',
-				'date_confirmed' => '2013-08-12 22:23:52',
-			),
-			array
-			(
-				'id' => 2,
-				'email' => 'testmail2@test.de',
-				'name' => 'testUsername2',
-				'password' => 'testPassword2',
-				'date_created' => '2013-09-02 22:13:52',
-				'date_confirmed' => '2013-09-02 22:15:45',
-			),
-		);
 		$modifiedUser = array
 		(
 			'email' => 'testmail2@test.deModified',
@@ -230,16 +252,19 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 			'date_confirmed' => '2013-08-20 22:20:30',
 		);
 
-		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'update'));
-		$dbMock->expects($this->once())
-				->method('selectArray')
-				->will($this->returnValue($userRows));
+		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'update', 'selectCell'));
 		$dbMock->expects($this->once())
 				->method('update')
 				->with($modifiedUser,
 					   'users',
 					   array('id' => 2))
 				->will($this->returnValue(null));
+		$dbMock->expects($this->once())
+				->method('selectCell')
+				->with('COUNT(*)',
+					   'users',
+					   array('id' => 2))
+				->will($this->returnValue(2));
 		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->loadFromArray
@@ -269,36 +294,24 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 	 */
 	public function testExistingUserWithEmptyModel()
 	{
-		/*
-		 * Current rows in the db.
-		 */
-		$userRows = array
-		(
-			array
-			(
-				'id' => 1,
-				'email' => 'testmail1@test.de',
-				'name' => 'testUsername1',
-				'password' => 'testPassword1',
-				'date_created' => '2013-08-02 20:12:42',
-			),
-		);
-
 		$userUpdateArr = array
 		(
 			'name' => 'newName',
 		);
 
-		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'update'));
-		$dbMock->expects($this->once())
-				->method('selectArray')
-				->will($this->returnValue($userRows));
+		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'update', 'selectCell'));
 		$dbMock->expects($this->once())
 				->method('update')
 				->with($userUpdateArr,
 					   'users',
 					   array('id' => 1))
 				->will($this->returnValue(null));
+		$dbMock->expects($this->once())
+				->method('selectCell')
+				->with('COUNT(*)',
+					   'users',
+					   array('id' => 1))
+				->will($this->returnValue(1));
 
 		$user = new UserModel();
 		$user->setId(1);
