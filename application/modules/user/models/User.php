@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class User_UserModel.
+ * Holds class User.
  *
  * @author Jainta Martin
  * @copyright Ilch 2.0
@@ -23,28 +23,28 @@ class User extends \Ilch\Model
 	 *
 	 * @var int
 	 */
-	protected $_id = null;
+	protected $_id;
 
 	/**
 	 * The username.
 	 *
 	 * @var string
 	 */
-	protected $_name = '';
+	protected $_name;
 
 	/**
 	 * The email address of the user.
 	 *
 	 * @var string
 	 */
-	protected $_email = '';
+	protected $_email;
 
 	/**
 	 * The password of the user.
 	 *
 	 * @var string
 	 */
-	protected $_password = '';
+	protected $_password;
 
 	/**
 	 * The Ilch_Date of when the user got created.
@@ -61,9 +61,9 @@ class User extends \Ilch\Model
 	protected $_dateConfirmed;
 
 	/**
-	 * The groups as id of the user.
+	 * The ids of the associated user groups.
 	 *
-	 * @var array
+	 * @var int[]
 	 */
 	protected $_groups = array();
 
