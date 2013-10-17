@@ -17,7 +17,7 @@
 						}
 						else
 						{
-							echo 'text-error';
+							echo 'text-danger';
 						} 
 						?>">
 				<?php echo $this->get('phpVersion'); ?>
@@ -34,7 +34,7 @@
 					}
 					else
 					{
-						echo '<span class="text-error">not writable</span>';
+						echo '<span class="text-danger">not writable</span>';
 					}
 				?>
 			</td>
@@ -50,7 +50,7 @@
 					}
 					else
 					{
-						echo '<span class="text-error">not writable</span>';
+						echo '<span class="text-danger">not writable</span>';
 					}
 				?>
 			</td>
