@@ -125,7 +125,7 @@ class Group extends \Ilch\Mapper
 		(
 			'user_id',
 			'users_groups',
-			array('id' => $groupId)
+			array('group_id' => $groupId)
 		);
 
 		return $userIds;
@@ -159,7 +159,7 @@ class Group extends \Ilch\Mapper
 				'groups',
 				array
 				(
-					'id' => $groupId,
+					'group_id' => $groupId,
 				)
 			);
 		}
