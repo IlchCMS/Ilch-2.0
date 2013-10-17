@@ -174,11 +174,16 @@ class Request
 	/**
 	 * Get post-value by key.
 	 *
-	 * @return array
+	 * @param string $key
+	 * @return mixed
 	 */
-	public function getPost($key)
+	public function getPost($key = '')
 	{
-		if(isset($_POST[$key]))
+		if($key === '')
+		{
+			return $_POST;
+		}
+		elseif(isset($_POST[$key]))
 		{
 			return $_POST[$key];
 		}
@@ -191,11 +196,16 @@ class Request
 	/**
 	 * Get get-value by key.
 	 *
-	 * @return array
+	 * @param string $key
+	 * @return mixed
 	 */
-	public function getQuery($key)
+	public function getQuery($key = '')
 	{
-		if(isset($_GET[$key]))
+		if($key === '')
+		{
+			return $_GET;
+		}
+		elseif(isset($_GET[$key]))
 		{
 			return $_GET[$key];
 		}
