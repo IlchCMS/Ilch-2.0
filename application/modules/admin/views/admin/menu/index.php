@@ -1,8 +1,28 @@
+<?php
+$menus = $this->get('menus');
+?>
 <form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
-	<ol class="sortable">
-		<li id="list_9"><div><span class="disclose"><span></span></span>Item 5</div></li>
-		<li id="list_10"><div><span class="disclose"><span></span></span>Item 5</div></li>
-	</ol>
+	<?php
+		foreach($menus as $menu)
+		{
+			$menuItems = json_decode($menu->getContent());
+	?>
+		<ol class="sortable">
+			<?php
+				foreach($menuItems as $item)
+				{
+					if(empty($item->item_id))
+					{
+						continue;
+					}
+
+					echo '<li id="list_'.$item->item_id.'"><div><span class="disclose"><span></span></span>'.$item->item_id.'</div></li>';
+				}
+			?>
+		</ol>
+	<?php
+		}
+	?>
 	<input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
 	<div class="content_savebox">
 		<button type="submit" name="save" class="btn">
@@ -10,7 +30,6 @@
 		</button>
 	</div>
 </form>
-
 <script>
 	$(document).ready
 	(
@@ -27,7 +46,7 @@
 			(
 				function()
 				{
-					$('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));;
+					$('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
 				}
 			)
 		}

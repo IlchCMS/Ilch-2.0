@@ -49,7 +49,40 @@ class Menu extends \Ilch\Mapper
 		return $menus;
 	}
 
-	public function save()
+	public function save(MenuModel $menu)
 	{
+		$fields = array('content' => $menu->getContent());
+		$menuId = (int)$this->getDatabase()->selectCell
+		(
+			'id',
+			'menus',
+			array
+			(
+				'id' => $menu->getId(),
+			)
+		);
+
+		if($menuId)
+		{
+			$this->getDatabase()->update
+			(
+				$fields,
+				'menus',
+				array
+				(
+					'id' => $menuId,
+				)
+			);
+		}
+		else
+		{
+			$menuId = $this->getDatabase()->insert
+			(
+				$fields,
+				'menus'
+			);
+		}
+		
+		return $menuId;
 	}
 }
