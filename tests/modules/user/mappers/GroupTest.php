@@ -126,13 +126,13 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
 	/**
 	 * Tests if the user associations of the group can be loaded.
 	 */
-	public function testLoadUsers()
+	public function testGetUsersForGroup()
 	{
 		$this->_dbMock->expects($this->once())
 				->method('selectList')
 				->with('user_id',
 						'users_groups',
-						array('id' => 1))
+						array('group_id' => 1))
 				->will($this->returnValue(array(1, 3 ,4)));
 		$mapper = new GroupMapper();
 		$mapper->setDatabase($this->_dbMock);
