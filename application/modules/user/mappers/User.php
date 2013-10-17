@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class User_UserMapper.
+ * Holds class User.
  *
  * @author Jainta Martin
  * @copyright Ilch 2.0
@@ -12,7 +12,7 @@ namespace User\Mappers;
 defined('ACCESS') or die('no direct access');
 
 /**
- * The user model class.
+ * The user mapper class.
  *
  * @author Jainta Martin
  * @package ilch

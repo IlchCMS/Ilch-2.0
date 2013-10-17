@@ -7,6 +7,8 @@
  * @package ilch_phpunit
  */
 
+use User\Mappers\User as UserMapper;
+use User\Models\User as UserModel;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -55,7 +57,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
-		$mapper = new \User\Mappers\User();
+		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserById(2);
 
@@ -95,7 +97,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
-		$mapper = new \User\Mappers\User();
+		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserByName('testUsername2');
 
@@ -136,7 +138,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   $where)
 				->will($this->returnValue($userRows));
-		$mapper = new \User\Mappers\User();
+		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->getUserByEmail('testmail2@test.de');
 
@@ -168,7 +170,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				->with($newUser,
 					   'users')
 				->will($this->returnValue(null));
-		$mapper = new \User\Mappers\User();
+		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->loadFromArray
 		(
@@ -238,7 +240,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 					   'users',
 					   array('id' => 2))
 				->will($this->returnValue(null));
-		$mapper = new \User\Mappers\User();
+		$mapper = new UserMapper();
 		$mapper->setDatabase($dbMock);
 		$user = $mapper->loadFromArray
 		(
@@ -258,6 +260,52 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 		$user->setDateCreated(1377037220);
 		$user->setDateConfirmed(1377037230);
 
+		$mapper->save($user);
+	}
+
+	/**
+	 * Tests if a user can be modified by creating an empty user model with its id
+	 * and modifying only one attribute.
+	 */
+	public function testExistingUserWithEmptyModel()
+	{
+		/*
+		 * Current rows in the db.
+		 */
+		$userRows = array
+		(
+			array
+			(
+				'id' => 1,
+				'email' => 'testmail1@test.de',
+				'name' => 'testUsername1',
+				'password' => 'testPassword1',
+				'date_created' => '2013-08-02 20:12:42',
+			),
+		);
+
+		$userUpdateArr = array
+		(
+			'name' => 'newName',
+		);
+
+		$dbMock = $this->getMock('Ilch_Database', array('selectArray', 'update'));
+		$dbMock->expects($this->once())
+				->method('selectArray')
+				->will($this->returnValue($userRows));
+		$dbMock->expects($this->once())
+				->method('update')
+				->with($userUpdateArr,
+					   'users',
+					   array('id' => 1))
+				->will($this->returnValue(null));
+
+		$user = new UserModel();
+		$user->setId(1);
+		$user->setName('newName');
+
+		$mapper = new UserMapper();
+		$mapper->setDatabase($dbMock);
 		$mapper->save($user);
 	}
 }
