@@ -18,7 +18,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('adminName'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('adminName') != ''){ echo $this->get('adminName'); } ?>"
+		<input value="<?php if($this->get('adminName') != ''){ echo $this->escape($this->get('adminName')); } ?>"
 			   type="text"
 			   name="adminName"
 			   class="form-control"
@@ -36,7 +36,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('adminPassword'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('adminPassword') != ''){ echo $this->get('adminPassword'); } ?>"
+		<input value="<?php if($this->get('adminPassword') != ''){ echo $this->escape($this->get('adminPassword')); } ?>"
 			   type="password"
 			   class="form-control"
 			   name="adminPassword"
@@ -54,7 +54,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('adminPassword2'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('adminPassword2') != ''){ echo $this->get('adminPassword2'); } ?>"
+		<input value="<?php if($this->get('adminPassword2') != ''){ echo $this->escape($this->get('adminPassword2')); } ?>"
 			   type="password"
 			   class="form-control"
 			   name="adminPassword2"
@@ -72,7 +72,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('adminEmail'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('adminEmail') != ''){ echo $this->get('adminEmail'); } ?>"
+		<input value="<?php if($this->get('adminEmail') != ''){ echo $this->escape($this->get('adminEmail')); } ?>"
 			   type="text"
 			   name="adminEmail"
 			   class="form-control"

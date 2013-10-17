@@ -20,7 +20,7 @@
 				   type="text"
 				   name="pageTitle"
 				   id="pageTitleInput"
-				   value="<?php if($this->get('page') != ''){ echo $this->get('page')->getTitle(); } ?>" />
+				   value="<?php if($this->get('page') != ''){ echo $this->escape($this->get('page')->getTitle()); } ?>" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -49,7 +49,7 @@
 						$selected = 'selected="selected"';
 					}
 
-					echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
+					echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
 				}
 				?>
 			</select>
@@ -64,7 +64,7 @@
 				   type="text"
 				   name="pagePerma"
 				   id="pagePerma"
-				   value="<?php if($this->get('page') != ''){ echo $this->get('page')->getPerma(); } ?>" />
+				   value="<?php if($this->get('page') != ''){ echo $this->escape($this->get('page')->getPerma()); } ?>" />
 		</div>
 	</div>
 	<div class="content_savebox">

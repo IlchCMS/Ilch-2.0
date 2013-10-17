@@ -16,7 +16,7 @@
 						$selected = 'selected="selected"';
 					}
 
-					echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
+					echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
 				}
 				?>
 			</select>

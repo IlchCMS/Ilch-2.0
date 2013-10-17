@@ -16,7 +16,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('dbHost'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('dbHost') != ''){ echo $this->get('dbHost'); }else{ echo 'localhost'; } ?>"
+		<input value="<?php if($this->get('dbHost') != ''){ echo $this->escape($this->get('dbHost')); }else{ echo 'localhost'; } ?>"
 			   type="text"
 			   class="form-control"
 			   name="dbHost"
@@ -34,7 +34,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('dbUser'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('dbUser') != ''){ echo $this->get('dbUser'); } ?>"
+		<input value="<?php if($this->get('dbUser') != ''){ echo $this->escape($this->get('dbUser')); } ?>"
 			   type="text"
 			   class="form-control"
 			   name="dbUser"
@@ -46,7 +46,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('dbPassword'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('dbPassword') != ''){ echo $this->get('dbPassword'); } ?>"
+		<input value="<?php if($this->get('dbPassword') != ''){ echo $this->escape($this->get('dbPassword')); } ?>"
 			   type="password"
 			   class="form-control"
 			   name="dbPassword"
@@ -58,7 +58,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('dbName'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('dbName') != ''){ echo $this->get('dbName'); } ?>"
+		<input value="<?php if($this->get('dbName') != ''){ echo $this->escape($this->get('dbName')); } ?>"
 			   type="text"
 			   name="dbName"
 			   class="form-control"
@@ -76,7 +76,7 @@ $errors = $this->get('errors');
 		<?php echo $this->trans('dbPrefix'); ?>:
 	</label>
 	<div class="col-lg-6">
-		<input value="<?php if($this->get('dbPrefix') != ''){ echo $this->get('dbPrefix'); } else { echo 'ilch_'; } ?>"
+		<input value="<?php if($this->get('dbPrefix') != ''){ echo $this->escape($this->get('dbPrefix')); } else { echo 'ilch_'; } ?>"
 			   type="text"
 			   class="form-control"
 			   name="dbPrefix"

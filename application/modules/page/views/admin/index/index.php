@@ -30,7 +30,7 @@ if($this->get('pages') != '')
 	
 			echo '</td>
 					<td>'.$page->getTitle().'</td>
-					<td><a target="_blank" href="'.$this->url().'/index.php/'.$page->getPerma().'">Öffnen</a></td>
+					<td><a target="_blank" href="'.$this->url().'/index.php/'.$this->escape($page->getPerma()).'">Öffnen</a></td>
 					<td><a href="'.$this->url(array('module' => 'page', 'controller' => 'index', 'action' => 'delete', 'id' => $page->getId())).'">Löschen</a></td>
 				</tr>';
 		}

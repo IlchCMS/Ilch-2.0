@@ -18,7 +18,7 @@
 					$selected = 'selected="selected"';
 				}
 
-				echo '<option '.$selected.' value="'.$key.'">'.$value.'</option>';
+				echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
 			}
 			?>
 		</select>
@@ -41,7 +41,7 @@
 						$sel = 'selected="selected"';
 					}
 
-					echo '<option '.$sel.' value="'.$timezones[$i].'">'.$timezones[$i].'</option>';
+					echo '<option '.$sel.' value="'.$this->escape($timezones[$i]).'">'.$this->escape($timezones[$i]).'</option>';
 				}
 			?>
 		</select>
