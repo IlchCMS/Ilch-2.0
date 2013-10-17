@@ -50,8 +50,8 @@ class Plugin
 
 		foreach($this->_detectedPlugins[$pluginName] as $module)
 		{
-			$pluginClass = $module.'\\Plugins\\'.$pluginName.'';
-			$plugin = new $pluginClass($this->_pluginData);
+			$pluginClass = ucfirst($module).'\\Plugins\\'.$pluginName.'';
+			new $pluginClass($this->_pluginData);
 		}
 	}
 
