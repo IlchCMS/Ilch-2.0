@@ -262,7 +262,7 @@ class Mysql
 
 		foreach($fields as $key => $value)
 		{
-			$up[] = '`' . $key . '` = "' . $value . '"';
+			$up[] = '`' . $key . '` = "' . $this->escape($value) . '"';
 		}
 
 		$sql .= implode(',', $up);
