@@ -12,15 +12,15 @@ defined('ACCESS') or die('no direct access');
 return array
 (
 	'loginWelcome' => 'Bitte loggen Sie sich ein',
-	'email' => 'E-mail Adresse',
+	'emailname' => 'Benutzer oder E-mail',
 	'password' => 'Passwort',
 	'rememberMe' => 'Eingeloggt bleiben',
 	'signIn' => 'Einloggen',
 	'logoutMsg' => 'Sie wurden erfolgreich ausgeloggt.',
 	'alreadyLoggedIn' => 'Sie sind bereits eingeloggt.',
-	'userNotFound' => 'Es wurde kein Benutzer mit dieser E-Mail Adresse oder Passwort gefunden.',
+	'userNotFound' => 'Es wurde kein Benutzer mit dieser Benutzername/E-Mail oder Passwort gefunden.',
 	'logout' => 'Ausloggen',
-	'noEmailGiven' => 'Es wurde keine E-Mail Adresse angegeben.',
+	'noUserEmailGiven' => 'Es wurde kein(e) Benutzername/E-Mail angegeben.',
 	'chooseLanguage' => 'Sprache',
 	'saveButton'     => 'Speichern',
 	'home'			 => 'Startseite',

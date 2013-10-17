@@ -25,7 +25,7 @@
 			<img class="logo" src="<?php echo $this->staticUrl('img/ilch_logo.png'); ?>" />
 			<?php
 				$errors = $this->get('errors');
-				$email = $this->get('email');
+				$emailname = $this->get('emailname');
 				$error = empty($errors) ? '' : 'error';
 			?>
 			<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'))?>">
@@ -33,10 +33,10 @@
 				<div class="form-group <?php if(!empty($errors)){ echo 'error'; }; ?>">
 					<div class="col-lg-12">
 						<input type="text"
-							   name="email"
+							   name="emailname"
 							   class="form-control <?php echo $error?>"
-							   placeholder="<?php echo $this->trans('email')?>"
-							   value="<?php echo $this->escape($email); ?>">
+							   placeholder="<?php echo $this->trans('emailname')?>"
+							   value="<?php echo $this->escape($emailname); ?>">
 					</div>
 					<div class="col-lg-12">
 						<input type="password"

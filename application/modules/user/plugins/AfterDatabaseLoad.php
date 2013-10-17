@@ -8,6 +8,7 @@
  */
 
 namespace User\Plugins;
+use User\Mappers\User as UserMapper;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -40,7 +41,7 @@ class AfterDatabaseLoad
 			$userId = (int)$_SESSION['user_id'];
 		}
 
-		$mapper = new \User\Mappers\User();
+		$mapper = new UserMapper();
 		$user = $mapper->getUserById($userId);
 
 		\Ilch\Registry::set('user', $user);

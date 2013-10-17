@@ -12,15 +12,15 @@ defined('ACCESS') or die('no direct access');
 return array
 (
 	'loginWelcome' => 'Please sign in',
-	'email' => 'Email address',
+	'emailname' => 'Email or Username',
 	'password' => 'Password',
 	'rememberMe' => 'Remember me',
 	'signIn' => 'Sign in',
 	'logoutMsg' => 'You got successfully logged out.',
 	'alreadyLoggedIn' => 'You are already logged in.',
-	'userNotFound' => 'No user found with this email or password.',
+	'userNotFound' => 'No user found with this username/email or password.',
 	'logout' => 'Logout',
-	'noEmailGiven' => 'No email address was provided.',
+	'noUserEmailGiven' => 'No username/email was provided.',
 	'chooseLanguage' => 'Language',
 	'saveButton'     => 'Save',
 	'home'			 => 'Start',

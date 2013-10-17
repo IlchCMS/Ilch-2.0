@@ -43,16 +43,21 @@ class Login extends \Ilch\Controller\Admin
 				$errors['alreadyLoggedIn'] = 'alreadyLoggedIn';
 			}
 
-			$email = $this->getRequest()->getPost('email');
+			$emailName = $this->getRequest()->getPost('emailname');
 
-			if($email === '')
+			if($emailName === '')
 			{
-				$errors['noEmailGiven']  = 'noEmailGiven';
+				$errors['noEmailGiven']  = 'noUserEmailGiven';
 			}
 			else
 			{
 				$mapper = new UserMapper();
-				$user = $mapper->getUserByEmail($email);
+				$user = $mapper->getUserByEmail($emailName);
+
+				if($user == null)
+				{
+					$user = $mapper->getUserByName($emailName);
+				}
 
 				if($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('password'), $user->getPassword()))
 				{
@@ -68,7 +73,7 @@ class Login extends \Ilch\Controller\Admin
 				}
 			}
 
-			$this->getLayout()->set('email', $email);
+			$this->getLayout()->set('emailname', $emailName);
 		}
 
 		$this->getLayout()->set('errors', $errors);
