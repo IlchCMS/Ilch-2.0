@@ -54,8 +54,8 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 	 * @var string
 	 */
 	protected $_groupSqlPart = 'SELECT g.*
-						FROM groups AS g
-						INNER JOIN users_groups AS ug ON ug.user_id = ';
+						FROM [prefix]_groups AS g
+						INNER JOIN [prefix]_users_groups AS ug ON ug.user_id = ';
 
 	/**
 	 * Tests if the user mapper returns the right user model using an id for the
@@ -212,7 +212,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				->will($this->returnValue(null));
 		$dbMock->expects($this->once())
 				->method('selectCell')
-				->with('COUNT(*)',
+				->with('id',
 					   'users',
 					   array('id' => null))
 				->will($this->returnValue(0));
@@ -261,7 +261,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				->will($this->returnValue(null));
 		$dbMock->expects($this->once())
 				->method('selectCell')
-				->with('COUNT(*)',
+				->with('id',
 					   'users',
 					   array('id' => 2))
 				->will($this->returnValue(2));
@@ -308,7 +308,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
 				->will($this->returnValue(null));
 		$dbMock->expects($this->once())
 				->method('selectCell')
-				->with('COUNT(*)',
+				->with('id',
 					   'users',
 					   array('id' => 1))
 				->will($this->returnValue(1));
