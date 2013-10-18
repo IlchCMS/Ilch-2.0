@@ -27,7 +27,7 @@ class Menu extends \Ilch\Mapper
 	public function getMenus()
 	{
 		$menus = array();
-		$menusRows = $this->getDatabase()->selectArray
+		$menusRows = $this->db()->selectArray
 		(
 			'*',
 			'menus'
@@ -52,7 +52,7 @@ class Menu extends \Ilch\Mapper
 	public function save(MenuModel $menu)
 	{
 		$fields = array('content' => $menu->getContent());
-		$menuId = (int)$this->getDatabase()->selectCell
+		$menuId = (int)$this->db()->selectCell
 		(
 			'id',
 			'menus',
@@ -64,7 +64,7 @@ class Menu extends \Ilch\Mapper
 
 		if($menuId)
 		{
-			$this->getDatabase()->update
+			$this->db()->update
 			(
 				$fields,
 				'menus',
@@ -76,7 +76,7 @@ class Menu extends \Ilch\Mapper
 		}
 		else
 		{
-			$menuId = $this->getDatabase()->insert
+			$menuId = $this->db()->insert
 			(
 				$fields,
 				'menus'

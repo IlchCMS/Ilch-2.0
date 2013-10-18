@@ -30,7 +30,7 @@ class Page extends \Ilch\Mapper
 		$sql = 'SELECT * FROM [prefix]_pages as p
 				INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
 				GROUP BY p.id';
-		$pageArray = $this->getDatabase()->queryArray($sql);
+		$pageArray = $this->db()->queryArray($sql);
 
 		if(empty($pageArray))
 		{
@@ -62,8 +62,8 @@ class Page extends \Ilch\Mapper
 	{
 		$sql = 'SELECT * FROM [prefix]_pages as p
 				INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
-				WHERE p.`id` = "'.(int)$id.'" AND pc.locale = "'.$this->getDatabase()->escape($locale).'"';
-		$pageRow = $this->getDatabase()->queryRow($sql);
+				WHERE p.`id` = "'.(int)$id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
+		$pageRow = $this->db()->queryRow($sql);
 
 		if(empty($pageRow))
 		{
@@ -88,7 +88,7 @@ class Page extends \Ilch\Mapper
 	public function getPagePermas()
 	{
 		$sql = 'SELECT page_id, locale, perma FROM [prefix]_pages_content';
-		$permas = $this->getDatabase()->queryArray($sql);
+		$permas = $this->db()->queryArray($sql);
 		$permaArray = array();
 
 		if(empty($permas))
@@ -116,7 +116,7 @@ class Page extends \Ilch\Mapper
 		{
 			if($this->getPageByIdLocale($page->getId(), $page->getLocale()))
 			{
-				$this->getDatabase()->update
+				$this->db()->update
 				(
 					array
 					(
@@ -134,7 +134,7 @@ class Page extends \Ilch\Mapper
 			}
 			else
 			{
-				$this->getDatabase()->insert
+				$this->db()->insert
 				(
 					array
 					(
@@ -151,7 +151,7 @@ class Page extends \Ilch\Mapper
 		else
 		{
 			$date = new \Ilch\Date();
-			$pageId = $this->getDatabase()->insert
+			$pageId = $this->db()->insert
 			(
 				array
 				(
@@ -160,7 +160,7 @@ class Page extends \Ilch\Mapper
 				'pages'
 			);
 			
-			$this->getDatabase()->insert
+			$this->db()->insert
 			(
 				array
 				(
@@ -177,13 +177,13 @@ class Page extends \Ilch\Mapper
 
 	public function delete($id)
 	{
-		$this->getDatabase()->delete
+		$this->db()->delete
 		(
 			'pages',
 			array('id' => $id)
 		);
 
-		$this->getDatabase()->delete
+		$this->db()->delete
 		(
 			'pages_content',
 			array('page_id' => $id)

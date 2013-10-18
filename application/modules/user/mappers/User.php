@@ -97,7 +97,7 @@ class User extends \Ilch\Mapper
 	 */
 	protected function _getBy($where = null)
 	{
-		$userRows = $this->getDatabase()->selectArray
+		$userRows = $this->db()->selectArray
 		(
 			'*',
 			'users',
@@ -114,7 +114,7 @@ class User extends \Ilch\Mapper
 				$sql = 'SELECT g.*
 						FROM groups AS g
 						INNER JOIN users_groups AS ug ON ug.user_id = '.$userRow['id'];
-				$groupRows = $this->getDatabase()->queryArray($sql);
+				$groupRows = $this->db()->queryArray($sql);
 				$groupMapper = new Group();
 
 				foreach($groupRows as $groupRow)
@@ -220,7 +220,7 @@ class User extends \Ilch\Mapper
 			$fields['date_confirmed'] = $user->getDateConfirmed()->toDb();
 		}
 
-		$userId = (int)$this->getDatabase()->selectCell
+		$userId = (int)$this->db()->selectCell
 		(
 			'id',
 			'users',
@@ -235,7 +235,7 @@ class User extends \Ilch\Mapper
 			/*
 			 * User does exist already, update.
 			 */
-			$this->getDatabase()->update
+			$this->db()->update
 			(
 				$fields,
 				'users',
@@ -250,7 +250,7 @@ class User extends \Ilch\Mapper
 			/*
 			 * User does not exist yet, insert.
 			 */
-			$userId = $this->getDatabase()->insert
+			$userId = $this->db()->insert
 			(
 				$fields,
 				'users'
@@ -259,7 +259,7 @@ class User extends \Ilch\Mapper
 
 		if($user->getGroups())
 		{
-			$this->getDatabase()->delete
+			$this->db()->delete
 			(
 				'users_groups',
 				array('user_id' => $userId)
@@ -267,7 +267,7 @@ class User extends \Ilch\Mapper
 
 			foreach($user->getGroups() as $groupId)
 			{
-				$this->getDatabase()->insert
+				$this->db()->insert
 				(
 					array
 					(

@@ -36,6 +36,16 @@ class Mapper
 	}
 
 	/**
+	 * Shortcut for getDatabse.
+	 *
+	 * @return Ilch_Database_*
+	 */
+	public function db()
+	{
+		return $this->getDatabase();
+	}
+
+	/**
 	 * Sets the database adapter.
 	 *
 	 * @param Ilch_Database_*

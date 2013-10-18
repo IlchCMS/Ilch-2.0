@@ -74,7 +74,7 @@ class Group extends \Ilch\Mapper
 	 */
 	protected function _getBy($where = null)
 	{
-		$groupRows = $this->getDatabase()->selectArray
+		$groupRows = $this->db()->selectArray
 		(
 			'*',
 			'groups',
@@ -121,7 +121,7 @@ class Group extends \Ilch\Mapper
 	 */
 	public function getUsersForGroup($groupId)
 	{
-		$userIds = $this->getDatabase()->selectList
+		$userIds = $this->db()->selectList
 		(
 			'user_id',
 			'users_groups',
@@ -153,7 +153,7 @@ class Group extends \Ilch\Mapper
 			/*
 			 * Group does exist already, update.
 			 */
-			$this->getDatabase()->update
+			$this->db()->update
 			(
 				$fields,
 				'groups',
@@ -168,7 +168,7 @@ class Group extends \Ilch\Mapper
 			/*
 			 * Group does not exist yet, insert.
 			 */
-			$groupId = $this->getDatabase()->insert
+			$groupId = $this->db()->insert
 			(
 				$fields,
 				'groups'
@@ -177,7 +177,7 @@ class Group extends \Ilch\Mapper
 
 		if($group->getUsers())
 		{
-			$this->getDatabase()->delete
+			$this->db()->delete
 			(
 				'users_groups',
 				array('group_id' => $groupId)
@@ -185,7 +185,7 @@ class Group extends \Ilch\Mapper
 
 			foreach($group->getUsers() as $userId)
 			{
-				$this->getDatabase()->insert
+				$this->db()->insert
 				(
 					array
 					(

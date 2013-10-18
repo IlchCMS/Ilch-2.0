@@ -26,7 +26,7 @@ class Module extends \Ilch\Mapper
 	public function getModules()
 	{
 		$modules = array();
-		$modulesRows = $this->getDatabase()->selectArray
+		$modulesRows = $this->db()->selectArray
 		(
 			'*',
 			'modules'
@@ -43,7 +43,7 @@ class Module extends \Ilch\Mapper
 			$moduleModel->setId($moduleRow['id']);
 			$moduleModel->setKey($moduleRow['key']);
 			$moduleModel->setIconSmall($moduleRow['icon_small']);
-			$nameRows = $this->getDatabase()->selectArray('*', 'modules_names', array('module_id' => $moduleRow['id']));
+			$nameRows = $this->db()->selectArray('*', 'modules_names', array('module_id' => $moduleRow['id']));
 
 			foreach($nameRows as $nameRow)
 			{
@@ -62,7 +62,7 @@ class Module extends \Ilch\Mapper
 	 */
 	public function save(\Admin\Models\Module $module)
 	{
-		$moduleId = $this->getDatabase()->insert
+		$moduleId = $this->db()->insert
 		(
 			array
 			(
@@ -74,7 +74,7 @@ class Module extends \Ilch\Mapper
 
 		foreach($module->getNames() as $key => $value)
 		{
-			$this->getDatabase()->insert
+			$this->db()->insert
 			(
 				array('module_id' => $moduleId, 'locale' => $key, 'name' => $value),
 				'modules_names'
