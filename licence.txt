@@ -1,4 +1,4 @@
-Ilch 2.0 Lizenz
+Ilch CMS 2.0 Lizenz
 
 Es ist gestattet, dass CMS zu benutzen.
 Es ist gestattet, dass CMS zu verändern.
