@@ -21,7 +21,7 @@ html, body {
 
 #sidebar_content {
 	color: #777777;
-	padding: 20px 15px 0 15px;
+	padding: 10px 15px 0 15px;
 }
 
 #sidebar_content .nav > li > a:hover,
@@ -92,6 +92,7 @@ html, body {
 /* content */
 
 .app_left {
+	margin-top: 51px;
 	background-color: #ECECFB;
 	border-right: 1px solid silver;
 	position: fixed;
@@ -101,7 +102,7 @@ html, body {
 
 .app_right {
 	margin-left: 300px;
-	padding: 30px 20px 60px 20px;
+	padding: 60px 20px 60px 20px;
 }
 
 .app_right_full {
