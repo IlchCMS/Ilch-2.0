@@ -12,7 +12,7 @@
  * @author Jainta Martin
  * @package ilch_phpunit
  */
-abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_TestCase
+abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Extensions_Database_TestCase
 {
 	/**
 	 * A data array which will be used to create a config object for the registry.
@@ -57,20 +57,65 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_TestCase
 	private $_request = null;
 
 	/**
+	 * Only instantiate pdo once for test clean-up/fixture load
+	 *
+	 * @var [type]
+	 */
+    static private $pdo = null;
+
+    /**
+     * instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+     *
+     * @var PHPUnit_Extensions_Database_DB_IDatabaseConnection
+     */
+    private $conn = null;
+
+	/**
 	 * Filling the config object with individual testcase data.
 	 */
 	public function setUp()
 	{
 		parent::setUp();
-		Ilch_Registry::remove('config');
+		\Ilch\Registry::remove('config');
+		\Ilch\Registry::remove('db');
+		\Ilch\Registry::remove('startTime');
+		\Ilch\Registry::remove('user');
+		$_SESSION['user_id'] = ADMIN_USER_ID;
 
 		$serverTimeZone = date_default_timezone_get();
 		date_default_timezone_set('UTC');
 
 		require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';
 
-		Ilch_Registry::set('startTime', microtime(true));
+		\Ilch\Registry::set('startTime', microtime(true));
 	}
+
+	/**
+	 * Creates the db connection to the test database.
+	 *
+	 * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
+	 */
+    final public function getConnection()
+    {
+        if($this->conn === null)
+        {
+            if(self::$pdo == null)
+            {
+                self::$pdo = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
+            }
+
+            $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
+        }
+
+        return $this->conn;
+    }
+
+    /**
+     * Creates and returns a dataset object.
+     *
+     * @return PHPUnit_Extensions_Database_DataSet
+     */
+    public function getDataSet(){}
 
 	/**
 	 * Sets a request parameter.
@@ -97,8 +142,17 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_TestCase
 		 * as the module name and "Userlist" as the controller name.
 		 */
 		$matches = array();
-		$requestFromClass = preg_match('/Modules_([a-zA-Z0-9]+)_Controllers_([a-zA-Z0-9]+)Test$/', get_class($this), $matches);
-		$requestURI = '/'.PHP_SELF.'/index.php/'.strtolower($matches[1]).'/'.strtolower($matches[2]).'/'.$this->_action;
+		$requestFromClass = preg_match('/Modules_([a-zA-Z0-9]+)_Controllers_([a-zA-Z0-9_]+)Test$/', get_class($this), $matches);
+
+		if(substr($matches[2], 0, 6) == 'Admin_')
+		{
+			$controllerIdent = explode('_', $matches[2])[1];
+			$requestURI = '/'.PHP_SELF.'/index.php/admin/'.strtolower($matches[1]).'/'.strtolower($controllerIdent).'/'.$this->_action;
+		}
+		else
+		{
+			$requestURI = '/'.PHP_SELF.'/index.php/'.strtolower($matches[1]).'/'.strtolower($matches[2]).'/'.$this->_action;
+		}
 
 		if(!empty($this->_requestParams))
 		{
@@ -118,9 +172,20 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_TestCase
 		$rewriteBaseParts = explode('index.php', $rewriteBaseParts);
 		$rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
 
-		define('REWRITE_BASE', $rewriteBaseParts);
-		define('BASE_URL', 'http://'.HTTP_HOST.REWRITE_BASE);
-		define('STATIC_URL', BASE_URL);
+		if(!defined('REWRITE_BASE'))
+		{
+			define('REWRITE_BASE', $rewriteBaseParts);
+		}
+
+		if(!defined('BASE_URL'))
+		{
+			define('BASE_URL', 'http://'.HTTP_HOST.REWRITE_BASE);
+		}
+
+		if(!defined('STATIC_URL'))
+		{
+			define('STATIC_URL', BASE_URL);
+		}
 
 		/*
 		 * Loading page and controller.
@@ -222,5 +287,48 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_TestCase
 	protected function _assertRequestParamEquals($key, $value)
 	{
 		$this->assertEquals($value, $this->_request->getParam($key), 'The request variable "'.$key.'" does not have the correct value, expected "'.$value.'", actual "'.$this->_request->getParam($key).'".');
+	}
+
+	/**
+	 * Asserts that a specific translation was output by checking if the
+	 * trans output is in the action output.
+	 *
+	 * @param string $transKey
+	 */
+	protected function _assertTransUsed($transKey)
+	{
+		$this->_assertTextWasOutput($this->_view->trans($transKey));
+	}
+
+	/**
+	 * Asserts that the given text exists in the action output.
+	 *
+	 * @param string $text
+	 */
+	protected function _assertTextWasOutput($text)
+	{
+		$this->assertTrue(strpos($this->_actionOutput, $text) !== false, 'The text "'.$text.'" was not found in the action output.');
+	}
+
+	/**
+	 * Returns the action output string.
+	 *
+	 * @return string
+	 */
+	protected function _getActionOutput()
+	{
+		return $this->_actionOutput;
+	}
+
+	/**
+	 * Returns a param from the view object.
+	 *
+	 * @param string $key
+	 *
+	 * @return mixed
+	 */
+	protected function _getViewParam($key)
+	{
+		return $this->_view->get($key);
 	}
 }

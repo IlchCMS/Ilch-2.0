@@ -50,7 +50,7 @@ class File
 	 */
 	public function loadConfigFromFile($fileName)
 	{
-		require_once $fileName;
+		require $fileName;
 
 		if(!empty($config))
 		{

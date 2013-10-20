@@ -7,6 +7,7 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
 ## Installation/Verwendung
 
 1. **PHPUnit installieren.** Eine gute Anleitung für Xampp ist [hier](http://web-union.de/484) zu finden.
+Für die Controller- bzw. Datenbanktests wird zusätzlich noch das DB-Modul von PHPUnit benötigt: "pear install phpunit/DbUnit"
 
 2. **xDebug auf dem Server aktivieren.**
 In Xampp muss man dafür, je nach Installation, nur die Kommentare in folgendem Teil in der php.ini rausnehmen bzw. den Teil einfügen:
@@ -67,6 +68,87 @@ class Libraries_Ilch_SomeObjectTest extends PHPUnit_Ilch_TestCase
 }
 ```
 
+### PHPUnit_Ilch_TestCase
+
+Die PHPUnit_Ilch_TestCase ist die Testklasse für Tests welche z. B. ein Model/Mapper/Ilch_libraryclass betreffen.
+Sie erweitert die Standard PHPUnit TestCase lediglich um die Funktion, Configparameter vor dem Testlauf anzupassen.
+
+Ein Beispiel: Setzen der Zeitzone um Zeitvergleiche konsistent über alle Serverstandorte ausführen zu können.
+
+```php
+/**
+ * Tests some object.
+ *
+ * @author <author>
+ * @package ilch_phpunit
+ */
+class Libraries_Ilch_SomeObjectTest extends PHPUnit_Ilch_TestCase
+{
+    /**
+     * Filling the timezone which the Ilch_Date object will use.
+     *
+     * @var Array
+     */
+    protected $_configData = array
+    (
+        'timezone' => 'Europe/Berlin'
+    );
+
+    ...
+}
+```
+
+### Datenbank Tests
+
+Die Testklasse für Tests welche eine reelle Datenbank verwenden ist an der PHPUnit_Ilch_TestCase angelehnt.
+
+Sie verfügt über dieselbe Funktionalität wie die PHPUnit_Ilch_TestCase, erweitert diese allerdings um die
+Möglichkeit gegen eine reelle Datenbank zu testen. Dazu müssen in den Testklassen die Funktion getDataSet()
+initialisiert werden.
+
+```php
+/**
+ * Tests the user index controller.
+ *
+ * @author <author>
+ * @package ilch_phpunit
+ */
+class Modules_User_Controllers_Admin_IndexTest extends PHPUnit_Ilch_Controller_TestCase
+{
+    /**
+     * Returns the dataset which fills user data into the tables users, groups and users_groups.
+     *
+     * @return PHPUnit_Extensions_Database_DataSet_YamlDataSet
+     */
+    public function getDataSet()
+    {
+        return new PHPUnit_Extensions_Database_DataSet_YamlDataSet
+        (
+            __DIR__.'/../_files/users.yml'
+        );
+    }
+
+    /**
+     * Checks if the index action collects all users.
+     */
+    public function testIndex()
+    {
+        $this->setRequestParam('test', 'teststr');
+        $this->setAction('index');
+
+        $this->load();
+
+        $this->_assertTransUsed('menuUser');
+
+        $this->_assertViewParamExists('userList');
+        $users = $this->_getViewParam('userList');
+        $this->assertCount(3, $users, 'Not correct number of users objects was provided.');
+    }
+}
+```
+
+Das DataSet kann auf verschiedene Art und Weise generiert werden, in meinem Beispiel als YAML-Datei, dazu allerdings näheres auf der [PHPUnit Dokumentation](http://phpunit.de/manual/3.8/en/database.html#database.understanding-datasets-and-datatables).
+
 ### Controller Tests
 
 Beim Testen von Controllern sollte die Klasse PHPUnit_Ilch_Controller_TestCase verwendet werden.
@@ -74,6 +156,9 @@ Beim Testen von Controllern sollte die Klasse PHPUnit_Ilch_Controller_TestCase v
 Diese initialiert eine Umgebung für den Controller mittels Ilch_Page und stößt eine Action an.
 Dabei wird mittels setAction($action) die gewünschte Action spezifiziert (Standard ist "index").
 Die Funktion load() stößt dann die Action an und füllt die Variablen für den Output, die View und den Request.
+
+Neben dessen wird bei der PHPUnit_Ilch_Controller_TestCase auch eine reelle Datenbank verwendet. Deshalb muss auch hier
+getDataSet() initialisiert werden damit der Test erfolgreich durchlaufen kann.
 
 Eine Testklasse kann folgendermaßen aussehen:
 
