@@ -55,7 +55,7 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
 			'dbPassword' => ''
 		);
 
-		$this->_config->loadConfigFromFile($this->_getFilesFolder().'/config.php');
+		$this->_config->loadConfigFromFile(__DIR__.'/_files/config.php');
 
 		$this->assertEquals
 		(

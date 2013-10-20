@@ -21,7 +21,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	public function testLoadTranslationsFile()
 	{
 		$translator = new \Ilch\Translator('de_DE');
-		$this->assertTrue($translator->load($this->_getFilesFolder()));
+		$this->assertTrue($translator->load(__DIR__.'/_files'));
 	}
 
 	/**
@@ -32,7 +32,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 		$translator = new \Ilch\Translator('xx_xx');
 		$this->assertFalse
 		(
-			$translator->load($this->_getFilesFolder()),
+			$translator->load(__DIR__.'/_files'),
 			'The translator didn\'t return false when the translation file doesn\'t exist.'
 		);
 	}
@@ -57,7 +57,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	public function testTrans()
 	{
 		$translator = new \Ilch\Translator('en_EN');
-		$translator->load($this->_getFilesFolder());
+		$translator->load(__DIR__.'/_files');
 
 		$this->assertEquals
 		(
@@ -74,7 +74,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	public function testTransNotTranslated()
 	{
 		$translator = new \Ilch\Translator('en_EN');
-		$translator->load($this->_getFilesFolder());
+		$translator->load(__DIR__.'/_files');
 
 		$this->assertEquals
 		(
@@ -91,7 +91,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	public function testTransPlaceholder()
 	{
 		$translator = new \Ilch\Translator('en_EN');
-		$translator->load($this->_getFilesFolder());
+		$translator->load(__DIR__.'/_files');
 
 		$this->assertEquals
 		(
@@ -126,7 +126,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
 	public function testGetTranslationsArray()
 	{
 		$translator = new \Ilch\Translator('en_EN');
-		$translator->load($this->_getFilesFolder());
+		$translator->load(__DIR__.'/_files');
 
 		$expectedTranslations = require __DIR__.'/_files/en.php';
 		$this->assertEquals($expectedTranslations, $translator->getTranslations(), 'The translations array was returned wrongly.');

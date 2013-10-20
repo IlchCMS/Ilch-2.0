@@ -40,30 +40,4 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
 			$config->set($configKey, $configValue);
 		}
 	}
-
-	/**
-	 * Returns the _files folder path for this test.
-	 *
-	 * @return string |false
-	 * @throws Exception If the _files directory doesn`t exist.
-	 */
-	protected function _getFilesFolder()
-	{
-		$classname = get_class($this);
-		/*
-		 * Generating the path from tests/ to the _files folder using the classname.
-		 * With the Classname Libraries_Ilch_ConfigTest the path would be "libraries/ilch".
-		 */
-		$classPathPart = str_replace('_', '/', $classname);
-		$classPathPart = strtolower(dirname($classPathPart));
-
-		$filesDir = APPLICATION_PATH.'/../tests/'.$classPathPart.'/_files';
-
-		if(!is_dir($filesDir))
-		{
-			throw new Exception('_files directory "'.$filesDir.'" does not exist.');
-		}
-
-		return $filesDir;
-	}
 }
