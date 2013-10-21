@@ -9,7 +9,14 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
 1. **PHPUnit installieren.** Eine gute Anleitung für Xampp ist [hier](http://web-union.de/484) zu finden.
 Für die Controller- bzw. Datenbanktests wird zusätzlich noch das DB-Modul von PHPUnit benötigt: "pear install phpunit/DbUnit"
 
-2. **xDebug auf dem Server aktivieren.**
+2. Konfiguration bereitstellen:
+    * Die Datei *tests/phpunit.example.xml" nach *tests/phpunit.xml" kopieren und die Eintrage entsprechend anpassen:
+        * PHP_SELF - Könnte ihr Ilch-2.0 z. B. unter localhost/Ilch-2 abrufen, ist das "Ilch-2". Dies wird für das Routing benötigt.
+        * HTTP_HOST - z. B. localhost
+    * Die Datei *tests/config.php* erstellen
+        * Soll mit derselben config.php gearbeitet werden wie im eigentlichen CMS einfach die config.php hier hin kopieren.
+
+3. **xDebug auf dem Server aktivieren.**
 In Xampp muss man dafür, je nach Installation, nur die Kommentare in folgendem Teil in der php.ini rausnehmen bzw. den Teil einfügen:
 
         [XDebug]
@@ -24,7 +31,7 @@ In Xampp muss man dafür, je nach Installation, nur die Kommentare in folgendem 
         xdebug.remote_host = "127.0.0.1"
         xdebug.trace_output_dir = "C:\xampp\tmp"
 
-3. **Im Ordner tests/ folgendes ausführen:**
+4. **Im Ordner tests/ folgendes ausführen:**
 
         phpunit . #Führt alle Tests aus
         phpunit --coverage-text . #Führt alle Tests aus und zeigt nen Code-Coverage Report in der Konsole
@@ -159,6 +166,8 @@ Die Funktion load() stößt dann die Action an und füllt die Variablen für den
 
 Neben dessen wird bei der PHPUnit_Ilch_Controller_TestCase auch eine reelle Datenbank verwendet. Deshalb muss auch hier
 getDataSet() initialisiert werden damit der Test erfolgreich durchlaufen kann.
+
+Die PHPUnit_Ilch_Controller_TestCase unterstützt nicht die Veränderung der Konfigurationsdaten, da diese während der Laufzeit erstellt wird.
 
 Eine Testklasse kann folgendermaßen aussehen:
 

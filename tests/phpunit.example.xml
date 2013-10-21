@@ -3,10 +3,5 @@
 	<php>
 		<const name="PHP_SELF" value="Ilch2"/>
 		<const name="HTTP_HOST" value="localhost"/>
-		<const name="ADMIN_USER_ID" value="1"/>
-		<var name="DB_DSN" value="mysql:dbname=dbname;host=localhost" />
-        <var name="DB_USER" value="dbuser" />
-        <var name="DB_PASSWD" value="password" />
-        <var name="DB_DBNAME" value="dbname" />
 	</php>
 </phpunit>

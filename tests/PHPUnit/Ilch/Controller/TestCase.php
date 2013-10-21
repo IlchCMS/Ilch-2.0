@@ -12,15 +12,8 @@
  * @author Jainta Martin
  * @package ilch_phpunit
  */
-abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Extensions_Database_TestCase
+abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_DatabaseTestCase
 {
-	/**
-	 * A data array which will be used to create a config object for the registry.
-	 *
-	 * @var Array
-	 */
-	protected $_configData = array();
-
 	/**
 	 * Holds request parameters.
 	 *
@@ -57,30 +50,16 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Extensions_Datab
 	private $_request = null;
 
 	/**
-	 * Only instantiate pdo once for test clean-up/fixture load
-	 *
-	 * @var [type]
-	 */
-    static private $pdo = null;
-
-    /**
-     * instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
-     *
-     * @var PHPUnit_Extensions_Database_DB_IDatabaseConnection
-     */
-    private $conn = null;
-
-	/**
 	 * Filling the config object with individual testcase data.
 	 */
 	public function setUp()
 	{
 		parent::setUp();
-		\Ilch\Registry::remove('config');
 		\Ilch\Registry::remove('db');
+		\Ilch\Registry::remove('config');
 		\Ilch\Registry::remove('startTime');
 		\Ilch\Registry::remove('user');
-		$_SESSION['user_id'] = ADMIN_USER_ID;
+		$_SESSION['user_id'] = 1;
 
 		$serverTimeZone = date_default_timezone_get();
 		date_default_timezone_set('UTC');
@@ -89,26 +68,6 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Extensions_Datab
 
 		\Ilch\Registry::set('startTime', microtime(true));
 	}
-
-	/**
-	 * Creates the db connection to the test database.
-	 *
-	 * @return PHPUnit_Extensions_Database_DB_IDatabaseConnection
-	 */
-    final public function getConnection()
-    {
-        if($this->conn === null)
-        {
-            if(self::$pdo == null)
-            {
-                self::$pdo = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
-            }
-
-            $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
-        }
-
-        return $this->conn;
-    }
 
     /**
      * Creates and returns a dataset object.
