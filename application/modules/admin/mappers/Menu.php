@@ -9,6 +9,7 @@
 
 namespace Admin\Mappers;
 use Admin\Models\Menu as MenuModel;
+use Admin\Models\MenuItem;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -20,69 +21,90 @@ defined('ACCESS') or die('no direct access');
 class Menu extends \Ilch\Mapper
 {
 	/**
-	 * Gets all menus.
-	 *
-	 * @return null|MenuModel[]
+	 * Gets all menu items by parent item id.
 	 */
-	public function getMenus()
+	public function getMenuItemsByParent($menuId, $itemId)
 	{
-		$menus = array();
-		$menusRows = $this->db()->selectArray
+		$items = array();
+		$itemRows = $this->db()->selectArray
 		(
 			'*',
-			'menus'
+			'menu_items',
+			array
+			(
+				'menu_id' => $menuId,
+				'parent_id' => $itemId
+			)
 		);
 		
-		if(empty($menusRows))
+		if(empty($itemRows))
 		{
 			return null;
 		}
 		
-		foreach($menusRows as $menuRow)
+		foreach($itemRows as $itemRow)
 		{
-			$menuModel = new MenuModel();
-			$menuModel->setId($menuRow['id']);
-			$menuModel->setContent($menuRow['content']);
-			$menus[] = $menuModel;
+			$itemModel = new MenuItem();
+			$itemModel->setId($itemRow['id']);
+			$itemModel->setHref($itemRow['href']);
+			$itemModel->setTitle($itemRow['title']);
+			$itemModel->setParentId($itemId);
+			$itemModel->setMenuId($menuId);
+			$items[] = $itemModel;
 		}
 
-		return $menus;
+		return $items;
 	}
+	
+	
 
-	public function save(MenuModel $menu)
+	/**
+	 * Save one menu item.
+	 *
+	 * @param MenuItem $menuItem
+	 * @return integer
+	 */
+	public function saveItem(MenuItem $menuItem)
 	{
-		$fields = array('content' => $menu->getContent());
-		$menuId = (int)$this->db()->selectCell
+		$fields = array
+		(
+			'href' => $menuItem->getHref(),
+			'title' => $menuItem->getTitle(),
+			'menu_id' => $menuItem->getMenuId(),
+			'parent_id' => $menuItem->getParentId()
+		);
+
+		$itemId = (int)$this->db()->selectCell
 		(
 			'id',
-			'menus',
+			'menu_items',
 			array
 			(
-				'id' => $menu->getId(),
+				'id' => $menuItem->getId(),
 			)
 		);
 
-		if($menuId)
+		if($itemId)
 		{
 			$this->db()->update
 			(
 				$fields,
-				'menus',
+				'menu_items',
 				array
 				(
-					'id' => $menuId,
+					'id' => $itemId,
 				)
 			);
 		}
 		else
 		{
-			$menuId = $this->db()->insert
+			$itemId = $this->db()->insert
 			(
 				$fields,
-				'menus'
+				'menu_items'
 			);
 		}
 		
-		return $menuId;
+		return $itemId;
 	}
 }

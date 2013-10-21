@@ -7,7 +7,7 @@
 
 namespace Admin\Controllers\Admin;
 use Admin\Mappers\Menu as MenuMapper;
-use Admin\Models\Menu as MenuModel;
+use Admin\Models\MenuItem;
 defined('ACCESS') or die('no direct access');
 
 class Menu extends \Ilch\Controller\Admin
@@ -18,12 +18,53 @@ class Menu extends \Ilch\Controller\Admin
 
 		if($this->getRequest()->isPost())
 		{
-			$menuModel = new MenuModel();
-			$menuModel->setId(1);
-			$menuModel->setContent($this->getRequest()->getPost('hiddenMenu'));
-			$menuMapper->save($menuModel);
+			$sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
+			$items = $this->getRequest()->getPost('items');
+
+			if($items)
+			{
+				$sortArray = array();
+
+				foreach($sortItems as $sortItem)
+				{
+					if($sortItem->item_id !== null)
+					{
+						$sortArray[$sortItem->item_id] = (int)$sortItem->parent_id;
+					}
+				}
+
+				foreach($items as $item)
+				{
+					$menuItem = new MenuItem();
+
+					if(strpos($item['id'], 'tmp_') !== false)
+					{
+						$item['id'] = str_replace('tmp_', '', $item['id']);
+					}
+					else
+					{
+						$menuItem->setId($item['id']);
+					}
+	
+					if(isset($sortArray[$item['id']]))
+					{
+						$menuItem->setParentId($sortArray[$item['id']]);
+					}
+					else
+					{
+						$menuItem->setParentId(0);	
+					}
+					
+					$menuItem->setMenuId(1);
+					$menuItem->setHref($item['href']);
+					$menuItem->setTitle($item['title']);
+					$menuMapper->saveItem($menuItem);
+				}
+			}
 		}
-		
-		$this->getView()->set('menus', $menuMapper->getMenus());
+
+		$menuItems = $menuMapper->getMenuItemsByParent(1, 0);
+		$this->getView()->set('menuItems', $menuItems);
+		$this->getView()->set('menuMapper', $menuMapper);
 	}
 }

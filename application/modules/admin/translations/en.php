@@ -11,6 +11,8 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+	'menuChange' => 'Menu change',
+	'menuItemAdd' => 'Add menu item',
 	'loginWelcome' => 'Please sign in',
 	'emailname' => 'Email or Username',
 	'password' => 'Password',
