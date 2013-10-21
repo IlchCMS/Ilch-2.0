@@ -12,8 +12,3 @@ Ilch 2.0 ist der direkte Nachfolger von Ilch (Version 1.2) und ist auch unter de
 
 ### Support
 http://www.ilch.de
-
-### Team
-- Meyer Dominik
-- Jainta Martin
-- Schneider Harald
