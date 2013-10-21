@@ -17,13 +17,19 @@
  */
 class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Framework_TestCase
 {
-
 	/**
 	 * A data array which will be used to create a config object for the registry.
 	 *
 	 * @var Array
 	 */
 	protected $_configData = array();
+
+	/**
+	 * A data array which will be used to create a config object for the registry.
+	 *
+	 * @var \Ilch\Config\File
+	 */
+	protected $_config = null;
 
 	/**
 	 * Only instantiate pdo once for test clean-up/fixture load
@@ -39,6 +45,13 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Framework_TestCase
      */
     private $conn = null;
 
+    /**
+     * Holds the db connection data.
+     *
+     * @var mixed[]
+     */
+    private $_dbData = array();
+
 	/**
 	 * Filling the config object with individual testcase data.
 	 */
@@ -46,14 +59,18 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Framework_TestCase
 	{
 		parent::setUp();
 
-		if(!\Ilch\Registry::has('config') && file_exists(__DIR__.'/../../../config.php'))
+		if(!\Ilch\Registry::has('config') && file_exists(CONFIG_PATH.'/config.php'))
 		{
 		    $config = new \Ilch\Config\File();
-		    $config->loadConfigFromFile(__DIR__.'/../../../config.php');
+		    $config->loadConfigFromFile(CONFIG_PATH.'/config.php');
 		    \Ilch\Registry::set('config', $config);
 		}
 
 		$config = \Ilch\Registry::get('config');
+
+		$dsn = strtolower($config->get('dbEngine')).':dbname='.$config->get('dbName').';host='.$config->get('dbHost');
+		$config->set('dbDsn', $dsn);
+		$this->_config = $config;
 
 		foreach($this->_configData as $configKey => $configValue)
 		{
@@ -72,10 +89,10 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Framework_TestCase
         {
             if(self::$pdo == null)
             {
-                self::$pdo = new PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
+                self::$pdo = new PDO($config->get('dbDsn'), $config->get('dbUser'), $config->get('dbPassword'));
             }
 
-            $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
+            $this->conn = $this->createDefaultDBConnection(self::$pdo, $config->get('dbName'));
         }
 
         return $this->conn;
