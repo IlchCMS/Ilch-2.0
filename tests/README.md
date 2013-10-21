@@ -10,7 +10,6 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
 Für die Controller- bzw. Datenbanktests wird zusätzlich noch das DB-Modul von PHPUnit benötigt: "pear install phpunit/DbUnit"
 
 2. Konfiguration bereitstellen:
-
     * Die Datei *tests/phpunit.example.xml" nach *tests/phpunit.xml" kopieren und die Eintrage entsprechend anpassen:
         * PHP_SELF - Könnte ihr Ilch-2.0 z. B. unter localhost/Ilch-2 abrufen, ist das "Ilch-2". Dies wird für das Routing benötigt.
         * HTTP_HOST - z. B. localhost
