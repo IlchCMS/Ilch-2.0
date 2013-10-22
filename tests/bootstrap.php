@@ -12,7 +12,7 @@
 define('ACCESS', 1);
 define('VERSION', '2.0');
 define('APPLICATION_PATH', __DIR__.'/../application');
-define('CONFIG_PATH', __DIR__);
+define('CONFIG_PATH', __DIR__.'/..');
 define('SERVER_TIMEZONE', 'Europe/Berlin');
 
 /*
