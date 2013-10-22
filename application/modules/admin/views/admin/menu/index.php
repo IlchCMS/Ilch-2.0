@@ -36,100 +36,116 @@ function rec($item, $menuMapper)
 }
 ?>
 <style>
-		ol.sortable, ol.sortable ol {
-			margin: 0 0 0 25px;
-			padding: 0;
-			list-style-type: none;
-		}
+	ol.sortable, ol.sortable ol {
+		margin: 0 0 0 25px;
+		padding: 0;
+		list-style-type: none;
+	}
 
-		ol.sortable {
-			margin: 0;
-		}
+	ol.sortable {
+		margin: 0;
+	}
 
-		.sortable li {
-			margin: 5px 0 0 0;
-			padding: 0;
-		}
+	.sortable li {
+		margin: 5px 0 0 0;
+		padding: 0;
+	}
 
-		.sortable li div  {
-			border: 1px solid #d4d4d4;
-			-webkit-border-radius: 3px;
-			-moz-border-radius: 3px;
-			border-radius: 3px;
-			border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-			padding: 6px;
-			margin: 0;
-			cursor: move;
-			background: #f6f6f6;
-			background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
-			background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-			background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-			background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-			background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
-		}
+	.sortable li div  {
+		border: 1px solid #d4d4d4;
+		-webkit-border-radius: 3px;
+		-moz-border-radius: 3px;
+		border-radius: 3px;
+		border-color: #D4D4D4 #D4D4D4 #BCBCBC;
+		padding: 6px;
+		margin: 0;
+		cursor: move;
+		background: #f6f6f6;
+		background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
+		background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+		background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+		background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+		background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
+	}
 
-		.sortable li.mjs-nestedSortable-branch div {
-			background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
-			background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#f0ece9 100%);
+	.sortable li.mjs-nestedSortable-branch div {
+		background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
+		background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#f0ece9 100%);
 
-		}
+	}
 
-		.sortable li.mjs-nestedSortable-leaf div {
-			background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #bcccbc 100%);
-			background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#bcccbc 100%);
+	.sortable li.mjs-nestedSortable-leaf div {
+		background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #bcccbc 100%);
+		background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#bcccbc 100%);
 
-		}
+	}
 
-		li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
-			border-color: #999;
-			background: #fafafa;
-		}
+	li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
+		border-color: #999;
+		background: #fafafa;
+	}
 
-		.disclose {
-			cursor: pointer;
-			width: 10px;
-			display: none;
-		}
+	.disclose {
+		cursor: pointer;
+		width: 10px;
+		display: none;
+	}
 
-		.sortable li.mjs-nestedSortable-collapsed > ol {
-			display: none;
-		}
+	.sortable li.mjs-nestedSortable-collapsed > ol {
+		display: none;
+	}
 
-		.sortable li.mjs-nestedSortable-branch > div > .disclose {
-			display: inline-block;
-		}
+	.sortable li.mjs-nestedSortable-branch > div > .disclose {
+		display: inline-block;
+	}
 
-		.sortable li.mjs-nestedSortable-collapsed > div > .disclose > span:before {
-			content: '+ ';
-		}
+	.sortable li.mjs-nestedSortable-collapsed > div > .disclose > span:before {
+		content: '+ ';
+	}
 
-		.sortable li.mjs-nestedSortable-expanded > div > .disclose > span:before {
-			content: '- ';
-		}
+	.sortable li.mjs-nestedSortable-expanded > div > .disclose > span:before {
+		content: '- ';
+	}
 </style>
 <form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
 	<legend><?php echo $this->trans('menuChange'); ?></legend>
-	<ol id="sortable" class="sortable">
-		<?php
-			if(!empty($menuItems))
-			{
-				foreach($menuItems as $item)
-				{
-					rec($item, $menuMapper);
-				}
-			}
-		?>
-	</ol>
-	<br />
-	<div style="border: 1px solid black;">
-		<input type="text" id="title" />
-		<br />
-		<input type="text" id="href" value="http://" />
-		<button type="button" id="menuItemAdd" class="btn">
-			<?php echo $this->trans('menuItemAdd'); ?>
-		</button>
+	<div class="row">
+		<div class="col-md-6">
+		  <ol id="sortable" class="sortable">
+				<?php
+					if(!empty($menuItems))
+					{
+						foreach($menuItems as $item)
+						{
+							rec($item, $menuMapper);
+						}
+					}
+				?>
+			</ol>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<label for="maintenanceMode" class="col-lg-2 control-label">
+					Seitentitel
+				</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="title" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="maintenanceMode" class="col-lg-2 control-label">
+					Adresse
+				</label>
+				<div class="col-lg-4">
+					<input type="text" class="form-control" id="href" value="http://" />
+				</div>
+			</div>
+			<button type="button" id="menuItemAdd" class="btn">
+				<?php echo $this->trans('menuItemAdd'); ?>
+			</button>
+		</div>
 	</div>
 	<input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
 	<div class="content_savebox">
