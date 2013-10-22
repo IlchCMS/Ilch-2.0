@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="bootstrap.php">
 	<php>
-		<const name="PHP_SELF" value="Ilch2"/>
-		<const name="HTTP_HOST" value="localhost"/>
+		<const name="PHPUNIT_TEST" value="true"/>
 	</php>
 </phpunit>

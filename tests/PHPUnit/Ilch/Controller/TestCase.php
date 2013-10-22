@@ -106,11 +106,11 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_DatabaseTes
 		if(substr($matches[2], 0, 6) == 'Admin_')
 		{
 			$controllerIdent = explode('_', $matches[2])[1];
-			$requestURI = '/'.PHP_SELF.'/index.php/admin/'.strtolower($matches[1]).'/'.strtolower($controllerIdent).'/'.$this->_action;
+			$requestURI = '/Ilch2/index.php/admin/'.strtolower($matches[1]).'/'.strtolower($controllerIdent).'/'.$this->_action;
 		}
 		else
 		{
-			$requestURI = '/'.PHP_SELF.'/index.php/'.strtolower($matches[1]).'/'.strtolower($matches[2]).'/'.$this->_action;
+			$requestURI = '/Ilch2/index.php/'.strtolower($matches[1]).'/'.strtolower($matches[2]).'/'.$this->_action;
 		}
 
 		if(!empty($this->_requestParams))
@@ -126,7 +126,7 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_DatabaseTes
 
 		$_SERVER['REQUEST_URI'] = $requestURI;
 
-		$_SERVER['PHP_SELF'] = '/'.PHP_SELF;
+		$_SERVER['PHP_SELF'] = '/Ilch2';
 		$rewriteBaseParts = $_SERVER['PHP_SELF'];
 		$rewriteBaseParts = explode('index.php', $rewriteBaseParts);
 		$rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
@@ -138,7 +138,7 @@ abstract class PHPUnit_Ilch_Controller_TestCase extends PHPUnit_Ilch_DatabaseTes
 
 		if(!defined('BASE_URL'))
 		{
-			define('BASE_URL', 'http://'.HTTP_HOST.REWRITE_BASE);
+			define('BASE_URL', 'http://localhost'.REWRITE_BASE);
 		}
 
 		if(!defined('STATIC_URL'))
