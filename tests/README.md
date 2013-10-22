@@ -9,12 +9,21 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
 1. **PHPUnit installieren.** Eine gute Anleitung für Xampp ist [hier](http://web-union.de/484) zu finden.
 Für die Controller- bzw. Datenbanktests wird zusätzlich noch das DB-Modul von PHPUnit benötigt: "pear install phpunit/DbUnit"
 
-2. Konfiguration bereitstellen:
-    * Die Datei *tests/phpunit.example.xml" nach *tests/phpunit.xml" kopieren und die Eintrage entsprechend anpassen:
-        * PHP_SELF - Könnte ihr Ilch-2.0 z. B. unter localhost/Ilch-2 abrufen, ist das "Ilch-2". Dies wird für das Routing benötigt.
-        * HTTP_HOST - z. B. localhost
-    * Die Datei *tests/config.php* erstellen
-        * Soll mit derselben config.php gearbeitet werden wie im eigentlichen CMS einfach die config.php hier hin kopieren.
+2. **Konfiguration bereitstellen.**
+    * DB-Einstellungen für die Datenbank- und Controllertests werden über die *config.php* geregelt.
+        * Sollen für die Tests eine andere DB verwendet werden, sollte die jeweilige Einstellung mit *Test* gesuffixed werden.
+        
+        ```php
+$config["dbEngine"] = "Mysql";
+$config["dbHost"] = "localhost";
+$config["dbUser"] = "ilch2";
+$config["dbPassword"] = "";
+$config["dbName"] = "ilch2";
+$config["dbPrefix"] = "";
+$config["dbUserTest"] = "ilch2test"; // Config for tests
+$config["dbPasswordTest"] = "ilch2test"; // Config for tests
+$config["dbNameTest"] = "ilch2test"; // Config for tests
+        ```
 
 3. **xDebug auf dem Server aktivieren.**
 In Xampp muss man dafür, je nach Installation, nur die Kommentare in folgendem Teil in der php.ini rausnehmen bzw. den Teil einfügen:
