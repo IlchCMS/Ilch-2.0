@@ -39,25 +39,41 @@ class Menu extends \Ilch\Controller\Admin
 
 					if(strpos($item['id'], 'tmp_') !== false)
 					{
-						$item['id'] = str_replace('tmp_', '', $item['id']);
+						$tmpId = str_replace('tmp_', '', $item['id']);
 					}
 					else
 					{
 						$menuItem->setId($item['id']);
 					}
-	
-					if(isset($sortArray[$item['id']]))
-					{
-						$menuItem->setParentId($sortArray[$item['id']]);
-					}
-					else
-					{
-						$menuItem->setParentId(0);	
-					}
-					
+
 					$menuItem->setMenuId(1);
 					$menuItem->setHref($item['href']);
 					$menuItem->setTitle($item['title']);
+					$newId = $menuMapper->saveItem($menuItem);
+
+					if(isset($tmpId))
+					{
+						foreach($sortArray as $id => $parentId)
+						{
+							if($id == $tmpId)
+							{
+								unset($sortArray[$id]);
+								$sortArray[$newId] = $parentId;
+							}
+
+							if($parentId == $tmpId)
+							{
+								$sortArray[$id] = $newId;
+							}
+						}
+					}
+				}
+
+				foreach($sortArray as $id => $parent)
+				{
+					$menuItem = new MenuItem();
+					$menuItem->setId($id);
+					$menuItem->setParentId($parent);
 					$menuMapper->saveItem($menuItem);
 				}
 			}

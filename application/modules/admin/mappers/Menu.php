@@ -74,6 +74,14 @@ class Menu extends \Ilch\Mapper
 			'parent_id' => $menuItem->getParentId()
 		);
 
+		foreach($fields as $key => $value)
+		{
+			if($value === null)
+			{
+				unset($fields[$key]);
+			}
+		}
+
 		$itemId = (int)$this->db()->selectCell
 		(
 			'id',
