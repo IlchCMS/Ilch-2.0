@@ -10,427 +10,410 @@ defined('ACCESS') or die('no direct access');
 
 class Mysql
 {
-	/**
-	 * @var string|null
-	 */
-	protected $prefix = null;
+    /**
+     * @var string|null
+     */
+    protected $prefix = null;
 
-	/**
-	 * @var Mysqli|null
-	 */
-	protected $conn = null;
+    /**
+     * @var Mysqli|null
+     */
+    protected $conn = null;
 
-	/**
-	 * Set the table prefix.
-	 *
-	 * @param string $pref
-	 */
-	public function setPrefix($pref)
-	{
-		$this->prefix = $pref;
-	}
+    /**
+     * Set the table prefix.
+     *
+     * @param string $pref
+     */
+    public function setPrefix($pref)
+    {
+        $this->prefix = $pref;
+    }
 
-	/**
-	 * Gets the table prefix.
-	 *
-	 * @return string
-	 */
-	public function getPrefix()
-	{
-		return $this->prefix;
-	}
+    /**
+     * Gets the table prefix.
+     *
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
 
-	/**
-	 * Get the mysqli object.
-	 *
-	 * @return Mysqli
-	 */
-	public function getLink()
-	{
-		return $this->conn;
-	}
+    /**
+     * Get the mysqli object.
+     *
+     * @return Mysqli
+     */
+    public function getLink()
+    {
+        return $this->conn;
+    }
 
-	/**
-	 * Set the database.
-	 *
-	 * @param string $db
-	 */
-	public function setDatabase($db)
-	{
-		if($this->conn->connect_error)
-		{
-			return false;
-		}
+    /**
+     * Set the database.
+     *
+     * @param string $db
+     */
+    public function setDatabase($db)
+    {
+        if ($this->conn->connect_error) {
+            return false;
+        }
 
-		return @$this->conn->select_db($db);
-	}
+        return @$this->conn->select_db($db);
+    }
 
-	/**
-	 * Connects to database.
-	 *
-	 * @param string $host
-	 * @param string $name
-	 * @param string $password
-	 */
-	public function connect($host, $name, $password)
-	{
-		$this->conn = @new \mysqli($host, $name, $password);
+    /**
+     * Connects to database.
+     *
+     * @param string $host
+     * @param string $name
+     * @param string $password
+     */
+    public function connect($host, $name, $password)
+    {
+        $this->conn = @new \mysqli($host, $name, $password);
 
-		if($this->conn->connect_error)
-		{
-			return false;
-		}
+        if ($this->conn->connect_error) {
+            return false;
+        }
 
-		@$this->conn->set_charset('utf8');
+        @$this->conn->set_charset('utf8');
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Execute sql query.
-	 *
-	 * @param string $sql
-	 * @return mysqli_result
-	 */
-	public function query($sql)
-	{
-		$sql = str_replace('[prefix]_', $this->prefix, $sql);
+    /**
+     * Execute sql query.
+     *
+     * @param  string        $sql
+     * @return mysqli_result
+     */
+    public function query($sql)
+    {
+        $sql = str_replace('[prefix]_', $this->prefix, $sql);
 
-		return mysqli_query($this->conn, $sql);
-	}
+        return mysqli_query($this->conn, $sql);
+    }
 
-	/**
-	 * Select on cell from table.
-	 *
-	 * @param string $sql
-	 * @return string|int
-	 */
-	public function queryCell($sql)
-	{
-		$row = mysqli_fetch_row($this->query($sql));
-		return $row[0];
-	}
+    /**
+     * Select on cell from table.
+     *
+     * @param  string     $sql
+     * @return string|int
+     */
+    public function queryCell($sql)
+    {
+        $row = mysqli_fetch_row($this->query($sql));
 
-	/**
-	 * Select one cell from table.
-	 *
-	 * @param string $cell
-	 * @param string $table
-	 * @param array $where
-	 * @return string|int
-	 */
-	public function selectCell($cell, $table, $where = null)
-	{
-		$sql = 'SELECT `' . $cell . '`
-				FROM `[prefix]_'.$table . '` ';
+        return $row[0];
+    }
 
-		if($where != null)
-		{
-			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-		}
+    /**
+     * Select one cell from table.
+     *
+     * @param  string     $cell
+     * @param  string     $table
+     * @param  array      $where
+     * @return string|int
+     */
+    public function selectCell($cell, $table, $where = null)
+    {
+        $sql = 'SELECT `' . $cell . '`
+                FROM `[prefix]_'.$table . '` ';
 
-		$sql .= ' LIMIT 1';
+        if ($where != null) {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+        }
 
-		return $this->queryCell($sql);
-	}
+        $sql .= ' LIMIT 1';
 
-	/**
-	 * Select one row from table.
-	 *
-	 * @param string $sql
-	 * @return array
-	 */
-	public function queryRow($sql)
-	{
-		$row = mysqli_fetch_assoc($this->query($sql));
-		return $row;
-	}
+        return $this->queryCell($sql);
+    }
 
-	/**
-	 * Select one row from table.
-	 *
-	 * @param array $fields
-	 * @param string $table
-	 * @param array $where
-	 * @return array
-	 */
-	public function selectRow($fields, $table, $where = null)
-	{
-		$sql = 'SELECT '. $this->_getFieldsSql($fields) .'
-				FROM `[prefix]_'. $table . '` ';
+    /**
+     * Select one row from table.
+     *
+     * @param  string $sql
+     * @return array
+     */
+    public function queryRow($sql)
+    {
+        $row = mysqli_fetch_assoc($this->query($sql));
 
-		if($where != null)
-		{
-			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-		}
+        return $row;
+    }
 
-		$sql .= ' LIMIT 1';
+    /**
+     * Select one row from table.
+     *
+     * @param  array  $fields
+     * @param  string $table
+     * @param  array  $where
+     * @return array
+     */
+    public function selectRow($fields, $table, $where = null)
+    {
+        $sql = 'SELECT '. $this->_getFieldsSql($fields) .'
+                FROM `[prefix]_'. $table . '` ';
 
-		return $this->queryRow($sql);
-	}
+        if ($where != null) {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+        }
 
-	/**
-	 * Select an array from db-table.
-	 *
-	 * @param string $sql
-	 * @return array
-	 */
-	public function queryArray($sql)
-	{
-		$rows = array();
-		$result = $this->query($sql);
+        $sql .= ' LIMIT 1';
 
-		while($row = mysqli_fetch_assoc($result))
-		{
-			$rows[] = $row;
-		}
+        return $this->queryRow($sql);
+    }
 
-		return $rows;
-	}
+    /**
+     * Select an array from db-table.
+     *
+     * @param  string $sql
+     * @return array
+     */
+    public function queryArray($sql)
+    {
+        $rows = array();
+        $result = $this->query($sql);
 
-	/**
-	 * Select an array from db-table.
-	 *
-	 * @param array $fields
-	 * @param string $table
-	 * @param array $where
-	 * @return array
-	 */
-	public function selectArray($fields, $table, $where = null)
-	{
-		$sql = 'SELECT '. $this->_getFieldsSql($fields).'
-				FROM `[prefix]_'.$table . '` ';
+        while ($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
 
-		if($where != null)
-		{
-			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-		}
+        return $rows;
+    }
 
-		return $this->queryArray($sql);
-	}
+    /**
+     * Select an array from db-table.
+     *
+     * @param  array  $fields
+     * @param  string $table
+     * @param  array  $where
+     * @return array
+     */
+    public function selectArray($fields, $table, $where = null)
+    {
+        $sql = 'SELECT '. $this->_getFieldsSql($fields).'
+                FROM `[prefix]_'.$table . '` ';
 
-	/**
-	 * Select a list from db-table.
-	 *
-	 * @param string $sql
-	 * @return array
-	 */
-	public function queryList($sql)
-	{
-		$list = array();
-		$result = $this->query($sql);
+        if ($where != null) {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+        }
 
-		while($row = mysqli_fetch_assoc($result))
-		{
-			$list[] = reset($row);
-		}
+        return $this->queryArray($sql);
+    }
 
-		return $list;
-	}
+    /**
+     * Select a list from db-table.
+     *
+     * @param  string $sql
+     * @return array
+     */
+    public function queryList($sql)
+    {
+        $list = array();
+        $result = $this->query($sql);
 
-	/**
-	 * Select a list from a db-table.
-	 *
-	 * @param array $fields
-	 * @param string $table
-	 * @param array $where
-	 * @return array
-	 */
-	public function selectList($fields, $table, $where = null)
-	{
-		$sql = 'SELECT '. $this->_getFieldsSql($fields).'
-				FROM `[prefix]_'.$table . '` ';
+        while ($row = mysqli_fetch_assoc($result)) {
+            $list[] = reset($row);
+        }
 
-		if($where != null)
-		{
-			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-		}
+        return $list;
+    }
 
-		return $this->queryList($sql);
-	}
+    /**
+     * Select a list from a db-table.
+     *
+     * @param  array  $fields
+     * @param  string $table
+     * @param  array  $where
+     * @return array
+     */
+    public function selectList($fields, $table, $where = null)
+    {
+        $sql = 'SELECT '. $this->_getFieldsSql($fields).'
+                FROM `[prefix]_'.$table . '` ';
 
-	/**
-	 * Update entries from the table.
-	 *
-	 * @param array $fields
-	 * @param string $table
-	 * @param array $where
-	 */
-	public function update($fields, $table, $where = null)
-	{
-		$sql = 'UPDATE `[prefix]_'.$table . '` SET ';
+        if ($where != null) {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+        }
 
-		foreach($fields as $key => $value)
-		{
-			$up[] = '`' . $key . '` = "' . $this->escape($value) . '"';
-		}
+        return $this->queryList($sql);
+    }
 
-		$sql .= implode(',', $up);
+    /**
+     * Update entries from the table.
+     *
+     * @param array  $fields
+     * @param string $table
+     * @param array  $where
+     */
+    public function update($fields, $table, $where = null)
+    {
+        $sql = 'UPDATE `[prefix]_'.$table . '` SET ';
 
-		if($where != null)
-		{
-			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-		}
+        foreach ($fields as $key => $value) {
+            $up[] = '`' . $key . '` = "' . $this->escape($value) . '"';
+        }
 
-		$this->query($sql);
-	}
+        $sql .= implode(',', $up);
 
-	/**
-	 * Insert entries to the table.
-	 *
-	 * @param array $fields
-	 * @param string $table
-	 * @return integer
-	 */
-	public function insert($fields, $table)
-	{
-		$sql = 'INSERT INTO `[prefix]_'.$table.'` ( ';
-		$sqlFields = array();
-		$sqlValues = array();
+        if ($where != null) {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+        }
 
-		foreach($fields as $key => $value)
-		{
-			$sqlFields[] = '`' . $key . '`';
-		}
+        $this->query($sql);
+    }
 
-		$sql .= implode(',', $sqlFields);
-		$sql .= ') VALUES (';
+    /**
+     * Insert entries to the table.
+     *
+     * @param  array   $fields
+     * @param  string  $table
+     * @return integer
+     */
+    public function insert($fields, $table)
+    {
+        $sql = 'INSERT INTO `[prefix]_'.$table.'` ( ';
+        $sqlFields = array();
+        $sqlValues = array();
 
-		foreach($fields as $key => $value)
-		{
-			$sqlValues[] = '"' . $this->escape($value) . '"';
-		}
+        foreach ($fields as $key => $value) {
+            $sqlFields[] = '`' . $key . '`';
+        }
 
-		$sql .= implode(',', $sqlValues) . ')';
-		$this->query($sql);
+        $sql .= implode(',', $sqlFields);
+        $sql .= ') VALUES (';
 
-		return $this->conn->insert_id;
-	}
+        foreach ($fields as $key => $value) {
+            $sqlValues[] = '"' . $this->escape($value) . '"';
+        }
 
-	/**
-	 * Deletes entries from the table.
-	 *
-	 * @param string $table
-	 * @param array $where
-	 */
-	public function delete($table, $where = null)
-	{
-		$sql = 'DELETE FROM `[prefix]_'.$table . '` ';
+        $sql .= implode(',', $sqlValues) . ')';
+        $this->query($sql);
 
-		if($where != null)
-		{
-			$sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-		}
+        return $this->conn->insert_id;
+    }
 
-		return $this->query($sql);
-	}
+    /**
+     * Deletes entries from the table.
+     *
+     * @param string $table
+     * @param array  $where
+     */
+    public function delete($table, $where = null)
+    {
+        $sql = 'DELETE FROM `[prefix]_'.$table . '` ';
 
-	/**
-	 * Drops the table from database.
-	 *
-	 * @param string $table
-	 */
-	public function drop($table)
-	{
-		$sql = 'DROP TABLE `'.$table . '`';
+        if ($where != null) {
+            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+        }
 
-		return $this->query($sql);
-	}
+        return $this->query($sql);
+    }
 
-	/**
-	 * Create the field part for the given array.
-	 *
-	 * @param array $fields
-	 * @return string
-	 */
-	protected function _getFieldsSql($fields)
-	{
-		if($fields === '*')
-		{
-			return $fields;
-		}
+    /**
+     * Drops the table from database.
+     *
+     * @param string $table
+     */
+    public function drop($table)
+    {
+        $sql = 'DROP TABLE `'.$table . '`';
 
-		return '`'.implode('`,`', (array) $fields).'`';
-	}
+        return $this->query($sql);
+    }
 
-	/**
-	 * Create the where part for the given array.
-	 *
-	 * @param array $where
-	 * @return string
-	 */
-	protected function _getWhereSql($where)
-	{
-		$sql = '';
+    /**
+     * Create the field part for the given array.
+     *
+     * @param  array  $fields
+     * @return string
+     */
+    protected function _getFieldsSql($fields)
+    {
+        if ($fields === '*') {
+            return $fields;
+        }
 
-		foreach ($where as $key => $value)
-		{
-			$sql .= 'AND `' . $key . '` = "' . $this->escape($value) . '" ';
-		}
+        return '`'.implode('`,`', (array) $fields).'`';
+    }
 
-		return $sql;
-	}
+    /**
+     * Create the where part for the given array.
+     *
+     * @param  array  $where
+     * @return string
+     */
+    protected function _getWhereSql($where)
+    {
+        $sql = '';
 
-	/**
-	 * Escape the given value for a sql query.
-	 *
-	 * @param string $value
-	 * @return string
-	 */
-	public function escape($value)
-	{
-		return mysqli_real_escape_string($this->conn, $value);
-	}
+        foreach ($where as $key => $value) {
+            $sql .= 'AND `' . $key . '` = "' . $this->escape($value) . '" ';
+        }
 
-	/**
-	 * Executes multiple queries given in one string within a single request.
-	 *
-	 * @param  string $sql The string with the multiple queries.
-	 * @return boolean false if the first statement failed. Otherwise true.
-	 */
-	public function queryMulti($sql)
-	{
-		$sql = str_replace('[prefix]_', $this->prefix, $sql);
+        return $sql;
+    }
 
-		/*
-		 * Executing the multiple queries.
-		 */
-		if($this->conn->multi_query($sql))
-		{
-		    while($this->conn->more_results())
-		    {
-		    	/*
-		    	 * If more results are available from the multi_query call we go
-		    	 * to the next result and free its memory usage.
-		    	 */
-		    	$this->conn->next_result();
+    /**
+     * Escape the given value for a sql query.
+     *
+     * @param  string $value
+     * @return string
+     */
+    public function escape($value)
+    {
+        return mysqli_real_escape_string($this->conn, $value);
+    }
 
-				$result = $this->conn->store_result();
+    /**
+     * Executes multiple queries given in one string within a single request.
+     *
+     * @param  string  $sql The string with the multiple queries.
+     * @return boolean false if the first statement failed. Otherwise true.
+     */
+    public function queryMulti($sql)
+    {
+        $sql = str_replace('[prefix]_', $this->prefix, $sql);
 
-		        if($result)
-		        {
-		            $result->free();
-		        }
-		    }
-		}
+        /*
+         * Executing the multiple queries.
+         */
+        if ($this->conn->multi_query($sql)) {
+            while ($this->conn->more_results()) {
+                /*
+                 * If more results are available from the multi_query call we go
+                 * to the next result and free its memory usage.
+                 */
+                $this->conn->next_result();
 
-		return $result;
-	}
+                $result = $this->conn->store_result();
 
-	/**
-	 * Drop all tables for given prefix.
-	 *
-	 * @param string $prefix
-	 */
-	public function dropTablesByPrefix($prefix)
-	{
-		$sql = 'SHOW TABLES LIKE "'.$prefix.'%"';
-		$tables = $this->queryArray($sql);
+                if ($result) {
+                    $result->free();
+                }
+            }
+        }
 
-		foreach($tables as $table)
-		{
-			$tableName = array_values($table);
-			$this->drop(reset($tableName));
-		}
-	}
+        return $result;
+    }
+
+    /**
+     * Drop all tables for given prefix.
+     *
+     * @param string $prefix
+     */
+    public function dropTablesByPrefix($prefix)
+    {
+        $sql = 'SHOW TABLES LIKE "'.$prefix.'%"';
+        $tables = $this->queryArray($sql);
+
+        foreach ($tables as $table) {
+            $tableName = array_values($table);
+            $this->drop(reset($tableName));
+        }
+    }
 }

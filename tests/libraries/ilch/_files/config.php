@@ -9,4 +9,3 @@
 $config['dbHost'] = 'localhost';
 $config['dbUser'] = 'root';
 $config['dbPassword'] = '';
-?>

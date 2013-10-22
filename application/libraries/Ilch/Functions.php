@@ -12,12 +12,11 @@ defined('ACCESS') or die('no direct access');
  */
 function dumpVar()
 {
-	echo '<pre>';
+    echo '<pre>';
 
-	foreach(func_get_args() as $arg)
-	{
-		var_dump($arg);
-	}
+    foreach (func_get_args() as $arg) {
+        var_dump($arg);
+    }
 
-	echo '</pre>';
+    echo '</pre>';
 }

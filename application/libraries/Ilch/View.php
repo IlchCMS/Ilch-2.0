@@ -10,21 +10,20 @@ defined('ACCESS') or die('no direct access');
 
 class View extends Design\Base
 {
-	/**
-	 * Loads a view script.
-	 *
-	 * @param string $viewScript
-	 * @return string
-	 */
-	public function loadScript($viewScript)
-	{
-		ob_start();
+    /**
+     * Loads a view script.
+     *
+     * @param  string $viewScript
+     * @return string
+     */
+    public function loadScript($viewScript)
+    {
+        ob_start();
 
-		if(file_exists($viewScript))
-		{
-			include_once($viewScript);
-		}
+        if (file_exists($viewScript)) {
+            include_once($viewScript);
+        }
 
-		return ob_get_clean();
-	}
+        return ob_get_clean();
+    }
 }

@@ -22,16 +22,14 @@ define('SERVER_TIMEZONE', 'Europe/Berlin');
 require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';
 spl_autoload_register
 (
-    function ($class)
-    {
+    function ($class) {
         /*
          * Simply replacing all underscores with slashes, routing on from the current
          * dir and appending the ".php" suffix to get the filepath.
          */
         $filepath = __DIR__.'/'.str_replace('_', '/', $class).'.php';
 
-        if(is_file($filepath))
-        {
+        if (is_file($filepath)) {
             require_once $filepath;
         }
     }

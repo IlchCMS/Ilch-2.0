@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace Admin\Models;
+namespace admin\models;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -18,57 +18,57 @@ defined('ACCESS') or die('no direct access');
  */
 class Menu extends \Ilch\Model
 {
-	/**
-	 * Id of the menu.
-	 *
-	 * @var integer
-	 */
-	protected $_id = null;
+    /**
+     * Id of the menu.
+     *
+     * @var integer
+     */
+    protected $_id = null;
 
-	/**
-	 * Content of the module.
-	 *
-	 * @var string
-	 */
-	protected $_content = '';
+    /**
+     * Content of the module.
+     *
+     * @var string
+     */
+    protected $_content = '';
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return integer
-	 */
-	public function getId()
-	{
-		return $this->_id;
-	}
+    /**
+     * Gets the id.
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param integer $id
-	 */
-	public function setId($id)
-	{
-		$this->_id = (int)$id;
-	}
+    /**
+     * Sets the id.
+     *
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->_id = (int) $id;
+    }
 
-	/**
-	 * Gets the content.
-	 *
-	 * @return string
-	 */
-	public function getContent()
-	{
-		return $this->_content;
-	}
+    /**
+     * Gets the content.
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->_content;
+    }
 
-	/**
-	 * Sets the content.
-	 *
-	 * @param string $content
-	 */
-	public function setContent($content)
-	{
-		$this->_content = (string)$content;
-	}
+    /**
+     * Sets the content.
+     *
+     * @param string $content
+     */
+    public function setContent($content)
+    {
+        $this->_content = (string) $content;
+    }
 }

@@ -7,28 +7,27 @@
  * @package ilch
  */
 
-namespace Page\Plugins;
+namespace page\plugins;
 use Page\Mappers\Page as PageMapper;
 defined('ACCESS') or die('no direct access');
 
 class AfterDatabaseLoad
 {
-	public function __construct(array $pluginData)
-	{
-		$request = $pluginData['request'];
-		$router = $pluginData['router'];
+    public function __construct(array $pluginData)
+    {
+        $request = $pluginData['request'];
+        $router = $pluginData['router'];
 
-		$pageMapper = new PageMapper();
-		$permas = $pageMapper->getPagePermas();
-		$url = $router->getQuery();
+        $pageMapper = new PageMapper();
+        $permas = $pageMapper->getPagePermas();
+        $url = $router->getQuery();
 
-		if(isset($permas[$url]))
-		{
-			$request->setModuleName('page');
-			$request->setControllerName('index');
-			$request->setActionName('show');
-			$request->setParam('id', $permas[$url]['page_id']);
-			$request->setParam('locale', $permas[$url]['locale']);
-		}
-	}
+        if (isset($permas[$url])) {
+            $request->setModuleName('page');
+            $request->setControllerName('index');
+            $request->setActionName('show');
+            $request->setParam('id', $permas[$url]['page_id']);
+            $request->setParam('locale', $permas[$url]['locale']);
+        }
+    }
 }

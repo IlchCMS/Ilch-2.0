@@ -10,4 +10,3 @@
  */
 header("Location: ../index.php/admin/admin");
 exit;
-?>
