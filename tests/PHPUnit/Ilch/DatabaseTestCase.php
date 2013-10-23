@@ -15,7 +15,7 @@
  * @author Jainta Martin
  * @package ilch_phpunit
  */
-class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Framework_TestCase
+class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
 {
     /**
      * A data array which will be used to create a config object for the registry.
@@ -25,55 +25,30 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Framework_TestCase
     protected $_configData = array();
 
     /**
-     * A data array which will be used to create a config object for the registry.
-     *
-     * @var \Ilch\Config\File
-     */
-    protected $_config = null;
-
-    /**
      * Only instantiate pdo once for test clean-up/fixture load
      *
-     * @var [type]
+     * @static Static so we can dont have to connect for every test again.
+     * @var PDO
      */
-    private static $pdo = null;
+    static private $pdo = null;
 
     /**
-     * instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+     * Instantiated PHPUnit_Extensions_Database_DB_IDatabaseConnection for the tests.
      *
+     * @static Static so we can dont have to connect for every test again.
      * @var PHPUnit_Extensions_Database_DB_IDatabaseConnection
      */
-    private $conn = null;
-
-    /**
-     * Holds the db connection data.
-     *
-     * @var mixed[]
-     */
-    private $_dbData = array();
+    static private $conn = null;
 
     /**
      * Filling the config object with individual testcase data.
      */
     public function setUp()
     {
-        parent::setUp();
+        $testHelper = new PHPUnit_Ilch_TestHelper();
+        $testHelper->setConfigInRegistry($this->_configData);
 
-        if (!\Ilch\Registry::has('config') && file_exists(CONFIG_PATH.'/config.php')) {
-            $config = new \Ilch\Config\File();
-            $config->loadConfigFromFile(CONFIG_PATH.'/config.php');
-            \Ilch\Registry::set('config', $config);
-        }
-
-        $config = \Ilch\Registry::get('config');
-
-        $dsn = strtolower($config->get('dbEngine')).':dbname='.$config->get('dbName').';host='.$config->get('dbHost');
-        $config->set('dbDsn', $dsn);
-        $this->_config = $config;
-
-        foreach ($this->_configData as $configKey => $configValue) {
-            $config->set($configKey, $configValue);
-        }
+    	parent::setUp();
     }
 
     /**
@@ -83,15 +58,31 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Framework_TestCase
      */
     final public function getConnection()
     {
-        if ($this->conn === null) {
-            if (self::$pdo == null) {
-                self::$pdo = new PDO($config->get('dbDsn'), $config->get('dbUser'), $config->get('dbPassword'));
-            }
+        $dbData = array();
+        $config = \Ilch\Registry::get('config');
 
-            $this->conn = $this->createDefaultDBConnection(self::$pdo, $config->get('dbName'));
+        foreach (array('dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $configKey) {
+            /*
+             * Using the data for the db from the config.
+             * We check if special config variables for this test execution exist.
+             * If so we gonna use it.
+             */
+            if ($config->get($configKey.'Test') !== null) {
+                $dbData[$configKey] = $config->get($configKey.'Test');
+            } elseif ($config->get($configKey) !== null) {
+                $dbData[$configKey] = $config->get($configKey);
+            }
         }
 
-        return $this->conn;
+        $dsn = strtolower($dbData['dbEngine']).':dbname='.$dbData['dbName'].';host='.$dbData['dbHost'];
+        $dbData['dbDsn'] = $dsn;
+
+        if (self::$conn === null) {
+            self::$pdo = new PDO($dbData['dbDsn'], $dbData['dbUser'], $dbData['dbPassword']);
+            self::$conn = $this->createDefaultDBConnection(self::$pdo, $dbData['dbName']);
+        }
+
+        return self::$conn;
     }
 
     /**
