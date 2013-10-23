@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Ilch <?php echo VERSION; ?> Frontend</title>
         <meta name="description" content="Ilch - Frontend">
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>">
         <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
