@@ -35,7 +35,7 @@ class Router
         $query = trim(str_replace('index.php', '', $query), '/');
         $this->_query = $query;
 
-        $this->_request->setModuleName('page');
+        $this->_request->setModuleName(DEFAULT_MODULE);
         $this->_request->setControllerName('index');
         $this->_request->setActionName('index');
 
