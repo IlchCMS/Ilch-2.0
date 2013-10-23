@@ -32,4 +32,5 @@ require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
 \Ilch\Registry::set('startTime', microtime(true));
 
 $page = new \Ilch\Page();
+$page->loadCms();
 $page->loadPage();
