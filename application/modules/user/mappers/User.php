@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace user\mappers;
+namespace User\Mappers;
 
 defined('ACCESS') or die('no direct access');
 

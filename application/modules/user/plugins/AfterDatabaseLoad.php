@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace user\plugins;
+namespace User\Plugins;
 use User\Mappers\User as UserMapper;
 defined('ACCESS') or die('no direct access');
 

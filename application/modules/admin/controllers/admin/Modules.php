@@ -5,7 +5,7 @@
  * @package ilch
  */
 
-namespace admin\controllers\admin;
+namespace Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
 class Modules extends \Ilch\Controller\Admin

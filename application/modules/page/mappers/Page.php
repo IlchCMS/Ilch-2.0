@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace page\mappers;
+namespace Page\Mappers;
 use Page\Models\Page as PageModel;
 
 defined('ACCESS') or die('no direct access');

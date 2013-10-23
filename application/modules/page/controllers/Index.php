@@ -5,7 +5,7 @@
  * @package ilch
  */
 
-namespace page\controllers;
+namespace Page\Controllers;
 use Page\Mappers\Page as PageMapper;
 defined('ACCESS') or die('no direct access');
 

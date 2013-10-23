@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace admin\plugins;
+namespace Admin\Plugins;
 defined('ACCESS') or die('no direct access');
 
 /**

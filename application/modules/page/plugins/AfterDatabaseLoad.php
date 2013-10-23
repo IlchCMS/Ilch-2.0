@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace page\plugins;
+namespace Page\Plugins;
 use Page\Mappers\Page as PageMapper;
 defined('ACCESS') or die('no direct access');
 

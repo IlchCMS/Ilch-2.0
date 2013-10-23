@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace user\mappers;
+namespace User\Mappers;
 use User\Models\Group as GroupModel;
 defined('ACCESS') or die('no direct access');
 

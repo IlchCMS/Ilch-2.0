@@ -7,7 +7,7 @@
  * @package ilch
  */
 
-namespace admin\mappers;
+namespace Admin\Mappers;
 use Admin\Models\MenuItem;
 defined('ACCESS') or die('no direct access');
 

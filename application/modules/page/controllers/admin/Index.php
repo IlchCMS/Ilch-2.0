@@ -5,7 +5,7 @@
  * @package ilch
  */
 
-namespace page\controllers\admin;
+namespace Page\Controllers\Admin;
 use Page\Mappers\Page as PageMapper;
 use Page\Models\Page as PageModel;
 

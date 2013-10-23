@@ -5,7 +5,7 @@
  * @package ilch
  */
 
-namespace admin\controllers\admin;
+namespace Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Admin

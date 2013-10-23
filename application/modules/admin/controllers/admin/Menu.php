@@ -5,7 +5,7 @@
  * @package ilch
  */
 
-namespace admin\controllers\admin;
+namespace Admin\Controllers\Admin;
 use Admin\Mappers\Menu as MenuMapper;
 use Admin\Models\MenuItem;
 defined('ACCESS') or die('no direct access');
