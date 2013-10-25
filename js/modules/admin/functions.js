@@ -18,11 +18,11 @@ function toggleSidebar(){
 
 	if(state == 'hide')
 	{
-		$('.slideLeft').removeClass('icon-angle-left');
+		$('.slideLeft').removeClass('fa fa-angle-left');
 	}
 	else
 	{
-		$('.slideRight').removeClass('icon-angle-right');
+		$('.slideRight').removeClass('fa fa-angle-right');
 	}
 
 	$sidebar.animate({
@@ -35,11 +35,11 @@ function toggleSidebar(){
 	}, speed, function() {
 		if(state == 'hide')
 		{
-			$('.slideRight').addClass('icon-angle-right');
+			$('.slideRight').addClass('fa fa-angle-right');
 		}
 		else
 		{
-			$('.slideLeft').addClass('icon-angle-left');
+			$('.slideLeft').addClass('fa fa-angle-left');
 		}
 	});
 

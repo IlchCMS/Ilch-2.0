@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Admin
                 (
                     'name' => 'menuSites',
                     'active' => true,
-                    'icon' => 'icon-th-list',
+                    'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
             )
@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
             array
             (
                 'name' => 'menuActionNewSite',
-                'icon' => 'icon-plus-sign',
+                'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'change'))
             )
         );

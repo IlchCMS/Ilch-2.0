@@ -23,7 +23,7 @@
                 <img class="brand" src="<?php echo $this->staticUrl('img/ilch_logo_brand.png'); ?>" />
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                         <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
+                         <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
                     </li>
                 </ul>
             </div>
@@ -31,17 +31,17 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
-                            <i class="icon-home"></i> <?php echo $this->trans('home'); ?>
+                            <i class="fa fa-home"></i> <?php echo $this->trans('home'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'menu', 'action' => 'index')); ?>">
-                            <i class="icon-th-list"></i> <?php echo $this->trans('navigation'); ?>
+                            <i class="fa fa-list-ol"></i> <?php echo $this->trans('navigation'); ?>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
-                            <i class="icon-puzzle-piece"></i> <?php echo $this->trans('modules'); ?>
+                            <i class="fa fa-puzzle-piece"></i> <?php echo $this->trans('modules'); ?>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
@@ -58,26 +58,26 @@
                     </li>
                     <li>
                         <a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
-                            <i class="icon-picture"></i> <?php echo $this->trans('layouts'); ?>
+                            <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
-                            <i class="icon-wrench"></i> <?php echo $this->trans('system'); ?>
+                            <i class="fa fa-cogs"></i> <?php echo $this->trans('system'); ?>
                         </a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="icon-user"></i> <?php echo $this->getUser()->getName(); ?>
+                        <i class="fa fa-user"></i> <?php echo $this->getUser()->getName(); ?>
                         <span class="caret"></span>
                     </a>
                         <ul class="dropdown-menu">
                             <li class="divider"></li>
                             <li>
                                 <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-                                    <i class="icon-off"></i> <?php echo $this->trans('logout');?>
+                                    <i class="fa fa-power-off"></i> <?php echo $this->trans('logout');?>
                                 </a>
                             </li>
                         </ul>
@@ -93,7 +93,7 @@
                         $contentFullClass = '';
                 ?>
                     <div class="app_left">
-                        <i class="icon-angle-left toggleSidebar slideLeft"></i>
+                        <i class="fa fa-angle-left toggleSidebar slideLeft"></i>
                         <div id="sidebar_content">
                             <ul class="nav">
                                 <?php
