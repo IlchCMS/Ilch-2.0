@@ -272,10 +272,10 @@ function rec($item, $menuMapper)
                $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
                                    <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">'); 
                $('#title').val($(this).parent().find('.hidden_title').val());
-               $('#href').val($(this).parent().find('.hidden_href').val());
                $('#type').val($(this).parent().find('.hidden_type').val());
                $('#id').val($(this).closest('li').attr('id'));
                $('#type').change();
+               $('#href').val($(this).parent().find('.hidden_href').val());
                $('#siteid').val($(this).parent().find('.hidden_siteid').val());
                
             });
