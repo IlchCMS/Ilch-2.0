@@ -20,6 +20,39 @@ defined('ACCESS') or die('no direct access');
 class Menu extends \Ilch\Mapper
 {
     /**
+     * Gets all menu items by menu id.
+     */
+    public function getMenuItems($menuId)
+    {
+        $items = array();
+        $itemRows = $this->db()->selectArray
+        (
+            '*',
+            'menu_items',
+            array
+            (
+                'menu_id' => $menuId,
+            )
+        );
+
+        if (empty($itemRows)) {
+            return null;
+        }
+
+        foreach ($itemRows as $itemRow) {
+            $itemModel = new MenuItem();
+            $itemModel->setId($itemRow['id']);
+            $itemModel->setHref($itemRow['href']);
+            $itemModel->setTitle($itemRow['title']);
+            $itemModel->setParentId($itemRow['parent_id']);
+            $itemModel->setMenuId($menuId);
+            $items[] = $itemModel;
+        }
+
+        return $items;
+    }
+
+    /**
      * Gets all menu items by parent item id.
      */
     public function getMenuItemsByParent($menuId, $itemId)
@@ -104,5 +137,22 @@ class Menu extends \Ilch\Mapper
         }
 
         return $itemId;
+    }
+ 
+    /**
+     * Delete the given menu item.
+     *
+     * @param  MenuItem $menuItem
+     */
+    public function delete($menuItem)
+    {
+        $this->db()->delete
+        (
+            'menu_items',
+            array
+            (
+                'id' => $menuItem->getId(),
+            )
+        );
     }
 }

@@ -16,9 +16,24 @@ class Menu extends \Ilch\Controller\Admin
     {
         $menuMapper = new MenuMapper();
 
+        /*
+         * Saves the item tree to database.
+         */
         if ($this->getRequest()->isPost()) {
             $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
             $items = $this->getRequest()->getPost('items');
+            $oldItems = $menuMapper->getMenuItems(1);
+
+            /*
+             * Deletes old entries from database.
+             */
+            if (!empty($oldItems)) {
+                foreach ($oldItems as $oldItem) {
+                    if (!isset($items[$oldItem->getId()])) {
+                        $menuMapper->delete($oldItem);
+                    }
+                }
+            }
 
             if ($items) {
                 $sortArray = array();

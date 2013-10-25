@@ -5,19 +5,19 @@ $menuMapper = $this->get('menuMapper');
 function rec($item, $menuMapper)
 {
     $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
-    $class = 'mjs-nestedSortable-branch mjs-nestedSortable-collapsed';
+    $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
         $class = 'mjs-nestedSortable-leaf';
     }
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
-    echo '<div><span class="disclose">
-                    <input type="hidden" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
-                    <input type="hidden" name="items['.$item->getId().'][href]" value="'.$item->getHref().'" />
+    echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
+                    <input type="hidden" name="items['.$item->getId().'][id]" class="hidden_id" value="'.$item->getId().'" />
+                    <input type="hidden" name="items['.$item->getId().'][title]" class="hidden_title" value="'.$item->getTitle().'" />
+                    <input type="hidden" name="items['.$item->getId().'][href]" class="hidden_href" value="'.$item->getHref().'" />
                     <span></span>
-                </span>'.$item->getTitle().'</div>';
+                </span><span class="title">'.$item->getTitle().'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
 
     if (!empty($subItems)) {
         echo '<ol>';
@@ -33,6 +33,17 @@ function rec($item, $menuMapper)
 }
 ?>
 <style>
+    .item_delete {
+        float: right;
+        cursor: pointer;
+    }
+    
+    .item_edit {
+        margin-right: 6px;
+        float: right;
+        cursor: pointer;
+    }
+
     ol.sortable, ol.sortable ol {
         margin: 0 0 0 25px;
         padding: 0;
@@ -86,7 +97,7 @@ function rec($item, $menuMapper)
 
     .disclose {
         cursor: pointer;
-        width: 10px;
+        width: 18px;
         display: none;
     }
 
@@ -97,13 +108,13 @@ function rec($item, $menuMapper)
     .sortable li.mjs-nestedSortable-branch > div > .disclose {
         display: inline-block;
     }
-
-    .sortable li.mjs-nestedSortable-collapsed > div > .disclose > span:before {
-        content: '+ ';
-    }
-
-    .sortable li.mjs-nestedSortable-expanded > div > .disclose > span:before {
-        content: '- ';
+    
+    .placeholder {
+        outline: 1px dashed #4183C4;
+        /*-webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin: -1px;*/
     }
 </style>
 <form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
@@ -120,10 +131,11 @@ function rec($item, $menuMapper)
                 ?>
             </ol>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 changeBox">
+            <input type="hidden" id="id" value="" />
             <div class="form-group">
                 <label for="maintenanceMode" class="col-lg-2 control-label">
-                    Seitentitel
+                    Menütitel
                 </label>
                 <div class="col-lg-4">
                     <input type="text" class="form-control" id="title" />
@@ -137,9 +149,9 @@ function rec($item, $menuMapper)
                     <input type="text" class="form-control" id="href" value="http://" />
                 </div>
             </div>
-            <button type="button" id="menuItemAdd" class="btn">
-                <?php echo $this->trans('menuItemAdd'); ?>
-            </button>
+            <div class="actions">
+                <input type="button" id="menuItemAdd" value="<?php echo $this->trans('menuItemAdd'); ?>" class="btn">
+            </div>
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
@@ -156,13 +168,27 @@ function rec($item, $menuMapper)
             var itemId = 999;
             $('.sortable').nestedSortable
             ({
+                forcePlaceholderSize: true,
                 handle: 'div',
+                helper:	'clone',
                 items: 'li',
+                opacity: .6,
+                placeholder: 'placeholder',
+                revert: 250,
+                tabSize: 25,
+                tolerance: 'pointer',
                 toleranceElement: '> div',
+                maxLevels: 8,
+                isTree: true,
+                expandOnHover: 700,
+                startCollapsed: false
             });
+            
+
 
             $('.disclose').on('click', function () {
                 $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
+                $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
             });
 
             $('#menuForm').submit
@@ -172,17 +198,55 @@ function rec($item, $menuMapper)
                 }
             );
 
-            $('#menuItemAdd').click
-            (
-                function () {
-                    $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                            +'<input type="hidden" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
-                            +'<input type="hidden" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
-                            +'<input type="hidden" name="items[tmp_'+itemId+'][href]" value="'+$('#href').val()+'" />'
-                            +'</span></span>'+$('#title').val()+'</div></li>').appendTo('#sortable');
-                    itemId++;
-                }
+            $('#menuForm').on('click', '#menuItemAdd', function () {
+                        $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
+                                +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
+                                +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
+                                +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
+                                +'</span></span>'+$('#title').val()+'<span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo('#sortable');
+                        itemId++;
+
+                        $(':input','.changeBox')
+                          .not(':button, :submit, :reset, :hidden')
+                          .val('')
+                          .removeAttr('checked')
+                          .removeAttr('selected');
+                    }
             );
+            
+            $('#menuForm').on('click', '#menuItemEdit', function () {
+                        $('#'+$('#id').val()).find('.title:first').text($('#title').val());
+                        $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
+                        $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
+                        $(':input','.changeBox')
+                          .not(':button, :submit, :reset, :hidden')
+                          .val('')
+                          .removeAttr('checked')
+                          .removeAttr('selected');
+                    }
+            );
+            
+            $('.sortable').on('click', '.item_delete', function() {
+                $(this).closest('li').remove();
+            });
+            
+            $('#menuForm').on('click', '#menuItemEditCancel', function() {
+                $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
+                   $(':input','.changeBox')
+                          .not(':button, :submit, :reset, :hidden')
+                          .val('')
+                          .removeAttr('checked')
+                          .removeAttr('selected');
+            });
+            
+            $('.sortable').on('click', '.item_edit', function() {
+               $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
+                                   <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">'); 
+               $('#title').val($(this).parent().find('.hidden_title').val());
+               $('#href').val($(this).parent().find('.hidden_href').val());
+               $('#id').val($(this).closest('li').attr('id'));
+               
+            });
         }
     );
 </script>
