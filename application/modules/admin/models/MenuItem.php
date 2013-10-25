@@ -24,6 +24,20 @@ class MenuItem extends \Ilch\Model
      * @var integer
      */
     protected $_id;
+    
+    /**
+     * Type of the item.
+     *
+     * @var integer
+     */
+    protected $_type;
+    
+    /**
+     * Siteid of the item.
+     *
+     * @var integer
+     */
+    protected $_siteId;
 
     /**
      * MenuId of the item.
@@ -71,6 +85,46 @@ class MenuItem extends \Ilch\Model
     public function setId($id)
     {
         $this->_id = (int) $id;
+    }
+    
+    /**
+     * Gets the type.
+     *
+     * @return integer
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
+
+    /**
+     * Sets the type.
+     *
+     * @param integer $id
+     */
+    public function setType($type)
+    {
+        $this->_type = (int)$type;
+    }
+    
+    /**
+     * Gets the siteid.
+     *
+     * @return integer
+     */
+    public function getSiteId()
+    {
+        return $this->_siteId;
+    }
+
+    /**
+     * Sets the siteid.
+     *
+     * @param integer $id
+     */
+    public function setSiteId($id)
+    {
+        $this->_siteId = (int)$id;
     }
 
     /**

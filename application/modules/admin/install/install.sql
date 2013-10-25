@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS `[prefix]_menu_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu_id` int(11) NOT NULL,
   `parent_id` int(11) NOT NULL,
+  `page_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `href` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)

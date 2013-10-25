@@ -42,6 +42,8 @@ class Menu extends \Ilch\Mapper
         foreach ($itemRows as $itemRow) {
             $itemModel = new MenuItem();
             $itemModel->setId($itemRow['id']);
+            $itemModel->setType($itemRow['type']);
+            $itemModel->setSiteId($itemRow['page_id']);
             $itemModel->setHref($itemRow['href']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setParentId($itemRow['parent_id']);
@@ -76,6 +78,8 @@ class Menu extends \Ilch\Mapper
         foreach ($itemRows as $itemRow) {
             $itemModel = new MenuItem();
             $itemModel->setId($itemRow['id']);
+            $itemModel->setType($itemRow['type']);
+            $itemModel->setSiteId($itemRow['page_id']);
             $itemModel->setHref($itemRow['href']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setParentId($itemId);
@@ -99,7 +103,9 @@ class Menu extends \Ilch\Mapper
             'href' => $menuItem->getHref(),
             'title' => $menuItem->getTitle(),
             'menu_id' => $menuItem->getMenuId(),
-            'parent_id' => $menuItem->getParentId()
+            'parent_id' => $menuItem->getParentId(),
+            'page_id' => $menuItem->getSiteId(),
+            'type' => $menuItem->getType(),
         );
 
         foreach ($fields as $key => $value) {

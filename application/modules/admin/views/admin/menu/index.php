@@ -1,6 +1,7 @@
 <?php
 $menuItems = $this->get('menuItems');
 $menuMapper = $this->get('menuMapper');
+$pages = $this->get('pages');
 
 function rec($item, $menuMapper)
 {
@@ -16,6 +17,8 @@ function rec($item, $menuMapper)
                     <input type="hidden" name="items['.$item->getId().'][id]" class="hidden_id" value="'.$item->getId().'" />
                     <input type="hidden" name="items['.$item->getId().'][title]" class="hidden_title" value="'.$item->getTitle().'" />
                     <input type="hidden" name="items['.$item->getId().'][href]" class="hidden_href" value="'.$item->getHref().'" />
+                    <input type="hidden" name="items['.$item->getId().'][type]" class="hidden_type" value="'.$item->getType().'" />
+                    <input type="hidden" name="items['.$item->getId().'][siteid]" class="hidden_siteid" value="'.$item->getSiteId().'" />
                     <span></span>
                 </span><span class="title">'.$item->getTitle().'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
 
@@ -131,22 +134,37 @@ function rec($item, $menuMapper)
                 ?>
             </ol>
         </div>
-        <div class="col-md-6 changeBox">
+        <div class="col-md-1"></div>
+        <div class="col-md-5 changeBox">
             <input type="hidden" id="id" value="" />
             <div class="form-group">
-                <label for="maintenanceMode" class="col-lg-2 control-label">
-                    Menütitel
+                <label for="title" class="col-lg-2 control-label">
+                    Itemtitel
                 </label>
                 <div class="col-lg-4">
                     <input type="text" class="form-control" id="title" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="maintenanceMode" class="col-lg-2 control-label">
-                    Adresse
+                <label for="type" class="col-lg-2 control-label">
+                    Itemtyp
                 </label>
                 <div class="col-lg-4">
-                    <input type="text" class="form-control" id="href" value="http://" />
+                    <select id="type" class="form-control">
+                        <option value="0">Link</option>
+                        <option value="1">Seite</option>
+                        <!--<option value="2">Box</option>-->
+                    </select>
+                </div>
+            </div>
+            <div class="dyn">
+                <div class="form-group">
+                    <label for="href" class="col-lg-2 control-label">
+                        Adresse
+                    </label>
+                    <div class="col-lg-4">
+                        <input type="text" class="form-control" id="href" value="http://" />
+                    </div>
                 </div>
             </div>
             <div class="actions">
@@ -162,12 +180,21 @@ function rec($item, $menuMapper)
     </div>
 </form>
 <script>
+    function resetBox() {
+        $(':input','.changeBox')
+        .not(':button, :submit, :reset, :hidden')
+        .val('')
+        .removeAttr('checked')
+        .removeAttr('selected');
+
+        $('#type').change();
+    }
+
     $(document).ready
     (
         function () {
             var itemId = 999;
-            $('.sortable').nestedSortable
-            ({
+            $('.sortable').nestedSortable ({
                 forcePlaceholderSize: true,
                 handle: 'div',
                 helper:	'clone',
@@ -191,8 +218,7 @@ function rec($item, $menuMapper)
                 $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
             });
 
-            $('#menuForm').submit
-            (
+            $('#menuForm').submit (
                 function () {
                     $('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
                 }
@@ -203,40 +229,43 @@ function rec($item, $menuMapper)
                                 +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
                                 +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
                                 +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
+                                +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
+                                +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
                                 +'</span></span>'+$('#title').val()+'<span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo('#sortable');
                         itemId++;
-
-                        $(':input','.changeBox')
-                          .not(':button, :submit, :reset, :hidden')
-                          .val('')
-                          .removeAttr('checked')
-                          .removeAttr('selected');
+                        resetBox();
                     }
             );
             
             $('#menuForm').on('click', '#menuItemEdit', function () {
-                        $('#'+$('#id').val()).find('.title:first').text($('#title').val());
-                        $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
-                        $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
-                        $(':input','.changeBox')
-                          .not(':button, :submit, :reset, :hidden')
-                          .val('')
-                          .removeAttr('checked')
-                          .removeAttr('selected');
-                    }
+                    $('#'+$('#id').val()).find('.title:first').text($('#title').val());
+                    $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
+                    $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
+                    $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
+                    $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
+                    resetBox();
+                }
             );
             
             $('.sortable').on('click', '.item_delete', function() {
                 $(this).closest('li').remove();
             });
             
+            $('#menuForm').on('change', '#type', function() {
+                if($(this).val() == '0') {
+                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Adresse</label>\n\
+                                    <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>');
+                } else if ($(this).val() == '1') {
+                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
+                                    <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div>');
+                } else {
+                    //@todo
+                }
+            });
+            
             $('#menuForm').on('click', '#menuItemEditCancel', function() {
                 $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
-                   $(':input','.changeBox')
-                          .not(':button, :submit, :reset, :hidden')
-                          .val('')
-                          .removeAttr('checked')
-                          .removeAttr('selected');
+                resetBox();
             });
             
             $('.sortable').on('click', '.item_edit', function() {
@@ -244,7 +273,10 @@ function rec($item, $menuMapper)
                                    <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">'); 
                $('#title').val($(this).parent().find('.hidden_title').val());
                $('#href').val($(this).parent().find('.hidden_href').val());
+               $('#type').val($(this).parent().find('.hidden_type').val());
                $('#id').val($(this).closest('li').attr('id'));
+               $('#type').change();
+               $('#siteid').val($(this).parent().find('.hidden_siteid').val());
                
             });
         }

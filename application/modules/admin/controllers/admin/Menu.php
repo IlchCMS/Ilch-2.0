@@ -7,6 +7,7 @@
 
 namespace Admin\Controllers\Admin;
 use Admin\Mappers\Menu as MenuMapper;
+use Page\Mappers\Page as PageMapper;
 use Admin\Models\MenuItem;
 defined('ACCESS') or die('no direct access');
 
@@ -15,6 +16,7 @@ class Menu extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $menuMapper = new MenuMapper();
+        $pageMapper = new PageMapper();
 
         /*
          * Saves the item tree to database.
@@ -54,6 +56,8 @@ class Menu extends \Ilch\Controller\Admin
                     }
 
                     $menuItem->setMenuId(1);
+                    $menuItem->setType($item['type']);
+                    $menuItem->setSiteId($item['siteid']);
                     $menuItem->setHref($item['href']);
                     $menuItem->setTitle($item['title']);
                     $newId = $menuMapper->saveItem($menuItem);
@@ -84,5 +88,6 @@ class Menu extends \Ilch\Controller\Admin
         $menuItems = $menuMapper->getMenuItemsByParent(1, 0);
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
+        $this->getView()->set('pages', $pageMapper->getPageList());
     }
 }
