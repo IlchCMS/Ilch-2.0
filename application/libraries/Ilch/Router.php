@@ -17,7 +17,7 @@ defined('ACCESS') or die('no direct access');
 class Router
 {
 
-	const DEFAULT_REGEX_PATTERN = '/?(?P<module>\w+)/(?P<controller>\w+)/(?P<actionId>\w+)(/(?P<params>[a-zA-Z0-9_/]+)?)?';
+	const DEFAULT_REGEX_PATTERN = '/?(?P<module>\w+)/(?P<controller>\w+)(/(?P<action>\w+)?)?(/(?P<params>[a-zA-Z0-9_/]+)?)?';
 	const DEFAULT_MATCH_STRATEGY = 'matchByQuery';
 
 	private $_query = null;
@@ -65,7 +65,7 @@ class Router
 	 * @return array
 	 * @throws \Exception
 	 */
-	protected function matchByRegex($route, $pattern = null)
+	public function matchByRegexp($route, $pattern = null)
 	{
 		$matches = [];
 
@@ -86,12 +86,41 @@ class Router
 	}
 
 	/**
+	 * Converts a valid routed string of params into array
+	 * @param $string
+	 * @return array
+	 */
+	public function convertParamStringIntoArray($string)
+	{
+		$array = explode('/', $string);
+		$result = array();
+		$prevKey = null;
+
+		foreach ($array as $key => $value)
+		{
+			if ($key % 2 === 0)
+			{
+				$prevKey = $value;
+			}
+			if ($key % 2 === 1)
+			{
+				$result[$prevKey] = $value;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Fills the request object if rewrite is possible.
 	 *
-	 * @param string $route
+	 * @param $params
+	 * @internal param string $route
 	 */
-	protected function matchByQuery($route)
+	public function matchByQuery($params)
 	{
+		$route = $params['route'];
+
 		$queryParts = explode('/', $route);
 
 		$i = 0;
@@ -145,18 +174,24 @@ class Router
 	/**
 	 * #todo add strategy iterator in addition to param
 	 * #todo execute strategy iterator if param Strategy is null
+	 * match(route, params)
+	 * match(route, strategy, params)
 	 * Match route by strategy
-	 * @param $route
 	 * @param string $strategy
 	 * @param array $params
 	 * @return mixed
 	 */
-	public function match($route, $strategy = self::DEFAULT_MATCH_STRATEGY, array $params = array())
+	public function match($strategy = self::DEFAULT_MATCH_STRATEGY, array $params = array())
 	{
 		$callback = array();
+		if (is_array($strategy))
+		{
+			$params = $strategy;
+			$strategy = self::DEFAULT_MATCH_STRATEGY;
+		}
 		if (!array_key_exists('route', $params))
 		{
-			$params['route'] = $route;
+			$params['route'] = $this->getRouteByRequest();
 		}
 		//select default strategy delivered by router
 		if (is_string($strategy) && strtolower(substr($strategy, 0, 5)) === 'match' && method_exists($this, $strategy))
