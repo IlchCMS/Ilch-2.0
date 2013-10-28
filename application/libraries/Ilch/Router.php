@@ -23,6 +23,11 @@ class Router
 	private $_query = null;
 
 	/**
+	 * @var \ArrayObject|null
+	 */
+	private $_config = null;
+
+	/**
 	 * Injects request and config object.
 	 *
 	 * @param Request $request
@@ -30,6 +35,37 @@ class Router
 	public function __construct(Request $request)
 	{
 		$this->_request = $request;
+		$this->_config = new \ArrayObject();
+	}
+
+	/**
+	 * @param $routeName
+	 * @return bool
+	 */
+	public function hasConfigItem($routeName){
+		return $this->_config->offsetExists($routeName);
+	}
+
+	/**
+	 * TODO: Value validation for valid route configuration!
+	 * @param $routeName
+	 * @param array $value
+	 * @return bool
+	 */
+	public function addConfigItem($routeName, array $value){
+		if(!$this->hasConfigItem($routeName)){
+			$this->_config->offsetSet($routeName, $value);
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param $routeName
+	 */
+	public function removeConfigItem($routeName){
+		$this->_config->offsetUnset($routeName);
 	}
 
 	/**
@@ -61,15 +97,15 @@ class Router
 	/**
 	 * Match given route by regular expression
 	 * @param $route
-	 * @param null $pattern
-	 * @return array
+	 * @param array $params
 	 * @throws \Exception
+	 * @return array
 	 */
-	public function matchByRegexp($route, $pattern = null)
+	public function matchByRegexp($route, array $params = array())
 	{
 		$matches = [];
 
-		$pattern = $pattern === null ? self::DEFAULT_REGEX_PATTERN : $pattern;
+		$pattern = array_key_exists('pattern',$params) ? self::DEFAULT_REGEX_PATTERN : $params['pattern'];
 
 		$matched = preg_match(
 			'#^' . $pattern . '$#i',
@@ -114,12 +150,11 @@ class Router
 	/**
 	 * Fills the request object if rewrite is possible.
 	 *
-	 * @param $params
-	 * @internal param string $route
+	 * @param string $route
+	 * @param array $params
 	 */
-	public function matchByQuery($params)
+	public function matchByQuery($route, array $params = array())
 	{
-		$route = $params['route'];
 
 		$queryParts = explode('/', $route);
 
@@ -172,27 +207,16 @@ class Router
 	}
 
 	/**
-	 * #todo add strategy iterator in addition to param
-	 * #todo execute strategy iterator if param Strategy is null
-	 * match(route, params)
-	 * match(route, strategy, params)
 	 * Match route by strategy
-	 * @param string $strategy
+	 * @param $route
 	 * @param array $params
 	 * @return mixed
 	 */
-	public function match($strategy = self::DEFAULT_MATCH_STRATEGY, array $params = array())
+	public function matchStrategy($route, array $params = array())
 	{
 		$callback = array();
-		if (is_array($strategy))
-		{
-			$params = $strategy;
-			$strategy = self::DEFAULT_MATCH_STRATEGY;
-		}
-		if (!array_key_exists('route', $params))
-		{
-			$params['route'] = $this->getRouteByRequest();
-		}
+		$strategy = array_key_exists('strategy', $params) ? $params['strategy'] : self::DEFAULT_MATCH_STRATEGY;
+
 		//select default strategy delivered by router
 		if (is_string($strategy) && strtolower(substr($strategy, 0, 5)) === 'match' && method_exists($this, $strategy))
 		{
@@ -205,6 +229,21 @@ class Router
 		}
 
 		return call_user_func_array($callback, $params);
+	}
+
+	/**
+	 * @param $route
+	 * @return array
+	 */
+	public function match($route){
+		$results = array();
+		foreach($this->_config as $routeName => $config){
+			if(!array_key_exists('strategy',$config)){
+				$params['strategy'] = self::DEFAULT_MATCH_STRATEGY;
+			}
+			$results[] = $this->matchStrategy($route, $params);
+		}
+		return $results;
 	}
 
 	/**
