@@ -8,6 +8,7 @@
  */
 
 namespace User\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -150,7 +151,7 @@ class User extends \Ilch\Model
     /**
      * Saves the groups of the user.
      *
-     * @return array
+     * @return Group[]
      */
     public function getGroups()
     {
@@ -160,11 +161,25 @@ class User extends \Ilch\Model
     /**
      * Saves the groups of the user.
      *
-     * @param array $groups
+     * @param Group[] $groups
      */
     public function setGroups($groups)
     {
-        $this->_groups = (array) $groups;
+        foreach ($groups as $group) {
+            $this->addGroup($group);
+        }
+    }
+
+    /**
+     * Adds a group to the users groups.
+     *
+     * @param Group $group
+     */
+    public function addGroup(Group $group)
+    {
+        if (!in_array($group, $this->_groups)) {
+            $this->_groups[] = $group;
+        }
     }
 
     /**
@@ -225,5 +240,35 @@ class User extends \Ilch\Model
         }
 
         $this->_dateConfirmed = $dateConfirmed;
+    }
+
+    /**
+     * Returns the date_LastActivity timestamp of the user.
+     *
+     * @return Ilch_Date
+     */
+    public function getDateLastActivity()
+    {
+        return $this->_dateLastActivity;
+    }
+
+    /**
+     * Saves the date_LastActivity timestamp of the user.
+     *
+     * @param int|Ilch_Date|string $dateLastActivity
+     */
+    public function setDateLastActivity($dateLastActivity)
+    {
+        if (is_numeric($dateLastActivity)) {
+            $timestamp = (int) $dateLastActivity;
+            $dateLastActivity = new \Ilch\Date();
+            $dateLastActivity->SetTimestamp($timestamp);
+        } elseif (is_string($dateLastActivity)) {
+            $dateLastActivity = new \Ilch\Date($dateLastActivity);
+        } elseif (!is_a($dateLastActivity, '\\Ilch\\Date')) {
+            throw new \InvalidArgumentException('DateLastActivity must be a timestamp, date-string or Ilch_Date, "'.$dateLastActivity.'" given.');
+        }
+
+        $this->_dateLastActivity = $dateLastActivity;
     }
 }
