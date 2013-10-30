@@ -40,15 +40,4 @@ class Modules_User_Models_GroupTest extends PHPUnit_Ilch_TestCase
         $this->assertEquals(3, $group->getId(), 'The group id did not save correctly.');
         $this->assertTrue(is_int($group->getId()), 'The group id was not returned as an Integer.');
     }
-
-    /**
-     * Tests if the count of users can be set and get from the model using an Integer.
-     */
-    public function testUsersInteger()
-    {
-        $group = new GroupModel();
-        $group->setUsers(2);
-
-        $this->assertEquals(array(2), $group->getUsers(), 'The users of the group did not save correctly using an Integer.');
-    }
 }

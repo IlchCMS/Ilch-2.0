@@ -140,4 +140,45 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
 
         $this->assertEquals(array(1, 3, 4), $groupIds);
     }
+
+    /**
+     * Tests if a grouplist can be returned correctly.
+     */
+    public function testGetGroupList()
+    {
+        $groupRows = array
+        (
+            array
+            (
+                'id' => 1,
+                'name' => 'Admin',
+            ),
+            array
+            (
+                'id' => 2,
+                'name' => 'Moderator',
+            ),
+            array
+            (
+                'id' => 3,
+                'name' => 'Member',
+            ),
+        );
+
+        $dbMock = $this->getMock('Ilch_Database', array('selectArray', 'queryArray'));
+        $dbMock->expects($this->once())
+                ->method('selectArray')
+                ->with('*',
+                    'groups')
+                ->will($this->returnValue($groupRows));
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+        $groupList = $mapper->getGroupList();
+
+        $this->assertCount(3, $groupList, 'It was not created exactly one group object for each group.');
+
+        foreach ($groupList as $key => $group) {
+            $this->assertInstanceOf('User\Models\Group', $group, 'The group with array key "'.$key.'" was not saved as a group model.');
+        }
+    }
 }

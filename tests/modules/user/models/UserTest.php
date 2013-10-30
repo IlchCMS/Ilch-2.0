@@ -8,6 +8,8 @@
  */
 
 use User\Models\User as UserModel;
+use User\Models\Group as GroupModel;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -141,22 +143,82 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
     }
 
     /**
+     * Tests if the date_last_active can be set and returned again using a timestamp.
+     */
+    public function testSetGetDatelast_activeFromStamp()
+    {
+        $user = new UserModel();
+        $user->setDateLastActivity(987654321);
+        $actualDate = $user->getDateLastActivity();
+
+        $this->assertInstanceOf('\\Ilch\\Date', $actualDate, 'The date_last_active was not created using Ilch_Date.');
+        $this->assertEquals(987654321, $actualDate->getTimestamp(), 'The timestamp of the date_last_active wasnt saved or returned correctly.');
+    }
+
+    /**
+     * Tests if the date_last_active can be set and returned again if using a
+     * date object.
+     */
+    public function testSetGetDateLastActivityFromDate()
+    {
+        $user = new UserModel();
+        $date = new \Ilch\Date();
+        $expectedTimestamp = $date->getTimestamp();
+        $user->setDateLastActivity($date);
+        $actualDate = $user->getDateLastActivity();
+
+        $this->assertEquals($expectedTimestamp, $actualDate->getTimestamp(), 'The date_last_active wasnt saved or returned correctly using a Ilch_Date object.');
+    }
+
+    /**
+     * Tests if the date_last_active can be set and returned again if using a string.
+     */
+    public function testSetDateLastActivityFromString()
+    {
+        $user = new UserModel();
+        $user->setDateLastActivity('2013-09-02 22:15:45');
+        $actualDate = $user->getDateLastActivity();
+
+        $this->assertInstanceOf('\\Ilch\\Date', $actualDate, 'The date_last_active was not created using Ilch_Date.');
+        $this->assertEquals('2013-09-02 22:15:45', $actualDate->format('Y-m-d H:i:s'), 'The date_last_active does not got saved correctly using a String.');
+    }
+
+    /**
      * Tests if the user groups can be set and returned again.
      */
     public function testSetGetGroups()
     {
+        $group1 = new GroupModel();
+        $group1->setId(1);
+        $group1->setName('Admin');
+        $group2 = new GroupModel();
+        $group2->setId(2);
+        $group2->setName('Member');
+        $group3 = new GroupModel();
+        $group3->setId(3);
+        $group3->setName('Clanleader');
         $user = new UserModel();
-        $user->setGroups(array(1, 2, 3));
-        $this->assertEquals(array(1, 2, 3), $user->getGroups(), 'The user groups wasnt saved or returned correctly.');
+        $user->setGroups(array($group1, $group2, $group3));
+        $this->assertEquals(array($group1, $group2, $group3), $user->getGroups(), 'The user groups wasnt saved or returned correctly.');
     }
 
     /**
-     * Tests if the user groups can be set and returned again with an single int.
+     * Tests if its possible to add groups.
      */
-    public function testSetGetGroupsInteger()
+    public function testAddGroup()
     {
+        $group1 = new GroupModel();
+        $group1->setId(1);
+        $group1->setName('Admin');
+        $group2 = new GroupModel();
+        $group2->setId(2);
+        $group2->setName('Member');
+        $group3 = new GroupModel();
+        $group3->setId(3);
+        $group3->setName('Clanleader');
         $user = new UserModel();
-        $user->setGroups(4);
-        $this->assertEquals(array(4), $user->getGroups(), 'The user groups wasnt saved or returned correctly.');
+        $user->setGroups(array($group1, $group3));
+        $user->addGroup($group2);
+        $this->assertEquals(array($group1, $group3, $group2), $user->getGroups(), 'The user groups wasnt added or returned correctly.');
     }
 }

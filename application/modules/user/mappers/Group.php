@@ -8,7 +8,9 @@
  */
 
 namespace User\Mappers;
+
 use User\Models\Group as GroupModel;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -142,7 +144,7 @@ class Group extends \Ilch\Mapper
 
         $groupId = $group->getId();
 
-        if ($groupId && $this->getUserById($groupId)) {
+        if ($groupId && $this->getById($groupId)) {
             /*
              * Group does exist already, update.
              */
@@ -165,25 +167,15 @@ class Group extends \Ilch\Mapper
                 'groups'
             );
         }
+    }
 
-        if ($group->getUsers()) {
-            $this->db()->delete
-            (
-                'users_groups',
-                array('group_id' => $groupId)
-            );
-
-            foreach ($group->getUsers() as $userId) {
-                $this->db()->insert
-                (
-                    array
-                    (
-                        'user_id' => $userId,
-                        'group_id' => $groupId
-                    ),
-                    'users_groups'
-                );
-            }
-        }
+    /**
+     * Returns a array of all group model objects.
+     *
+     * @return groupModel[]
+     */
+    public function getGroupList()
+    {
+        return $this->_getBy();
     }
 }

@@ -9,6 +9,9 @@
 
 namespace User\Mappers;
 
+use User\Models\User as UserModel;
+use Ilch\Date as IlchDate;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -108,7 +111,8 @@ class User extends \Ilch\Mapper
                 $groups = array();
                 $sql = 'SELECT g.*
                         FROM [prefix]_groups AS g
-                        INNER JOIN [prefix]_users_groups AS ug ON ug.user_id = '.$userRow['id'];
+                        INNER JOIN [prefix]_users_groups AS ug ON g.id = ug.group_id
+                        WHERE ug.user_id = '.$userRow['id'];
                 $groupRows = $this->db()->queryArray($sql);
                 $groupMapper = new Group();
 
@@ -131,12 +135,12 @@ class User extends \Ilch\Mapper
     /**
      * Returns a user created using an array with user data.
      *
-     * @param  mixed[]           $userRow
-     * @return \User\Models\User
+     * @param  mixed[]   $userRow
+     * @return UserModel
      */
     public function loadFromArray($userRow = array())
     {
-        $user = new \User\Models\User();
+        $user = new UserModel();
 
         if (isset($userRow['id'])) {
             $user->setId($userRow['id']);
@@ -155,15 +159,21 @@ class User extends \Ilch\Mapper
         }
 
         if (isset($userRow['date_created'])) {
-            $dateCreated = new \Ilch\Date($userRow['date_created']);
+            $dateCreated = new IlchDate($userRow['date_created']);
             $users['date_created'] = $dateCreated;
             $user->setDateCreated($dateCreated);
         }
 
         if (isset($userRow['date_confirmed'])) {
-            $dateConfirmed = new \Ilch\Date($userRow['date_confirmed']);
+            $dateConfirmed = new IlchDate($userRow['date_confirmed']);
             $users['date_confirmed'] = $dateConfirmed;
             $user->setDateConfirmed($dateConfirmed);
+        }
+
+        if (isset($userRow['date_last_activity'])) {
+            $dateLastActivity = new IlchDate($userRow['date_last_activity']);
+            $users['date_last_activity'] = $dateLastActivity;
+            $user->setDateLastActivity($dateLastActivity);
         }
 
         return $user;
@@ -172,9 +182,11 @@ class User extends \Ilch\Mapper
     /**
      * Inserts or updates a user model in the database.
      *
-     * @param \User\Models\User $user
+     * @param UserModel $user
+     *
+     * @return The userId of the updated or inserted user.
      */
-    public function save(\User\Models\User $user)
+    public function save(UserModel $user)
     {
         $fields = array();
         $name = $user->getName();
@@ -182,6 +194,7 @@ class User extends \Ilch\Mapper
         $email = $user->getEmail();
         $dateCreated = $user->getDateCreated();
         $dateConfirmed = $user->getDateConfirmed();
+        $dateLastActivity = $user->getDateLastActivity();
 
         if (!empty($name)) {
             $fields['name'] = $user->getName();
@@ -201,6 +214,10 @@ class User extends \Ilch\Mapper
 
         if (!empty($dateConfirmed)) {
             $fields['date_confirmed'] = $user->getDateConfirmed()->toDb();
+        }
+
+        if (!empty($dateLastActivity)) {
+            $fields['date_last_activity'] = $user->getDateLastActivity()->toDb();
         }
 
         $userId = (int) $this->db()->selectCell
@@ -244,17 +261,68 @@ class User extends \Ilch\Mapper
                 array('user_id' => $userId)
             );
 
-            foreach ($user->getGroups() as $groupId) {
+            foreach ($user->getGroups() as $group) {
                 $this->db()->insert
                 (
                     array
                     (
                         'user_id' => $userId,
-                        'group_id' => $groupId
+                        'group_id' => $group->getId()
                     ),
                     'users_groups'
                 );
             }
         }
+
+        return $userId;
+    }
+
+    /**
+     * Returns a array of all user model objects.
+     *
+     * @return UserModel[]
+     */
+    public function getUserList()
+    {
+        return $this->_getBy();
+    }
+
+    /**
+     * Returns whether a user exists.
+     *
+     * @param  int $userId
+     *
+     * @return boolean True if a user with this id exists, false otherwise.
+     */
+    public function userWithIdExists($userId)
+    {
+        $userExists = (boolean) $this->db()->selectCell
+        (
+            'id',
+            'users',
+            array
+            (
+                'id' => $userId,
+            )
+        );
+
+        return $userExists;
+    }
+
+    /**
+     * Deletes a given user or a user with the given id.
+     *
+     * @param  int|UserModel $userId
+     *
+     * @return boolean True of success, otherwise false.
+     */
+    public function delete($userId)
+    {
+        if(is_a($userId, '\User\Models\User'))
+        {
+            $userId = $userId->getId();
+        }
+
+        return $this->db()->delete('users', array('id' => $userId));
     }
 }
