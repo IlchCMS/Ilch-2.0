@@ -60,12 +60,12 @@ if ($this->get('userList') != '') {
                                   data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'delete', 'id' => $user->getId())); ?>"
                                   title="<?php echo $this->trans('deleteUser'); ?>"></span>
                         </td>
-                        <td><?php echo $user->getName(); ?></td>
-                        <td><?php echo $user->getEmail(); ?></td>
-                        <td><?php echo $user->getDateCreated(); ?></td>
-                        <td><?php echo $dateConfirmed; ?></td>
-                        <td><?php echo $dateLastActivity; ?></td>
-                        <td><?php echo $groups; ?></td>
+                        <td><?php echo $this->escape($user->getName()); ?></td>
+                        <td><?php echo $this->escape($user->getEmail()); ?></td>
+                        <td><?php echo $this->escape($user->getDateCreated()); ?></td>
+                        <td><?php echo $this->escape($dateConfirmed); ?></td>
+                        <td><?php echo $this->escape($dateLastActivity); ?></td>
+                        <td><?php echo $this->escape($groups); ?></td>
                     </tr>
                     <?php
                 }

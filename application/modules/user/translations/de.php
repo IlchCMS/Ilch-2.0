@@ -12,8 +12,8 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuUser' => 'Benutzer',
-    'menuActionNewUser' => 'Neuen Benutzer erstellen',
-    'addButton' => 'Benutzer anlegen',
+    'menuActionNewUser' => 'Neuen Benutzer hinzufügen',
+    'addUser' => 'Benutzer hinzufügen',
     'editUser' => 'Benutzer editieren',
     'deleteUser' => 'Benutzer entfernen',
     'userName' => 'Benutzername',

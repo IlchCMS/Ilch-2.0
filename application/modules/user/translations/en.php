@@ -13,9 +13,9 @@ return array
 (
     'menuUser' => 'User',
     'menuActionNewUser' => 'Create new user',
-    'addButton' => 'Create user',
-    'editButton' => 'Edit user',
-    'deleteButton' => 'Remove user',
+    'addUser' => 'Create user',
+    'editUser' => 'Edit user',
+    'deleteUser' => 'Remove user',
     'userName' => 'Username',
     'userEmail' => 'Email address',
     'userDateCreated' => 'Created',

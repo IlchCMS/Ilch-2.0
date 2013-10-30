@@ -167,26 +167,6 @@ class Group extends \Ilch\Mapper
                 'groups'
             );
         }
-
-        if ($group->getUsers()) {
-            $this->db()->delete
-            (
-                'users_groups',
-                array('group_id' => $groupId)
-            );
-
-            foreach ($group->getUsers() as $userId) {
-                $this->db()->insert
-                (
-                    array
-                    (
-                        'user_id' => $userId,
-                        'group_id' => $groupId
-                    ),
-                    'users_groups'
-                );
-            }
-        }
     }
 
     /**

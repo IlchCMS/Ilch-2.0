@@ -20,7 +20,7 @@ $user = new \User\Models\User();
 $user->setName($_SESSION['install']['adminName']);
 $user->setPassword(crypt($_SESSION['install']['adminPassword']));
 $user->setEmail($_SESSION['install']['adminEmail']);
-$user->setGroups($group);
+$user->addGroup($group);
 $dateCreated = new \Ilch\Date();
 $user->setDateCreated($dateCreated);
 $userMapper->save($user);
