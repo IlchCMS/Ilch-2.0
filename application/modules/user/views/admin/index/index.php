@@ -58,6 +58,8 @@ if ($this->get('userList') != '') {
                                   title="<?php echo $this->trans('editUser'); ?>"></span>
                             <span class="deleteUser clickable glyphicon glyphicon-remove"
                                   data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'delete', 'id' => $user->getId())); ?>"
+                                  data-toggle="modal"
+                                  data-target="#deleteModal"
                                   title="<?php echo $this->trans('deleteUser'); ?>"></span>
                         </td>
                         <td><?php echo $this->escape($user->getName()); ?></td>
@@ -73,11 +75,41 @@ if ($this->get('userList') != '') {
             </tbody>
         </table>
     </div>
+    <div class="modal fade"
+         id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><?php echo $this->trans('needAcknowledgement'); ?></h4>
+                </div>
+                <div class="modal-body">
+                    <p><?php echo sprintf($this->trans('askIfDeleteUser'), $this->escape($user->getName())); ?></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary"
+                            id="deleteUserButton"><?php echo $this->trans('ack'); ?></button>
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-dismiss="modal"><?php echo $this->trans('cancel'); ?></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
     $('.editUser').on('click', function(event) {
         window.location = $(this).data('clickurl');
     });
+
     $('.deleteUser').on('click', function(event) {
+        $('#deleteUserButton').data('clickurl', $(this).data('clickurl'));
+    });
+
+    $('#deleteUserButton').on('click', function(event) {
         window.location = $(this).data('clickurl');
     });
     </script>

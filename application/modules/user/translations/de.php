@@ -31,4 +31,8 @@ return array
     'noGroupsAssigned' => 'Keine Gruppe zugewiesen',
     'assignedGroups' => 'Zugewiesene Gruppen',
     'selectAssignedGroups' => 'Zugewiesene Gruppen wählen',
+    'ack' => 'Bestätigen',
+    'cancel' => 'Abbrechen',
+    'needAcknowledgement' => 'Bestätigung erforderlich',
+    'askIfDeleteUser' => 'Sind Sie sicher dass der Benutzer "%s" entfernt werden soll?',
 );

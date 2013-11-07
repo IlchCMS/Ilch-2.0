@@ -31,4 +31,8 @@ return array
     'noGroupsAssigned' => 'No group assigned',
     'assignedGroups' => 'Assigned groups',
     'selectAssignedGroups' => 'Select assigned groups',
+    'ack' => 'Confirm',
+    'cancel' => 'Cancel',
+    'needAcknowledgement' => 'Confirmation required',
+    'askIfDeleteUser' => 'Are you sure to delete user "%s"?',
 );
