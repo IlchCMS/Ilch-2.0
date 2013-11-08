@@ -34,5 +34,5 @@ return array
     'ack' => 'Confirm',
     'cancel' => 'Cancel',
     'needAcknowledgement' => 'Confirmation required',
-    'askIfDeleteUser' => 'Are you sure to delete user "%s"?',
+    'askIfDeleteUser' => 'Are you sure to delete user "$username"?',
 );

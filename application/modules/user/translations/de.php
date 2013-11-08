@@ -34,5 +34,5 @@ return array
     'ack' => 'Bestätigen',
     'cancel' => 'Abbrechen',
     'needAcknowledgement' => 'Bestätigung erforderlich',
-    'askIfDeleteUser' => 'Sind Sie sicher dass der Benutzer "%s" entfernt werden soll?',
+    'askIfDeleteUser' => 'Sind Sie sicher dass der Benutzer "$username" entfernt werden soll?',
 );
