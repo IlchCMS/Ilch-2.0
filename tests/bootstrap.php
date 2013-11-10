@@ -19,7 +19,7 @@ define('SERVER_TIMEZONE', 'Europe/Berlin');
  * Initializing the autoloading for the application classes and for custom
  * PHPUnit Classes.
  */
-require_once APPLICATION_PATH.'/libraries/ilch/Loader.php';
+require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
 spl_autoload_register
 (
     function ($class) {
