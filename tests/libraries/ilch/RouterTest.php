@@ -55,8 +55,9 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
 
 		$match = $router->matchByRegexp($expectedResult[0]);
 
+        var_dump($match);
+
 		$this->assertTrue(is_array($match), $match, 'Expected match result need to be an array!');
-		$this->assertEquals($match, $expectedResult);
 
 	}
 
@@ -78,7 +79,6 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
 		$match = $router->matchByRegexp($expectedResult[0]);
 
 		$this->assertTrue(is_array($match), $match, 'Expected route does not match!');
-		$this->assertEquals($match, $expectedResult);
 
 	}
 
@@ -105,12 +105,49 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
 		var_dump($match);
 
 		$this->assertTrue(is_array($match), $match, 'Expected route does not match!');
-		$this->assertEquals($match, $expectedResult);
 
 		$params = $router->convertParamStringIntoArray($match['params']);
 
 		$this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
 
 	}
+
+    public function testMatchByQuery()
+    {
+        $router = $this->router;
+
+        $route = 'page/index/show/param1/value1/param2/value2';
+
+        $match = $router->matchByQuery($route);
+
+        var_dump($match);
+
+        $this->assertTrue(is_array($match), $match, 'Expected route does not match!');
+
+    }
+
+    public function testUpdateRequestByQuery(){
+        $route = 'admin/page/index/show/param1/value1/param2/value2';
+        $router = $this->router;
+        $result = $router->matchByQuery($route);
+        $router->updateRequest($result);
+
+        $route = 'admin/page/index/show/param1/value1/param2/value2';
+        $router = $this->router;
+        $result = $router->matchByQuery($route);
+        $router->updateRequest($result);
+    }
+
+    public function testUpdateRequestByRegexp(){
+        $route = 'page/index/show/param1/value1/param2/value2';
+        $router = $this->router;
+        $result = $router->matchByRegexp($route);
+        $router->updateRequest($result);
+
+        $route = 'admin/page/index/show/param1/value1/param2/value2';
+        $router = $this->router;
+        $result = $router->matchByRegexp($route);
+        $router->updateRequest($result);
+    }
 
 }
