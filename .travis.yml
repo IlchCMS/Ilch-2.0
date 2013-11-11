@@ -1,0 +1,17 @@
+language: php
+
+php:
+  - 5.4
+
+before_script:
+  - cd tests
+
+script: phpunit .
+
+notifications:
+  webhooks:
+    urls:
+      - http://www.ilch.de/ilch2/versions/
+    on_success: always
+    on_failure: never
+    on_start: false
