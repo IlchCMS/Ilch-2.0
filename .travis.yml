@@ -7,3 +7,6 @@ before_script:
   - cd tests
 
 script: phpunit .
+
+notifications:
+  webhooks: http://www.ilch.de/ilch2/versions/
