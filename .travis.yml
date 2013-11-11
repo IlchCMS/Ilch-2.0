@@ -10,4 +10,8 @@ script: phpunit .
 
 notifications:
   webhooks:
-    - http://www.ilch.de/ilch2/versions/
+    urls:
+      - http://www.ilch.de/ilch2/versions/
+    on_success: always
+    on_failure: never
+    on_start: false
