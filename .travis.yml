@@ -9,4 +9,5 @@ before_script:
 script: phpunit .
 
 notifications:
-  - webhooks: http://www.ilch.de/ilch2/versions/
+  webhooks:
+    - http://www.ilch.de/ilch2/versions/
