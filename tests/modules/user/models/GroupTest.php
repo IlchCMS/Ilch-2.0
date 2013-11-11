@@ -25,7 +25,7 @@ class Modules_User_Models_GroupTest extends PHPUnit_Ilch_TestCase
     {
         $group = new GroupModel();
         $group->setName('newGroup');
-throw new Exception('test');
+
         $this->assertEquals('newGroup', $group->getName(), 'The group name did not save correctly.');
     }
 
