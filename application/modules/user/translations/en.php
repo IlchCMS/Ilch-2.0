@@ -35,4 +35,6 @@ return array
     'cancel' => 'Cancel',
     'needAcknowledgement' => 'Confirmation required',
     'askIfDeleteUser' => 'Are you sure to delete user "$username"?',
+    'newUserMsg' => 'User got created successfully.',
+    'delUserMsg' => 'User got deleted successfully.',
 );
