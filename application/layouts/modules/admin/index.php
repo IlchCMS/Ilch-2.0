@@ -16,8 +16,20 @@
         <script src="<?php echo $this->staticUrl('js/jquery.mjs.nestedSortable.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/modules/admin/functions.js'); ?>"></script>
+        <script src="<?php echo $this->staticUrl('js/validate/jquery.validate.min.js'); ?>"></script>
+        <script src="<?php echo $this->staticUrl('js/validate/additional-methods.min.js'); ?>"></script>
+        <script src="<?php echo $this->staticUrl('js/validate/ilch-validate.js'); ?>"></script>
     </head>
     <body>
+        <script>
+            /*
+             * Custom validate messages.
+             */
+            jQuery.extend(jQuery.validator.messages, {
+                required: <?php echo json_encode($this->trans('validateRequired')); ?>,
+                email: <?php echo json_encode($this->trans('validateEmail')); ?>,
+            });
+        </script>
         <nav class="navbar navbar-default navbar-fixed-top topnavbar">
             <div class="navbar-header leftbar">
                 <img class="brand" src="<?php echo $this->staticUrl('img/ilch_logo_brand.png'); ?>" />
