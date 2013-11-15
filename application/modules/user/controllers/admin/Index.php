@@ -63,6 +63,7 @@ class Index extends \Ilch\Controller\Admin
         $userMapper = new UserMapper();
         $userList = $userMapper->getUserList();
         $this->getView()->set('userList', $userList);
+        $this->getView()->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'));
     }
 
     /**
@@ -70,6 +71,7 @@ class Index extends \Ilch\Controller\Admin
      */
     public function treatAction()
     {
+        $this->getView()->set('showNewUserMsg', $this->getRequest()->getParam('showNewUserMsg'));
         $userId = $this->getRequest()->getParam('id');
         $userMapper = new UserMapper();
 
@@ -107,7 +109,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $userId = $userMapper->save($user);
-            $this->redirect(array('action' => 'treat', 'id' => $userId));
+            $this->redirect(array('action' => 'treat', 'id' => $userId, 'showNewUserMsg' => (int)isset($postData['user']['id'])));
         }
     }
 
@@ -117,12 +119,13 @@ class Index extends \Ilch\Controller\Admin
     public function deleteAction()
     {
         $userId = $this->getRequest()->getParam('id');
+        $success = false;
 
         if ($userId) {
             $userMapper = new UserMapper();
             $success = $userMapper->delete($userId);
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(array('action' => 'index', 'showDelUserMsg' => (int)$success));
     }
 }

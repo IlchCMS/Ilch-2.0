@@ -1,6 +1,16 @@
 <?php
 if ($this->get('userList') != '') {
 ?>
+    <?php
+    if ($this->get('showDelUserMsg')) {
+        ?>
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <?php echo $this->trans('delUserMsg'); ?>
+        </div>
+        <?php
+    }
+    ?>
     <div class="panel panel-default">
         <table class="table table-hover table-striped">
             <colgroup>
