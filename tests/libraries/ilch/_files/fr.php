@@ -9,5 +9,6 @@
 return array
 (
     'userGetsWhatHeWants' => 'L\'utilisateur obtient ce qu\'il veut!',
-    'welcomeUser' => 'Accueil, %name%',
+    'welcomeUser' => 'Accueil, %s',
+    'welcomeUserExtended' => 'Accueil, %s, votre dernière connexion était de %s',
 );

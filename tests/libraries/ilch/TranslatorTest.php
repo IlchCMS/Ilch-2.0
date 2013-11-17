@@ -85,8 +85,8 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
     }
 
     /**
-     * Tests if the Translator returns an entry which wasnt translated yet in
-     * the translation file.
+     * Tests if the Translator replaces the placeholder withing the translated text
+     * with one replacement.
      */
     public function testTransPlaceholder()
     {
@@ -96,7 +96,24 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
         $this->assertEquals
         (
             'Welcome, Hans',
-            $translator->trans('welcomeUser', array('%name%' => 'Hans')),
+            $translator->trans('welcomeUser', 'Hans'),
+            'The text wasnt returned with the placeholder.'
+        );
+    }
+
+    /**
+     * Tests if the Translator replaces the placeholder withing the translated text
+     * with multiple replacements.
+     */
+    public function testTransMultiplePlaceholder()
+    {
+        $translator = new \Ilch\Translator('en_EN');
+        $translator->load(__DIR__.'/_files');
+
+        $this->assertEquals
+        (
+            'Welcome, Hans, ur last login was yesterday',
+            $translator->trans('welcomeUserExtended', 'Hans', 'yesterday'),
             'The text wasnt returned with the placeholder.'
         );
     }

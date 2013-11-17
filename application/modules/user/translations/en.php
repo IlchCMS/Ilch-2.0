@@ -34,7 +34,7 @@ return array
     'ack' => 'Confirm',
     'cancel' => 'Cancel',
     'needAcknowledgement' => 'Confirmation required',
-    'askIfDeleteUser' => 'Are you sure to delete user "$username"?',
+    'askIfDeleteUser' => 'Are you sure to delete user "%s"?',
     'newUserMsg' => 'User got created successfully.',
     'delUserMsg' => 'User got deleted successfully.',
 );

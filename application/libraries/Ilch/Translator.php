@@ -80,15 +80,14 @@ class Translator
     /**
      * Returns the translated text for a specific key.
      *
-     * Can also replace placeholders with a given string e. g. for names. As
-     * default, trans() uses the request locale.
+     * Works with an argument list like sprintf does
+     * to replace placholders in the translated text.
      *
      * @param string  $key
-     * @param mixed[] $placeholders Key as the placeholder, value as the text which
-     * the placeholder gonna be replaced with.
+     * @param [, mixed $args [, mixed $... ]]
      * @return string
      */
-    public function trans($key, $placeholders = array())
+    public function trans($key)
     {
         if (isset($this->_translations[$key])) {
             $translatedText = $this->_translations[$key];
@@ -99,9 +98,9 @@ class Translator
             $translatedText = $key;
         }
 
-        foreach ($placeholders as $placeholder => $value) {
-            $translatedText = str_replace($placeholder, $value, $translatedText);
-        }
+        $arguments = func_get_args();
+        $arguments[0] = $translatedText;
+        $translatedText = call_user_func_array('sprintf', $arguments);
 
         return $translatedText;
     }

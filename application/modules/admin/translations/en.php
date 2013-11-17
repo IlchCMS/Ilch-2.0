@@ -35,7 +35,7 @@ return array
     'off'			  => 'Off',
     'systemSettings'  => 'System - Settings',
     'search' => 'Search',
-    'welcomeBack' => 'Welcome back [user]',
+    'welcomeBack' => 'Welcome back %s',
     'welcomeBackDescripton' => 'To find your target, please choose on the top menu or on the search on the left top corner',
     'validateRequired' => 'This field is required.',
     'validateEmail' => 'Please enter a valid email address.',

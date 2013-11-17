@@ -1,5 +1,5 @@
 <h2>
-    <?php echo $this->trans('welcomeToInstall', array('[VERSION]' => VERSION)); ?>
+    <?php echo $this->trans('welcomeToInstall', (string)VERSION); ?>
 </h2>
 <br />
 <div class="form-group">

@@ -97,7 +97,7 @@ if ($this->get('userList') != '') {
                     <h4 class="modal-title"><?php echo $this->trans('needAcknowledgement'); ?></h4>
                 </div>
                 <div class="modal-body">
-                    <p><?php echo $this->trans('askIfDeleteUser', array('$username' => $this->escape($user->getName()))); ?></p>
+                    <p><?php echo $this->trans('askIfDeleteUser', $this->escape($user->getName())); ?></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button"
