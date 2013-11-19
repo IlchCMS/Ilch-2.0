@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewSite',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'change'))
+                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
@@ -55,7 +55,7 @@ class Index extends \Ilch\Controller\Admin
         $this->redirect(array('action' => 'index'));
     }
 
-    public function changeAction()
+    public function treatAction()
     {
         $pageMapper = new PageMapper();
 

@@ -10,15 +10,19 @@
         <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->staticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
+        <link href="<?php echo $this->staticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
 
         <script src="<?php echo $this->staticUrl('js/jquery.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/jquery-ui.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/jquery.mjs.nestedSortable.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/modules/admin/functions.js'); ?>"></script>
+        <script src="<?php echo $this->staticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
         <script src="<?php echo $this->staticUrl('js/validate/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/validate/additional-methods.min.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/validate/ilch-validate.js'); ?>"></script>
+
     </head>
     <body>
         <script>

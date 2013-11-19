@@ -5,15 +5,11 @@ if ($this->get('pages') != '') {
     <colgroup>
         <col class="col-lg-1">
         <col />
-        <col class="col-lg-1">
-        <col class="col-lg-1">
     </colgroup>
     <thead>
         <tr>
-            <th>Editieren</th>
+            <th>Bearbeiten</th>
             <th><?php echo $this->trans('pageTitle'); ?></th>
-            <th><?php echo $this->trans('pageAdress'); ?></th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -22,13 +18,14 @@ if ($this->get('pages') != '') {
             echo '<tr>
                     <td>';
             foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                echo '<a href="'.$this->url(array('module' => 'page', 'controller' => 'index', 'action' => 'change', 'id' => $page->getId(), 'locale' => $key)).'"><img src="'.$this->staticUrl('img/'.$key.'.png').'"></a> ';
+                echo '<a href="'.$this->url(array('module' => 'page', 'controller' => 'index', 'action' => 'treat', 'id' => $page->getId(), 'locale' => $key)).'"><img src="'.$this->staticUrl('img/'.$key.'.png').'"></a> ';
             }
 
-            echo '</td>
-                    <td>'.$page->getTitle().'</td>
-                    <td><a target="_blank" href="'.$this->url().'/index.php/'.$this->escape($page->getPerma()).'">Öffnen</a></td>
-                    <td><a href="'.$this->url(array('module' => 'page', 'controller' => 'index', 'action' => 'delete', 'id' => $page->getId())).'">Löschen</a></td>
+            echo ' <a class="deleteLink" href="'.$this->url(array('module' => 'page', 'controller' => 'index', 'action' => 'delete', 'id' => $page->getId())).'">
+                        <i class="fa fa-times-circle"></i>
+                    </a>
+                    </td>
+                    <td><a target="_blank" href="'.$this->url().'/index.php/'.$this->escape($page->getPerma()).'">'.$page->getTitle().'</a></td>
                 </tr>';
         }
         ?>
@@ -38,3 +35,9 @@ if ($this->get('pages') != '') {
 } else {
     echo 'Keine Seiten vorhanden';
 }
+?>
+<style>
+    .deleteLink {
+        padding-left: 10px;
+    }
+</style>

@@ -1,5 +1,5 @@
 <?php
-/**
+/*
  * Viewfile for user creation and editing.
  */
 $user = $this->get('user');
@@ -12,10 +12,6 @@ else {
     $fieldsetLegend = $this->trans('addUser');
 }
 ?>
-<script type="text/javascript" src="<?php echo $this->staticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
-<!--<script type="text/javascript" src="<?php echo $this->staticUrl('js/chosen/chosen.proto.min.js') ?>"></script>-->
-<link rel="stylesheet" href="<?php echo $this->staticUrl('css/chosen/bootstrap.css') ?>">
-<link rel="stylesheet" href="<?php echo $this->staticUrl('css/chosen/bootstrap-chosen.css') ?>">
 <fieldset>
     <legend>
         <?php echo $fieldsetLegend; ?>
@@ -143,7 +139,7 @@ else {
         </div>
     </form>
 </fieldset>
-<script type="text/javascript">
+<script>
     $('#assignedGroups').chosen();
     $('#assignedGroups_chosen').css('width', '100%'); // Workaround for chosen resize bug.
     $('#userForm').validate();

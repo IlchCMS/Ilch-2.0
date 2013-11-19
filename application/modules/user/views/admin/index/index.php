@@ -11,80 +11,78 @@ if ($this->get('userList') != '') {
         <?php
     }
     ?>
-    <div class="panel panel-default">
-        <table class="table table-hover table-striped">
-            <colgroup>
-                <col />
-                <col class="col-lg-2">
-                <col />
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th><?php echo $this->trans('userName'); ?></th>
-                    <th><?php echo $this->trans('userEmail'); ?></th>
-                    <th><?php echo $this->trans('userDateCreated'); ?></th>
-                    <th><?php echo $this->trans('userDateConfirmed'); ?></th>
-                    <th><?php echo $this->trans('userDateLastActivity'); ?></th>
-                    <th><?php echo $this->trans('userGroups'); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($this->get('userList') as $user) {
-                    $groups = '';
+    <table class="table table-hover table-striped">
+        <colgroup>
+            <col />
+            <col class="col-lg-2">
+            <col />
+            <col class="col-lg-2">
+            <col class="col-lg-2">
+            <col class="col-lg-2">
+        </colgroup>
+        <thead>
+            <tr>
+                <th></th>
+                <th><?php echo $this->trans('userName'); ?></th>
+                <th><?php echo $this->trans('userEmail'); ?></th>
+                <th><?php echo $this->trans('userDateCreated'); ?></th>
+                <th><?php echo $this->trans('userDateConfirmed'); ?></th>
+                <th><?php echo $this->trans('userDateLastActivity'); ?></th>
+                <th><?php echo $this->trans('userGroups'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ($this->get('userList') as $user) {
+                $groups = '';
 
-                    foreach($user->getGroups() as $group) {
-                        if ($groups != '') {
-                            $groups .= ', ';
-                        }
-
-                        $groups .= $group->getName();
+                foreach($user->getGroups() as $group) {
+                    if ($groups != '') {
+                        $groups .= ', ';
                     }
 
-                    if ($groups === '') {
-                        $groups = $this->trans('noGroupsAssigned');
-                    }
+                    $groups .= $group->getName();
+                }
 
-                    $dateConfirmed = $user->getDateConfirmed();
+                if ($groups === '') {
+                    $groups = $this->trans('noGroupsAssigned');
+                }
 
-                    if ($dateConfirmed->getTimestamp() == 0) {
-                        $dateConfirmed = $this->trans('notConfirmedYet');
-                    }
+                $dateConfirmed = $user->getDateConfirmed();
 
-                    $dateLastActivity = $user->getDateLastActivity();
+                if ($dateConfirmed->getTimestamp() == 0) {
+                    $dateConfirmed = $this->trans('notConfirmedYet');
+                }
 
-                    if ($dateLastActivity->getTimestamp() == 0) {
-                        $dateLastActivity = $this->trans('neverLoggedIn');
-                    }
-                    ?>
-                    <tr>
-                        <td>
-                            <span class="editUser clickable glyphicon glyphicon-edit"
-                                  data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'treat', 'id' => $user->getId())); ?>"
-                                  title="<?php echo $this->trans('editUser'); ?>"></span>
-                            <span class="deleteUser clickable glyphicon glyphicon-remove"
-                                  data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'delete', 'id' => $user->getId())); ?>"
-                                  data-toggle="modal"
-                                  data-target="#deleteModal"
-                                  title="<?php echo $this->trans('deleteUser'); ?>"></span>
-                        </td>
-                        <td><?php echo $this->escape($user->getName()); ?></td>
-                        <td><?php echo $this->escape($user->getEmail()); ?></td>
-                        <td><?php echo $this->escape($user->getDateCreated()); ?></td>
-                        <td><?php echo $this->escape($dateConfirmed); ?></td>
-                        <td><?php echo $this->escape($dateLastActivity); ?></td>
-                        <td><?php echo $this->escape($groups); ?></td>
-                    </tr>
-                    <?php
+                $dateLastActivity = $user->getDateLastActivity();
+
+                if ($dateLastActivity->getTimestamp() == 0) {
+                    $dateLastActivity = $this->trans('neverLoggedIn');
                 }
                 ?>
-            </tbody>
-        </table>
-    </div>
+                <tr>
+                    <td>
+                        <span class="editUser clickable fa fa-edit"
+                              data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'treat', 'id' => $user->getId())); ?>"
+                              title="<?php echo $this->trans('editUser'); ?>"></span> 
+                        <span class="deleteUser clickable fa fa-times-circle"
+                              data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'delete', 'id' => $user->getId())); ?>"
+                              data-toggle="modal"
+                              data-target="#deleteModal"
+                              title="<?php echo $this->trans('deleteUser'); ?>"></span>
+                    </td>
+                    <td><?php echo $this->escape($user->getName()); ?></td>
+                    <td><?php echo $this->escape($user->getEmail()); ?></td>
+                    <td><?php echo $this->escape($user->getDateCreated()); ?></td>
+                    <td><?php echo $this->escape($dateConfirmed); ?></td>
+                    <td><?php echo $this->escape($dateLastActivity); ?></td>
+                    <td><?php echo $this->escape($groups); ?></td>
+                </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
     <div class="modal fade"
          id="deleteModal">
         <div class="modal-dialog">
@@ -97,7 +95,7 @@ if ($this->get('userList') != '') {
                     <h4 class="modal-title"><?php echo $this->trans('needAcknowledgement'); ?></h4>
                 </div>
                 <div class="modal-body">
-                    <p><?php echo $this->trans('askIfDeleteUser', $this->escape($user->getName())); ?></p>
+                    <p><?php echo $this->trans('askIfDeleteUser', '@todo'); ?></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button"
