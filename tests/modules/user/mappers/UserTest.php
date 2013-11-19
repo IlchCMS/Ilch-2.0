@@ -427,7 +427,13 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
     public function testDeleteUserByObject()
     {
         $dbMock = $this->getMock('Ilch_Database', array('delete'));
-        $dbMock->expects($this->once())
+        $dbMock->expects($this->at(0))
+                ->method('delete')
+                ->with('users_groups',
+                       array('user_id' => 3))
+                ->will($this->returnValue(true));
+
+        $dbMock->expects($this->at(1))
                 ->method('delete')
                 ->with('users',
                        array('id' => 3))
@@ -447,11 +453,18 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
     public function testDeleteUserById()
     {
         $dbMock = $this->getMock('Ilch_Database', array('delete'));
-        $dbMock->expects($this->once())
+        $dbMock->expects($this->at(0))
+                ->method('delete')
+                ->with('users_groups',
+                       array('user_id' => 3))
+                ->will($this->returnValue(true));
+
+        $dbMock->expects($this->at(1))
                 ->method('delete')
                 ->with('users',
                        array('id' => 3))
                 ->will($this->returnValue(true));
+
         $mapper = new UserMapper();
         $mapper->setDatabase($dbMock);
 

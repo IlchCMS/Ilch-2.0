@@ -159,15 +159,13 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the groups of the user.
+     * Sets the groups of the user.
      *
      * @param Group[] $groups
      */
     public function setGroups($groups)
     {
-        foreach ($groups as $group) {
-            $this->addGroup($group);
-        }
+        $this->_groups = $groups;
     }
 
     /**
@@ -177,9 +175,24 @@ class User extends \Ilch\Model
      */
     public function addGroup(Group $group)
     {
-        if (!in_array($group, $this->_groups)) {
-            $this->_groups[] = $group;
+        if (!isset($this->_groups[$group->getId()])) {
+            $this->_groups[$group->getId()] = $group;
         }
+    }
+
+    /**
+     * Checks if user has the given group.
+     *
+     * @param integer $groupId
+     * @return boolean
+     */
+    public function hasGroup($groupId)
+    {
+        if (!isset($this->_groups[$groupId])) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

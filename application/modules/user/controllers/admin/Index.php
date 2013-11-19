@@ -118,12 +118,24 @@ class Index extends \Ilch\Controller\Admin
      */
     public function deleteAction()
     {
+        $userMapper = new UserMapper();
         $userId = $this->getRequest()->getParam('id');
         $success = false;
 
         if ($userId) {
-            $userMapper = new UserMapper();
-            $success = $userMapper->delete($userId);
+            $deleteUser = $userMapper->getUserById($userId);
+
+            /*
+             * Admingroup has always id "1" because group is not deletable.
+             */
+            if ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
+               /*
+                * Delete adminuser only if he is not the last admin.
+                * @todo create message for frontend.
+                */
+            } else {
+                $success = $userMapper->delete($userId);
+            }
         }
 
         $this->redirect(array('action' => 'index', 'showDelUserMsg' => (int)$success));

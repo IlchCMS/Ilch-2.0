@@ -117,12 +117,11 @@ class User extends \Ilch\Mapper
                 $groupMapper = new Group();
 
                 foreach ($groupRows as $groupRow) {
-                    $groups[] = $groupMapper->loadFromArray($groupRow);
+                    $groups[$groupRow['id']] = $groupMapper->loadFromArray($groupRow);
                 }
 
                 $user = $this->loadFromArray($userRow);
                 $user->setGroups($groups);
-
                 $users[] = $user;
             }
 
@@ -278,6 +277,20 @@ class User extends \Ilch\Mapper
     }
 
     /**
+     * Gets the counter of all users with group "administrator".
+     *
+     * @return integer
+     */
+    public function getAdministratorCount()
+    {
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_users_groups`
+                WHERE `group_id` = 1';
+
+        return (int)$this->db()->queryCell($sql);
+    }
+
+    /**
      * Returns a array of all user model objects.
      *
      * @return UserModel[]
@@ -323,6 +336,7 @@ class User extends \Ilch\Mapper
             $userId = $userId->getId();
         }
 
+        $this->db()->delete('users_groups', array('user_id' => $userId));
         return $this->db()->delete('users', array('id' => $userId));
     }
 }
