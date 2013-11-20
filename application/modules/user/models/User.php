@@ -86,6 +86,8 @@ class User extends \Ilch\Model
     public function setId($id)
     {
         $this->_id = (int) $id;
+
+        return $this;
     }
 
     /**
@@ -106,6 +108,8 @@ class User extends \Ilch\Model
     public function setName($username)
     {
         $this->_name = (string) $username;
+
+        return $this;
     }
 
     /**
@@ -126,6 +130,8 @@ class User extends \Ilch\Model
     public function setEmail($email)
     {
         $this->_email = (string) $email;
+
+        return $this;
     }
 
     /**
@@ -146,6 +152,8 @@ class User extends \Ilch\Model
     public function setPassword($password)
     {
         $this->_password = (string) $password;
+
+        return $this;
     }
 
     /**
@@ -166,6 +174,8 @@ class User extends \Ilch\Model
     public function setGroups($groups)
     {
         $this->_groups = $groups;
+
+        return $this;
     }
 
     /**
@@ -178,6 +188,8 @@ class User extends \Ilch\Model
         if (!isset($this->_groups[$group->getId()])) {
             $this->_groups[$group->getId()] = $group;
         }
+
+        return $this;
     }
 
     /**
@@ -223,6 +235,8 @@ class User extends \Ilch\Model
         }
 
         $this->_dateCreated = $dateCreated;
+
+        return $this;
     }
 
     /**
@@ -253,6 +267,8 @@ class User extends \Ilch\Model
         }
 
         $this->_dateConfirmed = $dateConfirmed;
+
+        return $this;
     }
 
     /**
@@ -283,5 +299,7 @@ class User extends \Ilch\Model
         }
 
         $this->_dateLastActivity = $dateLastActivity;
+
+        return $this;
     }
 }

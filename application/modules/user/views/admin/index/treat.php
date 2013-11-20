@@ -1,7 +1,8 @@
 <?php
-/*
+/**
  * Viewfile for user creation and editing.
  */
+
 $user = $this->get('user');
 $showNewUserMsg = $this->get('showNewUserMsg');
 

@@ -221,4 +221,32 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
         $user->addGroup($group2);
         $this->assertEquals(array($group1, $group3, $group2), $user->getGroups(), 'The user groups wasnt added or returned correctly.');
     }
+
+    /**
+     * Tests if user has the given groups.
+     */
+    public function testHasGroup()
+    {
+        $user = new UserModel();
+
+        $group1 = new GroupModel();
+        $group1->setId(1);
+        $group1->setName('Admin');
+
+        $group2 = new GroupModel();
+        $group2->setId(2);
+        $group2->setName('Member');
+
+        $group3 = new GroupModel();
+        $group3->setId(3);
+        $group3->setName('Clanleader');
+
+        $user->addGroup($group1)->addGroup($group2)->addGroup($group3);
+
+        $this->assertTrue($user->hasGroup(2), 'The user has not the group with id "2".');
+        $this->assertFalse($user->hasGroup(4), 'The user has the group with id "4".');
+
+        $user->setGroups(array());
+        $this->assertFalse($user->hasGroup(2), 'The user has the group with id "2".');
+    }
 }
