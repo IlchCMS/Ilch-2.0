@@ -38,4 +38,5 @@ return array
     'newUserMsg' => 'User got created successfully.',
     'delUserMsg' => 'User got deleted successfully.',
     'delLastAdminProhibited' => 'It is not allowed to delete the last user with the group "Administrator" assigned.',
+    'delOwnUserProhibited' => 'It is not allowed to delete the your own user.',
 );

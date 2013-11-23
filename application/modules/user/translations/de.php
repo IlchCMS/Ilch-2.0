@@ -38,4 +38,5 @@ return array
     'newUserMsg' => 'Der Benutzer wurde erfolgreich angelegt.',
     'delUserMsg' => 'Der Benutzer wurde erfolgreich entfernt.',
     'delLastAdminProhibited' => 'Es ist nicht erlaubt den letzten aktiven Benutzer mit zugewiesener Gruppe "Administrator" zu entfernen.',
+    'delOwnUserProhibited' => 'Es ist nicht erlaubt Ihren eigenen Benutzer zu entfernen.',
 );

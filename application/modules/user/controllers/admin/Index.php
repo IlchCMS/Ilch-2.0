@@ -12,6 +12,7 @@ use User\Mappers\User as UserMapper;
 use User\Mappers\Group as GroupMapper;
 use User\Models\User as UserModel;
 use User\Models\Group as GroupModel;
+use \Ilch\Registry as Registry;
 
 defined('ACCESS') or die('no direct access');
 
@@ -132,12 +133,13 @@ class Index extends \Ilch\Controller\Admin
             /*
              * Admingroup has always id "1" because group is not deletable.
              */
-            if ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
+            if ($deleteUser->getId() == Registry::get('user')->getId()) {
+                $requestData['errorMsg'] = 'delOwnUserProhibited';
+            } elseif ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
                 $requestData['errorMsg'] = 'delLastAdminProhibited';
-               /*
-                * Delete adminuser only if he is not the last admin.
-                * @todo create message for frontend.
-                */
+                /*
+                 * Delete adminuser only if he is not the last admin.
+                 */
             } else {
                 $requestData['showDelUserMsg'] = (int)$userMapper->delete($userId);
             }
