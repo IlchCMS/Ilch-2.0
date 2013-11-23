@@ -37,4 +37,5 @@ return array
     'askIfDeleteUser' => 'Sind Sie sicher dass der Benutzer "%s" entfernt werden soll?',
     'newUserMsg' => 'Der Benutzer wurde erfolgreich angelegt.',
     'delUserMsg' => 'Der Benutzer wurde erfolgreich entfernt.',
+    'delLastAdminProhibited' => 'Es ist nicht erlaubt den letzten aktiven Benutzer mit zugewiesener Gruppe "Administrator" zu entfernen.',
 );

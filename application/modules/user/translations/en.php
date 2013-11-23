@@ -37,4 +37,5 @@ return array
     'askIfDeleteUser' => 'Are you sure to delete user "%s"?',
     'newUserMsg' => 'User got created successfully.',
     'delUserMsg' => 'User got deleted successfully.',
+    'delLastAdminProhibited' => 'It is not allowed to delete the last user with the group "Administrator" assigned.',
 );

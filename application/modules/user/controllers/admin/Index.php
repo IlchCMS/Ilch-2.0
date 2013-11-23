@@ -64,6 +64,7 @@ class Index extends \Ilch\Controller\Admin
         $userList = $userMapper->getUserList();
         $this->getView()->set('userList', $userList);
         $this->getView()->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'));
+        $this->getView()->set('errorMsg', $this->getRequest()->getParam('errorMsg'));
     }
 
     /**
@@ -120,7 +121,10 @@ class Index extends \Ilch\Controller\Admin
     {
         $userMapper = new UserMapper();
         $userId = $this->getRequest()->getParam('id');
-        $success = false;
+        $requestData = array
+        (
+            'action' => 'index',
+        );
 
         if ($userId) {
             $deleteUser = $userMapper->getUserById($userId);
@@ -129,15 +133,16 @@ class Index extends \Ilch\Controller\Admin
              * Admingroup has always id "1" because group is not deletable.
              */
             if ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
+                $requestData['errorMsg'] = 'delLastAdminProhibited';
                /*
                 * Delete adminuser only if he is not the last admin.
                 * @todo create message for frontend.
                 */
             } else {
-                $success = $userMapper->delete($userId);
+                $requestData['showDelUserMsg'] = (int)$userMapper->delete($userId);
             }
         }
 
-        $this->redirect(array('action' => 'index', 'showDelUserMsg' => (int)$success));
+        $this->redirect($requestData);
     }
 }

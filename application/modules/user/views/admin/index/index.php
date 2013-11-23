@@ -10,6 +10,15 @@ if ($this->get('userList') != '') {
         </div>
         <?php
     }
+
+    if ($this->get('errorMsg')) {
+        ?>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <?php echo $this->trans($this->get('errorMsg')); ?>
+        </div>
+        <?php
+    }
     ?>
     <table class="table table-hover table-striped">
         <colgroup>
@@ -64,11 +73,12 @@ if ($this->get('userList') != '') {
                     <td>
                         <span class="editUser clickable fa fa-edit"
                               data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'treat', 'id' => $user->getId())); ?>"
-                              title="<?php echo $this->trans('editUser'); ?>"></span> 
+                              title="<?php echo $this->trans('editUser'); ?>"></span>
                         <span class="deleteUser clickable fa fa-times-circle"
                               data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'delete', 'id' => $user->getId())); ?>"
                               data-toggle="modal"
                               data-target="#deleteModal"
+                              data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteUser', $user->getName())); ?>"
                               title="<?php echo $this->trans('deleteUser'); ?>"></span>
                     </td>
                     <td><?php echo $this->escape($user->getName()); ?></td>
@@ -95,7 +105,7 @@ if ($this->get('userList') != '') {
                     <h4 class="modal-title"><?php echo $this->trans('needAcknowledgement'); ?></h4>
                 </div>
                 <div class="modal-body">
-                    <p><?php echo $this->trans('askIfDeleteUser', '@todo'); ?></p>
+                    <p id="deleteModalText"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button"
@@ -115,6 +125,7 @@ if ($this->get('userList') != '') {
 
     $('.deleteUser').on('click', function(event) {
         $('#deleteUserButton').data('clickurl', $(this).data('clickurl'));
+        $('#deleteModalText').html($(this).data('modaltext'));
     });
 
     $('#deleteUserButton').on('click', function(event) {
