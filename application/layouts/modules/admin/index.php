@@ -155,7 +155,7 @@
                 ?>
                     <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <?php echo $this->escape($message['text']); ?>
+                        <?php echo $this->escape($this->getTranslator()->trans($message['text'])); ?>
                     </div>
                 <?php
                         unset($_SESSION['messages'][$key]);

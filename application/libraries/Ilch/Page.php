@@ -111,17 +111,13 @@ class Page
      */
     public function loadPage()
     {
+        $controller = $this->_loadController();
+        $this->_plugin->addPluginData('controller', $controller);
+        $this->_plugin->execute('AfterControllerLoad');
         $this->_translator->load(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/translations');
 
         if ($this->_request->isAdmin()) {
             $this->_translator->load(APPLICATION_PATH.'/modules/admin/translations');
-        }
-
-        $controller = $this->_loadController();
-        $this->_plugin->addPluginData('controller', $controller);
-        $this->_plugin->execute('AfterControllerLoad');
-
-        if ($this->_request->isAdmin()) {
             $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/admin/'.$this->_request->getControllerName().'/'.$this->_request->getActionName().'.php');
         } else {
             $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/'.$this->_request->getControllerName().'/'.$this->_request->getActionName().'.php');

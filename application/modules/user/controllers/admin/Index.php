@@ -114,7 +114,7 @@ class Index extends \Ilch\Controller\Admin
             $userId = $userMapper->save($user);
 
             if (!empty($userId) && empty($userData['id'])) {
-                $this->addMessage($this->getTranslator()->trans('newUserMsg'));
+                $this->addMessage('newUserMsg');
             }
 
             $this->redirect(array('action' => 'treat', 'id' => $userId));
@@ -136,15 +136,15 @@ class Index extends \Ilch\Controller\Admin
              * Admingroup has always id "1" because group is not deletable.
              */
             if ($deleteUser->getId() == Registry::get('user')->getId()) {
-                $this->addMessage($this->getTranslator()->trans('delOwnUserProhibited'), 'warning');
+                $this->addMessage('delOwnUserProhibited', 'warning');
             } elseif ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
-                $this->addMessage($this->getTranslator()->trans('delLastAdminProhibited'), 'warning');
+                $this->addMessage('delLastAdminProhibited', 'warning');
                 /*
                  * Delete adminuser only if he is not the last admin.
                  */
             } else {
                 if ($userMapper->delete($userId)) {
-                    $this->addMessage($this->getTranslator()->trans('delUserMsg'));
+                    $this->addMessage('delUserMsg');
                 }
             }
         }
