@@ -162,6 +162,31 @@
                     }
                 ?>
                 <i class="toggleSidebar slideRight"></i>
+                <div class="modal fade"
+                     id="deleteModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-hidden="true">&times;</button>
+                                <h4 class="modal-title"><?php echo $this->trans('needAcknowledgement'); ?></h4>
+                            </div>
+                            <div class="modal-body">
+                                <p id="modalText"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        id="modalButton"><?php echo $this->trans('ack'); ?></button>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-dismiss="modal"><?php echo $this->trans('cancel'); ?></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <?php echo $this->getContent(); ?>
             </div>
         </div>

@@ -17,9 +17,13 @@ return array
     'pageTitle' => 'Seitentitel',
     'addPage'	=> 'Neue Seite hinzufügen',
     'editPage'	=> 'Seite editieren',
+    'deletePage' => 'Seite entfernen',
     'pageLanguage' => 'Seitensprache',
     'addButton' => 'Seite anlegen',
     'editButton' => 'Seite ändern',
     'permaLink' => 'Permalink',
-    'pageAdress' => 'Seitenadresse'
+    'pageAdress' => 'Seitenadresse',
+    'noPages' => 'Keine Seiten vorhanden',
+    'treat' => 'Bearbeiten',
+    'askIfDeletePage' => 'Sind Sie sicher dass die Seite "%s" entfernt werden soll?',
 );

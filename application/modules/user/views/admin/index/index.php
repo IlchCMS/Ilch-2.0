@@ -74,42 +74,17 @@ if ($this->get('userList') != '') {
             ?>
         </tbody>
     </table>
-    <div class="modal fade"
-         id="deleteModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><?php echo $this->trans('needAcknowledgement'); ?></h4>
-                </div>
-                <div class="modal-body">
-                    <p id="deleteModalText"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="btn btn-primary"
-                            id="deleteUserButton"><?php echo $this->trans('ack'); ?></button>
-                    <button type="button"
-                            class="btn btn-primary"
-                            data-dismiss="modal"><?php echo $this->trans('cancel'); ?></button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
+    <script>
     $('.editUser').on('click', function(event) {
         window.location = $(this).data('clickurl');
     });
 
     $('.deleteUser').on('click', function(event) {
-        $('#deleteUserButton').data('clickurl', $(this).data('clickurl'));
-        $('#deleteModalText').html($(this).data('modaltext'));
+        $('#modalButton').data('clickurl', $(this).data('clickurl'));
+        $('#modalText').html($(this).data('modaltext'));
     });
 
-    $('#deleteUserButton').on('click', function(event) {
+    $('#modalButton').on('click', function(event) {
         window.location = $(this).data('clickurl');
     });
     </script>

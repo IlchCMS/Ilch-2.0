@@ -17,9 +17,13 @@ return array
     'pageTitle' => 'Page title',
     'addPage'	=> 'Add new page',
     'editPage'	=> 'Site edit',
+    'deletePage' => 'Remove page',
     'pageLanguage' => 'Page language',
     'addButton' => 'Site add',
     'editButton' => 'Site edit',
     'permaLink' => 'Perma link',
-    'pageAdress' => 'Page adress'
+    'pageAdress' => 'Page adress',
+    'noPages' => 'No pages',
+    'treat' => 'Treat',
+    'askIfDeletePage' => 'Are you sure to delete page "%s"?',
 );
