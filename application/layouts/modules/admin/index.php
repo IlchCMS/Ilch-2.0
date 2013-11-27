@@ -150,6 +150,17 @@
                 ?>
 
             <div class="app_right <?php echo $contentFullClass?>">
+                <?php
+                    foreach ($this->get('messages') as $key => $message) {
+                ?>
+                    <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <?php echo $this->escape($message['text']); ?>
+                    </div>
+                <?php
+                        unset($_SESSION['messages'][$key]);
+                    }
+                ?>
                 <i class="toggleSidebar slideRight"></i>
                 <?php echo $this->getContent(); ?>
             </div>

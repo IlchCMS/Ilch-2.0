@@ -1,25 +1,6 @@
 <?php
 if ($this->get('userList') != '') {
 ?>
-    <?php
-    if ($this->get('showDelUserMsg')) {
-        ?>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <?php echo $this->trans('delUserMsg'); ?>
-        </div>
-        <?php
-    }
-
-    if ($this->get('errorMsg')) {
-        ?>
-        <div class="alert alert-warning alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <?php echo $this->trans($this->get('errorMsg')); ?>
-        </div>
-        <?php
-    }
-    ?>
     <table class="table table-hover table-striped">
         <colgroup>
             <col />

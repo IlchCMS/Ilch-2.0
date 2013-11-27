@@ -4,7 +4,6 @@
  */
 
 $user = $this->get('user');
-$showNewUserMsg = $this->get('showNewUserMsg');
 
 if ($user->getId()) {
     $fieldsetLegend = $this->trans('editUser');
@@ -17,16 +16,6 @@ else {
     <legend>
         <?php echo $fieldsetLegend; ?>
     </legend>
-    <?php
-    if ($showNewUserMsg) {
-        ?>
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <?php echo $this->trans('newUserMsg'); ?>
-        </div>
-        <?php
-    }
-    ?>
     <form action="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'save', 'id' => $user->getId())); ?>"
           method="POST"
           class="form-horizontal"

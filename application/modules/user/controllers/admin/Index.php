@@ -73,7 +73,6 @@ class Index extends \Ilch\Controller\Admin
      */
     public function treatAction()
     {
-        $this->getView()->set('showNewUserMsg', $this->getRequest()->getParam('showNewUserMsg'));
         $userId = $this->getRequest()->getParam('id');
         $userMapper = new UserMapper();
 
@@ -84,9 +83,9 @@ class Index extends \Ilch\Controller\Admin
             $user = new UserModel();
         }
 
-        $this->getView()->set('user', $user);
-
         $groupMapper = new GroupMapper();
+
+        $this->getView()->set('user', $user);
         $this->getView()->set('groupList', $groupMapper->getGroupList());
     }
 
@@ -104,14 +103,21 @@ class Index extends \Ilch\Controller\Admin
             $user = $userMapper->loadFromArray($userData);
             $user->setDateCreated(time());
 
-            foreach ($userData['groups'] as $groupId) {
-                $group = new GroupModel();
-                $group->setId($groupId);
-                $user->addGroup($group);
+            if (!empty($userData['groups'])) {
+                foreach ($userData['groups'] as $groupId) {
+                    $group = new GroupModel();
+                    $group->setId($groupId);
+                    $user->addGroup($group);
+                }
             }
 
             $userId = $userMapper->save($user);
-            $this->redirect(array('action' => 'treat', 'id' => $userId, 'showNewUserMsg' => (int)isset($postData['user']['id'])));
+
+            if (!empty($userId) && empty($userData['id'])) {
+                $this->addMessage($this->getTranslator()->trans('newUserMsg'));
+            }
+
+            $this->redirect(array('action' => 'treat', 'id' => $userId));
         }
     }
 
@@ -122,10 +128,6 @@ class Index extends \Ilch\Controller\Admin
     {
         $userMapper = new UserMapper();
         $userId = $this->getRequest()->getParam('id');
-        $requestData = array
-        (
-            'action' => 'index',
-        );
 
         if ($userId) {
             $deleteUser = $userMapper->getUserById($userId);
@@ -134,17 +136,19 @@ class Index extends \Ilch\Controller\Admin
              * Admingroup has always id "1" because group is not deletable.
              */
             if ($deleteUser->getId() == Registry::get('user')->getId()) {
-                $requestData['errorMsg'] = 'delOwnUserProhibited';
+                $this->addMessage($this->getTranslator()->trans('delOwnUserProhibited'), 'warning');
             } elseif ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() === 1) {
-                $requestData['errorMsg'] = 'delLastAdminProhibited';
+                $this->addMessage($this->getTranslator()->trans('delLastAdminProhibited'), 'warning');
                 /*
                  * Delete adminuser only if he is not the last admin.
                  */
             } else {
-                $requestData['showDelUserMsg'] = (int)$userMapper->delete($userId);
+                if ($userMapper->delete($userId)) {
+                    $this->addMessage($this->getTranslator()->trans('delUserMsg'));
+                }
             }
         }
 
-        $this->redirect($requestData);
+        $this->redirect(array('action' => 'index'));
     }
 }
