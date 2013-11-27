@@ -18,7 +18,7 @@ define('VERSION', '2.0');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 define('APPLICATION_PATH', __DIR__.'/application');
-define('CONFIG_PATH', APPLICATION_PATH.'/');
+define('CONFIG_PATH', APPLICATION_PATH);
 
 $rewriteBaseParts = $_SERVER['PHP_SELF'];
 $rewriteBaseParts = explode('index.php', $rewriteBaseParts);
