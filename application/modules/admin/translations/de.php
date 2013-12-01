@@ -42,4 +42,6 @@ return array
     'ack' => 'Bestätigen',
     'cancel' => 'Abbrechen',
     'needAcknowledgement' => 'Bestätigung erforderlich',
+    'pageTitle' => 'Seiten Titel',
+    'saveSuccess' => 'Erfolgreich gespeichert',
 );

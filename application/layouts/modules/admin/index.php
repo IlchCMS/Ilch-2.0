@@ -151,7 +151,13 @@
 
             <div class="app_right <?php echo $contentFullClass?>">
                 <?php
-                    foreach ($this->get('messages') as $key => $message) {
+                    $messages = array();
+
+                    if(!empty($_SESSION['messages'])) {
+                        $messages = $_SESSION['messages'];
+                    }
+
+                    foreach ($messages as $key => $message) {
                 ?>
                     <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

@@ -16,9 +16,13 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('locale', $this->getRequest()->getPost('language'));
             $this->getTranslator()->setLocale($this->getRequest()->getPost('language'));
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
+            $this->getConfig()->set('page_title', $this->getRequest()->getPost('pageTitle'));
+
+            $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('maintenanceMode', $this->getConfig()->get('maintenance_mode'));
+        $this->getView()->set('pageTitle', $this->getConfig()->get('page_title'));
     }
 }

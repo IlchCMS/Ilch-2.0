@@ -19,15 +19,6 @@ class Admin extends Base
 
         $moduleMapper = new \Admin\Mappers\Module();
         $this->getLayout()->set('modules', $moduleMapper->getModules());
-        
-        $messages = array();
-
-        if(!empty($_SESSION['messages']))
-        {
-            $messages = $_SESSION['messages'];
-        }
-
-        $this->getLayout()->set('messages', $messages);
     }
  
     /**

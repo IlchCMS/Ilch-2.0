@@ -44,6 +44,18 @@
             </div>
         </div>
     </div>
+    <div class="form-group">
+        <label for="pageTitleInput" class="col-lg-2 control-label">
+            <?php echo $this->trans('pageTitle'); ?>:
+        </label>
+        <div class="col-lg-2">
+            <input class="form-control"
+                   id="pageTitleInput"
+                   name="pageTitle"
+                   type="text"
+                   value="<?php echo $this->escape($this->get('pageTitle')); ?>" />
+        </div>
+    </div>
     <div class="content_savebox">
         <button type="submit" name="save" class="btn">
             <?php echo $this->trans('saveButton'); ?>

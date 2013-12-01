@@ -42,4 +42,6 @@ return array
     'ack' => 'Confirm',
     'cancel' => 'Cancel',
     'needAcknowledgement' => 'Confirmation required',
+    'pageTitle' => 'Page title',
+    'saveSuccess' => 'Saved successful',
 );
