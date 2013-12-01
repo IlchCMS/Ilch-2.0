@@ -19,44 +19,41 @@
     </head>
     <body>
         <div class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="/" class="navbar-brand"><img class="brand" src="<?php echo $this->staticUrl('img/ilch_logo_brand.png'); ?>"></img></a>
-                </div>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="<?php echo $this->url(); ?>" class="navbar-brand"><img class="brand" src="<?php echo $this->staticUrl('img/ilch_logo_brand.png'); ?>"></img></a>
             </div>
         </div>
         <div class="container">
-        <div class="jumbotron">
-            <h1><?php /*echo $this->pageHeader();*/ ?></h1>
-            <p><?php /*echo $this->pageSubHeader();*/ ?></p>
-        </div>
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="panel panel-default" id="headings">
-                    <div class="panel-heading">
-                        <?php echo 'hnav'; ?>
-                    </div>
-                    <div class="panel-body">
-                        <?php echo $this->getContent(); ?>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default" id="headings">
+                        <div class="panel-heading">
+                            <?php echo 'hnav'; ?>
+                        </div>
+                        <div class="panel-body">
+                            <?php echo $this->getContent(); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="panel panel-default" id="content-formatting">
-                    <div class="panel-heading">
-                        <?php /*echo $this->getMenu()->getTitle();*/ ?>
-                    </div>
-                    <div class="panel-body">
-                        <?php echo $this->getMenu(); ?>
+                <div class="col-lg-4">
+                    <div class="panel panel-default" id="content-formatting">
+                        <div class="panel-heading">
+                            <?php /*echo $this->getMenu()->getTitle();*/ ?>
+                        </div>
+                        <div class="panel-body">
+                            <?php echo $this->getMenu(); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div> 
+        <div class="container credit">
+            <p class="muted credit">© Ilch CMS | <?php echo '<a href="admin">Administrator</a>'; ?></p>
+        </div>  
     </body>
 </html>
