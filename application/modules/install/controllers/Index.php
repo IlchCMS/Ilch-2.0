@@ -240,6 +240,8 @@ class Index extends \Ilch\Controller\Frontend
                     }
                 }
 
+                $db->queryMulti(file_get_contents(APPLICATION_PATH.'/modules/install/install/install_'.$_SESSION['install']['cmsType'].'.sql'));
+
                 unset($_SESSION['install']);
                 $this->redirect(array('action' => 'finish'));
             }

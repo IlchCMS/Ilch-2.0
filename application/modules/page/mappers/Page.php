@@ -23,12 +23,14 @@ class Page extends \Ilch\Mapper
     /**
      * Get page lists for overview.
      *
+     * @param  string $locale
      * @return Page_PageModel[]|null
      */
-    public function getPageList()
+    public function getPageList($locale)
     {
-        $sql = 'SELECT * FROM [prefix]_pages as p
-                INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+        $sql = 'SELECT pc.title, pc.perma, p.id FROM [prefix]_pages as p
+                LEFT JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+                    AND pc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY p.id';
         $pageArray = $this->db()->queryArray($sql);
 

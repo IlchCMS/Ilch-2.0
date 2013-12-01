@@ -36,7 +36,7 @@ class Translator
      *
      * @var string
      */
-    private $_locale = 'en_EN';
+    private $_locale = 'de_DE';
 
     /**
      * Sets the locale to use for the request.

@@ -44,7 +44,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $pageMapper = new PageMapper();
-        $pages = $pageMapper->getPageList();
+        $pages = $pageMapper->getPageList($this->getTranslator()->getLocale());
         $this->getView()->set('pages', $pages);
     }
 

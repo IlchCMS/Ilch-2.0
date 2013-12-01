@@ -8,7 +8,6 @@ $errors = $this->get('errors');
     <div class="col-lg-6">
         <select name="cmsType" class="form-control">
             <option value="private">Private</option>
-            <option value="clan">Clan</option>
         </select>
     </div>
 </div>

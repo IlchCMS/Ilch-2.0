@@ -21,6 +21,41 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="startPage" class="col-lg-2 control-label">
+            <?php echo $this->trans('startPage'); ?>:
+        </label>
+        <div class="col-lg-2">
+            <select class="form-control" name="startPage" id="startPage">
+                <optgroup label="<?php echo $this->trans('pages'); ?>">
+                <?php
+                    foreach ($this->get('pages') as $page) {
+                        $selected = '';
+
+                        if ($this->get('startPage') == 'page_'.$page->getID()) {
+                            $selected = 'selected="selected"';
+                        }
+                        echo '<option '.$selected.' value="page_'.$page->getID().'">'.$this->escape($page->getTitle()).'</option>';
+                    }
+                ?>
+                </optgroup>
+                <optgroup label="<?php echo $this->trans('modules'); ?>">
+                <?php
+                    $moduleMapper = new \Admin\Mappers\Module();
+
+                    foreach ($this->get('modules') as $module) {
+                        $selected = '';
+
+                        if ($this->get('startPage') == 'module_'.$module->getKey()) {
+                            $selected = 'selected="selected"';
+                        }
+                        echo '<option '.$selected.' value="module_'.$module->getKey().'">'.$this->escape($module->getName($this->getTranslator()->getLocale())).'</option>';
+                    }
+                ?>
+                </optgroup>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="maintenanceMode" class="col-lg-2 control-label">
             <?php echo $this->trans('maintenanceMode'); ?>:
         </label>

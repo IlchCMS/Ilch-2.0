@@ -88,6 +88,6 @@ class Menu extends \Ilch\Controller\Admin
         $menuItems = $menuMapper->getMenuItemsByParent(1, 0);
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
-        $this->getView()->set('pages', $pageMapper->getPageList());
+        $this->getView()->set('pages', $pageMapper->getPageList($this->getTranslator()->getLocale()));
     }
 }

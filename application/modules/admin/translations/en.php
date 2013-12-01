@@ -30,7 +30,7 @@ return array
     'modules'		 => 'Modules',
     'layouts'		 => 'Layouts',
     'system'		 => 'Settings',
-    'maintenanceMode' => 'Maintenance mode',
+    'maintenanceMode' => 'Maintenance-Mode',
     'on'			  => 'On',
     'off'			  => 'Off',
     'systemSettings'  => 'System - Settings',
@@ -42,6 +42,8 @@ return array
     'ack' => 'Confirm',
     'cancel' => 'Cancel',
     'needAcknowledgement' => 'Confirmation required',
-    'pageTitle' => 'Page title',
+    'pageTitle' => 'Pagetitle',
     'saveSuccess' => 'Saved successful',
+    'startPage' => 'Startpage',
+    'pages' => 'Pages',
 );

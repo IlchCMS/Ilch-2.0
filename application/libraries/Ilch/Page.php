@@ -93,11 +93,11 @@ class Page
             $databaseConfig->loadConfigFromDatabase();
             Registry::set('db', $db);
             Registry::set('config', $databaseConfig);
-
             $this->_plugin->addPluginData('db', $db);
             $this->_plugin->addPluginData('config', $databaseConfig);
             $this->_plugin->addPluginData('translator', $this->_translator);
             $this->_plugin->execute('AfterDatabaseLoad');
+            $this->_router->defineStartPage($databaseConfig->get('start_page'), $this->_translator);
         } else {
             /*
              * Cms not installed yet.

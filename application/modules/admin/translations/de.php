@@ -44,4 +44,6 @@ return array
     'needAcknowledgement' => 'Bestätigung erforderlich',
     'pageTitle' => 'Seiten Titel',
     'saveSuccess' => 'Erfolgreich gespeichert',
+    'startPage' => 'Startseite',
+    'pages' => 'Seiten'
 );

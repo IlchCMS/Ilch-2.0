@@ -11,7 +11,7 @@ defined('ACCESS') or die('no direct access');
 class Router
 {
     /**
-     * Injects request and config object.
+     * Injects request.
      *
      * @param Ilch_Request $request
      */
@@ -42,6 +42,37 @@ class Router
         if (!empty($query)) {
             $this->_executeRewrite($query);
         }
+    }
+
+    /**
+     * Defines the start page.
+     *
+     * @param string $startPage
+     * @param \Ilch\Translator $translator
+     * @return null
+     */
+    public function defineStartPage($startPage, $translator)
+    {
+        if (!empty($this->_query)) {
+            return;
+        }
+
+        if (strpos($startPage, 'module_') !== false) {
+            $this->_request->setModuleName(str_replace('module_', '', $startPage));
+            $this->_request->setControllerName('index');
+            $this->_request->setActionName('index');
+        } elseif (strpos($startPage, 'page_') !== false) {
+            $this->_request->setModuleName('page');
+            $this->_request->setControllerName('index');
+            $this->_request->setActionName('show');
+            $this->_request->setParam('id', str_replace('page_', '', $startPage));
+            $this->_request->setParam('locale', $translator->getLocale());
+        } else {
+            $this->_request->setModuleName(DEFAULT_MODULE);
+            $this->_request->setControllerName('index');
+            $this->_request->setActionName('index');
+        }
+
     }
 
     /**
