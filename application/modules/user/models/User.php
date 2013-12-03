@@ -62,6 +62,13 @@ class User extends \Ilch\Model
     protected $_dateConfirmed;
 
     /**
+     * LastActivity timestamp of the user.
+     *
+     * @var Ilch_Date
+     */
+    protected $_dateLastActivity;
+
+    /**
      * The associated user group object.
      *
      * @var User\Models\Group[]
