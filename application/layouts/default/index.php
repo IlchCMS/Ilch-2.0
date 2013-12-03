@@ -43,10 +43,10 @@
                 <div class="col-lg-4">
                     <div class="panel panel-default" id="content-formatting">
                         <div class="panel-heading">
-                            <?php /*echo $this->getMenu()->getTitle();*/ ?>
+                            <?php echo $this->getMenu(1)->getTitle(); ?>
                         </div>
                         <div class="panel-body">
-                            <?php echo $this->getMenu(); ?>
+                            <?php echo $this->getMenu(1)->getItems(); ?>
                         </div>
                     </div>
                 </div>

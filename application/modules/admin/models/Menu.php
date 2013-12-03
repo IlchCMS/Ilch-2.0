@@ -19,21 +19,49 @@ defined('ACCESS') or die('no direct access');
 class Menu extends \Ilch\Model
 {
     /**
+     * Mapper of the menu.
+     *
+     * @var \Ilch\Mapper
+     */
+    protected $_mapper;
+
+    /**
      * Id of the menu.
      *
      * @var integer
      */
-    protected $_id = null;
-
+    protected $_id;
+    
     /**
-     * Content of the module.
+     * Title of the menu.
      *
      * @var string
      */
-    protected $_content = '';
+    protected $_title;
+    
+    /**
+     * Injects mapper to model.
+     * 
+     * @todo it is a workaround for the rec function.
+     * @param \Ilch\Mapper $mapper
+     */
+    public function __construct($mapper)
+    {
+        $this->_mapper = $mapper;
+    }
 
     /**
-     * Gets the id.
+     * Sets the menu id.
+     *
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->_id = (int)$id;
+    }
+
+    /**
+     * Gets the menu id.
      *
      * @return integer
      */
@@ -41,34 +69,66 @@ class Menu extends \Ilch\Model
     {
         return $this->_id;
     }
-
+    
     /**
-     * Sets the id.
+     * Sets the menu title.
      *
-     * @param integer $id
+     * @param string $title
      */
-    public function setId($id)
+    public function setTitle($title)
     {
-        $this->_id = (int) $id;
+        $this->_title = (string)$title;
     }
 
     /**
-     * Gets the content.
+     * Gets the menu title.
      *
      * @return string
      */
-    public function getContent()
+    public function getTitle()
     {
-        return $this->_content;
+        return $this->_title;
     }
 
     /**
-     * Sets the content.
-     *
-     * @param string $content
+     * Gets the menu items as html-string.
+     * 
+     * @return string
      */
-    public function setContent($content)
+    public function getItems()
     {
-        $this->_content = (string) $content;
+        $html = '';
+
+        foreach ($this->_mapper->getMenuItemsByParent($this->getId(), 0) as $item) {
+            $html .= $this->_rec($item);
+        }
+
+        return $html;
+    }
+
+    /**
+     * Gets the menu items as html-string.
+     *
+     * @param \Admin\Models\MenuItem $item
+     * @return string
+     */
+    protected function _rec($item)
+    {
+        $subItems = $this->_mapper->getMenuItemsByParent(1, $item->getId());
+
+        $html = '<ul><li>';
+        $html .= $item->getTitle();
+
+        if (!empty($subItems)) {
+            $html .= '<ul>';
+
+            foreach ($subItems as $subItem) {
+                $html .= $this->_rec($subItem);
+            }
+
+            $html .= '</ul>';
+        }
+
+        return $html .= '</li></ul>';
     }
 }

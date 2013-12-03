@@ -20,6 +20,28 @@ defined('ACCESS') or die('no direct access');
 class Menu extends \Ilch\Mapper
 {
     /**
+     * Gets the menu for the given id.
+     * 
+     * @return \Admin\Models\Menu
+     */
+    public function getMenu($menuId)
+    {
+        $menu = new \Admin\Models\Menu($this);
+        
+        $menuRow = $this->db()->selectRow
+        (
+            array('id','title'),
+            'menu',
+            array('id' => $menuId)
+        );
+
+        $menu->setId($menuRow['id']);
+        $menu->setTitle($menuRow['title']);
+
+        return $menu;
+    }
+
+    /**
      * Gets all menu items by menu id.
      */
     public function getMenuItems($menuId)

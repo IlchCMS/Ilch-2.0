@@ -12,9 +12,13 @@ class Frontend extends Base
 {
     /**
      * Gets the menu for the given id.
+     * 
+     * @return \Admin\Models\Menu
      */
     public function getMenu($menu = 1)
     {
+        $menuMapper = new \Admin\Mappers\Menu();
+        return $menuMapper->getMenu($menu);
     }
 
     /**
