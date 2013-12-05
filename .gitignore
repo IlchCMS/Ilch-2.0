@@ -1,3 +1,4 @@
 .htaccess
 application/config.php
 /nbproject/private/
+.idea
