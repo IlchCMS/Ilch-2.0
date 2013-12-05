@@ -220,23 +220,20 @@ class Index extends \Ilch\Controller\Frontend
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
-                    $db->queryMulti(file_get_contents(APPLICATION_PATH.'/modules/'.$module.'/install/install.sql'));
+                    $configClass = $module.'\\Config\\Config';
+                    $config = new $configClass($this->getTranslator());
+                    $config->install();
 
-                    if (file_exists(APPLICATION_PATH.'/modules/'.$module.'/install/install.php')) {
-                        $config = array();
-                        require_once APPLICATION_PATH.'/modules/'.$module.'/install/install.php';
+                    if (!empty($config->name)) {
+                        $moduleModel = new \Admin\Models\Module();
+                        $moduleModel->setKey($config->key);
 
-                        if (!empty($config)) {
-                            $moduleModel = new \Admin\Models\Module();
-                            $moduleModel->setKey($config['key']);
-
-                            foreach ($config['name'] as $key => $value) {
-                                $moduleModel->addName($key, $value);
-                            }
-
-                            $moduleModel->setIconSmall($config['icon_small']);
-                            $moduleMapper->save($moduleModel);
+                        foreach ($config->name as $key => $value) {
+                            $moduleModel->addName($key, $value);
                         }
+
+                        $moduleModel->setIconSmall($config->icon_small);
+                        $moduleMapper->save($moduleModel);
                     }
                 }
 
