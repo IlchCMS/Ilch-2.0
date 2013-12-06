@@ -84,16 +84,20 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a target="_blank" href="<?php echo $this->url(); ?> ">
+                            <i class="fa fa-share"></i> <?php echo $this->trans('frontend'); ?>
+                        </a>
+                    </li>
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user"></i> <?php echo $this->getUser()->getName(); ?>
-                        <span class="caret"></span>
-                    </a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i> <?php echo $this->getUser()->getName(); ?>
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
-                            <li class="divider"></li>
                             <li>
                                 <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-                                    <i class="fa fa-power-off"></i> <?php echo $this->trans('logout');?>
+                                    <i class="fa fa-power-off"></i> <?php echo $this->trans('logout'); ?>
                                 </a>
                             </li>
                         </ul>

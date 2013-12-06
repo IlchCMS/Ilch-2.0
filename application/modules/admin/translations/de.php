@@ -47,4 +47,5 @@ return array
     'startPage' => 'Startseite',
     'pages' => 'Seiten',
     'menuTitle' => 'Menütitel',
+    'frontend' => 'Frontend',
 );
