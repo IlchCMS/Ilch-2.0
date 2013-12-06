@@ -45,7 +45,7 @@ class Menu extends \Ilch\Model
      * @todo it is a workaround for the rec function.
      * @param \Ilch\Mapper $mapper
      */
-    public function __construct($mapper)
+    public function __construct($mapper = '')
     {
         $this->_mapper = $mapper;
     }

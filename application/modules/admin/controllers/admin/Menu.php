@@ -9,12 +9,14 @@ namespace Admin\Controllers\Admin;
 use Admin\Mappers\Menu as MenuMapper;
 use Page\Mappers\Page as PageMapper;
 use Admin\Models\MenuItem;
+use Admin\Models\Menu as MenuModel;
 defined('ACCESS') or die('no direct access');
 
 class Menu extends \Ilch\Controller\Admin
 {
     public function indexAction()
     {
+        $menuId = 1;
         $menuMapper = new MenuMapper();
         $pageMapper = new PageMapper();
 
@@ -83,9 +85,19 @@ class Menu extends \Ilch\Controller\Admin
                     $menuMapper->saveItem($menuItem);
                 }
             }
+
+            $menu = new MenuModel();
+            $menu->setId($menuId);
+            $menu->setTitle($this->getRequest()->getPost('menuTitle'));
+            $menuMapper->save($menu);
+
+            $this->addMessage('saveSuccess');
         }
 
-        $menuItems = $menuMapper->getMenuItemsByParent(1, 0);
+        $menuItems = $menuMapper->getMenuItemsByParent($menuId, 0);
+        $menu = $menuMapper->getMenu($menuId);
+
+        $this->getView()->set('menu', $menu);
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
         $this->getView()->set('pages', $pageMapper->getPageList($this->getTranslator()->getLocale()));

@@ -121,10 +121,20 @@ function rec($item, $menuMapper)
     }
 </style>
 <form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
-    <legend><?php echo $this->trans('menuChange'); ?></legend>
-    <div class="row">
-        <div class="col-md-6">
-          <ol id="sortable" class="sortable">
+    <legend><?php echo $this->trans('menuChange', $this->get('menu')->getId()); ?></legend>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="type" class="col-lg-2 control-label">
+                    <?php echo $this->trans('menuTitle'); ?>
+                </label>
+                <div class="col-lg-10">
+                    <input class="form-control"
+                           type="text"
+                           name="menuTitle"
+                           value="<?php echo $this->escape($this->get('menu')->getTitle()); ?>" />
+                </div>
+            </div>
+            <ol id="sortable" class="sortable">
                 <?php
                     if (!empty($menuItems)) {
                         foreach ($menuItems as $item) {
@@ -134,8 +144,8 @@ function rec($item, $menuMapper)
                 ?>
             </ol>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-5 changeBox">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 changeBox">
             <input type="hidden" id="id" value="" />
             <div class="form-group">
                 <label for="title" class="col-lg-2 control-label">
@@ -171,7 +181,6 @@ function rec($item, $menuMapper)
                 <input type="button" id="menuItemAdd" value="<?php echo $this->trans('menuItemAdd'); ?>" class="btn">
             </div>
         </div>
-    </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
     <div class="content_savebox">
         <button type="submit" name="save" class="btn">

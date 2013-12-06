@@ -11,7 +11,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuChange' => 'Menu change',
+    'menuChange' => 'Menu %s change',
     'menuItemAdd' => 'Add menu item',
     'loginWelcome' => 'Please sign in',
     'emailname' => 'Email or Username',
@@ -46,4 +46,5 @@ return array
     'saveSuccess' => 'Saved successful',
     'startPage' => 'Startpage',
     'pages' => 'Pages',
+    'menuTitle' => 'Menutitle',
 );

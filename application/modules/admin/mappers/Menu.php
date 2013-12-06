@@ -9,6 +9,7 @@
 
 namespace Admin\Mappers;
 use Admin\Models\MenuItem;
+use Admin\Models\Menu as MenuModel;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -165,6 +166,45 @@ class Menu extends \Ilch\Mapper
         }
 
         return $itemId;
+    }
+    
+    /**
+     * Save one menu.
+     *
+     * @param MenuModel $menu
+     * @return integer
+     */
+    public function save(MenuModel $menu)
+    {
+        $menuId = (int)$this->db()->selectCell
+        (
+            'id',
+            'menu',
+            array
+            (
+                'id' => $menu->getId(),
+            )
+        );
+
+        if ($menuId) {
+            $this->db()->update
+            (
+                array('title' => $menu->getTitle()),
+                'menu',
+                array
+                (
+                    'id' => $menuId,
+                )
+            );
+        } else {
+            $menuId = $this->db()->insert
+            (
+                array('title' => $menu->getTitle()),
+                'menu'
+            );
+        }
+
+        return $menuId;
     }
  
     /**
