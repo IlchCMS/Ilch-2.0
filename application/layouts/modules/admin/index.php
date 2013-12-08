@@ -38,29 +38,41 @@
             <div class="navbar-header leftbar">
                 <img class="brand" src="<?php echo $this->staticUrl('img/ilch_logo_brand.png'); ?>" />
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                         <a href="#" id="search" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b></a>
+                    <li>
+                        <div>
+                            <a class="btn btn-default" href="#" id="search">
+                                <i class="fa fa-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b>
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
-                            <i class="fa fa-home"></i> <?php echo $this->trans('home'); ?>
-                        </a>
+                        <div>
+                            <a class="btn btn-default" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
+                                <i class="fa fa-home"></i> <?php echo $this->trans('home'); ?>
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'menu', 'action' => 'index')); ?>">
-                            <i class="fa fa-list-ol"></i> <?php echo $this->trans('navigation'); ?>
-                        </a>
+                        <div>
+                            <a class="btn btn-default" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'menu', 'action' => 'index')); ?>">
+                                <i class="fa fa-list-ol"></i> <?php echo $this->trans('navigation'); ?>
+                            </a>
+                        </div>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>">
-                            <i class="fa fa-puzzle-piece"></i> <?php echo $this->trans('modules'); ?>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
+                    <li>
+                        <div class="btn-group dropdown-toggle">
+                            <a class="btn btn-default" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>" >
+                                <i class="fa fa-puzzle-piece"></i> <?php echo $this->trans('modules'); ?>
+                            </a>
+                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul role="menu" class="dropdown-menu">
                             <?php
                                 foreach ($this->get('modules') as $module) {
                                     echo '<li>
@@ -70,37 +82,46 @@
                                         </li>';
                                 }
                             ?>
-                        </ul>
+                            </ul>
+                        </div>
                     </li>
                     <li>
-                        <a href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
-                            <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
-                        </a>
+                        <div>
+                            <a class="btn btn-default" href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
+                                <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
+                            </a>
+                        </div>
                     </li>
                     <li>
-                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
-                            <i class="fa fa-cogs"></i> <?php echo $this->trans('system'); ?>
-                        </a>
+                        <div>
+                            <a class="btn btn-default" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
+                                <i class="fa fa-cogs"></i> <?php echo $this->trans('system'); ?>
+                            </a>
+                        </div>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a target="_blank" href="<?php echo $this->url(); ?> ">
-                            <i class="fa fa-share"></i> <?php echo $this->trans('frontend'); ?>
-                        </a>
+                        <div>
+                            <a class="btn btn-default" target="_blank" href="<?php echo $this->url(); ?> ">
+                                <i class="fa fa-share"></i> <?php echo $this->trans('frontend'); ?>
+                            </a>
+                        </div>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-user"></i> <?php echo $this->getUser()->getName(); ?>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-                                    <i class="fa fa-power-off"></i> <?php echo $this->trans('logout'); ?>
-                                </a>
-                            </li>
-                        </ul>
+                    <li>
+                        <div class="btn-group dropdown-toggle">
+                            <a class="btn btn-default" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user"></i> <?php echo $this->getUser()->getName(); ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
+                                        <i class="fa fa-power-off"></i> <?php echo $this->trans('logout'); ?>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
