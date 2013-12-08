@@ -14,9 +14,19 @@ defined('ACCESS') or die('no direct access');
 
 class Menu extends \Ilch\Controller\Admin
 {
+    public function init()
+    {
+        $this->getLayout()->removeSidebar();
+    }
+
     public function indexAction()
     {
         $menuId = 1;
+
+        if ($this->getRequest()->getParam('menu')) {
+            $menuId = (int)$this->getRequest()->getParam('menu');
+        }
+
         $menuMapper = new MenuMapper();
         $pageMapper = new PageMapper();
 
@@ -34,7 +44,7 @@ class Menu extends \Ilch\Controller\Admin
             if (!empty($oldItems)) {
                 foreach ($oldItems as $oldItem) {
                     if (!isset($items[$oldItem->getId()])) {
-                        $menuMapper->delete($oldItem);
+                        $menuMapper->deleteItem($oldItem);
                     }
                 }
             }
@@ -57,7 +67,7 @@ class Menu extends \Ilch\Controller\Admin
                         $menuItem->setId($item['id']);
                     }
 
-                    $menuItem->setMenuId(1);
+                    $menuItem->setMenuId($menuId);
                     $menuItem->setType($item['type']);
                     $menuItem->setSiteId($item['siteid']);
                     $menuItem->setHref($item['href']);
@@ -96,10 +106,31 @@ class Menu extends \Ilch\Controller\Admin
 
         $menuItems = $menuMapper->getMenuItemsByParent($menuId, 0);
         $menu = $menuMapper->getMenu($menuId);
-
+        $menus = $menuMapper->getMenus();
+        
         $this->getView()->set('menu', $menu);
+        $this->getView()->set('menus', $menus);
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
         $this->getView()->set('pages', $pageMapper->getPageList($this->getTranslator()->getLocale()));
+    }
+    
+    public function addAction()
+    {
+        $menuMapper = new MenuMapper();
+        $menu = new MenuModel();
+        $menu->setTitle('New');
+        $newId = $menuMapper->save($menu);
+        $this->addMessage('saveSuccess');
+        $this->redirect(array('action' => 'index', 'menu' => $newId));
+    }
+    
+    public function deleteAction()
+    {
+        $menuMapper = new MenuMapper();
+        $id = (int)$this->getRequest()->getParam('id');
+        $menuMapper->delete($id);        
+        $this->addMessage('saveSuccess');
+        $this->redirect(array('action' => 'index'));       
     }
 }

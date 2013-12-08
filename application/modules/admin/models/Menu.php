@@ -98,9 +98,12 @@ class Menu extends \Ilch\Model
     public function getItems()
     {
         $html = '';
-
-        foreach ($this->_mapper->getMenuItemsByParent($this->getId(), 0) as $item) {
-            $html .= $this->_rec($item);
+        $items = $this->_mapper->getMenuItemsByParent($this->getId(), 0);
+        
+        if (!empty($items)) {
+            foreach ($items as $item) {
+                $html .= $this->_rec($item);
+            }
         }
 
         return $html;

@@ -41,14 +41,20 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
+                    <?php
+                        foreach ($this->getMenus() as $menu) {
+                    ?>
                     <div class="panel panel-default" id="content-formatting">
                         <div class="panel-heading">
-                            <?php echo $this->getMenu(1)->getTitle(); ?>
+                            <?php echo $menu->getTitle(); ?>
                         </div>
                         <div class="panel-body">
-                            <?php echo $this->getMenu(1)->getItems(); ?>
+                            <?php echo $menu->getItems(); ?>
                         </div>
                     </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
         </div> 

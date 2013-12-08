@@ -21,6 +21,45 @@ defined('ACCESS') or die('no direct access');
 class Menu extends \Ilch\Mapper
 {
     /**
+     * Gets the menu id for the menu position.
+     *
+     * @param integer $position
+     */
+    public function getMenuIdForPosition($position)
+    {
+        $sql = 'SELECT id FROM [prefix]_menu
+                ORDER BY id ASC
+                LIMIT '.(int)($position-1).', 1';
+        $id = $this->db()->queryCell($sql);
+
+        return $id;
+    }
+
+    /**
+     * Gets the menus.
+     * 
+     * @return \Admin\Models\Menu[]
+     */
+    public function getMenus()
+    {
+        $menus = array();
+        $menuRows = $this->db()->selectArray
+        (
+            array('id','title'),
+            'menu'
+        );
+
+        foreach ($menuRows as $menuRow) {
+            $menu = new \Admin\Models\Menu($this);
+            $menu->setId($menuRow['id']);
+            $menu->setTitle($menuRow['title']);
+            $menus[] = $menu;
+        }
+
+        return $menus;
+    }
+
+    /**
      * Gets the menu for the given id.
      * 
      * @return \Admin\Models\Menu
@@ -212,7 +251,7 @@ class Menu extends \Ilch\Mapper
      *
      * @param  MenuItem $menuItem
      */
-    public function delete($menuItem)
+    public function deleteItem($menuItem)
     {
         $this->db()->delete
         (
@@ -220,6 +259,23 @@ class Menu extends \Ilch\Mapper
             array
             (
                 'id' => $menuItem->getId(),
+            )
+        );
+    }
+
+    /**
+     * Delete the given menu.
+     *
+     * @param integer $id
+     */
+    public function delete($id)
+    {
+        $this->db()->delete
+        (
+            'menu',
+            array
+            (
+                'id' => $id,
             )
         );
     }

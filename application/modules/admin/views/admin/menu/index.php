@@ -3,9 +3,9 @@ $menuItems = $this->get('menuItems');
 $menuMapper = $this->get('menuMapper');
 $pages = $this->get('pages');
 
-function rec($item, $menuMapper)
+function rec($item, $menuMapper, $obj)
 {
-    $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
+    $subItems = $menuMapper->getMenuItemsByParent($obj->get('menu')->getId(), $item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
@@ -26,7 +26,7 @@ function rec($item, $menuMapper)
         echo '<ol>';
 
         foreach ($subItems as $subItem) {
-            rec($subItem, $menuMapper);
+            rec($subItem, $menuMapper, $obj);
         }
 
         echo '</ol>';
@@ -120,8 +120,27 @@ function rec($item, $menuMapper)
         margin: -1px;*/
     }
 </style>
-<form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
-    <legend><?php echo $this->trans('menuChange', $this->get('menu')->getId()); ?></legend>
+<form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId())); ?>">
+    <ul class="nav nav-tabs">
+        <?php
+        $iMenu = 1;
+
+        foreach ($this->get('menus') as $menu) {
+            $active = '';
+            
+            if($menu->getId() == $this->get('menu')->getId()) {
+                $active = 'active';
+            }
+            echo '<li class="'.$active.'">'
+                    . '<a href="'.$this->url(array('menu' => $menu->getId())).'">'.$this->trans('menu').' '.$iMenu.'</a>'
+                    . '</li>';
+            $iMenu++;
+        }
+        ?>
+      <li><a href="<?php echo $this->url(array('action' => 'add')); ?>">+</a></li>
+    </ul>
+    <br />
+    <legend><?php echo $this->trans('menuChange'); ?></legend>
         <div class="col-lg-6">
             <div class="form-group">
                 <label for="type" class="col-lg-2 control-label">
@@ -138,7 +157,7 @@ function rec($item, $menuMapper)
                 <?php
                     if (!empty($menuItems)) {
                         foreach ($menuItems as $item) {
-                            rec($item, $menuMapper);
+                            rec($item, $menuMapper, $this);
                         }
                     }
                 ?>
@@ -186,6 +205,14 @@ function rec($item, $menuMapper)
         <button type="submit" name="save" class="btn">
             <?php echo $this->trans('saveButton'); ?>
         </button>
+        <span class="deleteMenu clickable btn pull-right"
+              data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $this->get('menu')->getId())); ?>"
+              data-toggle="modal"
+              data-target="#deleteModal"
+              data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteMenu', $this->get('menu')->getTitle())); ?>">
+                  <?php echo $this->trans('deleteMenu'); ?>
+        </span>
+
     </div>
 </form>
 <script>
@@ -198,6 +225,15 @@ function rec($item, $menuMapper)
 
         $('#type').change();
     }
+    
+    $('.deleteMenu').on('click', function(event) {
+        $('#modalButton').data('clickurl', $(this).data('clickurl'));
+        $('#modalText').html($(this).data('modaltext'));
+    });
+
+    $('#modalButton').on('click', function(event) {
+        window.location = $(this).data('clickurl');
+    });
 
     $(document).ready
     (

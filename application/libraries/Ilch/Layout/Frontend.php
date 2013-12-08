@@ -11,14 +11,27 @@ defined('ACCESS') or die('no direct access');
 class Frontend extends Base
 {
     /**
-     * Gets the menu for the given id.
+     * Gets all the menus.
+     * 
+     * @return \Admin\Models\Menu[]
+     */
+    public function getMenus()
+    {
+        $menuMapper = new \Admin\Mappers\Menu();
+
+        return $menuMapper->getMenus();
+    }
+
+    /**
+     * Gets the menu for the given position.
      * 
      * @return \Admin\Models\Menu
      */
     public function getMenu($menu = 1)
     {
         $menuMapper = new \Admin\Mappers\Menu();
-        return $menuMapper->getMenu($menu);
+
+        return $menuMapper->getMenu($menuMapper->getMenuIdForPosition($menu));
     }
 
     /**

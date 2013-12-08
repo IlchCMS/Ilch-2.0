@@ -11,7 +11,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuChange' => 'Menu %s change',
+    'menuChange' => 'Menu change',
     'menuItemAdd' => 'Add menu item',
     'loginWelcome' => 'Please sign in',
     'emailname' => 'Email or Username',
@@ -48,4 +48,7 @@ return array
     'pages' => 'Pages',
     'menuTitle' => 'Menutitle',
     'frontend' => 'Frontend',
+    'menu' => 'menu',
+    'deleteMenu' => 'Delete menu',
+    'askIfDeleteMenu' => 'Are you sure to delete menu "%s"?'
 );

@@ -10,6 +10,11 @@ defined('ACCESS') or die('no direct access');
 
 class Settings extends \Ilch\Controller\Admin
 {
+    public function init()
+    {
+        $this->getLayout()->removeSidebar();
+    }
+
     public function indexAction()
     {
         $moduleMapper = new \Admin\Mappers\Module();

@@ -109,7 +109,7 @@
                 <?php
                     $contentFullClass = 'app_right_full';
 
-                    if (($this->getRequest()->getControllerName() !== 'index' && $this->getRequest()->getModuleName() == 'admin') || $this->getRequest()->getModuleName() !== 'admin') {
+                    if ($this->hasSidebar()) {
                         $contentFullClass = '';
                 ?>
                     <div class="app_left">

@@ -21,6 +21,11 @@ class Admin extends Base
     private $_menuActions = array();
 
     /**
+     * @var boolean
+     */
+    private $_showSidebar = true;
+
+    /**
      * @return array
      */
     public function getMenus()
@@ -55,5 +60,23 @@ class Admin extends Base
     public function getMenuAction()
     {
         return $this->_menuActions;
+    }
+
+    /**
+     * Removes sidebar on the left side.
+     */
+    public function removeSidebar()
+    {
+        $this->_showSidebar = false;
+    }
+
+    /**
+     * Defines if sidebar is shown or not.
+     *
+     * @return boolean
+     */
+    public function hasSidebar()
+    {
+        return (bool)$this->_showSidebar;
     }
 }
