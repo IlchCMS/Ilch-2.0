@@ -200,6 +200,19 @@ abstract class Base
     }
 
     /**
+     * Gets formular hidden token input field.
+     *
+     * @return string
+     */
+    public function getTokenField()
+    {
+        $token = md5(uniqid());
+        $_SESSION['token'][$token] = $token;
+
+        return '<input type="hidden" name="ilch_token" value="'.$token.'" />'."\n";
+    }
+
+    /**
      * Gets the page loading time in microsecond.
      *
      * @return float

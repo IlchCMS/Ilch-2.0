@@ -1,4 +1,5 @@
 <form class="form-horizontal" method="POST" action="">
+    <?php echo $this->getTokenField(); ?>
     <legend>
     <?php
         if ($this->get('page') != '') {

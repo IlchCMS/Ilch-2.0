@@ -20,6 +20,7 @@ else {
           method="POST"
           class="form-horizontal"
           id="userForm">
+        <?php echo $this->getTokenField(); ?>
         <input name="user[id]"
                type="hidden"
                value="<?php echo $user->getId(); ?>" />

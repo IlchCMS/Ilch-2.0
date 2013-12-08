@@ -29,6 +29,7 @@
                 $emailname = $this->get('emailname');
             ?>
             <form class="form-signin" method="POST" action="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'))?>">
+                <?php echo $this->getTokenField(); ?>
                 <h4><?php echo$this->trans('loginWelcome')?></h4>
                 <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; }; ?>">
                     <input type="text"

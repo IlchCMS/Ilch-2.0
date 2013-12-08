@@ -65,6 +65,14 @@ class Page
             $this->_layout = new Layout\Frontend($this->_request, $this->_translator, $this->_router);
         }
 
+        if ($this->_request->isPost()) {
+            $token = $this->_request->getPost('ilch_token');
+
+            if (empty($token) || !isset($_SESSION['token'][$token])) {
+                throw new \InvalidArgumentException('token wrong');
+            }
+        }
+
         $this->_plugin->detectPlugins();
         $this->_plugin->addPluginData('request', $this->_request);
         $this->_plugin->addPluginData('layout', $this->_layout);

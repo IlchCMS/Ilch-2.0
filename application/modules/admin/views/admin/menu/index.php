@@ -121,6 +121,7 @@ function rec($item, $menuMapper, $obj)
     }
 </style>
 <form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId())); ?>">
+    <?php echo $this->getTokenField(); ?>
     <ul class="nav nav-tabs">
         <?php
         $iMenu = 1;

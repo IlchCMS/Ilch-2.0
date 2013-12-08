@@ -14,6 +14,7 @@
     </head>
     <body>
         <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
+            <?php echo $this->getTokenField(); ?>
             <div class="container install_container">
                 <img class="logo" src="<?php echo $this->staticUrl('img/ilch_logo.png'); ?>" />
                 <ul class="nav nav-tabs" id="install_steps">
