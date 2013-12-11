@@ -2,14 +2,12 @@
 /**
  * Holds class Libraries_Ilch_RouterTest.
  *
- * @author Marco Bunge
  * @package ilch_phpunit
  */
 
 /**
  * Tests the router object.
  *
- * @author Marco Bunge
  * @package ilch_phpunit
  */
 class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase

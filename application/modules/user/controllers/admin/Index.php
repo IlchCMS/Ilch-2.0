@@ -2,8 +2,7 @@
 /**
  * Holds the class Index.
  *
- * @author Martin Jainta
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -19,8 +18,7 @@ defined('ACCESS') or die('no direct access');
 /**
  * Handles action for the main admin configuration page.
  *
- * @author Martin Jainta
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 class Index extends \Ilch\Controller\Admin

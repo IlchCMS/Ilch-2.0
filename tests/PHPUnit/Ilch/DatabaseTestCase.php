@@ -2,7 +2,6 @@
 /**
  * Holds class PHPUnit_Ilch_DatabaseTestCase.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 
@@ -12,7 +11,6 @@
  * Should be used when using a mock for the database is not possible
  * or an extraordinarily huge effort.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase

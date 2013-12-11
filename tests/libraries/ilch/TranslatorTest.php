@@ -2,14 +2,12 @@
 /**
  * Holds class Libraries_Ilch_TranslatorTest.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 
 /**
  * Tests the translator object.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase

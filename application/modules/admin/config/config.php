@@ -2,7 +2,6 @@
 /**
  * Holds Admin\Config\Config.
  *
- * @author Meyer Dominik
  * @copyright Ilch 2.0
  * @package ilch
  */

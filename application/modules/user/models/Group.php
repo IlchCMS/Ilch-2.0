@@ -2,7 +2,6 @@
 /**
  * Holds class Group.
  *
- * @author Jainta Martin
  * @copyright Ilch Pluto
  * @package ilch
  */
@@ -13,7 +12,6 @@ defined('ACCESS') or die('no direct access');
 /**
  * The user group model class.
  *
- * @author Jainta Martin
  * @package ilch
  */
 class Group extends \Ilch\Mapper

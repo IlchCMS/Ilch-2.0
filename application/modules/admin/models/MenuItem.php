@@ -2,7 +2,6 @@
 /**
  * Holds class Menu.
  *
- * @author Meyer Dominik
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -13,7 +12,6 @@ defined('ACCESS') or die('no direct access');
 /**
  * The menu item model class.
  *
- * @author Meyer Dominik
  * @package ilch
  */
 class MenuItem extends \Ilch\Model

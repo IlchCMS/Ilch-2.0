@@ -2,7 +2,6 @@
 /**
  * Holds class Ilch_Translator.
  *
- * @author Jainta Martin
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -16,7 +15,6 @@ defined('ACCESS') or die('no direct access');
  * Loads a translations array from a translation file, searches for translations
  * in the translation array and returns translations.
  *
- * @author Jainta Martin
  * @package ilch
  */
 class Translator

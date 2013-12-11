@@ -2,7 +2,6 @@
 /**
  * Translations file for install module.
  *
- * @author Meyer Dominik
  * @copyright Ilch 2.0
  * @package ilch
  */
