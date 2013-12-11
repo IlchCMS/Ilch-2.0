@@ -2,7 +2,6 @@
 /**
  * Translations file for testing purposes.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 

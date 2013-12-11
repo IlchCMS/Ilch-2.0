@@ -2,7 +2,6 @@
 /**
  * Holds class Modules_User_Mappers_GroupTest.
  *
- * @author Jainta Martin
  * @copyright Ilch Pluto
  * @package ilch_phpunit
  */
@@ -14,7 +13,6 @@ defined('ACCESS') or die('no direct access');
 /**
  * Tests the user group mapper class.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase

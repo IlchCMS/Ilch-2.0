@@ -2,7 +2,6 @@
 /**
  * Translations file for the admin module.
  *
- * @author Martin Jainta
  * @copyright Ilch 2.0
  * @package ilch
  */

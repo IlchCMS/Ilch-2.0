@@ -2,7 +2,6 @@
 /**
  * Holds class Login.
  *
- * @author Meyer Dominik
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -14,7 +13,6 @@ defined('ACCESS') or die('no direct access');
 /**
  * Handles the login functionality.
  *
- * @author Jainta Martin
  * @copyright Ilch 2.0
  * @package ilch
  */

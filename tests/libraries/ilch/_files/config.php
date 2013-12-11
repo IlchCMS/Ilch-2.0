@@ -2,7 +2,6 @@
 /**
  * Config file for testing purposes.
  *
- * @author Meyer Dominik
  * @package ilch_phpunit
  */
 

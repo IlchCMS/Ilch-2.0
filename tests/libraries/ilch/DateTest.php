@@ -2,7 +2,6 @@
 /**
  * Holds class Libraries_Ilch_ConfigTest.
  *
- * @author Martin Jainta
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
@@ -11,7 +10,6 @@ defined('ACCESS') or die('no direct access');
 /**
  * Tests the config object.
  *
- * @author Martin Jainta
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */

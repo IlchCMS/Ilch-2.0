@@ -2,7 +2,6 @@
 /**
  * Holds class Modules_User_Models_UserTest.
  *
- * @author Jainta Martin
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
@@ -15,7 +14,6 @@ defined('ACCESS') or die('no direct access');
 /**
  * Tests the user model class.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase

@@ -2,7 +2,6 @@
 /**
  * Holds class Admin_ModuleModel.
  *
- * @author Meyer Dominik
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -13,7 +12,6 @@ defined('ACCESS') or die('no direct access');
 /**
  * The module model class.
  *
- * @author Meyer Dominik
  * @package ilch
  */
 class Module extends \Ilch\Model

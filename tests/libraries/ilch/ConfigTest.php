@@ -2,14 +2,12 @@
 /**
  * Holds class Libraries_Ilch_ConfigTest.
  *
- * @author Meyer Dominik
  * @package ilch_phpunit
  */
 
 /**
  * Tests the config object.
  *
- * @author Meyer Dominik
  * @package ilch_phpunit
  */
 class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase

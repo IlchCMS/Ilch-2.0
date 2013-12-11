@@ -2,7 +2,6 @@
 /**
  * Holds class PHPUnit_Ilch_TestHelper.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 
@@ -11,7 +10,6 @@ use Ilch\Registry as Registry;
 /**
  * Helper class for the PHPUnit execution.
  *
- * @author Jainta Martin
  * @package ilch_phpunit
  */
 class PHPUnit_Ilch_TestHelper

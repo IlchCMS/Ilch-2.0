@@ -1,7 +1,5 @@
 <?php
 /**
- * @author Meyer Dominik
- * @author Bunge Marco
  * @copyright Ilch 2.0
  * @package ilch
  */
