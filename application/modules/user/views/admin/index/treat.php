@@ -1,6 +1,9 @@
 <?php
 /**
  * Viewfile for user creation and editing.
+ *
+ * @copyright Ilch Pluto
+ * @package ilch
  */
 
 $user = $this->get('user');
@@ -16,7 +19,7 @@ else {
     <legend>
         <?php echo $fieldsetLegend; ?>
     </legend>
-    <form action="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'save', 'id' => $user->getId())); ?>"
+    <form action="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'save')); ?>"
           method="POST"
           class="form-horizontal"
           id="userForm">

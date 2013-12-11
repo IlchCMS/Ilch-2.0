@@ -11,8 +11,13 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuUser' => 'User',
     'menuActionNewUser' => 'Create new user',
+    'menuActionNewGroup' => 'Create new group',
+
+    'menuUser' => 'User',
+    'menuGroup' => 'Groups',
+
+    'treat' => 'Edit',
     'addUser' => 'Create user',
     'editUser' => 'Edit user',
     'deleteUser' => 'Remove user',
@@ -36,4 +41,14 @@ return array
     'delUserMsg' => 'User got deleted successfully.',
     'delLastAdminProhibited' => 'It is not allowed to delete the last user with the group "Administrator" assigned.',
     'delOwnUserProhibited' => 'It is not allowed to delete the your own user.',
+
+    'groupName' => 'Groupname',
+    'groupAssignedUsers' => 'Number "Assigned users"',
+    'editGroup' => 'Edit group',
+    'addGroup' => 'Create user',
+    'newGroupMsg' => 'Group got created successfully.',
+    'askIfDeleteGroup' => 'Are you sure to delete group "%s"?',
+    'delGroupMsg' => 'Group got deleted successfully.',
+    'delAdminGroup' => 'It is not allowed to delete the group "Administrator".',
+    'noGroupsExist' => 'No groups exist.',
 );

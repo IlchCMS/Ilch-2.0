@@ -8,6 +8,8 @@
  */
 
 namespace User\Controllers\Admin;
+
+use User\Controllers\Admin\Base as BaseController;
 use User\Mappers\User as UserMapper;
 use User\Mappers\Group as GroupMapper;
 use User\Models\User as UserModel;
@@ -23,7 +25,7 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch Pluto
  * @package ilch
  */
-class Index extends \Ilch\Controller\Admin
+class Index extends BaseController
 {
     /**
      * Initializes the menu.
@@ -42,6 +44,13 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
+                array
+                (
+                    'name' => 'menuGroup',
+                    'active' => true,
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->url(array('controller' => 'group', 'action' => 'index'))
+                ),
             )
         );
 
@@ -52,6 +61,16 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'menuActionNewUser',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat', 'id' => 0))
+            )
+        );
+
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
+                'name' => 'menuActionNewGroup',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->url(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
             )
         );
     }

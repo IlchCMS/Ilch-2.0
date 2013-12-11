@@ -27,7 +27,7 @@ class Group extends \Ilch\Mapper
      * @param  int              $id
      * @return false|GroupModel
      */
-    public function getById($id)
+    public function getGroupById($id)
     {
         $where = array
         (
@@ -49,7 +49,7 @@ class Group extends \Ilch\Mapper
      * @param  string           $name
      * @return false|GroupModel
      */
-    public function getByName($name)
+    public function getGroupByName($name)
     {
         $where = array
         (
@@ -142,9 +142,17 @@ class Group extends \Ilch\Mapper
             $fields['name'] = $group->getName();
         }
 
-        $groupId = $group->getId();
+        $groupId = (int) $this->db()->selectCell
+        (
+            'id',
+            'groups',
+            array
+            (
+                'id' => $group->getId(),
+            )
+        );
 
-        if ($groupId && $this->getById($groupId)) {
+        if ($groupId) {
             /*
              * Group does exist already, update.
              */
@@ -154,7 +162,7 @@ class Group extends \Ilch\Mapper
                 'groups',
                 array
                 (
-                    'group_id' => $groupId,
+                    'id' => $groupId,
                 )
             );
         } else {
@@ -167,6 +175,8 @@ class Group extends \Ilch\Mapper
                 'groups'
             );
         }
+
+        return $groupId;
     }
 
     /**
@@ -177,5 +187,44 @@ class Group extends \Ilch\Mapper
     public function getGroupList()
     {
         return $this->_getBy();
+    }
+
+    /**
+     * Returns whether a group with the given id exists in the database.
+     *
+     * @param  int $groupId
+     * @return boolean
+     */
+    public function groupWithIdExists($groupId)
+    {
+        $groupExists = (boolean)$this->db()->selectCell
+        (
+            'COUNT(*)',
+            'groups',
+            array
+            (
+                'id' => (int)$groupId
+            )
+        );
+
+        return $groupExists;
+    }
+
+    /**
+     * Deletes a given group or a user with the given id.
+     *
+     * @param  int|GroupModel $groupId
+     *
+     * @return boolean True of success, otherwise false.
+     */
+    public function delete($groupId)
+    {
+        if(is_a($groupId, '\User\Models\Group'))
+        {
+            $groupId = $groupId->getId();
+        }
+
+        $this->db()->delete('users_groups', array('group_id' => $groupId));
+        return $this->db()->delete('groups', array('id' => $groupId));
     }
 }

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Viewfile for the userlist.
+ *
+ * @copyright Ilch Pluto
+ * @package ilch
+ */
+
 if ($this->get('userList') != '') {
 ?>
     <table class="table table-hover table-striped">
@@ -12,7 +19,7 @@ if ($this->get('userList') != '') {
         </colgroup>
         <thead>
             <tr>
-                <th></th>
+                <th><?php echo $this->trans('treat'); ?></th>
                 <th><?php echo $this->trans('userName'); ?></th>
                 <th><?php echo $this->trans('userEmail'); ?></th>
                 <th><?php echo $this->trans('userDateCreated'); ?></th>

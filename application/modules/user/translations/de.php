@@ -11,8 +11,13 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuUser' => 'Benutzer',
     'menuActionNewUser' => 'Neuen Benutzer hinzufügen',
+    'menuActionNewGroup' => 'Neue Gruppe hinzufügen',
+
+    'menuUser' => 'Benutzer',
+    'menuGroup' => 'Gruppen',
+
+    'treat' => 'Bearbeiten',
     'addUser' => 'Benutzer hinzufügen',
     'editUser' => 'Benutzer editieren',
     'deleteUser' => 'Benutzer entfernen',
@@ -36,4 +41,14 @@ return array
     'delUserMsg' => 'Der Benutzer wurde erfolgreich entfernt.',
     'delLastAdminProhibited' => 'Es ist nicht erlaubt den letzten aktiven Benutzer mit zugewiesener Gruppe "Administrator" zu entfernen.',
     'delOwnUserProhibited' => 'Es ist nicht erlaubt Ihren eigenen Benutzer zu entfernen.',
+
+    'groupName' => 'Gruppenname',
+    'groupAssignedUsers' => 'Anzahl "Zugeordnete Benutzer"',
+    'editGroup' => 'Gruppe editieren',
+    'addGroup' => 'Gruppe hinzufügen',
+    'newGroupMsg' => 'Die Gruppe wurde erfolgreich angelegt.',
+    'askIfDeleteGroup' => 'Sind Sie sicher dass die Gruppe "%s" entfernt werden soll?',
+    'delGroupMsg' => 'Die Gruppe wurde erfolgreich entfernt.',
+    'delAdminGroup' => 'Es ist nicht erlaubt die Gruppe "Administrator" zu entfernen.',
+    'noGroupsExist' => 'Keine Gruppen vorhanden.',
 );

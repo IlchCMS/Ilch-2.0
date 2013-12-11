@@ -8,6 +8,7 @@
  */
 
 use \User\Mappers\Group as GroupMapper;
+use \User\Models\Group as GroupModel;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -61,7 +62,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
                 ->will($this->returnValue($groupRow));
         $mapper = new GroupMapper();
         $mapper->setDatabase($this->_dbMock);
-        $group = $mapper->getById(2);
+        $group = $mapper->getGroupById(2);
 
         $this->assertTrue($group !== false);
         $this->assertEquals(2, $group->getId());
@@ -96,7 +97,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
                 ->will($this->returnValue($groupRow));
         $mapper = new GroupMapper();
         $mapper->setDatabase($this->_dbMock);
-        $group = $mapper->getByName('Administrator');
+        $group = $mapper->getGroupByName('Administrator');
 
         $this->assertTrue($group !== false);
         $this->assertEquals(1, $group->getId());
@@ -180,5 +181,119 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         foreach ($groupList as $key => $group) {
             $this->assertInstanceOf('User\Models\Group', $group, 'The group with array key "'.$key.'" was not saved as a group model.');
         }
+    }
+
+    /**
+     * Tests if a group with a certain id exists in the db.
+     */
+    public function testGroupWithIdExists()
+    {
+        $dbMock = $this->getMock('Ilch_Database', array('selectCell'));
+        $dbMock->expects($this->once())
+                ->method('selectCell')
+                ->with('COUNT(*)',
+                    'groups',
+                    array('id' => 3))
+                ->will($this->returnValue('1'));
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+
+        $this->assertTrue($mapper->groupWithIdExists(3), 'The existing group could not be found.');
+    }
+
+    /**
+     * Tests if the save function returns the inserted group id.
+     */
+    public function testGroupSaveReturnsIdOnCreate()
+    {
+        $group = new GroupModel();
+        $group->setName('New Group');
+        $rec = array('name' => 'New Group');
+        $dbMock = $this->getMock('Ilch_Database', array('insert', 'selectCell'));
+        $dbMock->expects($this->once())
+                ->method('insert')
+                ->with($rec, 'groups')
+                ->will($this->returnValue(3));
+        $dbMock->expects($this->once())
+                ->method('selectCell')
+                ->with('id', 'groups', array('id' => 0))
+                ->will($this->returnValue(0));
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+
+        $this->assertEquals(3, $mapper->save($group), 'The save function does not return the newly inserted group id.');
+    }
+
+    /**
+     * Tests if the save function returns an updated group´s id.
+     */
+    public function testGroupSaveReturnsIdOnUpdate()
+    {
+        $group = new GroupModel();
+        $group->setId(3);
+        $group->setName('Old Group');
+        $rec = array('name' => 'Old Group');
+        $dbMock = $this->getMock('Ilch_Database', array('update', 'selectCell'));
+        $dbMock->expects($this->once())
+                ->method('update')
+                ->with($rec, 'groups');
+        $dbMock->expects($this->once())
+                ->method('selectCell')
+                ->with('id', 'groups', array('id' => 3))
+                ->will($this->returnValue(3));
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+
+        $this->assertEquals(3, $mapper->save($group), 'The save function does not return the group id of an updated group.');
+    }
+
+    /**
+     * Tests if a group can be deleted using an object.
+     */
+    public function testDeleteGroupByObject()
+    {
+        $dbMock = $this->getMock('Ilch_Database', array('delete'));
+        $dbMock->expects($this->at(0))
+                ->method('delete')
+                ->with('users_groups',
+                       array('group_id' => 3))
+                ->will($this->returnValue(true));
+
+        $dbMock->expects($this->at(1))
+                ->method('delete')
+                ->with('groups',
+                       array('id' => 3))
+                ->will($this->returnValue(true));
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+
+        $group = new GroupModel();
+        $group->setId(3);
+
+        $this->assertTrue($mapper->delete($group), 'The group does not got deleted successfully.');
+    }
+
+    /**
+     * Tests if a group can be deleted using a integer.
+     */
+    public function testDeleteGroupById()
+    {
+        $dbMock = $this->getMock('Ilch_Database', array('delete'));
+        $dbMock->expects($this->at(0))
+                ->method('delete')
+                ->with('users_groups',
+                       array('group_id' => 3))
+                ->will($this->returnValue(true));
+
+        $dbMock->expects($this->at(1))
+                ->method('delete')
+                ->with('groups',
+                       array('id' => 3))
+                ->will($this->returnValue(true));
+
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+
+        $this->assertTrue($mapper->delete(3), 'The group does not got deleted successfully.');
     }
 }
