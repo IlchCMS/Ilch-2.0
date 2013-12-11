@@ -2,7 +2,7 @@
 /**
  * Viewfile for user creation and editing.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 

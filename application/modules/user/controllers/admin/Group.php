@@ -2,7 +2,7 @@
 /**
  * Holds the class Index.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -20,7 +20,7 @@ defined('ACCESS') or die('no direct access');
 /**
  * Handles action for the main admin configuration page.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 class Group extends BaseController

@@ -2,7 +2,7 @@
 /**
  * Holds class Group.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 

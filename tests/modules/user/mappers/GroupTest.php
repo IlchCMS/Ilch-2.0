@@ -2,7 +2,7 @@
 /**
  * Holds class Modules_User_Mappers_GroupTest.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 

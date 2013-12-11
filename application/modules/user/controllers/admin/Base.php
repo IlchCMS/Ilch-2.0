@@ -2,7 +2,7 @@
 /**
  * Holds the class Index.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -15,7 +15,7 @@ defined('ACCESS') or die('no direct access');
 /**
  * Handles the init for the user module.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 class Base extends \Ilch\Controller\Admin

@@ -2,7 +2,7 @@
 /**
  * Viewfile for the grouplist.
  *
- * @copyright Ilch Pluto
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
