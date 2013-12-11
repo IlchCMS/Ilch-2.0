@@ -25,6 +25,20 @@ defined('ACCESS') or die('no direct access');
  */
 class Group extends BaseController
 {
+    public function init()
+    {
+        parent::init();
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
+                'name' => 'menuActionNewGroup',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->url(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
+            )
+        );
+    }
+
     /**
      * Shows a table with all groups.
      */

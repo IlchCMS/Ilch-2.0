@@ -8,8 +8,6 @@
 
 namespace User\Controllers\Admin;
 
-use \Ilch\Registry as Registry;
-
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -25,6 +23,17 @@ class Base extends \Ilch\Controller\Admin
      */
     public function init()
     {
+        $active = array('group' => false, 'user' => false);
+
+        if($this->getRequest()->getControllerName() == 'group')
+        {
+            $active['group'] = true;
+        }
+        else
+        {
+            $active['user'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'menuUser',
@@ -33,37 +42,17 @@ class Base extends \Ilch\Controller\Admin
                 array
                 (
                     'name' => 'menuUser',
-                    'active' => true,
+                    'active' => $active['user'],
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'menuGroup',
-                    'active' => true,
+                    'active' => $active['group'],
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'group', 'action' => 'index'))
                 ),
-            )
-        );
-
-        $this->getLayout()->addMenuAction
-        (
-            array
-            (
-                'name' => 'menuActionNewUser',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat', 'id' => 0))
-            )
-        );
-
-        $this->getLayout()->addMenuAction
-        (
-            array
-            (
-                'name' => 'menuActionNewGroup',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
             )
         );
     }
