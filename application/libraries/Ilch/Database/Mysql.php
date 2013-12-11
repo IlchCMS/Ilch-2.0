@@ -137,7 +137,7 @@ class Mysql
      */
     public function selectCell($cell, $table, $where = null)
     {
-        $sql = 'SELECT `' . $cell . '`
+        $sql = 'SELECT ' . $this->_getFieldsSql($cell) . '
                 FROM `[prefix]_'.$table . '` ';
 
         if ($where != null) {
@@ -352,6 +352,8 @@ class Mysql
     protected function _getFieldsSql($fields)
     {
         if ($fields === '*') {
+            return $fields;
+        } elseif ($fields === 'COUNT(*)') {
             return $fields;
         }
 

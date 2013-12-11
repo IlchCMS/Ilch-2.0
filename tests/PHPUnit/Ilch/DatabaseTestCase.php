@@ -6,6 +6,9 @@
  * @package ilch_phpunit
  */
 
+use Ilch\Registry as Registry;
+use Ilch\Database\Factory as Factory;
+
 /**
  * Base class for database test cases for Ilch.
  *
@@ -35,10 +38,16 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
     /**
      * Instantiated PHPUnit_Extensions_Database_DB_IDatabaseConnection for the tests.
      *
-     * @static Static so we can dont have to connect for every test again.
      * @var PHPUnit_Extensions_Database_DB_IDatabaseConnection
      */
-    static private $conn = null;
+    private $conn = null;
+
+    /**
+     * The db instance to test with.
+     *
+     * @var Ilch\Database\MySQL
+     */
+    protected $db = null;
 
     /**
      * Filling the config object with individual testcase data.
@@ -47,8 +56,22 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
     {
         $testHelper = new PHPUnit_Ilch_TestHelper();
         $testHelper->setConfigInRegistry($this->_configData);
+        $dbFactory = new Factory();
 
-    	parent::setUp();
+        $this->db = $dbFactory->getInstanceByConfig(Registry::get('config'));
+
+        parent::setUp();
+    }
+
+    /**
+     * Removes the config and db variables from the Registry.
+     */
+    public function tearDown()
+    {
+        Registry::remove('config');
+        Registry::remove('db');
+
+        parent::tearDown();
     }
 
     /**
@@ -59,7 +82,7 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
     final public function getConnection()
     {
         $dbData = array();
-        $config = \Ilch\Registry::get('config');
+        $config = Registry::get('config');
 
         foreach (array('dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $configKey) {
             /*
@@ -77,12 +100,15 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
         $dsn = strtolower($dbData['dbEngine']).':dbname='.$dbData['dbName'].';host='.$dbData['dbHost'];
         $dbData['dbDsn'] = $dsn;
 
-        if (self::$conn === null) {
-            self::$pdo = new PDO($dbData['dbDsn'], $dbData['dbUser'], $dbData['dbPassword']);
-            self::$conn = $this->createDefaultDBConnection(self::$pdo, $dbData['dbName']);
+        if ($this->conn === null) {
+            if (self::$pdo === null) {
+                self::$pdo = new PDO($dbData['dbDsn'], $dbData['dbUser'], $dbData['dbPassword']);
+            }
+
+            $this->conn = $this->createDefaultDBConnection(self::$pdo, $dbData['dbName']);
         }
 
-        return self::$conn;
+        return $this->conn;
     }
 
     /**
@@ -90,5 +116,5 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
      *
      * @return PHPUnit_Extensions_Database_DataSet
      */
-    public function getDataSet() {}
+    protected function getDataSet() {}
 }

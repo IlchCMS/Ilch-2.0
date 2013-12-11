@@ -6,6 +6,8 @@
  * @package ilch_phpunit
  */
 
+use Ilch\Registry as Registry;
+
 /**
  * Helper class for the PHPUnit execution.
  *
@@ -28,7 +30,7 @@ class PHPUnit_Ilch_TestHelper
     public function setConfigInRegistry($configData)
     {
         if (self::$config === null) {
-            if (!\Ilch\Registry::has('config') && file_exists(CONFIG_PATH.'/config.php')) {
+            if (!Registry::has('config') && file_exists(CONFIG_PATH.'/config.php')) {
                 self::$config = new \Ilch\Config\File();
                 self::$config->loadConfigFromFile(CONFIG_PATH.'/config.php');
 
@@ -38,7 +40,7 @@ class PHPUnit_Ilch_TestHelper
             }
         }
 
-        \Ilch\Registry::remove('config');
-        \Ilch\Registry::set('config', self::$config);
+        Registry::remove('config');
+        Registry::set('config', self::$config);
     }
 }
