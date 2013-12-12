@@ -117,11 +117,11 @@ class Menu extends \Ilch\Model
     {
         $subItems = $this->_mapper->getMenuItemsByParent(1, $item->getId());
 
-        $html = '<ul><li>';
+        $html = '<ul class="list-unstyled"><li>';
         $html .= $item->getTitle();
 
         if (!empty($subItems)) {
-            $html .= '<ul>';
+            $html .= '<ul class="list-unstyled">';
 
             foreach ($subItems as $subItem) {
                 $html .= $this->_rec($subItem);
