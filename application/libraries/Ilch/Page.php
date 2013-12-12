@@ -83,7 +83,9 @@ class Page
      */
     public function loadCms()
     {
-        if (file_get_contents(CONFIG_PATH.'/config.php') != '') {
+        include_once CONFIG_PATH.'/config.php';
+
+        if (!empty($config['dbUser'])) {
             /*
              * Cms is installed
              */
