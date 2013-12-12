@@ -21,17 +21,30 @@ html, body {
 
 #sidebar_content {
 	color: #777777;
-	padding: 10px 15px 0 15px;
+    padding-top: 10px;
 }
 
 #sidebar_content .nav > li > a:hover,
 #sidebar_content .nav > li > a:focus {
-	background-color: #ECECFB;
+	background-color: white;
 	color: black;
 }
 
 #sidebar_content .nav > li > a {
-	color: #777;
+	color: black;
+}
+
+#sidebar_content .nav > li.heading {
+    font-size: 15px;
+    font-weight: bold;
+	color: black;
+    padding: 10px;
+}
+
+
+
+#sidebar_content .nav > li.active > a {
+    background-color: white;
 }
 
 #sidebar_content .divider {

@@ -41,7 +41,7 @@
                     <li>
                         <div>
                             <a class="btn btn-default" href="#" id="search">
-                                <i class="fa fa-search"></i> <?php echo $this->trans('search'); ?><b class="caret"></b>
+                                <i class="fa fa-search"></i> <?php echo $this->trans('search'); ?> <b class="caret"></b>
                             </a>
                         </div>
                     </li>
@@ -139,16 +139,16 @@
                             <ul class="nav">
                                 <?php
                                     foreach ($this->getMenus() as $key => $items) {
-                                        echo '<li>'.$this->trans($key).'</li>';
+                                        echo '<li class="heading">'.$this->trans($key).'</li>';
 
                                         foreach ($items as $key) {
                                             $class = '';
 
                                             if ($key['active']) {
-                                                $class = 'active';
+                                                $class = ' class="active"';
                                             }
 
-                                            echo '<li class="'.$class.'">
+                                            echo '<li'.$class.'>
                                                       <a href="'.$key['url'].'"><i class="'.$key['icon'].'"></i> '.$this->trans($key['name']).'</a>
                                                   </li>';
                                         }
