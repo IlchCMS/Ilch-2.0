@@ -55,21 +55,34 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
         $testHelper = new PHPUnit_Ilch_TestHelper();
         $testHelper->setConfigInRegistry($this->_configData);
         $dbFactory = new Factory();
+        $config = Registry::get('config');
+
+        if (getenv('TRAVIS')) {
+            $config->set('dbEngineTest', 'Mysql');
+            $config->set('dbHostTest', '127.0.0.1');
+            $config->set('dbUserTest', 'travis');
+            $config->set('dbPasswordTest', '');
+            $config->set('dbNameTest', 'ilch2_test');
+            $config->set('dbPrefixTest', '');
+        }
 
         $this->db = $dbFactory->getInstanceByConfig(Registry::get('config'));
 
+        /*
+         * Deleting all tables from the db and setting up the db using the given schema.
+         */
+        $sql = 'SHOW TABLES';
+        $tableList = $this->db->queryList($sql);
+
+        foreach($tableList as $table)
+        {
+            $sql = 'DROP TABLE '.$table;
+            $this->db->query($sql);
+        }
+
+        $this->db->queryMulti(file_get_contents(__DIR__.'/_files/db_schema.sql'));
+
         parent::setUp();
-    }
-
-    /**
-     * Removes the config and db variables from the Registry.
-     */
-    public function tearDown()
-    {
-        Registry::remove('config');
-        Registry::remove('db');
-
-        parent::tearDown();
     }
 
     /**
