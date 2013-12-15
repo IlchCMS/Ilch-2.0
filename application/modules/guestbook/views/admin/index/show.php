@@ -1,6 +1,6 @@
 <legend><?php echo $this->trans('manage'); ?></legend>
 <?php if (is_array($this->get('entries')) && count($this->get('entries')) > 0) : ?>
-    <div class="table-responsive">
+    <div id="img-responsive" class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
