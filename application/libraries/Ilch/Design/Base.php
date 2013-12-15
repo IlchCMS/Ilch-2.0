@@ -10,6 +10,36 @@ defined('ACCESS') or die('no direct access');
 abstract class Base
 {
     /**
+     * Holds all Helpers.
+     *
+     * @var array 
+     */
+    private $_helpers = array();
+
+    /**
+     * Adds view/layout helper.
+     *
+     * @param string $name
+     * @param string $type
+     * @param mixed $obj
+     */
+    public function addHelper($name, $type, $obj)
+    {
+        $this->_helpers[$type][$name] = $obj;
+    }
+
+    /**
+     * Gets view/layout helper.
+     *
+     * @param string $name
+     * @param string $type
+     */
+    public function getHelper($name, $type)
+    {
+        return $this->_helpers[$type][$name];
+    }
+
+    /**
      * @var Ilch_Request
      */
     private $_request;
@@ -160,6 +190,10 @@ abstract class Base
     {
         if (empty($urlArray)) {
             return BASE_URL;
+        }
+        
+        if (is_string($urlArray)) {
+            return BASE_URL.'/index.php/'.$urlArray;
         }
 
         $urlParts = array();

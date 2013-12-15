@@ -10,6 +10,21 @@ defined('ACCESS') or die('no direct access');
 abstract class Base extends \Ilch\Design\Base
 {
     /**
+     * Loads layout helper.
+     *
+     * @param string $name
+     * @param mixed $args
+     */
+    public function __call($name, $args)
+    {
+        $layout = $this->getHelper($name, 'layout');
+
+        if(!empty($layout)) {
+            return $layout->$name($args);
+        }
+    }
+
+    /**
      * Defines if layout is disabled.
      *
      * @var boolean

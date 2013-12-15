@@ -43,14 +43,12 @@ class Menu extends \Ilch\Mapper
         $menus = array();
         $menuRows = $this->db()->selectArray
         (
-            array('id','title'),
+            array('id'),
             'menu'
         );
 
         foreach ($menuRows as $menuRow) {
-            $menu = new \Admin\Models\Menu($this);
-            $menu->setId($menuRow['id']);
-            $menu->setTitle($menuRow['title']);
+            $menu = $this->getMenu($menuRow['id']);
             $menus[] = $menu;
         }
 
@@ -64,7 +62,7 @@ class Menu extends \Ilch\Mapper
      */
     public function getMenu($menuId)
     {
-        $menu = new \Admin\Models\Menu($this);
+        $menu = new \Ilch\Models\Menu();
         
         $menuRow = $this->db()->selectRow
         (
@@ -107,6 +105,7 @@ class Menu extends \Ilch\Mapper
             $itemModel->setHref($itemRow['href']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setParentId($itemRow['parent_id']);
+            $itemModel->setKey($itemRow['key']);
             $itemModel->setMenuId($menuId);
             $items[] = $itemModel;
         }
@@ -142,6 +141,7 @@ class Menu extends \Ilch\Mapper
             $itemModel->setSiteId($itemRow['page_id']);
             $itemModel->setHref($itemRow['href']);
             $itemModel->setTitle($itemRow['title']);
+            $itemModel->setKey($itemRow['key']);
             $itemModel->setParentId($itemId);
             $itemModel->setMenuId($menuId);
             $items[] = $itemModel;
@@ -166,6 +166,7 @@ class Menu extends \Ilch\Mapper
             'parent_id' => $menuItem->getParentId(),
             'page_id' => $menuItem->getSiteId(),
             'type' => $menuItem->getType(),
+            'key' => $menuItem->getKey(),
         );
 
         foreach ($fields as $key => $value) {

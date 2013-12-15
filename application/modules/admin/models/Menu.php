@@ -17,13 +17,6 @@ defined('ACCESS') or die('no direct access');
 class Menu extends \Ilch\Model
 {
     /**
-     * Mapper of the menu.
-     *
-     * @var \Ilch\Mapper
-     */
-    protected $_mapper;
-
-    /**
      * Id of the menu.
      *
      * @var integer
@@ -36,17 +29,6 @@ class Menu extends \Ilch\Model
      * @var string
      */
     protected $_title;
-    
-    /**
-     * Injects mapper to model.
-     * 
-     * @todo it is a workaround for the rec function.
-     * @param \Ilch\Mapper $mapper
-     */
-    public function __construct($mapper = '')
-    {
-        $this->_mapper = $mapper;
-    }
 
     /**
      * Sets the menu id.
@@ -86,50 +68,5 @@ class Menu extends \Ilch\Model
     public function getTitle()
     {
         return $this->_title;
-    }
-
-    /**
-     * Gets the menu items as html-string.
-     * 
-     * @return string
-     */
-    public function getItems()
-    {
-        $html = '';
-        $items = $this->_mapper->getMenuItemsByParent($this->getId(), 0);
-        
-        if (!empty($items)) {
-            foreach ($items as $item) {
-                $html .= $this->_rec($item);
-            }
-        }
-
-        return $html;
-    }
-
-    /**
-     * Gets the menu items as html-string.
-     *
-     * @param \Admin\Models\MenuItem $item
-     * @return string
-     */
-    protected function _rec($item)
-    {
-        $subItems = $this->_mapper->getMenuItemsByParent(1, $item->getId());
-
-        $html = '<ul class="list-unstyled"><li>';
-        $html .= $item->getTitle();
-
-        if (!empty($subItems)) {
-            $html .= '<ul class="list-unstyled">';
-
-            foreach ($subItems as $subItem) {
-                $html .= $this->_rec($subItem);
-            }
-
-            $html .= '</ul>';
-        }
-
-        return $html .= '</li></ul>';
     }
 }

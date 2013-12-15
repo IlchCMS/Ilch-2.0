@@ -4,52 +4,128 @@
  * @package ilch
  */
 
-namespace Ilch\Layout;
+namespace Ilch\Layout\Helper\Menu;
 defined('ACCESS') or die('no direct access');
 
-class Frontend extends Base
+class Model
 {
     /**
-     * Gets all the menus.
-     * 
-     * @return \Admin\Models\Menu[]
+     * Id of the menu.
+     *
+     * @var integer
      */
-    public function getMenus()
-    {
-        $menuMapper = new \Admin\Mappers\Menu();
+    protected $_id;
+    
+    /**
+     * Title of the menu.
+     *
+     * @var string
+     */
+    protected $_title;
 
-        return $menuMapper->getMenus();
+    /**
+     * Injects the layout.
+     *
+     * @param Ilch\Layout $layout
+     */
+    public function __construct($layout)
+    {
+        $this->_layout = $layout;
     }
 
     /**
-     * Gets the menu for the given position.
-     * 
-     * @return \Admin\Models\Menu
+     * Sets the menu id.
+     *
+     * @param integer $id
      */
-    public function getMenu($menu = 1)
+    public function setId($id)
     {
-        $menuMapper = new \Admin\Mappers\Menu();
-
-        return $menuMapper->getMenu($menuMapper->getMenuIdForPosition($menu));
+        $this->_id = (int)$id;
     }
 
     /**
-     * Gets page title from config or meta settings.
+     * Gets the menu id.
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+    
+    /**
+     * Sets the menu title.
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->_title = (string)$title;
+    }
+
+    /**
+     * Gets the menu title.
      *
      * @return string
      */
     public function getTitle()
     {
-        $config = \Ilch\Registry::get('config');
-
-        /*
-         * @todo page modul handling
-         */
-
-        if (!empty($config) && $config->get('page_title') !== '') {
-            return $this->escape($config->get('page_title'));
-        } else {
-            return 'Ilch '.VERSION.' Frontend';
+        return $this->_title;
+    }
+            
+    /**
+     * Gets the menu items as html-string.
+     * 
+     * @return string
+     */
+    public function getItems()
+    {
+        $html = '';
+        $menuMapper = new \Admin\Mappers\Menu();
+        $items = $menuMapper->getMenuItemsByParent($this->getId(), 0);
+        
+        if (!empty($items)) {
+            foreach ($items as $item) {
+                $html .= $this->_recGetItems($item);
+            }
         }
+
+        return $html;
+    }
+
+    /**
+     * Gets the menu items as html-string.
+     *
+     * @param \Admin\Models\MenuItem $item
+     * @return string
+     */
+    protected function _recGetItems($item)
+    {
+        $menuMapper = new \Admin\Mappers\Menu();
+        $pageMapper = new \Page\Mappers\Page();
+        $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
+
+        $html = '<ul class="list-unstyled"><li>';
+
+        if ($item->getType() == 0) {
+            $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
+        } elseif ($item->getType() == 1) {
+            $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $this->_layout->getTranslator()->getLocale());
+            $html .= '<a href="'.$this->_layout->url($page->getPerma()).'">'.$item->getTitle().'</a>';
+        } elseif ($item->getType() == 2) {
+            $html .= '<a href="'.$this->_layout->url(array('module' => $item->getKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
+        }
+        
+        if (!empty($subItems)) {
+            $html .= '<ul class="list-unstyled">';
+
+            foreach ($subItems as $subItem) {
+                $html .= $this->_recGetItems($subItem);
+            }
+
+            $html .= '</ul>';
+        }
+
+        return $html .= '</li></ul>';
     }
 }

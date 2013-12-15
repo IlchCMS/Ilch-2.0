@@ -10,27 +10,19 @@ defined('ACCESS') or die('no direct access');
 class Frontend extends Base
 {
     /**
-     * Gets all the menus.
-     * 
-     * @return \Admin\Models\Menu[]
+     * Adds layout helper.
+     *
+     * @todo adds helper dynamic from folder.
+     * @param \Ilch\Request $request
+     * @param \Ilch\Translator $translator
+     * @param \Ilch\Router $router
      */
-    public function getMenus()
+    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
     {
-        $menuMapper = new \Admin\Mappers\Menu();
+        parent::__construct($request, $translator, $router);
 
-        return $menuMapper->getMenus();
-    }
-
-    /**
-     * Gets the menu for the given position.
-     * 
-     * @return \Admin\Models\Menu
-     */
-    public function getMenu($menu = 1)
-    {
-        $menuMapper = new \Admin\Mappers\Menu();
-
-        return $menuMapper->getMenu($menuMapper->getMenuIdForPosition($menu));
+        $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
+        $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
     }
 
     /**

@@ -4,52 +4,63 @@
  * @package ilch
  */
 
-namespace Ilch\Layout;
+namespace Ilch\Layout\Helper\Menu;
 defined('ACCESS') or die('no direct access');
 
-class Frontend extends Base
+class Mapper
 {
     /**
-     * Gets all the menus.
-     * 
-     * @return \Admin\Models\Menu[]
+     * Injects layout and gets database.
+     *
+     * @param Ilch\Layout $layout
+     */
+    public function __construct($layout)
+    {
+        $this->_db = \Ilch\Registry::get('db');
+        $this->_layout = $layout;
+    }
+
+    /**
+     * Gets the menus.
+     *
+     * @return Ilch\Layout\Helper\Menu\Model[]
      */
     public function getMenus()
     {
-        $menuMapper = new \Admin\Mappers\Menu();
+        $menus = array();
+        $menuRows = $this->_db->selectArray
+        (
+            array('id'),
+            'menu'
+        );
 
-        return $menuMapper->getMenus();
-    }
-
-    /**
-     * Gets the menu for the given position.
-     * 
-     * @return \Admin\Models\Menu
-     */
-    public function getMenu($menu = 1)
-    {
-        $menuMapper = new \Admin\Mappers\Menu();
-
-        return $menuMapper->getMenu($menuMapper->getMenuIdForPosition($menu));
-    }
-
-    /**
-     * Gets page title from config or meta settings.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        $config = \Ilch\Registry::get('config');
-
-        /*
-         * @todo page modul handling
-         */
-
-        if (!empty($config) && $config->get('page_title') !== '') {
-            return $this->escape($config->get('page_title'));
-        } else {
-            return 'Ilch '.VERSION.' Frontend';
+        foreach ($menuRows as $menuRow) {
+            $menu = $this->getMenu($menuRow['id']);
+            $menus[] = $menu;
         }
+
+        return $menus;
+    }
+
+    /**
+     * Gets the menu for the given id.
+     *
+     * @return Ilch\Layout\Helper\Menu\Model
+     */
+    public function getMenu($menuId)
+    {
+        $menu = new \Ilch\Layout\Helper\Menu\Model($this->_layout);
+
+        $menuRow = $this->_db->selectRow
+        (
+            array('id','title'),
+            'menu',
+            array('id' => $menuId)
+        );
+
+        $menu->setId($menuRow['id']);
+        $menu->setTitle($menuRow['title']);
+
+        return $menu;
     }
 }

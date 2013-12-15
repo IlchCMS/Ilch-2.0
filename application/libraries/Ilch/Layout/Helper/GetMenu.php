@@ -4,52 +4,33 @@
  * @package ilch
  */
 
-namespace Ilch\Layout;
+namespace Ilch\Layout\Helper;
 defined('ACCESS') or die('no direct access');
 
-class Frontend extends Base
+class GetMenu
 {
     /**
-     * Gets all the menus.
-     * 
-     * @return \Admin\Models\Menu[]
+     * Injects the layout.
+     *
+     * @param Ilch\Layout $layout
      */
-    public function getMenus()
+    public function __construct($layout)
     {
-        $menuMapper = new \Admin\Mappers\Menu();
-
-        return $menuMapper->getMenus();
+        $this->_layout = $layout;
     }
 
     /**
      * Gets the menu for the given position.
-     * 
-     * @return \Admin\Models\Menu
+     *
+     * @param integer $menu
+     * @return Ilch\Layout\Helper\Menu\Model
      */
     public function getMenu($menu = 1)
     {
+        $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->_layout);
         $menuMapper = new \Admin\Mappers\Menu();
 
-        return $menuMapper->getMenu($menuMapper->getMenuIdForPosition($menu));
-    }
-
-    /**
-     * Gets page title from config or meta settings.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        $config = \Ilch\Registry::get('config');
-
-        /*
-         * @todo page modul handling
-         */
-
-        if (!empty($config) && $config->get('page_title') !== '') {
-            return $this->escape($config->get('page_title'));
-        } else {
-            return 'Ilch '.VERSION.' Frontend';
-        }
+        return $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menu));
     }
 }
+
