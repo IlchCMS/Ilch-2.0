@@ -22,6 +22,12 @@ i {
 	color: black;
 }
 
+img{
+ display: block !important;
+ height: auto !important;
+ max-width: 100% !important;
+}
+
 .clickable {
     cursor: pointer;
 }
