@@ -22,7 +22,7 @@ i {
 	color: black;
 }
 
-img{
+#img-responsive img{
  height: auto !important;
  max-width: 100% !important;
 }

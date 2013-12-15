@@ -13,7 +13,7 @@
                 <?php foreach ($this->get('entries') as $entry) : ?>
                     <tr>
                         <td><?php echo $this->escape($entry->getName()); ?></td>
-                        <td><?php echo $entry->getText(); ?></td>
+                        <td id="img-responsive"><?php echo $entry->getText(); ?></td>
                         <td><a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'del', 'id' => $this->escape($entry->getId()))); ?>">
                             <span class="item_delete" title="<?php echo $this->trans('delete'); ?>"><i class="fa fa-times-circle"></i></span></a></td>
                     </tr>

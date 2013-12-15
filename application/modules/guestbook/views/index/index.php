@@ -5,7 +5,7 @@
 <div class="responsive">
     <?php if (is_array($this->get('entries')) && count($this->get('entries')) > 0) : ?>
         <?php foreach ($this->get('entries') as $entry) : ?>
-            <div class="responsive panel bordered ">
+            <div class="responsive panel bordered">
                 <table class="table table-bordered table-striped table-responsive">
                     <tbody>
                         <tr>
@@ -16,7 +16,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="responsive panel-body"><?php echo $entry->getText(); ?></div>
+                <div class="responsive panel-body" id="img-responsive"><?php echo $entry->getText(); ?></div>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
