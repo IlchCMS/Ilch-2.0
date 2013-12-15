@@ -183,6 +183,7 @@ function rec($item, $menuMapper, $obj)
                     <select id="type" class="form-control">
                         <option value="0">Link</option>
                         <option value="1">Seite</option>
+                        <option value="2">Modul</option>
                         <!--<option value="2">Box</option>-->
                     </select>
                 </div>

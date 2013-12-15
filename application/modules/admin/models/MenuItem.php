@@ -106,6 +106,26 @@ class MenuItem extends \Ilch\Model
     }
     
     /**
+     * Gets the key.
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->_key;
+    }
+
+    /**
+     * Sets the key.
+     *
+     * @param string $key
+     */
+    public function setKey($key)
+    {
+        $this->_key = (string)$key;
+    }
+    
+    /**
      * Gets the siteid.
      *
      * @return integer
