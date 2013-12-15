@@ -2,7 +2,7 @@
 <p class="pull-right">
     <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'newentry')); ?>" class="btn btn-small btn-primary" type="button" ><?php echo $this->trans('entry'); ?></a>
 </p>
-<div class="responsive">
+<div id="img-responsive" class="responsive">
     <?php if (is_array($this->get('entries')) && count($this->get('entries')) > 0) : ?>
         <?php foreach ($this->get('entries') as $entry) : ?>
             <div class="responsive panel bordered">
@@ -16,7 +16,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="responsive panel-body" id="img-responsive"><?php echo $entry->getText(); ?></div>
+                <div class="responsive panel-body"><?php echo $entry->getText(); ?></div>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
