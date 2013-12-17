@@ -62,7 +62,7 @@ class Menu extends \Ilch\Mapper
      */
     public function getMenu($menuId)
     {
-        $menu = new \Ilch\Models\Menu();
+        $menu = new \Admin\Models\Menu();
         
         $menuRow = $this->db()->selectRow
         (
