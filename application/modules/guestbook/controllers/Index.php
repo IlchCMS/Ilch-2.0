@@ -11,45 +11,42 @@ use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Controller\Frontend 
+class Index extends \Ilch\Controller\Frontend
 {
-    public function indexAction() 
+    public function indexAction()
     {
         $guestbookMapper = new GuestbookMapper();
-        $entries = $guestbookMapper->getEntries();
-        $this->getView()->set('entries', $entries);
+        $this->getView()->set('entries', $guestbookMapper->getEntries());
     }
 
-    public function newEntryAction() 
+    public function newEntryAction()
     {
-        $postData = $this->getRequest()->getPost();
+        $guestbookMapper = new GuestbookMapper();
+        $ilchdate = new IlchDate;
 
-        if (isset($postData['saveEntry'])) 
-        {
-            if (empty($postData['text'])) 
-            {
-                $this->redirect(array('action' => 'error'));
+        if ($this->getRequest()->isPost()) {
+            $name = $this->getRequest()->getPost('name');
+            $email = trim($this->getRequest()->getPost('email'));
+            $text = trim($this->getRequest()->getPost('text'));
+            $homepage = trim($this->getRequest()->getPost('homepage'));
+
+            if (empty($text)) {
+                $this->addMessage('missingText', 'error');
+            } elseif(empty($name)) {
+                $this->addMessage('missingName', 'error');
             } else {
-                $ilchdate = new IlchDate;
-                $date = $ilchdate->toDb();
                 $entryDatas = array
                 (
-                    'name' => trim($this->getRequest()->getPost('name')),
-                    'email' => trim($this->getRequest()->getPost('email')),
-                    'text' => trim($this->getRequest()->getPost('text')),
-                    'homepage' => trim($this->getRequest()->getPost('homepage')),
-                    'datetime' => $date
+                    'name' => $name,
+                    'email' => $email,
+                    'text' => $text,
+                    'homepage' => $homepage,
+                    'datetime' => $ilchdate->toDb()
                 );
-                $GuestbookMapper = new GuestbookMapper();
-                $GuestbookMapper->saveEntry($entryDatas);
+
+                $guestbookMapper->saveEntry($entryDatas);
                 $this->redirect(array('action' => 'index'));
             }
         }
     }
-
-    public function errorAction() 
-    {
-        $this->getView()->set('info', 'nicht alle Felder ausgef&uuml;llt');
-    }
-
 }

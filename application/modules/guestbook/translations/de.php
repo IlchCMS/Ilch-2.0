@@ -1,6 +1,6 @@
 <?php
 /**
- * Translations file for the admin module.
+ * Translations file for the Guestbook module.
  *
  * @copyright Ilch 2.0
  * @package ilch
@@ -25,5 +25,6 @@ return array
     'text' => 'Text',
     'delete' => 'Löschen',
     'successful' => 'Erfolgreich',
-
+    'missingText' => 'Nachricht muss ausgefüllt werden',
+    'missingName' => 'Name muss ausgefüllt werden'
 );

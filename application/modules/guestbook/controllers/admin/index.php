@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @copyright Ilch 2.0
  * @package ilch
@@ -13,26 +12,23 @@ defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Admin 
 {
-
     public function indexAction() 
     {
-        
     }
 
     public function showAction() 
     {
         $guestbookMapper = new GuestbookMapper();
-        $entries = $guestbookMapper->getEntries();
-        $this->getView()->set('entries', $entries);
+        $this->getView()->set('entries', $guestbookMapper->getEntries());
     }
 
     public function delAction() 
     {
+        $guestbookMapper = new GuestbookMapper();
         $id = $this->getRequest()->getParam('id');
-        $GuestbookMapper = new GuestbookMapper();
-        $GuestbookMapper->delEntry($id);
-        $this->addMessage('Successful');
+        $guestbookMapper->deleteEntry($id);
+        $this->addMessage('successful');
         $this->redirect(array('action' => 'show'));
     }
-
 }
+

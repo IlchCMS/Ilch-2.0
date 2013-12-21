@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @copyright Ilch 2.0
  * @package ilch
@@ -11,10 +10,14 @@ use Guestbook\Models\Entry as GuestbookModel;
 
 defined('ACCESS') or die('no direct access');
 
-class Guestbook extends \Ilch\Mapper 
+class Guestbook extends \Ilch\Mapper
 {
-
-    public function getEntries() 
+    /**
+     * Gets the guestbook entries.
+     *
+     * @return Guestbook\Models\Entry[]|null
+     */
+    public function getEntries()
     {
         $sql = 'SELECT *
                 FROM [prefix]_gbook
@@ -41,14 +44,24 @@ class Guestbook extends \Ilch\Mapper
         return $entry;
     }
 
-    public function saveEntry(array $datas) 
+    /**
+     * Saves the guestbook entry.
+     *
+     * @param array $datas
+     * @return integer
+     */
+    public function saveEntry(array $datas)
     {
-        $this->db()->insert($datas, 'gbook');
+        return $this->db()->insert($datas, 'gbook');
     }
 
-    public function delEntry($id) 
+    /**
+     * Deletes the guestbook entry.
+     *
+     * @param integer $id
+     */
+    public function deleteEntry($id)
     {
-        $this->db()->delete('gbook', array('id' => $id));
+        return $this->db()->delete('gbook', array('id' => $id));
     }
-
 }

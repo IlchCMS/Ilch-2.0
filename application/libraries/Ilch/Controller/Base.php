@@ -127,4 +127,15 @@ class Base
     {
         return $this->_view;
     }
+
+    /**
+     * Adds a flash message.
+     *
+     * @param string $message
+     * @param string|null $type
+     */
+    public function addMessage($message, $type = 'success')
+    {
+        $_SESSION['messages'][] = array('text' => $message, 'type' => $type);
+    }
 }

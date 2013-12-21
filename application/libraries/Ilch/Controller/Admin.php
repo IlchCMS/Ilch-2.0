@@ -19,15 +19,4 @@ class Admin extends Base
         $moduleMapper = new \Admin\Mappers\Module();
         $this->getLayout()->set('modules', $moduleMapper->getModules());
     }
- 
-    /**
-     * Adds a flash message.
-     *
-     * @param string $message
-     * @param string|null $type
-     */
-    public function addMessage($message, $type = 'success')
-    {
-        $_SESSION['messages'][] = array('text' => $message, 'type' => $type);
-    }
 }

@@ -25,5 +25,6 @@ return array
     'text' => 'Text',
     'delete' => 'Delete',
     'successful' => 'Successful',
-    
+    'missingText' => 'Text was not filled',
+    'missingName' => 'Name was not filled',
 );

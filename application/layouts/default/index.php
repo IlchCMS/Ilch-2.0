@@ -36,6 +36,26 @@
                             <?php echo 'hnav'; ?>
                         </div>
                         <div class="panel-body">
+                            <?php
+                                /**
+                                 * @todo we must put this part on a site which is loaded on every layout.
+                                 */
+                                $messages = array();
+        
+                                if(!empty($_SESSION['messages'])) {
+                                    $messages = $_SESSION['messages'];
+                                }
+
+                                foreach ($messages as $key => $message) {
+                            ?>
+                                <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <?php echo $this->escape($this->getTranslator()->trans($message['text'])); ?>
+                                </div>
+                            <?php
+                                    unset($_SESSION['messages'][$key]);
+                                }
+                            ?>
                             <?php echo $this->getContent(); ?>
                         </div>
                     </div>
@@ -59,7 +79,7 @@
             </div>
         </div> 
         <div class="container credit">
-            <p class="muted credit">© Ilch CMS | <?php echo '<a href="admin">Administrator</a>'; ?></p>
+            <p class="muted credit">© Ilch CMS | <?php echo '<a href="'.$this->url('admin').'">Administrator</a>'; ?></p>
         </div>  
     </body>
 </html>
