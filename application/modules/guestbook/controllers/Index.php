@@ -7,6 +7,7 @@
 namespace Guestbook\Controllers;
 
 use Guestbook\Mappers\Guestbook as GuestbookMapper;
+use Guestbook\Mappers\Settings as SettingsMapper;
 use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
@@ -22,6 +23,7 @@ class Index extends \Ilch\Controller\Frontend
     public function newEntryAction()
     {
         $guestbookMapper = new GuestbookMapper();
+        $SettingsMapper = new SettingsMapper();
         $ilchdate = new IlchDate;
 
         if ($this->getRequest()->isPost()) {
@@ -31,9 +33,9 @@ class Index extends \Ilch\Controller\Frontend
             $homepage = trim($this->getRequest()->getPost('homepage'));
 
             if (empty($text)) {
-                $this->addMessage('missingText', 'error');
+                $this->addMessage('missingText', 'danger');
             } elseif(empty($name)) {
-                $this->addMessage('missingName', 'error');
+                $this->addMessage('missingName', 'danger');
             } else {
                 $entryDatas = array
                 (
@@ -41,9 +43,12 @@ class Index extends \Ilch\Controller\Frontend
                     'email' => $email,
                     'text' => $text,
                     'homepage' => $homepage,
-                    'datetime' => $ilchdate->toDb()
+                    'datetime' => $ilchdate->toDb(),
+                    'setfree' => $SettingsMapper->getSettings('entrysettings')
                 );
-
+                if ($SettingsMapper->getSettings('entrysettings') === '1' ) {
+                $this->addMessage('check', 'success');
+                }
                 $guestbookMapper->saveEntry($entryDatas);
                 $this->redirect(array('action' => 'index'));
             }

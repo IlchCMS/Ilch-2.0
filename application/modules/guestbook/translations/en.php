@@ -27,4 +27,11 @@ return array
     'successful' => 'Successful',
     'missingText' => 'Text was not filled',
     'missingName' => 'Name was not filled',
+    'settings' => 'Settings',
+    'entrySettings' => 'Share entries directly?',
+    'yes' => 'yes',
+    'no' => 'no',
+    'managenewentry' => 'New entries unlocking',
+    'setfree' => 'Set free',
+    'check' => 'Thanks. Entry is checked.',
 );
