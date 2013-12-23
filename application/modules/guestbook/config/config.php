@@ -39,8 +39,14 @@ class Config extends \Ilch\Config\Install
                    `datetime` datetime NOT NULL,
                    `homepage` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                    `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                   `setfree` int(11) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
                    PRIMARY KEY (`id`)
-               ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+               ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+        
+               CREATE TABLE IF NOT EXISTS `[prefix]_gbook_settings` 
+                (
+                    `entrysettings` int(1) NOT NULL DEFAULT 0
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
     }
 }
 

@@ -26,5 +26,12 @@ return array
     'delete' => 'Löschen',
     'successful' => 'Erfolgreich',
     'missingText' => 'Nachricht muss ausgefüllt werden',
-    'missingName' => 'Name muss ausgefüllt werden'
+    'missingName' => 'Name muss ausgefüllt werden',
+    'settings' => 'Einstellungen',
+    'entrySettings' => 'Einträge sofort freigeben?',
+    'yes' => 'ja',
+    'no' => 'nein',
+    'managenewentry' => 'Neue Einträge Freischalten',
+    'setfree' => 'Freischalten',
+    'check' => 'Danke. Eintrag wird geprüft.',
 );

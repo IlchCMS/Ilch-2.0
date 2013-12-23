@@ -21,6 +21,7 @@ class Guestbook extends \Ilch\Mapper
     {
         $sql = 'SELECT *
                 FROM [prefix]_gbook
+                WHERE setfree = 0
                 ORDER by id DESC';
         $entryArray = $this->db()->queryArray($sql);
 
