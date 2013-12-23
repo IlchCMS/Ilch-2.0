@@ -27,16 +27,13 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
-            )
-        );
-        
-        $this->getLayout()->addMenuAction
-        (
-            array
-            (
-                'name' => 'Settings',
-                'icon' => 'fa fa-cogs',
-                'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
+                array
+                (
+                    'name' => 'Settings',
+                    'active' => false,
+                    'icon' => 'fa fa-cogs',
+                    'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
+                )
             )
         );
     }
@@ -53,8 +50,8 @@ class Index extends \Ilch\Controller\Admin
     
     public function shownewAction()
     {
-        $SettingsMapper = new SettingsMapper();
-        $this->getView()->set('entries', $SettingsMapper->getnewEntries());
+        $settingsMapper = new SettingsMapper();
+        $this->getView()->set('entries', $settingsMapper->getNewEntries());
     }
 
     public function delAction()
@@ -65,7 +62,7 @@ class Index extends \Ilch\Controller\Admin
         $this->addMessage('successful');
         $this->redirect(array('action' => 'show'));
     }
-    
+        
     public function delspamAction()
     {
         $guestbookMapper = new GuestbookMapper();
@@ -78,18 +75,18 @@ class Index extends \Ilch\Controller\Admin
     public function setfreeAction()
     {
         $id = $this->getRequest()->getParam('id');
-        $SettingsMapper = new SettingsMapper();
+        $settingsMapper = new SettingsMapper();
         
         $fild = array
-                (
-                    'setfree' => 'setfree'
-                ); 
+        (
+            'setfree' => 'setfree'
+        ); 
         $where = array
-                (
-                    'id' => $id
-                );
+        (
+            'id' => $id
+        );
         
-        $SettingsMapper->saveSetfree($fild,$where);
+        $settingsMapper->saveSetfree($fild, $where);
         $this->redirect(array('action' => 'shownew'));
     }
 }

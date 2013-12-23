@@ -226,7 +226,7 @@ class Settings extends \Ilch\Model
      * @return int
      */
     
-    public function setentrySettings($entrySettings)
+    public function setEntrySettings($entrySettings)
     {
         $this->_entrySettings = (string) $entrySettings;
     }

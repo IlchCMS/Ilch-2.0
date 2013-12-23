@@ -22,38 +22,35 @@ class Settings extends \Ilch\Controller\Admin
                 array
                 (
                     'name' => 'Verwalten',
-                    'active' => true,
+                    'active' => false,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
-            )
-        );
-
-        $this->getLayout()->addMenuAction
-        (
-            array
-            (
-                'name' => 'Settings',
-                'icon' => 'fa fa-cogs',
-                'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
+                array
+                (
+                    'name' => 'Settings',
+                    'active' => true,
+                    'icon' => 'fa fa-cogs',
+                    'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
+                )
             )
         );
     }
     
     public function indexAction() 
     {
-        $SettingsMapper = new SettingsMapper();
+        $settingsMapper = new SettingsMapper();
         
         if ($this->getRequest()->isPost()) {
             $entrySettings = array
-                (
-                    'entrySettings' =>$this->getRequest()->getPost('entrySettings'),
-                );
-            $SettingsMapper->saveSettings($entrySettings);
+            (
+                'entrySettings' => $this->getRequest()->getPost('entrySettings'),
+            );
+
+            $settingsMapper->saveSettings($entrySettings);
             $this->addMessage('successful');
         }
-        $this->getView()->set('entrySettings', $SettingsMapper->getallSettings('entrySettings'));
+
+        $this->getView()->set('entrySettings', $settingsMapper->getAllSettings());
     }
 }
-
-

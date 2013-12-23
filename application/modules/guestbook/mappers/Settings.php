@@ -10,9 +10,14 @@ use Guestbook\Models\Settings as SettingsModel;
 
 defined('ACCESS') or die('no direct access');
 
-class Settings extends \Ilch\Mapper 
+class Settings extends \Ilch\Mapper
 {
-    public function getnewEntries() 
+    /**
+     * Gets all new entries.
+     *
+     * @return Guestbook\Models\Settings[]|null
+     */
+    public function getNewEntries()
     {
         $sql = 'SELECT *
                 FROM [prefix]_gbook
@@ -40,40 +45,51 @@ class Settings extends \Ilch\Mapper
 
         return $entry;
     }
-    
-    public function getSettings($cell) 
+
+    /**
+     * Gets one guestbook setting.
+     *
+     * @param string $cell
+     * @return mixed
+     */
+    public function getSettings($cell)
     {
-        $table = 'gbook_settings';
-        $query = $this->db()->selectCell($cell,$table);
-       
-        return $query;
+        return $this->db()->selectCell($cell, 'gbook_settings');
     }
-    
-    public function getallSettings() 
+
+    /**
+     * Gets all guestbook settings
+     *
+     * @return Guestbook\Models\Settings[]
+     */
+    public function getAllSettings()
     {
-        $sql = 'SELECT *
-                FROM [prefix]_gbook_settings';
-        $settingsArray = $this->db()->queryArray($sql);
-        
+        $settingsArray = $this->db()->selectArray('*', 'gbook_settings');
+
         $entrySettings = array();
 
         foreach ($settingsArray as $entries) {
             $entryModel = new SettingsModel();
-            $entryModel->setentrySettings($entries['entrysettings']);
+            $entryModel->setEntrySettings($entries['entrysettings']);
             $entrySettings[] = $entryModel;
         }
-        
+
         return $entrySettings;
     }
-    
-    public function saveSettings(array $datas) 
+
+    /**
+     * Update guestbook settings.
+     *
+     * @param array $datas
+     * @return boolean
+     */
+    public function saveSettings(array $datas)
     {
-        $this->db()->update($datas, 'gbook_settings');
-    }
-    
-    public function saveSetfree(array $datas,array $id) 
-    {
-        $this->db()->update($datas, 'gbook', $id);
+        return $this->db()->update($datas, 'gbook_settings');
     }
 
+    public function saveSetfree(array $datas, array $id)
+    {
+       return $this->db()->update($datas, 'gbook', $id);
+    }
 }
