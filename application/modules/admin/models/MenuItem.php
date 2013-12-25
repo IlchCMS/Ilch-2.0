@@ -24,18 +24,39 @@ class MenuItem extends \Ilch\Model
     protected $_id;
     
     /**
+     * Sort of the item.
+     *
+     * @var integer
+     */
+    protected $_sort;
+
+    /**
      * Type of the item.
      *
      * @var integer
      */
     protected $_type;
-    
+
+    /**
+     * Key of the item.
+     *
+     * @var string
+     */
+    protected $_moduleKey;
+
     /**
      * Siteid of the item.
      *
      * @var integer
      */
     protected $_siteId;
+
+    /**
+     * Boxid of the item.
+     *
+     * @var integer
+     */
+    protected $_boxId;
 
     /**
      * MenuId of the item.
@@ -84,7 +105,27 @@ class MenuItem extends \Ilch\Model
     {
         $this->_id = (int) $id;
     }
-    
+
+    /**
+     * Gets the sort.
+     *
+     * @return integer
+     */
+    public function getSort()
+    {
+        return $this->_sort;
+    }
+
+    /**
+     * Sets the sort.
+     *
+     * @param integer $sort
+     */
+    public function setSort($sort)
+    {
+        $this->_sort = (int)$sort;
+    }
+
     /**
      * Gets the type.
      *
@@ -104,27 +145,7 @@ class MenuItem extends \Ilch\Model
     {
         $this->_type = (int)$type;
     }
-    
-    /**
-     * Gets the key.
-     *
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->_key;
-    }
 
-    /**
-     * Sets the key.
-     *
-     * @param string $key
-     */
-    public function setKey($key)
-    {
-        $this->_key = (string)$key;
-    }
-    
     /**
      * Gets the siteid.
      *
@@ -143,6 +164,46 @@ class MenuItem extends \Ilch\Model
     public function setSiteId($id)
     {
         $this->_siteId = (int)$id;
+    }
+
+    /**
+     * Gets the box id.
+     *
+     * @return integer
+     */
+    public function getBoxId()
+    {
+        return $this->_boxId;
+    }
+
+    /**
+     * Sets the box id.
+     *
+     * @param integer $id
+     */
+    public function setBoxId($id)
+    {
+        $this->_boxId = (int)$id;
+    }
+
+    /**
+     * Gets the module key.
+     *
+     * @return string
+     */
+    public function getModuleKey()
+    {
+        return $this->_moduleKey;
+    }
+
+    /**
+     * Sets the module key.
+     *
+     * @param string $key
+     */
+    public function setModuleKey($key)
+    {
+        $this->_moduleKey = (string)$key;
     }
 
     /**

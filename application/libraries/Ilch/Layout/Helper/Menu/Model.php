@@ -103,6 +103,7 @@ class Model
     {
         $menuMapper = new \Admin\Mappers\Menu();
         $pageMapper = new \Page\Mappers\Page();
+        $boxMapper = new \Box\Mappers\Box();
         $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
 
         $html = '<ul class="list-unstyled"><li>';
@@ -113,7 +114,10 @@ class Model
             $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $this->_layout->getTranslator()->getLocale());
             $html .= '<a href="'.$this->_layout->url($page->getPerma()).'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 2) {
-            $html .= '<a href="'.$this->_layout->url(array('module' => $item->getKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->_layout->url(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
+        } elseif ($item->getType() == 3) {
+            $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $this->_layout->getTranslator()->getLocale());
+            $html .= $box->getContent();
         }
         
         if (!empty($subItems)) {

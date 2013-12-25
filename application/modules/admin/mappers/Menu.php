@@ -90,7 +90,8 @@ class Menu extends \Ilch\Mapper
             array
             (
                 'menu_id' => $menuId,
-            )
+            ),
+            array('sort' => 'ASC')
         );
 
         if (empty($itemRows)) {
@@ -102,10 +103,11 @@ class Menu extends \Ilch\Mapper
             $itemModel->setId($itemRow['id']);
             $itemModel->setType($itemRow['type']);
             $itemModel->setSiteId($itemRow['page_id']);
+            $itemModel->setBoxId($itemRow['box_id']);
             $itemModel->setHref($itemRow['href']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setParentId($itemRow['parent_id']);
-            $itemModel->setKey($itemRow['key']);
+            $itemModel->setModuleKey($itemRow['module_key']);
             $itemModel->setMenuId($menuId);
             $items[] = $itemModel;
         }
@@ -127,7 +129,8 @@ class Menu extends \Ilch\Mapper
             (
                 'menu_id' => $menuId,
                 'parent_id' => $itemId
-            )
+            ),
+            array('sort' => 'ASC')
         );
 
         if (empty($itemRows)) {
@@ -139,9 +142,10 @@ class Menu extends \Ilch\Mapper
             $itemModel->setId($itemRow['id']);
             $itemModel->setType($itemRow['type']);
             $itemModel->setSiteId($itemRow['page_id']);
+            $itemModel->setBoxId($itemRow['box_id']);
             $itemModel->setHref($itemRow['href']);
             $itemModel->setTitle($itemRow['title']);
-            $itemModel->setKey($itemRow['key']);
+            $itemModel->setModuleKey($itemRow['module_key']);
             $itemModel->setParentId($itemId);
             $itemModel->setMenuId($menuId);
             $items[] = $itemModel;
@@ -163,10 +167,12 @@ class Menu extends \Ilch\Mapper
             'href' => $menuItem->getHref(),
             'title' => $menuItem->getTitle(),
             'menu_id' => $menuItem->getMenuId(),
+            'sort' => $menuItem->getSort(),
             'parent_id' => $menuItem->getParentId(),
             'page_id' => $menuItem->getSiteId(),
+            'box_id' => $menuItem->getBoxId(),
             'type' => $menuItem->getType(),
-            'key' => $menuItem->getKey(),
+            'module_key' => $menuItem->getModuleKey(),
         );
 
         foreach ($fields as $key => $value) {

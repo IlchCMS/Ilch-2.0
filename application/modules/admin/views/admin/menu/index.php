@@ -2,6 +2,8 @@
 $menuItems = $this->get('menuItems');
 $menuMapper = $this->get('menuMapper');
 $pages = $this->get('pages');
+$modules = $this->get('modules');
+$boxes = $this->get('boxes');
 
 function rec($item, $menuMapper, $obj)
 {
@@ -19,6 +21,8 @@ function rec($item, $menuMapper, $obj)
                     <input type="hidden" name="items['.$item->getId().'][href]" class="hidden_href" value="'.$item->getHref().'" />
                     <input type="hidden" name="items['.$item->getId().'][type]" class="hidden_type" value="'.$item->getType().'" />
                     <input type="hidden" name="items['.$item->getId().'][siteid]" class="hidden_siteid" value="'.$item->getSiteId().'" />
+                    <input type="hidden" name="items['.$item->getId().'][boxid]" class="hidden_boxid" value="'.$item->getBoxId().'" />
+                    <input type="hidden" name="items['.$item->getId().'][modulekey]" class="hidden_modulekey" value="'.$item->getModuleKey().'" />
                     <span></span>
                 </span><span class="title">'.$item->getTitle().'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
 
@@ -184,7 +188,7 @@ function rec($item, $menuMapper, $obj)
                         <option value="0">Link</option>
                         <option value="1">Seite</option>
                         <option value="2">Modul</option>
-                        <!--<option value="2">Box</option>-->
+                        <option value="3">Box</option>
                     </select>
                 </div>
             </div>
@@ -278,6 +282,8 @@ function rec($item, $menuMapper, $obj)
                                 +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
                                 +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
                                 +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
+                                +'<input type="hidden" name="items[tmp_'+itemId+'][boxid]" class="hidden_boxid" value="'+$('#boxid').val()+'" />'
+                                +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+$('#modulekey').val()+'" />'
                                 +'</span></span>'+$('#title').val()+'<span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo('#sortable');
                         itemId++;
                         resetBox();
@@ -290,6 +296,8 @@ function rec($item, $menuMapper, $obj)
                     $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
                     $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
                     $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
+                    $('#'+$('#id').val()).find('.hidden_modulekey:first').val($('#modulekey').val());
+                    $('#'+$('#id').val()).find('.hidden_boxid:first').val($('#boxid').val());
                     resetBox();
                 }
             );
@@ -305,8 +313,12 @@ function rec($item, $menuMapper, $obj)
                 } else if ($(this).val() == '1') {
                      $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
                                     <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div>');
-                } else {
-                    //@todo
+                } else if ($(this).val() == '2') {
+                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
+                                    <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ echo '<option value="'.$module->getKey().'">'.$module->getName($this->getTranslator()->getLocale()).'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div>');
+                } else if ($(this).val() == '3') {
+                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
+                                    <div class="col-lg-4"><?php if(!empty($boxes)) { echo '<select id="boxid" class="form-control">'; foreach($boxes as $box){ echo '<option value="'.$box->getId().'">'.$box->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Box vorhanden'; } ?></div>');
                 }
             });
             
@@ -324,7 +336,8 @@ function rec($item, $menuMapper, $obj)
                $('#type').change();
                $('#href').val($(this).parent().find('.hidden_href').val());
                $('#siteid').val($(this).parent().find('.hidden_siteid').val());
-               
+               $('#boxid').val($(this).parent().find('.hidden_boxid').val());
+               $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());
             });
         }
     );

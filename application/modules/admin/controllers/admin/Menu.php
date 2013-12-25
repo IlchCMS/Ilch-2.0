@@ -35,7 +35,7 @@ class Menu extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
             $items = $this->getRequest()->getPost('items');
-            $oldItems = $menuMapper->getMenuItems(1);
+            $oldItems = $menuMapper->getMenuItems($menuId);
 
             /*
              * Deletes old entries from database.
@@ -53,7 +53,7 @@ class Menu extends \Ilch\Controller\Admin
 
                 foreach ($sortItems as $sortItem) {
                     if ($sortItem->item_id !== null) {
-                        $sortArray[$sortItem->item_id] = (int) $sortItem->parent_id;
+                        $sortArray[$sortItem->item_id] = (int)$sortItem->parent_id;
                     }
                 }
 
@@ -71,6 +71,9 @@ class Menu extends \Ilch\Controller\Admin
                     $menuItem->setSiteId($item['siteid']);
                     $menuItem->setHref($item['href']);
                     $menuItem->setTitle($item['title']);
+                    $menuItem->setBoxId($item['boxid']);
+                    $menuItem->setModuleKey($item['modulekey']);
+                    
                     $newId = $menuMapper->saveItem($menuItem);
 
                     if (isset($tmpId)) {
@@ -87,11 +90,15 @@ class Menu extends \Ilch\Controller\Admin
                     }
                 }
 
+                $sort = 0;
+
                 foreach ($sortArray as $id => $parent) {
                     $menuItem = new MenuItem();
                     $menuItem->setId($id);
+                    $menuItem->setSort($sort);
                     $menuItem->setParentId($parent);
                     $menuMapper->saveItem($menuItem);
+                    $sort += 10;
                 }
             }
 
@@ -107,11 +114,15 @@ class Menu extends \Ilch\Controller\Admin
         $menu = $menuMapper->getMenu($menuId);
         $menus = $menuMapper->getMenus();
         
+        $moduleMapper = new \Admin\Mappers\Module();
+        $boxMapper = new \Box\Mappers\Box();
         $this->getView()->set('menu', $menu);
         $this->getView()->set('menus', $menus);
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
         $this->getView()->set('pages', $pageMapper->getPageList($this->getTranslator()->getLocale()));
+        $this->getView()->set('boxes', $boxMapper->getBoxList($this->getTranslator()->getLocale()));
+        $this->getView()->set('modules', $moduleMapper->getModules());
     }
     
     public function addAction()

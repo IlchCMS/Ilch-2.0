@@ -13,6 +13,6 @@ INSERT INTO `[prefix]_config` (`key`, `value`, `autoload`) VALUES
 INSERT INTO `[prefix]_menu` (`id`, `title`) VALUES
 (1, 'Hauptmenü');
 
-INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `parent_id`, `page_id`, `type`, `title`, `href`, `key`) VALUES
-(1, 1, 0, 1, 1, 'Startseite', 'undefined', ''),
-(2, 1, 0, 0, 2, 'Gästebuch', 'undefined', 'guestbook');
+INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `type`, `title`, `href`, `module_key`) VALUES
+(1, 1, 10, 0, 1, 0, 1, 'Startseite', 'undefined', ''),
+(2, 1, 20, 0, 0, 0, 2, 'Gästebuch', 'undefined', 'guestbook');

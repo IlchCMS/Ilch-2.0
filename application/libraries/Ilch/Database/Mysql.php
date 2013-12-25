@@ -206,16 +206,25 @@ class Mysql
      *
      * @param  array  $fields
      * @param  string $table
-     * @param  array  $where
+     * @param  array  $where|null
+     * @param  array  $orderBy|null
      * @return array
      */
-    public function selectArray($fields, $table, $where = null)
+    public function selectArray($fields, $table, $where = null, $orderBy = null)
     {
         $sql = 'SELECT '. $this->_getFieldsSql($fields).'
                 FROM `[prefix]_'.$table . '` ';
 
         if ($where != null) {
             $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+        }
+        
+        if (!empty($orderBy)) {
+            $sql .= ' ORDER BY';
+
+            foreach ($orderBy as $column => $direction) {
+                $sql .= ' `'. $column.'` '.$direction;
+            }
         }
 
         return $this->queryArray($sql);
