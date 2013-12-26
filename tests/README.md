@@ -11,7 +11,7 @@ Für die Controller- bzw. Datenbanktests wird zusätzlich noch das DB-Modul von 
 
 2. **Konfiguration bereitstellen.**
     * DB-Einstellungen für die Datenbank- und Controllertests werden über die *config.php* geregelt.
-        * Sollen für die Tests eine andere DB verwendet werden, sollte die jeweilige Einstellung mit *Test* gesuffixed werden.
+        * Für Datenbanktests werden alle Configeinträge mit dem Suffix "Test" benötigt!
 
         ```php
 $config["dbEngine"] = "Mysql";
@@ -20,9 +20,12 @@ $config["dbUser"] = "ilch2";
 $config["dbPassword"] = "";
 $config["dbName"] = "ilch2";
 $config["dbPrefix"] = "";
+$config["dbEngineTest"] = "Mysql"; // Config for tests
+$config["dbHostTest"] = "localhost"; // Config for tests
 $config["dbUserTest"] = "ilch2test"; // Config for tests
 $config["dbPasswordTest"] = "ilch2test"; // Config for tests
 $config["dbNameTest"] = "ilch2test"; // Config for tests
+$config["dbPrefixTest"] = ""; // Config for tests
         ```
 
 3. **xDebug auf dem Server aktivieren.**
