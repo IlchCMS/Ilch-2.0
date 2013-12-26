@@ -58,6 +58,7 @@ class Login extends \Ilch\Controller\Admin
                      * A use was found. Set his id in the session and redirect to the admincenter.
                      */
                     $_SESSION['user_id'] = $user->getId();
+                    $_SESSION['language'] = $this->getRequest()->getPost('language');
                     $this->redirect(array('controller' => 'index', 'action' => 'index'));
                 }
             }
@@ -66,6 +67,7 @@ class Login extends \Ilch\Controller\Admin
         }
 
         $this->getLayout()->set('errors', $errors);
+        $this->getLayout()->set('languages', $this->getTranslator()->getLocaleList());
     }
 
     /**

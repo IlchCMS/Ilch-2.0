@@ -43,7 +43,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $pageMapper = new PageMapper();
-        $pages = $pageMapper->getPageList($this->getTranslator()->getLocale());
+        $pages = $pageMapper->getPageList($this->getConfig()->get('locale'));
         $this->getView()->set('pages', $pages);
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
     }
@@ -61,7 +61,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             if ($this->getRequest()->getParam('locale') == '') {
-                $locale = $this->getTranslator()->getLocale();
+                $locale = $this->getConfig()->get('locale');
             } else {
                 $locale = $this->getRequest()->getParam('locale');
             }

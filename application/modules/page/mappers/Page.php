@@ -47,8 +47,8 @@ class Page extends \Ilch\Mapper
                $sql = 'SELECT title, locale
                        FROM [prefix]_pages_content 
                        WHERE page_id = '.$pageRow['id'].' AND title != ""';
-               $row = $this->db()->queryRow($sql);     
-               $pageModel->setTitle('('.$row['locale'].') '.$row['title']);
+               $row = $this->db()->queryRow($sql);
+               $pageModel->setTitle($row['title'].' (Orginalfassung: '.$row['locale'].')');
             }
 
             $pageModel->setPerma($pageRow['perma']);

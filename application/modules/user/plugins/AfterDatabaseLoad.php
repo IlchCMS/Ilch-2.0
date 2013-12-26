@@ -43,5 +43,10 @@ class AfterDatabaseLoad
         \Ilch\Registry::set('user', $user);
 
         $pluginData['translator']->setLocale($pluginData['config']->get('locale'));
+
+        if (!empty($_SESSION['language'])) {
+            $pluginData['translator']->setLocale($_SESSION['language']);
+        }
+        
     }
 }

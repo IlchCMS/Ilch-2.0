@@ -43,6 +43,16 @@
                            class="form-control"
                            placeholder="<?php echo $this->trans('password')?>">
                 </div>
+                <div class="form-group">
+                    <select class="form-control" name="language">
+                        <option>Standard</option>
+                        <?php
+                        foreach ($this->get('languages') as $key => $value) {
+                            echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
+                        }
+                        ?>
+                </select>
+                </div>
                 <button class="btn" type="submit"><?php echo $this->trans('signIn')?></button>
                 <br />
                 <?php

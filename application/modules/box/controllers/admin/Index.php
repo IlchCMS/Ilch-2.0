@@ -43,7 +43,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $boxMapper = new BoxMapper();
-        $boxes = $boxMapper->getBoxList($this->getTranslator()->getLocale());
+        $boxes = $boxMapper->getBoxList($this->getConfig()->get('locale'));
         $this->getView()->set('boxes', $boxes);
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
     }
@@ -61,7 +61,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             if ($this->getRequest()->getParam('locale') == '') {
-                $locale = $this->getTranslator()->getLocale();
+                $locale = $this->getConfig()->get('locale');
             } else {
                 $locale = $this->getRequest()->getParam('locale');
             }
