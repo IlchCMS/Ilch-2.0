@@ -5,11 +5,31 @@ if ($this->get('boxes') != '') {
     <colgroup>
         <col class="col-lg-1">
         <col />
+        <?php
+            if ($this->get('multilingual')) {
+                echo '<col />';
+            }
+        ?>
     </colgroup>
     <thead>
         <tr>
             <th><?php echo $this->getTranslator()->trans('treat'); ?></th>
             <th><?php echo $this->trans('boxTitle'); ?></th>
+            <?php
+                if ($this->get('multilingual')) {
+                    echo '<th class="text-right">';
+
+                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
+                        if ($key == $this->getTranslator()->getLocale()) {
+                            continue;
+                        }
+
+                        echo '<img src="'.$this->staticUrl('img/'.$key.'.png').'"> ';
+                    }
+
+                    echo '</th>';
+                }
+            ?>
         </tr>
     </thead>
     <tbody>
@@ -17,10 +37,7 @@ if ($this->get('boxes') != '') {
         foreach ($this->get('boxes') as $box) {
             echo '<tr>
                     <td>';
-            foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                echo '<a href="'.$this->url(array('module' => 'box', 'controller' => 'index', 'action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'"><img src="'.$this->staticUrl('img/'.$key.'.png').'"></a> ';
-            }
-            
+             echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId())).'"><i class="fa fa-edit"></i></a> ';
             ?>
                 <span class="deleteBox clickable fa fa-times-circle"
                               data-clickurl="<?php echo $this->url(array('module' => 'box', 'controller' => 'index', 'action' => 'delete', 'id' => $box->getId())); ?>"
@@ -29,9 +46,27 @@ if ($this->get('boxes') != '') {
                               data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteBox', $box->getTitle())); ?>"
                               title="<?php echo $this->trans('deleteBox'); ?>"></span>
             <?php
-            echo '</td>
-                  <td>'.$this->escape($box->getTitle()).'</td>
-                </tr>';
+            echo '</td>';
+            echo '<td>';
+
+            if ($box->getTitle() !== '') {
+                echo $box->getTitle();
+            } else {
+                echo 'Kein Datensatz für Sprache vorhanden';
+            }
+            echo '</td>';
+            if ($this->get('multilingual')) {
+                echo '<td class="text-right">';
+                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
+                        if ($key == $this->getTranslator()->getLocale()) {
+                            continue;
+                        }
+                        echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'">Edit</a>';
+                    }
+
+                echo '</td>';
+            }
+            echo '</tr>';
         }
         ?>
     </tbody>

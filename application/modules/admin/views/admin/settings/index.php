@@ -3,7 +3,7 @@
     <legend><?php echo $this->trans('systemSettings'); ?></legend>
     <div class="form-group">
         <label for="languageInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('chooseLanguage'); ?>:
+            <?php echo $this->trans('systemLanguage'); ?>:
         </label>
         <div class="col-lg-2">
             <select class="form-control" name="language" id="languageInput">
@@ -76,6 +76,30 @@
                        name="maintenanceMode"
                        value="0"
                 <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->trans('off'); ?>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="multilingualAcp" class="col-lg-2 control-label">
+            <?php echo $this->trans('multilingualAcp'); ?>:
+        </label>
+        <div class="col-lg-2">
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="multilingualAcp"
+                       id="multilingualAcp"
+                       value="1"
+                <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->trans('on'); ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="multilingualAcp"
+                       value="0"
+                <?php if ($this->get('multilingualAcp') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->trans('off'); ?>
                 </label>
             </div>
         </div>

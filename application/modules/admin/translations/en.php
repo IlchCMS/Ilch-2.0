@@ -22,7 +22,7 @@ return array
     'userNotFound' => 'No user found with this username/email or password.',
     'logout' => 'Logout',
     'noUserEmailGiven' => 'No username/email was provided.',
-    'chooseLanguage' => 'Language',
+    'systemLanguage' => 'Default Systemlanguage',
     'saveButton'     => 'Save',
     'home'			 => 'Start',
     'navigation'	 => 'Navigation',
@@ -49,5 +49,6 @@ return array
     'frontend' => 'Frontend',
     'menu' => 'menu',
     'deleteMenu' => 'Delete menu',
-    'askIfDeleteMenu' => 'Are you sure to delete menu "%s"?'
+    'askIfDeleteMenu' => 'Are you sure to delete menu "%s"?',
+    'multilingualAcp' => 'Multilingual Settings',
 );

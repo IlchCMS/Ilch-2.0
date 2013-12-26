@@ -24,6 +24,9 @@
     <div class="form-group">
         <textarea class="form-control" name="boxContent"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
     </div>
+    <?php
+        if ($this->get('multilingual')) {
+    ?>
     <div class="form-group">
         <label for="boxLanguageInput" class="col-lg-2 control-label">
             <?php echo $this->trans('boxLanguage'); ?>:
@@ -48,6 +51,9 @@
             </select>
         </div>
     </div>
+    <?php
+        }
+    ?>
     <div class="content_savebox">
         <button type="submit" name="save" class="btn">
             <?php

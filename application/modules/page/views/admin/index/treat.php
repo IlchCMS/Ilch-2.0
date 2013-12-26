@@ -24,6 +24,9 @@
     <div class="form-group">
         <textarea class="form-control" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
     </div>
+    <?php
+        if ($this->get('multilingual')) {
+    ?>
     <div class="form-group">
         <label for="pageLanguageInput" class="col-lg-2 control-label">
             <?php echo $this->trans('pageLanguage'); ?>:
@@ -48,6 +51,9 @@
             </select>
         </div>
     </div>
+    <?php
+    }
+    ?>
     <div class="form-group">
         <label for="pagePerma" class="col-lg-2 control-label">
             <?php echo $this->trans('permaLink'); ?>:

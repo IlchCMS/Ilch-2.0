@@ -5,11 +5,31 @@ if ($this->get('pages') != '') {
     <colgroup>
         <col class="col-lg-1">
         <col />
+        <?php
+            if ($this->get('multilingual')) {
+                echo '<col />';
+            }
+        ?>
     </colgroup>
     <thead>
         <tr>
             <th><?php echo $this->getTranslator()->trans('treat'); ?></th>
             <th><?php echo $this->trans('pageTitle'); ?></th>
+            <?php
+                if ($this->get('multilingual')) {
+                    echo '<th class="text-right">';
+
+                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
+                        if ($key == $this->getTranslator()->getLocale()) {
+                            continue;
+                        }
+
+                        echo '<img src="'.$this->staticUrl('img/'.$key.'.png').'"> ';
+                    }
+
+                    echo '</th>';
+                }
+            ?>
         </tr>
     </thead>
     <tbody>
@@ -17,10 +37,7 @@ if ($this->get('pages') != '') {
         foreach ($this->get('pages') as $page) {
             echo '<tr>
                     <td>';
-            foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                echo '<a href="'.$this->url(array('module' => 'page', 'controller' => 'index', 'action' => 'treat', 'id' => $page->getId(), 'locale' => $key)).'"><img src="'.$this->staticUrl('img/'.$key.'.png').'"></a> ';
-            }
-            
+             echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $page->getId())).'"><i class="fa fa-edit"></i></a> ';
             ?>
                 <span class="deletePage clickable fa fa-times-circle"
                               data-clickurl="<?php echo $this->url(array('module' => 'page', 'controller' => 'index', 'action' => 'delete', 'id' => $page->getId())); ?>"
@@ -29,9 +46,27 @@ if ($this->get('pages') != '') {
                               data-modaltext="<?php echo $this->escape($this->trans('askIfDeletePage', $page->getTitle())); ?>"
                               title="<?php echo $this->trans('deletePage'); ?>"></span>
             <?php
-            echo '</td>
-                  <td><a target="_blank" href="'.$this->url().'/index.php/'.$this->escape($page->getPerma()).'">'.$page->getTitle().'</a></td>
-                </tr>';
+            echo '</td>';
+            echo '<td>';
+
+            if ($page->getTitle() !== '') {
+                echo '<a target="_blank" href="'.$this->url().'/index.php/'.$this->escape($page->getPerma()).'">'.$page->getTitle().'</a>';
+            } else {
+                echo 'Kein Datensatz für Sprache vorhanden';
+            }
+            echo '</td>';
+            if ($this->get('multilingual')) {
+                echo '<td class="text-right">';
+                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
+                        if ($key == $this->getTranslator()->getLocale()) {
+                            continue;
+                        }
+                        echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $page->getId(), 'locale' => $key)).'">Edit</a>';
+                    }
+
+                echo '</td>';
+            }
+            echo '</tr>';
         }
         ?>
     </tbody>

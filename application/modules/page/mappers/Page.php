@@ -42,6 +42,15 @@ class Page extends \Ilch\Mapper
             $pageModel = new PageModel();
             $pageModel->setId($pageRow['id']);
             $pageModel->setTitle($pageRow['title']);
+            
+            if (empty($pageRow['title'])) {
+               $sql = 'SELECT title, locale
+                       FROM [prefix]_pages_content 
+                       WHERE page_id = '.$pageRow['id'].' AND title != ""';
+               $row = $this->db()->queryRow($sql);     
+               $pageModel->setTitle('('.$row['locale'].') '.$row['title']);
+            }
+
             $pageModel->setPerma($pageRow['perma']);
             $pages[] = $pageModel;
         }
@@ -58,9 +67,9 @@ class Page extends \Ilch\Mapper
      */
     public function getPageByIdLocale($id, $locale = '')
     {
-        $sql = 'SELECT * FROM [prefix]_pages as p
-                INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
-                WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
+            $sql = 'SELECT * FROM [prefix]_pages as p
+                    INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+                    WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
         $pageRow = $this->db()->queryRow($sql);
 
         if (empty($pageRow)) {

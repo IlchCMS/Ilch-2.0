@@ -45,6 +45,7 @@ class Index extends \Ilch\Controller\Admin
         $pageMapper = new PageMapper();
         $pages = $pageMapper->getPageList($this->getTranslator()->getLocale());
         $this->getView()->set('pages', $pages);
+        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
     }
 
     public function deleteAction()
@@ -69,6 +70,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
+        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
 
         if ($this->getRequest()->isPost()) {
             $model = new PageModel();
@@ -79,7 +81,13 @@ class Index extends \Ilch\Controller\Admin
 
             $model->setTitle($this->getRequest()->getPost('pageTitle'));
             $model->setContent($this->getRequest()->getPost('pageContent'));
-            $model->setLocale($this->getRequest()->getPost('pageLanguage'));
+            
+            if ($this->getRequest()->getPost('pageLanguage') != '') {
+                $model->setLocale($this->getRequest()->getPost('pageLanguage'));
+            } else {
+                $model->setLocale($this->getTranslator()->getLocale());
+            }
+
             $model->setPerma($this->getRequest()->getPost('pagePerma'));
             $pageMapper->save($model);
 

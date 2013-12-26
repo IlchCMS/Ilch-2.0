@@ -22,7 +22,7 @@ return array
     'userNotFound' => 'Es wurde kein Benutzer mit dieser Benutzername/E-Mail oder Passwort gefunden.',
     'logout' => 'Ausloggen',
     'noUserEmailGiven' => 'Es wurde kein(e) Benutzername/E-Mail angegeben.',
-    'chooseLanguage' => 'Sprache',
+    'systemLanguage' => 'Standart Systemsprache',
     'saveButton'     => 'Speichern',
     'home'			 => 'Startseite',
     'navigation'	 => 'Menüs',
@@ -49,5 +49,6 @@ return array
     'frontend' => 'Frontend',
     'menu' => 'Menü',
     'deleteMenu' => 'Menü löschen',
-    'askIfDeleteMenu' => 'Sind Sie sicher, dass das Menü "%s" entfernt werden soll?'
+    'askIfDeleteMenu' => 'Sind Sie sicher, dass das Menü "%s" entfernt werden soll?',
+    'multilingualAcp' => 'Multisprachige Einstellungen',
 );
