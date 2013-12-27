@@ -247,6 +247,15 @@ class Router
         if (!empty($this->_query)) {
             return;
         }
+        
+        $config = \Ilch\Registry::get('config');
+        $locale = '';
+
+        if ((bool)$config->get('multilingual_acp')) {
+            if ($translator->getLocale() != $config->get('content_language')) {
+                $locale = $translator->getLocale();
+            }
+        }
 
         if (strpos($startPage, 'module_') !== false) {
             $this->_request->setModuleName(str_replace('module_', '', $startPage));
@@ -257,7 +266,7 @@ class Router
             $this->_request->setControllerName('index');
             $this->_request->setActionName('show');
             $this->_request->setParam('id', str_replace('page_', '', $startPage));
-            $this->_request->setParam('locale', $translator->getLocale());
+            $this->_request->setParam('locale', $locale);
         } else {
             $this->_request->setModuleName(DEFAULT_MODULE);
             $this->_request->setControllerName('index');

@@ -20,7 +20,7 @@ if ($this->get('pages') != '') {
                     echo '<th class="text-right">';
 
                     foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                        if ($key == $this->getTranslator()->getLocale()) {
+                        if ($key == $this->get('contentLanguage')) {
                             continue;
                         }
 
@@ -58,7 +58,7 @@ if ($this->get('pages') != '') {
             if ($this->get('multilingual')) {
                 echo '<td class="text-right">';
                     foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                        if ($key == $this->getTranslator()->getLocale()) {
+                        if ($key == $this->get('contentLanguage')) {
                             continue;
                         }
                         echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $page->getId(), 'locale' => $key)).'">Edit</a>';

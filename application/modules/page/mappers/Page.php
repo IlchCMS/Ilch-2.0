@@ -24,7 +24,7 @@ class Page extends \Ilch\Mapper
      * @param  string $locale
      * @return Page_PageModel[]|null
      */
-    public function getPageList($locale)
+    public function getPageList($locale = '')
     {
         $sql = 'SELECT pc.title, pc.perma, p.id FROM [prefix]_pages as p
                 LEFT JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
@@ -42,15 +42,6 @@ class Page extends \Ilch\Mapper
             $pageModel = new PageModel();
             $pageModel->setId($pageRow['id']);
             $pageModel->setTitle($pageRow['title']);
-            
-            if (empty($pageRow['title'])) {
-               $sql = 'SELECT title, locale
-                       FROM [prefix]_pages_content 
-                       WHERE page_id = '.$pageRow['id'].' AND title != ""';
-               $row = $this->db()->queryRow($sql);
-               $pageModel->setTitle($row['title'].' (Orginalfassung: '.$row['locale'].')');
-            }
-
             $pageModel->setPerma($pageRow['perma']);
             $pages[] = $pageModel;
         }
@@ -115,7 +106,7 @@ class Page extends \Ilch\Mapper
      */
     public function save(PageModel $page)
     {
-        if ($page->getId() && $page->getLocale()) {
+        if ($page->getId()) {
             if ($this->getPageByIdLocale($page->getId(), $page->getLocale())) {
                 $this->db()->update
                 (

@@ -107,16 +107,25 @@ class Model
         $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
 
         $html = '<ul class="list-unstyled"><li>';
+        $config = \Ilch\Registry::get('config');
+
+        $locale = '';
+
+        if ((bool)$config->get('multilingual_acp')) {
+            if ($this->_layout->getTranslator()->getLocale() != $config->get('content_language')) {
+                $locale = $this->_layout->getTranslator()->getLocale();
+            }
+        }
 
         if ($item->getType() == 0) {
             $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 1) {
-            $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $this->_layout->getTranslator()->getLocale());
+            $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
             $html .= '<a href="'.$this->_layout->url($page->getPerma()).'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 2) {
             $html .= '<a href="'.$this->_layout->url(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 3) {
-            $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $this->_layout->getTranslator()->getLocale());
+            $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
             $html .= $box->getContent();
         }
         

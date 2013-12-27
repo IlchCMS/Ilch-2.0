@@ -22,7 +22,7 @@ return array
     'userNotFound' => 'No user found with this username/email or password.',
     'logout' => 'Logout',
     'noUserEmailGiven' => 'No username/email was provided.',
-    'systemLanguage' => 'Default Systemlanguage',
+    'contentLanguage' => 'Contentlanguage',
     'saveButton'     => 'Save',
     'home'			 => 'Start',
     'navigation'	 => 'Navigation',

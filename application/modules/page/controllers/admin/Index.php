@@ -43,9 +43,10 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $pageMapper = new PageMapper();
-        $pages = $pageMapper->getPageList($this->getConfig()->get('locale'));
+        $pages = $pageMapper->getPageList('');
         $this->getView()->set('pages', $pages);
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
     }
 
     public function deleteAction()
@@ -61,7 +62,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             if ($this->getRequest()->getParam('locale') == '') {
-                $locale = $this->getConfig()->get('locale');
+                $locale = '';
             } else {
                 $locale = $this->getRequest()->getParam('locale');
             }
@@ -85,10 +86,11 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('pageLanguage') != '') {
                 $model->setLocale($this->getRequest()->getPost('pageLanguage'));
             } else {
-                $model->setLocale($this->getTranslator()->getLocale());
+                $model->setLocale('');
             }
 
             $model->setPerma($this->getRequest()->getPost('pagePerma'));
+
             $pageMapper->save($model);
 
             $this->redirect(array('action' => 'index'));
