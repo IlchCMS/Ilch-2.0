@@ -19,12 +19,7 @@ define('DEFAULT_MODULE', 'page');
 define('APPLICATION_PATH', __DIR__.'/application');
 define('CONFIG_PATH', APPLICATION_PATH);
 
-$rewriteBaseParts = explode('index.php', $_SERVER['PHP_SELF']);
-
-if(empty($rewriteBaseParts)) {
-    $rewriteBaseParts = explode('Index.php', $rewriteBaseParts);
-}
-
+$rewriteBaseParts = explode('index.php', str_replace('Index.php', 'index.php', $_SERVER['PHP_SELF']));
 $rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
 
 define('REWRITE_BASE', $rewriteBaseParts);
