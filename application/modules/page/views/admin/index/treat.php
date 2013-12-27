@@ -25,7 +25,7 @@
         <textarea class="form-control" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
     </div>
     <?php
-        if ($this->get('multilingual')) {
+        if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
     ?>
     <div class="form-group">
         <label for="pageLanguageInput" class="col-lg-2 control-label">
@@ -37,11 +37,11 @@
                 foreach ($this->get('languages') as $key => $value) {
                     $selected = '';
 
-                    if ($this->getRequest()->getParam('locale') != '') {
-                        if ($this->getRequest()->getParam('locale') == $key) {
-                            $selected = 'selected="selected"';
-                        }
-                    } elseif ($this->getTranslator()->getLocale() == $key) {
+                    if ($key == $this->get('contentLanguage')) {
+                        continue;
+                    }
+
+                    if ($this->getRequest()->getParam('locale') == $key) {
                         $selected = 'selected="selected"';
                     }
 

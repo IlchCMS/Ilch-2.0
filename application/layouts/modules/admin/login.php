@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <select class="form-control" name="language">
-                        <option>Standard</option>
+                        <option value="">Standard</option>
                         <?php
                         foreach ($this->get('languages') as $key => $value) {
                             echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';

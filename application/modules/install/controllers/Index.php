@@ -18,8 +18,8 @@ class Index extends \Ilch\Controller\Frontend
          */
         set_time_limit(0);
 
-        if (isset($_SESSION['language'])) {
-            $this->getTranslator()->setLocale($_SESSION['language']);
+        if (isset($_SESSION['install']['language'])) {
+            $this->getTranslator()->setLocale($_SESSION['install']['language']);
         }
 
         $menu = array
@@ -68,7 +68,7 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($local) {
             $this->getTranslator()->setLocale($local);
-            $_SESSION['language'] = $local;
+            $_SESSION['install']['language'] = $local;
         }
 
         if ($this->getRequest()->isPost()) {

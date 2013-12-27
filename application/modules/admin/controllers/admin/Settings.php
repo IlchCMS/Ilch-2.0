@@ -20,7 +20,6 @@ class Settings extends \Ilch\Controller\Admin
         $pageMapper = new \Page\Mappers\Page();
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('locale', $this->getRequest()->getPost('language'));
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
             $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
             $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));

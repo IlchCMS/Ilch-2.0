@@ -44,6 +44,8 @@ class Index extends \Ilch\Controller\Admin
     {
         $pageMapper = new PageMapper();
         $pages = $pageMapper->getPageList('');
+
+        $this->getView()->set('pageMapper', $pageMapper);
         $this->getView()->set('pages', $pages);
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
@@ -58,6 +60,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
+        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $pageMapper = new PageMapper();
 
         if ($this->getRequest()->getParam('id')) {
