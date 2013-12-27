@@ -20,7 +20,7 @@ if ($this->get('boxes') != '') {
                     echo '<th class="text-right">';
 
                     foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                        if ($key == $this->getTranslator()->getLocale()) {
+                        if ($key == $this->get('contentLanguage')) {
                             continue;
                         }
 
@@ -55,17 +55,25 @@ if ($this->get('boxes') != '') {
                 echo 'Kein Datensatz für Sprache vorhanden';
             }
             echo '</td>';
+
             if ($this->get('multilingual')) {
                 echo '<td class="text-right">';
                     foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                        if ($key == $this->getTranslator()->getLocale()) {
+                        if ($key == $this->get('contentLanguage')) {
                             continue;
                         }
-                        echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'">Edit</a>';
+                        
+                        if ($this->get('boxMapper')->getBoxByIdLocale($box->getId(), $key) != null) {
+                            echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'"><i class="fa fa-edit"></i></a>';
+                        } else {
+                            echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'"><i class="fa fa-plus-circle"></i></a>';
+                        }
+                            
                     }
 
                 echo '</td>';
             }
+
             echo '</tr>';
         }
         ?>

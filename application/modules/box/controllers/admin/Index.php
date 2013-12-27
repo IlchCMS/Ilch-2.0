@@ -44,8 +44,11 @@ class Index extends \Ilch\Controller\Admin
     {
         $boxMapper = new BoxMapper();
         $boxes = $boxMapper->getBoxList($this->getConfig()->get('locale'));
+        
+        $this->getView()->set('boxMapper', $boxMapper);
         $this->getView()->set('boxes', $boxes);
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
     }
 
     public function deleteAction()
@@ -57,11 +60,12 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
+        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $boxMapper = new BoxMapper();
 
         if ($this->getRequest()->getParam('id')) {
             if ($this->getRequest()->getParam('locale') == '') {
-                $locale = $this->getConfig()->get('locale');
+                $locale = '';
             } else {
                 $locale = $this->getRequest()->getParam('locale');
             }
@@ -85,7 +89,7 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('boxLanguage') != '') {
                 $model->setLocale($this->getRequest()->getPost('boxLanguage'));
             } else {
-                $model->setLocale($this->getTranslator()->getLocale());
+                $model->setLocale('');
             }
 
             $boxMapper->save($model);

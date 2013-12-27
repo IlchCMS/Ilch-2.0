@@ -36,12 +36,12 @@
                 <?php
                 foreach ($this->get('languages') as $key => $value) {
                     $selected = '';
+                    
+                    if ($key == $this->get('contentLanguage')) {
+                        continue;
+                    }
 
-                    if ($this->getRequest()->getParam('locale') != '') {
-                        if ($this->getRequest()->getParam('locale') == $key) {
-                            $selected = 'selected="selected"';
-                        }
-                    } elseif ($this->getTranslator()->getLocale() == $key) {
+                    if ($this->getRequest()->getParam('locale') == $key) {
                         $selected = 'selected="selected"';
                     }
 
