@@ -43,7 +43,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $boxMapper = new BoxMapper();
-        $boxes = $boxMapper->getBoxList($this->getConfig()->get('locale'));
+        $boxes = $boxMapper->getBoxList('');
         
         $this->getView()->set('boxMapper', $boxMapper);
         $this->getView()->set('boxes', $boxes);

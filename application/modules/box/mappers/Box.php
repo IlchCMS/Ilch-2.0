@@ -42,14 +42,7 @@ class Box extends \Ilch\Mapper
             $boxModel = new BoxModel();
             $boxModel->setId($boxRow['id']);
             $boxModel->setTitle($boxRow['title']);
-            
-            if (empty($boxRow['title'])) {
-               $sql = 'SELECT title, locale
-                       FROM [prefix]_boxes_content 
-                       WHERE box_id = '.$boxRow['id'].' AND title != ""';
-               $row = $this->db()->queryRow($sql);
-               $boxModel->setTitle($row['title'].' (Orginalfassung: '.$row['locale'].')');
-            }
+
             $boxes[] = $boxModel;
         }
 

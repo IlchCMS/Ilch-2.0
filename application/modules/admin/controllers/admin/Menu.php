@@ -116,12 +116,21 @@ class Menu extends \Ilch\Controller\Admin
         
         $moduleMapper = new \Admin\Mappers\Module();
         $boxMapper = new \Box\Mappers\Box();
+
+        $locale = '';
+
+        if ((bool)$this->getConfig()->get('multilingual_acp')) {
+            if ($this->getTranslator()->getLocale() != $this->getConfig()->get('content_language')) {
+                $locale = $this->getTranslator()->getLocale();
+            }
+        }
+
         $this->getView()->set('menu', $menu);
         $this->getView()->set('menus', $menus);
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
-        $this->getView()->set('pages', $pageMapper->getPageList($this->getTranslator()->getLocale()));
-        $this->getView()->set('boxes', $boxMapper->getBoxList($this->getTranslator()->getLocale()));
+        $this->getView()->set('pages', $pageMapper->getPageList($locale));
+        $this->getView()->set('boxes', $boxMapper->getBoxList($locale));
         $this->getView()->set('modules', $moduleMapper->getModules());
     }
     
