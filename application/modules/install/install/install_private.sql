@@ -11,5 +11,6 @@ INSERT INTO `[prefix]_menu` (`id`, `title`) VALUES
 (1, 'Hauptmenü');
 
 INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `type`, `title`, `href`, `module_key`) VALUES
-(1, 1, 10, 0, 1, 0, 1, 'Startseite', 'undefined', ''),
-(2, 1, 20, 0, 0, 0, 2, 'Gästebuch', 'undefined', 'guestbook');
+(1, 1, 10, 0, 1, 0, 1, 'Startseite', '', ''),
+(2, 1, 20, 0, 0, 0, 2, 'Gästebuch', '', 'guestbook'),
+(3, 1, 30, 0, 0, 0, 2, 'Kontakt', '', 'contact');

@@ -10,6 +10,11 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'editButton' => 'Bearbeiten',
+    'addButton' => 'Hinzufügen',
+    'saveButton'     => 'Speichern',
+    'saveSuccess' => 'Erfolgreich gespeichert',
+    'treat' => 'Bearbeiten',
     'menuChange' => 'Menü bearbeiten',
     'menuItemAdd' => 'Menüitem hinzufügen',
     'loginWelcome' => 'Bitte loggen Sie sich ein',
@@ -23,7 +28,6 @@ return array
     'logout' => 'Ausloggen',
     'noUserEmailGiven' => 'Es wurde kein(e) Benutzername/E-Mail angegeben.',
     'contentLanguage' => 'Sprache des Inhaltes',
-    'saveButton'     => 'Speichern',
     'home'			 => 'Startseite',
     'navigation'	 => 'Menüs',
     'modules'		 => 'Module',
@@ -42,7 +46,6 @@ return array
     'cancel' => 'Abbrechen',
     'needAcknowledgement' => 'Bestätigung erforderlich',
     'pageTitle' => 'Seiten Titel',
-    'saveSuccess' => 'Erfolgreich gespeichert',
     'startPage' => 'Startseite',
     'pages' => 'Seiten',
     'menuTitle' => 'Menütitel',

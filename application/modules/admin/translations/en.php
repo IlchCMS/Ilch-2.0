@@ -10,6 +10,11 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'editButton' => 'Edit',
+    'addButton' => 'Add',
+    'saveButton' => 'Save',
+    'saveSuccess' => 'Saved successful',
+    'treat' => 'Edit',
     'menuChange' => 'Menu change',
     'menuItemAdd' => 'Add menu item',
     'loginWelcome' => 'Please sign in',
@@ -23,7 +28,6 @@ return array
     'logout' => 'Logout',
     'noUserEmailGiven' => 'No username/email was provided.',
     'contentLanguage' => 'Contentlanguage',
-    'saveButton'     => 'Save',
     'home'			 => 'Start',
     'navigation'	 => 'Navigation',
     'modules'		 => 'Modules',
@@ -42,7 +46,6 @@ return array
     'cancel' => 'Cancel',
     'needAcknowledgement' => 'Confirmation required',
     'pageTitle' => 'Pagetitle',
-    'saveSuccess' => 'Saved successful',
     'startPage' => 'Startpage',
     'pages' => 'Pages',
     'menuTitle' => 'Menutitle',
