@@ -48,7 +48,7 @@
                         <option value="">Standard</option>
                         <?php
                         foreach ($this->get('languages') as $key => $value) {
-                            echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
+                            echo '<option value="'.$key.'">'.$this->escape($value).'</option>';
                         }
                         ?>
                 </select>

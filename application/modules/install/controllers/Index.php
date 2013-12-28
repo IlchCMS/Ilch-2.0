@@ -210,7 +210,7 @@ class Index extends \Ilch\Controller\Frontend
                 /*
                  * Install every registered module.
                  */
-                $modulesToInstall = array('admin', 'user', 'page', 'box', 'guestbook', 'contact');
+                $modulesToInstall = array('admin', 'user', 'article', 'page', 'box', 'guestbook', 'contact');
                 $moduleMapper = new \Admin\Mappers\Module();
 
                 /*
