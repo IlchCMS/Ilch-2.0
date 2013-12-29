@@ -14,7 +14,7 @@ class Admin extends Base
         parent::__construct($layout, $view, $request, $router, $translator);
 
         $this->getLayout()->set('menu', array());
-        $this->getLayout()->setFile('modules/admin/index');
+        $this->getLayout()->setFile('modules/admin/layouts/index');
 
         $moduleMapper = new \Admin\Mappers\Module();
         $this->getLayout()->set('modules', $moduleMapper->getModules());

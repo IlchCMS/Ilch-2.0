@@ -32,7 +32,7 @@ class BeforeControllerLoad
             $config = $pluginData['config'];
 
             if (!$request->isAdmin() && $config->get('maintenance_mode')) {
-                $pluginData['layout']->setFile('maintenance/index');
+                $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
             }
         }
 

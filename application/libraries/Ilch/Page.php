@@ -148,9 +148,7 @@ class Page
 
         if ($controller->getLayout()->getDisabled() === false) {
             if ($controller->getLayout()->getFile() != '') {
-                $this->_layout->loadScript(APPLICATION_PATH.'/layouts/'.$controller->getLayout()->getFile().'.php');
-            } elseif (file_exists(APPLICATION_PATH.'/layouts/'.$this->_request->getModuleName().'/index.php')) {
-                $this->_layout->loadScript(APPLICATION_PATH.'/layouts/'.$this->_request->getModuleName().'/index.php');
+                $this->_layout->loadScript(APPLICATION_PATH.'/'.$controller->getLayout()->getFile().'.php');
             }
         }
     }
