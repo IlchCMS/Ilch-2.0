@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <title><?php echo $this->getTitle(); ?></title>
         <meta name="description" content="Ilch - Frontend">
-		<link href="<?php echo $this->staticUrl('css/default/style.css'); ?>" rel="stylesheet">
+		<link href="<?php echo $this->staticUrl('../application/layouts/default/style.css', 1); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">

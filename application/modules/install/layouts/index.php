@@ -7,7 +7,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>">
         <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('css/modules/install/install.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->staticUrl('../application/modules/install/static/css/install.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
         <script src="<?php echo $this->staticUrl('js/jquery.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/jquery-ui.js'); ?>"></script>

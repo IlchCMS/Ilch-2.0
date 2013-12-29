@@ -8,7 +8,7 @@
         <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('css/modules/admin/main.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->staticUrl('../application/modules/admin/static/css/main.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
@@ -17,7 +17,7 @@
         <script src="<?php echo $this->staticUrl('js/jquery-ui.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/jquery.mjs.nestedSortable.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
-        <script src="<?php echo $this->staticUrl('js/modules/admin/functions.js'); ?>"></script>
+        <script src="<?php echo $this->staticUrl('../application/modules/admin/static/js/functions.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
         <script src="<?php echo $this->staticUrl('js/validate/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo $this->staticUrl('js/validate/additional-methods.min.js'); ?>"></script>
@@ -77,7 +77,7 @@
                                 foreach ($this->get('modules') as $module) {
                                     echo '<li>
                                             <a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
-                                                <img style="padding-right: 5px;" src="'.$this->staticUrl('img/modules/'.$module->getKey().'/'.$module->getIconSmall()).'" />'
+                                                <img style="padding-right: 5px;" src="'.$this->staticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
                                                 .$module->getName($this->getTranslator()->getLocale()).'</a>
                                         </li>';
                                 }
