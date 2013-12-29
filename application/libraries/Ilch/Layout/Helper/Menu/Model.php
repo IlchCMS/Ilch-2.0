@@ -114,9 +114,9 @@ class Model
                         }
 
                         $html = str_replace('%c', $box->getContent(), $html);
+                    } else {
+                        $htmlMenuItems .= $this->_recGetItems($item, $locale);
                     }
-                } else {
-                    $htmlMenuItems .= $this->_recGetItems($item, $locale);
                 }
             }
             

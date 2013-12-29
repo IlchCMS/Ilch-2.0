@@ -13,6 +13,10 @@ function rec($item, $menuMapper, $obj)
     if (empty($subItems)) {
         $class = 'mjs-nestedSortable-leaf';
     }
+    
+    if ($item->getType() == 4) {
+        $class .= ' mjs-nestedSortable-no-nesting';
+    }
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
     echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
@@ -251,11 +255,16 @@ function rec($item, $menuMapper, $obj)
                 maxLevels: 8,
                 isTree: true,
                 expandOnHover: 700,
-                startCollapsed: false
+                startCollapsed: false,
+                stop: function(event, ui){
+                    val = ui.item.find('input.hidden_type').val();
+
+                    if ((val == 4 || val == 0) && ui.position.left > ui.originalPosition.left) {
+                        event.preventDefault();
+                    }
+                }
             });
-            
-
-
+  
             $('.disclose').on('click', function () {
                 $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
                 $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
