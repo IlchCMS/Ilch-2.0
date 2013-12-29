@@ -76,18 +76,52 @@ class Model
     /**
      * Gets the menu items as html-string.
      * 
+     * @param string $tpl
      * @return string
      */
-    public function getItems()
+    public function getItems($tpl = '')
     {
         $html = '';
+        $locale = '';
+        $htmlMenuItems = '';
+
         $menuMapper = new \Admin\Mappers\Menu();
         $items = $menuMapper->getMenuItemsByParent($this->getId(), 0);
-        
+        $boxMapper = new \Box\Mappers\Box();
+        $config = \Ilch\Registry::get('config');
+
+        if ((bool)$config->get('multilingual_acp')) {
+            if ($this->_layout->getTranslator()->getLocale() != $config->get('content_language')) {
+                $locale = $this->_layout->getTranslator()->getLocale();
+            }
+        }
+
         if (!empty($items)) {
             foreach ($items as $item) {
-                $html .= $this->_recGetItems($item);
+                if ($item->getType() == 0 || $item->getType() == 4) {
+                    $html = str_replace('%c', $htmlMenuItems, $html);
+                    $htmlMenuItems = '';
+                    $html .= str_replace('%s', $item->getTitle(), $tpl);
+    
+                    if ($item->getType() == 4) {
+                        if (is_int($item->getBoxKey())) {
+                            $box = $boxMapper->getBoxByIdLocale($item->getBoxKey(), $locale);
+                        } else {
+                            $class = 'Boxes\\'.ucfirst($item->getBoxKey()).'\\Index';
+                            $boxObj = new $class();
+                            $box = new \Box\Models\Box();
+                            $box->setContent($boxObj->render());
+                        }
+
+                        $html = str_replace('%c', $box->getContent(), $html);
+                    }
+                } else {
+                    $htmlMenuItems .= $this->_recGetItems($item, $locale);
+                }
             }
+            
+            $html = str_replace('%c', $htmlMenuItems, $html);
+            $htmlMenuItems = '';
         }
 
         return $html;
@@ -99,41 +133,28 @@ class Model
      * @param \Admin\Models\MenuItem $item
      * @return string
      */
-    protected function _recGetItems($item)
+    protected function _recGetItems($item, $locale)
     {
         $menuMapper = new \Admin\Mappers\Menu();
         $pageMapper = new \Page\Mappers\Page();
-        $boxMapper = new \Box\Mappers\Box();
         $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
 
         $html = '<ul class="list-unstyled"><li>';
-        $config = \Ilch\Registry::get('config');
 
-        $locale = '';
-
-        if ((bool)$config->get('multilingual_acp')) {
-            if ($this->_layout->getTranslator()->getLocale() != $config->get('content_language')) {
-                $locale = $this->_layout->getTranslator()->getLocale();
-            }
-        }
-
-        if ($item->getType() == 0) {
+        if ($item->getType() == 1) {
             $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
-        } elseif ($item->getType() == 1) {
+        } elseif ($item->getType() == 2) {
             $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
             $html .= '<a href="'.$this->_layout->url($page->getPerma()).'">'.$item->getTitle().'</a>';
-        } elseif ($item->getType() == 2) {
-            $html .= '<a href="'.$this->_layout->url(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 3) {
-            $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
-            $html .= $box->getContent();
+            $html .= '<a href="'.$this->_layout->url(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
         }
         
         if (!empty($subItems)) {
             $html .= '<ul class="list-unstyled">';
 
             foreach ($subItems as $subItem) {
-                $html .= $this->_recGetItems($subItem);
+                $html .= $this->_recGetItems($subItem, $locale);
             }
 
             $html .= '</ul>';

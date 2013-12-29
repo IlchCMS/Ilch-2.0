@@ -54,9 +54,9 @@ class MenuItem extends \Ilch\Model
     /**
      * Boxid of the item.
      *
-     * @var integer
+     * @var string
      */
-    protected $_boxId;
+    protected $_boxKey;
 
     /**
      * MenuId of the item.
@@ -169,21 +169,21 @@ class MenuItem extends \Ilch\Model
     /**
      * Gets the box id.
      *
-     * @return integer
+     * @return string
      */
-    public function getBoxId()
+    public function getBoxKey()
     {
-        return $this->_boxId;
+        return $this->_boxKey;
     }
 
     /**
      * Sets the box id.
      *
-     * @param integer $id
+     * @param string $key
      */
-    public function setBoxId($id)
+    public function setBoxKey($key)
     {
-        $this->_boxId = (int)$id;
+        $this->_boxKey = (string)$key;
     }
 
     /**

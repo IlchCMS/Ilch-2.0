@@ -62,18 +62,16 @@
                 </div>
                 <div class="col-lg-4">
                     <?php
-                        foreach ($this->getMenus() as $menu) {
-                    ?>
-                    <div class="panel panel-default" id="content-formatting">
-                        <div class="panel-heading">
-                            <?php echo $menu->getTitle(); ?>
-                        </div>
-                        <div class="panel-body">
-                            <?php echo $menu->getItems(); ?>
-                        </div>
-                    </div>
-                    <?php
-                        }
+                        echo $this->getMenu
+                        (
+                            1,
+                            '<div class="panel panel-default">
+                                 <div class="panel-heading">%s</div>
+                                    <div class="panel-body">
+                                        %c
+                                    </div>
+                             </div>'
+                        );
                     ?>
                 </div>
             </div>

@@ -65,7 +65,7 @@ class Config extends \Ilch\Config\Install
                   `sort` int(11) NOT NULL,
                   `parent_id` int(11) NOT NULL,
                   `page_id` int(11) NOT NULL,
-                  `box_id` int(11) NOT NULL,
+                  `box_key` varchar(255) NOT NULL,
                   `type` int(11) NOT NULL,
                   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `href` varchar(255) COLLATE utf8_unicode_ci NOT NULL,

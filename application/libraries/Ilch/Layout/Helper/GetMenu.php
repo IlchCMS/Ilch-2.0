@@ -23,14 +23,23 @@ class GetMenu
      * Gets the menu for the given position.
      *
      * @param integer $menu
-     * @return Ilch\Layout\Helper\Menu\Model
+     * @param string $html
+     * @return string
      */
-    public function getMenu($menu = 1)
+    public function getMenu($args)
     {
+        $menuId = $args[0];
+
         $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->_layout);
         $menuMapper = new \Admin\Mappers\Menu();
 
-        return $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menu));
+        $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
+        
+        if (isset($args[1])) {
+            return $menu->getItems($args[1]);
+        }
+
+        return $menu->getItems();
     }
 }
 

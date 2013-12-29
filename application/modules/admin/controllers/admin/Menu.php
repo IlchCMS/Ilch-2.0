@@ -71,7 +71,7 @@ class Menu extends \Ilch\Controller\Admin
                     $menuItem->setSiteId($item['siteid']);
                     $menuItem->setHref($item['href']);
                     $menuItem->setTitle($item['title']);
-                    $menuItem->setBoxId($item['boxid']);
+                    $menuItem->setBoxKey($item['boxkey']);
                     $menuItem->setModuleKey($item['modulekey']);
                     
                     $newId = $menuMapper->saveItem($menuItem);
@@ -130,7 +130,7 @@ class Menu extends \Ilch\Controller\Admin
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
         $this->getView()->set('pages', $pageMapper->getPageList($locale));
-        $this->getView()->set('boxes', $boxMapper->getBoxList($locale));
+        $this->getView()->set('boxes', (array)$boxMapper->getBoxList($locale));
         $this->getView()->set('modules', $moduleMapper->getModules());
     }
     
