@@ -23,15 +23,10 @@ class Base extends \Ilch\Controller\Admin
      */
     public function init()
     {
-        $active = array('group' => false, 'user' => false);
+        $active = array();
 
-        if($this->getRequest()->getControllerName() == 'group')
-        {
-            $active['group'] = true;
-        }
-        else
-        {
-            $active['user'] = true;
+        foreach(array('group', 'user', 'access') as $controllerName) {
+            $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 
         $this->getLayout()->addMenu
@@ -52,6 +47,13 @@ class Base extends \Ilch\Controller\Admin
                     'active' => $active['group'],
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'group', 'action' => 'index'))
+                ),
+                array
+                (
+                    'name' => 'menuAccess',
+                    'active' => $active['access'],
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->url(array('controller' => 'access', 'action' => 'index'))
                 ),
             )
         );

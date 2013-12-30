@@ -50,4 +50,9 @@ return array
     'delGroupMsg' => 'Die Gruppe wurde erfolgreich entfernt.',
     'delAdminGroup' => 'Es ist nicht erlaubt die Gruppe "Administrator" zu entfernen.',
     'noGroupsExist' => 'Keine Gruppen vorhanden.',
+
+    'menuAccess' => 'Gruppenrechte',
+    'lookAccess' => 'nur sehen',
+    'noAccess' => 'nicht sehen/bearbeiten',
+    'modifyAccess' => 'bearbeiten',
 );
