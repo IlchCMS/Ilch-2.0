@@ -13,7 +13,7 @@ function rec($item, $menuMapper, $obj)
     if (empty($subItems)) {
         $class = 'mjs-nestedSortable-leaf';
     }
-    
+
     if ($item->getType() == 4) {
         $class .= ' mjs-nestedSortable-no-nesting';
     }
@@ -48,7 +48,7 @@ function rec($item, $menuMapper, $obj)
         float: right;
         cursor: pointer;
     }
-    
+
     .item_edit {
         margin-right: 6px;
         float: right;
@@ -119,7 +119,7 @@ function rec($item, $menuMapper, $obj)
     .sortable li.mjs-nestedSortable-branch > div > .disclose {
         display: inline-block;
     }
-    
+
     .placeholder {
         outline: 1px dashed #4183C4;
         /*-webkit-border-radius: 3px;
@@ -136,7 +136,7 @@ function rec($item, $menuMapper, $obj)
 
         foreach ($this->get('menus') as $menu) {
             $active = '';
-            
+
             if($menu->getId() == $this->get('menu')->getId()) {
                 $active = 'active';
             }
@@ -190,9 +190,11 @@ function rec($item, $menuMapper, $obj)
                 <div class="col-lg-4">
                     <select id="type" class="form-control">
                         <option value="0">Menu</option>
-                        <option value="1">Link</option>
-                        <option value="2">Seite</option>
-                        <option value="3">Modul</option>
+                        <optgroup>
+                            <option value="1">Externe Verlinkung</option>
+                            <option value="2">Seiten Verlinkung</option>
+                            <option value="3">Modul Verlinkung</option>
+                        </optgroup>
                         <option value="4">Box</option>
                     </select>
                 </div>
@@ -227,7 +229,7 @@ function rec($item, $menuMapper, $obj)
 
         $('#type').change();
     }
-    
+
     $('.deleteMenu').on('click', function(event) {
         $('#modalButton').data('clickurl', $(this).data('clickurl'));
         $('#modalText').html($(this).data('modaltext'));
@@ -259,12 +261,18 @@ function rec($item, $menuMapper, $obj)
                 stop: function(event, ui){
                     val = ui.item.find('input.hidden_type').val();
 
-                    if ((val == 4 || val == 0) && ui.position.left > ui.originalPosition.left) {
-                        event.preventDefault();
+                    if ((val == 4 || val == 0)) {
+                        if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() != undefined) {
+                            event.preventDefault();
+                        }
+                    } else {
+                        if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() == undefined) {
+                            event.preventDefault();
+                        }
                     }
                 }
             });
-  
+
             $('.disclose').on('click', function () {
                 $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
                 $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
@@ -277,20 +285,38 @@ function rec($item, $menuMapper, $obj)
             );
 
             $('#menuForm').on('click', '#menuItemAdd', function () {
-                        $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                                +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
-                                +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
-                                +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
-                                +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
-                                +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
-                                +'<input type="hidden" name="items[tmp_'+itemId+'][boxkey]" class="hidden_boxkey" value="'+$('#boxkey').val()+'" />'
-                                +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+$('#modulekey').val()+'" />'
-                                +'</span></span>'+$('#title').val()+'<span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo('#sortable');
-                        itemId++;
-                        resetBox();
+                append = '#sortable';
+
+                if ($('#type').val() != 0 && $('#type').val() != 4 && $('#menukey').val() != 0) {
+                    id = $('#menukey').val();
+
+                    if ($('#sortable #'+id+' ol').length > 0) {
+
+                    } else {
+                        $('<ol></ol>').appendTo('#sortable #'+id);
                     }
+
+                    if (!isNaN(id)) {
+                        append = '#sortable #list_'+id+' ol';
+                    } else {
+                        append = '#sortable #'+id+' ol';
+                    }
+                }
+
+                $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][boxkey]" class="hidden_boxkey" value="'+$('#boxkey').val()+'" />'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+$('#modulekey').val()+'" />'
+                        +'</span></span>'+$('#title').val()+'<span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
+                itemId++;
+                resetBox();
+                }
             );
-            
+
             $('#menuForm').on('click', '#menuItemEdit', function () {
                     $('#'+$('#id').val()).find('.title:first').text($('#title').val());
                     $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
@@ -302,38 +328,48 @@ function rec($item, $menuMapper, $obj)
                     resetBox();
                 }
             );
-            
+
             $('.sortable').on('click', '.item_delete', function() {
                 $(this).closest('li').remove();
             });
-            
+
             $('#menuForm').on('change', '#type', function() {
+                var options = '';
+                $('#sortable').find('li').each(function(){
+                    if ($(this).find('input.hidden_type:first').val() == 0) {
+                        options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
+                    }
+                });
+
+                menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label">Menü</label>\n\
+                            <div class="col-lg-4"><select id="menukey" class="form-control">'+options+'</select></div></div>';
+
                 if ($(this).val() == '0') {
                     $('.dyn').html('');
                 } else if($(this).val() == '1') {
                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Adresse</label>\n\
-                                    <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>');
+                                    <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
                 } else if ($(this).val() == '2') {
                      $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
-                                    <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div>');
+                                    <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
                 } else if ($(this).val() == '3') {
                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
-                                    <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ echo '<option value="'.$module->getKey().'">'.$module->getName($this->getTranslator()->getLocale()).'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div>');
+                                    <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ echo '<option value="'.$module->getKey().'">'.$module->getName($this->getTranslator()->getLocale()).'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
                 } else if ($(this).val() == '4') {
                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
-                                    <div class="col-lg-4"><?php echo '<select id="boxkey" class="form-control">'; 
-                    foreach (glob(APPLICATION_PATH.'/boxes/*') as $path) { echo '<option value="'.basename($path).'">'.basename($path).'</option>'; } foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div>');
+                                    <div class="col-lg-4"><?php echo '<select id="boxkey" class="form-control">';
+                    foreach (glob(APPLICATION_PATH.'/boxes/*') as $path) { echo '<option value="'.basename($path).'">'.basename($path).'</option>'; } foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
                 }
             });
-            
+
             $('#menuForm').on('click', '#menuItemEditCancel', function() {
                 $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
                 resetBox();
             });
-            
+
             $('.sortable').on('click', '.item_edit', function() {
                $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
-                                   <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">'); 
+                                   <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">');
                $('#title').val($(this).parent().find('.hidden_title').val());
                $('#type').val($(this).parent().find('.hidden_type').val());
                $('#id').val($(this).closest('li').attr('id'));
