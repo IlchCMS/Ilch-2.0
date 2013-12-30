@@ -151,17 +151,6 @@ function rec($item, $menuMapper, $obj)
     <br />
     <legend><?php echo $this->trans('menuChange'); ?></legend>
         <div class="col-lg-6">
-            <div class="form-group">
-                <label for="type" class="col-lg-2 control-label">
-                    <?php echo $this->trans('menuTitle'); ?>
-                </label>
-                <div class="col-lg-10">
-                    <input class="form-control"
-                           type="text"
-                           name="menuTitle"
-                           value="<?php echo $this->escape($this->get('menu')->getTitle()); ?>" />
-                </div>
-            </div>
             <ol id="sortable" class="sortable">
                 <?php
                     if (!empty($menuItems)) {

@@ -104,7 +104,6 @@ class Menu extends \Ilch\Controller\Admin
 
             $menu = new MenuModel();
             $menu->setId($menuId);
-            $menu->setTitle($this->getRequest()->getPost('menuTitle'));
             $menuMapper->save($menu);
 
             $this->addMessage('saveSuccess');
