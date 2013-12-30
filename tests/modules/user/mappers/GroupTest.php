@@ -294,4 +294,159 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
 
         $this->assertTrue($mapper->delete(3), 'The group does not got deleted successfully.');
     }
+
+    /*
+     * Tests if the group access list will be returned correctly.
+     */
+    public function testGetGroupAccessList()
+    {
+        $accessDbList = array(
+            array(
+                'group_name' => 'Squad Member',
+                'group_id' => '3',
+                'page_id' => '1',
+                'module_id' => '0',
+                'article_id' => '0',
+                'access_level' => '1',
+            ),
+            array(
+                'group_name' => 'Squad Leader',
+                'group_id' => '4',
+                'page_id' => '0',
+                'module_id' => '11',
+                'article_id' => '0',
+                'access_level' => '2',
+            ),
+            array(
+                'group_name' => 'Squad Leader',
+                'group_id' => '4',
+                'page_id' => '0',
+                'module_id' => '10',
+                'article_id' => '0',
+                'access_level' => '1',
+            ),
+            array(
+                'group_name' => 'Squad Leader',
+                'group_id' => '4',
+                'page_id' => '1',
+                'module_id' => '0',
+                'article_id' => '0',
+                'access_level' => '1',
+            ),
+            array(
+                'group_name' => 'Squad Leader',
+                'group_id' => '4',
+                'page_id' => '0',
+                'module_id' => '0',
+                'article_id' => '1',
+                'access_level' => '1',
+            ),
+            array(
+                'group_name' => 'Squad Leader',
+                'group_id' => '4',
+                'page_id' => '0',
+                'module_id' => '0',
+                'article_id' => '2',
+                'access_level' => '2',
+            ),
+        );
+        $dbMock = $this->getMock('Ilch_Database', array('queryArray'));
+        $dbMock->expects($this->once())
+                ->method('queryArray')
+                ->with($this->logicalAnd($this->stringContains('FROM groups_access'), $this->stringContains('INNER JOIN groups')))
+                ->will($this->returnValue($accessDbList));
+
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+        $accessList = $mapper->getGroupAccessList();
+
+        $expectedAccessList = array(
+            3 => array(
+                'group_name' => 'Squad Member',
+                'entries' => array(
+                    'pages' => array(
+                        1 => 1,
+                    ),
+                    'modules' => array(),
+                    'articles' => array(),
+                ),
+            ),
+            4 => array(
+                'group_name' => 'Squad Leader',
+                'entries' => array(
+                    'pages' => array(
+                        1 => 1,
+                    ),
+                    'modules' => array(
+                        11 => 2,
+                        10 => 1,
+                    ),
+                    'articles' => array(
+                        1 => 1,
+                        2 => 2,
+                    ),
+                ),
+            ),
+        );
+
+        $this->assertEquals($expectedAccessList, $accessList, 'Group access list was wrong returned.');
+    }
+
+    /*
+     * Tests if a new access data entry can be saved to db.
+     */
+    public function testSaveAccessData()
+    {
+        $expectedFields = array(
+            'group_id' => 3,
+            'module_id' => 4,
+            'access_level' => 2,
+        );
+        $expectedRec = array(
+            'group_id' => 3,
+            'module_id' => 4,
+        );
+        $dbMock = $this->getMock('Ilch_Database', array('insert', 'selectCell'));
+        $dbMock->expects($this->once())
+                ->method('insert')
+                ->with($expectedFields, 'groups_access')
+                ->will($this->returnValue(1));
+        $dbMock->expects($this->once())
+                ->method('selectCell')
+                ->with('COUNT(*)', 'groups_access', $expectedRec)
+                ->will($this->returnValue(0));
+
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+        $mapper->saveAccessData(3, 4, 2, 'module');
+    }
+
+    /*
+     * Tests if a new access data entry can be saved to db.
+     */
+    public function testUpdateAccessData()
+    {
+        $expectedFields = array(
+            'group_id' => 3,
+            'module_id' => 4,
+            'access_level' => 2,
+        );
+        $expectedRec = array(
+            'group_id' => 3,
+            'module_id' => 4,
+        );
+        $dbMock = $this->getMock('Ilch_Database', array('update', 'selectCell'));
+        $dbMock->expects($this->once())
+                ->method('update')
+                ->with($expectedFields, 'groups_access', $expectedRec)
+                ->will($this->returnValue(1));
+        $dbMock->expects($this->once())
+                ->method('selectCell')
+                ->with('COUNT(*)', 'groups_access', $expectedRec)
+                ->will($this->returnValue(1));
+
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+        $mapper->saveAccessData(3, 4, 2, 'module');
+    }
 }

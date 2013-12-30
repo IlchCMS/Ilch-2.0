@@ -225,4 +225,78 @@ class Group extends \Ilch\Mapper
         $this->db()->delete('users_groups', array('group_id' => $groupId));
         return $this->db()->delete('groups', array('id' => $groupId));
     }
+
+    /**
+     * Returns the group access list from the database.
+     *
+     * @return mixed[]
+     */
+    public function getGroupAccessList()
+    {
+        $sql = 'SELECT g.name AS group_name, ga.*
+                FROM groups_access AS ga
+                INNER JOIN groups AS g ON ga.group_id = g.id';
+        $accessDbList = $this->db()->queryArray($sql);
+        $accessList = array();
+        $entries = array(
+            'pages' => array(),
+            'modules' => array(),
+            'articles' => array(),
+        );
+
+        foreach($accessDbList as $accessDbListEntry) {
+            $groupId = $accessDbListEntry['group_id'];
+
+            if(!isset($accessList[$groupId])) {
+                /*
+                 * First entry for this group
+                 */
+                $groupName = $accessDbListEntry['group_name'];
+                unset($accessDbListEntry['group_id']);
+                unset($accessDbListEntry['group_name']);
+                $accessList[$groupId]['group_name'] = $groupName;
+                $accessList[$groupId]['entries'] = $entries;
+            }
+
+            if(!empty($accessDbListEntry['module_id'])) {
+                $entryType = 'modules';
+                $entryId = $accessDbListEntry['module_id'];
+            } elseif(!empty($accessDbListEntry['page_id'])) {
+                $entryType = 'pages';
+                $entryId = $accessDbListEntry['page_id'];
+            } elseif(!empty($accessDbListEntry['article_id'])) {
+                $entryType = 'articles';
+                $entryId = $accessDbListEntry['article_id'];
+            }
+
+            $accessList[$groupId]['entries'][$entryType][$entryId] = $accessDbListEntry['access_level'];
+        }
+
+        return $accessList;
+    }
+
+    /**
+     * Saves or updates an access data entry to the db.
+     *
+     * @param  int    $groupId
+     * @param  int    $typeId
+     * @param  int    $accessLevel
+     * @param  string $type
+     */
+    public function saveAccessData($groupId, $typeId, $accessLevel, $type)
+    {
+        $rec = array(
+            'group_id' => (int)$groupId,
+            $type.'_id' => (int)$typeId,
+        );
+        $fields = $rec;
+        $fields['access_level'] = (int)$accessLevel;
+        $entryExists = $this->db()->selectCell('COUNT(*)', 'groups_access', $rec);
+
+        if($entryExists) {
+            $this->db()->update($fields, 'groups_access', $rec);
+        } else {
+            $this->db()->insert($fields, 'groups_access');
+        }
+    }
 }

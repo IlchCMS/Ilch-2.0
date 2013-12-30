@@ -25,16 +25,15 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $groupMapper = new \User\Mappers\Group();
-        $group = new \User\Models\Group();
-        $group->setName('Admin');
-        $group->setId(1);
-        $groupMapper->save($group);
+        $adminGroup = $groupMapper->getGroupById(1);
+        $usersGroup = $groupMapper->getGroupById(2);
         $userMapper = new \User\Mappers\User();
         $user = new \User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
         $user->setPassword(crypt($_SESSION['install']['adminPassword']));
         $user->setEmail($_SESSION['install']['adminEmail']);
-        $user->addGroup($group);
+        $user->addGroup($adminGroup);
+        $user->addGroup($usersGroup);
         $dateCreated = new \Ilch\Date();
         $user->setDateCreated($dateCreated);
         $userMapper->save($user);
@@ -43,7 +42,7 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
     }
-    
+
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
@@ -53,7 +52,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2;
 
                 INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
-                (1, "Administrator");
+                (1, "Administrator"),(2, "User");
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_users` (
                   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -69,6 +68,15 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
                   `user_id` int(11) NOT NULL,
                   `group_id` int(11) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
+                  `group_id` int(11) NOT NULL,
+                  `page_id` int(11) DEFAULT 0,
+                  `module_id` int(11) DEFAULT 0,
+                  `article_id` int(11) DEFAULT 0,
+                  `access_level` int(11) DEFAULT 0,
+                  PRIMARY KEY (`group_id`, `page_id`, `module_id`, `article_id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }
