@@ -22,7 +22,7 @@ class Box extends \Ilch\Mapper
      * Get box lists for overview.
      *
      * @param  string $locale
-     * @return BoxModel[]|null
+     * @return BoxModel[]|array
      */
     public function getBoxList($locale)
     {
@@ -33,7 +33,7 @@ class Box extends \Ilch\Mapper
         $boxArray = $this->db()->queryArray($sql);
 
         if (empty($boxArray)) {
-            return null;
+            return array();
         }
 
         $boxes = array();

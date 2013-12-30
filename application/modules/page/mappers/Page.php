@@ -22,7 +22,7 @@ class Page extends \Ilch\Mapper
      * Get page lists for overview.
      *
      * @param  string $locale
-     * @return Page_PageModel[]|null
+     * @return Page_PageModel[]|array
      */
     public function getPageList($locale = '')
     {
@@ -33,7 +33,7 @@ class Page extends \Ilch\Mapper
         $pageArray = $this->db()->queryArray($sql);
 
         if (empty($pageArray)) {
-            return null;
+            return array();
         }
 
         $pages = array();
