@@ -44,4 +44,20 @@ class Frontend extends Base
             return 'Ilch '.VERSION.' Frontend';
         }
     }
+
+    /**
+     * Gets the box with the given key.
+     *
+     * @return string
+     */
+    public function getBox($boxKey)
+    {
+        $class = 'Boxes\\'.ucfirst($boxKey).'\\Index';
+        $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
+        $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
+        $boxObj->render();
+
+        return $view->loadScript(APPLICATION_PATH.'/boxes/'.$boxKey.'/render.php');
+    }
 }
+

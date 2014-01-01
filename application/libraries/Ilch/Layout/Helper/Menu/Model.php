@@ -108,9 +108,13 @@ class Model
                             $box = $boxMapper->getBoxByIdLocale($item->getBoxKey(), $locale);
                         } else {
                             $class = 'Boxes\\'.ucfirst($item->getBoxKey()).'\\Index';
-                            $boxObj = new $class();
+                            $view = new \Ilch\View($this->_layout->getRequest(), $this->_layout->getTranslator(), $this->_layout->getRouter());
+                            $boxObj = new $class($this->_layout, $view, $this->_layout->getRequest(), $this->_layout->getRouter(), $this->_layout->getTranslator());
+                            $boxObj->render();
+                            $output = $view->loadScript(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php');
+
                             $box = new \Box\Models\Box();
-                            $box->setContent($boxObj->render());
+                            $box->setContent($output);
                         }
 
                         $html = str_replace('%c', $box->getContent(), $html);

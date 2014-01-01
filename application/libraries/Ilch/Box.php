@@ -7,7 +7,7 @@
 namespace Ilch;
 defined('ACCESS') or die('no direct access');
 
-class Box
+class Box extends \Ilch\Controller\Base
 {
     /**
      * Hold the database adapter.
@@ -17,10 +17,17 @@ class Box
     private $_db;
 
     /**
-     * Injects the database adapter to the mapper.
+     * Injects the layout/view to the controller.
+     *
+     * @param \Ilch\Layout\Base $layout
+     * @param \Ilch\View        $view
+     * @param \Ilch\Request     $request
+     * @param \Ilch\Router      $router
+     * @param Ilch_Translator   $translator
      */
-    public function __construct()
+    public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
     {
+        parent::__construct($layout, $view, $request, $router, $translator);
         $this->_db = Registry::get('db');
     }
 

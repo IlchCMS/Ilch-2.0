@@ -20,7 +20,7 @@ class View extends Design\Base
         ob_start();
 
         if (file_exists($viewScript)) {
-            include_once($viewScript);
+            include $viewScript;
         }
 
         return ob_get_clean();
