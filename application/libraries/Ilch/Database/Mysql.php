@@ -405,6 +405,7 @@ class Mysql
      */
     public function queryMulti($sql)
     {
+        $result = '';
         $sql = $this->getSqlWithPrefix($sql);
 
         /*
