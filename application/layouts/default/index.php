@@ -30,11 +30,36 @@
         </div>
         <div class="container">
             <div class="row">
+                <div class="container paddet">
+                    <div id="breadcrumbs">
+                        <div class="breadcrumb-button blue">
+                            <span class="breadcrumb-label">
+                                <i class="fa fa-home"></i> Startseite
+                            </span>
+                            <span class="breadcrumb-arrow">
+                                <span></span>
+                            </span>
+                        </div>
+                        <div class="breadcrumb-button">
+                            <span class="breadcrumb-label">
+                                <i class="fa fa-puzzle-piece"></i> Gästebuch
+                            </span>
+                            <span class="breadcrumb-arrow">
+                                <span></span>
+                            </span>
+                        </div>
+                        <div class="breadcrumb-button">
+                            <span class="breadcrumb-label">
+                                <i class="fa fa-cogs"></i> Einträge
+                            </span>
+                            <span class="breadcrumb-arrow">
+                                <span></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-lg-8">
                     <div class="panel panel-default" id="headings">
-                        <div class="panel-heading">
-                            <?php echo 'hnav'; ?>
-                        </div>
                         <div class="panel-body">
                             <?php
                                 /**
