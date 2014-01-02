@@ -12,7 +12,7 @@ class Index extends \Ilch\Box
     public function render()
     {
         $partnerMapper = new \Partner\Mappers\Partner();
-        $this->getView()->set('partners', $partnerMapper->getPartners());
+        $this->getView()->set('partners', $partnerMapper->getPartnersBy(array('setfree' => 1)));
     }
 }
 

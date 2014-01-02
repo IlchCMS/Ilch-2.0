@@ -53,7 +53,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $partnerMapper = new PartnerMapper();
-        $partners = $partnerMapper->getPartners();
+        $partners = $partnerMapper->getPartnersBy(array('setfree' => 1));
         $this->getView()->set('partners', $partners);
     }
 
@@ -80,6 +80,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
+            $model->setFree(1);
             $model->setName($this->getRequest()->getPost('name'));
             $model->setBanner($this->getRequest()->getPost('banner'));
             $model->setLink($this->getRequest()->getPost('link'));
@@ -93,24 +94,16 @@ class Index extends \Ilch\Controller\Admin
     public function shownewAction()
     {
         $partnerMapper = new PartnerMapper();
-        $this->getView()->set('entries', $partnerMapper->getNewEntries());
+        $this->getView()->set('entries', $partnerMapper->getPartnersBy(array('setfree' => 0)));
     }
     
     public function setfreeAction()
     {
-        $id = $this->getRequest()->getParam('id');
         $partnerMapper = new PartnerMapper();
-        
-        $fild = array
-        (
-            'setfree' => 'setfree'
-        ); 
-        $where = array
-        (
-            'id' => $id
-        );
-        
-        $partnerMapper->saveSetfree($fild, $where);
+        $model = $partnerMapper->getPartnerById($this->getRequest()->getParam('id'));
+        $model->setFree(1);
+        $partnerMapper->save($model);
+
         $this->addMessage('saveSuccess');
         $this->redirect(array('action' => 'index'));
     }

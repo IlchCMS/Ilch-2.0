@@ -26,21 +26,16 @@ class Index extends \Ilch\Controller\Frontend
                 $this->addMessage('missingName', 'danger');
             } elseif(empty($link)) {
                 $this->addMessage('missingLink', 'danger');
-           /** } elseif (substr($link,0,7) != "http://") {
-                $link = 'http://'.$link; */
             } elseif(empty($banner)) {
                 $this->addMessage('missingBanner', 'danger');
-           /** } elseif (substr($banner,0,7) != "http://") {
-                $banner = 'http://'.$banner; */
             } else {
-                $entryDatas = array
-                (
-                    'name' => $name,
-                    'link' => $link,
-                    'banner' => $banner,
-                    'setfree' => 1
-                );
-                $partnerMapper->saveEntry($entryDatas);
+                $partnerModel = new \Partner\Models\Partner();
+                $partnerModel->setName($name);
+                $partnerModel->setLink($link);
+                $partnerModel->setBanner($banner);
+                $partnerModel->setFree(0);
+
+                $partnerMapper->save($partnerModel);
                 $this->addMessage('sendSuccess');
             }
         }

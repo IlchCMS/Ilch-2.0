@@ -19,18 +19,22 @@ class Partner extends \Ilch\Mapper
     /**
      * Gets partners.
      *
+     * @param array $where
+     * @param array $orderBy
      * @return PartnerModel[]|null
      */
-    public function getPartners()
+    public function getPartnersBy($where = array(), $orderBy = array('id' => 'ASC'))
     {
-        $sql = 'SELECT *
-                FROM [prefix]_partners
-                WHERE setfree = 0
-                ORDER by id ASC';
-        $partnerArray = $this->db()->queryArray($sql);
+        $partnerArray = $this->db()->selectArray
+        (
+            '*',
+            'partners',
+            $where,
+            $orderBy
+        );
 
         if (empty($partnerArray)) {
-            return null;
+            return array();
         }
 
         $partners = array();
@@ -55,10 +59,12 @@ class Partner extends \Ilch\Mapper
      */
     public function getPartnerById($id)
     {
-        $sql = 'SELECT *
-                FROM [prefix]_partners
-                WHERE id = '.$this->db()->escape($id);
-        $partnerRow = $this->db()->queryRow($sql);
+        $partnerRow = $this->db()->selectRow
+        (
+            '*',
+            'partners',
+            array('id' => $this->db()->escape($id))
+        );
 
         if (empty($partnerRow)) {
             return null;
@@ -85,6 +91,7 @@ class Partner extends \Ilch\Mapper
             (
                 array
                 (
+                    'setfree' => $partner->getFree(),
                     'name' => $partner->getName(),
                     'link' => $partner->getLink(),
                     'banner' => $partner->getBanner(),
@@ -100,6 +107,7 @@ class Partner extends \Ilch\Mapper
             (
                 array
                 (
+                    'setfree' => $partner->getFree(),
                     'name' => $partner->getName(),
                     'link' => $partner->getLink(),
                     'banner' => $partner->getBanner(),
@@ -107,17 +115,6 @@ class Partner extends \Ilch\Mapper
                 'partners'
             );
         }
-    }
-
-    /**
-     * Saves the partner entry.
-     *
-     * @param array $datas
-     * @return integer
-     */
-    public function saveEntry(array $datas)
-    {
-        return $this->db()->insert($datas, 'partners');
     }
 
     /**
@@ -132,42 +129,5 @@ class Partner extends \Ilch\Mapper
             'partners',
             array('id' => $id)
         );
-    }
-    
-    /**
-     * Gets all new entries.
-     *
-     * @return Partner\Models\Partner[]|null
-     */
-    public function getNewEntries()
-    {
-        $sql = 'SELECT *
-                FROM [prefix]_partners
-                WHERE setfree = 1
-                ORDER by id DESC';
-        $entryArray = $this->db()->queryArray($sql);
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $entry = array();
-
-        foreach ($entryArray as $entries) {
-            $entryModel = new PartnerModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setLink($entries['link']);
-            $entryModel->setBanner($entries['banner']);
-            $entryModel->setFree($entries['setfree']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
-    }
-
-    public function saveSetfree(array $datas, array $id)
-    {
-       return $this->db()->update($datas, 'partners', $id);
     }
 }

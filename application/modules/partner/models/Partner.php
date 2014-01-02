@@ -47,7 +47,7 @@ class Partner extends \Ilch\Model
     /**
      * The free of the entry.
      *
-     * @var int
+     * @var integer
      */
     protected $_free;
 
@@ -126,6 +126,10 @@ class Partner extends \Ilch\Model
      */
     public function setLink($link)
     {
+        if (substr($link, 0, 7) != 'http://') {
+            $link = 'http://'.$link;
+        }
+
         $this->_link = (string)$link;
 
         return $this;
@@ -149,6 +153,10 @@ class Partner extends \Ilch\Model
      */
     public function setBanner($banner)
     {
+        if (substr($banner, 0, 7) != 'http://') {
+            $banner = 'http://'.$banner;
+        }
+
         $this->_banner = (string)$banner;
 
         return $this;
@@ -157,11 +165,10 @@ class Partner extends \Ilch\Model
     /**
      * Set the free of the entry.
      *
-     * @return int
+     * @return integer
      */
-    
     public function setFree($free)
     {
-        $this->_free = (string) $free;
+        $this->_free = (int)$free;
     }
 }
