@@ -71,18 +71,21 @@ class Frontend extends Base
             return;
         }
 
-        $html = '<div id="breadcrumbs">';
-        $i = 0;
-
+        $html = '<div id="breadcrumbs">
+                    <div class="breadcrumb-button blue">
+                        <span class="breadcrumb-label">
+                            <a href="'.$this->url().'">
+                                <i class="fa fa-home"></i>
+                            </a>
+                        </span>
+                        <span class="breadcrumb-arrow">
+                            <span></span>
+                        </span>
+                    </div>';
+        
         foreach ($this->_hmenu as $key => $value) {
-            if ($i == 0) {
-                $html .= '<div class="breadcrumb-button blue">';
-            } else {
-                $html .= '<div class="breadcrumb-button">';
-            }
-
-            $html .= '<span class="breadcrumb-label">';
-            
+            $html .= '<div class="breadcrumb-button"><span class="breadcrumb-label">';
+                        
             if (empty($value)) {
                 $html .= $this->escape($this->trans($key));
             } else {
@@ -90,7 +93,6 @@ class Frontend extends Base
             }
 
             $html .=  '</span><span class="breadcrumb-arrow"><span></span></span></div>';
-            $i++;
         }
 
         $html .= '</div>';
