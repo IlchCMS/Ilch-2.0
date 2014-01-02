@@ -6,6 +6,7 @@
         <meta name="description" content="Ilch - Frontend">
 		<link href="<?php echo $this->staticUrl('../application/layouts/default/style.css', 1); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->staticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
         <script src="<?php echo $this->staticUrl('js/jquery.js'); ?>"></script>
@@ -31,56 +32,11 @@
         <div class="container">
             <div class="row">
                 <div class="container paddet">
-                    <div id="breadcrumbs">
-                        <div class="breadcrumb-button blue">
-                            <span class="breadcrumb-label">
-                                <i class="fa fa-home"></i> Startseite
-                            </span>
-                            <span class="breadcrumb-arrow">
-                                <span></span>
-                            </span>
-                        </div>
-                        <div class="breadcrumb-button">
-                            <span class="breadcrumb-label">
-                                <i class="fa fa-puzzle-piece"></i> Gästebuch
-                            </span>
-                            <span class="breadcrumb-arrow">
-                                <span></span>
-                            </span>
-                        </div>
-                        <div class="breadcrumb-button">
-                            <span class="breadcrumb-label">
-                                <i class="fa fa-cogs"></i> Einträge
-                            </span>
-                            <span class="breadcrumb-arrow">
-                                <span></span>
-                            </span>
-                        </div>
-                    </div>
+                    <?php echo $this->getHmenu(); ?>
                 </div>
                 <div class="col-lg-8">
                     <div class="panel panel-default" id="headings">
                         <div class="panel-body">
-                            <?php
-                                /**
-                                 * @todo we must put this part on a site which is loaded on every layout.
-                                 */
-                                $messages = array();
-        
-                                if(!empty($_SESSION['messages'])) {
-                                    $messages = $_SESSION['messages'];
-                                }
-
-                                foreach ($messages as $key => $message) {
-                            ?>
-                                <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <?php echo $this->escape($this->getTranslator()->trans($message['text'])); ?>
-                                </div>
-                            <?php
-                                    unset($_SESSION['messages'][$key]);
-                                }
-                            ?>
                             <?php echo $this->getContent(); ?>
                         </div>
                     </div>

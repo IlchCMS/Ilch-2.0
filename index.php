@@ -5,7 +5,7 @@
  */
 
 @ini_set('display_errors', 'on');
-error_reporting(-1);
+error_reporting(E_ALL);
 
 session_start();
 header('Content-Type: text/html; charset=utf-8');

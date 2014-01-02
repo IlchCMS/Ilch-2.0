@@ -12,6 +12,7 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+        $this->getLayout()->setHmenu(array('menuArticles' => ''));
         $locale = '';
 
         if ((bool)$this->getConfig()->get('multilingual_acp')) {

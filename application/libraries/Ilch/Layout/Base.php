@@ -44,6 +44,13 @@ abstract class Base extends \Ilch\Design\Base
      * @var string
      */
     protected $_file;
+    
+    /**
+     * Holds the hmenu.
+     *
+     * @var array 
+     */
+    protected $_hmenu;
 
     /**
      * Set layout disabled flag.
@@ -82,7 +89,21 @@ abstract class Base extends \Ilch\Design\Base
      */
     public function getContent()
     {
-        return $this->_content;
+        $html = '';
+        $messages = array();
+
+        if(!empty($_SESSION['messages'])) {
+            $messages = $_SESSION['messages'];
+        }
+
+        foreach ($messages as $key => $message) {
+            $html = '<div class="alert alert-'.$message['type'].' alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            '.$this->escape($this->getTranslator()->trans($message['text'])).'</div>';
+            unset($_SESSION['messages'][$key]);
+        }
+
+        return $html.$this->_content;
     }
 
     /**
@@ -116,5 +137,15 @@ abstract class Base extends \Ilch\Design\Base
     public function getFile()
     {
         return $this->_file;
+    }
+    
+    /**
+     * Sets the hmenu.
+     *
+     * @param array $hmenu
+     */
+    public function setHmenu($hmenu)
+    {
+        $this->_hmenu = $hmenu;
     }
 }

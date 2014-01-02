@@ -5,13 +5,15 @@
  */
 
 namespace Contact\Controllers;
-use Contact\Mappers\Receiver as ReceiverMapper;
 defined('ACCESS') or die('no direct access');
+
+use Contact\Mappers\Receiver as ReceiverMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+        $this->getLayout()->setHmenu(array('menuReceiver' => ''));
         $receiverMapper = new ReceiverMapper();
         $receivers = $receiverMapper->getReceivers();
 

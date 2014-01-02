@@ -12,7 +12,7 @@ INSERT INTO `[prefix]_menu` (`id`, `title`) VALUES
 
 INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
 (1, 1, 0, 0, 0, '', 0, 'Menü', '', ''),
-(2, 1, 10, 1, 0, '', 3, 'Neuigkeiten', '', 'article'),
+(2, 1, 10, 1, 0, '', 3, 'Artikel', '', 'article'),
 (3, 1, 20, 1, 0, '', 3, 'Gästebuch', '', 'guestbook'),
 (4, 1, 30, 1, 0, '', 3, 'Kontakt', '', 'contact'),
 (5, 1, 40, 1, 0, '', 3, 'Partner werden', '', 'partner'),

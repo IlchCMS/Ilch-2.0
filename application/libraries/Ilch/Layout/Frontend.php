@@ -59,5 +59,43 @@ class Frontend extends Base
 
         return $view->loadScript(APPLICATION_PATH.'/boxes/'.$boxKey.'/render.php');
     }
+
+    /**
+     * Gets the hnav.
+     *
+     * @return string
+     */
+    public function getHmenu()
+    {
+        if (empty($this->_hmenu)) {
+            return;
+        }
+
+        $html = '<div id="breadcrumbs">';
+        $i = 0;
+
+        foreach ($this->_hmenu as $key => $value) {
+            if ($i == 0) {
+                $html .= '<div class="breadcrumb-button blue">';
+            } else {
+                $html .= '<div class="breadcrumb-button">';
+            }
+
+            $html .= '<span class="breadcrumb-label">';
+            
+            if (empty($value)) {
+                $html .= $this->escape($this->trans($key));
+            } else {
+                $html .= '<a href="'.$this->url($value).'">'.$this->escape($this->trans($key)).'</a>';
+            }
+
+            $html .=  '</span><span class="breadcrumb-arrow"><span></span></span></div>';
+            $i++;
+        }
+
+        $html .= '</div>';
+        
+        return $html;
+    }
 }
 

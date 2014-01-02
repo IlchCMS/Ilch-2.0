@@ -175,23 +175,6 @@
                 ?>
 
             <div class="app_right <?php echo $contentFullClass?>">
-                <?php
-                    $messages = array();
-
-                    if(!empty($_SESSION['messages'])) {
-                        $messages = $_SESSION['messages'];
-                    }
-
-                    foreach ($messages as $key => $message) {
-                ?>
-                    <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <?php echo $this->escape($this->getTranslator()->trans($message['text'])); ?>
-                    </div>
-                <?php
-                        unset($_SESSION['messages'][$key]);
-                    }
-                ?>
                 <i class="toggleSidebar slideRight"></i>
                 <div class="modal fade"
                      id="deleteModal">

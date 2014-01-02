@@ -26,7 +26,7 @@
                    id="name"
                    name="name"
                    type="text"
-                   value="<?php if($this->get('name') != ''){ echo $this->escape($this->get('name')); } ?>" />
+                   value="" />
         </div>
     </div>
     <div class="form-group">
@@ -38,7 +38,7 @@
                    id="email"
                    name="email"
                    type="text"
-                   value="<?php if($this->get('email') != ''){ echo $this->escape($this->get('email')); } ?>" />
+                   value="" />
         </div>
     </div>
     <div class="form-group">
@@ -48,7 +48,7 @@
         <div class="col-lg-10">
             <textarea class="form-control"
                    id="message"
-                   name="message"><?php if($this->get('message') != ''){ echo $this->escape($this->get('message')); } ?></textarea>
+                   name="message"></textarea>
         </div>
     </div>
     <div class="form-group">

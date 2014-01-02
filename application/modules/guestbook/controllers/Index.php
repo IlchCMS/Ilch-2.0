@@ -16,12 +16,22 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+        $this->getLayout()->setHmenu(array('guestbook' => ''));
         $guestbookMapper = new GuestbookMapper();
         $this->getView()->set('entries', $guestbookMapper->getEntries());
     }
 
     public function newEntryAction()
     {
+        $this->getLayout()->setHmenu
+        (
+            array
+            (
+                'guestbook' => array('action' => 'index'),
+                'entry' => ''
+            )
+        );
+
         $guestbookMapper = new GuestbookMapper();
         $SettingsMapper = new SettingsMapper();
         $ilchdate = new IlchDate;
