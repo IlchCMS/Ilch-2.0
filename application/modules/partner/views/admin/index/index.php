@@ -16,14 +16,14 @@ if ($this->get('partners') != '') {
         foreach ($this->get('partners') as $partner) {
             echo '<tr>
                     <td>
-                    <a href="'.$this->url(array('action' => 'treat', 'id' => $partner->getId())).'"><i class="fa fa-edit"></i></a> ';
+                    <a href="'.$this->url(array('action' => 'treat', 'id' => $partner->getId())).'" title="'.$this->trans('treat').'"><i class="fa fa-edit"></i></a> ';
 ?>
                 <span class="deletePartner clickable fa fa-times-circle"
                               data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $partner->getId())); ?>"
                               data-toggle="modal"
                               data-target="#deleteModal"
                               data-modaltext="<?php echo $this->escape($this->trans('askIfDeletePartner', $this->escape($partner->getName()))); ?>"
-                              title="<?php echo $this->trans('deletePartner'); ?>"></span>
+                              title="<?php echo $this->trans('delete'); ?>"></span>
 <?php
             echo '</td>';
             echo '<td>'.$this->escape($partner->getName()).'</td>';

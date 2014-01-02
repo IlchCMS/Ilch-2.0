@@ -24,7 +24,9 @@ class Partner extends \Ilch\Mapper
     public function getPartners()
     {
         $sql = 'SELECT *
-                FROM [prefix]_partners';
+                FROM [prefix]_partners
+                WHERE setfree = 0
+                ORDER by id ASC';
         $partnerArray = $this->db()->queryArray($sql);
 
         if (empty($partnerArray)) {
@@ -108,6 +110,17 @@ class Partner extends \Ilch\Mapper
     }
 
     /**
+     * Saves the partner entry.
+     *
+     * @param array $datas
+     * @return integer
+     */
+    public function saveEntry(array $datas)
+    {
+        return $this->db()->insert($datas, 'partners');
+    }
+
+    /**
      * Deletes partner with given id.
      *
      * @param integer $id
@@ -119,5 +132,42 @@ class Partner extends \Ilch\Mapper
             'partners',
             array('id' => $id)
         );
+    }
+    
+    /**
+     * Gets all new entries.
+     *
+     * @return Partner\Models\Partner[]|null
+     */
+    public function getNewEntries()
+    {
+        $sql = 'SELECT *
+                FROM [prefix]_partners
+                WHERE setfree = 1
+                ORDER by id DESC';
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new PartnerModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setName($entries['name']);
+            $entryModel->setLink($entries['link']);
+            $entryModel->setBanner($entries['banner']);
+            $entryModel->setFree($entries['setfree']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
+
+    public function saveSetfree(array $datas, array $id)
+    {
+       return $this->db()->update($datas, 'partners', $id);
     }
 }
