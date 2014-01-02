@@ -1,5 +1,4 @@
 <?php $entries = $this->get('entries'); ?>
-<legend><?php echo $this->trans('guestbook'); ?></legend>
 <p class="pull-right">
     <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'newentry')); ?>"
        class="btn btn-small btn-primary"
