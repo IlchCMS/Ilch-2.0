@@ -37,6 +37,7 @@ class Config extends \Ilch\Config\Install
                   `name` varchar(100) NOT NULL,
                   `banner` varchar(255) NOT NULL,
                   `link` varchar(255) NOT NULL,
+                  `setfree` int(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
         

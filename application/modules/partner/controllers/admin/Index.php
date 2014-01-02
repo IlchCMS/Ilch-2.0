@@ -33,6 +33,16 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
+                'name' => 'setfree',
+                'icon' => 'fa fa-th-list',
+                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'shownew'))
+            )
+        );
+
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
                 'name' => 'menuActionNewPartner',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
@@ -51,6 +61,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $partnerMapper = new PartnerMapper();
         $partnerMapper->delete($this->getRequest()->getParam('id'));
+        $this->addMessage('saveSuccess');
         $this->redirect(array('action' => 'index'));
     }
 
@@ -77,5 +88,30 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('saveSuccess');
             $this->redirect(array('action' => 'index'));
         }
+    }
+
+    public function shownewAction()
+    {
+        $partnerMapper = new PartnerMapper();
+        $this->getView()->set('entries', $partnerMapper->getNewEntries());
+    }
+    
+    public function setfreeAction()
+    {
+        $id = $this->getRequest()->getParam('id');
+        $partnerMapper = new PartnerMapper();
+        
+        $fild = array
+        (
+            'setfree' => 'setfree'
+        ); 
+        $where = array
+        (
+            'id' => $id
+        );
+        
+        $partnerMapper->saveSetfree($fild, $where);
+        $this->addMessage('saveSuccess');
+        $this->redirect(array('action' => 'index'));
     }
 }

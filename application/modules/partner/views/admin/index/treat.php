@@ -18,19 +18,8 @@
                    type="text"
                    name="name"
                    id="name"
+                   placeholder="Name"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } ?>" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="banner" class="col-lg-2 control-label">
-            <?php echo $this->trans('banner'); ?>:
-        </label>
-        <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="banner"
-                   id="email"
-                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -41,8 +30,22 @@
             <input class="form-control"
                    type="text"
                    name="link"
-                   id="email"
+                   id="link"
+                   placeholder="http://"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="banner" class="col-lg-2 control-label">
+            <?php echo $this->trans('banner'); ?>:
+        </label>
+        <div class="col-lg-4">
+            <input class="form-control"
+                   type="text"
+                   name="banner"
+                   id="banner"
+                   placeholder="http://"
+                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
         </div>
     </div>
     <div class="content_savebox">

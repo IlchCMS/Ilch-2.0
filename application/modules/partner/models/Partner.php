@@ -43,6 +43,13 @@ class Partner extends \Ilch\Model
      * @var string
      */
     protected $_banner;
+    
+    /**
+     * The free of the entry.
+     *
+     * @var int
+     */
+    protected $_free;
 
     /**
      * Gets the id of the partner.
@@ -52,6 +59,17 @@ class Partner extends \Ilch\Model
     public function getId()
     {
         return $this->_id;
+    }
+    
+    /**
+     * Gets the free of the entry.
+     *
+     * @return integer
+     */
+    
+    public function getFree()
+    {
+        return $this->_free;
     }
 
     /**
@@ -134,5 +152,16 @@ class Partner extends \Ilch\Model
         $this->_banner = (string)$banner;
 
         return $this;
+    }
+    
+    /**
+     * Set the free of the entry.
+     *
+     * @return int
+     */
+    
+    public function setFree($free)
+    {
+        $this->_free = (string) $free;
     }
 }
