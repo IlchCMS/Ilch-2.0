@@ -44,7 +44,7 @@ html, body {
 
 
 #sidebar_content .nav > li.active > a {
-    background-color: white;
+    background-color: #E7E7E7;
 }
 
 #sidebar_content .divider {
@@ -66,41 +66,21 @@ html, body {
 	padding: 20px;
 }
 
-.nav-tabs > .active > a {
-	color: black;
-}
-
-.navbar-nav > li {
-    padding-top: 9px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.nav-tabs.nav-stacked > li:first-child > a,
-.nav-tabs.nav-stacked > li:last-child > a {
-	border-radius: 0px;
-	border:none;
-}
-
-.navbar {
-	margin-bottom: 0px;
-	border-radius: 0px;
-}
-
 .topnavbar {
 	border-bottom: 1px solid silver;
 }
 
-.leftbar {
-	width: 300px;
-	border-right: 1px solid silver;
+.rightbar .navbar-nav > li {
+    border-left: 1px solid silver;
 }
 
-/* content */
+.leftbar {
+	width: 300px;
+}
 
 .app_left {
 	margin-top: 51px;
-	background-color: #ECECFB;
+	background-color: white;
 	border-right: 1px solid silver;
 	position: fixed;
 	width: 300px;
@@ -116,8 +96,6 @@ html, body {
 	margin-left: 0px;
 }
 
-/* sidebar toggle */
-
 .toggleSidebar {
 	font-size: 20px;
 	cursor: pointer;
@@ -132,7 +110,7 @@ html, body {
 }
 
 .slideRight {
-	background-color: #ECECFB;
+	background-color: white;
 	border-right: 1px solid silver;
 	border-bottom: 1px solid silver;
 }
@@ -146,10 +124,4 @@ html, body {
 	position: fixed;
 	padding: 5px 15px 5px 15px;
 	background-color: #EEEEEE;
-}
-
-.brand {
-	height: 50px;
-	padding-left: 15px;
-	float: left;
 }

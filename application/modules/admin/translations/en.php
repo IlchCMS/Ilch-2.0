@@ -50,11 +50,12 @@ return array
     'startPage' => 'Startpage',
     'pages' => 'Pages',
     'menuTitle' => 'Menutitle',
-    'frontend' => 'Frontend',
+    'openFrontend' => 'Open Frontend',
     'menu' => 'menu',
     'deleteMenu' => 'Delete menu',
     'askIfDeleteMenu' => 'Are you sure to delete menu "%s"?',
     'multilingualAcp' => 'Multilingual Settings',
     'list' => 'List',
     'menuActionNewLayout' => 'Add new layout',
+    'overview' => 'Overview'
 );

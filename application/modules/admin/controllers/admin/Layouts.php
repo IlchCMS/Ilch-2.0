@@ -39,6 +39,7 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $layouts = array();
         $this->getView()->set('layouts', $layouts);
     }
     
