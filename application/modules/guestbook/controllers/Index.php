@@ -54,7 +54,7 @@ class Index extends \Ilch\Controller\Frontend
                     'datetime' => $ilchdate->toDb(),
                     'setfree' => $this->getConfig()->get('gbook')
                 );
-                if ($this->getConfig()->get('gbook') === '1' ) {
+                if ($this->getConfig()->get('gbook_autosetfree') === '1' ) {
                 $this->addMessage('check', 'success');
                 }
                 $guestbookMapper->saveEntry($entryDatas);
