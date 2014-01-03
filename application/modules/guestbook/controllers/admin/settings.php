@@ -38,11 +38,11 @@ class Settings extends \Ilch\Controller\Admin
     public function indexAction() 
     {
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('gbook', $this->getRequest()->getPost('entrySettings'));
+            $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
             
             $this->addMessage('saveSuccess');
         }
         
-        $this->getView()->set('setfree', $this->getConfig()->get('gbook'));
+        $this->getView()->set('setfree', $this->getConfig()->get('gbook_autosetfree'));
     }
 }
