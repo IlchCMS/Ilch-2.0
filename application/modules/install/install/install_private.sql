@@ -16,6 +16,11 @@ INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_i
 (3, 1, 20, 1, 0, '', 3, 'Gästebuch', '', 'guestbook'),
 (4, 1, 30, 1, 0, '', 3, 'Kontakt', '', 'contact'),
 (5, 1, 40, 1, 0, '', 3, 'Partner werden', '', 'partner'),
-(6, 1, 50, 0, 0, 'langswitch', 4, 'Sprache', '', ''),
-(7, 1, 60, 0, 0, 'partner', 4, 'Partner', '', ''),
-(8, 1, 70, 0, 0, 'layoutswitch', 4, 'Layout', '', '');
+(6, 1, 50, 0, 0, 'layoutswitch', 4, 'Layout', '', '');
+
+INSERT INTO `[prefix]_menu` (`id`, `title`) VALUES
+(2, 'Hauptmenü 2');
+
+INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
+(7, 2, 20, 0, 0, 'partner', 4, 'Partner', '', ''),
+(8, 2, 30, 0, 0, 'langswitch', 4, 'Sprache', '', '');

@@ -2,13 +2,19 @@
 <html>
     <head>
         <?php echo $this->getHeader(); ?>
-        <link href="<?php echo $this->staticUrl('../application/layouts/clan/style.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->staticUrl('../application/layouts/3columns/style.css'); ?>" rel="stylesheet">
         <link rel="icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>" type="image/x-icon" />
     </head>
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-lg-4">
+                <div class="container paddet">
+                    <?php echo $this->getHmenu(); ?>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-2">
                     <?php
                         echo $this->getMenu
                         (
@@ -22,14 +28,14 @@
                         );
                     ?>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="panel panel-default" id="headings">
                         <div class="panel-body">
                             <?php echo $this->getContent(); ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <?php
                         echo $this->getMenu
                         (

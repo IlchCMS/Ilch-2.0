@@ -34,7 +34,7 @@ class GetMenu
         $menuMapper = new \Admin\Mappers\Menu();
 
         $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
-        
+
         if (isset($args[1])) {
             return $menu->getItems($args[1]);
         }

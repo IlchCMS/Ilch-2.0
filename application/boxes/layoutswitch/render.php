@@ -7,7 +7,7 @@
                 
                 if ((!isset($_SESSION['layout']) && $name == 'default')
                     ||
-                    isset($_SESSION['layout']) && $_SESSION['layout'] == $name) {
+                    (isset($_SESSION['layout']) && $_SESSION['layout'] == $name)) {
                     $sel = 'selected="selected"';
                 }
 

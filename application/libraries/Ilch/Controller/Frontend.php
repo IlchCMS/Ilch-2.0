@@ -16,7 +16,7 @@ class Frontend extends Base
         if (!empty($_SESSION['layout'])) {
             $this->getLayout()->setFile('layouts/'.$_SESSION['layout'].'/index');
         } else {
-            $this->getLayout()->setFile('layouts/default/index');
+            $this->getLayout()->setFile('layouts/2columns/index');
         }
     }
 }
