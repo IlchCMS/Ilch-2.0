@@ -42,7 +42,7 @@ html, body {
 }
 
 #sidebar_content .nav > li.active > a {
-    background-color: #E7E7E7;
+    background-color: white;
 }
 
 #sidebar_content .divider {
@@ -78,7 +78,7 @@ html, body {
 
 .app_left {
 	margin-top: 51px;
-	background-color: white;
+	background-color: #F8F8F8;
 	border-right: 1px solid silver;
 	position: fixed;
 	width: 300px;
@@ -108,7 +108,7 @@ html, body {
 }
 
 .slideRight {
-	background-color: white;
+	background-color: #F8F8F8;
 	border-right: 1px solid silver;
 	border-bottom: 1px solid silver;
 }
