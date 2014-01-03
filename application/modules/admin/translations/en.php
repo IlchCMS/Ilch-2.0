@@ -54,4 +54,6 @@ return array
     'deleteMenu' => 'Delete menu',
     'askIfDeleteMenu' => 'Are you sure to delete menu "%s"?',
     'multilingualAcp' => 'Multilingual Settings',
+    'list' => 'List',
+    'menuActionNewLayout' => 'Add new layout',
 );

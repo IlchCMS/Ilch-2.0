@@ -54,4 +54,6 @@ return array
     'deleteMenu' => 'Menü löschen',
     'askIfDeleteMenu' => 'Sind Sie sicher, dass das Menü "%s" entfernt werden soll?',
     'multilingualAcp' => 'Multisprachige Einstellungen',
+    'list' => 'Liste',
+    'menuActionNewLayout' => 'Neues Layout hinzufügen',
 );

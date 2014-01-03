@@ -87,7 +87,7 @@
                     </li>
                     <li>
                         <div>
-                            <a class="btn btn-default" href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
+                            <a class="btn btn-default" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
                                 <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
                             </a>
                         </div>
