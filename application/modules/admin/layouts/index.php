@@ -36,7 +36,7 @@
         </script>
         <nav class="navbar navbar-default navbar-fixed-top topnavbar">
             <div class="navbar-header leftbar">
-<!--                <img src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />-->
+                <img src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="#" id="search">
