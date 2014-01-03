@@ -8,13 +8,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <div class="container paddet">
-                    <?php echo $this->getHmenu(); ?>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <?php
                         echo $this->getMenu
                         (
@@ -29,13 +23,15 @@
                     ?>
                 </div>
                 <div class="col-lg-6">
+                    <?php echo $this->getHmenu(); ?>
+                    <br /><br />
                     <div class="panel panel-default" id="headings">
                         <div class="panel-body">
                             <?php echo $this->getContent(); ?>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-3">
                     <?php
                         echo $this->getMenu
                         (
