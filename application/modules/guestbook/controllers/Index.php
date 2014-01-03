@@ -52,7 +52,7 @@ class Index extends \Ilch\Controller\Frontend
                     'text' => $text,
                     'homepage' => $homepage,
                     'datetime' => $ilchdate->toDb(),
-                    'setfree' => $this->getConfig()->get('gbook')
+                    'setfree' => $this->getConfig()->get('gbook_autosetfree')
                 );
                 if ($this->getConfig()->get('gbook_autosetfree') === '1' ) {
                 $this->addMessage('check', 'success');
