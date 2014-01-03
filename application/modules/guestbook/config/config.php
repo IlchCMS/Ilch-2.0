@@ -23,6 +23,8 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('gbook_autosetfree', '0', 0);
     }
 
     public function uninstall()
@@ -41,12 +43,7 @@ class Config extends \Ilch\Config\Install
                    `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                    `setfree` int(11) NOT NULL DEFAULT 0,
                    PRIMARY KEY (`id`)
-               ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
-
-               CREATE TABLE IF NOT EXISTS `[prefix]_gbook_settings` 
-               (
-                  `entrysettings` int(1) NOT NULL DEFAULT 0
-               ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
+               ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
     }
 }
 

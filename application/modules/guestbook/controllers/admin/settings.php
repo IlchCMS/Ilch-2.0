@@ -6,8 +6,6 @@
 
 namespace Guestbook\Controllers\Admin;
 
-use Guestbook\Mappers\Settings as SettingsMapper;
-
 defined('ACCESS') or die('no direct access');
 
 class Settings extends \Ilch\Controller\Admin 
@@ -28,7 +26,7 @@ class Settings extends \Ilch\Controller\Admin
                 ),
                 array
                 (
-                    'name' => 'Settings',
+                    'name' => 'settings',
                     'active' => true,
                     'icon' => 'fa fa-cogs',
                     'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
@@ -39,18 +37,12 @@ class Settings extends \Ilch\Controller\Admin
     
     public function indexAction() 
     {
-        $settingsMapper = new SettingsMapper();
-        
         if ($this->getRequest()->isPost()) {
-            $entrySettings = array
-            (
-                'entrySettings' => $this->getRequest()->getPost('entrySettings'),
-            );
-
-            $settingsMapper->saveSettings($entrySettings);
-            $this->addMessage('successful');
+            $this->getConfig()->set('gbook', $this->getRequest()->getPost('entrySettings'));
+            
+            $this->addMessage('saveSuccess');
         }
-
-        $this->getView()->set('entrySettings', $settingsMapper->getAllSettings());
+        
+        $this->getView()->set('setfree', $this->getConfig()->get('gbook'));
     }
 }
