@@ -28,7 +28,7 @@ return array
     'missingText' => 'Nachricht muss ausgefüllt werden',
     'missingName' => 'Name muss ausgefüllt werden',
     'settings' => 'Einstellungen',
-    'entrySettings' => 'Einträge sofort freigeben?',
+    'entrySettings' => 'Einträge sofort freigeben',
     'yes' => 'ja',
     'no' => 'nein',
     'entrys' => 'Einträge',

@@ -39,7 +39,6 @@ class Settings extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
-            
             $this->addMessage('saveSuccess');
         }
         

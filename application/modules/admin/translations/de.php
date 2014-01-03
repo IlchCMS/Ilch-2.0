@@ -14,6 +14,7 @@ return array
     'addButton' => 'Hinzufügen',
     'saveButton'     => 'Speichern',
     'saveSuccess' => 'Erfolgreich gespeichert',
+    'deleteSuccess' => 'Erfolgreich gelöscht',
     'treat' => 'Bearbeiten',
     'menuChange' => 'Menü bearbeiten',
     'menuItemAdd' => 'Menüitem hinzufügen',

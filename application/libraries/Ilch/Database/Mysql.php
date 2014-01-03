@@ -280,6 +280,10 @@ class Mysql
         $sql = 'UPDATE `[prefix]_'.$table . '` SET ';
 
         foreach ($fields as $key => $value) {
+            if ($value == null) {
+                continue;
+            }
+
             $up[] = '`' . $key . '` = "' . $this->escape($value) . '"';
         }
 
@@ -306,6 +310,10 @@ class Mysql
         $sqlValues = array();
 
         foreach ($fields as $key => $value) {
+            if ($value == null) {
+                continue;
+            }
+
             $sqlFields[] = '`' . $key . '`';
         }
 
@@ -313,6 +321,10 @@ class Mysql
         $sql .= ') VALUES (';
 
         foreach ($fields as $key => $value) {
+            if ($value == null) {
+                continue;
+            }
+
             $sqlValues[] = '"' . $this->escape($value) . '"';
         }
 

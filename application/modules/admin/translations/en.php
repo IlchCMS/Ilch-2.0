@@ -14,6 +14,7 @@ return array
     'addButton' => 'Add',
     'saveButton' => 'Save',
     'saveSuccess' => 'Saved successful',
+    'deleteSuccess' => 'Deleted successful',
     'treat' => 'Edit',
     'menuChange' => 'Menu change',
     'menuItemAdd' => 'Add menu item',
