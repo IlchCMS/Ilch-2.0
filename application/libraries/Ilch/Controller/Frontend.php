@@ -13,6 +13,10 @@ class Frontend extends Base
     {
         parent::__construct($layout, $view, $request, $router, $translator);
 
-        $this->getLayout()->setFile('layouts/default/index');
+        if (!empty($_SESSION['layout'])) {
+            $this->getLayout()->setFile('layouts/'.$_SESSION['layout'].'/index');
+        } else {
+            $this->getLayout()->setFile('layouts/default/index');
+        }
     }
 }

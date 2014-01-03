@@ -99,5 +99,26 @@ class Frontend extends Base
         
         return $html;
     }
+
+    /**
+     * Gets the header.
+     *
+     * @return string
+     */
+    public function getHeader()
+    {
+        $html = '<meta charset="utf-8">
+                <title>'.$this->getTitle().'</title>
+                <meta name="description" content="">';
+
+        $html .= '<link href="'.$this->staticUrl('css/bootstrap.css').'" rel="stylesheet">
+                <link href="'.$this->staticUrl('css/font-awesome.css').'" rel="stylesheet">
+                <link href="'.$this->staticUrl('css/global.css').'" rel="stylesheet">
+                <link href="'.$this->staticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
+                <script src="'.$this->staticUrl('js/jquery.js').'"></script>
+                <script src="'.$this->staticUrl('js/bootstrap.js').'"></script>
+                <script src="'.$this->staticUrl('js/jquery-ui.js').'"></script>';
+        return $html;
+    }
 }
 
