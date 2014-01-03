@@ -31,7 +31,8 @@ return array
     'entrySettings' => 'Einträge sofort freigeben?',
     'yes' => 'ja',
     'no' => 'nein',
-    'managenewentry' => 'Neue Einträge Freischalten',
-    'setfree' => 'Freischalten',
+    'entrys' => 'Einträge',
+    'setfree' => 'Freischalten ',
     'check' => 'Danke. Eintrag wird geprüft.',
+    'settings' => 'Einstellungen',
 );

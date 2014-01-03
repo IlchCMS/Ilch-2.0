@@ -7,7 +7,6 @@
 namespace Guestbook\Controllers\Admin;
 
 use Guestbook\Mappers\Guestbook as GuestbookMapper;
-use Guestbook\Mappers\Settings as SettingsMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -29,7 +28,7 @@ class Index extends \Ilch\Controller\Admin
                 ),
                 array
                 (
-                    'name' => 'Settings',
+                    'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
                     'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
@@ -40,18 +39,16 @@ class Index extends \Ilch\Controller\Admin
     
     public function indexAction()
     {
-    }
-    
-    public function showAction()
-    {
         $guestbookMapper = new GuestbookMapper();
         $this->getView()->set('entries', $guestbookMapper->getEntries());
+        $this->getView()->set('badge', count($guestbookMapper->getNewEntries()));
     }
     
     public function shownewAction()
     {
-        $settingsMapper = new SettingsMapper();
-        $this->getView()->set('entries', $settingsMapper->getNewEntries());
+        $guestbookMapper = new GuestbookMapper();
+        $this->getView()->set('entries', $guestbookMapper->getNewEntries());
+        $this->getView()->set('badge', count($guestbookMapper->getNewEntries()));
     }
 
     public function delAction()
@@ -60,7 +57,7 @@ class Index extends \Ilch\Controller\Admin
         $id = $this->getRequest()->getParam('id');
         $guestbookMapper->deleteEntry($id);
         $this->addMessage('successful');
-        $this->redirect(array('action' => 'show'));
+        $this->redirect(array('action' => 'index'));
     }
         
     public function delspamAction()
@@ -75,7 +72,7 @@ class Index extends \Ilch\Controller\Admin
     public function setfreeAction()
     {
         $id = $this->getRequest()->getParam('id');
-        $settingsMapper = new SettingsMapper();
+        $guestbookMapper = new GuestbookMapper();
         
         $fild = array
         (
@@ -86,7 +83,7 @@ class Index extends \Ilch\Controller\Admin
             'id' => $id
         );
         
-        $settingsMapper->saveSetfree($fild, $where);
+        $guestbookMapper->saveSetfree($fild, $where);
         $this->redirect(array('action' => 'shownew'));
     }
 }

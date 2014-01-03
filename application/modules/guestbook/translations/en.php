@@ -31,7 +31,8 @@ return array
     'entrySettings' => 'Share entries directly?',
     'yes' => 'yes',
     'no' => 'no',
-    'managenewentry' => 'New entries unlocking',
-    'setfree' => 'Set free',
+    'entrys' => 'Entries',
+    'setfree' => 'Set free ',
     'check' => 'Thanks. Entry is checked.',
+    'settings' => 'Settings',
 );

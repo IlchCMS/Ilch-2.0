@@ -1,20 +1,49 @@
 <legend><?php echo $this->trans('manage'); ?></legend>
-<div class="table-responsive">
-    <table class="table table-hover table-striped">
-        <tbody>
-            <tr>
-                <td>
-                    <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'show')); ?>">
-                    <span class="clickable fa fa-edit" title="Edit"></span></a></td>
-                <td><?php echo $this->trans('manageentry'); ?></td>
-            </tr>
-            
-            <tr>
-                <td>
-                    <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'shownew')); ?>">
-                    <span class="clickable fa fa-edit" title="Edit"></span></a></td>
-                <td><?php echo $this->trans('managenewentry'); ?></td>
-            </tr>
-        </tbody>
-    </table>
+<div id="img-responsive">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('entrys'); ?></a>
+        </li>
+        <?php if ($this->get('badge') > 0) : ?>
+        <li>
+            <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'shownew')); ?>">
+                <span class="badge pull-right"><?php echo $this->get('badge'); ?></span><?php echo $this->trans('setfree'); ?></a>
+        </li>
+        <?php endif; ?>
+    </ul>
+    <?php if (is_array($this->get('entries')) && count($this->get('entries')) > 0) : ?>
+    <?php $entries = $this->get('entries'); ?>
+        <?php foreach ($entries as $entry) : ?>
+            <div class="responsive panel bordered">
+                <table class="table table-bordered table-striped table-responsive">
+                    <colgroup>
+                        <col class="col-lg-3">
+                        <col />
+                        <col />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <?php echo $this->trans('from'); ?>: <?php echo $this->escape($entry->getName()); ?>
+                            </td>
+                            <td>
+                                <?php echo $this->trans('date'); ?>: <?php echo $this->escape($entry->getDatetime()); ?>
+                            </td>
+                            <td>
+                                <?php echo $this->trans('delete'); ?>
+                                <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'del', 'id' => $this->escape($entry->getId()))); ?>">
+                                    <span title="<?php echo $this->trans('delete'); ?>">
+                                        <i class="fa fa-times-circle"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="responsive panel-body">
+                    <?php echo $entry->getText(); ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>
