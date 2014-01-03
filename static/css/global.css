@@ -85,7 +85,6 @@ i {
         background-image: -o-linear-gradient(top, #fafafa, #ececec);
         background-image: linear-gradient(top, #fafafa, #ececec);
         display: inline-block;
-        cursor: pointer;
         margin-right: -20px;
 }
 
@@ -163,6 +162,11 @@ i {
 
 #breadcrumbs .breadcrumb-button .breadcrumb-label {
         color: #888888;
+}
+
+#breadcrumbs .breadcrumb-button .breadcrumb-label a {
+    text-decoration: none;
+    color: #888888;
 }
 
 #breadcrumbs .breadcrumb-button .breadcrumb-arrow span {
