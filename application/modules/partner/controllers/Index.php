@@ -29,7 +29,7 @@ class Index extends \Ilch\Controller\Frontend
             } elseif(empty($banner)) {
                 $this->addMessage('missingBanner', 'danger');
             } else {
-                $partnerModel = new \Partner\Models\Partner();
+                $partnerModel = new \Partner\Models\Entry();
                 $partnerModel->setName($name);
                 $partnerModel->setLink($link);
                 $partnerModel->setBanner($banner);

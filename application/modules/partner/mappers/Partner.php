@@ -5,17 +5,49 @@
  */
 
 namespace Partner\Mappers;
-use Partner\Models\Partner as PartnerModel;
+
+use Partner\Models\Entry as PartnerModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The partner mapper class.
- *
- * @package ilch
- */
 class Partner extends \Ilch\Mapper
 {
+    /**
+     * Gets the Partner entries.
+     *
+     * @param array $where
+     * @return PartnerModel[]|array
+     */
+    public function getEntries($where = array())
+    {
+        $entryArray = $this->db()->selectArray
+        (
+            '*',
+            'partners',
+            $where,
+            array('id' => 'DESC')
+        );
+
+        if (empty($entryArray)) {
+            return array();
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new PartnerModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setName($entries['name']);
+            $entryModel->setLink($entries['link']);
+            $entryModel->setBanner($entries['banner']);
+            $entryModel->setFree($entries['setfree']);
+            $entry[] = $entryModel;
+
+        }
+
+        return $entry;
+    }
+    
     /**
      * Gets partners.
      *

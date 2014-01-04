@@ -22,8 +22,12 @@ return array
     'menuActionNewPartner' => 'Add Partner',
     'menuActionEditPartner' => 'Edit Partner',
     'noPartners' => 'No partners',
+    'noNewPartners' => 'No new partners',
     'askIfDeletePartner' => 'Are you sure you want delete the partner "%s"?',
     'managenewentry' => 'New partner unlocking',
+    'managePartner' => 'Manage Partner',
+    'manage' => 'Manage',
     'setfree' => 'Set free',
     'delete' => 'Delete',
+    'entrys' => 'Einträge',
 );
