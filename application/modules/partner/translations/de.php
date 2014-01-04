@@ -26,6 +26,7 @@ return array
     'askIfDeletePartner' => 'Sind Sie sicher, dass der Partner "%s" entfernt werden soll?',
     'managenewentry' => 'Neue Partner Freischalten',
     'managePartner' => 'Partner verwalten',
+    'manage' => 'Verwalten',
     'setfree' => 'Freischalten',
     'delete' => 'Löschen',
     'entrys' => 'Einträge',

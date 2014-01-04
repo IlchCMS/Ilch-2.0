@@ -26,6 +26,7 @@ return array
     'askIfDeletePartner' => 'Are you sure you want delete the partner "%s"?',
     'managenewentry' => 'New partner unlocking',
     'managePartner' => 'Manage Partner',
+    'manage' => 'Manage',
     'setfree' => 'Set free',
     'delete' => 'Delete',
     'entrys' => 'Einträge',
