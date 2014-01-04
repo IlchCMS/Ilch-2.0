@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
     <legend>
     <?php

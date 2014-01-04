@@ -15,6 +15,7 @@ return array
     'saveButton'     => 'Speichern',
     'saveSuccess' => 'Erfolgreich gespeichert',
     'deleteSuccess' => 'Erfolgreich gelöscht',
+    'freeSuccess' => 'Erfolgreich freigeschaltet',
     'treat' => 'Bearbeiten',
     'menuChange' => 'Menü bearbeiten',
     'menuItemAdd' => 'Menüitem hinzufügen',
