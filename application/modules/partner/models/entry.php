@@ -1,20 +1,14 @@
 <?php
 /**
- * Holds Contact\Models\Partner.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Partner\Models;
+
 defined('ACCESS') or die('no direct access');
 
-/**
- * The partner model class.
- *
- * @package ilch
- */
-class Partner extends \Ilch\Model
+class Entry extends \Ilch\Model
 {
     /**
      * The id of the partner.
