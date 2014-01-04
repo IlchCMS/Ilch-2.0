@@ -9,7 +9,7 @@
         <?php if ($this->get('badge') > 0) : ?>
             <li <?php if($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index', 'showsetfree' => 1)); ?>">
-                    <?php echo $this->trans('setfree'); ?><span class="badge"><?php echo $this->get('badge'); ?></span>
+                    <?php echo $this->trans('setfree'); ?> <span class="badge"><?php echo $this->get('badge'); ?></span>
                 </a>
             </li>
         <?php endif; ?>
@@ -20,10 +20,11 @@
             <colgroup>
                 <col class="col-lg-1">
                 <col class="col-lg-2">
+                <col />
             </colgroup>
             <thead>
                 <tr>
-                    <th><?php echo $this->trans('manage'); ?></th>
+                    <th><?php echo $this->trans('treat'); ?></th>
                     <th><?php echo $this->trans('name'); ?></th>
                     <th><?php echo $this->trans('banner'); ?></th>
                 </tr>
@@ -32,8 +33,14 @@
             <tbody>
                 <tr>
                     <td>
-                    <?php if($this->getRequest()->getParam('showsetfree')) { ?>
-                        <a href="<?php echo $this->url(array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $this->escape($entry->getId()))).'" title="'.$this->trans('setfree'); ?>"><i class="fa fa-check"></i></a>
+                    <?php if($this->getRequest()->getParam('showsetfree')) {
+                        $freeArray = array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId());
+
+                        if($this->get('badge') > 1) {
+                            $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
+                        }
+                    ?>
+                        <a href="<?php echo $this->url($freeArray).'" title="'.$this->trans('setfree'); ?>"><i class="fa fa-check"></i></a>
                     <?php }else{ ?>
                         <a href="<?php echo $this->url(array('action' => 'treat', 'id' => $entry->getId())).'" title="'.$this->trans('treat'); ?>"><i class="fa fa-edit"></i></a>
                     <?php } ?>

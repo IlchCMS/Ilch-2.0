@@ -72,6 +72,10 @@ class Index extends \Ilch\Controller\Admin
         $model->setFree(1);
         $guestbookMapper->save($model);
 
-        $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+        if ($this->getRequest()->getParam('showsetfree')) {
+            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+        } else {
+            $this->redirect(array('action' => 'index'));
+        }
     }
 }

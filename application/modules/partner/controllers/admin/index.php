@@ -32,7 +32,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'menuActionNewPartner',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->url(array('controller' => 'treat', 'action' => 'index'))
+                    'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
                 )
             )
         );
@@ -74,6 +74,37 @@ class Index extends \Ilch\Controller\Admin
         $partnerMapper->save($model);
             
         $this->addMessage('freeSuccess');
-        $this->redirect(array('action' => 'index', 'index'));
+
+        if ($this->getRequest()->getParam('showsetfree')) {
+            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+        } else {
+            $this->redirect(array('action' => 'index'));
+        }
+    }
+
+    public function treatAction() 
+    {
+        $partnerMapper = new PartnerMapper();
+
+        if ($this->getRequest()->getParam('id')) {
+            $this->getView()->set('partner', $partnerMapper->getPartnerById($this->getRequest()->getParam('id')));
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $model = new PartnerModel();
+
+            if ($this->getRequest()->getParam('id')) {
+                $model->setId($this->getRequest()->getParam('id'));
+            }
+
+            $model->setFree(1);
+            $model->setName($this->getRequest()->getPost('name'));
+            $model->setBanner($this->getRequest()->getPost('banner'));
+            $model->setLink($this->getRequest()->getPost('link'));
+
+            $partnerMapper->save($model);
+            $this->addMessage('saveSuccess');
+            $this->redirect(array('action' => 'index'));
+        }
     }
 }

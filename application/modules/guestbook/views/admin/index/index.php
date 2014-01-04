@@ -15,57 +15,58 @@
         <?php endif; ?>
     </ul>
     <br />
-    <?php foreach ($this->get('entries') as $entry) : ?>
-        <div class="responsive panel bordered">
-            <table class="table table-bordered table-striped table-responsive">
-                <colgroup>
-                    <col class="col-lg-3">
-                    <col />
-                    <col />
+    <div class="responsive panel bordered">
+        <table class="table table-bordered table-striped table-responsive">
+            <colgroup>
+                <col class="col-lg-1" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?php echo $this->trans('treat'); ?></th>
+                    <th><?php echo $this->trans('from'); ?></th>
+                    <th><?php echo $this->trans('date'); ?></th>
+                    <th><?php echo $this->trans('message'); ?></th>
+                </tr>
+            </thead>
+            <?php foreach ($this->get('entries') as $entry) : ?>
+            <tbody>
+                <tr>
+                    <td>
                     <?php
                         if($this->getRequest()->getParam('showsetfree')) {
-                            echo '<col />';
+                            $freeArray = array('action' => 'setfree', 'id' => $entry->getId());
+            
+                            if($this->get('badge') > 1) {
+                                $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
+                            }
+                    ?>
+                        <a href="<?php echo $this->url($freeArray).'" title="'.$this->trans('setfree'); ?>">
+                            <i class="fa fa-check"></i>
+                        </a>
+                    <?php }
+                        $deleteArray = array('action' => 'del', 'id' => $entry->getId());
+
+                        if($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
+                            $deleteArray = array('action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1);
                         }
                     ?>
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td>
-                            <?php echo $this->trans('from'); ?>: <?php echo $this->escape($entry->getName()); ?>
-                        </td>
-                        <td>
-                            <?php echo $this->trans('date'); ?>: <?php echo $this->escape($entry->getDatetime()); ?>
-                        </td>
-                        <td>
-                            <?php
-                                echo $this->trans('delete');
-                                $deleteArray = array('action' => 'del', 'id' => $entry->getId());
-
-                                if($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
-                                    $deleteArray = array('action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1);
-                                }
-                            ?>
-                            <a href="<?php echo $this->url($deleteArray); ?>">
-                                <span title="<?php echo $this->trans('delete'); ?>">
-                                    <i class="fa fa-times-circle"></i>
-                                </span>
-                            </a>
-                        </td>
-                        <?php if($this->getRequest()->getParam('showsetfree')) { ?>
-                        <td>
-                            <?php echo $this->trans('setfree'); ?>
-                            <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'setfree', 'id' => $this->escape($entry->getId()))); ?>">
-                                <span title="<?php echo $this->trans('setfree'); ?>">
-                                    <i class="fa fa-check"></i></span>
-                            </a>
-                        </td>
-                        <?php } ?>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="responsive panel-body">
-                <?php echo $entry->getText(); ?>
-            </div>
-        </div>
-    <?php endforeach; ?>
+                        <a href="<?php echo $this->url($deleteArray).'" title="'.$this->trans('delete'); ?>"><i class="fa fa-times-circle"></i></a>
+                    </td>
+                    <td>
+                        <?php echo $this->escape($entry->getName()); ?>
+                    </td>
+                    <td>
+                        <?php echo $this->escape($entry->getDateTime()); ?>
+                    </td>
+                    <td>
+                        <?php echo $entry->getText(); ?>
+                    </td>
+                </tr>
+            </tbody>
+            <?php endforeach; ?>
+        </table>
+    </div>
 </div>
