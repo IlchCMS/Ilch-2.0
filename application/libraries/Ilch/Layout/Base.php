@@ -18,7 +18,7 @@ abstract class Base extends \Ilch\Design\Base
     public function __call($name, $args)
     {
         $layout = $this->getHelper($name, 'layout');
-
+dumpvar($layout);die('d');
         if(!empty($layout)) {
             return $layout->$name($args);
         }
@@ -44,13 +44,6 @@ abstract class Base extends \Ilch\Design\Base
      * @var string
      */
     protected $_file;
-    
-    /**
-     * Holds the hmenu.
-     *
-     * @var array 
-     */
-    protected $_hmenu;
 
     /**
      * Set layout disabled flag.
@@ -137,15 +130,5 @@ abstract class Base extends \Ilch\Design\Base
     public function getFile()
     {
         return $this->_file;
-    }
-    
-    /**
-     * Sets the hmenu.
-     *
-     * @param array $hmenu
-     */
-    public function setHmenu($hmenu)
-    {
-        $this->_hmenu = $hmenu;
     }
 }

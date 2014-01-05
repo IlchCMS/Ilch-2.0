@@ -14,7 +14,7 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->setHmenu(array('menuPartners' => ''));
+        $this->getLayout()->setHmenu(array($this->getTranslator()->trans('menuPartners') => ''));
         $partnerMapper = new PartnerMapper();
 
         if ($this->getRequest()->isPost()) {
