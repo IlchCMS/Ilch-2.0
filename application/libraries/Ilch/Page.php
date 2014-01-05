@@ -112,6 +112,10 @@ class Page
              * Cms not installed yet.
              */
             $this->_request->setModuleName('install');
+
+            if (!empty($_SESSION['language'])) {
+                $this->_translator->setLocale($_SESSION['language']);
+            }
         }
     }
 
@@ -120,6 +124,12 @@ class Page
      */
     public function loadPage()
     {
+        $this->_translator->load(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/translations');
+        
+        if($this->_request->isAdmin()) {
+            $this->_translator->load(APPLICATION_PATH.'/modules/admin/translations');
+        }
+
         $controller = $this->_loadController();
         $controllerName = $this->_request->getControllerName();
         $findSub = strpos($controllerName, '_');
@@ -133,10 +143,9 @@ class Page
         
         $this->_plugin->addPluginData('controller', $controller);
         $this->_plugin->execute('AfterControllerLoad');
-        $this->_translator->load(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/translations');
+        
 
         if ($this->_request->isAdmin()) {
-            $this->_translator->load(APPLICATION_PATH.'/modules/admin/translations');
             $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/admin/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php');
         } else {
             $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php');

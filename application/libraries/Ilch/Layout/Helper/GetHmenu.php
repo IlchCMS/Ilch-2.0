@@ -10,21 +10,27 @@ defined('ACCESS') or die('no direct access');
 class GetHmenu
 {
     /**
+     * var Ilch\Layout\Helper\Hmenu\Model
+     */
+    private $_model;
+
+    /**
      * Injects the layout.
      *
      * @param Ilch\Layout $layout
      */
     public function __construct($layout)
     {
-        $this->_layout = $layout;
+        $this->_model = new \Ilch\Layout\Helper\Hmenu\Model($layout);
     }
 
     /**
+     * Gets the hmenu
+     * @return \Ilch\Layout\Helper\Hmenu\Model
      */
     public function getHmenu()
     {
-        $model = new \Ilch\Layout\Helper\Hmenu\Model();
-        return $model;
+        return $this->_model;
     }
 }
 

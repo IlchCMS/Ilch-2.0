@@ -23,5 +23,5 @@ INSERT INTO `[prefix]_menu` (`id`, `title`) VALUES
 (2, 'Hauptmenü 2');
 
 INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
-(7, 2, 20, 0, 0, 'partner', 4, 'Partner', '', ''),
-(8, 2, 30, 0, 0, 'langswitch', 4, 'Sprache', '', '');
+(8, 2, 10, 0, 0, 'partner', 4, 'Partner', '', ''),
+(9, 2, 20, 0, 0, 'langswitch', 4, 'Sprache', '', '');

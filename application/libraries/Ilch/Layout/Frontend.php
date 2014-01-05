@@ -62,46 +62,6 @@ class Frontend extends Base
     }
 
     /**
-     * Gets the hnav.
-     *
-     * @return string
-     */
-    public function getHmenu()
-    {
-        if (empty($this->_hmenu)) {
-            return;
-        }
-
-        $html = '<div id="breadcrumbs">
-                    <div class="breadcrumb-button blue">
-                        <span class="breadcrumb-label">
-                            <a href="'.$this->url().'">
-                                <i class="fa fa-home"></i>
-                            </a>
-                        </span>
-                        <span class="breadcrumb-arrow">
-                            <span></span>
-                        </span>
-                    </div>';
-        
-        foreach ($this->_hmenu as $key => $value) {
-            $html .= '<div class="breadcrumb-button"><span class="breadcrumb-label">';
-                        
-            if (empty($value)) {
-                $html .= $this->escape($this->trans($key));
-            } else {
-                $html .= '<a href="'.$this->url($value).'">'.$this->escape($key).'</a>';
-            }
-
-            $html .=  '</span><span class="breadcrumb-arrow"><span></span></span></div>';
-        }
-
-        $html .= '</div>';
-        
-        return $html;
-    }
-
-    /**
      * Gets the header.
      *
      * @return string

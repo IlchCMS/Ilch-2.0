@@ -18,7 +18,7 @@ abstract class Base extends \Ilch\Design\Base
     public function __call($name, $args)
     {
         $layout = $this->getHelper($name, 'layout');
-dumpvar($layout);die('d');
+
         if(!empty($layout)) {
             return $layout->$name($args);
         }
