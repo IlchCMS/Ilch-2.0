@@ -23,6 +23,7 @@ class Frontend extends Base
 
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
         $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
+        $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
     }
 
     /**
@@ -89,7 +90,7 @@ class Frontend extends Base
             if (empty($value)) {
                 $html .= $this->escape($this->trans($key));
             } else {
-                $html .= '<a href="'.$this->url($value).'">'.$this->escape($this->trans($key)).'</a>';
+                $html .= '<a href="'.$this->url($value).'">'.$this->escape($key).'</a>';
             }
 
             $html .=  '</span><span class="breadcrumb-arrow"><span></span></span></div>';

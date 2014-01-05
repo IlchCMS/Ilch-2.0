@@ -15,21 +15,16 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->setHmenu(array('guestbook' => ''));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'));
         $guestbookMapper = new GuestbookMapper();
         $this->getView()->set('entries', $guestbookMapper->getEntries(array('setfree' => 1)));
     }
 
     public function newEntryAction()
     {
-        $this->getLayout()->setHmenu
-        (
-            array
-            (
-                'guestbook' => array('action' => 'index'),
-                'entry' => ''
-            )
-        );
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('entry'));
 
         $guestbookMapper = new GuestbookMapper();
         $ilchdate = new IlchDate;
