@@ -41,7 +41,7 @@
     <thead>
         <tr>
             <th><?php echo $this->trans('links'); ?></th>
-            <th align="center"><?php echo $this->trans('show'); ?></th>
+            <th align="center"><?php echo $this->trans('hits'); ?></th>
         </tr>
     </thead>
     <tbody>

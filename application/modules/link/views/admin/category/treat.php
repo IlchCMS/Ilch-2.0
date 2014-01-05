@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label for="desc" class="col-lg-2 control-label">
-            <?php echo $this->trans('desc'); ?>:
+            <?php echo $this->trans('description'); ?>:
         </label>
         <div class="col-lg-4">
             <textarea class="form-control"
