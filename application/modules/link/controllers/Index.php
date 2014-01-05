@@ -18,23 +18,23 @@ class Index extends \Ilch\Controller\Frontend
         $linkMapper = new LinkMapper();
         $categoryMapper = new CategoryMapper();
         
-        if ($this->getRequest()->getParam('cat')) {
-            $parentCategories = $categoryMapper->getCategoriesForParent($this->getRequest()->getParam('cat'));
+        if ($this->getRequest()->getParam('cat_id')) {
+            $parentCategories = $categoryMapper->getCategoriesForParent($this->getRequest()->getParam('cat_id'));
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'));
 
             foreach($parentCategories as $parent) {
-                $this->getLayout()->getHmenu()->add($parent->getName(), array('action' => 'index', 'cat' => $this->getRequest()->getParam('cat')));
+                $this->getLayout()->getHmenu()->add($parent->getName(), array('action' => 'index', 'cat_id' => $this->getRequest()->getParam('cat_id')));
             }
             
-            $links = $linkMapper->getLinks(array('cat_id' => $this->getRequest()->getParam('cat')));
-            $categorys = $categoryMapper->getCategories(array('cat_id' => $this->getRequest()->getParam('cat')));
+            $links = $linkMapper->getLinks(array('cat_id' => $this->getRequest()->getParam('cat_id')));
+            $categorys = $categoryMapper->getCategories(array('cat_id' => $this->getRequest()->getParam('cat_id')));
         } else {
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLinks'));
             $links = $linkMapper->getLinks();
             $categorys = $categoryMapper->getCategories();
         }
         
-        $this->getView()->set('links', $links);
+        $this->getView()->set('links', $linkMapper->getLinks(array('cat_id' => 0)));
         $this->getView()->set('categorys', $categorys);
     }
 }

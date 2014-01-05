@@ -28,6 +28,7 @@ return array
     'menuActionNewLink' => 'Link hinzufügen',
     'menuActionEditLink' => 'Link editieren',
     'menuActionNewCategory' => 'Kategorie hinzufügen',
+    'menuActionEditCategory' => 'Kategorie editieren',
     'noLinks' => 'Keine Links vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
     'askIfDeleteLink' => 'Sind Sie sicher, dass der Link "%s" entfernt werden soll?',

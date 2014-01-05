@@ -36,7 +36,7 @@
                 echo '</td>';
                 echo '<td>'.$getBanner.'</td>';
                 echo '<td>'.$this->escape($link->getDesc()).'</td>';
-                echo '<td>'.$this->escape($link->getCat()).'</td>';
+                echo '<td>'.$this->escape($link->getCatId()).'</td>';
                 echo '</tr>';
             }
         } else {
@@ -64,7 +64,7 @@ $(function () {
         trigger: 'hover',
         placement: 'right',
         title: 'Banner Vorschau',
-        content: function(){return '<img src="'+$(this).data('img') + '" width="468px" />';}
+        content: function(){return '<img src="'+$(this).data('img') + '" />';}
     });
 });
 </script>

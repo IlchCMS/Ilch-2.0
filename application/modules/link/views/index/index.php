@@ -22,7 +22,7 @@
                     $getDesc = '';
                 }
                 
-                echo '<td><a href='.$this->url(array('action' => 'index', 'cat' => $category->getId())).' target="_blank" title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
+                echo '<td><a href='.$this->url(array('action' => 'index', 'cat' => $category->getId())).' title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
                 echo '<td align="center" style="vertical-align:middle">'.$this->escape($category->getCatId()).'</td>';
                 echo '</tr>';
             }
