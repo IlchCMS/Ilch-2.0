@@ -218,7 +218,7 @@ class Mysql
         if ($where != null) {
             $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
         }
-        
+
         if (!empty($orderBy)) {
             $sql .= ' ORDER BY';
 
@@ -278,9 +278,10 @@ class Mysql
     public function update($fields, $table, $where = null)
     {
         $sql = 'UPDATE `[prefix]_'.$table . '` SET ';
+        $up = array();
 
         foreach ($fields as $key => $value) {
-            if ($value == null) {
+            if ($value === null) {
                 continue;
             }
 
@@ -310,7 +311,7 @@ class Mysql
         $sqlValues = array();
 
         foreach ($fields as $key => $value) {
-            if ($value == null) {
+            if ($value === null) {
                 continue;
             }
 
@@ -321,7 +322,7 @@ class Mysql
         $sql .= ') VALUES (';
 
         foreach ($fields as $key => $value) {
-            if ($value == null) {
+            if ($value === null) {
                 continue;
             }
 
