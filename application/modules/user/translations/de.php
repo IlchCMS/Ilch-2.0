@@ -52,7 +52,10 @@ return array
     'noGroupsExist' => 'Keine Gruppen vorhanden.',
 
     'menuAccess' => 'Gruppenrechte',
-    'lookAccess' => 'nur sehen',
-    'noAccess' => 'nicht sehen/bearbeiten',
-    'modifyAccess' => 'bearbeiten',
+    'lookAccess' => 'sichtbar',
+    'noAccess' => 'nicht sichtbar',
+    'modifyAccess' => 'bearbeitbar',
+    'module' => 'Modul',
+    'page' => 'Seite',
+    'article' => 'Artikel',
 );
