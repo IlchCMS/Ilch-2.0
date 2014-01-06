@@ -1,9 +1,8 @@
-/* main */
-
-html, body {
+body {
     margin: 0;
     padding: 0;
     height: 100%;
+    min-width: 970px;
 }
 
 .form-horizontal .control-group {
@@ -122,4 +121,53 @@ html, body {
 	position: fixed;
 	padding: 5px 15px 5px 15px;
 	background-color: #EEEEEE;
+}
+
+/* Disable responsive */
+.container {
+  max-width: none !important;
+  width: 970px;
+}
+
+.container .navbar-header,
+.container .navbar-collapse {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.navbar-header {
+  float: left;
+}
+
+.navbar-collapse {
+  display: block !important;
+  height: auto !important;
+  padding-bottom: 0;
+  overflow: visible !important;
+}
+
+.navbar-toggle {
+  display: none;
+}
+.navbar-collapse {
+  border-top: 0;
+}
+
+.navbar-brand {
+  margin-left: -15px;
+}
+
+.navbar-nav {
+  float: left;
+  margin: 0;
+}
+.navbar-nav > li {
+  float: left;
+}
+.navbar-nav > li > a {
+  padding: 15px;
+}
+
+.navbar-nav.navbar-right {
+  float: right;
 }
