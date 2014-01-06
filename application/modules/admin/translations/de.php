@@ -58,5 +58,10 @@ return array
     'multilingualAcp' => 'Multisprachige Einstellungen',
     'list' => 'Liste',
     'menuActionNewLayout' => 'Neues Layout hinzufügen',
-    'overview' => 'Übersicht'
+    'overview' => 'Übersicht',
+    'setDefault' => 'Als Standart setzen',
+    'isDefault' => 'Ist Standart',
+    'delete' => 'Löschen',
+    'askIfDeleteLayout' => 'Sind Sie sicher, dass das Layout "%s" entfernt werden soll?',
+    'cantDeleteDefaultLayout' => 'Standartlayout kann nicht gelöscht werden',
 );
