@@ -52,7 +52,10 @@ return array
     'noGroupsExist' => 'No groups exist.',
 
     'menuAccess' => 'Grouprights',
-    'lookAccess' => 'only lookup',
-    'noAccess' => 'no lookup/modify',
-    'modifyAccess' => 'modify',
+    'lookAccess' => 'visible',
+    'noAccess' => 'not visible',
+    'modifyAccess' => 'changeable',
+    'module' => 'Module',
+    'page' => 'Page',
+    'article' => 'Article',
 );

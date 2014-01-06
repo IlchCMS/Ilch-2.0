@@ -11,6 +11,8 @@ namespace User\Controllers\Admin;
 use User\Controllers\Admin\Base as BaseController;
 use User\Mappers\Group as GroupMapper;
 use Admin\Mappers\Module as ModuleMapper;
+use Page\Mappers\Page as PageMapper;
+use Article\Mappers\Article as ArticleMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -36,7 +38,19 @@ class Access extends BaseController
 
         $moduleMapper = new ModuleMapper();
         $modules = $moduleMapper->getModules();
-        $this->getView()->set('modules', $modules);
+
+        $pageMapper = new PageMapper();
+        $pages = $pageMapper->getPageList();
+
+        $articleMapper = new ArticleMapper();
+        $articles = $articleMapper->getArticles();
+
+        $accessTypes = array(
+            'module' => $modules,
+            'page' => $pages,
+            'article' => $articles,
+        );
+        $this->getView()->set('accessTypes', $accessTypes);
     }
 
     /**
@@ -46,13 +60,15 @@ class Access extends BaseController
     {
         $postData = $this->getRequest()->getPost();
 
-        if (isset($postData['groupsModules'])) {
-            $groupsModulesAccessData = $postData['groupsModules'];
+        if (isset($postData['groupsAccess'])) {
+            $groupsAccessData = $postData['groupsAccess'];
             $groupMapper = new GroupMapper();
 
-            foreach($groupsModulesAccessData as $groupId => $groupModulesAccessData) {
-                foreach($groupModulesAccessData as $moduleId => $accessLevel) {
-                    $groupMapper->saveAccessData($groupId, $moduleId, $accessLevel, 'module');
+            foreach($groupsAccessData as $type => $groupsAccessTypeData) {
+                foreach($groupsAccessTypeData as $groupId => $groupAccessTypeData) {
+                    foreach($groupAccessTypeData as $typeId => $accessLevel) {
+                        $groupMapper->saveAccessData($groupId, $typeId, $accessLevel, $type);
+                    }
                 }
             }
 
