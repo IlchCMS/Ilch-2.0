@@ -29,10 +29,10 @@ else {
                value="<?php echo $user->getId(); ?>" />
         <div class="form-group">
             <label for="userName"
-                   class="col-lg-3 control-label">
+                   class="col-xs-3 control-label">
                 <?php echo $this->trans('userName'); ?>
             </label>
-            <div class="col-lg-9">
+            <div class="col-xs-9">
                 <input name="user[name]"
                        type="text"
                        id="userName"
@@ -42,10 +42,10 @@ else {
             </div>
         </div>
         <div class="form-group">
-            <label for="userEmail" class="col-lg-3 control-label">
+            <label for="userEmail" class="col-xs-3 control-label">
                 <?php echo $this->trans('userEmail'); ?>
             </label>
-            <div class="col-lg-9">
+            <div class="col-xs-9">
                 <input name="user[email]"
                        type="text"
                        id="userEmail"
@@ -69,26 +69,26 @@ else {
             }
             ?>
             <div class="form-group">
-                <label class="col-lg-3 control-label">
+                <label class="col-xs-3 control-label">
                     <?php echo $this->trans('userDateCreated'); ?>
                 </label>
-                <div class="col-lg-9">
+                <div class="col-xs-9">
                     <p class="form-control-static"><?php echo $this->escape($user->getDateCreated()); ?></p>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-3 control-label">
+                <label class="col-xs-3 control-label">
                     <?php echo $this->trans('userDateConfirmed'); ?>
                 </label>
-                <div class="col-lg-9">
+                <div class="col-xs-9">
                     <p class="form-control-static"><?php echo $this->escape($dateConfirmed); ?></p>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-3 control-label">
+                <label class="col-xs-3 control-label">
                     <?php echo $this->trans('userDateLastActivity'); ?>
                 </label>
-                <div class="col-lg-9">
+                <div class="col-xs-9">
                     <p class="form-control-static"><?php echo $this->escape($dateLastActivity); ?></p>
                 </div>
             </div>
@@ -96,10 +96,10 @@ else {
         }
         ?>
         <div class="form-group">
-            <label for="assignedGroups" class="col-lg-3 control-label">
+            <label for="assignedGroups" class="col-xs-3 control-label">
                     <?php echo $this->trans('assignedGroups'); ?>
             </label>
-            <div class="col-lg-9">
+            <div class="col-xs-9">
                 <select id="assignedGroups"
                         class="chosen-select form-control"
                         data-placeholder="<?php echo $this->trans('selectAssignedGroups'); ?>"

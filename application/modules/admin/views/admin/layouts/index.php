@@ -12,7 +12,7 @@
                     echo '<div class="row">';
                 }
         ?>
-            <div class="col-lg-3">
+            <div class="col-xs-3">
                 <div class="thumbnail">
                     <img src="<?php echo $this->staticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png'); ?>" />
                     <div class="caption">

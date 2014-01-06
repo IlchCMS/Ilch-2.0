@@ -2,7 +2,7 @@
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
         <col />
-        <col class="col-lg-1" />
+        <col class="col-xs-1" />
     </colgroup>
     <thead>
         <tr>
@@ -36,7 +36,7 @@
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
         <col />
-        <col class="col-lg-1" />
+        <col class="col-xs-1" />
     </colgroup>
     <thead>
         <tr>

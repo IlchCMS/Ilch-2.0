@@ -1,8 +1,8 @@
 <legend><?php echo $this->trans('manageCategory'); ?></legend>
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
-        <col class="col-lg-1" />
-        <col class="col-lg-2" />
+        <col class="col-xs-1" />
+        <col class="col-xs-2" />
     </colgroup>
     <thead>
         <tr>

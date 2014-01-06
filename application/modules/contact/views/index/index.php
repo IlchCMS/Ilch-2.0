@@ -1,10 +1,10 @@
 <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
     <div class="form-group">
-        <label for="receiver" class="col-lg-2 control-label">
+        <label for="receiver" class="col-xs-2 control-label">
             <?php echo $this->trans('receiver'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xs-10">
             <select class="form-control"
                     id="receiver"
                     name="receiver">
@@ -18,10 +18,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="name" class="col-lg-2 control-label">
+        <label for="name" class="col-xs-2 control-label">
             <?php echo $this->trans('name'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xs-10">
             <input class="form-control"
                    id="name"
                    name="name"
@@ -30,10 +30,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="email" class="col-lg-2 control-label">
+        <label for="email" class="col-xs-2 control-label">
             <?php echo $this->trans('email'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xs-10">
             <input class="form-control"
                    id="email"
                    name="email"
@@ -42,17 +42,17 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="message" class="col-lg-2 control-label">
+        <label for="message" class="col-xs-2 control-label">
             <?php echo $this->trans('message'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-xs-10">
             <textarea class="form-control"
                    id="message"
                    name="message"></textarea>
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-xs-offset-2 col-xs-10">
             <button type="submit" name="save" class="btn">
                 <?php echo $this->trans('send'); ?>
             </button>

@@ -11,11 +11,11 @@ if ($this->get('userList') != '') {
     <table class="table table-hover table-striped">
         <colgroup>
             <col />
-            <col class="col-lg-2">
+            <col class="col-xs-2">
             <col />
-            <col class="col-lg-2">
-            <col class="col-lg-2">
-            <col class="col-lg-2">
+            <col class="col-xs-2">
+            <col class="col-xs-2">
+            <col class="col-xs-2">
         </colgroup>
         <thead>
             <tr>
