@@ -51,7 +51,7 @@
                                     echo 'class="active"';
                                 }?>>
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
-                            <i class="fa fa-home"></i> <?php echo $this->trans('home'); ?>
+                            <i class="fa fa-home"></i>
                         </a>
                     </li>
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'menu') {
@@ -102,15 +102,15 @@
                             <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
                         </a>
                     </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
                                     echo 'class="active"';
                                 }?>>
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
-                            <i class="fa fa-cogs"></i> <?php echo $this->trans('system'); ?>
+                            <i class="fa fa-cogs"></i>
                         </a>
                     </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a title="<?php echo $this->trans('openFrontend'); ?>"
                            target="_blank"
