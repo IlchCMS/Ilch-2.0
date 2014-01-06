@@ -353,7 +353,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         $dbMock = $this->getMock('Ilch_Database', array('queryArray'));
         $dbMock->expects($this->once())
                 ->method('queryArray')
-                ->with($this->logicalAnd($this->stringContains('FROM groups_access'), $this->stringContains('INNER JOIN groups')))
+                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN [prefix]_groups')))
                 ->will($this->returnValue($accessDbList));
 
         $mapper = new GroupMapper();

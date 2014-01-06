@@ -234,8 +234,8 @@ class Group extends \Ilch\Mapper
     public function getGroupAccessList()
     {
         $sql = 'SELECT g.name AS group_name, ga.*
-                FROM groups_access AS ga
-                INNER JOIN groups AS g ON ga.group_id = g.id';
+                FROM [prefix]_groups_access AS ga
+                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id';
         $accessDbList = $this->db()->queryArray($sql);
         $accessList = array();
         $entries = array(
