@@ -53,6 +53,20 @@ class Link extends \Ilch\Model
     protected $_cat;
 
     /**
+     * The category of the link.
+     *
+     * @var string
+     */
+    protected $_desc;
+
+    /**
+     * The category of the link.
+     *
+     * @var string
+     */
+    protected $_hits;
+
+    /**
      * Gets the id of the link.
      *
      * @return int
@@ -111,7 +125,7 @@ class Link extends \Ilch\Model
     /**
      * Sets the link of the link.
      *
-     * @param string $email
+     * @param string $link
      * @return this
      */
     public function setLink($link)
@@ -134,7 +148,7 @@ class Link extends \Ilch\Model
     /**
      * Sets the banner of the link.
      *
-     * @param string $email
+     * @param string $banner
      * @return this
      */
     public function setBanner($banner)

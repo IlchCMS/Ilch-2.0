@@ -18,18 +18,32 @@ defined('ACCESS') or die('no direct access');
 class Category extends \Ilch\Mapper
 {
     /**
-     * The id of the user category.
+     * The id of the category.
      *
      * @var int
      */
     private $_id;
 
     /**
-     * The name of the user category.
+     * The name of the category.
      *
      * @var string
      */
     private $_name = '';
+
+    /**
+     * The catid of the category.
+     *
+     * @var string
+     */
+    private $_cat = '';
+
+    /**
+     * The description of the category.
+     *
+     * @var string
+     */
+    private $_desc = '';
 
     /**
      * Returns the user category id.
@@ -42,7 +56,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the user category id.
+     * Sets the category id.
      *
      * @param int $id
      */
@@ -52,7 +66,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Returns the user category name.
+     * Returns the category name.
      *
      * @return string
      */
@@ -62,7 +76,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the user category name.
+     * Sets the category id.
      *
      * @param string $name
      */
@@ -72,7 +86,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Returns the user category name.
+     * Returns the category id.
      *
      * @return string
      */
@@ -82,7 +96,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the user category name.
+     * Sets the category name.
      *
      * @param string $name
      */

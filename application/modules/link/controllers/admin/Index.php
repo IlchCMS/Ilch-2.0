@@ -59,8 +59,9 @@ class Index extends BaseController
             }
 
             $model->setName($this->getRequest()->getPost('name'));
-            $model->setBanner($this->getRequest()->getPost('banner'));
             $model->setLink($this->getRequest()->getPost('link'));
+            $model->setBanner($this->getRequest()->getPost('banner'));
+            $model->setDesc($this->getRequest()->getPost('desc'));
 
             $linkMapper->save($model);
             $this->addMessage('saveSuccess');

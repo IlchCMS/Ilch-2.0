@@ -23,11 +23,28 @@ class Category extends \Ilch\Mapper
      * Gets categorys.
      *
      * @param array $where
-     * @return LinkModel[]|null
+     * @return CategoryModel[]|null
      */
     public function getCategories($where = array())
     {
-        return $this->_getBy($where);
+        $categoryArray = $this->db()->selectArray('*', 'link_cats', $where);
+
+        if (empty($categoryArray)) {
+            return array();
+        }
+
+        $categorys = array();
+
+        foreach ($categoryArray as $categoryRow) {
+            $categoryModel = new CategoryModel();
+            $categoryModel->setId($categoryRow['id']);
+            $categoryModel->setCatId($categoryRow['cat_id']);
+            $categoryModel->setName($categoryRow['name']);
+            $categoryModel->setDesc($categoryRow['desc']);
+            $categorys[] = $categoryModel;
+        }
+
+        return $categorys;
     }
     
     /**
@@ -38,18 +55,24 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoryById($id)
     {
-        $where = array
+        $categoryRow = $this->db()->selectRow
         (
-            'id' => (int)$id,
+            '*',
+            'link_cats',
+            array('id' => $this->db()->escape($id))
         );
 
-        $categorys = $this->_getBy($where);
-
-        if (!empty($categorys)) {
-            return reset($categorys);
+        if (empty($categoryRow)) {
+            return null;
         }
 
-        return null;
+        $categoryModel = new CategoryModel();
+        $categoryModel->setId($categoryRow['id']);
+        $categoryModel->setCatID($categoryRow['cat_id']);
+        $categoryModel->setName($categoryRow['name']);
+        $categoryModel->setDesc($categoryRow['desc']);
+
+        return $categoryModel;
     }
 
     /**
@@ -75,173 +98,52 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Returns an array with user category models found by the where clause of false if
-     * none found.
-     *
-     * @param  mixed[]            $where
-     * @return false|CategoryModel[]
-     */
-    protected function _getBy($where = null)
-    {
-        $categoryRows = $this->db()->selectArray
-        (
-            '*',
-            'link_cats',
-            $where
-        );
-
-        if (!empty($categoryRows)) {
-            $categorys = array_map(array($this, 'loadFromArray'), $categoryRows);
-
-            return $categorys;
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns a user category created using an array with user category data.
-     *
-     * @param  mixed[]    $categoryRow
-     * @return CategoryModel
-     */
-    public function loadFromArray($categoryRow = array())
-    {
-        $category = new CategoryModel();
-
-        if (isset($categoryRow['id'])) {
-            $category->setId($categoryRow['id']);
-        }
-
-        if (isset($categoryRow['name'])) {
-            $category->setName($categoryRow['name']);
-        }
-        
-        if (isset($categoryRow['cat_id'])) {
-            $category->setCatId($categoryRow['cat_id']);
-        }
-        
-        if (isset($categoryRow['desc'])) {
-            $category->setDesc($categoryRow['desc']);
-        }
- 
-        return $category;
-    }
-
-    /**
-     * Loads the user ids associated with a user category.
-     *
-     * @param int $categoryId
-     */
-    public function getUsersForCategory($categoryId)
-    {
-        $userIds = $this->db()->selectList
-        (
-            'id',
-            'cat',
-            array('id' => $categoryId)
-        );
-
-        return $userIds;
-    }
-
-    /**
-     * Inserts or updates a user category model into the database.
+     * Inserts or updates category model.
      *
      * @param CategoryModel $category
      */
     public function save(CategoryModel $category)
     {
-        $fields = array();
-        $name = $category->getName();
-
-        if (!empty($name)) {
-            $fields['name'] = $category->getName();
-        }
-
-        $categoryId = (int) $this->db()->selectCell
-        (
-            'id',
-            'link_cats',
-            array
-            (
-                'id' => $category->getId(),
-            )
-        );
-
-        if ($categoryId) {
-            /*
-             * Category does exist already, update.
-             */
+        if ($category->getId()) {
             $this->db()->update
             (
-                $fields,
+                array
+                (
+                    'name' => $category->getName(),
+                    'desc' => $category->getDesc(),
+                    'cat_id' => $category->getCatId()
+                ),
                 'link_cats',
                 array
                 (
-                    'id' => $categoryId,
+                    'id' => $category->getId(),
                 )
             );
         } else {
-            /*
-             * Category does not exist yet, insert.
-             */
-            $categoryId = $this->db()->insert
+            $this->db()->insert
             (
-                $fields,
+                array
+                (
+                    'name' => $category->getName(),
+                    'desc' => $category->getDesc(),
+                    'cat_id' => $category->getCatId()
+                ),
                 'link_cats'
             );
         }
-
-        return $categoryId;
     }
 
     /**
-     * Returns a array of all category model objects.
+     * Deletes category with given id.
      *
-     * @return categoryModel[]
+     * @param integer $id
      */
-    public function getCategoryList()
+    public function delete($id)
     {
-        return $this->_getBy();
-    }
-
-    /**
-     * Returns whether a category with the given id exists in the database.
-     *
-     * @param  int $categoryId
-     * @return boolean
-     */
-    public function categoryWithIdExists($categoryId)
-    {
-        $categoryExists = (boolean)$this->db()->selectCell
+        $this->db()->delete
         (
-            'COUNT(*)',
             'link_cats',
-            array
-            (
-                'id' => (int)$categoryId
-            )
+            array('id' => $id)
         );
-
-        return $categoryExists;
-    }
-
-    /**
-     * Deletes a given category or a user with the given id.
-     *
-     * @param  int|CategoryModel $categoryId
-     *
-     * @return boolean True of success, otherwise false.
-     */
-    public function delete($categoryId)
-    {
-        if(is_a($categoryId, '\User\Models\Category'))
-        {
-            $categoryId = $categoryId->getId();
-        }
-
-        $this->db()->delete('link_cats', array('id' => $categoryId));
-        return $this->db()->delete('link_cats', array('id' => $categoryId));
     }
 }

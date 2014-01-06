@@ -22,7 +22,7 @@
                     $getDesc = '';
                 }
                 
-                echo '<td><a href='.$this->url(array('action' => 'index', 'cat' => $category->getId())).' target="_blank" title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
+                echo '<td><a href='.$this->url(array('action' => 'index', 'cat' => $category->getId())).' title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
                 echo '<td align="center" style="vertical-align:middle">'.$this->escape($category->getCatId()).'</td>';
                 echo '</tr>';
             }
@@ -41,7 +41,7 @@
     <thead>
         <tr>
             <th><?php echo $this->trans('links'); ?></th>
-            <th align="center"><?php echo $this->trans('show'); ?></th>
+            <th align="center"><?php echo $this->trans('hits'); ?></th>
         </tr>
     </thead>
     <tbody>

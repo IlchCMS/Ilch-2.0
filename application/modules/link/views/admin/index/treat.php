@@ -49,15 +49,33 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="cat_id" class="col-lg-2 control-label">
+            <?php echo $this->trans('category'); ?>:
+        </label>
+        <div class="col-lg-4">
+            <select class="form-control" name="cat_id">
+                <?php
+                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
+                        $sel = '';
+
+                        if ($this->get('cat_id') == $key) {
+                            $sel = 'selected="selected"';
+                        }
+                        echo '<option '.$sel.' value="'.$key.'">'.$this->escape($value).'</option>';
+                    }
+                ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="desc" class="col-lg-2 control-label">
-            <?php echo $this->trans('desc'); ?>:
+            <?php echo $this->trans('description'); ?>:
         </label>
         <div class="col-lg-4">
             <textarea class="form-control"
                       name="desc" 
-                      id="desc"
                       cols="45" 
-                      rows="4"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } ?></textarea>
+                      rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } ?></textarea>
         </div>
     </div>
     <div class="content_savebox">

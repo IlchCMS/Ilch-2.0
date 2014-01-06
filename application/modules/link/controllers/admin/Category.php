@@ -35,43 +35,35 @@ class Category extends BaseController
         $this->getView()->set('categorys', $categorys);
     }
 
-    public function saveAction()
-    {
-        $postData = $this->getRequest()->getPost();
-
-        if (isset($postData['category'])) {
-            $categoryData = $postData['category'];
-
-            $categoryMapper = new CategoryMapper();
-            $category = $categoryMapper->loadFromArray($categoryData);
-            $categoryId = $categoryMapper->save($category);
-
-            if (!empty($categoryId) && empty($categoryData['id'])) {
-                $this->addMessage('newCategoryMsg');
-            }
-
-            $this->redirect(array('action' => 'treat', 'id' => $categoryId));
-        }
-    }
-
     public function deleteAction()
     {
-        $categoryMapper = new CategoryMapper();
-        $categoryId = $this->getRequest()->getParam('id');
+        $categorykMapper = new CategoryMapper();
+        $categorykMapper->delete($this->getRequest()->getParam('id'));
+        $this->addMessage('saveSuccess');
+        $this->redirect(array('action' => 'index'));
+    }
 
-        if ($categoryId) {
-            $deletecategory = $categoryMapper->getCategoryById($categoryId);
-            $usersForCategory = $categoryMapper->getUsersForCategory($categoryId);
+    public function treatAction()
+    {
+        $categorykMapper = new CategoryMapper();
 
-            if ($categoryId == 1) {
-                $this->addMessage('delAdminCategory', 'warning');
-            } else {
-                if ($categoryMapper->delete($categoryId)) {
-                    $this->addMessage('delCategoryMsg');
-                }
-            }
+        if ($this->getRequest()->getParam('id')) {
+            $this->getView()->set('category', $categorykMapper->getCategoryById($this->getRequest()->getParam('id')));
         }
 
-        $this->redirect(array('action' => 'index'));
+        if ($this->getRequest()->isPost()) {
+            $model = new CategoryModel();
+
+            if ($this->getRequest()->getParam('id')) {
+                $model->setId($this->getRequest()->getParam('id'));
+            }
+
+            $model->setName($this->getRequest()->getPost('name'));
+            $model->setDesc($this->getRequest()->getPost('desc'));
+
+            $categorykMapper->save($model);
+            $this->addMessage('saveSuccess');
+            $this->redirect(array('action' => 'index'));
+        }
     }
 }

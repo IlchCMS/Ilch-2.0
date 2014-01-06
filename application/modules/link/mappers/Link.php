@@ -69,7 +69,7 @@ class Link extends \Ilch\Mapper
 
         $linkModel = new LinkModel();
         $linkModel->setId($linkRow['id']);
-        $linkModel->setCat($linkRow['cat_id']);
+        $linkModel->setCatID($linkRow['cat_id']);
         $linkModel->setName($linkRow['name']);
         $linkModel->setDesc($linkRow['desc']);
         $linkModel->setLink($linkRow['link']);
