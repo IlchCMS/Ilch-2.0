@@ -15,7 +15,7 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'));
         $guestbookMapper = new GuestbookMapper();
         $this->getView()->set('entries', $guestbookMapper->getEntries(array('setfree' => 1)));
     }
@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('entry'));
+                ->add($this->getTranslator()->trans('entry'), array('action' => 'newentry'));
 
         $guestbookMapper = new GuestbookMapper();
         $ilchdate = new IlchDate;

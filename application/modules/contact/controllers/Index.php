@@ -13,7 +13,7 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuReceiver'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'));
         $receiverMapper = new ReceiverMapper();
         $receivers = $receiverMapper->getReceivers();
 
