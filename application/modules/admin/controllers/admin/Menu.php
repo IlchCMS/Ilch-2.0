@@ -114,7 +114,7 @@ class Menu extends \Ilch\Controller\Admin
         $menus = $menuMapper->getMenus();
         
         $moduleMapper = new \Admin\Mappers\Module();
-        $boxMapper = new \Box\Mappers\Box();
+        $boxMapper = new \Admin\Mappers\Box();
 
         $locale = '';
 

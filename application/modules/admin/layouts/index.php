@@ -88,6 +88,13 @@
                             ?>
                         </ul>
                     </li>
+                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') {
+                                    echo 'class="active"';
+                                }?>>
+                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'boxes', 'action' => 'index')); ?>">
+                            <i class="fa fa-inbox"></i> <?php echo $this->trans('boxes'); ?>
+                        </a>
+                    </li>
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'layouts') {
                                     echo 'class="active"';
                                 }?>>

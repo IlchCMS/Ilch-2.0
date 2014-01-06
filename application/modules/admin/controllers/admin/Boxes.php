@@ -4,13 +4,13 @@
  * @package ilch
  */
 
-namespace Box\Controllers\Admin;
-use Box\Mappers\Box as BoxMapper;
-use Box\Models\Box as BoxModel;
+namespace Admin\Controllers\Admin;
+use Admin\Mappers\Box as BoxMapper;
+use Admin\Models\Box as BoxModel;
 
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Controller\Admin
+class Boxes extends \Ilch\Controller\Admin
 {
     public function init()
     {
@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'menuBoxes',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->url(array('controller' => 'boxes', 'action' => 'index'))
                 ),
             )
         );
@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewBox',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
+                'url'  => $this->getLayout()->url(array('controller' => 'boxes', 'action' => 'treat'))
             )
         );
     }

@@ -87,7 +87,7 @@ class Model
 
         $menuMapper = new \Admin\Mappers\Menu();
         $items = $menuMapper->getMenuItemsByParent($this->getId(), 0);
-        $boxMapper = new \Box\Mappers\Box();
+        $boxMapper = new \Admin\Mappers\Box();
         $config = \Ilch\Registry::get('config');
 
         if ((bool)$config->get('multilingual_acp')) {
@@ -113,7 +113,7 @@ class Model
                             $boxObj->render();
                             $output = $view->loadScript(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php');
 
-                            $box = new \Box\Models\Box();
+                            $box = new \Admin\Models\Box();
                             $box->setContent($output);
                         }
 

@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace Box\Models;
+namespace Admin\Models;
 defined('ACCESS') or die('no direct access');
 
 /**
