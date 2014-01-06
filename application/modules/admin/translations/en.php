@@ -57,5 +57,10 @@ return array
     'multilingualAcp' => 'Multilingual Settings',
     'list' => 'List',
     'menuActionNewLayout' => 'Add new layout',
-    'overview' => 'Overview'
+    'overview' => 'Overview',
+    'setDefault' => 'Set as Default',
+    'isDefault' => 'Is Standard',
+    'delete' => 'Delete',
+    'askIfDeleteLayout' => 'Are you sure to delete layout "%s"?',
+    'cantDeleteDefaultLayout' => 'Cant delete default layout',
 );
