@@ -224,6 +224,8 @@
                 $('.topnavbar').css('left', (-1) * $(this).scrollLeft());
                 $('.app_left').css('left', (-1) * $(this).scrollLeft());
                 $('.slideLeft').css('left', (-1) * $(this).scrollLeft() + 288);
+                $('.content_savebox').css('left', (-1) * $(this).scrollLeft() + 320);
+                $('.content_savebox').css('width', $(this).scrollLeft() + $(this).width());
             });
         </script>
     </body>
