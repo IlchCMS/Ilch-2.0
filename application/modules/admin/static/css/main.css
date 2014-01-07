@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    min-width: 970px;
+    min-width: 1024px;
 }
 
 .form-horizontal .control-group {
@@ -51,8 +51,8 @@ body {
 .watermark {
 	left: -95px;
 	opacity: 0.2;
-	position: fixed;
-	bottom: -78px;
+	position: absolute;
+	bottom: 0px;
 }
 
 #app {
@@ -65,6 +65,7 @@ body {
 
 .topnavbar {
 	border-bottom: 1px solid silver;
+    min-width: 1024px;
 }
 
 .rightbar .navbar-nav > li {
@@ -103,7 +104,7 @@ body {
 }
 
 .slideLeft {
-	left:288px;
+	left: 288px;
 }
 
 .slideRight {
@@ -123,14 +124,8 @@ body {
 	background-color: #EEEEEE;
 }
 
-/* Disable responsive */
-.container {
-  max-width: none !important;
-  width: 970px;
-}
-
-.container .navbar-header,
-.container .navbar-collapse {
+.navbar-header,
+.navbar-collapse {
   margin-right: 0;
   margin-left: 0;
 }
@@ -157,6 +152,7 @@ body {
   margin-left: -15px;
 }
 
+/* Always apply the floated nav */
 .navbar-nav {
   float: left;
   margin: 0;
@@ -168,6 +164,11 @@ body {
   padding: 15px;
 }
 
+/* Redeclare since we override the float above */
 .navbar-nav.navbar-right {
   float: right;
+}
+
+.col-xs-2 {
+    min-width: 220px;
 }

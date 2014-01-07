@@ -45,7 +45,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="rightbar collapse navbar-collapse navbar-ex1-collapse">
+            <div class="rightbar">
                 <ul class="nav navbar-nav">
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') {
                                     echo 'class="active"';
@@ -214,9 +214,17 @@
                 <?php echo $this->getContent(); ?>
             </div>
         </div>
-
         <script>
             $('.toggleSidebar').on('click', toggleSidebar);
+
+            /*
+             * Hack that fixed elements can be scrolled.
+             */
+            $(window).scroll(function(){
+                $('.topnavbar').css('left', (-1) * $(this).scrollLeft());
+                $('.app_left').css('left', (-1) * $(this).scrollLeft());
+                $('.slideLeft').css('left', (-1) * $(this).scrollLeft() + 288);
+            });
         </script>
     </body>
 </html>
