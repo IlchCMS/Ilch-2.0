@@ -66,4 +66,44 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
 
         $this->assertEquals('2', $result, 'Wrong cell value was returned.');
     }
+
+    /**
+     * Tests if an update with an empty value can be done.
+     */
+    public function testUpdateWithEmptyValue()
+    {
+        $this->db->update(array('name' => ''), 'groups', array('id' => 2));
+
+        $result = $this->db->selectCell
+        (
+            'name',
+            'groups',
+            array
+            (
+                'id' => 2
+            )
+        );
+
+        $this->assertEquals('', $result, 'The db entry has not being updated with an empty string.');
+    }
+
+    /**
+     * Tests if an insertion with an empty value can be done.
+     */
+    public function testInsertWithEmptyValue()
+    {
+        $this->db->insert(array('name' => ''), 'groups');
+
+        $result = $this->db->selectCell
+        (
+            'COUNT(*)',
+            'groups',
+            array
+            (
+                'name' => ''
+            )
+        );
+
+        $this->assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
+    }
 }

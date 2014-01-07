@@ -16,12 +16,12 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'menuSite',
+            'menuArticle',
             array
             (
                 array
                 (
-                    'name' => 'menuSites',
+                    'name' => 'menuArticles',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))

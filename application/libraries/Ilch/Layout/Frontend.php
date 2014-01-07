@@ -23,6 +23,7 @@ class Frontend extends Base
 
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
         $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
+        $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
     }
 
     /**
@@ -44,4 +45,41 @@ class Frontend extends Base
             return 'Ilch '.VERSION.' Frontend';
         }
     }
+
+    /**
+     * Gets the box with the given key.
+     *
+     * @return string
+     */
+    public function getBox($boxKey)
+    {
+        $class = 'Boxes\\'.ucfirst($boxKey).'\\Index';
+        $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
+        $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
+        $boxObj->render();
+
+        return $view->loadScript(APPLICATION_PATH.'/boxes/'.$boxKey.'/render.php');
+    }
+
+    /**
+     * Gets the header.
+     *
+     * @return string
+     */
+    public function getHeader()
+    {
+        $html = '<meta charset="utf-8">
+                <title>'.$this->getTitle().'</title>
+                <meta name="description" content="">';
+
+        $html .= '<link href="'.$this->staticUrl('css/bootstrap.css').'" rel="stylesheet">
+                <link href="'.$this->staticUrl('css/font-awesome.css').'" rel="stylesheet">
+                <link href="'.$this->staticUrl('css/global.css').'" rel="stylesheet">
+                <link href="'.$this->staticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
+                <script src="'.$this->staticUrl('js/jquery.js').'"></script>
+                <script src="'.$this->staticUrl('js/bootstrap.js').'"></script>
+                <script src="'.$this->staticUrl('js/jquery-ui.js').'"></script>';
+        return $html;
+    }
 }
+

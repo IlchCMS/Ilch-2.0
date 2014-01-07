@@ -22,7 +22,7 @@ class Article extends \Ilch\Mapper
      * Get articles.
      *
      * @param  string $locale
-     * @return Article_ArticleModel[]|null
+     * @return Article_ArticleModel[]|array
      */
     public function getArticles($locale = '')
     {
@@ -33,7 +33,7 @@ class Article extends \Ilch\Mapper
         $articleArray = $this->db()->queryArray($sql);
 
         if (empty($articleArray)) {
-            return null;
+            return array();
         }
 
         $articles = array();

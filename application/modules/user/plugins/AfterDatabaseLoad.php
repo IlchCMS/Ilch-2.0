@@ -42,6 +42,14 @@ class AfterDatabaseLoad
 
         \Ilch\Registry::set('user', $user);
 
+        if ($pluginData['request']->getParam('language')) {
+            $_SESSION['language'] = $pluginData['request']->getParam('language');
+        }
+        
+        if ($pluginData['request']->getParam('ilch_layout')) {
+            $_SESSION['layout'] = $pluginData['request']->getParam('ilch_layout');
+        }
+
         $pluginData['translator']->setLocale($pluginData['config']->get('locale'));
 
         if (!empty($_SESSION['language'])) {

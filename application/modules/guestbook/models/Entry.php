@@ -53,6 +53,13 @@ class Entry extends \Ilch\Model
     protected $_datetime;
 
     /**
+     * The setfee of the entry.
+     *
+     * @var integer
+     */
+    protected $_setFree;
+
+    /**
      * Gets the id of the entry.
      *
      * @return integer
@@ -113,6 +120,16 @@ class Entry extends \Ilch\Model
     }
 
     /**
+     * Gets the setfree of the entry.
+     *
+     * @return string
+     */
+    public function getFree()
+    {
+        return $this->_setFree;
+    }
+
+    /**
      * Sets the id of the entry.
      *
      * @param integer $id
@@ -170,5 +187,15 @@ class Entry extends \Ilch\Model
     public function setDatetime($datetime)
     {
         $this->_datetime = (string)$datetime;
+    }
+
+    /**
+     * Sets the free of the entry.
+     *
+     * @param integer $free
+     */
+    public function setFree($free)
+    {
+        $this->_setFree = (integer)$free;
     }
 }

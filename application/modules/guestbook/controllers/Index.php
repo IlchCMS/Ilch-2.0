@@ -7,7 +7,6 @@
 namespace Guestbook\Controllers;
 
 use Guestbook\Mappers\Guestbook as GuestbookMapper;
-use Guestbook\Mappers\Settings as SettingsMapper;
 use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
@@ -16,14 +15,18 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'));
         $guestbookMapper = new GuestbookMapper();
-        $this->getView()->set('entries', $guestbookMapper->getEntries());
+        $this->getView()->set('entries', $guestbookMapper->getEntries(array('setfree' => 1)));
     }
 
     public function newEntryAction()
     {
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('entry'), array('action' => 'newentry'));
+
         $guestbookMapper = new GuestbookMapper();
-        $SettingsMapper = new SettingsMapper();
         $ilchdate = new IlchDate;
 
         if ($this->getRequest()->isPost()) {
@@ -37,19 +40,19 @@ class Index extends \Ilch\Controller\Frontend
             } elseif(empty($name)) {
                 $this->addMessage('missingName', 'danger');
             } else {
-                $entryDatas = array
-                (
-                    'name' => $name,
-                    'email' => $email,
-                    'text' => $text,
-                    'homepage' => $homepage,
-                    'datetime' => $ilchdate->toDb(),
-                    'setfree' => $SettingsMapper->getSettings('entrysettings')
-                );
-                if ($SettingsMapper->getSettings('entrysettings') === '1' ) {
-                $this->addMessage('check', 'success');
+                $model = new \Guestbook\Models\Entry();
+                $model->setName($name);
+                $model->setEmail($email);
+                $model->setText($text);
+                $model->setHomepage($homepage);
+                $model->setDatetime($ilchdate->toDb());
+                $model->setFree($this->getConfig()->get('gbook_autosetfree'));
+                $guestbookMapper->save($model);
+
+                if ($this->getConfig()->get('gbook_autosetfree') == 0 ) {
+                    $this->addMessage('check', 'success');
                 }
-                $guestbookMapper->saveEntry($entryDatas);
+
                 $this->redirect(array('action' => 'index'));
             }
         }

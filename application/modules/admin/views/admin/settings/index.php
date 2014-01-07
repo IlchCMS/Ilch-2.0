@@ -2,10 +2,10 @@
     <?php echo $this->getTokenField(); ?>
     <legend><?php echo $this->trans('systemSettings'); ?></legend>
     <div class="form-group">
-        <label for="startPage" class="col-lg-2 control-label">
+        <label for="startPage" class="col-xs-2 control-label">
             <?php echo $this->trans('startPage'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xs-2">
             <select class="form-control" name="startPage" id="startPage">
                 <optgroup label="<?php echo $this->trans('pages'); ?>">
                 <?php
@@ -37,10 +37,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="maintenanceMode" class="col-lg-2 control-label">
+        <label for="maintenanceMode" class="col-xs-2 control-label">
             <?php echo $this->trans('maintenanceMode'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xs-2">
             <div class="radio">
                 <label>
                     <input type="radio"
@@ -60,10 +60,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="multilingualAcp" class="col-lg-2 control-label">
+        <label for="multilingualAcp" class="col-xs-2 control-label">
             <?php echo $this->trans('multilingualAcp'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xs-2">
             <div class="radio">
                 <label>
                     <input type="radio"
@@ -84,10 +84,10 @@
         </div>
     </div>
     <div id="contentLanguage" class="form-group <?php if($this->get('multilingualAcp') != '1'){ echo 'hidden'; } ?>">
-        <label for="languageInput" class="col-lg-2 control-label">
+        <label for="languageInput" class="col-xs-2 control-label">
             <?php echo $this->trans('contentLanguage'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xs-2">
             <select class="form-control" name="contentLanguage" id="languageInput">
                 <?php
                 foreach ($this->get('languages') as $key => $value) {
@@ -104,10 +104,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="pageTitleInput" class="col-lg-2 control-label">
+        <label for="pageTitleInput" class="col-xs-2 control-label">
             <?php echo $this->trans('pageTitle'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-xs-2">
             <input class="form-control"
                    id="pageTitleInput"
                    name="pageTitle"

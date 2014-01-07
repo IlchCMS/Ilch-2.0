@@ -108,6 +108,16 @@ abstract class Base
     {
         return $this->_request;
     }
+    
+    /**
+     * Gets the router object.
+     *
+     * @return \Ilch\Router
+     */
+    public function getRouter()
+    {
+        return $this->_router;
+    }
 
     /**
      * Gets the translator object.

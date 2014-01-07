@@ -218,7 +218,7 @@ class Mysql
         if ($where != null) {
             $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
         }
-        
+
         if (!empty($orderBy)) {
             $sql .= ' ORDER BY';
 
@@ -278,8 +278,13 @@ class Mysql
     public function update($fields, $table, $where = null)
     {
         $sql = 'UPDATE `[prefix]_'.$table . '` SET ';
+        $up = array();
 
         foreach ($fields as $key => $value) {
+            if ($value === null) {
+                continue;
+            }
+
             $up[] = '`' . $key . '` = "' . $this->escape($value) . '"';
         }
 
@@ -306,6 +311,10 @@ class Mysql
         $sqlValues = array();
 
         foreach ($fields as $key => $value) {
+            if ($value === null) {
+                continue;
+            }
+
             $sqlFields[] = '`' . $key . '`';
         }
 
@@ -313,6 +322,10 @@ class Mysql
         $sql .= ') VALUES (';
 
         foreach ($fields as $key => $value) {
+            if ($value === null) {
+                continue;
+            }
+
             $sqlValues[] = '"' . $this->escape($value) . '"';
         }
 
@@ -405,6 +418,7 @@ class Mysql
      */
     public function queryMulti($sql)
     {
+        $result = '';
         $sql = $this->getSqlWithPrefix($sql);
 
         /*

@@ -1,9 +1,8 @@
-/* main */
-
-html, body {
+body {
     margin: 0;
     padding: 0;
     height: 100%;
+    min-width: 1024px;
 }
 
 .form-horizontal .control-group {
@@ -41,8 +40,6 @@ html, body {
     padding: 10px;
 }
 
-
-
 #sidebar_content .nav > li.active > a {
     background-color: white;
 }
@@ -54,8 +51,8 @@ html, body {
 .watermark {
 	left: -95px;
 	opacity: 0.2;
-	position: fixed;
-	bottom: -78px;
+	position: absolute;
+	bottom: 0px;
 }
 
 #app {
@@ -66,41 +63,22 @@ html, body {
 	padding: 20px;
 }
 
-.nav-tabs > .active > a {
-	color: black;
-}
-
-.navbar-nav > li {
-    padding-top: 9px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.nav-tabs.nav-stacked > li:first-child > a,
-.nav-tabs.nav-stacked > li:last-child > a {
-	border-radius: 0px;
-	border:none;
-}
-
-.navbar {
-	margin-bottom: 0px;
-	border-radius: 0px;
-}
-
 .topnavbar {
 	border-bottom: 1px solid silver;
+    min-width: 1024px;
+}
+
+.rightbar .navbar-nav > li {
+    border-left: 1px solid silver;
 }
 
 .leftbar {
 	width: 300px;
-	border-right: 1px solid silver;
 }
-
-/* content */
 
 .app_left {
 	margin-top: 51px;
-	background-color: #ECECFB;
+	background-color: #F8F8F8;
 	border-right: 1px solid silver;
 	position: fixed;
 	width: 300px;
@@ -116,8 +94,6 @@ html, body {
 	margin-left: 0px;
 }
 
-/* sidebar toggle */
-
 .toggleSidebar {
 	font-size: 20px;
 	cursor: pointer;
@@ -128,11 +104,11 @@ html, body {
 }
 
 .slideLeft {
-	left:288px;
+	left: 288px;
 }
 
 .slideRight {
-	background-color: #ECECFB;
+	background-color: #F8F8F8;
 	border-right: 1px solid silver;
 	border-bottom: 1px solid silver;
 }
@@ -148,8 +124,51 @@ html, body {
 	background-color: #EEEEEE;
 }
 
-.brand {
-	height: 50px;
-	padding-left: 15px;
-	float: left;
+.navbar-header,
+.navbar-collapse {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.navbar-header {
+  float: left;
+}
+
+.navbar-collapse {
+  display: block !important;
+  height: auto !important;
+  padding-bottom: 0;
+  overflow: visible !important;
+}
+
+.navbar-toggle {
+  display: none;
+}
+.navbar-collapse {
+  border-top: 0;
+}
+
+.navbar-brand {
+  margin-left: -15px;
+}
+
+/* Always apply the floated nav */
+.navbar-nav {
+  float: left;
+  margin: 0;
+}
+.navbar-nav > li {
+  float: left;
+}
+.navbar-nav > li > a {
+  padding: 15px;
+}
+
+/* Redeclare since we override the float above */
+.navbar-nav.navbar-right {
+  float: right;
+}
+
+.col-xs-2 {
+    min-width: 220px;
 }

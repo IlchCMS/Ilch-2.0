@@ -36,43 +36,47 @@
         </script>
         <nav class="navbar navbar-default navbar-fixed-top topnavbar">
             <div class="navbar-header leftbar">
-                <img class="brand" src="<?php echo $this->staticUrl('img/ilch_logo_brand.png'); ?>" />
+                <img src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <div>
-                            <a class="btn btn-default" href="#" id="search">
-                                <i class="fa fa-search"></i> <?php echo $this->trans('search'); ?> <b class="caret"></b>
-                            </a>
-                        </div>
+                        <a href="#" id="search">
+                            <i class="fa fa-search"></i> <?php echo $this->trans('search'); ?> <b class="caret"></b>
+                        </a>
                     </li>
                 </ul>
             </div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="rightbar">
                 <ul class="nav navbar-nav">
-                    <li>
-                        <div>
-                            <a class="btn btn-default" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
-                                <i class="fa fa-home"></i> <?php echo $this->trans('home'); ?>
-                            </a>
-                        </div>
+                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') {
+                                    echo 'class="active"';
+                                }?>>
+                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
+                            <i class="fa fa-home"></i>
+                        </a>
                     </li>
-                    <li>
-                        <div>
-                            <a class="btn btn-default" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'menu', 'action' => 'index')); ?>">
-                                <i class="fa fa-list-ol"></i> <?php echo $this->trans('navigation'); ?>
-                            </a>
-                        </div>
+                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'menu') {
+                                    echo 'class="active"';
+                                }?>>
+                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'menu', 'action' => 'index')); ?>">
+                            <i class="fa fa-list-ol"></i> <?php echo $this->trans('navigation'); ?>
+                        </a>
                     </li>
-                    <li>
-                        <div class="btn-group dropdown-toggle">
-                            <a class="btn btn-default" href="<?php echo $this->url(array('controller' => 'modules', 'controller' => 'index', 'action' => 'index')); ?>" >
-                                <i class="fa fa-puzzle-piece"></i> <?php echo $this->trans('modules'); ?>
-                            </a>
-                            <button data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul role="menu" class="dropdown-menu">
+                    <li class="dropdown <?php if($this->getRequest()->getModuleName() !== 'admin') {
+                                    echo 'active';
+                                }?>">
+                        <a data-toggle="dropdown" class="dropdown-toggle"
+                               target="_blank"
+                               href="<?php echo $this->url(); ?> ">
+                            <i class="fa fa-puzzle-piece"></i> <?php echo $this->trans('modules'); ?>
+                            <b class="caret"></b>
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-list-ol"></i> <?php echo $this->trans('overview'); ?>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
                             <?php
                                 foreach ($this->get('modules') as $module) {
                                     echo '<li>
@@ -82,46 +86,52 @@
                                         </li>';
                                 }
                             ?>
-                            </ul>
-                        </div>
+                        </ul>
                     </li>
-                    <li>
-                        <div>
-                            <a class="btn btn-default" href="#<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
-                                <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
-                            </a>
-                        </div>
+                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') {
+                                    echo 'class="active"';
+                                }?>>
+                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'boxes', 'action' => 'index')); ?>">
+                            <i class="fa fa-inbox"></i> <?php echo $this->trans('boxes'); ?>
+                        </a>
                     </li>
-                    <li>
-                        <div>
-                            <a class="btn btn-default" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
-                                <i class="fa fa-cogs"></i> <?php echo $this->trans('system'); ?>
-                            </a>
-                        </div>
+                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'layouts') {
+                                    echo 'class="active"';
+                                }?>>
+                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')); ?>">
+                            <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
+                        </a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <div>
-                            <a class="btn btn-default" target="_blank" href="<?php echo $this->url(); ?> ">
-                                <i class="fa fa-share"></i> <?php echo $this->trans('frontend'); ?>
-                            </a>
-                        </div>
+                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
+                                    echo 'class="active"';
+                                }?>>
+                        <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
+                            <i class="fa fa-cogs"></i>
+                        </a>
                     </li>
                     <li>
-                        <div class="btn-group dropdown-toggle">
-                            <a class="btn btn-default" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-user"></i> <?php echo $this->getUser()->getName(); ?>
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
-                                        <i class="fa fa-power-off"></i> <?php echo $this->trans('logout'); ?>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <a title="<?php echo $this->trans('openFrontend'); ?>"
+                           target="_blank"
+                           href="<?php echo $this->url(); ?>">
+                            <i class="fa fa-share"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle"
+                               target="_blank"
+                               href="<?php echo $this->url(); ?> ">
+                            <i class="fa fa-user"></i> <?php echo $this->getUser()->getName(); ?>
+                            <b class="caret"></b>
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout'))?>">
+                                    <i class="fa fa-power-off"></i> <?php echo $this->trans('logout'); ?>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -175,23 +185,6 @@
                 ?>
 
             <div class="app_right <?php echo $contentFullClass?>">
-                <?php
-                    $messages = array();
-
-                    if(!empty($_SESSION['messages'])) {
-                        $messages = $_SESSION['messages'];
-                    }
-
-                    foreach ($messages as $key => $message) {
-                ?>
-                    <div class="alert alert-<?php echo $message['type']; ?> alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <?php echo $this->escape($this->getTranslator()->trans($message['text'])); ?>
-                    </div>
-                <?php
-                        unset($_SESSION['messages'][$key]);
-                    }
-                ?>
                 <i class="toggleSidebar slideRight"></i>
                 <div class="modal fade"
                      id="deleteModal">
@@ -221,7 +214,6 @@
                 <?php echo $this->getContent(); ?>
             </div>
         </div>
-
         <script>
             $('.toggleSidebar').on('click', toggleSidebar);
         </script>

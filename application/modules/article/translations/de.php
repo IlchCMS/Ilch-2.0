@@ -8,8 +8,8 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuSite' => 'Artikel',
-    'menuSites' => 'Artikel',
+    'menuArticle' => 'Artikel',
+    'menuArticles' => 'Artikel',
     'menuActionNewSite' => 'Neuen Artikel erstellen',
     'articleTitle' => 'Artikeltitel',
     'addArticle'	=> 'Neuen Artikel hinzufügen',

@@ -87,7 +87,7 @@ class Model
 
         $menuMapper = new \Admin\Mappers\Menu();
         $items = $menuMapper->getMenuItemsByParent($this->getId(), 0);
-        $boxMapper = new \Box\Mappers\Box();
+        $boxMapper = new \Admin\Mappers\Box();
         $config = \Ilch\Registry::get('config');
 
         if ((bool)$config->get('multilingual_acp')) {
@@ -108,9 +108,13 @@ class Model
                             $box = $boxMapper->getBoxByIdLocale($item->getBoxKey(), $locale);
                         } else {
                             $class = 'Boxes\\'.ucfirst($item->getBoxKey()).'\\Index';
-                            $boxObj = new $class();
-                            $box = new \Box\Models\Box();
-                            $box->setContent($boxObj->render());
+                            $view = new \Ilch\View($this->_layout->getRequest(), $this->_layout->getTranslator(), $this->_layout->getRouter());
+                            $boxObj = new $class($this->_layout, $view, $this->_layout->getRequest(), $this->_layout->getRouter(), $this->_layout->getTranslator());
+                            $boxObj->render();
+                            $output = $view->loadScript(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php');
+
+                            $box = new \Admin\Models\Box();
+                            $box->setContent($output);
                         }
 
                         $html = str_replace('%c', $box->getContent(), $html);

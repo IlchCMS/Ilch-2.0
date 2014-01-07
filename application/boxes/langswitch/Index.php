@@ -11,6 +11,7 @@ class Index extends \Ilch\Box
 {
     public function render()
     {
-        
+        $this->getView()->set('language', $this->getTranslator()->getLocale());
     }
 }
+

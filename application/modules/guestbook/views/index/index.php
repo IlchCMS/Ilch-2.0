@@ -1,7 +1,5 @@
-<?php $entries = $this->get('entries'); ?>
-<legend><?php echo $this->trans('guestbook'); ?></legend>
 <p class="pull-right">
-    <a href="<?php echo $this->url(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'newentry')); ?>"
+    <a href="<?php echo $this->url(array('action' => 'newentry')); ?>"
        class="btn btn-small btn-primary"
        type="button" >
            <?php echo $this->trans('entry'); ?>
@@ -9,13 +7,12 @@
 </p>
 <div id="img-responsive" class="responsive">
     <?php
-        if (!empty($entries)) :
-            foreach ($this->get('entries') as $entry) :
+        foreach ($this->get('entries') as $entry) :
     ?>
             <div class="responsive panel bordered">
                 <table class="table table-bordered table-striped table-responsive">
                     <colgroup>
-                        <col class="col-lg-3">
+                        <col class="col-xs-3">
                         <col />
                         <col />
                     </colgroup>
@@ -43,7 +40,6 @@
                 </div>
             </div>
     <?php
-            endforeach;
-        endif;
+        endforeach;
     ?>
 </div>

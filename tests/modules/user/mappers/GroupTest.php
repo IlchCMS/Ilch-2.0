@@ -353,7 +353,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         $dbMock = $this->getMock('Ilch_Database', array('queryArray'));
         $dbMock->expects($this->once())
                 ->method('queryArray')
-                ->with($this->logicalAnd($this->stringContains('FROM groups_access'), $this->stringContains('INNER JOIN groups')))
+                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN [prefix]_groups')))
                 ->will($this->returnValue($accessDbList));
 
         $mapper = new GroupMapper();
@@ -408,17 +408,46 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         );
         $dbMock = $this->getMock('Ilch_Database', array('insert', 'selectCell'));
         $dbMock->expects($this->once())
-                ->method('insert')
-                ->with($expectedFields, 'groups_access')
-                ->will($this->returnValue(1));
-        $dbMock->expects($this->once())
                 ->method('selectCell')
                 ->with('COUNT(*)', 'groups_access', $expectedRec)
                 ->will($this->returnValue(0));
+        $dbMock->expects($this->once())
+                ->method('insert')
+                ->with($expectedFields, 'groups_access')
+                ->will($this->returnValue(1));
 
         $mapper = new GroupMapper();
         $mapper->setDatabase($dbMock);
         $mapper->saveAccessData(3, 4, 2, 'module');
+    }
+
+    /*
+     * Tests if a new access data entry with access level 0 can be saved to db.
+     */
+    public function testSaveAccessDataZeroLevel()
+    {
+        $expectedFields = array(
+            'group_id' => 3,
+            'module_id' => 4,
+            'access_level' => 0,
+        );
+        $expectedRec = array(
+            'group_id' => 3,
+            'module_id' => 4,
+        );
+        $dbMock = $this->getMock('Ilch_Database', array('insert', 'selectCell'));
+        $dbMock->expects($this->once())
+                ->method('selectCell')
+                ->with('COUNT(*)', 'groups_access', $expectedRec)
+                ->will($this->returnValue(0));
+        $dbMock->expects($this->once())
+                ->method('insert')
+                ->with($expectedFields, 'groups_access')
+                ->will($this->returnValue(1));
+
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+        $mapper->saveAccessData(3, 4, 0, 'module');
     }
 
     /*
@@ -437,16 +466,45 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         );
         $dbMock = $this->getMock('Ilch_Database', array('update', 'selectCell'));
         $dbMock->expects($this->once())
-                ->method('update')
-                ->with($expectedFields, 'groups_access', $expectedRec)
-                ->will($this->returnValue(1));
-        $dbMock->expects($this->once())
                 ->method('selectCell')
                 ->with('COUNT(*)', 'groups_access', $expectedRec)
+                ->will($this->returnValue(1));
+        $dbMock->expects($this->once())
+                ->method('update')
+                ->with($expectedFields, 'groups_access', $expectedRec)
                 ->will($this->returnValue(1));
 
         $mapper = new GroupMapper();
         $mapper->setDatabase($dbMock);
         $mapper->saveAccessData(3, 4, 2, 'module');
+    }
+
+    /*
+     * Tests if a new access data entry with access level 0 can be saved to db.
+     */
+    public function testUpdateAccessDataZeroLevel()
+    {
+        $expectedFields = array(
+            'group_id' => 3,
+            'module_id' => 4,
+            'access_level' => 0,
+        );
+        $expectedRec = array(
+            'group_id' => 3,
+            'module_id' => 4,
+        );
+        $dbMock = $this->getMock('Ilch_Database', array('update', 'selectCell'));
+        $dbMock->expects($this->once())
+                ->method('selectCell')
+                ->with('COUNT(*)', 'groups_access', $expectedRec)
+                ->will($this->returnValue(1));
+        $dbMock->expects($this->once())
+                ->method('update')
+                ->with($expectedFields, 'groups_access', $expectedRec)
+                ->will($this->returnValue(1));
+
+        $mapper = new GroupMapper();
+        $mapper->setDatabase($dbMock);
+        $mapper->saveAccessData(3, 4, 0, 'module');
     }
 }

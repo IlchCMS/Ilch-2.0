@@ -7,11 +7,10 @@
 namespace Guestbook\Controllers\Admin;
 
 use Guestbook\Mappers\Guestbook as GuestbookMapper;
-use Guestbook\Mappers\Settings as SettingsMapper;
 
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Controller\Admin 
+class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
@@ -29,7 +28,7 @@ class Index extends \Ilch\Controller\Admin
                 ),
                 array
                 (
-                    'name' => 'Settings',
+                    'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
                     'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
@@ -37,57 +36,46 @@ class Index extends \Ilch\Controller\Admin
             )
         );
     }
-    
+
     public function indexAction()
     {
-    }
-    
-    public function showAction()
-    {
         $guestbookMapper = new GuestbookMapper();
-        $this->getView()->set('entries', $guestbookMapper->getEntries());
-    }
-    
-    public function shownewAction()
-    {
-        $settingsMapper = new SettingsMapper();
-        $this->getView()->set('entries', $settingsMapper->getNewEntries());
+
+        if ($this->getRequest()->getParam('showsetfree')) {
+            $entries = $guestbookMapper->getEntries(array('setfree' => 0));
+        } else {
+            $entries = $guestbookMapper->getEntries(array('setfree' => 1));
+        }
+
+        $this->getView()->set('entries', $entries);
+        $this->getView()->set('badge', count($guestbookMapper->getEntries(array('setfree' => 0))));
     }
 
     public function delAction()
     {
         $guestbookMapper = new GuestbookMapper();
-        $id = $this->getRequest()->getParam('id');
-        $guestbookMapper->deleteEntry($id);
-        $this->addMessage('successful');
-        $this->redirect(array('action' => 'show'));
-    }
+        $guestbookMapper->delete($this->getRequest()->getParam('id'));
+        $this->addMessage('deleteSuccess');
         
-    public function delspamAction()
-    {
-        $guestbookMapper = new GuestbookMapper();
-        $id = $this->getRequest()->getParam('id');
-        $guestbookMapper->deleteEntry($id);
-        $this->addMessage('successful');
-        $this->redirect(array('action' => 'shownew'));
+        if ($this->getRequest()->getParam('showsetfree')) {
+            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+        } else {
+            $this->redirect(array('action' => 'index'));
+        }
     }
-    
+
     public function setfreeAction()
     {
-        $id = $this->getRequest()->getParam('id');
-        $settingsMapper = new SettingsMapper();
-        
-        $fild = array
-        (
-            'setfree' => 'setfree'
-        ); 
-        $where = array
-        (
-            'id' => $id
-        );
-        
-        $settingsMapper->saveSetfree($fild, $where);
-        $this->redirect(array('action' => 'shownew'));
+        $guestbookMapper = new GuestbookMapper();
+        $model = new \Guestbook\Models\Entry();
+        $model->setId($this->getRequest()->getParam('id'));
+        $model->setFree(1);
+        $guestbookMapper->save($model);
+
+        if ($this->getRequest()->getParam('showsetfree')) {
+            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+        } else {
+            $this->redirect(array('action' => 'index'));
+        }
     }
 }
-

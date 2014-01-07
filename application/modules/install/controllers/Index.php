@@ -18,10 +18,6 @@ class Index extends \Ilch\Controller\Frontend
          */
         set_time_limit(0);
 
-        if (isset($_SESSION['install']['language'])) {
-            $this->getTranslator()->setLocale($_SESSION['install']['language']);
-        }
-
         $menu = array
         (
             'index' => array
@@ -68,7 +64,8 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($local) {
             $this->getTranslator()->setLocale($local);
-            $_SESSION['install']['language'] = $local;
+            $_SESSION['language'] = $local;
+            $this->redirect(array('action' => 'index'));
         }
 
         if ($this->getRequest()->isPost()) {
@@ -210,7 +207,7 @@ class Index extends \Ilch\Controller\Frontend
                 /*
                  * Install every registered module.
                  */
-                $modulesToInstall = array('admin', 'user', 'article', 'page', 'box', 'guestbook', 'contact');
+                $modulesToInstall = array('admin', 'user', 'article', 'page', 'guestbook', 'contact', 'partner', 'link');
                 $moduleMapper = new \Admin\Mappers\Module();
 
                 /*

@@ -42,6 +42,6 @@ return array
     'adminEmail'       => 'Admin Email',
     'fieldEmpty'	   => 'Feld darf nicht leer sein',
     'fieldDiffersPassword' => 'Passwortfelder müssen gleich sein',
-    'fieldEmail'	   => 'Email ist nicht valide',
+    'fieldEmail'	   => 'Email ist nicht gültig',
     'timezone'		   => 'Zeitzone',
 );
