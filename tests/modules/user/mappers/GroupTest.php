@@ -302,14 +302,6 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
     {
         $accessDbList = array(
             array(
-                'group_name' => 'Squad Member',
-                'group_id' => '3',
-                'page_id' => '1',
-                'module_id' => '0',
-                'article_id' => '0',
-                'access_level' => '1',
-            ),
-            array(
                 'group_name' => 'Squad Leader',
                 'group_id' => '4',
                 'page_id' => '0',
@@ -353,38 +345,26 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         $dbMock = $this->getMock('Ilch_Database', array('queryArray'));
         $dbMock->expects($this->once())
                 ->method('queryArray')
-                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN [prefix]_groups')))
+                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN [prefix]_groups'), $this->stringContains('4')))
                 ->will($this->returnValue($accessDbList));
 
         $mapper = new GroupMapper();
         $mapper->setDatabase($dbMock);
-        $accessList = $mapper->getGroupAccessList();
+        $accessList = $mapper->getGroupAccessList(4);
 
         $expectedAccessList = array(
-            3 => array(
-                'group_name' => 'Squad Member',
-                'entries' => array(
-                    'pages' => array(
-                        1 => 1,
-                    ),
-                    'modules' => array(),
-                    'articles' => array(),
+            'group_name' => 'Squad Leader',
+            'entries' => array(
+                'pages' => array(
+                    1 => 1,
                 ),
-            ),
-            4 => array(
-                'group_name' => 'Squad Leader',
-                'entries' => array(
-                    'pages' => array(
-                        1 => 1,
-                    ),
-                    'modules' => array(
-                        11 => 2,
-                        10 => 1,
-                    ),
-                    'articles' => array(
-                        1 => 1,
-                        2 => 2,
-                    ),
+                'modules' => array(
+                    11 => 2,
+                    10 => 1,
+                ),
+                'articles' => array(
+                    1 => 1,
+                    2 => 2,
                 ),
             ),
         );
