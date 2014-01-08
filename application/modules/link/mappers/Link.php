@@ -42,6 +42,7 @@ class Link extends \Ilch\Mapper
             $linkModel->setLink($linkRow['link']);
             $linkModel->setBanner($linkRow['banner']);
             $linkModel->setHits($linkRow['hits']);
+         
             $links[] = $linkModel;
         }
 
@@ -56,27 +57,8 @@ class Link extends \Ilch\Mapper
      */
     public function getLinkById($id)
     {
-        $linkRow = $this->db()->selectRow
-        (
-            '*',
-            'links',
-            array('id' => $this->db()->escape($id))
-        );
-
-        if (empty($linkRow)) {
-            return null;
-        }
-
-        $linkModel = new LinkModel();
-        $linkModel->setId($linkRow['id']);
-        $linkModel->setCatID($linkRow['cat_id']);
-        $linkModel->setName($linkRow['name']);
-        $linkModel->setDesc($linkRow['desc']);
-        $linkModel->setLink($linkRow['link']);
-        $linkModel->setBanner($linkRow['banner']);
-        $linkModel->setHits($linkRow['hits']);
-
-        return $linkModel;
+        $links = $this->getLinks(array('id' => $id));
+        return reset($links);
     }
 
     /**
@@ -95,7 +77,8 @@ class Link extends \Ilch\Mapper
                     'link' => $link->getLink(),
                     'banner' => $link->getBanner(),
                     'desc' => $link->getDesc(),
-                    'cat_id' => $link->getCatId()
+                    'cat_id' => $link->getCatId(),
+                    'hits' => $link->getHits()
                 ),
                 'links',
                 array
@@ -112,7 +95,8 @@ class Link extends \Ilch\Mapper
                     'link' => $link->getLink(),
                     'banner' => $link->getBanner(),
                     'desc' => $link->getDesc(),
-                    'cat_id' => $link->getCatId()
+                    'cat_id' => $link->getCatId(),
+                    'hits' => $link->getHits()
                 ),
                 'links'
             );

@@ -58,9 +58,9 @@
         <button type="submit" name="save" class="btn">
             <?php
             if ($this->get('box') != '') {
-                echo $this->trans('editButton');
+                echo $this->trans('editButtonBox');
             } else {
-                echo $this->trans('addButton');
+                echo $this->trans('addButtonBox');
             }
             ?>
         </button>

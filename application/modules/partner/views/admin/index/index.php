@@ -29,39 +29,60 @@
                     <th><?php echo $this->trans('banner'); ?></th>
                 </tr>
             </thead>
-            <?php foreach ($this->get('entries') as $entry) : ?>
             <tbody>
-                <tr>
-                    <td>
-                    <?php if($this->getRequest()->getParam('showsetfree')) {
-                        $freeArray = array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId());
+                <?php foreach ($this->get('entries') as $entry) : ?>
+                    <tr>
+                        <td>
+                        <?php if($this->getRequest()->getParam('showsetfree')) {
+                            $freeArray = array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId());
 
-                        if($this->get('badge') > 1) {
-                            $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
-                        }
-                    ?>
-                        <a href="<?php echo $this->url($freeArray).'" title="'.$this->trans('setfree'); ?>"><i class="fa fa-check"></i></a>
-                    <?php }else{ ?>
-                        <a href="<?php echo $this->url(array('action' => 'treat', 'id' => $entry->getId())).'" title="'.$this->trans('treat'); ?>"><i class="fa fa-edit"></i></a>
-                    <?php } ?>
-                        <?php
-                            $deleteArray = array('action' => 'del', 'id' => $entry->getId());
-
-                            if($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
-                                $deleteArray = array('action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1);
+                            if($this->get('badge') > 1) {
+                                $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
                             }
                         ?>
-                        <a href="<?php echo $this->url($deleteArray).'" title="'.$this->trans('delete'); ?>"><i class="fa fa-times-circle"></i></a>
-                    </td>
-                    <td>
-                        <?php echo $this->escape($entry->getName()); ?>
-                    </td>
-                    <td>
-                        <a href='<?php echo $this->escape($entry->getLink()); ?>' target="_blank"><img src='<?php echo $this->escape($entry->getBanner()); ?>'></a>
-                    </td>
-                </tr>
+                            <a href="<?php echo $this->url($freeArray).'" title="'.$this->trans('setfree'); ?>"><i class="fa fa-check text-success"></i></a>
+                        <?php }else{ ?>
+                            <a href="<?php echo $this->url(array('action' => 'treat', 'id' => $entry->getId())).'" title="'.$this->trans('treat'); ?>"><i class="fa fa-edit"></i></a>
+                        <?php } ?>
+                            <?php
+                                $deleteArray = array('action' => 'del', 'id' => $entry->getId());
+
+                                if($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
+                                    $deleteArray = array('action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1);
+                                }
+                            ?>
+                        <span class="deleteLink clickable fa fa-trash-o fa-1x text-danger"
+                                      data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $entry->getId())); ?>"
+                                      data-toggle="modal"
+                                      data-target="#deleteModal"
+                                      data-modaltext="<?php echo $this->escape($this->trans('askIfDeletePartner', $this->escape($entry->getName()))); ?>"
+                                      title="<?php echo $this->trans('delete'); ?>"></span>
+                        </td>
+                        <td>
+                            <?php echo $this->escape($entry->getName()); ?>
+                        </td>
+                        <td>
+                            <a href='<?php echo $this->escape($entry->getLink()); ?>' target="_blank"><img src='<?php echo $this->escape($entry->getBanner()); ?>'></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
-            <?php endforeach; ?>
         </table>
     </div>
 </div>
+
+<script>
+$('.deleteLink').on('click', function(event) {
+    $('#modalButton').data('clickurl', $(this).data('clickurl'));
+    $('#modalText').html($(this).data('modaltext'));
+});
+
+$('#modalButton').on('click', function(event) {
+    window.location = $(this).data('clickurl');
+});
+</script>
+<style>
+    .deleteLink {
+        padding-left: 10px;
+    }
+</style>
