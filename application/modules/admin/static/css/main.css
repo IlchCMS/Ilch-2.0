@@ -2,7 +2,6 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    min-width: 1024px;
 }
 
 .form-horizontal .control-group {
@@ -65,7 +64,7 @@ body {
 
 .topnavbar {
 	border-bottom: 1px solid silver;
-    min-width: 1024px;
+
 }
 
 .rightbar .navbar-nav > li {
@@ -124,51 +123,7 @@ body {
 	background-color: #EEEEEE;
 }
 
-.navbar-header,
-.navbar-collapse {
-  margin-right: 0;
-  margin-left: 0;
-}
-
-.navbar-header {
-  float: left;
-}
-
-.navbar-collapse {
-  display: block !important;
-  height: auto !important;
-  padding-bottom: 0;
-  overflow: visible !important;
-}
-
-.navbar-toggle {
-  display: none;
-}
-.navbar-collapse {
-  border-top: 0;
-}
-
-.navbar-brand {
-  margin-left: -15px;
-}
-
-/* Always apply the floated nav */
-.navbar-nav {
-  float: left;
-  margin: 0;
-}
-.navbar-nav > li {
-  float: left;
-}
-.navbar-nav > li > a {
-  padding: 15px;
-}
-
-/* Redeclare since we override the float above */
-.navbar-nav.navbar-right {
-  float: right;
-}
-
-.col-xs-2 {
-    min-width: 220px;
+@media(max-width:991px){
+    .app_left {display: none;}
+    .app_right {margin-left: 0px;}
 }

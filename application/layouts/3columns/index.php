@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <?php echo $this->getHeader(); ?>
         <link href="<?php echo $this->staticUrl('../application/layouts/3columns/style.css'); ?>" rel="stylesheet">
         <link rel="icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>" type="image/x-icon" />
