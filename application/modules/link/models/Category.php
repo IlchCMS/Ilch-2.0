@@ -29,21 +29,28 @@ class Category extends \Ilch\Mapper
      *
      * @var string
      */
-    private $_name = '';
+    private $_name;
 
     /**
      * The catid of the category.
      *
      * @var string
      */
-    private $_cat = '';
+    private $_cat;
 
     /**
      * The description of the category.
      *
      * @var string
      */
-    private $_desc = '';
+    private $_desc;
+    
+    /**
+     * The links count of the category.
+     *
+     * @var integer
+     */
+    private $_linksCount;
 
     /**
      * Returns the user category id.
@@ -80,7 +87,7 @@ class Category extends \Ilch\Mapper
      *
      * @param string $name
      */
-    public function setCatId($cat)
+    public function setParentId($cat)
     {
         $this->_cat = (string) $cat;
     }
@@ -90,7 +97,7 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getCatId()
+    public function getParentId()
     {
         return $this->_cat;
     }
@@ -106,7 +113,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Gets the description of the link.
+     * Gets the description of the category.
      *
      * @return string
      */
@@ -116,7 +123,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the description of the link.
+     * Sets the description of the category.
      *
      * @param string $desc
      * @return this
@@ -124,6 +131,29 @@ class Category extends \Ilch\Mapper
     public function setDesc($desc)
     {
         $this->_desc = (string)$desc;
+
+        return $this;
+    }
+    
+    /**
+     * Gets the links count of the category.
+     *
+     * @return integer
+     */
+    public function getLinksCount()
+    {
+        return $this->_linksCount;
+    }
+
+    /**
+     * Sets the links count of the category.
+     *
+     * @param integer $count
+     * @return this
+     */
+    public function setLinksCount($count)
+    {
+        $this->_linksCount = $count;
 
         return $this;
     }

@@ -45,7 +45,7 @@ class Config extends \Ilch\Config\Install
                 
                 CREATE TABLE IF NOT EXISTS `[prefix]_link_cats` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `cat_id` int(11) NULL DEFAULT 0,
+                  `parent_id` int(11) NULL DEFAULT 0,
                   `pos` int(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
                   `desc` VARCHAR(255) NOT NULL,
