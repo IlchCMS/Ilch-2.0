@@ -10,10 +10,10 @@
     ?>
     </legend>
     <div class="form-group">
-        <label for="boxTitleInput" class="col-xs-2 control-label">
+        <label for="boxTitleInput" class="col-lg-2 control-label">
             <?php echo $this->trans('boxTitle'); ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-2">
             <input class="form-control"
                    type="text"
                    name="boxTitle"
@@ -28,10 +28,10 @@
         if ($this->get('multilingual')) {
     ?>
     <div class="form-group">
-        <label for="boxLanguageInput" class="col-xs-2 control-label">
+        <label for="boxLanguageInput" class="col-lg-2 control-label">
             <?php echo $this->trans('boxLanguage'); ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-2">
             <select class="form-control" name="boxLanguage" id="boxLanguageInput">
                 <?php
                 foreach ($this->get('languages') as $key => $value) {

@@ -3,10 +3,10 @@
 </h2>
 <br />
 <div class="form-group">
-    <label for="languageInput" class="col-xs-2 control-label">
+    <label for="languageInput" class="col-lg-2 control-label">
         <?php echo $this->trans('chooseLanguage'); ?>:
     </label>
-    <div class="col-xs-3">
+    <div class="col-lg-3">
         <select name="language" id="languageInput" class="form-control">
             <?php
             foreach ($this->get('languages') as $key => $value) {
@@ -23,10 +23,10 @@
     </div>
 </div>
 <div class="form-group">
-    <label for="timezone" class="col-xs-2 control-label">
+    <label for="timezone" class="col-lg-2 control-label">
         <?php echo $this->trans('timezone'); ?>:
     </label>
-    <div class="col-xs-3">
+    <div class="col-lg-3">
         <select id="timezone" name="timezone" class="form-control">
             <?php
                 $timezones = $this->get('timezones');

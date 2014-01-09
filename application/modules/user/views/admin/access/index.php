@@ -56,7 +56,7 @@
                 ?>
                 <table class="table table-hover table-striped">
                     <colgroup>
-                        <col class="col-xs-2">
+                        <col class="col-lg-2">
                         <col />
                     </colgroup>
                     <thead>
