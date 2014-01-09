@@ -7,9 +7,9 @@ if (!empty($categories)) {
 ?>
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
-        <col class="col-xs-1" />
+        <col class="col-lg-1" />
         <col />
-        <col class="col-xs-1" />
+        <col class="col-lg-1" />
     </colgroup>
     <thead>
         <tr>
@@ -53,7 +53,7 @@ if (!empty($categories)) {
 
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
-        <col class="col-xs-1" />
+        <col class="col-lg-1" />
         <col />
     </colgroup>
     <thead>
