@@ -1,11 +1,11 @@
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
     <?php echo $this->getTokenField(); ?>
     <legend>
     <?php
-        if ($this->get('link') != '') {
-            echo $this->trans('menuActionEditLink');
+        if ($this->get('partner') != '') {
+            echo $this->trans('menuActionEditPartner');
         } else {
-            echo $this->trans('menuActionNewLink');
+            echo $this->trans('menuActionNewPartner');
         }
     ?>
     </legend>
@@ -19,7 +19,7 @@
                    name="name"
                    id="name"
                    placeholder="Name"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getName()); } ?>" />
+                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -32,7 +32,7 @@
                    name="link"
                    id="link"
                    placeholder="http://"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getLink()); } ?>" />
+                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -45,24 +45,13 @@
                    name="banner"
                    id="banner"
                    placeholder="http://"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } ?>" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="desc" class="col-lg-2 control-label">
-            <?php echo $this->trans('description'); ?>:
-        </label>
-        <div class="col-lg-4">
-            <textarea class="form-control"
-                      name="desc" 
-                      cols="45" 
-                      rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } ?></textarea>
+                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
         </div>
     </div>
     <div class="content_savebox">
         <button type="submit" name="save" class="btn">
             <?php
-            if ($this->get('link') != '') {
+            if ($this->get('partner') != '') {
                 echo $this->trans('editButton');
             } else {
                 echo $this->trans('addButton');

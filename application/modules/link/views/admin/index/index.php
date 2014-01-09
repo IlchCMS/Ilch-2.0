@@ -8,13 +8,8 @@ if (!empty($categories)) {
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
         <col class="col-lg-1" />
-<<<<<<< HEAD
-        <col class="col-lg-2" />
-        <col class="col-lg-5" />
-=======
         <col />
         <col class="col-lg-1" />
->>>>>>> e4d3202f6ff91046d083383cf0ef3af3bb1f594c
     </colgroup>
     <thead>
         <tr>

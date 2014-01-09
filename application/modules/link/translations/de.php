@@ -18,7 +18,6 @@ return array
     'description' => 'Beschreibung',
     'missingName' => 'Name muss ausgefüllt werden',
     'missingLink' => 'Link muss ausgefüllt werden',
-    'missingBanner' => 'Banner muss ausgefüllt werden',
     'menuLink' => 'Link',
     'menuLinks' => 'Links',
     'manageLink' => 'Links verwalten',
