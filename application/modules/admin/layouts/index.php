@@ -122,34 +122,6 @@
                             <i class="fa fa-picture-o"></i> <?php echo $this->trans('layouts'); ?>
                         </a>
                     </li>
-                    <li class="dropdown <?php if($this->getRequest()->getModuleName() !== 'admin') {
-                                    echo 'active';
-                                }?>">
-                        <a data-toggle="dropdown" class="dropdown-toggle"
-                               target="_blank"
-                               href="<?php echo $this->url(); ?> ">
-                            <i class="fa fa-question-circle"></i> <?php echo $this->trans('help'); ?>
-                            <b class="caret"></b>
-                        </a>
-                        <ul role="menu" class="dropdown-menu">
-                            <li>
-                                <a href="http://www.ilch.de" target="_blank">
-                                    <i class="fa fa-home"></i>
-                                    <?php echo $this->trans('officalSite'); ?></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="http://www.ilch.de/forum.html" target="_blank">
-                                    <i class="fa fa-comments-o"></i>
-                                    <?php echo $this->trans('officalSupportForum'); ?></a>
-                            </li>
-                            <li>
-                                <a href="http://www.ilch.de/doku.html" target="_blank">
-                                    <i class="fa fa-book"></i>
-                                    <?php echo $this->trans('documentationFAQ'); ?></a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
@@ -167,6 +139,34 @@
                         </a>
                     </li>
                     <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle"
+                               target="_blank"
+                               href="<?php echo $this->url(); ?> ">
+                            <i class="fa fa-question-circle"></i> <b class="caret"></b>
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="http://www.ilch.de" target="_blank">
+                                    <i class="fa fa-home"></i>
+                                    <?php echo $this->trans('officalSite'); ?>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="http://www.ilch.de/forum.html" target="_blank">
+                                    <i class="fa fa-comments-o"></i>
+                                    <?php echo $this->trans('officalSupportForum'); ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.ilch.de/redmine/projects/dev2-doku/wiki" target="_blank">
+                                    <i class="fa fa-book"></i>
+                                    <?php echo $this->trans('documentationFAQ'); ?>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-user">
                         <a data-toggle="dropdown" class="dropdown-toggle"
                                target="_blank"
                                href="<?php echo $this->url(); ?> ">
