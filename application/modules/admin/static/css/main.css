@@ -123,7 +123,12 @@ body {
 	background-color: #EEEEEE;
 }
 
+#search, .navbar-right .dropdown {
+    margin-right: 10px;
+}
+
 @media(max-width:991px){
     .app_left {display: none;}
     .app_right {margin-left: 0px;}
+    .leftbar {width: 100%;}
 }

@@ -56,4 +56,6 @@ return array
     'module' => 'Module',
     'page' => 'Page',
     'article' => 'Article',
+    'chooseAGroup' => 'Please choose a group.',
+    'group' => 'Group',
 );

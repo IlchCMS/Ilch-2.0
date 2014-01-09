@@ -38,7 +38,13 @@
         <nav class="navbar navbar-default navbar-fixed-top topnavbar">
             <div class="navbar-header leftbar">
                 <img src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
-                <ul class="nav navbar-nav navbar-right">
+                <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <ul class="nav navbar-nav hidden-xs hidden-sm navbar-right">
                     <li>
                         <a href="#" id="search">
                             <i class="fa fa-search"></i> <?php echo $this->trans('search'); ?> <b class="caret"></b>
@@ -46,7 +52,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="rightbar">
+            <div id="rightbar" class="rightbar navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') {
                                     echo 'class="active"';

@@ -9,7 +9,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <div class="col-xs-2">
+                <div class="col-lg-2">
                     <?php
                         echo $this->getMenu
                         (
@@ -23,7 +23,7 @@
                         );
                     ?>
                 </div>
-                <div class="col-xs-8">
+                <div class="col-lg-8">
                     <?php echo $this->getHmenu(); ?>
                     <br /><br />
                     <div class="panel panel-default" id="headings">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-lg-2">
                     <?php
                         echo $this->getMenu
                         (

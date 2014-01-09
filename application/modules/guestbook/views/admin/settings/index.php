@@ -2,10 +2,10 @@
 <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
     <div class="form-group">
-        <label for="guestbookSettings" class="col-xs-2 control-label">
+        <label for="guestbookSettings" class="col-lg-2 control-label">
             <?php echo $this->trans('entrySettings'); ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-2">
             <div class="radio">
                 <label>
                     <input type="radio"

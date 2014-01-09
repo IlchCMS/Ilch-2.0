@@ -29,5 +29,5 @@ return array
     'manage' => 'Manage',
     'setfree' => 'Set free',
     'delete' => 'Delete',
-    'entrys' => 'Einträge',
+    'entrys' => 'Entries',
 );

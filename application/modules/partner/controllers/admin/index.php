@@ -56,6 +56,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $partnerMapper = new PartnerMapper();
         $partnerMapper->delete($this->getRequest()->getParam('id'));
+        
         $this->addMessage('deleteSuccess');
         
         if ($this->getRequest()->getParam('showsetfree')) {
