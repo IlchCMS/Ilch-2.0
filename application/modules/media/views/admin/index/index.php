@@ -29,6 +29,6 @@ if ($this->get('medias') != '') {
 </table>
 <?php
 } else {
-    echo $this->getTranslator()->trans('noPages');
+    echo $this->trans('noMedias');
 }
 ?>

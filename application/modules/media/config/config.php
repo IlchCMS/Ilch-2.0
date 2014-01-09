@@ -27,6 +27,10 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti($this->getInstallSql());
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('media_uploadpath', 'application/modules/media/static/upload/');
+        $databaseConfig->set('media_allowed_ending', 'png jpg gif');
     }
     
     public function getInstallSql()

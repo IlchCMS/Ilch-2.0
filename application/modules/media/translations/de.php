@@ -18,4 +18,5 @@ return array
     'mediatype' => 'Medien Art',
     'options' => 'Optionen',
     'mediaUpload' => 'Medien hochladen',
+    'noMedias' => 'keine Medien',
 );
