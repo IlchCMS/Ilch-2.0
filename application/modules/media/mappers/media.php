@@ -19,7 +19,8 @@ defined('ACCESS') or die('no direct access');
  */
 class Media extends \Ilch\Mapper
 {
-    public function getMediaList() {
+    public function getMediaList() 
+    {
         $mediaArray = $this->db()->selectArray
         (
             '*',
@@ -47,6 +48,27 @@ class Media extends \Ilch\Mapper
 
         return $media;
     }
+    
+    /**
+     * Inserts media entry.
+     *
+     * @param MediaModel $model
+     */
+    public function save(MediaModel $model)
+    {
+        $this->db()->insert
+        (
+            array
+            (
+                'url' => $model->getUrl(),
+                'name' => $model->getName(),
+                'datetime' => $model->getDatetime(),
+                'description' => $model->getDescription(),
+            ),
+            'media'
+        );
+    }
+
     
     public function saveEntry(array $datas) {
 
