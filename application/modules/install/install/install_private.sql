@@ -17,7 +17,8 @@ INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_i
 (4, 1, 30, 1, 0, '', 3, 'Kontakt', '', 'contact'),
 (5, 1, 40, 1, 0, '', 3, 'Links', '', 'link'),
 (6, 1, 50, 1, 0, '', 3, 'Partner werden', '', 'partner'),
-(7, 1, 60, 0, 0, 'layoutswitch', 4, 'Layout', '', '');
+(7, 1, 60, 1, 0, '', 3, 'Impressum', '', 'impressum'),
+(8, 1, 70, 0, 0, 'layoutswitch', 4, 'Layout', '', '');
 
 INSERT INTO `[prefix]_menu` (`id`, `title`) VALUES
 (2, 'Hauptmenü 2');

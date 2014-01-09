@@ -11,7 +11,7 @@ defined('ACCESS') or die('no direct access');
 class Impressum extends \Ilch\Model
 {
     /**
-     * The id of the partner.
+     * The id of the impressum.
      *
      * @var int
      */
@@ -25,49 +25,49 @@ class Impressum extends \Ilch\Model
     protected $_company;
 
     /**
-     * The name of the partner.
+     * The paragraph of the impressum.
      *
      * @var string
      */
     protected $_paragraph;
 
     /**
-     * The name of the partner.
+     * The name of the impressum.
      *
      * @var string
      */
     protected $_name;
 
     /**
-     * The name of the partner.
+     * The address of the impressum.
      *
      * @var string
      */
-    protected $_adress;
+    protected $_address;
 
     /**
-     * The name of the partner.
+     * The city of the impressum.
      *
      * @var string
      */
     protected $_city;
 
     /**
-     * The name of the partner.
+     * The phone of the impressum.
      *
      * @var string
      */
     protected $_phone;
 
     /**
-     * The name of the partner.
+     * The disclaime of the impressum.
      *
      * @var string
      */
     protected $_disclaimer;
 
     /**
-     * Gets the id of the partner.
+     * Gets the id of the impressum.
      *
      * @return int
      */
@@ -77,7 +77,7 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Sets the id of the partner.
+     * Sets the id of the impressum.
      *
      * @param int $id
      * @return this
@@ -90,7 +90,7 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Gets the name of the partner.
+     * Gets the paragraph of the impressum.
      *
      * @return string
      */
@@ -100,9 +100,9 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Sets the name of the partner.
+     * Sets the paragraph of the impressum.
      *
-     * @param string $name
+     * @param string $paragraph
      * @return this
      */
     public function setParagraph($paragraph)
@@ -113,7 +113,7 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Gets the name of the partner.
+     * Gets the company of the impressum.
      *
      * @return string
      */
@@ -123,9 +123,9 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Sets the name of the partner.
+     * Sets the company of the impressum.
      *
-     * @param string $name
+     * @param string $company
      * @return this
      */
     public function setCompany($company)
@@ -136,7 +136,7 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Gets the name of the partner.
+     * Gets the name of the impressum.
      *
      * @return string
      */
@@ -146,7 +146,7 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Sets the name of the partner.
+     * Sets the name of the impressum.
      *
      * @param string $name
      * @return this
@@ -159,30 +159,30 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Gets the name of the partner.
+     * Gets the address of the impressum.
      *
      * @return string
      */
-    public function getAdress()
+    public function getAddress()
     {
-        return $this->_adress;
+        return $this->_address;
     }
 
     /**
-     * Sets the name of the partner.
+     * Sets the address of the impressum.
      *
-     * @param string $name
+     * @param string $address
      * @return this
      */
-    public function setAdress($adress)
+    public function setAddress($address)
     {
-        $this->_adress = (string)$adress;
+        $this->_address = (string)$address;
 
         return $this;
     }
 
     /**
-     * Gets the name of the partner.
+     * Gets the city of the impressum.
      *
      * @return string
      */
@@ -192,9 +192,9 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Sets the name of the partner.
+     * Sets the city of the impressum.
      *
-     * @param string $name
+     * @param string $city
      * @return this
      */
     public function setCity($city)
@@ -205,7 +205,7 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Gets the name of the partner.
+     * Gets the phone of the impressum.
      *
      * @return string
      */
@@ -215,9 +215,9 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Sets the name of the partner.
+     * Sets the phone of the impressum.
      *
-     * @param string $name
+     * @param string $phone
      * @return this
      */
     public function setPhone($phone)
@@ -228,7 +228,7 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Gets the name of the partner.
+     * Gets the disclaimer of the impressum.
      *
      * @return string
      */
@@ -238,9 +238,9 @@ class Impressum extends \Ilch\Model
     }
 
     /**
-     * Sets the name of the partner.
+     * Sets the disclaimer of the impressum.
      *
-     * @param string $name
+     * @param string $disclaimer
      * @return this
      */
     public function setDisclaimer($disclaimer)

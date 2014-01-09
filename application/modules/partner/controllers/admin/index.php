@@ -27,13 +27,16 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
-                array
-                (
-                    'name' => 'menuActionNewPartner',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
-                )
+            )
+        );
+
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
+                'name' => 'menuActionNewPartner',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }

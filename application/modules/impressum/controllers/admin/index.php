@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Partner\Controllers\Admin;
+namespace Impressum\Controllers\Admin;
 
-use Partner\Mappers\Partner as PartnerMapper;
-use Partner\Models\Entry as PartnerModel;
+use Impressum\Mappers\Impressum as ImpressumMapper;
+use Impressum\Models\Impressum as ImpressumModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'menuPartner',
+            'menuImpressum',
             array
             (
                 array
@@ -27,98 +27,35 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
-                array
-                (
-                    'name' => 'menuActionNewPartner',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
-                )
             )
         );
     }
 
+
+
     public function indexAction()
     {
-        $partnerMapper = new PartnerMapper();
+        $impressumMapper = new ImpressumMapper();
 
-        if ($this->getRequest()->getParam('showsetfree')) {
-            $entries = $partnerMapper->getEntries(array('setfree' => 0));
-        } else {
-            $entries = $partnerMapper->getEntries(array('setfree' => 1));
-        }
-
-        $this->getView()->set('entries', $entries);
-        $this->getView()->set('badge', count($partnerMapper->getEntries(array('setfree' => 0))));
-    }
-    
-    public function delAction()
-    {
-        $partnerMapper = new PartnerMapper();
-        $partnerMapper->delete($this->getRequest()->getParam('id'));
-        
-        $this->addMessage('deleteSuccess');
-        
-        if ($this->getRequest()->getParam('showsetfree')) {
-            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
-        } else {
-            $this->redirect(array('action' => 'index'));
-        }
-    }
-    
-    public function setfreeAction()
-    {
-        $partnerMapper = new PartnerMapper();
-        $model = new \Partner\Models\Entry();
-        $model->setId($this->getRequest()->getParam('id'));
-        $model->setFree(1);
-        $partnerMapper->save($model);
-            
-        $this->addMessage('freeSuccess');
-
-        if ($this->getRequest()->getParam('showsetfree')) {
-            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
-        } else {
-            $this->redirect(array('action' => 'index'));
-        }
-    }
-
-    public function treatAction() 
-    {
-        $partnerMapper = new PartnerMapper();
-
-        if ($this->getRequest()->getParam('id')) {
-            $this->getView()->set('partner', $partnerMapper->getPartnerById($this->getRequest()->getParam('id')));
-        }
-
+        $this->getView()->set('impressum', $impressumMapper->getImpressumById(1));
+              
         if ($this->getRequest()->isPost()) {
-            $model = new PartnerModel();
+            $model = new ImpressumModel();
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $model->setId(1);
             
-            $name = $this->getRequest()->getPost('name');
-            $banner = trim($this->getRequest()->getPost('banner'));
-            $link = trim($this->getRequest()->getPost('link'));
-            
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif(empty($link)) {
-                $this->addMessage('missingLink', 'danger');
-            } elseif(empty($banner)) {
-                $this->addMessage('missingBanner', 'danger');
-            } else {
-                $model->setFree(1);
-                $model->setName($this->getRequest()->getPost('name'));
-                $model->setBanner($this->getRequest()->getPost('banner'));
-                $model->setLink($this->getRequest()->getPost('link'));
-                $partnerMapper->save($model);
-                
-                $this->addMessage('saveSuccess');
-                
-                $this->redirect(array('action' => 'index'));
-            }
+            $model->setParagraph($this->getRequest()->getPost('paragraph'));
+            $model->setCompany($this->getRequest()->getPost('company'));
+            $model->setName($this->getRequest()->getPost('name'));
+            $model->setAddress($this->getRequest()->getPost('address'));
+            $model->setCity($this->getRequest()->getPost('city'));
+            $model->setPhone($this->getRequest()->getPost('phone'));
+            $model->setDisclaimer($this->getRequest()->getPost('disclaimer'));
+            $impressumMapper->save($model);
+
+            $this->addMessage('saveSuccess');
+
+            $this->redirect(array('action' => 'index'));
         }
     }
 }

@@ -22,6 +22,7 @@ return array
     'menuLink' => 'Link',
     'menuLinks' => 'Links',
     'manageLink' => 'Manage Links',
+    'manage' => 'Manage',
     'manageCategory' => 'Manage Category',
     'menuCategory' => 'Category',
     'menuActionNewLink' => 'Add Link',
