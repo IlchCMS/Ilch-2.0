@@ -89,7 +89,7 @@ class Category extends \Ilch\Mapper
      */
     public function setParentId($cat)
     {
-        $this->_cat = (string) $cat;
+        $this->_cat_id = (string) $cat;
     }
 
     /**
@@ -99,7 +99,7 @@ class Category extends \Ilch\Mapper
      */
     public function getParentId()
     {
-        return $this->_cat;
+        return $this->_cat_id;
     }
 
     /**

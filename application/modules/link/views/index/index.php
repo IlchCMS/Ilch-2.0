@@ -49,8 +49,8 @@ if (!empty($categories)) {
         </tr>
     </thead>
     <tbody>
-        <?php if (!empty($links)) { ?>
-        <?php foreach ($this->get('links') as $link) {
+        <?php if (!empty($links)) {
+            foreach ($this->get('links') as $link) {
                 echo '<tr>';
                 $getBanner = $this->escape($link->getBanner());
                 $getDesc = $this->escape($link->getDesc());
@@ -71,7 +71,9 @@ if (!empty($categories)) {
                 echo '<td align="center" style="vertical-align:middle">'.$this->escape($link->getHits()).'</td>';
                 echo '</tr>';
             }
-        ?>
-        <?php } ?>
+
+        }  else {
+            echo '<td colspan="2">'.$this->trans('noLinks').'</td>';
+        } ?>
     </tbody>
 </table>

@@ -50,7 +50,7 @@ class Link extends \Ilch\Model
      *
      * @var string
      */
-    protected $_cat;
+    protected $_cat_id;
 
     /**
      * The category of the link.
@@ -165,7 +165,7 @@ class Link extends \Ilch\Model
      */
     public function getCatId()
     {
-        return $this->_cat;
+        return $this->_cat_id;
     }
 
     /**
@@ -176,7 +176,7 @@ class Link extends \Ilch\Model
      */
     public function setCatId($cat)
     {
-        $this->_cat = (int)$cat;
+        $this->_cat_id = (int)$cat;
 
         return $this;
     }

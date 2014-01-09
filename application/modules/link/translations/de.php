@@ -28,9 +28,9 @@ return array
     'menuActionEditLink' => 'Link editieren',
     'menuActionNewCategory' => 'Kategorie hinzufügen',
     'menuActionEditCategory' => 'Kategorie editieren',
-    'askIfDeletePartner' => 'Sind Sie sicher, dass der Link "%s" entfernt werden soll?',
     'noLinks' => 'Keine Links vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
     'askIfDeleteLink' => 'Sind Sie sicher, dass der Link "%s" entfernt werden soll?',
+    'askIfDeleteCat' => 'Sind Sie sicher, dass die Kategorie "%s" entfernt werden soll?',
     'delete' => 'Löschen',
 );

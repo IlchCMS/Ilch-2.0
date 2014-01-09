@@ -49,25 +49,6 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="cat_id" class="col-xs-2 control-label">
-            <?php echo $this->trans('category'); ?>:
-        </label>
-        <div class="col-xs-4">
-            <select class="form-control" name="cat_id">
-                <?php
-                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                        $sel = '';
-
-                        if ($this->get('cat_id') == $key) {
-                            $sel = 'selected="selected"';
-                        }
-                        echo '<option '.$sel.' value="'.$key.'">'.$this->escape($value).'</option>';
-                    }
-                ?>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
         <label for="desc" class="col-xs-2 control-label">
             <?php echo $this->trans('description'); ?>:
         </label>
