@@ -28,9 +28,9 @@ return array
     'menuActionEditLink' => 'Edit Link',
     'menuActionNewCategory' => 'Add Category',
     'menuActionEditCategory' => 'Edit Category',
-    'askIfDeletePartner' => 'Are you sure you want delete the Link "%s"?',
     'noLinks' => 'No Links',
     'noCategory' => 'No Category',
-    'askIfDeletePartner' => 'Are you sure you want delete the partner "%s"?',
+    'askIfDeleteLink' => 'Are you sure you want delete the Link "%s"?',
+    'askIfDeleteCat' => 'Are you sure you want delete the Category "%s"?',
     'delete' => 'Delete',
 );

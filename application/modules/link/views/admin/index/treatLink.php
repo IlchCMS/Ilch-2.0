@@ -49,6 +49,7 @@
         </div>
     </div>
     <div class="form-group">
+<<<<<<< HEAD:application/modules/link/views/admin/index/treat.php
         <label for="cat_id" class="col-lg-2 control-label">
             <?php echo $this->trans('category'); ?>:
         </label>
@@ -68,6 +69,8 @@
         </div>
     </div>
     <div class="form-group">
+=======
+>>>>>>> e4d3202f6ff91046d083383cf0ef3af3bb1f594c:application/modules/link/views/admin/index/treatLink.php
         <label for="desc" class="col-lg-2 control-label">
             <?php echo $this->trans('description'); ?>:
         </label>
