@@ -13,7 +13,7 @@ defined('ACCESS') or die('no direct access');
 class Impressum extends \Ilch\Mapper
 {
     /**
-     * Gets the Impressum entries.
+     * Gets the Impressum.
      *
      * @param array $where
      * @return ImpressumModel[]|array
@@ -23,7 +23,7 @@ class Impressum extends \Ilch\Mapper
         $entryArray = $this->db()->selectArray
         (
             '*',
-            'Impressum',
+            'impressum',
             $where,
             array('id' => 'DESC')
         );
@@ -32,7 +32,7 @@ class Impressum extends \Ilch\Mapper
             return array();
         }
 
-        $entry = array();
+        $impressum = array();
 
         foreach ($entryArray as $entries) {
             $entryModel = new ImpressumModel();
@@ -40,15 +40,27 @@ class Impressum extends \Ilch\Mapper
             $entryModel->setParagraph($entries['paragraph']);
             $entryModel->setCompany($entries['company']);
             $entryModel->setName($entries['name']);
-            $entryModel->setAdress($entries['address']);
+            $entryModel->setAddress($entries['address']);
             $entryModel->setCity($entries['city']);
             $entryModel->setPhone($entries['phone']);
             $entryModel->setDisclaimer($entries['disclaimer']);
-            $entry[] = $entryModel;
+            $impressum[] = $entryModel;
 
         }
 
-        return $entry;
+        return $impressum;
+    }
+
+    /**
+     * Gets impressum.
+     *
+     * @param integer $id
+     * @return ImpressumModel|null
+     */
+    public function getImpressumById($id)
+    {
+        $impressum = $this->getImpressum(array('id' => $id));
+        return reset($impressum);
     }
 
     /**
@@ -62,7 +74,13 @@ class Impressum extends \Ilch\Mapper
         (
             array
             (
+                'paragraph' => $impressum->getParagraph(),
+                'company' => $impressum->getCompany(),
                 'name' => $impressum->getName(),
+                'address' => $impressum->getAddress(),
+                'city' => $impressum->getCity(),
+                'phone' => $impressum->getPhone(),
+                'disclaimer' => $impressum->getDisclaimer(),
             ),
             'impressum',
             array

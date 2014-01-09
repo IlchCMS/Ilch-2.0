@@ -10,6 +10,13 @@ return array
 (
     'impressum' => 'Impressum',
     'name' => 'Name',
+    'company' => 'Company / Club',
+    'address' => 'Address',
+    'city' => 'City',
+    'phone' => 'Phone',
+    'contact' => 'Contact',
+    'form' => 'Form',
     'menuImpressum' => 'Impressum',
     'manageImpressum' => 'Manage Impressum',
+    'manage' => 'Manage',
 );

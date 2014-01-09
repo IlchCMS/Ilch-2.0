@@ -24,25 +24,31 @@ class Index extends \Ilch\Controller\Admin
             (
                 array
                 (
-                    'name' => 'links',
+                    'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
-                array
-                (
-                    'name' => 'menuActionNewLink',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')))
-                ),
-                array
-                (
-                    'name' => 'menuActionNewCategory',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')))
-                )
+            )
+        );
+
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
+                'name' => 'menuActionNewLink',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')))
+            )
+        );
+
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
+                'name' => 'menuActionNewCategory',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')))
             )
         );
     }

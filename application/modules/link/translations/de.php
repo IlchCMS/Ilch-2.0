@@ -21,6 +21,7 @@ return array
     'menuLink' => 'Link',
     'menuLinks' => 'Links',
     'manageLink' => 'Links verwalten',
+    'manage' => 'Verwalten',
     'manageCategory' => 'Kategorien verwalten',
     'menuCategory' => 'Kategorien',
     'menuActionNewLink' => 'Link hinzufügen',
