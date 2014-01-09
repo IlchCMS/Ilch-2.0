@@ -132,3 +132,13 @@ body {
     .app_right {margin-left: 0px;}
     .leftbar {width: 100%;}
 }
+
+.mobile {
+    width: 100%;
+}
+
+.mobile > a {
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-right: 10px;
+}

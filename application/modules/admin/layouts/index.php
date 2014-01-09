@@ -37,13 +37,26 @@
         </script>
         <nav class="navbar navbar-default navbar-fixed-top topnavbar">
             <div class="navbar-header leftbar">
-                <img src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
-                <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                <img class="pull-left" src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
+                <div class="mobile hidden-md hidden-lg">
+                    <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="pull-right" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
+                        <i class="fa fa-2x fa-cogs"></i>
+                    </a>
+                    <a class="pull-right" title="<?php echo $this->trans('openFrontend'); ?>"
+                           target="_blank"
+                           href="<?php echo $this->url(); ?>">
+                        <i class="fa fa-2x fa-share"></i>
+                    </a>
+                    <a class="pull-right" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
+                        <i class="fa fa-2x fa-home"></i>
+                    </a>
+                </div>
                 <ul class="nav navbar-nav hidden-xs hidden-sm navbar-right">
                     <li>
                         <a href="#" id="search">
@@ -54,9 +67,9 @@
             </div>
             <div id="rightbar" class="rightbar navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') {
-                                    echo 'class="active"';
-                                }?>>
+                    <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') {
+                                    echo 'active';
+                                }?> visible-md visible-lg">
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
                             <i class="fa fa-home"></i>
                         </a>
@@ -111,14 +124,14 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
-                                    echo 'class="active"';
-                                }?>>
+                    <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
+                                    echo 'active';
+                                }?> visible-md visible-lg">
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
                             <i class="fa fa-cogs"></i>
                         </a>
                     </li>
-                    <li>
+                    <li class="visible-md visible-lg">
                         <a title="<?php echo $this->trans('openFrontend'); ?>"
                            target="_blank"
                            href="<?php echo $this->url(); ?>">
