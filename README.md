@@ -6,7 +6,6 @@ Ilch 2.0 ist der direkte Nachfolger von Ilch (Version 1.2) und ist auch unter de
 
 ### Installation
 
-
 ### Voraussetzungen
 - PHP Version 5.4
 - Mysql
