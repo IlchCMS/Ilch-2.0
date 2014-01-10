@@ -12,7 +12,7 @@
             <div class="responsive panel bordered">
                 <table class="table table-bordered table-striped table-responsive">
                     <colgroup>
-                        <col class="col-xs-3">
+                        <col class="col-lg-3">
                         <col />
                         <col />
                     </colgroup>

@@ -150,7 +150,7 @@ function rec($item, $menuMapper, $obj)
     </ul>
     <br />
     <legend><?php echo $this->trans('menuChange'); ?></legend>
-        <div class="col-xs-6">
+        <div class="col-lg-6">
             <ol id="sortable" class="sortable">
                 <?php
                     if (!empty($menuItems)) {
@@ -161,22 +161,22 @@ function rec($item, $menuMapper, $obj)
                 ?>
             </ol>
         </div>
-        <div class="col-xs-1"></div>
-        <div class="col-xs-5 changeBox">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 changeBox">
             <input type="hidden" id="id" value="" />
             <div class="form-group">
-                <label for="title" class="col-xs-2 control-label">
+                <label for="title" class="col-lg-2 control-label">
                     Itemtitel
                 </label>
-                <div class="col-xs-4">
+                <div class="col-lg-4">
                     <input type="text" class="form-control" id="title" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="type" class="col-xs-2 control-label">
+                <label for="type" class="col-lg-2 control-label">
                     Itemtyp
                 </label>
-                <div class="col-xs-4">
+                <div class="col-lg-4">
                     <select id="type" class="form-control">
                         <option value="0">Menu</option>
                         <optgroup>
@@ -330,23 +330,23 @@ function rec($item, $menuMapper, $obj)
                     }
                 });
 
-                menuHtml = '<div class="form-group"><label for="href" class="col-xs-2 control-label">Menü</label>\n\
-                            <div class="col-xs-4"><select id="menukey" class="form-control">'+options+'</select></div></div>';
+                menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label">Menü</label>\n\
+                            <div class="col-lg-4"><select id="menukey" class="form-control">'+options+'</select></div></div>';
 
                 if ($(this).val() == '0') {
                     $('.dyn').html('');
                 } else if($(this).val() == '1') {
-                    $('.dyn').html('<div class="form-group"><label for="href" class="col-xs-2 control-label">Adresse</label>\n\
-                                    <div class="col-xs-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
+                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Adresse</label>\n\
+                                    <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
                 } else if ($(this).val() == '2') {
-                     $('.dyn').html('<div class="form-group"><label for="href" class="col-xs-2 control-label">Seite</label>\n\
-                                    <div class="col-xs-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
+                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
+                                    <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
                 } else if ($(this).val() == '3') {
-                    $('.dyn').html('<div class="form-group"><label for="href" class="col-xs-2 control-label">Modul</label>\n\
-                                    <div class="col-xs-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ echo '<option value="'.$module->getKey().'">'.$module->getName($this->getTranslator()->getLocale()).'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
+                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
+                                    <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ echo '<option value="'.$module->getKey().'">'.$module->getName($this->getTranslator()->getLocale()).'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
                 } else if ($(this).val() == '4') {
-                    $('.dyn').html('<div class="form-group"><label for="href" class="col-xs-2 control-label">Box</label>\n\
-                                    <div class="col-xs-4"><?php echo '<select id="boxkey" class="form-control">';
+                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
+                                    <div class="col-lg-4"><?php echo '<select id="boxkey" class="form-control">';
                     foreach (glob(APPLICATION_PATH.'/boxes/*') as $path) { echo '<option value="'.basename($path).'">'.basename($path).'</option>'; } foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
                 }
             });

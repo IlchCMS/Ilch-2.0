@@ -27,13 +27,16 @@ class Index extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
-                array
-                (
-                    'name' => 'menuActionNewPartner',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
-                )
+            )
+        );
+
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
+                'name' => 'menuActionNewPartner',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
@@ -56,6 +59,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $partnerMapper = new PartnerMapper();
         $partnerMapper->delete($this->getRequest()->getParam('id'));
+        
         $this->addMessage('deleteSuccess');
         
         if ($this->getRequest()->getParam('showsetfree')) {
@@ -96,15 +100,28 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
             }
-
-            $model->setFree(1);
-            $model->setName($this->getRequest()->getPost('name'));
-            $model->setBanner($this->getRequest()->getPost('banner'));
-            $model->setLink($this->getRequest()->getPost('link'));
-
-            $partnerMapper->save($model);
-            $this->addMessage('saveSuccess');
-            $this->redirect(array('action' => 'index'));
+            
+            $name = $this->getRequest()->getPost('name');
+            $banner = trim($this->getRequest()->getPost('banner'));
+            $link = trim($this->getRequest()->getPost('link'));
+            
+            if (empty($name)) {
+                $this->addMessage('missingName', 'danger');
+            } elseif(empty($link)) {
+                $this->addMessage('missingLink', 'danger');
+            } elseif(empty($banner)) {
+                $this->addMessage('missingBanner', 'danger');
+            } else {
+                $model->setFree(1);
+                $model->setName($this->getRequest()->getPost('name'));
+                $model->setBanner($this->getRequest()->getPost('banner'));
+                $model->setLink($this->getRequest()->getPost('link'));
+                $partnerMapper->save($model);
+                
+                $this->addMessage('saveSuccess');
+                
+                $this->redirect(array('action' => 'index'));
+            }
         }
     }
 }

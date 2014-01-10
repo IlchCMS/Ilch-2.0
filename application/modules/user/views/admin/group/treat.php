@@ -29,10 +29,10 @@ else {
                value="<?php echo $group->getId(); ?>" />
         <div class="form-group">
             <label for="groupName"
-                   class="col-xs-3 control-label">
+                   class="col-lg-3 control-label">
                 <?php echo $this->trans('groupName'); ?>
             </label>
-            <div class="col-xs-9">
+            <div class="col-lg-9">
                 <input name="group[name]"
                        type="text"
                        id="groupName"

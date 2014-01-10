@@ -1,10 +1,10 @@
 <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
     <div class="form-group">
-        <label for="name" class="col-xs-2 control-label">
+        <label for="name" class="col-lg-2 control-label">
             <?php echo $this->trans('name'); ?>:
         </label>
-        <div class="col-xs-10">
+        <div class="col-lg-10">
             <input class="form-control"
                    id="name"
                    name="name"
@@ -14,10 +14,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="link" class="col-xs-2 control-label">
+        <label for="link" class="col-lg-2 control-label">
             <?php echo $this->trans('link'); ?>:
         </label>
-        <div class="col-xs-10">
+        <div class="col-lg-10">
             <input class="form-control"
                    id="link"
                    name="link"
@@ -27,10 +27,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="banner" class="col-xs-2 control-label">
+        <label for="banner" class="col-lg-2 control-label">
             <?php echo $this->trans('banner'); ?>:
         </label>
-        <div class="col-xs-10">
+        <div class="col-lg-10">
             <input class="form-control"
                    id="banner"
                    name="banner"
@@ -40,7 +40,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-xs-offset-2 col-xs-10">
+        <div class="col-lg-offset-2 col-lg-10">
             <button type="submit" name="save" class="btn">
                 <?php echo $this->trans('send'); ?>
             </button>

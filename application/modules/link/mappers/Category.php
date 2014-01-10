@@ -27,7 +27,17 @@ class Category extends \Ilch\Mapper
      */
     public function getCategories($where = array())
     {
-        $categoryArray = $this->db()->selectArray('*', 'link_cats', $where);
+        $sql = 'SELECT lc.*, COUNT(l.id) as count
+                FROM `[prefix]_link_cats` as lc
+                LEFT JOIN [prefix]_links as l ON l.cat_id = lc.id
+                WHERE 1 ';
+
+        foreach ($where as $key => $value) {
+            $sql .= ' AND lc.`'.$key.'` = "'.$this->db()->escape($value).'"';
+        }
+
+        $sql .= 'GROUP BY lc.id';
+        $categoryArray = $this->db()->queryArray($sql);
 
         if (empty($categoryArray)) {
             return array();
@@ -38,9 +48,10 @@ class Category extends \Ilch\Mapper
         foreach ($categoryArray as $categoryRow) {
             $categoryModel = new CategoryModel();
             $categoryModel->setId($categoryRow['id']);
-            $categoryModel->setCatId($categoryRow['cat_id']);
+            $categoryModel->setParentId($categoryRow['parent_id']);
             $categoryModel->setName($categoryRow['name']);
             $categoryModel->setDesc($categoryRow['desc']);
+            $categoryModel->setLinksCount($categoryRow['count']);
             $categorys[] = $categoryModel;
         }
 
@@ -55,46 +66,46 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoryById($id)
     {
+        $cats = $this->getCategories(array('id' => $id));
+        return reset($cats);
+    }
+
+    public function _getCategoriesForParentRec($models, $id)
+    {
         $categoryRow = $this->db()->selectRow
         (
             '*',
             'link_cats',
-            array('id' => $this->db()->escape($id))
+            array('id' => $id)
         );
-
+        
         if (empty($categoryRow)) {
             return null;
         }
 
+        if (!empty($categoryRow['parent_id'])) {
+           $models = $this->_getCategoriesForParentRec($models, $categoryRow['parent_id']);
+        }
+                        
         $categoryModel = new CategoryModel();
         $categoryModel->setId($categoryRow['id']);
-        $categoryModel->setCatID($categoryRow['cat_id']);
+        $categoryModel->setParentId($categoryRow['parent_id']);
         $categoryModel->setName($categoryRow['name']);
         $categoryModel->setDesc($categoryRow['desc']);
-
-        return $categoryModel;
+        $models[] = $categoryModel;
+        
+        return $models;
     }
-
     /**
      * Returns user model found by the name or false if none found.
      *
      * @param  string           $name
      * @return false|CategoryModel
      */
-    public function getCategoryByName($name)
+    public function getCategoriesForParent($id)
     {
-        $where = array
-        (
-            'name' => $name,
-        );
-
-        $categorys = $this->_getBy($where);
-
-        if (!empty($categorys)) {
-            return reset($categorys);
-        }
-
-        return false;
+        $models = $this->_getCategoriesForParentRec(array(), $id);
+        return $models;
     }
 
     /**
@@ -111,7 +122,7 @@ class Category extends \Ilch\Mapper
                 (
                     'name' => $category->getName(),
                     'desc' => $category->getDesc(),
-                    'cat_id' => $category->getCatId()
+                    'parent_id' => $category->getParentId()
                 ),
                 'link_cats',
                 array
@@ -126,7 +137,7 @@ class Category extends \Ilch\Mapper
                 (
                     'name' => $category->getName(),
                     'desc' => $category->getDesc(),
-                    'cat_id' => $category->getCatId()
+                    'parent_id' => $category->getParentId()
                 ),
                 'link_cats'
             );
