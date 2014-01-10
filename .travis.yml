@@ -5,7 +5,6 @@ php:
 
 before_script:
   - mysql -e 'create database ilch2_test;'
-  - pear clear-cache
   - pear config-set auto_discover 1
   - pear install pear.phpunit.de/DbUnit
   - phpenv rehash
