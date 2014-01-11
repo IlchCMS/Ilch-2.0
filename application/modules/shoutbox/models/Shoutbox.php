@@ -155,10 +155,6 @@ class Shoutbox extends \Ilch\Model
      */
     public function setTime($time)
     {
-        $time = strtotime($time);        
-        $dateformat = 'd. M y ~ H:i';
-        $time = date($dateformat, $time);
-        
         $this->_time = (string)$time;
 
         return $this;

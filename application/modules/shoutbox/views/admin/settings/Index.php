@@ -6,7 +6,7 @@
             <?php echo $this->trans('numberOfMessagesDisplayed'); ?>:
         </label>
         <div class="form-group">
-            <div class="col-lg-1">
+            <div class="col-lg-2">
                 <input class="form-control"
                        id="limit"
                        name="limit"
@@ -19,7 +19,7 @@
             <?php echo $this->trans('maximumWordLength'); ?>:
         </label>
         <div class="form-group">
-            <div class="col-lg-1">
+            <div class="col-lg-2">
                 <input class="form-control"
                        id="maxwordlength"
                        name="maxwordlength"

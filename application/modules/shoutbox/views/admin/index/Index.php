@@ -13,7 +13,9 @@ if (!empty($shoutboxs)) {
                             data-target="#deleteModal"
                             data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteShoutbox', $this->escape($shoutbox->getName()))); ?>"
                             title="<?php echo $this->trans('delete'); ?>"></span>
-                            <b> <?php echo $this->escape($shoutbox->getName()); ?>:</b> <span style="font-size:12px"><?php echo $shoutbox->getTime(); ?></span></td>  
+                            <b> <?php echo $this->escape($shoutbox->getName()); ?>:</b> <span style="font-size:12px">
+                                <?php echo $shoutbox->getTime(); ?>
+                            </span></td>  
     </tr>
     <tr>             
         <td colspan="2"><?php echo $this->escape($shoutbox->getTextarea()); ?></td>
