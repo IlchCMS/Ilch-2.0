@@ -210,7 +210,7 @@ class Mysql
      * @param  array  $orderBy|null
      * @return array
      */
-    public function selectArray($fields, $table, $where = null, $orderBy = null)
+    public function selectArray($fields, $table, $where = null, $orderBy = null, $limit = null)
     {
         $sql = 'SELECT '. $this->_getFieldsSql($fields).'
                 FROM `[prefix]_'.$table . '` ';
@@ -225,6 +225,10 @@ class Mysql
             foreach ($orderBy as $column => $direction) {
                 $sql .= ' `'. $column.'` '.$direction;
             }
+        }
+
+        if ($limit !== null) {
+            $sql .= ' LIMIT ' . (int)$limit;
         }
 
         return $this->queryArray($sql);

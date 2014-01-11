@@ -126,6 +126,16 @@ class Base
     public function getView()
     {
         return $this->_view;
+    }    
+    
+    /**
+     * Gets the user object.
+     *
+     * @return User_UserModel
+     */
+    public function getUser()
+    {
+        return \Ilch\Registry::get('user');
     }
 
     /**
