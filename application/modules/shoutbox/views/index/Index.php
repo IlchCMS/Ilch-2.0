@@ -1,3 +1,8 @@
+<?php
+$shoutboxs = $this->get('shoutbox');
+
+if (!empty($shoutboxs)) {
+?>
 <table class="table table-bordered table-striped table-responsive">
         <?php foreach ($this->get('shoutbox') as $shoutbox): {
                 echo '<tr>';         
@@ -9,3 +14,7 @@
             }
         endforeach; ?>
 </table>
+<?php
+}  else {
+    echo $this->trans('noEntrys');
+} ?>
