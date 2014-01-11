@@ -108,10 +108,6 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableConfig'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/../.htaccess')) {
-            $errors['writableHtaccess'] = true;
-        }
-
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(array('action' => 'database'));
         }
@@ -216,7 +212,7 @@ class Index extends \Ilch\Controller\Frontend
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
-                    $configClass = $module.'\\Config\\Config';
+                    $configClass = '\\'.ucfirst($module).'\\Config\\config';
                     $config = new $configClass($this->getTranslator());
                     $config->install();
 

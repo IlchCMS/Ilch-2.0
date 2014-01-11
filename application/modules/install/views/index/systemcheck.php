@@ -33,18 +33,5 @@
                 ?>
             </td>
         </tr>
-        <tr>
-            <td><?php echo $this->trans('writable').' ".htaccess"' ?></td>
-            <td class="text-success">writable</td>
-            <td>
-                <?php
-                    if (is_writable(APPLICATION_PATH.'/../.htaccess')) {
-                        echo '<span class="text-success">writable</span>';
-                    } else {
-                        echo '<span class="text-danger">not writable</span>';
-                    }
-                ?>
-            </td>
-        </tr>
     </tbody>
 </table>
