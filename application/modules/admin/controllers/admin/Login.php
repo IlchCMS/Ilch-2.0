@@ -86,7 +86,7 @@ class Login extends \Ilch\Controller\Admin
          * @todo flash message helper for show logout message on next site.
          */
 
-        if ($this->getRequest()->getParam('fromFrontend')) {
+        if ($this->getRequest()->getParam('from_frontend')) {
             $this->redirect();
         } else {
             $this->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));

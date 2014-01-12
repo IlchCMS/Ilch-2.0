@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <input class="form-control"
                    id="name"
-                   name="name"
+                   name="shoutbox_name"
                    type="text"
                    placeholder="Name"
                    value="<?php if($this->getUser() !== null) { echo $this->escape($this->getUser()->getName());} ?>"
@@ -14,7 +14,7 @@
     <div class="form-group">
         <div class="col-lg-12">
             <textarea class="form-control"
-                      name="textarea" 
+                      name="shoutbox_textarea" 
                       id="x"
                       cols="10" 
                       rows="5"

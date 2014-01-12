@@ -1,5 +1,6 @@
 <?php if($this->getUser() !== null) { ?>
-    <?php echo $this->trans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b><br />
+    <?php echo $this->trans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b>
+    <br />
     <!--
     <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('message'); ?> (0)</a><br />
     <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('UserPanel'); ?></a><br />
@@ -8,7 +9,7 @@
         <?php echo $this->trans('adminarea'); ?>
     </a>
     <br />
-    <a href="<?php echo $this->url(array('module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'fromFrontend' => 1)); ?>">
+    <a href="<?php echo $this->url(array('module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1)); ?>">
         <?php echo $this->trans('logout'); ?>
     </a>
     <?php }else{ ?>
