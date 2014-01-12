@@ -38,12 +38,11 @@ class Shoutbox extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $entryModel = new ShoutboxModel();
             $entryModel->setId($entries['id']);
-            $entryModel->setUid($entries['uid']);
+            $entryModel->setUid($entries['user_id']);
             $entryModel->setName($entries['name']);
             $entryModel->setTextarea($entries['textarea']);
             $entryModel->setTime($entries['time']);
             $shoutbox[] = $entryModel;
-
         }
 
         return $shoutbox;
@@ -68,13 +67,16 @@ class Shoutbox extends \Ilch\Mapper
      */
     public function save(ShoutboxModel $shoutbox)
     {
+        $date = new \Ilch\Date();
+
         $this->db()->insert
         (
             array
             (
-                'uid' => $shoutbox->getUid(),
+                'user_id' => $shoutbox->getUid(),
                 'name' => $shoutbox->getName(),
                 'textarea' => $shoutbox->getTextarea(),
+                'time' => $date->toDb(),
             ),
             'shoutbox'
         );

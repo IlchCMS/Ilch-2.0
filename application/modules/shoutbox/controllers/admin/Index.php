@@ -23,14 +23,14 @@ class Index extends \Ilch\Controller\Admin
                 array
                 (
                     'name' => 'manage',
-                    'active' => false,
+                    'active' => true,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'settings',
-                    'active' => true,
+                    'active' => false,
                     'icon' => 'fa fa-cogs',
                     'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
                 )

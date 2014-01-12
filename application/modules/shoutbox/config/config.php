@@ -38,10 +38,10 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_shoutbox` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `uid` int(11) NOT NULL,
+                  `user_id` int(11) NOT NULL,
                   `name` varchar(100) NOT NULL,
                   `textarea` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                  `time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  `time` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
