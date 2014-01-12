@@ -65,6 +65,7 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
             $config->set('dbPasswordTest', '');
             $config->set('dbNameTest', 'ilch2_test');
             $config->set('dbPrefixTest', '');
+            \Ilch\Registry::set('config', $config);
         }
 
         $this->db = $dbFactory->getInstanceByConfig($config);
