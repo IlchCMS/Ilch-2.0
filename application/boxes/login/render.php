@@ -1,14 +1,14 @@
 <?php if($this->getUser() !== null) { ?>
     <?php echo $this->trans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b><br />
+    <!--
     <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('message'); ?> (0)</a><br />
     <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('UserPanel'); ?></a><br />
-    <!--  Todo if isAdmin  -->
+    -->
     <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'admin')); ?>">
         <?php echo $this->trans('adminarea'); ?>
     </a>
     <br />
-    <!-- // -->
-    <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'logout')); ?>">
+    <a href="<?php echo $this->url(array('module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'fromFrontend' => 1)); ?>">
         <?php echo $this->trans('logout'); ?>
     </a>
     <?php }else{ ?>
@@ -45,8 +45,10 @@
                 }
             ?>
         </form>
+        <!--
         <div style="font-size: 13px;">
-        <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('register'); ?></a><br />
-        <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('forgotPassword'); ?></a>
+            <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('register'); ?></a><br />
+            <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('forgotPassword'); ?></a>
         </div>
+        -->
 <?php } ?>

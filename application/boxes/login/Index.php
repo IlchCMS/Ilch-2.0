@@ -11,10 +11,6 @@ defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Box
 {
-    /**
-     * Shows the standard login page.
-     * %akes the request data for the login and tries to login the user.
-     */
     public function render()
     {
         $errors = array();
@@ -39,16 +35,14 @@ class Index extends \Ilch\Box
                 if ($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('password'), $user->getPassword())) {
                     $errors['userNotFound'] = 'userNotFound';
                 } else {
-                    /*
-                     * A use was found. Set his id in the session and redirect to the admincenter.
-                     */
                     $_SESSION['user_id'] = $user->getId();
 
                     ?>
-                    <script language="JavaScript" type="text/javascript">
-                        window.location.href = "index";
+                    <script type="text/javascript">
+                        top.location.href = '<?php echo $this->getLayout()->url(); ?>';
                     </script>
                     <?php
+                    exit;
                 }
             }
 
@@ -57,20 +51,4 @@ class Index extends \Ilch\Box
 
         $this->getLayout()->set('errors', $errors);
     }
-
-    /**
-     * Does the logout for a user.
-     */
-    public function logoutAction()
-    {
-        session_destroy();
-        unset($_SESSION);
-        \Ilch\Registry::remove('user');
-
-        /*
-         * @todo flash message helper for show logout message on next site.
-         */
-        $this->redirect(array('action' => 'index'));
-    }
 }
-?>

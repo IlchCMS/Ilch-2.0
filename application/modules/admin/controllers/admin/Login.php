@@ -79,13 +79,17 @@ class Login extends \Ilch\Controller\Admin
      */
     public function logoutAction()
     {
-        session_destroy();
-        unset($_SESSION);
+        unset($_SESSION['user_id']);
         \Ilch\Registry::remove('user');
 
         /*
          * @todo flash message helper for show logout message on next site.
          */
-        $this->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));
+
+        if ($this->getRequest()->getParam('fromFrontend')) {
+            $this->redirect();
+        } else {
+            $this->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));
+        }
     }
 }
