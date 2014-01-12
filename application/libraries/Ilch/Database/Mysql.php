@@ -25,7 +25,7 @@ class Mysql
     public function __destruct()
     {
         if($this->conn !== null) {
-            $this->conn->close();
+            @$this->conn->close();
         }
     }
 
@@ -79,10 +79,11 @@ class Mysql
      * @param string $host
      * @param string $name
      * @param string $password
+     * @param integer|null $port
      */
-    public function connect($host, $name, $password)
+    public function connect($host, $name, $password, $port = null)
     {
-        $this->conn = @new \mysqli($host, $name, $password);
+        $this->conn = @new \mysqli($host, $name, $password, $port);
 
         if ($this->conn->connect_error) {
             return false;

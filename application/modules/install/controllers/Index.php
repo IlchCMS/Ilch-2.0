@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * Dont set a time limit for installer.
          */
-        set_time_limit(0);
+        @set_time_limit(0);
 
         $menu = array
         (
@@ -127,7 +127,14 @@ class Index extends \Ilch\Controller\Frontend
 
             $ilch = new \Ilch\Database\Factory();
             $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
-            $dbConnect = $db->connect($this->getRequest()->getPost('dbHost'), $this->getRequest()->getPost('dbUser'), $this->getRequest()->getPost('dbPassword'));
+            $hostParts = explode(':', $this->getRequest()->getPost('dbHost'));
+            $port = null;
+
+            if (!empty($hostParts[1])) {
+                $port = $hostParts[1];
+            }
+
+            $dbConnect = $db->connect(reset($hostParts), $this->getRequest()->getPost('dbUser'), $this->getRequest()->getPost('dbPassword'), $port);
 
             if (!$dbConnect) {
                 $errors['dbConnection'] = 'dbConnectionError';
