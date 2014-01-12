@@ -55,6 +55,7 @@ class Frontend extends Base
     {
         $class = 'Boxes\\'.ucfirst($boxKey).'\\Index';
         $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
+        $this->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$boxKey.'/translations');
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
         $boxObj->render();
 
