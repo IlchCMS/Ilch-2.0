@@ -48,7 +48,9 @@ class File
      */
     public function loadConfigFromFile($fileName)
     {
-        require $fileName;
+        if (file_exists($fileName)) {
+            require $fileName;
+        }
 
         if (!empty($config)) {
             foreach ($config as $key => $value) {

@@ -21,11 +21,11 @@
             </td>
         </tr>
         <tr>
-            <td><?php echo $this->trans('writable').' "config.php"' ?></td>
+            <td><?php echo $this->trans('writable').' "application"' ?></td>
             <td class="text-success">writable</td>
             <td>
                 <?php
-                    if (is_writable(CONFIG_PATH.'/config.php')) {
+                    if (is_writable(CONFIG_PATH)) {
                         echo '<span class="text-success">writable</span>';
                     } else {
                         echo '<span class="text-danger">not writable</span>';

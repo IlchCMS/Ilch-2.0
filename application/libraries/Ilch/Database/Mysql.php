@@ -20,6 +20,16 @@ class Mysql
     protected $conn = null;
 
     /**
+     * Close database connection.
+     */
+    public function __destruct()
+    {
+        if($this->conn !== null) {
+            $this->conn->close();
+        }
+    }
+
+    /**
      * Set the table prefix.
      *
      * @param string $pref
