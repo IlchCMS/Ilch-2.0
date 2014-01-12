@@ -1,6 +1,4 @@
-<form class="form-horizontal" 
-      action="" 
-      method="post">
+<form class="form-horizontal" action="" method="post">
    <?php echo $this->getTokenField(); ?>
     <div class="form-group">
         <div class="col-lg-12">
@@ -27,7 +25,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-12">
-            <button type="submit" name="save" class="btn">
+            <button type="submit" name="entry" class="btn">
                 <?php echo $this->trans('send'); ?>
             </button>
         </div>
