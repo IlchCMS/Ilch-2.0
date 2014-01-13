@@ -38,7 +38,7 @@ class Index extends \Ilch\Controller\Frontend
             $links = $linkMapper->getLinks(array('cat_id' => 0));
             $categorys = $categoryMapper->getCategories(array('parent_id' => 0));
         }
-        
+
         $this->getView()->set('links', $links);
         $this->getView()->set('categorys', $categorys);
     }

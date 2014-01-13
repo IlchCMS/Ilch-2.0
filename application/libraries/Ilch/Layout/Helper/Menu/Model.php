@@ -109,6 +109,7 @@ class Model
                         } else {
                             $class = 'Boxes\\'.ucfirst($item->getBoxKey()).'\\Index';
                             $view = new \Ilch\View($this->_layout->getRequest(), $this->_layout->getTranslator(), $this->_layout->getRouter());
+                            $this->_layout->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/translations');
                             $boxObj = new $class($this->_layout, $view, $this->_layout->getRequest(), $this->_layout->getRouter(), $this->_layout->getTranslator());
                             $boxObj->render();
                             $output = $view->loadScript(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php');

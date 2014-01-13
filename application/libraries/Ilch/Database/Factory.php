@@ -36,7 +36,14 @@ class Factory
 
         $dbClass = '\\Ilch\\Database\\'.$dbData['dbEngine'];
         $db = new $dbClass();
-        $db->connect($dbData['dbHost'], $dbData['dbUser'], $dbData['dbPassword']);
+        $hostParts = explode(':', $dbData['dbHost']);
+        $port = null;
+
+        if (!empty($hostParts[1])) {
+            $port = $hostParts[1];
+        }
+
+        $db->connect(reset($hostParts), $dbData['dbUser'], $dbData['dbPassword'], $port);
         $db->setDatabase($dbData['dbName']);
         $db->setPrefix($dbData['dbPrefix']);
 

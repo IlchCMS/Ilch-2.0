@@ -58,15 +58,17 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
         $config = Registry::get('config');
 
         if (getenv('TRAVIS')) {
+            $config = new \Ilch\Config\File();
             $config->set('dbEngineTest', 'Mysql');
             $config->set('dbHostTest', '127.0.0.1');
             $config->set('dbUserTest', 'travis');
             $config->set('dbPasswordTest', '');
             $config->set('dbNameTest', 'ilch2_test');
             $config->set('dbPrefixTest', '');
+            \Ilch\Registry::set('config', $config);
         }
 
-        $this->db = $dbFactory->getInstanceByConfig(Registry::get('config'));
+        $this->db = $dbFactory->getInstanceByConfig($config);
 
         if($this->db === false)
         {

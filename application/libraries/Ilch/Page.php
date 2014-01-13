@@ -83,14 +83,12 @@ class Page
      */
     public function loadCms()
     {
-        include_once CONFIG_PATH.'/config.php';
+        $this->_fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
 
-        if (!empty($config['dbUser'])) {
+        if (($this->_fileConfig->get('dbUser')) !== null) {
             /*
              * Cms is installed
              */
-            $this->_fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
-
             if ($this->_fileConfig->get('debugModus') === false) {
                 @ini_set('display_errors', 'off');
                 error_reporting(0);

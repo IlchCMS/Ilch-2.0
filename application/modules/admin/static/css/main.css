@@ -13,7 +13,7 @@ body {
 }
 
 #sidebar_content {
-	width:300px;
+	width: 270px;
 	height: 100%;
 }
 
@@ -48,7 +48,7 @@ body {
 }
 
 .watermark {
-	left: -95px;
+	left: -130px;
 	opacity: 0.2;
 	position: absolute;
 	bottom: 0px;
@@ -72,7 +72,7 @@ body {
 }
 
 .leftbar {
-	width: 300px;
+	width: 270px;
 }
 
 .app_left {
@@ -80,12 +80,12 @@ body {
 	background-color: #F8F8F8;
 	border-right: 1px solid silver;
 	position: fixed;
-	width: 300px;
+	width: 270px;
 	height: 100%;
 }
 
 .app_right {
-	margin-left: 300px;
+	margin-left: 270px;
 	padding: 60px 20px 60px 20px;
 }
 
@@ -103,7 +103,7 @@ body {
 }
 
 .slideLeft {
-	left: 288px;
+	left: 258px;
 }
 
 .slideRight {
@@ -123,7 +123,7 @@ body {
 	background-color: #EEEEEE;
 }
 
-#search, .navbar-right .dropdown {
+#search, .navbar-right .dropdown-user {
     margin-right: 10px;
 }
 
@@ -131,4 +131,14 @@ body {
     .app_left {display: none;}
     .app_right {margin-left: 0px;}
     .leftbar {width: 100%;}
+}
+
+.mobile {
+    width: 100%;
+}
+
+.mobile > a {
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-right: 10px;
 }

@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * Dont set a time limit for installer.
          */
-        set_time_limit(0);
+        @set_time_limit(0);
 
         $menu = array
         (
@@ -104,12 +104,8 @@ class Index extends \Ilch\Controller\Frontend
             $errors['version'] = true;
         }
 
-        if (!is_writable(CONFIG_PATH.'/config.php')) {
+        if (!is_writable(CONFIG_PATH)) {
             $errors['writableConfig'] = true;
-        }
-
-        if (!is_writable(APPLICATION_PATH.'/../.htaccess')) {
-            $errors['writableHtaccess'] = true;
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
@@ -131,7 +127,14 @@ class Index extends \Ilch\Controller\Frontend
 
             $ilch = new \Ilch\Database\Factory();
             $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
-            $dbConnect = $db->connect($this->getRequest()->getPost('dbHost'), $this->getRequest()->getPost('dbUser'), $this->getRequest()->getPost('dbPassword'));
+            $hostParts = explode(':', $this->getRequest()->getPost('dbHost'));
+            $port = null;
+
+            if (!empty($hostParts[1])) {
+                $port = $hostParts[1];
+            }
+
+            $dbConnect = $db->connect(reset($hostParts), $this->getRequest()->getPost('dbUser'), $this->getRequest()->getPost('dbPassword'), $port);
 
             if (!$dbConnect) {
                 $errors['dbConnection'] = 'dbConnectionError';
@@ -207,7 +210,7 @@ class Index extends \Ilch\Controller\Frontend
                 /*
                  * Install every registered module.
                  */
-                $modulesToInstall = array('admin', 'user', 'article', 'page', 'guestbook', 'contact', 'partner', 'link', 'media');
+                $modulesToInstall = array('admin', 'user', 'article', 'page', 'guestbook', 'contact', 'partner', 'link', 'shoutbox', 'impressum');
                 $moduleMapper = new \Admin\Mappers\Module();
 
                 /*
@@ -216,7 +219,7 @@ class Index extends \Ilch\Controller\Frontend
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
-                    $configClass = $module.'\\Config\\Config';
+                    $configClass = '\\'.ucfirst($module).'\\Config\\config';
                     $config = new $configClass($this->getTranslator());
                     $config->install();
 
