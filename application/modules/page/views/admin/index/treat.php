@@ -10,10 +10,10 @@
     ?>
     </legend>
     <div class="form-group">
-        <label for="pageTitleInput" class="col-xs-2 control-label">
+        <label for="pageTitleInput" class="col-lg-2 control-label">
             <?php echo $this->trans('pageTitle'); ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-2">
             <input class="form-control"
                    type="text"
                    name="pageTitle"
@@ -28,10 +28,10 @@
         if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
     ?>
     <div class="form-group">
-        <label for="pageLanguageInput" class="col-xs-2 control-label">
+        <label for="pageLanguageInput" class="col-lg-2 control-label">
             <?php echo $this->trans('pageLanguage'); ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-2">
             <select class="form-control" name="pageLanguage" id="pageLanguageInput">
                 <?php
                 foreach ($this->get('languages') as $key => $value) {
@@ -55,10 +55,10 @@
     }
     ?>
     <div class="form-group">
-        <label for="pagePerma" class="col-xs-2 control-label">
+        <label for="pagePerma" class="col-lg-2 control-label">
             <?php echo $this->trans('permaLink'); ?>:
         </label>
-        <div class="col-xs-5">
+        <div class="col-lg-5">
             <?php echo $this->url(); ?>/index.php/<input
                    type="text"
                    name="pagePerma"

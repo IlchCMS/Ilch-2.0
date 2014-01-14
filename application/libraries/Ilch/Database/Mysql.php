@@ -20,6 +20,16 @@ class Mysql
     protected $conn = null;
 
     /**
+     * Close database connection.
+     */
+    public function __destruct()
+    {
+        if($this->conn !== null) {
+            @$this->conn->close();
+        }
+    }
+
+    /**
      * Set the table prefix.
      *
      * @param string $pref
@@ -69,10 +79,11 @@ class Mysql
      * @param string $host
      * @param string $name
      * @param string $password
+     * @param integer|null $port
      */
-    public function connect($host, $name, $password)
+    public function connect($host, $name, $password, $port = null)
     {
-        $this->conn = @new \mysqli($host, $name, $password);
+        $this->conn = @new \mysqli($host, $name, $password, $port);
 
         if ($this->conn->connect_error) {
             return false;
@@ -210,7 +221,7 @@ class Mysql
      * @param  array  $orderBy|null
      * @return array
      */
-    public function selectArray($fields, $table, $where = null, $orderBy = null)
+    public function selectArray($fields, $table, $where = null, $orderBy = null, $limit = null)
     {
         $sql = 'SELECT '. $this->_getFieldsSql($fields).'
                 FROM `[prefix]_'.$table . '` ';
@@ -225,6 +236,10 @@ class Mysql
             foreach ($orderBy as $column => $direction) {
                 $sql .= ' `'. $column.'` '.$direction;
             }
+        }
+
+        if ($limit !== null) {
+            $sql .= ' LIMIT ' . (int)$limit;
         }
 
         return $this->queryArray($sql);

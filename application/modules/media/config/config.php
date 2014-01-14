@@ -23,6 +23,9 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('media_uploadpath', 'application/modules/media/static/upload/');
+        $databaseConfig->set('media_allowed_ending', 'png jpg gif');
     }
 
     public function uninstall()
@@ -36,7 +39,8 @@ class Config extends \Ilch\Config\Install
                    `id` int(11) NOT NULL AUTO_INCREMENT,
                    `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
 				   `url` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
-				   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
+                   `url_thumb` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
+				   `ending` varchar(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
                    `datetime` datetime NOT NULL,
 				   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';

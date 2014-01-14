@@ -35,7 +35,8 @@
         </p>
         <p>
             <?php echo $this->trans('message'); ?>*<br />
-            <textarea name="text" 
+            <textarea id="guestbook_message"
+                      name="text" 
                       cols="40" 
                       rows="5"
                       required>
@@ -56,7 +57,7 @@
     (
         {
             height: 400,
-            selector: "textarea",
+            selector: "#guestbook_message",
             plugins: "image preview"
         }
     );

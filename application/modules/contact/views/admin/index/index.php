@@ -3,9 +3,9 @@ if ($this->get('receivers') != '') {
 ?>
 <table class="table table-hover">
     <colgroup>
-        <col class="col-xs-1" />
-        <col class="col-xs-2" />
-        <col class="col-xs-2" />
+        <col class="col-lg-1" />
+        <col class="col-lg-2" />
+        <col class="col-lg-2" />
     </colgroup>
     <thead>
         <tr>

@@ -10,10 +10,10 @@
     ?>
     </legend>
     <div class="form-group">
-        <label for="name" class="col-xs-2 control-label">
+        <label for="name" class="col-lg-2 control-label">
             <?php echo $this->trans('name'); ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="name"
@@ -23,10 +23,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="link" class="col-xs-2 control-label">
+        <label for="link" class="col-lg-2 control-label">
             <?php echo $this->trans('link'); ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="link"
@@ -36,10 +36,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="banner" class="col-xs-2 control-label">
+        <label for="banner" class="col-lg-2 control-label">
             <?php echo $this->trans('banner'); ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="banner"
@@ -49,29 +49,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="cat_id" class="col-xs-2 control-label">
-            <?php echo $this->trans('category'); ?>:
-        </label>
-        <div class="col-xs-4">
-            <select class="form-control" name="cat_id">
-                <?php
-                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                        $sel = '';
-
-                        if ($this->get('cat_id') == $key) {
-                            $sel = 'selected="selected"';
-                        }
-                        echo '<option '.$sel.' value="'.$key.'">'.$this->escape($value).'</option>';
-                    }
-                ?>
-            </select>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="desc" class="col-xs-2 control-label">
+        <label for="desc" class="col-lg-2 control-label">
             <?php echo $this->trans('description'); ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <textarea class="form-control"
                       name="desc" 
                       cols="45" 

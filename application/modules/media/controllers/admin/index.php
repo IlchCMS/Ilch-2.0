@@ -9,6 +9,7 @@
 namespace Media\Controllers\Admin;
 
 use Media\Mappers\Media as MediaMapper;
+use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
 
@@ -50,47 +51,36 @@ class Index extends \Ilch\Controller\Admin
 		
     public function uploadAction() 
     {
+        $ilchdate = new IlchDate;
+        $mediaMapper = new MediaMapper();
+        
+        if ($this->getRequest()->isPost()) {
+            
+            $path = $this->getConfig()->get('media_uploadpath');
+            $file = $_FILES['upl']['name'];
+            $endung = pathinfo($file, PATHINFO_EXTENSION);
+            $name = pathinfo($file, PATHINFO_FILENAME);
+            $filename = uniqid() . $name;
+            $url = $path.$filename.'.'.$endung;
+            
+            $model = new \Media\Models\Media();
+            $model->setUrl($url);
+            $model->setEnding($endung);
+            $model->setName($name);
+            $model->setDatetime($ilchdate->toDb());
+            $mediaMapper->save($model);
+            
+            if(move_uploaded_file($_FILES['upl']['tmp_name'], $path.$filename.'.'.$endung)){
+                
+            }
+            if($endung != 'zip'){
+                $thumb = new MediaMapper();
+                $thumb->resize_image($path, $filename.'.'.$endung);
+            }
+        }
         return $this->getView();
     }
 	
-	public function saveimageAction() {
-		$allowed = array('png', 'jpg', 'gif');
-		$url = 'application/modules/media/static/upload/';
-		
-		
-		    
-		
-			if(isset($_FILES['upl']) && $_FILES['upl']['error'] == 0){
-
-				if(move_uploaded_file($_FILES['upl']['tmp_name'], $url.$_FILES['upl']['name'])){
-	 
-				}
-				
-			
-			
-				
-				
-			$entryImage = array(
-                    'url' => $url.trim($_FILES['upl']['name']),
-                );
-                $this->model = new MediaMapper();
-                $this->model->saveImage($entryImage);
-				
-				
-				
-				
-			}
-	}
-
-
-    public function showAction() {
-		$id = $this->getRequest()->getParam('id');
-		$this->model = new MediaModels();
-        $entrys = $this->model->showImage($id);
-
-        return $this->getView()->set('entrys', $entrys);
-        
-    }	
 	
 	public function delAction()
     {

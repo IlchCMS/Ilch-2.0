@@ -229,33 +229,29 @@ class Group extends \Ilch\Mapper
     /**
      * Returns the group access list from the database.
      *
+     * @param  int     $groupId
      * @return mixed[]
      */
-    public function getGroupAccessList()
+    public function getGroupAccessList($groupId)
     {
         $sql = 'SELECT g.name AS group_name, ga.*
                 FROM [prefix]_groups_access AS ga
-                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id';
+                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id
+                WHERE ga.group_id = '.(int)$groupId;
         $accessDbList = $this->db()->queryArray($sql);
         $accessList = array();
-        $entries = array(
-            'pages' => array(),
-            'modules' => array(),
-            'articles' => array(),
-        );
 
         foreach($accessDbList as $accessDbListEntry) {
-            $groupId = $accessDbListEntry['group_id'];
-
-            if(!isset($accessList[$groupId])) {
+            if(empty($accessList)) {
                 /*
-                 * First entry for this group
+                 * First entry.
                  */
-                $groupName = $accessDbListEntry['group_name'];
-                unset($accessDbListEntry['group_id']);
-                unset($accessDbListEntry['group_name']);
-                $accessList[$groupId]['group_name'] = $groupName;
-                $accessList[$groupId]['entries'] = $entries;
+                $accessList['group_name'] = $accessDbListEntry['group_name'];
+                $accessList['entries'] = array(
+                    'pages' => array(),
+                    'modules' => array(),
+                    'articles' => array(),
+                );
             }
 
             if(!empty($accessDbListEntry['module_id'])) {
@@ -269,7 +265,7 @@ class Group extends \Ilch\Mapper
                 $entryId = $accessDbListEntry['article_id'];
             }
 
-            $accessList[$groupId]['entries'][$entryType][$entryId] = $accessDbListEntry['access_level'];
+            $accessList['entries'][$entryType][$entryId] = $accessDbListEntry['access_level'];
         }
 
         return $accessList;

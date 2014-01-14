@@ -3,7 +3,7 @@ if ($this->get('articles') != '') {
 ?>
 <table class="table table-hover">
     <colgroup>
-        <col class="col-xs-1">
+        <col class="col-lg-1">
         <col />
         <?php
             if ($this->get('multilingual')) {

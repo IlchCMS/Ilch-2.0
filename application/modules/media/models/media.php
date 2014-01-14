@@ -26,11 +26,18 @@ class Media extends \Ilch\Model
     protected $_url;
 
     /**
-     * The description of the media.
+     * The urlthumb of the media.
      *
      * @var string
      */
-    protected $_description;
+    protected $_urlthumb;
+
+    /**
+     * The ending of the media.
+     *
+     * @var string
+     */
+    protected $_ending;
 
     /**
      * The name of the media.
@@ -67,13 +74,23 @@ class Media extends \Ilch\Model
     }
 
     /**
-     * Gets description of the media.
+     * Gets urlthumb of the media.
      *
      * @return string
      */
-    public function getDescription()
+    public function getUrlThumb()
     {
-        return $this->_description;
+        return $this->_urlthumb;
+    }
+
+    /**
+     * Gets ending of the media.
+     *
+     * @return string
+     */
+    public function getEnding()
+    {
+        return $this->_ending;
     }
 
     /**
@@ -117,13 +134,23 @@ class Media extends \Ilch\Model
     }
 
     /**
-     * Sets the description.
+     * Sets the urlthumb.
      *
-     * @param string $description
+     * @param string $urlthumb
      */
-    public function setDescription($description)
+    public function setUrlThumb($urlthumb)
     {
-        $this->_description = (string)$description;
+        $this->_urlthumb = (string)$urlthumb;
+    }
+
+    /**
+     * Sets the ending.
+     *
+     * @param string $ending
+     */
+    public function setEnding($ending)
+    {
+        $this->_ending = (string)$ending;
     }
 
     /**

@@ -1,8 +1,13 @@
-<?php if ($this->get('categorys') != '') { ?>
+<?php
+$categories = $this->get('categorys');
+$links = $this->get('links');
+
+if (!empty($categories)) {
+?>
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
         <col />
-        <col class="col-xs-1" />
+        <col class="col-lg-1" />
     </colgroup>
     <thead>
         <tr>
@@ -11,8 +16,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php if ($this->get('categorys') != '') {
-            foreach ($this->get('categorys') as $category) {
+        <?php foreach ($this->get('categorys') as $category) {
                 echo '<tr>';
                 $getDesc = $this->escape($category->getDesc());
                 
@@ -22,30 +26,30 @@
                     $getDesc = '';
                 }
                 
-                echo '<td><a href='.$this->url(array('action' => 'index', 'cat' => $category->getId())).' title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
-                echo '<td align="center" style="vertical-align:middle">'.$this->escape($category->getCatId()).'</td>';
+                echo '<td><a href='.$this->url(array('action' => 'index', 'cat_id' => $category->getId())).' title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
+                echo '<td align="center" style="vertical-align:middle">'.$category->getLinksCount().'</td>';
                 echo '</tr>';
             }
-        } 
         ?>
     </tbody>
 </table>
 <br />
 <?php } ?>
-        
+
+
 <table class="table table-bordered table-striped table-responsive">
     <colgroup>
         <col />
-        <col class="col-xs-1" />
+        <col class="col-lg-1" />
     </colgroup>
     <thead>
         <tr>
             <th><?php echo $this->trans('links'); ?></th>
-            <th align="center"><?php echo $this->trans('hits'); ?></th>
+            <th style="text-align:center"><?php echo $this->trans('hits'); ?></th>
         </tr>
     </thead>
     <tbody>
-        <?php if ($this->get('links') != '') {
+        <?php if (!empty($links)) {
             foreach ($this->get('links') as $link) {
                 echo '<tr>';
                 $getBanner = $this->escape($link->getBanner());
@@ -63,15 +67,13 @@
                     $getBanner = $this->escape($link->getName());
                 }
                 
-                echo '<td><a href='.$this->escape($link->getLink()).' target="_blank" title="'.$this->escape($link->getName()).'">'.$getBanner.'</a><br />'.$getDesc.'</td>';    
+                echo '<td><a href='.$this->url(array('action' => 'redirect', 'link_id' => $link->getId())).' target="_blank" title="'.$this->escape($link->getName()).'">'.$getBanner.'</a><br />'.$getDesc.'</td>';    
                 echo '<td align="center" style="vertical-align:middle">'.$this->escape($link->getHits()).'</td>';
                 echo '</tr>';
             }
-        } else {
-            echo '<tr>';
+
+        }  else {
             echo '<td colspan="2">'.$this->trans('noLinks').'</td>';
-            echo '</tr>';
-        }
-        ?>
+        } ?>
     </tbody>
 </table>

@@ -34,8 +34,8 @@ class Index extends \Ilch\Controller\Frontend
                 $partnerModel->setLink($link);
                 $partnerModel->setBanner($banner);
                 $partnerModel->setFree(0);
-
                 $partnerMapper->save($partnerModel);
+                
                 $this->addMessage('sendSuccess');
             }
         }

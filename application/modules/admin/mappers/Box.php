@@ -83,7 +83,7 @@ class Box extends \Ilch\Mapper
      */
     public function save(BoxModel $box)
     {
-        if ($box->getId() && $box->getLocale()) {
+        if ($box->getId()) {
             if ($this->getBoxByIdLocale($box->getId(), $box->getLocale())) {
                 $this->db()->update
                 (

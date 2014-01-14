@@ -29,12 +29,40 @@ class Access extends BaseController
      */
     public function indexAction()
     {
+        $postData = $this->getRequest()->getPost();
         $groupMapper = new GroupMapper();
-        $groupAccessList = $groupMapper->getGroupAccessList();
         $groups = $groupMapper->getGroupList();
+        $this->getView()->set('activeGroupId', 0);
+        $this->getView()->set('activeGroup', null);
+
+        foreach($groups as $key => $group) {
+            if($group->getId() == 1) {
+                unset($groups[$key]);
+            }
+        }
 
         $this->getView()->set('groups', $groups);
-        $this->getView()->set('groupAccessList', $groupAccessList);
+
+        if (isset($postData['groupId'])) {
+            $groupId = (int)$postData['groupId'];
+            $_SESSION['user']['accessGroup'] = $groupId;
+        }
+        elseif(isset($_SESSION['user']['accessGroup']))
+        {
+            $groupId = (int)$_SESSION['user']['accessGroup'];
+        }
+        else
+        {
+            $groupId = 0;
+        }
+
+        if ($groupId) {
+            $groupAccessList = $groupMapper->getGroupAccessList($groupId);
+            $activeGroup = $groupMapper->getGroupById($groupId);
+            $this->getView()->set('groupAccessList', $groupAccessList);
+            $this->getView()->set('activeGroupId', $groupId);
+            $this->getView()->set('activeGroup', $activeGroup);
+        }
 
         $moduleMapper = new ModuleMapper();
         $modules = $moduleMapper->getModules();
@@ -60,14 +88,14 @@ class Access extends BaseController
     {
         $postData = $this->getRequest()->getPost();
 
-        if (isset($postData['groupsAccess'])) {
-            $groupsAccessData = $postData['groupsAccess'];
-            $groupMapper = new GroupMapper();
+        if (isset($postData['groupAccess'], $postData['groupId'])) {
+            if((int)$postData['groupId'] !== 1) {
+                $groupAccessData = $postData['groupAccess'];
+                $groupMapper = new GroupMapper();
 
-            foreach($groupsAccessData as $type => $groupsAccessTypeData) {
-                foreach($groupsAccessTypeData as $groupId => $groupAccessTypeData) {
-                    foreach($groupAccessTypeData as $typeId => $accessLevel) {
-                        $groupMapper->saveAccessData($groupId, $typeId, $accessLevel, $type);
+                foreach($groupAccessData as $type => $groupsAccessTypeData) {
+                    foreach($groupsAccessTypeData as $typeId => $accessLevel) {
+                        $groupMapper->saveAccessData($_SESSION['user']['accessGroup'], $typeId, $accessLevel, $type);
                     }
                 }
             }

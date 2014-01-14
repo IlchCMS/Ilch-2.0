@@ -37,8 +37,27 @@
         </script>
         <nav class="navbar navbar-default navbar-fixed-top topnavbar">
             <div class="navbar-header leftbar">
-                <img src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
-                <ul class="nav navbar-nav navbar-right">
+                <img class="pull-left" src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
+                <div class="mobile hidden-md hidden-lg">
+                    <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="pull-right" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
+                        <i class="fa fa-2x fa-cogs"></i>
+                    </a>
+                    <a class="pull-right" title="<?php echo $this->trans('openFrontend'); ?>"
+                           target="_blank"
+                           href="<?php echo $this->url(); ?>">
+                        <i class="fa fa-2x fa-share"></i>
+                    </a>
+                    <a class="pull-right" href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
+                        <i class="fa fa-2x fa-home"></i>
+                    </a>
+                </div>
+                <ul class="nav navbar-nav hidden-xs hidden-sm navbar-right">
                     <li>
                         <a href="#" id="search">
                             <i class="fa fa-search"></i> <?php echo $this->trans('search'); ?> <b class="caret"></b>
@@ -46,11 +65,11 @@
                     </li>
                 </ul>
             </div>
-            <div class="rightbar">
+            <div id="rightbar" class="rightbar navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') {
-                                    echo 'class="active"';
-                                }?>>
+                    <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') {
+                                    echo 'active';
+                                }?> visible-md visible-lg">
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')); ?>">
                             <i class="fa fa-home"></i>
                         </a>
@@ -105,14 +124,14 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
-                                    echo 'class="active"';
-                                }?>>
+                    <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
+                                    echo 'active';
+                                }?> visible-md visible-lg">
                         <a href="<?php echo $this->url(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')); ?>">
                             <i class="fa fa-cogs"></i>
                         </a>
                     </li>
-                    <li>
+                    <li class="visible-md visible-lg">
                         <a title="<?php echo $this->trans('openFrontend'); ?>"
                            target="_blank"
                            href="<?php echo $this->url(); ?>">
@@ -120,6 +139,34 @@
                         </a>
                     </li>
                     <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle"
+                               target="_blank"
+                               href="<?php echo $this->url(); ?> ">
+                            <i class="fa fa-question-circle"></i> <b class="caret"></b>
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="http://www.ilch.de" target="_blank">
+                                    <i class="fa fa-home"></i>
+                                    <?php echo $this->trans('officalSite'); ?>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="http://www.ilch.de/forum.html" target="_blank">
+                                    <i class="fa fa-comments-o"></i>
+                                    <?php echo $this->trans('officalSupportForum'); ?>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.ilch.de/redmine/projects/dev2-doku/wiki" target="_blank">
+                                    <i class="fa fa-book"></i>
+                                    <?php echo $this->trans('documentationFAQ'); ?>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dropdown-user">
                         <a data-toggle="dropdown" class="dropdown-toggle"
                                target="_blank"
                                href="<?php echo $this->url(); ?> ">

@@ -10,10 +10,10 @@
     ?>
     </legend>
     <div class="form-group">
-        <label for="name" class="col-xs-2 control-label">
+        <label for="name" class="col-lg-2 control-label">
             <?php echo $this->trans('name'); ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="name"
@@ -23,10 +23,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="link" class="col-xs-2 control-label">
+        <label for="link" class="col-lg-2 control-label">
             <?php echo $this->trans('link'); ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="link"
@@ -36,10 +36,10 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="banner" class="col-xs-2 control-label">
+        <label for="banner" class="col-lg-2 control-label">
             <?php echo $this->trans('banner'); ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="banner"

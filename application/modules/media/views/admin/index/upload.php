@@ -1,7 +1,7 @@
 <legend><?php echo $this->trans('mediaUpload'); ?></legend>
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-	<form id="upload" method="post" action="<?php echo $this->Url('index.php/admin/media/index/saveimage'); ?>" enctype="multipart/form-data">
+		<div class="col-lg-12">
+	<form id="upload" method="post" action="<?php echo $this->Url('index.php/admin/media/index/upload'); ?>" enctype="multipart/form-data">
 			<?php echo $this->getTokenField(); ?>
         <div id="drop">
 				<p>Drop Here</p>

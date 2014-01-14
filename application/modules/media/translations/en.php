@@ -18,4 +18,5 @@ return array
     'mediatype' => 'Media type',
     'options' => 'Options',
     'mediaUpload' => 'Media Upload',
+    'noMedias' => 'no Medias',
 );
