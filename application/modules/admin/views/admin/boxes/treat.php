@@ -25,7 +25,7 @@
         <textarea class="form-control" name="boxContent"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
     </div>
     <?php
-        if ($this->get('multilingual')) {
+        if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
     ?>
     <div class="form-group">
         <label for="boxLanguageInput" class="col-lg-2 control-label">

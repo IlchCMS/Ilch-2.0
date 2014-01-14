@@ -40,7 +40,7 @@ if ($this->get('boxes') != '') {
              echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId())).'"><i class="fa fa-edit"></i></a> ';
             ?>
                 <span class="deleteBox clickable fa fa-times-circle"
-                              data-clickurl="<?php echo $this->url(array('module' => 'box', 'controller' => 'index', 'action' => 'delete', 'id' => $box->getId())); ?>"
+                              data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $box->getId())); ?>"
                               data-toggle="modal"
                               data-target="#deleteModal"
                               data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteBox', $box->getTitle())); ?>"
