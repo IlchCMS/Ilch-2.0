@@ -202,4 +202,19 @@ class Request
             return null;
         }
     }
+
+    /**
+     * Checks if request is secure.
+     *
+     * @return boolean
+     */
+    public function isSecure()
+    {
+        if (isset($_SESSION['token'][$this->getPost('ilch_token')])
+               || isset($_SESSION['token'][$this->getParam('ilch_token')])) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -44,6 +44,23 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $partnerMapper = new PartnerMapper();
+        
+        if ($this->getRequest()->getPost('check_entries')) {
+            if ($this->getRequest()->getPost('action') == 'delete') {
+                foreach($this->getRequest()->getPost('check_entries') as $partnerId) {
+                    $partnerMapper->delete($partnerId);
+                }
+            }
+
+            if ($this->getRequest()->getPost('action') == 'setfree') {
+                foreach($this->getRequest()->getPost('check_entries') as $entryId) {
+                    $model = new \Partner\Models\Entry();
+                    $model->setId($entryId);
+                    $model->setFree(1);
+                    $partnerMapper->save($model);
+                }
+            }
+        }
 
         if ($this->getRequest()->getParam('showsetfree')) {
             $entries = $partnerMapper->getEntries(array('setfree' => 0));
@@ -54,21 +71,19 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('entries', $entries);
         $this->getView()->set('badge', count($partnerMapper->getEntries(array('setfree' => 0))));
     }
-    
+
     public function delAction()
     {
-        $partnerMapper = new PartnerMapper();
-        $partnerMapper->delete($this->getRequest()->getParam('id'));
-        
-        $this->addMessage('deleteSuccess');
-        
-        if ($this->getRequest()->getParam('showsetfree')) {
-            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
-        } else {
-            $this->redirect(array('action' => 'index'));
+        if($this->getRequest()->isSecure()) {
+            $partnerMapper = new PartnerMapper();
+            $partnerMapper->delete($this->getRequest()->getParam('id'));
+
+            $this->addMessage('deleteSuccess');
         }
+
+        $this->redirect(array('action' => 'index'));
     }
-    
+
     public function setfreeAction()
     {
         $partnerMapper = new PartnerMapper();

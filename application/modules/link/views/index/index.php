@@ -4,7 +4,7 @@ $links = $this->get('links');
 
 if (!empty($categories)) {
 ?>
-<table class="table table-bordered table-striped table-responsive">
+<table class="table table-striped table-responsive">
     <colgroup>
         <col />
         <col class="col-lg-1" />
@@ -37,7 +37,7 @@ if (!empty($categories)) {
 <?php } ?>
 
 
-<table class="table table-bordered table-striped table-responsive">
+<table class="table table-striped table-responsive">
     <colgroup>
         <col />
         <col class="col-lg-1" />

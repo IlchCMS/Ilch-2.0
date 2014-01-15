@@ -9,6 +9,8 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'shoutbox' => 'Shoutbox',
+    'from' => 'From',
+    'date' => 'Date',
     'name' => 'Name',
     'menuShoutbox' => 'Shoutbox',
     'manageShoutbox' => 'Manage Shoutbox',

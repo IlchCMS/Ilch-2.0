@@ -10,7 +10,7 @@
         foreach ($this->get('entries') as $entry) :
     ?>
             <div class="responsive panel bordered">
-                <table class="table table-bordered table-striped table-responsive">
+                <table class="table table-striped table-responsive">
                     <colgroup>
                         <col class="col-lg-3">
                         <col />

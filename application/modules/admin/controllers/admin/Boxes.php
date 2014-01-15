@@ -43,6 +43,13 @@ class Boxes extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $boxMapper = new BoxMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_boxes')) {
+            foreach($this->getRequest()->getPost('check_boxes') as $boxId) {
+                $boxMapper->delete($boxId);
+            }
+        }
+
         $boxes = $boxMapper->getBoxList('');
 
         /*
@@ -71,7 +78,8 @@ class Boxes extends \Ilch\Controller\Admin
     {
         $user = \Ilch\Registry::get('user');
 
-        if($user->hasAccess('box_'.$this->getRequest()->getParam('id'))) {
+        if($user->hasAccess('box_'.$this->getRequest()->getParam('id'))
+                && $this->getRequest()->isSecure()) {
             $boxMapper = new BoxMapper();
             $boxMapper->delete($this->getRequest()->getParam('id'));
         }

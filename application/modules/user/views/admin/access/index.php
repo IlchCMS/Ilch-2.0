@@ -1,7 +1,5 @@
 <?php
 /**
- * Viewfile for the access page.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -128,12 +126,7 @@
             <?php
         }
         ?>
-        <div class="content_savebox">
-            <input id="formSubmit"
-                   type="submit"
-                   class="btn btn-default"
-                   value="<?php echo $this->trans('save'); ?>" />
-        </div>
+        <?=$this->getSaveBar()?>
         <?php
     }
     ?>

@@ -45,6 +45,15 @@ class Group extends BaseController
     public function indexAction()
     {
         $groupMapper = new GroupMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
+            foreach($this->getRequest()->getPost('check_groups') as $groupId) {
+                if ($groupId != 1) {
+                    $groupMapper->delete($groupId);
+                }
+            }
+        }
+        
         $groupList = $groupMapper->getGroupList();
         $groupUsers = array();
 
@@ -109,10 +118,7 @@ class Group extends BaseController
         $groupMapper = new GroupMapper();
         $groupId = $this->getRequest()->getParam('id');
 
-        if ($groupId) {
-            $deletegroup = $groupMapper->getGroupById($groupId);
-            $usersForGroup = $groupMapper->getUsersForGroup($groupId);
-
+        if ($groupId && $this->getRequest()->isSecure()) {
             /*
              * Admingroup has always id "1" and is not allowed to be deleted.
              */

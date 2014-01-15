@@ -53,18 +53,13 @@
     </div>
     <?php
         }
+
+        if ($this->get('box') != '') {
+            echo $this->getSaveBar('editButtonBox');
+        } else {
+            echo $this->getSaveBar('addButtonBox');
+        }
     ?>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('box') != '') {
-                echo $this->trans('editButtonBox');
-            } else {
-                echo $this->trans('addButtonBox');
-            }
-            ?>
-        </button>
-    </div>
 </form>
 <script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
