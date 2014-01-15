@@ -98,12 +98,16 @@
                             </li>
                             <li class="divider"></li>
                             <?php
+                                $user = \Ilch\Registry::get('user');
+
                                 foreach ($this->get('modules') as $module) {
-                                    echo '<li>
-                                            <a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
-                                                <img style="padding-right: 5px;" src="'.$this->staticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
-                                                .$module->getName($this->getTranslator()->getLocale()).'</a>
-                                        </li>';
+                                    if($user->hasAccess('module_'.$module->getId())) {
+                                        echo '<li>
+                                                <a href="'.$this->url(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                                    <img style="padding-right: 5px;" src="'.$this->staticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
+                                                    .$module->getName($this->getTranslator()->getLocale()).'</a>
+                                            </li>';
+                                    }
                                 }
                             ?>
                         </ul>

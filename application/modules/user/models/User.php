@@ -318,6 +318,13 @@ class User extends \Ilch\Model
      */
     public function hasAccess($key, $isInAdmin = true)
     {
+        if(in_array(1, array_keys($this->getGroups()))) {
+            /*
+             * The user is an admin, allow him everything.
+             */
+            return true;
+        }
+
         $type = '';
         $rec = array();
         $sql = 'SELECT ga.access_level
@@ -329,15 +336,20 @@ class User extends \Ilch\Model
             $sqlJoin = ' INNER JOIN [prefix]_modules AS m ON ga.module_id = m.id';
             $sqlWhere = ' WHERE m.key = "'.$moduleKey.'"';
         } elseif (strpos($key, 'page_') !== false) {
-            $pageId = (int)substr($key, 6);
+            $pageId = (int)substr($key, 5);
             $type = 'page';
             $sqlJoin = ' INNER JOIN [prefix]_pages AS p ON ga.page_id = p.id';
             $sqlWhere = ' WHERE p.id = '.(int)$pageId;
         } elseif (strpos($key, 'article_') !== false) {
-            $articleId = (int)substr($key, 9);
+            $articleId = (int)substr($key, 8);
             $type = 'article';
             $sqlJoin = ' INNER JOIN [prefix]_articles AS a ON ga.article_id = a.id';
             $sqlWhere = ' WHERE a.id = '.(int)$articleId;
+        } elseif (strpos($key, 'box_') !== false) {
+            $boxId = (int)substr($key, 4);
+            $type = 'box';
+            $sqlJoin = ' INNER JOIN [prefix]_boxes AS b ON ga.box_id = b.id';
+            $sqlWhere = ' WHERE b.id = '.(int)$boxId;
         }
 
         $sql .= $sqlJoin.$sqlWhere.'

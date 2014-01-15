@@ -43,6 +43,12 @@ class BeforeControllerLoad
 
         $userMapper = new UserMapper();
         $user = $userMapper->getUserById($userId);
+
+        if(!is_object($user)) {
+            // Happens rarely, for example if a user id is saved in the session before reinstalling and the cms got just installed.
+            return;
+        }
+
         $groups = $user->getGroups();
         $groupMapper = new GroupMapper();
         $request = $pluginData['request'];
