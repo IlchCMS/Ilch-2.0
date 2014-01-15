@@ -46,10 +46,12 @@
                 }
             ?>
         </form>
-        <!--
         <div style="font-size: 13px;">
-            <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('register'); ?></a><br />
+        <?php if ($this->get('regist_accept') == '1') { ?>
+            <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')); ?>"><?php echo $this->trans('register'); ?></a><br />
+        <?php } ?>
+        <!--
             <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('forgotPassword'); ?></a>
-        </div>
         -->
+        </div>
 <?php } ?>

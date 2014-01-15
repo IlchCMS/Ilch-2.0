@@ -275,6 +275,29 @@ class User extends \Ilch\Mapper
     }
 
     /**
+     * Insert usercheck model.
+     *
+     * @param UserModel $user
+     */
+    public function saveCheck(UserModel $user)
+    {
+        $date = new \Ilch\Date();
+
+        $this->db()->insert
+        (
+            array
+            (
+                'check' => md5(uniqid(rand())),
+                'name' => $user->getName(),
+                'password' => $user->getPassword(),
+                'email' => $user->getEmail(),
+                'date_created' => $date->toDb(),
+            ),
+            'usercheck'
+        );
+    }
+
+    /**
      * Gets the counter of all users with group "administrator".
      *
      * @return integer

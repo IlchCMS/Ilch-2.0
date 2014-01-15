@@ -25,7 +25,7 @@ class Base extends \Ilch\Controller\Admin
     {
         $active = array();
 
-        foreach(array('group', 'index', 'access') as $controllerName) {
+        foreach(array('group', 'index', 'access', 'settings') as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 
@@ -55,6 +55,13 @@ class Base extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->url(array('controller' => 'access', 'action' => 'index'))
                 ),
+                array
+                (
+                    'name' => 'menuSettings',
+                    'active' => $active['settings'],
+                    'icon' => 'fa fa-cogs',
+                    'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
+                )
             )
         );
     }

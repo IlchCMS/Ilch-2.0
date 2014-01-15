@@ -7,6 +7,7 @@
 namespace Boxes\Login;
 
 use User\Mappers\User as UserMapper;
+
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Box
@@ -48,7 +49,9 @@ class Index extends \Ilch\Box
 
             $this->getLayout()->set('emailname', $emailName);
         }
-
+        
+        $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
+        
         $this->getLayout()->set('errors', $errors);
     }
 }
