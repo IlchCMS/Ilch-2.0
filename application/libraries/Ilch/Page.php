@@ -64,12 +64,10 @@ class Page
             $this->_layout = new Layout\Frontend($this->_request, $this->_translator, $this->_router);
         }
 
-        if ($this->_request->isPost()) {
-            $token = $this->_request->getPost('ilch_token');
-
-            if (empty($token) || !isset($_SESSION['token'][$token])) {
-                throw new \InvalidArgumentException('token wrong');
-            }
+        if ($this->_request->isPost() && !$this->_request->isSecure()) {
+            throw new \InvalidArgumentException(
+                'no valid secure token given, add function getTokenField() to formular'
+            );
         }
 
         $this->_plugin->detectPlugins();

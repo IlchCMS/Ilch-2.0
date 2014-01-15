@@ -1,9 +1,13 @@
 <?php
 if ($this->get('boxes') != '') {
 ?>
+<form class="form-horizontal" method="POST" action="">
+<?php echo $this->getTokenField(); ?>
 <table class="table table-hover">
     <colgroup>
-        <col class="col-lg-1">
+        <col class="icon_width">
+        <col class="icon_width">
+        <col class="icon_width">
         <col />
         <?php
             if ($this->get('multilingual')) {
@@ -13,7 +17,9 @@ if ($this->get('boxes') != '') {
     </colgroup>
     <thead>
         <tr>
-            <th><?php echo $this->getTranslator()->trans('treat'); ?></th>
+            <th><?=$this->getCheckAllCheckbox('check_boxes')?></th>
+            <th></th>
+            <th></th>
             <th><?php echo $this->trans('boxTitle'); ?></th>
             <?php
                 if ($this->get('multilingual')) {
@@ -36,18 +42,18 @@ if ($this->get('boxes') != '') {
         <?php
         foreach ($this->get('boxes') as $box) {
             echo '<tr>
+                    <td>
+                        <input value="'.$box->getId().'" type="checkbox" name="check_boxes[]" />
+                    </td>
+                    <td>
+                        <a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId())).'">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    </td>
+                    <td>
+                        '.$this->getDeleteIcon(array('action' => 'delete', 'id' => $box->getId())).'
+                    </td>
                     <td>';
-             echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId())).'"><i class="fa fa-edit"></i></a> ';
-            ?>
-                <span class="deleteBox clickable fa fa-times-circle"
-                              data-clickurl="<?php echo $this->url(array('module' => 'box', 'controller' => 'index', 'action' => 'delete', 'id' => $box->getId())); ?>"
-                              data-toggle="modal"
-                              data-target="#deleteModal"
-                              data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteBox', $box->getTitle())); ?>"
-                              title="<?php echo $this->trans('deleteBox'); ?>"></span>
-            <?php
-            echo '</td>';
-            echo '<td>';
 
             if ($box->getTitle() !== '') {
                 echo $box->getTitle();
@@ -79,6 +85,8 @@ if ($this->get('boxes') != '') {
         ?>
     </tbody>
 </table>
+<?=$this->getListBar(array('delete' => 'delete'))?>
+</form>
 <?php
 } else {
     echo $this->getTranslator()->trans('noBoxes');

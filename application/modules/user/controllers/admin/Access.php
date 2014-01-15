@@ -11,6 +11,7 @@ namespace User\Controllers\Admin;
 use User\Controllers\Admin\Base as BaseController;
 use User\Mappers\Group as GroupMapper;
 use Admin\Mappers\Module as ModuleMapper;
+use Admin\Mappers\Box as BoxMapper;
 use Page\Mappers\Page as PageMapper;
 use Article\Mappers\Article as ArticleMapper;
 
@@ -73,10 +74,14 @@ class Access extends BaseController
         $articleMapper = new ArticleMapper();
         $articles = $articleMapper->getArticles();
 
+        $boxMapper = new BoxMapper();
+        $boxes = $boxMapper->getBoxList($this->getTranslator()->getLocale());
+
         $accessTypes = array(
             'module' => $modules,
             'page' => $pages,
             'article' => $articles,
+            'box' => $boxes,
         );
         $this->getView()->set('accessTypes', $accessTypes);
     }

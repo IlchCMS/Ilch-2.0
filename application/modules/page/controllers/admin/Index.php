@@ -43,6 +43,13 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $pageMapper = new PageMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_pages')) {
+            foreach($this->getRequest()->getPost('check_pages') as $pageId) {
+                $pageMapper->delete($pageId);
+            }
+        }
+
         $pages = $pageMapper->getPageList('');
 
         $this->getView()->set('pageMapper', $pageMapper);
@@ -53,8 +60,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        $pageMapper = new PageMapper();
-        $pageMapper->delete($this->getRequest()->getParam('id'));
+        if($this->getRequest()->isSecure()) {
+            $pageMapper = new PageMapper();
+            $pageMapper->delete($this->getRequest()->getParam('id'));
+        }
         $this->redirect(array('action' => 'index'));
     }
 

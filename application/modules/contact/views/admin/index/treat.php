@@ -33,15 +33,11 @@
                    value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getEmail()); } ?>" />
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('receiver') != '') {
-                echo $this->trans('editButton');
-            } else {
-                echo $this->trans('addButton');
-            }
-            ?>
-        </button>
-    </div>
+    <?php
+    if ($this->get('receiver') != '') {
+        echo $this->getSaveBar('editButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>

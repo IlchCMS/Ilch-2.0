@@ -38,23 +38,29 @@ class Index extends \Ilch\Controller\Admin
         );
     }
 
-
-
     public function indexAction()
     {
-        $shoutboxMapper = new ShoutboxMapper();        
+        $shoutboxMapper = new ShoutboxMapper();    
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_entries')) {
+            foreach($this->getRequest()->getPost('check_entries') as $entryId) {
+                $shoutboxMapper->delete($entryId);
+            }
+        }
+
         $shoutbox = $shoutboxMapper->getShoutbox();
-        
         $this->getView()->set('shoutbox', $shoutbox);
     }
     
     public function deleteAction()
     {
-        $shoutboxMapper = new ShoutboxMapper();
-        $shoutboxMapper->delete($this->getRequest()->getParam('id'));
-        
-        $this->addMessage('deleteSuccess');
-        
+        if($this->getRequest()->isSecure()) {
+            $shoutboxMapper = new ShoutboxMapper();
+            $shoutboxMapper->delete($this->getRequest()->getParam('id'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
         $this->redirect(array('action' => 'index'));
     }
 }

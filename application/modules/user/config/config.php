@@ -75,8 +75,9 @@ class Config extends \Ilch\Config\Install
                   `page_id` int(11) DEFAULT 0,
                   `module_id` int(11) DEFAULT 0,
                   `article_id` int(11) DEFAULT 0,
+                  `box_id` int(11) DEFAULT 0,
                   `access_level` int(11) DEFAULT 0,
-                  PRIMARY KEY (`group_id`, `page_id`, `module_id`, `article_id`)
+                  PRIMARY KEY (`group_id`, `page_id`, `module_id`, `article_id`, `box_id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }

@@ -27,9 +27,5 @@
                    required />
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php echo $this->trans('saveButton'); ?>
-        </button>
-    </div>
+    <?=$this->getSaveBar()?>
 </form>

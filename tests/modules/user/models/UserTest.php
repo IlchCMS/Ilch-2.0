@@ -247,4 +247,26 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
         $user->setGroups(array());
         $this->assertFalse($user->hasGroup(2), 'The user has the group with id "2".');
     }
+
+    /**
+     * Tests if the access for a user can be returned.
+     */
+    public function testHasAccess()
+    {
+        $group = new GroupModel();
+        $group->setId(3);
+        $group->setName('Testgroup');
+        $user = new UserModel();
+        $user->setId(123);
+        $user->addGroup($group);
+
+        $dbMock = $this->getMock('Ilch_Database', array('queryCell'));
+        $dbMock->expects($this->once())
+                ->method('queryCell')
+                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN [prefix]_modules'), $this->stringContains('user')))
+                ->will($this->returnValue('0'));
+        \Ilch\Registry::set('db', $dbMock);
+
+        $this->assertEquals(0, $user->hasAccess('module_user'));
+    }
 }

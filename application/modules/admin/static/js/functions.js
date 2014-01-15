@@ -1,6 +1,3 @@
-/**
- * toggle the Sidebar
- */
 function toggleSidebar(){
 	var $sidebar = $('.app_left');
 	var $content = $('.app_right');
@@ -47,3 +44,46 @@ function toggleSidebar(){
 		width: state
 	}, speed);
 }
+
+$(document).ready
+(
+    function()
+    {
+        $('.listChooser a').click
+        (
+            function()
+            {
+                if ($(this).data('hiddenkey') == 'setfree') {
+                    txt = 'Sollen die markierten Einträge wirklich freigeschalten werden ?'
+                }
+
+                if ($(this).data('hiddenkey') == 'delete') {
+                    txt = 'Sollen die markierten Einträge wirklich gelöscht werden ?'
+                }
+
+                if (confirm(txt)) {
+                    $('.content_savebox_hidden').val($(this).data('hiddenkey'));
+                    $(this).closest('form').submit();
+                }
+            }
+        );
+
+        $('.check_all').click
+        (
+            function()
+            {
+                $('input[name='+$(this).data('childs')+'\\[\\]]').prop('checked', $(this).is(":checked"));
+            }
+        );
+
+        $('.delete_button').click
+        (
+            function(event)
+            {
+                if (!confirm("Sollen der Eintrag wirklich gelöscht werden ?")) {
+                    event.preventDefault();
+                }
+            }
+        );
+    }
+);

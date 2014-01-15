@@ -43,23 +43,60 @@ class Boxes extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $boxMapper = new BoxMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_boxes')) {
+            foreach($this->getRequest()->getPost('check_boxes') as $boxId) {
+                $boxMapper->delete($boxId);
+            }
+        }
+
         $boxes = $boxMapper->getBoxList('');
-        
+
+        /*
+         * Filtering boxes out which are not allowed for the user.
+         */
+        $user = \Ilch\Registry::get('user');
+
+        foreach($boxes as $key => $box) {
+            if(!$user->hasAccess('box_'.$box->getId())) {
+                unset($boxes[$key]);
+            }
+        }
+
         $this->getView()->set('boxMapper', $boxMapper);
         $this->getView()->set('boxes', $boxes);
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
     }
 
+    /**
+     * Deleting a box.
+     *
+     * If the user has no rights to do so, just redirect to index.
+     */
     public function deleteAction()
     {
-        $boxMapper = new BoxMapper();
-        $boxMapper->delete($this->getRequest()->getParam('id'));
+        $user = \Ilch\Registry::get('user');
+
+        if($user->hasAccess('box_'.$this->getRequest()->getParam('id'))
+                && $this->getRequest()->isSecure()) {
+            $boxMapper = new BoxMapper();
+            $boxMapper->delete($this->getRequest()->getParam('id'));
+        }
+
         $this->redirect(array('action' => 'index'));
     }
 
     public function treatAction()
     {
+        if($this->getRequest()->getParam('id') !== null) {
+            $user = \Ilch\Registry::get('user');
+
+            if(!$user->hasAccess('box_'.$this->getRequest()->getParam('id'))) {
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $boxMapper = new BoxMapper();
 
@@ -85,7 +122,7 @@ class Boxes extends \Ilch\Controller\Admin
 
             $model->setTitle($this->getRequest()->getPost('boxTitle'));
             $model->setContent($this->getRequest()->getPost('boxContent'));
-            
+
             if ($this->getRequest()->getPost('boxLanguage') != '') {
                 $model->setLocale($this->getRequest()->getPost('boxLanguage'));
             } else {

@@ -48,15 +48,11 @@
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('partner') != '') {
-                echo $this->trans('editButton');
-            } else {
-                echo $this->trans('addButton');
-            }
-            ?>
-        </button>
-    </div>
+    <?php
+    if ($this->get('partner') != '') {
+        echo $this->getSaveBar('editButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>

@@ -43,14 +43,24 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $receiverMapper = new ReceiverMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_receivers')) {
+            foreach($this->getRequest()->getPost('check_receivers') as $receiveId) {
+                $receiverMapper->delete($receiveId);
+            }
+        }
+
         $receivers = $receiverMapper->getReceivers();
         $this->getView()->set('receivers', $receivers);
     }
 
     public function deleteAction()
     {
-        $receiverMapper = new ReceiverMapper();
-        $receiverMapper->delete($this->getRequest()->getParam('id'));
+        if($this->getRequest()->isSecure()) {
+            $receiverMapper = new ReceiverMapper();
+            $receiverMapper->delete($this->getRequest()->getParam('id'));
+        }
+
         $this->redirect(array('action' => 'index'));
     }
 

@@ -45,6 +45,19 @@ class Index extends BaseController
     public function indexAction()
     {
         $userMapper = new UserMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
+            foreach($this->getRequest()->getPost('check_users') as $userId) {
+                $deleteUser = $userMapper->getUserById($userId);
+
+                if ($deleteUser->getId() != Registry::get('user')->getId()) {
+                    if($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() == 1) {} else {
+                        $userMapper->delete($deleteUser->getId());
+                    }
+                }
+            }
+        }
+
         $userList = $userMapper->getUserList();
         $this->getView()->set('userList', $userList);
         $this->getView()->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'));
@@ -112,7 +125,7 @@ class Index extends BaseController
         $userMapper = new UserMapper();
         $userId = $this->getRequest()->getParam('id');
 
-        if ($userId) {
+        if ($userId && $this->getRequest()->isSecure()) {
             $deleteUser = $userMapper->getUserById($userId);
 
             /*

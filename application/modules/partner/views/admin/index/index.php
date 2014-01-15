@@ -1,5 +1,6 @@
 <legend><?php echo $this->trans('managePartner'); ?></legend>
-<div id="img-responsive">
+<form class="form-horizontal" method="POST" action="">
+<?=$this->getTokenField()?>
     <ul class="nav nav-tabs">
         <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
             <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">
@@ -16,15 +17,19 @@
     </ul>
     <br />
     <div class="responsive panel bordered">
-        <table class="table table-bordered table-striped table-responsive">
+        <table class="table table-striped table-responsive">
             <colgroup>
-                <col class="col-lg-1">
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="icon_width">
                 <col class="col-lg-2">
                 <col />
             </colgroup>
             <thead>
                 <tr>
-                    <th><?php echo $this->trans('treat'); ?></th>
+                    <th><?=$this->getCheckAllCheckbox('check_entries')?></th>
+                    <th></th>
+                    <th></th>
                     <th><?php echo $this->trans('name'); ?></th>
                     <th><?php echo $this->trans('banner'); ?></th>
                 </tr>
@@ -32,6 +37,7 @@
             <tbody>
                 <?php foreach ($this->get('entries') as $entry) : ?>
                     <tr>
+                        <td><input value="<?=$entry->getId()?>" type="checkbox" name="check_entries[]" /></td>
                         <td>
                         <?php if($this->getRequest()->getParam('showsetfree')) {
                             $freeArray = array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId());
@@ -40,10 +46,12 @@
                                 $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
                             }
                         ?>
-                            <a href="<?php echo $this->url($freeArray).'" title="'.$this->trans('setfree'); ?>"><i class="fa fa-check text-success"></i></a>
-                        <?php }else{ ?>
-                            <a href="<?php echo $this->url(array('action' => 'treat', 'id' => $entry->getId())).'" title="'.$this->trans('treat'); ?>"><i class="fa fa-edit"></i></a>
-                        <?php } ?>
+                            <a href="<?php echo $this->url($freeArray).'" title="'.$this->trans('setfree'); ?>"><i class="fa fa-check-square-o text-success"></i></a>
+                        <?php }else{
+                            echo $this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId()));
+                        } ?>
+                        </td>
+                        <td>
                             <?php
                                 $deleteArray = array('action' => 'del', 'id' => $entry->getId());
 
@@ -51,12 +59,7 @@
                                     $deleteArray = array('action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1);
                                 }
                             ?>
-                        <span class="deleteLink clickable fa fa-trash-o fa-1x text-danger"
-                                      data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $entry->getId())); ?>"
-                                      data-toggle="modal"
-                                      data-target="#deleteModal"
-                                      data-modaltext="<?php echo $this->escape($this->trans('askIfDeletePartner', $this->escape($entry->getName()))); ?>"
-                                      title="<?php echo $this->trans('delete'); ?>"></span>
+                            <?=$this->getDeleteIcon($deleteArray)?>
                         </td>
                         <td>
                             <?php echo $this->escape($entry->getName()); ?>
@@ -69,20 +72,13 @@
             </tbody>
         </table>
     </div>
-</div>
+    <?php
+    $actions = array('delete' => 'delete');
 
-<script>
-$('.deleteLink').on('click', function(event) {
-    $('#modalButton').data('clickurl', $(this).data('clickurl'));
-    $('#modalText').html($(this).data('modaltext'));
-});
-
-$('#modalButton').on('click', function(event) {
-    window.location = $(this).data('clickurl');
-});
-</script>
-<style>
-    .deleteLink {
-        padding-left: 10px;
+    if($this->getRequest()->getParam('showsetfree')) {
+        $actions = array('delete' => 'delete', 'setfree' => 'setfree');
     }
-</style>
+
+    echo $this->getListBar($actions);
+    ?>
+</form>

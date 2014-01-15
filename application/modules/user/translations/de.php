@@ -58,6 +58,7 @@ return array
     'module' => 'Modul',
     'page' => 'Seite',
     'article' => 'Artikel',
+    'box' => 'Box',
     'chooseAGroup' => 'Bitte wählen Sie eine Gruppe aus.',
     'group' => 'Gruppe',
 );

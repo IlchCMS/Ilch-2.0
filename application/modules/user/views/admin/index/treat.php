@@ -1,7 +1,5 @@
 <?php
 /**
- * Viewfile for user creation and editing.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -125,12 +123,7 @@ else {
                 </select>
             </div>
         </div>
-        <div class="content_savebox">
-            <input id="formSubmit"
-                   type="submit"
-                   class="btn btn-default"
-                   value="<?php echo $this->trans('save'); ?>" />
-        </div>
+        <?=$this->getSaveBar()?>
     </form>
 </fieldset>
 <script>

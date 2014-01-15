@@ -307,6 +307,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
                 'page_id' => '0',
                 'module_id' => '11',
                 'article_id' => '0',
+                'box_id' => '0',
                 'access_level' => '2',
             ),
             array(
@@ -315,6 +316,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
                 'page_id' => '0',
                 'module_id' => '10',
                 'article_id' => '0',
+                'box_id' => '0',
                 'access_level' => '1',
             ),
             array(
@@ -323,6 +325,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
                 'page_id' => '1',
                 'module_id' => '0',
                 'article_id' => '0',
+                'box_id' => '0',
                 'access_level' => '1',
             ),
             array(
@@ -331,6 +334,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
                 'page_id' => '0',
                 'module_id' => '0',
                 'article_id' => '1',
+                'box_id' => '0',
                 'access_level' => '1',
             ),
             array(
@@ -339,6 +343,16 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
                 'page_id' => '0',
                 'module_id' => '0',
                 'article_id' => '2',
+                'box_id' => '0',
+                'access_level' => '2',
+            ),
+            array(
+                'group_name' => 'Squad Leader',
+                'group_id' => '4',
+                'page_id' => '0',
+                'module_id' => '0',
+                'article_id' => '0',
+                'box_id' => '2',
                 'access_level' => '2',
             ),
         );
@@ -355,15 +369,18 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         $expectedAccessList = array(
             'group_name' => 'Squad Leader',
             'entries' => array(
-                'pages' => array(
+                'page' => array(
                     1 => 1,
                 ),
-                'modules' => array(
+                'module' => array(
                     11 => 2,
                     10 => 1,
                 ),
-                'articles' => array(
+                'article' => array(
                     1 => 1,
+                    2 => 2,
+                ),
+                'box' => array(
                     2 => 2,
                 ),
             ),

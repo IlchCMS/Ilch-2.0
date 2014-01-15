@@ -240,32 +240,34 @@ class Group extends \Ilch\Mapper
                 WHERE ga.group_id = '.(int)$groupId;
         $accessDbList = $this->db()->queryArray($sql);
         $accessList = array();
+        $accessList['entries'] = array(
+            'page' => array(),
+            'module' => array(),
+            'article' => array(),
+            'box' => array(),
+        );
+        $accessTypes = array(
+            'module',
+            'page',
+            'article',
+            'box',
+        );
 
         foreach($accessDbList as $accessDbListEntry) {
-            if(empty($accessList)) {
+            if(empty($accessList['group_name'])) {
                 /*
-                 * First entry.
+                 * Only on first entry.
                  */
                 $accessList['group_name'] = $accessDbListEntry['group_name'];
-                $accessList['entries'] = array(
-                    'pages' => array(),
-                    'modules' => array(),
-                    'articles' => array(),
-                );
             }
 
-            if(!empty($accessDbListEntry['module_id'])) {
-                $entryType = 'modules';
-                $entryId = $accessDbListEntry['module_id'];
-            } elseif(!empty($accessDbListEntry['page_id'])) {
-                $entryType = 'pages';
-                $entryId = $accessDbListEntry['page_id'];
-            } elseif(!empty($accessDbListEntry['article_id'])) {
-                $entryType = 'articles';
-                $entryId = $accessDbListEntry['article_id'];
+            foreach($accessTypes as $accessType) {
+                if(!empty($accessDbListEntry[$accessType.'_id'])) {
+                    $entryId = $accessDbListEntry[$accessType.'_id'];
+                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_id']] = $accessDbListEntry['access_level'];
+                    break;
+                }
             }
-
-            $accessList['entries'][$entryType][$entryId] = $accessDbListEntry['access_level'];
         }
 
         return $accessList;
