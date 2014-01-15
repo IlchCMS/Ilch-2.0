@@ -33,78 +33,86 @@ class Menu extends \Ilch\Controller\Admin
          * Saves the item tree to database.
          */
         if ($this->getRequest()->isPost()) {
-            $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
-            $items = $this->getRequest()->getPost('items');
-            $oldItems = $menuMapper->getMenuItems($menuId);
+            if ($this->getRequest()->getPost('save')) {
+                $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
+                $items = $this->getRequest()->getPost('items');
+                $oldItems = $menuMapper->getMenuItems($menuId);
 
-            /*
-             * Deletes old entries from database.
-             */
-            if (!empty($oldItems)) {
-                foreach ($oldItems as $oldItem) {
-                    if (!isset($items[$oldItem->getId()])) {
-                        $menuMapper->deleteItem($oldItem);
-                    }
-                }
-            }
-
-            if ($items) {
-                $sortArray = array();
-
-                foreach ($sortItems as $sortItem) {
-                    if ($sortItem->item_id !== null) {
-                        $sortArray[$sortItem->item_id] = (int)$sortItem->parent_id;
-                    }
-                }
-
-                foreach ($items as $item) {
-                    $menuItem = new MenuItem();
-
-                    if (strpos($item['id'], 'tmp_') !== false) {
-                        $tmpId = str_replace('tmp_', '', $item['id']);
-                    } else {
-                        $menuItem->setId($item['id']);
-                    }
-
-                    $menuItem->setMenuId($menuId);
-                    $menuItem->setType($item['type']);
-                    $menuItem->setSiteId($item['siteid']);
-                    $menuItem->setHref($item['href']);
-                    $menuItem->setTitle($item['title']);
-                    $menuItem->setBoxKey($item['boxkey']);
-                    $menuItem->setModuleKey($item['modulekey']);
-                    
-                    $newId = $menuMapper->saveItem($menuItem);
-
-                    if (isset($tmpId)) {
-                        foreach ($sortArray as $id => $parentId) {
-                            if ($id == $tmpId) {
-                                unset($sortArray[$id]);
-                                $sortArray[$newId] = $parentId;
-                            }
-
-                            if ($parentId == $tmpId) {
-                                $sortArray[$id] = $newId;
-                            }
+                /*
+                 * Deletes old entries from database.
+                 */
+                if (!empty($oldItems)) {
+                    foreach ($oldItems as $oldItem) {
+                        if (!isset($items[$oldItem->getId()])) {
+                            $menuMapper->deleteItem($oldItem);
                         }
                     }
                 }
 
-                $sort = 0;
+                if ($items) {
+                    $sortArray = array();
 
-                foreach ($sortArray as $id => $parent) {
-                    $menuItem = new MenuItem();
-                    $menuItem->setId($id);
-                    $menuItem->setSort($sort);
-                    $menuItem->setParentId($parent);
-                    $menuMapper->saveItem($menuItem);
-                    $sort += 10;
+                    foreach ($sortItems as $sortItem) {
+                        if ($sortItem->item_id !== null) {
+                            $sortArray[$sortItem->item_id] = (int)$sortItem->parent_id;
+                        }
+                    }
+
+                    foreach ($items as $item) {
+                        $menuItem = new MenuItem();
+
+                        if (strpos($item['id'], 'tmp_') !== false) {
+                            $tmpId = str_replace('tmp_', '', $item['id']);
+                        } else {
+                            $menuItem->setId($item['id']);
+                        }
+
+                        $menuItem->setMenuId($menuId);
+                        $menuItem->setType($item['type']);
+                        $menuItem->setSiteId($item['siteid']);
+                        $menuItem->setHref($item['href']);
+                        $menuItem->setTitle($item['title']);
+                        $menuItem->setBoxKey($item['boxkey']);
+                        $menuItem->setModuleKey($item['modulekey']);
+
+                        $newId = $menuMapper->saveItem($menuItem);
+
+                        if (isset($tmpId)) {
+                            foreach ($sortArray as $id => $parentId) {
+                                if ($id == $tmpId) {
+                                    unset($sortArray[$id]);
+                                    $sortArray[$newId] = $parentId;
+                                }
+
+                                if ($parentId == $tmpId) {
+                                    $sortArray[$id] = $newId;
+                                }
+                            }
+                        }
+                    }
+
+                    $sort = 0;
+
+                    foreach ($sortArray as $id => $parent) {
+                        $menuItem = new MenuItem();
+                        $menuItem->setId($id);
+                        $menuItem->setSort($sort);
+                        $menuItem->setParentId($parent);
+                        $menuMapper->saveItem($menuItem);
+                        $sort += 10;
+                    }
                 }
+
+                $menu = new MenuModel();
+                $menu->setId($menuId);
+                $menuMapper->save($menu);
             }
 
-            $menu = new MenuModel();
-            $menu->setId($menuId);
-            $menuMapper->save($menu);
+            if ($this->getRequest()->getPost('delete')) {
+                $id = (int)$this->getRequest()->getParam('menu');
+                $menuMapper->delete($id);        
+                $this->redirect(array('action' => 'index'));   
+            }
 
             $this->addMessage('saveSuccess');
         }
@@ -132,7 +140,7 @@ class Menu extends \Ilch\Controller\Admin
         $this->getView()->set('boxes', (array)$boxMapper->getBoxList($locale));
         $this->getView()->set('modules', $moduleMapper->getModules());
     }
-    
+
     public function addAction()
     {
         $menuMapper = new MenuMapper();
@@ -141,14 +149,5 @@ class Menu extends \Ilch\Controller\Admin
         $newId = $menuMapper->save($menu);
         $this->addMessage('saveSuccess');
         $this->redirect(array('action' => 'index', 'menu' => $newId));
-    }
-    
-    public function deleteAction()
-    {
-        $menuMapper = new MenuMapper();
-        $id = (int)$this->getRequest()->getParam('id');
-        $menuMapper->delete($id);        
-        $this->addMessage('saveSuccess');
-        $this->redirect(array('action' => 'index'));       
     }
 }

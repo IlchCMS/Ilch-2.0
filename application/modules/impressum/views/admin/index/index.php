@@ -73,11 +73,7 @@
                       rows="5"><?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getDisclaimer()); } ?></textarea>
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php echo $this->trans('editButton'); ?>
-        </button>
-    </div>
+    <?=$this->getSaveBar('editButton')?>
 </form>
 
 <script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>

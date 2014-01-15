@@ -1,4 +1,6 @@
 <legend><?php echo $this->trans('manage'); ?></legend>
+<form class="form-horizontal" method="POST" action="">
+<?=$this->getTokenField()?>
 <div id="img-responsive">
     <ul class="nav nav-tabs">
         <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
@@ -16,16 +18,28 @@
     </ul>
     <br />
     <div class="responsive panel bordered">
-        <table class="table table-bordered table-striped table-responsive">
+        <table class="table table-striped table-responsive">
             <colgroup>
-                <col class="col-lg-1" />
+                <col class="icon_width" />
+                <?php
+                    if($this->getRequest()->getParam('showsetfree')) {
+                        echo '<col class="icon_width" />';
+                    }
+                ?>
+                <col class="icon_width" />
                 <col class="col-lg-2" />
                 <col class="col-lg-2" />
                 <col />
             </colgroup>
             <thead>
                 <tr>
-                    <th><?php echo $this->trans('treat'); ?></th>
+                    <th><?=$this->getCheckAllCheckbox('check_entries')?></th>
+                    <?php
+                        if($this->getRequest()->getParam('showsetfree')) {
+                            echo '<th></th>';
+                        }
+                    ?>
+                    <th></th>
                     <th><?php echo $this->trans('from'); ?></th>
                     <th><?php echo $this->trans('date'); ?></th>
                     <th><?php echo $this->trans('message'); ?></th>
@@ -34,27 +48,28 @@
             <?php foreach ($this->get('entries') as $entry) : ?>
             <tbody>
                 <tr>
-                    <td>
+                    <td><input value="<?=$entry->getId()?>" type="checkbox" name="check_entries[]" /></td>
                     <?php
                         if($this->getRequest()->getParam('showsetfree')) {
+                            echo '<td>';
                             $freeArray = array('action' => 'setfree', 'id' => $entry->getId());
             
                             if($this->get('badge') > 1) {
                                 $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
                             }
-                    ?>
-                        <a href="<?php echo $this->url($freeArray).'" title="'.$this->trans('setfree'); ?>">
-                            <i class="fa fa-check"></i>
-                        </a>
-                    <?php }
+
+                           echo '<a href="'.$this->url($freeArray).'"><span class="fa fa-check-square-o text-success"></span></a>';
+                           echo '</td>';
+                        }
+                        
                         $deleteArray = array('action' => 'del', 'id' => $entry->getId());
 
                         if($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
                             $deleteArray = array('action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1);
                         }
                     ?>
-                        <a href="<?php echo $this->url($deleteArray).'" title="'.$this->trans('delete'); ?>"><i class="fa fa-times-circle"></i></a>
                     </td>
+                    <td><?=$this->getDeleteIcon($deleteArray)?></td>
                     <td>
                         <?php echo $this->escape($entry->getName()); ?>
                     </td>
@@ -70,3 +85,12 @@
         </table>
     </div>
 </div>
+<?php
+$actions = array('delete' => 'delete');
+
+if($this->getRequest()->getParam('showsetfree')) {
+    $actions = array('delete' => 'delete', 'setfree' => 'setfree');
+}
+
+echo $this->getListBar($actions);
+?>

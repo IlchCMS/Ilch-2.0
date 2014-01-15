@@ -13,7 +13,7 @@ class Model
      * @var array
      */
     protected $_data;
-    
+
     /**
      * Injects the layout.
      *

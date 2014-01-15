@@ -1,7 +1,5 @@
 <?php
 /**
- * Viewfile for the access page.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -56,15 +54,17 @@
                 ?>
                 <table class="table table-hover table-striped">
                     <colgroup>
-                        <col class="col-lg-2">
-                        <col />
+                        <col class="col-lg-9">
+                        <col class="col-lg-1">
+                        <col class="col-lg-1">
+                        <col class="col-lg-1">
                     </colgroup>
                     <thead>
                         <tr>
                             <th><?php echo $this->trans($accessType); ?></th>
                             <?php
                             foreach($accessLevelsTrans as $transKey) {
-                                echo '<th>'.$this->trans($transKey).'</th>';
+                                echo '<th class="text-center">'.$this->trans($transKey).'</th>';
                             }
                             ?>
                         </tr>
@@ -82,14 +82,16 @@
                                        echo $this->escape($type->getTitle());
                                     } elseif($accessType == 'page') {
                                         echo $this->escape($type->getTitle());
+                                    } elseif($accessType == 'box') {
+                                        echo $this->escape($type->getTitle());
                                     }
                                     ?>
                                 </td>
                                 <?php
                                 $groupHasEntries = true;
 
-                                if(isset($groupAccessList['entries'][$accessType.'s'])) {
-                                    $typeEntries = $groupAccessList['entries'][$accessType.'s'];
+                                if(isset($groupAccessList['entries'][$accessType])) {
+                                    $typeEntries = $groupAccessList['entries'][$accessType];
                                 } else {
                                     $groupHasEntries = false;
                                 }
@@ -106,16 +108,11 @@
 
                                 foreach($accessLevelsTrans as $accessLevel => $transKey) {
                                     ?>
-                                    <td>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio"
-                                                       name="groupAccess<?php echo '['.$accessType.']['.$type->getId().']'; ?>"
-                                                       value="<?php echo $accessLevel; ?>"
-                                                       <?php echo ($accessLevel == $typeAccessLevel) ? 'checked' : '' ?>/>
-                                                <?php echo $this->trans($transKey); ?>
-                                            </label>
-                                        </div>
+                                    <td class="text-center">
+                                        <input type="radio"
+                                               name="groupAccess<?php echo '['.$accessType.']['.$type->getId().']'; ?>"
+                                               value="<?php echo $accessLevel; ?>"
+                                               <?php echo ($accessLevel == $typeAccessLevel) ? 'checked' : '' ?>/>
                                     </td>
                                     <?php
                                 }
@@ -129,12 +126,7 @@
             <?php
         }
         ?>
-        <div class="content_savebox">
-            <input id="formSubmit"
-                   type="submit"
-                   class="btn btn-default"
-                   value="<?php echo $this->trans('save'); ?>" />
-        </div>
+        <?=$this->getSaveBar()?>
         <?php
     }
     ?>

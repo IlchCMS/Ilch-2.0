@@ -52,14 +52,24 @@ class Index extends \Ilch\Controller\Admin
             )
         );
     }
-    
- 
 
     public function indexAction()
     {
         $linkMapper = new LinkMapper();
         $categoryMapper = new CategoryMapper();
-        
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_cats')) {
+            foreach($this->getRequest()->getPost('check_cats') as $catId) {
+                $categoryMapper->delete($catId);
+            }
+        }
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_links')) {
+            foreach($this->getRequest()->getPost('check_links') as $linkId) {
+                $linkMapper->delete($linkId);
+            }
+        }
+
         if ($this->getRequest()->getParam('cat_id')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
             $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
@@ -87,21 +97,23 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteCatAction()
     {
-        $categorykMapper = new CategoryMapper();
-        $categorykMapper->delete($this->getRequest()->getParam('id'));
-        
-        $this->addMessage('deleteSuccess');
-        
+        if($this->getRequest()->isSecure()) {
+            $categorykMapper = new CategoryMapper();
+            $categorykMapper->delete($this->getRequest()->getParam('id'));
+            $this->addMessage('deleteSuccess');
+        }
+
         $this->redirect(array('action' => 'index'));
     }
 
     public function deleteLinkAction()
     {
-        $linkMapper = new LinkMapper();
-        $linkMapper->delete($this->getRequest()->getParam('id'));
-        
-        $this->addMessage('deleteSuccess');
-        
+        if($this->getRequest()->isSecure()) {
+            $linkMapper = new LinkMapper();
+            $linkMapper->delete($this->getRequest()->getParam('id'));
+            $this->addMessage('deleteSuccess');
+        }
+
         $this->redirect(array('action' => 'index'));
     }
 

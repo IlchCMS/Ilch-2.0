@@ -193,15 +193,15 @@ abstract class Base
      *
      * @param  array   $urlArray
      * @param  string  $route
-     * @param  boolean $rewrite
+     * @param  boolean $secure
      * @return string
      */
-    public function url($urlArray = array(), $route = null, $rewrite  = false)
+    public function url($urlArray = array(), $route = null, $secure  = false)
     {
         if (empty($urlArray)) {
             return BASE_URL;
         }
-        
+
         if (is_string($urlArray)) {
             return BASE_URL.'/index.php/'.$urlArray;
         }
@@ -231,6 +231,12 @@ abstract class Base
 
         foreach ($urlArray as $key => $value) {
             $urlParts[] = $key.'/'.$value;
+        }
+        
+        if ($secure) {
+            $token = uniqid();
+            $_SESSION['token'][$token] = $token;
+            $urlParts[] = 'ilch_token/'.$token;
         }
 
         $s = '';

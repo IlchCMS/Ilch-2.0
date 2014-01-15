@@ -115,11 +115,7 @@
                    value="<?php echo $this->escape($this->get('pageTitle')); ?>" />
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php echo $this->trans('saveButton'); ?>
-        </button>
-    </div>
+    <?=$this->getSaveBar()?>
 </form>
 <script>
     $('[name="multilingualAcp"]').click(function () {

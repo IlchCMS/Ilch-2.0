@@ -194,19 +194,7 @@ function rec($item, $menuMapper, $obj)
             </div>
         </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php echo $this->trans('saveButton'); ?>
-        </button>
-        <span class="deleteMenu clickable btn pull-right"
-              data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $this->get('menu')->getId())); ?>"
-              data-toggle="modal"
-              data-target="#deleteModal"
-              data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteMenu', $this->get('menu')->getTitle())); ?>">
-                  <?php echo $this->trans('deleteMenu'); ?>
-        </span>
-
-    </div>
+    <?=$this->getSaveBar('saveButton', 'deleteMenu')?>
 </form>
 <script>
     function resetBox() {

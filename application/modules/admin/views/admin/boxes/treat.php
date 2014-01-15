@@ -25,7 +25,7 @@
         <textarea class="form-control" name="boxContent"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
     </div>
     <?php
-        if ($this->get('multilingual')) {
+        if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
     ?>
     <div class="form-group">
         <label for="boxLanguageInput" class="col-lg-2 control-label">
@@ -53,18 +53,13 @@
     </div>
     <?php
         }
+
+        if ($this->get('box') != '') {
+            echo $this->getSaveBar('editButtonBox');
+        } else {
+            echo $this->getSaveBar('addButtonBox');
+        }
     ?>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('box') != '') {
-                echo $this->trans('editButtonBox');
-            } else {
-                echo $this->trans('addButtonBox');
-            }
-            ?>
-        </button>
-    </div>
 </form>
 <script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>

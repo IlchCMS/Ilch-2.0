@@ -66,19 +66,15 @@
                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } ?>" />
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('article') != '') {
-                echo $this->trans('editButton');
-            } else {
-                echo $this->trans('addButton');
-            }
-            ?>
-        </button>
-    </div>
+    <?php
+    if ($this->get('article') != '') {
+        echo $this->getSaveBar('editButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>
-<script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
+<script src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
 <?php
 $articleID = '';

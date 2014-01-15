@@ -60,6 +60,7 @@ return array
     'module' => 'Module',
     'page' => 'Page',
     'article' => 'Article',
+    'box' => 'Box',
     'chooseAGroup' => 'Please choose a group.',
     'group' => 'Group',
     
