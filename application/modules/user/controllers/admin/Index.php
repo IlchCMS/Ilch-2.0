@@ -88,6 +88,9 @@ class Index extends BaseController
                 }
             }
 
+            $date = new \Ilch\Date();
+            $user->setDateCreated($date);
+
             $userId = $userMapper->save($user);
 
             if (!empty($userId) && empty($userData['id'])) {

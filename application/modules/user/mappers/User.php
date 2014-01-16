@@ -191,6 +191,7 @@ class User extends \Ilch\Mapper
         $email = $user->getEmail();
         $dateConfirmed = $user->getDateConfirmed();
         $dateLastActivity = $user->getDateLastActivity();
+        $dateCreated = $user->getDateCreated();
 
         if (!empty($name)) {
             $fields['name'] = $user->getName();
@@ -202,6 +203,10 @@ class User extends \Ilch\Mapper
 
         if (!empty($email)) {
             $fields['email'] = $user->getEmail();
+        }
+        
+        if (!empty($dateCreated)) {
+            $fields['date_created'] = $user->getDateCreated()->toDb();
         }
 
         if (!empty($dateConfirmed)) {
@@ -236,9 +241,6 @@ class User extends \Ilch\Mapper
                 )
             );
         } else {
-            $date = new \Ilch\Date();
-            $fields['date_created'] = $date->toDb();
-
             /*
              * User does not exist yet, insert.
              */
