@@ -104,8 +104,8 @@ class Model
                     $html .= str_replace('%s', $item->getTitle(), $tpl);
     
                     if ($item->getType() == 4) {
-                        if (is_int($item->getBoxKey())) {
-                            $box = $boxMapper->getBoxByIdLocale($item->getBoxKey(), $locale);
+                        if ($item->getBoxId()) {
+                            $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
                         } else {
                             $class = 'Boxes\\'.ucfirst($item->getBoxKey()).'\\Index';
                             $view = new \Ilch\View($this->_layout->getRequest(), $this->_layout->getTranslator(), $this->_layout->getRouter());
