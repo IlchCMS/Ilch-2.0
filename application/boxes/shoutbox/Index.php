@@ -5,6 +5,7 @@
  */
 
 namespace Boxes\Shoutbox;
+
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Box

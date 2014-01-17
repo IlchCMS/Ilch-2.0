@@ -4,6 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <?php echo $this->getHeader(); ?>
         <link href="<?php echo $this->staticUrl('../application/layouts/2columns/style.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->staticUrl('../application/modules/user/static/css/user.css'); ?>" rel="stylesheet">
         <link rel="icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>" type="image/x-icon" />
     </head>
     <body>
@@ -35,7 +36,7 @@
             </div>
         </div> 
         <div class="container credit">
-            <p class="muted credit">© Ilch CMS | <?php echo '<a href="'.$this->url('admin').'">Administrator</a>'; ?></p>
+            <p class="muted credit">© Ilch CMS | <?php echo '<a href="'.$this->url(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')).'">Administrator</a>'; ?></p>
         </div>  
     </body>
 </html>

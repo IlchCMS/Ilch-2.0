@@ -10,4 +10,5 @@ return array
 (
     'send' => 'Absenden',
     'message' => 'Nachricht',
+    'archive' => 'Archiv',
 );

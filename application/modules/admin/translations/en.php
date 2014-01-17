@@ -19,7 +19,7 @@ return array
     'menuChange' => 'Menu change',
     'menuItemAdd' => 'Add menu item',
     'loginWelcome' => 'Please sign in',
-    'emailname' => 'Email or Username',
+    'emailname' => 'Username or E-Mail',
     'password' => 'Password',
     'rememberMe' => 'Remember me',
     'signIn' => 'Sign in',
