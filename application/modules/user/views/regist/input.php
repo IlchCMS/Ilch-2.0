@@ -6,7 +6,7 @@
         <label for="name" class="control-label col-lg-3">
             <?php echo $this->trans('name'); ?>:
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-9">
             <input value=""
                    type="text"
                    name="name"
@@ -19,11 +19,12 @@
             ?>
         </div>
     </div>
+<?php if ($this->get('regist_password') == '1') { ?>
     <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
         <label for="password" class="control-label col-lg-3">
             <?php echo $this->trans('password'); ?>:
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-9">
             <input value=""
                    type="password"
                    class="form-control"
@@ -40,7 +41,7 @@
         <label for="password2" class="control-label col-lg-3">
             <?php echo $this->trans('password2'); ?>:
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-9">
             <input value=""
                    type="password"
                    class="form-control"
@@ -53,11 +54,12 @@
             ?>
         </div>
     </div>
+<?php } ?>
     <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
         <label for="email" class="control-label col-lg-3">
             <?php echo $this->trans('email'); ?>:
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-9">
             <input value=""
                    type="text"
                    name="email"

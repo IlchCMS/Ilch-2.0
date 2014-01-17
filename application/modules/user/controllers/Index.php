@@ -17,8 +17,7 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuUserList'), array('action' => 'index'));
 
-        $userList = $userMapper->getUserList();
-        $this->getView()->set('userList', $userList);
+        $this->getView()->set('userList', $userMapper->getUserList(array('confirmed' => 1)));
     }    
 }
 

@@ -15,7 +15,7 @@
         </div>
         <div class="col-lg-11">
             Vielen Dank <b><?php echo $_SESSION["name"]; ?></b>, dass Sie sich registiert haben.<br />
-            Sie können sich nun mit Ihren Daten einloggen.
+            Sie können sich jetzt mit Ihren Benutzerdaten anmelden.
         </div>
     </div>
 <?php

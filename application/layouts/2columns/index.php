@@ -36,7 +36,7 @@
             </div>
         </div> 
         <div class="container credit">
-            <p class="muted credit">© Ilch CMS | <?php echo '<a href="'.$this->url('admin').'">Administrator</a>'; ?></p>
+            <p class="muted credit">© Ilch CMS | <?php echo '<a href="'.$this->url(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')).'">Administrator</a>'; ?></p>
         </div>  
     </body>
 </html>

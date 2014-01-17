@@ -1,46 +1,42 @@
 <?php 
-$check = $this->getRequest()->getParam('check');
-if (empty($check)) { 
+$code = $this->getRequest()->getParam('code');
+$confirm = $this->get('confirmed'); 
+
+if (empty($code) || empty($confirm)) { 
  ?>
     <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
         <?php echo $this->getTokenField();
             $errors = $this->get('errors');
         ?>
-        <div class="form-group <?php if (!empty($errors['check'])) { echo 'has-error'; }; ?>">
-            <label for="confirmCode" class="control-label col-lg-3">
+        <div class="form-group <?php if (!empty($errors['confirmedCode'])) { echo 'has-error'; }; ?>">
+            <label for="confirmedCode" class="control-label col-lg-3">
                 <?php echo $this->trans('confirmCode'); ?>:
             </label>
             <div class="col-lg-6">
                 <input value=""
                        type="text"
-                       name="check"
+                       name="confirmedCode"
                        class="form-control"
-                       id="check" />
+                       id="confirmedCode" />
                 <?php
-                    if (!empty($errors['check'])) {
-                        echo '<span class="help-inline">'.$this->trans($errors['check']).'</span>';
+                    if (!empty($errors['confirmedCode'])) {
+                        echo '<span class="help-inline">'.$this->trans($errors['confirmedCode']).'</span>';
                     }
                 ?>
             </div>
         </div>
         <button type="submit" name="save" class="btn pull-right"><?php echo $this->trans('menuConfirm'); ?></button>
     </form>
-<?php }else{
-    
-    
-    
-    foreach ($this->get('checks') as $checks) {
-        $checkCode = $checks->getCheck();
-        if (empty($checkCode)) { 
-            echo 'Es wurde kein Eintrag gefunden.<br />
-                  <br />
-                  Evtl. ist es schon zu lange her und der Eintrag wurde gelöscht oder der Eintrag wurde schon Aktiviiert.';   
-        }else{
-                echo 'test';
-        }
-    }
-    
-    
-    
-    
-} ?>
+<?php } else { ?>
+    <div class="row">
+        <div class="col-lg-1 fa-4x check">
+            <i class="fa fa-check-circle text-success" title=""></i>
+        </div>
+        <div class="col-lg-11">
+            Ihr Benutzerkonto wurde erfolgreich freigeschaltet.<br />
+            Sie können sich jetzt mit Ihren Benutzerdaten anmelden.
+        </div>
+    </div>
+<?php
+}
+?>

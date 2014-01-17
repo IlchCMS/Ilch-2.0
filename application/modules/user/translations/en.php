@@ -93,6 +93,13 @@ return array
     'fieldEmail' => 'email is not valid',
     'rulesForRegist' => 'Rules for Registration',
     'acceptUserRegis' => 'Allow User Registration?',
+    'passwordFreeChoice' => 'Password free choice?',
     'yes' => 'Yes',
     'no' => 'No',
+    
+    'menuLogin' => 'Login',
+    'login' => 'Login',
+    'nameEmail' => 'Username or E-Mail',
+    'register' => 'Register',
+    'forgotPassword' => 'Forgot password?',
 );

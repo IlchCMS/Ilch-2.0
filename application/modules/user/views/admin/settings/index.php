@@ -48,6 +48,29 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="regist_password" class="col-lg-2 control-label">
+            <?php echo $this->trans('passwordFreeChoice'); ?>:
+        </label>
+        <div class="col-lg-4">
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="regist_password"
+                       id="regist_password_yes" 
+                       value="1"
+                       <?php if ($this->get('regist_password') == '1') { echo 'checked="checked"';} ?>>
+                       <label for="regist_password_yes"><?php echo $this->trans('yes'); ?></label>
+            </label>
+            <label class="checkbox-inline">
+                <input type="radio"
+                       name="regist_password"
+                       id="regist_password_no" 
+                       value="0"
+                       <?php if ($this->get('regist_password') == '0') { echo 'checked="checked"';} ?>>
+                       <label for="regist_password_no"><?php echo $this->trans('no'); ?></label>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="regist_rules" class="col-lg-2 control-label">
             <?php echo $this->trans('rulesForRegist'); ?>:
         </label>
@@ -58,9 +81,5 @@
                       rows="5"><?php echo $this->get('regist_rules'); ?></textarea>
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php echo $this->trans('saveButton'); ?>
-        </button>
-    </div>
+    <?=$this->getSaveBar()?>
 </form>

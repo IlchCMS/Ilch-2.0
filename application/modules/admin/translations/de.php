@@ -20,7 +20,7 @@ return array
     'menuChange' => 'Menü bearbeiten',
     'menuItemAdd' => 'Menüitem hinzufügen',
     'loginWelcome' => 'Bitte loggen Sie sich ein',
-    'emailname' => 'Benutzer oder E-mail',
+    'emailname' => 'Benutzername oder E-mail',
     'password' => 'Passwort',
     'rememberMe' => 'Eingeloggt bleiben',
     'signIn' => 'Einloggen',

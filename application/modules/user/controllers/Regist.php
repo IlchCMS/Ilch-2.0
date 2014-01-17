@@ -7,7 +7,6 @@
 namespace User\Controllers;
 
 use User\Mappers\User as UserMapper;
-use User\Mappers\Confirm as ConfirmMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -58,17 +57,19 @@ class Regist extends \Ilch\Controller\Frontend
                 $errors['name'] = 'fieldEmpty';
             }
 
-            if (empty($password)) {
-                $errors['password'] = 'fieldEmpty';
-            }
+            if ($this->getConfig()->get('regist_password') == 1) {
+                if (empty($password)) {
+                    $errors['password'] = 'fieldEmpty';
+                }
 
-            if (empty($password2)) {
-                $errors['password2'] = 'fieldEmpty';
-            }
+                if (empty($password2)) {
+                    $errors['password2'] = 'fieldEmpty';
+                }
 
-            if ($password !== $password2) {
-                $errors['password'] = 'fieldDiffersPassword';
-                $errors['password2'] = 'fieldDiffersPassword';
+                if ($password !== $password2) {
+                    $errors['password'] = 'fieldDiffersPassword';
+                    $errors['password2'] = 'fieldDiffersPassword';
+                }                
             }
 
             if (empty($email)) {
@@ -79,7 +80,7 @@ class Regist extends \Ilch\Controller\Frontend
             
             if (empty($errors)) {
                 if ($this->getConfig()->get('regist_confirm') == 0){  
-                    $currentDate = new \Ilch\Date();            
+                    $currentDate = new \Ilch\Date(); 
                     $model = new \User\Models\User();
                     $model->setName($name);
                     $model->setPassword(crypt($password));
@@ -89,11 +90,17 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setDateLastActivity($currentDate);
                     $registMapper->save($model);
                 }else{        
+                    $currentDate = new \Ilch\Date(); 
+                    $confirmedCode = md5(uniqid(rand()));
                     $model = new \User\Models\User();
                     $model->setName($name);
                     $model->setPassword(crypt($password));
                     $model->setEmail($email);
-                    $registMapper->saveCheck($model);                    
+                    $model->setDateCreated($currentDate);
+                    $model->setDateLastActivity($currentDate);
+                    $model->setConfirmed(1);
+                    $model->setConfirmedCode($confirmedCode);
+                    $registMapper->save($model);                   
                 }
                 
                 $_SESSION["name"] = $name;
@@ -102,8 +109,10 @@ class Regist extends \Ilch\Controller\Frontend
                 $this->redirect(array('action' => 'finish'));
             }
             
-            $this->getView()->set('errors', $errors);
+            $this->getView()->set('errors', $errors); 
         }
+        
+        $this->getView()->set('regist_password', $this->getConfig()->get('regist_password')); 
     }
 
     public function finishAction()
@@ -121,57 +130,42 @@ class Regist extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('menuConfirm'), array('action' => 'confirm'));
         
-        $confirmMapper = new ConfirmMapper();
         $errors = array();
         
         if ($this->getRequest()->isPost()) {
-            $check = $this->getRequest()->getPost('check');
+            $confirmedCode = $this->getRequest()->getPost('confirmedCode');
 
-            if (empty($check)) {
-                $errors['check'] = 'fieldEmpty';
+            if (empty($confirmedCode)) {
+                $errors['confirmedCode'] = 'fieldEmpty';
             }
             
             if (empty($errors)) {                
-                $this->redirect(array('controller' => 'regist', 'action' => 'confirm', 'check' => $check));
+                $this->redirect(array('controller' => 'regist', 'action' => 'confirm', 'code' => $confirmedCode));
             }
             
             $this->getView()->set('errors', $errors);
             
         }else{
-            if ($this->getRequest()->getParam('check')) {
-                $check = $this->getRequest()->getParam('check');
-                $checks = $confirmMapper->getCheck(array('check' => $check));
-                
-                if (!empty($checks)) {
-                    $registMapper = new UserMapper();
-                    
-                    $checkCode = $this->getRequest()->getParam('check');
-                    
-                    foreach($checks as $checks) {          
-                        $name = $checks->getName();
-                        $password = $checks->getPassword();
-                        $email = $checks->getEmail();
-                        $date_created = $checks->getDateCreated();
-                    }
+            $userMapper = new UserMapper();
+            $confirmed = $this->getRequest()->getParam('code');
+            $user = $userMapper->getUserByConfirmedCode($confirmed);
+            
+            if (!empty($confirmed)) {
+                if(!empty($user)) {
+                    $user->setConfirmedCode($confirmed);
+                    $user->setConfirmed(0);
+                    $user->setConfirmedCode('');
+                    $userId = $userMapper->save($user);
 
-                    $currentDate = new \Ilch\Date();
-                    $model = new \User\Models\User();
-                    $model->setName($name);
-                    $model->setPassword($password);
-                    $model->setEmail($email);
-                    $model->setDateCreated($date_created);
-                    $model->setDateConfirmed($currentDate);
-                    $model->setDateLastActivity($currentDate);
-                    $registMapper->save($model);
+                    $confirmed = '1';
+                    $this->getView()->set('confirmed', $confirmed);
+                } else {   
+                    $confirmed = null;
+                    $this->getView()->set('confirmed', $confirmed);
                     
-                    $deleteUser = new ConfirmMapper();
-                    $deleteUser->delete($this->getRequest()->getParam('check'));
-                    
-                    $this->getView()->set('checks', $checks); 
-                }else{
-                    $this->getView();                    
-                }
-            }else{
+                    $_SESSION['messages'][] = array('text' => 'Aktivierungscode Falsch', 'type' => 'warning');
+                }                
+            } else {
                 $this->getView();
             }
         }

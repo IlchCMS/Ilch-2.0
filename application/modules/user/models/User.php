@@ -67,6 +67,20 @@ class User extends \Ilch\Model
     protected $_dateLastActivity;
 
     /**
+     * Confirmed of the user.
+     *
+     * @var int
+     */
+    protected $_confirmed;
+
+    /**
+     * Confirmed Code of the user.
+     *
+     * @var string
+     */
+    protected $_confirmedCode;
+
+    /**
      * The associated user group object.
      *
      * @var User\Models\Group[]
@@ -157,6 +171,50 @@ class User extends \Ilch\Model
     public function setPassword($password)
     {
         $this->_password = (string) $password;
+
+        return $this;
+    }
+
+    /**
+     * Returns the confirmed of the user.
+     *
+     * @return int
+     */
+    public function getConfirmed()
+    {
+        return $this->_confirmed;
+    }
+
+    /**
+     * Saves the confirmed of the user.
+     *
+     * @param int $confirmed
+     */
+    public function setConfirmed($confirmed)
+    {
+        $this->_confirmed = (int) $confirmed;
+
+        return $this;
+    }
+
+    /**
+     * Returns the confirmed code of the user.
+     *
+     * @return string
+     */
+    public function getConfirmedCode()
+    {
+        return $this->_confirmedCode;
+    }
+
+    /**
+     * Saves the confirmed code of the user.
+     *
+     * @param string $confirmed
+     */
+    public function setConfirmedCode($confirmedCode)
+    {
+        $this->_confirmedCode = (string) $confirmedCode;
 
         return $this;
     }
