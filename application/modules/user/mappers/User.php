@@ -249,8 +249,13 @@ class User extends \Ilch\Mapper
             $fields['date_last_activity'] = $user->getDateLastActivity()->toDb();
         }
 
-        $fields['confirmed'] = $user->getConfirmed();
-        $fields['confirmed_code'] = $user->getConfirmedCode();
+        if ($user->getConfirmed() !== null) {
+            $fields['confirmed'] = $user->getConfirmed();
+        }
+        
+        if ($user->getConfirmedCode() !== null) {
+            $fields['confirmed_code'] = $user->getConfirmedCode();
+        }
 
         $userId = (int) $this->db()->selectCell
         (
@@ -330,13 +335,6 @@ class User extends \Ilch\Mapper
      */
     public function getUserList($where = null)
     {
-        $userRows = $this->db()->selectArray
-        (
-            '*',
-            'users',
-            $where
-        );
-        
         return $this->_getBy($where);
     }
 
