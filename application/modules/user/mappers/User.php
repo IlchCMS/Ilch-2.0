@@ -87,6 +87,28 @@ class User extends \Ilch\Mapper
     }
 
     /**
+     * Returns user model found by the confirmed_code.
+     *
+     * @param  string              $confirmed
+     * @return null|User_UserModel
+     */
+    public function getUserByConfirmedCode($confirmed)
+    {
+        $where = array
+        (
+            'confirmed_code' => (string) $confirmed,
+        );
+
+        $users = $this->_getBy($where);
+
+        if (!empty($users)) {
+            return reset($users);
+        }
+
+        return null;
+    }
+
+    /**
      * Returns an array with user models found by the where clause of false if
      * none found.
      *
@@ -173,6 +195,14 @@ class User extends \Ilch\Mapper
             $user->setDateLastActivity($dateLastActivity);
         }
 
+        if (isset($userRow['confirmed'])) {
+            $user->setConfirmed($userRow['confirmed']);
+        }
+
+        if (isset($userRow['confirmed_code'])) {
+            $user->setConfirmedCode($userRow['confirmed_code']);
+        }
+
         return $user;
     }
 
@@ -192,6 +222,8 @@ class User extends \Ilch\Mapper
         $dateConfirmed = $user->getDateConfirmed();
         $dateLastActivity = $user->getDateLastActivity();
         $dateCreated = $user->getDateCreated();
+        $confirmed = $user->getConfirmed();
+        $confirmedCode = $user->getConfirmedCode();
 
         if (!empty($name)) {
             $fields['name'] = $user->getName();
@@ -215,6 +247,14 @@ class User extends \Ilch\Mapper
 
         if (!empty($dateLastActivity)) {
             $fields['date_last_activity'] = $user->getDateLastActivity()->toDb();
+        }
+
+        if ($user->getConfirmed() !== null) {
+            $fields['confirmed'] = $user->getConfirmed();
+        }
+        
+        if ($user->getConfirmedCode() !== null) {
+            $fields['confirmed_code'] = $user->getConfirmedCode();
         }
 
         $userId = (int) $this->db()->selectCell
@@ -273,7 +313,7 @@ class User extends \Ilch\Mapper
 
         return $userId;
     }
-
+    
     /**
      * Gets the counter of all users with group "administrator".
      *
@@ -293,9 +333,9 @@ class User extends \Ilch\Mapper
      *
      * @return UserModel[]
      */
-    public function getUserList()
+    public function getUserList($where = null)
     {
-        return $this->_getBy();
+        return $this->_getBy($where);
     }
 
     /**
@@ -319,7 +359,7 @@ class User extends \Ilch\Mapper
 
         return $userExists;
     }
-
+    
     /**
      * Deletes a given user or a user with the given id.
      *

@@ -14,19 +14,21 @@
     </a>
     <?php }else{ ?>
         <form class="form-horizontal" action="" method="post">
-           <?php echo $this->getTokenField(); ?>
-            <div class="form-group">
-                <div class="col-lg-12">
+           <?php echo $this->getTokenField();
+                $errors = $this->get('errors');
+            ?>
+            <div class="form-group <?php if (!empty($errors['loginbox_emailname'])) { echo 'has-error'; }; ?>">
+                <div class="col-lg-12 ">
                     <input class="form-control"
-                           name="emailname"
+                           name="loginbox_emailname"
                            type="text"
                            placeholder="<?php echo $this->trans('nameEmail')?>" />
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group <?php if (!empty($errors['loginbox_password'])) { echo 'has-error'; }; ?>">
                 <div class="col-lg-12">
                     <input class="form-control"
-                           name="password"
+                           name="loginbox_password"
                            type="password"
                            placeholder="<?php echo $this->trans('password')?>" />
                 </div>
@@ -38,18 +40,13 @@
                     </button>
                 </div>
             </div>
-            <?php
-                if (!empty($errors)) {
-                    foreach ($errors as $transKey) {
-                        echo '<br /><span class="text-danger">'.$this->trans($transKey).'</span>';
-                    }
-                }
-            ?>
         </form>
-        <!--
         <div style="font-size: 13px;">
-            <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('register'); ?></a><br />
+        <?php if ($this->get('regist_accept') == '1') { ?>
+            <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')); ?>"><?php echo $this->trans('register'); ?></a><br />
+        <?php } ?>
+        <!--
             <a href="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('forgotPassword'); ?></a>
-        </div>
         -->
+        </div>
 <?php } ?>

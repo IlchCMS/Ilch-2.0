@@ -23,11 +23,16 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-
+        
         $groupMapper = new \User\Mappers\Group();
         $adminGroup = $groupMapper->getGroupById(1);
         $usersGroup = $groupMapper->getGroupById(2);
         $userMapper = new \User\Mappers\User();
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('regist_accept', '1');
+        $databaseConfig->set('regist_confirm', '1');
+        $databaseConfig->set('regist_password', '1');
+        $databaseConfig->set('regist_rules', 'Die Registrierung ist völlig Kostenlos.\r\nDie Betreiber der Seite übernehmen keine Haftung.\r\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.');
         $user = new \User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
         $user->setPassword(crypt($_SESSION['install']['adminPassword']));
@@ -62,8 +67,10 @@ class Config extends \Ilch\Config\Install
                   `date_created` datetime NOT NULL,
                   `date_confirmed` datetime NOT NULL,
                   `date_last_activity` datetime NOT NULL,
+                  `confirmed` int(11) DEFAULT 1,
+                  `confirmed_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
                   `user_id` int(11) NOT NULL,
@@ -78,6 +85,25 @@ class Config extends \Ilch\Config\Install
                   `box_id` int(11) DEFAULT 0,
                   `access_level` int(11) DEFAULT 0,
                   PRIMARY KEY (`group_id`, `page_id`, `module_id`, `article_id`, `box_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (
+                  `user_id` int(11) NOT NULL,
+                  `field_id` int(11) NOT NULL,
+                  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
+                  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+                  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                  `type` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
+                  `field_id` int(11) NOT NULL,
+                  `locale` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }
