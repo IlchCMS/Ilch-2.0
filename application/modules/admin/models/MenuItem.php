@@ -50,6 +50,13 @@ class MenuItem extends \Ilch\Model
      * @var integer
      */
     protected $_siteId;
+    
+    /**
+     * Boxid of the item.
+     *
+     * @var integer
+     */
+    protected $_boxId;
 
     /**
      * Boxid of the item.
@@ -164,6 +171,26 @@ class MenuItem extends \Ilch\Model
     public function setSiteId($id)
     {
         $this->_siteId = (int)$id;
+    }
+    
+    /**
+     * Gets the boxid.
+     *
+     * @return integer
+     */
+    public function getBoxId()
+    {
+        return $this->_boxId;
+    }
+
+    /**
+     * Sets the boxid.
+     *
+     * @param integer $id
+     */
+    public function setBoxId($id)
+    {
+        $this->_boxId = (int)$id;
     }
 
     /**

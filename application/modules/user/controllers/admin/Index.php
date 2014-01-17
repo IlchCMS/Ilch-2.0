@@ -34,7 +34,7 @@ class Index extends BaseController
             (
                 'name' => 'menuActionNewUser',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat', 'id' => 0))
+                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
@@ -69,8 +69,38 @@ class Index extends BaseController
      */
     public function treatAction()
     {
-        $userId = $this->getRequest()->getParam('id');
         $userMapper = new UserMapper();
+
+        if ($this->getRequest()->isPost()) {
+            $userData = $this->getRequest()->getPost('user');
+            
+            if (!empty($userData['password'])) {
+                $userData['password'] = crypt($userData['password']);
+            }
+
+            $user = $userMapper->loadFromArray($userData);
+
+            if (!empty($userData['groups'])) {
+                foreach ($userData['groups'] as $groupId) {
+                    $group = new GroupModel();
+                    $group->setId($groupId);
+                    $user->addGroup($group);
+                }
+            }
+
+            $date = new \Ilch\Date();
+            $user->setDateCreated($date);
+
+            $userId = $userMapper->save($user);
+
+            if (!empty($userId) && empty($userData['id'])) {
+                $this->addMessage('newUserMsg');
+            }
+        }
+
+        if (empty($userId)) {
+            $userId = $this->getRequest()->getParam('id');
+        }
 
         if ($userMapper->userWithIdExists($userId)) {
             $user = $userMapper->getUserById($userId);
@@ -83,38 +113,6 @@ class Index extends BaseController
 
         $this->getView()->set('user', $user);
         $this->getView()->set('groupList', $groupMapper->getGroupList());
-    }
-
-    /**
-     * Saves the given user.
-     */
-    public function saveAction()
-    {
-        $postData = $this->getRequest()->getPost();
-
-        if (isset($postData['user'])) {
-            $userData = $postData['user'];
-
-            $userMapper = new UserMapper();
-            $user = $userMapper->loadFromArray($userData);
-            $user->setDateCreated(time());
-
-            if (!empty($userData['groups'])) {
-                foreach ($userData['groups'] as $groupId) {
-                    $group = new GroupModel();
-                    $group->setId($groupId);
-                    $user->addGroup($group);
-                }
-            }
-
-            $userId = $userMapper->save($user);
-
-            if (!empty($userId) && empty($userData['id'])) {
-                $this->addMessage('newUserMsg');
-            }
-
-            $this->redirect(array('action' => 'treat', 'id' => $userId));
-        }
     }
 
     /**

@@ -22,6 +22,7 @@ return array
     'deleteUser' => 'Benutzer entfernen',
     'userName' => 'Benutzername',
     'userEmail' => 'E-Mail Adresse',
+    'userPassword' => 'Passwort',
     'userDateCreated' => 'Erstellt',
     'userDateConfirmed' => 'Bestätigt',
     'userDateLastActivity' => 'Zuletzt Online',

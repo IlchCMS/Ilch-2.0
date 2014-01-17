@@ -72,7 +72,13 @@ class Menu extends \Ilch\Controller\Admin
                         $menuItem->setSiteId($item['siteid']);
                         $menuItem->setHref($item['href']);
                         $menuItem->setTitle($item['title']);
-                        $menuItem->setBoxKey($item['boxkey']);
+                        
+                        if((int)$item['boxkey'] > 0) {
+                            $menuItem->setBoxId($item['boxkey']);
+                        } else {
+                            $menuItem->setBoxKey($item['boxkey']);
+                        }
+                        
                         $menuItem->setModuleKey($item['modulekey']);
 
                         $newId = $menuMapper->saveItem($menuItem);

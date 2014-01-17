@@ -17,7 +17,7 @@ else {
     <legend>
         <?php echo $fieldsetLegend; ?>
     </legend>
-    <form action="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'save')); ?>"
+    <form action="<?php echo $this->url(array('action' => 'treat')); ?>"
           method="POST"
           class="form-horizontal"
           id="userForm">
@@ -50,6 +50,18 @@ else {
                        class="form-control required email"
                        placeholder="<?php echo $this->trans('userEmail'); ?>"
                        value="<?php echo $this->escape($user->getEmail()); ?>" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="userPassword" class="col-lg-3 control-label">
+                <?php echo $this->trans('userPassword'); ?>
+            </label>
+            <div class="col-lg-9">
+                <input name="user[password]"
+                       type="password"
+                       class="form-control"
+                       placeholder="<?php echo $this->trans('userPassword'); ?>"
+                       value="" />
             </div>
         </div>
         <?php
