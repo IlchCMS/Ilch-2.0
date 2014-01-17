@@ -219,9 +219,9 @@ class User extends \Ilch\Mapper
         $name = $user->getName();
         $password = $user->getPassword();
         $email = $user->getEmail();
-        $dateCreated = $user->getDateCreated();
         $dateConfirmed = $user->getDateConfirmed();
         $dateLastActivity = $user->getDateLastActivity();
+        $dateCreated = $user->getDateCreated();
         $confirmed = $user->getConfirmed();
         $confirmedCode = $user->getConfirmedCode();
 
@@ -236,7 +236,7 @@ class User extends \Ilch\Mapper
         if (!empty($email)) {
             $fields['email'] = $user->getEmail();
         }
-
+        
         if (!empty($dateCreated)) {
             $fields['date_created'] = $user->getDateCreated()->toDb();
         }

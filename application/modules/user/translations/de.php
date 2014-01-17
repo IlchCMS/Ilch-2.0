@@ -24,6 +24,7 @@ return array
     'userName' => 'Benutzername',
     'userEmail' => 'E-Mail Adresse',
     'userRegist' => 'Registriert',
+    'userPassword' => 'Passwort',
     'userDateCreated' => 'Erstellt',
     'userDateConfirmed' => 'Bestätigt',
     'userDateLastActivity' => 'Zuletzt Online',
