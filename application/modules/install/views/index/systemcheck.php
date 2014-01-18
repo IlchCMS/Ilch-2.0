@@ -11,7 +11,7 @@
             <td><?php echo $this->trans('phpVersion'); ?></td>
             <td class="text-success">>= 5.4.0</td>
             <td class="<?php
-                        if (version_compare(phpversion(), '5.4.0', '>')) {
+                        if (version_compare(phpversion(), '5.4.0', '>=')) {
                             echo 'text-success';
                         } else {
                             echo 'text-danger';
