@@ -19,7 +19,6 @@
             ?>
         </div>
     </div>
-<?php if ($this->get('regist_password') == '1') { ?>
     <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
         <label for="password" class="control-label col-lg-3">
             <?php echo $this->trans('password'); ?>:
@@ -54,7 +53,6 @@
             ?>
         </div>
     </div>
-<?php } ?>
     <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
         <label for="email" class="control-label col-lg-3">
             <?php echo $this->trans('email'); ?>:
