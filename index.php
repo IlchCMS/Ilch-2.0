@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-if(!version_compare('5.4.0', '5.4.0', '>=')) {
+if(!version_compare(phpversion(), '5.4.0', '>=')) {
     die('Ilch CMS 2.* needed minimum php version 5.4.0');
 }
 
