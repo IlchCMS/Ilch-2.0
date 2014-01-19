@@ -27,6 +27,9 @@ $errors = $this->get('errors');
             }
         ?>
     </div>
+    <div class="col-lg-2">
+        <i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->trans('dbHostInfo'); ?>"></i>
+    </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
     <label for="dbUser" class="col-lg-2 control-label">
@@ -38,6 +41,9 @@ $errors = $this->get('errors');
                class="form-control"
                name="dbUser"
                id="dbUser" />
+    </div>
+    <div class="col-lg-2">
+        <i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->trans('dbUserInfo'); ?>"></i>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
@@ -68,6 +74,9 @@ $errors = $this->get('errors');
             }
         ?>
     </div>
+    <div class="col-lg-2">
+        <i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->trans('dbNameInfo'); ?>"></i>
+    </div>
 </div>
 <div class="form-group">
     <label for="dbPrefix" class="col-lg-2 control-label">
@@ -81,3 +90,10 @@ $errors = $this->get('errors');
                id="dbPrefix" />
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $("[rel='tooltip']").tooltip({
+            'placement': 'right'
+        });
+    });
+</script>
