@@ -10,7 +10,7 @@
 <html lang="de">
     <head>
         <meta charset="utf-8">
-        <title>Ilch <?php echo VERSION; ?> - Login</title>
+        <title>Ilch - Login</title>
         <meta name="description" content="Ilch - Login">
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>">
         <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">

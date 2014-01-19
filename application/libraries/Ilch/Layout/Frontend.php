@@ -42,7 +42,7 @@ class Frontend extends Base
         if (!empty($config) && $config->get('page_title') !== '') {
             return $this->escape($config->get('page_title'));
         } else {
-            return 'Ilch '.VERSION.' Frontend';
+            return 'Ilch Frontend';
         }
     }
 

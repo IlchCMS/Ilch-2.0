@@ -17,7 +17,7 @@ $serverTimeZone = @date_default_timezone_get();
 date_default_timezone_set('UTC');
 
 define('ACCESS', 1);
-define('VERSION', '2.0');
+define('VERSION', '2.0.0');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 
