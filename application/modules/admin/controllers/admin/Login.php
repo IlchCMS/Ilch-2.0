@@ -87,7 +87,7 @@ class Login extends \Ilch\Controller\Admin
          */
 
         if ($this->getRequest()->getParam('from_frontend')) {
-            $this->redirect();
+            $this->redirect(array());
         } else {
             $this->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));
         }
