@@ -15,7 +15,7 @@
         <script src="<?php echo $this->getStaticUrl('js/bootstrap.js'); ?>"></script>
     </head>
     <body>
-        <form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
+        <form autocomplete="off" class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
             <?php echo $this->getTokenField(); ?>
             <div class="container install_container">
                 <img class="logo" src="<?php echo $this->getStaticUrl('img/ilch_logo.png'); ?>" />
