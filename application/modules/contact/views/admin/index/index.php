@@ -16,8 +16,8 @@ if ($this->get('receivers') != '') {
             <th><?=$this->getCheckAllCheckbox('check_receivers')?></th>
             <th></th>
             <th></th>
-            <th><?php echo $this->trans('name'); ?></th>
-            <th><?php echo $this->trans('email'); ?></th>
+            <th><?php echo $this->getTrans('name'); ?></th>
+            <th><?php echo $this->getTrans('email'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -40,6 +40,6 @@ if ($this->get('receivers') != '') {
 </form>
 <?php
 } else {
-    echo $this->trans('noReceivers');
+    echo $this->getTrans('noReceivers');
 }
 ?>

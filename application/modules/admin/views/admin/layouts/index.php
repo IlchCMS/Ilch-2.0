@@ -1,6 +1,6 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
-    <legend><?php echo $this->trans('layouts'); ?></legend>
+    <legend><?php echo $this->getTrans('layouts'); ?></legend>
         <?php
             $i = 0;
             foreach ($this->get('layouts') as $layout) {
@@ -14,13 +14,13 @@
         ?>
             <div class="col-lg-4">
                 <div class="thumbnail">
-                    <img src="<?php echo $this->staticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png'); ?>" />
+                    <img src="<?php echo $this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png'); ?>" />
                     <div class="caption">
                         <h3><?php echo $this->escape($layout->getKey()); ?></h3>
                         <p><?php echo $this->escape($layout->getDesc()); ?></p>
                         <p>
-                            <a title="<?php if ($this->get('defaultLayout') == $layout->getKey()) { echo $this->trans('isDefault'); } else { echo $this->trans('setDefault'); } ?>"
-                                href="<?php echo $this->url(array('action' => 'default', 'key' => $layout->getKey())); ?>">
+                            <a title="<?php if ($this->get('defaultLayout') == $layout->getKey()) { echo $this->getTrans('isDefault'); } else { echo $this->getTrans('setDefault'); } ?>"
+                                href="<?php echo $this->getUrl(array('action' => 'default', 'key' => $layout->getKey())); ?>">
                                 <?php
                                 if ($this->get('defaultLayout') == $layout->getKey()) {
                                     echo '<i class="fa fa-check-square-o fa-2x text-success"></i>';
@@ -30,11 +30,11 @@
                                 ?>
                             </a>
                             <span class="deleteLayout clickable fa fa-trash-o fa-2x text-danger pull-right"
-                              data-clickurl="<?php echo $this->url(array('action' => 'delete', 'key' => $layout->getKey())); ?>"
+                              data-clickurl="<?php echo $this->getUrl(array('action' => 'delete', 'key' => $layout->getKey())); ?>"
                               data-toggle="modal"
                               data-target="#deleteModal"
-                              data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteLayout', $layout->getKey())); ?>"
-                              title="<?php echo $this->trans('delete'); ?>">
+                              data-modaltext="<?php echo $this->escape($this->getTrans('askIfDeleteLayout', $layout->getKey())); ?>"
+                              title="<?php echo $this->getTrans('delete'); ?>">
                             </span>
                         </p>
                     </div>

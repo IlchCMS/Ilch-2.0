@@ -1,17 +1,17 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
     <?php echo $this->getTokenField(); ?>
     <legend>
     <?php
         if ($this->get('partner') != '') {
-            echo $this->trans('menuActionEditPartner');
+            echo $this->getTrans('menuActionEditPartner');
         } else {
-            echo $this->trans('menuActionNewPartner');
+            echo $this->getTrans('menuActionNewPartner');
         }
     ?>
     </legend>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
-            <?php echo $this->trans('name'); ?>:
+            <?php echo $this->getTrans('name'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label for="link" class="col-lg-2 control-label">
-            <?php echo $this->trans('link'); ?>:
+            <?php echo $this->getTrans('link'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -37,7 +37,7 @@
     </div>
     <div class="form-group">
         <label for="banner" class="col-lg-2 control-label">
-            <?php echo $this->trans('banner'); ?>:
+            <?php echo $this->getTrans('banner'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"

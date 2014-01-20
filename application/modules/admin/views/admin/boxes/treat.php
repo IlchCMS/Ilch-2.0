@@ -3,15 +3,15 @@
     <legend>
     <?php
         if ($this->get('box') != '') {
-            echo $this->trans('editBox');
+            echo $this->getTrans('editBox');
         } else {
-            echo $this->trans('addBox');
+            echo $this->getTrans('addBox');
         }
     ?>
     </legend>
     <div class="form-group">
         <label for="boxTitleInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('boxTitle'); ?>:
+            <?php echo $this->getTrans('boxTitle'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
@@ -29,7 +29,7 @@
     ?>
     <div class="form-group">
         <label for="boxLanguageInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('boxLanguage'); ?>:
+            <?php echo $this->getTrans('boxLanguage'); ?>:
         </label>
         <div class="col-lg-2">
             <select class="form-control" name="boxLanguage" id="boxLanguageInput">
@@ -61,7 +61,7 @@
         }
     ?>
 </form>
-<script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getStaticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
 <?php
 $boxID = '';
@@ -74,7 +74,7 @@ $('#boxLanguageInput').change
 (
     this,
     function () {
-        top.location.href = '<?php echo $this->url(array('id' => $boxID)); ?>/locale/'+$(this).val();
+        top.location.href = '<?php echo $this->getUrl(array('id' => $boxID)); ?>/locale/'+$(this).val();
     }
 );
 

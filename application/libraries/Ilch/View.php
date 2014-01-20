@@ -37,12 +37,12 @@ class View extends Design\Base
     {
         $html = '<div class="content_savebox">
                     <button value="save" type="submit" name="save" class="btn">
-                        '.$this->trans($saveKey).'
+                        '.$this->getTrans($saveKey).'
                     </button>';
 
         if (!empty($deleteKey)) {
             $html .= '<button value="delete" type="submit" name="delete" class="delete_button pull-right btn">
-                        '.$this->trans($deleteKey).'
+                        '.$this->getTrans($deleteKey).'
                        </button>';
         }
 
@@ -69,7 +69,7 @@ class View extends Design\Base
                       <ul class="dropdown-menu listChooser" role="menu">';
         
         foreach($actions as $key => $name) {
-            $html .= '<li><a href="#" data-hiddenkey="'.$key.'">'.$this->trans($name).'</a></li>';
+            $html .= '<li><a href="#" data-hiddenkey="'.$key.'">'.$this->getTrans($name).'</a></li>';
         }
 
         $html .= '</ul></div>';
@@ -85,7 +85,7 @@ class View extends Design\Base
      */
     public function getEditIcon($url)
     {
-        $html = '<a href="'.$this->url($url).'">
+        $html = '<a href="'.$this->getUrl($url).'">
                     <span class="fa fa-edit text-success"></span>
                  </a>';
 
@@ -100,7 +100,7 @@ class View extends Design\Base
      */
     public function getDeleteIcon($url)
     {
-        $html = '<a class="delete_button" href="'.$this->url($url, null, true).'">
+        $html = '<a class="delete_button" href="'.$this->getUrl($url, null, true).'">
                     <span class="fa fa-trash-o text-danger"></span>
                  </a>';
 

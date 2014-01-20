@@ -117,8 +117,9 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @param string $file
      */
-    public function setFile($file)
+    public function setFile($file, $layoutKey = '')
     {
+        $this->_layoutKey = $layoutKey;
         $this->_file = $file;
     }
 

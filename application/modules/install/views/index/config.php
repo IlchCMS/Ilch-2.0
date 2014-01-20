@@ -3,7 +3,7 @@ $errors = $this->get('errors');
 ?>
 <div class="form-group">
     <label for="type" class="control-label col-lg-3">
-        <?php echo $this->trans('cmsType'); ?>:
+        <?php echo $this->getTrans('cmsType'); ?>:
     </label>
     <div class="col-lg-6">
         <select name="cmsType" class="form-control">
@@ -14,7 +14,7 @@ $errors = $this->get('errors');
 <hr />
 <div class="form-group <?php if (!empty($errors['adminName'])) { echo 'has-error'; }; ?>">
     <label for="adminName" class="control-label col-lg-3">
-        <?php echo $this->trans('adminName'); ?>:
+        <?php echo $this->getTrans('adminName'); ?>:
     </label>
     <div class="col-lg-6">
         <input value="<?php if ($this->get('adminName') != '') { echo $this->escape($this->get('adminName')); } ?>"
@@ -24,14 +24,14 @@ $errors = $this->get('errors');
                id="adminName" />
         <?php
             if (!empty($errors['adminName'])) {
-                echo '<span class="help-inline">'.$this->trans($errors['adminName']).'</span>';
+                echo '<span class="help-inline">'.$this->getTrans($errors['adminName']).'</span>';
             }
         ?>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword'])) { echo 'has-error'; }; ?>">
     <label for="adminPassword" class="control-label col-lg-3">
-        <?php echo $this->trans('adminPassword'); ?>:
+        <?php echo $this->getTrans('adminPassword'); ?>:
     </label>
     <div class="col-lg-6">
         <input value="<?php if ($this->get('adminPassword') != '') { echo $this->escape($this->get('adminPassword')); } ?>"
@@ -41,14 +41,14 @@ $errors = $this->get('errors');
                id="adminPassword" />
         <?php
             if (!empty($errors['adminPassword'])) {
-                echo '<span class="help-inline">'.$this->trans($errors['adminPassword']).'</span>';
+                echo '<span class="help-inline">'.$this->getTrans($errors['adminPassword']).'</span>';
             }
         ?>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword2'])) { echo 'has-error'; }; ?>">
     <label for="adminPassword2" class="control-label col-lg-3">
-        <?php echo $this->trans('adminPassword2'); ?>:
+        <?php echo $this->getTrans('adminPassword2'); ?>:
     </label>
     <div class="col-lg-6">
         <input value="<?php if ($this->get('adminPassword2') != '') { echo $this->escape($this->get('adminPassword2')); } ?>"
@@ -58,14 +58,14 @@ $errors = $this->get('errors');
                id="adminPassword2" />
         <?php
             if (!empty($errors['adminPassword2'])) {
-                echo '<span class="help-inline">'.$this->trans($errors['adminPassword2']).'</span>';
+                echo '<span class="help-inline">'.$this->getTrans($errors['adminPassword2']).'</span>';
             }
         ?>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminEmail'])) { echo 'has-error'; }; ?>">
     <label for="adminEmail" class="control-label col-lg-3">
-        <?php echo $this->trans('adminEmail'); ?>:
+        <?php echo $this->getTrans('adminEmail'); ?>:
     </label>
     <div class="col-lg-6">
         <input value="<?php if ($this->get('adminEmail') != '') { echo $this->escape($this->get('adminEmail')); } ?>"
@@ -75,7 +75,7 @@ $errors = $this->get('errors');
                id="adminEmail" />
         <?php
             if (!empty($errors['adminEmail'])) {
-                echo '<span class="help-inline">'.$this->trans($errors['adminEmail']).'</span>';
+                echo '<span class="help-inline">'.$this->getTrans($errors['adminEmail']).'</span>';
             }
         ?>
     </div>

@@ -4,12 +4,12 @@
         <meta charset="utf-8">
         <title>Ilch Wartungsmodus</title>
         <meta name="description" content="Ilch - Frontend">
-        <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>">
-        <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
-        <script src="<?php echo $this->staticUrl('js/jquery.js'); ?>"></script>
-        <script src="<?php echo $this->staticUrl('js/jquery-ui.js'); ?>"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->getStaticUrl('img/favicon.ico'); ?>">
+        <link href="<?php echo $this->getStaticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/global.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
+        <script src="<?php echo $this->getStaticUrl('js/jquery.js'); ?>"></script>
+        <script src="<?php echo $this->getStaticUrl('js/jquery-ui.js'); ?>"></script>
     </head>
     <body>
         <h3>

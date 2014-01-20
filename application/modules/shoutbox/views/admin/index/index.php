@@ -1,4 +1,4 @@
-<legend><?php echo $this->trans('manageShoutbox'); ?></legend>
+<legend><?php echo $this->getTrans('manageShoutbox'); ?></legend>
 <?php
 $shoutboxs = $this->get('shoutbox');
 
@@ -17,9 +17,9 @@ if (!empty($shoutboxs)) {
         <tr>
             <th><?=$this->getCheckAllCheckbox('check_entries')?></th>
             <th></th>
-            <th><?php echo $this->trans('from'); ?></th>
-            <th><?php echo $this->trans('date'); ?></th>
-            <th><?php echo $this->trans('message'); ?></th>
+            <th><?php echo $this->getTrans('from'); ?></th>
+            <th><?php echo $this->getTrans('date'); ?></th>
+            <th><?php echo $this->getTrans('message'); ?></th>
         </tr>
     <?php foreach ($this->get('shoutbox') as $shoutbox) : ?>
     <tr>
@@ -45,5 +45,5 @@ if (!empty($shoutboxs)) {
 </form>
 <?php
 }  else {
-    echo $this->trans('noEntrys');
+    echo $this->getTrans('noEntrys');
 } ?>

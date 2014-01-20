@@ -52,7 +52,7 @@ class Model
         $html = '<div id="breadcrumbs">
                     <div class="breadcrumb-button blue">
                         <span class="breadcrumb-label">
-                            <a href="'.$this->_layout->url().'">
+                            <a href="'.$this->_layout->getUrl().'">
                                 <i class="fa fa-home"></i>
                             </a>
                         </span>
@@ -67,7 +67,7 @@ class Model
             if (empty($value)) {
                 $html .= $this->_layout->escape($key);
             } else {
-                $html .= '<a href="'.$this->_layout->url($value).'">'.$this->_layout->escape($key).'</a>';
+                $html .= '<a href="'.$this->_layout->getUrl($value).'">'.$this->_layout->escape($key).'</a>';
             }
 
             $html .=  '</span><span class="breadcrumb-arrow"><span></span></span></div>';

@@ -27,7 +27,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
             )
         );
@@ -38,7 +38,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewLink',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')))
             )
         );
 
@@ -48,7 +48,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewCategory',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')))
             )
         );
     }

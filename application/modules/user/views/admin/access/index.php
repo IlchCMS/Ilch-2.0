@@ -4,7 +4,7 @@
  * @package ilch
  */
 ?>
-<form action="<?php echo $this->url(array('module' => 'user', 'controller' => 'access', 'action' => 'save')); ?>"
+<form action="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'access', 'action' => 'save')); ?>"
       method="POST"
       class="form-horizontal"
       role="form"
@@ -13,7 +13,7 @@
     <div class="form-group">
         <label for="groupId"
                class="control-label col-sm-2">
-            <?php echo $this->trans('group'); ?>
+            <?php echo $this->getTrans('group'); ?>
         </label>
         <div class="col-sm-10">
             <select name="groupId"
@@ -21,7 +21,7 @@
                     class="form-control">
                 <option value="0"
                         <?php echo ((int)$this->get('activeGroupId') == null) ? 'selected="selected"' : '';?>>
-                        <?php echo $this->trans('chooseAGroup'); ?>
+                        <?php echo $this->getTrans('chooseAGroup'); ?>
                 </option>
                 <?php
                 foreach($this->get('groups') as $group) {
@@ -61,10 +61,10 @@
                     </colgroup>
                     <thead>
                         <tr>
-                            <th><?php echo $this->trans($accessType); ?></th>
+                            <th><?php echo $this->getTrans($accessType); ?></th>
                             <?php
                             foreach($accessLevelsTrans as $transKey) {
-                                echo '<th class="text-center">'.$this->trans($transKey).'</th>';
+                                echo '<th class="text-center">'.$this->getTrans($transKey).'</th>';
                             }
                             ?>
                         </tr>
@@ -134,7 +134,7 @@
 <script>
     $('#groupId').on('change', function() {
         if($(this).val() != 0) {
-            $('#groupAccessForm').attr('action', '<?php echo $this->url(array('module' => 'user', 'controller' => 'access', 'action' => 'index')); ?>');
+            $('#groupAccessForm').attr('action', '<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'access', 'action' => 'index')); ?>');
             $('#groupAccessForm').submit();
         }
     });

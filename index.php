@@ -32,7 +32,6 @@ $rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
 
 define('REWRITE_BASE', $rewriteBaseParts);
 define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
-define('STATIC_URL', BASE_URL.'/static');
 
 require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
 

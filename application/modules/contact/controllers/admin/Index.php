@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'menuReceivers',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
             )
         );
@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewReceiver',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }

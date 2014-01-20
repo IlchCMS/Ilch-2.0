@@ -134,7 +134,7 @@ function rec($item, $menuMapper, $obj)
         margin: -1px;*/
     }
 </style>
-<form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId())); ?>">
+<form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId())); ?>">
     <?php echo $this->getTokenField(); ?>
     <ul class="nav nav-tabs">
         <?php
@@ -147,15 +147,15 @@ function rec($item, $menuMapper, $obj)
                 $active = 'active';
             }
             echo '<li class="'.$active.'">'
-                    . '<a href="'.$this->url(array('menu' => $menu->getId())).'">'.$this->trans('menu').' '.$iMenu.'</a>'
+                    . '<a href="'.$this->getUrl(array('menu' => $menu->getId())).'">'.$this->getTrans('menu').' '.$iMenu.'</a>'
                     . '</li>';
             $iMenu++;
         }
         ?>
-      <li><a href="<?php echo $this->url(array('action' => 'add')); ?>">+</a></li>
+      <li><a href="<?php echo $this->getUrl(array('action' => 'add')); ?>">+</a></li>
     </ul>
     <br />
-    <legend><?php echo $this->trans('menuChange'); ?></legend>
+    <legend><?php echo $this->getTrans('menuChange'); ?></legend>
         <div class="col-lg-6">
             <ol id="sortable" class="sortable">
                 <?php
@@ -196,7 +196,7 @@ function rec($item, $menuMapper, $obj)
             </div>
             <div class="dyn"></div>
             <div class="actions">
-                <input type="button" id="menuItemAdd" value="<?php echo $this->trans('menuItemAdd'); ?>" class="btn">
+                <input type="button" id="menuItemAdd" value="<?php echo $this->getTrans('menuItemAdd'); ?>" class="btn">
             </div>
         </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />

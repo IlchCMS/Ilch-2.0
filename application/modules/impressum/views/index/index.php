@@ -10,13 +10,13 @@
         echo $this->escape($impressum->getName()).'<br />';    
         echo $this->escape($impressum->getAddress()).'<br /><br />';    
         echo $this->escape($impressum->getCity()).'<br /><br />';
-        echo '<b>'.$this->trans('contact').':</b><br />';
+        echo '<b>'.$this->getTrans('contact').':</b><br />';
         
         $getPhone = $this->escape($impressum->getPhone());
         if ($getPhone != '') {
         echo $this->escape($impressum->getPhone()).'<br />';            
         }
-        echo '<a href="'.$this->url(array('module'=> 'contact')).'" title="">'.$this->trans('form').'</a><br /><br /><br />';
+        echo '<a href="'.$this->getUrl(array('module'=> 'contact')).'" title="">'.$this->getTrans('form').'</a><br /><br /><br />';
         echo $impressum->getDisclaimer();    
     }
 ?>

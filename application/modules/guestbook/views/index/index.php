@@ -1,8 +1,8 @@
 <p class="pull-right">
-    <a href="<?php echo $this->url(array('action' => 'newentry')); ?>"
+    <a href="<?php echo $this->getUrl(array('action' => 'newentry')); ?>"
        class="btn btn-small btn-primary"
        type="button" >
-           <?php echo $this->trans('entry'); ?>
+           <?php echo $this->getTrans('entry'); ?>
     </a>
 </p>
 <div id="img-responsive" class="responsive">
@@ -19,7 +19,7 @@
                     <tbody>
                         <tr>
                             <td>
-                                <?php echo $this->trans('from'); ?>: <?php echo $this->escape($entry->getName()); ?>
+                                <?php echo $this->getTrans('from'); ?>: <?php echo $this->escape($entry->getName()); ?>
                             </td>
                             <td>
                                 <a target="_blank" href="//<?php echo $this->escape($entry->getHomepage()); ?>">
@@ -30,7 +30,7 @@
                                 </a>
                             </td>
                             <td>
-                                <?php echo $this->trans('date'); ?>: <?php echo $this->escape($entry->getDatetime()); ?>
+                                <?php echo $this->getTrans('date'); ?>: <?php echo $this->escape($entry->getDatetime()); ?>
                             </td>
                         </tr>
                     </tbody>

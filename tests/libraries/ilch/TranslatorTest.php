@@ -60,7 +60,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
         $this->assertEquals
         (
             'The user gets what he wants!',
-            $translator->trans('userGetsWhatHeWants'),
+            $translator->getTrans('userGetsWhatHeWants'),
             'The text wasnt translated using the translation file.'
         );
     }
@@ -77,7 +77,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
         $this->assertEquals
         (
             'notTranslatedText',
-            $translator->trans('notTranslatedText'),
+            $translator->getTrans('notTranslatedText'),
             'The text wasnt simply returned.'
         );
     }
@@ -94,7 +94,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
         $this->assertEquals
         (
             'Welcome, Hans',
-            $translator->trans('welcomeUser', 'Hans'),
+            $translator->getTrans('welcomeUser', 'Hans'),
             'The text wasnt returned with the placeholder.'
         );
     }
@@ -111,7 +111,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
         $this->assertEquals
         (
             'Welcome, Hans, ur last login was yesterday',
-            $translator->trans('welcomeUserExtended', 'Hans', 'yesterday'),
+            $translator->getTrans('welcomeUserExtended', 'Hans', 'yesterday'),
             'The text wasnt returned with the placeholder.'
         );
     }

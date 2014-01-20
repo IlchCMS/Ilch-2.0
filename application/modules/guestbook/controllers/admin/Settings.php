@@ -22,14 +22,14 @@ class Settings extends \Ilch\Controller\Admin
                     'name' => 'Verwalten',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'settings',
                     'active' => true,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
                 )
             )
         );

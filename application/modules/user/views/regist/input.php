@@ -1,10 +1,10 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField();
         $errors = $this->get('errors');
     ?>
     <div class="form-group <?php if (!empty($errors['name'])) { echo 'has-error'; }; ?>">
         <label for="name" class="control-label col-lg-3">
-            <?php echo $this->trans('name'); ?>:
+            <?php echo $this->getTrans('name'); ?>:
         </label>
         <div class="col-lg-9">
             <input value=""
@@ -14,14 +14,14 @@
                    id="name" />
             <?php
                 if (!empty($errors['name'])) {
-                    echo '<span class="help-inline">'.$this->trans($errors['name']).'</span>';
+                    echo '<span class="help-inline">'.$this->getTrans($errors['name']).'</span>';
                 }
             ?>
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
         <label for="password" class="control-label col-lg-3">
-            <?php echo $this->trans('password'); ?>:
+            <?php echo $this->getTrans('password'); ?>:
         </label>
         <div class="col-lg-9">
             <input value=""
@@ -31,14 +31,14 @@
                    id="password" />
             <?php
                 if (!empty($errors['password'])) {
-                    echo '<span class="help-inline">'.$this->trans($errors['password']).'</span>';
+                    echo '<span class="help-inline">'.$this->getTrans($errors['password']).'</span>';
                 }
             ?>
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['password2'])) { echo 'has-error'; }; ?>">
         <label for="password2" class="control-label col-lg-3">
-            <?php echo $this->trans('password2'); ?>:
+            <?php echo $this->getTrans('password2'); ?>:
         </label>
         <div class="col-lg-9">
             <input value=""
@@ -48,14 +48,14 @@
                    id="pwd2" />
             <?php
                 if (!empty($errors['password2'])) {
-                    echo '<span class="help-inline">'.$this->trans($errors['password2']).'</span>';
+                    echo '<span class="help-inline">'.$this->getTrans($errors['password2']).'</span>';
                 }
             ?>
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
         <label for="email" class="control-label col-lg-3">
-            <?php echo $this->trans('email'); ?>:
+            <?php echo $this->getTrans('email'); ?>:
         </label>
         <div class="col-lg-9">
             <input value=""
@@ -65,19 +65,18 @@
                    id="email" />
             <?php
                 if (!empty($errors['email'])) {
-                    echo '<span class="help-inline">'.$this->trans($errors['email']).'</span>';
+                    echo '<span class="help-inline">'.$this->getTrans($errors['email']).'</span>';
                 }
             ?>
         </div>
     </div>
-        <a href="<?php echo $this->url(array('action' => 'index')); ?>" class="btn btn-default pull-left">
-            <?php echo $this->trans('backButton'); ?>
+        <a href="<?php echo $this->getUrl(array('action' => 'index')); ?>" class="btn btn-default pull-left">
+            <?php echo $this->getTrans('backButton'); ?>
         </a>
-    <button type="submit" name="save" class="btn pull-right"><?php echo $this->trans('registButton'); ?></button>
+    <button type="submit" name="save" class="btn pull-right"><?php echo $this->getTrans('registButton'); ?></button>
 </form>
 
-
-<script src="<?php echo $this->baseUrl('application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
+<script src="<?php echo $this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
 
 <script>
 $(document).ready(function(){

@@ -1,9 +1,9 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
-    <legend><?php echo $this->trans('settings'); ?></legend>
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
+    <legend><?php echo $this->getTrans('settings'); ?></legend>
     <?php echo $this->getTokenField(); ?>
     <div class="form-group">
         <label for="shoutboxSettings" class="col-lg-2 control-label">
-            <?php echo $this->trans('numberOfMessagesDisplayed'); ?>:
+            <?php echo $this->getTrans('numberOfMessagesDisplayed'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label for="shoutboxSettings" class="col-lg-2 control-label">
-            <?php echo $this->trans('maximumWordLength'); ?>:
+            <?php echo $this->getTrans('maximumWordLength'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"

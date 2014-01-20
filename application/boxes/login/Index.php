@@ -41,7 +41,7 @@ class Index extends \Ilch\Box
                 if ($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('loginbox_password'), $user->getPassword())) {
                     ?>  
                     <script type="text/javascript">
-                        top.location.href = '<?php echo $this->getLayout()->url(array('module' => 'user', 'controller' => 'login', 'action' => 'index')); ?>';
+                        top.location.href = '<?php echo $this->getLayout()->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'index')); ?>';
                     </script>
                     <?php
                 } else {
@@ -49,7 +49,7 @@ class Index extends \Ilch\Box
 
                     ?>
                     <script type="text/javascript">
-                        top.location.href = '<?php echo $this->getLayout()->url(); ?>';
+                        top.location.href = '<?php echo $this->getLayout()->getUrl(); ?>';
                     </script>
                     <?php
                     exit;

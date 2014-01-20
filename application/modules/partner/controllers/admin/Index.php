@@ -25,7 +25,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
             )
         );
@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewPartner',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }

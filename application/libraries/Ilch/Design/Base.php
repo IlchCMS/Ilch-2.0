@@ -146,7 +146,7 @@ abstract class Base
      * @param mixed[]
      * @return string
      */
-    public function trans($key, $placeholders = array())
+    public function getTrans($key, $placeholders = array())
     {
         return $this->getTranslator()->trans($key, $placeholders);
     }
@@ -157,24 +157,39 @@ abstract class Base
      * @param  sting  $url
      * @return string
      */
-    public function baseUrl($url = '')
+    public function getBaseUrl($url = '')
     {
         return BASE_URL.'/'.$url;
     }
 
-    /**
+   /**
      * Gets the static url.
      *
      * @param  string $url
      * @return string
      */
-    public function staticUrl($url = '')
+    public function getLayoutUrl($url = '')
     {
         if (empty($url)) {
-            return STATIC_URL;
+            return BASE_URL.'/application/layouts/'.$this->_layoutKey.'/';
         }
 
-        return STATIC_URL.'/'.$url;
+        return BASE_URL.'/application/layouts/'.$this->_layoutKey.'/'.$url;
+    }
+
+    /**
+     * Gets the syste, static url.
+     *
+     * @param  string $url
+     * @return string
+     */
+    public function getStaticUrl($url = '')
+    {
+        if (empty($url)) {
+            return BASE_URL.'/static/';
+        }
+
+        return BASE_URL.'/static/'.$url;
     }
 
     /**
@@ -196,7 +211,7 @@ abstract class Base
      * @param  boolean $secure
      * @return string
      */
-    public function url($urlArray = array(), $route = null, $secure  = false)
+    public function getUrl($urlArray = array(), $route = null, $secure  = false)
     {
         if (empty($urlArray)) {
             return BASE_URL;
