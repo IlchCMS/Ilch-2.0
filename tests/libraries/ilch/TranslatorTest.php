@@ -60,7 +60,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
         $this->assertEquals
         (
             'The user gets what he wants!',
-            $translator->getTrans('userGetsWhatHeWants'),
+            $translator->trans('userGetsWhatHeWants'),
             'The text wasnt translated using the translation file.'
         );
     }
