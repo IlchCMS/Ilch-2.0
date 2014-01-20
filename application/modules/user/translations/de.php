@@ -95,7 +95,6 @@ return array
     'rulesForRegist' => 'Regeln für die Registrierung',
     'acceptUserRegis' => 'Benutzerregistrierung erlauben?',
     'confirmRegistrationEmail' => 'Bestätigen der Registrierung per Link?',
-    'passwordFreeChoice' => 'Passwort frei wählbar?',
     'yes' => 'Ja',
     'no' => 'Nein',
     

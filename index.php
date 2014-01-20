@@ -4,6 +4,10 @@
  * @package ilch
  */
 
+if(!version_compare(phpversion(), '5.4.0', '>=')) {
+    die('Ilch CMS 2.* needed minimum php version 5.4.0');
+}
+
 @ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
@@ -13,7 +17,7 @@ $serverTimeZone = @date_default_timezone_get();
 date_default_timezone_set('UTC');
 
 define('ACCESS', 1);
-define('VERSION', '2.0');
+define('VERSION', '2.0.0');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 

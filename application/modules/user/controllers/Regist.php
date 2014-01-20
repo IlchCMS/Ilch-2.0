@@ -57,20 +57,18 @@ class Regist extends \Ilch\Controller\Frontend
                 $errors['name'] = 'fieldEmpty';
             }
 
-            if ($this->getConfig()->get('regist_password') == 1) {
-                if (empty($password)) {
-                    $errors['password'] = 'fieldEmpty';
-                }
-
-                if (empty($password2)) {
-                    $errors['password2'] = 'fieldEmpty';
-                }
-
-                if ($password !== $password2) {
-                    $errors['password'] = 'fieldDiffersPassword';
-                    $errors['password2'] = 'fieldDiffersPassword';
-                }                
+            if (empty($password)) {
+                $errors['password'] = 'fieldEmpty';
             }
+
+            if (empty($password2)) {
+                $errors['password2'] = 'fieldEmpty';
+            }
+
+            if ($password !== $password2) {
+                $errors['password'] = 'fieldDiffersPassword';
+                $errors['password2'] = 'fieldDiffersPassword';
+            }     
 
             if (empty($email)) {
                 $errors['email'] = 'fieldEmpty';
@@ -112,7 +110,7 @@ class Regist extends \Ilch\Controller\Frontend
             $this->getView()->set('errors', $errors); 
         }
         
-        $this->getView()->set('regist_password', $this->getConfig()->get('regist_password')); 
+        $this->getView(); 
     }
 
     public function finishAction()

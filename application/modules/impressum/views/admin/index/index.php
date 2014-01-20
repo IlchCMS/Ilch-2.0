@@ -84,6 +84,7 @@
             height: 300,
             width: 500,
             selector: "textarea",
+            plugins: ["code table image preview"]
         }
     );
 </script>

@@ -58,7 +58,7 @@
         {
             height: 400,
             selector: "#guestbook_message",
-            plugins: "image preview"
+            plugins: "image preview table"
         }
     );
 </script>

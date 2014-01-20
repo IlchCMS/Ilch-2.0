@@ -82,7 +82,8 @@ tinymce.init
 (
     {
         height: 400,
-        selector: "textarea"
+        selector: "textarea",
+        plugins: ["code table image preview"]
     }
 );
 </script>

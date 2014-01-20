@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-        <title>Ilch <?php echo VERSION; ?> - Admincenter</title>
+        <title>Ilch - Admincenter</title>
         <meta name="description" content="Ilch - Login">
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>">
         <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
@@ -37,7 +37,7 @@
         </script>
         <nav class="navbar navbar-default navbar-fixed-top topnavbar">
             <div class="navbar-header leftbar">
-                <img class="pull-left" src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
+                <img title="Version <?=VERSION?>" class="pull-left" src="<?php echo $this->staticUrl('img/ilch_logo_2.png'); ?>" />
                 <div class="mobile hidden-md hidden-lg">
                     <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
                         <span class="sr-only">Toggle navigation</span>
