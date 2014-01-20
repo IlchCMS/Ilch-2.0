@@ -27,7 +27,7 @@ $errors = $this->get('errors');
             }
         ?>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-4">
         <i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->getTrans('dbHostInfo'); ?>"></i>
     </div>
 </div>
@@ -42,7 +42,7 @@ $errors = $this->get('errors');
                name="dbUser"
                id="dbUser" />
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-4">
         <i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->getTrans('dbUserInfo'); ?>"></i>
     </div>
 </div>
@@ -59,23 +59,24 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbDatabase'])) { echo 'has-error'; }; ?>">
-    <label for="dbName" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('dbName'); ?>:
-    </label>
-    <div class="col-lg-6">
-        <input value="<?php if ($this->get('dbName') != '') { echo $this->escape($this->get('dbName')); } ?>"
-               type="text"
-               name="dbName"
-               class="form-control"
-               id="dbName" />
-        <?php
-            if (!empty($errors['dbDatabase'])) {
-                echo '<span class="help-block">'.$this->getTrans($errors['dbDatabase']).'</span>';
-            }
-        ?>
-    </div>
-    <div class="col-lg-2">
-        <i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"></i>
+        <label for="dbName" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('dbName'); ?>:
+        </label>
+        <div class="col-lg-6">
+            <input value="<?php if ($this->get('dbName') != '') { echo $this->escape($this->get('dbName')); } ?>"
+                   type="text"
+                   name="dbName"
+                   class="form-control"
+                   id="dbName" />
+            <?php
+                if (!empty($errors['dbDatabase'])) {
+                    echo '<span class="help-block">'.$this->getTrans($errors['dbDatabase']).'</span>';
+                }
+            ?>
+        </div>
+        <div class="col-lg-4">
+            <i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"></i>
+        </div>
     </div>
 </div>
 <div class="form-group">
@@ -97,3 +98,9 @@ $errors = $this->get('errors');
         });
     });
 </script>
+<style>
+    .form-group .col-lg-6 {
+        padding-right: 0px;
+    }
+
+</style>
