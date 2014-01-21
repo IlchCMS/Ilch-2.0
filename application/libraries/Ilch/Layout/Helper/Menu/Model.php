@@ -150,9 +150,9 @@ class Model
             $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 2) {
             $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
-            $html .= '<a href="'.$this->_layout->url($page->getPerma()).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->_layout->getUrl($page->getPerma()).'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 3) {
-            $html .= '<a href="'.$this->_layout->url(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->_layout->getUrl(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
         }
         
         if (!empty($subItems)) {

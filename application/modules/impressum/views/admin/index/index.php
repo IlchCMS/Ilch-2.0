@@ -1,7 +1,7 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName(), 'id' => 1)); ?>">
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => 1)); ?>">
     <?php echo $this->getTokenField(); ?>
     <legend>
-    <?php echo $this->trans('manageImpressum'); ?>
+    <?php echo $this->getTrans('manageImpressum'); ?>
     </legend>
     <div class="form-group">
         <div class="col-lg-4">
@@ -18,7 +18,7 @@
                    type="text"
                    name="company"
                    id="company"
-                   placeholder="<?php echo $this->trans('company'); ?>"
+                   placeholder="<?php echo $this->getTrans('company'); ?>"
                    value="<?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getCompany()); } ?>" />
         </div>
     </div>
@@ -28,7 +28,7 @@
                    type="text"
                    name="name"
                    id="name"
-                   placeholder="<?php echo $this->trans('name'); ?>"
+                   placeholder="<?php echo $this->getTrans('name'); ?>"
                    value="<?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getName()); } ?>" />
         </div>
     </div>
@@ -38,7 +38,7 @@
                    type="text"
                    name="address"
                    id="address"
-                   placeholder="<?php echo $this->trans('address'); ?>"
+                   placeholder="<?php echo $this->getTrans('address'); ?>"
                    value="<?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getAddress()); } ?>" />
         </div>
     </div>
@@ -49,7 +49,7 @@
                    type="text"
                    name="city"
                    id="city"
-                   placeholder="<?php echo $this->trans('city'); ?>"
+                   placeholder="<?php echo $this->getTrans('city'); ?>"
                    value="<?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getCity()); } ?>" />
         </div>
     </div>
@@ -60,7 +60,7 @@
                    type="text"
                    name="phone"
                    id="phone"
-                   placeholder="<?php echo $this->trans('phone'); ?>"
+                   placeholder="<?php echo $this->getTrans('phone'); ?>"
                    value="<?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getPhone()); } ?>" />
         </div>
     </div>
@@ -76,7 +76,7 @@
     <?=$this->getSaveBar('editButton')?>
 </form>
 
-<script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getStaticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
     tinymce.init
     (

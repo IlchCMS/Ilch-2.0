@@ -3,15 +3,15 @@
     <legend>
     <?php
         if ($this->get('receiver') != '') {
-            echo $this->trans('menuActionEditReceiver');
+            echo $this->getTrans('menuActionEditReceiver');
         } else {
-            echo $this->trans('menuActionNewReceiver');
+            echo $this->getTrans('menuActionNewReceiver');
         }
     ?>
     </legend>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
-            <?php echo $this->trans('name'); ?>:
+            <?php echo $this->getTrans('name'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <label for="email" class="col-lg-2 control-label">
-            <?php echo $this->trans('email'); ?>:
+            <?php echo $this->getTrans('email'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"

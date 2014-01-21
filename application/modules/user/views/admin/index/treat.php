@@ -7,17 +7,17 @@
 $user = $this->get('user');
 
 if ($user->getId()) {
-    $fieldsetLegend = $this->trans('editUser');
+    $fieldsetLegend = $this->getTrans('editUser');
 }
 else {
-    $fieldsetLegend = $this->trans('addUser');
+    $fieldsetLegend = $this->getTrans('addUser');
 }
 ?>
 <fieldset>
     <legend>
         <?php echo $fieldsetLegend; ?>
     </legend>
-    <form action="<?php echo $this->url(array('action' => 'treat')); ?>"
+    <form action="<?php echo $this->getUrl(array('action' => 'treat')); ?>"
           method="POST"
           class="form-horizontal"
           id="userForm">
@@ -28,39 +28,39 @@ else {
         <div class="form-group">
             <label for="userName"
                    class="col-lg-3 control-label">
-                <?php echo $this->trans('userName'); ?>
+                <?php echo $this->getTrans('userName'); ?>
             </label>
             <div class="col-lg-9">
                 <input name="user[name]"
                        type="text"
                        id="userName"
                        class="form-control required"
-                       placeholder="<?php echo $this->trans('userName'); ?>"
+                       placeholder="<?php echo $this->getTrans('userName'); ?>"
                        value="<?php echo $this->escape($user->getName()); ?>" />
             </div>
         </div>
         <div class="form-group">
             <label for="userEmail" class="col-lg-3 control-label">
-                <?php echo $this->trans('userEmail'); ?>
+                <?php echo $this->getTrans('userEmail'); ?>
             </label>
             <div class="col-lg-9">
                 <input name="user[email]"
                        type="text"
                        id="userEmail"
                        class="form-control required email"
-                       placeholder="<?php echo $this->trans('userEmail'); ?>"
+                       placeholder="<?php echo $this->getTrans('userEmail'); ?>"
                        value="<?php echo $this->escape($user->getEmail()); ?>" />
             </div>
         </div>
         <div class="form-group">
             <label for="userPassword" class="col-lg-3 control-label">
-                <?php echo $this->trans('userPassword'); ?>
+                <?php echo $this->getTrans('userPassword'); ?>
             </label>
             <div class="col-lg-9">
                 <input name="user[password]"
                        type="password"
                        class="form-control"
-                       placeholder="<?php echo $this->trans('userPassword'); ?>"
+                       placeholder="<?php echo $this->getTrans('userPassword'); ?>"
                        value="" />
             </div>
         </div>
@@ -69,18 +69,18 @@ else {
             $dateConfirmed = $user->getDateConfirmed();
 
             if ($dateConfirmed->getTimestamp() == 0) {
-                $dateConfirmed = $this->trans('notConfirmedYet');
+                $dateConfirmed = $this->getTrans('notConfirmedYet');
             }
 
             $dateLastActivity = $user->getDateLastActivity();
 
             if ($dateLastActivity->getTimestamp() == 0) {
-                $dateLastActivity = $this->trans('neverLoggedIn');
+                $dateLastActivity = $this->getTrans('neverLoggedIn');
             }
             ?>
             <div class="form-group">
                 <label class="col-lg-3 control-label">
-                    <?php echo $this->trans('userDateCreated'); ?>
+                    <?php echo $this->getTrans('userDateCreated'); ?>
                 </label>
                 <div class="col-lg-9">
                     <p class="form-control-static"><?php echo $this->escape($user->getDateCreated()); ?></p>
@@ -88,7 +88,7 @@ else {
             </div>
             <div class="form-group">
                 <label class="col-lg-3 control-label">
-                    <?php echo $this->trans('userDateConfirmed'); ?>
+                    <?php echo $this->getTrans('userDateConfirmed'); ?>
                 </label>
                 <div class="col-lg-9">
                     <p class="form-control-static"><?php echo $this->escape($dateConfirmed); ?></p>
@@ -96,7 +96,7 @@ else {
             </div>
             <div class="form-group">
                 <label class="col-lg-3 control-label">
-                    <?php echo $this->trans('userDateLastActivity'); ?>
+                    <?php echo $this->getTrans('userDateLastActivity'); ?>
                 </label>
                 <div class="col-lg-9">
                     <p class="form-control-static"><?php echo $this->escape($dateLastActivity); ?></p>
@@ -107,12 +107,12 @@ else {
         ?>
         <div class="form-group">
             <label for="assignedGroups" class="col-lg-3 control-label">
-                    <?php echo $this->trans('assignedGroups'); ?>
+                    <?php echo $this->getTrans('assignedGroups'); ?>
             </label>
             <div class="col-lg-9">
                 <select id="assignedGroups"
                         class="chosen-select form-control"
-                        data-placeholder="<?php echo $this->trans('selectAssignedGroups'); ?>"
+                        data-placeholder="<?php echo $this->getTrans('selectAssignedGroups'); ?>"
                         multiple
                         name="user[groups][]">
                         <?php

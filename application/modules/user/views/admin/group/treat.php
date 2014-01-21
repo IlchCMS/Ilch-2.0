@@ -7,17 +7,17 @@
 $group = $this->get('group');
 
 if ($group->getId()) {
-    $fieldsetLegend = $this->trans('editGroup');
+    $fieldsetLegend = $this->getTrans('editGroup');
 }
 else {
-    $fieldsetLegend = $this->trans('addGroup');
+    $fieldsetLegend = $this->getTrans('addGroup');
 }
 ?>
 <fieldset>
     <legend>
         <?php echo $fieldsetLegend; ?>
     </legend>
-    <form action="<?php echo $this->url(array('module' => 'user', 'controller' => 'group', 'action' => 'save')); ?>"
+    <form action="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'group', 'action' => 'save')); ?>"
           method="POST"
           class="form-horizontal"
           id="groupForm">
@@ -28,14 +28,14 @@ else {
         <div class="form-group">
             <label for="groupName"
                    class="col-lg-3 control-label">
-                <?php echo $this->trans('groupName'); ?>
+                <?php echo $this->getTrans('groupName'); ?>
             </label>
             <div class="col-lg-9">
                 <input name="group[name]"
                        type="text"
                        id="groupName"
                        class="form-control required"
-                       placeholder="<?php echo $this->trans('groupName'); ?>"
+                       placeholder="<?php echo $this->getTrans('groupName'); ?>"
                        value="<?php echo $this->escape($group->getName()); ?>" />
             </div>
         </div>

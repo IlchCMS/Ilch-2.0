@@ -3,15 +3,15 @@
     <legend>
     <?php
         if ($this->get('article') != '') {
-            echo $this->trans('editArticle');
+            echo $this->getTrans('editArticle');
         } else {
-            echo $this->trans('addArticle');
+            echo $this->getTrans('addArticle');
         }
     ?>
     </legend>
     <div class="form-group">
         <label for="articleTitleInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('articleTitle'); ?>:
+            <?php echo $this->getTrans('articleTitle'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
@@ -29,7 +29,7 @@
     ?>
     <div class="form-group">
         <label for="articleLanguageInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('articleLanguage'); ?>:
+            <?php echo $this->getTrans('articleLanguage'); ?>:
         </label>
         <div class="col-lg-2">
             <select class="form-control" name="articleLanguage" id="articleLanguageInput">
@@ -56,10 +56,10 @@
     ?>
     <div class="form-group">
         <label for="articlePerma" class="col-lg-2 control-label">
-            <?php echo $this->trans('permaLink'); ?>:
+            <?php echo $this->getTrans('permaLink'); ?>:
         </label>
         <div class="col-lg-5">
-            <?php echo $this->url(); ?>/index.php/<input
+            <?php echo $this->getUrl(); ?>/index.php/<input
                    type="text"
                    name="articlePerma"
                    id="articlePerma"
@@ -74,7 +74,7 @@
     }
     ?>
 </form>
-<script src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
+<script src="<?php echo $this->getStaticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
 <?php
 $articleID = '';
@@ -99,7 +99,7 @@ $('#articleLanguageInput').change
 (
     this,
     function () {
-        top.location.href = '<?php echo $this->url(array('id' => $articleID)); ?>/locale/'+$(this).val();
+        top.location.href = '<?php echo $this->getUrl(array('id' => $articleID)); ?>/locale/'+$(this).val();
     }
 );
 

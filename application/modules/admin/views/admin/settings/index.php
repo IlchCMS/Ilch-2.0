@@ -1,13 +1,13 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
-    <legend><?php echo $this->trans('systemSettings'); ?></legend>
+    <legend><?php echo $this->getTrans('systemSettings'); ?></legend>
     <div class="form-group">
         <label for="startPage" class="col-lg-2 control-label">
-            <?php echo $this->trans('startPage'); ?>:
+            <?php echo $this->getTrans('startPage'); ?>:
         </label>
         <div class="col-lg-2">
             <select class="form-control" name="startPage" id="startPage">
-                <optgroup label="<?php echo $this->trans('pages'); ?>">
+                <optgroup label="<?php echo $this->getTrans('pages'); ?>">
                 <?php
                     foreach ($this->get('pages') as $page) {
                         $selected = '';
@@ -19,7 +19,7 @@
                     }
                 ?>
                 </optgroup>
-                <optgroup label="<?php echo $this->trans('modules'); ?>">
+                <optgroup label="<?php echo $this->getTrans('modules'); ?>">
                 <?php
                     $moduleMapper = new \Admin\Mappers\Module();
 
@@ -38,7 +38,7 @@
     </div>
     <div class="form-group">
         <label for="maintenanceMode" class="col-lg-2 control-label">
-            <?php echo $this->trans('maintenanceMode'); ?>:
+            <?php echo $this->getTrans('maintenanceMode'); ?>:
         </label>
         <div class="col-lg-2">
             <div class="radio">
@@ -46,7 +46,7 @@
                     <input type="radio"
                        name="maintenanceMode"
                        value="1"
-                <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->trans('on'); ?>
+                <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->getTrans('on'); ?>
                 </label>
             </div>
             <div class="radio">
@@ -54,14 +54,14 @@
                     <input type="radio"
                        name="maintenanceMode"
                        value="0"
-                <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->trans('off'); ?>
+                <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->getTrans('off'); ?>
                 </label>
             </div>
         </div>
     </div>
     <div class="form-group">
         <label for="multilingualAcp" class="col-lg-2 control-label">
-            <?php echo $this->trans('multilingualAcp'); ?>:
+            <?php echo $this->getTrans('multilingualAcp'); ?>:
         </label>
         <div class="col-lg-2">
             <div class="radio">
@@ -70,7 +70,7 @@
                        name="multilingualAcp"
                        id="multilingualAcp"
                        value="1"
-                <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->trans('on'); ?>
+                <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->getTrans('on'); ?>
                 </label>
             </div>
             <div class="radio">
@@ -78,14 +78,14 @@
                     <input type="radio"
                        name="multilingualAcp"
                        value="0"
-                <?php if ($this->get('multilingualAcp') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->trans('off'); ?>
+                <?php if ($this->get('multilingualAcp') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->getTrans('off'); ?>
                 </label>
             </div>
         </div>
     </div>
     <div id="contentLanguage" class="form-group <?php if($this->get('multilingualAcp') != '1'){ echo 'hidden'; } ?>">
         <label for="languageInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('contentLanguage'); ?>:
+            <?php echo $this->getTrans('contentLanguage'); ?>:
         </label>
         <div class="col-lg-2">
             <select class="form-control" name="contentLanguage" id="languageInput">
@@ -105,7 +105,7 @@
     </div>
     <div class="form-group">
         <label for="pageTitleInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('pageTitle'); ?>:
+            <?php echo $this->getTrans('pageTitle'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"

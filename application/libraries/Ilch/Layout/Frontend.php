@@ -73,13 +73,14 @@ class Frontend extends Base
                 <title>'.$this->getTitle().'</title>
                 <meta name="description" content="">';
 
-        $html .= '<link href="'.$this->staticUrl('css/bootstrap.css').'" rel="stylesheet">
-                <link href="'.$this->staticUrl('css/font-awesome.css').'" rel="stylesheet">
-                <link href="'.$this->staticUrl('css/global.css').'" rel="stylesheet">
-                <link href="'.$this->staticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
-                <script src="'.$this->staticUrl('js/jquery.js').'"></script>
-                <script src="'.$this->staticUrl('js/bootstrap.js').'"></script>
-                <script src="'.$this->staticUrl('js/jquery-ui.js').'"></script>';
+        $html .= '<link href="'.$this->getStaticUrl('css/bootstrap.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/font-awesome.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/global.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('../application/modules/user/static/css/user.css').'" rel="stylesheet">
+                <script src="'.$this->getStaticUrl('js/jquery.js').'"></script>
+                <script src="'.$this->getStaticUrl('js/bootstrap.js').'"></script>
+                <script src="'.$this->getStaticUrl('js/jquery-ui.js').'"></script>';
         return $html;
     }
 }

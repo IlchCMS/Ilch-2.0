@@ -34,7 +34,7 @@ class Group extends BaseController
             (
                 'name' => 'menuActionNewGroup',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
             )
         );
     }

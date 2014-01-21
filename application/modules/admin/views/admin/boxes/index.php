@@ -20,7 +20,7 @@ if ($this->get('boxes') != '') {
             <th><?=$this->getCheckAllCheckbox('check_boxes')?></th>
             <th></th>
             <th></th>
-            <th><?php echo $this->trans('boxTitle'); ?></th>
+            <th><?php echo $this->getTrans('boxTitle'); ?></th>
             <?php
                 if ($this->get('multilingual')) {
                     echo '<th class="text-right">';
@@ -30,7 +30,7 @@ if ($this->get('boxes') != '') {
                             continue;
                         }
 
-                        echo '<img src="'.$this->staticUrl('img/'.$key.'.png').'"> ';
+                        echo '<img src="'.$this->getStaticUrl('img/'.$key.'.png').'"> ';
                     }
 
                     echo '</th>';
@@ -46,7 +46,7 @@ if ($this->get('boxes') != '') {
                         <input value="'.$box->getId().'" type="checkbox" name="check_boxes[]" />
                     </td>
                     <td>
-                        <a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId())).'">
+                        <a href="'.$this->getUrl(array('action' => 'treat', 'id' => $box->getId())).'">
                             <i class="fa fa-edit"></i>
                         </a>
                     </td>
@@ -70,9 +70,9 @@ if ($this->get('boxes') != '') {
                         }
                         
                         if ($this->get('boxMapper')->getBoxByIdLocale($box->getId(), $key) != null) {
-                            echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'"><i class="fa fa-edit"></i></a>';
+                            echo '<a href="'.$this->getUrl(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'"><i class="fa fa-edit"></i></a>';
                         } else {
-                            echo '<a href="'.$this->url(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'"><i class="fa fa-plus-circle"></i></a>';
+                            echo '<a href="'.$this->getUrl(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)).'"><i class="fa fa-plus-circle"></i></a>';
                         }
                             
                     }

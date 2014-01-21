@@ -24,7 +24,7 @@ class Boxes extends \Ilch\Controller\Admin
                     'name' => 'menuBoxes',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'boxes', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'boxes', 'action' => 'index'))
                 ),
             )
         );
@@ -35,7 +35,7 @@ class Boxes extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewBox',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'boxes', 'action' => 'treat'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'boxes', 'action' => 'treat'))
             )
         );
     }

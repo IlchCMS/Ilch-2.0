@@ -1,17 +1,17 @@
-<legend><?php echo $this->trans('manage'); ?></legend>
+<legend><?php echo $this->getTrans('manage'); ?></legend>
 <form class="form-horizontal" method="POST" action="">
 <?=$this->getTokenField()?>
 <div id="img-responsive">
     <ul class="nav nav-tabs">
         <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
-            <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index')); ?>">
-                <?php echo $this->trans('entrys'); ?>
+            <a href="<?php echo $this->getUrl(array('controller' => 'index', 'action' => 'index')); ?>">
+                <?php echo $this->getTrans('entrys'); ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0) : ?>
             <li <?php if($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
-                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'index', 'showsetfree' => 1)); ?>">
-                    <?php echo $this->trans('setfree'); ?><span class="badge"><?php echo $this->get('badge'); ?></span>
+                <a href="<?php echo $this->getUrl(array('controller' => 'index', 'action' => 'index', 'showsetfree' => 1)); ?>">
+                    <?php echo $this->getTrans('setfree'); ?><span class="badge"><?php echo $this->get('badge'); ?></span>
                 </a>
             </li>
         <?php endif; ?>
@@ -40,9 +40,9 @@
                         }
                     ?>
                     <th></th>
-                    <th><?php echo $this->trans('from'); ?></th>
-                    <th><?php echo $this->trans('date'); ?></th>
-                    <th><?php echo $this->trans('message'); ?></th>
+                    <th><?php echo $this->getTrans('from'); ?></th>
+                    <th><?php echo $this->getTrans('date'); ?></th>
+                    <th><?php echo $this->getTrans('message'); ?></th>
                 </tr>
             </thead>
             <?php foreach ($this->get('entries') as $entry) : ?>
@@ -58,7 +58,7 @@
                                 $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
                             }
 
-                           echo '<a href="'.$this->url($freeArray).'"><span class="fa fa-check-square-o text-success"></span></a>';
+                           echo '<a href="'.$this->getUrl($freeArray).'"><span class="fa fa-check-square-o text-success"></span></a>';
                            echo '</td>';
                         }
                         

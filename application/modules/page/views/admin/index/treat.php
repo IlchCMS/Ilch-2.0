@@ -3,15 +3,15 @@
     <legend>
     <?php
         if ($this->get('page') != '') {
-            echo $this->trans('editPage');
+            echo $this->getTrans('editPage');
         } else {
-            echo $this->trans('addPage');
+            echo $this->getTrans('addPage');
         }
     ?>
     </legend>
     <div class="form-group">
         <label for="pageTitleInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('pageTitle'); ?>:
+            <?php echo $this->getTrans('pageTitle'); ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
@@ -29,7 +29,7 @@
     ?>
     <div class="form-group">
         <label for="pageLanguageInput" class="col-lg-2 control-label">
-            <?php echo $this->trans('pageLanguage'); ?>:
+            <?php echo $this->getTrans('pageLanguage'); ?>:
         </label>
         <div class="col-lg-2">
             <select class="form-control" name="pageLanguage" id="pageLanguageInput">
@@ -56,10 +56,10 @@
     ?>
     <div class="form-group">
         <label for="pagePerma" class="col-lg-2 control-label">
-            <?php echo $this->trans('permaLink'); ?>:
+            <?php echo $this->getTrans('permaLink'); ?>:
         </label>
         <div class="col-lg-5">
-            <?php echo $this->url(); ?>/index.php/<input
+            <?php echo $this->getUrl(); ?>/index.php/<input
                    type="text"
                    name="pagePerma"
                    id="pagePerma"
@@ -74,7 +74,7 @@
     }
     ?>
 </form>
-<script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getStaticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
 <?php
 $pageID = '';
@@ -99,7 +99,7 @@ $('#pageLanguageInput').change
 (
     this,
     function () {
-        top.location.href = '<?php echo $this->url(array('id' => $pageID)); ?>/locale/'+$(this).val();
+        top.location.href = '<?php echo $this->getUrl(array('id' => $pageID)); ?>/locale/'+$(this).val();
     }
 );
 

@@ -3,15 +3,15 @@
     <legend>
     <?php
         if ($this->get('link') != '') {
-            echo $this->trans('menuActionEditLink');
+            echo $this->getTrans('menuActionEditLink');
         } else {
-            echo $this->trans('menuActionNewLink');
+            echo $this->getTrans('menuActionNewLink');
         }
     ?>
     </legend>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
-            <?php echo $this->trans('name'); ?>:
+            <?php echo $this->getTrans('name'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label for="link" class="col-lg-2 control-label">
-            <?php echo $this->trans('link'); ?>:
+            <?php echo $this->getTrans('link'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -37,7 +37,7 @@
     </div>
     <div class="form-group">
         <label for="banner" class="col-lg-2 control-label">
-            <?php echo $this->trans('banner'); ?>:
+            <?php echo $this->getTrans('banner'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -50,7 +50,7 @@
     </div>
     <div class="form-group">
         <label for="desc" class="col-lg-2 control-label">
-            <?php echo $this->trans('description'); ?>:
+            <?php echo $this->getTrans('description'); ?>:
         </label>
         <div class="col-lg-4">
             <textarea class="form-control"

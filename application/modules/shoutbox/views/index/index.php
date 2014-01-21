@@ -16,5 +16,5 @@ if (!empty($shoutboxs)) {
 </table>
 <?php
 }  else {
-    echo $this->trans('noEntrys');
+    echo $this->getTrans('noEntrys');
 } ?>

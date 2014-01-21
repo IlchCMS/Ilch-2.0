@@ -23,10 +23,10 @@ if ($this->get('userList') != '') {
                 <th><?=$this->getCheckAllCheckbox('check_users')?></th>
                 <th></th>
                 <th></th>
-                <th><?php echo $this->trans('userName'); ?></th>
-                <th><?php echo $this->trans('userEmail'); ?></th>
-                <th><?php echo $this->trans('userDateCreated'); ?></th>
-                <th><?php echo $this->trans('userGroups'); ?></th>
+                <th><?php echo $this->getTrans('userName'); ?></th>
+                <th><?php echo $this->getTrans('userEmail'); ?></th>
+                <th><?php echo $this->getTrans('userDateCreated'); ?></th>
+                <th><?php echo $this->getTrans('userGroups'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -43,19 +43,19 @@ if ($this->get('userList') != '') {
                 }
 
                 if ($groups === '') {
-                    $groups = $this->trans('noGroupsAssigned');
+                    $groups = $this->getTrans('noGroupsAssigned');
                 }
 
                 $dateConfirmed = $user->getDateConfirmed();
 
                 if ($dateConfirmed->getTimestamp() == 0) {
-                    $dateConfirmed = $this->trans('notConfirmedYet');
+                    $dateConfirmed = $this->getTrans('notConfirmedYet');
                 }
 
                 $dateLastActivity = $user->getDateLastActivity();
 
                 if ($dateLastActivity->getTimestamp() == 0) {
-                    $dateLastActivity = $this->trans('neverLoggedIn');
+                    $dateLastActivity = $this->getTrans('neverLoggedIn');
                 }
                 ?>
                 <tr>
@@ -82,6 +82,6 @@ if ($this->get('userList') != '') {
 </form>
 <?php
 } else {
-    echo $this->trans('noUsersExist');
+    echo $this->getTrans('noUsersExist');
 }
 ?>

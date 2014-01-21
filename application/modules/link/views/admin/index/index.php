@@ -1,4 +1,4 @@
-<legend><?php echo $this->trans('manageLink'); ?></legend>
+<legend><?php echo $this->getTrans('manageLink'); ?></legend>
 <form class="form-horizontal" method="POST" action="">
 <?=$this->getTokenField()?>
 <?php
@@ -21,8 +21,8 @@ if (!empty($categories)) {
             <th><?=$this->getCheckAllCheckbox('check_cats')?></th>
             <th></th>
             <th></th>
-            <th><?php echo $this->trans('category'); ?></th>
-            <th style="text-align:center"><?php echo $this->trans('links'); ?></th>
+            <th><?php echo $this->getTrans('category'); ?></th>
+            <th style="text-align:center"><?php echo $this->getTrans('links'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -40,7 +40,7 @@ if (!empty($categories)) {
                     $getDesc = '';
                 }
                 
-                echo '<td><a href='.$this->url(array('action' => 'index', 'cat_id' => $category->getId())).' title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
+                echo '<td><a href='.$this->getUrl(array('action' => 'index', 'cat_id' => $category->getId())).' title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
                 echo '<td align="center" style="vertical-align:middle">'.$category->getLinksCount().'</td>';
                 echo '</tr>';
             }
@@ -63,7 +63,7 @@ if (!empty($links)) {
             <th><?=$this->getCheckAllCheckbox('check_links')?></th>
             <th></th>
             <th></th>
-            <th><?php echo $this->trans('links'); ?></th>
+            <th><?php echo $this->getTrans('links'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -96,7 +96,7 @@ if (!empty($links)) {
 </table>
 <?php
 } else {
-    echo $this->trans('noLinks');
+    echo $this->getTrans('noLinks');
 }
 ?>
 <?=$this->getListBar(array('delete' => 'delete'))?>

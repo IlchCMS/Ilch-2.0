@@ -21,7 +21,7 @@ class Layouts extends \Ilch\Controller\Admin
                     'name' => 'list',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'layouts', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'layouts', 'action' => 'index'))
                 ),
             )
         );

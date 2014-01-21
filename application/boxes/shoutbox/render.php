@@ -19,14 +19,14 @@
                       cols="10" 
                       rows="5"
                       maxlength="50"
-                      placeholder="<?php echo $this->trans('message'); ?>"
+                      placeholder="<?php echo $this->getTrans('message'); ?>"
                       required></textarea>
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-12">
             <button type="submit" name="entry" class="btn">
-                <?php echo $this->trans('send'); ?>
+                <?php echo $this->getTrans('send'); ?>
             </button>
         </div>
     </div>
@@ -48,4 +48,4 @@
         endforeach; ?>
 </table>
 
-<div align="center"><a href="<?php echo $this->url(array('module' => 'shoutbox', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->trans('archive'); ?></a></div>
+<div align="center"><a href="<?php echo $this->getUrl(array('module' => 'shoutbox', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->getTrans('archive'); ?></a></div>

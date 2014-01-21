@@ -1,5 +1,5 @@
 <h3>
-    <?php echo $this->trans('welcomeBack', $this->getUser()->getName()); ?> !
+    <?php echo $this->getTrans('welcomeBack', $this->getUser()->getName()); ?> !
 </h3>
 
-<?php echo $this->trans('welcomeBackDescripton'); ?>
+<?php echo $this->getTrans('welcomeBackDescripton'); ?>

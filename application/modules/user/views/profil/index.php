@@ -20,13 +20,13 @@
             <div class="col-lg-5 col-xs-12">
                 <h3><?php echo $this->escape($profil->getName()); ?> (00)</h3>
                 <div class="detail">
-                    <i class="fa fa-star" title="<?php echo $this->trans('rank'); ?>"></i> {Rangname]<br />
-                    <i class="fa fa-sign-in" title="<?php echo $this->trans('regist'); ?>"></i> <?php echo $this->escape($profil->getDateCreated()) ?>
+                    <i class="fa fa-star" title="<?php echo $this->getTrans('rank'); ?>"></i> {Rangname]<br />
+                    <i class="fa fa-sign-in" title="<?php echo $this->getTrans('regist'); ?>"></i> <?php echo $this->escape($profil->getDateCreated()) ?>
                 </div>
             </div>
             <div class="col-lg-4 hidden-xs concatLinks-lg">
                 <a class="fa fa-envelope" title="E-Mail"></a>
-                <a class="fa fa-globe" title="<?php echo $this->trans('website'); ?>"></a>
+                <a class="fa fa-globe" title="<?php echo $this->getTrans('website'); ?>"></a>
                 <a class="fa fa-facebook" title="Facebook"></a>
                 <a class="fa fa-google-plus" title="Goggle+"></a>
                 <a class="fa fa-twitter" title="Twitter"></a>
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-xs-12 visible-xs hidden-lg concatLinks">
                 <a class="fa fa-envelope" title="E-Mail"></a>
-                <a class="fa fa-globe" title="<?php echo $this->trans('website'); ?>"></a>
+                <a class="fa fa-globe" title="<?php echo $this->getTrans('website'); ?>"></a>
                 <a class="fa fa-facebook" title="Facebook"></a>
                 <a class="fa fa-google-plus" title="Goggle+"></a>
                 <a class="fa fa-twitter" title="Twitter"></a>
@@ -46,7 +46,7 @@
     </div>
     <br />
     <div class="profil-content">
-        <legend><?php echo $this->trans('profileDetails'); ?></legend>
+        <legend><?php echo $this->getTrans('profileDetails'); ?></legend>
         <div class="row">
             <div class="col-lg-2 detail bold">
                 First Name:
@@ -65,10 +65,10 @@
         </div>
         <div class="clearfix"></div>
         <br />
-        <legend><?php echo $this->trans('others'); ?></legend>
+        <legend><?php echo $this->getTrans('others'); ?></legend>
         <div class="row">
             <div class="col-lg-2 detail bold">
-                <?php echo $this->trans('groups'); ?>:
+                <?php echo $this->getTrans('groups'); ?>:
             </div>
             <div class="col-lg-10 detail">
                 <?php echo $this->escape($groups) ?>

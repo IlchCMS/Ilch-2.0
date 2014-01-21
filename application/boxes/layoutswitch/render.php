@@ -21,7 +21,7 @@
     (
         this,
         function () {
-            top.location.href = '<?php echo $this->url(array('action' => 'index')); ?>/ilch_layout/'+$(this).val();
+            top.location.href = '<?php echo $this->getUrl(array('action' => 'index')); ?>/ilch_layout/'+$(this).val();
         }
     );
 </script>

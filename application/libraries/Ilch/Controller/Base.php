@@ -64,7 +64,7 @@ class Base
      */
     public function redirect($urlArray, $route = null, $rewrite = false)
     {
-        header("location: ".$this->getLayout()->url($urlArray, $route, $rewrite));
+        header("location: ".$this->getLayout()->getUrl($urlArray, $route, $rewrite));
         exit;
     }
 

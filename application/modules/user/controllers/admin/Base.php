@@ -39,28 +39,28 @@ class Base extends \Ilch\Controller\Admin
                     'name' => 'menuUser',
                     'active' => $active['index'],
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'menuGroup',
                     'active' => $active['group'],
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'group', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'group', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'menuAccess',
                     'active' => $active['access'],
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'access', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'access', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'menuSettings',
                     'active' => $active['settings'],
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->url(array('controller' => 'settings', 'action' => 'index'))
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
                 )
             )
         );

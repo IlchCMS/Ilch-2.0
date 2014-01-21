@@ -34,7 +34,7 @@ class Index extends BaseController
             (
                 'name' => 'menuActionNewUser',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }

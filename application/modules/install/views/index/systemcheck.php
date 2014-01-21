@@ -2,13 +2,13 @@
     <thead>
         <tr>
             <th></th>
-            <th><?php echo $this->trans('required'); ?></th>
-            <th><?php echo $this->trans('available'); ?></th>
+            <th><?php echo $this->getTrans('required'); ?></th>
+            <th><?php echo $this->getTrans('available'); ?></th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td><?php echo $this->trans('phpVersion'); ?></td>
+            <td><?php echo $this->getTrans('phpVersion'); ?></td>
             <td class="text-success">>= 5.4.0</td>
             <td class="<?php
                         if (version_compare(phpversion(), '5.4.0', '>=')) {
@@ -21,7 +21,7 @@
             </td>
         </tr>
         <tr>
-            <td><?php echo $this->trans('writable').' "application"' ?></td>
+            <td><?php echo $this->getTrans('writable').' "application"' ?></td>
             <td class="text-success">writable</td>
             <td>
                 <?php

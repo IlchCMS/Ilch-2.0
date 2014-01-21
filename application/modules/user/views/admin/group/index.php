@@ -21,8 +21,8 @@ if ($this->get('groupList') != '') {
                 <th><input type="checkbox" class="check_all" data-childs="check_groups" /></th>
                 <th></th>
                 <th></th>
-                <th><?php echo $this->trans('groupName'); ?></th>
-                <th><?php echo $this->trans('groupAssignedUsers'); ?></th>
+                <th><?php echo $this->getTrans('groupName'); ?></th>
+                <th><?php echo $this->getTrans('groupAssignedUsers'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -54,6 +54,6 @@ if ($this->get('groupList') != '') {
 </form>
 <?php
 } else {
-    echo $this->trans('noGroupsExist');
+    echo $this->getTrans('noGroupsExist');
 }
 ?>

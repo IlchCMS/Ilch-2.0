@@ -4,21 +4,21 @@
         <meta charset="utf-8">
         <title>Ilch - Installation</title>
         <meta name="description" content="Ilch - Installation">
-        <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->staticUrl('img/favicon.ico'); ?>">
-        <link href="<?php echo $this->staticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('css/global.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('../application/modules/install/static/css/install.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->staticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
-        <script src="<?php echo $this->staticUrl('js/jquery.js'); ?>"></script>
-        <script src="<?php echo $this->staticUrl('js/jquery-ui.js'); ?>"></script>        
-        <script src="<?php echo $this->staticUrl('js/bootstrap.js'); ?>"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->getStaticUrl('img/favicon.ico'); ?>">
+        <link href="<?php echo $this->getStaticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/global.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('../application/modules/install/static/css/install.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
+        <script src="<?php echo $this->getStaticUrl('js/jquery.js'); ?>"></script>
+        <script src="<?php echo $this->getStaticUrl('js/jquery-ui.js'); ?>"></script>        
+        <script src="<?php echo $this->getStaticUrl('js/bootstrap.js'); ?>"></script>
     </head>
     <body>
-        <form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
+        <form autocomplete="off" class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
             <?php echo $this->getTokenField(); ?>
             <div class="container install_container">
-                <img class="logo" src="<?php echo $this->staticUrl('img/ilch_logo.png'); ?>" />
+                <img class="logo" src="<?php echo $this->getStaticUrl('img/ilch_logo.png'); ?>" />
                 <ul class="nav nav-tabs" id="install_steps">
                     <?php
                         $done = 1;
@@ -33,7 +33,7 @@
                             ?>
                                 <li class="<?php echo $this->getRequest()->getActionName() == $key ? 'active': ''; ?>">
                                     <a data-toggle="tab">
-                                        <?php echo $this->trans($values['langKey']); ?>
+                                        <?php echo $this->getTrans($values['langKey']); ?>
                                     </a>
                                 </li>
                         <?php
@@ -60,8 +60,8 @@
                 <?php
                     if (!in_array($this->getRequest()->getActionName(), array('index', 'finish'))) {
                 ?>
-                        <a href="<?php echo $this->url(array('action' => $lastAction)); ?>" class="btn pull-left">
-                            <?php echo $this->trans('backButton'); ?>
+                        <a href="<?php echo $this->getUrl(array('action' => $lastAction)); ?>" class="btn pull-left">
+                            <?php echo $this->getTrans('backButton'); ?>
                         </a>
                 <?php
                     }
@@ -78,7 +78,7 @@
                                     $buttonTrans = 'installButton';
                                 }
 
-                                echo $this->trans($buttonTrans);
+                                echo $this->getTrans($buttonTrans);
                             ?>
                         </button>
                 <?php
