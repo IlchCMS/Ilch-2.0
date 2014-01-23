@@ -115,6 +115,30 @@
                    value="<?php echo $this->escape($this->get('pageTitle')); ?>" />
         </div>
     </div>
+    <div class="form-group">
+        <label for="modRewrite" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('modRewrite'); ?>:
+        </label>
+        <div class="col-lg-2">
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="modRewrite"
+                       id="modRewrite"
+                       value="1"
+                <?php if ($this->get('modRewrite') == '1') { echo 'checked="checked"';} ?> /> <?php echo $this->getTrans('on'); ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="modRewrite"
+                       value="0"
+                <?php if ($this->get('modRewrite') != '1') { echo 'checked="checked"';} ?>> <?php echo $this->getTrans('off'); ?>
+                </label>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar()?>
 </form>
 <script>

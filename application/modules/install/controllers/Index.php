@@ -107,6 +107,10 @@ class Index extends \Ilch\Controller\Frontend
         if (!is_writable(CONFIG_PATH)) {
             $errors['writableConfig'] = true;
         }
+        
+        if (!is_writable(APPLICATION_PATH.'/../.htaccess')) {
+            $errors['writableHtaccess'] = true;
+        }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(array('action' => 'database'));

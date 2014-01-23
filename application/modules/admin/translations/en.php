@@ -81,4 +81,5 @@ return array
     'noBoxes' => 'No Boxes',
     'treat' => 'Treat',
     'askIfDeleteBox' => 'Are you sure you want delete the box "%s"?',
+    'modRewrite' => 'Mod-Rewrite',
 );
