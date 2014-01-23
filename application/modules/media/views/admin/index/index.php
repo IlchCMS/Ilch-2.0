@@ -1,46 +1,50 @@
-<legend><?php echo $this->trans('media'); ?></legend>
+<link href="<?php echo $this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
+<legend><?php echo $this->getTrans('media'); ?></legend>
 <?php
 if ($this->get('medias') != '') {
 ?>
+<form class="form-horizontal" method="POST" action="">
+<?=$this->getTokenField()?>
 <table class="table table-hover">
     <colgroup>
-        <col class="col-lg-12">
-        <col />
+            <col class="icon_width" />
+            <col class="icon_width" />
+            <col class="col-xs-1"/>
+            <col class="col-lg-2" />
+            <col class="col-lg-2" />
+            <col />
     </colgroup>
     <thead>
         <tr>
-            <th><?php echo $this->trans('mediatype'); ?></th>
-            <th><?php echo $this->trans('name'); ?></th>
-            <th><?php echo $this->trans('ending'); ?></th>
-            <th><?php echo $this->trans('date'); ?></th>
-            <th><?php echo $this->getTranslator()->trans('options'); ?></th>
+            <th><?=$this->getCheckAllCheckbox('check_medias')?></th>
+            <th></th>
+            <th><?php echo $this->getTrans('type'); ?></th>
+            <th></th>
+            <th><?php echo $this->getTrans('name'); ?></th>
+            <th><?php echo $this->getTrans('date'); ?></th>
         </tr>
     </thead>
-    
-        <tbody><?php foreach ($this->get('medias') as $media) : ?>
-            <tr>
-                <td><?php if( $media->getEnding() != 'zip'){
-                echo '<a class="fancybox" href="/'.$media->getUrl().'" data-fancybox-group="gallery" title="Lorem ipsum dolor sit amet"><img src="/'.$media->getUrlThumb().'" alt=""></a>';
-                }  else {
-                    echo '<img src="'.$this->staticUrl('../application/modules/media/static/img/nomedia.jpg').'" class="thumbnail img-responsive" style="width:150px; height:auto;"  />';
-                }
-                    ?></td>
-                <td><?php echo $media->getName(); ?></td>
-                <td><?php echo $media->getEnding(); ?></td>
-                <td><?php echo $media->getDatetime(); ?></td>
-                <td>
-					<a href="/index.php/admin/gallery/index/show/id/"><i class="fa fa-edit"></i></a>
-                    <a href="<?php  echo $this->url(array('action' => 'del', 'id' => $media->getId())); ?>"><i class="fa fa-times-circle"></i></a>
-				</td>
-			</tr><?php endforeach; ?>
-        </tbody>
-    
+    <tbody><?php foreach ($this->get('medias') as $media) : ?>
+        <tr>
+            <td><input value="<?=$media->getId()?>" type="checkbox" name="check_medias[]" /></td>
+            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $media->getId()))?></td>
+            <td><?php echo $media->getEnding(); ?></td>
+            <td><?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))){
+                echo '<a href="'.$this->getStaticUrl().'../'.$media->getUrl().'" title="'.$media->getName().'"><img class="img-preview" src="'.$this->getStaticUrl().'../'.$media->getUrl().'" alt=""></a>';
+                    }  else {
+                        echo '<img src="'.$this->getStaticUrl('../application/modules/media/static/img/nomedia.jpg').'" class="img-preview" style="width:50px; height:auto;"  />';
+                    }
+                ?>
+            </td>
+            <td><?php echo $media->getName(); ?></td>
+            <td><?php echo $media->getDatetime(); ?></td>
+        </tr><?php endforeach; ?>
+    </tbody>
 </table>
+<?=$this->getListBar(array('delete' => 'delete'))?>
+</form>
 <?php
 } else {
-    echo $this->trans('noMedias');
-}
+    echo $this->getTrans('noMedias');
+    }
 ?>
-<script>$(document).ready(function(){
-   $('.fancybox').fancybox(); 
-});</script>

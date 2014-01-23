@@ -12,11 +12,12 @@ return array
 (
     'media' => 'Media',
     'menuMedia' => 'Media',
-    'allMedias' => 'all Media',
     'menuActionAddNew' => 'Add New',
     'description' => 'Description',
-    'mediatype' => 'Media type',
+    'type' => 'Type',
     'options' => 'Options',
     'mediaUpload' => 'Media Upload',
     'noMedias' => 'no Medias',
+    'name' => 'Name',
+    'date' => 'Date added',
 );

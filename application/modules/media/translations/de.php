@@ -12,11 +12,12 @@ return array
 (
     'media' => 'Medien',
     'menuMedia' => 'Medien',
-    'allMedias' => 'alle Medien',
     'menuActionAddNew' => 'Neu Hinzufügen',
     'description' => 'Beschreibung',
-    'mediatype' => 'Medien Art',
+    'type' => 'Art',
     'options' => 'Optionen',
     'mediaUpload' => 'Medien hochladen',
     'noMedias' => 'keine Medien',
+    'name' => 'Name',
+    'date' => 'Hinzugefügt am',
 );

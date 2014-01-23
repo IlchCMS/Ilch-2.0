@@ -1,12 +1,11 @@
 <?php
 /**
- * Holds Media Model.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Media\Models;
+
 defined('ACCESS') or die('no direct access');
 
 class Media extends \Ilch\Model 

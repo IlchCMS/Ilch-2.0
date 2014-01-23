@@ -19,7 +19,7 @@ $(function(){
         add: function (e, data) {
 
             var tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
-                ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
+                ' data-fgColor="#00AEFF" data-readOnly="1" data-bgColor="#3e4043" /><p></p><b class="suss-none">Finish</b><span class=""></span></li>');
 
             // Append the file name and file size
             tpl.find('p').text(data.files[0].name)
@@ -56,15 +56,28 @@ $(function(){
             // Update the hidden input field and trigger a change
             // so that the jQuery knob plugin knows to update the dial
             data.context.find('input').val(progress).change();
-
+            data.context.find('span').addClass('fa fa-spinner');
             if(progress == 100){
                 data.context.removeClass('working');
+                
             }
         },
 
         fail:function(e, data){
             // Something has gone wrong!
             data.context.addClass('error');
+            data.context.find('span').removeClass('fa fa-spinner');
+            data.context.find('span').addClass('fa fa-bolt');
+        },
+        
+        done:function(e, data){
+            // Something has gone wrong!
+            data.context.addClass('finish');
+            data.context.find('span').removeClass('fa fa-spinner');
+            data.context.find('span').addClass('fa fa-check');
+            data.context.find('b').removeClass('suss-none');
+            data.context.find('b').addClass('suss');
+            
         }
 
     });

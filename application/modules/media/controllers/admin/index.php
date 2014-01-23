@@ -1,7 +1,5 @@
 <?php
-
 /**
- * @author Thomas Stantin
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -9,6 +7,7 @@
 namespace Media\Controllers\Admin;
 
 use Media\Mappers\Media as MediaMapper;
+
 use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
@@ -24,10 +23,10 @@ class Index extends \Ilch\Controller\Admin
             (
                 array
                 (
-                    'name' => 'allMedias',
+                    'name' => 'media',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 )
             )
         );
@@ -38,7 +37,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionAddNew',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'upload'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'upload'))
             )
         );
     }
@@ -46,9 +45,22 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction() 
     {
         $MediaMapper = new MediaMapper();
+        
+        if ($this->getRequest()->getPost('action') == 'delete' and $this->getRequest()->getPost('check_medias') > 0) {
+                foreach($this->getRequest()->getPost('check_medias') as $mediaId) {
+                    $MediaMapper->delImage($mediaId);
+                }
+                $this->addMessage('deleteSuccess');
+                $this->redirect(array('action' => 'index'));
+        }
+        
+        $MediaMapper = new MediaMapper();
         $this->getView()->set('medias', $MediaMapper->getMediaList());
+        $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
+        $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
+        $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
     }
-		
+
     public function uploadAction() 
     {
         $ilchdate = new IlchDate;
@@ -73,23 +85,15 @@ class Index extends \Ilch\Controller\Admin
             if(move_uploaded_file($_FILES['upl']['tmp_name'], $path.$filename.'.'.$endung)){
                 
             }
-            if($endung != 'zip'){
-                $thumb = new MediaMapper();
-                $thumb->resize_image($path, $filename.'.'.$endung);
-            }
         }
         return $this->getView();
     }
-	
-	
+
 	public function delAction()
     {
         $MediaMapper = new MediaMapper();
         $MediaMapper->delImage($this->getRequest()->getParam('id'));
         $this->addMessage('deleteSuccess');
         $this->redirect(array('action' => 'index'));
-        
     }
-	
-	
 }

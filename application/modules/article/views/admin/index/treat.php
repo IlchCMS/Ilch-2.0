@@ -103,12 +103,19 @@ $('#articleLanguageInput').change
     }
 );
 
-tinymce.init
-(
-    {
-        height: 400,
-        selector: "textarea",
-        plugins: ["code table image preview"]
-    }
-);
+tinymce.init({
+    selector : "textarea",
+    height: 400,
+    width:1000,
+    plugins: [
+         "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+         "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+         "table contextmenu directionality emoticons paste textcolor ilchmedia"
+   ],
+   toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+   toolbar2: "link | image media | preview code ",
+   image_advtab: true ,
+   external_filemanager_path:"<?php echo $this->getStaticUrl('../index.php/admin/media/iframe/index'); ?>",
+   filemanager_title:"Media" 
+ });
 </script>
