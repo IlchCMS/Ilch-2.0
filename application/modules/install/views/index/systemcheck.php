@@ -21,11 +21,24 @@
             </td>
         </tr>
         <tr>
-            <td><?php echo $this->getTrans('writable').' "application"' ?></td>
+            <td><?php echo $this->getTrans('writable').' "/application/"' ?></td>
             <td class="text-success">writable</td>
             <td>
                 <?php
                     if (is_writable(CONFIG_PATH)) {
+                        echo '<span class="text-success">writable</span>';
+                    } else {
+                        echo '<span class="text-danger">not writable</span>';
+                    }
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->getTrans('writable').' "/.htaccess"' ?></td>
+            <td class="text-success">writable</td>
+            <td>
+                <?php
+                    if (is_writable(APPLICATION_PATH.'/../.htaccess')) {
                         echo '<span class="text-success">writable</span>';
                     } else {
                         echo '<span class="text-danger">not writable</span>';

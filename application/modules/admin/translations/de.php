@@ -82,4 +82,5 @@ return array
     'noBoxes' => 'Keine Boxen vorhanden',
     'treat' => 'Bearbeiten',
     'askIfDeleteBox' => 'Sind Sie sicher dass die Box "%s" entfernt werden soll?',
+    'modRewrite' => 'Mod-Rewrite',
 );

@@ -60,6 +60,11 @@ abstract class Base
     private $_data = array();
 
     /**
+     * @var boolean
+     */
+    private $_modRewrite;
+
+    /**
      * Gets view data.
      *
      * @param  string     $key
@@ -213,6 +218,12 @@ abstract class Base
      */
     public function getUrl($urlArray = array(), $route = null, $secure  = false)
     {
+        $config = \Ilch\Registry::get('config');
+
+        if($config !== null && $this->_modRewrite === null) {
+            $this->_modRewrite = (bool)$config->get('mod_rewrite');
+        }
+
         if (empty($urlArray)) {
             return BASE_URL;
         }
@@ -260,7 +271,11 @@ abstract class Base
             $s = 'admin/';
         }
 
-        return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
+        if ($this->_modRewrite && empty($s)) {
+            return BASE_URL.'/'.$s.implode('/', $urlParts);
+        } else {
+            return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
+        }
     }
 
     /**
