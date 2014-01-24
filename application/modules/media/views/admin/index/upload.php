@@ -15,15 +15,10 @@
         </form>
     </div>
 </div>
-<div class="content_savebox">
-    <a class="btn btn-default pull-left" href="javascript:history.back()" role="button">Abbrechen</a>
-</div>
-        
-<!-- MEDIA -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 <script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/jquery.knob.js'); ?>"></script>
 <script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/jquery.ui.widget.js'); ?>"></script>
-<script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/jquery.iframe-getTransport.js'); ?>"></script>
+<script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/jquery.iframe-transport.js'); ?>"></script>
 <script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/jquery.fileupload.js'); ?>"></script>
 <script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/script.js'); ?>"></script>
 

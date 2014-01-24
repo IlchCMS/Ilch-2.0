@@ -34,6 +34,19 @@
             </td>
         </tr>
         <tr>
+            <td><?php echo $this->getTrans('writable').' "/application/modules/media/static/upload/"' ?></td>
+            <td class="text-success">writable</td>
+            <td>
+                <?php
+                    if (is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
+                        echo '<span class="text-success">writable</span>';
+                    } else {
+                        echo '<span class="text-danger">not writable</span>';
+                    }
+                ?>
+            </td>
+        </tr>
+        <tr>
             <td><?php echo $this->getTrans('writable').' "/.htaccess"' ?></td>
             <td class="text-success">writable</td>
             <td>

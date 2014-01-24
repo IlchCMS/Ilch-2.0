@@ -60,6 +60,8 @@ class Media extends \Ilch\Mapper
 
     public function delImage($id) 
     {
-		$this->db()->delete('media', array('id' => $id));
+        $this->db()->delete('media')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

@@ -112,6 +112,10 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableHtaccess'] = true;
         }
 
+        if (!is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
+             $errors['writableMedia'] = true;
+        }
+
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(array('action' => 'database'));
         }
