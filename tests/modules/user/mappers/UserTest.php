@@ -424,18 +424,31 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testDeleteUserByObject()
     {
-        $dbMock = $this->getMock('Ilch_Database', array('delete'));
+        $dbMock = $this->getMock('Ilch_Database', array('delete', 'where', 'execute'));
         $dbMock->expects($this->at(0))
                 ->method('delete')
-                ->with('users_groups',
-                       array('user_id' => 3))
+                ->with('users_groups')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(1))
+                ->method('where')
+                ->with(array('user_id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(2))
+                ->method('execute')
                 ->will($this->returnValue(true));
 
-        $dbMock->expects($this->at(1))
+        $dbMock->expects($this->at(3))
                 ->method('delete')
-                ->with('users',
-                       array('id' => 3))
+                ->with('users')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(4))
+                ->method('where')
+                ->with(array('id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(5))
+                ->method('execute')
                 ->will($this->returnValue(true));
+
         $mapper = new UserMapper();
         $mapper->setDatabase($dbMock);
 
@@ -450,17 +463,29 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testDeleteUserById()
     {
-        $dbMock = $this->getMock('Ilch_Database', array('delete'));
+        $dbMock = $this->getMock('Ilch_Database', array('delete', 'where', 'execute'));
         $dbMock->expects($this->at(0))
                 ->method('delete')
-                ->with('users_groups',
-                       array('user_id' => 3))
+                ->with('users_groups')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(1))
+                ->method('where')
+                ->with(array('user_id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(2))
+                ->method('execute')
                 ->will($this->returnValue(true));
 
-        $dbMock->expects($this->at(1))
+        $dbMock->expects($this->at(3))
                 ->method('delete')
-                ->with('users',
-                       array('id' => 3))
+                ->with('users')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(4))
+                ->method('where')
+                ->with(array('id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(5))
+                ->method('execute')
                 ->will($this->returnValue(true));
 
         $mapper = new UserMapper();

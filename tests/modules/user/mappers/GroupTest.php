@@ -250,17 +250,29 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
      */
     public function testDeleteGroupByObject()
     {
-        $dbMock = $this->getMock('Ilch_Database', array('delete'));
+        $dbMock = $this->getMock('Ilch_Database', array('delete', 'where', 'execute'));
         $dbMock->expects($this->at(0))
                 ->method('delete')
-                ->with('users_groups',
-                       array('group_id' => 3))
+                ->with('users_groups')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(1))
+                ->method('where')
+                ->with(array('group_id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(2))
+                ->method('execute')
                 ->will($this->returnValue(true));
 
-        $dbMock->expects($this->at(1))
+        $dbMock->expects($this->at(3))
                 ->method('delete')
-                ->with('groups',
-                       array('id' => 3))
+                ->with('groups')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(4))
+                ->method('where')
+                ->with(array('id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(5))
+                ->method('execute')
                 ->will($this->returnValue(true));
         $mapper = new GroupMapper();
         $mapper->setDatabase($dbMock);
@@ -276,18 +288,30 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
      */
     public function testDeleteGroupById()
     {
-        $dbMock = $this->getMock('Ilch_Database', array('delete'));
+        $dbMock = $this->getMock('Ilch_Database', array('delete', 'where', 'execute'));
         $dbMock->expects($this->at(0))
                 ->method('delete')
-                ->with('users_groups',
-                       array('group_id' => 3))
+                ->with('users_groups')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(1))
+                ->method('where')
+                ->with(array('group_id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(2))
+                ->method('execute')
                 ->will($this->returnValue(true));
 
-        $dbMock->expects($this->at(1))
+        $dbMock->expects($this->at(3))
                 ->method('delete')
-                ->with('groups',
-                       array('id' => 3))
-                ->will($this->returnValue(true));
+                ->with('groups')
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(4))
+                ->method('where')
+                ->with(array('id' => 3))
+                ->will($this->returnValue($dbMock));
+        $dbMock->expects($this->at(5))
+                ->method('execute')
+                ->will($this->returnValue(true));;
 
         $mapper = new GroupMapper();
         $mapper->setDatabase($dbMock);
