@@ -197,16 +197,12 @@ class Article extends \Ilch\Mapper
 
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'articles',
-            array('id' => $id)
-        );
-
-        $this->db()->delete
-        (
-            'articles_content',
-            array('article_id' => $id)
-        );
+        $this->db()->delete('articles')
+            ->where(array('id' => $id))
+            ->execute();
+        
+        $this->db()->delete('articles_content')
+            ->where(array('article_id' => $id))
+            ->execute();
     }
 }

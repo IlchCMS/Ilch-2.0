@@ -165,16 +165,12 @@ class Page extends \Ilch\Mapper
 
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'pages',
-            array('id' => $id)
-        );
-
-        $this->db()->delete
-        (
-            'pages_content',
-            array('page_id' => $id)
-        );
+        $this->db()->delete('pages')
+            ->where(array('id' => $id))
+            ->execute();
+        
+        $this->db()->delete('pages_content')
+            ->where(array('page_id' => $id))
+            ->execute();
     }
 }

@@ -261,14 +261,9 @@ class Menu extends \Ilch\Mapper
      */
     public function deleteItem($menuItem)
     {
-        $this->db()->delete
-        (
-            'menu_items',
-            array
-            (
-                'id' => $menuItem->getId(),
-            )
-        );
+        $this->db()->delete('menu_items')
+            ->where(array('id' => $menuItem->getId()))
+            ->execute();
     }
 
     /**
@@ -278,13 +273,8 @@ class Menu extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'menu',
-            array
-            (
-                'id' => $id,
-            )
-        );
+        $this->db()->delete('menu')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

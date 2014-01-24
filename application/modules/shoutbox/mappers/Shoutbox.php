@@ -89,10 +89,8 @@ class Shoutbox extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'shoutbox',
-            array('id' => $id)
-        );
+        $this->db()->delete('shoutbox')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

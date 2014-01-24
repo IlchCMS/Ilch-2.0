@@ -156,10 +156,8 @@ class Partner extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'partners',
-            array('id' => $id)
-        );
+        $this->db()->delete('partners')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

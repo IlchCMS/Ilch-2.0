@@ -292,11 +292,9 @@ class User extends \Ilch\Mapper
         }
 
         if ($user->getGroups()) {
-            $this->db()->delete
-            (
-                'users_groups',
-                array('user_id' => $userId)
-            );
+            $this->db()->delete('users_groups')
+                ->where(array('user_id' => $userId))
+                ->execute();
 
             foreach ($user->getGroups() as $group) {
                 $this->db()->insert
@@ -374,7 +372,12 @@ class User extends \Ilch\Mapper
             $userId = $userId->getId();
         }
 
-        $this->db()->delete('users_groups', array('user_id' => $userId));
-        return $this->db()->delete('users', array('id' => $userId));
+        $this->db()->delete('users_groups')
+            ->where(array('user_id' => $userId))
+            ->execute();
+        
+        return $this->db()->delete('users')
+            ->where(array('id' => $userId))
+            ->execute();
     }
 }

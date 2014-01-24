@@ -112,10 +112,8 @@ class Receiver extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'contact_receivers',
-            array('id' => $id)
-        );
+        $this->db()->delete('contact_receivers')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

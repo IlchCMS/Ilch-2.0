@@ -222,8 +222,13 @@ class Group extends \Ilch\Mapper
             $groupId = $groupId->getId();
         }
 
-        $this->db()->delete('users_groups', array('group_id' => $groupId));
-        return $this->db()->delete('groups', array('id' => $groupId));
+        $this->db()->delete('users_groups')
+            ->where(array('group_id' => $groupId))
+            ->execute();
+
+        return $this->db()->delete('groups')
+            ->where(array('id' => $groupId))
+            ->execute();
     }
 
     /**

@@ -151,10 +151,8 @@ class Category extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'link_cats',
-            array('id' => $id)
-        );
+        $this->db()->delete('link_cats')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

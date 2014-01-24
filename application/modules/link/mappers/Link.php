@@ -110,10 +110,8 @@ class Link extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'links',
-            array('id' => $id)
-        );
+        $this->db()->delete('links')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

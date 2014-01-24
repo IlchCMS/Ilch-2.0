@@ -139,16 +139,12 @@ class Box extends \Ilch\Mapper
 
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'boxes',
-            array('id' => $id)
-        );
+        $this->db()->delete('boxes')
+                ->where(array('id' => $id))
+                ->execute();
 
-        $this->db()->delete
-        (
-            'boxes_content',
-            array('box_id' => $id)
-        );
+        $this->db()->delete('boxes_content')
+                ->where(array('box_id' => $id))
+                ->execute();
     }
 }

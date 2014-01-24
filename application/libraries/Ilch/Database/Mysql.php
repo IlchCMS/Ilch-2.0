@@ -353,18 +353,14 @@ class Mysql
     /**
      * Deletes entries from the table.
      *
-     * @param string $table
-     * @param array  $where
+     * @return \Ilch\Database\Mysql\Delete
      */
-    public function delete($table, $where = null)
+    public function delete($table)
     {
-        $sql = 'DELETE FROM `[prefix]_'.$table . '` ';
+         $deleteObj = new \Ilch\Database\Mysql\Delete($this);
+         $deleteObj->from($table);
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-        }
-
-        return $this->query($sql);
+         return $deleteObj;
     }
 
     /**

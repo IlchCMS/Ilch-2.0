@@ -99,6 +99,8 @@ class Guestbook extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        return $this->db()->delete('gbook', array('id' => $id));
+        return $this->db()->delete('gbook')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }
