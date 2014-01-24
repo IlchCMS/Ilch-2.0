@@ -239,3 +239,16 @@ i {
         margin-left: -13px;
         margin-top: 3px;
 }
+
+.mce-ilchmedia{
+    width: 98% !important;
+    height: 90% !important;
+    top: 0px !important;
+    left: 0px !important;
+    margin: 1% !important;
+}
+
+.mce-ilchmedia div.mce-container-body{
+    width: 100% !important;
+    height: 100% !important;
+}
