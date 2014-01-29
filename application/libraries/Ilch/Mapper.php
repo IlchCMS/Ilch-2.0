@@ -10,6 +10,18 @@ defined('ACCESS') or die('no direct access');
 class Mapper
 {
     /**
+     * @var string
+     */
+    protected $_primaryKey = 'id';
+    
+    /**
+     * @var string
+     */
+    protected $_table = '';
+    
+    protected $_model;
+
+    /**
      * Hold the database adapter.
      *
      * @var Ilch_Database_*
@@ -52,5 +64,59 @@ class Mapper
     public function setDatabase($db)
     {
         $this->_db = $db;
+    }
+
+    /**
+     * Deletes entry from database.
+     *
+     * @param integer $id
+     * @return boolean
+     */
+    public function delete($id)
+    {
+        return $this->db()->delete($this->_table)
+            ->where(array($this->_primaryKey => $id))
+            ->execute();
+    }
+
+    /**
+     * Gets entry from database.
+     *
+     * @param type $id
+     * @return \Ilch\_model
+     */
+    public function getById($id)
+    {
+        $row = $this->db()->selectRow()
+            ->from($this->_table)
+            ->where(array($this->_primaryKey => $id))
+            ->execute();
+        
+        $model = new $this->_model();
+        $model->fillWith($row);
+        
+        return $model;
+    }
+
+    /**
+     * Gets entries from database.
+     *
+     * @param type $array
+     */
+    public function getBy($array)
+    {
+        $rows = $this->db()->selectArray()
+            ->from($this->_table)
+            ->where($array)
+            ->execute();
+        $models = array();
+
+        foreach ($rows as $row) {
+            $model = new $this->_model();
+            $model->fillWith($row);
+            $models[] = $model;
+        }
+        
+        return $models;
     }
 }
