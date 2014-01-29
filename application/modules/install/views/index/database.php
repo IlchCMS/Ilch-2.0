@@ -21,7 +21,7 @@ $errors = $this->get('errors');
                class="form-control"
                name="dbHost"
                id="dbHost" />
-        <span class="input-group-addon"><i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->getTrans('dbHostInfo'); ?>"></i></span>
+        <span class="input-group-addon"><i class="fa fa-info-circle" rel="tooltip" title="<?php echo $this->getTrans('dbHostInfo'); ?>"></i></span>
         <?php
             if (!empty($errors['dbConnection'])) {
                 echo '<span class="help-block">'.$this->getTrans($errors['dbConnection']).'</span>';
@@ -39,7 +39,7 @@ $errors = $this->get('errors');
                class="form-control"
                name="dbUser"
                id="dbUser" />
-        <span class="input-group-addon"><i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->getTrans('dbUserInfo'); ?>"></i></span>
+        <span class="input-group-addon"><i class="fa fa-info-circle" rel="tooltip" title="<?php echo $this->getTrans('dbUserInfo'); ?>"></i></span>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
@@ -64,7 +64,7 @@ $errors = $this->get('errors');
                    name="dbName"
                    class="form-control"
                    id="dbName" />
-            <span class="input-group-addon"><i class="fa fa-info-circle text-info" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"></i></span>
+            <span class="input-group-addon"><i class="fa fa-info-circle" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"></i></span>
             <?php
                 if (!empty($errors['dbDatabase'])) {
                     echo '<span class="help-block">'.$this->getTrans($errors['dbDatabase']).'</span>';
