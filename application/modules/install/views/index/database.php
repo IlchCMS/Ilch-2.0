@@ -21,12 +21,12 @@ $errors = $this->get('errors');
                class="form-control"
                name="dbHost"
                id="dbHost" />
-        <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbHostInfo'); ?>"><i class="fa fa-info-circle"></i></div>
         <?php
             if (!empty($errors['dbConnection'])) {
                 echo '<span class="help-block">'.$this->getTrans($errors['dbConnection']).'</span>';
             }
         ?>
+        <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbHostInfo'); ?>"><i class="fa fa-info-circle"></i></div>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
@@ -64,12 +64,12 @@ $errors = $this->get('errors');
                    name="dbName"
                    class="form-control"
                    id="dbName" />
-            <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"><i class="fa fa-info-circle"></i></div>
             <?php
                 if (!empty($errors['dbDatabase'])) {
                     echo '<span class="help-block">'.$this->getTrans($errors['dbDatabase']).'</span>';
                 }
             ?>
+            <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"><i class="fa fa-info-circle"></i></div>
         </div>
     </div>
 </div>
