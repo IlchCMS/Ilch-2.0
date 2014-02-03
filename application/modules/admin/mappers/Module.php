@@ -24,11 +24,9 @@ class Module extends \Ilch\Mapper
     public function getModules()
     {
         $modules = array();
-        $modulesRows = $this->db()->selectArray
-        (
-            '*',
-            'modules'
-        );
+        $modulesRows = $this->db()->selectArray('*')
+            ->from('modules')
+            ->execute();
 
         if (empty($modulesRows)) {
             return null;
@@ -39,7 +37,10 @@ class Module extends \Ilch\Mapper
             $moduleModel->setId($moduleRow['id']);
             $moduleModel->setKey($moduleRow['key']);
             $moduleModel->setIconSmall($moduleRow['icon_small']);
-            $nameRows = $this->db()->selectArray('*', 'modules_names', array('module_id' => $moduleRow['id']));
+            $nameRows = $this->db()->selectArray('*')
+                ->from('modules_names')
+                ->where(array('module_id' => $moduleRow['id']))
+                ->execute();
 
             foreach ($nameRows as $nameRow) {
                 $moduleModel->addName($nameRow['locale'], $nameRow['name']);

@@ -14,13 +14,10 @@ class Media extends \Ilch\Mapper
 {
     public function getMediaList() 
     {
-        $mediaArray = $this->db()->selectArray
-        (
-            '*',
-            'media',
-            '',
-            array('id' => 'DESC')
-        );
+        $mediaArray = $this->db()->selectArray('*')
+            ->from('media')
+            ->order(array('id' => 'DESC'))
+            ->execute();
 
         if (empty($mediaArray)) {
             return null;

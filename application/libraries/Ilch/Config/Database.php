@@ -98,12 +98,10 @@ class Database
      */
     public function loadConfigFromDatabase()
     {
-        $configs = $this->_db->selectArray
-        (
-            array('key', 'value'),
-            'config',
-            array('autoload' => 1)
-        );
+        $configs = $this->_db->selectArray(array('key', 'value'))
+            ->from('config')
+            ->where(array('autoload' => 1))
+            ->execute();
 
         foreach ($configs as $config) {
             $this->_configData[$config['key']]['value'] = $config['value'];

@@ -20,13 +20,11 @@ class Guestbook extends \Ilch\Mapper
      */
     public function getEntries($where = array())
     {
-        $entryArray = $this->db()->selectArray
-        (
-            '*',
-            'gbook',
-            $where,
-            array('id' => 'DESC')
-        );
+        $entryArray = $this->db()->selectArray('*')
+            ->from('gbook')
+            ->where($where)
+            ->order(array('id' => 'DESC'))
+            ->execute();
 
         if (empty($entryArray)) {
             return array();

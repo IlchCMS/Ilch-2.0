@@ -20,13 +20,11 @@ class Partner extends \Ilch\Mapper
      */
     public function getEntries($where = array())
     {
-        $entryArray = $this->db()->selectArray
-        (
-            '*',
-            'partners',
-            $where,
-            array('id' => 'DESC')
-        );
+        $entryArray = $this->db()->selectArray('*')
+            ->from('partners')
+            ->where($where)
+            ->order(array('id' => 'DESC'))
+            ->execute();
 
         if (empty($entryArray)) {
             return array();
@@ -57,13 +55,11 @@ class Partner extends \Ilch\Mapper
      */
     public function getPartnersBy($where = array(), $orderBy = array('id' => 'ASC'))
     {
-        $partnerArray = $this->db()->selectArray
-        (
-            '*',
-            'partners',
-            $where,
-            $orderBy
-        );
+        $partnerArray = $this->db()->selectArray('*')
+            ->from('partners')
+            ->where($where)
+            ->order($orderBy)
+            ->execute();
 
         if (empty($partnerArray)) {
             return array();

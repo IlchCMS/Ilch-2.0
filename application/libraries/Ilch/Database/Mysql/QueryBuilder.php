@@ -15,6 +15,21 @@ class QueryBuilder
     protected $_type = '';
 
     /**
+     * @var integer|null
+     */
+    protected $_limit;
+    
+    /**
+     * @var array|null
+     */
+    protected $_where;
+
+    /**
+     * @var array|null
+     */
+    protected $_fields;
+
+    /**
      * Injects the database adapter.
      *
      * @param Ilch\Database\Mysql $db
@@ -64,6 +79,32 @@ class QueryBuilder
     }
     
     /**
+     * Adds order to query builder.
+     *
+     * @param array $order
+     * @return \Ilch\Database\Mysql\QueryBuilder
+     */
+    public function order($order)
+    {
+        $this->_order = $order;
+
+        return $this;
+    }
+    
+    /**
+     * Adds limit to query builder.
+     *
+     * @param integer $limit
+     * @return \Ilch\Database\Mysql\QueryBuilder
+     */
+    public function limit($limit)
+    {
+        $this->_limit = $limit;
+
+        return $this;
+    }
+    
+    /**
      * Adds cell to query builder.
      *
      * @param string $cell
@@ -90,6 +131,8 @@ class QueryBuilder
             return $this->_db->queryCell($this->generateSql());
         } elseif ($this->_type == 'selectRow') {
             return $this->_db->queryRow($this->generateSql());
+        } elseif ($this->_type == 'selectArray') {
+            return $this->_db->queryArray($this->generateSql());
         } else {
             return $this->_db->query($this->generateSql());        
         }

@@ -72,12 +72,10 @@ class Group extends \Ilch\Mapper
      */
     protected function _getBy($where = null)
     {
-        $groupRows = $this->db()->selectArray
-        (
-            '*',
-            'groups',
-            $where
-        );
+        $groupRows = $this->db()->selectArray('*')
+            ->from('groups')
+            ->where($where)
+            ->execute();
 
         if (!empty($groupRows)) {
             $groups = array_map(array($this, 'loadFromArray'), $groupRows);

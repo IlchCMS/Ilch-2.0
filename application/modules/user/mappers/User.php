@@ -117,12 +117,10 @@ class User extends \Ilch\Mapper
      */
     protected function _getBy($where = null)
     {
-        $userRows = $this->db()->selectArray
-        (
-            '*',
-            'users',
-            $where
-        );
+        $userRows = $this->db()->selectArray('*')
+            ->from('users')
+            ->where($where)
+            ->execute();
 
         if (!empty($userRows)) {
             $users = array();

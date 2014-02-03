@@ -20,14 +20,12 @@ class Shoutbox extends \Ilch\Mapper
      */
     public function getShoutbox($where = array(), $limit = null)
     {
-        $entryArray = $this->db()->selectArray
-        (
-            '*',
-            'shoutbox',
-            $where,
-            array('id' => 'DESC'),
-            $limit
-        );
+        $entryArray = $this->db()->selectArray('*')
+                ->from('shoutbox')
+                ->where($where)
+                ->order(array('id' => 'DESC'))
+                ->limit($limit)
+                ->execute();
 
         if (empty($entryArray)) {
             return array();

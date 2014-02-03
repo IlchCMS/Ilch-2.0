@@ -20,13 +20,11 @@ class Impressum extends \Ilch\Mapper
      */
     public function getImpressum($where = array())
     {
-        $entryArray = $this->db()->selectArray
-        (
-            '*',
-            'impressum',
-            $where,
-            array('id' => 'DESC')
-        );
+        $entryArray = $this->db()->selectArray('*')
+            ->from('impressum')
+            ->where($where)
+            ->order(array('id' => 'DESC'))
+            ->execute();
 
         if (empty($entryArray)) {
             return array();

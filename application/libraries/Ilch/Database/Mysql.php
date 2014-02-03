@@ -195,38 +195,19 @@ class Mysql
 
         return $rows;
     }
-
+    
     /**
      * Select an array from db-table.
      *
-     * @param  array  $fields
-     * @param  string $table
-     * @param  array  $where|null
-     * @param  array  $orderBy|null
-     * @return array
+     * @param array $fields
+     * @return \Ilch\Database\Mysql\SelectArray
      */
-    public function selectArray($fields, $table, $where = null, $orderBy = null, $limit = null)
+    public function selectArray($fields)
     {
-        $sql = 'SELECT '. $this->_getFieldsSql($fields).'
-                FROM `[prefix]_'.$table . '` ';
+         $select = new \Ilch\Database\Mysql\SelectArray($this);
+         $select->fields($fields);
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-        }
-
-        if (!empty($orderBy)) {
-            $sql .= ' ORDER BY';
-
-            foreach ($orderBy as $column => $direction) {
-                $sql .= ' `'. $column.'` '.$direction;
-            }
-        }
-
-        if ($limit !== null) {
-            $sql .= ' LIMIT ' . (int)$limit;
-        }
-
-        return $this->queryArray($sql);
+         return $select;
     }
 
     /**

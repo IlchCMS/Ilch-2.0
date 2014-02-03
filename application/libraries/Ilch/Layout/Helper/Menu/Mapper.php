@@ -28,11 +28,9 @@ class Mapper
     public function getMenus()
     {
         $menus = array();
-        $menuRows = $this->_db->selectArray
-        (
-            array('id'),
-            'menu'
-        );
+        $menuRows = $this->_db->selectArray(array('id'))
+            ->from('menu')
+            ->execute();
 
         foreach ($menuRows as $menuRow) {
             $menu = $this->getMenu($menuRow['id']);

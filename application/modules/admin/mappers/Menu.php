@@ -41,11 +41,9 @@ class Menu extends \Ilch\Mapper
     public function getMenus()
     {
         $menus = array();
-        $menuRows = $this->db()->selectArray
-        (
-            array('id'),
-            'menu'
-        );
+        $menuRows = $this->db()->selectArray(array('id'))
+            ->from('menu')
+            ->execute();
 
         foreach ($menuRows as $menuRow) {
             $menu = $this->getMenu($menuRow['id']);
@@ -81,16 +79,11 @@ class Menu extends \Ilch\Mapper
     public function getMenuItems($menuId)
     {
         $items = array();
-        $itemRows = $this->db()->selectArray
-        (
-            '*',
-            'menu_items',
-            array
-            (
-                'menu_id' => $menuId,
-            ),
-            array('sort' => 'ASC')
-        );
+        $itemRows = $this->db()->selectArray('*')
+                ->from('menu_items')
+                ->where(array('menu_id' => $menuId))
+                ->order(array('sort' => 'ASC'))
+                ->execute();
 
         if (empty($itemRows)) {
             return null;
@@ -120,17 +113,11 @@ class Menu extends \Ilch\Mapper
     public function getMenuItemsByParent($menuId, $itemId)
     {
         $items = array();
-        $itemRows = $this->db()->selectArray
-        (
-            '*',
-            'menu_items',
-            array
-            (
-                'menu_id' => $menuId,
-                'parent_id' => $itemId
-            ),
-            array('sort' => 'ASC')
-        );
+        $itemRows = $this->db()->selectArray('*')
+                ->from('menu_items')
+                ->where(array('menu_id' => $menuId, 'parent_id' => $itemId))
+                ->order(array('sort' => 'ASC'))
+                ->execute();
 
         if (empty($itemRows)) {
             return null;
