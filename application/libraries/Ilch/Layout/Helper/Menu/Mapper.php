@@ -51,12 +51,10 @@ class Mapper
     {
         $menu = new \Ilch\Layout\Helper\Menu\Model($this->_layout);
 
-        $menuRow = $this->_db->selectRow
-        (
-            array('id','title'),
-            'menu',
-            array('id' => $menuId)
-        );
+        $menuRow = $this->_db->selectRow(array('id', 'title'))
+            ->from('menu')
+            ->where(array('id' => $menuId))
+            ->execute();
 
         $menu->setId($menuRow['id']);
         $menu->setTitle($menuRow['title']);

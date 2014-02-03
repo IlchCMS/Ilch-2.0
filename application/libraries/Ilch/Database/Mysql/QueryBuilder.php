@@ -88,6 +88,8 @@ class QueryBuilder
             return $this->_db->getLink()->insert_id;
         } elseif ($this->_type == 'selectCell') {
             return $this->_db->queryCell($this->generateSql());
+        } elseif ($this->_type == 'selectRow') {
+            return $this->_db->queryRow($this->generateSql());
         } else {
             return $this->_db->query($this->generateSql());        
         }

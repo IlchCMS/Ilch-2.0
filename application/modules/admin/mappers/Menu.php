@@ -64,12 +64,10 @@ class Menu extends \Ilch\Mapper
     {
         $menu = new \Admin\Models\Menu();
         
-        $menuRow = $this->db()->selectRow
-        (
-            array('id','title'),
-            'menu',
-            array('id' => $menuId)
-        );
+        $menuRow = $this->db()->selectRow(array('id','title'))
+            ->from('menu')
+            ->where(array('id' => $menuId))
+            ->execute();
 
         $menu->setId($menuRow['id']);
         $menu->setTitle($menuRow['title']);

@@ -91,12 +91,10 @@ class Partner extends \Ilch\Mapper
      */
     public function getPartnerById($id)
     {
-        $partnerRow = $this->db()->selectRow
-        (
-            '*',
-            'partners',
-            array('id' => $this->db()->escape($id))
-        );
+        $partnerRow = $this->db()->selectRow('*')
+            ->from('partners')
+            ->where(array('id' => $this->db()->escape($id)))
+            ->execute();
 
         if (empty($partnerRow)) {
             return null;

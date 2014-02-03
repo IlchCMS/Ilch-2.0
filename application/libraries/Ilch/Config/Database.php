@@ -41,12 +41,10 @@ class Database
         if (isset($this->_configData[$key]['value']) && !$alwaysLoad) {
             return $this->_configData[$key]['value'];
         } else {
-            $configRow = $this->_db->selectRow
-            (
-                array('value', 'key', 'autoload'),
-                'config',
-                array('key' => $key)
-            );
+            $configRow = $this->_db->selectRow(array('value', 'key', 'autoload'))
+                ->from('config')
+                ->where(array('key' => $key))
+                ->execute();
 
             if (empty($configRow)) {
                 return null;

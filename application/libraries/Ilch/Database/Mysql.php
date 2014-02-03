@@ -145,10 +145,10 @@ class Mysql
      */
     public function selectCell($cell)
     {
-         $selectCellObj = new \Ilch\Database\Mysql\SelectCell($this);
-         $selectCellObj->cell($cell);
+         $select = new \Ilch\Database\Mysql\SelectCell($this);
+         $select->cell($cell);
 
-         return $selectCellObj;
+         return $select;
     }
 
     /**
@@ -167,23 +167,15 @@ class Mysql
     /**
      * Select one row from table.
      *
-     * @param  array  $fields
-     * @param  string $table
-     * @param  array  $where
-     * @return array
+     * @param array $fields
+     * @return \Ilch\Database\Mysql\SelectRow
      */
-    public function selectRow($fields, $table, $where = null)
+    public function selectRow($fields)
     {
-        $sql = 'SELECT '. $this->_getFieldsSql($fields) .'
-                FROM `[prefix]_'. $table . '` ';
+         $select = new \Ilch\Database\Mysql\SelectRow($this);
+         $select->fields($fields);
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-        }
-
-        $sql .= ' LIMIT 1';
-
-        return $this->queryRow($sql);
+         return $select;
     }
 
     /**

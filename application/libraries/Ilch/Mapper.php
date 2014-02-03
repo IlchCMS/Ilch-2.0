@@ -69,6 +69,7 @@ class Mapper
     /**
      * Deletes entry from database.
      *
+     * @todo method not ready now.
      * @param integer $id
      * @return boolean
      */
@@ -82,12 +83,13 @@ class Mapper
     /**
      * Gets entry from database.
      *
+     * @todo method not ready now.
      * @param type $id
      * @return \Ilch\_model
      */
     public function getById($id)
     {
-        $row = $this->db()->selectRow()
+        $row = $this->db()->selectRow('*')
             ->from($this->_table)
             ->where(array($this->_primaryKey => $id))
             ->execute();
@@ -101,6 +103,7 @@ class Mapper
     /**
      * Gets entries from database.
      *
+     * @todo method not ready now.
      * @param type $array
      */
     public function getBy($array)
