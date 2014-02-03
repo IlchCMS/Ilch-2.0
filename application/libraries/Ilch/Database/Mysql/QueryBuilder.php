@@ -10,9 +10,9 @@ defined('ACCESS') or die('no direct access');
 class QueryBuilder
 {
     /**
-     * @var boolean
+     * @var string
      */
-    protected $_executeInsertId = false;
+    protected $_type = '';
 
     /**
      * Injects the database adapter.
@@ -62,21 +62,35 @@ class QueryBuilder
 
         return $this;
     }
+    
+    /**
+     * Adds cell to query builder.
+     *
+     * @param string $cell
+     * @return \Ilch\Database\Mysql\QueryBuilder
+     */
+    public function cell($cell)
+    {
+        $this->_cell = $cell;
+
+        return $this;
+    }
 
     /**
      * Execute the query builder.
      *
-     * @return mysqli_query
+     * @return mixed
      */
     public function execute()
     {
-        $result = $this->_db->query($this->generateSql());
-
-        if ($this->_executeInsertId) {
+        if ($this->_type == 'insert') {
+            $this->_db->query($this->generateSql());
             return $this->_db->getLink()->insert_id;
+        } elseif ($this->_type == 'selectCell') {
+            return $this->_db->queryCell($this->generateSql());
+        } else {
+            return $this->_db->query($this->generateSql());        
         }
-
-        return $result;
     }
 
     /**
@@ -94,5 +108,23 @@ class QueryBuilder
         }
 
         return $sql;
+    }
+    
+    /**
+     * Create the field part for the given array.
+     *
+     * @param  array  $fields
+     * @return string
+     */
+    protected function _getFieldsSql($fields)
+    {
+        /*
+         * @todo check on sign "(" on fields.
+         */
+        if ($fields === '*' || $fields === 'COUNT(*)') {
+            return $fields;
+        }
+
+        return '`'.implode('`,`', (array) $fields).'`';
     }
 }

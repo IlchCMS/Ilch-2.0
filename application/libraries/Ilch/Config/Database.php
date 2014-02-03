@@ -68,12 +68,10 @@ class Database
      */
     public function set($key, $value, $autoload = 0)
     {
-        $oldValue = (string) $this->_db->selectCell
-        (
-            'value',
-            'config',
-            array('key' => $key)
-        );
+        $oldValue = (string)$this->_db->selectCell('value')
+            ->from('config')
+            ->where(array('key' => $key))
+            ->execute();
 
         if ($oldValue != null) {
             if ($value !== $oldValue) {

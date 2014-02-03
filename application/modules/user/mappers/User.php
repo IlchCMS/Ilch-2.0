@@ -257,15 +257,10 @@ class User extends \Ilch\Mapper
             $fields['confirmed_code'] = $user->getConfirmedCode();
         }
 
-        $userId = (int) $this->db()->selectCell
-        (
-            'id',
-            'users',
-            array
-            (
-                'id' => $user->getId(),
-            )
-        );
+        $userId = (int)$this->db()->selectCell('id')
+            ->from('users')
+            ->where(array('id' => $user->getId()))
+            ->execute();
 
         if ($userId) {
             /*
@@ -333,15 +328,10 @@ class User extends \Ilch\Mapper
      */
     public function userWithIdExists($userId)
     {
-        $userExists = (boolean) $this->db()->selectCell
-        (
-            'id',
-            'users',
-            array
-            (
-                'id' => $userId,
-            )
-        );
+        $userExists = (bool)$this->db()->selectCell('id')
+            ->from('users')
+            ->where(array('id' => $userId))
+            ->execute();
 
         return $userExists;
     }

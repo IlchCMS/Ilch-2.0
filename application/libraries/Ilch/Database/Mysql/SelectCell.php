@@ -7,25 +7,28 @@
 namespace Ilch\Database\Mysql;
 defined('ACCESS') or die('no direct access');
 
-class Delete extends QueryBuilder
+class SelectCell extends QueryBuilder
 {
     /**
      * @var string
      */
-    protected $_type = 'delete';
+    protected $_type = 'selectCell';
 
     /**
-     * Gets delete query builder sql.
+     * Gets select cell query builder sql.
      *
      * @return string
      */
     public function generateSql()
     {
-        $sql = 'DELETE  FROM `[prefix]_'.$this->_table.'`';
+        $sql = 'SELECT ' . $this->_getFieldsSql($this->_cell) . '
+                FROM `[prefix]_'.$this->_table . '` ';
 
         if ($this->_where != null) {
             $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
         }
+
+        $sql .= ' LIMIT 1';
 
         return $sql;
     }

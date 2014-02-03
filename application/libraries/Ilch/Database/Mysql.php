@@ -140,23 +140,15 @@ class Mysql
     /**
      * Select one cell from table.
      *
-     * @param  string     $cell
-     * @param  string     $table
-     * @param  array      $where
-     * @return string|int
+     * @param string $cell
+     * @return \Ilch\Database\Mysql\SelectCell
      */
-    public function selectCell($cell, $table, $where = null)
+    public function selectCell($cell)
     {
-        $sql = 'SELECT ' . $this->_getFieldsSql($cell) . '
-                FROM `[prefix]_'.$table . '` ';
+         $selectCellObj = new \Ilch\Database\Mysql\SelectCell($this);
+         $selectCellObj->cell($cell);
 
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-        }
-
-        $sql .= ' LIMIT 1';
-
-        return $this->queryCell($sql);
+         return $selectCellObj;
     }
 
     /**

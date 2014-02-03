@@ -10,9 +10,9 @@ defined('ACCESS') or die('no direct access');
 class Insert extends QueryBuilder
 {
     /**
-     * @var boolean
+     * @var string
      */
-    protected $_executeInsertId = true;
+    protected $_type = 'insert';
 
     /**
      * Gets delete query builder sql.

@@ -184,15 +184,10 @@ class Menu extends \Ilch\Mapper
             }
         }
 
-        $itemId = (int) $this->db()->selectCell
-        (
-            'id',
-            'menu_items',
-            array
-            (
-                'id' => $menuItem->getId(),
-            )
-        );
+        $itemId = (int)$this->db()->selectCell('id')
+            ->from('menu_items')
+            ->where(array('id' => $menuItem->getId()))
+            ->execute();
 
         if ($itemId) {
             $this->db()->update('menu_items')
@@ -216,15 +211,10 @@ class Menu extends \Ilch\Mapper
      */
     public function save(MenuModel $menu)
     {
-        $menuId = (int)$this->db()->selectCell
-        (
-            'id',
-            'menu',
-            array
-            (
-                'id' => $menu->getId(),
-            )
-        );
+        $menuId = (int)$this->db()->selectCell('id')
+            ->from('menu')
+            ->where(array('id' => $menu->getId()))
+            ->execute();
 
         if ($menuId) {
             $this->db()->update('menu')

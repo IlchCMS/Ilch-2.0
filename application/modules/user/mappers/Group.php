@@ -140,15 +140,10 @@ class Group extends \Ilch\Mapper
             $fields['name'] = $group->getName();
         }
 
-        $groupId = (int) $this->db()->selectCell
-        (
-            'id',
-            'groups',
-            array
-            (
-                'id' => $group->getId(),
-            )
-        );
+        $groupId = (int) $this->db()->selectCell('id')
+            ->from('groups')
+            ->where(array('id' => $group->getId()))
+            ->execute();
 
         if ($groupId) {
             /*
@@ -188,15 +183,10 @@ class Group extends \Ilch\Mapper
      */
     public function groupWithIdExists($groupId)
     {
-        $groupExists = (boolean)$this->db()->selectCell
-        (
-            'COUNT(*)',
-            'groups',
-            array
-            (
-                'id' => (int)$groupId
-            )
-        );
+        $groupExists = (boolean)$this->db()->selectCell('COUNT(*)')
+            ->from('groups')
+            ->where(array('id' => (int)$groupId))
+            ->execute();
 
         return $groupExists;
     }
@@ -287,7 +277,10 @@ class Group extends \Ilch\Mapper
         );
         $fields = $rec;
         $fields['access_level'] = (int)$accessLevel;
-        $entryExists = $this->db()->selectCell('COUNT(*)', 'groups_access', $rec);
+        $entryExists = (bool)$this->db()->selectCell('COUNT(*)')
+            ->from('groups_access')
+            ->where($rec)
+            ->execute();
 
         if($entryExists) {
             $this->db()->update('groups_access')

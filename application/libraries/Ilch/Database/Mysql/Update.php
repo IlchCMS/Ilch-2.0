@@ -10,6 +10,11 @@ defined('ACCESS') or die('no direct access');
 class Update extends QueryBuilder
 {
     /**
+     * @var string
+     */
+    protected $_type = 'update';
+
+    /**
      * Gets delete query builder sql.
      *
      * @return string

@@ -36,15 +36,10 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
      */
     public function testSelectCellNormalField()
     {
-        $result = $this->db->selectCell
-        (
-            'id',
-            'groups',
-            array
-            (
-                'id' => 2
-            )
-        );
+        $result = $this->db->selectCell('id')
+                ->from('groups')
+                ->where(array('id' => 2))
+                ->execute();
 
         $this->assertEquals('2', $result, 'Wrong cell value was returned.');
     }
@@ -54,15 +49,10 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
      */
     public function testSelectCellWithCount()
     {
-        $result = $this->db->selectCell
-        (
-            'COUNT(*)',
-            'groups',
-            array
-            (
-                'name' => 'Clanleader'
-            )
-        );
+        $result = $this->db->selectCell('COUNT(*)')
+            ->from('groups')
+            ->where(array('name' => 'Clanleader'))
+            ->execute();
 
         $this->assertEquals('2', $result, 'Wrong cell value was returned.');
     }
@@ -76,15 +66,10 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
             ->fields(array('name' => ''))
             ->where(array('id' => 2));
 
-        $result = $this->db->selectCell
-        (
-            'name',
-            'groups',
-            array
-            (
-                'id' => 2
-            )
-        );
+        $result = $this->db->selectCell('name')
+            ->from('groups')
+            ->where(array('id' => 2))
+            ->execute();
 
         $this->assertEquals('', $result, 'The db entry has not being updated with an empty string.');
     }
@@ -96,15 +81,10 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
     {
         $this->db->insert('groups')->fields(array('name' => ''))->execute();
 
-        $result = $this->db->selectCell
-        (
-            'COUNT(*)',
-            'groups',
-            array
-            (
-                'name' => ''
-            )
-        );
+        $result = $this->db->selectCell('COUNT(*)')
+            ->from('groups')
+            ->where(array('name' => ''))
+            ->execute();
 
         $this->assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
     }
