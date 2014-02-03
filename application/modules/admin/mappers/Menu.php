@@ -195,21 +195,14 @@ class Menu extends \Ilch\Mapper
         );
 
         if ($itemId) {
-            $this->db()->update
-            (
-                $fields,
-                'menu_items',
-                array
-                (
-                    'id' => $itemId,
-                )
-            );
+            $this->db()->update('menu_items')
+                ->fields($fields)
+                ->where(array('id' => $itemId))
+                ->execute();
         } else {
-            $itemId = $this->db()->insert
-            (
-                $fields,
-                'menu_items'
-            );
+            $itemId = $this->db()->insert('menu_items')
+                ->fields($fields)
+                ->execute();
         }
 
         return $itemId;
@@ -234,21 +227,14 @@ class Menu extends \Ilch\Mapper
         );
 
         if ($menuId) {
-            $this->db()->update
-            (
-                array('title' => $menu->getTitle()),
-                'menu',
-                array
-                (
-                    'id' => $menuId,
-                )
-            );
+            $this->db()->update('menu')
+                ->fields(array('title' => $menu->getTitle()))
+                ->where(array('id' => $menuId))
+                ->execute();
         } else {
-            $menuId = $this->db()->insert
-            (
-                array('title' => $menu->getTitle()),
-                'menu'
-            );
+            $menuId = $this->db()->insert('menu')
+                ->fields(array('title' => $menu->getTitle()))
+                ->execute();
         }
 
         return $menuId;

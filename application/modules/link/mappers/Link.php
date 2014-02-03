@@ -68,38 +68,25 @@ class Link extends \Ilch\Mapper
      */
     public function save(LinkModel $link)
     {
+        $fields = array
+        (
+            'name' => $link->getName(),
+            'link' => $link->getLink(),
+            'banner' => $link->getBanner(),
+            'desc' => $link->getDesc(),
+            'cat_id' => $link->getCatId(),
+            'hits' => $link->getHits()
+        );
+
         if ($link->getId()) {
-            $this->db()->update
-            (
-                array
-                (
-                    'name' => $link->getName(),
-                    'link' => $link->getLink(),
-                    'banner' => $link->getBanner(),
-                    'desc' => $link->getDesc(),
-                    'cat_id' => $link->getCatId(),
-                    'hits' => $link->getHits()
-                ),
-                'links',
-                array
-                (
-                    'id' => $link->getId(),
-                )
-            );
+            $this->db()->update('links')
+                ->fields($fields)
+                ->where(array('id' => $link->getId()))
+                ->execute();
         } else {
-            $this->db()->insert
-            (
-                array
-                (
-                    'name' => $link->getName(),
-                    'link' => $link->getLink(),
-                    'banner' => $link->getBanner(),
-                    'desc' => $link->getDesc(),
-                    'cat_id' => $link->getCatId(),
-                    'hits' => $link->getHits()
-                ),
-                'links'
-            );
+            $this->db()->insert('links')
+                ->fields($fields)
+                ->execute();
         }
     }
 

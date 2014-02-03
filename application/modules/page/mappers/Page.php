@@ -108,58 +108,51 @@ class Page extends \Ilch\Mapper
     {
         if ($page->getId()) {
             if ($this->getPageByIdLocale($page->getId(), $page->getLocale())) {
-                $this->db()->update
-                (
-                    array
-                    (
+                $this->db()->update('pages_content')
+                    ->fields(array(
                         'title' => $page->getTitle(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
-                    ),
-                    'pages_content',
-                    array
-                    (
+                    ))
+                    ->where(array(
                         'page_id' => $page->getId(),
                         'locale' => $page->getLocale(),
-                    )
-                );
+                    ))
+                    ->execute();
             } else {
-                $this->db()->insert
+                $this->db()->insert('pages_content')
+                    ->fields
+                    (
+                        array
+                        (
+                            'page_id' => $page->getId(),
+                            'title' => $page->getTitle(),
+                            'content' => $page->getContent(),
+                            'perma' => $page->getPerma(),
+                            'locale' => $page->getLocale()
+                        )
+                    )
+                    ->execute();
+            }
+        } else {
+            $date = new \Ilch\Date();
+            $pageId = $this->db()->insert('pages')
+                ->fields(array('date_created' => $date->toDb()))
+                ->execute();
+
+            $this->db()->insert('pages_content')
+                ->fields
                 (
                     array
                     (
-                        'page_id' => $page->getId(),
+                        'page_id' => $pageId,
                         'title' => $page->getTitle(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
                         'locale' => $page->getLocale()
-                    ),
-                    'pages_content'
-                );
-            }
-        } else {
-            $date = new \Ilch\Date();
-            $pageId = $this->db()->insert
-            (
-                array
-                (
-                    'date_created' => $date->toDb()
-                ),
-                'pages'
-            );
-
-            $this->db()->insert
-            (
-                array
-                (
-                    'page_id' => $pageId,
-                    'title' => $page->getTitle(),
-                    'content' => $page->getContent(),
-                    'perma' => $page->getPerma(),
-                    'locale' => $page->getLocale()
-                ),
-                'pages_content'
-            );
+                    )  
+                )
+                ->execute();
         }
     }
 

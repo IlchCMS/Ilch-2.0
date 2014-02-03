@@ -154,24 +154,17 @@ class Group extends \Ilch\Mapper
             /*
              * Group does exist already, update.
              */
-            $this->db()->update
-            (
-                $fields,
-                'groups',
-                array
-                (
-                    'id' => $groupId,
-                )
-            );
+            $this->db()->update('groups')
+                ->fields($fields)
+                ->where(array('id' => $groupId))
+                ->execute();
         } else {
             /*
              * Group does not exist yet, insert.
              */
-            $groupId = $this->db()->insert
-            (
-                $fields,
-                'groups'
-            );
+            $groupId = $this->db()->insert('groups')
+                ->fields($fields)
+                ->execute();
         }
 
         return $groupId;
@@ -297,9 +290,14 @@ class Group extends \Ilch\Mapper
         $entryExists = $this->db()->selectCell('COUNT(*)', 'groups_access', $rec);
 
         if($entryExists) {
-            $this->db()->update($fields, 'groups_access', $rec);
+            $this->db()->update('groups_access')
+                ->fields($fields)
+                ->where($rec)
+                ->execute();
         } else {
-            $this->db()->insert($fields, 'groups_access');
+            $this->db()->insert('groups_access')
+                ->fields($fields)
+                ->execute();
         }
     }
 }

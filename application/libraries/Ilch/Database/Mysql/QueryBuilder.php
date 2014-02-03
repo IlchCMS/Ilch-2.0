@@ -10,6 +10,11 @@ defined('ACCESS') or die('no direct access');
 class QueryBuilder
 {
     /**
+     * @var boolean
+     */
+    protected $_executeInsertId = false;
+
+    /**
      * Injects the database adapter.
      *
      * @param Ilch\Database\Mysql $db
@@ -28,6 +33,19 @@ class QueryBuilder
     public function from($table)
     {
         $this->_table = $table;
+
+        return $this;
+    }
+
+    /**
+     * Adds fields to query builder.
+     *
+     * @param array $fields
+     * @return \Ilch\Database\Mysql\QueryBuilder
+     */
+    public function fields($fields)
+    {
+        $this->_fields = $fields;
 
         return $this;
     }
@@ -52,7 +70,13 @@ class QueryBuilder
      */
     public function execute()
     {
-        return $this->_db->query($this->generateSql());
+        $result = $this->_db->query($this->generateSql());
+
+        if ($this->_executeInsertId) {
+            return $this->_db->getLink()->insert_id;
+        }
+
+        return $result;
     }
 
     /**

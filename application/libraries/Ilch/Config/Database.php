@@ -77,33 +77,20 @@ class Database
 
         if ($oldValue != null) {
             if ($value !== $oldValue) {
-
-                $this->_db->update
-                (
-                    array
-                    (
-                        'value' => $value,
-                        'autoload' => $autoload
-                    ),
-                    'config',
-                    array
-                    (
-                        'key' => $key
-                    )
-
-                );
+                $this->_db->update('config')
+                    ->fields(array(
+                            'value' => $value,
+                            'autoload' => $autoload))
+                    ->where(array('key' => $key))
+                    ->execute();
             }
         } else {
-            $this->_db->insert
-            (
-                array
-                (
-                    'key' => $key,
-                    'value' => $value,
-                    'autoload' => $autoload
-                ),
-                'config'
-            );
+                $this->_db->insert('config')
+                    ->fields(array(
+                        'key' => $key,
+                        'value' => $value,
+                        'autoload' => $autoload))
+                    ->execute();
         }
 
         $this->_configData[$key]['value'] = $value;

@@ -115,32 +115,22 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $category)
     {
+        $fields = array
+        (
+            'name' => $category->getName(),
+            'desc' => $category->getDesc(),
+            'parent_id' => $category->getParentId()
+        );
+
         if ($category->getId()) {
-            $this->db()->update
-            (
-                array
-                (
-                    'name' => $category->getName(),
-                    'desc' => $category->getDesc(),
-                    'parent_id' => $category->getParentId()
-                ),
-                'link_cats',
-                array
-                (
-                    'id' => $category->getId(),
-                )
-            );
+            $this->db()->update('link_cats')
+                ->fields($fields)
+                ->where(array('id' => $category->getId()))
+                ->execute();
         } else {
-            $this->db()->insert
-            (
-                array
-                (
-                    'name' => $category->getName(),
-                    'desc' => $category->getDesc(),
-                    'parent_id' => $category->getParentId()
-                ),
-                'link_cats'
-            );
+            $this->db()->insert('link_cats')
+                ->fields($fields)
+                ->execute();
         }
     }
 

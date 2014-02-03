@@ -72,7 +72,9 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
      */
     public function testUpdateWithEmptyValue()
     {
-        $this->db->update(array('name' => ''), 'groups', array('id' => 2));
+        $this->db->update('groups')
+            ->fields(array('name' => ''))
+            ->where(array('id' => 2));
 
         $result = $this->db->selectCell
         (
@@ -92,7 +94,7 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
      */
     public function testInsertWithEmptyValue()
     {
-        $this->db->insert(array('name' => ''), 'groups');
+        $this->db->insert('groups')->fields(array('name' => ''))->execute();
 
         $result = $this->db->selectCell
         (

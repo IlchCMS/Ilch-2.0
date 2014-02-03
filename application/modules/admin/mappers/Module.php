@@ -57,22 +57,15 @@ class Module extends \Ilch\Mapper
      */
     public function save(\Admin\Models\Module $module)
     {
-        $moduleId = $this->db()->insert
-        (
-            array
-            (
-                'key' => $module->getKey(),
-                'icon_small' => $module->getIconSmall(),
-            ),
-            'modules'
-        );
+        $moduleId = $this->db()->insert('modules')
+            ->fields(array('key' => $module->getKey(),
+                'icon_small' => $module->getIconSmall()))
+            ->execute();
 
         foreach ($module->getNames() as $key => $value) {
-            $this->db()->insert
-            (
-                array('module_id' => $moduleId, 'locale' => $key, 'name' => $value),
-                'modules_names'
-            );
+            $this->db()->insert('modules_names')
+                ->fields(array('module_id' => $moduleId, 'locale' => $key, 'name' => $value))
+                ->execute();
         }
 
         return $moduleId;

@@ -70,23 +70,21 @@ class Impressum extends \Ilch\Mapper
      */
     public function save(ImpressumModel $impressum)
     {
-        $this->db()->update
-        (
-            array
+        $this->db()->update('impressum')
+            ->fields
             (
-                'paragraph' => $impressum->getParagraph(),
-                'company' => $impressum->getCompany(),
-                'name' => $impressum->getName(),
-                'address' => $impressum->getAddress(),
-                'city' => $impressum->getCity(),
-                'phone' => $impressum->getPhone(),
-                'disclaimer' => $impressum->getDisclaimer(),
-            ),
-            'impressum',
-            array
-            (
-                'id' => $impressum->getId(),
+                array
+                (
+                    'paragraph' => $impressum->getParagraph(),
+                    'company' => $impressum->getCompany(),
+                    'name' => $impressum->getName(),
+                    'address' => $impressum->getAddress(),
+                    'city' => $impressum->getCity(),
+                    'phone' => $impressum->getPhone(),
+                    'disclaimer' => $impressum->getDisclaimer()
+                )
             )
-        );
+            ->where(array('id' => $impressum->getId()))
+            ->execute();
     }
 }

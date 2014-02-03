@@ -45,17 +45,14 @@ class Media extends \Ilch\Mapper
 
     public function save(MediaModel $model)
     {
-        $this->db()->insert
-        (
-            array
-            (
+        $this->db()->insert('media')
+            ->fields(array(
                 'url' => $model->getUrl(),
                 'name' => $model->getName(),
                 'datetime' => $model->getDatetime(),
                 'ending' => $model->getEnding(),
-            ),
-            'media'
-        );
+            ))
+            ->execute();
     }	
 
     public function delImage($id) 

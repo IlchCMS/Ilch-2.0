@@ -286,68 +286,27 @@ class Mysql
     /**
      * Update entries from the table.
      *
-     * @param array  $fields
-     * @param string $table
-     * @param array  $where
+     * @return \Ilch\Database\Mysql\Update
      */
-    public function update($fields, $table, $where = null)
+    public function update($table)
     {
-        $sql = 'UPDATE `[prefix]_'.$table . '` SET ';
-        $up = array();
+         $updateObj = new \Ilch\Database\Mysql\Update($this);
+         $updateObj->from($table);
 
-        foreach ($fields as $key => $value) {
-            if ($value === null) {
-                continue;
-            }
-
-            $up[] = '`' . $key . '` = "' . $this->escape($value) . '"';
-        }
-
-        $sql .= implode(',', $up);
-
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
-        }
-
-        $this->query($sql);
+         return $updateObj;
     }
 
     /**
-     * Insert entries to the table.
+     * Insert entries into the table.
      *
-     * @param  array   $fields
-     * @param  string  $table
-     * @return integer
+     * @return \Ilch\Database\Mysql\Update
      */
-    public function insert($fields, $table)
+    public function insert($table)
     {
-        $sql = 'INSERT INTO `[prefix]_'.$table.'` ( ';
-        $sqlFields = array();
-        $sqlValues = array();
+         $insertObj = new \Ilch\Database\Mysql\Insert($this);
+         $insertObj->from($table);
 
-        foreach ($fields as $key => $value) {
-            if ($value === null) {
-                continue;
-            }
-
-            $sqlFields[] = '`' . $key . '`';
-        }
-
-        $sql .= implode(',', $sqlFields);
-        $sql .= ') VALUES (';
-
-        foreach ($fields as $key => $value) {
-            if ($value === null) {
-                continue;
-            }
-
-            $sqlValues[] = '"' . $this->escape($value) . '"';
-        }
-
-        $sql .= implode(',', $sqlValues) . ')';
-        $this->query($sql);
-
-        return $this->conn->insert_id;
+         return $insertObj;
     }
 
     /**

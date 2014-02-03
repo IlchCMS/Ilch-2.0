@@ -79,29 +79,14 @@ class Receiver extends \Ilch\Mapper
     public function save(ReceiverModel $receiver)
     {
         if ($receiver->getId()) {
-            $this->db()->update
-            (
-                array
-                (
-                    'name' => $receiver->getName(),
-                    'email' => $receiver->getEmail(),
-                ),
-                'contact_receivers',
-                array
-                (
-                    'id' => $receiver->getId(),
-                )
-            );
+            $this->db()->update('contact_receivers')
+                ->fields(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
+                ->where(array('id' => $receiver->getId()))
+                ->execute();
         } else {
-            $this->db()->insert
-            (
-                array
-                (
-                    'name' => $receiver->getName(),
-                    'email' => $receiver->getEmail(),
-                ),
-                'contact_receivers'
-            );
+            $this->db()->insert('contact_receivers')
+                ->fields(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
+                ->execute();
         }
     }
 

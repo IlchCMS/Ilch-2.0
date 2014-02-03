@@ -85,66 +85,35 @@ class Box extends \Ilch\Mapper
     {
         if ($box->getId()) {
             if ($this->getBoxByIdLocale($box->getId(), $box->getLocale())) {
-                $this->db()->update
-                (
-                    array
-                    (
-                        'title' => $box->getTitle(),
-                        'content' => $box->getContent(),
-                    ),
-                    'boxes_content',
-                    array
-                    (
-                        'box_id' => $box->getId(),
-                        'locale' => $box->getLocale(),
-                    )
-                );
+                $this->db()->update('boxes_content')
+                    ->fields(array('title' => $box->getTitle(), 'content' => $box->getContent()))
+                    ->where(array('box_id' => $box->getId(), 'locale' => $box->getLocale()))
+                    ->execute();
             } else {
-                $this->db()->insert
-                (
-                    array
-                    (
-                        'box_id' => $box->getId(),
-                        'title' => $box->getTitle(),
-                        'content' => $box->getContent(),
-                        'locale' => $box->getLocale()
-                    ),
-                    'boxes_content'
-                );
+                $this->db()->insert('boxes_content')
+                    ->fields(array('box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                    ->execute();
             }
         } else {
             $date = new \Ilch\Date();
-            $boxId = $this->db()->insert
-            (
-                array
-                (
-                    'date_created' => $date->toDb()
-                ),
-                'boxes'
-            );
+            $boxId = $this->db()->insert('boxes')
+                ->fields(array('date_created' => $date->toDb()))
+                ->execute();
 
-            $this->db()->insert
-            (
-                array
-                (
-                    'box_id' => $boxId,
-                    'title' => $box->getTitle(),
-                    'content' => $box->getContent(),
-                    'locale' => $box->getLocale()
-                ),
-                'boxes_content'
-            );
+            $this->db()->insert('boxes_content')
+                ->fields(array('box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                ->execute();
         }
     }
 
     public function delete($id)
     {
         $this->db()->delete('boxes')
-                ->where(array('id' => $id))
-                ->execute();
+            ->where(array('id' => $id))
+            ->execute();
 
         $this->db()->delete('boxes_content')
-                ->where(array('box_id' => $id))
-                ->execute();
+            ->where(array('box_id' => $id))
+            ->execute();
     }
 }

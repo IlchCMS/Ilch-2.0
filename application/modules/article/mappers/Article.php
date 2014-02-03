@@ -140,58 +140,44 @@ class Article extends \Ilch\Mapper
     {
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
-                $this->db()->update
-                (
-                    array
-                    (
-                        'title' => $article->getTitle(),
-                        'content' => $article->getContent(),
-                        'perma' => $article->getPerma(),
-                    ),
-                    'articles_content',
-                    array
-                    (
-                        'article_id' => $article->getId(),
-                        'locale' => $article->getLocale(),
-                    )
-                );
+                $this->db()->update('articles_content')
+                    ->fields(array('title' => $article->getTitle(), 'content' => $article->getContent(), 'perma' => $article->getPerma()))
+                    ->where(array('article_id' => $article->getId(), 'locale' => $article->getLocale()))
+                    ->execute();
             } else {
-                $this->db()->insert
+                $this->db()->insert('articles_content')
+                    ->fields
+                    (
+                        array
+                        (
+                            'article_id' => $article->getId(),
+                            'title' => $article->getTitle(),
+                            'content' => $article->getContent(),
+                            'perma' => $article->getPerma(),
+                            'locale' => $article->getLocale()
+                        )
+                    )
+                    ->execute();
+            }
+        } else {
+            $date = new \Ilch\Date();
+            $articleId = $this->db()->insert('articles')
+                ->fields(array('date_created' => $date->toDb()))
+                ->execute();
+
+            $this->db()->insert('articles_content')
+                ->fields
                 (
                     array
                     (
-                        'article_id' => $article->getId(),
+                        'article_id' => $articleId,
                         'title' => $article->getTitle(),
                         'content' => $article->getContent(),
                         'perma' => $article->getPerma(),
                         'locale' => $article->getLocale()
-                    ),
-                    'articles_content'
-                );
-            }
-        } else {
-            $date = new \Ilch\Date();
-            $articleId = $this->db()->insert
-            (
-                array
-                (
-                    'date_created' => $date->toDb()
-                ),
-                'articles'
-            );
-
-            $this->db()->insert
-            (
-                array
-                (
-                    'article_id' => $articleId,
-                    'title' => $article->getTitle(),
-                    'content' => $article->getContent(),
-                    'perma' => $article->getPerma(),
-                    'locale' => $article->getLocale()
-                ),
-                'articles_content'
-            );
+                    )
+                )
+                ->execute();
         }
     }
 

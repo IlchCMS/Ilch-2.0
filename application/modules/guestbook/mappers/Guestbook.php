@@ -57,38 +57,25 @@ class Guestbook extends \Ilch\Mapper
      */
     public function save(GuestbookModel $model)
     {
+        $fields = array
+        (
+            'email' => $model->getEmail(),
+            'text' => $model->getText(),
+            'datetime' => $model->getDatetime(),
+            'homepage' => $model->getHomepage(),
+            'name' => $model->getName(),
+            'setfree' => $model->getFree(),
+        );
+
         if ($model->getId()) {
-            $this->db()->update
-            (
-                array
-                (
-                    'email' => $model->getEmail(),
-                    'text' => $model->getText(),
-                    'datetime' => $model->getDatetime(),
-                    'homepage' => $model->getHomepage(),
-                    'name' => $model->getName(),
-                    'setfree' => $model->getFree(),
-                ),
-                'gbook',
-                array
-                (
-                    'id' => $model->getId(),
-                )
-            );
+            $this->db()->update('gbook')
+                ->fields($fields)
+                ->where(array('id' => $model->getId()))
+                ->execute();
         } else {
-            $this->db()->insert
-            (
-                array
-                (
-                    'email' => $model->getEmail(),
-                    'text' => $model->getText(),
-                    'datetime' => $model->getDatetime(),
-                    'homepage' => $model->getHomepage(),
-                    'name' => $model->getName(),
-                    'setfree' => $model->getFree(),
-                ),
-                'gbook'
-            );
+            $this->db()->insert('gbook')
+                ->fields($fields)
+                ->execute();
         }
     }
 

@@ -118,34 +118,23 @@ class Partner extends \Ilch\Mapper
      */
     public function save(PartnerModel $partner)
     {
+        $fields = array
+        (
+            'setfree' => $partner->getFree(),
+            'name' => $partner->getName(),
+            'link' => $partner->getLink(),
+            'banner' => $partner->getBanner(),
+        );
+
         if ($partner->getId()) {
-            $this->db()->update
-            (
-                array
-                (
-                    'setfree' => $partner->getFree(),
-                    'name' => $partner->getName(),
-                    'link' => $partner->getLink(),
-                    'banner' => $partner->getBanner(),
-                ),
-                'partners',
-                array
-                (
-                    'id' => $partner->getId(),
-                )
-            );
+            $this->db()->update('partners')
+                ->fields($fields)
+                ->where(array('id' => $partner->getId()))
+                ->execute();
         } else {
-            $this->db()->insert
-            (
-                array
-                (
-                    'setfree' => $partner->getFree(),
-                    'name' => $partner->getName(),
-                    'link' => $partner->getLink(),
-                    'banner' => $partner->getBanner(),
-                ),
-                'partners'
-            );
+            $this->db()->insert('partners')
+                ->fields($fields)
+                ->execute();
         }
     }
 
