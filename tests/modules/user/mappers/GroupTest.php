@@ -29,7 +29,7 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
      */
     public function setUp()
     {
-        $this->_dbMock = $this->getMock('Ilch_Database', array('selectArray', 'selectList'));
+        $this->_dbMock = $this->getMock('Ilch_Database', array('selectArray', 'selectList', 'from', 'where', 'execute'));
     }
 
     /**
@@ -54,10 +54,23 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
 
         $this->_dbMock->expects($this->once())
                 ->method('selectArray')
-                ->with('*',
-                       'groups',
-                       $where)
+                ->with('*')
+                ->will($this->returnValue($this->_dbMock));
+
+		$this->_dbMock->expects($this->once())
+                ->method('from')
+                ->with('groups')
+                ->will($this->returnValue($this->_dbMock));
+
+		$this->_dbMock->expects($this->once())
+                ->method('where')
+                ->with($where)
+                ->will($this->returnValue($this->_dbMock));
+
+		$this->_dbMock->expects($this->once())
+                ->method('execute')
                 ->will($this->returnValue($groupRow));
+
         $mapper = new GroupMapper();
         $mapper->setDatabase($this->_dbMock);
         $group = $mapper->getGroupById(2);
@@ -207,15 +220,42 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
         $group = new GroupModel();
         $group->setName('New Group');
         $rec = array('name' => 'New Group');
-        $dbMock = $this->getMock('Ilch_Database', array('insert', 'selectCell'));
-        $dbMock->expects($this->once())
-                ->method('insert')
-                ->with($rec, 'groups')
-                ->will($this->returnValue(3));
-        $dbMock->expects($this->once())
+        $dbMock = $this->getMock('Ilch_Database', array('selectCell', 'from', 'where', 'execute', 'insert', 'fields'));
+
+		$dbMock->expects($this->at(0))
                 ->method('selectCell')
-                ->with('id', 'groups', array('id' => 0))
+                ->with('id')
+                ->will($this->returnValue($dbMock));
+
+		$dbMock->expects($this->at(1))
+                ->method('from')
+                ->with('groups')
+                ->will($this->returnValue($dbMock));
+
+		$dbMock->expects($this->at(2))
+                ->method('where')
+                ->with(array('id' => 0))
+                ->will($this->returnValue($dbMock));
+
+		$dbMock->expects($this->at(3))
+                ->method('execute')
                 ->will($this->returnValue(0));
+
+        $dbMock->expects($this->at(4))
+                ->method('insert')
+                ->with('groups')
+                ->will($this->returnValue($dbMock));
+
+		$dbMock->expects($this->at(5))
+                ->method('fields')
+                ->with($rec)
+                ->will($this->returnValue($dbMock));
+
+		$dbMock->expects($this->at(6))
+                ->method('execute')
+                ->will($this->returnValue(3));
+
+
         $mapper = new GroupMapper();
         $mapper->setDatabase($dbMock);
 

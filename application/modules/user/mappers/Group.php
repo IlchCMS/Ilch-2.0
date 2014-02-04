@@ -138,7 +138,7 @@ class Group extends \Ilch\Mapper
             $fields['name'] = $group->getName();
         }
 
-        $groupId = (int) $this->db()->selectCell('id')
+        $groupId = (int)$this->db()->selectCell('id')
             ->from('groups')
             ->where(array('id' => $group->getId()))
             ->execute();
