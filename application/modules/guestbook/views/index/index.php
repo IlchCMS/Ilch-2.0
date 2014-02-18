@@ -36,7 +36,7 @@
                     </tbody>
                 </table>
                 <div class="responsive panel-body">
-                    <?php echo $entry->getText(); ?>
+                    <?php echo nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))); ?>
                 </div>
             </div>
     <?php

@@ -209,6 +209,31 @@ abstract class Base
     }
 
     /**
+     * Gets html from bbcode.
+     *
+     * @param string $bbcode
+     * @return string
+     */
+    public function getHtmlFromBBCode($bbcode)
+    {
+        require_once APPLICATION_PATH.'/libraries/jbbcode/Parser.php';
+        
+        $parser = new \JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<div class="quote">{param}</div>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre class="code">{param}</pre>');
+        $builder->setParseContent(false);
+        $parser->addCodeDefinition($builder->build());
+        
+        $parser->parse($bbcode);
+
+        return $parser->getAsHTML();
+    }
+
+    /**
      * Creates a full url for the given parts.
      *
      * @param  array   $urlArray

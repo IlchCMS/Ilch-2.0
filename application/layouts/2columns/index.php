@@ -36,6 +36,6 @@
         </div> 
         <div class="container credit">
             <p class="muted credit">© Ilch CMS | <?php echo '<a href="'.$this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')).'">Administrator</a>'; ?></p>
-        </div>  
+        </div>
     </body>
 </html>

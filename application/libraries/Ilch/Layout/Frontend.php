@@ -78,10 +78,11 @@ class Frontend extends Base
                 <link href="'.$this->getStaticUrl('css/global.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('../application/modules/user/static/css/user.css').'" rel="stylesheet">
-                <script src="'.$this->getStaticUrl('js/jquery.js').'"></script>
-                <script src="'.$this->getStaticUrl('js/bootstrap.js').'"></script>
-                <script src="'.$this->getStaticUrl('js/jquery-ui.js').'"></script>';
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/bootstrap.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/ckeditor/ckeditor.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>';
         return $html;
     }
 }
-
