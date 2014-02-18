@@ -68,6 +68,7 @@
     <div class="form-group">
         <div class="col-lg-4">
             <textarea class="form-control"
+                      id="ilch_html"
                       name="disclaimer" 
                       cols="60" 
                       rows="5"><?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getDisclaimer()); } ?></textarea>
@@ -75,16 +76,3 @@
     </div>
     <?=$this->getSaveBar('editButton')?>
 </form>
-
-<script type="text/javascript" src="<?php echo $this->getStaticUrl('js/tinymce/tinymce.min.js') ?>"></script>
-<script>
-    tinymce.init
-    (
-        {
-            height: 300,
-            width: 500,
-            selector: "textarea",
-            plugins: ["code table image preview"]
-        }
-    );
-</script>

@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="form-group">
-        <textarea class="form-control" name="boxContent"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
+        <textarea class="form-control" id="ilch_html" name="boxContent"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
     </div>
     <?php
         if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
@@ -61,7 +61,6 @@
         }
     ?>
 </form>
-<script type="text/javascript" src="<?php echo $this->getStaticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
 <?php
 $boxID = '';
@@ -75,15 +74,6 @@ $('#boxLanguageInput').change
     this,
     function () {
         top.location.href = '<?php echo $this->getUrl(array('id' => $boxID)); ?>/locale/'+$(this).val();
-    }
-);
-
-tinymce.init
-(
-    {
-        height: 400,
-        selector: "textarea",
-        plugins: ["code table image preview"]
     }
 );
 </script>

@@ -40,6 +40,5 @@
 <script>
     $(".image").click(function(){
         window.parent.$('#<?=$this->getRequest()->getParam('inputid') ?>').val($(this).data('url'));
-        top.tinymce.activeEditor.windowManager.close();
     });
 </script>

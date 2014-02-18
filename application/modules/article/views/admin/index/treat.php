@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="form-group">
-        <textarea class="form-control" name="articleContent"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
+        <textarea class="form-control" id="ilch_html" name="articleContent"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
     </div>
     <?php
         if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
@@ -74,7 +74,6 @@
     }
     ?>
 </form>
-<script src="<?php echo $this->getStaticUrl('js/tinymce/tinymce.min.js') ?>"></script>
 <script>
 <?php
 $articleID = '';
@@ -102,20 +101,4 @@ $('#articleLanguageInput').change
         top.location.href = '<?php echo $this->getUrl(array('id' => $articleID)); ?>/locale/'+$(this).val();
     }
 );
-
-tinymce.init({
-    selector : "textarea",
-    height: 400,
-    width:1000,
-    plugins: [
-         "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-         "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-         "table contextmenu directionality emoticons paste textcolor ilchmedia"
-   ],
-   toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
-   toolbar2: "link | image media | preview code ",
-   image_advtab: true ,
-   external_filemanager_path:"<?php echo $this->getStaticUrl('../index.php/admin/media/iframe/index'); ?>",
-   filemanager_title:"Media" 
- });
 </script>

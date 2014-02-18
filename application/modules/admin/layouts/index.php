@@ -23,7 +23,8 @@
         <script src="<?php echo $this->getStaticUrl('js/validate/jquery.validate.min.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/validate/additional-methods.min.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/validate/ilch-validate.js'); ?>"></script>
-
+        <script src="<?php echo $this->getStaticUrl('js/ckeditor/ckeditor.js'); ?>"></script>
+        <script src="<?php echo $this->getStaticUrl('js/ilch.js'); ?>"></script>
     </head>
     <body>
         <script>
