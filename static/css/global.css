@@ -22,9 +22,9 @@ i {
 	color: black;
 }
 
-#img-responsive img{
- height: auto !important;
- max-width: 100% !important;
+img{
+    height: auto !important;
+    max-width: 100% !important;
 }
 
 .clickable {
