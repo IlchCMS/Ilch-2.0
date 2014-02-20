@@ -5,7 +5,7 @@
            <?php echo $this->getTrans('entry'); ?>
     </a>
 </p>
-<div id="img-responsive" class="responsive">
+<div class="responsive">
     <?php
         foreach ($this->get('entries') as $entry) :
     ?>
