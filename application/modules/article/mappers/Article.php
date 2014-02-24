@@ -26,7 +26,7 @@ class Article extends \Ilch\Mapper
      */
     public function getArticles($locale = '')
     {
-        $sql = 'SELECT pc.*, p.id FROM [prefix]_articles as p
+        $sql = 'SELECT pc.*, p.* FROM [prefix]_articles as p
                 LEFT JOIN [prefix]_articles_content as pc ON p.id = pc.article_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY p.id';
@@ -44,6 +44,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
+            $articleModel->setDateCreated($articleRow['date_created']);
             $articles[] = $articleModel;
         }
 
@@ -105,6 +106,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setContent($articleRow['content']);
         $articleModel->setLocale($articleRow['locale']);
         $articleModel->setPerma($articleRow['perma']);
+        $articleModel->setDateCreated($articleRow['date_created']);
 
         return $articleModel;
     }

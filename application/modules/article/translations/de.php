@@ -22,4 +22,5 @@ return array
     'articleAdress' => 'Artikeladresse',
     'noArticles' => 'Keine Artikel vorhanden',
     'askIfDeleteArticle' => 'Sind Sie sicher dass die Artikel "%s" entfernt werden soll?',
+    'readMore' => 'ganzen Artikel lesen'
 );

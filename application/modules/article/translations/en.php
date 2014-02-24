@@ -24,4 +24,5 @@ return array
     'articleAdress' => 'Article adress',
     'noArticles' => 'No articles',
     'askIfDeleteArticle' => 'Are you sure to delete article "%s"?',
+    'readMore' => 'Read whole article'
 );

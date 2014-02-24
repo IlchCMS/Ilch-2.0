@@ -10,10 +10,8 @@ defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
 {
-    public function indexAction()
+    public function init()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'));
-
         $locale = '';
 
         if ((bool)$this->getConfig()->get('multilingual_acp')) {
@@ -21,8 +19,24 @@ class Index extends \Ilch\Controller\Frontend
                 $locale = $this->getTranslator()->getLocale();
             }
         }
+        
+        $this->_locale = $locale;
+    }
 
+    public function indexAction()
+    {
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'));
         $articleMapper = new ArticleMapper();
-        $this->getView()->set('articles', $articleMapper->getArticles($locale));
+        $this->getView()->set('articles', $articleMapper->getArticles($this->_locale));
+    }
+    
+    public function showAction()
+    {
+        $articleMapper = new ArticleMapper();
+        $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
+                ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
+        
+        $this->getView()->set('article', $article, $this->_locale);
     }
 }

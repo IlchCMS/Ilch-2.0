@@ -1,9 +1,3 @@
-INSERT INTO `[prefix]_articles_content` (`article_id`, `content`, `locale`, `title`, `perma`) VALUES
-(1, 'Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.', '', 'Startseite', 'startseite.html');
-
-INSERT INTO `[prefix]_articles` (`id`, `date_created`) VALUES
-(1, 'CURRENT_TIMESTAMP');
-
 INSERT INTO `[prefix]_config` (`key`, `value`, `autoload`) VALUES
 ('start_page', 'module_article', 0);
 

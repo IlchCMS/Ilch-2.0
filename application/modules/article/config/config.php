@@ -23,6 +23,17 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+        
+        $articleMapper = new \Article\Mappers\Article();
+        
+        /*
+         * @todo change content for different types.
+         */
+        $article = new \Article\Models\Article();
+        $article->setContent('Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
+        $article->setTitle('Startseite');
+        $article->setPerma('startseite.html');
+        $articleMapper->save($article);
     }
 
     public function uninstall()
