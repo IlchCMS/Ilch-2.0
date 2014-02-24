@@ -252,37 +252,3 @@ img{
     width: 100% !important;
     height: 100% !important;
 }
-
-.cke_button__ilchmedia_label{
-   display: inline !important;
-}
-
-#MediaModal{
-    z-index: 100000 !important;
-    visibility: visible;
-}
-#MediaModal .modal-dialog {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: auto !important;
-}
-
-#MediaModal .modal-content {
-  height: 96%;
-  border-radius: 0;
-  margin: 1%;
-}
-
-#MediaModal .modal-body {
-  height: 75%;
-  border-radius: 0;
-  padding: 0px !important;
-}
-
-iframe {
-width: 100%;
-min-height: 100%;
-border-color:#00ff00; 
-border-style:solid;
-}

@@ -23,12 +23,9 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
 		{ name: 'styles' },
 		{ name: 'colors' },
-		{ name: 'about' },
-                { name: 'ilchmedia' }
+		{ name: 'about' }
 	];
 
 	// Se the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
-        CKEDITOR.plugins.addExternal( 'ilchmedia', window.location.origin+'/application/modules/media/static/js/ilchmedia/' );
-        config.extraPlugins = 'ilchmedia';
-        };
+};
