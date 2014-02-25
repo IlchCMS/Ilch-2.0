@@ -77,9 +77,10 @@ class Model
      * Gets the menu items as html-string.
      * 
      * @param string $tpl
+     * @param string $itemTpl
      * @return string
      */
-    public function getItems($tpl = '')
+    public function getItems($tpl = '', $itemTpl = '')
     {
         $html = '';
         $locale = '';
@@ -124,7 +125,7 @@ class Model
                     }
                 }
             }
-            
+
             $html = str_replace('%c', $htmlMenuItems, $html);
             $htmlMenuItems = '';
         }
@@ -143,8 +144,11 @@ class Model
         $menuMapper = new \Admin\Mappers\Menu();
         $pageMapper = new \Page\Mappers\Page();
         $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
+        $html = '';
 
-        $html = '<ul class="list-unstyled"><li>';
+        if(in_array($item->getType(), array(1,2,3))) {
+            $html = '<li>';
+        }
 
         if ($item->getType() == 1) {
             $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
@@ -156,7 +160,7 @@ class Model
         }
         
         if (!empty($subItems)) {
-            $html .= '<ul class="list-unstyled">';
+            $html .= '<ul class="list-unstyled ilch_menu_ul">';
 
             foreach ($subItems as $subItem) {
                 $html .= $this->_recGetItems($subItem, $locale);
@@ -165,6 +169,10 @@ class Model
             $html .= '</ul>';
         }
 
-        return $html .= '</li></ul>';
+        if(in_array($item->getType(), array(1,2,3))) {
+            $html .= '</li>';
+        }
+
+        return $html;
     }
 }

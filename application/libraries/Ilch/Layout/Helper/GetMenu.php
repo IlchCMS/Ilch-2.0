@@ -35,6 +35,10 @@ class GetMenu
 
         $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
 
+        if (isset($args[1]) && isset($args[2])) {
+            return $menu->getItems($args[1], $args[2]);
+        }
+
         if (isset($args[1])) {
             return $menu->getItems($args[1]);
         }
