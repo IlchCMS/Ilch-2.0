@@ -302,6 +302,7 @@
             var iframeUrlImage = "<?=$this->getUrl('admin/media/iframe/index/type/image/');?>";
             var iframeUrlFile = "<?=$this->getUrl('admin/media/iframe/index/type/file/');?>";
             var iframeUrlMedia = "<?=$this->getUrl('admin/media/iframe/index/type/media/');?>";
+            var ilchMediaPlugin = "<?=$this->getStaticUrl('../application/modules/media/static/js/ilchmedia/');?>";
         </script>
     </body>
 </html>

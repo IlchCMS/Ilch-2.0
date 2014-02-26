@@ -29,6 +29,6 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Se the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
-	CKEDITOR.plugins.addExternal( 'ilchmedia', window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port: '') +'/application/modules/media/static/js/ilchmedia/' );
+	CKEDITOR.plugins.addExternal( 'ilchmedia', ilchMediaPlugin);
 	config.extraPlugins = 'ilchmedia';
 };
