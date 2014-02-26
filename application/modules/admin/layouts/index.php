@@ -264,11 +264,44 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" 
+                     id="MediaModal" 
+                     tabindex="-1" 
+                     role="dialog"  
+                     aria-labelledby="MediaModalLabel" 
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" 
+                                        class="close" 
+                                        data-dismiss="modal" 
+                                        aria-hidden="true">&times;
+                                </button>
+                                <h4 class="modal-title" 
+                                    id="MediaModalLabel">Media
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <iframe frameborder="0"></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" 
+                                        class="btn btn-default" 
+                                        data-dismiss="modal">Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <?php echo $this->getContent(); ?>
             </div>
         </div>
         <script>
             $('.toggleSidebar').on('click', toggleSidebar);
+            var iframeUrlImage = "<?=$this->getUrl('admin/media/iframe/index/type/image/');?>";
+            var iframeUrlFile = "<?=$this->getUrl('admin/media/iframe/index/type/file/');?>";
+            var iframeUrlMedia = "<?=$this->getUrl('admin/media/iframe/index/type/media/');?>";
         </script>
     </body>
 </html>
