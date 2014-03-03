@@ -7,12 +7,26 @@
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->getStaticUrl('img/favicon.ico'); ?>">
         <link href="<?php echo $this->getStaticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->getStaticUrl('css/global.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/ilch.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('../application/modules/install/static/css/install.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
         <script src="<?php echo $this->getStaticUrl('js/jquery.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/jquery-ui.js'); ?>"></script>        
         <script src="<?php echo $this->getStaticUrl('js/bootstrap.js'); ?>"></script>
+        <style>
+        .btn {
+            background-image: none;
+            border: 1px solid silver;
+            border-color: silver;
+            -webkit-border-radius: 0px;
+               -moz-border-radius: 0px;
+                    border-radius: 0px;
+        }
+
+        label {
+            font-weight: normal;
+        }
+        </style>
     </head>
     <body>
         <form autocomplete="off" class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">

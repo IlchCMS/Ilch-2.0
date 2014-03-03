@@ -49,31 +49,15 @@ class Model
             return '';
         }
 
-        $html = '<div id="breadcrumbs">
-                    <div class="breadcrumb-button blue">
-                        <span class="breadcrumb-label">
-                            <a href="'.$this->_layout->getUrl().'">
-                                <i class="fa fa-home"></i>
-                            </a>
-                        </span>
-                        <span class="breadcrumb-arrow">
-                            <span></span>
-                        </span>
-                    </div>';
+        $html = '<a href="'.$this->_layout->getUrl().'">Start</a>';
 
         foreach ($this->_data as $key => $value) {
-            $html .= '<div class="breadcrumb-button"><span class="breadcrumb-label">';
-
             if (empty($value)) {
                 $html .= $this->_layout->escape($key);
             } else {
-                $html .= '<a href="'.$this->_layout->getUrl($value).'">'.$this->_layout->escape($key).'</a>';
+                $html .= ' &rArr; <a href="'.$this->_layout->getUrl($value).'">'.$this->_layout->escape($key).'</a>';
             }
-
-            $html .=  '</span><span class="breadcrumb-arrow"><span></span></span></div>';
         }
-
-        $html .= '</div>';
 
         return $html;
     }

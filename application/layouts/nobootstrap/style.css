@@ -1,0 +1,14 @@
+.left_container {
+    float: left;
+    width: 250px;
+    border: 1px solid black;
+    padding: 15px;
+}
+
+.right_container {
+    float: left;
+    margin-left: 150px;
+    width: 900px;
+    border: 1px solid black;
+    padding: 15px;
+}

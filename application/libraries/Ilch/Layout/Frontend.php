@@ -73,13 +73,11 @@ class Frontend extends Base
                 <title>'.$this->getTitle().'</title>
                 <meta name="description" content="">';
 
-        $html .= '<link href="'.$this->getStaticUrl('css/bootstrap.css').'" rel="stylesheet">
-                <link href="'.$this->getStaticUrl('css/font-awesome.css').'" rel="stylesheet">
-                <link href="'.$this->getStaticUrl('css/global.css').'" rel="stylesheet">
+        $html .= '<link href="'.$this->getStaticUrl('css/font-awesome.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('../application/modules/user/static/css/user.css').'" rel="stylesheet">
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.js').'"></script>
-                <script type="text/javascript" src="'.$this->getStaticUrl('js/bootstrap.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ckeditor/ckeditor.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>';

@@ -8,7 +8,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->getStaticUrl('img/favicon.ico'); ?>">
         <link href="<?php echo $this->getStaticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->getStaticUrl('css/global.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/ilch.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('../application/modules/admin/static/css/main.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
@@ -25,6 +25,78 @@
         <script src="<?php echo $this->getStaticUrl('js/validate/ilch-validate.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ckeditor/ckeditor.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ilch.js'); ?>"></script>
+        <style>
+            .btn {
+                background-image: none;
+                border: 1px solid silver;
+                border-color: silver;
+                -webkit-border-radius: 0px;
+                   -moz-border-radius: 0px;
+                        border-radius: 0px;
+            }
+
+            .form-horizontal .form-group .control-label {
+                text-align: left;
+            }
+
+            label {
+                font-weight: normal;
+            }
+
+            legend {
+                font-size: 18px;
+            }
+
+            i {
+                color: black;
+            }
+
+            hr {
+                margin: 10px 0;
+            }
+
+            .clickable {
+                cursor: pointer;
+            }
+
+            @font-face {
+                font-family: 'Glyphicons Halflings';
+                src: url('../fonts/glyphicons-halflings-regular.eot');
+                src: url('../font/sglyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+            }
+
+            .cke_button__ilchmedia_label{
+               display: inline !important;
+            }
+
+            #MediaModal{
+                z-index: 100000 !important;
+                visibility: visible;
+            }
+            #MediaModal .modal-dialog {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                margin: auto !important;
+            }
+
+            #MediaModal .modal-content {
+                height: 96%;
+                border-radius: 0;
+                margin: 1%;
+            }
+
+            #MediaModal .modal-body {
+                height: 75%;
+                border-radius: 0;
+                padding: 0px !important;
+            }
+
+            iframe {
+                width: 100%;
+                min-height: 100%;
+            }
+        </style>
     </head>
     <body>
         <script>
