@@ -27,6 +27,10 @@ img{
     max-width: 100% !important;
 }
 
+hr {
+    margin: 10px 0;
+}
+
 .clickable {
     cursor: pointer;
 }

@@ -6,6 +6,9 @@
 
 namespace Article\Controllers;
 use Article\Mappers\Article as ArticleMapper;
+use Comment\Mappers\Comment as CommentMapper;
+use Comment\Models\Comment as CommentModel;
+
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
@@ -32,11 +35,27 @@ class Index extends \Ilch\Controller\Frontend
     
     public function showAction()
     {
+        $commentMapper = new CommentMapper();
+
+        if ($this->getRequest()->getPost('article_comment_text')) {
+            $commentModel = new CommentModel();
+            $commentModel->setKey('articles_'.$this->getRequest()->getParam('id'));
+            $commentModel->setText($this->getRequest()->getPost('article_comment_text'));
+            
+            $date = new \Ilch\Date();
+            $commentModel->setDateCreated($date);
+            $commentModel->setUserId($this->getUser()->getId());
+            $commentMapper->save($commentModel);
+        }
+
         $articleMapper = new ArticleMapper();
+
         $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+        $comments = $commentMapper->getCommentsByKey('articles_'.$this->getRequest()->getParam('id'));
+
+        $this->getView()->set('article', $article);
+        $this->getView()->set('comments', $comments);
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
-                ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
-        
-        $this->getView()->set('article', $article, $this->_locale);
+            ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
     }
 }
