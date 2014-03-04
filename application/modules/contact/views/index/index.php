@@ -1,11 +1,11 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
+<form method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
-    <div class="form-group">
-        <label for="receiver" class="col-lg-2 control-label">
+    <div class="ilch_form_group">
+        <label for="receiver">
             <?php echo $this->getTrans('receiver'); ?>:
         </label>
-        <div class="col-lg-10">
-            <select class="form-control"
+        <div class="controls">
+            <select class="ilch_cbo"
                     id="receiver"
                     name="receiver">
                 <?php
@@ -17,43 +17,43 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="ilch_form_group">
+        <label for="name">
             <?php echo $this->getTrans('name'); ?>:
         </label>
-        <div class="col-lg-10">
-            <input class="form-control"
+        <div class="controls">
+            <input class="ilch_txt"
                    id="name"
                    name="name"
                    type="text"
                    value="" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="email" class="col-lg-2 control-label">
+    <div class="ilch_form_group">
+        <label for="email">
             <?php echo $this->getTrans('email'); ?>:
         </label>
-        <div class="col-lg-10">
-            <input class="form-control"
+        <div class="controls">
+            <input class="ilch_txt"
                    id="email"
                    name="email"
                    type="text"
                    value="" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="message" class="col-lg-2 control-label">
+    <div class="ilch_form_group">
+        <label for="message">
             <?php echo $this->getTrans('message'); ?>:
         </label>
-        <div class="col-lg-10">
-            <textarea class="form-control"
+        <div class="controls">
+            <textarea class="ilch_txt"
                    id="message"
                    name="message"></textarea>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
-            <button type="submit" name="save" class="btn">
+    <div class="ilch_form_group">
+        <div class="controls">
+            <button type="submit" name="save" class="ilch_btn">
                 <?php echo $this->getTrans('send'); ?>
             </button>
         </div>

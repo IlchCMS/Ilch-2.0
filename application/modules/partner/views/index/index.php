@@ -1,11 +1,11 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
+<form method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
-    <div class="form-group">
-        <label for="name" class="col-lg-2 control-label">
+    <div class="ilch_form_group">
+        <label for="name">
             <?php echo $this->getTrans('name'); ?>:
         </label>
-        <div class="col-lg-10">
-            <input class="form-control"
+        <div class="controls">
+            <input class="ilch_txt"
                    id="name"
                    name="name"
                    type="text"
@@ -13,12 +13,12 @@
                    value="<?php if($this->get('name') != ''){ echo $this->escape($this->get('name')); } ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="link" class="col-lg-2 control-label">
+    <div class="ilch_form_group">
+        <label for="link">
             <?php echo $this->getTrans('link'); ?>:
         </label>
-        <div class="col-lg-10">
-            <input class="form-control"
+        <div class="controls">
+            <input class="ilch_txt"
                    id="link"
                    name="link"
                    type="text"
@@ -26,12 +26,12 @@
                    value="<?php if($this->get('link') != ''){ echo $this->escape($this->get('link')); } ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="banner" class="col-lg-2 control-label">
+    <div class="ilch_form_group">
+        <label for="banner">
             <?php echo $this->getTrans('banner'); ?>:
         </label>
-        <div class="col-lg-10">
-            <input class="form-control"
+        <div class="controls">
+            <input class="ilch_txt"
                    id="banner"
                    name="banner"
                    type="text"
@@ -39,9 +39,9 @@
                    value="<?php if($this->get('banner') != ''){ echo $this->escape($this->get('banner')); } ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
-            <button type="submit" name="save" class="btn">
+   <div class="ilch_form_group">
+        <div class="controls">
+            <button type="submit" name="save" class="ilch_btn">
                 <?php echo $this->getTrans('send'); ?>
             </button>
         </div>
