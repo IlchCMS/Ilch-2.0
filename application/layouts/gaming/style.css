@@ -6,6 +6,33 @@ body {
     background-size: cover;
 }
 
+img {
+    height: auto !important;
+    max-width: 100% !important;
+}
+
+a {
+    color: #428BCA;
+    text-decoration: none;
+}
+
+.ilch_btn, .ilch_txt, .ilch_cbo {
+    border: 1px grey black;
+    padding: 5px;
+}
+
+.ilch_form_group {
+    padding-bottom: 10px;
+}
+
+.ilch_form_group label {
+    float: left;
+}
+
+.ilch_form_group .controls {
+    margin-left: 100px;
+}
+
 label {
     font-weight: normal;
 }
