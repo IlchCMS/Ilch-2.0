@@ -3,6 +3,11 @@ img {
     max-width: 100% !important;
 }
 
+a {
+    color: #428BCA;
+    text-decoration: none;
+}
+
 .ilch_full_width {
     width: 100%;
 }
