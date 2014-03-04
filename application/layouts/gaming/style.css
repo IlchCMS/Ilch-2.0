@@ -6,6 +6,10 @@ body {
     background-size: cover;
 }
 
+label {
+    font-weight: normal;
+}
+
 @media (min-width: 991px) {
 	nav {
 		margin-top: 30px;

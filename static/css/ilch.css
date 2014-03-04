@@ -1,3 +1,10 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  font-family: Verdana, sans-serif;
+}
+
 img {
     height: auto !important;
     max-width: 100% !important;
@@ -20,8 +27,9 @@ a {
     float: right;
 }
 
-.ilch_btn, .ilch_txt {
-    border: 1px solid black;
+.ilch_btn, .ilch_txt, .ilch_cbo {
+    border: 1px grey black;
+    padding: 5px;
 }
 
 .ilch_form_group {

@@ -7,8 +7,8 @@
     ?>
         <table>
             <colgroup>
-                <col />
-                <col />
+                <col style="width: 200px;" />
+                <col style="width: 100px;" />
                 <col />
             </colgroup>
             <tbody>
@@ -28,9 +28,12 @@
                         <?php echo $this->getTrans('date'); ?>: <?php echo $this->escape($entry->getDatetime()); ?>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2"><?php echo nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))); ?></td>
+                </tr>
             </tbody>
         </table>
-        <?php echo nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))); ?>
+        <br /><br />
     <?php
         endforeach;
     ?>
