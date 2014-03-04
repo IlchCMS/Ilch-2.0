@@ -5,7 +5,7 @@
     <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->getTrans('message'); ?> (0)</a><br />
     <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->getTrans('UserPanel'); ?></a><br />
     -->
-    <a href="<?php echo $this->getUrl(array('module' => 'admin', 'controller' => 'admin')); ?>">
+    <a href="<?php echo $this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')); ?>">
         <?php echo $this->getTrans('adminarea'); ?>
     </a>
     <br />
