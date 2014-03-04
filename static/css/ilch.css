@@ -1,0 +1,32 @@
+img {
+    height: auto !important;
+    max-width: 100% !important;
+}
+
+.ilch_full_width {
+    width: 100%;
+}
+
+.ilch_pull_left {
+    float: left;
+}
+
+.ilch_pull_right {
+    float: right;
+}
+
+.ilch_btn, .ilch_txt {
+    border: 1px solid black;
+}
+
+.ilch_form_group {
+    padding-bottom: 10px;
+}
+
+.ilch_form_group label {
+    float: left;
+}
+
+.ilch_form_group .controls {
+    margin-left: 100px;
+}

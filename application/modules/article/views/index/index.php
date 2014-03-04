@@ -7,15 +7,12 @@ if (!empty($articles)) {
         $date = new \Ilch\Date($article->getDateCreated());
         $comments = $commentMapper->getCommentsByKey('articles_'.$article->getId());
 ?>
-<div class="pull-left">
-    <h4>
-        <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
-    </h4>
+<h4>
+    <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
+</h4>
+<div>
+    <span><?=$date->format(null, true)?></span> <i class="fa fa-comment-o"></i> <?=count($comments)?></span>
 </div>
-<div class="pull-right">
-    <span style="padding-right: 15px; vertical-align: middle; line-height: 39px;"><?=$date->format(null, true)?></span> <i class="fa fa-comment-o"></i> <?=count($comments)?></span>
-</div>
-<div class="clearfix"></div>
 <hr />
 <?php
         $content = $article->getContent();
