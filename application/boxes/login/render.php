@@ -41,12 +41,10 @@
                 </div>
             </div>
         </form>
-        <div style="font-size: 13px;">
         <?php if ($this->get('regist_accept') == '1') { ?>
             <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')); ?>"><?php echo $this->getTrans('register'); ?></a><br />
         <?php } ?>
         <!--
             <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->getTrans('forgotPassword'); ?></a>
         -->
-        </div>
 <?php } ?>

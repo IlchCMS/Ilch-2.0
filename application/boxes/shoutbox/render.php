@@ -36,7 +36,7 @@
         <?php foreach ($this->get('shoutbox') as $shoutbox): {
                 echo '<tr>';         
                 echo '<td><b>'.$this->escape($shoutbox->getName()).'</b><br />';
-                echo '<span style="font-size:12px">'.$shoutbox->getTime().'</span></td>';  
+                echo '<span>'.$shoutbox->getTime().'</span></td>';  
                 echo '</tr>';
                 echo '<tr>';
                 /*

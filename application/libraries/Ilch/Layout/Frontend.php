@@ -73,7 +73,8 @@ class Frontend extends Base
                 <title>'.$this->getTitle().'</title>
                 <meta name="description" content="">';
 
-        $html .= '<link href="'.$this->getStaticUrl('css/font-awesome.css').'" rel="stylesheet">
+        $html .= '<link href="'.$this->getStaticUrl('css/normalize.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/font-awesome.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('../application/modules/user/static/css/user.css').'" rel="stylesheet">
