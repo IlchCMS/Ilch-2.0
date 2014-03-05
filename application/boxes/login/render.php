@@ -13,29 +13,29 @@
         <?php echo $this->getTrans('logout'); ?>
     </a>
     <?php }else{ ?>
-        <form class="form-horizontal" action="" method="post">
+        <form action="" method="post">
            <?php echo $this->getTokenField();
                 $errors = $this->get('errors');
             ?>
-            <div class="form-group <?php if (!empty($errors['loginbox_emailname'])) { echo 'has-error'; }; ?>">
-                <div class="col-lg-12 ">
-                    <input class="form-control"
+            <div class="ilch_form_group">
+                <div class="controls">
+                    <input class="ilch_txt"
                            name="loginbox_emailname"
                            type="text"
                            placeholder="<?php echo $this->getTrans('nameEmail')?>" />
                 </div>
             </div>
-            <div class="form-group <?php if (!empty($errors['loginbox_password'])) { echo 'has-error'; }; ?>">
-                <div class="col-lg-12">
-                    <input class="form-control"
+            <div class="ilch_form_group">
+                <div class="controls">
+                    <input class="ilch_txt"
                            name="loginbox_password"
                            type="password"
                            placeholder="<?php echo $this->getTrans('password')?>" />
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <button type="submit" name="login" class="btn">
+            <div class="ilch_form_group">
+                <div class="controls">
+                    <button type="submit" name="login" class="ilch_btn">
                         <?php echo $this->getTrans('login'); ?>
                     </button>
                 </div>
