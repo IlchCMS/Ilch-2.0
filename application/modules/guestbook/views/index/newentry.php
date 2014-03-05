@@ -6,7 +6,6 @@
         </label>
         <div class="controls">
             <input type="text"
-                   class="ilch_txt"
                    name="name"
                    placeholder="Name"
                    required />
@@ -18,7 +17,6 @@
         </label>
         <div class="controls">
             <input type="text"
-                   class="ilch_txt"
                    name="email" 
                    placeholder="E-Mail" />
         </div>
@@ -29,7 +27,6 @@
         </label>
         <div class="controls">
            <input type="text"
-                  class="ilch_txt"
                   name="homepage" 
                   placeholder="<?php echo $this->getTrans('page'); ?>" />
         </div>
@@ -48,7 +45,7 @@
     <div class="ilch_form_group">
         <input type="submit" 
                name="saveEntry" 
-               class="ilch_btn ilch_pull_right" 
+               class="ilch_pull_right" 
                value="<?php echo $this->getTrans('submit'); ?>" />
     </div>
 </form>

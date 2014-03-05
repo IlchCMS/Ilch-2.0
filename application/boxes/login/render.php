@@ -19,23 +19,21 @@
             ?>
             <div class="ilch_form_group ilch_form_nolabel">
                 <div class="controls">
-                    <input class="ilch_txt"
-                           name="loginbox_emailname"
+                    <input name="loginbox_emailname"
                            type="text"
                            placeholder="<?php echo $this->getTrans('nameEmail')?>" />
                 </div>
             </div>
             <div class="ilch_form_group ilch_form_nolabel">
                 <div class="controls ">
-                    <input class="ilch_txt"
-                           name="loginbox_password"
+                    <input name="loginbox_password"
                            type="password"
                            placeholder="<?php echo $this->getTrans('password')?>" />
                 </div>
             </div>
             <div class="ilch_form_group ilch_form_nolabel">
                 <div class="controls">
-                    <button type="submit" name="login" class="ilch_btn">
+                    <button type="submit" name="login">
                         <?php echo $this->getTrans('login'); ?>
                     </button>
                 </div>

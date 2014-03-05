@@ -1,5 +1,5 @@
 <form action="get">
-    <select class="ilch_cbo layoutInput" name="language">
+    <select class="layoutInput" name="language">
         <?php
             foreach ($this->get('layouts') as $layout) {
                 $name = basename($layout);

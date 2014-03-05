@@ -5,8 +5,7 @@
             <?php echo $this->getTrans('name'); ?>:
         </label>
         <div class="controls">
-            <input class="ilch_txt"
-                   id="name"
+            <input id="name"
                    name="name"
                    type="text"
                    placeholder="Name"
@@ -18,8 +17,7 @@
             <?php echo $this->getTrans('link'); ?>:
         </label>
         <div class="controls">
-            <input class="ilch_txt"
-                   id="link"
+            <input id="link"
                    name="link"
                    type="text"
                    placeholder="http://"
@@ -31,8 +29,7 @@
             <?php echo $this->getTrans('banner'); ?>:
         </label>
         <div class="controls">
-            <input class="ilch_txt"
-                   id="banner"
+            <input id="banner"
                    name="banner"
                    type="text"
                    placeholder="http://"
@@ -41,7 +38,7 @@
     </div>
    <div class="ilch_form_group">
         <div class="controls">
-            <button type="submit" name="save" class="ilch_btn">
+            <button type="submit" name="save">
                 <?php echo $this->getTrans('send'); ?>
             </button>
         </div>

@@ -12,9 +12,10 @@ a {
     text-decoration: none;
 }
 
-.ilch_btn, .ilch_txt, .ilch_cbo {
+input, select {
     border: 1px grey black;
     padding: 5px;
+    width: 130px;
 }
 
 label {

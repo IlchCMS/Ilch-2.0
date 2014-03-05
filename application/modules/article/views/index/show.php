@@ -22,7 +22,7 @@ if($this->getUser())
     <div class="ilch_form_group">
         <input type="submit"
            name="saveEntry"
-           class="ilch_pull_right ilch_btn" 
+           class="ilch_pull_right" 
            value="<?php echo $this->getTrans('submit'); ?>" />
     </div>
 </form>
