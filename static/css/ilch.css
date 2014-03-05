@@ -21,3 +21,7 @@
 .ilch_form_group .controls {
     margin-left: 100px;
 }
+
+.ilch_form_nolabel .controls {
+    margin-left: 0px !important;
+}
