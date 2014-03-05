@@ -1,3 +1,19 @@
+img {
+    height: auto !important;
+    max-width: 100% !important;
+}
+
+a {
+    color: #428BCA;
+    text-decoration: none;
+}
+
+input, select {
+    border: 1px grey black;
+    padding: 5px;
+    width: 130px;
+}
+
 .left_container {
     float: left;
     width: 250px;

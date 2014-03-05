@@ -5,8 +5,7 @@
             <?php echo $this->getTrans('receiver'); ?>:
         </label>
         <div class="controls">
-            <select class="ilch_cbo"
-                    id="receiver"
+            <select id="receiver"
                     name="receiver">
                 <?php
                     foreach($this->get('receivers') as $receiver)
@@ -22,8 +21,7 @@
             <?php echo $this->getTrans('name'); ?>:
         </label>
         <div class="controls">
-            <input class="ilch_txt"
-                   id="name"
+            <input id="name"
                    name="name"
                    type="text"
                    value="" />
@@ -34,8 +32,7 @@
             <?php echo $this->getTrans('email'); ?>:
         </label>
         <div class="controls">
-            <input class="ilch_txt"
-                   id="email"
+            <input id="email"
                    name="email"
                    type="text"
                    value="" />
@@ -46,14 +43,14 @@
             <?php echo $this->getTrans('message'); ?>:
         </label>
         <div class="controls">
-            <textarea class="ilch_txt"
+            <textarea class="ilch_full_width"
                    id="message"
                    name="message"></textarea>
         </div>
     </div>
     <div class="ilch_form_group">
         <div class="controls">
-            <button type="submit" name="save" class="ilch_btn">
+            <button type="submit" name="save">
                 <?php echo $this->getTrans('send'); ?>
             </button>
         </div>
