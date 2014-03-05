@@ -7,8 +7,6 @@
         <link href="<?php echo $this->getLayoutUrl('style.css'); ?>" rel="stylesheet">
         <link rel="icon" href="<?php echo $this->getStaticUrl('img/favicon.ico'); ?>" type="image/x-icon" />
         <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap.js')?>"></script> 
-
-        <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
     </head>
     <body>
         <header class="header">
