@@ -20,18 +20,6 @@ a {
     padding: 5px;
 }
 
-.ilch_form_group {
-    padding-bottom: 10px;
-}
-
-.ilch_form_group label {
-    float: left;
-}
-
-.ilch_form_group .controls {
-    margin-left: 100px;
-}
-
 label {
     font-weight: normal;
 }
