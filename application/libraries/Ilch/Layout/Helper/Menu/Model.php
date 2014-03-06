@@ -113,8 +113,13 @@ class Model
                             $this->_layout->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/translations');
                             $boxObj = new $class($this->_layout, $view, $this->_layout->getRequest(), $this->_layout->getRouter(), $this->_layout->getTranslator());
                             $boxObj->render();
-                            $output = $view->loadScript(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php');
+                            $viewPath = APPLICATION_PATH.'/'.dirname($this->_layout->getFile()).'/views/boxes/'.$item->getBoxKey().'/render.php';
 
+                            if (!file_exists($viewPath)) {
+                                $viewPath = APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php';
+                            }
+
+                            $output = $view->loadScript($viewPath);
                             $box = new \Admin\Models\Box();
                             $box->setContent($output);
                         }

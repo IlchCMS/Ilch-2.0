@@ -144,7 +144,13 @@ class Page
         if ($this->_request->isAdmin()) {
             $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/admin/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php');
         } else {
-            $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php');
+            $viewPath = APPLICATION_PATH.'/'.dirname($controller->getLayout()->getFile()).'/views/modules/'.$this->_request->getModuleName().'/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php';
+
+            if (!file_exists($viewPath)) {
+                $viewPath = APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php';
+            }
+
+            $viewOutput = $this->_view->loadScript($viewPath);
         }
 
         if (!empty($viewOutput)) {

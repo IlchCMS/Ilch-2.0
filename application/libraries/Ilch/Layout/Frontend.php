@@ -58,8 +58,13 @@ class Frontend extends Base
         $this->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$boxKey.'/translations');
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
         $boxObj->render();
+        $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/boxes/'.$boxKey.'/render.php';
 
-        return $view->loadScript(APPLICATION_PATH.'/boxes/'.$boxKey.'/render.php');
+        if (!file_exists($viewPath)) {
+            $viewPath = APPLICATION_PATH.'/boxes/'.$boxKey.'/render.php';
+        }
+
+        return $view->loadScript($viewPath);
     }
 
     /**
