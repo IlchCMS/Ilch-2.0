@@ -13,30 +13,32 @@
         <?php echo $this->getTrans('logout'); ?>
     </a>
     <?php }else{ ?>
-        <form action="" method="post">
+        <form action="" class="form-horizontal" method="post">
            <?php echo $this->getTokenField();
                 $errors = $this->get('errors');
             ?>
-            <div class="ilch_form_group ilch_form_nolabel">
-                <div class="controls">
+            <div class="form-group">
+                <div class="col-lg-6">
                     <input name="loginbox_emailname"
+                           class="form-control"
                            type="text"
                            placeholder="<?php echo $this->getTrans('nameEmail')?>" />
                 </div>
             </div>
-            <div class="ilch_form_group ilch_form_nolabel">
-                <div class="controls ">
+            <div class="form-group">
+                <div class="col-lg-6">
                     <input name="loginbox_password"
+                           class="form-control"
                            type="password"
                            placeholder="<?php echo $this->getTrans('password')?>" />
                 </div>
             </div>
-            <div class="ilch_form_group ilch_form_nolabel">
-                <div class="controls">
-                    <button type="submit" name="login">
+            <div class="form-group">
+                 <div class="col-lg-4">
+                    <button type="submit" class="btn" name="login">
                         <?php echo $this->getTrans('login'); ?>
                     </button>
-                </div>
+                 </div>
             </div>
         </form>
         <?php if ($this->get('regist_accept') == '1') { ?>

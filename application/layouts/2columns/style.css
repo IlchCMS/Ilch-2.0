@@ -12,12 +12,6 @@ a {
     text-decoration: none;
 }
 
-input, select {
-    border: 1px grey black;
-    padding: 5px;
-    width: 130px;
-}
-
 label {
     font-weight: normal;
 }
