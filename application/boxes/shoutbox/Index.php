@@ -13,15 +13,15 @@ class Index extends \Ilch\Box
     public function render()
     {
         $shoutboxMapper = new \Shoutbox\Mappers\Shoutbox();
+        $uniqid = $this->getUniqid();
 
-        if ($this->getRequest()->getPost('shoutbox_name')) {
+        if ($this->getRequest()->getPost('form_'.$uniqid)) {
             $name = $this->getRequest()->getPost('shoutbox_name');
             $textarea = $this->getRequest()->getPost('shoutbox_textarea');
+            $uid = 0;
 
             if($this->getUser() !== null) {
                 $uid = $this->getUser()->getId();
-            }else{
-                $uid = 0;
             }
 
             $shoutboxModel = new \Shoutbox\Models\Shoutbox();
@@ -31,6 +31,7 @@ class Index extends \Ilch\Box
             $shoutboxMapper->save($shoutboxModel);
         }
 
+        $this->getView()->set('uniqid', $uniqid);
         $this->getView()->set('shoutbox', $shoutboxMapper->getShoutbox(array(), $this->getConfig()->get('shoutbox_limit')));
         $this->getView()->set('maxwordlength', $this->getConfig()->get('shoutbox_maxwordlength'));
     }
