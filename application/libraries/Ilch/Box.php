@@ -15,6 +15,16 @@ class Box extends \Ilch\Controller\Base
      * @var Ilch_Database_*
      */
     private $_db;
+    
+    /**
+     * @var integer
+     */
+    private $_boxUniqid;
+
+    /**
+     * @var integer
+     */
+    private static $_staticBoxUniqid;
 
     /**
      * Injects the layout/view to the controller.
@@ -29,6 +39,24 @@ class Box extends \Ilch\Controller\Base
     {
         parent::__construct($layout, $view, $request, $router, $translator);
         $this->_db = Registry::get('db');
+        
+        if (!isset(Box::$_staticBoxUniqid)) {
+            Box::$_staticBoxUniqid = 0;
+        } else {
+            Box::$_staticBoxUniqid++;
+        }
+
+        $this->_boxUniqid = Box::$_staticBoxUniqid;
+    }
+
+    /**
+     * Gets uniqid for box.
+     *
+     * @return string
+     */
+    public function getUniqid()
+    {
+        return 'box_'.$this->_boxUniqid;
     }
 
     /**
