@@ -9,6 +9,16 @@
         <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap.js')?>"></script> 
     </head>
     <body>
+        <?php
+            $menu = $this->getMenu
+            (
+                3,
+                '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">%s <b class="caret"></b></a>%c</li>',
+                array('class_ul' => 'dropdown-menu')
+            );
+        ?>
+        
+        <?php if (!empty($menu)) { ?>
         <header class="header">
             <nav class="navbar navbar-gaming container" role="navigation">
                 <div class="container-fluid">
@@ -22,39 +32,14 @@
                         <a class="navbar-brand" href="/">Brand</a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="/">Home</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
-                        </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#">Link</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </li>
+                            <?=$menu?>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
+        <?php } ?>
         <div id="carousel-example-generic" class="carousel slide container" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
