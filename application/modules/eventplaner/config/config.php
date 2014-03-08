@@ -44,3 +44,4 @@ class Config extends \Ilch\Config\Install
         return '';
     }
 }
+?>

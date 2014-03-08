@@ -20,5 +20,4 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('userList', $userMapper->getUserList(array('confirmed' => 1)));
     }    
 }
-
-
+?>

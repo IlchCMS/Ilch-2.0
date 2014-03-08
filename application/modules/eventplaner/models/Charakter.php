@@ -72,3 +72,4 @@ class Charakter extends \Ilch\Model
     }
    
 }
+?>

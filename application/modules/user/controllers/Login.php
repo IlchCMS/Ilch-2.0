@@ -53,3 +53,4 @@ class Login extends \Ilch\Controller\Frontend
         $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
     }
 }
+?>

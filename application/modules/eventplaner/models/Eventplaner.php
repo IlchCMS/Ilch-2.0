@@ -104,3 +104,4 @@ class Eventplaner extends \Ilch\Model
 		$this->_created = (integer)$res;
     }
 }
+?>

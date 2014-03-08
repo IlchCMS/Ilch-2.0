@@ -1,7 +1,6 @@
 <?php
 /**
  * @copyright Balthazar3k
- * 
  */
 
 namespace Eventplaner\Mappers;
@@ -47,3 +46,4 @@ class Eventplaner extends \Ilch\Mapper
             ->execute();
     }
 }
+?>

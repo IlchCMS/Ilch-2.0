@@ -104,3 +104,4 @@ class Registrations extends \Ilch\Model
 		$this->_registered = (integer)$res;
     }
 }
+?>

@@ -58,3 +58,4 @@ class Registrations extends \Ilch\Mapper
             ->execute();
     }
 }
+?>
