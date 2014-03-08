@@ -1,5 +1,5 @@
 <form action="get">
-    <select class="layoutInput" name="language">
+    <select class="layoutInput form-control" name="language">
         <?php
             foreach ($this->get('layouts') as $layout) {
                 $name = basename($layout);

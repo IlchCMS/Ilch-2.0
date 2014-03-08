@@ -18,7 +18,7 @@
                 $errors = $this->get('errors');
             ?>
             <div class="form-group">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <input name="loginbox_emailname"
                            class="form-control"
                            type="text"
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <input name="loginbox_password"
                            class="form-control"
                            type="password"
