@@ -12,13 +12,15 @@ class Eventplaner extends \Ilch\Model
 {
 
     protected $_id;
-    protected $_aktiv;
+    protected $_status;
     protected $_start;
     protected $_ends;
     protected $_organizer;
 	protected $_title;
+	protected $_event;
 	protected $_message;
 	protected $_created;
+	protected $_changed;
 	//protected $_;
 
 	
@@ -27,9 +29,9 @@ class Eventplaner extends \Ilch\Model
         return $this->_id;
     }
 
-    public function getAktiv()
+    public function getStatus()
     {
-        return $this->_aktiv;
+        return $this->_Status;
     }
 
     public function getStart()
@@ -52,6 +54,11 @@ class Eventplaner extends \Ilch\Model
         return $this->_title;
     }
 	
+	public function getEvent()
+    {
+        return $this->_event;
+    }
+	
 	public function getMessage()
     {
         return $this->_message;
@@ -61,6 +68,11 @@ class Eventplaner extends \Ilch\Model
     {
         return $this->_created;
     }
+	
+	public function getChanged()
+    {
+        return $this->_changed;
+    }
 
 	## SETTER #################################### 
 
@@ -69,9 +81,9 @@ class Eventplaner extends \Ilch\Model
         $this->_id = (integer)$id;
     }
 
-	public function setAktiv($res)
+	public function setStatus($res)
     {
-		$this->_aktiv = (integer)$res;
+		$this->_status = (integer)$res;
     }
 	
 	public function setStart($res)
@@ -94,6 +106,11 @@ class Eventplaner extends \Ilch\Model
 		$this->_title = (string)$res;
     }
 	
+	public function setEvent($res)
+    {
+		$this->_event = (string)$res;
+    }
+	
 	public function setMessage($res)
     {
 		$this->_message = (string)$res;
@@ -102,6 +119,11 @@ class Eventplaner extends \Ilch\Model
 	public function setCreated($res)
     {
 		$this->_created = (integer)$res;
+    }
+	
+	public function setChanged($res)
+    {
+		$this->_changed = (integer)$res;
     }
 }
 ?>
