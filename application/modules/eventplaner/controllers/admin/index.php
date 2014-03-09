@@ -44,16 +44,9 @@ class Index extends \Ilch\Controller\Admin
 	
     public function indexAction()
     {
-		//$this->arPrint( $_SESSION );
-	
-		// Header Menu Definieren
-
-		
-		// Test
-		$this->addMessage($this->getTranslator()->trans('entrySuccess'), 'info');
-		
-		//$charakters = new CharakterMapper;
-		//$this->getView()->set('eventplaner', $charakters->getList());
+		$eventMapper = new EventMapper();
+		$this->getView()->set('eventList', $eventMapper->getEventList());
+		//$this->arPrint( $eventMapper->getEventList() );
     }
 	
 	public function calenderAction()

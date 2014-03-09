@@ -47,7 +47,7 @@ class Eventplaner extends \Ilch\Mapper
 	{
 		$entryArray = $this->db()->selectRow('*')
             ->from('ep_events')
-            ->where(array('id' => $id)
+            ->where(array('id' => $id))
             ->execute();
 			
 		if (empty($entryArray)) {

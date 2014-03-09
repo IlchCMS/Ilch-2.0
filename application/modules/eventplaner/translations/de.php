@@ -13,6 +13,8 @@ return array(
 	"entrySuccess" => "Eintrag war erfolgreich!",
 	"entryFailure" => "Eintrag war <b>nicht</b> erfolgreich!",
 	
+	"hours" => "Stunden",
+	
 	0 => "Sonntag",
 	1 => "Montag",
 	2 => "Dienstag",
