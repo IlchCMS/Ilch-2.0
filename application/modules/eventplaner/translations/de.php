@@ -3,8 +3,12 @@
 defined('ACCESS') or die('no direct access');
 
 return array(
-
+	
 	"eventplaner" => "Eventplaner",
+	"list" => "Liste",
+	"calender" => "Kalender",
+	"createNewEvent" => "Neuen Event erstellen",
+
 	"welcome" => "Willkommen",
 	"entrySuccess" => "Eintrag war erfolgreich!",
 	"entryFailure" => "Eintrag war <b>nicht</b> erfolgreich!",
