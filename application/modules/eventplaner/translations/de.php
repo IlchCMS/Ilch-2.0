@@ -5,11 +5,11 @@ defined('ACCESS') or die('no direct access');
 return array(
 	
 	"eventplaner" => "Eventplaner",
-	"list" => "Liste",
+	"listView" => "Listenansicht",
 	"calender" => "Kalender",
-	"createNewEvent" => "Neuen Event erstellen",
+	"calenderView" => "Kalenderansicht",
+	"createEvent" => "Event erstellen",
 
-	"welcome" => "Willkommen",
 	"entrySuccess" => "Eintrag war erfolgreich!",
 	"entryFailure" => "Eintrag war <b>nicht</b> erfolgreich!",
 	

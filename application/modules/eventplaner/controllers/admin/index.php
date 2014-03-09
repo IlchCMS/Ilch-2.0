@@ -2,7 +2,7 @@
 namespace Eventplaner\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
-use Eventplaner\Mappers\Eventplaner as CharakterMapper;
+use Eventplaner\Mappers\Eventplaner as EventMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -16,17 +16,17 @@ class Index extends \Ilch\Controller\Admin
             (
                 array
                 (
-                    'name' => 'list',
+                    'name' => 'listView',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
 				array
                 (
-                    'name' => 'calender',
+                    'name' => 'calenderView',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'calender'))
                 ),
             )
         );
@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
-                'name' => 'createNewEvent',
+                'name' => 'createEvent',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'create'))
             )
@@ -56,18 +56,16 @@ class Index extends \Ilch\Controller\Admin
 		//$this->getView()->set('eventplaner', $charakters->getList());
     }
 	
+	public function calenderAction()
+	{
+		$this->addMessage($this->getTranslator()->trans('calender'), 'info');
+		$this->getView();
+	}
+	
 	public function createAction()
     {
-		//$this->arPrint( $_SESSION );
-	
-		// Header Menu Definieren
-
-		
-		// Test
-		$this->addMessage("Neuen Event erstellen!", 'info');
-		
-		//$charakters = new CharakterMapper;
-		//$this->getView()->set('eventplaner', $charakters->getList());
+		$this->addMessage($this->getTranslator()->trans('entrySuccess'), 'info');
+		//$this->getView()->set('test', 'Hallo Welt');
     }
 	
 	public function arPrint( $array )

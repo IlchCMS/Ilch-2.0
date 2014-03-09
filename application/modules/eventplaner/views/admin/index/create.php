@@ -1,0 +1,1 @@
+<h4><?=$this->getTrans('createEvent');?></h4>
