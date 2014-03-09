@@ -12,11 +12,11 @@ class Index extends \Ilch\Box
     public function render()
     {
         $date = new \Ilch\Date();
-        $userMapper = new \User\Mappers\User();
-        $this->getView()->set('visitsToday', $userMapper->getVisitsCount($date->format('Y-m-d')));
+        $visitMapper = new \User\Mappers\Visit();
+        $this->getView()->set('visitsToday', $visitMapper->getVisitsCount($date->format('Y-m-d')));
         $date->modify('-1 day');
-        $this->getView()->set('visitsYesterday', $userMapper->getVisitsCount($date->format('Y-m-d')));
-        $this->getView()->set('visitsTotal', $userMapper->getVisitsCount());
+        $this->getView()->set('visitsYesterday', $visitMapper->getVisitsCount($date->format('Y-m-d')));
+        $this->getView()->set('visitsTotal', $visitMapper->getVisitsCount());
     }
 }
 
