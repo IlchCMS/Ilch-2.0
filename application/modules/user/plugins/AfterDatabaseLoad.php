@@ -50,7 +50,8 @@ class AfterDatabaseLoad
             $ip = '128.0.0.1';
         }
 
-        $mapper->saveVisit(array('user_id' => $userId, 'ip' => $ip));
+        $visitMapper = new \User\Mappers\Visit();
+        $visitMapper->saveVisit(array('user_id' => $userId, 'ip' => $ip));
 
         if ($pluginData['request']->getParam('language')) {
             $_SESSION['language'] = $pluginData['request']->getParam('language');

@@ -11,10 +11,10 @@ class Index extends \Ilch\Box
 {
     public function render()
     {
-        $userMapper = new \User\Mappers\User();
+        $visitMapper = new \User\Mappers\Visit();
         
-        $allCount = $userMapper->getVisitsCountOnline();
-        $userCount = $userMapper->getVisitsCountOnline(true);
+        $allCount = $visitMapper->getVisitsCountOnline();
+        $userCount = $visitMapper->getVisitsCountOnline(true);
 
         $this->getView()->set('userOnline', $userCount);
         $this->getView()->set('guestOnline', $allCount - $userCount);
