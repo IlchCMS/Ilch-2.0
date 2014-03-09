@@ -177,19 +177,16 @@ class User extends \Ilch\Mapper
 
         if (isset($userRow['date_created'])) {
             $dateCreated = new IlchDate($userRow['date_created']);
-            $users['date_created'] = $dateCreated;
             $user->setDateCreated($dateCreated);
         }
 
         if (isset($userRow['date_confirmed'])) {
             $dateConfirmed = new IlchDate($userRow['date_confirmed']);
-            $users['date_confirmed'] = $dateConfirmed;
             $user->setDateConfirmed($dateConfirmed);
         }
 
         if (isset($userRow['date_last_activity'])) {
             $dateLastActivity = new IlchDate($userRow['date_last_activity']);
-            $users['date_last_activity'] = $dateLastActivity;
             $user->setDateLastActivity($dateLastActivity);
         }
 
@@ -293,6 +290,78 @@ class User extends \Ilch\Mapper
         return $userId;
     }
     
+    /**
+     * @return integer
+     */
+    public function getVisitsCountOnline($onlyUsers = null)
+    {
+        $date = new \Ilch\Date();
+        $date->modify('-5 minutes');
+
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_visits_online`
+                WHERE `date_last_activity` > "'.$date->toDb().'"';
+        
+        if ($onlyUsers != null) {
+            $sql .= 'AND `user_id` > 0';
+        }
+
+        $visits = $this->db()->queryCell($sql);
+
+        return $visits;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getVisitsCount($date = null)
+    {
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_visits_stats`';
+        
+        if ($date != null) {
+            $sql .= 'WHERE `date` > '.$date;
+        }
+
+        $visits = $this->db()->queryCell($sql);
+
+        return $visits;
+    }
+
+    /**
+     * @param array $row
+     */
+    public function saveVisit($row)
+    {
+        $date = new \Ilch\Date();
+        $visitId = (bool)$this->db()->selectCell('id')
+            ->from('visits_online')
+            ->where(array('ip_address' => $row['ip'], 'user_id' => $row['user_id']))
+            ->execute();
+
+        if ($visitId) {
+            $this->db()->update('visits_online')
+                ->fields(array('date_last_activity' => $date->toDb()))
+                ->where(array('id' => $visitId))
+                ->execute();
+        } else {
+            $this->db()->insert('visits_online')
+                ->fields(array('date_last_activity' => $date->toDb(), 'ip_address' => $row['ip'], 'user_id' => $row['user_id']))
+                ->execute();
+        }
+        
+        $uniqueUser = (bool)$this->db()->selectCell('id')
+            ->from('visits_stats')
+            ->where(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
+            ->execute();
+        
+        if (!$uniqueUser) {
+            $this->db()->insert('visits_stats')
+                ->fields(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
+                ->execute();
+        }
+    }
+
     /**
      * Gets the counter of all users with group "administrator".
      *

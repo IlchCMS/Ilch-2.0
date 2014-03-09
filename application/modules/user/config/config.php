@@ -65,7 +65,6 @@ class Config extends \Ilch\Config\Install
                   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `date_created` datetime NOT NULL,
                   `date_confirmed` datetime NOT NULL,
-                  `date_last_activity` datetime NOT NULL,
                   `confirmed` int(11) DEFAULT 1,
                   `confirmed_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                   PRIMARY KEY (`id`)
