@@ -21,19 +21,21 @@ class Frontend extends Base
             $layoutFile = 'index';
         }
 
-        require_once APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php';
-        
-        if(!empty($config['layouts'])) {
-            foreach ($config['layouts'] as $layoutKeyConfig => $layouts) {
-                foreach ($layouts as $url) {
-                    if($url['module'] == $this->getRequest()->getModuleName()) {
-                        $layoutFile = $layoutKeyConfig;
-                        break 2;
+        if(!empty($layoutKey)) {
+            require_once APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php';
+
+            if(!empty($config['layouts'])) {
+                foreach ($config['layouts'] as $layoutKeyConfig => $layouts) {
+                    foreach ($layouts as $url) {
+                        if($url['module'] == $this->getRequest()->getModuleName()) {
+                            $layoutFile = $layoutKeyConfig;
+                            break 2;
+                        }
                     }
                 }
             }
-        }
 
-        $this->getLayout()->setFile('layouts/'.$layoutKey.'/'.$layoutFile, $layoutKey);
+            $this->getLayout()->setFile('layouts/'.$layoutKey.'/'.$layoutFile, $layoutKey);
+        }
     }
 }

@@ -41,6 +41,8 @@ class AfterDatabaseLoad
         $user = $mapper->getUserById($userId);
 
         \Ilch\Registry::set('user', $user);
+        
+        $mapper->saveVisit(array('user_id' => $userId, 'ip' => $_SERVER['REMOTE_ADDR']));
 
         if ($pluginData['request']->getParam('language')) {
             $_SESSION['language'] = $pluginData['request']->getParam('language');
