@@ -11,15 +11,16 @@
 	<tr>
 		<td>
 			<div><b><?=$event->getTitle();?></b></div>
-			<div>- <?=$event->getEvent();?> um <?=date('H:i', $event->getStart());?> Uhr</div>
+			<div>- <?=$event->getEvent();?> um <?=date('H:i', $event->getStart());?> bis <?=date('H:i', $event->getEnds());?> Uhr</div>
 			<div>- <?=$this->getTrans(date('w', $event->getStart()));?> den <?=date('d.m.Y', $event->getStart());?></div>
 		</td>
 		
 		<td align="center" valign="middle">
-			<?php
-				$dif = ($event->getEnds() - $event->getStart()) / 60 / 60;
-				echo $dif .' '. $this->getTrans('hours');
-			?>
+			<?=round((($event->getEnds()-$event->getStart())/60/60), 1) .' '. $this->getTrans('hours');?>
+		</td>
+		
+		<td align="center" valign="middle">
+			<?=$event->getMessage();?>
 		</td>
 	</tr>
 	<?php endforeach; ?>
