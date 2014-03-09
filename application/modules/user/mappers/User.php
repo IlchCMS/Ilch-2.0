@@ -296,7 +296,7 @@ class User extends \Ilch\Mapper
     public function getVisitsCountOnline($onlyUsers = null)
     {
         $date = new \Ilch\Date();
-        $date->modify('-5 minutes');
+        $date->modify('-3 minutes');
 
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_online`
@@ -312,7 +312,7 @@ class User extends \Ilch\Mapper
     }
     
     /**
-     * @return array
+     * @return integer
      */
     public function getVisitsCount($date = null)
     {
