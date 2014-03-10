@@ -9,9 +9,32 @@ defined('ACCESS') or die('no direct access');
 class Visit extends \Ilch\Mapper
 {
     /**
+     * @return \User\Models\User[]
+     */
+    public function getVisitsOnlineUser()
+    {
+        $userMapper = new \User\Mappers\User();
+        $date = new \Ilch\Date();
+        $date->modify('-3 minutes');
+
+        $sql = 'SELECT *
+                FROM `[prefix]_visits_online`
+                WHERE `date_last_activity` > "'.$date->toDb().'"
+                AND `user_id` > 0';
+
+        $rows = $this->db()->queryArray($sql);
+        $users = array();
+
+        foreach ($rows as $row) {
+            $users[] = $userMapper->getUserById($row['user_id']);
+        }
+
+        return $users;
+    }
+    /**
      * @return integer
      */
-    public function getVisitsCountOnline($onlyUsers = null)
+    public function getVisitsCountOnline()
     {
         $date = new \Ilch\Date();
         $date->modify('-3 minutes');
@@ -20,10 +43,6 @@ class Visit extends \Ilch\Mapper
                 FROM `[prefix]_visits_online`
                 WHERE `date_last_activity` > "'.$date->toDb().'"';
         
-        if ($onlyUsers != null) {
-            $sql .= ' AND `user_id` > 0';
-        }
-
         $visits = $this->db()->queryCell($sql);
 
         return $visits;
