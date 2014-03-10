@@ -12,18 +12,22 @@ echo '<h5>'.$this->getTrans('comments').' ('.count($comments).')</h5>';
 if($this->getUser())
 {
 ?>
-<form action="" method="POST">
+<form action="" class="form-horizontal" method="POST">
     <?php echo $this->getTokenField(); ?>
-    <div class="ilch_form_group">
-        <textarea class="ilch_full_width"
-                  name="article_comment_text"
-                  required></textarea>
+    <div class="form-group">
+        <div class="col-lg-12">
+            <textarea class="form-control"
+                    name="article_comment_text"
+                      required></textarea>
+        </div>
     </div>
-    <div class="ilch_form_group">
-        <input type="submit"
-           name="saveEntry"
-           class="ilch_pull_right" 
-           value="<?php echo $this->getTrans('submit'); ?>" />
+    <div class="form-group">
+        <div class="col-lg-12">
+            <input type="submit"
+                   name="saveEntry"
+                   class="pull-right btn" 
+                   value="<?php echo $this->getTrans('submit'); ?>" />
+        </div>
     </div>
 </form>
 <?php
