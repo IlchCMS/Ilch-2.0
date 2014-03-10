@@ -4,7 +4,7 @@
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('name'); ?>*
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-10">
             <input type="text"
                    class="form-control"
                    name="name"
@@ -16,7 +16,7 @@
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('email'); ?>*
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-10">
             <input type="text"
                    class="form-control"
                    name="email" 
@@ -27,7 +27,7 @@
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('page'); ?>
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-10">
            <input type="text"
                   class="form-control"
                   name="homepage" 
@@ -38,7 +38,7 @@
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('message'); ?>*
         </label>
-        <div class="col-lg-6">
+        <div class="col-lg-10">
             <textarea id="ilch_bbcode"
                       class="form-control"
                       name="text"
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-6">
+        <div class="col-lg-offset-2 col-lg-10">
             <input type="submit" 
                    name="saveEntry" 
                    class="btn"
