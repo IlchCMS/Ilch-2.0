@@ -31,6 +31,7 @@ class Eventplaner extends \Ilch\Mapper
             $entryModel->setStatus($entries['status']);
             $entryModel->setStart($entries['start']);
             $entryModel->setEnds($entries['ends']);
+			$entryModel->setRegistrations($entries['registrations']);
             $entryModel->setOrganizer($entries['organizer']);
 			$entryModel->setTitle($entries['title']);
 			$entryModel->setEvent($entries['event']);

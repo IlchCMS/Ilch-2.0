@@ -13,7 +13,12 @@ return array(
 	"entrySuccess" => "Eintrag war erfolgreich!",
 	"entryFailure" => "Eintrag war <b>nicht</b> erfolgreich!",
 	
-	"hours" => "Stunden",
+	"hours" => "std",
+	"created" => "Erstellt am",
+	"changed" => "Ge&auml;ndert am",
+	"organizer" => "Veranstalter:",
+	"registrations" => "Anmeldungen",
+	"participant" => "Teilnehmer",
 	
 	0 => "Sonntag",
 	1 => "Montag",

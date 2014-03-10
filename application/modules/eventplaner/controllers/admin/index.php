@@ -51,7 +51,7 @@ class Index extends \Ilch\Controller\Admin
 	
 	public function calenderAction()
 	{
-		$this->addMessage($this->getTranslator()->trans('calender'), 'info');
+		$this->addMessage('comming soon', 'info');
 		$this->getView();
 	}
 	

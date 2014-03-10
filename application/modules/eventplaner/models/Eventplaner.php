@@ -15,6 +15,7 @@ class Eventplaner extends \Ilch\Model
     protected $_status;
     protected $_start;
     protected $_ends;
+	protected $_registrations;
     protected $_organizer;
 	protected $_title;
 	protected $_event;
@@ -31,7 +32,7 @@ class Eventplaner extends \Ilch\Model
 
     public function getStatus()
     {
-        return $this->_Status;
+        return $this->_status;
     }
 
     public function getStart()
@@ -44,6 +45,11 @@ class Eventplaner extends \Ilch\Model
         return $this->_ends;
     }
 
+	public function getRegistrations()
+    {
+        return $this->_registrations;
+    }
+	
     public function getOrganizer()
     {
         return $this->_organizer;
@@ -94,6 +100,11 @@ class Eventplaner extends \Ilch\Model
    	public function setEnds($res)
     {
 		$this->_ends = (integer)$res;
+    }
+	
+	public function setRegistrations($res)
+    {
+		$this->_registrations = (integer)$res;
     }
 	
 	public function setOrganizer($res)

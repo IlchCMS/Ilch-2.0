@@ -38,6 +38,7 @@ class Config extends \Ilch\Config\Install
 			  `status` int(2) NOT NULL,
 			  `start` int(32) NOT NULL,
 			  `ends` int(32) NOT NULL,
+			  `registrations` int(3) NOT NULL,
 			  `organizer` int(32) NOT NULL,
 			  `title` varchar(128) NOT NULL,
 			  `event` varchar(128) NOT NULL,
