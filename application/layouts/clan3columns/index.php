@@ -39,41 +39,23 @@
             </nav>
         </header>
         <?php } ?>
-        <div id="carousel-example-generic" class="carousel slide container" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="active item">
-                    <img class="img-responsive" alt="" src="<?php echo $this->getLayoutUrl('img/slider1.jpg'); ?>"/>
-                    <div class="carousel-caption">
-                        <h3>First slide</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing…</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <img class="img-responsive" alt="" src="<?php echo $this->getLayoutUrl('img/slider2.jpg'); ?>"/>
-                    <div class="carousel-caption">
-                        <h3>Second slide</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing…</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <img class="img-responsive" alt="" src="<?php echo $this->getLayoutUrl('img/slider.jpg'); ?>"/>
-                </div>
-            </div>
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
-        </div>
-        <div id="main" class="container">
+        <div id="main">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-3">
+                    <?php
+                        echo $this->getMenu
+                        (
+                            1,
+                            '<div class="panel panel-gaming">
+                                 <div class="panel-heading">%s</div>
+                                    <div class="panel-body">
+                                        %c
+                                    </div>
+                             </div>'
+                        );
+                    ?>
+                </div>
+                <div class="col-lg-6">
                     <?php echo $this->getHmenu(); ?>
                     <br /><br />
                     <div class="panel panel-default" id="headings">
@@ -82,11 +64,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <?php
                         echo $this->getMenu
                         (
-                            1,
+                            2,
                             '<div class="panel panel-gaming">
                                  <div class="panel-heading">%s</div>
                                     <div class="panel-body">
