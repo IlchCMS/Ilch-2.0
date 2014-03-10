@@ -14,10 +14,10 @@ class Index extends \Ilch\Box
         $visitMapper = new \User\Mappers\Visit();
         
         $allCount = $visitMapper->getVisitsCountOnline();
-        $userCount = $visitMapper->getVisitsCountOnline(true);
+        $users = $visitMapper->getVisitsOnlineUser();
 
-        $this->getView()->set('userOnline', $userCount);
-        $this->getView()->set('guestOnline', $allCount - $userCount);
+        $this->getView()->set('usersOnline', $users);
+        $this->getView()->set('guestOnline', $allCount - count($users));
     }
 }
 
