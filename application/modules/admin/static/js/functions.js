@@ -4,7 +4,7 @@ function toggleSidebar(){
 	var $watermark = $('.watermark');
 
 	var state = 'show';
-	var margin = '300px';
+	var margin = '270px';
 	var speed = 'slow';
 
 	if($sidebar.is(':visible'))
