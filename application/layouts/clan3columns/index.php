@@ -9,36 +9,6 @@
         <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap.js')?>"></script> 
     </head>
     <body>
-        <?php
-            $menu = $this->getMenu
-            (
-                3,
-                '<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">%s <b class="caret"></b></a>%c</li>',
-                array('class_ul' => 'dropdown-menu')
-            );
-        ?>
-        
-        <?php if (!empty($menu)) { ?>
-        <header class="header">
-            <nav class="navbar navbar-gaming container" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <?=$menu?>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <?php } ?>
         <div id="main">
             <div class="row">
                 <div class="col-lg-3">
