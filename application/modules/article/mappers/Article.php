@@ -54,15 +54,22 @@ class Article extends \Ilch\Mapper
     /**
      * Get article lists for overview.
      *
-     * @param  string $locale
+     * @param string $locale
+     * @param integer $limit
      * @return Article_ArticleModel[]|null
      */
-    public function getArticleList($locale = '')
+    public function getArticleList($locale = '', $limit = null)
     {
         $sql = 'SELECT pc.title, pc.perma, p.id FROM [prefix]_articles as p
                 LEFT JOIN [prefix]_articles_content as pc ON p.id = pc.article_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY p.id';
+                GROUP BY p.id
+                ORDER BY p.`date_created` ASC';
+        
+        if ($limit !== null) {
+           $sql .= ' LIMIT '.(int)$limit;
+        }
+
         $articleArray = $this->db()->queryArray($sql);
 
         if (empty($articleArray)) {
