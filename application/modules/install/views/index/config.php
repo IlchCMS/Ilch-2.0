@@ -5,7 +5,7 @@ $errors = $this->get('errors');
     <label for="type" class="control-label col-lg-3">
         <?php echo $this->getTrans('cmsType'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <select name="cmsType" class="form-control">
             <option value="private">Private</option>
         </select>
@@ -16,7 +16,7 @@ $errors = $this->get('errors');
     <label for="adminName" class="control-label col-lg-3">
         <?php echo $this->getTrans('adminName'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <input value="<?php if ($this->get('adminName') != '') { echo $this->escape($this->get('adminName')); } ?>"
                type="text"
                name="adminName"
@@ -33,7 +33,7 @@ $errors = $this->get('errors');
     <label for="adminPassword" class="control-label col-lg-3">
         <?php echo $this->getTrans('adminPassword'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <input value="<?php if ($this->get('adminPassword') != '') { echo $this->escape($this->get('adminPassword')); } ?>"
                type="password"
                class="form-control"
@@ -50,7 +50,7 @@ $errors = $this->get('errors');
     <label for="adminPassword2" class="control-label col-lg-3">
         <?php echo $this->getTrans('adminPassword2'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <input value="<?php if ($this->get('adminPassword2') != '') { echo $this->escape($this->get('adminPassword2')); } ?>"
                type="password"
                class="form-control"
@@ -67,7 +67,7 @@ $errors = $this->get('errors');
     <label for="adminEmail" class="control-label col-lg-3">
         <?php echo $this->getTrans('adminEmail'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <input value="<?php if ($this->get('adminEmail') != '') { echo $this->escape($this->get('adminEmail')); } ?>"
                type="text"
                name="adminEmail"

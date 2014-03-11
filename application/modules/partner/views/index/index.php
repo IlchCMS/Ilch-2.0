@@ -4,7 +4,7 @@
         <label for="name" class="col-lg-2 control-label">
             <?php echo $this->getTrans('name'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <input id="name"
                    class="form-control"
                    name="name"
@@ -17,7 +17,7 @@
         <label for="link" class="col-lg-2 control-label">
             <?php echo $this->getTrans('link'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <input id="link"
                    class="form-control"
                    name="link"
@@ -30,7 +30,7 @@
         <label for="banner" class="col-lg-2 control-label">
             <?php echo $this->getTrans('banner'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <input id="banner"
                    class="form-control"
                    name="banner"
@@ -40,7 +40,7 @@
         </div>
     </div>
    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-10">
+        <div class="col-lg-offset-2 col-lg-8">
             <button type="submit" class="btn" name="save">
                 <?php echo $this->getTrans('send'); ?>
             </button>

@@ -156,7 +156,7 @@ function rec($item, $menuMapper, $obj)
     </ul>
     <br />
     <legend><?php echo $this->getTrans('menuChange'); ?></legend>
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <ol id="sortable" class="sortable">
                 <?php
                     if (!empty($menuItems)) {
