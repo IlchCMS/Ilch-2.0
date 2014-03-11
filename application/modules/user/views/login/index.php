@@ -7,7 +7,7 @@
         <label for="loginContent_emailname" class="col-lg-2 control-label">
             <?php echo $this->getTrans('name'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <input class="form-control"
                    name="loginContent_emailname"
                    type="text"
@@ -23,7 +23,7 @@
         <label for="loginContent_password" class="col-lg-2 control-label">
             <?php echo $this->getTrans('password'); ?>:
         </label>
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <input class="form-control"
                    name="loginContent_password"
                    type="password"
