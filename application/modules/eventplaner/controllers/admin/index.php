@@ -1,8 +1,11 @@
 <?php
+namespace Eventplaner\Views\Admin;
 namespace Eventplaner\Controllers\Admin;
+
 defined('ACCESS') or die('no direct access');
 
 use Eventplaner\Mappers\Eventplaner as EventMapper;
+use User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -37,7 +40,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'createEvent',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'create'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'createEvent'))
             )
         );
     }
@@ -55,10 +58,12 @@ class Index extends \Ilch\Controller\Admin
 		$this->getView();
 	}
 	
-	public function createAction()
-    {
-		$this->addMessage($this->getTranslator()->trans('entrySuccess'), 'info');
-		//$this->getView()->set('test', 'Hallo Welt');
+	public function createEventAction()
+    {		
+		$user = new UserMapper;
+		//$this->arPrint( $user->getUserList( array("id" => 1) ) );
+		$this->getView()->set('users', $user->getUserList(  ) );
+
     }
 	
 	public function arPrint( $array )

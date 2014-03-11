@@ -16,7 +16,7 @@ return array(
 	"hours" => "std",
 	"created" => "Erstellt am",
 	"changed" => "Ge&auml;ndert am",
-	"organizer" => "Veranstalter:",
+	"organizer" => "Veranstalter",
 	"registrations" => "Anmeldungen",
 	"participant" => "Teilnehmer",
 	

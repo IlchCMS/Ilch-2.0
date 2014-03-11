@@ -95,8 +95,3 @@ $user = new UserMapper;
 	<?php endforeach; ?>
 </table>
 
-<pre>
-<?php
-print_r( $event );
-?>
-</pre>
