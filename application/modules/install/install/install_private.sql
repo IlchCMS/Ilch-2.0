@@ -24,4 +24,5 @@ INSERT INTO `[prefix]_menu` (`id`, `title`) VALUES
 INSERT INTO `[prefix]_menu_items` (`id`, `menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
 (13, 2, 10, 0, 0, 0, 'partner', 4, 'Partner', '', ''),
 (14, 2, 20, 0, 0, 0, 'langswitch', 4, 'Sprache', '', ''),
-(15, 2, 30, 0, 0, 0, 'shoutbox', 4, 'Shoutbox', '', '');
+(15, 2, 30, 0, 0, 0, 'article', 4, 'Letzte Artikel', '', ''),
+(16, 2, 40, 0, 0, 0, 'shoutbox', 4, 'Shoutbox', '', '');
