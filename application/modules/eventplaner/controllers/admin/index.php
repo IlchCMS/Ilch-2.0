@@ -1,5 +1,4 @@
 <?php
-namespace Eventplaner\Views\Admin;
 namespace Eventplaner\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
@@ -63,8 +62,17 @@ class Index extends \Ilch\Controller\Admin
 		$user = new UserMapper;
 		//$this->arPrint( $user->getUserList( array("id" => 1) ) );
 		$this->getView()->set('users', $user->getUserList(  ) );
-
+		$this->getView()->set('status', $this->getStatusArray());
     }
+	
+	public function getStatusArray()
+	{
+		return array(
+			0 => $this->getTranslator()->trans('active'),
+			1 => $this->getTranslator()->trans('closed'),
+			2 => $this->getTranslator()->trans('canceled')
+		);
+	}
 	
 	public function arPrint( $array )
 	{

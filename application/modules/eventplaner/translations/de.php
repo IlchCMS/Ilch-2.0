@@ -16,9 +16,24 @@ return array(
 	"hours" => "std",
 	"created" => "Erstellt am",
 	"changed" => "Ge&auml;ndert am",
+	
+	
+	"title" => "Titel",
+	"status" => "Status",
+	"event" => "Event",
 	"organizer" => "Veranstalter",
+	"message" => "Mitteilung",
+	"startDate" => "Begin",
+	"start" => "Start",
+	"ends" => "Ende",
+	
 	"registrations" => "Anmeldungen",
 	"participant" => "Teilnehmer",
+	
+	// Status
+	"active" => "Aktiv",
+	"closed" => "Beendet",
+	"canceled" => "Abgesagt",
 	
 	0 => "Sonntag",
 	1 => "Montag",
