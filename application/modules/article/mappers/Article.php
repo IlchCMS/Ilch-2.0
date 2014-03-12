@@ -45,6 +45,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
+            $articleModel->setArticleImage($articleRow['article_img']);
             $articles[] = $articleModel;
         }
 
@@ -114,6 +115,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setLocale($articleRow['locale']);
         $articleModel->setPerma($articleRow['perma']);
         $articleModel->setDateCreated($articleRow['date_created']);
+        $articleModel->setArticleImage($articleRow['article_img']);
 
         return $articleModel;
     }
@@ -150,7 +152,7 @@ class Article extends \Ilch\Mapper
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 $this->db()->update('articles_content')
-                    ->fields(array('title' => $article->getTitle(), 'content' => $article->getContent(), 'perma' => $article->getPerma()))
+                    ->fields(array('title' => $article->getTitle(), 'content' => $article->getContent(), 'perma' => $article->getPerma(), 'article_img' => $article->getArticleImage()))
                     ->where(array('article_id' => $article->getId(), 'locale' => $article->getLocale()))
                     ->execute();
             } else {
@@ -163,7 +165,8 @@ class Article extends \Ilch\Mapper
                             'title' => $article->getTitle(),
                             'content' => $article->getContent(),
                             'perma' => $article->getPerma(),
-                            'locale' => $article->getLocale()
+                            'locale' => $article->getLocale(),
+                            'article_img' => $article->getArticleImage()
                         )
                     )
                     ->execute();
@@ -183,7 +186,8 @@ class Article extends \Ilch\Mapper
                         'title' => $article->getTitle(),
                         'content' => $article->getContent(),
                         'perma' => $article->getPerma(),
-                        'locale' => $article->getLocale()
+                        'locale' => $article->getLocale(),
+                        'article_img' => $article->getArticleImage()
                     )
                 )
                 ->execute();

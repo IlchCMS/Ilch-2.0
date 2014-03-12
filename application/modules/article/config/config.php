@@ -53,7 +53,8 @@ class Config extends \Ilch\Config\Install
                   `content` mediumtext COLLATE utf8_unicode_ci NOT NULL,
                   `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `perma` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+                  `perma` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `article_img` varchar(255) COLLATE utf8_unicode_ci NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }

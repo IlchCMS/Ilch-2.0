@@ -13,6 +13,7 @@ if (!empty($articles)) {
 <div>
     <span><?=$date->format(null, true)?></span> <i class="fa fa-comment-o"></i> <?=count($comments)?></span>
 </div>
+<img class="articleImage" src="<?=$article->getArticleImage()?>"/>
 <hr />
 <?php
         $content = $article->getContent();
