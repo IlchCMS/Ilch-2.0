@@ -3,6 +3,7 @@ $(document).ready(function(){
         CKEDITOR.replace('ilch_html', {
              removePlugins: 'bbcode',
              disableObjectResizing: false,
+             allowedContent: true,
              toolbar: [
                 { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
                 { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
