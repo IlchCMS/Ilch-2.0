@@ -139,7 +139,7 @@ input, select, textarea{
 			var time = string.split(':');
 			if( string.length == 2 &&  string.indexOf(':') ){
 				$(this).val( string + ':');
-			}else if( string.indexOf(':') ){
+			}else if( string.indexOf('::') ){
 				$(this).val( string.replace('::', ':') );
 			}
 			
