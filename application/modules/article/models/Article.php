@@ -59,6 +59,13 @@ class Article extends \Ilch\Model
     protected $_dateCreated;
 
     /**
+     * The articleImage of the article.
+     *
+     * @var DateTime
+     */
+    protected $_articleImage;
+
+    /**
      * Gets the id of the article.
      *
      * @return int
@@ -176,5 +183,25 @@ class Article extends \Ilch\Model
     public function setDateCreated($dateCreated)
     {
         $this->_dateCreated = $dateCreated;
+    }
+
+    /**
+     * Sets the articleImage of the article.
+     *
+     * @param int $perma
+     */
+    public function setArticleImage($articleimage)
+    {
+        $this->_articleImage = $articleimage;
+    }
+
+    /**
+     * Gets the article Image.
+     *
+     * @return string
+     */
+    public function getArticleImage()
+    {
+        return $this->_articleImage;
     }
 }
