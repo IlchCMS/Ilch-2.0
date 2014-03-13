@@ -188,7 +188,7 @@ class Article extends \Ilch\Model
     /**
      * Sets the articleImage of the article.
      *
-     * @param int $perma
+     * @param string $articleimage
      */
     public function setArticleImage($articleimage)
     {
