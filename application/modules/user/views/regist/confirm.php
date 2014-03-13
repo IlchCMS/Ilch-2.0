@@ -12,7 +12,7 @@ if (empty($code) || empty($confirm)) {
             <label for="confirmedCode" class="control-label col-lg-3">
                 <?php echo $this->getTrans('confirmCode'); ?>:
             </label>
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <input value=""
                        type="text"
                        name="confirmedCode"

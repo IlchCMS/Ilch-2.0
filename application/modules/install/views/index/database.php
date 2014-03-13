@@ -2,20 +2,20 @@
 $errors = $this->get('errors');
 ?>
 <div class="form-group">
-    <label for="dbEngine" class="col-lg-3 control-label">
+    <label for="dbEngine" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbEngine'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <select name="dbEngine" class="form-control" id="dbEngine">
             <option value="Mysql">Mysql</option>
         </select>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
-    <label for="dbHost" class="col-lg-3 control-label">
+    <label for="dbHost" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbHost'); ?>:
     </label>
-    <div class="col-lg-6 input-group">
+    <div class="col-lg-8 input-group">
         <input value="<?php if ($this->get('dbHost') != '') { echo $this->escape($this->get('dbHost')); } else { echo 'localhost'; } ?>"
                type="text"
                class="form-control"
@@ -30,10 +30,10 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
-    <label for="dbUser" class="col-lg-3 control-label">
+    <label for="dbUser" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbUser'); ?>:
     </label>
-    <div class="col-lg-6 input-group">
+    <div class="col-lg-8 input-group">
         <input value="<?php if ($this->get('dbUser') != '') { echo $this->escape($this->get('dbUser')); } ?>"
                type="text"
                class="form-control"
@@ -43,10 +43,10 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
-    <label for="dbPassword" class="col-lg-3 control-label">
+    <label for="dbPassword" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbPassword'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <input value="<?php if ($this->get('dbPassword') != '') { echo $this->escape($this->get('dbPassword')); } ?>"
                type="password"
                class="form-control"
@@ -55,10 +55,10 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbDatabase'])) { echo 'has-error'; }; ?>">
-        <label for="dbName" class="col-lg-3 control-label">
+        <label for="dbName" class="col-lg-2 control-label">
             <?php echo $this->getTrans('dbName'); ?>:
         </label>
-        <div class="col-lg-6 input-group">
+        <div class="col-lg-8 input-group">
             <input value="<?php if ($this->get('dbName') != '') { echo $this->escape($this->get('dbName')); } ?>"
                    type="text"
                    name="dbName"
@@ -74,10 +74,10 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group">
-    <label for="dbPrefix" class="col-lg-3 control-label">
+    <label for="dbPrefix" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbPrefix'); ?>:
     </label>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <input value="<?php if ($this->get('dbPrefix') != '') { echo $this->escape($this->get('dbPrefix')); } else { echo 'ilch_'; } ?>"
                type="text"
                class="form-control"
@@ -94,7 +94,7 @@ $errors = $this->get('errors');
     });
 </script>
 <style>
-    .form-group .col-lg-6 {
+    .form-group .col-lg-8 {
         padding: 0px;
     }
 </style>

@@ -77,10 +77,10 @@ class Model
      * Gets the menu items as html-string.
      * 
      * @param string $tpl
-     * @param string $itemTpl
+     * @param array $options
      * @return string
      */
-    public function getItems($tpl = '', $itemTpl = '')
+    public function getItems($tpl = '', $options = array())
     {
         $html = '';
         $locale = '';
@@ -103,7 +103,7 @@ class Model
                     $html = str_replace('%c', $htmlMenuItems, $html);
                     $htmlMenuItems = '';
                     $html .= str_replace('%s', $item->getTitle(), $tpl);
-    
+
                     if ($item->getType() == 4) {
                         if ($item->getBoxId()) {
                             $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
@@ -126,7 +126,7 @@ class Model
 
                         $html = str_replace('%c', $box->getContent(), $html);
                     } else {
-                        $htmlMenuItems .= $this->_recGetItems($item, $locale);
+                        $htmlMenuItems .= $this->_recGetItems($item, $locale, $options);
                     }
                 }
             }
@@ -142,13 +142,14 @@ class Model
      * Gets the menu items as html-string.
      *
      * @param \Admin\Models\MenuItem $item
+     * @param array $options
      * @return string
      */
-    protected function _recGetItems($item, $locale)
+    protected function _recGetItems($item, $locale, $options = array())
     {
         $menuMapper = new \Admin\Mappers\Menu();
         $pageMapper = new \Page\Mappers\Page();
-        $subItems = $menuMapper->getMenuItemsByParent(1, $item->getId());
+        $subItems = $menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $html = '';
 
         if(in_array($item->getType(), array(1,2,3))) {
@@ -165,10 +166,14 @@ class Model
         }
         
         if (!empty($subItems)) {
-            $html .= '<ul class="list-unstyled ilch_menu_ul">';
+            if (isset($options['class_ul'])) {
+                $html .= '<ul class="'.$options['class_ul'].'">';
+            } else {
+                $html .= '<ul class="list-unstyled ilch_menu_ul">';
+            }
 
             foreach ($subItems as $subItem) {
-                $html .= $this->_recGetItems($subItem, $locale);
+                $html .= $this->_recGetItems($subItem, $locale, $options);
             }
 
             $html .= '</ul>';

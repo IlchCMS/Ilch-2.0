@@ -283,20 +283,10 @@ class User extends \Ilch\Model
     /**
      * Saves the date_created Ilch_Date of the user.
      *
-     * @param int|Ilch_Date|string $dateCreated
+     * @param Ilch_Date $dateCreated
      */
     public function setDateCreated($dateCreated)
     {
-        if (is_numeric($dateCreated)) {
-            $timestamp = (int) $dateCreated;
-            $dateCreated = new \Ilch\Date();
-            $dateCreated->SetTimestamp($timestamp);
-        } elseif (is_string($dateCreated)) {
-            $dateCreated = new \Ilch\Date($dateCreated);
-        } elseif (!is_a($dateCreated, '\\Ilch\\Date')) {
-            throw new \InvalidArgumentException('DateCreated must be a timestamp, date-string or Ilch_Date, "'.$dateCreated.'" given.');
-        }
-
         $this->_dateCreated = $dateCreated;
 
         return $this;
@@ -315,20 +305,10 @@ class User extends \Ilch\Model
     /**
      * Saves the date_confirmed timestamp of the user.
      *
-     * @param int|Ilch_Date|string $dateConfirmed
+     * @param Ilch_Date $dateConfirmed
      */
     public function setDateConfirmed($dateConfirmed)
     {
-        if (is_numeric($dateConfirmed)) {
-            $timestamp = (int) $dateConfirmed;
-            $dateConfirmed = new \Ilch\Date();
-            $dateConfirmed->SetTimestamp($timestamp);
-        } elseif (is_string($dateConfirmed)) {
-            $dateConfirmed = new \Ilch\Date($dateConfirmed);
-        } elseif (!is_a($dateConfirmed, '\\Ilch\\Date')) {
-            throw new \InvalidArgumentException('DateConfirmed must be a timestamp, date-string or Ilch_Date, "'.$dateConfirmed.'" given.');
-        }
-
         $this->_dateConfirmed = $dateConfirmed;
 
         return $this;
@@ -347,20 +327,10 @@ class User extends \Ilch\Model
     /**
      * Saves the date_LastActivity timestamp of the user.
      *
-     * @param int|Ilch_Date|string $dateLastActivity
+     * @param \Ilch\Date $dateLastActivity
      */
     public function setDateLastActivity($dateLastActivity)
     {
-        if (is_numeric($dateLastActivity)) {
-            $timestamp = (int) $dateLastActivity;
-            $dateLastActivity = new \Ilch\Date();
-            $dateLastActivity->SetTimestamp($timestamp);
-        } elseif (is_string($dateLastActivity)) {
-            $dateLastActivity = new \Ilch\Date($dateLastActivity);
-        } elseif (!is_a($dateLastActivity, '\\Ilch\\Date')) {
-            throw new \InvalidArgumentException('DateLastActivity must be a timestamp, date-string or Ilch_Date, "'.$dateLastActivity.'" given.');
-        }
-
         $this->_dateLastActivity = $dateLastActivity;
 
         return $this;

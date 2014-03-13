@@ -177,19 +177,16 @@ class User extends \Ilch\Mapper
 
         if (isset($userRow['date_created'])) {
             $dateCreated = new IlchDate($userRow['date_created']);
-            $users['date_created'] = $dateCreated;
             $user->setDateCreated($dateCreated);
         }
 
         if (isset($userRow['date_confirmed'])) {
             $dateConfirmed = new IlchDate($userRow['date_confirmed']);
-            $users['date_confirmed'] = $dateConfirmed;
             $user->setDateConfirmed($dateConfirmed);
         }
 
         if (isset($userRow['date_last_activity'])) {
             $dateLastActivity = new IlchDate($userRow['date_last_activity']);
-            $users['date_last_activity'] = $dateLastActivity;
             $user->setDateLastActivity($dateLastActivity);
         }
 
@@ -292,7 +289,7 @@ class User extends \Ilch\Mapper
 
         return $userId;
     }
-    
+
     /**
      * Gets the counter of all users with group "administrator".
      *

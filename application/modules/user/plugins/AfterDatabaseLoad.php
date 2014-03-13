@@ -41,6 +41,17 @@ class AfterDatabaseLoad
         $user = $mapper->getUserById($userId);
 
         \Ilch\Registry::set('user', $user);
+        
+        if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]) && preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER["HTTP_X_FORWARDED_FOR"])) {
+            $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        } elseif (preg_match("/^[0-9a-zA-Z\/.:]{7,}$/", $_SERVER["REMOTE_ADDR"])) {
+            $ip = $_SERVER["REMOTE_ADDR"];
+        } else {
+            $ip = '128.0.0.1';
+        }
+
+        $visitMapper = new \User\Mappers\Visit();
+        $visitMapper->saveVisit(array('user_id' => $userId, 'ip' => $ip));
 
         if ($pluginData['request']->getParam('language')) {
             $_SESSION['language'] = $pluginData['request']->getParam('language');

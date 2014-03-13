@@ -218,7 +218,19 @@ class Index extends \Ilch\Controller\Frontend
                 /*
                  * Install every registered module.
                  */
-                $modulesToInstall = array('admin', 'user', 'article', 'page', 'guestbook', 'contact', 'partner', 'link', 'shoutbox', 'impressum', 'media', 'comment', 'checkout');
+                $modulesToInstall = array('admin', 'user');
+
+                foreach (glob(APPLICATION_PATH.'/modules/*') as $modulePath) {
+                    $moduleKey = basename($modulePath);
+
+                    if(in_array($moduleKey, $modulesToInstall)
+                       || in_array($moduleKey, array('install', 'sample'))) {
+                        continue;
+                    }
+
+                    $modulesToInstall[] = $moduleKey;
+                }
+
                 $moduleMapper = new \Admin\Mappers\Module();
 
                 /*

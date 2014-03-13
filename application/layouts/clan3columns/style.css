@@ -35,15 +35,6 @@ label {
 	}
 }
 
-.carousel-control {
-    margin: 5px;
-}
-
-.carousel {
-    padding: 5px;
-    background-color: #32333B;
-}
-
 .navbar-gaming {
     background: #40434E; 
     border-bottom-width:5px;
@@ -86,6 +77,10 @@ header nav ul > li > ul > li > a{
 }
 
 #main{
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 80%;
     background-color: #F1F1F1;
     padding-top: 30px;
     margin-top: 30px;

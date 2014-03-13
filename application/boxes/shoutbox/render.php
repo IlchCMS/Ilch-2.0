@@ -25,7 +25,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-12">
-            <button type="submit" name="entry" class="btn">
+            <button type="submit" value="1" name="form_<?=$this->get('uniqid')?>" class="btn">
                 <?php echo $this->getTrans('send'); ?>
             </button>
         </div>

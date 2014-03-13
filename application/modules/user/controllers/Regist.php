@@ -85,7 +85,6 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setEmail($email);
                     $model->setDateCreated($currentDate);
                     $model->setDateConfirmed($currentDate);
-                    $model->setDateLastActivity($currentDate);
                     $registMapper->save($model);
                 }else{        
                     $currentDate = new \Ilch\Date(); 
@@ -95,7 +94,6 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setPassword(crypt($password));
                     $model->setEmail($email);
                     $model->setDateCreated($currentDate);
-                    $model->setDateLastActivity($currentDate);
                     $model->setConfirmed(1);
                     $model->setConfirmedCode($confirmedCode);
                     $registMapper->save($model);                   

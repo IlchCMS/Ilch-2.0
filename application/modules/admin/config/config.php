@@ -24,7 +24,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
         $databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
-        $databaseConfig->set('default_layout', '2columns');
+        $databaseConfig->set('default_layout', 'clan3columns');
     }
 
     public function uninstall()
@@ -86,6 +86,21 @@ class Config extends \Ilch\Config\Install
                   `content` mediumtext COLLATE utf8_unicode_ci NOT NULL,
                   `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                
+                CREATE TABLE IF NOT EXISTS `[prefix]_visits_online` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `user_id` int(11) NOT NULL,
+                  `ip_address` varchar(255) NOT NULL,
+                  `date_last_activity` datetime NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+                
+                CREATE TABLE IF NOT EXISTS `[prefix]_visits_stats` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `ip_address` varchar(255) NOT NULL,
+                  `date` date NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;';
     }
 }

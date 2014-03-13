@@ -51,7 +51,7 @@
             <div class="col-lg-2 detail bold">
                 First Name:
             </div>
-            <div class="col-lg-10 detail">
+            <div class="col-lg-8 detail">
                 Max 
             </div>
         </div>
@@ -59,7 +59,7 @@
             <div class="col-lg-2 detail bold">
                 Last Name:
             </div>
-            <div class="col-lg-10 detail">
+            <div class="col-lg-8 detail">
                 Mustermann
             </div>
         </div>
@@ -70,7 +70,7 @@
             <div class="col-lg-2 detail bold">
                 <?php echo $this->getTrans('groups'); ?>:
             </div>
-            <div class="col-lg-10 detail">
+            <div class="col-lg-8 detail">
                 <?php echo $this->escape($groups) ?>
             </div>
         </div>
