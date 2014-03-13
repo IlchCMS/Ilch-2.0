@@ -111,6 +111,7 @@ input, select, textarea{
 		</div>
 
 	</div>
+	<?=$this->getSaveBar()?>
 </form>
 <br />
 
