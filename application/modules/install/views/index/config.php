@@ -2,7 +2,7 @@
 $errors = $this->get('errors');
 ?>
 <div class="form-group">
-    <label for="type" class="control-label col-lg-3">
+    <label for="type" class="control-label col-lg-2">
         <?php echo $this->getTrans('cmsType'); ?>:
     </label>
     <div class="col-lg-8">
@@ -13,7 +13,7 @@ $errors = $this->get('errors');
 </div>
 <hr />
 <div class="form-group <?php if (!empty($errors['adminName'])) { echo 'has-error'; }; ?>">
-    <label for="adminName" class="control-label col-lg-3">
+    <label for="adminName" class="control-label col-lg-2">
         <?php echo $this->getTrans('adminName'); ?>:
     </label>
     <div class="col-lg-8">
@@ -30,7 +30,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword'])) { echo 'has-error'; }; ?>">
-    <label for="adminPassword" class="control-label col-lg-3">
+    <label for="adminPassword" class="control-label col-lg-2">
         <?php echo $this->getTrans('adminPassword'); ?>:
     </label>
     <div class="col-lg-8">
@@ -47,7 +47,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword2'])) { echo 'has-error'; }; ?>">
-    <label for="adminPassword2" class="control-label col-lg-3">
+    <label for="adminPassword2" class="control-label col-lg-2">
         <?php echo $this->getTrans('adminPassword2'); ?>:
     </label>
     <div class="col-lg-8">
@@ -64,7 +64,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminEmail'])) { echo 'has-error'; }; ?>">
-    <label for="adminEmail" class="control-label col-lg-3">
+    <label for="adminEmail" class="control-label col-lg-2">
         <?php echo $this->getTrans('adminEmail'); ?>:
     </label>
     <div class="col-lg-8">

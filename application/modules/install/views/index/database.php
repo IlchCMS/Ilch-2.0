@@ -2,7 +2,7 @@
 $errors = $this->get('errors');
 ?>
 <div class="form-group">
-    <label for="dbEngine" class="col-lg-3 control-label">
+    <label for="dbEngine" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbEngine'); ?>:
     </label>
     <div class="col-lg-8">
@@ -12,7 +12,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
-    <label for="dbHost" class="col-lg-3 control-label">
+    <label for="dbHost" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbHost'); ?>:
     </label>
     <div class="col-lg-8 input-group">
@@ -30,7 +30,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
-    <label for="dbUser" class="col-lg-3 control-label">
+    <label for="dbUser" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbUser'); ?>:
     </label>
     <div class="col-lg-8 input-group">
@@ -43,7 +43,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
-    <label for="dbPassword" class="col-lg-3 control-label">
+    <label for="dbPassword" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbPassword'); ?>:
     </label>
     <div class="col-lg-8">
@@ -55,7 +55,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbDatabase'])) { echo 'has-error'; }; ?>">
-        <label for="dbName" class="col-lg-3 control-label">
+        <label for="dbName" class="col-lg-2 control-label">
             <?php echo $this->getTrans('dbName'); ?>:
         </label>
         <div class="col-lg-8 input-group">
@@ -74,7 +74,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group">
-    <label for="dbPrefix" class="col-lg-3 control-label">
+    <label for="dbPrefix" class="col-lg-2 control-label">
         <?php echo $this->getTrans('dbPrefix'); ?>:
     </label>
     <div class="col-lg-8">
