@@ -69,9 +69,9 @@
     <div class="form-group">
         <label for="articleImage"
                 class="col-lg-2 control-label">
-            <?php echo $this->getTrans('articleImage'); ?>
+            <?php echo $this->getTrans('articleImage'); ?>:
         </label>
-        <div class="col-lg-4 input-group">
+        <div class="col-lg-2 input-group">
             <input class="form-control"
                    type="text"
                    name="articleImage"
