@@ -95,6 +95,7 @@ class Index extends \Ilch\Controller\Admin
 
             $model->setTitle($this->getRequest()->getPost('articleTitle'));
             $model->setContent($this->getRequest()->getPost('articleContent'));
+            $model->setArticleImage($this->getRequest()->getPost('articleImage'));
             
             if ($this->getRequest()->getPost('articleLanguage') != '') {
                 $model->setLocale($this->getRequest()->getPost('articleLanguage'));
