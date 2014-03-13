@@ -74,7 +74,7 @@ else {
 
             $dateLastActivity = $user->getDateLastActivity();
 
-            if ($dateLastActivity->getTimestamp() == 0) {
+            if ($dateLastActivity !== null && $dateLastActivity->getTimestamp() == 0) {
                 $dateLastActivity = $this->getTrans('neverLoggedIn');
             }
             ?>
