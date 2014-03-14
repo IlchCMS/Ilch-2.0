@@ -4,25 +4,29 @@ $errors = $this->get('errors');
 
 <style>
 .left-box{
-	width: 40%;
-	float: left;
+    width: 40%;
+    float: left;
 }
 
 .right-box{
-	width: 60%;
-	float: right;
+    width: 60%;
+    float: right;
 }
 
 br{
-	clear: both;
+    clear: both;
 }
 
 label{
-	width: 125px;
+    width: 125px;
 }
 
 input, select, textarea{
-	width: 350px;
+    width: 350px;
+}
+
+hidden {
+    display: none;
 }
 </style>
 
@@ -35,7 +39,8 @@ input, select, textarea{
             <label for="title">
                 <?php echo $this->getTrans('title'); ?>:
             </label>
-            <input id="title" type="text" name="title" value="" />
+            <input id="title" type="text" name="title" value="" autocomplete="" />
+            <hidden><?=$this->get('titleJSON')?></hidden>
         </div>
 		
         <div>
@@ -166,9 +171,14 @@ input, select, textarea{
                     });
                 });
                 
-                
-                
-                
+                $('[autocomplete]').each(function(){
+                    var titleTags = $(this).next().html();
+                    
+                    console.log(titleTags);
+                    $(this).autocomplete({
+                        source: titleTags
+                    });
+                });         
 		
 	});
 	

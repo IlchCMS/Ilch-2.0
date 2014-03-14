@@ -61,6 +61,8 @@ class Index extends \Ilch\Controller\Admin
     {		
 		$user = new UserMapper;
                 $eventMapper = new EventMapper();
+                
+                $this->getView()->set('titleJSON', $eventMapper->getTitleJSON());
 		$this->getView()->set('users', $user->getUserList(  ) );
 		$this->getView()->set('status', $this->getStatusArray() );
                 $this->getView()->set('eventNames', $eventMapper->getEventNames() );

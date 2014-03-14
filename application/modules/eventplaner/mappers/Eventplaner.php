@@ -86,6 +86,13 @@ class Eventplaner extends \Ilch\Mapper
             
             return $entry;
 	}
+        
+        public function getTitleJSON()
+	{
+            return json_encode($this->db()->queryList('
+                SELECT DISTINCT title FROM [prefix]_ep_events
+            '));
+	}
 	
 	public function setEvent()
 	{
