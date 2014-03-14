@@ -15,13 +15,13 @@ class Eventplaner extends \Ilch\Model
     protected $_status;
     protected $_start;
     protected $_ends;
-	protected $_registrations;
+    protected $_registrations;
     protected $_organizer;
-	protected $_title;
-	protected $_event;
-	protected $_message;
-	protected $_created;
-	protected $_changed;
+    protected $_title;
+    protected $_event;
+    protected $_message;
+    protected $_created;
+    protected $_changed;
 	//protected $_;
 
 	
@@ -37,15 +37,15 @@ class Eventplaner extends \Ilch\Model
 
     public function getStart()
     {
-        return $this->_start;
+        return strtotime($this->_start);
     }
 	
-	public function getEnds()
+    public function getEnds()
     {
-        return $this->_ends;
+        return strtotime($this->_ends);
     }
 
-	public function getRegistrations()
+    public function getRegistrations()
     {
         return $this->_registrations;
     }
@@ -60,27 +60,27 @@ class Eventplaner extends \Ilch\Model
         return $this->_title;
     }
 	
-	public function getEvent()
+    public function getEvent()
     {
         return $this->_event;
     }
 	
-	public function getMessage()
+    public function getMessage()
     {
         return $this->_message;
     }
 	
-	public function getCreated()
+    public function getCreated()
     {
-        return $this->_created;
+        return strtotime($this->_created);
     }
 	
-	public function getChanged()
+    public function getChanged()
     {
-        return $this->_changed;
+        return strtotime($this->_changed);
     }
 
-	## SETTER #################################### 
+    ## SETTER #################################### 
 
     public function setId($id)
     {
@@ -94,12 +94,12 @@ class Eventplaner extends \Ilch\Model
 	
 	public function setStart($res)
     {
-		$this->_start = (integer)$res;
+		$this->_start = (string)$res;
     }
    
    	public function setEnds($res)
     {
-		$this->_ends = (integer)$res;
+		$this->_ends = (string)$res;
     }
 	
 	public function setRegistrations($res)
@@ -129,12 +129,12 @@ class Eventplaner extends \Ilch\Model
 	
 	public function setCreated($res)
     {
-		$this->_created = (integer)$res;
+		$this->_created = (string)$res;
     }
 	
 	public function setChanged($res)
     {
-		$this->_changed = (integer)$res;
+		$this->_changed = (string)$res;
     }
 }
 ?>

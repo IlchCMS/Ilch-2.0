@@ -9,7 +9,7 @@ use User\Mappers\User as UserMapper;
 class Index extends \Ilch\Controller\Admin
 {
 
-	public function init()
+    public function init()
     {
         $this->getLayout()->addMenu
         (
@@ -60,9 +60,10 @@ class Index extends \Ilch\Controller\Admin
 	public function createEventAction()
     {		
 		$user = new UserMapper;
-		//$this->arPrint( $user->getUserList( array("id" => 1) ) );
+                $eventMapper = new EventMapper();
 		$this->getView()->set('users', $user->getUserList(  ) );
-		$this->getView()->set('status', $this->getStatusArray());
+		$this->getView()->set('status', $this->getStatusArray() );
+                $this->getView()->set('eventNames', $eventMapper->getEventNames() );
     }
 	
 	public function getStatusArray()
@@ -74,11 +75,24 @@ class Index extends \Ilch\Controller\Admin
 		);
 	}
 	
-	public function arPrint( $array )
-	{
-		echo "<pre>";
-		print_r( $array );
-		echo "</pre>";
+	public static function arPrint($res)
+	{	
+		?>
+		<br /> <br />
+		<script>$(document).ready(function(){ $( "#accordion" ).accordion({heightStyle: "content"}); });</script>
+		
+		<div id="accordion">
+			<?php foreach(func_get_args() as $key => $val ) : ?>
+			<h3><?=$key;?></h3>
+			<div>
+				<pre>
+					<?php print_r( $val );?>
+				</pre>
+			</div>
+			<?php endforeach; ?>
+		</div>
+		
+		<?php
 	}
 }
 ?>

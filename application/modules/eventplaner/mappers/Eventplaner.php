@@ -31,13 +31,13 @@ class Eventplaner extends \Ilch\Mapper
             $entryModel->setStatus($entries['status']);
             $entryModel->setStart($entries['start']);
             $entryModel->setEnds($entries['ends']);
-			$entryModel->setRegistrations($entries['registrations']);
+            $entryModel->setRegistrations($entries['registrations']);
             $entryModel->setOrganizer($entries['organizer']);
-			$entryModel->setTitle($entries['title']);
-			$entryModel->setEvent($entries['event']);
-			$entryModel->setMessage($entries['message']);
-			$entryModel->setCreated($entries['created']);
-			$entryModel->setChanged($entries['changed']);
+            $entryModel->setTitle($entries['title']);
+            $entryModel->setEvent($entries['event']);
+            $entryModel->setMessage($entries['message']);
+            $entryModel->setCreated($entries['created']);
+            $entryModel->setChanged($entries['changed']);
             $entry[] = $entryModel;
         }
 
@@ -46,14 +46,14 @@ class Eventplaner extends \Ilch\Mapper
 	
 	public function getEvent($id)
 	{
-		$entryArray = $this->db()->selectRow('*')
-            ->from('ep_events')
-            ->where(array('id' => $id))
-            ->execute();
+            $entryArray = $this->db()->selectRow('*')
+                ->from('ep_events')
+                ->where(array('id' => $id))
+                ->execute();
 			
-		if (empty($entryArray)) {
-            return array();
-        }
+            if (empty($entryArray)) {
+                return array();
+            }
 		
 		$entryModel = new EventModel();
 		$entryModel->setId($entries['id']);
@@ -67,6 +67,24 @@ class Eventplaner extends \Ilch\Mapper
 		$entryModel->setCreated($entries['created']);
 		$entryModel->setChanged($entries['changed']);
 		return $entryModel;
+	}
+	
+	public function getEventNames()
+	{
+            $entryArray = $this->db()->queryArray('
+                SELECT DISTINCT event FROM [prefix]_ep_events
+            ');
+		
+            $entry = array();
+            
+            foreach( $entryArray as $res )
+            {    
+                $entryModel = new EventModel();
+                $entryModel->setEvent($res['event']);
+                $entry[] = $entryModel;
+            }
+            
+            return $entry;
 	}
 	
 	public function setEvent()

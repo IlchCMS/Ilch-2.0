@@ -19,12 +19,5 @@ class Index extends \Ilch\Controller\Frontend
 		$charakters = new CharakterMapper;
 		$this->getView()->set('eventplaner', $charakters->getList());
     }
-	
-	public function arPrint( $array )
-	{
-		echo "<pre>";
-		print_r( $array );
-		echo "</pre>";
-	}
 }
 ?>
