@@ -26,6 +26,7 @@ return array(
 	"startDate" => "Begin",
 	"start" => "Start",
 	"ends" => "Ende",
+        "useSlider" => "Benutze den Silder f&uuml;r die Zeiten",
 	
 	"registrations" => "Anmeldungen",
 	"participant" => "Teilnehmer",

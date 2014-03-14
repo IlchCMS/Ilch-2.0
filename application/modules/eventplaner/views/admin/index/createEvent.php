@@ -21,7 +21,7 @@ label{
     width: 125px;
 }
 
-input, select, textarea{
+input, select, textarea, #slider, .inputWidth{
     width: 350px;
 }
 
@@ -118,7 +118,11 @@ hidden {
             </label>
             <input id="ends" type="text" name="ends" value="" />
         </div>
-
+        <div style="margin-left: 129px;"><div id="slider"></div></div>
+        <div class="inputWidth" style="margin-left: 129px;" align="center">
+            <span id="viewDiff"></span> 
+            <?=$this->getTrans('useSlider');?>
+        </div>
     </div>
     <?=$this->getSaveBar()?>
 </form>
@@ -162,7 +166,7 @@ hidden {
                 $('#change2input').bind('click', function(){
                     var id = $(this).prev().attr('id');
                     var name = $(this).prev().attr('name');
-                    $(this).prev().replaceWith('<input id="'+ id +'" name="'+ name +'" class="autocomplete" />').next();
+                    $(this).prev().replaceWith('<input id="'+ id +'" name="'+ name +'" class="autocomplete" />');
                     $(this).fadeOut(1000, function(){
                         var thisTags = <?=json_encode($eventNames);?>;
                         $('input.autocomplete').autocomplete({
@@ -174,12 +178,68 @@ hidden {
                 $('[autocomplete]').each(function(){
                     var titleTags = $(this).next().html();
                     
-                    console.log(titleTags);
                     $(this).autocomplete({
                         source: titleTags
                     });
-                });         
-		
+                });
+                
+                var thisSlider = $( "#slider" );
+                var thisDiff = $( "#viewDiff" );
+                
+                thisSlider.slider({
+                    range: true,                 
+                    min: time2sec("13:00"),
+                    max: time2sec("23:59"),
+                    values: [time2sec("18:30"), time2sec("21:30")],
+                    step: time2sec("00:30"),
+                    slide: function( event, ui ) { 
+                        $('input#start').val(sec2time(ui.values[0]));
+                        $('input#ends').val(sec2time(ui.values[1]));
+                        
+                        thisDiff.html( sec2diff(ui.values[0], ui.values[1]) );
+                    }
+                });
+                
+                $("input#start, input#ends").bind("keypress", setSliderValues());
+                
+                function setSliderValues(){
+                    var start = $('input#start').val();
+                    var ends = $('input#ends').val();
+                   // thisSlider.slider({ values: [ time2sec(start), time2sec(ends)] });
+                    thisDiff.html( sec2diff(time2sec(start), time2sec(ends)) );
+                }
+                
+                function sec2time(seconds)
+                {    
+                    var hours = seconds / 3600;
+                    hours = Math.floor(hours);        
+                    seconds -= hours * 3600;
+
+                    var minutes = seconds / 60;
+                    minutes = Math.floor(minutes);
+                    seconds -= minutes * 60;
+
+                    if(hours < 10) {
+                        hours = '0' + hours;
+                    }
+                    if(minutes < 10) {
+                        minutes = '0' + minutes;
+                    }
+                    if(seconds < 10) {
+                        seconds = '0' + seconds;
+                    }
+                    return hours + ':' + minutes;
+                }
+                
+                function time2sec(time){
+                    var val = time.split(":");
+                    sec = (parseInt(val[1])*60);
+                    return sec + (parseInt(val[0])*60*60);
+                }
+                
+                function sec2diff(time1, time2){
+                    return sec2time(time2-time1);
+                }
 	});
 	
 </script>
