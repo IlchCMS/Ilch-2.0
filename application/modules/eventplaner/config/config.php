@@ -33,7 +33,7 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return array(	
-            'CREATE TABLE IF NOT EXISTS `prefix_ep_events` (
+            "CREATE TABLE IF NOT EXISTS `prefix_ep_events` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `status` int(2) NOT NULL,
                 `start` datetime NOT NULL,
@@ -67,7 +67,7 @@ class Config extends \Ilch\Config\Install
 
               INSERT INTO `prefix_ep_registrations` (`id`, `aktiv`, `eid`, `uid`, `cid`, `comment`, `changed`, `registered`) VALUES
               (1, 1, 1, 1, 0, 'Bin dabei!', '2014-03-14 18:30:00', '2014-03-14 21:30:00'),
-              (2, 1, 2, 1, 0, 'LetsRock', '2014-03-14 18:30:00', '2014-03-14 21:30:00');'
+              (2, 1, 2, 1, 0, 'LetsRock', '2014-03-14 18:30:00', '2014-03-14 21:30:00');"
         );
     }
 }
