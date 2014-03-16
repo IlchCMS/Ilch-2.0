@@ -1,9 +1,7 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Balthazar3k
- * @package eventplaner
+ * @copyright Balthazar3k 2014
+ * @package Eventplaner 2.0
  */
 
 namespace Eventplaner\Config;
@@ -31,7 +29,7 @@ class Config extends \Ilch\Config\Install
     }
 
     public function getInstallSql()
-    {
+    {   /* IST NOCH ZUM TESTEN */
         return array(	
             "CREATE TABLE IF NOT EXISTS `prefix_ep_events` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,

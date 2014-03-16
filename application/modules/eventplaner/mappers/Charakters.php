@@ -1,6 +1,7 @@
 <?php
 /**
  * @copyright Balthazar3k 2014
+ * @package Eventplaner 2.0
  */
 
 namespace Eventplaner\Mappers;

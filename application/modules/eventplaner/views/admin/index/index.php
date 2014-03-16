@@ -1,4 +1,9 @@
 <?php
+/**
+ * @copyright Balthazar3k 2014
+ * @package Eventplaner 2.0
+ */
+ 
 namespace Eventplaner\Views\Admin;
 use User\Mappers\User as UserMapper;
 $user = new UserMapper;

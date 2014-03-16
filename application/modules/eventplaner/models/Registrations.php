@@ -1,7 +1,7 @@
 <?php
 /**
- * @copyright Balthazar3k
- * @package eventplaner
+ * @copyright Balthazar3k 2014
+ * @package Eventplaner 2.0
  */
 
 namespace Eventplaner\Models;

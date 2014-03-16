@@ -1,4 +1,9 @@
 <?php
+/**
+ * @copyright Balthazar3k 2014
+ * @package Eventplaner 2.0
+ */
+ 
 $charaktere = $this->get('eventplaner');
 
 if (!empty($charaktere)) {

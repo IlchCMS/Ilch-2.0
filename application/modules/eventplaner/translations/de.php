@@ -1,4 +1,8 @@
 <?php
+/**
+ * @copyright Balthazar3k 2014
+ * @package Eventplaner 2.0
+ */
 
 defined('ACCESS') or die('no direct access');
 
