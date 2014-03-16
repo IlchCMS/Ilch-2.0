@@ -9,7 +9,7 @@ namespace Eventplaner\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
 use Eventplaner\Mappers\Eventplaner as EventMapper;
-use Eventplaner\Model\Eventplaner as EventModel;
+use Eventplaner\Models\Eventplaner as EventModel;
 use User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Admin
@@ -45,7 +45,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'createEvent',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'createEvent'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
@@ -54,7 +54,6 @@ class Index extends \Ilch\Controller\Admin
     {
         $eventMapper = new EventMapper();
         $this->getView()->set('eventList', $eventMapper->getEventList());
-        //$this->arPrint( $eventMapper->getEventList() );
     }
 	
     public function calenderAction()
@@ -70,7 +69,10 @@ class Index extends \Ilch\Controller\Admin
         
         if($this->getRequest()->isPost()) {
             $model = new EventModel();
-            //$eventData = $this->getRequest()->getPost('event');
+            
+            if ($this->getRequest()->getParam('id')) {
+                $model->setId($this->getRequest()->getParam('id'));
+            }
             
             $status = $this->getRequest()->getPost('status');
             $start = $this->getRequest()->getPost('start');
@@ -78,9 +80,11 @@ class Index extends \Ilch\Controller\Admin
             $registrations = $this->getRequest()->getPost('registrations');
             $organizer = $this->getRequest()->getPost('organizer');
             $event = $this->getRequest()->getPost('event');
+
+            $this->arPrint($_POST);
             
             
-            if(empty($status)) {
+            if($status == '') {
                 $this->addMessage('missingStatus', 'danger');
             } elseif(empty($start)) {
                 $this->addMessage('missingStart', 'danger');
@@ -102,6 +106,10 @@ class Index extends \Ilch\Controller\Admin
                 $model->setTitle($this->getRequest()->getPost('title'));
                 $model->setMessage($this->getRequest()->getPost('message'));
                 $eventMapper->save($model);
+                
+                $this->addMessage('saveSuccess');
+                
+                $this->redirect(array('action' => 'index'));
             }
         }
         

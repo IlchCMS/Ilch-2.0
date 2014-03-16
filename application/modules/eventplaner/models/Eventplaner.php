@@ -22,7 +22,6 @@ class Eventplaner extends \Ilch\Model
     protected $_message;
     protected $_created;
     protected $_changed;
-	//protected $_;
 
 	
     public function getId()
@@ -37,12 +36,12 @@ class Eventplaner extends \Ilch\Model
 
     public function getStart()
     {
-        return strtotime($this->_start);
+        return $this->_start;
     }
 	
     public function getEnds()
     {
-        return strtotime($this->_ends);
+        return $this->_ends;
     }
 
     public function getRegistrations()
@@ -72,12 +71,12 @@ class Eventplaner extends \Ilch\Model
 	
     public function getCreated()
     {
-        return strtotime($this->_created);
+        return $this->_created;
     }
 	
     public function getChanged()
     {
-        return strtotime($this->_changed);
+        return $this->_changed;
     }
 
     ## SETTER #################################### 

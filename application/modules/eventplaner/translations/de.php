@@ -7,12 +7,14 @@
 defined('ACCESS') or die('no direct access');
 
 return array(
+
+
 	
 	"eventplaner" => "Eventplaner",
 	"listView" => "Listenansicht",
 	"calender" => "Kalender",
 	"calenderView" => "Kalenderansicht",
-	"createEvent" => "Event erstellen",
+	"menuActionNewEvent" => "Event erstellen",
 
 	"entrySuccess" => "Eintrag war erfolgreich!",
 	"entryFailure" => "Eintrag war <b>nicht</b> erfolgreich!",
@@ -20,6 +22,8 @@ return array(
 	"hours" => "std",
 	"created" => "Erstellt am",
 	"changed" => "Ge&auml;ndert am",
+
+	"choose" => "w&auml;hle",
 	
 	
 	"title" => "Titel",
@@ -30,7 +34,7 @@ return array(
 	"startDate" => "Begin",
 	"start" => "Start",
 	"ends" => "Ende",
-        "useSlider" => "Benutze den Silder f&uuml;r die Zeiten",
+    "useSlider" => "Benutze den Silder f&uuml;r die Zeiten",
 	
 	"registrations" => "Anmeldungen",
 	"participant" => "Teilnehmer",
