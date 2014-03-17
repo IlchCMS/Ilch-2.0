@@ -97,12 +97,21 @@ class Mysql
     /**
      * Execute sql query.
      *
-     * @param  string        $sql
+     * @param  string $sql
      * @return mysqli_result
      */
     public function query($sql)
     {
-        return mysqli_query($this->conn, $this->getSqlWithPrefix($sql));
+        $mysqliResult = mysqli_query($this->conn, $this->getSqlWithPrefix($sql));
+        
+        if (!$mysqliResult) {
+            echo '<pre><h4 class="text-danger">MySQL Error:</h4>'
+                .$this->conn->errno.': '.$this->conn->error
+                .'<h5>Query</h5>'.$this->getSqlWithPrefix($sql)
+                .'<h5>Debug backtrace</h5>'.debug_backtrace_html().'</pre>';
+        }
+
+        return $mysqliResult;
     }
 
     /**
