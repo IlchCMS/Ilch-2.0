@@ -65,16 +65,18 @@ $user = new UserMapper;
 		
         <td  width="3%" align="center" valign="middle" class="td-border">
             <!--<center class="small">Options</center><br />-->
-            <a href="http://localhost/Ilch-2.0/index.php/admin/eventplaner/index/calender"><i class="fa fa-info-circle"></i></a><br />
-            <a href="http://localhost/Ilch-2.0/index.php/admin/eventplaner/index/calender"><i class="fa fa-cogs"></i></a><br />
-            <a href="http://localhost/Ilch-2.0/index.php/admin/eventplaner/index/calender"><i class="fa fa-th-list"></i></a>
+            <a href=""><i class="fa fa-info-circle"></i></a><br />
+            <a href="<?=$this->getURL(array('action' => 'treat', 'id' => $event->getId() ));?>"><i class="fa fa-cogs"></i></a><br />
+            <a href=""><i class="fa fa-th-list"></i></a>
         </td>
 		
         <td width="15%">
             <b><?=$event->getTitle();?></b><br />
-            - <?=$event->getEvent();?>, <b><?=date('H:i', $event->getStart());?> - <?=date('H:i', $event->getEnds());?> </b>
-              (<?=round((($event->getEnds()-$event->getStart())/60/60), 1) . $this->getTrans('hours');?>)<br />
-            - <?=$this->getTrans(date('w', $event->getStart()));?>, <?=date('d.m.Y', $event->getStart());?>
+            - <?=$event->getEvent();?>, <b><?=date('H:i', strtotime($event->getStart()));?> - <?=date('H:i', strtotime($event->getEnds()));?> </b>
+
+              (<?=round( (strtotime($event->getEnds())-strtotime($event->getStart()))/60/60 , 1) . $this->getTrans('hours');?>)<br />
+
+            - <?=$this->getTrans(date('w', strtotime($event->getStart())));?>, <?=date('d.m.Y', strtotime($event->getStart()));?>
         </td>
 		
             <td  width="40%">
@@ -90,8 +92,8 @@ $user = new UserMapper;
             <td  width="20%" align="right" valign="middle">
                 <?=$this->getTrans('organizer');?> <b><?=$user->getUserById($event->getOrganizer())->getName();?></b><br />
                 <span class="small">
-                    <?=$this->getTrans('created');?> <?=date('d.m.Y H:i', $event->getCreated());?><br />
-                    <?=$this->getTrans('changed');?> <?=date('d.m.Y H:i', $event->getChanged());?>
+                    <?=$this->getTrans('created');?> <?=date('d.m.Y H:i', strtotime($event->getCreated()));?><br />
+                    <?=$this->getTrans('changed');?> <?=date('d.m.Y H:i', strtotime($event->getChanged()));?>
                 </span>
             </td>
 	</tr>

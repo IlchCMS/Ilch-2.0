@@ -45,9 +45,31 @@ class Eventplaner extends \Ilch\Mapper
         return $entry;
     }
 	
-    public function getEvent($id)
-    {
+    public function getEventById($eventId)
+    {   
+        $res = $this->db()->selectRow('*')
+                    ->from('ep_events')
+                    ->where(array('id' => $eventId))
+                    ->execute();
 
+        if(empty($res)){
+            return false;
+        }
+
+        $model = new EventModel();
+        $model->setId($res['id']);
+        $model->setStatus($res['status']);
+        $model->setStart($res['start']);
+        $model->setEnds($res['ends']);
+        $model->setRegistrations($res['registrations']);
+        $model->setOrganizer($res['organizer']);
+        $model->setTitle($res['title']);
+        $model->setEvent($res['event']);
+        $model->setMessage($res['message']);
+        $model->setCreated($res['created']);
+        $model->setChanged($res['changed']);
+
+        return $model;
     }
 
     public function getEventNames()
@@ -80,6 +102,7 @@ class Eventplaner extends \Ilch\Mapper
         $title = $eventplaner->getTitle();
         $event = $eventplaner->getEvent();
         $message = $eventplaner->getMessage();
+        $changed = $eventplaner->getChanged();
 
         if(!empty($status)) {
             $fields['status'] = $eventplaner->getStatus();
@@ -113,6 +136,10 @@ class Eventplaner extends \Ilch\Mapper
             $fields['message'] = $eventplaner->getMessage();
         }
 
+        if(!empty($changed)) {
+            $fields['changed'] = $eventplaner->getChanged();
+        }
+
         $eventId = (int)$this->db()->selectCell('id')
                 ->from('ep_events')
                 ->where(array('id' => $eventplaner->getId()))
@@ -124,6 +151,9 @@ class Eventplaner extends \Ilch\Mapper
                 ->where(array('id' => $eventId))
                 ->execute();
         } else {
+            
+            $fields['created'] = $eventplaner->getCreated();
+
             $userId = $this->db()->insert('ep_events')
                 ->fields($fields)
                 ->execute();

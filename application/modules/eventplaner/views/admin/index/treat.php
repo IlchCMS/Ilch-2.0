@@ -10,7 +10,7 @@ $errors = $this->get('errors');
     <?php echo $this->getTokenField(); ?>
     <legend>
     <?php
-        if ($this->get('partner') != '') {
+        if ($this->get('event') != '') {
             echo $this->getTrans('menuActionEditEvent');
         } else {
             echo $this->getTrans('menuActionNewEvent');
@@ -29,7 +29,7 @@ $errors = $this->get('errors');
                 name="status">
                 <option><?=$this->getTrans('choose')?> <?=$this->getTrans('status')?></option>
                 <?php foreach($this->get('status') as $id => $status) :?>
-                    <option value="<?=$id;?>">
+                    <option value="<?=$id;?>" <?=( $id == $this->get('event')->getStatus() ? 'selected="selected"' : '');?>>
                             <?=$status;?>
                     </option>
                 <?php endforeach; ?>
@@ -62,7 +62,7 @@ $errors = $this->get('errors');
                 name="organizer">
                 <option><?=$this->getTrans('choose')?> <?=$this->getTrans('organizer')?></option>
                 <?php foreach($this->get('users') as $user) :?>
-                    <option value="<?=$user->getId();?>" <?=( $user->getId() == $_SESSION['user_id'] ? 'checked="checked"' : '');?>>
+                    <option value="<?=$user->getId();?>" <?php if( $id == $this->get('event')->getOrganizer() || $user->getId() == $_SESSION['user_id'] ) { echo 'selected="selected"'; } ?>>
                         <?=$user->getName();?>
                     </option>
                 <?php endforeach; ?>
@@ -85,7 +85,7 @@ $errors = $this->get('errors');
                     foreach($this->get('eventNames') as $eventName) :
                         $eventNames[] = $eventName->getEvent();
                 ?>
-                    <option value="<?=$eventName->getEvent();?>">
+                    <option value="<?=$eventName->getEvent();?>" <?=( $eventName->getEvent() == $this->get('event')->getEvent() ? 'selected="selected"' : '');?>>
                         <?=$eventName->getEvent();?>
                      </option>
                 <?php endforeach; ?>
@@ -127,9 +127,10 @@ $errors = $this->get('errors');
         <div class="col-lg-4">
             <input class="form-control datepicker"
                    type="text"
-                   id="selectDateStart"
+                   id="start"
+                   name="start"
                    placeholder="<?php echo $this->getTrans('start'); ?>"
-                   value="<?=date("Y-m-d")?>" />
+                   value="<?=( empty($this->get('event')->getStart()) ? date("Y-m-d") : $this->get('event')->getStart() );?>" />
         </div>
     </div>
 
@@ -140,9 +141,10 @@ $errors = $this->get('errors');
         <div class="col-lg-4">
             <input class="form-control datepicker"
                    type="text"
-                   id="selectDateEnds"
+                   id="ends"
+                   name="ends"
                    placeholder="<?php echo $this->getTrans('ends'); ?>"
-                   value="<?=date("Y-m-d")?>" />
+                   value="<?=( empty($this->get('event')->getEnds()) ? date("Y-m-d") : $this->get('event')->getEnds() );?>" />
         </div>
     </div>
 
@@ -159,10 +161,6 @@ $errors = $this->get('errors');
         </div>
     </div>
 
-    <!-- IMPORTANT TIME, TO CREATE A EVENT -->
-    <input type="hidden" id="start" name="start" value="">
-    <input type="hidden" id="ends" name="ends" value="">
-
     <?php
     if ($this->get('event') != '') {
         echo $this->getSaveBar('editButton');
@@ -174,49 +172,55 @@ $errors = $this->get('errors');
 
 <script>
 	$(document).ready(function(){
+
+        var thisSlider = $( "#slider" );
+        var thisDiff = $( "#viewDiff" );
 		
 		$( ".datepicker" ).each(function(i){
 			$(this).datepicker({ 
 				dateFormat: "yy-mm-dd",
                 onClose: function(date){
-                    $('input#selectDateEnds').val(date);
+                    var start = $('input#start');
+                    var ends = $('input#ends');
 
+                    start.val(date + ' 18:00:00');
+                    ends.val(date + ' 21:00:00');
+
+                    thisSlider.slider({
+                        values: [datetime2sec(start.val()), datetime2sec(ends.val())],
+                        slide: function( event, ui ) { 
+
+                            var startDate = start.val();
+                            var endsDate = ends.val();
+
+                            startDate = startDate.split(' ');
+                            endsDate = endsDate.split(' ');
+
+                            //console.log('StartDate:', startDate);
+                            //console.log('EndsDate:', endsDate);
+
+                            start.val(startDate[0] + ' ' + sec2time(ui.values[0]));
+                            ends.val(endsDate[0] + ' ' + sec2time(ui.values[1]));
+                        
+                        
+                            thisDiff.html( sec2diff(ui.values[0], ui.values[1]) );
+                        }
+                    });
                     
                 }
 			});
 		});
 
-        function compile(){
-            var startDate = $("input#selectDateStart").val();
-            var endsDate = $("input#selectDateEnds").val();
-
-            var startTime = $("input#timeStart").val();
-            var endsTime = $("input#timeStart").val();
-
-            $('input#start').val(startDate + ' ' + startTime );
-            $('input#ends').val(endsDate + ' ' + endsTime );
-        }
-
-
-        var thisSlider = $( "#slider" );
-        var thisDiff = $( "#viewDiff" );
+        
 
         thisSlider.slider({
             range: true,                 
             min: time2sec("10:00"),
             max: time2sec("23:59"),
-            values: [time2sec("18:30"), time2sec("21:30")],
             step: time2sec("00:15"),
-            slide: function( event, ui ) { 
-                $('input#start').val($("input#selectDateStart").val() + ' ' + sec2time(ui.values[0]));
-                $('input#ends').val($("input#selectDateStart").val() + ' ' + sec2time(ui.values[1]));
-                
-                thisDiff.html(sec2time(ui.values[0]) + ' - ' + sec2time(ui.values[1]) + ', ' + sec2diff(ui.values[0], ui.values[1]) );
-            }
         });
 
-        function sec2time(seconds)
-        {    
+        function sec2time(seconds) {    
             var hours = seconds / 3600;
             hours = Math.floor(hours);        
             seconds -= hours * 3600;
@@ -245,6 +249,14 @@ $errors = $this->get('errors');
             }
         }
 
+        function datetime2sec(datetime){
+            if(typeof datetime != "undefined" && datetime.indexOf(' ') ){
+                var val = datetime.split(" ");
+                //console.log('Function datetime2sec:', val[1]);
+                return time2sec(val[1]);
+            }
+        }
+
         function sec2diff(time1, time2){
             return sec2time(time2-time1);
         }
@@ -253,5 +265,6 @@ $errors = $this->get('errors');
 </script>
 
 <?php
-//Eventplaner\Controllers\Admin\Index::arPrint( $this->get('eventNames') );
+    use Eventplaner\Controllers\Admin\Index as b3k;
+    b3k::arPrint( $this->get('event') );
 ?>

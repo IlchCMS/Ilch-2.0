@@ -24,10 +24,17 @@ class Index extends \Ilch\Controller\Admin
             (
                 array
                 (
-                    'name' => 'listView',
+                    'name' => 'listViewNew',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
+                ),
+                array
+                (
+                    'name' => 'listViewOld',
+                    'active' => true,
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index', 'expired' => true))
                 ),
 				array
                 (
@@ -52,8 +59,12 @@ class Index extends \Ilch\Controller\Admin
 	
     public function indexAction()
     {
+        $date = new \Ilch\Date();
         $eventMapper = new EventMapper();
-        $this->getView()->set('eventList', $eventMapper->getEventList());
+
+        $this->getView()->set('eventList',
+             $eventMapper->getEventList(array('status' => 1)
+        ) );
     }
 	
     public function calenderAction()
@@ -69,6 +80,7 @@ class Index extends \Ilch\Controller\Admin
         
         if($this->getRequest()->isPost()) {
             $model = new EventModel();
+            $date = new \Ilch\Date();
             
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
@@ -86,7 +98,7 @@ class Index extends \Ilch\Controller\Admin
             
             if($status == '') {
                 $this->addMessage('missingStatus', 'danger');
-            } elseif(empty($start)) {
+            } elseif(empty($start) /*&& preg_match('/([0-9]{2,4}\-[0-9]{1,2}\-[0-9]{1,2}\ [0-9]{1,2}\:[0-9]{1,2}?\:[0-9]{1,2})/', $start)*/ ) {
                 $this->addMessage('missingStart', 'danger');
             } elseif(empty($ends)) {
                 $this->addMessage('missingEnds', 'danger');
@@ -105,6 +117,8 @@ class Index extends \Ilch\Controller\Admin
                 $model->setEvent($event);
                 $model->setTitle($this->getRequest()->getPost('title'));
                 $model->setMessage($this->getRequest()->getPost('message'));
+                $model->setChanged($date);
+                $model->setCreated($date);
                 $eventMapper->save($model);
                 
                 $this->addMessage('saveSuccess');
@@ -112,9 +126,10 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(array('action' => 'index'));
             }
         }
-        
-        
-        
+
+        if ($evendId = $this->getRequest()->getParam('id')) {
+            $this->getView()->set('event', $eventMapper->getEventById($evendId) );
+        }
 
         $this->getView()->set('users', $user->getUserList(  ) );
         $this->getView()->set('status', $this->getStatusArray() );
