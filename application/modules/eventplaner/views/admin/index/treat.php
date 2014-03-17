@@ -3,7 +3,7 @@
  * @copyright Balthazar3k 2014
  * @package Eventplaner 2.0
  */
-$errors = $this->get('errors');
+
 ?>
 
 <form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => 'treat')); ?>">
@@ -29,7 +29,7 @@ $errors = $this->get('errors');
                 name="status">
                 <option><?=$this->getTrans('choose')?> <?=$this->getTrans('status')?></option>
                 <?php foreach($this->get('status') as $id => $status) :?>
-                    <option value="<?=$id;?>" <?=( $id == $this->get('event')->getStatus() ? 'selected="selected"' : '');?>>
+                    <option value="<?=$id;?>" <?php if( $this->get('event') != '') { echo ( $id == $this->get('event')->getStatus() ? 'selected="selected"' : ''); }?>>
                             <?=$status;?>
                     </option>
                 <?php endforeach; ?>
@@ -62,7 +62,7 @@ $errors = $this->get('errors');
                 name="organizer">
                 <option><?=$this->getTrans('choose')?> <?=$this->getTrans('organizer')?></option>
                 <?php foreach($this->get('users') as $user) :?>
-                    <option value="<?=$user->getId();?>" <?php if( $id == $this->get('event')->getOrganizer() || $user->getId() == $_SESSION['user_id'] ) { echo 'selected="selected"'; } ?>>
+                    <option value="<?=$user->getId();?>" <?php if($this->get('event') != ''){ if( $id == $this->get('event')->getOrganizer() || $user->getId() == $_SESSION['user_id'] ) { echo 'selected="selected"'; } } ?>>
                         <?=$user->getName();?>
                     </option>
                 <?php endforeach; ?>
@@ -85,7 +85,7 @@ $errors = $this->get('errors');
                     foreach($this->get('eventNames') as $eventName) :
                         $eventNames[] = $eventName->getEvent();
                 ?>
-                    <option value="<?=$eventName->getEvent();?>" <?=( $eventName->getEvent() == $this->get('event')->getEvent() ? 'selected="selected"' : '');?>>
+                    <option value="<?=$eventName->getEvent();?>" <?php if( $this->get('event') != '') { echo ( $eventName->getEvent() == $this->get('event')->getEvent() ? 'selected="selected"' : ''); }?>>
                         <?=$eventName->getEvent();?>
                      </option>
                 <?php endforeach; ?>
@@ -129,8 +129,8 @@ $errors = $this->get('errors');
                    type="text"
                    id="start"
                    name="start"
-                   placeholder="<?php echo $this->getTrans('start'); ?>"
-                   value="<?=( empty($this->get('event')->getStart()) ? date("Y-m-d") : $this->get('event')->getStart() );?>" />
+                   placeholder="<?php echo $this->getTrans('start'); ?>, Format: YYYY-MM-TT HH:MM:SS"
+                   value="<?php if( $this->get('event') != '') { echo ( empty($this->get('event')->getStart()) ? date("Y-m-d") : $this->get('event')->getStart() ); } ?>" />
         </div>
     </div>
 
@@ -143,8 +143,8 @@ $errors = $this->get('errors');
                    type="text"
                    id="ends"
                    name="ends"
-                   placeholder="<?php echo $this->getTrans('ends'); ?>"
-                   value="<?=( empty($this->get('event')->getEnds()) ? date("Y-m-d") : $this->get('event')->getEnds() );?>" />
+                   placeholder="<?php echo $this->getTrans('ends'); ?>, Format: YYYY-MM-TT HH:MM:SS"
+                   value="<?php if( $this->get('event') != '') { echo ( empty($this->get('event')->getEnds()) ? date("Y-m-d") : $this->get('event')->getEnds() ); } ?>" />
         </div>
     </div>
 

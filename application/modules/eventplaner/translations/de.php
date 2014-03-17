@@ -43,6 +43,7 @@ return array(
 	"active" => "Aktiv",
 	"closed" => "Beendet",
 	"canceled" => "Abgesagt",
+	"removed" => "Entfernt",
 	
 	0 => "Sonntag",
 	1 => "Montag",

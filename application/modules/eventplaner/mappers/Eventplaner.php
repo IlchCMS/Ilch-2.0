@@ -89,6 +89,24 @@ class Eventplaner extends \Ilch\Mapper
 
         return $entry;
     }
+
+    public function getEventStatus()
+    {
+        $entryArray = $this->db()->queryArray('
+            SELECT DISTINCT status FROM [prefix]_ep_events
+        ');
+
+        $entry = array();
+
+        foreach( $entryArray as $res )
+        {    
+            $entryModel = new EventModel();
+            $entryModel->setStatus($res['status']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
         
 	
     public function save(EventModel $eventplaner)

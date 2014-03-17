@@ -19,31 +19,8 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'eventplaner',
-            array
-            (
-                array
-                (
-                    'name' => 'listViewNew',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
-                    'name' => 'listViewOld',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index', 'expired' => true))
-                ),
-				array
-                (
-                    'name' => 'calenderView',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'calender'))
-                ),
-            )
+            'listView',
+            $this->getEventStatusMenu()
         );
 
         $this->getLayout()->addMenuAction
@@ -62,9 +39,11 @@ class Index extends \Ilch\Controller\Admin
         $date = new \Ilch\Date();
         $eventMapper = new EventMapper();
 
-        $this->getView()->set('eventList',
-             $eventMapper->getEventList(array('status' => 1)
-        ) );
+        if( $status = $this->getRequest()->getParam('status') ){
+            $status = array('status' => $status );
+        }
+
+        $this->getView()->set('eventList', $eventMapper->getEventList($status) );
     }
 	
     public function calenderAction()
@@ -127,9 +106,9 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        if ($evendId = $this->getRequest()->getParam('id')) {
+        /*if ($evendId = $this->getRequest()->getParam('id')) {
             $this->getView()->set('event', $eventMapper->getEventById($evendId) );
-        }
+        }*/
 
         $this->getView()->set('users', $user->getUserList(  ) );
         $this->getView()->set('status', $this->getStatusArray() );
@@ -139,11 +118,33 @@ class Index extends \Ilch\Controller\Admin
     public function getStatusArray()
     {
         return array(
-            0 => $this->getTranslator()->trans('active'),
-            1 => $this->getTranslator()->trans('closed'),
-            2 => $this->getTranslator()->trans('canceled'),
-            3 => $this->getTranslator()->trans('removed')
+            1 => $this->getTranslator()->trans('active'),
+            2 => $this->getTranslator()->trans('closed'),
+            3 => $this->getTranslator()->trans('canceled'),
+            4 => $this->getTranslator()->trans('removed')
         );
+    }
+
+    public function getEventStatusMenu()
+    {
+        $eventMapper = new EventMapper();
+        $statusMenu = $eventMapper->getEventStatus();
+        $statusName = $this->getStatusArray();
+
+        $newArray = array();
+
+        foreach( $statusMenu as $menu ){
+            $newArray[] = array
+            (
+                'name' => $statusName[$menu->getStatus()],
+                'active' => true,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index', 'status' => (int)$menu->getStatus() ) )
+            );
+        }
+
+        return $newArray;
+
     }
 	
     public static function arPrint($res)

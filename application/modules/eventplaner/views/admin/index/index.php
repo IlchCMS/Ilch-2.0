@@ -25,6 +25,14 @@ $user = new UserMapper;
 	background-color: blue;
 }
 
+.status-3{
+    background-color: orange;
+}
+
+.status-4{
+    background-color: red;
+}
+
 .td-border{
 	border-left: 1px solid rgba( 0, 0, 0, 0.1);
 	border-right: 1px solid rgba( 0, 0, 0, 0.1);
@@ -101,6 +109,6 @@ $user = new UserMapper;
 </table>
 
 <?php
-    use Eventplaner\Controllers\Admin\Index as b3k;
-    b3k::arPrint( $this->get('eventList') );
+    //use Eventplaner\Controllers\Admin\Index as b3k;
+    //b3k::arPrint( $this->get('event') );
 ?>
