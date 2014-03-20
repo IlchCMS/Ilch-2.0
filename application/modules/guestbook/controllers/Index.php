@@ -17,7 +17,10 @@ class Index extends \Ilch\Controller\Frontend
     {
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'));
         $guestbookMapper = new GuestbookMapper();
-        $this->getView()->set('entries', $guestbookMapper->getEntries(array('setfree' => 1)));
+        $pagination = new \Ilch\Pagination();
+        $pagination->setPage($this->getRequest()->getParam('page'));
+        $this->getView()->set('entries', $guestbookMapper->getEntries(array('setfree' => 1), $pagination));
+        $this->getView()->set('pagination', $pagination);
     }
 
     public function newEntryAction()

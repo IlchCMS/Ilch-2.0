@@ -16,20 +16,22 @@ class Guestbook extends \Ilch\Mapper
      * Gets the guestbook entries.
      *
      * @param array $where
+     * @param \Ilch\Pagination|null $pagination
      * @return GuestbookModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = array(), $pagination = null)
     {
-        $entryArray = $this->db()->selectArray('*')
+        $select = $this->db()->selectArray('*')
             ->from('gbook')
             ->where($where)
-            ->order(array('id' => 'DESC'))
-            ->execute();
-
-        if (empty($entryArray)) {
-            return array();
+            ->order(array('id' => 'DESC'));
+        
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit());
+            $pagination->setRows($select->getCount());
         }
 
+        $entryArray = $select->execute();
         $entry = array();
 
         foreach ($entryArray as $entries) {
