@@ -71,9 +71,6 @@ class Index extends \Ilch\Controller\Admin
             $registrations = $this->getRequest()->getPost('registrations');
             $organizer = $this->getRequest()->getPost('organizer');
             $event = $this->getRequest()->getPost('event');
-
-            $this->arPrint($_POST);
-            
             
             if($status == '') {
                 $this->addMessage('missingStatus', 'danger');
@@ -88,6 +85,7 @@ class Index extends \Ilch\Controller\Admin
             } elseif(empty($event)) {
                 $this->addMessage('missingEvent', 'danger');
             } else {
+
                 $model->setStatus($status);
                 $model->setStart($start);
                 $model->setEnds($ends);
@@ -106,9 +104,9 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        /*if ($evendId = $this->getRequest()->getParam('id')) {
+        if ($evendId = $this->getRequest()->getParam('id')) {
             $this->getView()->set('event', $eventMapper->getEventById($evendId) );
-        }*/
+        }
 
         $this->getView()->set('users', $user->getUserList(  ) );
         $this->getView()->set('status', $this->getStatusArray() );

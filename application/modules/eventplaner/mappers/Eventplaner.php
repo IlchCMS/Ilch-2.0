@@ -14,6 +14,7 @@ class Eventplaner extends \Ilch\Mapper
 {
     public function getEventList($where = array())
     {
+        
         $entryArray = $this->db()->selectArray('*')
             ->from('ep_events')
             ->where($where)

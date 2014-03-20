@@ -6,6 +6,8 @@
  
 namespace Eventplaner\Views\Admin;
 use User\Mappers\User as UserMapper;
+use Ilch\Database\Mysql\Pager2 as Pager;
+
 $user = new UserMapper;
 ?>
 

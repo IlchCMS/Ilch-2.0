@@ -6,7 +6,7 @@
 
 ?>
 
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => 'treat')); ?>">
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => 'treat', 'id' => $this->getRequest()->getParam('id'))); ?>">
     <?php echo $this->getTokenField(); ?>
     <legend>
     <?php
