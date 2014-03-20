@@ -71,4 +71,18 @@ class Module extends \Ilch\Mapper
 
         return $moduleId;
     }
+
+    /**
+     * @param string $key
+     */
+    public function delete($key)
+    {
+        $this->db()->delete('modules')
+            ->where(array('key' => $key))
+            ->execute();
+        
+//        $this->db()->delete('modules_names')
+//            ->where(array('key' => $key))
+//            ->execute();
+    }
 }

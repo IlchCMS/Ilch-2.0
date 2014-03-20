@@ -25,7 +25,8 @@ function dumpVar()
  *
  * @return string
  */
-function debug_backtrace_html() {
+function debug_backtrace_html()
+{
     $r = '';
 
     foreach(debug_backtrace() as $t) {
@@ -55,4 +56,28 @@ function debug_backtrace_html() {
     }
 
     return $r;
+}
+
+/**
+ * Delete directory recursive.
+ *
+ * @param string $dir
+ */
+function removeDir($dir)
+{
+    if (is_dir($dir)) {
+        $dircontent = scandir($dir);
+
+        foreach ($dircontent as $c) {
+            if ($c != '.' && $c != '..' && is_dir($dir.'/'.$c)) {
+                removeDir($dir.'/'.$c);
+            } else if ($c != '.' && $c != '..') {
+                unlink($dir.'/'.$c);
+            }
+        }
+
+        rmdir($dir);
+    } else {
+        unlink($dir);
+    }
 }

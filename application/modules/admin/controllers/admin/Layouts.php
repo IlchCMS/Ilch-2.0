@@ -1,6 +1,5 @@
 <?php
 /**
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,6 +10,7 @@ class Layouts extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $this->getLayout()->removeSidebar();
         $this->getLayout()->addMenu
         (
             'Layouts',
@@ -55,34 +55,10 @@ class Layouts extends \Ilch\Controller\Admin
         if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {
             $this->addMessage('cantDeleteDefaultLayout');
         } else {
-            $this->rmDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
+            removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
             $this->addMessage('deleteSuccess');
         }
 
         $this->redirect(array('action' => 'index'));
-    }
-    
-    /**
-     * Delete directory recursive.
-     *
-     * @param string $dir
-     */
-    function rmDir($dir)
-    {
-        if (is_dir($dir)) {
-            $dircontent = scandir($dir);
-
-            foreach ($dircontent as $c) {
-                if ($c != '.' && $c != '..' && is_dir($dir.'/'.$c)) {
-                    $this->rmDir($dir.'/'.$c);
-                } else if ($c != '.' && $c != '..') {
-                    unlink($dir.'/'.$c);
-                }
-            }
-
-            rmdir($dir);
-        } else {
-            unlink($dir);
-        }
     }
 }

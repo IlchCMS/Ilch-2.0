@@ -165,7 +165,7 @@
                         </a>
                         <ul role="menu" class="dropdown-menu">
                             <li>
-                                <a href="#">
+                                <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'modules', 'action' => 'index'))?>">
                                     <i class="fa fa-list-ol"></i> <?php echo $this->getTrans('overview'); ?>
                                 </a>
                             </li>
