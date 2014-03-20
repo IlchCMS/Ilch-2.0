@@ -111,6 +111,7 @@ $user = new UserMapper;
 </table>
 
 <?php
+echo $this->get('pagination')->getHtml($this, array('action' => 'index'));
     //use Eventplaner\Controllers\Admin\Index as b3k;
     //b3k::arPrint( $this->get('event') );
 ?>

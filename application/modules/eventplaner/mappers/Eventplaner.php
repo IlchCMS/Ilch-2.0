@@ -12,14 +12,23 @@ defined('ACCESS') or die('no direct access');
 
 class Eventplaner extends \Ilch\Mapper
 {
-    public function getEventList($where = array())
+    public function getEventList($where = array(), $pagination = null)
     {
         
-        $entryArray = $this->db()->selectArray('*')
+        $select = $this->db()->selectArray('*')
             ->from('ep_events')
             ->where($where)
-            ->order(array('start' => 'ASC'))
-            ->execute();
+            ->order(array('start' => 'ASC'));
+
+        print_r($pagination->getLimit());
+            
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit());
+            $pagination->setRows($select->getCount());
+        }
+
+        $entryArray = $select->execute();
 
         if (empty($entryArray)) {
             return array();

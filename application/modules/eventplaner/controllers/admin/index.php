@@ -43,7 +43,11 @@ class Index extends \Ilch\Controller\Admin
             $status = array('status' => $status );
         }
 
-        $this->getView()->set('eventList', $eventMapper->getEventList($status) );
+        $pagination = new \Ilch\Pagination();
+        $pagination->setRowsPerPage(10);
+        $pagination->setPage($this->getRequest()->getParam('page'));
+        $this->getView()->set('eventList', $eventMapper->getEventList($status, $pagination) );
+        $this->getView()->set('pagination', $pagination);
     }
 	
     public function calenderAction()
@@ -131,15 +135,25 @@ class Index extends \Ilch\Controller\Admin
 
         $newArray = array();
 
+
+
         foreach( $statusMenu as $menu ){
             $newArray[] = array
             (
                 'name' => $statusName[$menu->getStatus()],
                 'active' => true,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index', 'status' => (int)$menu->getStatus() ) )
+                'url' => $this->getLayout()->getUrl(
+                    array(
+                        'controller' => 'index', 
+                        'action' => 'index', 
+                        'status' => (int)$menu->getStatus() 
+                    ) 
+                )
             );
         }
+
+        ksort($newArray);
 
         return $newArray;
 
