@@ -27,4 +27,5 @@ return array
     'readMore' => 'Read whole article',
     'comments' => 'Comments',
     'submit' => 'Save',
+    'articleImage' => 'Article image',
 );

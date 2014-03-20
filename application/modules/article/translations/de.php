@@ -25,4 +25,5 @@ return array
     'readMore' => 'ganzen Artikel lesen',
     'comments' => 'Kommentare',
     'submit' => 'Eintragen',
+    'articleImage' => 'Artikelbild',
 );
