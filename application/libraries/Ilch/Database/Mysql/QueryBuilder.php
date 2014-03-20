@@ -15,7 +15,7 @@ class QueryBuilder
     protected $_type = '';
 
     /**
-     * @var integer|null
+     * @var array|null
      */
     protected $_limit;
     
@@ -94,7 +94,7 @@ class QueryBuilder
     /**
      * Adds limit to query builder.
      *
-     * @param integer $limit
+     * @param array $limit
      * @return \Ilch\Database\Mysql\QueryBuilder
      */
     public function limit($limit)
@@ -115,6 +115,14 @@ class QueryBuilder
         $this->_cell = $cell;
 
         return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getCount()
+    {
+        return $this->_db->queryCell($this->generateCountSql());
     }
 
     /**
