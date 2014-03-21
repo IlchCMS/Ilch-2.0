@@ -22,6 +22,15 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+        
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('admin_eventplaner_rowperpage', '15');
+        $databaseConfig->set('index_eventplaner_rowperpage', '10');
+        $databaseConfig->set('close_registrations_time', '02:00');
+        $databaseConfig->set('event_start_time', '18:00');
+        $databaseConfig->set('event_ends_time', '21:00');
+        $databaseConfig->set('event_time_steps', '00:30');
+        $databaseConfig->set('event_status', '{"1":{"status":"active","color":"lime"},"2":{"status":"closed","color":"orange"},"3":{"status":"canceled","color":"blue"},"4":{"status":"removed","color":"red"}}');
     }
 
     public function uninstall()

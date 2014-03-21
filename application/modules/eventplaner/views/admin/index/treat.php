@@ -30,7 +30,7 @@
                 <option><?=$this->getTrans('choose')?> <?=$this->getTrans('status')?></option>
                 <?php foreach($this->get('status') as $id => $status) :?>
                     <option value="<?=$id;?>" <?php if( $this->get('event') != '') { echo ( $id == $this->get('event')->getStatus() ? 'selected="selected"' : ''); }?>>
-                            <?=$status;?>
+                            <?=$this->getTrans($status['status']);?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -263,8 +263,3 @@
 	});
 	
 </script>
-
-<?php
-    use Eventplaner\Controllers\Admin\Index as b3k;
-    b3k::arPrint( $this->get('event') );
-?>

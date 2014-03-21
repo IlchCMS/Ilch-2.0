@@ -43,7 +43,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('users', $user->getUserList(  ) );
-        //$this->getView()->set('status', $this->getStatusArray() );
+        $this->getView()->set('status', EventConfig::getStatus());
         $this->getView()->set('eventNames', $eventMapper->getEventNames() );
     }
 }

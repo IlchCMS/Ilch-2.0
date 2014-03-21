@@ -19,17 +19,33 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'listView',
-            $this->getEventStatusMenu()
+            'eventplaner',
+            array
+            (
+                array
+                (
+                    'name' => 'listView',
+                    'active' => true,
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
+                ),
+                array
+                (
+                    'name' => 'newEvent',
+                    'active' => true,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                )
+            )
         );
-
+        
         $this->getLayout()->addMenuAction
         (
             array
             (
-                'name' => 'createEvent',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                'name' => 'settings',
+                'icon' => 'fa fa-cogs',
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
             )
         );
     }
@@ -111,72 +127,11 @@ class Index extends \Ilch\Controller\Admin
         if ($evendId = $this->getRequest()->getParam('id')) {
             $this->getView()->set('event', $eventMapper->getEventById($evendId) );
         }
-
+        
         $this->getView()->set('users', $user->getUserList(  ) );
-        $this->getView()->set('status', $this->getStatusArray() );
+        $this->getView()->set('status', json_decode($this->getConfig()->get('event_status'), true) );
         $this->getView()->set('eventNames', $eventMapper->getEventNames() );
     }
 	
-    public function getStatusArray()
-    {
-        return array(
-            1 => $this->getTranslator()->trans('active'),
-            2 => $this->getTranslator()->trans('closed'),
-            3 => $this->getTranslator()->trans('canceled'),
-            4 => $this->getTranslator()->trans('removed')
-        );
-    }
-
-    public function getEventStatusMenu()
-    {
-        $eventMapper = new EventMapper();
-        $statusMenu = $eventMapper->getEventStatus();
-        $statusName = $this->getStatusArray();
-
-        $newArray = array();
-
-
-
-        foreach( $statusMenu as $menu ){
-            $newArray[] = array
-            (
-                'name' => $statusName[$menu->getStatus()],
-                'active' => true,
-                'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(
-                    array(
-                        'controller' => 'index', 
-                        'action' => 'index', 
-                        'status' => (int)$menu->getStatus() 
-                    ) 
-                )
-            );
-        }
-
-        ksort($newArray);
-
-        return $newArray;
-
-    }
-	
-    public static function arPrint($res)
-    {	
-        ?>
-        <br /> <br />
-        <script>$(document).ready(function(){ $( "#accordion" ).accordion({heightStyle: "content"}); });</script>
-
-        <div id="accordion">
-            <?php foreach(func_get_args() as $key => $val ) : ?>
-            <h3><?=$key;?></h3>
-            <div>
-                <pre>
-                            <?php print_r( $val );?>
-                </pre>
-            </div>
-            <?php endforeach; ?>
-        </div>
-
-        <?php
-}
 }
 ?>
