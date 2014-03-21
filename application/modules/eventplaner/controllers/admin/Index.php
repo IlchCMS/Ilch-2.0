@@ -44,7 +44,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $pagination = new \Ilch\Pagination();
-        $pagination->setRowsPerPage(10);
+        $pagination->setRowsPerPage(5);
         $pagination->setPage($this->getRequest()->getParam('page'));
         $this->getView()->set('eventList', $eventMapper->getEventList($status, $pagination) );
         $this->getView()->set('pagination', $pagination);
