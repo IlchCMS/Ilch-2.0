@@ -115,7 +115,7 @@
             <textarea class="form-control"
                 type="text"
                 name="message"
-                id="message"
+                id="ilch_html"
                 placeholder="<?=$this->getTrans('message')?>"/><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getMessage()); } ?></textarea>
         </div>
     </div>

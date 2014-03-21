@@ -12,6 +12,7 @@ return array(
     "listView" => "Listenansicht",
     "calender" => "Kalender",
     "calenderView" => "Kalenderansicht",
+    "eventDetails" => "Event Details",
     "menuActionNewEvent" => "Event erstellen",
     "menuActionEditEvent" => "Event bearbeiten",
 
@@ -23,6 +24,9 @@ return array(
     "changed" => "Ge&auml;ndert am",
 
     "choose" => "w&auml;hle",
+    
+    "name"  => "Name",
+    "register" => "Anmelden",
 
 
     "title" => "Titel",

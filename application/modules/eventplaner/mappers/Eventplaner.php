@@ -15,20 +15,22 @@ class Eventplaner extends \Ilch\Mapper
     public function getEventList($where = array(), $pagination = null)
     {
         
-        $select = $this->db()->selectArray('*')
-            ->from('ep_events')
-            ->where($where)
-            ->order(array('start' => 'ASC'));
-
-        print_r($pagination->getLimit());
-            
+        $limit = (array) $pagination->getLimit();
+        
+        $eventSQL = '
+            SELECT SQL_CALC_FOUND_ROWS
+                *
+            FROM [prefix]_ep_events
+            /*WHERE `ends` >= \''.date('Y-m-d H:i:s').'\'*/
+            ORDER BY status ASC, start DESC 
+            LIMIT '.$limit[0].','.$limit[1].';
+        ';
+        
+        $entryArray = $this->db()->queryArray($eventSQL);
 
         if ($pagination !== null) {
-            $select->limit($pagination->getLimit());
-            $pagination->setRows($select->getCount());
+            $pagination->setRows($this->db()->queryCell('SELECT FOUND_ROWS()'));
         }
-
-        $entryArray = $select->execute();
 
         if (empty($entryArray)) {
             return array();
