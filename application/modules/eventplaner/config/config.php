@@ -18,27 +18,38 @@ class Config extends \Ilch\Config\Install
         'de_DE' => 'Eventplaner',
     );
     public $icon_small = 'eventplaner.png';
-
+    
+    protected $configs = array(
+        'event_admin_rowperpage' => '15',
+        'event_index_rowperpage' => '10',
+        'event_registrations_close' => '02:00',
+        'event_start_time' => '18:00',
+        'event_ends_time' => '21:00',
+        'event_start' => '14:00',
+        'event_ends' => '23:59',
+        'event_time_steps' => '00:30',
+        'event_status' => '{"1":{"status":"active","color":"lime"},"2":{"status":"closed","color":"orange"},"3":{"status":"canceled","color":"blue"},"4":{"status":"removed","color":"red"}}'
+    );
+            
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
         
-        $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('admin_eventplaner_rowperpage', '15');
-        $databaseConfig->set('index_eventplaner_rowperpage', '10');
-        $databaseConfig->set('close_registrations_time', '02:00');
-        $databaseConfig->set('event_start_time', '18:00');
-        $databaseConfig->set('event_ends_time', '21:00');
-        $databaseConfig->set('event_time_steps', '00:30');
-        $databaseConfig->set('event_status', '{"1":{"status":"active","color":"lime"},"2":{"status":"closed","color":"orange"},"3":{"status":"canceled","color":"blue"},"4":{"status":"removed","color":"red"}}');
+        $config = new \Ilch\Config\Database($this->db());
+        foreach( $this->configs as $key => $value){
+            $config->set($key, $value);
+        }
     }
 
     public function uninstall()
     {
-        return array(
-            "DROP TABLE IF EXISTS `[prefix]_ep_events`",
-            "DROP TABLE IF EXISTS `[prefix]_ep_registrations`"
-        );
+        $this->db()->drop('ep_events');
+        $this->db()->drop('ep_registrations');
+        
+        foreach( $this->configs as $key => $value){
+            $this->db()->delete('config')->where(array('key' => $key))->execute();
+        }
+        
     }
 
     public function getInstallSql()
@@ -61,7 +72,7 @@ class Config extends \Ilch\Config\Install
 
               CREATE TABLE IF NOT EXISTS `[prefix]_ep_registrations` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
-                `aktiv` int(2) NOT NULL,
+                `status` int(2) NOT NULL,
                 `eid` int(8) NOT NULL,
                 `uid` int(8) NOT NULL,
                 `cid` int(8) NOT NULL,
