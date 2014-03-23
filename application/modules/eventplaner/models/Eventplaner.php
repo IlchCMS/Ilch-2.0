@@ -86,54 +86,91 @@ class Eventplaner extends \Ilch\Model
         $this->_id = (integer)$id;
     }
 
-	public function setStatus($res)
+    public function setStatus($res)
     {
 		$this->_status = (integer)$res;
     }
 	
-	public function setStart($res)
+    public function setStart($res)
     {
 		$this->_start = (string)$res;
     }
    
-   	public function setEnds($res)
+    public function setEnds($res)
     {
 		$this->_ends = (string)$res;
     }
 	
-	public function setRegistrations($res)
+    public function setRegistrations($res)
     {
 		$this->_registrations = (integer)$res;
     }
 	
-	public function setOrganizer($res)
+    public function setOrganizer($res)
     {
 		$this->_organizer = (integer)$res;
     }
 	
-	public function setTitle($res)
+    public function setTitle($res)
     {
 		$this->_title = (string)$res;
     }
 	
-	public function setEvent($res)
+    public function setEvent($res)
     {
 		$this->_event = (string)$res;
     }
 	
-	public function setMessage($res)
+    public function setMessage($res)
     {
 		$this->_message = (string)$res;
     }
 	
-	public function setCreated($res)
+    public function setCreated($res)
     {
 		$this->_created = (string)$res;
     }
 	
-	public function setChanged($res)
+    public function setChanged($res)
     {
 		$this->_changed = (string)$res;
+    }
+    
+    /* Formatet Time Strings */
+    
+    public function getStartDMY($placeholder = '.')
+    {
+        return date('d'.$placeholder.'m'.$placeholder.'Y', strtotime($this->getStart()));
+    }
+    
+    public function getStartHIS($placeholder = ':', $sec = false)
+    {
+        return date('H'.$placeholder.'i'.( $sec ? $placeholder.'s' : '' ), strtotime($this->getStart()));
+    }
+    
+    public function getEndsDMY($placeholder = '.')
+    {
+        return date('d'.$placeholder.'m'.$placeholder.'Y', strtotime($this->getEnds()));
+    }
+    
+    public function getEndsHIS($placeholder = ':', $sec = false)
+    {
+        return date('H'.$placeholder.'i'.( $sec ? $placeholder.'s' : '' ), strtotime($this->getEnds()));
+    }
+    
+    public function getStartTS()
+    {
+        return strtotime($this->getStart());
+    }
+    
+    public function getEndsTS()
+    {
+        return strtotime($this->getEnds());
+    }
+    
+    public function getTimeDiff($pattern = 'd.m.Y H:i:s'){
+        $seconds = $this->getEndsTS()-$this->getStartTS();
+        return date($pattern, $seconds); 
     }
 }
 ?>

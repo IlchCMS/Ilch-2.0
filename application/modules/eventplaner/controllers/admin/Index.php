@@ -62,6 +62,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
         $pagination->setRowsPerPage($this->getConfig()->get('event_admin_rowsperpage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
+        $this->getView()->set('config', $this->getConfig());
         $this->getView()->set('eventList', $eventMapper->getEventList($status, $pagination) );
         $this->getView()->set('pagination', $pagination);
     }
@@ -79,7 +80,6 @@ class Index extends \Ilch\Controller\Admin
         
         if($this->getRequest()->isPost()) {
             $model = new EventModel();
-            $date = new \Ilch\Date();
             
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
@@ -92,9 +92,13 @@ class Index extends \Ilch\Controller\Admin
             $organizer = $this->getRequest()->getPost('organizer');
             $event = $this->getRequest()->getPost('event');
             
+            if(!empty($this->getRequest()->getPost('newEvent'))){
+                $event = $this->getRequest()->getPost('newEvent');
+            }
+            
             if($status == '') {
                 $this->addMessage('missingStatus', 'danger');
-            } elseif(empty($start) /*&& preg_match('/([0-9]{2,4}\-[0-9]{1,2}\-[0-9]{1,2}\ [0-9]{1,2}\:[0-9]{1,2}?\:[0-9]{1,2})/', $start)*/ ) {
+            } elseif(empty($start)) {
                 $this->addMessage('missingStart', 'danger');
             } elseif(empty($ends)) {
                 $this->addMessage('missingEnds', 'danger');
@@ -114,8 +118,6 @@ class Index extends \Ilch\Controller\Admin
                 $model->setEvent($event);
                 $model->setTitle($this->getRequest()->getPost('title'));
                 $model->setMessage($this->getRequest()->getPost('message'));
-                $model->setChanged($date);
-                $model->setCreated($date);
                 $eventMapper->save($model);
                 
                 $this->addMessage('saveSuccess');

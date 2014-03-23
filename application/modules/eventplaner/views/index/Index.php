@@ -8,6 +8,7 @@ namespace Eventplaner\Views\Admin;
 use User\Mappers\User as UserMapper;
 use Ilch\Database\Mysql\Pager2 as Pager;
 
+$status = (array) json_decode($this->get('config')->get('event_status'), true);
 $user = new UserMapper;
 ?>
 
@@ -22,12 +23,21 @@ if(empty($this->get('eventList'))){
 }
 ?>
 
+<style type="text/css">
+.status{
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.9);
+}
+</style>
+
 <table class="table table-hover table-striped">
     <?php foreach( $this->get('eventList') as $event ): ?>
     <tr valign="middle">
 	
         <td  width="5%" align="center" valign="middle">
-            <div class="status status-<?=$event->getStatus();?>"><br /><br /><br /></div>
+            <div style="<?=$status[$event->getStatus()]['style'];?>" class="status"><br /><br /><br /></div>
         </td>
 		
         <td width="25%">

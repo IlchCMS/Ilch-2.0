@@ -28,6 +28,7 @@ class Index extends \Ilch\Controller\Frontend
         $pagination->setPage($this->getRequest()->getParam('page'));
         $this->getView()->set('eventList', $eventMapper->getEventList($status, $pagination) );
         $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('config', $this->getConfig());
     }
     
     public function detailsAction()
@@ -43,7 +44,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('users', $user->getUserList(  ) );
-        $this->getView()->set('status', EventConfig::getStatus());
+        $this->getView()->set('status', json_decode($this->getConfig()->get('event_status'), true));
         $this->getView()->set('eventNames', $eventMapper->getEventNames() );
     }
 }

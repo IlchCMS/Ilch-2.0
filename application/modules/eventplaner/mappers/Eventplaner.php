@@ -131,7 +131,6 @@ class Eventplaner extends \Ilch\Mapper
         $title = $eventplaner->getTitle();
         $event = $eventplaner->getEvent();
         $message = $eventplaner->getMessage();
-        $changed = $eventplaner->getChanged();
 
         if(!empty($status)) {
             $fields['status'] = $eventplaner->getStatus();
@@ -165,10 +164,6 @@ class Eventplaner extends \Ilch\Mapper
             $fields['message'] = $eventplaner->getMessage();
         }
 
-        if(!empty($changed)) {
-            $fields['changed'] = $eventplaner->getChanged();
-        }
-
         $eventId = (int)$this->db()->selectCell('id')
                 ->from('ep_events')
                 ->where(array('id' => $eventplaner->getId()))
@@ -180,9 +175,6 @@ class Eventplaner extends \Ilch\Mapper
                 ->where(array('id' => $eventId))
                 ->execute();
         } else {
-            
-            $fields['created'] = $eventplaner->getCreated();
-
             $userId = $this->db()->insert('ep_events')
                 ->fields($fields)
                 ->execute();

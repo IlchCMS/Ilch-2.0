@@ -79,27 +79,27 @@ class Config extends \Ilch\Config\Install
             "CREATE TABLE IF NOT EXISTS `[prefix]_ep_events` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `status` int(2) NOT NULL,
-                `start` datetime NOT NULL,
-                `ends` datetime NOT NULL,
+                `start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `ends` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `registrations` int(3) NOT NULL,
                 `organizer` int(32) NOT NULL,
                 `title` varchar(128) NOT NULL,
                 `event` varchar(128) NOT NULL,
                 `message` text NOT NULL,
-                `created` datetime NOT NULL,
-                `changed` datetime NOT NULL,
+                `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`)
-              ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;",
-
-              "CREATE TABLE IF NOT EXISTS `[prefix]_ep_registrations` (
+              ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+              
+            CREATE TABLE IF NOT EXISTS `[prefix]_ep_registrations` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `status` int(2) NOT NULL,
                 `eid` int(8) NOT NULL,
                 `uid` int(8) NOT NULL,
                 `cid` int(8) NOT NULL,
                 `comment` varchar(256) NOT NULL,
-                `changed` datetime NOT NULL,
-                `registered` datetime NOT NULL,
+                `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                `registered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`)
               ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;"
         );

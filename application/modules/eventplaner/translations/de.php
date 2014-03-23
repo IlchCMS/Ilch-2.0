@@ -8,6 +8,8 @@ defined('ACCESS') or die('no direct access');
 
 return array(
     "noEvents" => "Es gibt zur Zeit keine Events!",
+    "noRegistrations" => "Es sind zur Zeit keine Anmeldungen vorhanden!",
+    "newEventName" => "neuen Event erstellen",
 	
     "eventplaner" => "Eventplaner",
     "listView" => "Listenansicht",
@@ -21,7 +23,7 @@ return array(
     "entrySuccess" => "Eintrag war erfolgreich!",
     "entryFailure" => "Eintrag war <b>nicht</b> erfolgreich!",
 
-    "hours" => "std",
+    "hours" => "Stunden",
     "created" => "Erstellt am",
     "changed" => "Ge&auml;ndert am",
 

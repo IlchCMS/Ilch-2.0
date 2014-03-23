@@ -11,27 +11,35 @@ $user = new UserMapper;
 <center>
     <h1>
         <?=(!empty($event->getTitle()) ? $event->getTitle() : $event->getEvent())?><br />
-        <span class="small"><b><?=$this->getTrans(date('w', strtotime($event->getStart())));?>, <?=date('d.m.Y', strtotime($event->getStart()));?></b></span>
+        <span class="small"><b><?=$this->getTrans(date('w', $event->getStartTS()));?>, <?=date('d.m.Y', $event->getStartTS());?></b></span>
     </h1>
 </center>
 
 <table class="table table-hover table-striped">
+    
+    <tr>
+        <td colspan="3" align="center" style="<?=$this->get('status')[$event->getStatus()]['style']?> font-size: 22px;">
+            <b><?=$this->getTrans($this->get('status')[$event->getId()]['status'])?></b>
+        </td>
+    </tr>
 
     <tr valign="middle">
 	
 		
         <td width="33%">
-            <div><b><?=(!empty($event->getTitle()) ? $event->getTitle() : $event->getEvent())?></b></div>
-            <span class="small"><?=$event->getEvent().' '.$event->getRegistrations()?></span><br />
-            <span class="small"><b><?=$this->getTrans(date('w', strtotime($event->getStart())));?>, <?=date('d.m.Y', strtotime($event->getStart()));?></b></span>
+            <div >
+                <div><b><?=(!empty($event->getTitle()) ? $event->getTitle() : $event->getEvent())?></b></div>
+                <span class="small"><?=$event->getEvent().' '.$event->getRegistrations()?></span><br />
+                <span class="small"><b><?=$this->getTrans(date('w', $event->getStartTS()));?>, <?=date('d.m.Y', $event->getStartTS());?></b></span>
+            </div>
 
         </td>
         
         <td width="33%" align="center">
             <h4>
-                <?=date('H:i', strtotime($event->getStart()));?> - 
-                <?=date('H:i', strtotime($event->getEnds()));?><br />
-                <span class="small">(<?=round( (strtotime($event->getEnds())-strtotime($event->getStart()))/60/60 , 1) . $this->getTrans('hours');?>)</span>
+                <?=date('H:i', $event->getStartTS());?> - 
+                <?=date('H:i', $event->getEndsTS());?><br />
+                <span class="small">(<?=$event->getTimeDiff('H:i') . ' ' . $this->getTrans('hours');?>)</span>
             </h4>
         </td>
 		
@@ -99,7 +107,7 @@ $user = new UserMapper;
     </div>
     <h3><?php echo $this->getTrans('registrations'); ?></h3>
     <div>
-        Es sind zur Zeit keine Anmeldungen vorhanden!
+        <?php echo $this->getTrans('noRegistrations'); ?>
     </div>
 </div>
 

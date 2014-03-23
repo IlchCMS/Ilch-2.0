@@ -90,6 +90,10 @@ $config = $this->get('config');
                      </option>
                 <?php endforeach; ?>
             </select>
+            <input class="form-control"
+                   type="text"
+                   name="newEvent"
+                   placeholder="<?php echo $this->getTrans('newEventName'); ?>" />
         </div>
      </div>
 
@@ -172,40 +176,44 @@ $config = $this->get('config');
 
 <script>
 	$(document).ready(function(){
+            
+        var start = $('input#start');
+        var ends = $('input#ends');
+            
+        var slideNow = function( event, ui ) { 
+
+            var startDate = start.val();
+            var endsDate = ends.val();
+
+            startDate = startDate.split(' ');
+            endsDate = endsDate.split(' ');
+
+            //console.log('StartDate:', startDate);
+            //console.log('EndsDate:', endsDate);
+
+            start.val(startDate[0] + ' ' + sec2time(ui.values[0]));
+            ends.val(endsDate[0] + ' ' + sec2time(ui.values[1]));
+
+
+            thisDiff.html( sec2diff(ui.values[0], ui.values[1]) );
+        }
 
         var thisSlider = $( "#slider" );
         var thisDiff = $( "#viewDiff" );
 		
-		$( ".datepicker" ).each(function(i){
-			$(this).datepicker({ 
-				dateFormat: "yy-mm-dd",
-                onClose: function(date){
-                    var start = $('input#start');
-                    var ends = $('input#ends');
-
-                    start.val(date + ' <?=$config->get('event_start_time');?>');
-                    ends.val(date + ' <?=$config->get('event_ends_time');?>');
-
-                    thisSlider.slider({
-                        values: [datetime2sec(start.val()), datetime2sec(ends.val())],
-                        slide: function( event, ui ) { 
-
-                            var startDate = start.val();
-                            var endsDate = ends.val();
-
-                            startDate = startDate.split(' ');
-                            endsDate = endsDate.split(' ');
-
-                            //console.log('StartDate:', startDate);
-                            //console.log('EndsDate:', endsDate);
-
-                            start.val(startDate[0] + ' ' + sec2time(ui.values[0]));
-                            ends.val(endsDate[0] + ' ' + sec2time(ui.values[1]));
+            $( ".datepicker" ).each(function(i){
+                $(this).datepicker({ 
+                    dateFormat: "yy-mm-dd",
+                    onClose: function(date){
                         
-                        
-                            thisDiff.html( sec2diff(ui.values[0], ui.values[1]) );
-                        }
-                    });
+
+                        start.val(date + ' <?=$config->get('event_start_time');?>');
+                        ends.val(date + ' <?=$config->get('event_ends_time');?>');
+
+                        thisSlider.slider({
+                            values: [datetime2sec(start.val()), datetime2sec(ends.val())],
+                            slide: slideNow
+                        });
                     
                 }
 			});
@@ -214,10 +222,15 @@ $config = $this->get('config');
         
 
         thisSlider.slider({
-            range: true,                 
-            min: time2sec("<?=$config->get('event_start');?>"),
-            max: time2sec("<?=$config->get('event_ends');?>"),
-            step: time2sec("<?=$config->get('event_steps_time');?>")
+            range: true, 
+            values: [
+                datetime2sec('<?=($this->get('event') == '' ? $config->get('event_start_time') : $this->get('event')->getStart() )?>'), 
+                datetime2sec('<?=($this->get('event') == '' ? $config->get('event_ends_time') : $this->get('event')->getEnds() )?>')
+            ],
+            min: time2sec("<?=$config->get('event_starting_time');?>"),
+            max: time2sec("<?=$config->get('event_ending_time');?>"),
+            step: time2sec("<?=$config->get('event_steps_time');?>"),
+            slide:  slideNow
         });
 
         function sec2time(seconds) {    
