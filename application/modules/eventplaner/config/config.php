@@ -75,8 +75,8 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {   /* IST NOCH ZUM TESTEN */
-        return array(	
-            "CREATE TABLE IF NOT EXISTS `[prefix]_ep_events` (
+        return "
+            CREATE TABLE IF NOT EXISTS `[prefix]_ep_events` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `status` int(2) NOT NULL,
                 `start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -90,7 +90,7 @@ class Config extends \Ilch\Config\Install
                 `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`)
               ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-              
+
             CREATE TABLE IF NOT EXISTS `[prefix]_ep_registrations` (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `status` int(2) NOT NULL,
@@ -101,8 +101,8 @@ class Config extends \Ilch\Config\Install
                 `changed` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 `registered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (`id`)
-              ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;"
-        );
+              ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+        ";
     }
 }
 ?>
