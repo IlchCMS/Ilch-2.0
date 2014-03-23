@@ -3,7 +3,7 @@
  * @copyright Balthazar3k 2014
  * @package Eventplaner 2.0
  */
-
+$config = $this->get('config');
 ?>
 
 <form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => 'treat', 'id' => $this->getRequest()->getParam('id'))); ?>">
@@ -183,8 +183,8 @@
                     var start = $('input#start');
                     var ends = $('input#ends');
 
-                    start.val(date + ' 18:00:00');
-                    ends.val(date + ' 21:00:00');
+                    start.val(date + ' <?=$config->get('event_start_time');?>');
+                    ends.val(date + ' <?=$config->get('event_ends_time');?>');
 
                     thisSlider.slider({
                         values: [datetime2sec(start.val()), datetime2sec(ends.val())],
@@ -215,9 +215,9 @@
 
         thisSlider.slider({
             range: true,                 
-            min: time2sec("10:00"),
-            max: time2sec("23:59"),
-            step: time2sec("00:15"),
+            min: time2sec("<?=$config->get('event_start');?>"),
+            max: time2sec("<?=$config->get('event_ends');?>"),
+            step: time2sec("<?=$config->get('event_steps_time');?>")
         });
 
         function sec2time(seconds) {    

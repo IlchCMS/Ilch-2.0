@@ -31,7 +31,7 @@ class Index extends \Ilch\Controller\Admin
                 ),
                 array
                 (
-                    'name' => 'newEvent',
+                    'name' => 'menuActionNewEvent',
                     'active' => true,
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
@@ -60,7 +60,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $pagination = new \Ilch\Pagination();
-        $pagination->setRowsPerPage(5);
+        $pagination->setRowsPerPage($this->getConfig()->get('event_admin_rowsperpage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $this->getView()->set('eventList', $eventMapper->getEventList($status, $pagination) );
         $this->getView()->set('pagination', $pagination);
@@ -131,6 +131,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('users', $user->getUserList(  ) );
         $this->getView()->set('status', json_decode($this->getConfig()->get('event_status'), true) );
         $this->getView()->set('eventNames', $eventMapper->getEventNames() );
+        $this->getView()->set('config', $this->getConfig());
     }
 	
 }

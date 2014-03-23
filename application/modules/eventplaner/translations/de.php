@@ -15,6 +15,7 @@ return array(
     "eventDetails" => "Event Details",
     "menuActionNewEvent" => "Event erstellen",
     "menuActionEditEvent" => "Event bearbeiten",
+    "settings" => "Einstellung",
 
     "entrySuccess" => "Eintrag war erfolgreich!",
     "entryFailure" => "Eintrag war <b>nicht</b> erfolgreich!",
@@ -43,10 +44,32 @@ return array(
     "participant" => "Teilnehmer",
 
     // Status
+    "style" => "CSS Style",
+    
     "active" => "Aktiv",
     "closed" => "Beendet",
     "canceled" => "Abgesagt",
     "removed" => "Entfernt",
+    
+    // Settings
+    "eventSettings" => "Eventplaner Einstellungen",
+    
+    "eventSettingsPages" => "Anzahl der Eintr&auml;ge pro Seite",
+    "event_admin_rowsperpage" => "Admin",
+    "event_index_rowsperpage" => "Index",
+    
+    "eventSettingsTime" => "Zeiten <span class=\"small\">(alle Zeit angaben müssen HH:MM entsprechen!)</span>",
+    "event_starting_time" => "Events gehen von (HH:MM) fr&uuml;stens los",
+    "event_ending_time" => "Events gehen bis sp&auml;testens (HH:MM)",
+    "event_steps_time" => "Slider Schritte", 
+    "event_close_time" => "Anmeldung wird vor Start geschlossen", 
+    "event_start_time" => "Stantard Start eines Events",
+    "event_ends_time" => "Stantard Ende eines Events",
+    
+    // Settings->Status
+    "eventSettingsStatus" => "Status Style",
+    "color" => "Farbe",
+    "style" => "CSS Style",
 
     0 => "Sonntag",
     1 => "Montag",

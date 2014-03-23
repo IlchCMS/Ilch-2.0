@@ -52,8 +52,7 @@ class Eventplaner extends \Ilch\Mapper
             $entryModel->setCreated($entries['created']);
             $entryModel->setChanged($entries['changed']);
             $entry[] = $entryModel;
-        }
-
+        }   
         return $entry;
     }
 	

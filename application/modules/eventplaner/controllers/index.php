@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $pagination = new \Ilch\Pagination();
-        $pagination->setRowsPerPage(10);
+        $pagination->setRowsPerPage($this->getConfig()->get('event_index_rowsperpage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $this->getView()->set('eventList', $eventMapper->getEventList($status, $pagination) );
         $this->getView()->set('pagination', $pagination);
