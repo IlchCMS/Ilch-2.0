@@ -12,40 +12,15 @@ $user = new UserMapper;
 ?>
 
 <!-- TITLE -->
-<style>
-.status{
-	width: 100%;
-	height: 100%;
-	border-radius: 3px;
-	box-shadow: inset 1px 1px 2px rgba(0,0,0,0.9);
-}
-.status-1{
-	background-color: lime;
-}
-
-.status-2{
-	background-color: blue;
-}
-
-.status-3{
-    background-color: orange;
-}
-
-.status-4{
-    background-color: red;
-}
-
-.rotate {
-     -moz-transform: rotate(-90.0deg);  /* FF3.5+ */
-       -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
-  -webkit-transform: rotate(-90.0deg);  /* Saf3.1+, Chrome */
-             filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
-         -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)"; /* IE8 */
-}
-
-</style>
 
 <h4><?=$this->getTrans('listView');?></h4>
+
+<?php
+if(empty($this->get('eventList'))){
+    echo $this->getTrans('noEvents');
+    return;
+}
+?>
 
 <table class="table table-hover table-striped">
     <?php foreach( $this->get('eventList') as $event ): ?>

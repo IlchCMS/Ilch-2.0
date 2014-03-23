@@ -3,65 +3,18 @@
  * @copyright Balthazar3k 2014
  * @package Eventplaner 2.0
  */
- 
 namespace Eventplaner\Views\Admin;
 use User\Mappers\User as UserMapper;
 $user = new UserMapper;
 ?>
-
-<!-- TITLE -->
-<style>
-.status{
-	width: 100%;
-	height: 100%;
-	border-radius: 3px;
-	box-shadow: inset 1px 1px 2px rgba(0,0,0,0.9);
-}
-.status-1{
-	background-color: lime;
-}
-
-.status-2{
-	background-color: blue;
-}
-
-.status-3{
-    background-color: orange;
-}
-
-.status-4{
-    background-color: red;
-}
-
-.td-border{
-	border-left: 1px solid rgba( 0, 0, 0, 0.1);
-	border-right: 1px solid rgba( 0, 0, 0, 0.1);
-}
-
-.registrations {
-	float: left;
-	text-align: center; 
-	width: 20px; 
-	height: 20px; 
-	line-height: 19px; 
-	margin-left: 2px; 
-	border: 1px solid #FFF;
-	font-size: 10px;
-}
-
-.registrations-aktiv {
-	color: #FFF;
-	text-shadow: 1px 1px 0 rgba( 0, 0, 0, 0.75);
-	font-size: 20px;
-	line-height: 16px;
-	background-color: lime;
-	overfolw: hidden;
-	 
-}
-
-</style>
-
 <h4><?=$this->getTrans('listView');?></h4>
+
+<?php
+if(empty($this->get('eventList'))){
+    echo $this->getTrans('noEvents');
+    return;
+}
+?>
 
 <table class="table table-hover table-striped">
     <?php foreach( $this->get('eventList') as $event ): ?>

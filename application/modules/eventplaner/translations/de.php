@@ -7,6 +7,7 @@
 defined('ACCESS') or die('no direct access');
 
 return array(
+    "noEvents" => "Es gibt zur Zeit keine Events!",
 	
     "eventplaner" => "Eventplaner",
     "listView" => "Listenansicht",
