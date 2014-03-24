@@ -74,12 +74,15 @@ $config = $this->get('config');
         <label for="event" class="col-lg-2 control-label">
             <?php echo $this->getTrans('event'); ?>:
         </label>
+        <?php if( !empty($this->get('eventNames')) ) : ?>
         <div class="col-lg-4">
             <select 
                 class="form-control"
                 id="event"
                 name="event">
                 <option><?=$this->getTrans('choose')?> <?=$this->getTrans('event')?></option>
+                <option value="newEvent"><?=$this->getTrans('newEventName');?></option>
+                <optgroup>Events</optgroup>
                 <?php 
                     $eventNames = array();
                     foreach($this->get('eventNames') as $eventName) :
@@ -90,7 +93,10 @@ $config = $this->get('config');
                      </option>
                 <?php endforeach; ?>
             </select>
-            <input class="form-control"
+        </div>
+        <?php endif; ?>
+        <div id="setNewEvent" class="col-lg-4" <?php if( !empty($this->get('eventNames')) ) : ?>style="display:none;"<?php endif; ?>>
+            <input class="form-control "
                    type="text"
                    name="newEvent"
                    placeholder="<?php echo $this->getTrans('newEventName'); ?>" />
@@ -176,6 +182,18 @@ $config = $this->get('config');
 
 <script>
 	$(document).ready(function(){
+            
+        var sel = $('select#event');
+        
+        
+            sel.change(function(){
+                if( sel.val() === 'newEvent'){
+                    $(this).animate({visibility:'hidden'}, function(){
+                        $('div#setNewEvent').fadeIn();
+                    }).parent().remove();
+                }
+            });
+      
             
         var start = $('input#start');
         var ends = $('input#ends');

@@ -104,7 +104,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('missingEnds', 'danger');
             } elseif(empty($registrations)) {
                 $this->addMessage('missingRegistrations', 'danger');
-            } elseif(empty($organizer)) {
+            } elseif($organizer == 0) {
                 $this->addMessage('missingOrganizer', 'danger');
             } elseif(empty($event)) {
                 $this->addMessage('missingEvent', 'danger');

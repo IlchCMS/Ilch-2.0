@@ -33,7 +33,7 @@ class Config extends \Ilch\Config\Install
     
     protected $eventStatus = array(
         array(
-            'status' => 'aktiv',
+            'status' => 'active',
             'style' => "background-color: darkgreen;\ncolor: #FFF;\ntext-shadow: -1px -1px 0 rgba(0,0,0,0.4);"
         ),
         array(

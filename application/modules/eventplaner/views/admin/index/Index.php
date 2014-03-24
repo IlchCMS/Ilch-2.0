@@ -44,12 +44,12 @@ if(empty($this->get('eventList'))){
         </td>
 		
         <td width="15%">
-            <b><?=$event->getTitle();?></b><br />
-            - <?=$event->getEvent();?>, <b><?=date('H:i', strtotime($event->getStart()));?> - <?=date('H:i', strtotime($event->getEnds()));?> </b>
+            <b><?=(!empty($event->getTitle()) ? $event->getTitle() : $event->getEvent())?></b><br />
+            - <?=$event->getEvent();?>, <b><?=date('H:i', $event->getStartTS());?> - <?=date('H:i', $event->getEndsTS());?> </b>
 
-              (<?=round( (strtotime($event->getEnds())-strtotime($event->getStart()))/60/60 , 1) . $this->getTrans('hours');?>)<br />
+              (<?=$event->getTimeDiff('H:i');?>)<br />
 
-            - <?=$this->getTrans(date('w', strtotime($event->getStart())));?>, <?=date('d.m.Y', strtotime($event->getStart()));?>
+            - <?=$this->getTrans(date('w', $event->getStartTS()));?>, <?=date('d.m.Y', $event->getStartTS());?>
         </td>
 		
         <td  width="40%" align="center">

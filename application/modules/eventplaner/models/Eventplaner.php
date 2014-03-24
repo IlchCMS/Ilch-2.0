@@ -135,29 +135,7 @@ class Eventplaner extends \Ilch\Model
     {
 		$this->_changed = (string)$res;
     }
-    
-    /* Formatet Time Strings */
-    
-    public function getStartDMY($placeholder = '.')
-    {
-        return date('d'.$placeholder.'m'.$placeholder.'Y', strtotime($this->getStart()));
-    }
-    
-    public function getStartHIS($placeholder = ':', $sec = false)
-    {
-        return date('H'.$placeholder.'i'.( $sec ? $placeholder.'s' : '' ), strtotime($this->getStart()));
-    }
-    
-    public function getEndsDMY($placeholder = '.')
-    {
-        return date('d'.$placeholder.'m'.$placeholder.'Y', strtotime($this->getEnds()));
-    }
-    
-    public function getEndsHIS($placeholder = ':', $sec = false)
-    {
-        return date('H'.$placeholder.'i'.( $sec ? $placeholder.'s' : '' ), strtotime($this->getEnds()));
-    }
-    
+     
     public function getStartTS()
     {
         return strtotime($this->getStart());
@@ -168,9 +146,19 @@ class Eventplaner extends \Ilch\Model
         return strtotime($this->getEnds());
     }
     
-    public function getTimeDiff($pattern = 'd.m.Y H:i:s'){
-        $seconds = $this->getEndsTS()-$this->getStartTS();
-        return date($pattern, $seconds); 
+    public function getTimeDiff($pattern = 'H:i')
+    {
+        return date($pattern, $this->getEndsTS()-$this->getStartTS()); 
+    }
+    
+    public function getStartDate($pattern = 'd.m.Y H:i')
+    {
+        return date($pattern, $this->getStartTS());
+    }
+    
+    public function getEndsDate($pattern = 'd.m.Y H:i')
+    {
+        return date($pattern, $this->getEndsTS());
     }
 }
 ?>

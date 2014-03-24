@@ -22,7 +22,7 @@ class Eventplaner extends \Ilch\Mapper
                 *
             FROM [prefix]_ep_events
             /*WHERE `ends` >= \''.date('Y-m-d H:i:s').'\'*/
-            ORDER BY status ASC, start DESC 
+            ORDER BY status ASC, start ASC 
             LIMIT '.$limit[0].','.$limit[1].';
         ';
         
