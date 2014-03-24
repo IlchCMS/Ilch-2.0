@@ -10,15 +10,14 @@ defined('ACCESS') or die('no direct access');
 
 class Registrations extends \Ilch\Model
 {
-
     protected $_id;
-	protected $_aktiv;
+    protected $_status;
     protected $_eid;
     protected $_uid;
     protected $_cid;
     protected $_comemnt;
-	protected $_changed;
-	protected $_registered;
+    protected $_changed;
+    protected $_registered;
 	
 	
     public function getId()
@@ -26,9 +25,9 @@ class Registrations extends \Ilch\Model
         return $this->_id;
     }
 
-    public function getAktiv()
+    public function getStatus()
     {
-        return $this->_aktiv;
+        return $this->_status;
     }
 
     public function getEid()
@@ -36,7 +35,7 @@ class Registrations extends \Ilch\Model
         return $this->_eid;
     }
 	
-	public function getUid()
+    public function getUid()
     {
         return $this->_uid;
     }
@@ -51,57 +50,61 @@ class Registrations extends \Ilch\Model
         return $this->_comment;
     }
 	
-	public function getChanged()
+    public function getChanged()
     {
         return $this->_changed;
     }
 	
-	public function getRegistered()
+    public function getRegistered()
     {
         return $this->_registered;
     }
-	
-
-	## SETTER #################################### 
 
     public function setId($id)
     {
         $this->_id = (integer)$id;
     }
 
-	public function setAktiv($res)
+    public function setStatus($res)
     {
-		$this->_aktiv = (integer)$res;
+        $this->_status = (integer)$res;
     }
 	
-	public function setEid($res)
+    public function setEid($res)
     {
-		$this->_eid = (integer)$res;
+        $this->_eid = (integer)$res;
     }
 	
-	public function setUid($res)
+    public function setUid($res)
     {
-		$this->_uid = (integer)$res;
+        $this->_uid = (integer)$res;
     }
 	
-	public function setCid($res)
+    public function setCid($res)
     {
-		$this->_cid = (integer)$res;
+        $this->_cid = (integer)$res;
     }
 	
-	public function setComment($res)
+    public function setComment($res)
     {
-		$this->_comment = (string)$res;
+        $this->_comment = (string)$res;
     }
 	
-	public function setChanged($res)
+    public function setChanged($res)
     {
-		$this->_changed = (integer)$res;
+        $this->_changed = (string)$res;
     }
 	
-	public function setRegistered($res)
+    public function setRegistered($res)
     {
-		$this->_registered = (integer)$res;
+        $this->_registered = (string)$res;
+    }
+    
+    
+    public function getUserName()
+    {
+        $user = new \User\Mappers\User();
+        return $user->getUserById($this->_uid)->getName();
     }
 }
 ?>

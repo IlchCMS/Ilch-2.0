@@ -103,7 +103,7 @@ if(empty($this->get('eventList'))){
             <div id="progressbar" data-value="<?=rand(1, $event->getRegistrations());?>" data-max="<?=$event->getRegistrations();?>">
                 <div class="progress-label">
                     <?=$this->getTrans('registrations')?>: 
-                    2/<?=$event->getRegistrations();?>
+                    <?=$event->numRegistrations();?>/<?=$event->getRegistrations();?>
                 </div>
             </div>
         </div>

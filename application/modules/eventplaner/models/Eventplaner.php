@@ -160,5 +160,17 @@ class Eventplaner extends \Ilch\Model
     {
         return date($pattern, $this->getEndsTS());
     }
+    
+    public function numRegistrations()
+    {
+        $registrations = new \Eventplaner\Mappers\Registrations();
+        return $registrations->numRegistrations($this->_id);
+    }
+    
+    public function registrationsList()
+    {
+        $registrations = new \Eventplaner\Mappers\Registrations();
+        return $registrations->get($this->_id);
+    }
 }
 ?>

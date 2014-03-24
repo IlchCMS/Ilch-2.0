@@ -108,8 +108,15 @@ $user = new UserMapper;
     <h3><?php echo $this->getTrans('registrations'); ?></h3>
     <div>
         <?php echo $this->getTrans('noRegistrations'); ?>
+        <?php
+            foreach( $event->registrationsList() as $registration):
+                echo $registration->getUserName()."<br />";
+            endforeach;
+        ?>
     </div>
 </div>
+
+
 
 
 <script>
