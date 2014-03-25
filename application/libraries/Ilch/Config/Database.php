@@ -71,7 +71,7 @@ class Database
             ->where(array('key' => $key))
             ->execute();
 
-        if ($oldValue !== null) {
+        if ($oldValue != null) {
             if ($value !== $oldValue) {
                 $this->_db->update('config')
                     ->fields(array(
