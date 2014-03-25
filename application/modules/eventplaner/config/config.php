@@ -60,6 +60,17 @@ class Config extends \Ilch\Config\Install
         foreach( $this->eventConfigs as $key => $value){
             $config->set($key, $value);
         }
+        
+        $menuModel = new \Admin\Models\MenuItem();
+        $menuMapper = new \Admin\Mappers\Menu();
+        
+        $menuModel->setMenuId(1);
+        $menuModel->setType(3);
+        $menuModel->setSort(90);
+        $menuModel->setParentId(1);
+        $menuModel->setTitle('Eventplaner');
+        $menuModel->setModuleKey($this->key);
+        $menuMapper->saveItem($menuModel);
     }
 
     public function uninstall()
@@ -67,6 +78,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->drop('[prefix]_ep_events');
         $this->db()->drop('[prefix]_ep_registrations');
         $this->db()->query('DELETE FROM `[prefix]_config` WHERE `key` LIKE \'event_%\';');
+        $this->db()->query('DELETE FROM `[prefix]_menu_items` WHERE `module_key` = \''.$this->key.'\';');
     }
 
     public function getInstallSql()
