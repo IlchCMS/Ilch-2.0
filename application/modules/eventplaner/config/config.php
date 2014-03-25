@@ -64,13 +64,9 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->drop('ep_events');
-        $this->db()->drop('ep_registrations');
-        
-        foreach( $this->configs as $key => $value){
-            $this->db()->delete('config')->where(array('key' => $key))->execute();
-        }
-        
+        $this->db()->drop('[prefix]_ep_events');
+        $this->db()->drop('[prefix]_ep_registrations');
+        $this->db()->query('DELETE FROM `[prefix]_config` WHERE `key` LIKE \'event_%\';');
     }
 
     public function getInstallSql()
