@@ -18,7 +18,14 @@ class Config extends \Ilch\Config\Install
         'en_EN' => 'User',
         'de_DE' => 'Benutzer',
     );
+    public $description = array
+    (
+        'en_EN' => 'Usermanagment, here you can create user/groups.',
+        'de_DE' => 'Benutzerverwaltung, hier können Benutzer/Gruppen erstellt werden.',
+    );
+
     public $icon_small = 'user.png';
+    public $isSystemModule = true;
 
     public function install()
     {

@@ -82,4 +82,7 @@ return array
     'treat' => 'Treat',
     'askIfDeleteBox' => 'Are you sure you want delete the box "%s"?',
     'modRewrite' => 'Mod-Rewrite',
+    'administrate' => 'Administrate',
+    'desc' => 'Description',
+    'author' => 'Author',
 );

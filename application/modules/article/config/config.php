@@ -18,6 +18,11 @@ class Config extends \Ilch\Config\Install
         'en_EN' => 'Articles',
         'de_DE' => 'Artikel',
     );
+    public $description = array
+    (
+        'en_EN' => 'Here you can create articles.',
+        'de_DE' => 'Hier können neue Artikel / News erstellt werden.',
+    );
     public $icon_small = 'article.png';
 
     public function install()

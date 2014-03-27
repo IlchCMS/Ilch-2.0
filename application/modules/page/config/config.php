@@ -18,6 +18,11 @@ class Config extends \Ilch\Config\Install
         'en_EN' => 'Pages',
         'de_DE' => 'Seiten',
     );
+    public $description = array
+    (
+        'en_EN' => 'Here you can create pages.',
+        'de_DE' => 'Hier können neue Seiten erstellt werden.',
+    );
     public $icon_small = 'page.png';
 
     public function install()
