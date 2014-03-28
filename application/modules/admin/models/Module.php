@@ -17,13 +17,6 @@ defined('ACCESS') or die('no direct access');
 class Module extends \Ilch\Model
 {
     /**
-     * Id of the module.
-     *
-     * @var int
-     */
-    protected $_id = null;
-
-    /**
      * Key of the module.
      *
      * @var string
@@ -31,36 +24,9 @@ class Module extends \Ilch\Model
     protected $_key = '';
 
     /**
-     * Names of the module.
-     *
-     * @var array
-     */
-    protected $_names;
-
-    /**
      * Small icon of the module.
      */
     protected $_iconSmall;
-
-    /**
-     * Gets the id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->_id;
-    }
-
-    /**
-     * Sets the id.
-     *
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->_id = (int) $id;
-    }
 
     /**
      * Gets the key.
@@ -80,6 +46,26 @@ class Module extends \Ilch\Model
     public function setKey($key)
     {
         $this->_key = (string) $key;
+    }
+    
+    /**
+     * Gets the author.
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->_author;
+    }
+
+    /**
+     * Sets the author.
+     *
+     * @param string $author
+     */
+    public function setAuthor($author)
+    {
+        $this->_author = (string)$author;
     }
 
     /**
@@ -103,33 +89,33 @@ class Module extends \Ilch\Model
     }
 
     /**
-     * Add a module name for given language.
+     * Add content for given language.
      *
      * @param string $langKey
-     * @param string $name
+     * @param string $content
      */
-    public function addName($langKey, $name)
+    public function addContent($langKey, $content)
     {
-        $this->_names[$langKey] = (string) $name;
+        $this->_content[$langKey] = $content;
     }
 
     /**
-     * Gets module name for given language.
+     * Gets content for given language.
      *
      * @return string
      */
-    public function getName($langKey)
+    public function getContentForLocale($langKey)
     {
-        return $this->_names[$langKey];
+        return $this->_content[$langKey];
     }
 
     /**
-     * Gets alle module names.
+     * Gets all content.
      *
      * @return array
      */
-    public function getNames()
+    public function getContent()
     {
-        return $this->_names;
+        return $this->_content;
     }
 }

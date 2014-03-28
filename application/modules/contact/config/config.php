@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,14 +8,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'contact';
-    public $author = 'Meyer Dominik';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Contact',
-        'de_DE' => 'Kontakt',
+        'key' => 'contact',
+        'author' => 'Meyer Dominik',
+        'icon_small' => 'contact.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Kontakt',
+                'description' => 'Hier können die Kontakte gepflegt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Contact',
+                'description' => 'Here you can manage your contacts.',
+            ),
+        )
     );
-    public $icon_small = 'contact.png';
 
     public function install()
     {
@@ -33,6 +41,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_contact_receivers`');
     }
 
     public function getInstallSql()

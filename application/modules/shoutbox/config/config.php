@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -12,14 +9,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'shoutbox';
-    public $author = 'Veldscholten Kevin';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Shoutbox',
-        'de_DE' => 'Shoutbox',
+        'key' => 'shoutbox',
+        'author' => 'Veldscholten Kevin',
+        'icon_small' => 'shoutbox.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Shoutbox',
+                'description' => 'Hier kann die Shoutbox verwaltet werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Shoutbox',
+                'description' => 'Here you can manage your shoutbox.',
+            ),
+        )
     );
-    public $icon_small = 'shoutbox.png';
 
     public function install()
     {
@@ -32,6 +40,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_shoutbox`');
     }
 
     public function getInstallSql()

@@ -11,19 +11,18 @@
     </thead>
 <?php
 foreach ($this->get('modules') as $module) {
-    $configClass = '\\'.ucfirst($module->getKey()).'\\Config\\config';
-    $config = new $configClass($this->getTranslator());
+    $content = $module->getContentForLocale($this->getTranslator()->getLocale());
 
-    if($this->getUser()->hasAccess('module_'.$module->getId())) {
+    if($this->getUser()->hasAccess('module_'.$module->getKey())) {
 ?>
     <tbody>
         <tr>
             <td>
                 <br />
                 <img src="<?=$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall())?>" />
-                <?=$module->getName($this->getTranslator()->getLocale())?>
+                <?=$content['name']?>
                 <br /><br />
-                <small><?=$this->getTrans('author')?>: <?=$config->author?></small>
+                <small><?=$this->getTrans('author')?>: <?=$module->getAuthor()?></small>
                 <br />
                 <a href="<?=$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index'))?>">
                     <?=$this->getTrans('administrate')?>
@@ -40,8 +39,8 @@ foreach ($this->get('modules') as $module) {
             </td>
             <td>
                 <?php
-                    if (!empty($config->description[$this->getTranslator()->getLocale()])) {
-                        echo $config->description[$this->getTranslator()->getLocale()];
+                    if (!empty($content['description'])) {
+                        echo $content['description'];
                     }
                 ?>
             </td>

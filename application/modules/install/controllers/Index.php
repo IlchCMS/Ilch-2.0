@@ -243,15 +243,16 @@ class Index extends \Ilch\Controller\Frontend
                     $config = new $configClass($this->getTranslator());
                     $config->install();
 
-                    if (!empty($config->name)) {
+                    if (!empty($config->config)) {
                         $moduleModel = new \Admin\Models\Module();
-                        $moduleModel->setKey($config->key);
+                        $moduleModel->setKey($config->config['key']);
+                        $moduleModel->setAuthor($config->config['author']);
 
-                        foreach ($config->name as $key => $value) {
-                            $moduleModel->addName($key, $value);
+                        foreach ($config->config['languages'] as $key => $value) {
+                            $moduleModel->addContent($key, $value);
                         }
 
-                        $moduleModel->setIconSmall($config->icon_small);
+                        $moduleModel->setIconSmall($config->config['icon_small']);
                         $moduleMapper->save($moduleModel);
                     }
                 }

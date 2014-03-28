@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,9 +8,6 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'admin';
-    public $author = 'Meyer Dominik';
-
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
@@ -27,10 +21,6 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('default_layout', 'clan3columns');
     }
 
-    public function uninstall()
-    {
-    }
-    
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_config` (
@@ -41,16 +31,16 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
                   `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `icon_small` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  PRIMARY KEY (`id`),
                   UNIQUE KEY `key` (`key`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_modules_names` (
-                  `module_id` int(11) NOT NULL,
+                CREATE TABLE IF NOT EXISTS `[prefix]_modules_content` (
+                  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

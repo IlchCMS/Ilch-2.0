@@ -174,11 +174,12 @@
                                 $user = \Ilch\Registry::get('user');
 
                                 foreach ($this->get('modules') as $module) {
-                                    if($user->hasAccess('module_'.$module->getId())) {
+                                    if($user->hasAccess('module_'.$module->getKey())) {
+                                        $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                                         echo '<li>
                                                 <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
                                                     <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
-                                                    .$module->getName($this->getTranslator()->getLocale()).'</a>
+                                                    .$content['name'].'</a>
                                             </li>';
                                     }
                                 }

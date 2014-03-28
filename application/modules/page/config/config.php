@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,19 +8,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'page';
-    public $author = 'Meyer Dominik';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Pages',
-        'de_DE' => 'Seiten',
+        'key' => 'page',
+        'author' => 'Meyer Dominik',
+        'icon_small' => 'page.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Seiten',
+                'description' => 'Hier können neue Seiten erstellt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Pages',
+                'description' => 'Here you can create pages.',
+            ),
+        )
     );
-    public $description = array
-    (
-        'en_EN' => 'Here you can create pages.',
-        'de_DE' => 'Hier können neue Seiten erstellt werden.',
-    );
-    public $icon_small = 'page.png';
 
     public function install()
     {
@@ -32,6 +35,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_pages`;
+                                 DROP TABLE `[prefix]_pages_content`;');
     }
 
     public function getInstallSql()

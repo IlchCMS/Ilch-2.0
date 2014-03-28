@@ -24,12 +24,13 @@
                     $moduleMapper = new \Admin\Mappers\Module();
 
                     foreach ($this->get('modules') as $module) {
+                        $content = $module->getContentForLocale($this->getTranslator()->getLocale());
                         $selected = '';
 
                         if ($this->get('startPage') == 'module_'.$module->getKey()) {
                             $selected = 'selected="selected"';
                         }
-                        echo '<option '.$selected.' value="module_'.$module->getKey().'">'.$this->escape($module->getName($this->getTranslator()->getLocale())).'</option>';
+                        echo '<option '.$selected.' value="module_'.$module->getKey().'">'.$this->escape($content['name']).'</option>';
                     }
                 ?>
                 </optgroup>

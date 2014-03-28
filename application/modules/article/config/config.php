@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,19 +8,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'article';
-    public $author = 'Meyer Dominik';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Articles',
-        'de_DE' => 'Artikel',
+        'key' => 'article',
+        'author' => 'Meyer Dominik',
+        'icon_small' => 'article.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Artikel',
+                'description' => 'Hier können neue Artikel / News erstellt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Articles',
+                'description' => 'Here you can create articles.',
+            ),
+        )
     );
-    public $description = array
-    (
-        'en_EN' => 'Here you can create articles.',
-        'de_DE' => 'Hier können neue Artikel / News erstellt werden.',
-    );
-    public $icon_small = 'article.png';
 
     public function install()
     {
@@ -43,6 +46,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_articles`;
+                                 DROP TABLE `[prefix]_articles_content`;');
     }
 
     public function getInstallSql()

@@ -11,21 +11,26 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'user';
-    public $author = 'Meyer Dominik';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'User',
-        'de_DE' => 'Benutzer',
+        'key' => 'user',
+        'author' => 'Meyer Dominik',
+        'icon_small' => 'user.png',
+        'system_module' => true,
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Benutzer',
+                'description' => 'Hier können neue Benutzer erstellt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'User',
+                'description' => 'Here you can create the users.',
+            ),
+        )
     );
-    public $description = array
-    (
-        'en_EN' => 'Usermanagment, here you can create user/groups.',
-        'de_DE' => 'Benutzerverwaltung, hier können Benutzer/Gruppen erstellt werden.',
-    );
-
-    public $icon_small = 'user.png';
-    public $isSystemModule = true;
 
     public function install()
     {
@@ -48,10 +53,6 @@ class Config extends \Ilch\Config\Install
         $dateCreated = new \Ilch\Date();
         $user->setDateCreated($dateCreated);
         $userMapper->save($user);
-    }
-
-    public function uninstall()
-    {
     }
 
     public function getInstallSql()

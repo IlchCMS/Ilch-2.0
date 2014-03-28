@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Media\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,14 +8,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'media';
-    public $author = 'Stantin Thomas';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Media',
-        'de_DE' => 'Medien',
+        'key' => 'media',
+        'author' => 'Stantin Thomas',
+        'icon_small' => 'media.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Medien',
+                'description' => 'Hier können die Medien verwaltet werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Media',
+                'description' => 'Here you can manage your media',
+            ),
+        )
     );
-    public $icon_small = 'media.png';
 
     public function install()
     {
@@ -32,6 +40,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_media`');
     }
     
     public function getInstallSql()

@@ -201,12 +201,7 @@ class Menu extends \Ilch\Mapper
             ->where(array('id' => $menu->getId()))
             ->execute();
 
-        if ($menuId) {
-            $this->db()->update('menu')
-                ->fields(array('title' => $menu->getTitle()))
-                ->where(array('id' => $menuId))
-                ->execute();
-        } else {
+        if (!$menuId) {
             $menuId = $this->db()->insert('menu')
                 ->fields(array('title' => $menu->getTitle()))
                 ->execute();

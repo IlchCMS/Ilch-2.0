@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -12,14 +9,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'impressum';
-    public $author = 'Veldscholten Kevin';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Impressum',
-        'de_DE' => 'Impressum',
+        'key' => 'impressum',
+        'author' => 'Veldscholten Kevin',
+        'icon_small' => 'impressum.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Impressum',
+                'description' => 'Hier kann das Impressum verwaltet werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Impress',
+                'description' => 'Here you can manage your impress.',
+            ),
+        )
     );
-    public $icon_small = 'impressum.png';
 
     public function install()
     {
@@ -28,6 +36,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_impressum`');
     }
 
     public function getInstallSql()

@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,14 +8,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'partner';
-    public $author = 'Veldscholten Kevin';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Partner',
-        'de_DE' => 'Partner',
+        'key' => 'partner',
+        'author' => 'Veldscholten Kevin',
+        'icon_small' => 'partner.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Partner',
+                'description' => 'Hier können neue Partner erstellt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Partner',
+                'description' => 'Here you can create new partners.',
+            ),
+        )
     );
-    public $icon_small = 'partner.png';
 
     public function install()
     {
@@ -27,6 +35,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_partners`');
     }
 
     public function getInstallSql()

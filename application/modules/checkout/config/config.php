@@ -1,8 +1,5 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -11,14 +8,25 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'checkout';
-    public $author = 'Thomas Stantin';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Checkout',
-        'de_DE' => 'Kasse',
+        'key' => 'checkout',
+        'author' => 'Thomas Stantin',
+        'icon_small' => 'checkout.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Kasse',
+                'description' => 'Hier kann die Clan-Kasse gepflegt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Checkout',
+                'description' => 'Here you can manage your clan cash.',
+            ),
+        )
     );
-    public $icon_small = 'checkout.png';
 
     public function install()
     {
@@ -29,6 +37,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_checkout`');
     }
 
     public function getInstallSql()
