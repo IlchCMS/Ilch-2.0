@@ -72,12 +72,15 @@
                     <tbody>
                         <?php
                         foreach($typeData as $type) {
+                            if ($accessType == 'module') {
+                                $content = $type->getContentForLocale($this->getTranslator()->getLocale());
+                            }
                         ?>
                             <tr>
                                 <td style="vertical-align:middle">
                                     <?php
                                     if($accessType == 'module') {
-                                        echo $this->escape($type->getName($this->getTranslator()->getLocale()));
+                                        echo $this->escape($content['name']);
                                     } elseif($accessType == 'article') {
                                        echo $this->escape($type->getTitle());
                                     } elseif($accessType == 'page') {
@@ -101,8 +104,14 @@
                                 $typeAccessLevel = 1;
 
                                 if($groupHasEntries) {
-                                    if(isset($typeEntries[$type->getId()])) {
-                                        $typeAccessLevel = (int)$typeEntries[$type->getId()];
+                                    if($accessType == 'module') {
+                                        if(isset($typeEntries[$type->getKey()])) {
+                                            $typeAccessLevel = (int)$typeEntries[$type->getKey()];
+                                        }
+                                    } else {
+                                        if(isset($typeEntries[$type->getId()])) {
+                                            $typeAccessLevel = (int)$typeEntries[$type->getId()];
+                                        }
                                     }
                                 }
 
@@ -110,9 +119,15 @@
                                     ?>
                                     <td class="text-center">
                                         <input type="radio"
-                                               name="groupAccess<?php echo '['.$accessType.']['.$type->getId().']'; ?>"
-                                               value="<?php echo $accessLevel; ?>"
-                                               <?php echo ($accessLevel == $typeAccessLevel) ? 'checked' : '' ?>/>
+                                           <?php
+                                             if($accessType == 'module') {
+                                                 echo 'name="groupAccess['.$accessType.']['.$type->getKey().']"';
+                                              } else {
+                                                  echo 'name="groupAccess['.$accessType.']['.$type->getId().']"';
+                                              }
+                                          ?>
+                                           value="<?php echo $accessLevel; ?>"
+                                           <?php echo ($accessLevel == $typeAccessLevel) ? 'checked' : '' ?>/>
                                     </td>
                                     <?php
                                 }

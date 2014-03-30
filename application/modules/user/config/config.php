@@ -43,7 +43,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('regist_accept', '1');
         $databaseConfig->set('regist_confirm', '1');
-        $databaseConfig->set('regist_rules', 'Die Registrierung ist völlig Kostenlos.\r\nDie Betreiber der Seite übernehmen keine Haftung.\r\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.');
+        $databaseConfig->set('regist_rules', "Die Registrierung ist völlig Kostenlos.\nDie Betreiber der Seite übernehmen keine Haftung.\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.");
         $user = new \User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
         $user->setPassword(crypt($_SESSION['install']['adminPassword']));
@@ -86,11 +86,11 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
                   `group_id` int(11) NOT NULL,
                   `page_id` int(11) DEFAULT 0,
-                  `module_id` int(11) DEFAULT 0,
+                  `module_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `article_id` int(11) DEFAULT 0,
                   `box_id` int(11) DEFAULT 0,
                   `access_level` int(11) DEFAULT 0,
-                  PRIMARY KEY (`group_id`, `page_id`, `module_id`, `article_id`, `box_id`)
+                  PRIMARY KEY (`group_id`, `page_id`, `module_key`, `article_id`, `box_id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (

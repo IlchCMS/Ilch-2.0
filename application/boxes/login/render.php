@@ -1,14 +1,16 @@
 <?php if($this->getUser() !== null) { ?>
     <?php echo $this->getTrans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b>
     <br />
-    <!--
-    <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->getTrans('message'); ?> (0)</a><br />
-    <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->getTrans('UserPanel'); ?></a><br />
-    -->
+    <?php
+        if($this->getUser()->isAdmin()) {
+    ?>
     <a href="<?php echo $this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')); ?>">
         <?php echo $this->getTrans('adminarea'); ?>
     </a>
     <br />
+    <?php
+        }
+    ?>
     <a href="<?php echo $this->getUrl(array('module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1)); ?>">
         <?php echo $this->getTrans('logout'); ?>
     </a>

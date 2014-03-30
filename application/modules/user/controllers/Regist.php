@@ -77,27 +77,25 @@ class Regist extends \Ilch\Controller\Frontend
             }
             
             if (empty($errors)) {
+                    $groupMapper = new \User\Mappers\Group();
+                    $userGroup = $groupMapper->getGroupById(2);
+                    $currentDate = new \Ilch\Date(); 
+                    $model = new \User\Models\User();
+                    $model->setName($name);
+                    $model->setPassword(crypt($password));
+                    $model->setEmail($email);
+                    $model->setDateCreated($currentDate);
+                    $model->addGroup($userGroup);
+
                 if ($this->getConfig()->get('regist_confirm') == 0){  
-                    $currentDate = new \Ilch\Date(); 
-                    $model = new \User\Models\User();
-                    $model->setName($name);
-                    $model->setPassword(crypt($password));
-                    $model->setEmail($email);
-                    $model->setDateCreated($currentDate);
                     $model->setDateConfirmed($currentDate);
-                    $registMapper->save($model);
                 }else{        
-                    $currentDate = new \Ilch\Date(); 
                     $confirmedCode = md5(uniqid(rand()));
-                    $model = new \User\Models\User();
-                    $model->setName($name);
-                    $model->setPassword(crypt($password));
-                    $model->setEmail($email);
-                    $model->setDateCreated($currentDate);
                     $model->setConfirmed(1);
                     $model->setConfirmedCode($confirmedCode);
-                    $registMapper->save($model);                   
                 }
+
+                $registMapper->save($model);                   
                 
                 $_SESSION["name"] = $name;
                 $_SESSION["email"] = $email;

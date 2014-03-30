@@ -81,18 +81,6 @@ CREATE TABLE IF NOT EXISTS `modules` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `modules_names`
---
-
-CREATE TABLE IF NOT EXISTS `modules_names` (
-  `module_id` int(11) NOT NULL,
-  `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `pages`
 --
 

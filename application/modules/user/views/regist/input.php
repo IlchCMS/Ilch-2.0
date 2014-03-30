@@ -3,10 +3,10 @@
         $errors = $this->get('errors');
     ?>
     <div class="form-group <?php if (!empty($errors['name'])) { echo 'has-error'; }; ?>">
-        <label for="name" class="control-label col-lg-3">
+        <label for="name" class="control-label col-lg-2">
             <?php echo $this->getTrans('name'); ?>:
         </label>
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <input value=""
                    type="text"
                    name="name"
@@ -20,10 +20,10 @@
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
-        <label for="password" class="control-label col-lg-3">
+        <label for="password" class="control-label col-lg-2">
             <?php echo $this->getTrans('password'); ?>:
         </label>
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <input value=""
                    type="password"
                    class="form-control"
@@ -37,10 +37,10 @@
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['password2'])) { echo 'has-error'; }; ?>">
-        <label for="password2" class="control-label col-lg-3">
+        <label for="password2" class="control-label col-lg-2">
             <?php echo $this->getTrans('password2'); ?>:
         </label>
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <input value=""
                    type="password"
                    class="form-control"
@@ -54,10 +54,10 @@
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
-        <label for="email" class="control-label col-lg-3">
+        <label for="email" class="control-label col-lg-2">
             <?php echo $this->getTrans('email'); ?>:
         </label>
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <input value=""
                    type="text"
                    name="email"
@@ -70,10 +70,11 @@
             ?>
         </div>
     </div>
-        <a href="<?php echo $this->getUrl(array('action' => 'index')); ?>" class="btn btn-default pull-left">
-            <?php echo $this->getTrans('backButton'); ?>
-        </a>
-    <button type="submit" name="save" class="btn pull-right"><?php echo $this->getTrans('registButton'); ?></button>
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-8">
+            <button type="submit" name="save" class="btn"><?php echo $this->getTrans('registButton'); ?></button>
+        </div>
+    </div>
 </form>
 
 <script src="<?php echo $this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>

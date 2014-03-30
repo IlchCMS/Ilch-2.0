@@ -49,34 +49,28 @@ class BeforeControllerLoad
             return;
         }
 
-        $groups = $user->getGroups();
-        $groupMapper = new GroupMapper();
         $request = $pluginData['request'];
-        $accessGranted = false;
-        $moduleMapper = new ModuleMapper();
-        $modules = $moduleMapper->getModules();
 
-        if($user->hasGroup(1)) {
+        if($user->isAdmin()) {
             /*
              * Administrator group should have sight on everything, return here.
              */
             return;
         }
 
-        if($request->isAdmin()) {
-            if(!in_array($request->getModuleName(), array('admin'))) {
-                $requestedModuleKey = null;
+        if($request->isAdmin() && !$user->isAdmin()) {
+            /*
+             * Not admins have only access to modules.
+             */
+            if ($request->getModuleName() == 'admin' && !in_array($request->getControllerName(), array('index', 'login'))) {
+                $pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'index', 'action' => 'index'));
+            }
 
-                foreach($modules as $module) {
-                    if($module->getKey() == $request->getModuleName()) {
-                        $requestedModuleKey = $module->getKey();
-                        break;
-                    }
-                }
-
-                if(!$user->hasAccess('module_'.$requestedModuleKey)) {
-                    $pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'index', 'action' => 'index'));
-                }
+            /*
+             * Check if user has right for this module.
+             */
+            if(!$user->hasAccess('module_'.$request->getModuleName()) && $request->getModuleName() !== 'admin') {
+                $pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'index', 'action' => 'index'));
             }
         }
     }

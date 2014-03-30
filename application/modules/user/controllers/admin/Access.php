@@ -99,8 +99,8 @@ class Access extends BaseController
                 $groupMapper = new GroupMapper();
 
                 foreach($groupAccessData as $type => $groupsAccessTypeData) {
-                    foreach($groupsAccessTypeData as $typeId => $accessLevel) {
-                        $groupMapper->saveAccessData($_SESSION['user']['accessGroup'], $typeId, $accessLevel, $type);
+                    foreach($groupsAccessTypeData as $value => $accessLevel) {
+                        $groupMapper->saveAccessData($_SESSION['user']['accessGroup'], $value, $accessLevel, $type);
                     }
                 }
             }

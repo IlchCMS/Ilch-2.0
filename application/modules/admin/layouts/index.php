@@ -147,6 +147,9 @@
                             <i class="fa fa-home"></i>
                         </a>
                     </li>
+                    <?php
+                        if($this->getUser()->isAdmin()) {
+                    ?>
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'menu') {
                                     echo 'class="active"';
                                 }?>>
@@ -154,6 +157,25 @@
                             <i class="fa fa-list-ol"></i> <?php echo $this->getTrans('navigation'); ?>
                         </a>
                     </li>
+                    <?php
+                        }
+                        
+                        $user = \Ilch\Registry::get('user');
+                        $modulesHtml = '';
+
+                        foreach ($this->get('modules') as $module) {
+                            if($user->hasAccess('module_'.$module->getKey())) {
+                                $content = $module->getContentForLocale($this->getTranslator()->getLocale());
+                                $modulesHtml .= '<li>
+                                        <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                            <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
+                                            .$content['name'].'</a>
+                                    </li>';
+                            }
+                        }
+
+                        if (!empty($modulesHtml)) {
+                    ?>
                     <li class="dropdown <?php if($this->getRequest()->getModuleName() !== 'admin') {
                                     echo 'active';
                                 }?>">
@@ -164,6 +186,9 @@
                             <b class="caret"></b>
                         </a>
                         <ul role="menu" class="dropdown-menu">
+                            <?php
+                                if($this->getUser()->isAdmin()) {
+                            ?>  
                             <li>
                                 <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'modules', 'action' => 'index'))?>">
                                     <i class="fa fa-list-ol"></i> <?php echo $this->getTrans('overview'); ?>
@@ -171,21 +196,16 @@
                             </li>
                             <li class="divider"></li>
                             <?php
-                                $user = \Ilch\Registry::get('user');
-
-                                foreach ($this->get('modules') as $module) {
-                                    if($user->hasAccess('module_'.$module->getKey())) {
-                                        $content = $module->getContentForLocale($this->getTranslator()->getLocale());
-                                        echo '<li>
-                                                <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
-                                                    <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
-                                                    .$content['name'].'</a>
-                                            </li>';
-                                    }
                                 }
+                                echo $modulesHtml;
                             ?>
                         </ul>
                     </li>
+                    <?php
+                        }
+
+                        if($this->getUser()->isAdmin()) {
+                    ?>
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') {
                                     echo 'class="active"';
                                 }?>>
@@ -193,6 +213,11 @@
                             <i class="fa fa-inbox"></i> <?php echo $this->getTrans('boxes'); ?>
                         </a>
                     </li>
+                    <?php
+                        }
+
+                        if($this->getUser()->isAdmin()) {
+                    ?>
                     <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'layouts') {
                                     echo 'class="active"';
                                 }?>>
@@ -200,8 +225,14 @@
                             <i class="fa fa-picture-o"></i> <?php echo $this->getTrans('layouts'); ?>
                         </a>
                     </li>
+                    <?php
+                        }
+                    ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <?php
+                        if($this->getUser()->isAdmin()) {
+                    ?>
                     <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') {
                                     echo 'active';
                                 }?> visible-md visible-lg">
@@ -209,6 +240,9 @@
                             <i class="fa fa-cogs"></i>
                         </a>
                     </li>
+                    <?php
+                        }
+                    ?>
                     <li class="visible-md visible-lg">
                         <a title="<?php echo $this->getTrans('openFrontend'); ?>"
                            target="_blank"

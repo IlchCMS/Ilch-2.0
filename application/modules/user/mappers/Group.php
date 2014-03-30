@@ -249,8 +249,12 @@ class Group extends \Ilch\Mapper
 
             foreach($accessTypes as $accessType) {
                 if(!empty($accessDbListEntry[$accessType.'_id'])) {
-                    $entryId = $accessDbListEntry[$accessType.'_id'];
                     $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_id']] = $accessDbListEntry['access_level'];
+                    break;
+                }
+                
+                if(!empty($accessDbListEntry[$accessType.'_key'])) {
+                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_key']] = $accessDbListEntry['access_level'];
                     break;
                 }
             }
@@ -263,16 +267,22 @@ class Group extends \Ilch\Mapper
      * Saves or updates an access data entry to the db.
      *
      * @param  int    $groupId
-     * @param  int    $typeId
+     * @param  mixed  $value
      * @param  int    $accessLevel
      * @param  string $type
      */
-    public function saveAccessData($groupId, $typeId, $accessLevel, $type)
+    public function saveAccessData($groupId, $value, $accessLevel, $type)
     {
         $rec = array(
             'group_id' => (int)$groupId,
-            $type.'_id' => (int)$typeId,
         );
+
+        if ($type == 'module') {
+            $rec['module_key'] = $value;
+        } else {
+            $rec[$type.'_id'] = (int)$value;
+        }
+
         $fields = $rec;
         $fields['access_level'] = (int)$accessLevel;
         $entryExists = (bool)$this->db()->selectCell('COUNT(*)')

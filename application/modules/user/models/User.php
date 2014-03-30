@@ -337,6 +337,20 @@ class User extends \Ilch\Model
     }
 
     /**
+     * Checks if user has admin group.
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        if(in_array(1, array_keys($this->getGroups()))) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Returns whether the user has access to a specific key.
      *
      * @param  string  $key       A module-key, page-id or article-id prefixed by either one of these: "module_", "page_", "article_".
@@ -354,19 +368,18 @@ class User extends \Ilch\Model
         }
 
         $type = '';
-        $rec = array();
         $sql = 'SELECT ga.access_level
                 FROM [prefix]_groups_access AS ga';
 
         if (strpos($key, 'module_') !== false) {
             $moduleKey = substr($key, 7);
             $type = 'module';
-            $sqlJoin = ' INNER JOIN [prefix]_modules AS m ON ga.module_id = m.id';
+            $sqlJoin = ' INNER JOIN `[prefix]_modules` AS m ON ga.module_key = m.key';
             $sqlWhere = ' WHERE m.key = "'.$moduleKey.'"';
         } elseif (strpos($key, 'page_') !== false) {
             $pageId = (int)substr($key, 5);
             $type = 'page';
-            $sqlJoin = ' INNER JOIN [prefix]_pages AS p ON ga.page_id = p.id';
+            $sqlJoin = ' INNER JOIN `[prefix]_pages` AS p ON ga.page_id = p.id';
             $sqlWhere = ' WHERE p.id = '.(int)$pageId;
         } elseif (strpos($key, 'article_') !== false) {
             $articleId = (int)substr($key, 8);
