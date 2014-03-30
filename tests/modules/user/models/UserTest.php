@@ -140,7 +140,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
         $dbMock = $this->getMock('Ilch_Database', array('queryCell'));
         $dbMock->expects($this->once())
                 ->method('queryCell')
-                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN [prefix]_modules'), $this->stringContains('user')))
+                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN `[prefix]_modules`'), $this->stringContains('user')))
                 ->will($this->returnValue('0'));
         \Ilch\Registry::set('db', $dbMock);
 
