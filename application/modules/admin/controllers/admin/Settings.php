@@ -28,15 +28,17 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
             
             if ((int)$this->getRequest()->getPost('modRewrite')) {
-                $htaccess = '<IfModule mod_rewrite.c>
-                                RewriteEngine On
-                                RewriteBase '.REWRITE_BASE.'
-                                RewriteRule ^index\.php$ - [L]
-                                RewriteCond %{REQUEST_FILENAME} !-f
-                                RewriteCond %{REQUEST_FILENAME} !-d
-                                RewriteRule . '.REWRITE_BASE.'/index.php [L]
-                            </IfModule>';
-                file_put_contents(APPLICATION_PATH.'/../.htaccess', $htaccess);
+                $htaccess = <<<'HTACCESS'
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase %1$s/
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %%{REQUEST_FILENAME} !-f
+    RewriteCond %%{REQUEST_FILENAME} !-d
+    RewriteRule . %1$s/index.php [L]
+</IfModule>
+HTACCESS;
+                file_put_contents(APPLICATION_PATH.'/../.htaccess', sprintf($htaccess, REWRITE_BASE));
             } elseif(file_exists(APPLICATION_PATH.'/../.htaccess')) {
                 file_put_contents(APPLICATION_PATH.'/../.htaccess', '');
             }
