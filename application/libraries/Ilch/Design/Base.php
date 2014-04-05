@@ -148,12 +148,13 @@ abstract class Base
      * Returns the translated text for a specific key.
      *
      * @param string $key
-     * @param mixed[]
+     * @param [, mixed $args [, mixed $... ]]
      * @return string
      */
-    public function getTrans($key, $placeholders = array())
+    public function getTrans($key)
     {
-        return $this->getTranslator()->trans($key, $placeholders);
+      $args = func_get_args();
+      return call_user_func_array(array($this->getTranslator(), 'trans'), $args);
     }
 
     /**
