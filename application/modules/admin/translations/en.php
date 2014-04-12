@@ -85,4 +85,10 @@ return array
     'administrate' => 'Administrate',
     'desc' => 'Description',
     'author' => 'Author',
+    'updateNow' => 'Update Now',
+    'system' => 'System',
+    'upToDate' => 'up to date',
+    'notUpToDate' => 'not up to date',
+    'installedVersion' => 'Installed Version',
+    'serverVersion' => 'Server Version'
 );

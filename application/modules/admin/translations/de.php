@@ -86,4 +86,10 @@ return array
     'administrate' => 'Administrieren',
     'desc' => 'Beschreibung',
     'author' => 'Autor',
+    'updateNow' => 'Jetzt aktualisieren',
+    'system' => 'System',
+    'upToDate' => 'aktuell',
+    'notUpToDate' => 'nicht aktuell',
+    'installedVersion' => 'Installierte Version',
+    'serverVersion' => 'Server Version'
 );
