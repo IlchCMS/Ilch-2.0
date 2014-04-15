@@ -32,6 +32,7 @@ class Module extends \Ilch\Mapper
             $moduleModel = new \Admin\Models\Module();
             $moduleModel->setKey($moduleRow['key']);
             $moduleModel->setAuthor($moduleRow['author']);
+            $moduleModel->setSystemModule($moduleRow['system']);
             $moduleModel->setIconSmall($moduleRow['icon_small']);
             $contentRows = $this->db()->selectArray('*')
                 ->from('modules_content')
@@ -55,7 +56,7 @@ class Module extends \Ilch\Mapper
     public function save(\Admin\Models\Module $module)
     {
         $moduleId = $this->db()->insert('modules')
-            ->fields(array('key' => $module->getKey(),
+            ->fields(array('key' => $module->getKey(), 'system' => $module->getSystemModule(),
                 'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor()))
             ->execute();
 

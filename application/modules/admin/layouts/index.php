@@ -161,20 +161,29 @@
                         }
                         
                         $user = \Ilch\Registry::get('user');
-                        $modulesHtml = '';
+                        $modulesHtml = $systemModuleHtml = '';
 
                         foreach ($this->get('modules') as $module) {
                             if($user->hasAccess('module_'.$module->getKey())) {
                                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
-                                $modulesHtml .= '<li>
-                                        <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
-                                            <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
-                                            .$content['name'].'</a>
-                                    </li>';
+
+                                if ($module->getSystemModule()) {
+                                    $systemModuleHtml .= '<li>
+                                            <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                                <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
+                                                .$content['name'].'</a>
+                                        </li>';
+                                } else {
+                                    $modulesHtml .= '<li>
+                                            <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                                <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
+                                                .$content['name'].'</a>
+                                        </li>';
+                                }
                             }
                         }
 
-                        if (!empty($modulesHtml)) {
+                        if (!empty($modulesHtml) || !empty($systemModuleHtml)) {
                     ?>
                     <li class="dropdown <?php if($this->getRequest()->getModuleName() !== 'admin') {
                                     echo 'active';
@@ -197,6 +206,8 @@
                             <li class="divider"></li>
                             <?php
                                 }
+                                echo $systemModuleHtml;
+                                echo '<li class="divider"></li>';
                                 echo $modulesHtml;
                             ?>
                         </ul>

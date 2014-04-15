@@ -25,8 +25,15 @@ class Module extends \Ilch\Model
 
     /**
      * Small icon of the module.
+     *
+     * @var string
      */
     protected $_iconSmall;
+
+    /**
+     * @var boolean
+     */
+    protected $_systemModule = false;
 
     /**
      * Gets the key.
@@ -67,7 +74,7 @@ class Module extends \Ilch\Model
     {
         $this->_author = (string)$author;
     }
-
+    
     /**
      * Gets the small icon.
      *
@@ -76,6 +83,26 @@ class Module extends \Ilch\Model
     public function getIconSmall()
     {
         return $this->_iconSmall;
+    }
+
+    /**
+     * Sets system module flag.
+     *
+     * @param boolean $system
+     */
+    public function setSystemModule($system)
+    {
+        $this->_systemModule = (bool)$system;
+    }
+
+    /**
+     * Gets system module flag.
+     *
+     * @return boolean
+     */
+    public function getSystemModule()
+    {
+        return $this->_systemModule;
     }
 
     /**
@@ -102,10 +129,14 @@ class Module extends \Ilch\Model
     /**
      * Gets content for given language.
      *
-     * @return string
+     * @return string|null
      */
     public function getContentForLocale($langKey)
     {
+        if (!isset($this->_content[$langKey])) {
+            return null;
+        }
+
         return $this->_content[$langKey];
     }
 

@@ -32,6 +32,7 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
                   `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `system` int(11) NOT NULL,
                   `author` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   `icon_small` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                   UNIQUE KEY `key` (`key`)

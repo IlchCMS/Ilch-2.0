@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'media',
-        'author' => 'Stantin Thomas',
+        'system_module' => true,
         'icon_small' => 'media.png',
         'languages' => array
         (

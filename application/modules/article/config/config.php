@@ -11,8 +11,8 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'article',
-        'author' => 'Meyer Dominik',
         'icon_small' => 'article.png',
+        'system_module' => true,
         'languages' => array
         (
             'de_DE' => array

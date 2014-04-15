@@ -13,7 +13,7 @@
 foreach ($this->get('modules') as $module) {
     $content = $module->getContentForLocale($this->getTranslator()->getLocale());
 
-    if($this->getUser()->hasAccess('module_'.$module->getKey())) {
+    if($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()) {
 ?>
     <tbody>
         <tr>
