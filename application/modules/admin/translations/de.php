@@ -10,9 +10,9 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'editButton' => 'Bearbeiten',
     'addButton' => 'Hinzufügen',
     'saveButton'     => 'Speichern',
+    'updateButton' => 'Aktualisieren',
     'saveSuccess' => 'Erfolgreich gespeichert',
     'deleteSuccess' => 'Erfolgreich gelöscht',
     'freeSuccess' => 'Erfolgreich freigeschaltet',
@@ -78,7 +78,7 @@ return array
     'deleteBox' => 'Box entfernen',
     'boxLanguage' => 'Boxsprache',
     'addButtonBox' => 'Box anlegen',
-    'editButtonBox' => 'Box ändern',
+    'updateButtonBox' => 'Box aktualisieren',
     'noBoxes' => 'Keine Boxen vorhanden',
     'treat' => 'Bearbeiten',
     'askIfDeleteBox' => 'Sind Sie sicher dass die Box "%s" entfernt werden soll?',

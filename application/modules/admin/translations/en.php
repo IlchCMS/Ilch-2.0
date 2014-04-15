@@ -10,9 +10,9 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'editButton' => 'Edit',
     'addButton' => 'Add',
     'saveButton' => 'Save',
+    'updateButton' => 'Update',
     'saveSuccess' => 'Saved successful',
     'deleteSuccess' => 'Deleted successful',
     'treat' => 'Edit',
@@ -76,8 +76,8 @@ return array
     'editBox'	=> 'Edit box',
     'deleteBox' => 'Delete box',
     'boxLanguage' => 'Boxlanguage',
-    'addButtonBox' => 'Add Box',
-    'editButtonBox' => 'Change Box',
+    'addButtonBox' => 'Add box',
+    'updateButtonBox' => 'Update box',
     'noBoxes' => 'No Boxes',
     'treat' => 'Treat',
     'askIfDeleteBox' => 'Are you sure you want delete the box "%s"?',

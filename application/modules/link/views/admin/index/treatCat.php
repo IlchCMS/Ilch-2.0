@@ -35,7 +35,7 @@
     </div>
     <?php
     if ($this->get('category') != '') {
-        echo $this->getSaveBar('editButton');
+        echo $this->getSaveBar('updateButton');
     } else {
         echo $this->getSaveBar('addButton');
     }
