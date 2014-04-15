@@ -63,7 +63,7 @@
     <?php
         endforeach;
     ?>
-    <?=$this->getSaveBar('editButton')?>
+    <?=$this->getSaveBar('updateButton')?>
 </form>
 <script>
     $('#amount').popover();

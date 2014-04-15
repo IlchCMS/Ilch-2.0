@@ -74,5 +74,5 @@
                       rows="5"><?php if ($this->get('impressum') != '') { echo $this->escape($this->get('impressum')->getDisclaimer()); } ?></textarea>
         </div>
     </div>
-    <?=$this->getSaveBar('saveButton')?>
+    <?=$this->getSaveBar('updateButton')?>
 </form>

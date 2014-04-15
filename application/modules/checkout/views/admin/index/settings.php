@@ -9,5 +9,5 @@
                   name="checkout_contact"><?php if ($this->get('checkout_contact') != '') { echo $this->get('checkout_contact') ; } ?>
         </textarea>
     </div>
-    <?=$this->getSaveBar('editButton')?>
+    <?=$this->getSaveBar('updateButton')?>
 </form>
