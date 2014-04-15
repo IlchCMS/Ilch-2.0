@@ -55,7 +55,7 @@
         }
 
         if ($this->get('box') != '') {
-            echo $this->getSaveBar('editButtonBox');
+            echo $this->getSaveBar('updateButtonBox');
         } else {
             echo $this->getSaveBar('addButtonBox');
         }

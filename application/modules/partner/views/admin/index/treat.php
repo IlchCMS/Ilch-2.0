@@ -50,7 +50,7 @@
     </div>
     <?php
     if ($this->get('partner') != '') {
-        echo $this->getSaveBar('editButton');
+        echo $this->getSaveBar('updateButton');
     } else {
         echo $this->getSaveBar('addButton');
     }

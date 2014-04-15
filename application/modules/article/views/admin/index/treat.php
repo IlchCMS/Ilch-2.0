@@ -83,7 +83,7 @@
     </div>
     <?php
     if ($this->get('article') != '') {
-        echo $this->getSaveBar('editButton');
+        echo $this->getSaveBar('updateButton');
     } else {
         echo $this->getSaveBar('addButton');
     }
