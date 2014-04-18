@@ -2,14 +2,21 @@
 $errors = $this->get('errors');
 ?>
 <div class="form-group">
-    <label for="type" class="control-label col-lg-2">
-        <?php echo $this->getTrans('cmsType'); ?>:
+    <label for="usage" class="control-label col-lg-2">
+        <?php echo $this->getTrans('usage'); ?>:
     </label>
     <div class="col-lg-8">
-        <select name="cmsType" class="form-control">
-            <option value="private">Private</option>
+        <select name="usage" id="usage" class="form-control">
+            <option value="private"><?=$this->getTrans('private')?></option>
+            <option <?php if ($this->get('usage') == 'clan') { echo 'selected="selected"'; } ?> value="clan"><?=$this->getTrans('clan')?></option>
         </select>
+        <a href="#" data-toggle="collapse" data-target="#modules">
+          <?=$this->getTrans('custom')?> &dArr;
+        </a>
     </div>
+</div>
+<div class="form-group collapse" id="modules">
+    <div id="modulesContent" class="col-lg-offset-2 col-lg-8"></div>
 </div>
 <hr />
 <div class="form-group <?php if (!empty($errors['adminName'])) { echo 'has-error'; }; ?>">
@@ -80,3 +87,10 @@ $errors = $this->get('errors');
         ?>
     </div>
 </div>
+<script>
+    $('#usage').change(function(){
+        $('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig'))?>/type/'+$('#usage').val());
+    });
+
+    $('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig'))?>/type/'+$('#usage').val());
+</script>

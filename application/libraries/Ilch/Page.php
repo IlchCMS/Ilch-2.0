@@ -140,7 +140,6 @@ class Page
         $this->_plugin->addPluginData('controller', $controller);
         $this->_plugin->execute('AfterControllerLoad');
         
-
         if ($this->_request->isAdmin()) {
             $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/admin/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php');
         } else {
@@ -157,7 +156,9 @@ class Page
             $controller->getLayout()->setContent($viewOutput);
         }
 
-        if ($controller->getLayout()->getDisabled() === false) {
+        if ($this->_request->isAjax()) {
+            echo $viewOutput;
+        } elseif ($controller->getLayout()->getDisabled() === false) {
             if ($controller->getLayout()->getFile() != '') {
                 $this->_layout->loadScript(APPLICATION_PATH.'/'.$controller->getLayout()->getFile().'.php');
             }

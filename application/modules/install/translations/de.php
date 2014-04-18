@@ -37,7 +37,7 @@ return array
     'dbUserInfo'         => 'Dein MySQL Benutzername',
     'dbNameInfo'         => 'Der Name der Datenbank',
     'writable'			 => 'Beschreibar',
-    'cmsType'			 => 'CMS Typ',
+    'usage'              => 'Benutzung',
     'successInstalled'	 => 'Ilch CMS wurde erfolgreich installiert',
     'adminName'		   => 'Admin Name',
     'adminPassword'	   => 'Admin Passwort',
@@ -47,4 +47,9 @@ return array
     'fieldDiffersPassword' => 'Passwortfelder müssen gleich sein',
     'fieldEmail'	   => 'Email ist nicht gültig',
     'timezone'		   => 'Zeitzone',
+    'custom'           => 'benutzerdefiniert',
+    'obligatoryModules' => 'Pflicht Module',
+    'optionalModules'   => 'Optionale Module',
+    'private'           => 'Private Seite',
+    'clan'              => 'Clan Seite',
 );

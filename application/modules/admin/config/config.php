@@ -19,6 +19,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
         $databaseConfig->set('default_layout', 'clan3columns');
+        $databaseConfig->set('start_page', 'module_article');
     }
 
     public function getInstallSql()
