@@ -10,9 +10,14 @@ defined('ACCESS') or die('no direct access');
 class Request
 {
     /**
-     * @var string
+     * @var boolean
      */
     protected $_isAdmin = false;
+    
+    /**
+     * @var boolean
+     */
+    protected $_isAjax = false;
 
     /**
      * @var string
@@ -47,11 +52,31 @@ class Request
     /**
      * Sets admin request flag.
      *
-     * @param string $name
+     * @param boolean $admin
      */
     public function setIsAdmin($admin)
     {
         $this->_isAdmin = $admin;
+    }
+    
+    /**
+     * Gets Ajax request flag.
+     *
+     * @return boolean
+     */
+    public function isAjax()
+    {
+        return $this->_isAjax;
+    }
+
+    /**
+     * Sets ajax request flag.
+     *
+     * @param boolean $ajax
+     */
+    public function setIsAjax($ajax)
+    {
+        $this->_isAjax = $ajax;
     }
 
     /**

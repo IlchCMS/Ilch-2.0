@@ -37,7 +37,7 @@ return array
     'dbUserInfo'       => 'Your MySQL username',
     'dbNameInfo'       => 'The name of the database',
     'writable'		   => 'writable',
-    'cmsType'		   => 'cms type',
+    'usage'             => 'Usage',
     'adminName'		   => 'admin name',
     'adminPassword'	   => 'admin password',
     'adminPassword2'   => 'admin password confirm',
@@ -47,4 +47,9 @@ return array
     'fieldDiffersPassword' => 'passwords are different',
     'fieldEmail'	   => 'email is not valid',
     'timezone'		   => 'timezone',
+    'custom'           => 'custom',
+    'obligatoryModules' => 'obligatory modules',
+    'optionalModules'   => 'optionally modules',
+    'private'           => 'private site',
+    'clan'              => 'clan site',
 );
