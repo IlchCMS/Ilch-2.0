@@ -41,6 +41,7 @@ class Article extends \Ilch\Mapper
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
+            $articleModel->setDescription($articleRow['description']);
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
@@ -110,6 +111,7 @@ class Article extends \Ilch\Mapper
 
         $articleModel = new ArticleModel();
         $articleModel->setId($articleRow['id']);
+        $articleModel->setDescription($articleRow['description']);
         $articleModel->setTitle($articleRow['title']);
         $articleModel->setContent($articleRow['content']);
         $articleModel->setLocale($articleRow['locale']);
@@ -152,7 +154,7 @@ class Article extends \Ilch\Mapper
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 $this->db()->update('articles_content')
-                    ->fields(array('title' => $article->getTitle(), 'content' => $article->getContent(), 'perma' => $article->getPerma(), 'article_img' => $article->getArticleImage()))
+                    ->fields(array('title' => $article->getTitle(), 'description' => $article->getDescription(), 'content' => $article->getContent(), 'perma' => $article->getPerma(), 'article_img' => $article->getArticleImage()))
                     ->where(array('article_id' => $article->getId(), 'locale' => $article->getLocale()))
                     ->execute();
             } else {
@@ -162,6 +164,7 @@ class Article extends \Ilch\Mapper
                         array
                         (
                             'article_id' => $article->getId(),
+                            'description' => $article->getDescription(),
                             'title' => $article->getTitle(),
                             'content' => $article->getContent(),
                             'perma' => $article->getPerma(),
@@ -183,6 +186,7 @@ class Article extends \Ilch\Mapper
                     array
                     (
                         'article_id' => $articleId,
+                        'description' => $article->getDescription(),
                         'title' => $article->getTitle(),
                         'content' => $article->getContent(),
                         'perma' => $article->getPerma(),

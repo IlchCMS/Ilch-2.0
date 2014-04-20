@@ -69,6 +69,7 @@ class Page extends \Ilch\Mapper
 
         $pageModel = new PageModel();
         $pageModel->setId($pageRow['id']);
+        $pageModel->setDescription($pageRow['description']);
         $pageModel->setTitle($pageRow['title']);
         $pageModel->setContent($pageRow['content']);
         $pageModel->setLocale($pageRow['locale']);
@@ -111,6 +112,7 @@ class Page extends \Ilch\Mapper
                 $this->db()->update('pages_content')
                     ->fields(array(
                         'title' => $page->getTitle(),
+                        'description' => $page->getDescription(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
                     ))
@@ -126,6 +128,7 @@ class Page extends \Ilch\Mapper
                         array
                         (
                             'page_id' => $page->getId(),
+                            'description' => $page->getDescription(),
                             'title' => $page->getTitle(),
                             'content' => $page->getContent(),
                             'perma' => $page->getPerma(),
@@ -146,6 +149,7 @@ class Page extends \Ilch\Mapper
                     array
                     (
                         'page_id' => $pageId,
+                        'description' => $page->getDescription(),
                         'title' => $page->getTitle(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),

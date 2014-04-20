@@ -45,6 +45,13 @@ class Page extends \Ilch\Model
     protected $_content;
 
     /**
+     * The description of the page.
+     *
+     * @var string
+     */
+    protected $_description;
+
+    /**
      * The locale of the page.
      *
      * @var string
@@ -136,6 +143,26 @@ class Page extends \Ilch\Model
     public function setContent($content)
     {
         $this->_content = (string) $content;
+    }
+
+    /**
+     * Gets the description of the page.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->_description;
+    }
+
+    /**
+     * Sets the description of the page.
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->_description = (string)$description;
     }
 
     /**

@@ -20,6 +20,7 @@ class Index extends \Ilch\Controller\Frontend
         if ($page == null) {
             $this->getView()->set('content', 'page not found');
         } else {
+            $this->getLayout()->set('metaDescription', $page->getDescription());
             $this->getView()->set('content', $page->getContent());
         }
     }

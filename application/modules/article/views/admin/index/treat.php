@@ -13,7 +13,7 @@
         <label for="articleTitleInput" class="col-lg-2 control-label">
             <?php echo $this->getTrans('articleTitle'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-8">
             <input class="form-control"
                    type="text"
                    name="articleTitle"
@@ -22,7 +22,9 @@
         </div>
     </div>
     <div class="form-group">
-        <textarea class="form-control" id="ilch_html" name="articleContent"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
+        <div class="col-lg-offset-2 col-lg-8">
+            <textarea class="form-control" id="ilch_html" name="articleContent"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
+        </div>
     </div>
     <?php
         if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
@@ -31,7 +33,7 @@
         <label for="articleLanguageInput" class="col-lg-2 control-label">
             <?php echo $this->getTrans('articleLanguage'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-8">
             <select class="form-control" name="articleLanguage" id="articleLanguageInput">
                 <?php
                 foreach ($this->get('languages') as $key => $value) {
@@ -54,11 +56,21 @@
     <?php
     }
     ?>
+    <legend>SEO</legend>
+    <div class="form-group">
+        <label for="descriptionInput" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('description'); ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control" id="descriptionInput" name="description"><?php if ($this->get('article') != '')
+                { echo $this->escape($this->get('article')->getDescription()); } ?></textarea>
+        </div>
+    </div>
     <div class="form-group">
         <label for="articlePerma" class="col-lg-2 control-label">
             <?php echo $this->getTrans('permaLink'); ?>:
         </label>
-        <div class="col-lg-5">
+        <div class="col-lg-8">
             <?php echo $this->getUrl(); ?>/index.php/<input
                    type="text"
                    name="articlePerma"

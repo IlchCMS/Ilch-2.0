@@ -76,7 +76,7 @@ class Frontend extends Base
     {
         $html = '<meta charset="utf-8">
                 <title>'.$this->getTitle().'</title>
-                <meta name="description" content="">';
+                <meta name="description" content="'.$this->escape($this->get('metaDescription')).'">';
 
         $html .= '<link href="'.$this->getStaticUrl('css/normalize.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/font-awesome.css').'" rel="stylesheet">

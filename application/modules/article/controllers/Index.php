@@ -53,6 +53,7 @@ class Index extends \Ilch\Controller\Frontend
         $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
         $comments = $commentMapper->getCommentsByKey('articles_'.$this->getRequest()->getParam('id'));
 
+        $this->getLayout()->set('metaDescription', $article->getDescription());
         $this->getView()->set('article', $article);
         $this->getView()->set('comments', $comments);
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
