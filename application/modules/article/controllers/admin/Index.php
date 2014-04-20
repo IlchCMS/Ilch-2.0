@@ -93,10 +93,11 @@ class Index extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
+            $model->setDescription($this->getRequest()->getPost('description'));
             $model->setTitle($this->getRequest()->getPost('articleTitle'));
             $model->setContent($this->getRequest()->getPost('articleContent'));
             $model->setArticleImage($this->getRequest()->getPost('articleImage'));
-            
+
             if ($this->getRequest()->getPost('articleLanguage') != '') {
                 $model->setLocale($this->getRequest()->getPost('articleLanguage'));
             } else {

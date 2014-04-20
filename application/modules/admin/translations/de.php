@@ -91,5 +91,6 @@ return array
     'upToDate' => 'aktuell',
     'notUpToDate' => 'nicht aktuell',
     'installedVersion' => 'Installierte Version',
-    'serverVersion' => 'Server Version'
+    'serverVersion' => 'Server Version',
+    'description' => 'Beschreibung',
 );

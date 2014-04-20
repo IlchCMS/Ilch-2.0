@@ -92,6 +92,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
+            $model->setDescription($this->getRequest()->getPost('description'));
             $model->setTitle($this->getRequest()->getPost('pageTitle'));
             $model->setContent($this->getRequest()->getPost('pageContent'));
             
