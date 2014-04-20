@@ -316,10 +316,7 @@ class Mysql
      */
     protected function _getFieldsSql($fields)
     {
-        /*
-         * @todo check on sign "(" on fields.
-         */
-        if ($fields === '*' || $fields === 'COUNT(*)') {
+        if (!is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
             return $fields;
         }
 
