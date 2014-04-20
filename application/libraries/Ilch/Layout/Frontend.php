@@ -34,16 +34,17 @@ class Frontend extends Base
     public function getTitle()
     {
         $config = \Ilch\Registry::get('config');
+        $metaTitle = $this->get('metaTitle');
 
-        /*
-         * @todo page modul handling
-         */
+        if (!empty($metaTitle)) {
+            return $metaTitle;
+        }
 
         if (!empty($config) && $config->get('page_title') !== '') {
             return $this->escape($config->get('page_title'));
-        } else {
-            return 'Ilch Frontend';
         }
+
+        return '';
     }
 
     /**
