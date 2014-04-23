@@ -62,11 +62,12 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleList($locale = '', $limit = null)
     {
-        $sql = 'SELECT pc.title, pc.perma, p.id FROM [prefix]_articles as p
-                LEFT JOIN [prefix]_articles_content as pc ON p.id = pc.article_id
-                    AND pc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY p.id
-                ORDER BY p.`date_created` ASC';
+        $sql = 'SELECT `a`.`id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`
+                FROM `[prefix]_articles` as `a`
+                LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
+                    AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
+                GROUP BY `a`.`id`
+                ORDER BY `a`.`date_created` ASC';
         
         if ($limit !== null) {
            $sql .= ' LIMIT '.(int)$limit;
@@ -85,6 +86,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setId($articleRow['id']);
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setPerma($articleRow['perma']);
+            $articleModel->setArticleImage($articleRow['article_img']);
             $articles[] = $articleModel;
         }
 
