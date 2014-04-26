@@ -41,7 +41,28 @@ class Frontend extends Base
         }
 
         if (!empty($config) && $config->get('page_title') !== '') {
-            return $this->escape($config->get('page_title'));
+            return $config->get('page_title');
+        }
+
+        return '';
+    }
+ 
+    /**
+     * Gets page description from config or meta settings.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        $config = \Ilch\Registry::get('config');
+        $metaDescription = $this->get('metaDescription');
+
+        if (!empty($metaDescription)) {
+            return $metaDescription;
+        }
+
+        if (!empty($config) && $config->get('description') !== '') {
+            return $config->get('description');
         }
 
         return '';
@@ -76,8 +97,8 @@ class Frontend extends Base
     public function getHeader()
     {
         $html = '<meta charset="utf-8">
-                <title>'.$this->getTitle().'</title>
-                <meta name="description" content="'.$this->escape($this->get('metaDescription')).'">';
+                <title>'.$this->escape($this->getTitle()).'</title>
+                <meta name="description" content="'.$this->escape($this->getDescription()).'">';
 
         $html .= '<link href="'.$this->getStaticUrl('css/normalize.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/font-awesome.css').'" rel="stylesheet">
