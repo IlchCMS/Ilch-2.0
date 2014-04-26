@@ -72,6 +72,8 @@ return array
     'menuBox' => 'Box',
     'menuBoxes' => 'Boxen',
     'menuActionNewBox' => 'Neue Box erstellen',
+    'menuSettings' => 'Einstellungen',
+    'menuBackup' => 'Backup',
     'boxTitle' => 'Boxentitel',
     'addBox'	=> 'Neue Box hinzufügen',
     'editBox'	=> 'Box editieren',

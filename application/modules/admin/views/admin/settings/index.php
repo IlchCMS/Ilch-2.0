@@ -5,7 +5,7 @@
         <label for="startPage" class="col-lg-2 control-label">
             <?php echo $this->getTrans('startPage'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-8">
             <select class="form-control" name="startPage" id="startPage">
                 <optgroup label="<?php echo $this->getTrans('pages'); ?>">
                 <?php
@@ -104,11 +104,21 @@
             </select>
         </div>
     </div>
+    <legend>SEO</legend>
+    <div class="form-group">
+        <label for="descriptionInput" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('description'); ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control" id="descriptionInput" name="description"><?php
+                echo $this->escape($this->get('description')); ?></textarea>
+        </div>
+    </div>
     <div class="form-group">
         <label for="pageTitleInput" class="col-lg-2 control-label">
             <?php echo $this->getTrans('pageTitle'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-8">
             <input class="form-control"
                    id="pageTitleInput"
                    name="pageTitle"
@@ -120,7 +130,7 @@
         <label for="modRewrite" class="col-lg-2 control-label">
             <?php echo $this->getTrans('modRewrite'); ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-8">
             <div class="radio">
                 <label>
                     <input type="radio"
