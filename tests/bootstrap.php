@@ -14,6 +14,11 @@ define('APPLICATION_PATH', __DIR__.'/../application');
 define('CONFIG_PATH', APPLICATION_PATH);
 define('SERVER_TIMEZONE', 'Europe/Berlin');
 
+$vendorAutoloadFile = __DIR__ . '/../development/vendor/autoload.php';
+if (file_exists($vendorAutoloadFile)) {
+    require $vendorAutoloadFile;
+}
+
 /*
  * Initializing the autoloading for the application classes and for custom
  * PHPUnit Classes.

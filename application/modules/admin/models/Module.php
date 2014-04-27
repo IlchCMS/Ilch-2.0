@@ -36,6 +36,11 @@ class Module extends \Ilch\Model
     protected $_systemModule = false;
 
     /**
+     * @var string
+     */
+    protected $_author;
+
+    /**
      * Gets the key.
      *
      * @return string
