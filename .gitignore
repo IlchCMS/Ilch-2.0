@@ -3,3 +3,5 @@ application/config.php
 application/modules/media/static/upload
 /nbproject/
 .idea
+/.vagrant
+/Vagrantfile
