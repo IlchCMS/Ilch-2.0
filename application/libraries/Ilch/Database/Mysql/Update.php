@@ -5,14 +5,19 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
 
 class Update extends QueryBuilder
 {
     /**
-     * @var string
+     * Execute the generated query
+     *
+     * @return integer number of changed rows
      */
-    protected $_type = 'update';
+    public function execute()
+    {
+        $res = $this->db->query($this->generateSql());
+        return $res->num_rows;
+    }
 
     /**
      * Gets delete query builder sql.
@@ -21,21 +26,21 @@ class Update extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'UPDATE `[prefix]_'.$this->_table . '` SET ';
+        $sql = 'UPDATE `[prefix]_'.$this->table . '` SET ';
         $up = array();
 
-        foreach ($this->_fields as $key => $value) {
+        foreach ($this->fields as $key => $value) {
             if ($value === null) {
                 continue;
             }
 
-            $up[] = '`' . $key . '` = "' . $this->_db->escape($value) . '"';
+            $up[] = '`' . $key . '` = "' . $this->db->escape($value) . '"';
         }
 
         $sql .= implode(',', $up);
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
         return $sql;

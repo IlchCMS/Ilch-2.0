@@ -5,38 +5,47 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
 
-class QueryBuilder
+abstract class QueryBuilder
 {
+    /**
+     * @var \Ilch\Database\Mysql
+     */
+    protected $db;
+
     /**
      * @var string
      */
-    protected $_type = '';
+    protected $table;
 
     /**
      * @var array|null
      */
-    protected $_limit;
+    protected $limit;
     
     /**
      * @var array|null
      */
-    protected $_where;
+    protected $where;
 
     /**
      * @var array|null
      */
-    protected $_fields;
+    protected $order;
+
+    /**
+     * @var array|null
+     */
+    protected $fields;
 
     /**
      * Injects the database adapter.
      *
-     * @param Ilch\Database\Mysql $db
+     * @param \Ilch\Database\Mysql $db
      */
     public function __construct($db)
     {
-        $this->_db = $db;
+        $this->db = $db;
     }
 
     /**
@@ -47,7 +56,7 @@ class QueryBuilder
      */
     public function from($table)
     {
-        $this->_table = $table;
+        $this->table = $table;
 
         return $this;
     }
@@ -60,7 +69,7 @@ class QueryBuilder
      */
     public function fields($fields)
     {
-        $this->_fields = $fields;
+        $this->fields = $fields;
 
         return $this;
     }
@@ -73,7 +82,7 @@ class QueryBuilder
      */
     public function where($where)
     {
-        $this->_where = $where;
+        $this->where = $where;
 
         return $this;
     }
@@ -86,7 +95,7 @@ class QueryBuilder
      */
     public function order($order)
     {
-        $this->_order = $order;
+        $this->order = $order;
 
         return $this;
     }
@@ -99,52 +108,24 @@ class QueryBuilder
      */
     public function limit($limit)
     {
-        $this->_limit = $limit;
+        $this->limit = $limit;
 
         return $this;
     }
     
     /**
-     * Adds cell to query builder.
-     *
-     * @param string $cell
-     * @return \Ilch\Database\Mysql\QueryBuilder
-     */
-    public function cell($cell)
-    {
-        $this->_cell = $cell;
-
-        return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getCount()
-    {
-        return $this->_db->queryCell($this->generateCountSql());
-    }
-
-    /**
-     * Execute the query builder.
+     * Execute the generated query
      *
      * @return mixed
      */
-    public function execute()
-    {
-        if ($this->_type == 'insert') {
-            $this->_db->query($this->generateSql());
-            return $this->_db->getLink()->insert_id;
-        } elseif ($this->_type == 'selectCell') {
-            return $this->_db->queryCell($this->generateSql());
-        } elseif ($this->_type == 'selectRow') {
-            return $this->_db->queryRow($this->generateSql());
-        } elseif ($this->_type == 'selectArray') {
-            return $this->_db->queryArray($this->generateSql());
-        } else {
-            return $this->_db->query($this->generateSql());        
-        }
-    }
+    abstract public function execute();
+
+    /**
+     * Generate the SQL executed by execute()
+     *
+     * @return string
+     */
+    abstract public function generateSql();
 
     /**
      * Create the where part for the given array.
@@ -152,12 +133,12 @@ class QueryBuilder
      * @param  array $where
      * @return string
      */
-    protected function _getWhereSql($where)
+    protected function getWhereSql($where)
     {
         $sql = '';
 
         foreach ($where as $key => $value) {
-            $sql .= 'AND `' . $key . '` = "' . $this->_db->escape($value) . '" ';
+            $sql .= 'AND `' . $key . '` = "' . $this->db->escape($value) . '" ';
         }
 
         return $sql;
@@ -169,7 +150,7 @@ class QueryBuilder
      * @param  array  $fields
      * @return string
      */
-    protected function _getFieldsSql($fields)
+    protected function getFieldsSql($fields)
     {
         if (!is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
             return $fields;

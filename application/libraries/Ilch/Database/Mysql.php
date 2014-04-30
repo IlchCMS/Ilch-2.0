@@ -5,7 +5,6 @@
  */
 
 namespace Ilch\Database;
-defined('ACCESS') or die('no direct access');
 
 class Mysql
 {
@@ -15,7 +14,7 @@ class Mysql
     protected $prefix = null;
 
     /**
-     * @var Mysqli|null
+     * @var \mysqli|null
      */
     protected $conn = null;
 
@@ -24,7 +23,7 @@ class Mysql
      */
     public function __destruct()
     {
-        if($this->conn !== null) {
+        if ($this->conn !== null) {
             @$this->conn->close();
         }
     }
@@ -52,7 +51,7 @@ class Mysql
     /**
      * Get the mysqli object.
      *
-     * @return Mysqli
+     * @return \mysqli
      */
     public function getLink()
     {
@@ -63,6 +62,7 @@ class Mysql
      * Set the database.
      *
      * @param string $db
+     * @return bool success
      */
     public function setDatabase($db)
     {
@@ -80,6 +80,7 @@ class Mysql
      * @param string $name
      * @param string $password
      * @param integer|null $port
+     * @return bool success
      */
     public function connect($host, $name, $password, $port = null)
     {
@@ -98,17 +99,17 @@ class Mysql
      * Execute sql query.
      *
      * @param  string $sql
-     * @return mysqli_result
+     * @return \mysqli_result
      */
     public function query($sql)
     {
         $mysqliResult = mysqli_query($this->conn, $this->getSqlWithPrefix($sql));
-        
+
         if (!$mysqliResult) {
             echo '<pre><h4 class="text-danger">MySQL Error:</h4>'
-                .$this->conn->errno.': '.$this->conn->error
-                .'<h5>Query</h5>'.$this->getSqlWithPrefix($sql)
-                .'<h5>Debug backtrace</h5>'.debug_backtrace_html().'</pre>';
+                . $this->conn->errno . ': ' . $this->conn->error
+                . '<h5>Query</h5>' . $this->getSqlWithPrefix($sql)
+                . '<h5>Debug backtrace</h5>' . debug_backtrace_html() . '</pre>';
         }
 
         return $mysqliResult;
@@ -123,9 +124,17 @@ class Mysql
     public function getSqlWithPrefix($sql)
     {
         if (preg_match("/^UPDATE `?\[prefix\]_\S+`?\s+SET/is", $sql)) {
-            $sql = preg_replace("/^UPDATE `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i", "UPDATE `" . $this->prefix . "\\1`\\2", $sql);
+            $sql = preg_replace(
+                "/^UPDATE `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
+                "UPDATE `" . $this->prefix . "\\1`\\2",
+                $sql
+            );
         } elseif (preg_match("/^INSERT INTO `?\[prefix\]_\S+`?\s+[a-z0-9\s,\)\(]*?VALUES/is", $sql)) {
-            $sql = preg_replace("/^INSERT INTO `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i", "INSERT INTO `" . $this->prefix . "\\1`\\2", $sql);
+            $sql = preg_replace(
+                "/^INSERT INTO `?\[prefix\]_(\S+?)`?([\s\.,]|$)/i",
+                "INSERT INTO `" . $this->prefix . "\\1`\\2",
+                $sql
+            );
         } else {
             $sql = preg_replace("/\[prefix\]_(\S+?)([\s\.,]|$)/", $this->prefix . "\\1\\2", $sql);
         }
@@ -136,7 +145,7 @@ class Mysql
     /**
      * Select on cell from table.
      *
-     * @param  string     $sql
+     * @param  string $sql
      * @return string|int
      */
     public function queryCell($sql)
@@ -154,17 +163,17 @@ class Mysql
      */
     public function selectCell($cell)
     {
-         $select = new \Ilch\Database\Mysql\SelectCell($this);
-         $select->cell($cell);
+        $select = new Mysql\SelectCell($this);
+        $select->cell($cell);
 
-         return $select;
+        return $select;
     }
 
     /**
      * Select one row from table.
      *
      * @param  string $sql
-     * @return array
+     * @return array|null
      */
     public function queryRow($sql)
     {
@@ -181,10 +190,10 @@ class Mysql
      */
     public function selectRow($fields)
     {
-         $select = new \Ilch\Database\Mysql\SelectRow($this);
-         $select->fields($fields);
+        $select = new Mysql\SelectRow($this);
+        $select->fields($fields);
 
-         return $select;
+        return $select;
     }
 
     /**
@@ -204,7 +213,7 @@ class Mysql
 
         return $rows;
     }
-    
+
     /**
      * Select an array from db-table.
      *
@@ -213,10 +222,10 @@ class Mysql
      */
     public function selectArray($fields)
     {
-         $select = new \Ilch\Database\Mysql\SelectArray($this);
-         $select->fields($fields);
+        $select = new Mysql\SelectArray($this);
+        $select->fields($fields);
 
-         return $select;
+        return $select;
     }
 
     /**
@@ -240,18 +249,18 @@ class Mysql
     /**
      * Select a list from a db-table.
      *
-     * @param  array  $fields
+     * @param  array $fields
      * @param  string $table
-     * @param  array  $where
+     * @param  array $where
      * @return array
      */
-    public function selectList($fields, $table, $where = null)
+    public function selectList($fields, $table, array $where = null)
     {
-        $sql = 'SELECT '. $this->_getFieldsSql($fields).'
-                FROM `[prefix]_'.$table . '` ';
+        $sql = 'SELECT ' . $this->getFieldsSql($fields) . '
+                FROM `[prefix]_' . $table . '` ';
 
         if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
         }
 
         return $this->queryList($sql);
@@ -260,50 +269,52 @@ class Mysql
     /**
      * Update entries from the table.
      *
+     * @param string $table
      * @return \Ilch\Database\Mysql\Update
      */
     public function update($table)
     {
-         $updateObj = new \Ilch\Database\Mysql\Update($this);
-         $updateObj->from($table);
+        $updateObj = new Mysql\Update($this);
+        $updateObj->from($table);
 
-         return $updateObj;
+        return $updateObj;
     }
 
     /**
      * Insert entries into the table.
-     *
+     * @param string $table
      * @return \Ilch\Database\Mysql\Update
      */
     public function insert($table)
     {
-         $insertObj = new \Ilch\Database\Mysql\Insert($this);
-         $insertObj->from($table);
+        $insertObj = new Mysql\Insert($this);
+        $insertObj->from($table);
 
-         return $insertObj;
+        return $insertObj;
     }
 
     /**
      * Deletes entries from the table.
-     *
+     * @param string $table
      * @return \Ilch\Database\Mysql\Delete
      */
     public function delete($table)
     {
-         $deleteObj = new \Ilch\Database\Mysql\Delete($this);
-         $deleteObj->from($table);
+        $deleteObj = new Mysql\Delete($this);
+        $deleteObj->from($table);
 
-         return $deleteObj;
+        return $deleteObj;
     }
 
     /**
      * Drops the table from database.
      *
      * @param string $table
+     * @return \mysqli_result
      */
     public function drop($table)
     {
-        $sql = 'DROP TABLE `'.$table . '`';
+        $sql = 'DROP TABLE `' . $table . '`';
 
         return $this->query($sql);
     }
@@ -311,25 +322,25 @@ class Mysql
     /**
      * Create the field part for the given array.
      *
-     * @param  array  $fields
+     * @param  array $fields
      * @return string
      */
-    protected function _getFieldsSql($fields)
+    protected function getFieldsSql($fields)
     {
         if (!is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
             return $fields;
         }
 
-        return '`'.implode('`,`', (array) $fields).'`';
+        return '`' . implode('`,`', (array)$fields) . '`';
     }
 
     /**
      * Create the where part for the given array.
      *
-     * @param  array  $where
+     * @param  array $where
      * @return string
      */
-    protected function _getWhereSql($where)
+    protected function getWhereSql($where)
     {
         $sql = '';
 
@@ -338,6 +349,29 @@ class Mysql
         }
 
         return $sql;
+    }
+
+    /**
+     * Quotes a field name
+     * @param string $field
+     * @return string
+     */
+    public function quote($field)
+    {
+        return '`' . $field . '`';
+    }
+
+    /**
+     * Quotes an array of field names
+     * @param array $fields
+     * @return array
+     */
+    public function quoteArray(array $fields)
+    {
+        foreach ($fields as &$field) {
+            $field = $this->quote($field);
+        }
+        return $fields;
     }
 
     /**
@@ -352,14 +386,28 @@ class Mysql
     }
 
     /**
+     * Escapes every value in a array for a sql query
+     *
+     * @param array $array
+     * @return array
+     */
+    public function escapeArray(array $array)
+    {
+        foreach ($array as &$value) {
+            $value = $this->escape($value);
+        }
+        return $array;
+    }
+
+    /**
      * Executes multiple queries given in one string within a single request.
      *
-     * @param  string  $sql The string with the multiple queries.
+     * @param  string $sql The string with the multiple queries.
      * @return boolean false if the first statement failed. Otherwise true.
      */
     public function queryMulti($sql)
     {
-        $result = '';
+        $result = false;
         $sql = $this->getSqlWithPrefix($sql);
 
         /*
@@ -391,7 +439,7 @@ class Mysql
      */
     public function dropTablesByPrefix($prefix)
     {
-        $sql = 'SHOW TABLES LIKE "'.$prefix.'%"';
+        $sql = 'SHOW TABLES LIKE "' . $prefix . '%"';
         $tables = $this->queryArray($sql);
 
         foreach ($tables as $table) {

@@ -5,14 +5,18 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
 
 class SelectRow extends QueryBuilder
 {
     /**
-     * @var string
+     * Execute the generated query
+     *
+     * @return array the fetched row
      */
-    protected $_type = 'selectRow';
+    public function execute()
+    {
+        return $this->db->queryRow($this->generateSql());
+    }
 
     /**
      * Gets query builder sql.
@@ -21,11 +25,11 @@ class SelectRow extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'SELECT '. $this->_getFieldsSql($this->_fields) .'
-                FROM `[prefix]_'. $this->_table . '` ';
+        $sql = 'SELECT '. $this->getFieldsSql($this->fields) .'
+                FROM `[prefix]_'. $this->table . '` ';
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
         $sql .= ' LIMIT 1';

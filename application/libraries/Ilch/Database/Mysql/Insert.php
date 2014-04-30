@@ -5,14 +5,19 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
 
 class Insert extends QueryBuilder
 {
     /**
-     * @var string
+     * Execute the query builder.
+     *
+     * @return integer generated autoincrement primary key
      */
-    protected $_type = 'insert';
+    public function execute()
+    {
+        $this->db->query($this->generateSql());
+        return $this->db->getLink()->insert_id;
+    }
 
     /**
      * Gets delete query builder sql.
@@ -20,29 +25,22 @@ class Insert extends QueryBuilder
      * @return string
      */
     public function generateSql()
-    { 
-        $sql = 'INSERT INTO `[prefix]_'.$this->_table.'` ( ';
+    {
+        $sql = 'INSERT INTO `[prefix]_'.$this->table.'` ( ';
         $sqlFields = array();
         $sqlValues = array();
 
-        foreach ($this->_fields as $key => $value) {
+        foreach ($this->fields as $key => $value) {
             if ($value === null) {
                 continue;
             }
 
             $sqlFields[] = '`' . $key . '`';
+            $sqlValues[] = '"' . $this->db->escape($value) . '"';
         }
 
         $sql .= implode(',', $sqlFields);
         $sql .= ') VALUES (';
-
-        foreach ($this->_fields as $key => $value) {
-            if ($value === null) {
-                continue;
-            }
-
-            $sqlValues[] = '"' . $this->_db->escape($value) . '"';
-        }
 
         $sql .= implode(',', $sqlValues) . ')';
 

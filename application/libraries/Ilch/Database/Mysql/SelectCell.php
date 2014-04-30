@@ -5,14 +5,36 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
 
 class SelectCell extends QueryBuilder
 {
     /**
      * @var string
      */
-    protected $_type = 'selectCell';
+    protected $cell;
+
+    /**
+     * Adds cell to query builder.
+     *
+     * @param string $cell field name
+     * @return \Ilch\Database\Mysql\QueryBuilder
+     */
+    public function cell($cell)
+    {
+        $this->cell = $cell;
+
+        return $this;
+    }
+
+    /**
+     * Execute the generated query
+     *
+     * @return string value of the field
+     */
+    public function execute()
+    {
+        return $this->db->queryCell($this->generateSql());
+    }
 
     /**
      * Gets select cell query builder sql.
@@ -21,11 +43,11 @@ class SelectCell extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'SELECT ' . $this->_getFieldsSql($this->_cell) . '
-                FROM `[prefix]_'.$this->_table . '` ';
+        $sql = 'SELECT ' . $this->getFieldsSql($this->cell) . '
+                FROM `[prefix]_'.$this->table . '` ';
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
         $sql .= ' LIMIT 1';

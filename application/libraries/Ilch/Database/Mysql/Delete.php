@@ -5,14 +5,18 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
 
 class Delete extends QueryBuilder
 {
     /**
-     * @var string
+     * Execute the query builder.
+     *
+     * @return \mysqli_result
      */
-    protected $_type = 'delete';
+    public function execute()
+    {
+        $res = $this->db->query($this->generateSql());
+    }
 
     /**
      * Gets delete query builder sql.
@@ -21,10 +25,10 @@ class Delete extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'DELETE  FROM `[prefix]_'.$this->_table.'`';
+        $sql = 'DELETE  FROM `[prefix]_'.$this->table.'`';
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
         return $sql;
