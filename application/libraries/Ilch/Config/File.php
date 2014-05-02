@@ -12,7 +12,7 @@ class File
     /**
      * @var array
      */
-    protected $_configData;
+    protected $configData;
 
     /**
      * Gets the config for given key.
@@ -22,8 +22,8 @@ class File
      */
     public function get($key)
     {
-        if (isset($this->_configData[$key])) {
-            return $this->_configData[$key];
+        if (isset($this->configData[$key])) {
+            return $this->configData[$key];
         }
 
         return null;
@@ -38,7 +38,7 @@ class File
      */
     public function set($key, $value)
     {
-        $this->_configData[$key] = $value;
+        $this->configData[$key] = $value;
     }
 
     /**
@@ -69,7 +69,7 @@ class File
         $fileString = '<?php';
         $fileString .= "\n";
 
-        foreach ($this->_configData as $key => $value) {
+        foreach ($this->configData as $key => $value) {
             $fileString .= '$config["'.$key.'"] = "'.$value.'";';
             $fileString .= "\n";
         }

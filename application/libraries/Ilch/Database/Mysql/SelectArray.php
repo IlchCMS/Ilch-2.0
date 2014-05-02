@@ -12,7 +12,7 @@ class SelectArray extends QueryBuilder
     /**
      * @var string
      */
-    protected $_type = 'selectArray';
+    protected $type = 'selectArray';
 
     /**
      * Gets query builder sql.
@@ -21,26 +21,26 @@ class SelectArray extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'SELECT '. $this->_getFieldsSql($this->_fields).'
-                FROM `[prefix]_'.$this->_table . '` ';
+        $sql = 'SELECT '. $this->getFieldsSql($this->fields).'
+                FROM `[prefix]_'.$this->table . '` ';
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
-        if (!empty($this->_order)) {
+        if (!empty($this->order)) {
             $sql .= ' ORDER BY';
 
-            foreach ($this->_order as $column => $direction) {
+            foreach ($this->order as $column => $direction) {
                 $sql .= ' `'. $column.'` '.$direction;
             }
         }
 
-        if ($this->_limit !== null) {
-            $sql .= ' LIMIT ' . (int)$this->_limit[0];
+        if ($this->limit !== null) {
+            $sql .= ' LIMIT ' . (int)$this->limit[0];
 
-            if (!empty($this->_limit[1])) {
-                $sql .= ', '.(int)$this->_limit[1];
+            if (!empty($this->limit[1])) {
+                $sql .= ', '.(int)$this->limit[1];
             }
         }
 
@@ -55,16 +55,16 @@ class SelectArray extends QueryBuilder
     public function generateCountSql()
     {
         $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_'.$this->_table . '` ';
+                FROM `[prefix]_'.$this->table . '` ';
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
-        if (!empty($this->_order)) {
+        if (!empty($this->order)) {
             $sql .= ' ORDER BY';
 
-            foreach ($this->_order as $column => $direction) {
+            foreach ($this->order as $column => $direction) {
                 $sql .= ' `'. $column.'` '.$direction;
             }
         }

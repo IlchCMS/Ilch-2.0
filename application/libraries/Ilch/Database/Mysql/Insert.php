@@ -12,7 +12,7 @@ class Insert extends QueryBuilder
     /**
      * @var string
      */
-    protected $_type = 'insert';
+    protected $type = 'insert';
 
     /**
      * Gets delete query builder sql.
@@ -21,11 +21,11 @@ class Insert extends QueryBuilder
      */
     public function generateSql()
     { 
-        $sql = 'INSERT INTO `[prefix]_'.$this->_table.'` ( ';
+        $sql = 'INSERT INTO `[prefix]_'.$this->table.'` ( ';
         $sqlFields = array();
         $sqlValues = array();
 
-        foreach ($this->_fields as $key => $value) {
+        foreach ($this->fields as $key => $value) {
             if ($value === null) {
                 continue;
             }
@@ -36,12 +36,12 @@ class Insert extends QueryBuilder
         $sql .= implode(',', $sqlFields);
         $sql .= ') VALUES (';
 
-        foreach ($this->_fields as $key => $value) {
+        foreach ($this->fields as $key => $value) {
             if ($value === null) {
                 continue;
             }
 
-            $sqlValues[] = '"' . $this->_db->escape($value) . '"';
+            $sqlValues[] = '"' . $this->db->escape($value) . '"';
         }
 
         $sql .= implode(',', $sqlValues) . ')';

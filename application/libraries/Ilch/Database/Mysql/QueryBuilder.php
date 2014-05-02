@@ -12,22 +12,22 @@ class QueryBuilder
     /**
      * @var string
      */
-    protected $_type = '';
+    protected $type = '';
 
     /**
      * @var array|null
      */
-    protected $_limit;
+    protected $limit;
     
     /**
      * @var array|null
      */
-    protected $_where;
+    protected $where;
 
     /**
      * @var array|null
      */
-    protected $_fields;
+    protected $fields;
 
     /**
      * Injects the database adapter.
@@ -36,7 +36,7 @@ class QueryBuilder
      */
     public function __construct($db)
     {
-        $this->_db = $db;
+        $this->db = $db;
     }
 
     /**
@@ -47,7 +47,7 @@ class QueryBuilder
      */
     public function from($table)
     {
-        $this->_table = $table;
+        $this->table = $table;
 
         return $this;
     }
@@ -60,7 +60,7 @@ class QueryBuilder
      */
     public function fields($fields)
     {
-        $this->_fields = $fields;
+        $this->fields = $fields;
 
         return $this;
     }
@@ -73,7 +73,7 @@ class QueryBuilder
      */
     public function where($where)
     {
-        $this->_where = $where;
+        $this->where = $where;
 
         return $this;
     }
@@ -86,7 +86,7 @@ class QueryBuilder
      */
     public function order($order)
     {
-        $this->_order = $order;
+        $this->order = $order;
 
         return $this;
     }
@@ -99,7 +99,7 @@ class QueryBuilder
      */
     public function limit($limit)
     {
-        $this->_limit = $limit;
+        $this->limit = $limit;
 
         return $this;
     }
@@ -112,7 +112,7 @@ class QueryBuilder
      */
     public function cell($cell)
     {
-        $this->_cell = $cell;
+        $this->cell = $cell;
 
         return $this;
     }
@@ -122,7 +122,7 @@ class QueryBuilder
      */
     public function getCount()
     {
-        return $this->_db->queryCell($this->generateCountSql());
+        return $this->db->queryCell($this->generateCountSql());
     }
 
     /**
@@ -132,17 +132,17 @@ class QueryBuilder
      */
     public function execute()
     {
-        if ($this->_type == 'insert') {
-            $this->_db->query($this->generateSql());
-            return $this->_db->getLink()->insert_id;
-        } elseif ($this->_type == 'selectCell') {
-            return $this->_db->queryCell($this->generateSql());
-        } elseif ($this->_type == 'selectRow') {
-            return $this->_db->queryRow($this->generateSql());
-        } elseif ($this->_type == 'selectArray') {
-            return $this->_db->queryArray($this->generateSql());
+        if ($this->type == 'insert') {
+            $this->db->query($this->generateSql());
+            return $this->db->getLink()->insert_id;
+        } elseif ($this->type == 'selectCell') {
+            return $this->db->queryCell($this->generateSql());
+        } elseif ($this->type == 'selectRow') {
+            return $this->db->queryRow($this->generateSql());
+        } elseif ($this->type == 'selectArray') {
+            return $this->db->queryArray($this->generateSql());
         } else {
-            return $this->_db->query($this->generateSql());        
+            return $this->db->query($this->generateSql());        
         }
     }
 
@@ -152,12 +152,12 @@ class QueryBuilder
      * @param  array $where
      * @return string
      */
-    protected function _getWhereSql($where)
+    protected function getWhereSql($where)
     {
         $sql = '';
 
         foreach ($where as $key => $value) {
-            $sql .= 'AND `' . $key . '` = "' . $this->_db->escape($value) . '" ';
+            $sql .= 'AND `' . $key . '` = "' . $this->db->escape($value) . '" ';
         }
 
         return $sql;
@@ -169,7 +169,7 @@ class QueryBuilder
      * @param  array  $fields
      * @return string
      */
-    protected function _getFieldsSql($fields)
+    protected function getFieldsSql($fields)
     {
         if (!is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
             return $fields;

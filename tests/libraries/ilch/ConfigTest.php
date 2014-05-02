@@ -17,14 +17,14 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
      *
      * @var Ilch_Config
      */
-    protected $_config;
+    protected $config;
 
     /**
      * Initializes an empty config object.
      */
     public function setUp()
     {
-        $this->_config = new \Ilch\Config\File();
+        $this->config = new \Ilch\Config\File();
     }
 
     /**
@@ -32,11 +32,11 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
      */
     public function testSetAndGetConfig()
     {
-        $this->_config->set('email', 'testuser@testmail.com');
+        $this->config->set('email', 'testuser@testmail.com');
         $this->assertEquals
         (
                 'testuser@testmail.com',
-                $this->_config->get('email'),
+                $this->config->get('email'),
                 'Config value got manipulated unexpectedly.'
         );
     }
@@ -53,16 +53,16 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
             'dbPassword' => ''
         );
 
-        $this->_config->loadConfigFromFile(__DIR__.'/_files/config.php');
+        $this->config->loadConfigFromFile(__DIR__.'/_files/config.php');
 
         $this->assertEquals
         (
                 $configArray,
                 array
                 (
-                    'dbHost' => $this->_config->get('dbHost'),
-                    'dbUser' => $this->_config->get('dbUser'),
-                    'dbPassword' => $this->_config->get('dbPassword')
+                    'dbHost' => $this->config->get('dbHost'),
+                    'dbUser' => $this->config->get('dbUser'),
+                    'dbPassword' => $this->config->get('dbPassword')
                 ),
                 'Config array from file differs with defined array.'
         );

@@ -247,11 +247,11 @@ class Mysql
      */
     public function selectList($fields, $table, $where = null)
     {
-        $sql = 'SELECT '. $this->_getFieldsSql($fields).'
+        $sql = 'SELECT '. $this->getFieldsSql($fields).'
                 FROM `[prefix]_'.$table . '` ';
 
         if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($where);
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
         }
 
         return $this->queryList($sql);
@@ -314,7 +314,7 @@ class Mysql
      * @param  array  $fields
      * @return string
      */
-    protected function _getFieldsSql($fields)
+    protected function getFieldsSql($fields)
     {
         if (!is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
             return $fields;
@@ -329,7 +329,7 @@ class Mysql
      * @param  array  $where
      * @return string
      */
-    protected function _getWhereSql($where)
+    protected function getWhereSql($where)
     {
         $sql = '';
 

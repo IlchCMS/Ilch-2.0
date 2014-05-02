@@ -12,12 +12,12 @@ class Database
     /**
      * @var Ilch_Database_*
      */
-    private $_db;
+    private $db;
 
     /**
      * @var array
      */
-    protected $_configData;
+    protected $configData;
 
     /**
      * Injects database adapter to config.
@@ -26,7 +26,7 @@ class Database
      */
     public function __construct($db)
     {
-        $this->_db = $db;
+        $this->db = $db;
     }
 
     /**
@@ -38,10 +38,10 @@ class Database
      */
     public function get($key, $alwaysLoad = false)
     {
-        if (isset($this->_configData[$key]['value']) && !$alwaysLoad) {
-            return $this->_configData[$key]['value'];
+        if (isset($this->configData[$key]['value']) && !$alwaysLoad) {
+            return $this->configData[$key]['value'];
         } else {
-            $configRow = $this->_db->selectRow(array('value', 'key', 'autoload'))
+            $configRow = $this->db->selectRow(array('value', 'key', 'autoload'))
                 ->from('config')
                 ->where(array('key' => $key))
                 ->execute();
@@ -50,8 +50,8 @@ class Database
                 return null;
             }
 
-            $this->_configData[$key]['value'] = $configRow['value'];
-            $this->_configData[$key]['autoload'] = $configRow['autoload'];
+            $this->configData[$key]['value'] = $configRow['value'];
+            $this->configData[$key]['autoload'] = $configRow['autoload'];
 
             return $configRow['value'];
         }
@@ -66,14 +66,14 @@ class Database
      */
     public function set($key, $value, $autoload = 0)
     {
-        $oldValue = $this->_db->selectCell('value')
+        $oldValue = $this->db->selectCell('value')
             ->from('config')
             ->where(array('key' => $key))
             ->execute();
 
         if ($oldValue !== null) {
             if ($value !== $oldValue) {
-                $this->_db->update('config')
+                $this->db->update('config')
                     ->fields(array(
                             'value' => $value,
                             'autoload' => $autoload))
@@ -81,7 +81,7 @@ class Database
                     ->execute();
             }
         } else {
-                $this->_db->insert('config')
+                $this->db->insert('config')
                     ->fields(array(
                         'key' => $key,
                         'value' => $value,
@@ -89,8 +89,8 @@ class Database
                     ->execute();
         }
 
-        $this->_configData[$key]['value'] = $value;
-        $this->_configData[$key]['autoload'] = $autoload;
+        $this->configData[$key]['value'] = $value;
+        $this->configData[$key]['autoload'] = $autoload;
     }
 
     /**
@@ -98,14 +98,14 @@ class Database
      */
     public function loadConfigFromDatabase()
     {
-        $configs = $this->_db->selectArray(array('key', 'value'))
+        $configs = $this->db->selectArray(array('key', 'value'))
             ->from('config')
             ->where(array('autoload' => 1))
             ->execute();
 
         foreach ($configs as $config) {
-            $this->_configData[$config['key']]['value'] = $config['value'];
-            $this->_configData[$config['key']]['autoload'] = 1;
+            $this->configData[$config['key']]['value'] = $config['value'];
+            $this->configData[$config['key']]['autoload'] = 1;
         }
     }
 }

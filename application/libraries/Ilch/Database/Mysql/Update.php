@@ -12,7 +12,7 @@ class Update extends QueryBuilder
     /**
      * @var string
      */
-    protected $_type = 'update';
+    protected $type = 'update';
 
     /**
      * Gets delete query builder sql.
@@ -21,21 +21,21 @@ class Update extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'UPDATE `[prefix]_'.$this->_table . '` SET ';
+        $sql = 'UPDATE `[prefix]_'.$this->table . '` SET ';
         $up = array();
 
-        foreach ($this->_fields as $key => $value) {
+        foreach ($this->fields as $key => $value) {
             if ($value === null) {
                 continue;
             }
 
-            $up[] = '`' . $key . '` = "' . $this->_db->escape($value) . '"';
+            $up[] = '`' . $key . '` = "' . $this->db->escape($value) . '"';
         }
 
         $sql .= implode(',', $up);
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
         return $sql;

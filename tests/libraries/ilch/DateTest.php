@@ -20,7 +20,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
      *
      * @var Array
      */
-    protected $_configData = array
+    protected $configData = array
     (
         'timezone' => 'Europe/Berlin'
     );

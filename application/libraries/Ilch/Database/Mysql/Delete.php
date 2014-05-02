@@ -12,7 +12,7 @@ class Delete extends QueryBuilder
     /**
      * @var string
      */
-    protected $_type = 'delete';
+    protected $type = 'delete';
 
     /**
      * Gets delete query builder sql.
@@ -21,10 +21,10 @@ class Delete extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'DELETE  FROM `[prefix]_'.$this->_table.'`';
+        $sql = 'DELETE  FROM `[prefix]_'.$this->table.'`';
 
-        if ($this->_where != null) {
-            $sql .= 'WHERE 1 ' . $this->_getWhereSql($this->_where);
+        if ($this->where != null) {
+            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
         }
 
         return $sql;

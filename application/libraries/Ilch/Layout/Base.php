@@ -29,21 +29,21 @@ abstract class Base extends \Ilch\Design\Base
      *
      * @var boolean
      */
-    protected $_disabled = false;
+    protected $disabled = false;
 
     /**
      * Holds the view output.
      *
      * @var string
      */
-    protected $_content = '';
+    protected $content = '';
 
     /**
      * File of the layout.
      *
      * @var string
      */
-    protected $_file;
+    protected $file;
 
     /**
      * Set layout disabled flag.
@@ -52,7 +52,7 @@ abstract class Base extends \Ilch\Design\Base
      */
     public function setDisabled($disabled)
     {
-        $this->_disabled = $disabled;
+        $this->disabled = $disabled;
     }
 
     /**
@@ -62,7 +62,7 @@ abstract class Base extends \Ilch\Design\Base
      */
     public function getDisabled()
     {
-        return $this->_disabled;
+        return $this->disabled;
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class Base extends \Ilch\Design\Base
      */
     public function setContent($content)
     {
-        $this->_content = $content;
+        $this->content = $content;
     }
 
     /**
@@ -96,7 +96,7 @@ abstract class Base extends \Ilch\Design\Base
             unset($_SESSION['messages'][$key]);
         }
 
-        return $html.$this->_content;
+        return $html.$this->content;
     }
 
     /**
@@ -119,8 +119,8 @@ abstract class Base extends \Ilch\Design\Base
      */
     public function setFile($file, $layoutKey = '')
     {
-        $this->_layoutKey = $layoutKey;
-        $this->_file = $file;
+        $this->layoutKey = $layoutKey;
+        $this->file = $file;
     }
 
     /**
@@ -130,6 +130,6 @@ abstract class Base extends \Ilch\Design\Base
      */
     public function getFile()
     {
-        return $this->_file;
+        return $this->file;
     }
 }

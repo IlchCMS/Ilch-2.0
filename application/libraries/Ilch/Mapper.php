@@ -14,14 +14,14 @@ class Mapper
      *
      * @var Ilch_Database_*
      */
-    private $_db;
+    private $db;
 
     /**
      * Injects the database adapter to the mapper.
      */
     public function __construct()
     {
-        $this->_db = Registry::get('db');
+        $this->db = Registry::get('db');
     }
 
     /**
@@ -31,7 +31,7 @@ class Mapper
      */
     public function getDatabase()
     {
-        return $this->_db;
+        return $this->db;
     }
 
     /**
@@ -51,6 +51,6 @@ class Mapper
      */
     public function setDatabase($db)
     {
-        $this->_db = $db;
+        $this->db = $db;
     }
 }

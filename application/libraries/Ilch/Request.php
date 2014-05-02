@@ -12,32 +12,32 @@ class Request
     /**
      * @var boolean
      */
-    protected $_isAdmin = false;
+    protected $isAdmin = false;
     
     /**
      * @var boolean
      */
-    protected $_isAjax = false;
+    protected $isAjax = false;
 
     /**
      * @var string
      */
-    protected $_moduleName;
+    protected $moduleName;
 
     /**
      * @var string
      */
-    protected $_controllerName;
+    protected $controllerName;
 
     /**
      * @var string
      */
-    protected $_actionName;
+    protected $actionName;
 
     /**
      * @var array
      */
-    protected $_params;
+    protected $params;
 
     /**
      * Gets admin request flag.
@@ -46,7 +46,7 @@ class Request
      */
     public function isAdmin()
     {
-        return $this->_isAdmin;
+        return $this->isAdmin;
     }
 
     /**
@@ -56,7 +56,7 @@ class Request
      */
     public function setIsAdmin($admin)
     {
-        $this->_isAdmin = $admin;
+        $this->isAdmin = $admin;
     }
     
     /**
@@ -66,7 +66,7 @@ class Request
      */
     public function isAjax()
     {
-        return $this->_isAjax;
+        return $this->isAjax;
     }
 
     /**
@@ -76,7 +76,7 @@ class Request
      */
     public function setIsAjax($ajax)
     {
-        $this->_isAjax = $ajax;
+        $this->isAjax = $ajax;
     }
 
     /**
@@ -86,7 +86,7 @@ class Request
      */
     public function getModuleName()
     {
-        return $this->_moduleName;
+        return $this->moduleName;
     }
 
     /**
@@ -96,7 +96,7 @@ class Request
      */
     public function setModuleName($name)
     {
-        $this->_moduleName = $name;
+        $this->moduleName = $name;
     }
 
     /**
@@ -106,7 +106,7 @@ class Request
      */
     public function getControllerName()
     {
-        return $this->_controllerName;
+        return $this->controllerName;
     }
 
     /**
@@ -116,7 +116,7 @@ class Request
      */
     public function setControllerName($name)
     {
-        $this->_controllerName = $name;
+        $this->controllerName = $name;
     }
 
     /**
@@ -126,7 +126,7 @@ class Request
      */
     public function getActionName()
     {
-        return $this->_actionName;
+        return $this->actionName;
     }
 
     /**
@@ -136,7 +136,7 @@ class Request
      */
     public function setActionName($name)
     {
-        $this->_actionName = $name;
+        $this->actionName = $name;
     }
 
     /**
@@ -146,8 +146,8 @@ class Request
      */
     public function getParam($key)
     {
-        if (isset($this->_params[$key])) {
-            return $this->_params[$key];
+        if (isset($this->params[$key])) {
+            return $this->params[$key];
         }
 
         return null;
@@ -161,7 +161,7 @@ class Request
      */
     public function setParam($key, $value)
     {
-        $this->_params[$key] = $value;
+        $this->params[$key] = $value;
     }
 
     /**
@@ -171,7 +171,7 @@ class Request
      */
     public function getParams()
     {
-        return $this->_params;
+        return $this->params;
     }
 
     /**
@@ -181,7 +181,7 @@ class Request
      */
     public function setParams($params)
     {
-        $this->_params = $params;
+        $this->params = $params;
     }
 
     /**
