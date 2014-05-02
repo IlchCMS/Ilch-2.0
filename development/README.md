@@ -8,8 +8,9 @@ so dass alle Entwickler mit dem gleichen System arbeiten und sich um deren Einri
 3. Kopiere die Datei development/vagrant/Vagrantfile aus dem development Ordner ins Hauptverzeichnis des Projektes
 4. Ändere die Datei Vagrantfile entsprechend deinen Wünschen, sie sollte aber auch ohne Änderungen funktionieren
 5. Starte eine Konsole (unter Windows möglichst PowerShell verwenden)
-6. Die VM mit __vargrant up__ initialisieren (Dies dauert beim ersten mal eine ganze Weile, da einiges heruntergeladen werden muss)
-7. VM kann im Browser über http://localhost:8080 aufgerufen werden, soweit du keinen anderen Port konfiguriert hast
+6. In das Hauptverzeichnis des Projektes per Shell wechseln
+7. Die VM mit __vargrant up__ initialisieren (Dies dauert beim ersten mal eine ganze Weile, da einiges heruntergeladen werden muss)
+8. VM kann im Browser über http://localhost:8080 aufgerufen werden, soweit du keinen anderen Port konfiguriert hast
 
 ## Benutzung nach Intialisierung
 
