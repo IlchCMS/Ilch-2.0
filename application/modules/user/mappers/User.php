@@ -33,7 +33,7 @@ class User extends \Ilch\Mapper
             'id' => (int) $id,
         );
 
-        $users = $this->_getBy($where);
+        $users = $this->getBy($where);
 
         if (!empty($users)) {
             return reset($users);
@@ -55,7 +55,7 @@ class User extends \Ilch\Mapper
             'name' => (string) $name,
         );
 
-        $users = $this->_getBy($where);
+        $users = $this->getBy($where);
 
         if (!empty($users)) {
             return reset($users);
@@ -77,7 +77,7 @@ class User extends \Ilch\Mapper
             'email' => (string) $email,
         );
 
-        $users = $this->_getBy($where);
+        $users = $this->getBy($where);
 
         if (!empty($users)) {
             return reset($users);
@@ -99,7 +99,7 @@ class User extends \Ilch\Mapper
             'confirmed_code' => (string) $confirmed,
         );
 
-        $users = $this->_getBy($where);
+        $users = $this_getBy($where);
 
         if (!empty($users)) {
             return reset($users);
@@ -115,7 +115,7 @@ class User extends \Ilch\Mapper
      * @param  mixed[]             $where
      * @return null|User_UserModel
      */
-    protected function _getBy($where = null)
+    protected function getBy($where = null)
     {
         $userRows = $this->db()->selectArray('*')
             ->from('users')
@@ -311,7 +311,7 @@ class User extends \Ilch\Mapper
      */
     public function getUserList($where = null)
     {
-        return $this->_getBy($where);
+        return $this->getBy($where);
     }
 
     /**

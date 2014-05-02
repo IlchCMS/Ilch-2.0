@@ -22,70 +22,70 @@ class User extends \Ilch\Model
      *
      * @var int
      */
-    protected $_id;
+    protected $id;
 
     /**
      * The username.
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * The email address of the user.
      *
      * @var string
      */
-    protected $_email;
+    protected $email;
 
     /**
      * The password of the user.
      *
      * @var string
      */
-    protected $_password;
+    protected $password;
 
     /**
      * The Ilch_Date of when the user got created.
      *
      * @var Ilch_Date
      */
-    protected $_dateCreated;
+    protected $dateCreated;
 
     /**
      * The Ilch_Date of when the user got confirmed.
      *
      * @var Ilch_Date
      */
-    protected $_dateConfirmed;
+    protected $dateConfirmed;
 
     /**
      * LastActivity timestamp of the user.
      *
      * @var Ilch_Date
      */
-    protected $_dateLastActivity;
+    protected $dateLastActivity;
 
     /**
      * Confirmed of the user.
      *
      * @var int
      */
-    protected $_confirmed;
+    protected $confirmed;
 
     /**
      * Confirmed Code of the user.
      *
      * @var string
      */
-    protected $_confirmedCode;
+    protected $confirmedCode;
 
     /**
      * The associated user group object.
      *
      * @var User\Models\Group[]
      */
-    protected $_groups = array();
+    protected $groups = array();
 
     /**
      * Returns the id of the user.
@@ -94,7 +94,7 @@ class User extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -104,7 +104,7 @@ class User extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
 
         return $this;
     }
@@ -116,7 +116,7 @@ class User extends \Ilch\Model
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -126,7 +126,7 @@ class User extends \Ilch\Model
      */
     public function setName($username)
     {
-        $this->_name = (string) $username;
+        $this->name = (string) $username;
 
         return $this;
     }
@@ -138,7 +138,7 @@ class User extends \Ilch\Model
      */
     public function getEmail()
     {
-        return $this->_email;
+        return $this->email;
     }
 
     /**
@@ -148,7 +148,7 @@ class User extends \Ilch\Model
      */
     public function setEmail($email)
     {
-        $this->_email = (string) $email;
+        $this->email = (string) $email;
 
         return $this;
     }
@@ -160,7 +160,7 @@ class User extends \Ilch\Model
      */
     public function getPassword()
     {
-        return $this->_password;
+        return $this->password;
     }
 
     /**
@@ -170,7 +170,7 @@ class User extends \Ilch\Model
      */
     public function setPassword($password)
     {
-        $this->_password = (string) $password;
+        $this->password = (string) $password;
 
         return $this;
     }
@@ -182,7 +182,7 @@ class User extends \Ilch\Model
      */
     public function getConfirmed()
     {
-        return $this->_confirmed;
+        return $this->confirmed;
     }
 
     /**
@@ -192,7 +192,7 @@ class User extends \Ilch\Model
      */
     public function setConfirmed($confirmed)
     {
-        $this->_confirmed = (int) $confirmed;
+        $this->confirmed = (int) $confirmed;
 
         return $this;
     }
@@ -204,7 +204,7 @@ class User extends \Ilch\Model
      */
     public function getConfirmedCode()
     {
-        return $this->_confirmedCode;
+        return $this->confirmedCode;
     }
 
     /**
@@ -214,7 +214,7 @@ class User extends \Ilch\Model
      */
     public function setConfirmedCode($confirmedCode)
     {
-        $this->_confirmedCode = (string) $confirmedCode;
+        $this->confirmedCode = (string) $confirmedCode;
 
         return $this;
     }
@@ -226,7 +226,7 @@ class User extends \Ilch\Model
      */
     public function getGroups()
     {
-        return $this->_groups;
+        return $this->groups;
     }
 
     /**
@@ -236,7 +236,7 @@ class User extends \Ilch\Model
      */
     public function setGroups($groups)
     {
-        $this->_groups = $groups;
+        $this->groups = $groups;
 
         return $this;
     }
@@ -248,8 +248,8 @@ class User extends \Ilch\Model
      */
     public function addGroup(Group $group)
     {
-        if (!isset($this->_groups[$group->getId()])) {
-            $this->_groups[$group->getId()] = $group;
+        if (!isset($this->groups[$group->getId()])) {
+            $this->groups[$group->getId()] = $group;
         }
 
         return $this;
@@ -263,7 +263,7 @@ class User extends \Ilch\Model
      */
     public function hasGroup($groupId)
     {
-        if (!isset($this->_groups[$groupId])) {
+        if (!isset($this->groups[$groupId])) {
             return false;
         }
 
@@ -277,7 +277,7 @@ class User extends \Ilch\Model
      */
     public function getDateCreated()
     {
-        return $this->_dateCreated;
+        return $this->dateCreated;
     }
 
     /**
@@ -287,7 +287,7 @@ class User extends \Ilch\Model
      */
     public function setDateCreated($dateCreated)
     {
-        $this->_dateCreated = $dateCreated;
+        $this->dateCreated = $dateCreated;
 
         return $this;
     }
@@ -299,7 +299,7 @@ class User extends \Ilch\Model
      */
     public function getDateConfirmed()
     {
-        return $this->_dateConfirmed;
+        return $this->dateConfirmed;
     }
 
     /**
@@ -309,7 +309,7 @@ class User extends \Ilch\Model
      */
     public function setDateConfirmed($dateConfirmed)
     {
-        $this->_dateConfirmed = $dateConfirmed;
+        $this->dateConfirmed = $dateConfirmed;
 
         return $this;
     }
@@ -321,7 +321,7 @@ class User extends \Ilch\Model
      */
     public function getDateLastActivity()
     {
-        return $this->_dateLastActivity;
+        return $this->dateLastActivity;
     }
 
     /**
@@ -331,7 +331,7 @@ class User extends \Ilch\Model
      */
     public function setDateLastActivity($dateLastActivity)
     {
-        $this->_dateLastActivity = $dateLastActivity;
+        $this->dateLastActivity = $dateLastActivity;
 
         return $this;
     }

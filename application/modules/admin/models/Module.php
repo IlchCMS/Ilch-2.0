@@ -21,24 +21,24 @@ class Module extends \Ilch\Model
      *
      * @var string
      */
-    protected $_key = '';
+    protected $key = '';
 
     /**
      * Small icon of the module.
      *
      * @var string
      */
-    protected $_iconSmall;
+    protected $iconSmall;
 
     /**
      * @var boolean
      */
-    protected $_systemModule = false;
+    protected $systemModule = false;
 
     /**
      * @var string
      */
-    protected $_author;
+    protected $author;
 
     /**
      * Gets the key.
@@ -47,7 +47,7 @@ class Module extends \Ilch\Model
      */
     public function getKey()
     {
-        return $this->_key;
+        return $this->key;
     }
 
     /**
@@ -57,7 +57,7 @@ class Module extends \Ilch\Model
      */
     public function setKey($key)
     {
-        $this->_key = (string) $key;
+        $this->key = (string) $key;
     }
     
     /**
@@ -67,7 +67,7 @@ class Module extends \Ilch\Model
      */
     public function getAuthor()
     {
-        return $this->_author;
+        return $this->author;
     }
 
     /**
@@ -77,7 +77,7 @@ class Module extends \Ilch\Model
      */
     public function setAuthor($author)
     {
-        $this->_author = (string)$author;
+        $this->author = (string)$author;
     }
     
     /**
@@ -87,7 +87,7 @@ class Module extends \Ilch\Model
      */
     public function getIconSmall()
     {
-        return $this->_iconSmall;
+        return $this->iconSmall;
     }
 
     /**
@@ -97,7 +97,7 @@ class Module extends \Ilch\Model
      */
     public function setSystemModule($system)
     {
-        $this->_systemModule = (bool)$system;
+        $this->systemModule = (bool)$system;
     }
 
     /**
@@ -107,7 +107,7 @@ class Module extends \Ilch\Model
      */
     public function getSystemModule()
     {
-        return $this->_systemModule;
+        return $this->systemModule;
     }
 
     /**
@@ -117,7 +117,7 @@ class Module extends \Ilch\Model
      */
     public function setIconSmall($icon)
     {
-        $this->_iconSmall = (string) $icon;
+        $this->iconSmall = (string) $icon;
     }
 
     /**
@@ -128,7 +128,7 @@ class Module extends \Ilch\Model
      */
     public function addContent($langKey, $content)
     {
-        $this->_content[$langKey] = $content;
+        $this->content[$langKey] = $content;
     }
 
     /**
@@ -138,11 +138,11 @@ class Module extends \Ilch\Model
      */
     public function getContentForLocale($langKey)
     {
-        if (!isset($this->_content[$langKey])) {
+        if (!isset($this->content[$langKey])) {
             return null;
         }
 
-        return $this->_content[$langKey];
+        return $this->content[$langKey];
     }
 
     /**
@@ -152,6 +152,6 @@ class Module extends \Ilch\Model
      */
     public function getContent()
     {
-        return $this->_content;
+        return $this->content;
     }
 }

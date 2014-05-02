@@ -15,35 +15,35 @@ class Entry extends \Ilch\Model
      *
      * @var int
      */
-    protected $_id;
+    protected $id;
 
     /**
      * The name of the partner.
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * The link of the partner.
      *
      * @var string
      */
-    protected $_link;
+    protected $link;
 
     /**
      * The banner of the partner.
      *
      * @var string
      */
-    protected $_banner;
+    protected $banner;
     
     /**
      * The free of the entry.
      *
      * @var integer
      */
-    protected $_free;
+    protected $free;
 
     /**
      * Gets the id of the partner.
@@ -52,7 +52,7 @@ class Entry extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
     
     /**
@@ -63,7 +63,7 @@ class Entry extends \Ilch\Model
     
     public function getFree()
     {
-        return $this->_free;
+        return $this->free;
     }
 
     /**
@@ -74,7 +74,7 @@ class Entry extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int)$id;
+        $this->id = (int)$id;
 
         return $this;
     }
@@ -86,7 +86,7 @@ class Entry extends \Ilch\Model
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -97,7 +97,7 @@ class Entry extends \Ilch\Model
      */
     public function setName($name)
     {
-        $this->_name = (string)$name;
+        $this->name = (string)$name;
 
         return $this;
     }
@@ -109,7 +109,7 @@ class Entry extends \Ilch\Model
      */
     public function getLink()
     {
-        return $this->_link;
+        return $this->link;
     }
 
     /**
@@ -124,7 +124,7 @@ class Entry extends \Ilch\Model
             $link = 'http://'.$link;
         }
 
-        $this->_link = (string)$link;
+        $this->link = (string)$link;
 
         return $this;
     }
@@ -136,7 +136,7 @@ class Entry extends \Ilch\Model
      */
     public function getBanner()
     {
-        return $this->_banner;
+        return $this->banner;
     }
 
     /**
@@ -151,7 +151,7 @@ class Entry extends \Ilch\Model
             $banner = 'http://'.$banner;
         }
 
-        $this->_banner = (string)$banner;
+        $this->banner = (string)$banner;
 
         return $this;
     }
@@ -163,6 +163,6 @@ class Entry extends \Ilch\Model
      */
     public function setFree($free)
     {
-        $this->_free = (int)$free;
+        $this->free = (int)$free;
     }
 }

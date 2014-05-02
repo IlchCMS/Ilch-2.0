@@ -70,7 +70,7 @@ class Category extends \Ilch\Mapper
         return reset($cats);
     }
 
-    public function _getCategoriesForParentRec($models, $id)
+    public function getCategoriesForParentRec($models, $id)
     {
         $categoryRow = $this->db()->selectRow('*')
             ->from('link_cats')
@@ -82,7 +82,7 @@ class Category extends \Ilch\Mapper
         }
 
         if (!empty($categoryRow['parent_id'])) {
-           $models = $this->_getCategoriesForParentRec($models, $categoryRow['parent_id']);
+           $models = $this->getCategoriesForParentRec($models, $categoryRow['parent_id']);
         }
                         
         $categoryModel = new CategoryModel();
@@ -102,7 +102,7 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoriesForParent($id)
     {
-        $models = $this->_getCategoriesForParentRec(array(), $id);
+        $models = $this->getCategoriesForParentRec(array(), $id);
         return $models;
     }
 

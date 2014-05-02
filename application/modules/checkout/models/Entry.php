@@ -15,35 +15,35 @@ class Entry extends \Ilch\Model
      *
      * @var integer
      */
-    protected $_id;
+    protected $id;
 
     /**
      * The datetime of the entry.
      *
      * @var string
      */
-    protected $_datetime;
+    protected $datetime;
 
     /**
      * The name of the entry.
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * The usage of the entry.
      *
      * @var string
      */
-    protected $_usage;
+    protected $usage;
 
     /**
      * The amount of the entry.
      *
      * @var string
      */
-    protected $_amount;
+    protected $amount;
 
     /**
      * Gets the id of the entry.
@@ -52,7 +52,7 @@ class Entry extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -62,7 +62,7 @@ class Entry extends \Ilch\Model
      */
     public function getDatetime()
     {
-        return $this->_datetime;
+        return $this->datetime;
     }
 
     /**
@@ -72,7 +72,7 @@ class Entry extends \Ilch\Model
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -82,7 +82,7 @@ class Entry extends \Ilch\Model
      */
     public function getUsage()
     {
-        return $this->_usage;
+        return $this->usage;
     }
 
     /**
@@ -92,7 +92,7 @@ class Entry extends \Ilch\Model
      */
     public function getAmount()
     {
-        return $this->_amount;
+        return $this->amount;
     }
 
     /**
@@ -102,7 +102,7 @@ class Entry extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int)$id;
+        $this->id = (int)$id;
     }
 
     /**
@@ -112,7 +112,7 @@ class Entry extends \Ilch\Model
      */
     public function setDatetime($datetime)
     {
-        $this->_datetime = (string)$datetime;
+        $this->datetime = (string)$datetime;
     }
 
     /**
@@ -122,7 +122,7 @@ class Entry extends \Ilch\Model
      */
     public function setName($name)
     {
-        $this->_name = (string)$name;
+        $this->name = (string)$name;
     }
 
     /**
@@ -132,7 +132,7 @@ class Entry extends \Ilch\Model
      */
     public function setUsage($usage)
     {
-        $this->_usage = (string)$usage;
+        $this->usage = (string)$usage;
     }
 
     /**
@@ -142,6 +142,6 @@ class Entry extends \Ilch\Model
      */
     public function setAmount($amount)
     {
-        $this->_amount = (string)$amount;
+        $this->amount = (string)$amount;
     }
 }

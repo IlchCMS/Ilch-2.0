@@ -22,35 +22,35 @@ class Category extends \Ilch\Mapper
      *
      * @var int
      */
-    private $_id;
+    private $id;
 
     /**
      * The name of the category.
      *
      * @var string
      */
-    private $_name;
+    private $name;
 
     /**
      * The catid of the category.
      *
      * @var string
      */
-    private $_cat;
+    private $cat;
 
     /**
      * The description of the category.
      *
      * @var string
      */
-    private $_desc;
+    private $desc;
     
     /**
      * The links count of the category.
      *
      * @var integer
      */
-    private $_linksCount;
+    private $linksCount;
 
     /**
      * Returns the user category id.
@@ -59,7 +59,7 @@ class Category extends \Ilch\Mapper
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -69,7 +69,7 @@ class Category extends \Ilch\Mapper
      */
     public function setId($id)
     {
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
     }
 
     /**
@@ -79,7 +79,7 @@ class Category extends \Ilch\Mapper
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -89,7 +89,7 @@ class Category extends \Ilch\Mapper
      */
     public function setParentId($cat)
     {
-        $this->_cat_id = (string) $cat;
+        $this->cat_id = (string)$cat;
     }
 
     /**
@@ -99,7 +99,7 @@ class Category extends \Ilch\Mapper
      */
     public function getParentId()
     {
-        return $this->_cat_id;
+        return $this->cat_id;
     }
 
     /**
@@ -109,7 +109,7 @@ class Category extends \Ilch\Mapper
      */
     public function setName($name)
     {
-        $this->_name = (string) $name;
+        $this->name = (string) $name;
     }
 
     /**
@@ -119,7 +119,7 @@ class Category extends \Ilch\Mapper
      */
     public function getDesc()
     {
-        return $this->_desc;
+        return $this->desc;
     }
 
     /**
@@ -130,7 +130,7 @@ class Category extends \Ilch\Mapper
      */
     public function setDesc($desc)
     {
-        $this->_desc = (string)$desc;
+        $this->desc = (string)$desc;
 
         return $this;
     }
@@ -142,7 +142,7 @@ class Category extends \Ilch\Mapper
      */
     public function getLinksCount()
     {
-        return $this->_linksCount;
+        return $this->linksCount;
     }
 
     /**
@@ -153,7 +153,7 @@ class Category extends \Ilch\Mapper
      */
     public function setLinksCount($count)
     {
-        $this->_linksCount = $count;
+        $this->linksCount = $count;
 
         return $this;
     }

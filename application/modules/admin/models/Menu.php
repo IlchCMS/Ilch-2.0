@@ -21,14 +21,14 @@ class Menu extends \Ilch\Model
      *
      * @var integer
      */
-    protected $_id;
+    protected $id;
     
     /**
      * Title of the menu.
      *
      * @var string
      */
-    protected $_title;
+    protected $title;
 
     /**
      * Sets the menu id.
@@ -37,7 +37,7 @@ class Menu extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int)$id;
+        $this->id = (int)$id;
     }
 
     /**
@@ -47,7 +47,7 @@ class Menu extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
     
     /**
@@ -57,7 +57,7 @@ class Menu extends \Ilch\Model
      */
     public function setTitle($title)
     {
-        $this->_title = (string)$title;
+        $this->title = (string)$title;
     }
 
     /**
@@ -67,6 +67,6 @@ class Menu extends \Ilch\Model
      */
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
 }
