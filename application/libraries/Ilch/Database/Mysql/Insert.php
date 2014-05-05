@@ -8,6 +8,40 @@ namespace Ilch\Database\Mysql;
 
 class Insert extends QueryBuilder
 {
+    /** @var  array */
+    protected $values;
+
+    /**
+     * @param array $values
+     * @return Update
+     */
+    public function values(array $values)
+    {
+        $this->values = $values;
+        return $this;
+    }
+
+    /**
+     * @param $table
+     * @return Update
+     */
+    public function into($table)
+    {
+        $this->table = (string) $table;
+        return $this;
+    }
+
+    /**
+     * @todo remove after updating modules
+     * @deprecated
+     * @param array $values
+     * @return Update
+     */
+    public function fields(array $values)
+    {
+        return $this->values($values);
+    }
+
     /**
      * Execute the query builder.
      *
@@ -16,7 +50,7 @@ class Insert extends QueryBuilder
     public function execute()
     {
         $this->db->query($this->generateSql());
-        return $this->db->getLink()->insert_id;
+        return $this->db->getLastInsertId();
     }
 
     /**
@@ -26,17 +60,26 @@ class Insert extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'INSERT INTO `[prefix]_'.$this->table.'` ( ';
-        $sqlFields = array();
-        $sqlValues = array();
+        if (!isset($this->table)) {
+            throw new \RuntimeException('table must be set');
+        }
 
-        foreach ($this->fields as $key => $value) {
-            if ($value === null) {
-                continue;
+        $sql = 'INSERT INTO ' . $this->db->quote('[prefix]_'.$this->table). ' (';
+        $sqlFields = $sqlValues = [];
+
+        if (!empty($this->values)) {
+            foreach ($this->values as $key => $value) {
+                if ($value === null) {
+                    continue;
+                }
+
+                $sqlFields[] = $this->db->quote($key);
+                $sqlValues[] = $this->db->escape($value);
             }
+        }
 
-            $sqlFields[] = '`' . $key . '`';
-            $sqlValues[] = '"' . $this->db->escape($value) . '"';
+        if (empty($sqlFields)) {
+            throw new \RuntimeException('no valid values for insert');
         }
 
         $sql .= implode(',', $sqlFields);

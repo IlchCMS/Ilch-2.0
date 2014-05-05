@@ -143,6 +143,24 @@ class Mysql
     }
 
     /**
+     * Returns number of affected rows of the last query
+     * @return integer
+     */
+    public function getAffectedRows()
+    {
+        return (int) $this->db->getLink()->affected_rows;
+    }
+
+    /**
+     * Returns last auto generated primary key
+     * @return integer|null
+     */
+    public function getLastInsertId()
+    {
+        return $this->db->getLink()->insert_id;
+    }
+
+    /**
      * Select on cell from table.
      *
      * @param  string $sql
@@ -283,7 +301,7 @@ class Mysql
     /**
      * Insert entries into the table.
      * @param string $table
-     * @return \Ilch\Database\Mysql\Update
+     * @return \Ilch\Database\Mysql\Insert
      */
     public function insert($table)
     {
@@ -308,6 +326,8 @@ class Mysql
 
     /**
      * Drops the table from database.
+     *
+     * @todo why no prefix usage?? at least as option
      *
      * @param string $table
      * @return \mysqli_result
@@ -362,27 +382,19 @@ class Mysql
     }
 
     /**
-     * Quotes an array of field names
-     * @param array $fields
-     * @return array
-     */
-    public function quoteArray(array $fields)
-    {
-        foreach ($fields as &$field) {
-            $field = $this->quote($field);
-        }
-        return $fields;
-    }
-
-    /**
      * Escape the given value for a sql query.
      *
      * @param  string $value
+     * @param  boolean $andQuote [default: true] add Quotes around
      * @return string
      */
-    public function escape($value)
+    public function escape($value, $andQuote = true)
     {
-        return mysqli_real_escape_string($this->conn, $value);
+        $escaped = mysqli_real_escape_string($this->conn, $value);
+        if (true === $andQuote) {
+            $escaped = '"' . $escaped . '"';
+        }
+        return $escaped;
     }
 
     /**

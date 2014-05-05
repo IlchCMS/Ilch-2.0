@@ -13,7 +13,7 @@ class Visit extends \Ilch\Mapper
      */
     public function getVisitsOnlineUser()
     {
-        $userMapper = new \User\Mappers\User();
+        $userMapper = new User();
         $date = new \Ilch\Date();
         $date->modify('-3 minutes');
 
