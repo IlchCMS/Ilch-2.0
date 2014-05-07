@@ -201,19 +201,35 @@ class Request
 
     /**
      * Get post-value by key.
-     *
+     * Supports 'dot' notation for arrays
+     * e.g.
+     *      foo.bar     > foo['bar']
+     *      foo.bar.baz > foo['bar']['baz']
      * @param  string $key
+     * @param  string $default This gets returned if $key does not exist
      * @return mixed
      */
-    public function getPost($key = '')
+    public function getPost($key = null, $default = null)
     {
-        if ($key === '') {
-            return $_POST;
-        } elseif (isset($_POST[$key])) {
-            return $_POST[$key];
-        } else {
-            return null;
+        $array = $_POST;
+
+        if (null === $key) {
+            return $array;
         }
+
+        if (isset($array[$key])) {
+            return $array[$key];
+        }
+
+        foreach (explode('.', $key) as $seg) {
+            if (! is_array($array) || ! array_key_exists($seg, $array)) {
+                return $default;
+            }
+
+            $array = $array[$seg];
+        }
+
+        return $array;
     }
 
     /**
