@@ -5,6 +5,7 @@
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
 
 class Request
@@ -13,7 +14,7 @@ class Request
      * @var boolean
      */
     protected $isAdmin = false;
-    
+
     /**
      * @var boolean
      */
@@ -58,7 +59,7 @@ class Request
     {
         $this->isAdmin = $admin;
     }
-    
+
     /**
      * Gets Ajax request flag.
      *
@@ -66,7 +67,11 @@ class Request
      */
     public function isAjax()
     {
-        return $this->isAjax;
+        if ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest") || $this->isAjax) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
