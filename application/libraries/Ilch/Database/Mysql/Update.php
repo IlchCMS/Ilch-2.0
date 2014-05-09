@@ -12,6 +12,24 @@ class Update extends QueryBuilder
     protected $values;
 
     /**
+     * @param array|null $values values as [name => value]
+     * @param string|null $table table without prefix
+     * @param array|null $where conditions @see QueryBuilder::where()
+     */
+    public function __construct($values = null, $table = null, $where = null)
+    {
+        if (isset($values)) {
+            $this->values($values);
+        }
+        if (isset($into)) {
+            $this->into($into);
+        }
+        if (isset($where)) {
+            $this->where($where);
+        }
+    }
+
+    /**
      * @param array $values
      * @return Update
      */

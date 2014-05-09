@@ -12,7 +12,21 @@ class Insert extends QueryBuilder
     protected $values;
 
     /**
-     * @param array $values
+     * @param array|null $values values as [name => value]
+     * @param string|null $into table without prefix
+     */
+    public function __construct($values = null, $into = null)
+    {
+        if (isset($values)) {
+            $this->values($values);
+        }
+        if (isset($into)) {
+            $this->into($into);
+        }
+    }
+
+    /**
+     * @param array $values values as [name => value]
      * @return Update
      */
     public function values(array $values)
@@ -22,7 +36,7 @@ class Insert extends QueryBuilder
     }
 
     /**
-     * @param $table
+     * @param $table table without prefix
      * @return Update
      */
     public function into($table)
@@ -57,6 +71,7 @@ class Insert extends QueryBuilder
      * Gets delete query builder sql.
      *
      * @return string
+     * @throws \RuntimeException
      */
     public function generateSql()
     {

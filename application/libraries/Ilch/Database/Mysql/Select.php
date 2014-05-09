@@ -37,9 +37,36 @@ class Select extends QueryBuilder
     protected $fields;
 
     /**
+     * Create Select Statement
+     * @param array|string|null $fields
+     * @param string|null $table table without prefix
+     * @param array|null $where conditions @see QueryBuilder::where()
+     * @param array|null $orderBy
+     * @param array|int|null $limit
+     */
+    public function __construct($fields = null, $table = null, $where = null, array $orderBy = null, $limit = null)
+    {
+        if (isset($fields)) {
+            $this->fields($fields);
+        }
+        if (isset($table)) {
+            $this->from($table);
+        }
+        if (isset($where)) {
+            $this->where($where);
+        }
+        if (isset($orderBy)) {
+            $this->order($orderBy);
+        }
+        if (isset($limit)) {
+            $this->limit($limit);
+        }
+    }
+
+    /**
      * Adds table to query builder.
      *
-     * @param string $table
+     * @param string $table table without prefix
      * @return \Ilch\Database\Mysql\Select
      */
     public function from($table)
