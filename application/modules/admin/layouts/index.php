@@ -421,6 +421,7 @@
             var iframeUrlFile = "<?=$this->getUrl('admin/media/iframe/index/type/file/');?>";
             var iframeUrlMedia = "<?=$this->getUrl('admin/media/iframe/index/type/media/');?>";
             var iframeSingleUrlImage = "<?=$this->getUrl('admin/media/iframe/index/type/single/');?>";
+            var iframeSingleUrlGallery = "<?=$this->getUrl('admin/media/iframe/multi/type/multi/');?>";
             var ilchMediaPlugin = "<?=$this->getStaticUrl('../application/modules/media/static/js/ilchmedia/');?>";
         </script>
     </body>

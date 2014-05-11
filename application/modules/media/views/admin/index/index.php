@@ -13,6 +13,7 @@ if ($this->get('medias') != '') {
             <col class="col-lg-2" />
             <col class="col-lg-2" />
             <col />
+            <col class="col-lg-2" />
     </colgroup>
     <thead>
         <tr>
@@ -22,6 +23,7 @@ if ($this->get('medias') != '') {
             <th></th>
             <th><?php echo $this->getTrans('name'); ?></th>
             <th><?php echo $this->getTrans('date'); ?></th>
+            <th>Kategorie</th>
         </tr>
     </thead>
     <tbody><?php foreach ($this->get('medias') as $media) : ?>
@@ -30,7 +32,7 @@ if ($this->get('medias') != '') {
             <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $media->getId()))?></td>
             <td><?php echo $media->getEnding(); ?></td>
             <td><?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))){
-                echo '<a href="'.$this->getStaticUrl().'../'.$media->getUrl().'" title="'.$media->getName().'"><img class="img-preview" src="'.$this->getStaticUrl().'../'.$media->getUrl().'" alt=""></a>';
+                echo '<a href="'.$this->getStaticUrl().'../'.$media->getUrl().'" title="'.$media->getName().'"><img class="img-preview" src="'.$this->getStaticUrl().'../'.$media->getUrlThumb().'" alt=""></a>';
                     }  else {
                         echo '<img src="'.$this->getStaticUrl('../application/modules/media/static/img/nomedia.jpg').'" class="img-preview" style="width:50px; height:auto;"  />';
                     }
@@ -38,6 +40,27 @@ if ($this->get('medias') != '') {
             </td>
             <td><?php echo $media->getName(); ?></td>
             <td><?php echo $media->getDatetime(); ?></td>
+            <td><div class="btn-group dropdown">
+                    <button class="btn btn-default dropdown-toggle" 
+                            data-toggle="dropdown" 
+                            type="button"><?php echo $media->getCatName(); ?>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu listChooser" role="menu">
+                        <?php
+                        if ($this->get('catnames') != '') {
+                        ?>
+                        <?php foreach ($this->get('catnames') as $name) : ?>
+                        <li>
+                            <a href="<?php echo $this->getUrl(array('action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId())) ?>"><?php echo $name->getCatName(); ?></a>
+                        </li>
+                        <?php endforeach; ?>
+                        <?php
+                            }
+                        ?>
+                    </ul>
+                </div>
+            </td>
         </tr><?php endforeach; ?>
     </tbody>
 </table>
