@@ -213,25 +213,7 @@ class Request
      */
     public function getPost($key = null, $default = null)
     {
-        $postData = $_POST;
-
-        if ($key === null) {
-            return $postData;
-        }
-
-        if (isset($postData[$key])) {
-            return $postData[$key];
-        }
-
-        foreach (explode('.', $key) as $seg) {
-            if (!is_array($postData) || !array_key_exists($seg, $postData)) {
-                return $default;
-            }
-
-            $postData = $postData[$seg];
-        }
-
-        return $postData;
+        return array_dot($_POST, $key, $default);
     }
 
     /**
