@@ -217,7 +217,7 @@ class Index extends \Ilch\Controller\Frontend
                 \Ilch\Registry::set('db', $db);
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
-                $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment', 'gallery'), $modulesToInstall);
+                $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment'), $modulesToInstall);
                 $moduleMapper = new \Admin\Mappers\Module();
 
                 /*
@@ -338,6 +338,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['link']['types']      = array('clan', 'private');
         $modules['partner']['types']   = array('clan', 'private');
         $modules['shoutbox']['types']  = array('clan', 'private');
+        $modules['gallery']['types']  = array('clan', 'private');
 
         foreach ($modules as $key => $module) {
             $configClass = '\\'.ucfirst($key).'\\Config\\config';
