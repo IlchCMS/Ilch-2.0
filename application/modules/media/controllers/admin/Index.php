@@ -56,6 +56,7 @@ class Index extends \Ilch\Controller\Admin
         
         $MediaMapper = new MediaMapper();
         $this->getView()->set('medias', $MediaMapper->getMediaList());
+        $this->getView()->set('catnames', $MediaMapper->getCatList());
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
         $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
         $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
@@ -74,19 +75,28 @@ class Index extends \Ilch\Controller\Admin
             $name = pathinfo($file, PATHINFO_FILENAME);
             $filename = uniqid() . $name;
             $url = $path.$filename.'.'.$endung;
+            $urlthumb = $path.'thumb_'.$filename.'.'.$endung;
+            
             
             $model = new \Media\Models\Media();
             $model->setUrl($url);
+            $model->setUrlThumb($urlthumb);
             $model->setEnding($endung);
             $model->setName($name);
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);
             
             if(move_uploaded_file($_FILES['upl']['tmp_name'], $path.$filename.'.'.$endung)){
-                
+                if(in_array($endung , explode(' ',$this->getConfig()->get('media_ext_img')))){
+                    $thumb = new \Ilch\Thumbnail;
+                    $thumb -> Thumbprefix = 'thumb_';
+                    $thumb -> Thumblocation = $path;
+                    $thumb -> Thumbsize = 300;
+                    $thumb -> Cropimage = array(3,1,50,50,50,50);
+                    $thumb -> Createthumb($url,'file');
+                }
             }
         }
-        return $this->getView();
     }
 
 	public function delAction()
