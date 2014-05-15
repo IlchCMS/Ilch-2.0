@@ -46,11 +46,11 @@ class Media extends \Ilch\Mapper
 
     public function getCatList() 
     {
-        $mediaArray = $this->db()->selectArray('*')
-        
+        $mediaArray = $this->db()->select('*')
             ->from('media_cats')
             ->order(array('id' => 'DESC'))
-            ->execute();
+            ->execute()
+            ->fetchRows();
         
 
         if (empty($mediaArray)) {
@@ -87,10 +87,11 @@ class Media extends \Ilch\Mapper
 
     public function delImage($id) 
     {
-        $mediaRow = $this->db()->selectRow('*')
+        $mediaRow = $this->db()->select('*')
             ->from('media')
             ->where(array('id' => $this->db()->escape($id)))
-            ->execute();
+            ->execute()
+            ->fetchAssoc();
         if (file_exists($mediaRow['url'])) {
             unlink($mediaRow['url']);
         }

@@ -22,11 +22,12 @@ class Image extends \Ilch\Mapper
      */
     public function getImage($where = array())
     {
-        $imageArray = $this->db()->selectArray('*')
+        $imageArray = $this->db()->select('*')
             ->from('gallery_imgs')
             ->where($where)
             ->order(array('id' => 'DESC'))
-            ->execute();
+            ->execute()
+            ->fetchRows();
 
         if (empty($imageArray)) {
             return array();
