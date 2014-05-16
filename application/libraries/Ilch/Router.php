@@ -357,7 +357,7 @@ class Router
      */
     public function execute()
     {
-        $this->request->setModuleName('page');
+        $this->request->setModuleName(DEFAULT_MODULE);
         $this->request->setControllerName('index');
         $this->request->setActionName('index');
 
