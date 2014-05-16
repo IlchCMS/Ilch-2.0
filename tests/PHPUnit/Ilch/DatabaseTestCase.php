@@ -55,23 +55,12 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
         $testHelper = new PHPUnit_Ilch_TestHelper();
         $testHelper->setConfigInRegistry($this->configData);
         $dbFactory = new Factory();
-        $config = Registry::get('config');
 
-        if (getenv('TRAVIS')) {
-            $config = new \Ilch\Config\File();
-            $config->set('dbEngineTest', 'Mysql');
-            $config->set('dbHostTest', '127.0.0.1');
-            $config->set('dbUserTest', 'travis');
-            $config->set('dbPasswordTest', '');
-            $config->set('dbNameTest', 'ilch2_test');
-            $config->set('dbPrefixTest', '');
-            \Ilch\Registry::set('config', $config);
+        if (!isset($this->db)) {
+            $this->db = $dbFactory->getInstanceByConfig($this->setupConfig());
         }
 
-        $this->db = $dbFactory->getInstanceByConfig($config);
-
-        if($this->db === false)
-        {
+        if ($this->db === false) {
             $this->markTestIncomplete('Necessary DB configuration is not set.');
             parent::setUp();
             return;
@@ -89,7 +78,7 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
             $this->db->query($sql);
         }
 
-        $this->db->queryMulti(file_get_contents(__DIR__.'/_files/db_schema.sql'));
+        $this->db->queryMulti($this->getSchemaSQLQueries());
 
         parent::setUp();
     }
@@ -102,7 +91,7 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
     final public function getConnection()
     {
         $dbData = array();
-        $config = Registry::get('config');
+        $config = $this->setupConfig();
 
         foreach (array('dbEngineTest', 'dbHostTest', 'dbUserTest', 'dbPasswordTest', 'dbNameTest', 'dbPrefixTest') as $configKey) {
             /*
@@ -114,7 +103,6 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
                 $dbData[$configKey] = $config->get($configKey);
             } else {
                 $this->markTestIncomplete('Necessary DB configuration is not set.');
-                return;
             }
         }
 
@@ -135,7 +123,44 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
     /**
      * Creates and returns a dataset object.
      *
-     * @return PHPUnit_Extensions_Database_DataSet
+     * @return PHPUnit_Extensions_Database_DataSet_AbstractDataSet
      */
-    protected function getDataSet() {}
+    protected function getDataSet()
+    {
+    }
+
+    /**
+     * Returns database schema sql statements to initialize database
+     *
+     * @return string
+     */
+    protected function getSchemaSQLQueries()
+    {
+        return file_get_contents(__DIR__.'/_files/db_schema.sql');
+    }
+
+    /**
+     * Setup the database config
+     * @return \Ilch\Config\File
+     */
+    protected function setupConfig()
+    {
+        $config = Registry::get('config');
+
+        if (getenv('TRAVIS')) {
+            $config = new \Ilch\Config\File();
+            $config->set('dbEngineTest', 'Mysql');
+            $config->set('dbHostTest', '127.0.0.1');
+            $config->set('dbUserTest', 'travis');
+            $config->set('dbPasswordTest', '');
+            $config->set('dbNameTest', 'ilch2_test');
+            $config->set('dbPrefixTest', '');
+            Registry::set('config', $config);
+        } elseif (!$config instanceof \Ilch\Config\File) {
+            $config = new \Ilch\Config\File();
+            $config->loadConfigFromFile(CONFIG_PATH . '/config.php');
+            Registry::set('config', $config);
+        }
+        return $config;
+    }
 }

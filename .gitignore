@@ -5,3 +5,4 @@ application/modules/media/static/upload
 .idea
 /.vagrant
 /Vagrantfile
+/tests/config.php

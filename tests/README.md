@@ -10,22 +10,17 @@ Hier gibts Antworten [PHPUnit](http://phpunit.de/manual/current/en/)
 Für die Controller- bzw. Datenbanktests wird zusätzlich noch das DB-Modul von PHPUnit benötigt: "pear install phpunit/DbUnit"
 
 2. **Konfiguration bereitstellen.**
-    * DB-Einstellungen für die Datenbank- und Controllertests werden über die *config.php* geregelt.
+    * DB-Einstellungen für die Datenbank- und Controllertests werden über die *tests/config.php* geregelt
         * Für Datenbanktests werden alle Configeinträge mit dem Suffix "Test" benötigt!
 
         ```php
-$config["dbEngine"] = "Mysql";
-$config["dbHost"] = "localhost";
-$config["dbUser"] = "ilch2";
-$config["dbPassword"] = "";
-$config["dbName"] = "ilch2";
-$config["dbPrefix"] = "";
-$config["dbEngineTest"] = "Mysql"; // Config for tests
-$config["dbHostTest"] = "localhost"; // Config for tests
-$config["dbUserTest"] = "ilch2test"; // Config for tests
-$config["dbPasswordTest"] = "ilch2test"; // Config for tests
-$config["dbNameTest"] = "ilch2test"; // Config for tests
-$config["dbPrefixTest"] = ""; // Config for tests
+        // Config for tests
+        $config["dbEngineTest"] = "Mysql";
+        $config["dbHostTest"] = "localhost";
+        $config["dbUserTest"] = "ilch2test";
+        $config["dbPasswordTest"] = "ilch2test";
+        $config["dbNameTest"] = "ilch2test";
+        $config["dbPrefixTest"] = "";
         ```
 
 3. **xDebug auf dem Server aktivieren.**

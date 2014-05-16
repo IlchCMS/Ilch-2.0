@@ -6,7 +6,8 @@
  * @package ilch_phpunit
  */
 
-defined('ACCESS') or die('no direct access');
+use Ilch\Registry;
+
 /**
  * Tests the config object.
  *
@@ -20,8 +21,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
      *
      * @var Array
      */
-    protected $configData = array
-    (
+    protected $configData = array (
         'timezone' => 'Europe/Berlin'
     );
 
@@ -30,7 +30,7 @@ class Libraries_Ilch_DateTest extends PHPUnit_Ilch_TestCase
      */
     public function testNewEmptyDateWithoutRegistry()
     {
-        \Ilch\Registry::remove('timezone');
+        Registry::remove('timezone');
         $date = new \Ilch\Date();
         $this->assertEquals('UTC', $date->getTimeZone()->getName(), 'Timezone is not UTC as expected when creating Ilch_Date without a paramter.');
     }

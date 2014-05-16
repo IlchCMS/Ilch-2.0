@@ -54,8 +54,12 @@ class Date extends \DateTime
     public function __construct($time = 'now', $timezone = 'UTC')
     {
         if (Registry::has('config')) {
-            $this->timeZoneLocal = new \DateTimeZone(Registry::get('config')->get('timezone'));
-        } else {
+            $timezoneString = Registry::get('config')->get('timezone');
+            if (!empty($timezoneString)) {
+                $this->timeZoneLocal = new \DateTimeZone($timezoneString);
+            }
+        }
+        if (!isset($this->timeZoneLocal)) {
             $this->timeZoneLocal = new \DateTimeZone(SERVER_TIMEZONE);
         }
 
