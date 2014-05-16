@@ -247,7 +247,6 @@ class Mysql
      */
     public function update($table = null, $values = null, $where = null)
     {
-        //@todo: refactor usages
         return new Mysql\Update($this, $table, $values, $where);
     }
 
@@ -261,7 +260,6 @@ class Mysql
      */
     public function insert($into = null, $values = null)
     {
-        //@todo: refactor usages
         return new Mysql\Insert($this, $into, $values);
     }
 
@@ -275,7 +273,6 @@ class Mysql
      */
     public function delete($from = null, $where = null)
     {
-        //@todo: refactor usages
         return new Mysql\Delete($this, $from, $where);
     }
 

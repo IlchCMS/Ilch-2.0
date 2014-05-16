@@ -80,12 +80,12 @@ class Link extends \Ilch\Mapper
 
         if ($link->getId()) {
             $this->db()->update('links')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $link->getId()))
                 ->execute();
         } else {
             $this->db()->insert('links')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
     }

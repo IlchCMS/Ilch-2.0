@@ -46,7 +46,7 @@ class Comment extends \Ilch\Mapper
     public function save(CommentModel $comment)
     {
         $this->db()->insert('comments')
-            ->fields
+            ->values
             (
                 array
                 (

@@ -73,7 +73,7 @@ class Media extends \Ilch\Mapper
     public function save(MediaModel $model)
     {
         $this->db()->insert('media')
-            ->fields(array(
+            ->values(array(
                 'url' => $model->getUrl(),
                 'url_thumb' => $model->getUrlThumb(),
                 'name' => $model->getName(),

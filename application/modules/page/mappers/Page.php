@@ -110,7 +110,7 @@ class Page extends \Ilch\Mapper
         if ($page->getId()) {
             if ($this->getPageByIdLocale($page->getId(), $page->getLocale())) {
                 $this->db()->update('pages_content')
-                    ->fields(array(
+                    ->values(array(
                         'title' => $page->getTitle(),
                         'description' => $page->getDescription(),
                         'content' => $page->getContent(),
@@ -123,7 +123,7 @@ class Page extends \Ilch\Mapper
                     ->execute();
             } else {
                 $this->db()->insert('pages_content')
-                    ->fields
+                    ->values
                     (
                         array
                         (
@@ -140,11 +140,11 @@ class Page extends \Ilch\Mapper
         } else {
             $date = new \Ilch\Date();
             $pageId = $this->db()->insert('pages')
-                ->fields(array('date_created' => $date->toDb()))
+                ->values(array('date_created' => $date->toDb()))
                 ->execute();
 
             $this->db()->insert('pages_content')
-                ->fields
+                ->values
                 (
                     array
                     (

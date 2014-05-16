@@ -70,7 +70,7 @@ class Impressum extends \Ilch\Mapper
     public function save(ImpressumModel $impressum)
     {
         $this->db()->update('impressum')
-            ->fields
+            ->values
             (
                 array
                 (

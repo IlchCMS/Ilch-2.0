@@ -125,12 +125,12 @@ class Partner extends \Ilch\Mapper
 
         if ($partner->getId()) {
             $this->db()->update('partners')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $partner->getId()))
                 ->execute();
         } else {
             $this->db()->insert('partners')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
     }

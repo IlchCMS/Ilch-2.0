@@ -82,12 +82,12 @@ class Checkout extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('checkout')
-                ->fields(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
+                ->values(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
                 ->where(array('id' => $model->getId()))
                 ->execute();
         } else {
             $this->db()->insert('checkout')
-                ->fields(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
+                ->values(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
                 ->execute();
         }
     }

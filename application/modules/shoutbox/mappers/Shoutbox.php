@@ -69,7 +69,7 @@ class Shoutbox extends \Ilch\Mapper
         $date = new \Ilch\Date();
 
         $this->db()->insert('shoutbox')
-            ->fields(array(
+            ->values(array(
                 'user_id' => $shoutbox->getUid(),
                 'name' => $shoutbox->getName(),
                 'textarea' => $shoutbox->getTextarea(),

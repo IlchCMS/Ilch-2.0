@@ -86,22 +86,22 @@ class Box extends \Ilch\Mapper
         if ($box->getId()) {
             if ($this->getBoxByIdLocale($box->getId(), $box->getLocale())) {
                 $this->db()->update('boxes_content')
-                    ->fields(array('title' => $box->getTitle(), 'content' => $box->getContent()))
+                    ->values(array('title' => $box->getTitle(), 'content' => $box->getContent()))
                     ->where(array('box_id' => $box->getId(), 'locale' => $box->getLocale()))
                     ->execute();
             } else {
                 $this->db()->insert('boxes_content')
-                    ->fields(array('box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                    ->values(array('box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
                     ->execute();
             }
         } else {
             $date = new \Ilch\Date();
             $boxId = $this->db()->insert('boxes')
-                ->fields(array('date_created' => $date->toDb()))
+                ->values(array('date_created' => $date->toDb()))
                 ->execute();
 
             $this->db()->insert('boxes_content')
-                ->fields(array('box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                ->values(array('box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
                 ->execute();
         }
     }

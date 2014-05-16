@@ -72,12 +72,12 @@ class Guestbook extends \Ilch\Mapper
 
         if ($model->getId()) {
             $this->db()->update('gbook')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $model->getId()))
                 ->execute();
         } else {
             $this->db()->insert('gbook')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
     }

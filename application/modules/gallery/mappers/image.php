@@ -61,12 +61,12 @@ class Image extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('gallery_imgs')
-                ->fields(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
+                ->values(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
                 ->where(array('id' => $model->getId()))
                 ->execute();
         } else {
             $this->db()->insert('gallery_imgs')
-                ->fields(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
+                ->values(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
                 ->execute();
         }
     }

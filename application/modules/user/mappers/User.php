@@ -264,7 +264,7 @@ class User extends \Ilch\Mapper
              * User does exist already, update.
              */
             $this->db()->update('users')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $userId))
                 ->execute();
         } else {
@@ -273,7 +273,7 @@ class User extends \Ilch\Mapper
              * User does not exist yet, insert.
              */
             $userId = $this->db()->insert('users')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
 
@@ -284,7 +284,7 @@ class User extends \Ilch\Mapper
 
             foreach ($user->getGroups() as $group) {
                 $this->db()->insert('users_groups')
-                    ->fields(array('user_id' => $userId, 'group_id' => $group->getId()))
+                    ->values(array('user_id' => $userId, 'group_id' => $group->getId()))
                     ->execute();
             }
         }

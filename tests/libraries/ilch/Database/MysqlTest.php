@@ -66,7 +66,7 @@ class MysqlTest extends \PHPUnit_Ilch_DatabaseTestCase
     public function testUpdateWithEmptyValue()
     {
         $this->db->update('groups')
-            ->fields(array('name' => ''))
+            ->values(array('name' => ''))
             ->where(array('id' => 2))
             ->execute();
 
@@ -84,7 +84,7 @@ class MysqlTest extends \PHPUnit_Ilch_DatabaseTestCase
      */
     public function testInsertWithEmptyValue()
     {
-        $this->db->insert('groups')->fields(array('name' => ''))->execute();
+        $this->db->insert('groups')->values(array('name' => ''))->execute();
 
         $result = $this->db->select('COUNT(*)')
             ->from('groups')

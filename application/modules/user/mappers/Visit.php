@@ -79,12 +79,12 @@ class Visit extends \Ilch\Mapper
 
         if ($visitId) {
             $this->db()->update('visits_online')
-                ->fields(array('date_last_activity' => $date->toDb()))
+                ->values(array('date_last_activity' => $date->toDb()))
                 ->where(array('id' => $visitId))
                 ->execute();
         } else {
             $this->db()->insert('visits_online')
-                ->fields(array('date_last_activity' => $date->toDb(), 'ip_address' => $row['ip'], 'user_id' => $row['user_id']))
+                ->values(array('date_last_activity' => $date->toDb(), 'ip_address' => $row['ip'], 'user_id' => $row['user_id']))
                 ->execute();
         }
         
@@ -96,7 +96,7 @@ class Visit extends \Ilch\Mapper
         
         if (!$uniqueUser) {
             $this->db()->insert('visits_stats')
-                ->fields(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
+                ->values(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
                 ->execute();
         }
     }

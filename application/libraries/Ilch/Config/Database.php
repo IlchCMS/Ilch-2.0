@@ -76,7 +76,7 @@ class Database
         if ($oldValue !== null) {
             if ($value !== $oldValue) {
                 $this->db->update('config')
-                    ->fields(array(
+                    ->values(array(
                             'value' => $value,
                             'autoload' => $autoload))
                     ->where(array('key' => $key))
@@ -84,7 +84,7 @@ class Database
             }
         } else {
                 $this->db->insert('config')
-                    ->fields(array(
+                    ->values(array(
                         'key' => $key,
                         'value' => $value,
                         'autoload' => $autoload))

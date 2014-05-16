@@ -179,12 +179,12 @@ class Menu extends \Ilch\Mapper
 
         if ($itemId) {
             $this->db()->update('menu_items')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $itemId))
                 ->execute();
         } else {
             $itemId = $this->db()->insert('menu_items')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
 
@@ -205,7 +205,7 @@ class Menu extends \Ilch\Mapper
 
         if (!$menuId) {
             $menuId = $this->db()->insert('menu')
-                ->fields(array('title' => $menu->getTitle()))
+                ->values(array('title' => $menu->getTitle()))
                 ->execute();
         }
 

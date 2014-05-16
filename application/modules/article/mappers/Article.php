@@ -156,12 +156,12 @@ class Article extends \Ilch\Mapper
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 $this->db()->update('articles_content')
-                    ->fields(array('title' => $article->getTitle(), 'description' => $article->getDescription(), 'content' => $article->getContent(), 'perma' => $article->getPerma(), 'article_img' => $article->getArticleImage()))
+                    ->values(array('title' => $article->getTitle(), 'description' => $article->getDescription(), 'content' => $article->getContent(), 'perma' => $article->getPerma(), 'article_img' => $article->getArticleImage()))
                     ->where(array('article_id' => $article->getId(), 'locale' => $article->getLocale()))
                     ->execute();
             } else {
                 $this->db()->insert('articles_content')
-                    ->fields
+                    ->values
                     (
                         array
                         (
@@ -179,11 +179,11 @@ class Article extends \Ilch\Mapper
         } else {
             $date = new \Ilch\Date();
             $articleId = $this->db()->insert('articles')
-                ->fields(array('date_created' => $date->toDb()))
+                ->values(array('date_created' => $date->toDb()))
                 ->execute();
 
             $this->db()->insert('articles_content')
-                ->fields
+                ->values
                 (
                     array
                     (

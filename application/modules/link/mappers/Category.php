@@ -123,12 +123,12 @@ class Category extends \Ilch\Mapper
 
         if ($category->getId()) {
             $this->db()->update('link_cats')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $category->getId()))
                 ->execute();
         } else {
             $this->db()->insert('link_cats')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
     }
