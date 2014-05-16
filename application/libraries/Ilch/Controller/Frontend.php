@@ -1,6 +1,5 @@
 <?php
 /**
- * @copyright Ilch 2.0
  * @package ilch
  */
 
@@ -15,14 +14,18 @@ class Frontend extends Base
         
         if (!empty($_SESSION['layout'])) {
             $layoutKey = $_SESSION['layout'];
-            $layoutFile = 'index';
         } elseif($this->getConfig() !== NULL) {
             $layoutKey = $this->getConfig()->get('default_layout');
-            $layoutFile = 'index';
+        } else {
+            $layoutKey = DEFAULT_LAYOUT;
         }
 
+        $layoutFile = 'index';
+
         if(!empty($layoutKey)) {
-            require_once APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php';
+            if (is_file(APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php')) {
+                require_once APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php';
+            }
 
             if(!empty($config['layouts'])) {
                 foreach ($config['layouts'] as $layoutKeyConfig => $layouts) {

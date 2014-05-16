@@ -21,6 +21,7 @@ define('VERSION', '2.0.0');
 define('ILCH_SERVER', 'http://www.ilch.de/ilch2');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
+define('DEFAULT_LAYOUT', 'index');
 
 /*
  * Path could not be under root.
