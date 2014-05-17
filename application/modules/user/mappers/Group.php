@@ -70,12 +70,13 @@ class Group extends \Ilch\Mapper
      * @param  mixed[]            $where
      * @return false|GroupModel[]
      */
-    protected function getBy($where = null)
+    protected function getBy($where = [])
     {
-        $groupRows = $this->db()->selectArray('*')
+        $groupRows = $this->db()->select('*')
             ->from('groups')
             ->where($where)
-            ->execute();
+            ->execute()
+            ->fetchRows();
 
         if (!empty($groupRows)) {
             $groups = array_map(array($this, 'loadFromArray'), $groupRows);
@@ -114,12 +115,9 @@ class Group extends \Ilch\Mapper
      */
     public function getUsersForGroup($groupId)
     {
-        $userIds = $this->db()->selectList
-        (
-            'user_id',
-            'users_groups',
-            array('group_id' => $groupId)
-        );
+        $userIds = $this->db()->select('user_id', 'users_groups', array('group_id' => $groupId))
+            ->execute()
+            ->fetchList();
 
         return $userIds;
     }
@@ -138,10 +136,9 @@ class Group extends \Ilch\Mapper
             $fields['name'] = $group->getName();
         }
 
-        $groupId = (int)$this->db()->selectCell('id')
-            ->from('groups')
-            ->where(array('id' => $group->getId()))
-            ->execute();
+        $groupId = (int) $this->db()->select('id', 'groups', array('id' => $group->getId()))
+            ->execute()
+            ->fetchCell();
 
         if ($groupId) {
             /*
@@ -181,12 +178,9 @@ class Group extends \Ilch\Mapper
      */
     public function groupWithIdExists($groupId)
     {
-        $groupExists = (boolean)$this->db()->selectCell('COUNT(*)')
-            ->from('groups')
-            ->where(array('id' => (int)$groupId))
-            ->execute();
-
-        return $groupExists;
+        return (boolean) $this->db()->select('COUNT(*)', 'groups', array('id' => (int)$groupId))
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -285,10 +279,11 @@ class Group extends \Ilch\Mapper
 
         $fields = $rec;
         $fields['access_level'] = (int)$accessLevel;
-        $entryExists = (bool)$this->db()->selectCell('COUNT(*)')
+        $entryExists = (bool)$this->db()->select('COUNT(*)')
             ->from('groups_access')
             ->where($rec)
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         if($entryExists) {
             $this->db()->update('groups_access')

@@ -12,7 +12,7 @@ class Box extends \Ilch\Controller\Base
     /**
      * Hold the database adapter.
      *
-     * @var Ilch_Database_*
+     * @var \Ilch\Database\Mysql
      */
     private $db;
     
@@ -62,7 +62,7 @@ class Box extends \Ilch\Controller\Base
     /**
      * Shortcut for getDatabse.
      *
-     * @return Ilch_Database_*
+     * @return \Ilch\Database\Mysql
      */
     public function db()
     {

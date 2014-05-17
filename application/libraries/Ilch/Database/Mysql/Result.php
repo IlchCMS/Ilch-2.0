@@ -59,8 +59,7 @@ class Result
                 }
 
             }
-        }
-        if (!isset($fieldNumber)) {
+        } else {
             $fieldNumber = 0;
         }
         $row = $this->dbResult->fetch_row();
@@ -110,11 +109,11 @@ class Result
         $this->dbResult->data_seek(0);
         $results = [];
         if (isset($keyField)) {
-            while ($row = $this->fetchArray($type)) {
+            while (null !== ($row = $this->fetchArray($type))) {
                 $results[$row[$keyField]] = $row;
             }
         } else {
-            while ($row = $this->fetchArray($type)) {
+            while (null !== ($row = $this->fetchArray($type))) {
                 $results[] = $row;
             }
         }
@@ -134,13 +133,21 @@ class Result
             $keyField = null;
         }
         $results = [];
+
+        if (null === $field) {
+            $fetchMethod = 'fetchRow';
+            $field = 0;
+        } else {
+            $fetchMethod = 'fetchAssoc';
+        }
+
         if (isset($keyField)) {
-            while (false !== ($row = $this->fetchAssoc())) {
-                $results[] = $row[$field];
+            while (null !== ($row = $this->$fetchMethod())) {
+                $results[$row[$keyField]] = $row[$field];
             }
         } else {
-            while (false !== ($row = $this->fetchAssoc())) {
-                $results[$row[$keyField]] = $row[$field];
+            while (null !== ($row = $this->$fetchMethod())) {
+                $results[] = $row[$field];
             }
         }
 
@@ -163,5 +170,14 @@ class Result
     public function getFieldCount()
     {
         return $this->dbResult->field_count;
+    }
+
+    /**
+     * Für eine Select Query, die mit useFoundRows aufgerufen wurde, kann so die FOUND_ROWS() aufgerufen werden
+     * @return integer
+     */
+    public function getFoundRows()
+    {
+        return (int) $this->db->queryCell('SELECT FOUND_ROWS()');
     }
 }

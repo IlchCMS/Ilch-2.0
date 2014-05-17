@@ -19,10 +19,11 @@ class Comment extends \Ilch\Mapper
      */
     public function getCommentsByKey($key)
     {
-        $commentsArray = $this->db()->selectArray('*')
+        $commentsArray = $this->db()->select('*')
 			->from('comments')
 			->where(array('key' => $key))
-			->execute();
+			->execute()
+            ->fetchRows();
 
         $comments = array();
 

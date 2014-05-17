@@ -57,9 +57,7 @@ class Delete extends QueryBuilder
     {
         $sql = 'DELETE  FROM ' . $this->db->quote('[prefix]_' . $this->table);
 
-        if (isset($this->where)) {
-            $sql .= ' WHERE ' . $this->where;
-        }
+        $sql .= $this->generateWhereSql();
 
         return $sql;
     }

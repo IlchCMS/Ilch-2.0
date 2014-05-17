@@ -39,7 +39,7 @@ abstract class QueryBuilder
      * Adds where to query builder.
      *
      * @param array|\Ilch\Database\Mysql\Expression\CompositePart $where
-     * @return \Ilch\Database\Mysql\QueryBuilder
+     * @return $this|\Ilch\Database\Mysql\QueryBuilder
      * @throws \InvalidArgumentException
      */
     public function where($where)
@@ -107,7 +107,7 @@ abstract class QueryBuilder
     /**
      * Execute the generated query
      *
-     * @return mixed
+     * @return \Ilch\Database\Mysql\Result|int
      */
     abstract public function execute();
 
@@ -117,6 +117,23 @@ abstract class QueryBuilder
      * @return string
      */
     abstract public function generateSql();
+
+    /**
+     * Generate WHERE part for SQL
+     *
+     * @return string
+     */
+    protected function generateWhereSql()
+    {
+        $sql = '';
+        if (isset($this->where)) {
+            $where = (string) $this->where;
+            if (!empty($where)) {
+                $sql = ' WHERE ' . $where;
+            }
+        }
+        return $sql;
+    }
 
     /**
      * Creates Expression for Where

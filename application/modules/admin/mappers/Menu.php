@@ -41,9 +41,10 @@ class Menu extends \Ilch\Mapper
     public function getMenus()
     {
         $menus = array();
-        $menuRows = $this->db()->selectArray(array('id'))
+        $menuRows = $this->db()->select(array('id'))
             ->from('menu')
-            ->execute();
+            ->execute()
+            ->fetchRows();
 
         foreach ($menuRows as $menuRow) {
             $menu = $this->getMenu($menuRow['id']);
@@ -62,10 +63,11 @@ class Menu extends \Ilch\Mapper
     {
         $menu = new \Admin\Models\Menu();
         
-        $menuRow = $this->db()->selectRow(array('id','title'))
+        $menuRow = $this->db()->select(array('id','title'))
             ->from('menu')
             ->where(array('id' => $menuId))
-            ->execute();
+            ->execute()
+            ->fetchAssoc();
 
         $menu->setId($menuRow['id']);
         $menu->setTitle($menuRow['title']);
@@ -79,11 +81,12 @@ class Menu extends \Ilch\Mapper
     public function getMenuItems($menuId)
     {
         $items = array();
-        $itemRows = $this->db()->selectArray('*')
+        $itemRows = $this->db()->select('*')
                 ->from('menu_items')
                 ->where(array('menu_id' => $menuId))
                 ->order(array('sort' => 'ASC'))
-                ->execute();
+                ->execute()
+                ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -113,11 +116,12 @@ class Menu extends \Ilch\Mapper
     public function getMenuItemsByParent($menuId, $itemId)
     {
         $items = array();
-        $itemRows = $this->db()->selectArray('*')
+        $itemRows = $this->db()->select('*')
                 ->from('menu_items')
                 ->where(array('menu_id' => $menuId, 'parent_id' => $itemId))
                 ->order(array('sort' => 'ASC'))
-                ->execute();
+                ->execute()
+                ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -169,10 +173,9 @@ class Menu extends \Ilch\Mapper
             }
         }
 
-        $itemId = (int)$this->db()->selectCell('id')
-            ->from('menu_items')
-            ->where(array('id' => $menuItem->getId()))
-            ->execute();
+        $itemId = (int)$this->db()->select('id', 'menu_items', array('id' => $menuItem->getId()))
+            ->execute()
+            ->fetchCell();
 
         if ($itemId) {
             $this->db()->update('menu_items')
@@ -196,10 +199,9 @@ class Menu extends \Ilch\Mapper
      */
     public function save(MenuModel $menu)
     {
-        $menuId = (int)$this->db()->selectCell('id')
-            ->from('menu')
-            ->where(array('id' => $menu->getId()))
-            ->execute();
+        $menuId = (int)$this->db()->select('id', 'menu', array('id' => $menu->getId()))
+            ->execute()
+            ->fetchCell();
 
         if (!$menuId) {
             $menuId = $this->db()->insert('menu')

@@ -71,10 +71,11 @@ class Visit extends \Ilch\Mapper
     public function saveVisit($row)
     {
         $date = new \Ilch\Date();
-        $visitId = (int)$this->db()->selectCell('id')
+        $visitId = (int) $this->db()->select('id')
             ->from('visits_online')
             ->where(array('ip_address' => $row['ip'], 'user_id' => $row['user_id']))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         if ($visitId) {
             $this->db()->update('visits_online')
@@ -87,10 +88,11 @@ class Visit extends \Ilch\Mapper
                 ->execute();
         }
         
-        $uniqueUser = (bool)$this->db()->selectCell('id')
+        $uniqueUser = (bool)$this->db()->select('id')
             ->from('visits_stats')
             ->where(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
-            ->execute();
+            ->execute()
+            ->fetchCell();
         
         if (!$uniqueUser) {
             $this->db()->insert('visits_stats')

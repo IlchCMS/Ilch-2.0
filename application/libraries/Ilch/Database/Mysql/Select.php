@@ -37,6 +37,9 @@ class Select extends QueryBuilder
      */
     protected $fields;
 
+    /** @var bool */
+    protected $useFoundRows = false;
+
     /**
      * Create Select Statement Query Builder
      *
@@ -178,6 +181,16 @@ class Select extends QueryBuilder
     }
 
     /**
+     * @param $useFoundRows
+     * @return \Ilch\Database\Mysql\Select
+     */
+    public function useFoundRows($useFoundRows = true)
+    {
+        $this->useFoundRows = (bool) $useFoundRows;
+        return $this;
+    }
+
+    /**
      * Execute the generated query
      *
      * @return \Ilch\Database\Mysql\Result
@@ -199,12 +212,16 @@ class Select extends QueryBuilder
             throw new \RuntimeException('table must be set');
         }
 
-        $sql = 'SELECT ' . $this->getFieldsSql($this->fields)
+        $sql = 'SELECT ';
+
+        if ($this->useFoundRows) {
+            $sql .= 'SQL_CALC_FOUND_ROWS ';
+        }
+
+        $sql .= $this->getFieldsSql($this->fields)
             . ' FROM ' . $this->db->quote('[prefix]_'.$this->table);
 
-        if (isset($this->where)) {
-            $sql .= ' WHERE ' . $this->where;
-        }
+        $sql .= $this->generateWhereSql();
 
         // add ORDER BY to sql
         if (!empty($this->order)) {

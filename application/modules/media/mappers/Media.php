@@ -12,12 +12,13 @@ defined('ACCESS') or die('no direct access');
 
 class Media extends \Ilch\Mapper
 {
-    public function getMediaList() 
+    public function getMediaList()
     {
-        $mediaArray = $this->db()->selectArray('*')
+        $mediaArray = $this->db()->select('*')
             ->from('media')
             ->order(array('id' => 'DESC'))
-            ->execute();
+            ->execute()
+            ->fetchRows();
 
         if (empty($mediaArray)) {
             return null;

@@ -25,7 +25,7 @@ class Link extends \Ilch\Mapper
      */
     public function getLinks($where = array())
     {
-        $linkArray = $this->db()->selectArray('*')->from('links')->where($where)->execute();
+        $linkArray = $this->db()->select('*')->from('links')->where($where)->execute()->fetchRows();
 
         if (empty($linkArray)) {
             return array();

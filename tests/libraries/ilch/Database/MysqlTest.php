@@ -37,10 +37,11 @@ class MysqlTest extends \PHPUnit_Ilch_DatabaseTestCase
      */
     public function testSelectCellNormalField()
     {
-        $result = $this->db->selectCell('id')
+        $result = $this->db->select('id')
             ->from('groups')
             ->where(array('id' => 2))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals('2', $result, 'Wrong cell value was returned.');
     }
@@ -50,10 +51,11 @@ class MysqlTest extends \PHPUnit_Ilch_DatabaseTestCase
      */
     public function testSelectCellWithCount()
     {
-        $result = $this->db->selectCell('COUNT(*)')
+        $result = $this->db->select('COUNT(*)')
             ->from('groups')
             ->where(array('name' => 'Clanleader'))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals('2', $result, 'Wrong cell value was returned.');
     }
@@ -68,10 +70,11 @@ class MysqlTest extends \PHPUnit_Ilch_DatabaseTestCase
             ->where(array('id' => 2))
             ->execute();
 
-        $result = $this->db->selectCell('name')
+        $result = $this->db->select('name')
             ->from('groups')
             ->where(array('id' => 2))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals('', $result, 'The db entry has not being updated with an empty string.');
     }
@@ -83,10 +86,11 @@ class MysqlTest extends \PHPUnit_Ilch_DatabaseTestCase
     {
         $this->db->insert('groups')->fields(array('name' => ''))->execute();
 
-        $result = $this->db->selectCell('COUNT(*)')
+        $result = $this->db->select('COUNT(*)')
             ->from('groups')
             ->where(array('name' => ''))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
     }

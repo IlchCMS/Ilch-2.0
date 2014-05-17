@@ -72,17 +72,18 @@ class Category extends \Ilch\Mapper
 
     public function getCategoriesForParentRec($models, $id)
     {
-        $categoryRow = $this->db()->selectRow('*')
+        $categoryRow = $this->db()->select('*')
             ->from('link_cats')
             ->where(array('id' => $id))
-            ->execute();
+            ->execute()
+            ->fetchAssoc();
         
         if (empty($categoryRow)) {
             return null;
         }
 
         if (!empty($categoryRow['parent_id'])) {
-           $models = $this->getCategoriesForParentRec($models, $categoryRow['parent_id']);
+            $models = $this->getCategoriesForParentRec($models, $categoryRow['parent_id']);
         }
                         
         $categoryModel = new CategoryModel();

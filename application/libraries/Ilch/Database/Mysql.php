@@ -188,21 +188,6 @@ class Mysql
     }
 
     /**
-     * Select one cell from table.
-     *
-     * @param string $cell
-     * @return \Ilch\Database\Mysql\SelectCell
-     */
-    public function selectCell($cell)
-    {
-        throw new \RuntimeException('should be refactored');
-        $select = new Mysql\SelectCell($this);
-        $select->cell($cell);
-
-        return $select;
-    }
-
-    /**
      * Select one row from table.
      *
      * @param  string $sql
@@ -213,21 +198,6 @@ class Mysql
         $row = mysqli_fetch_assoc($this->query($sql));
 
         return $row;
-    }
-
-    /**
-     * Select one row from table.
-     *
-     * @param array $fields
-     * @return \Ilch\Database\Mysql\SelectRow
-     */
-    public function selectRow($fields)
-    {
-        throw new \RuntimeException('should be refactored');
-        $select = new Mysql\SelectRow($this);
-        $select->fields($fields);
-
-        return $select;
     }
 
     /**
@@ -249,21 +219,6 @@ class Mysql
     }
 
     /**
-     * Select an array from db-table.
-     *
-     * @param array $fields
-     * @return \Ilch\Database\Mysql\SelectArray
-     */
-    public function selectArray($fields)
-    {
-        throw new \RuntimeException('should be refactored');
-        $select = new Mysql\SelectArray($this);
-        $select->fields($fields);
-
-        return $select;
-    }
-
-    /**
      * Select a list from db-table.
      *
      * @param  string $sql
@@ -271,7 +226,6 @@ class Mysql
      */
     public function queryList($sql)
     {
-        throw new \RuntimeException('should be refactored');
         $list = array();
         $result = $this->query($sql);
 
@@ -280,27 +234,6 @@ class Mysql
         }
 
         return $list;
-    }
-
-    /**
-     * Select a list from a db-table.
-     *
-     * @param  array $fields
-     * @param  string $table
-     * @param  array $where
-     * @return array
-     */
-    public function selectList($fields, $table, array $where = null)
-    {
-        throw new \RuntimeException('should be refactored');
-        $sql = 'SELECT ' . $this->getFieldsSql($fields) . '
-                FROM `[prefix]_' . $table . '` ';
-
-        if ($where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($where);
-        }
-
-        return $this->queryList($sql);
     }
 
     /**
@@ -407,7 +340,7 @@ class Mysql
      * Escape the given value for a sql query.
      *
      * @param  string $value
-     * @param  boolean $andQuote [default: true] add Quotes around
+     * @param  boolean $andQuote [default: true] add quotes around
      * @return string
      */
     public function escape($value, $andQuote = true)

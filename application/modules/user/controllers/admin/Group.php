@@ -47,7 +47,7 @@ class Group extends BaseController
         $groupMapper = new GroupMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
-            foreach($this->getRequest()->getPost('check_groups') as $groupId) {
+            foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
                 if ($groupId != 1) {
                     $groupMapper->delete($groupId);
                 }

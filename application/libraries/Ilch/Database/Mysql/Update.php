@@ -107,9 +107,7 @@ class Update extends QueryBuilder
 
         $sql .= implode(',', $up);
 
-        if (isset($this->where)) {
-            $sql .= ' WHERE ' . $this->where;
-        }
+        $sql .= $this->generateWhereSql();
 
         return $sql;
     }

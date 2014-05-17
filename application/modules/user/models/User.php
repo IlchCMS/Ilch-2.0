@@ -366,6 +366,8 @@ class User extends \Ilch\Model
      * @param  boolean $isInAdmin Whether the user is in the admin backend currently.
      *
      * @return boolean            True if access granted, false otherwise.
+     *
+     * @todo refactor -> kein Abhängigkeiten zu anderen Klassen, die keine Models sind
      */
     public function hasAccess($key, $isInAdmin = true)
     {
