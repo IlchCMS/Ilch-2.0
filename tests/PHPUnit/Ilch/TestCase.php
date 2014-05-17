@@ -17,7 +17,7 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
      *
      * @var Array
      */
-    protected $_configData = array();
+    protected $configData = array();
 
     /**
      * Filling the config object with individual testcase data.
@@ -25,7 +25,7 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
     	$testHelper = new PHPUnit_Ilch_TestHelper();
-        $testHelper->setConfigInRegistry($this->_configData);
+        $testHelper->setConfigInRegistry($this->configData);
 
         parent::setUp();
     }

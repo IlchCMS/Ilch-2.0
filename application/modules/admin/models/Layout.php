@@ -19,21 +19,21 @@ class Layout extends \Ilch\Model
      *
      * @var string
      */
-    protected $_key;
+    protected $key;
 
     /**
      * Author of the layout.
      *
      * @var string
      */
-    protected $_author;
+    protected $author;
 
     /**
      * Description of the layout.
      *
      * @var string
      */
-    protected $_desc;
+    protected $desc;
 
     /**
      * Gets the key.
@@ -42,7 +42,7 @@ class Layout extends \Ilch\Model
      */
     public function getKey()
     {
-        return $this->_key;
+        return $this->key;
     }
 
     /**
@@ -52,7 +52,7 @@ class Layout extends \Ilch\Model
      */
     public function setKey($key)
     {
-        $this->_key = (string)$key;
+        $this->key = (string)$key;
     }
 
     /**
@@ -62,7 +62,7 @@ class Layout extends \Ilch\Model
      */
     public function getAuthor()
     {
-        return $this->_author;
+        return $this->author;
     }
 
     /**
@@ -72,7 +72,7 @@ class Layout extends \Ilch\Model
      */
     public function setAuthor($author)
     {
-        $this->_author = (string)$author;
+        $this->author = (string)$author;
     }
     
     /**
@@ -82,7 +82,7 @@ class Layout extends \Ilch\Model
      */
     public function getDesc()
     {
-        return $this->_desc;
+        return $this->desc;
     }
 
     /**
@@ -92,6 +92,6 @@ class Layout extends \Ilch\Model
      */
     public function setDesc($desc)
     {
-        $this->_desc = (string)$desc;
+        $this->desc = (string)$desc;
     }
 }

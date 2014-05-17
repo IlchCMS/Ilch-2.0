@@ -15,17 +15,17 @@ class Router
     /**
      * @var string
      */
-    private $_query;
+    private $query;
 
     /**
      * @var \ArrayObject|null
      */
-    private $_config;
+    private $config;
 
     /**
      * @var \Ilch\Request|null
      */
-    private $_request;
+    private $request;
 
     /**
      * Injects request.
@@ -34,9 +34,9 @@ class Router
      */
     public function __construct(\Ilch\Request $request)
     {
-        $this->_request = $request;
-        $this->_config = new \ArrayObject();
-        $this->_config->offsetSet
+        $this->request = $request;
+        $this->config = new \ArrayObject();
+        $this->config->offsetSet
         (
             '_DEFAULT_',
             array
@@ -52,7 +52,7 @@ class Router
      */
     public function setRequest($request)
     {
-        $this->_request = $request;
+        $this->request = $request;
     }
 
     /**
@@ -60,7 +60,7 @@ class Router
      */
     public function getRequest()
     {
-        return $this->_request;
+        return $this->request;
     }
 
     /**
@@ -68,7 +68,7 @@ class Router
      */
     public function setConfig($config)
     {
-        $this->_config = $config;
+        $this->config = $config;
     }
 
     /**
@@ -76,7 +76,7 @@ class Router
      */
     public function getConfig()
     {
-        return $this->_config;
+        return $this->config;
     }
 
     /**
@@ -87,7 +87,7 @@ class Router
      */
     public function hasConfigItem($routeName)
     {
-        return (bool)$this->_config->offsetExists($routeName);
+        return (bool)$this->config->offsetExists($routeName);
     }
 
     /**
@@ -100,7 +100,7 @@ class Router
     public function addConfigItem($routeName, array $value)
     {
         if (!$this->hasConfigItem($routeName)) {
-            $this->_config->offsetSet($routeName, $value);
+            $this->config->offsetSet($routeName, $value);
             return true;
         }
 
@@ -114,7 +114,7 @@ class Router
      */
     public function removeConfigItem($routeName)
     {
-        $this->_config->offsetUnset($routeName);
+        $this->config->offsetUnset($routeName);
     }
 
     /**
@@ -124,7 +124,7 @@ class Router
      */
     public function getQuery()
     {
-        return $this->_query;
+        return $this->query;
     }
 
     /**
@@ -136,7 +136,7 @@ class Router
         $query = str_replace('index.php/', '', $query);
         $query = trim(str_replace('index.php', '', $query), '/');
 
-        $this->_query = $query;
+        $this->query = $query;
     }
 
     /**
@@ -244,7 +244,7 @@ class Router
      */
     public function defineStartPage($startPage, $translator)
     {
-        if (!empty($this->_query)) {
+        if (!empty($this->query)) {
             return;
         }
         
@@ -258,19 +258,19 @@ class Router
         }
 
         if (strpos($startPage, 'module_') !== false) {
-            $this->_request->setModuleName(str_replace('module_', '', $startPage));
-            $this->_request->setControllerName('index');
-            $this->_request->setActionName('index');
+            $this->request->setModuleName(str_replace('module_', '', $startPage));
+            $this->request->setControllerName('index');
+            $this->request->setActionName('index');
         } elseif (strpos($startPage, 'page_') !== false) {
-            $this->_request->setModuleName('page');
-            $this->_request->setControllerName('index');
-            $this->_request->setActionName('show');
-            $this->_request->setParam('id', str_replace('page_', '', $startPage));
-            $this->_request->setParam('locale', $locale);
+            $this->request->setModuleName('page');
+            $this->request->setControllerName('index');
+            $this->request->setActionName('show');
+            $this->request->setParam('id', str_replace('page_', '', $startPage));
+            $this->request->setParam('locale', $locale);
         } else {
-            $this->_request->setModuleName(DEFAULT_MODULE);
-            $this->_request->setControllerName('index');
-            $this->_request->setActionName('index');
+            $this->request->setModuleName(DEFAULT_MODULE);
+            $this->request->setControllerName('index');
+            $this->request->setActionName('index');
         }
     }
 
@@ -310,7 +310,7 @@ class Router
     {
         $results = array();
 
-        foreach ($this->_config as $routeName => $config) {
+        foreach ($this->config as $routeName => $config) {
             if (!array_key_exists('strategy', $config)) {
                 $config['strategy'] = self::DEFAULT_MATCH_STRATEGY;
             }
@@ -328,26 +328,26 @@ class Router
     public function updateRequest($result)
     {
         if (array_key_exists('admin', $result) && strlen($result['admin']) > 0){
-            $this->_request->setIsAdmin(true);
+            $this->request->setIsAdmin(true);
         }
 
         if (array_key_exists('module', $result)) {
-            $this->_request->setModuleName($result['module']);
+            $this->request->setModuleName($result['module']);
         }
 
         if (array_key_exists('controller', $result)) {
-            $this->_request->setControllerName($result['controller']);
+            $this->request->setControllerName($result['controller']);
         }
 
         if (array_key_exists('action', $result)) {
-            $this->_request->setActionName($result['action']);
+            $this->request->setActionName($result['action']);
         }
 
         if (array_key_exists('params', $result)) {
             $params = $this->convertParamStringIntoArray($result['params']);
 
             foreach($params as $key => $value) {
-                $this->_request->setParam($key,$value);
+                $this->request->setParam($key,$value);
             }
         }
     }
@@ -357,9 +357,9 @@ class Router
      */
     public function execute()
     {
-        $this->_request->setModuleName('page');
-        $this->_request->setControllerName('index');
-        $this->_request->setActionName('index');
+        $this->request->setModuleName('page');
+        $this->request->setControllerName('index');
+        $this->request->setActionName('index');
 
         $this->fillQuery();
         $query = $this->getQuery();

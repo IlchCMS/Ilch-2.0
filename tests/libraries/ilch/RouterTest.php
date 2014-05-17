@@ -15,19 +15,19 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
     /**
 	 * @var \Ilch\Request
 	 */
-	protected $_request;
+	protected $request;
 
 	/**
 	 * @var \Ilch\Router
 	 */
-	protected $_router;
+	protected $router;
 
 	public function setUp()
 	{
 		parent::setUp();
 
-		$this->_request = new \Ilch\Request();
-		$this->_router = new \Ilch\Router($this->_request);
+		$this->request = new \Ilch\Request();
+		$this->router = new \Ilch\Router($this->request);
 	}
 
 	public function testDefaultRegexpPattern()
@@ -42,7 +42,7 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
 
 	public function testParamConvertingIntoArray()
 	{
-		$params = $this->_router->convertParamStringIntoArray('param1/value1/param2/value2');
+		$params = $this->router->convertParamStringIntoArray('param1/value1/param2/value2');
 		$this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
 	}
 
@@ -57,7 +57,7 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
 			'index',
 		);
 
-		$match = $this->_router->matchByRegexp($expectedResult[0]);
+		$match = $this->router->matchByRegexp($expectedResult[0]);
 		$this->assertTrue(is_array($match), $match, 'Expected match result need to be an array!');
 	}
 
@@ -75,7 +75,7 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
 			'show',
 		);
 
-		$match = $this->_router->matchByRegexp($expectedResult[0]);
+		$match = $this->router->matchByRegexp($expectedResult[0]);
 		$this->assertTrue(is_array($match), $match, 'Expected route does not match!');
 	}
 
@@ -96,38 +96,38 @@ class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
 			'param1/value1/param2/value2',
 		);
 
-		$match = $this->_router->matchByRegexp($expectedResult[0]);
+		$match = $this->router->matchByRegexp($expectedResult[0]);
 		$this->assertTrue(is_array($match), $match, 'Expected route does not match!');
-		$params = $this->_router->convertParamStringIntoArray($match['params']);
+		$params = $this->router->convertParamStringIntoArray($match['params']);
 		$this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
 	}
 
     public function testMatchByQuery()
     {
         $route = 'page/index/show/param1/value1/param2/value2';
-        $match = $this->_router->matchByQuery($route);
+        $match = $this->router->matchByQuery($route);
         $this->assertTrue(is_array($match), $match, 'Expected route does not match!');
     }
 
     public function testUpdateRequestByQuery()
     {
         $route = 'admin/page/index/show/param1/value1/param2/value2';
-        $result = $this->_router->matchByQuery($route);
-        $this->_router->updateRequest($result);
+        $result = $this->router->matchByQuery($route);
+        $this->router->updateRequest($result);
 
         $route = 'admin/page/index/show/param1/value1/param2/value2';
-        $result = $this->_router->matchByQuery($route);
-        $this->_router->updateRequest($result);
+        $result = $this->router->matchByQuery($route);
+        $this->router->updateRequest($result);
     }
 
     public function testUpdateRequestByRegexp()
     {
         $route = 'page/index/show/param1/value1/param2/value2';
-        $result = $this->_router->matchByRegexp($route);
-        $this->_router->updateRequest($result);
+        $result = $this->router->matchByRegexp($route);
+        $this->router->updateRequest($result);
 
         $route = 'admin/page/index/show/param1/value1/param2/value2';
-        $result = $this->_router->matchByRegexp($route);
-        $this->_router->updateRequest($result);
+        $result = $this->router->matchByRegexp($route);
+        $this->router->updateRequest($result);
     }
 }

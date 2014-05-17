@@ -27,14 +27,14 @@ class Translator
      *
      * @var mixed[]
      */
-    private $_translations = array();
+    private $translations = array();
 
     /**
      * The locale in which the texts should be translated.
      *
      * @var string
      */
-    private $_locale = 'de_DE';
+    private $locale = 'de_DE';
 
     /**
      * Sets the locale to use for the request.
@@ -47,7 +47,7 @@ class Translator
          * If a setting is given, set the locale to the given one.
          */
         if ($locale !== null) {
-            $this->_locale = $locale;
+            $this->locale = $locale;
         }
     }
 
@@ -63,11 +63,11 @@ class Translator
             return false;
         }
 
-        $localeShort = $this->shortenLocale($this->_locale);
+        $localeShort = $this->shortenLocale($this->locale);
         $transFile = $transDir.'/'.$localeShort.'.php';
 
         if (is_file($transFile)) {
-            $this->_translations = array_merge($this->_translations, require $transFile);
+            $this->translations = array_merge($this->translations, require $transFile);
 
             return true;
         } else {
@@ -87,8 +87,8 @@ class Translator
      */
     public function trans($key)
     {
-        if (isset($this->_translations[$key])) {
-            $translatedText = $this->_translations[$key];
+        if (isset($this->translations[$key])) {
+            $translatedText = $this->translations[$key];
         } else {
             /*
              * If no translation exists, return the key as fallback.
@@ -108,7 +108,7 @@ class Translator
      */
     public function getTranslations()
     {
-        return $this->_translations;
+        return $this->translations;
     }
 
     /**
@@ -143,7 +143,7 @@ class Translator
      */
     public function getLocale()
     {
-        return $this->_locale;
+        return $this->locale;
     }
 
     /**
@@ -153,6 +153,6 @@ class Translator
      */
     public function setLocale($locale)
     {
-        $this->_locale = $locale;
+        $this->locale = $locale;
     }
 }

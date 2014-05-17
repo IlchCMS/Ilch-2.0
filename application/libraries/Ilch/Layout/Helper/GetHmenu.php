@@ -12,7 +12,7 @@ class GetHmenu
     /**
      * var Ilch\Layout\Helper\Hmenu\Model
      */
-    private $_model;
+    private $model;
 
     /**
      * Injects the layout.
@@ -21,7 +21,7 @@ class GetHmenu
      */
     public function __construct($layout)
     {
-        $this->_model = new \Ilch\Layout\Helper\Hmenu\Model($layout);
+        $this->model = new \Ilch\Layout\Helper\Hmenu\Model($layout);
     }
 
     /**
@@ -30,7 +30,7 @@ class GetHmenu
      */
     public function getHmenu()
     {
-        return $this->_model;
+        return $this->model;
     }
 }
 

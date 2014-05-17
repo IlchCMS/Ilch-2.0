@@ -14,7 +14,7 @@ abstract class Base
      *
      * @var array 
      */
-    private $_helpers = array();
+    private $helpers = array();
 
     /**
      * Adds view/layout helper.
@@ -25,7 +25,7 @@ abstract class Base
      */
     public function addHelper($name, $type, $obj)
     {
-        $this->_helpers[$type][$name] = $obj;
+        $this->helpers[$type][$name] = $obj;
     }
 
     /**
@@ -36,33 +36,33 @@ abstract class Base
      */
     public function getHelper($name, $type)
     {
-        return $this->_helpers[$type][$name];
+        return $this->helpers[$type][$name];
     }
 
     /**
      * @var Ilch_Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var Ilch_Translator
      */
-    private $_translator;
+    private $translator;
 
     /**
      * @var Ilch_Router
      */
-    private $_router;
+    private $router;
 
     /**
      * @var array
      */
-    private $_data = array();
+    private $data = array();
 
     /**
      * @var boolean
      */
-    private $_modRewrite;
+    private $modRewrite;
 
     /**
      * Gets view data.
@@ -72,8 +72,8 @@ abstract class Base
      */
     public function get($key)
     {
-        if (isset($this->_data[$key])) {
-            return $this->_data[$key];
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
         }
 
         return null;
@@ -87,7 +87,7 @@ abstract class Base
      */
     public function set($key, $value)
     {
-        $this->_data[$key] = $value;
+        $this->data[$key] = $value;
     }
 
     /**
@@ -99,9 +99,9 @@ abstract class Base
      */
     public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
     {
-        $this->_request = $request;
-        $this->_translator = $translator;
-        $this->_router = $router;
+        $this->request = $request;
+        $this->translator = $translator;
+        $this->router = $router;
     }
 
     /**
@@ -111,7 +111,7 @@ abstract class Base
      */
     public function getRequest()
     {
-        return $this->_request;
+        return $this->request;
     }
     
     /**
@@ -121,7 +121,7 @@ abstract class Base
      */
     public function getRouter()
     {
-        return $this->_router;
+        return $this->router;
     }
 
     /**
@@ -131,7 +131,7 @@ abstract class Base
      */
     public function getTranslator()
     {
-        return $this->_translator;
+        return $this->translator;
     }
 
     /**
@@ -177,10 +177,10 @@ abstract class Base
     public function getLayoutUrl($url = '')
     {
         if (empty($url)) {
-            return BASE_URL.'/application/layouts/'.$this->_layoutKey.'/';
+            return BASE_URL.'/application/layouts/'.$this->layoutKey.'/';
         }
 
-        return BASE_URL.'/application/layouts/'.$this->_layoutKey.'/'.$url;
+        return BASE_URL.'/application/layouts/'.$this->layoutKey.'/'.$url;
     }
 
     /**
@@ -246,8 +246,8 @@ abstract class Base
     {
         $config = \Ilch\Registry::get('config');
 
-        if($config !== null && $this->_modRewrite === null) {
-            $this->_modRewrite = (bool)$config->get('mod_rewrite');
+        if($config !== null && $this->modRewrite === null) {
+            $this->modRewrite = (bool)$config->get('mod_rewrite');
         }
 
         if (empty($urlArray)) {
@@ -297,7 +297,7 @@ abstract class Base
             $s = 'admin/';
         }
 
-        if ($this->_modRewrite && empty($s)) {
+        if ($this->modRewrite && empty($s)) {
             return BASE_URL.'/'.$s.implode('/', $urlParts);
         } else {
             return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);

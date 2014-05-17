@@ -16,8 +16,8 @@ class Mapper
      */
     public function __construct($layout)
     {
-        $this->_db = \Ilch\Registry::get('db');
-        $this->_layout = $layout;
+        $this->db = \Ilch\Registry::get('db');
+        $this->layout = $layout;
     }
 
     /**
@@ -28,7 +28,7 @@ class Mapper
     public function getMenus()
     {
         $menus = array();
-        $menuRows = $this->_db->selectArray(array('id'))
+        $menuRows = $this->db->selectArray(array('id'))
             ->from('menu')
             ->execute();
 
@@ -47,9 +47,9 @@ class Mapper
      */
     public function getMenu($menuId)
     {
-        $menu = new \Ilch\Layout\Helper\Menu\Model($this->_layout);
+        $menu = new \Ilch\Layout\Helper\Menu\Model($this->layout);
 
-        $menuRow = $this->_db->selectRow(array('id', 'title'))
+        $menuRow = $this->db->selectRow(array('id', 'title'))
             ->from('menu')
             ->where(array('id' => $menuId))
             ->execute();

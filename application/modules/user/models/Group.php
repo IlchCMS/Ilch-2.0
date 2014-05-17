@@ -22,14 +22,14 @@ class Group extends \Ilch\Mapper
      *
      * @var int
      */
-    private $_id;
+    private $id;
 
     /**
      * The name of the user group.
      *
      * @var string
      */
-    private $_name = '';
+    private $name = '';
 
     /**
      * Returns the user group id.
@@ -38,7 +38,7 @@ class Group extends \Ilch\Mapper
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -48,7 +48,7 @@ class Group extends \Ilch\Mapper
      */
     public function setId($id)
     {
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
     }
 
     /**
@@ -58,7 +58,7 @@ class Group extends \Ilch\Mapper
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -68,6 +68,6 @@ class Group extends \Ilch\Mapper
      */
     public function setName($name)
     {
-        $this->_name = (string) $name;
+        $this->name = (string) $name;
     }
 }

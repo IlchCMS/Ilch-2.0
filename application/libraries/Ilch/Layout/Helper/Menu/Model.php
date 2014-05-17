@@ -14,14 +14,14 @@ class Model
      *
      * @var integer
      */
-    protected $_id;
+    protected $id;
     
     /**
      * Title of the menu.
      *
      * @var string
      */
-    protected $_title;
+    protected $title;
 
     /**
      * Injects the layout.
@@ -30,7 +30,7 @@ class Model
      */
     public function __construct($layout)
     {
-        $this->_layout = $layout;
+        $this->layout = $layout;
     }
 
     /**
@@ -40,7 +40,7 @@ class Model
      */
     public function setId($id)
     {
-        $this->_id = (int)$id;
+        $this->id = (int)$id;
     }
 
     /**
@@ -50,7 +50,7 @@ class Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
     
     /**
@@ -60,7 +60,7 @@ class Model
      */
     public function setTitle($title)
     {
-        $this->_title = (string)$title;
+        $this->title = (string)$title;
     }
 
     /**
@@ -70,7 +70,7 @@ class Model
      */
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
             
     /**
@@ -92,8 +92,8 @@ class Model
         $config = \Ilch\Registry::get('config');
 
         if ((bool)$config->get('multilingual_acp')) {
-            if ($this->_layout->getTranslator()->getLocale() != $config->get('content_language')) {
-                $locale = $this->_layout->getTranslator()->getLocale();
+            if ($this->layout->getTranslator()->getLocale() != $config->get('content_language')) {
+                $locale = $this->layout->getTranslator()->getLocale();
             }
         }
 
@@ -109,11 +109,11 @@ class Model
                             $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
                         } else {
                             $class = 'Boxes\\'.ucfirst($item->getBoxKey()).'\\Index';
-                            $view = new \Ilch\View($this->_layout->getRequest(), $this->_layout->getTranslator(), $this->_layout->getRouter());
-                            $this->_layout->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/translations');
-                            $boxObj = new $class($this->_layout, $view, $this->_layout->getRequest(), $this->_layout->getRouter(), $this->_layout->getTranslator());
+                            $view = new \Ilch\View($this->layout->getRequest(), $this->layout->getTranslator(), $this->layout->getRouter());
+                            $this->layout->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/translations');
+                            $boxObj = new $class($this->layout, $view, $this->layout->getRequest(), $this->layout->getRouter(), $this->layout->getTranslator());
                             $boxObj->render();
-                            $viewPath = APPLICATION_PATH.'/'.dirname($this->_layout->getFile()).'/views/boxes/'.$item->getBoxKey().'/render.php';
+                            $viewPath = APPLICATION_PATH.'/'.dirname($this->layout->getFile()).'/views/boxes/'.$item->getBoxKey().'/render.php';
 
                             if (!file_exists($viewPath)) {
                                 $viewPath = APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php';
@@ -126,7 +126,7 @@ class Model
 
                         $html = str_replace('%c', $box->getContent(), $html);
                     } else {
-                        $htmlMenuItems .= $this->_recGetItems($item, $locale, $options);
+                        $htmlMenuItems .= $this->recGetItems($item, $locale, $options);
                     }
                 }
             }
@@ -145,7 +145,7 @@ class Model
      * @param array $options
      * @return string
      */
-    protected function _recGetItems($item, $locale, $options = array())
+    protected function recGetItems($item, $locale, $options = array())
     {
         $menuMapper = new \Admin\Mappers\Menu();
         $pageMapper = new \Page\Mappers\Page();
@@ -160,9 +160,9 @@ class Model
             $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 2) {
             $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
-            $html .= '<a href="'.$this->_layout->getUrl($page->getPerma()).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->layout->getUrl($page->getPerma()).'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 3) {
-            $html .= '<a href="'.$this->_layout->getUrl(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->layout->getUrl(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
         }
         
         if (!empty($subItems)) {
@@ -173,7 +173,7 @@ class Model
             }
 
             foreach ($subItems as $subItem) {
-                $html .= $this->_recGetItems($subItem, $locale, $options);
+                $html .= $this->recGetItems($subItem, $locale, $options);
             }
 
             $html .= '</ul>';

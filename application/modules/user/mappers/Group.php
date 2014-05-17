@@ -32,7 +32,7 @@ class Group extends \Ilch\Mapper
             'id' => (int) $id,
         );
 
-        $groups = $this->_getBy($where);
+        $groups = $this->getBy($where);
 
         if (!empty($groups)) {
             return reset($groups);
@@ -54,7 +54,7 @@ class Group extends \Ilch\Mapper
             'name' => $name,
         );
 
-        $groups = $this->_getBy($where);
+        $groups = $this->getBy($where);
 
         if (!empty($groups)) {
             return reset($groups);
@@ -70,7 +70,7 @@ class Group extends \Ilch\Mapper
      * @param  mixed[]            $where
      * @return false|GroupModel[]
      */
-    protected function _getBy($where = null)
+    protected function getBy($where = null)
     {
         $groupRows = $this->db()->selectArray('*')
             ->from('groups')
@@ -170,7 +170,7 @@ class Group extends \Ilch\Mapper
      */
     public function getGroupList()
     {
-        return $this->_getBy();
+        return $this->getBy();
     }
 
     /**

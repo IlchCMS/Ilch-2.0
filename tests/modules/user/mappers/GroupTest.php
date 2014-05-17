@@ -22,14 +22,14 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
      *
      * @var Ilch_Database
      */
-    private $_dbMock;
+    private $dbMock;
 
     /**
      * Sets the db mock.
      */
     public function setUp()
     {
-        $this->_dbMock = $this->getMock('Ilch_Database', array('selectArray', 'selectList', 'from', 'where', 'execute'));
+        $this->dbMock = $this->getMock('Ilch_Database', array('selectArray', 'selectList', 'from', 'where', 'execute'));
     }
 
     /**
@@ -52,27 +52,27 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
             'id' => 2,
         );
 
-        $this->_dbMock->expects($this->once())
+        $this->dbMock->expects($this->once())
                 ->method('selectArray')
                 ->with('*')
-                ->will($this->returnValue($this->_dbMock));
+                ->will($this->returnValue($this->dbMock));
 
-		$this->_dbMock->expects($this->once())
+		$this->dbMock->expects($this->once())
                 ->method('from')
                 ->with('groups')
-                ->will($this->returnValue($this->_dbMock));
+                ->will($this->returnValue($this->dbMock));
 
-		$this->_dbMock->expects($this->once())
+		$this->dbMock->expects($this->once())
                 ->method('where')
                 ->with($where)
-                ->will($this->returnValue($this->_dbMock));
+                ->will($this->returnValue($this->dbMock));
 
-		$this->_dbMock->expects($this->once())
+		$this->dbMock->expects($this->once())
                 ->method('execute')
                 ->will($this->returnValue($groupRow));
 
         $mapper = new GroupMapper();
-        $mapper->setDatabase($this->_dbMock);
+        $mapper->setDatabase($this->dbMock);
         $group = $mapper->getGroupById(2);
 
         $this->assertTrue($group !== false);
@@ -100,27 +100,27 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
             'name' => 'Administrator',
         );
 
-        $this->_dbMock->expects($this->once())
+        $this->dbMock->expects($this->once())
                 ->method('selectArray')
                 ->with('*')
-                ->will($this->returnValue($this->_dbMock));
+                ->will($this->returnValue($this->dbMock));
 
-		$this->_dbMock->expects($this->once())
+		$this->dbMock->expects($this->once())
                 ->method('from')
                 ->with('groups')
-                ->will($this->returnValue($this->_dbMock));
+                ->will($this->returnValue($this->dbMock));
 
-		$this->_dbMock->expects($this->once())
+		$this->dbMock->expects($this->once())
                 ->method('where')
                 ->with($where)
-                ->will($this->returnValue($this->_dbMock));
+                ->will($this->returnValue($this->dbMock));
 
-		$this->_dbMock->expects($this->once())
+		$this->dbMock->expects($this->once())
                 ->method('execute')
                 ->will($this->returnValue($groupRow));
 
         $mapper = new GroupMapper();
-        $mapper->setDatabase($this->_dbMock);
+        $mapper->setDatabase($this->dbMock);
         $group = $mapper->getGroupByName('Administrator');
 
         $this->assertTrue($group !== false);
@@ -153,14 +153,14 @@ class Modules_User_Mappers_GroupTest extends PHPUnit_Ilch_TestCase
      */
     public function testGetUsersForGroup()
     {
-        $this->_dbMock->expects($this->once())
+        $this->dbMock->expects($this->once())
                 ->method('selectList')
                 ->with('user_id',
                         'users_groups',
                         array('group_id' => 1))
                 ->will($this->returnValue(array(1, 3 ,4)));
         $mapper = new GroupMapper();
-        $mapper->setDatabase($this->_dbMock);
+        $mapper->setDatabase($this->dbMock);
         $groupIds = $mapper->getUsersForGroup(1);
 
         $this->assertEquals(array(1, 3, 4), $groupIds);

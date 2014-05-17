@@ -15,35 +15,35 @@ class Shoutbox extends \Ilch\Model
      *
      * @var int
      */
-    protected $_id;
+    protected $id;
 
     /**
      * The uid of the shoutbox.
      *
      * @var string
      */
-    protected $_uid;
+    protected $uid;
 
     /**
      * The name of the shoutbox.
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * The textarea of the shoutbox.
      *
      * @var string
      */
-    protected $_textarea;
+    protected $textarea;
 
     /**
      * The time of the shoutbox.
      *
      * @var string
      */
-    protected $_time;
+    protected $time;
 
     /**
      * Gets the id of the shoutbox.
@@ -52,7 +52,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -63,7 +63,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int)$id;
+        $this->id = (int)$id;
 
         return $this;
     }
@@ -75,7 +75,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function getUid()
     {
-        return $this->_uid;
+        return $this->uid;
     }
 
     /**
@@ -86,7 +86,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function setUid($uid)
     {
-        $this->_uid = (string)$uid;
+        $this->uid = (string)$uid;
 
         return $this;
     }
@@ -98,7 +98,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -109,7 +109,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function setName($name)
     {
-        $this->_name = (string)$name;
+        $this->name = (string)$name;
 
         return $this;
     }
@@ -121,7 +121,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function getTextarea()
     {
-        return $this->_textarea;
+        return $this->textarea;
     }
 
     /**
@@ -132,7 +132,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function setTextarea($textarea)
     {
-        $this->_textarea = (string)$textarea;
+        $this->textarea = (string)$textarea;
 
         return $this;
     }
@@ -144,7 +144,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function getTime()
     {
-        return $this->_time;
+        return $this->time;
     }
 
     /**
@@ -155,7 +155,7 @@ class Shoutbox extends \Ilch\Model
      */
     public function setTime($time)
     {
-        $this->_time = (string)$time;
+        $this->time = (string)$time;
 
         return $this;
     }

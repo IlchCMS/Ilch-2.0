@@ -23,14 +23,14 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
         
-        $this->_locale = $locale;
+        $this->locale = $locale;
     }
 
     public function indexAction()
     {
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'));
         $articleMapper = new ArticleMapper();
-        $this->getView()->set('articles', $articleMapper->getArticles($this->_locale));
+        $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
     }
     
     public function showAction()

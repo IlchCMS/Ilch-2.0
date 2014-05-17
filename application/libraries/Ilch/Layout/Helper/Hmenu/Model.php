@@ -12,7 +12,7 @@ class Model
     /**
      * @var array
      */
-    protected $_data;
+    protected $data;
 
     /**
      * Injects the layout.
@@ -21,7 +21,7 @@ class Model
      */
     public function __construct($layout)
     {
-        $this->_layout = $layout;
+        $this->layout = $layout;
     }
 
     /**
@@ -33,7 +33,7 @@ class Model
      */
     public function add($key, $value = '')
     {
-        $this->_data[$key] = $value;
+        $this->data[$key] = $value;
 
         return $this;
     }
@@ -45,17 +45,17 @@ class Model
      */
     public function __toString()
     {
-        if (empty($this->_data)) {
+        if (empty($this->data)) {
             return '';
         }
 
-        $html = '<a href="'.$this->_layout->getUrl().'">Start</a>';
+        $html = '<a href="'.$this->layout->getUrl().'">Start</a>';
 
-        foreach ($this->_data as $key => $value) {
+        foreach ($this->data as $key => $value) {
             if (empty($value)) {
-                $html .= $this->_layout->escape($key);
+                $html .= $this->layout->escape($key);
             } else {
-                $html .= ' &rArr; <a href="'.$this->_layout->getUrl($value).'">'.$this->_layout->escape($key).'</a>';
+                $html .= ' &rArr; <a href="'.$this->layout->getUrl($value).'">'.$this->layout->escape($key).'</a>';
             }
         }
 

@@ -11,17 +11,17 @@ class Pagination
     /**
      * @var integer
      */
-    protected $_page = 1;
+    protected $page = 1;
 
     /**
      * @var integer
      */
-    protected $_rowsPerPage = 20;
+    protected $rowsPerPage = 20;
 
     /**
      * @var integer
      */
-    protected $_rows;
+    protected $rows;
 
     /**
      * @param integer $page
@@ -32,7 +32,7 @@ class Pagination
             $page = 1;
         }
 
-        $this->_page = $page;
+        $this->page = $page;
     }
 
     /**
@@ -40,7 +40,7 @@ class Pagination
      */
     public function setRows($rows)
     {
-        $this->_rows = $rows;
+        $this->rows = $rows;
     }
 
     /**
@@ -48,7 +48,7 @@ class Pagination
      */
     public function setRowsPerPage($rowsPerPage)
     {
-        $this->_rowsPerPage = $rowsPerPage;
+        $this->rowsPerPage = $rowsPerPage;
     }
 
     /**
@@ -56,7 +56,7 @@ class Pagination
      */
     public function getLimit()
     {
-        return array(($this->_page - 1) * $this->_rowsPerPage, $this->_rowsPerPage);
+        return array(($this->page - 1) * $this->rowsPerPage, $this->rowsPerPage);
     }
 
     /**
@@ -64,21 +64,21 @@ class Pagination
      */
     public function getHtml($view, $urlArray)
     {
-        if (empty($this->_rows)) {
+        if (empty($this->rows)) {
             return;
         }
 
         $html = '<ul class="pagination">';
-        $page = $this->_page;
+        $page = $this->page;
 
         if ($page > 1) {
             $urlArray['page'] = $page - 1;
             $html .= '<li><a href="'.$view->getUrl($urlArray).'">&laquo;</a></li>';
         }
 
-        $html .= '<li><a href="#">'.(($page - 1) * $this->_rowsPerPage).' - '.((($page - 1) * $this->_rowsPerPage) + $this->_rowsPerPage).' von '.$this->_rows.'</a></li>';
+        $html .= '<li><a href="#">'.(($page - 1) * $this->rowsPerPage).' - '.((($page - 1) * $this->rowsPerPage) + $this->rowsPerPage).' von '.$this->rows.'</a></li>';
 
-        if ($page * $this->_rowsPerPage < $this->_rows) {
+        if ($page * $this->rowsPerPage < $this->rows) {
             $urlArray['page'] = $page + 1;
             $html .= '<li><a href="'.$view->getUrl($urlArray).'">&raquo;</a></li>';
         }

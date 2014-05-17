@@ -23,7 +23,7 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
      *
      * @var Array
      */
-    protected $_configData = array();
+    protected $configData = array();
 
     /**
      * Only instantiate pdo once for test clean-up/fixture load
@@ -53,7 +53,7 @@ class PHPUnit_Ilch_DatabaseTestCase extends PHPUnit_Extensions_Database_TestCase
     public function setUp()
     {
         $testHelper = new PHPUnit_Ilch_TestHelper();
-        $testHelper->setConfigInRegistry($this->_configData);
+        $testHelper->setConfigInRegistry($this->configData);
         $dbFactory = new Factory();
         $config = Registry::get('config');
 

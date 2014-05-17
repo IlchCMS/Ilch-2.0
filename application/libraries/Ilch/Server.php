@@ -11,7 +11,7 @@ class Server
     /**
      * @var string
      */
-    protected $_fetchMethod;
+    protected $fetchMethod;
 
     /**
      * Checks which transfer methods are viable.
@@ -20,7 +20,7 @@ class Server
      */
     public function init()
     {
-        if (!empty($this->_fetchMethod)) {
+        if (!empty($this->fetchMethod)) {
             return;
         }
 

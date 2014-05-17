@@ -23,7 +23,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      *
      * @var Array
      */
-    protected $_configData = array
+    protected $configData = array
     (
         'timezone' => 'Europe/Berlin'
     );

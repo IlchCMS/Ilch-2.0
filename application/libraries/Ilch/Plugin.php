@@ -12,14 +12,14 @@ class Plugin
     /**
      * @var array
      */
-    protected $_detectedPlugins;
+    protected $detectedPlugins;
 
     /**
      * Data hold by for passing to the plugins.
      *
      * @var Array
      */
-    protected $_pluginData = array();
+    protected $pluginData = array();
 
     /**
      * Searching for plugins.
@@ -30,7 +30,7 @@ class Plugin
             $pluginName = str_replace('.php', '', basename($pluginPath));
             $pluginPathParts = explode('/', $pluginPath);
             $pluginPathPartsCount = count($pluginPathParts);
-            $this->_detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-3];
+            $this->detectedPlugins[$pluginName][] = $pluginPathParts[$pluginPathPartsCount-3];
         }
     }
 
@@ -41,13 +41,13 @@ class Plugin
      */
     public function execute($pluginName)
     {
-        if (!isset($this->_detectedPlugins[$pluginName])) {
+        if (!isset($this->detectedPlugins[$pluginName])) {
             return;
         }
 
-        foreach ($this->_detectedPlugins[$pluginName] as $module) {
+        foreach ($this->detectedPlugins[$pluginName] as $module) {
             $pluginClass = ucfirst($module).'\\Plugins\\'.$pluginName.'';
-            new $pluginClass($this->_pluginData);
+            new $pluginClass($this->pluginData);
         }
     }
 
@@ -61,6 +61,6 @@ class Plugin
      */
     public function addPluginData($key, $value)
     {
-        $this->_pluginData[$key] = $value;
+        $this->pluginData[$key] = $value;
     }
 }

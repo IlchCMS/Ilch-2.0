@@ -15,56 +15,56 @@ class Impressum extends \Ilch\Model
      *
      * @var int
      */
-    protected $_id;
+    protected $id;
 
     /**
      * The company of the impressum.
      *
      * @var string
      */
-    protected $_company;
+    protected $company;
 
     /**
      * The paragraph of the impressum.
      *
      * @var string
      */
-    protected $_paragraph;
+    protected $paragraph;
 
     /**
      * The name of the impressum.
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * The address of the impressum.
      *
      * @var string
      */
-    protected $_address;
+    protected $address;
 
     /**
      * The city of the impressum.
      *
      * @var string
      */
-    protected $_city;
+    protected $city;
 
     /**
      * The phone of the impressum.
      *
      * @var string
      */
-    protected $_phone;
+    protected $phone;
 
     /**
      * The disclaime of the impressum.
      *
      * @var string
      */
-    protected $_disclaimer;
+    protected $disclaimer;
 
     /**
      * Gets the id of the impressum.
@@ -73,7 +73,7 @@ class Impressum extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -84,7 +84,7 @@ class Impressum extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int)$id;
+        $this->id = (int)$id;
 
         return $this;
     }
@@ -96,7 +96,7 @@ class Impressum extends \Ilch\Model
      */
     public function getParagraph()
     {
-        return $this->_paragraph;
+        return $this->paragraph;
     }
 
     /**
@@ -107,7 +107,7 @@ class Impressum extends \Ilch\Model
      */
     public function setParagraph($paragraph)
     {
-        $this->_paragraph = (string)$paragraph;
+        $this->paragraph = (string)$paragraph;
 
         return $this;
     }
@@ -119,7 +119,7 @@ class Impressum extends \Ilch\Model
      */
     public function getCompany()
     {
-        return $this->_company;
+        return $this->company;
     }
 
     /**
@@ -130,7 +130,7 @@ class Impressum extends \Ilch\Model
      */
     public function setCompany($company)
     {
-        $this->_company = (string)$company;
+        $this->company = (string)$company;
 
         return $this;
     }
@@ -142,7 +142,7 @@ class Impressum extends \Ilch\Model
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -153,7 +153,7 @@ class Impressum extends \Ilch\Model
      */
     public function setName($name)
     {
-        $this->_name = (string)$name;
+        $this->name = (string)$name;
 
         return $this;
     }
@@ -165,7 +165,7 @@ class Impressum extends \Ilch\Model
      */
     public function getAddress()
     {
-        return $this->_address;
+        return $this->address;
     }
 
     /**
@@ -176,7 +176,7 @@ class Impressum extends \Ilch\Model
      */
     public function setAddress($address)
     {
-        $this->_address = (string)$address;
+        $this->address = (string)$address;
 
         return $this;
     }
@@ -188,7 +188,7 @@ class Impressum extends \Ilch\Model
      */
     public function getCity()
     {
-        return $this->_city;
+        return $this->city;
     }
 
     /**
@@ -199,7 +199,7 @@ class Impressum extends \Ilch\Model
      */
     public function setCity($city)
     {
-        $this->_city = (string)$city;
+        $this->city = (string)$city;
 
         return $this;
     }
@@ -211,7 +211,7 @@ class Impressum extends \Ilch\Model
      */
     public function getPhone()
     {
-        return $this->_phone;
+        return $this->phone;
     }
 
     /**
@@ -222,7 +222,7 @@ class Impressum extends \Ilch\Model
      */
     public function setPhone($phone)
     {
-        $this->_phone = (string)$phone;
+        $this->phone = (string)$phone;
 
         return $this;
     }
@@ -234,7 +234,7 @@ class Impressum extends \Ilch\Model
      */
     public function getDisclaimer()
     {
-        return $this->_disclaimer;
+        return $this->disclaimer;
     }
 
     /**
@@ -245,7 +245,7 @@ class Impressum extends \Ilch\Model
      */
     public function setDisclaimer($disclaimer)
     {
-        $this->_disclaimer = (string)$disclaimer;
+        $this->disclaimer = (string)$disclaimer;
 
         return $this;
     }

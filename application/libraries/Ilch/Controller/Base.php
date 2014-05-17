@@ -12,29 +12,29 @@ class Base
     /**
      * @var Ilch_Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var Ilch_Translator
      */
-    private $_translator;
+    private $translator;
 
     /**
      * @var Ilch_Layout_Base
      */
-    private $_layout;
+    private $layout;
 
     /**
      * @var Ilch_View
      */
-    private $_view;
+    private $view;
 
     /**
      * The currently logged in user or null if the user is a guest.
      *
      * @var User_UserModel
      */
-    private $_user;
+    private $user;
 
     /**
      * Injects the layout/view to the controller.
@@ -47,12 +47,12 @@ class Base
      */
     public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
     {
-        $this->_layout = $layout;
-        $this->_view = $view;
-        $this->_request = $request;
-        $this->_router = $router;
-        $this->_translator = $translator;
-        $this->_user = \Ilch\Registry::get('user');
+        $this->layout = $layout;
+        $this->view = $view;
+        $this->request = $request;
+        $this->router = $router;
+        $this->translator = $translator;
+        $this->user = \Ilch\Registry::get('user');
     }
 
     /**
@@ -75,7 +75,7 @@ class Base
      */
     public function getRequest()
     {
-        return $this->_request;
+        return $this->request;
     }
 
     /**
@@ -85,7 +85,7 @@ class Base
      */
     public function getRouter()
     {
-        return $this->_router;
+        return $this->router;
     }
 
     /**
@@ -105,7 +105,7 @@ class Base
      */
     public function getTranslator()
     {
-        return $this->_translator;
+        return $this->translator;
     }
 
     /**
@@ -115,7 +115,7 @@ class Base
      */
     public function getLayout()
     {
-        return $this->_layout;
+        return $this->layout;
     }
 
     /**
@@ -125,7 +125,7 @@ class Base
      */
     public function getView()
     {
-        return $this->_view;
+        return $this->view;
     }    
     
     /**

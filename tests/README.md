@@ -88,7 +88,7 @@ Ein Beispiel: Setzen der Zeitzone um Zeitvergleiche konsistent über alle Server
 ```php
 class Libraries_Ilch_SomeObjectTest extends PHPUnit_Ilch_TestCase
 {
-    protected $_configData = array
+    protected $configData = array
     (
         'timezone' => 'Europe/Berlin' // Filling the timezone which the Ilch_Date object will use.
     );

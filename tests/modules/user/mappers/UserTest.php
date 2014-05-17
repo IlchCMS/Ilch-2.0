@@ -23,7 +23,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
      *
      * @var Array
      */
-    protected $_configData = array
+    protected $configData = array
     (
         'timezone' => 'Europe/Berlin'
     );
@@ -33,7 +33,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
      *
      * @var mixed[]
      */
-    protected $_groupRows = array
+    protected $groupRows = array
     (
         array
         (
@@ -52,7 +52,7 @@ class Modules_User_Mappers_UserTest extends PHPUnit_Ilch_TestCase
      *
      * @var string
      */
-    protected $_groupSqlPart = 'SELECT g.*
+    protected $groupSqlPart = 'SELECT g.*
                         FROM [prefix]_groups AS g
                         INNER JOIN [prefix]_users_groups AS ug ON g.id = ug.group_id
                         WHERE ug.user_id = ';
