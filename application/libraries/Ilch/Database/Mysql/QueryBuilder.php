@@ -6,6 +6,8 @@
 
 namespace Ilch\Database\Mysql;
 
+use \Ilch\Database\Mysql as DB;
+
 abstract class QueryBuilder
 {
     /**
@@ -28,7 +30,7 @@ abstract class QueryBuilder
      *
      * @param \Ilch\Database\Mysql $db
      */
-    public function __construct($db)
+    public function __construct(DB $db)
     {
         $this->db = $db;
     }

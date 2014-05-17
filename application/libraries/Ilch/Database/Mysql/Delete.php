@@ -6,14 +6,19 @@
 
 namespace Ilch\Database\Mysql;
 
+use \Ilch\Database\Mysql as DB;
+
 class Delete extends QueryBuilder
 {
     /**
+     * @param \Ilch\Database\Mysql $db
      * @param string|null $from table without prefix
      * @param array|null $where conditions @see QueryBuilder::where()
      */
-    public function __construct($from = null, $where = null)
+    public function __construct(DB $db, $from = null, $where = null)
     {
+        parent::__construct($db);
+
         if (isset($from)) {
             $this->from($from);
         }

@@ -123,17 +123,26 @@ class Result
 
     /**
      * Returns a array with one field of each row
-     * @param string $key
+     * @param string $keyField
      * @param string $field
      * @return string[]
      */
-    public function fetchList($key = null, $field = null)
+    public function fetchList($keyField = null, $field = null)
     {
-        if (null === $field && null !== $key) {
-            $field = $key;
-            $key = null;
+        if (null === $field && null !== $keyField) {
+            $field = $keyField;
+            $keyField = null;
         }
         $results = [];
+        if (isset($keyField)) {
+            while (false !== ($row = $this->fetchAssoc())) {
+                $results[] = $row[$field];
+            }
+        } else {
+            while (false !== ($row = $this->fetchAssoc())) {
+                $results[$row[$keyField]] = $row[$field];
+            }
+        }
 
         return $results;
     }

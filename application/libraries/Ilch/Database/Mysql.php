@@ -148,7 +148,7 @@ class Mysql
      */
     public function getAffectedRows()
     {
-        return (int) $this->db->getLink()->affected_rows;
+        return (int) $this->conn->affected_rows;
     }
 
     /**
@@ -157,7 +157,21 @@ class Mysql
      */
     public function getLastInsertId()
     {
-        return $this->db->getLink()->insert_id;
+        return $this->conn->insert_id;
+    }
+
+    /**
+     * Create Select Statement Query Builder
+     * @param array|string|null $fields
+     * @param string|null $table table without prefix
+     * @param array|null $where conditions @see QueryBuilder::where()
+     * @param array|null $orderBy
+     * @param array|int|null $limit
+     * @return Mysql\Select
+     */
+    public function select($fields = null, $table = null, $where = null, array $orderBy = null, $limit = null)
+    {
+        return new Mysql\Select($this, $fields, $table, $where, $orderBy, $limit);
     }
 
     /**
@@ -181,6 +195,7 @@ class Mysql
      */
     public function selectCell($cell)
     {
+        throw new \RuntimeException('should be refactored');
         $select = new Mysql\SelectCell($this);
         $select->cell($cell);
 
@@ -208,6 +223,7 @@ class Mysql
      */
     public function selectRow($fields)
     {
+        throw new \RuntimeException('should be refactored');
         $select = new Mysql\SelectRow($this);
         $select->fields($fields);
 
@@ -240,6 +256,7 @@ class Mysql
      */
     public function selectArray($fields)
     {
+        throw new \RuntimeException('should be refactored');
         $select = new Mysql\SelectArray($this);
         $select->fields($fields);
 
@@ -254,6 +271,7 @@ class Mysql
      */
     public function queryList($sql)
     {
+        throw new \RuntimeException('should be refactored');
         $list = array();
         $result = $this->query($sql);
 
@@ -274,6 +292,7 @@ class Mysql
      */
     public function selectList($fields, $table, array $where = null)
     {
+        throw new \RuntimeException('should be refactored');
         $sql = 'SELECT ' . $this->getFieldsSql($fields) . '
                 FROM `[prefix]_' . $table . '` ';
 
@@ -285,43 +304,46 @@ class Mysql
     }
 
     /**
-     * Update entries from the table.
+     * Create Update Query Builder
      *
-     * @param string $table
+     * @param string|null $table
+     * @param array|null $values values as [name => value]
+     * @param array|null $where conditions @see QueryBuilder::where()
+     *
      * @return \Ilch\Database\Mysql\Update
      */
-    public function update($table)
+    public function update($table = null, $values = null, $where = null)
     {
-        $updateObj = new Mysql\Update($this);
-        $updateObj->from($table);
-
-        return $updateObj;
+        //@todo: refactor usages
+        return new Mysql\Update($this, $table, $values, $where);
     }
 
     /**
-     * Insert entries into the table.
-     * @param string $table
+     * Create Insert Query Builder
+     *
+     * @param string|null $into table without prefix
+     * @param array|null $values values as [name => value]
+     *
      * @return \Ilch\Database\Mysql\Insert
      */
-    public function insert($table)
+    public function insert($into = null, $values = null)
     {
-        $insertObj = new Mysql\Insert($this);
-        $insertObj->from($table);
-
-        return $insertObj;
+        //@todo: refactor usages
+        return new Mysql\Insert($this, $into, $values);
     }
 
     /**
-     * Deletes entries from the table.
-     * @param string $table
+     * Create Delete Query Builder
+     *
+     * @param string|null $from table without prefix
+     * @param array|null $where conditions @see QueryBuilder::where()
+     *
      * @return \Ilch\Database\Mysql\Delete
      */
-    public function delete($table)
+    public function delete($from = null, $where = null)
     {
-        $deleteObj = new Mysql\Delete($this);
-        $deleteObj->from($table);
-
-        return $deleteObj;
+        //@todo: refactor usages
+        return new Mysql\Delete($this, $from, $where);
     }
 
     /**

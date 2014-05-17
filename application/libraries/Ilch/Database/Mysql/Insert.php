@@ -6,17 +6,22 @@
 
 namespace Ilch\Database\Mysql;
 
+use \Ilch\Database\Mysql as DB;
+
 class Insert extends QueryBuilder
 {
     /** @var  array */
     protected $values;
 
     /**
-     * @param array|null $values values as [name => value]
+     * @param \Ilch\Database\Mysql $db
      * @param string|null $into table without prefix
+     * @param array|null $values values as [name => value]
      */
-    public function __construct($values = null, $into = null)
+    public function __construct(DB $db, $into = null, $values = null)
     {
+        parent::__construct($db);
+
         if (isset($values)) {
             $this->values($values);
         }
@@ -36,7 +41,7 @@ class Insert extends QueryBuilder
     }
 
     /**
-     * @param $table table without prefix
+     * @param string $table table without prefix
      * @return Update
      */
     public function into($table)

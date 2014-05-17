@@ -32,3 +32,6 @@ ln -s /vagrant/ /var/www
 #restart services
 service mysql restart
 service apache2 restart
+
+#install git
+aptitude -y install git
