@@ -10,15 +10,13 @@ namespace Ilch\Database;
 
 use Ilch\Database\Mysql as MySQL;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Tests the MySQL database object.
  *
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
-class MysqlTest extends \PHPUnit_Ilch_DatabaseTestCase
+class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
     /**
      * Returns the initial dataset for the db.

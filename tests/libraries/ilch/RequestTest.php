@@ -1,21 +1,25 @@
 <?php
 /**
- * Holds class Libraries_Ilch_RequestTest.
+ * Holds class \Ilch\RequestTest.
  *
  * @package ilch_phpunit
  */
+
+namespace Ilch;
+
+use PHPUnit\Ilch\TestCase;
 
 /**
  * Tests the request object.
  *
  * @package ilch_phpunit
  */
-class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
+class RequestTest extends TestCase
 {
     /**
      * The object to test with.
      *
-     * @var Ilch_Request
+     * @var Request
      */
     protected $request;
 
@@ -24,7 +28,7 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
      */
     public function setUp()
     {
-        $this->request = new \Ilch\Request();
+        $this->request = new Request();
         $_REQUEST = array();
         $_GET = array();
         $_POST = array();
@@ -37,9 +41,9 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testSetAndGetParams()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
         $this->request->setParams($params);
         $actualParams = $this->request->getParams();
@@ -53,9 +57,9 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testGetSingleParam()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
         $this->request->setParams($params);
 
@@ -68,14 +72,18 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testGetSingleParamNull()
     {
         $params = array(
-            'name' => 'testuser',
-            'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'name'      => 'testuser',
+            'email'     => 'testuser@testmail.com',
+            'id'        => 123,
             'nullParam' => null,
         );
         $this->request->setParams($params);
 
-        $this->assertEquals(null, $actualParam = $this->request->getParam('nullParam'), 'Param got manipulated unexpectedly.');
+        $this->assertEquals(
+            null,
+            $actualParam = $this->request->getParam('nullParam'),
+            'Param got manipulated unexpectedly.'
+        );
     }
 
     /**
@@ -85,9 +93,9 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testSaveParamsWithNullValue()
     {
         $params = array(
-            'name' => 'testuser',
-            'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'name'      => 'testuser',
+            'email'     => 'testuser@testmail.com',
+            'id'        => 123,
             'nullParam' => null,
         );
         $this->request->setParams($params);
@@ -125,9 +133,9 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testSetAndManipulateSourceParams()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
         $expectedParams = $params;
         $this->request->setParams($params);
@@ -170,9 +178,9 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testIsPost()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
         $_POST = $params;
         $_REQUEST = $params;
@@ -187,7 +195,11 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     {
         $_GET['username'] = 'testuser';
 
-        $this->assertEquals('testuser', $this->request->getQuery('username'), 'The request object didnt returned the GET parameter.');
+        $this->assertEquals(
+            'testuser',
+            $this->request->getQuery('username'),
+            'The request object didnt returned the GET parameter.'
+        );
     }
 
     /**
@@ -197,6 +209,10 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     {
         $_POST['username'] = 'testuser';
 
-        $this->assertEquals('testuser', $this->request->getPost('username'), 'The request object didnt returned the POST parameter.');
+        $this->assertEquals(
+            'testuser',
+            $this->request->getPost('username'),
+            'The request object didnt returned the POST parameter.'
+        );
     }
 }

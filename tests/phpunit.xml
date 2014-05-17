@@ -3,4 +3,14 @@
 	<php>
 		<const name="PHPUNIT_TEST" value="true"/>
 	</php>
+
+    <testsuites>
+        <testsuite name="libraries">
+            <directory>libraries</directory>
+        </testsuite>
+        <testsuite name="modules">
+            <directory>modules</directory>
+        </testsuite>
+    </testsuites>
+    
 </phpunit>

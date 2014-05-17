@@ -1,16 +1,18 @@
 <?php
 /**
- * Holds class PHPUnit_Ilch_TestCase.
+ * Holds class \PHPUnit\Ilch\TestCase
  *
  * @package ilch_phpunit
  */
+
+namespace PHPUnit\Ilch;
 
 /**
  * Base class for test cases for Ilch.
  *
  * @package ilch_phpunit
  */
-class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
+class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * A data array which will be used to create a config object for the registry.
@@ -24,7 +26,7 @@ class PHPUnit_Ilch_TestCase extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-    	$testHelper = new PHPUnit_Ilch_TestHelper();
+        $testHelper = new TestHelper();
         $testHelper->setConfigInRegistry($this->configData);
 
         parent::setUp();

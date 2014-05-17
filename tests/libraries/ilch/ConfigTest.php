@@ -1,21 +1,26 @@
 <?php
 /**
- * Holds class Libraries_Ilch_ConfigTest.
+ * Holds class \Ilch\ConfigTest.
  *
  * @package ilch_phpunit
  */
+
+namespace Ilch;
+
+use Ilch\Config\File as Config;
+use PHPUnit\Ilch\TestCase;
 
 /**
  * Tests the config object.
  *
  * @package ilch_phpunit
  */
-class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
+class ConfigTest extends TestCase
 {
     /**
      * The object to test with.
      *
-     * @var Ilch_Config
+     * @var Config
      */
     protected $config;
 
@@ -24,7 +29,7 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
      */
     public function setUp()
     {
-        $this->config = new \Ilch\Config\File();
+        $this->config = new Config();
     }
 
     /**
@@ -33,11 +38,10 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
     public function testSetAndGetConfig()
     {
         $this->config->set('email', 'testuser@testmail.com');
-        $this->assertEquals
-        (
-                'testuser@testmail.com',
-                $this->config->get('email'),
-                'Config value got manipulated unexpectedly.'
+        $this->assertEquals(
+            'testuser@testmail.com',
+            $this->config->get('email'),
+            'Config value got manipulated unexpectedly.'
         );
     }
 
@@ -48,23 +52,22 @@ class Libraries_Ilch_ConfigTest extends PHPUnit_Ilch_TestCase
     {
         $configArray = array
         (
-            'dbHost' => 'localhost',
-            'dbUser' => 'root',
+            'dbHost'     => 'localhost',
+            'dbUser'     => 'root',
             'dbPassword' => ''
         );
 
-        $this->config->loadConfigFromFile(__DIR__.'/_files/config.php');
+        $this->config->loadConfigFromFile(__DIR__ . '/_files/config.php');
 
-        $this->assertEquals
-        (
-                $configArray,
-                array
-                (
-                    'dbHost' => $this->config->get('dbHost'),
-                    'dbUser' => $this->config->get('dbUser'),
-                    'dbPassword' => $this->config->get('dbPassword')
-                ),
-                'Config array from file differs with defined array.'
+        $this->assertEquals(
+            $configArray,
+            array
+            (
+                'dbHost'     => $this->config->get('dbHost'),
+                'dbUser'     => $this->config->get('dbUser'),
+                'dbPassword' => $this->config->get('dbPassword')
+            ),
+            'Config array from file differs with defined array.'
         );
     }
 }

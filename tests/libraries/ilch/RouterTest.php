@@ -1,106 +1,110 @@
 <?php
 /**
- * Holds class Libraries_Ilch_RouterTest.
+ * Holds class \Ilch\RouterTest.
  *
  * @package ilch_phpunit
  */
+
+namespace Ilch;
+
+use PHPUnit\Ilch\TestCase;
 
 /**
  * Tests the router object.
  *
  * @package ilch_phpunit
  */
-class Libraries_Ilch_RouterTest extends PHPUnit_Ilch_TestCase
+class RouterTest extends TestCase
 {
     /**
-	 * @var \Ilch\Request
-	 */
-	protected $request;
+     * @var \Ilch\Request
+     */
+    protected $request;
 
-	/**
-	 * @var \Ilch\Router
-	 */
-	protected $router;
+    /**
+     * @var \Ilch\Router
+     */
+    protected $router;
 
-	public function setUp()
-	{
-		parent::setUp();
+    public function setUp()
+    {
+        parent::setUp();
 
-		$this->request = new \Ilch\Request();
-		$this->router = new \Ilch\Router($this->request);
-	}
+        $this->request = new Request();
+        $this->router = new Router($this->request);
+    }
 
-	public function testDefaultRegexpPattern()
-	{
-		$pattern = \Ilch\Router::DEFAULT_REGEX_PATTERN;
-		$pattern = '#^' . $pattern . '$#i';
+    public function testDefaultRegexpPattern()
+    {
+        $pattern = Router::DEFAULT_REGEX_PATTERN;
+        $pattern = '#^' . $pattern . '$#i';
 
-		$this->assertRegexp($pattern, 'module/controller');
-		$this->assertRegexp($pattern, 'module/controller/action');
-		$this->assertRegexp($pattern, 'module/controller/action/param1/value1/param2/value2');
-	}
+        $this->assertRegexp($pattern, 'module/controller');
+        $this->assertRegexp($pattern, 'module/controller/action');
+        $this->assertRegexp($pattern, 'module/controller/action/param1/value1/param2/value2');
+    }
 
-	public function testParamConvertingIntoArray()
-	{
-		$params = $this->router->convertParamStringIntoArray('param1/value1/param2/value2');
-		$this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
-	}
+    public function testParamConvertingIntoArray()
+    {
+        $params = $this->router->convertParamStringIntoArray('param1/value1/param2/value2');
+        $this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
+    }
 
-	public function testMatchModuleController()
-	{
-		$expectedResult = array
+    public function testMatchModuleController()
+    {
+        $expectedResult = array
         (
-			'page/index',
-			'module' => 'page',
-			'page',
-			'controller' => 'index',
-			'index',
-		);
+            'page/index',
+            'module'     => 'page',
+            'page',
+            'controller' => 'index',
+            'index',
+        );
 
-		$match = $this->router->matchByRegexp($expectedResult[0]);
-		$this->assertTrue(is_array($match), $match, 'Expected match result need to be an array!');
-	}
+        $match = $this->router->matchByRegexp($expectedResult[0]);
+        $this->assertTrue(is_array($match), $match, 'Expected match result need to be an array!');
+    }
 
-	public function testMatchModuleControllerAction()
-	{
-		$expectedResult = array
+    public function testMatchModuleControllerAction()
+    {
+        $expectedResult = array
         (
-			'page/index/show',
-			'module' => 'page',
-			'page',
-			'controller' => 'index',
-			'index',
-			'/show',
-			'action' => 'show',
-			'show',
-		);
+            'page/index/show',
+            'module'     => 'page',
+            'page',
+            'controller' => 'index',
+            'index',
+            '/show',
+            'action'     => 'show',
+            'show',
+        );
 
-		$match = $this->router->matchByRegexp($expectedResult[0]);
-		$this->assertTrue(is_array($match), $match, 'Expected route does not match!');
-	}
+        $match = $this->router->matchByRegexp($expectedResult[0]);
+        $this->assertTrue(is_array($match), $match, 'Expected route does not match!');
+    }
 
-	public function testMatchModuleControllerActionParams()
-	{
-		$expectedResult = array
+    public function testMatchModuleControllerActionParams()
+    {
+        $expectedResult = array
         (
-			'page/index/show/param1/value1/param2/value2',
-			'module' => 'page',
-			'page',
-			'controller' => 'index',
-			'index',
-			'/show',
-			'action' => 'show',
-			'show',
-			'/param1/value1/param2/value2',
-			'params' => 'param1/value1/param2/value2',
-			'param1/value1/param2/value2',
-		);
+            'page/index/show/param1/value1/param2/value2',
+            'module'     => 'page',
+            'page',
+            'controller' => 'index',
+            'index',
+            '/show',
+            'action'     => 'show',
+            'show',
+            '/param1/value1/param2/value2',
+            'params'     => 'param1/value1/param2/value2',
+            'param1/value1/param2/value2',
+        );
 
-		$match = $this->router->matchByRegexp($expectedResult[0]);
-		$this->assertTrue(is_array($match), $match, 'Expected route does not match!');
-		$params = $this->router->convertParamStringIntoArray($match['params']);
-		$this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
-	}
+        $match = $this->router->matchByRegexp($expectedResult[0]);
+        $this->assertTrue(is_array($match), $match, 'Expected route does not match!');
+        $params = $this->router->convertParamStringIntoArray($match['params']);
+        $this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
+    }
 
     public function testMatchByQuery()
     {
