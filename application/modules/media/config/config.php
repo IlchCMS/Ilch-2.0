@@ -41,6 +41,7 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_media`');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_media_cats`');
     }
     
     public function getInstallSql()
@@ -53,7 +54,16 @@ class Config extends \Ilch\Config\Install
                    `url_thumb` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
 				   `ending` varchar(5) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
                    `datetime` datetime NOT NULL,
+                   `cat_name` VARCHAR(100) NOT NULL,
+                   `cat` int(11) NOT NULL,
 				   PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                
+                CREATE TABLE IF NOT EXISTS `[prefix]_media_cats`
+                (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `cat_name` VARCHAR(100) NOT NULL,
+                  PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 }

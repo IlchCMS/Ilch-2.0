@@ -5,7 +5,7 @@
         <?php if( $this->getRequest()->getParam('type') === 'image' OR $this->getRequest()->getParam('type') === 'single'){ ?>
             <?php foreach ($this->get('medias') as $media) : ?>
                 <?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))){
-                    echo '<div class="col-lg-2 col-sm-3 col-xs-4"><img class="image thumbnail img-responsive" data-url="'.$this->getUrl().'/'.$media->getUrl().'" src="'.$this->getStaticUrl().'../'.$media->getUrl().'" alt=""><div class="media-getname">'.$media->getName().'</div></div>';
+                    echo '<div class="col-lg-2 col-sm-3 col-xs-4"><img class="image thumbnail img-responsive" data-url="'.$this->getUrl().'/'.$media->getUrl().'" src="'.$this->getStaticUrl().'../'.$media->getUrlThumb().'" alt=""><div class="media-getname">'.$media->getName().'</div></div>';
                     }
                 ?>
             <?php endforeach; ?>

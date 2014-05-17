@@ -53,10 +53,25 @@ class Media extends \Ilch\Model
     protected $datetime;
 
     /**
+     * The cat_id of the media.
+     *
+     * @var int
+     */
+    protected $catname;
+
+    /**
+     * The cat_id of the media.
+     *
+     * @var int
+     */
+    protected $catid;
+
+    /**
      * Gets the id of the media.
      *
      * @return integer
      */
+
     public function getId()
     {
         return $this->id;
@@ -110,6 +125,26 @@ class Media extends \Ilch\Model
     public function getDatetime()
     {
         return $this->datetime;
+    }
+
+    /**
+     * Gets the cat_id of the media.
+     *
+     * @return integer
+     */
+    public function getCatName()
+    {
+        return $this->catname;
+    }
+
+    /**
+     * Gets the cat_id of the media.
+     *
+     * @return integer
+     */
+    public function getCatId()
+    {
+        return $this->catid;
     }
 
     /**
@@ -170,5 +205,25 @@ class Media extends \Ilch\Model
     public function setDatetime($datetime)
     {
         $this->datetime = (string)$datetime;
+    }
+
+    /**
+     * Sets the cat_id of the media.
+     *
+     * @param integer $catid
+     */
+    public function setCatName($catname)
+    {
+        $this->catname = $catname;
+    }
+
+    /**
+     * Sets the cat_id of the media.
+     *
+     * @param integer $catid
+     */
+    public function setCatId($catid)
+    {
+        $this->catid = $catid;
     }
 }

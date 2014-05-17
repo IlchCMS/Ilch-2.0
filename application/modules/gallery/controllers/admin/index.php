@@ -1,0 +1,98 @@
+<?php
+/**
+ * @copyright Ilch 2.0
+ * @package ilch
+ */
+
+namespace Gallery\Controllers\Admin;
+
+use Gallery\Mappers\Gallery as GalleryMapper;
+use Gallery\Controllers\Admin\Base as BaseController;
+
+defined('ACCESS') or die('no direct access');
+
+class Index extends BaseController 
+{
+    public function indexAction() 
+    {
+        $gallerymapper = new GalleryMapper();
+
+        /*
+         * Saves the item tree to database.
+         */
+        if ($this->getRequest()->isPost()) {
+            if ($this->getRequest()->getPost('save')) {
+                $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
+                $items = $this->getRequest()->getPost('items');
+                $oldItems = $gallerymapper->getGalleryItems(1);
+
+                /*
+                 * Deletes old entries from database.
+                 */
+                if (!empty($oldItems)) {
+                    foreach ($oldItems as $oldItem) {
+                        if (!isset($items[$oldItem->getId()])) {
+                            $gallerymapper->deleteItem($oldItem);
+                        }
+                    }
+                }
+
+                if ($items) {
+                    $sortArray = array();
+
+                    foreach ($sortItems as $sortItem) {
+                        if ($sortItem->item_id !== null) {
+                            $sortArray[$sortItem->item_id] = (int)$sortItem->parent_id;
+                        }
+                    }
+
+                    foreach ($items as $item) {
+                        $galleryItem = new \Gallery\Models\GalleryItem;
+
+                        if (strpos($item['id'], 'tmp_') !== false) {
+                            $tmpId = str_replace('tmp_', '', $item['id']);
+                        } else {
+                            $galleryItem->setId($item['id']);
+                        }
+
+                        $galleryItem->setGalleryId(1);
+                        $galleryItem->setType($item['type']);
+                        $galleryItem->setTitle($item['title']);
+                        $galleryItem->setDesc($item['desc']);
+                        $newId = $gallerymapper->saveItem($galleryItem);
+
+                        if (isset($tmpId)) {
+                            foreach ($sortArray as $id => $parentId) {
+                                if ($id == $tmpId) {
+                                    unset($sortArray[$id]);
+                                    $sortArray[$newId] = $parentId;
+                                }
+
+                                if ($parentId == $tmpId) {
+                                    $sortArray[$id] = $newId;
+                                }
+                            }
+                        }
+                    }
+
+                    $sort = 0;
+
+                    foreach ($sortArray as $id => $parent) {
+                        $galleryItem = new \Gallery\Models\GalleryItem();
+                        $galleryItem->setId($id);
+                        $galleryItem->setSort($sort);
+                        $galleryItem->setParentId($parent);
+                        $gallerymapper->saveItem($galleryItem);
+                        $sort += 10;
+                    }
+                }
+            }
+
+            $this->addMessage('saveSuccess');
+        }
+
+        $galleryItems = $gallerymapper->getGalleryItemsByParent(1, 0);
+        $this->getView()->set('galleryItems', $galleryItems);
+        $this->getView()->set('gallerymapper', $gallerymapper);
+    }
+}

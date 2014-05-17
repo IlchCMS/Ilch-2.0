@@ -137,23 +137,82 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', end
     cursor: default;
 }
 
-#ilchmedia .thumbnail {
-    margin-bottom:7px;
+#ilchmedia{
+    margin-top: 60px;
 }
 
-#ilchmedia div.col-lg-2 {
-    height: 200px;
+#ilchmedia .thumbnail {
+    margin-bottom:7px;
+    width: 100%;
 }
-.img-preview{
-    width: auto;
-    height: auto;
-    max-width: 150px;
-    max-height: 50px;
-    
+
+#ilchmedia .chacked {
+    border-color:#0099FF;
+    border-style:solid;
+}
+
+#ilchmedia .thumb {
+    margin-bottom: 30px;
 }
 
 .media-getname{
     position: relative;
     background: #fff;
     overflow: hidden;
+}
+
+.regular-checkbox {
+    display: none;
+}
+
+.regular-checkbox + label {
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    top: 5px;
+    right: 9px;
+    outline: 0px none;
+    border: 1px solid #575757;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #F1F1F1, #E1E1E1) repeat scroll 0% 0% #F1F1F1;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.regular-checkbox + label:active, .regular-checkbox:checked + label:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.regular-checkbox:checked + label {
+}
+
+.regular-checkbox:checked + label:after {
+    content: '\2714';
+    font-size: 16px;
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    color: #0099FF;
+}
+
+.nav-pills{
+    border-bottom: 1px solid #E5E5E5;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.btn {
+    padding: 9px 12px !important;
+    border-radius: 0px;
+}
+
+.img-preview{
+    width: 100px;
+    height: auto;
 }
