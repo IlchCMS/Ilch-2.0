@@ -91,6 +91,16 @@ abstract class Base
     }
 
     /**
+     * Sets view data array.
+     *
+     * @param mixed[] $data
+     */
+    public function setArray($data = array())
+    {
+        $this->data = array_merge($this->data, $data);
+    }
+
+    /**
      * Injects request and translator to layout/view.
      *
      * @param \Ilch\Request    $request

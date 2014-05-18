@@ -19,11 +19,28 @@ class View extends Design\Base
     {
         ob_start();
 
-        if (file_exists($viewScript)) {
+        if (is_file($viewScript)) {
             include $viewScript;
         }
 
         return ob_get_clean();
+    }
+
+    /**
+     * Loads a view file.
+     *
+     * @param string $url
+     * @param mixed[] $data
+     */
+    public function load($file, $data = array())
+    {
+        $request = $this->getRequest();
+        $view = new \Ilch\View($request,
+            $this->getTranslator(),
+            $this->getRouter());
+        $view->setArray($data);
+
+        echo $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$file);
     }
 
     /**
