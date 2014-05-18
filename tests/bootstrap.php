@@ -24,6 +24,7 @@ if (file_exists($vendorAutoloadFile)) {
  * PHPUnit Classes.
  */
 require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
+$loader = new \Ilch\Loader();
 spl_autoload_register
 (
     function ($class) {
