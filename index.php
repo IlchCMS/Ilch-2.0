@@ -36,6 +36,7 @@ define('REWRITE_BASE', $rewriteBaseParts);
 define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
 require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
+$loader = new \Ilch\Loader();
 
 \Ilch\Registry::set('startTime', microtime(true));
 
