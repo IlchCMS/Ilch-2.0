@@ -325,12 +325,23 @@ class Mysql
 
     /**
      * Quotes a field name
-     * @param string $field
+     *
+     * @param string $field field, f.e. field, a.field, table.field
+     * @param boolean $complete [default: false] quotes complete field
+     *
      * @return string
+     * @throws \InvalidArgumentException for invalid field expressions
      */
-    public function quote($field)
+    public function quote($field, $complete = false)
     {
-        return '`' . $field . '`';
+        if ($complete || strpos($field, '.') === false) {
+            return '`' . $field . '`';
+        }
+        $parts = explode('.', $field);
+        if (count($parts) > 2) {
+            throw new \InvalidArgumentException('Invalid field expression: ' . $field);
+        }
+        return '`' . $field[0] . '`.`' . $field[1] . '`';
     }
 
     /**

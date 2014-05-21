@@ -33,9 +33,19 @@ class Select extends QueryBuilder
     protected $order;
 
     /**
-     * @var array|null
+     * @var array
      */
-    protected $fields;
+    protected $fields = [];
+
+    /**
+     * @var Expression\Join[]
+     */
+    protected $joins = [];
+
+    /**
+     * @var array
+     */
+    protected $groupByFields = [];
 
     /** @var bool */
     protected $useFoundRows = false;
@@ -80,7 +90,7 @@ class Select extends QueryBuilder
     /**
      * Adds table to query builder.
      *
-     * @param string $table table without prefix
+     * @param string|array $table table without prefix (as array with alias as key)
      * @return \Ilch\Database\Mysql\Select
      */
     public function from($table)
@@ -94,29 +104,24 @@ class Select extends QueryBuilder
      * Adds fields to query builder.
      *
      * @param array|string $fields
+     * @param boolean $replace [default: true]
+     *
      * @return \Ilch\Database\Mysql\Select
      * @throws \InvalidArgumentException for invalid $fields parameter
      */
-    public function fields($fields)
+    public function fields($fields, $replace = true)
     {
-        if (is_string($fields)) {
-            if ($fields === '*') {
-                return $this;
-            }
-            //function like COUNT(), todo: should be removed!
-            if (strpos($fields, '(') !== false) {
-                $fields = [new Expression\Expression($fields)];
-            //single field
-            } elseif (strpos($fields, ' ') === false) {
-                $fields = [$fields];
-            }
-        } elseif ($fields instanceof Expression\Expression) {
-            $fields = [$fields];
+        if ($fields === '*') {
+            return $this;
         }
-        if (!is_array($fields)) {
-            throw new \InvalidArgumentException('array or single field (or function) string expected');
+
+        $fields = $this->createFieldsArray($fields);
+
+        if ($replace || empty($this->fields)) {
+            $this->fields = $fields;
+        } else {
+            $this->fields = array_merge($this->fields. $fields);
         }
-        $this->fields = $fields;
 
         return $this;
     }
@@ -181,6 +186,37 @@ class Select extends QueryBuilder
     }
 
     /**
+     * Adds a join to the query (builder)
+     *
+     * @param Expression\Join $join
+     * @return \Ilch\Database\Mysql\Select
+     */
+    public function join(Expression\Join $join)
+    {
+        $this->joins[] = $join;
+        return $this;
+    }
+
+    /**
+     * Add GROUP BY to the query (builder)
+     *
+     * @param array $fields
+     * @param boolean $replace
+     *
+     * @return \Ilch\Database\Mysql\Select
+     */
+    public function group(array $fields, $replace = true)
+    {
+        if ($replace) {
+            $this->groupByFields = $fields;
+        } else {
+            $this->groupByFields = array_merge($this->groupByFields, $fields);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param $useFoundRows
      * @return \Ilch\Database\Mysql\Select
      */
@@ -212,14 +248,32 @@ class Select extends QueryBuilder
             throw new \RuntimeException('table must be set');
         }
 
+        $fields = $this->fields;
+
         $sql = 'SELECT ';
 
         if ($this->useFoundRows) {
             $sql .= 'SQL_CALC_FOUND_ROWS ';
         }
 
-        $sql .= $this->getFieldsSql($this->fields)
-            . ' FROM ' . $this->db->quote('[prefix]_'.$this->table);
+        $joinSql = [];
+        foreach ($this->joins as $join) {
+            $temp = $join->getType() . ' JOIN ' . $this->getTableSql($join->getTable());
+            $joinCondition = $join->getConditions();
+            if (!empty($joinCondition)) {
+                $temp .= ' ON ' . $this->generateWhereSql($joinCondition);
+            }
+            $joinFields = $join->getFields();
+            if (!empty($joinFields)) {
+                $fields = array_merge($fields, $this->createFieldsArray($joinFields));
+            }
+            $joinSql[] = $temp;
+        }
+
+        $sql .= $this->getFieldsSql($fields)
+            . ' FROM ' . $this->getTableSql($this->table);
+
+        $sql .= implode(' ', $joinSql);
 
         $sql .= $this->generateWhereSql();
 
@@ -273,11 +327,63 @@ class Select extends QueryBuilder
             }
             //non int key -> alias
             if (!is_int($key)) {
-                $value .= ' AS ' . $this->db->quote($key);
+                $value .= ' AS ' . $this->db->quote($key, true);
             }
             $sqlFields[] = $value;
         }
 
         return implode(',', $sqlFields);
+    }
+
+    /**
+     * Create sql for a table (with optional alias)
+     *
+     * @param string|array $table
+     *
+     * @return string
+     */
+    protected function getTableSql($table)
+    {
+        if (is_array($table)) {
+            $table = reset($table);
+            $tableAlias = key($table);
+        } else {
+            $table = $this->table;
+        }
+
+        $sql = $this->db->quote('[prefix]_' . $table);
+        if (isset($tableAlias)) {
+            $sql .= ' AS ' . $this->db->quote($tableAlias, true);
+        }
+
+        return $sql;
+    }
+
+    /**
+     * Create an array of fields
+     *
+     * @param string|array $fields
+     *
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    protected function createFieldsArray($fields)
+    {
+        if (is_string($fields)) {
+            //function like COUNT()
+            if (strpos($fields, '(') !== false) {
+                $fields = [new Expression\Expression($fields)];
+                //single field
+            } elseif (strpos($fields, ' ') === false) {
+                $fields = [$fields];
+            }
+        } elseif ($fields instanceof Expression\Expression) {
+            $fields = [$fields];
+        }
+        if (!is_array($fields)) {
+            throw new \InvalidArgumentException('array or single field (or function) string expected');
+        }
+
+        return $fields;
     }
 }

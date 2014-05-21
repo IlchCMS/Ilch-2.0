@@ -16,7 +16,7 @@ abstract class QueryBuilder
     protected $db;
 
     /**
-     * @var string
+     * @var string|array
      */
     protected $table;
 
