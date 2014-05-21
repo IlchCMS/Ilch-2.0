@@ -1,9 +1,12 @@
+<?php $commentMapper = new \Comment\Mappers\Comment();?>
 <div id="gallery">
     <?php foreach ($this->get('image') as $image) : ?>
-    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-        <a class="thumbnail" href="<?php echo $this->getUrl().'/'.$image->getImageId(); ?>">
+    <?php $comments = $commentMapper->getCommentsByKey('gallery_'.$image->getId());?>
+    <div class="col-lg-3 col-md-4 col-xs-6">
+        <a class="thumbnail" href="<?php echo $this->getUrl(array('action' => 'showimage', 'gallery'  => $this->getRequest()->getParam('id'), 'id' => $image->getId())) ; ?>">
             <img class="img-responsive" src="<?php echo $this->getUrl().'/'.$image->getImageThumb(); ?>"/>
         </a>
+        <i class="fa fa-comment-o"></i> <?=count($comments)?>
     </div>
     <?php endforeach; ?>
 </div>
