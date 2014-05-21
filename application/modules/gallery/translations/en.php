@@ -33,5 +33,7 @@ return array
     'type' => 'Type',
     'galleryItemAdd' => 'Append',
     'menuGalleryOverview' => 'Gallery Overview',
+    'comments' => 'Comments',
+    'submit' => 'Save',
     
 );

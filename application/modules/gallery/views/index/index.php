@@ -2,10 +2,12 @@
 <?php
 $galleryMapper = $this->get('galleryMapper');
 $galleryItems = $this->get('galleryItems');
+$imageMapper = $this->get('imageMapper');
 
-function rec($item, $galleryMapper, $obj)
+function rec($item, $galleryMapper, $obj, $imageMapper)
 {
     $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
+    $image = $imageMapper->getCountImageById($item->getId());
 
     if ($item->getType() === 0){
         echo '<div class="page-header">
@@ -15,14 +17,16 @@ function rec($item, $galleryMapper, $obj)
     if ($item->getType() != 0){
         echo '<div class="list-group">
                     <a href="'.$obj->getUrl(array('controller' => 'index', 'action' => 'show','id' => $item->getId())).'" class="list-group-item">
-                        <h4 class="list-group-item-heading">'.$item->getTitle().'</h4>
+                        <h4 class="list-group-item-heading">'.$item->getTitle().'
+                        <span class="pull-right">Bilder: '. count($image).'</span></h4>
                         <p class="list-group-item-text">'.$item->getDesc().'</p>
                     </a>
+                    
               </div>';
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            rec($subItem, $galleryMapper, $obj);
+            rec($subItem, $galleryMapper, $obj, $imageMapper);
         }
     }
 }
@@ -32,7 +36,7 @@ function rec($item, $galleryMapper, $obj)
         <?php
             if (!empty($galleryItems)) {
                 foreach ($galleryItems as $item) {
-                    rec($item, $galleryMapper, $this);
+                    rec($item, $galleryMapper, $this, $imageMapper);
                 }
             }
         ?>

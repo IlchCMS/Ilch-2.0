@@ -20,35 +20,38 @@ class Image extends \Ilch\Mapper
      * @param array $where
      * @return ImageModel[]|array
      */
-    public function getImage($where = array())
+    public function getImage($id)
     {
-        $imageArray = $this->db()->selectArray('*')
-            ->from('gallery_imgs')
-            ->where($where)
-            ->order(array('id' => 'DESC'))
-            ->execute();
-
-        if (empty($imageArray)) {
-            return array();
-        }
-
-        $entry = array();
-
-        foreach ($imageArray as $entries) {
+        $sql = 'SELECT g.image_id,g.cat,g.id as imgid, m.url, m.id, m.url_thumb
+                           FROM `[prefix]_gallery_imgs` AS g
+                           LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
+                           
+                           WHERE g.id = '.$id;
+        $imageRow = $this->db()->queryRow($sql);
+        
             $entryModel = new ImageModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setImageId($entries['image_id']);
-            $entryModel->setCat($entries['cat']);
-            $entry[] = $entryModel;
-        }
+            $entryModel->setImageId($imageRow['url']);
+            
+        
 
-        return $entry;
+        return $entryModel;
     }
 
     public function getImageById($id)
     {
         $gallery = $this->getImage(array('id' => $id));
         return $gallery;
+    }
+
+    public function getCountImageById($id)
+    {
+        $sql = 'SELECT *
+                FROM `[prefix]_gallery_imgs`
+                
+                WHERE cat = '.$id;
+        $count = $this->db()->queryArray($sql);
+
+        return $count;
     }
 
     /**

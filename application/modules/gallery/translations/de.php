@@ -34,5 +34,7 @@ return array
     'type' => 'Art',
     'galleryItemAdd' => 'Hinzufügen',
     'menuGalleryOverview' => 'Galerie Übersicht',
+    'comments' => 'Kommentare',
+    'submit' => 'Eintragen',
     
 );

@@ -8,6 +8,8 @@ namespace Gallery\Controllers;
 
 use Gallery\Mappers\Gallery as GalleryMapper;
 use Gallery\Mappers\Image as ImageMapper;
+use Comment\Mappers\Comment as CommentMapper;
+use Comment\Models\Comment as CommentModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -18,10 +20,12 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'));
         $galleryMapper = new GalleryMapper();
+        $imageMapper = new ImageMapper();
         $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);
         $this->getView()->set('galleryItems', $galleryItems);
         
         $this->getView()->set('galleryMapper', $galleryMapper);
+        $this->getView()->set('imageMapper', $imageMapper);
 	}
 
     public function showAction() 
@@ -42,5 +46,35 @@ class Index extends \Ilch\Controller\Frontend
         
         $this->getView()->set('image', $imagemapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
+    }
+
+    public function showImageAction() 
+    {
+        $commentMapper = new CommentMapper;
+        $imagemapper = new ImageMapper();
+        $galleryMapper = new GalleryMapper();
+
+        if ($this->getRequest()->getPost('gallery_comment_text')) {
+            $commentModel = new CommentModel();
+            $commentModel->setKey('gallery_'.$this->getRequest()->getParam('id'));
+            $commentModel->setText($this->getRequest()->getPost('gallery_comment_text'));
+
+            $date = new \Ilch\Date();
+            $commentModel->setDateCreated($date);
+            $commentModel->setUserId($this->getUser()->getId());
+            $commentMapper->save($commentModel);
+        }
+
+        $id = $this->getRequest()->getParam('id');
+        $galleryid = $this->getRequest()->getParam('gallery');
+        $gallery = $galleryMapper->getGalleryById($galleryid);
+        $comments = $commentMapper->getCommentsByKey('gallery_'.$this->getRequest()->getParam('id'));
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'))
+                ->add($gallery->getTitle(), array('action' => 'show', 'id' => $galleryid));
+
+        $this->getView()->set('image', $imagemapper->getImage($id));
+        $this->getView()->set('comments', $comments);
     }
 }
