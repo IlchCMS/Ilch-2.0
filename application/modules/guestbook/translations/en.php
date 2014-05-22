@@ -27,6 +27,7 @@ return array
     'successful' => 'Successful',
     'missingText' => 'Text was not filled',
     'missingName' => 'Name was not filled',
+    'missingEmail' => 'E-Mail was not filled',
     'settings' => 'Settings',
     'entrySettings' => 'Share entries directly',
     'yes' => 'yes',
