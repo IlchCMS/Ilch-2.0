@@ -40,6 +40,8 @@ class Index extends \Ilch\Controller\Frontend
 
             if (empty($text)) {
                 $this->addMessage('missingText', 'danger');
+            } elseif(empty($email)) {
+                $this->addMessage('missingEmail', 'danger');
             } elseif(empty($name)) {
                 $this->addMessage('missingName', 'danger');
             } else {
