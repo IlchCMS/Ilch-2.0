@@ -26,6 +26,7 @@ return array
     'delete' => 'Delete',
     'successful' => 'Successful',
     'missingText' => 'Text was not filled',
+    'missingEmail' => 'E-Mail was not filled',
     'missingName' => 'Name was not filled',
     'settings' => 'Settings',
     'entrySettings' => 'Share entries directly',
