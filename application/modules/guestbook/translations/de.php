@@ -26,6 +26,7 @@ return array
     'delete' => 'Löschen',
     'successful' => 'Erfolgreich',
     'missingText' => 'Nachricht muss ausgefüllt werden',
+    'missingEmail' => 'E-Mail muss ausgefüllt werden',
     'missingName' => 'Name muss ausgefüllt werden',
     'settings' => 'Einstellungen',
     'entrySettings' => 'Einträge sofort freigeben',
