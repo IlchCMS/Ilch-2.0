@@ -29,7 +29,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         $db->expects($this->any())
             ->method('escape')
             ->will($this->returnCallback(function ($value) {
-                return '"' . $value. '"';
+                return $value;
             }));
 
         $this->out = new Select($db);
@@ -184,28 +184,28 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             //array - positive
             'in array'          => [
                 'where'           => ['field' => [5, 6]],
-                'expectedSqlPart' => '`field` IN ("5","6")'
+                'expectedSqlPart' => '`field` IN ("5", "6")'
             ],
             'in array - ='      => [
                 'where'           => ['field =' => [5, 6]],
-                'expectedSqlPart' => '`field` IN ("5","6")'
+                'expectedSqlPart' => '`field` IN ("5", "6")'
             ],
             'in array - IN'     => [
                 'where'           => ['field IN' => [5, 6]],
-                'expectedSqlPart' => '`field` IN ("5","6")'
+                'expectedSqlPart' => '`field` IN ("5", "6")'
             ],
             //array - negative
             'not in array - !='     => [
                 'where'           => ['field !=' => [5, 6]],
-                'expectedSqlPart' => '`field` NOT IN ("5","6")'
+                'expectedSqlPart' => '`field` NOT IN ("5", "6")'
             ],
             'not in array - <>'     => [
                 'where'           => ['field <>' => [5, 6]],
-                'expectedSqlPart' => '`field` NOT IN ("5","6")'
+                'expectedSqlPart' => '`field` NOT IN ("5", "6")'
             ],
             'not in array - NOT IN' => [
                 'where'           => ['field NOT IN' => [5, 6]],
-                'expectedSqlPart' => '`field` NOT IN ("5","6")'
+                'expectedSqlPart' => '`field` NOT IN ("5", "6")'
             ],
         ];
     }

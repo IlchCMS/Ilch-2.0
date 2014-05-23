@@ -29,7 +29,7 @@ class UpdateTest extends \PHPUnit_Framework_TestCase
         $db->expects($this->any())
             ->method('escape')
             ->will($this->returnCallback(function ($value) {
-                return '"' . $value . '"';
+                return $value;
             }));
 
         $this->out = new Update($db);

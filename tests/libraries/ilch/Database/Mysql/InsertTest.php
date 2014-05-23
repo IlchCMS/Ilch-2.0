@@ -31,7 +31,7 @@ class InsertTest extends \PHPUnit_Framework_TestCase
         $db->expects($this->any())
             ->method('escape')
             ->will($this->returnCallback(function ($value) {
-                return '"' . $value . '"';
+                return $value;
             }));
         $db->expects($this->any())
             ->method('getLastInsertId')
@@ -62,7 +62,7 @@ class InsertTest extends \PHPUnit_Framework_TestCase
                   ->values(['super' => 'data', 'next' => 'fieldData']);
 
         $expected = 'INSERT INTO `[prefix]_Test` '
-            . '(`super`,`next`) VALUES ("data","fieldData")';
+            . '(`super`,`next`) VALUES ("data", "fieldData")';
 
         $this->assertEquals($expected, $this->out->generateSql());
     }
