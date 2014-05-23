@@ -28,7 +28,7 @@ class Page extends \Ilch\Mapper
     {
         $sql = 'SELECT pc.title, pc.perma, p.id FROM [prefix]_pages as p
                 LEFT JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
-                    AND pc.locale = "'.$this->db()->escape($locale).'"
+                    AND pc.locale = '.$this->db()->escape($locale).'
                 GROUP BY p.id';
         $pageArray = $this->db()->queryArray($sql);
 
@@ -60,7 +60,7 @@ class Page extends \Ilch\Mapper
     {
             $sql = 'SELECT * FROM [prefix]_pages as p
                     INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
-                    WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
+                    WHERE p.`id` = "'.(int) $id.'" AND pc.locale = '.$this->db()->escape($locale);
         $pageRow = $this->db()->queryRow($sql);
 
         if (empty($pageRow)) {
@@ -110,7 +110,7 @@ class Page extends \Ilch\Mapper
         if ($page->getId()) {
             if ($this->getPageByIdLocale($page->getId(), $page->getLocale())) {
                 $this->db()->update('pages_content')
-                    ->fields(array(
+                    ->values(array(
                         'title' => $page->getTitle(),
                         'description' => $page->getDescription(),
                         'content' => $page->getContent(),
@@ -123,7 +123,7 @@ class Page extends \Ilch\Mapper
                     ->execute();
             } else {
                 $this->db()->insert('pages_content')
-                    ->fields
+                    ->values
                     (
                         array
                         (
@@ -140,11 +140,11 @@ class Page extends \Ilch\Mapper
         } else {
             $date = new \Ilch\Date();
             $pageId = $this->db()->insert('pages')
-                ->fields(array('date_created' => $date->toDb()))
+                ->values(array('date_created' => $date->toDb()))
                 ->execute();
 
             $this->db()->insert('pages_content')
-                ->fields
+                ->values
                 (
                     array
                     (

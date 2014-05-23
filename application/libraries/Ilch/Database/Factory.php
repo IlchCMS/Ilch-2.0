@@ -18,20 +18,7 @@ class Factory
     public function getInstanceByConfig(\Ilch\Config\File $config)
     {
         foreach (array('dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $configKey) {
-            /*
-             * Using the data for the db from the config.
-             * If the constant PHPUNIT_TEST is set, we check if special config variables
-             * for this test execution exist. If so we gonna use it. Otherwise we dont connect to any db.
-             */
-            if (defined('PHPUNIT_TEST')) {
-                if ($config->get($configKey.'Test') !== null) {
-                    $dbData[$configKey] = $config->get($configKey.'Test');
-                } else {
-                    return false;
-                }
-            } else {
-                $dbData[$configKey] = $config->get($configKey);
-            }
+            $dbData[$configKey] = $config->get($configKey);
         }
 
         $dbClass = '\\Ilch\\Database\\'.$dbData['dbEngine'];

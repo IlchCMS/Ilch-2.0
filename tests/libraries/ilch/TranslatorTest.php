@@ -1,16 +1,20 @@
 <?php
 /**
- * Holds class Libraries_Ilch_TranslatorTest.
+ * Holds class \Ilch\TranslatorTest.
  *
  * @package ilch_phpunit
  */
+
+namespace Ilch;
+
+use PHPUnit\Ilch\TestCase;
 
 /**
  * Tests the translator object.
  *
  * @package ilch_phpunit
  */
-class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
+class TranslatorTest extends TestCase
 {
     /**
      * Tests if the translator can handle a directory which is filled with
@@ -18,8 +22,8 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testLoadTranslationsFile()
     {
-        $translator = new \Ilch\Translator('de_DE');
-        $this->assertTrue($translator->load(__DIR__.'/_files'));
+        $translator = new Translator('de_DE');
+        $this->assertTrue($translator->load(__DIR__ . '/_files'));
     }
 
     /**
@@ -27,10 +31,9 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testLoadTranslationFileNotExists()
     {
-        $translator = new \Ilch\Translator('xx_xx');
-        $this->assertFalse
-        (
-            $translator->load(__DIR__.'/_files'),
+        $translator = new Translator('xx_xx');
+        $this->assertFalse(
+            $translator->load(__DIR__ . '/_files'),
             'The translator didn\'t return false when the translation file doesn\'t exist.'
         );
     }
@@ -40,9 +43,8 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testLoadTranslationDirNotExists()
     {
-        $translator = new \Ilch\Translator('de_DE');
-        $this->assertFalse
-        (
+        $translator = new Translator('de_DE');
+        $this->assertFalse(
             $translator->load('someImaginaryFolder'),
             'The translator didn\'t return false when the given translation directory doesn\'t exist.'
         );
@@ -54,11 +56,10 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testTrans()
     {
-        $translator = new \Ilch\Translator('en_EN');
-        $translator->load(__DIR__.'/_files');
+        $translator = new Translator('en_EN');
+        $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals
-        (
+        $this->assertEquals(
             'The user gets what he wants!',
             $translator->trans('userGetsWhatHeWants'),
             'The text wasnt translated using the translation file.'
@@ -71,11 +72,10 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testTransNotTranslated()
     {
-        $translator = new \Ilch\Translator('en_EN');
-        $translator->load(__DIR__.'/_files');
+        $translator = new Translator('en_EN');
+        $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals
-        (
+        $this->assertEquals(
             'notTranslatedText',
             $translator->trans('notTranslatedText'),
             'The text wasnt simply returned.'
@@ -88,11 +88,10 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testTransPlaceholder()
     {
-        $translator = new \Ilch\Translator('en_EN');
-        $translator->load(__DIR__.'/_files');
+        $translator = new Translator('en_EN');
+        $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals
-        (
+        $this->assertEquals(
             'Welcome, Hans',
             $translator->trans('welcomeUser', 'Hans'),
             'The text wasnt returned with the placeholder.'
@@ -105,11 +104,10 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testTransMultiplePlaceholder()
     {
-        $translator = new \Ilch\Translator('en_EN');
-        $translator->load(__DIR__.'/_files');
+        $translator = new Translator('en_EN');
+        $translator->load(__DIR__ . '/_files');
 
-        $this->assertEquals
-        (
+        $this->assertEquals(
             'Welcome, Hans, ur last login was yesterday',
             $translator->trans('welcomeUserExtended', 'Hans', 'yesterday'),
             'The text wasnt returned with the placeholder.'
@@ -121,7 +119,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testRequestLocaleDefinition()
     {
-        $translator = new \Ilch\Translator('en_EN');
+        $translator = new Translator('en_EN');
         $this->assertEquals('en_EN', $translator->getLocale());
     }
 
@@ -131,7 +129,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testRequestLocaleDefinitionDefault()
     {
-        $translator = new \Ilch\Translator();
+        $translator = new Translator();
         $this->assertEquals('de_DE', $translator->getLocale());
     }
 
@@ -140,11 +138,15 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testGetTranslationsArray()
     {
-        $translator = new \Ilch\Translator('en_EN');
-        $translator->load(__DIR__.'/_files');
+        $translator = new Translator('en_EN');
+        $translator->load(__DIR__ . '/_files');
 
-        $expectedTranslations = require __DIR__.'/_files/en.php';
-        $this->assertEquals($expectedTranslations, $translator->getTranslations(), 'The translations array was returned wrongly.');
+        $expectedTranslations = require __DIR__ . '/_files/en.php';
+        $this->assertEquals(
+            $expectedTranslations,
+            $translator->getTranslations(),
+            'The translations array was returned wrongly.'
+        );
     }
 
     /**
@@ -152,7 +154,7 @@ class Libraries_Ilch_TranslatorTest extends PHPUnit_Ilch_TestCase
      */
     public function testShortenLocale()
     {
-        $translator = new \Ilch\Translator();
+        $translator = new Translator();
         $this->assertEquals('en', $translator->shortenLocale('en_EN'), 'The locale wasn\'t trimmed correctly.');
     }
 }

@@ -8,8 +8,6 @@
 
 namespace User\Models;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The user model class.
  *
@@ -46,23 +44,23 @@ class User extends \Ilch\Model
     protected $password;
 
     /**
-     * The Ilch_Date of when the user got created.
+     * The \Ilch\Date of when the user got created.
      *
-     * @var Ilch_Date
+     * @var \Ilch\Date
      */
     protected $dateCreated;
 
     /**
-     * The Ilch_Date of when the user got confirmed.
+     * The \Ilch\Date of when the user got confirmed.
      *
-     * @var Ilch_Date
+     * @var \Ilch\Date
      */
     protected $dateConfirmed;
 
     /**
      * LastActivity timestamp of the user.
      *
-     * @var Ilch_Date
+     * @var \Ilch\Date
      */
     protected $dateLastActivity;
 
@@ -83,7 +81,7 @@ class User extends \Ilch\Model
     /**
      * The associated user group object.
      *
-     * @var User\Models\Group[]
+     * @var \User\Models\Group[]
      */
     protected $groups = array();
 
@@ -101,10 +99,11 @@ class User extends \Ilch\Model
      * Saves the id of the user.
      *
      * @param int $id
+     * @return User
      */
     public function setId($id)
     {
-        $this->id = (int) $id;
+        $this->id = (int)$id;
 
         return $this;
     }
@@ -123,10 +122,11 @@ class User extends \Ilch\Model
      * Saves the username.
      *
      * @param string $username
+     * @return User
      */
     public function setName($username)
     {
-        $this->name = (string) $username;
+        $this->name = (string)$username;
 
         return $this;
     }
@@ -145,10 +145,11 @@ class User extends \Ilch\Model
      * Saves the email address of the user.
      *
      * @param string $email
+     * @return User
      */
     public function setEmail($email)
     {
-        $this->email = (string) $email;
+        $this->email = (string)$email;
 
         return $this;
     }
@@ -167,10 +168,11 @@ class User extends \Ilch\Model
      * Saves the password of the user.
      *
      * @param string $password
+     * @return User
      */
     public function setPassword($password)
     {
-        $this->password = (string) $password;
+        $this->password = (string)$password;
 
         return $this;
     }
@@ -189,10 +191,11 @@ class User extends \Ilch\Model
      * Saves the confirmed of the user.
      *
      * @param int $confirmed
+     * @return User
      */
     public function setConfirmed($confirmed)
     {
-        $this->confirmed = (int) $confirmed;
+        $this->confirmed = (int)$confirmed;
 
         return $this;
     }
@@ -210,11 +213,12 @@ class User extends \Ilch\Model
     /**
      * Saves the confirmed code of the user.
      *
-     * @param string $confirmed
+     * @param string $confirmedCode
+     * @return User
      */
     public function setConfirmedCode($confirmedCode)
     {
-        $this->confirmedCode = (string) $confirmedCode;
+        $this->confirmedCode = (string)$confirmedCode;
 
         return $this;
     }
@@ -233,6 +237,7 @@ class User extends \Ilch\Model
      * Sets the groups of the user.
      *
      * @param Group[] $groups
+     * @return User
      */
     public function setGroups($groups)
     {
@@ -245,6 +250,7 @@ class User extends \Ilch\Model
      * Adds a group to the users groups.
      *
      * @param Group $group
+     * @return User
      */
     public function addGroup(Group $group)
     {
@@ -271,9 +277,9 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the date_created Ilch_Date of the user.
+     * Returns the date_created \Ilch\Date of the user.
      *
-     * @return Ilch_Date
+     * @return \Ilch\Date
      */
     public function getDateCreated()
     {
@@ -281,9 +287,10 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the date_created Ilch_Date of the user.
+     * Saves the date_created \Ilch\Date of the user.
      *
-     * @param Ilch_Date $dateCreated
+     * @param \Ilch\Date $dateCreated
+     * @return User
      */
     public function setDateCreated($dateCreated)
     {
@@ -295,7 +302,7 @@ class User extends \Ilch\Model
     /**
      * Returns the date_confirmed timestamp of the user.
      *
-     * @return Ilch_Date
+     * @return \Ilch\Date
      */
     public function getDateConfirmed()
     {
@@ -305,7 +312,7 @@ class User extends \Ilch\Model
     /**
      * Saves the date_confirmed timestamp of the user.
      *
-     * @param Ilch_Date $dateConfirmed
+     * @param \Ilch\Date $dateConfirmed
      */
     public function setDateConfirmed($dateConfirmed)
     {
@@ -317,7 +324,7 @@ class User extends \Ilch\Model
     /**
      * Returns the date_LastActivity timestamp of the user.
      *
-     * @return Ilch_Date
+     * @return \Ilch\Date
      */
     public function getDateLastActivity()
     {
@@ -328,6 +335,7 @@ class User extends \Ilch\Model
      * Saves the date_LastActivity timestamp of the user.
      *
      * @param \Ilch\Date $dateLastActivity
+     * @return User
      */
     public function setDateLastActivity($dateLastActivity)
     {
@@ -343,7 +351,7 @@ class User extends \Ilch\Model
      */
     public function isAdmin()
     {
-        if(in_array(1, array_keys($this->getGroups()))) {
+        if (in_array(1, array_keys($this->getGroups()))) {
             return true;
         }
 
@@ -353,14 +361,17 @@ class User extends \Ilch\Model
     /**
      * Returns whether the user has access to a specific key.
      *
-     * @param  string  $key       A module-key, page-id or article-id prefixed by either one of these: "module_", "page_", "article_".
+     * @todo Remove from user model and create acl class
+     * @param  string $key A module-key, page-id or article-id prefixed by either one of these: "module_", "page_", "article_".
      * @param  boolean $isInAdmin Whether the user is in the admin backend currently.
      *
      * @return boolean            True if access granted, false otherwise.
+     *
+     * @todo refactor -> kein Abhängigkeiten zu anderen Klassen, die keine Models sind
      */
     public function hasAccess($key, $isInAdmin = true)
     {
-        if(in_array(1, array_keys($this->getGroups()))) {
+        if (in_array(1, array_keys($this->getGroups()))) {
             /*
              * The user is an admin, allow him everything.
              */
@@ -375,32 +386,32 @@ class User extends \Ilch\Model
             $moduleKey = substr($key, 7);
             $type = 'module';
             $sqlJoin = ' INNER JOIN `[prefix]_modules` AS m ON ga.module_key = m.key';
-            $sqlWhere = ' WHERE m.key = "'.$moduleKey.'"';
+            $sqlWhere = ' WHERE m.key = "' . $moduleKey . '"';
         } elseif (strpos($key, 'page_') !== false) {
             $pageId = (int)substr($key, 5);
             $type = 'page';
             $sqlJoin = ' INNER JOIN `[prefix]_pages` AS p ON ga.page_id = p.id';
-            $sqlWhere = ' WHERE p.id = '.(int)$pageId;
+            $sqlWhere = ' WHERE p.id = ' . (int)$pageId;
         } elseif (strpos($key, 'article_') !== false) {
             $articleId = (int)substr($key, 8);
             $type = 'article';
             $sqlJoin = ' INNER JOIN [prefix]_articles AS a ON ga.article_id = a.id';
-            $sqlWhere = ' WHERE a.id = '.(int)$articleId;
+            $sqlWhere = ' WHERE a.id = ' . (int)$articleId;
         } elseif (strpos($key, 'box_') !== false) {
             $boxId = (int)substr($key, 4);
             $type = 'box';
             $sqlJoin = ' INNER JOIN [prefix]_boxes AS b ON ga.box_id = b.id';
-            $sqlWhere = ' WHERE b.id = '.(int)$boxId;
+            $sqlWhere = ' WHERE b.id = ' . (int)$boxId;
         }
 
-        $sql .= $sqlJoin.$sqlWhere.'
-                AND ga.group_id IN ('.implode(',', array_keys($this->getGroups())).')
+        $sql .= $sqlJoin . $sqlWhere . '
+                AND ga.group_id IN (' . implode(',', array_keys($this->getGroups())) . ')
                 ORDER BY access_level DESC
                 LIMIT 1';
         $db = \Ilch\Registry::get('db');
         $accessLevel = (int)$db->queryCell($sql);
 
-        if(($isInAdmin && $accessLevel === 2) || (!$isInAdmin && $accessLevel >= 1)) {
+        if (($isInAdmin && $accessLevel === 2) || (!$isInAdmin && $accessLevel >= 1)) {
             return true;
         } else {
             return false;

@@ -20,11 +20,12 @@ class Checkout extends \Ilch\Mapper
      */
     public function getEntries($where = array())
     {
-        $entryArray = $this->db()->selectArray('*')
+        $entryArray = $this->db()->select('*')
             ->from('checkout')
             ->where($where)
             ->order(array('id' => 'DESC'))
-            ->execute();
+            ->execute()
+            ->fetchRows();
 
         if (empty($entryArray)) {
             return array();
@@ -53,26 +54,23 @@ class Checkout extends \Ilch\Mapper
 
     public function getAmount()
     {
-        $sql = $this->db()->selectCell('ROUND(SUM(amount),2)')
-            ->from('checkout')
-            ->execute();
-        return $sql;
+        return $this->db()->select('ROUND(SUM(amount),2)', 'checkout')
+            ->execute()
+            ->fetchCell();
     }
 
     public function getAmountPlus()
     {
-        $sql = 'SELECT ROUND(SUM(amount),2) FROM [prefix]_checkout
-                WHERE amount > 0';
-        $amount = $this->db()->queryCell($sql);
-        return $amount;
+        return $this->db()->select('ROUND(SUM(amount),2)', 'checkout', ['amount >' => 0])
+            ->execute()
+            ->fetchCell();
     }
 
     public function getAmountMinus()
     {
-        $sql = 'SELECT ROUND(SUM(amount),2) FROM [prefix]_checkout
-                WHERE amount < 0';
-        $amount = $this->db()->queryCell($sql);
-        return $amount;
+        return $this->db()->select('ROUND(SUM(amount),2)', 'checkout', ['amount <' => 0])
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -84,12 +82,12 @@ class Checkout extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('checkout')
-                ->fields(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
+                ->values(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
                 ->where(array('id' => $model->getId()))
                 ->execute();
         } else {
             $this->db()->insert('checkout')
-                ->fields(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
+                ->values(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
                 ->execute();
         }
     }

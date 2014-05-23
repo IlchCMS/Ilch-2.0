@@ -1,27 +1,28 @@
 <?php
 /**
- * Holds class Modules_User_Models_GroupTest.
+ * Holds class \User\Models\GroupTest.
  *
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 
-use User\Models\Group as GroupModel;
-defined('ACCESS') or die('no direct access');
+namespace User\Models;
+
+use PHPUnit\Ilch\TestCase;
 
 /**
  * Tests the user group model class.
  *
  * @package ilch_phpunit
  */
-class Modules_User_Models_GroupTest extends PHPUnit_Ilch_TestCase
+class GroupTest extends TestCase
 {
     /**
      * Tests if the user group can save and return a name.
      */
     public function testName()
     {
-        $group = new GroupModel();
+        $group = new Group();
         $group->setName('newGroup');
 
         $this->assertEquals('newGroup', $group->getName(), 'The group name did not save correctly.');
@@ -32,7 +33,7 @@ class Modules_User_Models_GroupTest extends PHPUnit_Ilch_TestCase
      */
     public function testId()
     {
-        $group = new GroupModel();
+        $group = new Group();
         $group->setId(3);
 
         $this->assertEquals(3, $group->getId(), 'The group id did not save correctly.');

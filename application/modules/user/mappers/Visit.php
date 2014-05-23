@@ -13,7 +13,7 @@ class Visit extends \Ilch\Mapper
      */
     public function getVisitsOnlineUser()
     {
-        $userMapper = new \User\Mappers\User();
+        $userMapper = new User();
         $date = new \Ilch\Date();
         $date->modify('-3 minutes');
 
@@ -71,30 +71,32 @@ class Visit extends \Ilch\Mapper
     public function saveVisit($row)
     {
         $date = new \Ilch\Date();
-        $visitId = (int)$this->db()->selectCell('id')
+        $visitId = (int) $this->db()->select('id')
             ->from('visits_online')
             ->where(array('ip_address' => $row['ip'], 'user_id' => $row['user_id']))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         if ($visitId) {
             $this->db()->update('visits_online')
-                ->fields(array('date_last_activity' => $date->toDb()))
+                ->values(array('date_last_activity' => $date->toDb()))
                 ->where(array('id' => $visitId))
                 ->execute();
         } else {
             $this->db()->insert('visits_online')
-                ->fields(array('date_last_activity' => $date->toDb(), 'ip_address' => $row['ip'], 'user_id' => $row['user_id']))
+                ->values(array('date_last_activity' => $date->toDb(), 'ip_address' => $row['ip'], 'user_id' => $row['user_id']))
                 ->execute();
         }
         
-        $uniqueUser = (bool)$this->db()->selectCell('id')
+        $uniqueUser = (bool)$this->db()->select('id')
             ->from('visits_stats')
             ->where(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
-            ->execute();
+            ->execute()
+            ->fetchCell();
         
         if (!$uniqueUser) {
             $this->db()->insert('visits_stats')
-                ->fields(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
+                ->values(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
                 ->execute();
         }
     }

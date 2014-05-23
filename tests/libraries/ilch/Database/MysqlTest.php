@@ -1,14 +1,14 @@
 <?php
 /**
- * Holds class Libraries_Ilch_DatabaseMysqlTest.
+ * Holds class Ilch\Database\MysqlTest.
  *
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 
-use Ilch\Database\Mysql as MySQL;
+namespace Ilch\Database;
 
-defined('ACCESS') or die('no direct access');
+use Ilch\Database\Mysql as MySQL;
 
 /**
  * Tests the MySQL database object.
@@ -16,18 +16,17 @@ defined('ACCESS') or die('no direct access');
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
-class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
+class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
     /**
      * Returns the initial dataset for the db.
      *
-     * @return PHPUnit_Extensions_Database_DataSet_YamlDataSet
+     * @return \PHPUnit_Extensions_Database_DataSet_YamlDataSet
      */
     protected function getDataSet()
     {
-        return new PHPUnit_Extensions_Database_DataSet_YamlDataSet
-        (
-            __DIR__.'/../_files/mysql_database.yml'
+        return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet(
+            __DIR__ . '/../_files/mysql_database.yml'
         );
     }
 
@@ -36,10 +35,11 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
      */
     public function testSelectCellNormalField()
     {
-        $result = $this->db->selectCell('id')
-                ->from('groups')
-                ->where(array('id' => 2))
-                ->execute();
+        $result = $this->db->select('id')
+            ->from('groups')
+            ->where(array('id' => 2))
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals('2', $result, 'Wrong cell value was returned.');
     }
@@ -49,10 +49,11 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
      */
     public function testSelectCellWithCount()
     {
-        $result = $this->db->selectCell('COUNT(*)')
+        $result = $this->db->select('COUNT(*)')
             ->from('groups')
             ->where(array('name' => 'Clanleader'))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals('2', $result, 'Wrong cell value was returned.');
     }
@@ -63,14 +64,15 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
     public function testUpdateWithEmptyValue()
     {
         $this->db->update('groups')
-            ->fields(array('name' => ''))
-            ->where(array('id' => 2))
-			->execute();
-
-        $result = $this->db->selectCell('name')
-            ->from('groups')
+            ->values(array('name' => ''))
             ->where(array('id' => 2))
             ->execute();
+
+        $result = $this->db->select('name')
+            ->from('groups')
+            ->where(array('id' => 2))
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals('', $result, 'The db entry has not being updated with an empty string.');
     }
@@ -80,12 +82,13 @@ class Libraries_Ilch_DatabaseMysqlTest extends PHPUnit_Ilch_DatabaseTestCase
      */
     public function testInsertWithEmptyValue()
     {
-        $this->db->insert('groups')->fields(array('name' => ''))->execute();
+        $this->db->insert('groups')->values(array('name' => ''))->execute();
 
-        $result = $this->db->selectCell('COUNT(*)')
+        $result = $this->db->select('COUNT(*)')
             ->from('groups')
             ->where(array('name' => ''))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         $this->assertEquals(1, $result, 'The db entry has not being inserted with an empty string.');
     }

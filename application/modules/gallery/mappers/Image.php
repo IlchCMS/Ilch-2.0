@@ -14,13 +14,7 @@ defined('ACCESS') or die('no direct access');
 
 class Image extends \Ilch\Mapper 
 {
-    /**
-     * Gets the image.
-     *
-     * @param array $where
-     * @return ImageModel[]|array
-     */
-    public function getImage($id)
+    public function getImageById($id)
     {
         $sql = 'SELECT g.image_id,g.cat,g.id as imgid, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
@@ -28,19 +22,10 @@ class Image extends \Ilch\Mapper
                            
                            WHERE g.id = '.$id;
         $imageRow = $this->db()->queryRow($sql);
-        
-            $entryModel = new ImageModel();
-            $entryModel->setImageId($imageRow['url']);
-            
-        
+        $entryModel = new ImageModel();
+        $entryModel->setImageId($imageRow['url']);
 
         return $entryModel;
-    }
-
-    public function getImageById($id)
-    {
-        $gallery = $this->getImage(array('id' => $id));
-        return $gallery;
     }
 
     public function getCountImageById($id)
@@ -63,12 +48,12 @@ class Image extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('gallery_imgs')
-                ->fields(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
+                ->values(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
                 ->where(array('id' => $model->getId()))
                 ->execute();
         } else {
             $this->db()->insert('gallery_imgs')
-                ->fields(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
+                ->values(array('image_id' => $model->getImageId(),'cat' => $model->getCat()))
                 ->execute();
         }
     }

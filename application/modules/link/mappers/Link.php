@@ -25,7 +25,7 @@ class Link extends \Ilch\Mapper
      */
     public function getLinks($where = array())
     {
-        $linkArray = $this->db()->selectArray('*')->from('links')->where($where)->execute();
+        $linkArray = $this->db()->select('*')->from('links')->where($where)->execute()->fetchRows();
 
         if (empty($linkArray)) {
             return array();
@@ -80,12 +80,12 @@ class Link extends \Ilch\Mapper
 
         if ($link->getId()) {
             $this->db()->update('links')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $link->getId()))
                 ->execute();
         } else {
             $this->db()->insert('links')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
     }

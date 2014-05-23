@@ -33,7 +33,7 @@ class Category extends \Ilch\Mapper
                 WHERE 1 ';
 
         foreach ($where as $key => $value) {
-            $sql .= ' AND lc.`'.$key.'` = "'.$this->db()->escape($value).'"';
+            $sql .= ' AND lc.`'.$key.'` = '.$this->db()->escape($value);
         }
 
         $sql .= 'GROUP BY lc.id';
@@ -72,17 +72,18 @@ class Category extends \Ilch\Mapper
 
     public function getCategoriesForParentRec($models, $id)
     {
-        $categoryRow = $this->db()->selectRow('*')
+        $categoryRow = $this->db()->select('*')
             ->from('link_cats')
             ->where(array('id' => $id))
-            ->execute();
+            ->execute()
+            ->fetchAssoc();
         
         if (empty($categoryRow)) {
             return null;
         }
 
         if (!empty($categoryRow['parent_id'])) {
-           $models = $this->getCategoriesForParentRec($models, $categoryRow['parent_id']);
+            $models = $this->getCategoriesForParentRec($models, $categoryRow['parent_id']);
         }
                         
         $categoryModel = new CategoryModel();
@@ -122,12 +123,12 @@ class Category extends \Ilch\Mapper
 
         if ($category->getId()) {
             $this->db()->update('link_cats')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $category->getId()))
                 ->execute();
         } else {
             $this->db()->insert('link_cats')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
     }

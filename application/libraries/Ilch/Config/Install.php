@@ -17,7 +17,7 @@ class Install extends \Ilch\Mapper
     /**
      * @param \Ilch\Translator $translator
      */
-    public function __construct(\Ilch\Translator $translator)
+    public function __construct(\Ilch\Translator $translator = null)
     {
         $this->translator = $translator;
         parent::__construct();

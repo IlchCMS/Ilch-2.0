@@ -80,12 +80,12 @@ class Receiver extends \Ilch\Mapper
     {
         if ($receiver->getId()) {
             $this->db()->update('contact_receivers')
-                ->fields(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
+                ->values(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
                 ->where(array('id' => $receiver->getId()))
                 ->execute();
         } else {
             $this->db()->insert('contact_receivers')
-                ->fields(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
+                ->values(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
                 ->execute();
         }
     }

@@ -20,11 +20,12 @@ class Gallery extends \Ilch\Mapper
     public function getGalleryItemsByParent($galleryId, $itemId)
     {
         $items = array();
-        $itemRows = $this->db()->selectArray('*')
+        $itemRows = $this->db()->select('*')
                 ->from('gallery_items')
                 ->where(array('gallery_id' => $galleryId, 'parent_id' => $itemId))
                 ->order(array('sort' => 'ASC'))
-                ->execute();
+                ->execute()
+                ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -50,11 +51,12 @@ class Gallery extends \Ilch\Mapper
     public function getGalleryCatItem($type)
     {
         $items = array();
-        $itemRows = $this->db()->selectArray('*')
+        $itemRows = $this->db()->select('*')
                 ->from('gallery_items')
                 ->where(array('type' => $type))
                 ->order(array('sort' => 'ASC'))
-                ->execute();
+                ->execute()
+                ->fetchRows();
 
         if (empty($itemRows)) {
             return null;
@@ -76,11 +78,12 @@ class Gallery extends \Ilch\Mapper
 
     public function getGalleryById($id)
     {
-        $itemRows = $this->db()->selectRow('*')
+        $itemRows = $this->db()->select('*')
                 ->from('gallery_items')
                 ->where(array('id' => $id))
                 ->order(array('sort' => 'ASC'))
-                ->execute();
+                ->execute()
+                ->fetchAssoc();
 
         if (empty($itemRows)) {
             return null;
@@ -122,19 +125,20 @@ class Gallery extends \Ilch\Mapper
             }
         }
 
-        $itemId = (int)$this->db()->selectCell('id')
+        $itemId = (int)$this->db()->select('id')
             ->from('gallery_items')
             ->where(array('id' => $galleryItem->getId()))
-            ->execute();
+            ->execute()
+            ->fetchCell();
 
         if ($itemId) {
             $this->db()->update('gallery_items')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $itemId))
                 ->execute();
         } else {
             $itemId = $this->db()->insert('gallery_items')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
 
@@ -159,11 +163,12 @@ class Gallery extends \Ilch\Mapper
     public function getGalleryItems($galleryId)
     {
         $items = array();
-        $itemRows = $this->db()->selectArray('*')
+        $itemRows = $this->db()->select('*')
                 ->from('gallery_items')
                 ->where(array('gallery_id' => $galleryId))
                 ->order(array('sort' => 'ASC'))
-                ->execute();
+                ->execute()
+                ->fetchRows();
 
         if (empty($itemRows)) {
             return null;

@@ -5,14 +5,48 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
+
+use \Ilch\Database\Mysql as DB;
 
 class Delete extends QueryBuilder
 {
     /**
-     * @var string
+     * @param \Ilch\Database\Mysql $db
+     * @param string|null $from table without prefix
+     * @param array|null $where conditions @see QueryBuilder::where()
      */
-    protected $type = 'delete';
+    public function __construct(DB $db, $from = null, $where = null)
+    {
+        parent::__construct($db);
+
+        if (isset($from)) {
+            $this->from($from);
+        }
+        if (isset($where)) {
+            $this->where($where);
+        }
+    }
+
+    /**
+     * @param string $table table without prefix
+     * @return Delete
+     */
+    public function from($table)
+    {
+        $this->table = (string) $table;
+        return $this;
+    }
+
+    /**
+     * Execute the query builder.
+     *
+     * @return integer number of deleted rows
+     */
+    public function execute()
+    {
+        $this->db->query($this->generateSql());
+        return $this->db->getAffectedRows();
+    }
 
     /**
      * Gets delete query builder sql.
@@ -21,11 +55,9 @@ class Delete extends QueryBuilder
      */
     public function generateSql()
     {
-        $sql = 'DELETE  FROM `[prefix]_'.$this->table.'`';
+        $sql = 'DELETE  FROM ' . $this->db->quote('[prefix]_' . $this->table);
 
-        if ($this->where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
-        }
+        $sql .= $this->generateWhereSql();
 
         return $sql;
     }

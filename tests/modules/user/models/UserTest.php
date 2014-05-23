@@ -1,22 +1,22 @@
 <?php
 /**
- * Holds class Modules_User_Models_UserTest.
+ * Holds class \User\Models\UserTest.
  *
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 
-use User\Models\User as UserModel;
-use User\Models\Group as GroupModel;
+namespace User\Models;
 
-defined('ACCESS') or die('no direct access');
+use PHPUnit\Ilch\TestCase;
+use Ilch\Registry;
 
 /**
  * Tests the user model class.
  *
  * @package ilch_phpunit
  */
-class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
+class UserTest extends TestCase
 {
     /**
      * Filling the timezone which the Ilch_Date object will use.
@@ -33,7 +33,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testSetGetId()
     {
-        $user = new UserModel();
+        $user = new User();
         $user->setId(123);
         $this->assertEquals(123, $user->getId(), 'The id wasnt saved or returned correctly.');
     }
@@ -43,7 +43,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testSetGetUsername()
     {
-        $user = new UserModel();
+        $user = new User();
         $user->setName('username');
         $this->assertEquals('username', $user->getName(), 'The username wasnt saved or returned correctly.');
     }
@@ -53,7 +53,7 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testSetGetEmail()
     {
-        $user = new UserModel();
+        $user = new User();
         $user->setEmail('email');
         $this->assertEquals('email', $user->getEmail(), 'The email wasnt saved or returned correctly.');
     }
@@ -63,18 +63,22 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testSetGetGroups()
     {
-        $group1 = new GroupModel();
+        $group1 = new Group();
         $group1->setId(1);
         $group1->setName('Admin');
-        $group2 = new GroupModel();
+        $group2 = new Group();
         $group2->setId(2);
         $group2->setName('Member');
-        $group3 = new GroupModel();
+        $group3 = new Group();
         $group3->setId(3);
         $group3->setName('Clanleader');
-        $user = new UserModel();
+        $user = new User();
         $user->setGroups(array($group1, $group2, $group3));
-        $this->assertEquals(array($group1, $group2, $group3), $user->getGroups(), 'The user groups wasnt saved or returned correctly.');
+        $this->assertEquals(
+            array($group1, $group2, $group3),
+            $user->getGroups(),
+            'The user groups wasnt saved or returned correctly.'
+        );
     }
 
     /**
@@ -82,19 +86,23 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testAddGroup()
     {
-        $group1 = new GroupModel();
+        $group1 = new Group();
         $group1->setId(1);
         $group1->setName('Admin');
-        $group2 = new GroupModel();
+        $group2 = new Group();
         $group2->setId(2);
         $group2->setName('Member');
-        $group3 = new GroupModel();
+        $group3 = new Group();
         $group3->setId(3);
         $group3->setName('Clanleader');
-        $user = new UserModel();
+        $user = new User();
         $user->setGroups(array($group1, $group3));
         $user->addGroup($group2);
-        $this->assertEquals(array($group1, $group3, $group2), $user->getGroups(), 'The user groups wasnt added or returned correctly.');
+        $this->assertEquals(
+            array($group1, $group3, $group2),
+            $user->getGroups(),
+            'The user groups wasnt added or returned correctly.'
+        );
     }
 
     /**
@@ -102,17 +110,17 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testHasGroup()
     {
-        $user = new UserModel();
+        $user = new User();
 
-        $group1 = new GroupModel();
+        $group1 = new Group();
         $group1->setId(1);
         $group1->setName('Admin');
 
-        $group2 = new GroupModel();
+        $group2 = new Group();
         $group2->setId(2);
         $group2->setName('Member');
 
-        $group3 = new GroupModel();
+        $group3 = new Group();
         $group3->setId(3);
         $group3->setName('Clanleader');
 
@@ -130,19 +138,26 @@ class Modules_User_Models_UserTest extends PHPUnit_Ilch_TestCase
      */
     public function testHasAccess()
     {
-        $group = new GroupModel();
+        $group = new Group();
         $group->setId(3);
         $group->setName('Testgroup');
-        $user = new UserModel();
+        $user = new User();
         $user->setId(123);
         $user->addGroup($group);
 
         $dbMock = $this->getMock('Ilch_Database', array('queryCell'));
         $dbMock->expects($this->once())
-                ->method('queryCell')
-                ->with($this->logicalAnd($this->stringContains('FROM [prefix]_groups_access'), $this->stringContains('INNER JOIN `[prefix]_modules`'), $this->stringContains('user')))
-                ->will($this->returnValue('0'));
-        \Ilch\Registry::set('db', $dbMock);
+            ->method('queryCell')
+            ->with(
+                $this->logicalAnd(
+                    $this->stringContains('FROM [prefix]_groups_access'),
+                    $this->stringContains('INNER JOIN `[prefix]_modules`'),
+                    $this->stringContains('user')
+                )
+            )
+            ->will($this->returnValue('0'));
+        Registry::remove('db');
+        Registry::set('db', $dbMock);
 
         $this->assertEquals(0, $user->hasAccess('module_user'));
     }

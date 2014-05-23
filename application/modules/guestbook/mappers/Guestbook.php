@@ -21,17 +21,21 @@ class Guestbook extends \Ilch\Mapper
      */
     public function getEntries($where = array(), $pagination = null)
     {
-        $select = $this->db()->selectArray('*')
+        $select = $this->db()->select('*')
             ->from('gbook')
             ->where($where)
             ->order(array('id' => 'DESC'));
         
         if ($pagination !== null) {
-            $select->limit($pagination->getLimit());
-            $pagination->setRows($select->getCount());
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
         }
 
-        $entryArray = $select->execute();
+        $entryArray = $result->fetchRows();
         $entry = array();
 
         foreach ($entryArray as $entries) {
@@ -44,7 +48,6 @@ class Guestbook extends \Ilch\Mapper
             $entryModel->setName($entries['name']);
             $entryModel->setFree($entries['setfree']);
             $entry[] = $entryModel;
-
         }
 
         return $entry;
@@ -69,12 +72,12 @@ class Guestbook extends \Ilch\Mapper
 
         if ($model->getId()) {
             $this->db()->update('gbook')
-                ->fields($fields)
+                ->values($fields)
                 ->where(array('id' => $model->getId()))
                 ->execute();
         } else {
             $this->db()->insert('gbook')
-                ->fields($fields)
+                ->values($fields)
                 ->execute();
         }
     }

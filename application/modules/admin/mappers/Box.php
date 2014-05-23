@@ -28,7 +28,7 @@ class Box extends \Ilch\Mapper
     {
         $sql = 'SELECT bc.title, b.id FROM [prefix]_boxes as b
                 LEFT JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
-                    AND bc.locale = "'.$this->db()->escape($locale).'"
+                    AND bc.locale = '.$this->db()->escape($locale).'
                 GROUP BY b.id';
         $boxArray = $this->db()->queryArray($sql);
 
@@ -60,7 +60,7 @@ class Box extends \Ilch\Mapper
     {
         $sql = 'SELECT * FROM [prefix]_boxes as b
                 INNER JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
-                WHERE b.`id` = "'.(int) $id.'" AND bc.locale = "'.$this->db()->escape($locale).'"';
+                WHERE b.`id` = "'.(int) $id.'" AND bc.locale = '.$this->db()->escape($locale);
         $boxRow = $this->db()->queryRow($sql);
 
         if (empty($boxRow)) {
@@ -86,22 +86,22 @@ class Box extends \Ilch\Mapper
         if ($box->getId()) {
             if ($this->getBoxByIdLocale($box->getId(), $box->getLocale())) {
                 $this->db()->update('boxes_content')
-                    ->fields(array('title' => $box->getTitle(), 'content' => $box->getContent()))
+                    ->values(array('title' => $box->getTitle(), 'content' => $box->getContent()))
                     ->where(array('box_id' => $box->getId(), 'locale' => $box->getLocale()))
                     ->execute();
             } else {
                 $this->db()->insert('boxes_content')
-                    ->fields(array('box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                    ->values(array('box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
                     ->execute();
             }
         } else {
             $date = new \Ilch\Date();
             $boxId = $this->db()->insert('boxes')
-                ->fields(array('date_created' => $date->toDb()))
+                ->values(array('date_created' => $date->toDb()))
                 ->execute();
 
             $this->db()->insert('boxes_content')
-                ->fields(array('box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                ->values(array('box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
                 ->execute();
         }
     }

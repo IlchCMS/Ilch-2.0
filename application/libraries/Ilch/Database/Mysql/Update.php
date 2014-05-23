@@ -5,38 +5,109 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
+
+use \Ilch\Database\Mysql as DB;
 
 class Update extends QueryBuilder
 {
+    /** @var  array */
+    protected $values;
+
     /**
-     * @var string
+     * @param \Ilch\Database\Mysql $db
+     * @param string|null $table table without prefix
+     * @param array|null $values values as [name => value]
+     * @param array|null $where conditions @see QueryBuilder::where()
      */
-    protected $type = 'update';
+    public function __construct(DB $db, $table = null, $values = null, $where = null)
+    {
+        parent::__construct($db);
+
+        if (isset($values)) {
+            $this->values($values);
+        }
+        if (isset($table)) {
+            $this->table($table);
+        }
+        if (isset($where)) {
+            $this->where($where);
+        }
+    }
+
+    /**
+     * @param array $values
+     * @return Update
+     */
+    public function values(array $values)
+    {
+        $this->values = $values;
+        return $this;
+    }
+
+    /**
+     * @param $table
+     * @return Update
+     */
+    public function table($table)
+    {
+        $this->table = (string) $table;
+        return $this;
+    }
+
+    /**
+     * @todo remove after updating modules
+     * @deprecated
+     * @param array $values
+     * @return Update
+     */
+    public function fields(array $values)
+    {
+        return $this->values($values);
+    }
+
+    /**
+     * Execute the generated query
+     *
+     * @return integer number of changed rows
+     */
+    public function execute()
+    {
+        $this->db->query($this->generateSql());
+        return $this->db->getAffectedRows();
+    }
 
     /**
      * Gets delete query builder sql.
      *
      * @return string
+     * @throws \RuntimeException
      */
     public function generateSql()
     {
-        $sql = 'UPDATE `[prefix]_'.$this->table . '` SET ';
-        $up = array();
+        if (!isset($this->table)) {
+            throw new \RuntimeException('table must be set');
+        }
 
-        foreach ($this->fields as $key => $value) {
-            if ($value === null) {
-                continue;
+        $sql = 'UPDATE ' . $this->db->quote('[prefix]_'.$this->table) . ' SET ';
+        $up = [];
+
+        if (!empty($this->values)) {
+            foreach ($this->values as $fieldName => $value) {
+                if ($value === null) { //todo: really no null values to db??
+                    continue;
+                }
+
+                $up[] = $this->db->quote($fieldName) . ' = ' . $this->db->escape($value);
             }
+        }
 
-            $up[] = '`' . $key . '` = "' . $this->db->escape($value) . '"';
+        if (empty($up)) {
+            throw new \RuntimeException('no valid values for update');
         }
 
         $sql .= implode(',', $up);
 
-        if ($this->where != null) {
-            $sql .= 'WHERE 1 ' . $this->getWhereSql($this->where);
-        }
+        $sql .= $this->generateWhereSql();
 
         return $sql;
     }

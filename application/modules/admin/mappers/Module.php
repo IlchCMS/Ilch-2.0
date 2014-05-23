@@ -24,9 +24,10 @@ class Module extends \Ilch\Mapper
     public function getModules()
     {
         $modules = array();
-        $modulesRows = $this->db()->selectArray('*')
+        $modulesRows = $this->db()->select('*')
             ->from('modules')
-            ->execute();
+            ->execute()
+            ->fetchRows();
 
         foreach ($modulesRows as $moduleRow) {
             $moduleModel = new \Admin\Models\Module();
@@ -34,10 +35,11 @@ class Module extends \Ilch\Mapper
             $moduleModel->setAuthor($moduleRow['author']);
             $moduleModel->setSystemModule($moduleRow['system']);
             $moduleModel->setIconSmall($moduleRow['icon_small']);
-            $contentRows = $this->db()->selectArray('*')
+            $contentRows = $this->db()->select('*')
                 ->from('modules_content')
                 ->where(array('key' => $moduleRow['key']))
-                ->execute();
+                ->execute()
+                ->fetchRows();
 
             foreach ($contentRows as $contentRow) {
                 $moduleModel->addContent($contentRow['locale'], array('name' => $contentRow['name'], 'description' => $contentRow['description']));
@@ -56,13 +58,13 @@ class Module extends \Ilch\Mapper
     public function save(\Admin\Models\Module $module)
     {
         $moduleId = $this->db()->insert('modules')
-            ->fields(array('key' => $module->getKey(), 'system' => $module->getSystemModule(),
+            ->values(array('key' => $module->getKey(), 'system' => $module->getSystemModule(),
                 'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor()))
             ->execute();
 
         foreach ($module->getContent() as $key => $value) {
             $this->db()->insert('modules_content')
-                ->fields(array('key' => $module->getKey(), 'locale' => $key, 'name' => $value['name'], 'description' => $value['description']))
+                ->values(array('key' => $module->getKey(), 'locale' => $key, 'name' => $value['name'], 'description' => $value['description']))
                 ->execute();
         }
 

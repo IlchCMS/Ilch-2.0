@@ -5,176 +5,192 @@
  */
 
 namespace Ilch\Database\Mysql;
-defined('ACCESS') or die('no direct access');
 
-class QueryBuilder
+use \Ilch\Database\Mysql as DB;
+
+abstract class QueryBuilder
 {
     /**
-     * @var string
+     * @var \Ilch\Database\Mysql
      */
-    protected $type = '';
+    protected $db;
 
     /**
-     * @var array|null
+     * @var string|array
      */
-    protected $limit;
-    
+    protected $table;
+
     /**
      * @var array|null
      */
     protected $where;
 
     /**
-     * @var array|null
-     */
-    protected $fields;
-
-    /**
      * Injects the database adapter.
      *
-     * @param Ilch\Database\Mysql $db
+     * @param \Ilch\Database\Mysql $db
      */
-    public function __construct($db)
+    public function __construct(DB $db)
     {
         $this->db = $db;
     }
 
     /**
-     * Adds table to query builder.
-     *
-     * @param string $table
-     * @return \Ilch\Database\Mysql\QueryBuilder
-     */
-    public function from($table)
-    {
-        $this->table = $table;
-
-        return $this;
-    }
-
-    /**
-     * Adds fields to query builder.
-     *
-     * @param array $fields
-     * @return \Ilch\Database\Mysql\QueryBuilder
-     */
-    public function fields($fields)
-    {
-        $this->fields = $fields;
-
-        return $this;
-    }
-
-    /**
      * Adds where to query builder.
      *
-     * @param array $where
-     * @return \Ilch\Database\Mysql\QueryBuilder
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $where
+     * @return $this|\Ilch\Database\Mysql\QueryBuilder
+     * @throws \InvalidArgumentException
      */
     public function where($where)
     {
+        if (is_array($where)) {
+            $where = $this->createCompositeExpression($where);
+        }
+        if (!$where instanceof Expression\CompositePart) {
+            throw new \InvalidArgumentException('array or Expression\CompositePart expected');
+        }
         $this->where = $where;
 
         return $this;
     }
-    
-    /**
-     * Adds order to query builder.
-     *
-     * @param array $order
-     * @return \Ilch\Database\Mysql\QueryBuilder
-     */
-    public function order($order)
-    {
-        $this->order = $order;
 
-        return $this;
-    }
-    
     /**
-     * Adds limit to query builder.
-     *
-     * @param array $limit
-     * @return \Ilch\Database\Mysql\QueryBuilder
+     * Creates Expression\OrX for the conditions in the array
+     * @param array $conditions
+     * @return Expression\OrX
      */
-    public function limit($limit)
+    public function orX(array $conditions)
     {
-        $this->limit = $limit;
-
-        return $this;
-    }
-    
-    /**
-     * Adds cell to query builder.
-     *
-     * @param string $cell
-     * @return \Ilch\Database\Mysql\QueryBuilder
-     */
-    public function cell($cell)
-    {
-        $this->cell = $cell;
-
-        return $this;
+        return $this->createCompositeExpression($conditions, 'or');
     }
 
     /**
-     * @return integer
+     * Creates Expression\AndX for the conditions in the array
+     * @param array $conditions
+     * @return Expression\AndX
      */
-    public function getCount()
+    public function andX(array $conditions)
     {
-        return $this->db->queryCell($this->generateCountSql());
+        return $this->createCompositeExpression($conditions);
     }
 
     /**
-     * Execute the query builder.
+     * Creates Expression\Comparison if multiple conditions for one field are needed
      *
-     * @return mixed
+     * Example:
+     * ```php
+     *    $qb->comp('field', 5);      // field = 5
+     *    $qb->comp('field >', 6);    // field > 6
+     *    $qb->comp('field', [5, 6]); // field IN (5, 6)
+     * ```
+     *
+     * @param string $fieldAndOperator field optionally followed by the operator
+     * @param mixed $value
+     * @return Expression\Comparison
      */
-    public function execute()
+    public function comp($fieldAndOperator, $value)
     {
-        if ($this->type == 'insert') {
-            $this->db->query($this->generateSql());
-            return $this->db->getLink()->insert_id;
-        } elseif ($this->type == 'selectCell') {
-            return $this->db->queryCell($this->generateSql());
-        } elseif ($this->type == 'selectRow') {
-            return $this->db->queryRow($this->generateSql());
-        } elseif ($this->type == 'selectArray') {
-            return $this->db->queryArray($this->generateSql());
-        } else {
-            return $this->db->query($this->generateSql());        
-        }
+        return $this->createComparisonExpression($fieldAndOperator, $value);
     }
 
     /**
-     * Create the where part for the given array.
+     * Content that wont be escaped when inserted into a query (builder)
+     * @param $content
+     * @return Expression\Expression
+     */
+    public function expr($content)
+    {
+        return new Expression\Expression($content);
+    }
+
+    /**
+     * Execute the generated query
      *
-     * @param  array $where
+     * @return \Ilch\Database\Mysql\Result|int
+     */
+    abstract public function execute();
+
+    /**
+     * Generate the SQL executed by execute()
+     *
      * @return string
      */
-    protected function getWhereSql($where)
+    abstract public function generateSql();
+
+    /**
+     * Generate WHERE part for SQL
+     *
+     * @return string
+     */
+    protected function generateWhereSql()
     {
         $sql = '';
-
-        foreach ($where as $key => $value) {
-            $sql .= 'AND `' . $key . '` = "' . $this->db->escape($value) . '" ';
+        if (isset($this->where)) {
+            $where = (string) $this->where;
+            if (!empty($where)) {
+                $sql = ' WHERE ' . $where;
+            }
         }
-
         return $sql;
     }
-    
+
     /**
-     * Create the field part for the given array.
+     * Creates Expression for Where
      *
-     * @param  array  $fields
-     * @return string
+     * @param array $where parts as CompositePart or array
+     * @param string $type 'and' or 'or'
+     * @return Expression\Composite
      */
-    protected function getFieldsSql($fields)
+    protected function createCompositeExpression(array $where, $type = 'and')
     {
-        if (!is_array($fields) && ($fields === '*' || strpos($fields, '(') !== false)) {
-            return $fields;
+        $parts = [];
+        foreach ($where as $key => $value) {
+            if ($value instanceof Expression\CompositePart) {
+                $parts[] = $value;
+            } else {
+                $parts[] = $this->createComparisonExpression($key, $value);
+            }
+        }
+        $compositeClass = __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X';
+        return new $compositeClass($parts);
+    }
+
+    /**
+     * Create Expression for Comparison
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return Expression\Comparison
+     * @throws \InvalidArgumentException
+     */
+    protected function createComparisonExpression($key, $value)
+    {
+        $keyParts = explode(' ', $key);
+        $left = $this->db->quote(array_shift($keyParts));
+        if (!empty($keyParts)) {
+            $operator = implode(' ', $keyParts);
+        } else {
+            $operator = '=';
         }
 
-        return '`'.implode('`,`', (array) $fields).'`';
+        if (is_array($value)) {
+            if ($operator === '=') {
+                $operator = 'IN';
+            } elseif (in_array($operator, ['!=', '<>'])) {
+                $operator = 'NOT IN';
+            }
+            if (!in_array($operator, ['IN', 'NOT IN'])) {
+                throw new \InvalidArgumentException('invalid operator for multiple value comparison');
+            }
+            $right = '(' . implode(',', $this->db->escapeArray($value)) . ')';
+        } else {
+            if (!in_array($operator, ['=', '<=', '=>', '<', '>', '!=', '<>'])) {
+                throw new \InvalidArgumentException('invalid operator for single value comparison');
+            }
+            $right = $this->db->escape($value);
+        }
+
+        return new Expression\Comparison($left, $operator, $right);
     }
 }

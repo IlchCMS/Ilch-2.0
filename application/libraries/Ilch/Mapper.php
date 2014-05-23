@@ -5,14 +5,13 @@
  */
 
 namespace Ilch;
-defined('ACCESS') or die('no direct access');
 
 class Mapper
 {
     /**
      * Hold the database adapter.
      *
-     * @var Ilch_Database_*
+     * @var \Ilch\Database\Mysql
      */
     private $db;
 
@@ -27,7 +26,7 @@ class Mapper
     /**
      * Gets the database adapter.
      *
-     * @return Ilch_Database_*
+     * @return \Ilch\Database\Mysql
      */
     public function getDatabase()
     {
@@ -37,7 +36,7 @@ class Mapper
     /**
      * Shortcut for getDatabse.
      *
-     * @return Ilch_Database_*
+     * @return \Ilch\Database\Mysql
      */
     public function db()
     {
@@ -47,7 +46,7 @@ class Mapper
     /**
      * Sets the database adapter.
      *
-     * @param Ilch_Database_*
+     * @param \Ilch\Database\Mysql
      */
     public function setDatabase($db)
     {
