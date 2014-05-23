@@ -28,7 +28,7 @@ class Article extends \Ilch\Mapper
     {
         $sql = 'SELECT pc.*, p.* FROM [prefix]_articles as p
                 LEFT JOIN [prefix]_articles_content as pc ON p.id = pc.article_id
-                    AND pc.locale = '.$this->db()->escape($locale).'
+                    AND pc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY p.id';
         $articleArray = $this->db()->queryArray($sql);
 
@@ -65,7 +65,7 @@ class Article extends \Ilch\Mapper
         $sql = 'SELECT `a`.`id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`
                 FROM `[prefix]_articles` as `a`
                 LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
-                    AND `ac`.`locale` = '.$this->db()->escape($locale).'
+                    AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
                 GROUP BY `a`.`id`
                 ORDER BY `a`.`date_created` ASC';
         
@@ -104,7 +104,7 @@ class Article extends \Ilch\Mapper
     {
             $sql = 'SELECT * FROM [prefix]_articles as p
                     INNER JOIN [prefix]_articles_content as pc ON p.id = pc.article_id
-                    WHERE p.`id` = "'.(int) $id.'" AND pc.locale = '.$this->db()->escape($locale);
+                    WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
         $articleRow = $this->db()->queryRow($sql);
 
         if (empty($articleRow)) {

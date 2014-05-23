@@ -89,7 +89,7 @@ class Media extends \Ilch\Mapper
     {
         $mediaRow = $this->db()->select('*')
             ->from('media')
-            ->where(array('id' => $this->db()->escape($id)))
+            ->where(array('id' => $id))
             ->execute()
             ->fetchAssoc();
         if (file_exists($mediaRow['url'])) {

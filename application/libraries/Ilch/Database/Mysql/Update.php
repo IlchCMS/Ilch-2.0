@@ -97,7 +97,7 @@ class Update extends QueryBuilder
                     continue;
                 }
 
-                $up[] = $this->db->quote($fieldName) . ' = ' . $this->db->escape($value);
+                $up[] = $this->db->quote($fieldName) . ' = "' . $this->db->escape($value).'"';
             }
         }
 

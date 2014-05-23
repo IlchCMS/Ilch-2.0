@@ -33,7 +33,7 @@ class Category extends \Ilch\Mapper
                 WHERE 1 ';
 
         foreach ($where as $key => $value) {
-            $sql .= ' AND lc.`'.$key.'` = '.$this->db()->escape($value);
+            $sql .= ' AND lc.`'.$key.'` = "'.$this->db()->escape($value).'"';
         }
 
         $sql .= 'GROUP BY lc.id';

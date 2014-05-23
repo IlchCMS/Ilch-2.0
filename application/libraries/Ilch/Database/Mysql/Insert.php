@@ -105,7 +105,7 @@ class Insert extends QueryBuilder
         $sql .= implode(',', $sqlFields);
         $sql .= ') VALUES (';
 
-        $sql .= implode(',', $sqlValues) . ')';
+        $sql .= '"'.implode('", "', $sqlValues) . '")';
 
         return $sql;
     }

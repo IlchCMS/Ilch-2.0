@@ -196,12 +196,12 @@ abstract class QueryBuilder
                 if (!in_array($operator, ['IN', 'NOT IN'])) {
                     throw new \InvalidArgumentException('invalid operator for multiple value comparison');
                 }
-                $right = '(' . implode(',', $this->db->escapeArray($value)) . ')';
+                $right = '("' . implode('", "', $this->db->escapeArray($value)) . '")';
             } else {
                 if (!in_array($operator, $singleComparisonOperators)) {
                     throw new \InvalidArgumentException('invalid operator for single value comparison');
                 }
-                $right = $this->db->escape($value);
+                $right = '"'.$this->db->escape($value).'"';
             }
         }
 

@@ -348,13 +348,14 @@ class Mysql
      * Escape the given value for a sql query.
      *
      * @param  string $value
-     * @param  boolean $andQuote [default: true] add quotes around
+     * @param  boolean $andQuote [default: false] add quotes around
      * @return string
      */
-    public function escape($value, $andQuote = true)
+    public function escape($value, $andQuote = false)
     {
         $escaped = mysqli_real_escape_string($this->conn, $value);
-        if (true === $andQuote) {
+
+        if ($andQuote == true) {
             $escaped = '"' . $escaped . '"';
         }
         return $escaped;

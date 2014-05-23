@@ -91,7 +91,7 @@ class Partner extends \Ilch\Mapper
     {
         $partnerRow = $this->db()->select('*')
             ->from('partners')
-            ->where(array('id' => $this->db()->escape($id)))
+            ->where(array('id' => $id))
             ->execute()
             ->fetchAssoc();
 
