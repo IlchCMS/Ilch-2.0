@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class PHPUnit_Ilch_DatabaseTestCase.
+ * Holds class \PHPUnit\Ilch\DatabaseTestCase.
  *
  * @package ilch_phpunit
  */
@@ -9,6 +9,7 @@ namespace PHPUnit\Ilch;
 
 use Ilch\Registry as Registry;
 use Ilch\Database\Factory as Factory;
+use Ilch\Config\File as Config;
 
 /**
  * Base class for database test cases for Ilch.
@@ -68,11 +69,14 @@ class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
 
         if (!isset($this->db)) {
             Registry::remove('db');
-            $this->db = $dbFactory->getInstanceByConfig(Registry::get('config'));
+            $config = $this->getConfig();
+            $this->db = $dbFactory->getInstanceByConfig($config);
             Registry::set('db', $this->db);
         }
 
+
         if ($this->db === false) {
+
             $this->markTestIncomplete('Necessary DB configuration is not set.');
             parent::setUp();
             return;
@@ -102,7 +106,7 @@ class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
     final public function getConnection()
     {
         $dbData = array();
-        $config = Registry::get('config');
+        $config = $this->getConfig();
 
         foreach (array('dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $configKey) {
             /*
@@ -113,7 +117,7 @@ class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
             if ($config->get($configKey) !== null) {
                 $dbData[$configKey] = $config->get($configKey);
             } else {
-                $this->markTestIncomplete('Necessary DB configuration is not set.');
+                $this->markTestSkipped('Necessary DB configuration is not set.');
             }
         }
 
@@ -148,5 +152,21 @@ class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
     protected function getSchemaSQLQueries()
     {
         return file_get_contents(__DIR__ . '/_files/db_schema.sql');
+    }
+
+    /**
+     * Returns config or marks test as skipped if config could not be loaded
+     *
+     * @return Config|null
+     */
+    protected function getConfig()
+    {
+        $config = Registry::get('config');
+
+        if (!$config instanceof Config) {
+            $this->markTestSkipped('Necessary DB configuration is not set.');
+        }
+
+        return $config;
     }
 }

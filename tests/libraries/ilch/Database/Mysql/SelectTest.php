@@ -8,6 +8,7 @@
 
 namespace Ilch\Database\Mysql;
 
+use Ilch\Database\Mysql\Expression\Expression;
 
 class SelectTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,126 +42,172 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         $this->out->generateSql();
     }
 
-    public function testGenerateSqlWithoutSettingFields()
+    /**
+     * @dataProvider dpForTable
+     *
+     * @param string $table
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForTable($table, $expectedSqlPart)
     {
-        $this->out->from('Test');
+        $this->out->from($table);
 
-        $expected = 'SELECT * FROM `[prefix]_Test`';
+        $expected = 'SELECT * FROM ' . $expectedSqlPart;
 
         $this->assertEquals($expected, $this->out->generateSql());
     }
 
-    public function testGenerateSqlWithSingleField()
+    /**
+     * @return array
+     */
+    public function dpForTable()
+    {
+        return [
+            'simple tablename' => [
+                'table' => 'Test',
+                'expectedSqlPart' => '`[prefix]_Test`'
+            ],
+            'table with alias' => [
+                'table' => ['alias' => 'Test'],
+                'expectedSqlPart' => '`[prefix]_Test` AS `alias`'
+            ],
+            'table with invalid alias' => [
+                'table' => [1 => 'Test'],
+                'expectedSqlPart' => '`[prefix]_Test`'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider dpForFields
+     *
+     * @param string|array $fields
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForFields($fields, $expectedSqlPart)
     {
         $this->out->from('Test')
-            ->fields('field');
+            ->fields($fields);
 
-        $expected = 'SELECT `field` FROM `[prefix]_Test`';
+        $expected = 'SELECT ' . $expectedSqlPart . ' FROM `[prefix]_Test`';
 
         $this->assertEquals($expected, $this->out->generateSql());
     }
 
-    public function testGenerateSqlWithMultipleFields()
+    /**
+     * @return array
+     */
+    public function dpForFields()
     {
-        $this->out->from('Test')
-            ->fields(['field1', 'field2']);
-
-        $expected = 'SELECT `field1`,`field2` FROM `[prefix]_Test`';
-
-        $this->assertEquals($expected, $this->out->generateSql());
+        return [
+            'string field' => [
+                'fields'          => 'field',
+                'expectedSqlPart' => '`field`'
+            ],
+            'array multiple fields' => [
+                'fields'          => ['field1', 'field2'],
+                'expectedSqlPart' => '`field1`,`field2`'
+            ],
+            'array multiple fields with alias' => [
+                'fields'          => ['name' => 'field1', 'super' => 'field2'],
+                'expectedSqlPart' => '`field1` AS `name`,`field2` AS `super`'
+            ],
+            'string expression' => [
+                'fields'          => 'COUNT(*)',
+                'expectedSqlPart' => 'COUNT(*)'
+            ],
+            'object expression' => [
+                'fields'          =>  new Expression('SUM(`field`)'),
+                'expectedSqlPart' => 'SUM(`field`)'
+            ],
+            'multiple expressions with alias' => [
+                'fields' => [
+                    'fieldSum' => new Expression('SUM(`field`)'),
+                    'count' => new Expression('COUNT(*)')
+                ],
+                'expectedSqlPart' => 'SUM(`field`) AS `fieldSum`,COUNT(*) AS `count`'
+            ]
+        ];
     }
 
-    public function testGenerateSqlWithMultipleFieldsAndAlias()
+    /**
+     * @dataProvider dpForWhere
+     *
+     * @param array|callable $where
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForWhere($where, $expectedSqlPart)
     {
+        if (is_callable($where)) {
+            $where = $where($this->out);
+        }
+
         $this->out->from('Test')
-            ->fields(['name' => 'field1', 'super' => 'field2']);
-
-        $expected = 'SELECT `field1` AS `name`,`field2` AS `super` FROM `[prefix]_Test`';
-
-        $this->assertEquals($expected, $this->out->generateSql());
-    }
-
-    public function testGenerateSqlWithFieldStringExpression()
-    {
-        $this->out->from('Test')
-            ->fields('COUNT(*)');
-
-        $expected = 'SELECT COUNT(*) FROM `[prefix]_Test`';
-
-        $this->assertEquals($expected, $this->out->generateSql());
-    }
-
-    public function testGenerateSqlWithFieldExpression()
-    {
-        $this->out->from('Test')
-            ->fields($this->out->expr('SUM(`field`)'));
-
-        $expected = 'SELECT SUM(`field`) FROM `[prefix]_Test`';
-
-        $this->assertEquals($expected, $this->out->generateSql());
-    }
-
-    public function testGenerateSqlWithMultipleFieldExpressions()
-    {
-        $this->out->from('Test')
-            ->fields([
-                'fieldSum' => $this->out->expr('SUM(`field`)'),
-                'count' => $this->out->expr('COUNT(*)')
-            ]);
-
-        $expected = 'SELECT SUM(`field`) AS `fieldSum`,COUNT(*) AS `count` FROM `[prefix]_Test`';
-
-        $this->assertEquals($expected, $this->out->generateSql());
-    }
-
-    public function testGenerateSqlForWhereWithSingleValueArray()
-    {
-        $this->out->from('Test')
-            ->where(['field1' => 5]);
+            ->where($where);
 
         $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' WHERE `field1` = "5"';
+            . ' WHERE ' . $expectedSqlPart;
 
         $this->assertEquals($expected, $this->out->generateSql());
     }
 
-    public function testGenerateSqlForWhereWithArray()
+    /**
+     * Data provider for testGenerateSqlForWhere
+     * @return array
+     */
+    public function dpForWhere()
     {
-        $this->out->from('Test')
-            ->where(['field1' => 5, 'field2' => 'super']);
-
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' WHERE (`field1` = "5" AND `field2` = "super")';
-
-        $this->assertEquals($expected, $this->out->generateSql());
-    }
-
-    public function testGenerateSqlForWhereWithOrExpression()
-    {
-        $this->out->from('Test')
-            ->where($this->out->orX(['field1' => 5, 'field2' => 'super']));
-
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' WHERE (`field1` = "5" OR `field2` = "super")';
-
-        $this->assertEquals($expected, $this->out->generateSql());
-    }
-
-    public function testGenerateSqlForWhereWithMultipleCompositeExpressions()
-    {
-        $this->out->from('Test')
-            ->where(([
-                'field1' => 5,
-                $this->out->orX([
-                    $this->out->comp('field2', 'super'),
-                    $this->out->comp('field2', 'geil')
-                ])
-            ]));
-
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' WHERE (`field1` = "5" AND (`field2` = "super" OR `field2` = "geil"))';
-
-        $this->assertEquals($expected, $this->out->generateSql());
+        return [
+            'simple condition'  => [
+                'where'           => ['field1' => 5],
+                'expectedSqlPart' => '`field1` = "5"'
+            ],
+            'and conditions'    => [
+                'where'           => ['field1' => 5, 'field2' => 'super'],
+                'expectedSqlPart' => '(`field1` = "5" AND `field2` = "super")'
+            ],
+            'or conditions'     => [
+                'where'           => function (Select $out) {
+                    return $out->orX(['field1' => 5, 'field2' => 'super']);
+                },
+                'expectedSqlPart' => '(`field1` = "5" OR `field2` = "super")'
+            ],
+            'complex condition' => [
+                'where'           => function (Select $out) {
+                    return [
+                        'field1' => 5,
+                        $out->orX([$out->comp('field2', 'super'), $out->comp('field2', 'geil')])
+                    ];
+                },
+                'expectedSqlPart' => '(`field1` = "5" AND (`field2` = "super" OR `field2` = "geil"))'
+            ],
+            //array - positive
+            'in array'          => [
+                'where'           => ['field' => [5, 6]],
+                'expectedSqlPart' => '`field` IN ("5","6")'
+            ],
+            'in array - ='      => [
+                'where'           => ['field =' => [5, 6]],
+                'expectedSqlPart' => '`field` IN ("5","6")'
+            ],
+            'in array - IN'     => [
+                'where'           => ['field IN' => [5, 6]],
+                'expectedSqlPart' => '`field` IN ("5","6")'
+            ],
+            //array - negative
+            'not in array - !='     => [
+                'where'           => ['field !=' => [5, 6]],
+                'expectedSqlPart' => '`field` NOT IN ("5","6")'
+            ],
+            'not in array - <>'     => [
+                'where'           => ['field <>' => [5, 6]],
+                'expectedSqlPart' => '`field` NOT IN ("5","6")'
+            ],
+            'not in array - NOT IN' => [
+                'where'           => ['field NOT IN' => [5, 6]],
+                'expectedSqlPart' => '`field` NOT IN ("5","6")'
+            ],
+        ];
     }
 
     /**
@@ -188,59 +235,6 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         return [['='], ['<='], ['=>'], ['<'], ['>'], ['!='], ['<>']];
     }
 
-    /**
-     * @dataProvider dpForMultipleValues
-     *
-     * @param array $where
-     * @param string $expectedCondition
-     */
-    public function testGenerateSqlForWhereWithMultipleValue(array $where, $expectedCondition)
-    {
-        $this->out->from('Test')
-            ->where($where);
-
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' WHERE ' . $expectedCondition;
-
-        $this->assertEquals($expected, $this->out->generateSql());
-    }
-
-    /**
-     * Data provider for testGenerateSqlForWhereWithMultipleValue
-     * @return array
-     */
-    public function dpForMultipleValues()
-    {
-        return [
-            //positive
-            [
-                'where' => ['field' => [5, 6]],
-                'expectedCondition' => '`field` IN ("5","6")'
-            ],
-            [
-                'where' => ['field =' => [5, 6]],
-                'expectedCondition' => '`field` IN ("5","6")'
-            ],
-            [
-                'where' => ['field IN' => [5, 6]],
-                'expectedCondition' => '`field` IN ("5","6")'
-            ],
-            // negative
-            [
-                'where' => ['field !=' => [5, 6]],
-                'expectedCondition' => '`field` NOT IN ("5","6")'
-            ],
-            [
-                'where' => ['field <>' => [5, 6]],
-                'expectedCondition' => '`field` NOT IN ("5","6")'
-            ],
-            [
-                'where' => ['field NOT IN' => [5, 6]],
-                'expectedCondition' => '`field` NOT IN ("5","6")'
-            ],
-        ];
-    }
-
     public function testGenerateSqlForOrderBy()
     {
         $this->out->from('Test')
@@ -252,26 +246,38 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->out->generateSql());
     }
 
-    public function testGenerateSqlForLimitWithInteger()
+    /**
+     * @dataProvider dpForLimit
+     *
+     * @param integer|array $limit
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForLimitWithInteger($limit, $expectedSqlPart)
     {
         $this->out->from('Test')
-            ->limit(5);
+            ->limit($limit);
 
         $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' LIMIT 5';
+            . ' LIMIT ' . $expectedSqlPart;
 
         $this->assertEquals($expected, $this->out->generateSql());
     }
 
-    public function testGenerateSqlForLimitWithArray()
+    /**
+     * @return array
+     */
+    public function dpForLimit()
     {
-        $this->out->from('Test')
-            ->limit([5, 10]);
-
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' LIMIT 5, 10';
-
-        $this->assertEquals($expected, $this->out->generateSql());
+        return [
+            'with integer'  => [
+                'limit'           => 5,
+                'expectedSqlPart' => '5'
+            ],
+            'with array'    => [
+                'where'           => [5, 10],
+                'expectedSqlPart' => '5, 10'
+            ]
+        ];
     }
 
     public function testGenerateSqlForLimitWithOffset()
@@ -318,6 +324,78 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             //invalid pages
             ['page' => 0, 'expectedOffset' => 0],
             ['page' => -3, 'expectedOffset' => 0],
+        ];
+    }
+
+    /**
+     * @dataProvider dpForTestGenerateSqlWithGroup
+     *
+     * @param array $groupByFields
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlWithGroup($groupByFields, $expectedSqlPart)
+    {
+        $this->out->from('Test')
+            ->group($groupByFields);
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' GROUP BY ' . $expectedSqlPart;
+
+        $this->assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * @return array
+     */
+    public function dpForTestGenerateSqlWithGroup()
+    {
+        return [
+            'one field' => [
+                'groupByFields' => ['field1'],
+                'expectedSqlPart' => '`field1`'
+            ],
+            'multiple fields with table' => [
+                'groupByFields' => ['field1', 'table.field2'],
+                'expectedSqlPart' => '`field1`,`table`.`field2`'
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dpForJoinConditions
+     *
+     * @param array $conditions
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForJoinConditions($conditions, $expectedSqlPart)
+    {
+        $this->out->from(['a' => 'Test']);
+        $this->out->join(['b' => 'Table2'], $conditions);
+
+        $expectedSql = 'SELECT * FROM `[prefix]_Test` AS `a`'
+            . ' INNER JOIN `[prefix]_Table2` AS `b` ON ' . $expectedSqlPart;
+
+        $this->assertEquals($expectedSql, $this->out->generateSql());
+    }
+
+    /**
+     * @return array
+     */
+    public function dpForJoinConditions()
+    {
+        return [
+            'single field comparison' => [
+                'conditions' => 'a.field1 = b.field2',
+                'expectedSqlPart' => '`a`.`field1` = `b`.`field2`'
+            ],
+            'single value comparison' => [
+                'conditions' => ['b.field2 >' => '3'],
+                'expectedSqlPart' => '`b`.`field2` > "3"'
+            ],
+            'complex comparison' => [
+                'conditions' => ['a.field1 != b.field3', 'b.field2 >' => '3'],
+                'expectedSqlPart' => '(`a`.`field1` != `b`.`field3` AND `b`.`field2` > "3")'
+            ]
         ];
     }
 }

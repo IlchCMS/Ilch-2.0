@@ -341,7 +341,7 @@ class Mysql
         if (count($parts) > 2) {
             throw new \InvalidArgumentException('Invalid field expression: ' . $field);
         }
-        return '`' . $field[0] . '`.`' . $field[1] . '`';
+        return '`' . $parts[0] . '`.`' . $parts[1] . '`';
     }
 
     /**

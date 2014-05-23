@@ -43,9 +43,15 @@ class Join
     /**
      * @param string|array $table
      * @param string $type
+     * @throws \InvalidArgumentException
      */
-    function __construct($table, $type = self::INNER)
+    function __construct($table, $type)
     {
+        $allowedTypes = [self::INNER, self::LEFT, self::RIGHT];
+        if (!in_array($type, $allowedTypes)) {
+            throw new \InvalidArgumentException('invalid type, allowed: ' . implode(', ', $allowedTypes));
+        }
+
         $this->table = $table;
         $this->type = $type;
     }
@@ -88,7 +94,7 @@ class Join
      * @param array $conditions
      * @return Join
      */
-    public function setConditions($conditions)
+    public function setConditions(array $conditions)
     {
         $this->conditions = $conditions;
         return $this;

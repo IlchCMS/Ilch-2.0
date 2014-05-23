@@ -159,36 +159,50 @@ abstract class QueryBuilder
     /**
      * Create Expression for Comparison
      *
-     * @param string $key
+     * @param string|integer $key
      * @param mixed $value
      * @return Expression\Comparison
      * @throws \InvalidArgumentException
      */
     protected function createComparisonExpression($key, $value)
     {
-        $keyParts = explode(' ', $key);
-        $left = $this->db->quote(array_shift($keyParts));
-        if (!empty($keyParts)) {
-            $operator = implode(' ', $keyParts);
-        } else {
-            $operator = '=';
-        }
+        $singleComparisonOperators =  ['=', '<=', '=>', '<', '>', '!=', '<>'];
 
-        if (is_array($value)) {
-            if ($operator === '=') {
-                $operator = 'IN';
-            } elseif (in_array($operator, ['!=', '<>'])) {
-                $operator = 'NOT IN';
+        // expect comparison of 2 fields -> don't escape (f.e. join conditions)
+        if (is_int($key)) {
+            $conditionParts = explode(' ', $value);
+            if (count($conditionParts) != 3 || !in_array($conditionParts[1], $singleComparisonOperators)) {
+                throw new \InvalidArgumentException('Invalid comparison expression');
             }
-            if (!in_array($operator, ['IN', 'NOT IN'])) {
-                throw new \InvalidArgumentException('invalid operator for multiple value comparison');
-            }
-            $right = '(' . implode(',', $this->db->escapeArray($value)) . ')';
+            $left = $this->db->quote($conditionParts[0]);
+            $operator = $conditionParts[1];
+            $right = $this->db->quote($conditionParts[2]);
         } else {
-            if (!in_array($operator, ['=', '<=', '=>', '<', '>', '!=', '<>'])) {
-                throw new \InvalidArgumentException('invalid operator for single value comparison');
+            // string key -> comparison with value(s)
+            $keyParts = explode(' ', $key);
+            $left = $this->db->quote(array_shift($keyParts));
+            if (!empty($keyParts)) {
+                $operator = implode(' ', $keyParts);
+            } else {
+                $operator = '=';
             }
-            $right = $this->db->escape($value);
+
+            if (is_array($value)) {
+                if ($operator === '=') {
+                    $operator = 'IN';
+                } elseif (in_array($operator, ['!=', '<>'])) {
+                    $operator = 'NOT IN';
+                }
+                if (!in_array($operator, ['IN', 'NOT IN'])) {
+                    throw new \InvalidArgumentException('invalid operator for multiple value comparison');
+                }
+                $right = '(' . implode(',', $this->db->escapeArray($value)) . ')';
+            } else {
+                if (!in_array($operator, $singleComparisonOperators)) {
+                    throw new \InvalidArgumentException('invalid operator for single value comparison');
+                }
+                $right = $this->db->escape($value);
+            }
         }
 
         return new Expression\Comparison($left, $operator, $right);

@@ -141,12 +141,12 @@ class Select extends QueryBuilder
 
     /**
      * Sets page for query builder (offset will be used first)
-     * @param $page
+     * @param int $page
      * @return \Ilch\Database\Mysql\Select
      */
     public function page($page)
     {
-        $this->page = $page;
+        $this->page = (int) $page;
         return $this;
     }
 
@@ -161,10 +161,10 @@ class Select extends QueryBuilder
         if (is_array($limit)) {
             $limitCount = count($limit);
             if ($limitCount === 1) {
-                $this->limit = $limit[0];
+                $this->limit = (int) $limit[0];
             } elseif ($limitCount > 1) {
-                $this->offset = $limit[0];
-                $this->limit = $limit[1];
+                $this->offset = (int) $limit[0];
+                $this->limit = (int) $limit[1];
             }
         } else {
             $this->limit = (int) $limit;
@@ -176,12 +176,12 @@ class Select extends QueryBuilder
     /**
      * Sets offset for query builder
      *
-     * @param $offset
+     * @param int $offset
      * @return \Ilch\Database\Mysql\Select
      */
     public function offset($offset)
     {
-        $this->offset = $offset;
+        $this->offset = (int) $offset;
         return $this;
     }
 
@@ -191,10 +191,42 @@ class Select extends QueryBuilder
      * @param Expression\Join $join
      * @return \Ilch\Database\Mysql\Select
      */
-    public function join(Expression\Join $join)
+    public function addJoin(Expression\Join $join)
     {
         $this->joins[] = $join;
         return $this;
+    }
+
+    /**
+     * @param string|array $table
+     * @param string $type
+     * @return Expression\Join
+     */
+    public function createJoin($table, $type = Expression\Join::INNER)
+    {
+        return new Expression\Join($table, $type);
+    }
+
+    /**
+     * Create and add a join to the query (builder)
+     *
+     * @param string|array $table
+     * @param string|array $conditions
+     * @param string $type
+     * @param array $fields
+     * @return \Ilch\Database\Mysql\Select
+     */
+    public function join($table, $conditions, $type = Expression\Join::INNER, array $fields = null)
+    {
+        $join = $this->createJoin($table, $type);
+        if (is_string($conditions)) {
+            $conditions = [$conditions];
+        }
+        if (isset($fields)) {
+            $join->setFields($fields);
+        }
+        $join->setConditions($conditions);
+        return $this->addJoin($join);
     }
 
     /**
@@ -256,12 +288,13 @@ class Select extends QueryBuilder
             $sql .= 'SQL_CALC_FOUND_ROWS ';
         }
 
+        // generate sql for joins
         $joinSql = [];
         foreach ($this->joins as $join) {
-            $temp = $join->getType() . ' JOIN ' . $this->getTableSql($join->getTable());
+            $temp = ' ' . $join->getType() . ' JOIN ' . $this->getTableSql($join->getTable());
             $joinCondition = $join->getConditions();
             if (!empty($joinCondition)) {
-                $temp .= ' ON ' . $this->generateWhereSql($joinCondition);
+                $temp .= ' ON ' . $this->createCompositeExpression($joinCondition);
             }
             $joinFields = $join->getFields();
             if (!empty($joinFields)) {
@@ -270,12 +303,18 @@ class Select extends QueryBuilder
             $joinSql[] = $temp;
         }
 
+        // start query
         $sql .= $this->getFieldsSql($fields)
             . ' FROM ' . $this->getTableSql($this->table);
 
         $sql .= implode(' ', $joinSql);
 
         $sql .= $this->generateWhereSql();
+
+        // add GROUP BY to sql
+        if (!empty($this->groupByFields)) {
+            $sql .= ' GROUP BY ' . $this->getFieldsSql($this->groupByFields);
+        }
 
         // add ORDER BY to sql
         if (!empty($this->order)) {
@@ -345,14 +384,14 @@ class Select extends QueryBuilder
     protected function getTableSql($table)
     {
         if (is_array($table)) {
-            $table = reset($table);
+            $tableName = reset($table);
             $tableAlias = key($table);
         } else {
-            $table = $this->table;
+            $tableName = $this->table;
         }
 
-        $sql = $this->db->quote('[prefix]_' . $table);
-        if (isset($tableAlias)) {
+        $sql = $this->db->quote('[prefix]_' . $tableName);
+        if (isset($tableAlias) && is_string($tableAlias)) {
             $sql .= ' AS ' . $this->db->quote($tableAlias, true);
         }
 
