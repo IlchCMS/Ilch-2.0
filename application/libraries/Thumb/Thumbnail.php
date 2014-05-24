@@ -1,9 +1,7 @@
 <?php
-/**
- * @package ilch
- */
 
-namespace Ilch;
+namespace Thumb;
+
 defined('ACCESS') or die('no direct access');
 
 class Thumbnail {
