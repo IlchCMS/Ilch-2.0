@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Boxes\Online;
+namespace User\Boxes;
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Box
+class Online extends \Ilch\Box
 {
     public function render()
     {

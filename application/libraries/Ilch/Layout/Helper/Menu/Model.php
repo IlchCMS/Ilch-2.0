@@ -108,15 +108,19 @@ class Model
                         if ($item->getBoxId()) {
                             $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
                         } else {
-                            $class = 'Boxes\\'.ucfirst($item->getBoxKey()).'\\Index';
+                            $parts = explode('_', $item->getBoxKey());
+                            $moduleKey = $parts[0];
+                            $boxKey = $parts[1];
+
+                            $class = ucfirst($moduleKey).'\\Boxes\\'.ucfirst($boxKey);
                             $view = new \Ilch\View($this->layout->getRequest(), $this->layout->getTranslator(), $this->layout->getRouter());
-                            $this->layout->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/translations');
+                            $this->layout->getTranslator()->load(APPLICATION_PATH.'/modules/'.$moduleKey.'/translations');
                             $boxObj = new $class($this->layout, $view, $this->layout->getRequest(), $this->layout->getRouter(), $this->layout->getTranslator());
                             $boxObj->render();
-                            $viewPath = APPLICATION_PATH.'/'.dirname($this->layout->getFile()).'/views/boxes/'.$item->getBoxKey().'/render.php';
+                            $viewPath = APPLICATION_PATH.'/'.dirname($this->layout->getFile()).'/override/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
 
                             if (!file_exists($viewPath)) {
-                                $viewPath = APPLICATION_PATH.'/boxes/'.$item->getBoxKey().'/render.php';
+                                $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
                             }
 
                             $output = $view->loadScript($viewPath);

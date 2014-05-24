@@ -22,4 +22,7 @@ return array
     'maximumWordLength' => 'Maximum word length',
     'askIfDeleteShoutbox' => 'Are you sure you want delete the shoutbox entry from "%s"?',
     'settings' => 'Settings',
+    'send' => 'Send',
+    'message' => 'Message',
+    'archive' => 'Archive',
 );

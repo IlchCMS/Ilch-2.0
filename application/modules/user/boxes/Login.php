@@ -4,13 +4,12 @@
  * @package ilch
  */
 
-namespace Boxes\Login;
-
+namespace User\Boxes;
 use User\Mappers\User as UserMapper;
 
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Box
+class Login extends \Ilch\Box
 {
     public function render()
     {

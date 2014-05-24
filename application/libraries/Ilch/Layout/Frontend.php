@@ -71,19 +71,25 @@ class Frontend extends Base
     /**
      * Gets the box with the given key.
      *
+     * @param string $moduleKey
+     * @param string $boxKey
      * @return string
      */
-    public function getBox($boxKey)
+    public function getBox($moduleKey, $boxKey = '')
     {
-        $class = 'Boxes\\'.ucfirst($boxKey).'\\Index';
+        if (empty($boxKey)) {
+            $boxKey = $moduleKey;
+        }
+
+        $class = ucfirst($moduleKey).'\\Boxes\\'.ucfirst($boxKey);
         $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
-        $this->getTranslator()->load(APPLICATION_PATH.'/boxes/'.$boxKey.'/translations');
+        $this->getTranslator()->load(APPLICATION_PATH.'/modules/'.$moduleKey.'/translations');
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
         $boxObj->render();
-        $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/boxes/'.$boxKey.'/render.php';
+        $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/override/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
 
         if (!file_exists($viewPath)) {
-            $viewPath = APPLICATION_PATH.'/boxes/'.$boxKey.'/render.php';
+            $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
         }
 
         return $view->loadScript($viewPath);

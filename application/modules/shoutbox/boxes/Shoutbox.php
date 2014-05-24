@@ -4,11 +4,11 @@
  * @package ilch
  */
 
-namespace Boxes\Shoutbox;
+namespace Shoutbox\Boxes;
 
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Box
+class Shoutbox extends \Ilch\Box
 {
     public function render()
     {

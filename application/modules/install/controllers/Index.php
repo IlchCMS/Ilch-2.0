@@ -292,12 +292,12 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                $boxes = "INSERT INTO `[prefix]_menu_items` (`menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
-                        (1, 80, 0, 0, 0, 'login', 4, 'Login', '', ''),
-                        (1, 90, 0, 0, 0, 'layoutswitch', 4, 'Layout', '', ''),
-                        (1, 100, 0, 0, 0, 'stats', 4, 'Statistik', '', ''),
-                        (1, 110, 0, 0, 0, 'online', 4, 'Online', '', ''),
-                        (2, 10, 0, 0, 0, 'langswitch', 4, 'Sprache', '', ''),
-                        (2, 20, 0, 0, 0, 'article', 4, 'Letzte Artikel', '', '')";
+                        (1, 80, 0, 0, 0, 'user_login', 4, 'Login', '', ''),
+                        (1, 90, 0, 0, 0, 'admin_layoutswitch', 4, 'Layout', '', ''),
+                        (1, 100, 0, 0, 0, 'user_stats', 4, 'Statistik', '', ''),
+                        (1, 110, 0, 0, 0, 'user_online', 4, 'Online', '', ''),
+                        (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
+                        (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', '')";
                 $db->queryMulti($boxes);
 
                 unset($_SESSION['install']);

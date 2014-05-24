@@ -202,6 +202,21 @@ function rec($item, $menuMapper, $obj)
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
     <?=$this->getSaveBar('saveButton', 'deleteMenu')?>
 </form>
+<?php
+$boxesDir = array();
+
+foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
+    $moduleKey = basename($moduleKey);
+
+    foreach (glob(APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/*') as $box) {
+        if (is_dir($box)) {
+            continue;
+        }
+
+        $boxesDir[$moduleKey] = str_replace('.php', '', strtolower(basename($box)));
+    }
+}
+?>
 <script>
     function resetBox() {
         $(':input','.changeBox')
@@ -368,7 +383,7 @@ function rec($item, $menuMapper, $obj)
                 } else if ($(this).val() == '4') {
                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
                                     <div class="col-lg-4"><?php echo '<select id="boxkey" class="form-control">';
-                    foreach (glob(APPLICATION_PATH.'/boxes/*') as $path) { echo '<option value="'.basename($path).'">'.basename($path).'</option>'; } foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
+                    foreach ($boxesDir as $moDir => $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; } foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
                 }
             });
 

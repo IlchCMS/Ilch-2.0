@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Boxes\Article;
+namespace Article\Boxes;
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Box
+class Article extends \Ilch\Box
 {
     public function render()
     {

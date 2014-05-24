@@ -103,4 +103,15 @@ return array
     'nameEmail' => 'Username or E-Mail',
     'register' => 'Register',
     'forgotPassword' => 'Forgot password?',
+    
+    'nameEmail' => 'Name / E-Mail',
+    'password' => 'Password',
+    'login' => 'Login',
+    'logout' => 'Logout',
+    'message' => 'Message',
+    'userPanel' => 'UserPanel',
+    'hello' => 'Hello',
+    'adminarea' => 'Adminarea',
+    'register' => 'Register',
+    'forgotPassword' => 'Forgot password?',
 );

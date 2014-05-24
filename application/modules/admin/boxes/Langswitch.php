@@ -4,14 +4,14 @@
  * @package ilch
  */
 
-namespace Boxes\Layoutswitch;
+namespace Admin\Boxes;
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Box
+class Langswitch extends \Ilch\Box
 {
     public function render()
     {
-        $this->getView()->set('layouts', glob(APPLICATION_PATH.'/layouts/*'));
+        $this->getView()->set('language', $this->getTranslator()->getLocale());
     }
 }
 
