@@ -88,7 +88,9 @@ class Index extends \Ilch\Controller\Admin
             
             if(move_uploaded_file($_FILES['upl']['tmp_name'], $path.$filename.'.'.$endung)){
                 if(in_array($endung , explode(' ',$this->getConfig()->get('media_ext_img')))){
-                    $thumb = new \Ilch\Thumbnail;
+                    require_once APPLICATION_PATH.'/libraries/Thumb/Thumbnail.php';
+                    
+                    $thumb = new \Thumb\Thumbnail;
                     $thumb -> Thumbprefix = 'thumb_';
                     $thumb -> Thumblocation = $path;
                     $thumb -> Thumbsize = 300;
