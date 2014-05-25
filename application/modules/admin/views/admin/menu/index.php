@@ -207,10 +207,10 @@ $boxesDir = array();
 
 foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
     $moduleKey = basename($moduleKey);
-    $boxes = glob(APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/*');
+    $boxesGlob = glob(APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/*');
 
-    if(!empty($boxes)) {
-        foreach ($boxes as $box) {
+    if(!empty($boxesGlob)) {
+        foreach ($boxesGlob as $box) {
             if (is_dir($box)) {
                 continue;
             }
