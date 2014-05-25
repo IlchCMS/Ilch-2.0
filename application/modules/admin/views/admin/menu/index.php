@@ -207,13 +207,16 @@ $boxesDir = array();
 
 foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
     $moduleKey = basename($moduleKey);
+    $boxes = glob(APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/*');
 
-    foreach (glob(APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/*') as $box) {
-        if (is_dir($box)) {
-            continue;
+    if(!empty($boxes)) {
+        foreach ($boxes as $box) {
+            if (is_dir($box)) {
+                continue;
+            }
+
+            $boxesDir[$moduleKey] = str_replace('.php', '', strtolower(basename($box)));
         }
-
-        $boxesDir[$moduleKey] = str_replace('.php', '', strtolower(basename($box)));
     }
 }
 ?>
