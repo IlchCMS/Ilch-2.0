@@ -88,7 +88,7 @@ class Update extends QueryBuilder
             throw new \RuntimeException('table must be set');
         }
 
-        $sql = 'UPDATE ' . $this->db->quote('[prefix]_'.$this->table) . ' SET ';
+        $sql = 'UPDATE ' . $this->db->quote('[prefix]_' . $this->table) . ' SET ';
         $up = [];
 
         if (!empty($this->values)) {
@@ -97,7 +97,7 @@ class Update extends QueryBuilder
                     continue;
                 }
 
-                $up[] = $this->db->quote($fieldName) . ' = "' . $this->db->escape($value).'"';
+                $up[] = $this->db->quote($fieldName) . ' = ' . $this->db->escape($value, true);
             }
         }
 

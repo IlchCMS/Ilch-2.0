@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class \PHPUnit\Ilch\TestCase
+ * Holds abstract class \PHPUnit\Ilch\TestCase
  *
  * @package ilch_phpunit
  */
@@ -12,7 +12,7 @@ namespace PHPUnit\Ilch;
  *
  * @package ilch_phpunit
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * A data array which will be used to create a config object for the registry.
@@ -24,10 +24,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * Filling the config object with individual testcase data.
      */
-    public function setUp()
+    protected function setUp()
     {
-        $testHelper = new TestHelper();
-        $testHelper->setConfigInRegistry($this->configData);
+        TestHelper::setConfigInRegistry($this->configData);
 
         parent::setUp();
     }

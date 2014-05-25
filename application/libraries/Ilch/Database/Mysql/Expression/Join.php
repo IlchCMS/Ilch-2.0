@@ -33,6 +33,11 @@ class Join
     /**
      * @var string
      */
+    protected $conditionsType = 'and';
+
+    /**
+     * @var string
+     */
     protected $type;
 
     /**
@@ -92,11 +97,15 @@ class Join
 
     /**
      * @param array $conditions
+     * @param string|null $type 'and' or 'or'
      * @return Join
      */
-    public function setConditions(array $conditions)
+    public function setConditions(array $conditions, $type = null)
     {
         $this->conditions = $conditions;
+        if (isset($type) && in_array($type, ['and', 'or'])) {
+            $this->conditionsType = $type;
+        }
         return $this;
     }
 
@@ -106,5 +115,13 @@ class Join
     public function getConditions()
     {
         return $this->conditions;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConditionsType()
+    {
+        return $this->conditionsType;
     }
 }

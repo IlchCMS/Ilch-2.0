@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 02.05.14
- * Time: 09:26
+ * Holds class Ilch\Database\Mysql\SelectTest.
+ *
+ * @copyright Ilch 2.0
+ * @package ilch_phpunit
  */
 
 namespace Ilch\Database\Mysql;
@@ -28,7 +28,10 @@ class SelectTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         $db->expects($this->any())
             ->method('escape')
-            ->will($this->returnCallback(function ($value) {
+            ->will($this->returnCallback(function ($value, $addQuotes = false) {
+                if ($addQuotes) {
+                    $value = '"' . $value . '"';
+                }
                 return $value;
             }));
 
@@ -135,15 +138,20 @@ class SelectTest extends \PHPUnit_Framework_TestCase
      *
      * @param array|callable $where
      * @param string $expectedSqlPart
+     * @param string $type
      */
-    public function testGenerateSqlForWhere($where, $expectedSqlPart)
+    public function testGenerateSqlForWhere($where, $expectedSqlPart, $type = null)
     {
         if (is_callable($where)) {
             $where = $where($this->out);
         }
 
-        $this->out->from('Test')
-            ->where($where);
+        $this->out->from('Test');
+        if (isset($type)) {
+            $this->out->where($where, $type);
+        } else {
+            $this->out->where($where);
+        }
 
         $expected = 'SELECT * FROM `[prefix]_Test`'
             . ' WHERE ' . $expectedSqlPart;
@@ -166,19 +174,24 @@ class SelectTest extends \PHPUnit_Framework_TestCase
                 'where'           => ['field1' => 5, 'field2' => 'super'],
                 'expectedSqlPart' => '(`field1` = "5" AND `field2` = "super")'
             ],
-            'or conditions'     => [
+            'or conditions by type'     => [
+                'where'           => ['field1' => 5, 'field2' => 'super'],
+                'expectedSqlPart' => '(`field1` = "5" OR `field2` = "super")',
+                'type'            => 'or'
+            ],
+            'or conditions with object'     => [
                 'where'           => function (Select $out) {
-                    return $out->orX(['field1' => 5, 'field2' => 'super']);
-                },
+                        return $out->orX(['field1' => 5, 'field2' => 'super']);
+                    },
                 'expectedSqlPart' => '(`field1` = "5" OR `field2` = "super")'
             ],
             'complex condition' => [
                 'where'           => function (Select $out) {
-                    return [
-                        'field1' => 5,
-                        $out->orX([$out->comp('field2', 'super'), $out->comp('field2', 'geil')])
-                    ];
-                },
+                        return [
+                            'field1' => 5,
+                            $out->orX([$out->comp('field2', 'super'), $out->comp('field2', 'geil')])
+                        ];
+                    },
                 'expectedSqlPart' => '(`field1` = "5" AND (`field2` = "super" OR `field2` = "geil"))'
             ],
             //array - positive
@@ -233,6 +246,61 @@ class SelectTest extends \PHPUnit_Framework_TestCase
     public function dpOperators()
     {
         return [['='], ['<='], ['=>'], ['<'], ['>'], ['!='], ['<>']];
+    }
+
+    /**
+     * @dataProvider dpForOrWhere
+     *
+     * @param array $where
+     * @param string $type
+     * @param array $orWhere
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForOrWhere($where, $type, $orWhere, $expectedSqlPart)
+    {
+        $this->out->from('Test');
+        if (!empty($where)) {
+            $this->out->where($where, $type);
+        }
+        $this->out->orWhere($orWhere);
+
+        $expected = 'SELECT * FROM `[prefix]_Test`'
+            . ' WHERE ' . $expectedSqlPart;
+
+        $this->assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * @return array
+     */
+    public function dpForOrWhere()
+    {
+        return [
+            'with empty where and single condition' => [
+                'where' => false,
+                'type'  => false,
+                'orWhere' => ['field1' => '2'],
+                'expectedSqlPart' => '`field1` = "2"'
+            ],
+            'with empty where and multiple condition' => [
+                'where' => false,
+                'type'  => false,
+                'orWhere' => ['field1' => '2', 'field1 >' => 5],
+                'expectedSqlPart' => '(`field1` = "2" OR `field1` > "5")'
+            ],
+            'with or where and multiple condition' => [
+                'where' => ['field1 <' => '0'],
+                'type'  => 'or',
+                'orWhere' => ['field1' => '2', 'field1 >' => 5],
+                'expectedSqlPart' => '(`field1` < "0" OR `field1` = "2" OR `field1` > "5")'
+            ],
+            'with and where and multiple condition' => [
+                'where' => ['field1 <' => '0', 'field2' => 3],
+                'type'  => 'and',
+                'orWhere' => ['field1' => '2', 'field1 >' => 5],
+                'expectedSqlPart' => '((`field1` < "0" AND `field2` = "3") OR `field1` = "2" OR `field1` > "5")'
+            ],
+        ];
     }
 
     public function testGenerateSqlForOrderBy()

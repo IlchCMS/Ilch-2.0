@@ -28,15 +28,15 @@ class TestHelper
     /**
      * Filling the config object with individual testcase data and injecting it into the registry.
      */
-    public function setConfigInRegistry($configData)
+    public static function setConfigInRegistry($configData)
     {
-        if (self::$config === null) {
+        if (static::$config === null) {
             if (!Registry::has('config') && file_exists(CONFIG_PATH . '/config.php')) {
-                self::$config = new Config();
-                self::$config->loadConfigFromFile(CONFIG_PATH . '/config.php');
+                static::$config = new Config();
+                static::$config->loadConfigFromFile(CONFIG_PATH . '/config.php');
 
                 foreach ($configData as $configKey => $configValue) {
-                    self::$config->set($configKey, $configValue);
+                    static::$config->set($configKey, $configValue);
                 }
             }
         }

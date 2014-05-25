@@ -6,6 +6,8 @@
 
 namespace Ilch\Database\Mysql;
 
+use Ilch\Database\Mysql as DB;
+
 class Result
 {
     /** @var integer TYPE for fetchRows or fetchArray */
@@ -25,13 +27,14 @@ class Result
      * @param \mysqli_result $dbResult
      * @param \Ilch\Database\Mysql $db
      */
-    public function __construct(\mysqli_result $dbResult, \Ilch\Database\Mysql $db)
+    public function __construct(\mysqli_result $dbResult, DB $db)
     {
         $this->dbResult = $dbResult;
         $this->db = $db;
     }
 
     /**
+     * Returns mysqli_result f.e. to use the Iterator interface
      * @return \mysqli_result
      */
     public function getMysqliResult()
@@ -43,7 +46,7 @@ class Result
      * Fetches one field of the current result row
      *
      * @param integer|string|null $name name or number of field
-     * @return mixed|null value of field; null if no field or row was found in result
+     * @return string|false|null value of field; false if the field is not in the result, null if no more rows in the result
      */
     public function fetchCell($name = null)
     {
@@ -52,28 +55,31 @@ class Result
                 $fieldNumber = $name;
             } else {
                 $row = $this->dbResult->fetch_assoc();
-                if (isset($row[$name])) {
+                if (!isset($row)) {
+                    return null;
+                } elseif (isset($row[$name])) {
                     return $row[$name];
                 } else {
-                    return null;
+                    return false;
                 }
-
             }
         } else {
             $fieldNumber = 0;
         }
         $row = $this->dbResult->fetch_row();
-        if (isset($row[$fieldNumber])) {
+        if (!isset($row)) {
+            return null;
+        } elseif (isset($row[$fieldNumber])) {
             return $row[$fieldNumber];
         }
 
-        return null;
+        return false;
     }
 
     /**
-     * Returns array with numerical and string keys
+     * Returns array with numerical and string keys of the current row or null if no more rows are in the result
      * @param integer $type type of returned array
-     * @return mixed
+     * @return array|null
      */
     public function fetchArray($type = self::BOTH)
     {
@@ -81,8 +87,8 @@ class Result
     }
 
     /**
-     * Return array with associative
-     * @return mixed
+     * Return array with indexed keys of the current row or null if no more rows are in the result
+     * @return array|null
      */
     public function fetchRow()
     {
@@ -90,12 +96,23 @@ class Result
     }
 
     /**
-     * Return associative array of current rows
-     * @return array
+     * Return associative array of the current row or null if no more rows are in the result
+     * @return array|null
      */
     public function fetchAssoc()
     {
         return $this->dbResult->fetch_assoc();
+    }
+
+    /**
+     * Returns an object of the current row or null if no more rows are in the result
+     * @param null $className
+     * @param array $params
+     * @return object|\stdClass
+     */
+    public function fetchObject($className = null, array $params = null)
+    {
+        return $this->dbResult->fetch_object($className, $params);
     }
 
     /**
@@ -106,7 +123,7 @@ class Result
      */
     public function fetchRows($keyField = null, $type = self::ASSOC)
     {
-        $this->dbResult->data_seek(0);
+        $this->setCurrentRow(0);
         $results = [];
         if (isset($keyField)) {
             while (null !== ($row = $this->fetchArray($type))) {
@@ -122,16 +139,13 @@ class Result
 
     /**
      * Returns a array with one field of each row
-     * @param string $keyField
      * @param string $field
+     * @param string $keyField
      * @return string[]
      */
-    public function fetchList($keyField = null, $field = null)
+    public function fetchList($field = null, $keyField = null)
     {
-        if (null === $field && null !== $keyField) {
-            $field = $keyField;
-            $keyField = null;
-        }
+        $this->setCurrentRow(0);
         $results = [];
 
         if (null === $field) {
@@ -179,5 +193,15 @@ class Result
     public function getFoundRows()
     {
         return (int) $this->db->queryCell('SELECT FOUND_ROWS()');
+    }
+
+    /**
+     * Set the internal pointer to the given position (must be between 0..getNumRow()-1)
+     * @param int $position
+     * @return bool
+     */
+    public function setCurrentRow($position)
+    {
+        return $this->dbResult->data_seek($position);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 04.05.14
- * Time: 08:14
+ * Holds class Ilch\Database\Mysql\UpdateTest.
+ *
+ * @copyright Ilch 2.0
+ * @package ilch_phpunit
  */
 
 namespace Ilch\Database\Mysql;
@@ -28,7 +28,10 @@ class UpdateTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         $db->expects($this->any())
             ->method('escape')
-            ->will($this->returnCallback(function ($value) {
+            ->will($this->returnCallback(function ($value, $addQuotes = false) {
+                if ($addQuotes) {
+                    $value = '"' . $value . '"';
+                }
                 return $value;
             }));
 

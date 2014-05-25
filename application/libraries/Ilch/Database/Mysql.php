@@ -345,7 +345,7 @@ class Mysql
     }
 
     /**
-     * Escape the given value for a sql query.
+     * Escape the given value for a sql query. Optionally add quotes
      *
      * @param  string $value
      * @param  boolean $andQuote [default: false] add quotes around
@@ -362,15 +362,16 @@ class Mysql
     }
 
     /**
-     * Escapes every value in a array for a sql query
+     * Escapes every value in a array for a sql query. Optionally add quotes
      *
      * @param array $array
+     * @param bool $andQuote [default: false] add quotes around each value
      * @return array
      */
-    public function escapeArray(array $array)
+    public function escapeArray(array $array, $andQuote = false)
     {
         foreach ($array as &$value) {
-            $value = $this->escape($value);
+            $value = $this->escape($value, $andQuote);
         }
         return $array;
     }

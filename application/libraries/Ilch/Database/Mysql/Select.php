@@ -294,7 +294,7 @@ class Select extends QueryBuilder
             $temp = ' ' . $join->getType() . ' JOIN ' . $this->getTableSql($join->getTable());
             $joinCondition = $join->getConditions();
             if (!empty($joinCondition)) {
-                $temp .= ' ON ' . $this->createCompositeExpression($joinCondition);
+                $temp .= ' ON ' . $this->createCompositeExpression($joinCondition, $join->getConditionsType());
             }
             $joinFields = $join->getFields();
             if (!empty($joinFields)) {

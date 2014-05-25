@@ -1,6 +1,6 @@
 <?php
 /**
- * Holds class \PHPUnit\Ilch\DatabaseTestCase.
+ * Holds abstract class \PHPUnit\Ilch\DatabaseTestCase.
  *
  * @package ilch_phpunit
  */
@@ -19,7 +19,7 @@ use Ilch\Config\File as Config;
  *
  * @package ilch_phpunit
  */
-class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
+abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
     /**
      * A data array which will be used to create a config object for the registry.
@@ -56,14 +56,13 @@ class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
-        $testHelper = new TestHelper();
-        $testHelper->setConfigInRegistry(static::$configData);
+        TestHelper::setConfigInRegistry(static::$configData);
     }
 
     /**
      * Filling the config object with individual testcase data.
      */
-    public function setUp()
+    protected function setUp()
     {
         $dbFactory = new Factory();
 
@@ -133,15 +132,6 @@ class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
         }
 
         return $this->conn;
-    }
-
-    /**
-     * Creates and returns a dataset object.
-     *
-     * @return \PHPUnit_Extensions_Database_DataSet_AbstractDataSet
-     */
-    protected function getDataSet()
-    {
     }
 
     /**

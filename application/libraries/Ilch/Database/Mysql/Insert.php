@@ -94,7 +94,7 @@ class Insert extends QueryBuilder
                 }
 
                 $sqlFields[] = $this->db->quote($key);
-                $sqlValues[] = $this->db->escape($value);
+                $sqlValues[] = $this->db->escape($value, true);
             }
         }
 
@@ -105,7 +105,7 @@ class Insert extends QueryBuilder
         $sql .= implode(',', $sqlFields);
         $sql .= ') VALUES (';
 
-        $sql .= '"'.implode('", "', $sqlValues) . '")';
+        $sql .= implode(',', $sqlValues) . ')';
 
         return $sql;
     }

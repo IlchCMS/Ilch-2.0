@@ -39,13 +39,17 @@ abstract class QueryBuilder
      * Adds where to query builder.
      *
      * @param array|\Ilch\Database\Mysql\Expression\CompositePart $where
+     * @param string $type [default: 'and'] 'and' or 'or'
      * @return $this|\Ilch\Database\Mysql\QueryBuilder
      * @throws \InvalidArgumentException
      */
-    public function where($where)
+    public function where($where, $type = 'and')
     {
         if (is_array($where)) {
-            $where = $this->createCompositeExpression($where);
+            if (!in_array($type, ['and', 'or'])) {
+                throw new \InvalidArgumentException('Invalid type: "and" or "or" expected');
+            }
+            $where = $this->createCompositeExpression($where, $type);
         }
         if (!$where instanceof Expression\CompositePart) {
             throw new \InvalidArgumentException('array or Expression\CompositePart expected');
@@ -53,6 +57,30 @@ abstract class QueryBuilder
         $this->where = $where;
 
         return $this;
+    }
+
+    /**
+     * Adds OR conditions to the existing where conditions
+     *
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $where
+     * @return $this|\Ilch\Database\Mysql\QueryBuilder
+     * @throws \InvalidArgumentException
+     */
+    public function orWhere($where)
+    {
+        return $this->addWhere('or', $where);
+    }
+
+    /**
+     * Adds AND conditions to the existing where conditions
+     *
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $where
+     * @return $this|\Ilch\Database\Mysql\QueryBuilder
+     * @throws \InvalidArgumentException
+     */
+    public function andWhere($where)
+    {
+        return $this->addWhere('and', $where);
     }
 
     /**
@@ -72,7 +100,7 @@ abstract class QueryBuilder
      */
     public function andX(array $conditions)
     {
-        return $this->createCompositeExpression($conditions);
+        return $this->createCompositeExpression($conditions, 'and');
     }
 
     /**
@@ -136,13 +164,57 @@ abstract class QueryBuilder
     }
 
     /**
+     * Helper for and/orWhere methods
+     *
+     * @param string $type 'and' or 'or'
+     * @param array|\Ilch\Database\Mysql\Expression\CompositePart $where
+     * @return $this|QueryBuilder
+     * @throws \InvalidArgumentException
+     */
+    protected function addWhere($type, $where)
+    {
+        $oppositeType = $type === 'and' ? 'or' : 'and';
+        // add to existing or
+        if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X')) {
+            if (is_array($where)) {
+                $this->where->addParts($this->createCompositePartArray($where));
+            } elseif ($where instanceof Expression\CompositePart) {
+                $this->where->addPart($where);
+            } else {
+                throw new \InvalidArgumentException('array or Expression\CompositePart expected');
+            }
+            return $this;
+        }
+
+        // new or insert existing where into condition
+        if (is_a($this->where, __NAMESPACE__ . '\Expression\\' . ucfirst($oppositeType) . 'X')) {
+            if (!is_array($where)) {
+                $where = [$where];
+            }
+            array_unshift($where, $this->where);
+        }
+        return $this->where($where, $type);
+    }
+
+    /**
      * Creates Expression for Where
      *
      * @param array $where parts as CompositePart or array
      * @param string $type 'and' or 'or'
      * @return Expression\Composite
      */
-    protected function createCompositeExpression(array $where, $type = 'and')
+    protected function createCompositeExpression(array $where, $type)
+    {
+        $compositeClass = __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X';
+        return new $compositeClass($this->createCompositePartArray($where));
+    }
+
+    /**
+     * Create an array of composite parts
+     * @param $where
+     * @return Expression\CompositePart[]
+     */
+    protected function createCompositePartArray($where)
     {
         $parts = [];
         foreach ($where as $key => $value) {
@@ -152,8 +224,7 @@ abstract class QueryBuilder
                 $parts[] = $this->createComparisonExpression($key, $value);
             }
         }
-        $compositeClass = __NAMESPACE__ . '\Expression\\' . ucfirst($type) . 'X';
-        return new $compositeClass($parts);
+        return $parts;
     }
 
     /**
@@ -196,12 +267,12 @@ abstract class QueryBuilder
                 if (!in_array($operator, ['IN', 'NOT IN'])) {
                     throw new \InvalidArgumentException('invalid operator for multiple value comparison');
                 }
-                $right = '("' . implode('", "', $this->db->escapeArray($value)) . '")';
+                $right = '(' . implode(', ', $this->db->escapeArray($value, true)) . ')';
             } else {
                 if (!in_array($operator, $singleComparisonOperators)) {
                     throw new \InvalidArgumentException('invalid operator for single value comparison');
                 }
-                $right = '"'.$this->db->escape($value).'"';
+                $right = $this->db->escape($value, true);
             }
         }
 

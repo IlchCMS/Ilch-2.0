@@ -1,13 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 04.05.14
- * Time: 08:14
+ * Holds class Ilch\Database\Mysql\InsertTest.
+ *
+ * @copyright Ilch 2.0
+ * @package ilch_phpunit
  */
 
 namespace Ilch\Database\Mysql;
-
 
 class InsertTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,7 +29,10 @@ class InsertTest extends \PHPUnit_Framework_TestCase
             ->getMockForAbstractClass();
         $db->expects($this->any())
             ->method('escape')
-            ->will($this->returnCallback(function ($value) {
+            ->will($this->returnCallback(function ($value, $addQuotes = false) {
+                if ($addQuotes) {
+                    $value = '"' . $value . '"';
+                }
                 return $value;
             }));
         $db->expects($this->any())
@@ -62,7 +64,7 @@ class InsertTest extends \PHPUnit_Framework_TestCase
                   ->values(['super' => 'data', 'next' => 'fieldData']);
 
         $expected = 'INSERT INTO `[prefix]_Test` '
-            . '(`super`,`next`) VALUES ("data", "fieldData")';
+            . '(`super`,`next`) VALUES ("data","fieldData")';
 
         $this->assertEquals($expected, $this->out->generateSql());
     }
