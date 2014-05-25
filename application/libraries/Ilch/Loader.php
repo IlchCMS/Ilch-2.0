@@ -12,7 +12,7 @@ class Loader
     /**
      * @var string[]
      */
-    protected $namespaces = array('Ilch');
+    protected $namespaces = array('Ilch', 'Thumb');
 
     /**
      * Initialize "spl_autoload_register".
