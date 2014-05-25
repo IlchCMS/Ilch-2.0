@@ -29,36 +29,34 @@ class Loader
             $class = str_replace('\\', '/', $class);
             $classParts = explode('/', $class);
             $path = APPLICATION_PATH;
-            $is = '';
+            $type = 'modules';
 
+            /*
+             * Libraries path handling.
+             */
             foreach($this->namespaces as $nameSpace) {
                 if (strpos($classParts[0], $nameSpace) !== false) {
-                    $is = 'lib';
+                    $type = 'libraries';
                     $path = $path.'/libraries';
                     break;
                 }
             }
 
-            if (empty($is)) {
-                if (strpos($classParts[0], 'Boxes') !== false) {
-                    $is = 'box';
-                    $path = $path.'/';
-                } else {
-                    $is = 'mod';
-                    $path = $path.'/modules';
-                }
-            }
-
             /*
-             * Transform the path to lower case.
+             * Modules path handling.
              */
-            if ($is == 'mod' || $is == 'box') {
+            if ($type == 'modules') {
+                $path = $path.'/modules';
+
                 $lastClassPart = $classParts[count($classParts)-1];
                 unset($classParts[count($classParts)-1]);
                 $classParts = array_map('strtolower', $classParts);
                 $class = implode('/', $classParts).'/'.$lastClassPart;
             }
 
+            /*
+             * General loading handling.
+             */
             if (file_exists($path.'/'. $class . '.php')) {
                 require_once($path.'/'. $class . '.php');
             }
