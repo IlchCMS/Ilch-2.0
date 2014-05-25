@@ -19,9 +19,9 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()->set('receivers', $receivers);
 
-        if ($this->getRequest()->isPost()) {
-            $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('receiver'));
-            $subject = 'Kontakt Website <'.$this->getRequest()->getPost('name').'>('.$this->getRequest()->getPost('email').')';
+        if ($this->getRequest()->getPost('contact_name') != '') {
+            $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('contact_receiver'));
+            $subject = 'Kontakt Website <'.$this->getRequest()->getPost('contact_name').'>('.$this->getRequest()->getPost('contact_email').')';
 
             /*
              * @todo We should create a \Ilch\Mail class.
@@ -30,7 +30,7 @@ class Index extends \Ilch\Controller\Frontend
             (
                 $receiver->getEmail(),
                 $subject,
-                $this->getRequest()->getPost('message')#
+                $this->getRequest()->getPost('contact_message')
             );
 
             $this->addMessage('sendSuccess');

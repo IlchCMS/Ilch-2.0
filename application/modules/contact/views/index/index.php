@@ -7,7 +7,7 @@
         <div class="col-lg-8">
             <select id="receiver"
                     class="form-control"
-                    name="receiver">
+                    name="contact_receiver">
                 <?php
                     foreach($this->get('receivers') as $receiver)
                     {
@@ -24,7 +24,7 @@
         <div class="col-lg-8">
             <input id="name"
                    class="form-control"
-                   name="name"
+                   name="contact_name"
                    type="text"
                    value="" />
         </div>
@@ -36,7 +36,7 @@
         <div class="col-lg-8">
             <input id="email"
                    class="form-control"
-                   name="email"
+                   name="contact_email"
                    type="text"
                    value="" />
         </div>
@@ -48,7 +48,7 @@
         <div class="col-lg-8">
             <textarea id="message"
                       class="form-control"
-                   name="message"></textarea>
+                   name="contact_message"></textarea>
         </div>
     </div>
     <div class="form-group">
