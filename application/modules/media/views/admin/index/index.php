@@ -34,7 +34,7 @@ if ($this->get('medias') != '') {
             <td><?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))){
                 echo '<a href="'.$this->getStaticUrl().'../'.$media->getUrl().'" title="'.$media->getName().'"><img class="img-preview" src="'.$this->getStaticUrl().'../'.$media->getUrlThumb().'" alt=""></a>';
                     }  else {
-                        echo '<img src="'.$this->getStaticUrl('../application/modules/media/static/img/nomedia.jpg').'" class="img-preview" style="width:50px; height:auto;"  />';
+                        echo '<img src="'.$this->getStaticUrl('../application/modules/media/static/img/nomedia.png').'" class="img-preview" style="width:50px; height:auto;"  />';
                     }
                 ?>
             </td>
