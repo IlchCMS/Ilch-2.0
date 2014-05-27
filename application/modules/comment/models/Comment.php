@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Comment\Models\Comment.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds class Group.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

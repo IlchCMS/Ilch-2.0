@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds class \Ilch\RouterTest.
- *
  * @package ilch_phpunit
  */
 

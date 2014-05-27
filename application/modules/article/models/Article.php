@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Article_ArticleModel.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

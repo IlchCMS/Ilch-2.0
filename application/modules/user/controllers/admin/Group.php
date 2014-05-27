@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds the class Index.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

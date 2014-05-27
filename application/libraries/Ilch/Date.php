@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds class Ilch_Date.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds the class Access.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

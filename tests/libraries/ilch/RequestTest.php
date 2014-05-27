@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds class \Ilch\RequestTest.
- *
  * @package ilch_phpunit
  */
 

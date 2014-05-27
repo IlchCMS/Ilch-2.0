@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Contact\Models\Receiver.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

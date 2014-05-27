@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Admin_ModuleMapper.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

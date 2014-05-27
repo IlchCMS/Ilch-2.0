@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds class Ilch\Database\Mysql\ResultTest.
- *
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */

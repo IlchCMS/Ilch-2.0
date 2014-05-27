@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds abstract class \PHPUnit\Ilch\TestCase
- *
  * @package ilch_phpunit
  */
 

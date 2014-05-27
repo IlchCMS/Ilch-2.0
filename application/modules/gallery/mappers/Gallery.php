@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Gallery Mapper.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

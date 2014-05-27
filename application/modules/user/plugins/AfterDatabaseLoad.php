@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds User_AfterDatabaseLoadPlugin.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

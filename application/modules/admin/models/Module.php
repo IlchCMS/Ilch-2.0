@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds class Admin_ModuleModel.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

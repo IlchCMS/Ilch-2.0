@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Box\Mappers\Box.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

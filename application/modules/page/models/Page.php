@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Page_PageModel.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds Article_ArticleMapper.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

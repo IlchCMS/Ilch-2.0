@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds User_BeforeControllerLoadPlugin.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

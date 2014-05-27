@@ -1,7 +1,5 @@
 <?php
 /**
- * Holds class \Ilch\ConfigTest.
- *
  * @package ilch_phpunit
  */
 
