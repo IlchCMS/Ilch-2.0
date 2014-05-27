@@ -37,6 +37,7 @@ define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
 require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
 $loader = new \Ilch\Loader();
+$loader->registNamespace('Thumb');
 
 \Ilch\Registry::set('startTime', microtime(true));
 
