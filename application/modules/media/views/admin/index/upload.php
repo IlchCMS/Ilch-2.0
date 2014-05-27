@@ -1,5 +1,5 @@
 <link href="<?php echo $this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
-<legend><?php echo $this->getTrans('mediaUpload'); ?></legend>
+<legend><?php echo $this->getTrans('mediaUpload'); ?> <a title='<?php echo 'post_max_size = ' . ini_get('post_max_size');?><br/><?php echo 'max_execution_time = ' . ini_get('max_execution_time'); ?>' rel='tooltip' data-html='true' data-placement='bottom'><i class="fa fa-info-circle"></i></a></legend>
 <form id="upload" method="post" action="<?php echo $this->getUrl('index.php/admin/media/index/upload'); ?>" enctype="multipart/form-data">
 <?php echo $this->getTokenField(); ?>
     <div id="drop">
@@ -17,5 +17,8 @@
 <script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/jquery.iframe-transport.js'); ?>"></script>
 <script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/jquery.fileupload.js'); ?>"></script>
 <script src="<?php echo $this->getStaticUrl('../application/modules/media/static/js/script.js'); ?>"></script>
-
-		
+<script language="javascript">
+   $(document).ready(function(){
+	$("[rel='tooltip']").tooltip();
+    });
+</script>

@@ -12,6 +12,7 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'gallery',
+        'author' => 'Stantin Thomas',
         'icon_small' => 'gallery.png',
         'languages' => array
         (
