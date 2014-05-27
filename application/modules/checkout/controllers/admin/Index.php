@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Checkout\Controllers\Admin;
+namespace Modules\Checkout\Controllers\Admin;
 
-use Checkout\Mappers\Checkout as CheckoutMapper;
+use Modules\Checkout\Mappers\Checkout as CheckoutMapper;
 use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
@@ -56,7 +56,7 @@ class Index extends \Ilch\Controller\Admin
             } elseif(empty($amount)) {
                 $this->addMessage('missingAmount', 'danger');
             } else {
-                $model = new \Checkout\Models\Entry();
+                $model = new \Modules\Checkout\Models\Entry();
                 $model->setName($name);
                 $model->setDatetime($datetime);
                 $model->setUsage($usage);
@@ -109,7 +109,7 @@ class Index extends \Ilch\Controller\Admin
             } elseif(empty($amount)) {
                 $this->addMessage('missingAmount', 'danger');
             } else {
-                $model = new \Checkout\Models\Entry();
+                $model = new \Modules\Checkout\Models\Entry();
                 $model->setId($id);
                 $model->setName($name);
                 $model->setDatetime($datetime);

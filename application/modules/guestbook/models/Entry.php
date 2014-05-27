@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Guestbook\Models;
+namespace Modules\Guestbook\Models;
 
 defined('ACCESS') or die('no direct access');
 

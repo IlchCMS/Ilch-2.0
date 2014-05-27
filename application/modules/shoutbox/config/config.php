@@ -3,7 +3,7 @@
  * @package ilch
  */
 
-namespace shoutbox\Config;
+namespace Modules\Shoutbox\Config;
 
 defined('ACCESS') or die('no direct access');
 

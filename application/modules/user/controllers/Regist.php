@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace User\Controllers;
+namespace Modules\User\Controllers;
 
-use User\Mappers\User as UserMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -77,10 +77,10 @@ class Regist extends \Ilch\Controller\Frontend
             }
             
             if (empty($errors)) {
-                    $groupMapper = new \User\Mappers\Group();
+                    $groupMapper = new \Modules\User\Mappers\Group();
                     $userGroup = $groupMapper->getGroupById(2);
                     $currentDate = new \Ilch\Date(); 
-                    $model = new \User\Models\User();
+                    $model = new \Modules\User\Models\User();
                     $model->setName($name);
                     $model->setPassword(crypt($password));
                     $model->setEmail($email);

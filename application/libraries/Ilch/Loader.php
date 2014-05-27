@@ -46,8 +46,6 @@ class Loader
              * Modules path handling.
              */
             if ($type == 'modules') {
-                $path = $path.'/modules';
-
                 $lastClassPart = $classParts[count($classParts)-1];
                 unset($classParts[count($classParts)-1]);
                 $classParts = array_map('strtolower', $classParts);

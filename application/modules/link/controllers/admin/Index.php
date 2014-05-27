@@ -4,12 +4,12 @@
  * @package ilch
  */
 
-namespace Link\Controllers\Admin;
+namespace Modules\Link\Controllers\Admin;
 
-use Link\Mappers\Link as LinkMapper;
-use Link\Mappers\Category as CategoryMapper;
-use Link\Models\Link as LinkModel;
-use Link\Models\Category as CategoryModel;
+use Modules\Link\Mappers\Link as LinkMapper;
+use Modules\Link\Mappers\Category as CategoryMapper;
+use Modules\Link\Models\Link as LinkModel;
+use Modules\Link\Models\Category as CategoryModel;
 
 defined('ACCESS') or die('no direct access');
 

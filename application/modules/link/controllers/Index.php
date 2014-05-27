@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Link\Controllers;
+namespace Modules\Link\Controllers;
 
-use Link\Mappers\Link as LinkMapper;
-use Link\Mappers\Category as CategoryMapper;
+use Modules\Link\Mappers\Link as LinkMapper;
+use Modules\Link\Mappers\Category as CategoryMapper;
 
 defined('ACCESS') or die('no direct access');
 

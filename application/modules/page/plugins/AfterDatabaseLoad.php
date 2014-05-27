@@ -3,8 +3,8 @@
  * @package ilch
  */
 
-namespace Page\Plugins;
-use Page\Mappers\Page as PageMapper;
+namespace Modules\Page\Plugins;
+use Modules\Page\Mappers\Page as PageMapper;
 defined('ACCESS') or die('no direct access');
 
 class AfterDatabaseLoad

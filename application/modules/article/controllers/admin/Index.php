@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Article\Controllers\Admin;
-use Article\Mappers\Article as ArticleMapper;
-use Article\Models\Article as ArticleModel;
+namespace Modules\Article\Controllers\Admin;
+use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\Article\Models\Article as ArticleModel;
 
 defined('ACCESS') or die('no direct access');
 

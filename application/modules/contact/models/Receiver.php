@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace Contact\Models;
+namespace Modules\Contact\Models;
 defined('ACCESS') or die('no direct access');
 
 /**

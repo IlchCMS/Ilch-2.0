@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Media\Models;
+namespace Modules\Media\Models;
 
 defined('ACCESS') or die('no direct access');
 

@@ -6,8 +6,8 @@
  * @package ilch
  */
 
-namespace Contact\Mappers;
-use Contact\Models\Receiver as ReceiverModel;
+namespace Modules\Contact\Mappers;
+use Modules\Contact\Models\Receiver as ReceiverModel;
 
 defined('ACCESS') or die('no direct access');
 

@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Guestbook\Controllers;
+namespace Modules\Guestbook\Controllers;
 
-use Guestbook\Mappers\Guestbook as GuestbookMapper;
+use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
 use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
@@ -45,7 +45,7 @@ class Index extends \Ilch\Controller\Frontend
             } elseif(empty($name)) {
                 $this->addMessage('missingName', 'danger');
             } else {
-                $model = new \Guestbook\Models\Entry();
+                $model = new \Modules\Guestbook\Models\Entry();
                 $model->setName($name);
                 $model->setEmail($email);
                 $model->setText($text);

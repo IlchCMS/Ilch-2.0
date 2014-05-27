@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Media\Controllers\Admin;
+namespace Modules\Media\Controllers\Admin;
 
-use Media\Mappers\Media as MediaMapper;
+use Modules\Media\Mappers\Media as MediaMapper;
 
 use Ilch\Date as IlchDate;
 

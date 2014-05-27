@@ -42,7 +42,7 @@ if($this->getUser())
 <?php
 }
 
-$userMapper = new \User\Mappers\User();
+$userMapper = new \Modules\User\Mappers\User();
 
 foreach($comments as $comment)
 {

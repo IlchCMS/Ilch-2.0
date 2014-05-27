@@ -6,9 +6,9 @@
  * @package ilch
  */
 
-namespace Admin\Mappers;
-use Admin\Models\MenuItem;
-use Admin\Models\Menu as MenuModel;
+namespace Modules\Admin\Mappers;
+use Modules\Admin\Models\MenuItem;
+use Modules\Admin\Models\Menu as MenuModel;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -36,7 +36,7 @@ class Menu extends \Ilch\Mapper
     /**
      * Gets the menus.
      * 
-     * @return \Admin\Models\Menu[]
+     * @return \Modules\Admin\Models\Menu[]
      */
     public function getMenus()
     {
@@ -57,11 +57,11 @@ class Menu extends \Ilch\Mapper
     /**
      * Gets the menu for the given id.
      * 
-     * @return \Admin\Models\Menu
+     * @return \Modules\Admin\Models\Menu
      */
     public function getMenu($menuId)
     {
-        $menu = new \Admin\Models\Menu();
+        $menu = new \Modules\Admin\Models\Menu();
         
         $menuRow = $this->db()->select(array('id','title'))
             ->from('menu')

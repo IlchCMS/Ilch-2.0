@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Impressum\Controllers;
+namespace Modules\Impressum\Controllers;
 
-use Impressum\Mappers\Impressum as ImpressumMapper;
+use Modules\Impressum\Mappers\Impressum as ImpressumMapper;
 
 defined('ACCESS') or die('no direct access');
 

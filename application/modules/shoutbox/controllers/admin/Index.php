@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Shoutbox\Controllers\Admin;
+namespace Modules\Shoutbox\Controllers\Admin;
 
-use Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
-use Shoutbox\Models\Shoutbox as ShoutboxModel;
+use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
+use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
 
 defined('ACCESS') or die('no direct access');
 

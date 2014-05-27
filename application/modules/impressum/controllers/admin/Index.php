@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Impressum\Controllers\Admin;
+namespace Modules\Impressum\Controllers\Admin;
 
-use Impressum\Mappers\Impressum as ImpressumMapper;
-use Impressum\Models\Impressum as ImpressumModel;
+use Modules\Impressum\Mappers\Impressum as ImpressumMapper;
+use Modules\Impressum\Models\Impressum as ImpressumModel;
 
 defined('ACCESS') or die('no direct access');
 

@@ -4,11 +4,11 @@
  * @package ilch
  */
 
-namespace Gallery\Controllers\Admin;
+namespace Modules\Gallery\Controllers\Admin;
 
-use Gallery\Mappers\Image as ImageMapper;
-use Gallery\Mappers\Gallery as GalleryMapper;
-use Gallery\Controllers\Admin\Base as BaseController;
+use Modules\Gallery\Mappers\Image as ImageMapper;
+use Modules\Gallery\Mappers\Gallery as GalleryMapper;
+use Modules\Gallery\Controllers\Admin\Base as BaseController;
 
 defined('ACCESS') or die('no direct access');
 
@@ -52,7 +52,7 @@ class Gallery extends BaseController
         if ($this->getRequest()->getPost()) {
             foreach($this->getRequest()->getPost('check_image') as $imageId ) {
                 $catId = $this->getRequest()->getParam('id');
-                $model = new \Gallery\Models\Image();
+                $model = new \Modules\Gallery\Models\Image();
                 $model->setImageId($imageId);
                 $model->setCat($catId);
                 $imagemapper->save($model);

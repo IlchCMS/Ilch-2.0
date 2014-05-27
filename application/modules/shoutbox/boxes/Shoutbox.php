@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Shoutbox\Boxes;
+namespace Modules\Shoutbox\Boxes;
 
 defined('ACCESS') or die('no direct access');
 
@@ -12,7 +12,7 @@ class Shoutbox extends \Ilch\Box
 {
     public function render()
     {
-        $shoutboxMapper = new \Shoutbox\Mappers\Shoutbox();
+        $shoutboxMapper = new \Modules\Shoutbox\Mappers\Shoutbox();
         $uniqid = $this->getUniqid();
 
         if ($this->getRequest()->getPost('form_'.$uniqid)) {
@@ -24,7 +24,7 @@ class Shoutbox extends \Ilch\Box
                 $uid = $this->getUser()->getId();
             }
 
-            $shoutboxModel = new \Shoutbox\Models\Shoutbox();
+            $shoutboxModel = new \Modules\Shoutbox\Models\Shoutbox();
             $shoutboxModel->setUid($uid);
             $shoutboxModel->setName($name);
             $shoutboxModel->setTextarea($textarea);

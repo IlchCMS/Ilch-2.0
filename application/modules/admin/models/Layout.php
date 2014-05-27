@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Admin\Models;
+namespace Modules\Admin\Models;
 defined('ACCESS') or die('no direct access');
 
 /**

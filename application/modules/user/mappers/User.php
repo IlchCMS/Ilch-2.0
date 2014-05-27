@@ -6,9 +6,9 @@
  * @package ilch
  */
 
-namespace User\Mappers;
+namespace Modules\User\Mappers;
 
-use User\Models\User as UserModel;
+use Modules\User\Models\User as UserModel;
 use Ilch\Date as IlchDate;
 
 /**
@@ -22,7 +22,7 @@ class User extends \Ilch\Mapper
      * Returns user model found by the id.
      *
      * @param  mixed[] $id
-     * @return null|\User\Models\User
+     * @return null|\Modules\User\Models\User
      */
     public function getUserById($id)
     {
@@ -44,7 +44,7 @@ class User extends \Ilch\Mapper
      * Returns user model found by the username.
      *
      * @param  string $name
-     * @return null|\User\Models\User
+     * @return null|\Modules\User\Models\User
      */
     public function getUserByName($name)
     {
@@ -66,7 +66,7 @@ class User extends \Ilch\Mapper
      * Returns user model found by the email.
      *
      * @param  string $email
-     * @return null|\User\Models\User
+     * @return null|\Modules\User\Models\User
      */
     public function getUserByEmail($email)
     {
@@ -88,7 +88,7 @@ class User extends \Ilch\Mapper
      * Returns user model found by the confirmed_code.
      *
      * @param  string $confirmed
-     * @return null|\User\Models\User
+     * @return null|\Modules\User\Models\User
      */
     public function getUserByConfirmedCode($confirmed)
     {
@@ -111,7 +111,7 @@ class User extends \Ilch\Mapper
      * none found.
      *
      * @param  mixed[] $where
-     * @return null|\User\Models\User
+     * @return null|\Modules\User\Models\User
      */
     protected function getBy($where = [])
     {
@@ -341,7 +341,7 @@ class User extends \Ilch\Mapper
      */
     public function delete($userId)
     {
-        if (is_a($userId, '\User\Models\User')) {
+        if (is_a($userId, '\Modules\User\Models\User')) {
             $userId = $userId->getId();
         }
 

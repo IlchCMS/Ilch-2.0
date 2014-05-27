@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Article\Controllers;
-use Article\Mappers\Article as ArticleMapper;
-use Comment\Mappers\Comment as CommentMapper;
-use Comment\Models\Comment as CommentModel;
+namespace Modules\Article\Controllers;
+use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\Comment\Mappers\Comment as CommentMapper;
+use Modules\Comment\Models\Comment as CommentModel;
 
 defined('ACCESS') or die('no direct access');
 

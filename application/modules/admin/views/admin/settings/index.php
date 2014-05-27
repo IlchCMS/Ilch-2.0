@@ -21,7 +21,7 @@
                 </optgroup>
                 <optgroup label="<?php echo $this->getTrans('modules'); ?>">
                 <?php
-                    $moduleMapper = new \Admin\Mappers\Module();
+                    $moduleMapper = new \Modules\Admin\Mappers\Module();
 
                     foreach ($this->get('modules') as $module) {
                         $content = $module->getContentForLocale($this->getTranslator()->getLocale());

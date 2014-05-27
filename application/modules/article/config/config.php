@@ -3,7 +3,7 @@
  * @package ilch
  */
 
-namespace Article\Config;
+namespace Modules\Article\Config;
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
@@ -32,12 +32,12 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti($this->getInstallSql());
         
-        $articleMapper = new \Article\Mappers\Article();
+        $articleMapper = new \Modules\Article\Mappers\Article();
         
         /*
          * @todo change content for different types.
          */
-        $article = new \Article\Models\Article();
+        $article = new \Modules\Article\Models\Article();
         $article->setContent('Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
         $article->setTitle('Startseite');
         $article->setPerma('startseite.html');

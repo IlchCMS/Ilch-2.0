@@ -6,9 +6,9 @@
  * @package ilch
  */
 
-namespace Gallery\Mappers;
+namespace Modules\Gallery\Mappers;
 
-use Gallery\Models\GalleryItem as GalleryItem;
+use Modules\Gallery\Models\GalleryItem as GalleryItem;
 
 defined('ACCESS') or die('no direct access');
 

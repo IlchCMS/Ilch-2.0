@@ -1,6 +1,6 @@
 <?php
 $articles = $this->get('articles');
-$commentMapper = new \Comment\Mappers\Comment();
+$commentMapper = new \Modules\Comment\Mappers\Comment();
 
 if (!empty($articles)) {
     foreach($articles as $article) {

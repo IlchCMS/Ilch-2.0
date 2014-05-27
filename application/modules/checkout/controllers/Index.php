@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Checkout\Controllers;
+namespace Modules\Checkout\Controllers;
 
-use Checkout\Mappers\Checkout as CheckoutMapper;
+use Modules\Checkout\Mappers\Checkout as CheckoutMapper;
 use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');

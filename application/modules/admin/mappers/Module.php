@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace Admin\Mappers;
+namespace Modules\Admin\Mappers;
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -30,7 +30,7 @@ class Module extends \Ilch\Mapper
             ->fetchRows();
 
         foreach ($modulesRows as $moduleRow) {
-            $moduleModel = new \Admin\Models\Module();
+            $moduleModel = new \Modules\Admin\Models\Module();
             $moduleModel->setKey($moduleRow['key']);
             $moduleModel->setAuthor($moduleRow['author']);
             $moduleModel->setSystemModule($moduleRow['system']);
@@ -53,9 +53,9 @@ class Module extends \Ilch\Mapper
     /**
      * Inserts a module model in the database.
      *
-     * @param \Admin\Models\Module $module
+     * @param \Modules\Admin\Models\Module $module
      */
-    public function save(\Admin\Models\Module $module)
+    public function save(\Modules\Admin\Models\Module $module)
     {
         $moduleId = $this->db()->insert('modules')
             ->values(array('key' => $module->getKey(), 'system' => $module->getSystemModule(),

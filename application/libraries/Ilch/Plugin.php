@@ -46,7 +46,7 @@ class Plugin
         }
 
         foreach ($this->detectedPlugins[$pluginName] as $module) {
-            $pluginClass = ucfirst($module).'\\Plugins\\'.$pluginName.'';
+            $pluginClass = '\\Modules\\'.ucfirst($module).'\\Plugins\\'.$pluginName.'';
             new $pluginClass($this->pluginData);
         }
     }

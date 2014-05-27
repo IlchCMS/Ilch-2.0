@@ -31,7 +31,7 @@ class GetMenu
         $menuId = $args[0];
 
         $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->layout);
-        $menuMapper = new \Admin\Mappers\Menu();
+        $menuMapper = new \Modules\Admin\Mappers\Menu();
 
         $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
 

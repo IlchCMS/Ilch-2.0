@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Impressum\Models;
+namespace Modules\Impressum\Models;
 
 defined('ACCESS') or die('no direct access');
 

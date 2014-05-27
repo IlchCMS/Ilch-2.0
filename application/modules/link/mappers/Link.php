@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Link\Mappers;
+namespace Modules\Link\Mappers;
 
-use Link\Models\Link as LinkModel;
+use Modules\Link\Models\Link as LinkModel;
 
 defined('ACCESS') or die('no direct access');
 

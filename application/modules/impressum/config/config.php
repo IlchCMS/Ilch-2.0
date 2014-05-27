@@ -3,7 +3,7 @@
  * @package ilch
  */
 
-namespace impressum\Config;
+namespace Modules\Impressum\Config;
 
 defined('ACCESS') or die('no direct access');
 

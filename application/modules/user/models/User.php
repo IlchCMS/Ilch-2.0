@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace User\Models;
+namespace Modules\User\Models;
 
 /**
  * The user model class.
@@ -81,7 +81,7 @@ class User extends \Ilch\Model
     /**
      * The associated user group object.
      *
-     * @var \User\Models\Group[]
+     * @var \Modules\User\Models\Group[]
      */
     protected $groups = array();
 

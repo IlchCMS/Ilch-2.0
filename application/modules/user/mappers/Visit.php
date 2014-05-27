@@ -1,5 +1,5 @@
 <?php
-namespace User\Mappers;
+namespace Modules\User\Mappers;
 
 defined('ACCESS') or die('no direct access');
 
@@ -9,7 +9,7 @@ defined('ACCESS') or die('no direct access');
 class Visit extends \Ilch\Mapper
 {
     /**
-     * @return \User\Models\User[]
+     * @return \Modules\User\Models\User[]
      */
     public function getVisitsOnlineUser()
     {

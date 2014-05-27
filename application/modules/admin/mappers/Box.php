@@ -6,8 +6,8 @@
  * @package ilch
  */
 
-namespace Admin\Mappers;
-use Admin\Models\Box as BoxModel;
+namespace Modules\Admin\Mappers;
+use Modules\Admin\Models\Box as BoxModel;
 
 defined('ACCESS') or die('no direct access');
 

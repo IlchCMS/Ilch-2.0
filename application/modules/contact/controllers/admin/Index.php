@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Contact\Controllers\Admin;
-use Contact\Mappers\Receiver as ReceiverMapper;
-use Contact\Models\Receiver as ReceiverModel;
+namespace Modules\Contact\Controllers\Admin;
+use Modules\Contact\Mappers\Receiver as ReceiverMapper;
+use Modules\Contact\Models\Receiver as ReceiverModel;
 
 defined('ACCESS') or die('no direct access');
 

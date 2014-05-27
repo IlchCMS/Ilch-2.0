@@ -3,7 +3,7 @@
  * @package ilch
  */
 
-namespace Contact\Config;
+namespace Modules\Contact\Config;
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
@@ -31,9 +31,9 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        $receiverMapper = new \Contact\Mappers\Receiver();
-        $model = new \Contact\Models\Receiver();
-        $userMapper = new \User\Mappers\User();
+        $receiverMapper = new \Modules\Contact\Mappers\Receiver();
+        $model = new \Modules\Contact\Models\Receiver();
+        $userMapper = new \Modules\User\Mappers\User();
         $user = $userMapper->getUserById(1);
         $model->setName('Webmaster')->setEmail($user->getEmail());
         $receiverMapper->save($model);

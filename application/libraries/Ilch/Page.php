@@ -183,9 +183,9 @@ class Page
         }
 
         if ($this->request->isAdmin()) {
-            $controller = ucfirst($this->request->getModuleName()).'\\Controllers\\Admin\\'.$dir.ucfirst($controllerName);
+            $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\Admin\\'.$dir.ucfirst($controllerName);
         } else {
-            $controller = ucfirst($this->request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
+            $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
         }
 
         $controller = new $controller($this->layout, $this->view, $this->request, $this->router, $this->translator);

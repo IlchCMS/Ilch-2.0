@@ -4,11 +4,11 @@
  * @package ilch
  */
 
-namespace Admin\Controllers\Admin;
-use Admin\Mappers\Menu as MenuMapper;
-use Page\Mappers\Page as PageMapper;
-use Admin\Models\MenuItem;
-use Admin\Models\Menu as MenuModel;
+namespace Modules\Admin\Controllers\Admin;
+use Modules\Admin\Mappers\Menu as MenuMapper;
+use Modules\Page\Mappers\Page as PageMapper;
+use Modules\Admin\Models\MenuItem;
+use Modules\Admin\Models\Menu as MenuModel;
 defined('ACCESS') or die('no direct access');
 
 class Menu extends \Ilch\Controller\Admin
@@ -127,8 +127,8 @@ class Menu extends \Ilch\Controller\Admin
         $menu = $menuMapper->getMenu($menuId);
         $menus = $menuMapper->getMenus();
         
-        $moduleMapper = new \Admin\Mappers\Module();
-        $boxMapper = new \Admin\Mappers\Box();
+        $moduleMapper = new \Modules\Admin\Mappers\Module();
+        $boxMapper = new \Modules\Admin\Mappers\Box();
 
         $locale = '';
 

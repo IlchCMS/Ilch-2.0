@@ -1,12 +1,10 @@
 <?php
 /**
- * Holds Gallery\Config\Config.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Gallery\Config;
+namespace Modules\Gallery\Config;
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install

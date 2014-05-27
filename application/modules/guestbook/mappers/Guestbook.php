@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Guestbook\Mappers;
+namespace Modules\Guestbook\Mappers;
 
-use Guestbook\Models\Entry as GuestbookModel;
+use Modules\Guestbook\Models\Entry as GuestbookModel;
 
 defined('ACCESS') or die('no direct access');
 

@@ -1,12 +1,10 @@
 <?php
 /**
- * Holds class \User\Models\GroupTest.
- *
  * @copyright Ilch 2.0
  * @package ilch_phpunit
  */
 
-namespace User\Models;
+namespace Modules\User\Models;
 
 use PHPUnit\Ilch\TestCase;
 

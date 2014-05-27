@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace Page\Models;
+namespace Modules\Page\Models;
 defined('ACCESS') or die('no direct access');
 
 /**

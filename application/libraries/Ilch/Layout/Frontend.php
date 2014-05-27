@@ -81,7 +81,7 @@ class Frontend extends Base
             $boxKey = $moduleKey;
         }
 
-        $class = ucfirst($moduleKey).'\\Boxes\\'.ucfirst($boxKey);
+        $class = '\\Modules\\'.ucfirst($moduleKey).'\\Boxes\\'.ucfirst($boxKey);
         $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
         $this->getTranslator()->load(APPLICATION_PATH.'/modules/'.$moduleKey.'/translations');
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());

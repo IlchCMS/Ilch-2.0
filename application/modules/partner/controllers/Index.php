@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Partner\Controllers;
+namespace Modules\Partner\Controllers;
 
-use Partner\Mappers\Partner as PartnerMapper;
+use Modules\Partner\Mappers\Partner as PartnerMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -29,7 +29,7 @@ class Index extends \Ilch\Controller\Frontend
             } elseif(empty($banner)) {
                 $this->addMessage('missingBanner', 'danger');
             } else {
-                $partnerModel = new \Partner\Models\Entry();
+                $partnerModel = new \Modules\Partner\Models\Entry();
                 $partnerModel->setName($name);
                 $partnerModel->setLink($link);
                 $partnerModel->setBanner($banner);

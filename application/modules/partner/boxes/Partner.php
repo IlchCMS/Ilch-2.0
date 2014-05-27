@@ -4,14 +4,14 @@
  * @package ilch
  */
 
-namespace Partner\Boxes;
+namespace Modules\Partner\Boxes;
 defined('ACCESS') or die('no direct access');
 
 class Partner extends \Ilch\Box
 {
     public function render()
     {
-        $partnerMapper = new \Partner\Mappers\Partner();
+        $partnerMapper = new \Modules\Partner\Mappers\Partner();
         $this->getView()->set('partners', $partnerMapper->getPartnersBy(array('setfree' => 1)));
     }
 }

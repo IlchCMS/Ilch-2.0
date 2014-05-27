@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Shoutbox\Mappers;
+namespace Modules\Shoutbox\Mappers;
 
-use Shoutbox\Models\Shoutbox as ShoutboxModel;
+use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
 
 defined('ACCESS') or die('no direct access');
 

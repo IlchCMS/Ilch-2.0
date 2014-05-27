@@ -86,9 +86,9 @@ class Model
         $locale = '';
         $htmlMenuItems = '';
 
-        $menuMapper = new \Admin\Mappers\Menu();
+        $menuMapper = new \Modules\Admin\Mappers\Menu();
         $items = $menuMapper->getMenuItemsByParent($this->getId(), 0);
-        $boxMapper = new \Admin\Mappers\Box();
+        $boxMapper = new \Modules\Admin\Mappers\Box();
         $config = \Ilch\Registry::get('config');
 
         if ((bool)$config->get('multilingual_acp')) {
@@ -112,7 +112,7 @@ class Model
                             $moduleKey = $parts[0];
                             $boxKey = $parts[1];
 
-                            $class = ucfirst($moduleKey).'\\Boxes\\'.ucfirst($boxKey);
+                            $class = '\\Modules\\'.ucfirst($moduleKey).'\\Boxes\\'.ucfirst($boxKey);
                             $view = new \Ilch\View($this->layout->getRequest(), $this->layout->getTranslator(), $this->layout->getRouter());
                             $this->layout->getTranslator()->load(APPLICATION_PATH.'/modules/'.$moduleKey.'/translations');
                             $boxObj = new $class($this->layout, $view, $this->layout->getRequest(), $this->layout->getRouter(), $this->layout->getTranslator());
@@ -124,7 +124,7 @@ class Model
                             }
 
                             $output = $view->loadScript($viewPath);
-                            $box = new \Admin\Models\Box();
+                            $box = new \Modules\Admin\Models\Box();
                             $box->setContent($output);
                         }
 
@@ -145,14 +145,14 @@ class Model
     /**
      * Gets the menu items as html-string.
      *
-     * @param \Admin\Models\MenuItem $item
+     * @param \Modules\Admin\Models\MenuItem $item
      * @param array $options
      * @return string
      */
     protected function recGetItems($item, $locale, $options = array())
     {
-        $menuMapper = new \Admin\Mappers\Menu();
-        $pageMapper = new \Page\Mappers\Page();
+        $menuMapper = new \Modules\Admin\Mappers\Menu();
+        $pageMapper = new \Modules\Page\Mappers\Page();
         $subItems = $menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $html = '';
 

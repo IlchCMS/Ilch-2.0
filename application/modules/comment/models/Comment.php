@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace Comment\Models;
+namespace Modules\Comment\Models;
 defined('ACCESS') or die('no direct access');
 
 /**

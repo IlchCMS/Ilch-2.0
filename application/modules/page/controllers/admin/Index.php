@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Page\Controllers\Admin;
-use Page\Mappers\Page as PageMapper;
-use Page\Models\Page as PageModel;
+namespace Modules\Page\Controllers\Admin;
+use Modules\Page\Mappers\Page as PageMapper;
+use Modules\Page\Models\Page as PageModel;
 
 defined('ACCESS') or die('no direct access');
 

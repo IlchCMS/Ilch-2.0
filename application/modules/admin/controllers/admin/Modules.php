@@ -3,7 +3,7 @@
  * @package ilch
  */
 
-namespace Admin\Controllers\Admin;
+namespace Modules\Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
 class Modules extends \Ilch\Controller\Admin
@@ -15,17 +15,17 @@ class Modules extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        $modules = new \Admin\Mappers\Module();
+        $modules = new \Modules\Admin\Mappers\Module();
         $this->getView()->set('modules', $modules->getModules());
     }
 
     public function deleteAction()
     {
-        $modules = new \Admin\Mappers\Module();
+        $modules = new \Modules\Admin\Mappers\Module();
         $key = $this->getRequest()->getParam('key');
 
         if($this->getRequest()->isSecure()) {
-            $configClass = '\\'.ucfirst($key).'\\Config\\config';
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
             $config = new $configClass($this->getTranslator());
             $config->uninstall();
             $modules->delete($key);

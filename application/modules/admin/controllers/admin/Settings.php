@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Admin\Controllers\Admin;
+namespace Modules\Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
 class Settings extends \Ilch\Controller\Admin
@@ -44,8 +44,8 @@ class Settings extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        $moduleMapper = new \Admin\Mappers\Module();
-        $pageMapper = new \Page\Mappers\Page();
+        $moduleMapper = new \Modules\Admin\Mappers\Module();
+        $pageMapper = new \Modules\Page\Mappers\Page();
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));

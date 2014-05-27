@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Media\Controllers\Admin;
+namespace Modules\Media\Controllers\Admin;
 
-use Media\Mappers\Media as MediaMapper;
+use Modules\Media\Mappers\Media as MediaMapper;
 
 use Ilch\Date as IlchDate;
 
@@ -78,7 +78,7 @@ class Index extends \Ilch\Controller\Admin
             $urlthumb = $path.'thumb_'.$filename.'.'.$endung;
             
             
-            $model = new \Media\Models\Media();
+            $model = new \Modules\Media\Models\Media();
             $model->setUrl($url);
             $model->setUrlThumb($urlthumb);
             $model->setEnding($endung);

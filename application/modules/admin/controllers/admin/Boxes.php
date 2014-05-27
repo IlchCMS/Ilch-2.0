@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Admin\Controllers\Admin;
-use Admin\Mappers\Box as BoxMapper;
-use Admin\Models\Box as BoxModel;
+namespace Modules\Admin\Controllers\Admin;
+use Modules\Admin\Mappers\Box as BoxMapper;
+use Modules\Admin\Models\Box as BoxModel;
 
 defined('ACCESS') or die('no direct access');
 

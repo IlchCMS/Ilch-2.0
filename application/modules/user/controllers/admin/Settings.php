@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace User\Controllers\Admin;
+namespace Modules\User\Controllers\Admin;
 
-use User\Controllers\Admin\Base as BaseController;
+use Modules\User\Controllers\Admin\Base as BaseController;
 
 defined('ACCESS') or die('no direct access');
 

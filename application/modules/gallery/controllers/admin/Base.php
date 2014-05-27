@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace Gallery\Controllers\Admin;
+namespace Modules\Gallery\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 

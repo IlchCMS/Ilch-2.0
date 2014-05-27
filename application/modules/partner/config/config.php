@@ -3,7 +3,7 @@
  * @package ilch
  */
 
-namespace Partner\Config;
+namespace Modules\Partner\Config;
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install

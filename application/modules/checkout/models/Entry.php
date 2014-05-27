@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Checkout\Models;
+namespace Modules\Checkout\Models;
 
 defined('ACCESS') or die('no direct access');
 

@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace User\Models;
+namespace Modules\User\Models;
 
 defined('ACCESS') or die('no direct access');
 

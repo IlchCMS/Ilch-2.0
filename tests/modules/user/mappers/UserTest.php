@@ -6,14 +6,14 @@
  * @package ilch_phpunit
  */
 
-namespace User\Mappers;
+namespace Modules\User\Mappers;
 
 require APPLICATION_PATH . '/modules/user/config/config.php';
 
 use PHPUnit\Ilch\DatabaseTestCase;
-use User\Config\Config as ModuleConfig;
-use User\Mappers\User as UserMapper;
-use User\Models\User as UserModel;
+use Modules\User\Config\Config as ModuleConfig;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Models\User as UserModel;
 
 /**
  * Tests the user mapper class.

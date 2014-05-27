@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Partner\Mappers;
+namespace Modules\Partner\Mappers;
 
-use Partner\Models\Entry as PartnerModel;
+use Modules\Partner\Models\Entry as PartnerModel;
 
 defined('ACCESS') or die('no direct access');
 

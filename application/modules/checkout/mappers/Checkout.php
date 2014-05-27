@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Checkout\Mappers;
+namespace Modules\Checkout\Mappers;
 
-use Checkout\Models\Entry as CheckoutModel;
+use Modules\Checkout\Models\Entry as CheckoutModel;
 
 defined('ACCESS') or die('no direct access');
 

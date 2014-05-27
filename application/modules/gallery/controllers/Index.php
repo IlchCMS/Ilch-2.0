@@ -4,12 +4,12 @@
  * @package ilch
  */
 
-namespace Gallery\Controllers;
+namespace Modules\Gallery\Controllers;
 
-use Gallery\Mappers\Gallery as GalleryMapper;
-use Gallery\Mappers\Image as ImageMapper;
-use Comment\Mappers\Comment as CommentMapper;
-use Comment\Models\Comment as CommentModel;
+use Modules\Gallery\Mappers\Gallery as GalleryMapper;
+use Modules\Gallery\Mappers\Image as ImageMapper;
+use Modules\Comment\Mappers\Comment as CommentMapper;
+use Modules\Comment\Models\Comment as CommentModel;
 
 defined('ACCESS') or die('no direct access');
 

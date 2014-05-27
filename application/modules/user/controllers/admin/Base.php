@@ -6,7 +6,7 @@
  * @package ilch
  */
 
-namespace User\Controllers\Admin;
+namespace Modules\User\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 

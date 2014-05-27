@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Shoutbox\Controllers\Admin;
+namespace Modules\Shoutbox\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 

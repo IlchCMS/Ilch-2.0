@@ -1,13 +1,11 @@
 <?php
 /**
- * Holds Page_PageMapper.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Page\Mappers;
-use Page\Models\Page as PageModel;
+namespace Modules\Page\Mappers;
+use Modules\Page\Models\Page as PageModel;
 
 defined('ACCESS') or die('no direct access');
 

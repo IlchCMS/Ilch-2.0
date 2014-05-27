@@ -6,8 +6,8 @@
  * @package ilch
  */
 
-namespace Article\Mappers;
-use Article\Models\Article as ArticleModel;
+namespace Modules\Article\Mappers;
+use Modules\Article\Models\Article as ArticleModel;
 
 defined('ACCESS') or die('no direct access');
 

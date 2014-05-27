@@ -1,4 +1,4 @@
-<?php $commentMapper = new \Comment\Mappers\Comment();?>
+<?php $commentMapper = new \Modules\Comment\Mappers\Comment();?>
 <div id="gallery">
     <?php foreach ($this->get('image') as $image) : ?>
     <?php $comments = $commentMapper->getCommentsByKey('gallery_'.$image->getId());?>

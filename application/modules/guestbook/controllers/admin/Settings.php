@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Guestbook\Controllers\Admin;
+namespace Modules\Guestbook\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 

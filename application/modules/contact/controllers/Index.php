@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Contact\Controllers;
+namespace Modules\Contact\Controllers;
 defined('ACCESS') or die('no direct access');
 
-use Contact\Mappers\Receiver as ReceiverMapper;
+use Modules\Contact\Mappers\Receiver as ReceiverMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {

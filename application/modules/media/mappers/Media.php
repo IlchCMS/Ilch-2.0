@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Media\Mappers;
+namespace Modules\Media\Mappers;
 
-use Media\Models\Media as MediaModel;
+use Modules\Media\Models\Media as MediaModel;
 
 defined('ACCESS') or die('no direct access');
 

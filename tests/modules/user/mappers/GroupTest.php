@@ -6,10 +6,10 @@
  * @package ilch_phpunit
  */
 
-namespace User\Mappers;
+namespace Modules\User\Mappers;
 
 use PHPUnit\Ilch\TestCase;
-use \User\Mappers\Group as GroupMapper;
+use \Modules\User\Mappers\Group as GroupMapper;
 
 /**
  * Tests the user group mapper class.

@@ -1,12 +1,10 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace User\Config;
+namespace Modules\User\Config;
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
@@ -35,15 +33,15 @@ class Config extends \Ilch\Config\Install
     {
         $this->db()->queryMulti($this->getInstallSql());
         
-        $groupMapper = new \User\Mappers\Group();
+        $groupMapper = new \Modules\User\Mappers\Group();
         $adminGroup = $groupMapper->getGroupById(1);
         $usersGroup = $groupMapper->getGroupById(2);
-        $userMapper = new \User\Mappers\User();
+        $userMapper = new \Modules\User\Mappers\User();
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('regist_accept', '1');
         $databaseConfig->set('regist_confirm', '1');
         $databaseConfig->set('regist_rules', "Die Registrierung ist völlig Kostenlos.\nDie Betreiber der Seite übernehmen keine Haftung.\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.");
-        $user = new \User\Models\User();
+        $user = new \Modules\User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
         $user->setPassword(crypt($_SESSION['install']['adminPassword']));
         $user->setEmail($_SESSION['install']['adminEmail']);

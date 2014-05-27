@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Install\Controllers;
+namespace Modules\Install\Controllers;
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
@@ -218,7 +218,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment'), $modulesToInstall);
-                $moduleMapper = new \Admin\Mappers\Module();
+                $moduleMapper = new \Modules\Admin\Mappers\Module();
 
                 /*
                  * Clear old tables.
@@ -226,12 +226,12 @@ class Index extends \Ilch\Controller\Frontend
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
-                    $configClass = '\\'.ucfirst($module).'\\Config\\config';
+                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
                     $config->install();
 
                     if (!empty($config->config)) {
-                        $moduleModel = new \Admin\Models\Module();
+                        $moduleModel = new \Modules\Admin\Models\Module();
                         $moduleModel->setKey($config->config['key']);
 
                         if (isset($config->config['author'])) {
@@ -253,19 +253,19 @@ class Index extends \Ilch\Controller\Frontend
                     }
                 }
 
-                $menuMapper = new \Admin\Mappers\Menu();
-                $menu1 = new \Admin\Models\Menu();
+                $menuMapper = new \Modules\Admin\Mappers\Menu();
+                $menu1 = new \Modules\Admin\Models\Menu();
                 $menu1->setId(1);
                 $menu1->setTitle('Hauptmenü');
                 $menuMapper->save($menu1);
 
-                $menu2 = new \Admin\Models\Menu();
+                $menu2 = new \Modules\Admin\Models\Menu();
                 $menu2->setId(2);
                 $menu2->setTitle('Hauptmenü 2');
                 $menuMapper->save($menu2);
 
                 $sort = 0;
-                $menuItem = new \Admin\Models\MenuItem();
+                $menuItem = new \Modules\Admin\Models\MenuItem();
                 $menuItem->setMenuId(1);
                 $menuItem->setParentId(0);
                 $menuItem->setTitle('Menü');
@@ -277,10 +277,10 @@ class Index extends \Ilch\Controller\Frontend
                         continue;
                     }
 
-                    $configClass = '\\'.ucfirst($module).'\\Config\\config';
+                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
 
-                    $menuItem = new \Admin\Models\MenuItem();
+                    $menuItem = new \Modules\Admin\Models\MenuItem();
                     $menuItem->setMenuId(1);
                     $menuItem->setSort($sort);
                     $menuItem->setParentId(1);
@@ -341,7 +341,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['gallery']['types']  = array('clan', 'private');
 
         foreach ($modules as $key => $module) {
-            $configClass = '\\'.ucfirst($key).'\\Config\\config';
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $modules[$key]['config'] = $config;
 

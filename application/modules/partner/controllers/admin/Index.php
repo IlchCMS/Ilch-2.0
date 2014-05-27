@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Partner\Controllers\Admin;
+namespace Modules\Partner\Controllers\Admin;
 
-use Partner\Mappers\Partner as PartnerMapper;
-use Partner\Models\Entry as PartnerModel;
+use Modules\Partner\Mappers\Partner as PartnerMapper;
+use Modules\Partner\Models\Entry as PartnerModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -54,7 +54,7 @@ class Index extends \Ilch\Controller\Admin
 
             if ($this->getRequest()->getPost('action') == 'setfree') {
                 foreach($this->getRequest()->getPost('check_entries') as $entryId) {
-                    $model = new \Partner\Models\Entry();
+                    $model = new \Modules\Partner\Models\Entry();
                     $model->setId($entryId);
                     $model->setFree(1);
                     $partnerMapper->save($model);
@@ -87,7 +87,7 @@ class Index extends \Ilch\Controller\Admin
     public function setfreeAction()
     {
         $partnerMapper = new PartnerMapper();
-        $model = new \Partner\Models\Entry();
+        $model = new \Modules\Partner\Models\Entry();
         $model->setId($this->getRequest()->getParam('id'));
         $model->setFree(1);
         $partnerMapper->save($model);

@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Guestbook\Controllers\Admin;
+namespace Modules\Guestbook\Controllers\Admin;
 
-use Guestbook\Mappers\Guestbook as GuestbookMapper;
+use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -52,7 +52,7 @@ class Index extends \Ilch\Controller\Admin
 
             if ($this->getRequest()->getPost('action') == 'setfree') {
                 foreach($this->getRequest()->getPost('check_entries') as $entryId) {
-                    $model = new \Guestbook\Models\Entry();
+                    $model = new \Modules\Guestbook\Models\Entry();
                     $model->setId($entryId);
                     $model->setFree(1);
                     $guestbookMapper->save($model);
@@ -91,7 +91,7 @@ class Index extends \Ilch\Controller\Admin
     public function setfreeAction()
     {
         $guestbookMapper = new GuestbookMapper();
-        $model = new \Guestbook\Models\Entry();
+        $model = new \Modules\Guestbook\Models\Entry();
         $model->setId($this->getRequest()->getParam('id'));
         $model->setFree(1);
         $guestbookMapper->save($model);

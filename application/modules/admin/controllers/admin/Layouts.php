@@ -3,7 +3,7 @@
  * @package ilch
  */
 
-namespace Admin\Controllers\Admin;
+namespace Modules\Admin\Controllers\Admin;
 defined('ACCESS') or die('no direct access');
 
 class Layouts extends \Ilch\Controller\Admin
@@ -32,7 +32,7 @@ class Layouts extends \Ilch\Controller\Admin
         $layouts = array();
 
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
-            $model = new \Admin\Models\Layout();
+            $model = new \Modules\Admin\Models\Layout();
             $model->setKey(basename($layoutPath));
             include_once $layoutPath.'/config/config.php';
             $model->setAuthor($config['author']);

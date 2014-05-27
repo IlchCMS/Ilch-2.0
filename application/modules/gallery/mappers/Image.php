@@ -6,9 +6,9 @@
  * @package ilch
  */
 
-namespace Gallery\Mappers;
+namespace Modules\Gallery\Mappers;
 
-use Gallery\Models\Image as ImageModel;
+use Modules\Gallery\Models\Image as ImageModel;
 
 defined('ACCESS') or die('no direct access');
 

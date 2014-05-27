@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Gallery\Models;
+namespace Modules\Gallery\Models;
 
 defined('ACCESS') or die('no direct access');
 

@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Gallery\Controllers\Admin;
+namespace Modules\Gallery\Controllers\Admin;
 
-use Gallery\Mappers\Gallery as GalleryMapper;
-use Gallery\Controllers\Admin\Base as BaseController;
+use Modules\Gallery\Mappers\Gallery as GalleryMapper;
+use Modules\Gallery\Controllers\Admin\Base as BaseController;
 
 defined('ACCESS') or die('no direct access');
 
@@ -47,7 +47,7 @@ class Index extends BaseController
                     }
 
                     foreach ($items as $item) {
-                        $galleryItem = new \Gallery\Models\GalleryItem;
+                        $galleryItem = new \Modules\Gallery\Models\GalleryItem;
 
                         if (strpos($item['id'], 'tmp_') !== false) {
                             $tmpId = str_replace('tmp_', '', $item['id']);
@@ -78,7 +78,7 @@ class Index extends BaseController
                     $sort = 0;
 
                     foreach ($sortArray as $id => $parent) {
-                        $galleryItem = new \Gallery\Models\GalleryItem();
+                        $galleryItem = new \Modules\Gallery\Models\GalleryItem();
                         $galleryItem->setId($id);
                         $galleryItem->setSort($sort);
                         $galleryItem->setParentId($parent);

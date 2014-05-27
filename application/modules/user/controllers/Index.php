@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace User\Controllers;
+namespace Modules\User\Controllers;
 
-use User\Mappers\User as UserMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 defined('ACCESS') or die('no direct access');
 

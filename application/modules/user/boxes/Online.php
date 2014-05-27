@@ -4,14 +4,14 @@
  * @package ilch
  */
 
-namespace User\Boxes;
+namespace Modules\User\Boxes;
 defined('ACCESS') or die('no direct access');
 
 class Online extends \Ilch\Box
 {
     public function render()
     {
-        $visitMapper = new \User\Mappers\Visit();
+        $visitMapper = new \Modules\User\Mappers\Visit();
         
         $allCount = $visitMapper->getVisitsCountOnline();
         $users = $visitMapper->getVisitsOnlineUser();

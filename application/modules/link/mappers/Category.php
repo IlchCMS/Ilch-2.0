@@ -6,9 +6,9 @@
  * @package ilch
  */
 
-namespace Link\Mappers;
+namespace Modules\Link\Mappers;
 
-use Link\Models\Category as CategoryModel;
+use Modules\Link\Models\Category as CategoryModel;
 
 defined('ACCESS') or die('no direct access');
 

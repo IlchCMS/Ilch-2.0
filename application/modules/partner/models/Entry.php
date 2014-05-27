@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Partner\Models;
+namespace Modules\Partner\Models;
 
 defined('ACCESS') or die('no direct access');
 

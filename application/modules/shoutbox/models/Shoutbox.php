@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Shoutbox\Models;
+namespace Modules\Shoutbox\Models;
 
 defined('ACCESS') or die('no direct access');
 

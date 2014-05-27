@@ -6,8 +6,8 @@
  * @package ilch
  */
 
-namespace Admin\Controllers\Admin;
-use User\Mappers\User as UserMapper;
+namespace Modules\Admin\Controllers\Admin;
+use Modules\User\Mappers\User as UserMapper;
 defined('ACCESS') or die('no direct access');
 
 /**

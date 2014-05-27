@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Shoutbox\Controllers;
+namespace Modules\Shoutbox\Controllers;
 
-use Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
+use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
 
 defined('ACCESS') or die('no direct access');
 

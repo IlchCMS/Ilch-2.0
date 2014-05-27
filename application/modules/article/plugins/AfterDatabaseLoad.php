@@ -3,8 +3,8 @@
  * @package ilch
  */
 
-namespace Article\Plugins;
-use Article\Mappers\Article as ArticleMapper;
+namespace Modules\Article\Plugins;
+use Modules\Article\Mappers\Article as ArticleMapper;
 defined('ACCESS') or die('no direct access');
 
 class AfterDatabaseLoad

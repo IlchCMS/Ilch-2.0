@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-namespace Comment\Mappers;
-use Comment\Models\Comment as CommentModel;
+namespace Modules\Comment\Mappers;
+use Modules\Comment\Models\Comment as CommentModel;
 
 defined('ACCESS') or die('no direct access');
 

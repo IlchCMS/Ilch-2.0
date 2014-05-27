@@ -6,9 +6,9 @@
  * @package ilch
  */
 
-namespace User\Mappers;
+namespace Modules\User\Mappers;
 
-use User\Models\Group as GroupModel;
+use Modules\User\Models\Group as GroupModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -192,7 +192,7 @@ class Group extends \Ilch\Mapper
      */
     public function delete($groupId)
     {
-        if(is_a($groupId, '\User\Models\Group'))
+        if(is_a($groupId, '\Modules\User\Models\Group'))
         {
             $groupId = $groupId->getId();
         }
