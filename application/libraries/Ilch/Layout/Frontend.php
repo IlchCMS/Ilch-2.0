@@ -131,6 +131,7 @@ class Frontend extends Base
             $this->getTranslator(),
             $this->getRouter());
         $layout->setArray($data);
+        $layout->setFile($this->getFile(), $this->getLayoutKey());
 
         echo $layout->loadScript(APPLICATION_PATH.'/'.dirname($this->getFile()).'/'.$file);
     }

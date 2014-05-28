@@ -132,4 +132,14 @@ abstract class Base extends \Ilch\Design\Base
     {
         return $this->file;
     }
+
+    /**
+     * Gets the key of the layout.
+     *
+     * @return string
+     */
+    public function getLayoutKey()
+    {
+        return $this->layoutKey;
+    }
 }
