@@ -108,7 +108,7 @@ abstract class Base extends \Ilch\Design\Base
     public function loadScript($loadScript)
     {
         if (file_exists($loadScript)) {
-            include_once($loadScript);
+            include $loadScript;
         }
     }
 
