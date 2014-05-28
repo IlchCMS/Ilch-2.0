@@ -117,4 +117,21 @@ class Frontend extends Base
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>';
         return $html;
     }
+        
+    /**
+     * Loads a layout file.
+     *
+     * @param string $file
+     * @param mixed[] $data
+     */
+    public function load($file, $data = array())
+    {
+        $request = $this->getRequest();
+        $layout = new \Ilch\Layout\Frontend($request,
+            $this->getTranslator(),
+            $this->getRouter());
+        $layout->setArray($data);
+
+        echo $layout->loadScript(APPLICATION_PATH.'/'.dirname($this->getFile()).'/'.$file);
+    }
 }
