@@ -74,7 +74,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'))
                 ->add($gallery->getTitle(), array('action' => 'show', 'id' => $galleryid));
 
-        $this->getView()->set('image', $imagemapper->getImage($id));
+        $this->getView()->set('image', $imagemapper->getImageById($id));
         $this->getView()->set('comments', $comments);
     }
 }
