@@ -381,4 +381,24 @@ abstract class Base
             return preg_replace("/[^ ]*$/", '', substr($str, 0, $length)).'...';
         }
     }
+
+    /**
+     * Gets the key of the layout.
+     *
+     * @return string
+     */
+    public function getLayoutKey()
+    {
+        return $this->layoutKey;
+    }
+
+    /**
+     * Set the key of the layout.
+     *
+     * @param string $layoutKey
+     */
+    public function setLayoutKey($layoutKey)
+    {
+        $this->layoutKey = $layoutKey;
+    }
 }

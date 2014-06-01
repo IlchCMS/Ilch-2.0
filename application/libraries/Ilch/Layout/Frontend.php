@@ -91,6 +91,8 @@ class Frontend extends Base
         if (!file_exists($viewPath)) {
             $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
         }
+        
+        $view->setLayoutKey($this->getLayoutKey());
 
         return $view->loadScript($viewPath);
     }

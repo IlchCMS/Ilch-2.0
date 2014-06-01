@@ -123,6 +123,8 @@ class Model
                                 $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
                             }
 
+                            $view->setLayoutKey($this->layout->getLayoutKey());
+
                             $output = $view->loadScript($viewPath);
                             $box = new \Modules\Admin\Models\Box();
                             $box->setContent($output);
