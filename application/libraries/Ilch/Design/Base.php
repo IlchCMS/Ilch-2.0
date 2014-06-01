@@ -12,7 +12,7 @@ abstract class Base
     /**
      * Holds all Helpers.
      *
-     * @var array 
+     * @var array
      */
     private $helpers = array();
 
@@ -63,6 +63,20 @@ abstract class Base
      * @var boolean
      */
     private $modRewrite;
+    
+    /**
+     * Injects request and translator to layout/view.
+     *
+     * @param \Ilch\Request    $request
+     * @param \Ilch\Translator $translator
+     * @param \Ilch\Router     $router
+     */
+    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
+    {
+        $this->request = $request;
+        $this->translator = $translator;
+        $this->router = $router;
+    }
 
     /**
      * Gets view data.
@@ -101,20 +115,6 @@ abstract class Base
     }
 
     /**
-     * Injects request and translator to layout/view.
-     *
-     * @param \Ilch\Request    $request
-     * @param \Ilch\Translator $translator
-     * @param \Ilch\Router     $router
-     */
-    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
-    {
-        $this->request = $request;
-        $this->translator = $translator;
-        $this->router = $router;
-    }
-
-    /**
      * Gets the request object.
      *
      * @return Ilch_Request
@@ -123,7 +123,7 @@ abstract class Base
     {
         return $this->request;
     }
-    
+
     /**
      * Gets the router object.
      *
@@ -179,9 +179,9 @@ abstract class Base
     }
 
    /**
-     * Gets the static url.
+     * Gets the layout url.
      *
-     * @param  string $url
+     * @param string $url
      * @return string
      */
     public function getLayoutUrl($url = '')
@@ -194,7 +194,22 @@ abstract class Base
     }
 
     /**
-     * Gets the syste, static url.
+     * Gets the module url.
+     *
+     * @param string $url
+     * @return string
+     */
+    public function getModuleUrl($url = '')
+    {
+        if (empty($url)) {
+            return BASE_URL.'/application/modules/'.$this->getRequest()->getModuleName();
+        }
+
+        return BASE_URL.'/application/modules/'.$this->getRequest()->getModuleName().'/'.$url;
+    }
+
+    /**
+     * Gets the system, static url.
      *
      * @param  string $url
      * @return string
@@ -228,17 +243,17 @@ abstract class Base
     public function getHtmlFromBBCode($bbcode)
     {
         require_once APPLICATION_PATH.'/libraries/jbbcode/Parser.php';
-        
+
         $parser = new \JBBCode\Parser();
         $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
-        
+
         $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<div class="quote">{param}</div>');
         $parser->addCodeDefinition($builder->build());
 
         $builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre class="code">{param}</pre>');
         $builder->setParseContent(false);
         $parser->addCodeDefinition($builder->build());
-        
+
         $parser->parse($bbcode);
 
         return $parser->getAsHTML();
@@ -294,7 +309,7 @@ abstract class Base
         foreach ($urlArray as $key => $value) {
             $urlParts[] = $key.'/'.$value;
         }
-        
+
         if ($secure) {
             $token = uniqid();
             $_SESSION['token'][$token] = $token;
