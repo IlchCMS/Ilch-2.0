@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Required validation class
+ * Datetime validation class
  *
  * @copyright Ilch 2.0
  * @package ilch
@@ -10,12 +10,17 @@
 
 namespace Ilch\Validators;
 
-class Required extends Base
+class Datetime extends Base
 {
     /**
      * @var mixed The value to validate
      */
     protected $value;
+
+    /**
+     * @var mixed The format to check against
+     */
+    protected $format = 'Y-m-d H:i:s';
 
     /**
      * Prepares the validator
@@ -27,6 +32,10 @@ class Required extends Base
     public function prepare($value, $source, $params)
     {
         $this->value = $value;
+
+        if (isset($params['format'])) {
+            $this->format = $params['format'];
+        }
     }
 
     /**
@@ -34,8 +43,8 @@ class Required extends Base
      */
     public function execute()
     {
-        if (empty($this->value) and $this->value !== 0) {
-            $this->addError('ist ein Pflichtfeld.');
+        if (!\Ilch\Date::createFromFormat($this->format, $this->value)) {
+            $this->addError('ist kein gültiges Datum.');
         }
     }
 }
