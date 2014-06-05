@@ -107,8 +107,6 @@ class Validator
 
         foreach ($this->rules as $item => $rules) {
 
-            dumpVar("BEFORE FILTERS:");
-
             // beforeFilters
             $this->filter('before', $item);
 
@@ -122,8 +120,6 @@ class Validator
                     $validator = "\Ilch\Validators\\".ucfirst($validator);
                 }
 
-                dumpVar($validator);
-
                 $validation = new $validator;
 
                 $validation->prepare(array_dot($this->data, $item), $this->data, $parameters);
@@ -133,8 +129,6 @@ class Validator
                     $this->addError($item, $validation->getMessage());
                 }
             }
-
-            dumpVar("AFTER FILTERS:");
 
             // afterFilters
             $this->filter('after', $item);
@@ -155,23 +149,17 @@ class Validator
                 }
             }
 
-            dumpVar($filter);
-
             $filterParts = explode("::", $filter);
 
             if (class_exists($filter)) {
 
                 $filterInstance = new $filter($params);
 
-                dumpVar("Filter class");
-
                 $filtered = $filterInstance->filter(array_dot($this->data, $item));
             } elseif (count($filterParts > 1) and (isset($filterParts[1]) and method_exists($filterParts[0], $filterParts[1]))) {
-                dumpVar("Static class method");
 
                 $filtered = call_user_func_array($filter, $params);
             } elseif (function_exists($filter)) {
-                dumpVar("Function");
                 // Replace placeholder with content
                 $params = str_replace(self::SELF, array_dot($this->data, $item), $params);
 
