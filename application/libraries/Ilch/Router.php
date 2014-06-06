@@ -132,7 +132,7 @@ class Router
      */
     protected function fillQuery()
     {
-        $query = substr($_SERVER['REQUEST_URI'], strlen(REWRITE_BASE));
+        $query = substr(urldecode($_SERVER['REQUEST_URI']), strlen(REWRITE_BASE));
         $query = str_replace('index.php/', '', $query);
         $query = trim(str_replace('index.php', '', $query), '/');
 
