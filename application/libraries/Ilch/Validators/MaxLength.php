@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Required If validation class
+ * Max Length validation class
  *
  * @copyright Ilch 2.0
  * @package ilch
@@ -10,7 +10,7 @@
 
 namespace Ilch\Validators;
 
-class RequiredIf extends Base
+class MaxLength extends Base
 {
     /**
      * @var mixed The value to validate
@@ -18,15 +18,21 @@ class RequiredIf extends Base
     protected $value;
 
     /**
+     * @var integer Max length of the value
+     */
+    protected $max;
+
+    /**
      * Prepares the validator
      *
      * @param mixed   $value       The value to validate
      * @param array   $source      The whole source array
-     * @param integer $params      Parameters
+     * @param integer $max         Maximum length
      */
-    public function prepare($value, $source, $params)
+    public function prepare($value, $source, $max)
     {
         $this->value = $value;
+        $this->max = $max;
     }
 
     /**
@@ -34,8 +40,8 @@ class RequiredIf extends Base
      */
     public function execute()
     {
-        if (empty($this->value)) {
-            $this->addError('ist ein Pflichtfeld.');
+        if (strlen($this->value) > $this->max) {
+            $this->addError("darf höchstens {$this->max} Zeichen lang sein.");
         }
     }
 }
