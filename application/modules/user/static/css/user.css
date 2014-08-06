@@ -152,3 +152,21 @@
 }
 .formLine .checkbox {
 }
+
+.panel-profile-image{
+    width: 100%;
+    margin-bottom: 5px;
+}
+#panel .nav > li > a.active{
+  text-decoration: none;
+  background-color: #eeeeee;
+}
+
+#panel hr{
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+.birthday {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}

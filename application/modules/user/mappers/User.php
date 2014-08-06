@@ -168,6 +168,35 @@ class User extends \Ilch\Mapper
             $user->setEmail($userRow['email']);
         }
 
+        if (isset($userRow['first_name'])) {
+            $user->setFirstName($userRow['first_name']);
+        }
+
+        if (isset($userRow['last_name'])) {
+            $user->setLastName($userRow['last_name']);
+        }
+
+        if (isset($userRow['homepage'])) {
+            $user->setHomepage($userRow['homepage']);
+        }
+
+        if (isset($userRow['city'])) {
+            $user->setCity($userRow['city']);
+        }
+
+        if (isset($userRow['birthday'])) {
+            $user->setBirthday($userRow['birthday']);
+        }
+
+        if (isset($userRow['avatar'])) {
+            if (file_exists($userRow['avatar'])){
+                $user->setAvatar($userRow['avatar']);
+            }  else {
+                $user->setAvatar('static/img/noavatar.jpg');
+            }
+            
+        }
+
         if (isset($userRow['password'])) {
             $user->setPassword($userRow['password']);
         }
@@ -248,6 +277,13 @@ class User extends \Ilch\Mapper
         if ($confirmedCode !== null) {
             $fields['confirmed_code'] = $confirmedCode;
         }
+
+        $fields['first_name'] = $user->getFirstName();
+        $fields['last_name'] = $user->getLastName();
+        $fields['homepage'] = $user->getHomepage();
+        $fields['city'] = $user->getCity();
+        $fields['birthday'] = $user->getBirthday();
+        $fields['avatar'] = $user->getAvatar();
 
         $userId = (int)$this->db()->select('id')
             ->from('users')

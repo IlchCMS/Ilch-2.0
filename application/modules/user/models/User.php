@@ -35,6 +35,48 @@ class User extends \Ilch\Model
     protected $email;
 
     /**
+     * The email address of the user.
+     *
+     * @var string
+     */
+    protected $firstname;
+
+    /**
+     * The email address of the user.
+     *
+     * @var string
+     */
+    protected $lastname;
+
+    /**
+     * The email address of the user.
+     *
+     * @var string
+     */
+    protected $homepage;
+
+    /**
+     * The email address of the user.
+     *
+     * @var string
+     */
+    protected $city;
+
+    /**
+     * The \Ilch\Date of when the user got created.
+     *
+     * @var \Ilch\Date
+     */
+    protected $birthday;
+
+    /**
+     * The \Ilch\Date of when the user got created.
+     *
+     * @var \Ilch\Date
+     */
+    protected $avatar;
+
+    /**
      * The password of the user.
      *
      * @var string
@@ -338,6 +380,144 @@ class User extends \Ilch\Model
     public function setDateLastActivity($dateLastActivity)
     {
         $this->dateLastActivity = $dateLastActivity;
+
+        return $this;
+    }
+
+    /**
+     * Returns the email address of the user.
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Saves the email address of the user.
+     *
+     * @param string $firstname
+     * @return User
+     */
+    public function setFirstName($firstname)
+    {
+        $this->firstname = (string)$firstname;
+
+        return $this;
+    }
+
+    /**
+     * Returns the email address of the user.
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Saves the email address of the user.
+     *
+     * @param string $lastname
+     * @return User
+     */
+    public function setLastName($lastname)
+    {
+        $this->lastname = (string)$lastname;
+
+        return $this;
+    }
+
+    /**
+     * Returns the email address of the user.
+     *
+     * @return string
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * Saves the email address of the user.
+     *
+     * @param string $homepage
+     * @return User
+     */
+    public function setHomepage($homepage)
+    {
+        $this->homepage = (string)$homepage;
+
+        return $this;
+    }
+
+    /**
+     * Returns the email address of the user.
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Saves the email address of the user.
+     *
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = (string)$avatar;
+
+        return $this;
+    }
+
+    /**
+     * Returns the email address of the user.
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Saves the email address of the user.
+     *
+     * @param string $city
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = (string)$city;
+
+        return $this;
+    }
+
+    /**
+     * Returns the date_created \Ilch\Date of the user.
+     *
+     * @return \Ilch\Date
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * Saves the date_created \Ilch\Date of the user.
+     *
+     * @param \Ilch\Date $birthday
+     * @return User
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
 
         return $this;
     }
