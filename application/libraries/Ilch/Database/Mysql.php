@@ -80,19 +80,16 @@ class Mysql
      * @param string $name
      * @param string $password
      * @param integer|null $port
-     * @return bool success
+     * @throws \RuntimeException
      */
     public function connect($host, $name, $password, $port = null)
     {
         $this->conn = @new \mysqli($host, $name, $password, $port);
-
-        if ($this->conn->connect_error) {
-            return false;
+        if (mysqli_connect_error() !== null) {
+            throw new \RuntimeException('Cannot connect to database.');
         }
 
-        @$this->conn->set_charset('utf8');
-
-        return true;
+        $this->conn->set_charset('utf8');
     }
 
     /**

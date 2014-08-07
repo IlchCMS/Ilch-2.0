@@ -43,6 +43,10 @@ $loader->registNamespace('Thumb');
 
 \Ilch\Registry::set('startTime', microtime(true));
 
-$page = new \Ilch\Page();
-$page->loadCms();
-$page->loadPage();
+try {
+    $page = new \Ilch\Page();
+    $page->loadCms();
+    $page->loadPage();
+} catch (Exception $ex) {
+    print 'An unexpected error occurred: ' . $ex->getMessage();
+}
