@@ -119,12 +119,11 @@ CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
                 
 INSERT INTO `[prefix]_user_menu` (`id`, `key`, `title`) VALUES
-(1, "", "Home"),
-(2, "user/panel/index", "Panel"),
-(3, "user/panel/dialog", "Dialog"),
-(4, "user/panel/friends", "Freunde"),
-(5, "user/panel/groups", "Gruppen"),
-(6, "user/panel/settings", "Einstellungen");
+(1, "user/panel/index", "Panel"),
+(2, "user/panel/dialog", "Dialog"),
+(3, "user/panel/friends", "Freunde"),
+(4, "user/panel/groups", "Gruppen"),
+(5, "user/panel/settings", "Einstellungen");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
                   `c_id` int(10) NOT NULL AUTO_INCREMENT,

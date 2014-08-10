@@ -15,11 +15,6 @@ defined('ACCESS') or die('no direct access');
 
 class Panel extends BaseController
 {
-    public function init()
-    {
-        parent::init();
-    }
-
     public function indexAction()
     {
         $profilMapper = new UserMapper();
@@ -126,10 +121,10 @@ class Panel extends BaseController
     public function dialogAction()
     {
         $profilMapper = new UserMapper();
-        $DialogMapper = new DialogMapper();
+        $dialogMapper = new DialogMapper();
 
         $profil = $profilMapper->getUserById($this->getUser()->getId());
-        $dialog = $DialogMapper->getDialog($this->getUser()->getId());
+        $dialog = $dialogMapper->getDialog($this->getUser()->getId());
 
         $this->getView()->set('dialog', $dialog);
         $this->getView()->set('profil', $profil);
@@ -138,9 +133,9 @@ class Panel extends BaseController
     public function dialogviewmessageAction()
     {
         if ($this->getRequest()->isPost('fetch')) {
-            $DialogMapper = new DialogMapper();
+            $dialogMapper = new DialogMapper();
             $c_id = $this->getRequest()->getParam('id');
-            $user = $DialogMapper->getDialogCheckByCId($c_id);
+            $user = $dialogMapper->getDialogCheckByCId($c_id);
 
             if($this->getUser()->getId() != $user->getUserTwo()){
                 $user_two = $user->getUserOne();
@@ -148,7 +143,7 @@ class Panel extends BaseController
                 $user_two = $user->getUserTwo();
             }
             
-            $this->getView()->set('inbox', $DialogMapper->getDialogMessage($c_id));
+            $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
         }
     }
     
