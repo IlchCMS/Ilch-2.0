@@ -35,8 +35,12 @@ class BeforeControllerLoad
             $userId = (int) $_SESSION['user_id'];
         }
 
+        $request = $pluginData['request'];
+
         if(!$userId) {
-            return;
+            if ($request->getModuleName() == 'user' && !in_array($request->getControllerName(), array('index', 'login', 'regist'))) {
+                $pluginData['controller']->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
+            }
         }
 
         $userMapper = new UserMapper();
@@ -46,8 +50,6 @@ class BeforeControllerLoad
             // Happens rarely, for example if a user id is saved in the session before reinstalling and the cms got just installed.
             return;
         }
-
-        $request = $pluginData['request'];
 
         if($user->isAdmin()) {
             /*

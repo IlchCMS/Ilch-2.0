@@ -41,6 +41,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('regist_accept', '1');
         $databaseConfig->set('regist_confirm', '1');
         $databaseConfig->set('regist_rules', "Die Registrierung ist völlig Kostenlos.\nDie Betreiber der Seite übernehmen keine Haftung.\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.");
+        $databaseConfig->set('avatar_uploadpath', 'application/modules/user/static/upload/avatar/');
         $user = new \Modules\User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
         $user->setPassword(crypt($_SESSION['install']['adminPassword']));
@@ -69,6 +70,12 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `homepage` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `birthday` date NOT NULL,
+  `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date_created` datetime NOT NULL,
   `date_confirmed` datetime NOT NULL,
   `confirmed` int(11) DEFAULT 1,
@@ -104,6 +111,39 @@ CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `key` varchar(255) NOT NULL,
+                  `title` varchar(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                
+INSERT INTO `[prefix]_user_menu` (`id`, `key`, `title`) VALUES
+(1, "", "Home"),
+(2, "user/panel/index", "Panel"),
+(3, "user/panel/dialog", "Dialog"),
+(4, "user/panel/friends", "Freunde"),
+(5, "user/panel/groups", "Gruppen"),
+(6, "user/panel/settings", "Einstellungen");
+
+CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
+                  `c_id` int(10) NOT NULL AUTO_INCREMENT,
+                  `user_one` int(10) unsigned NOT NULL,
+                  `user_two` int(10) unsigned NOT NULL,
+                  `time` datetime NOT NULL,
+                  PRIMARY KEY (`c_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
+                  `cr_id` int(10) NOT NULL AUTO_INCREMENT,
+                  `reply` text,
+                  `user_id_fk` int(10) unsigned NOT NULL,
+                  `c_id_fk` int(10) NOT NULL,
+                  `time` datetime NOT NULL,
+                  `read` int(11) DEFAULT 0,
+                  PRIMARY KEY (`cr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+ 
 CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
   `field_id` int(11) NOT NULL,
   `locale` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
