@@ -18,7 +18,40 @@ class Shoutbox extends \Ilch\Mapper
      * @param array $where
      * @return ShoutboxModel[]|array
      */
-    public function getShoutbox($where = array(), $limit = null)
+    public function getShoutbox($where = array())
+    {
+        $entryArray = $this->db()->select('*')
+                ->from('shoutbox')
+                ->where($where)
+                ->order(array('id' => 'DESC'))
+                ->execute()
+                ->fetchRows();
+
+        if (empty($entryArray)) {
+            return array();
+        }
+
+        $shoutbox = array();
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new ShoutboxModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setUid($entries['user_id']);
+            $entryModel->setName($entries['name']);
+            $entryModel->setTextarea($entries['textarea']);
+            $entryModel->setTime($entries['time']);
+            $shoutbox[] = $entryModel;
+        }
+
+        return $shoutbox;
+    }
+    /**
+     * Gets the Shoutbox.
+     *
+     * @param array $where
+     * @return ShoutboxModel[]|array
+     */
+    public function getShoutboxLimit($where = array(), $limit = null)
     {
         $entryArray = $this->db()->select('*')
                 ->from('shoutbox')

@@ -17,6 +17,7 @@ class Stats extends \Ilch\Box
         $date->modify('-1 day');
         $this->getView()->set('visitsYesterday', $visitMapper->getVisitsCount($date->format('Y-m-d')));
         $this->getView()->set('visitsTotal', $visitMapper->getVisitsCount());
+        $this->getView()->set('visitsOnline', $visitMapper->getVisitsCountOnline());
     }
 }
 

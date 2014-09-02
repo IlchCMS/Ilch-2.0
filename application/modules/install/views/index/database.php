@@ -21,13 +21,13 @@ $errors = $this->get('errors');
                class="form-control"
                name="dbHost"
                id="dbHost" />
-        <?php
-            if (!empty($errors['dbConnection'])) {
-                echo '<span class="help-block">'.$this->getTrans($errors['dbConnection']).'</span>';
-            }
-        ?>
         <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbHostInfo'); ?>"><i class="fa fa-info-circle"></i></div>
-    </div>
+    </div>    
+    <?php
+        if (!empty($errors['dbConnection'])) {
+            echo '<span class="col-lg-2"></span><span class="col-lg-8 help-block">'.$this->getTrans($errors['dbConnection']).'</span>';
+        }
+    ?>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
     <label for="dbUser" class="col-lg-2 control-label">
@@ -64,13 +64,13 @@ $errors = $this->get('errors');
                    name="dbName"
                    class="form-control"
                    id="dbName" />
-            <?php
-                if (!empty($errors['dbDatabase'])) {
-                    echo '<span class="help-block">'.$this->getTrans($errors['dbDatabase']).'</span>';
-                }
-            ?>
             <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"><i class="fa fa-info-circle"></i></div>
-        </div>
+        </div> 
+        <?php
+            if (!empty($errors['dbDatabase'])) {
+                echo '<span class="col-lg-2"></span><span class="col-lg-8 help-block">'.$this->getTrans($errors['dbDatabase']).'</span>';
+            }
+        ?>
     </div>
 </div>
 <div class="form-group">

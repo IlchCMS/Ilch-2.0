@@ -32,7 +32,7 @@ class Shoutbox extends \Ilch\Box
         }
 
         $this->getView()->set('uniqid', $uniqid);
-        $this->getView()->set('shoutbox', $shoutboxMapper->getShoutbox(array(), $this->getConfig()->get('shoutbox_limit')));
+        $this->getView()->set('shoutbox', $shoutboxMapper->getShoutboxLimit(array(), $this->getConfig()->get('shoutbox_limit')));
         $this->getView()->set('maxwordlength', $this->getConfig()->get('shoutbox_maxwordlength'));
     }
 }

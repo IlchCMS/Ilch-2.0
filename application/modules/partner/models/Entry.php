@@ -115,7 +115,7 @@ class Entry extends \Ilch\Model
     /**
      * Sets the link of the partner.
      *
-     * @param string $email
+     * @param string $link
      * @return this
      */
     public function setLink($link)
@@ -142,7 +142,7 @@ class Entry extends \Ilch\Model
     /**
      * Sets the banner of the partner.
      *
-     * @param string $email
+     * @param string $banner
      * @return this
      */
     public function setBanner($banner)
