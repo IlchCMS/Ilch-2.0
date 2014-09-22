@@ -1,10 +1,12 @@
 <?php
-$menuMapper = $this->get('gallerymapper');
+$galleryMapper = $this->get('galleryMapper');
 $galleryItems = $this->get('galleryItems');
+$imageMapper = $this->get('imageMapper');
 
-function rec($item, $menuMapper, $obj)
+function rec($item, $galleryMapper, $obj, $imageMapper)
 {
-    $subItems = $menuMapper->getGalleryItemsByParent('1', $item->getId());
+    $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
+    $image = $imageMapper->getCountImageById($item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
@@ -19,13 +21,30 @@ function rec($item, $menuMapper, $obj)
                     <input type="hidden" name="items['.$item->getId().'][type]" class="hidden_type" value="'.$item->getType().'" />
                     <span></span>
                 </span>
-                <span class="title">'.$item->getTitle().'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span><span class="upload" style="float:right; margin-right: 6px;"><a href="'.$obj->getUrl(array('controller' => 'gallery', 'action' => 'treatgallery','id' => $item->getId())).'"><i class="fa fa-cloud-upload"></i></a></span></div>';
+                <span class="title">'.$item->getTitle().'</span>
+                <span class="item_delete">
+                    <i class="fa fa-times-circle"></i>
+                </span><span class="item_edit">
+                    <i class="fa fa-edit"></i>
+                </span>
+                <span class="upload" style="float:right; margin-right: 6px;">
+                    <a href="javascript:media('.$item->getId().')">
+                        <i class="fa fa-cloud-upload"></i>
+                    </a>
+                </span>
+                <span class="view" style="float:right; margin-right: 6px;">
+                    <a href="'.$obj->getUrl(array('controller' => 'gallery', 'action' => 'treatgallery','id' => $item->getId())).'">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                </span>
+                <span class="count" style="float:right; margin-right: 6px;">'. count($image).'</span>
+            </div>';
 
     if (!empty($subItems)) {
         echo '<ol>';
 
         foreach ($subItems as $subItem) {
-            rec($subItem, $menuMapper, $obj);
+            rec($subItem, $galleryMapper, $obj, $imageMapper);
         }
 
         echo '</ol>';
@@ -42,7 +61,7 @@ function rec($item, $menuMapper, $obj)
                 <?php
                     if (!empty($galleryItems)) {
                         foreach ($galleryItems as $item) {
-                            rec($item, $menuMapper, $this);
+                            rec($item, $galleryMapper, $this, $imageMapper);
                         }
                     }
                 ?>
@@ -51,7 +70,7 @@ function rec($item, $menuMapper, $obj)
         <div class="col-lg-6 changeBox">
             <input type="hidden" id="id" value="" />
             <div class="form-group">
-                <label for="title" class="col-lg-2 control-label">
+                <label for="title" class="col-lg-3 control-label">
                     <?php echo $this->getTrans('title'); ?>
                 </label>
                 <div class="col-lg-6">
@@ -59,7 +78,7 @@ function rec($item, $menuMapper, $obj)
                 </div>
             </div>
             <div class="form-group">
-                <label for="desc" class="col-lg-2 control-label">
+                <label for="desc" class="col-lg-3 control-label">
                     <?php echo $this->getTrans('description'); ?>
                 </label>
                 <div class="col-lg-6">
@@ -67,7 +86,7 @@ function rec($item, $menuMapper, $obj)
                 </div>
             </div>
             <div class="form-group">
-                <label for="type" class="col-lg-2 control-label">
+                <label for="type" class="col-lg-3 control-label">
                     <?php echo $this->getTrans('type'); ?>
                 </label>
                 <div class="col-lg-6">
@@ -78,12 +97,12 @@ function rec($item, $menuMapper, $obj)
                 </div>
             </div>
             <div class="dyn"></div>
-            <div class="col-lg-offset-2 actions">
+            <div class="col-lg-offset-3 actions">
                 <input type="button" id="menuItemAdd" value="<?php echo $this->getTrans('galleryItemAdd'); ?>" class="btn">
             </div>
         </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton', 'deleteMenu')?>
+    <?=$this->getSaveBar('saveButton')?>
 </form>
 
 <script>
@@ -145,8 +164,8 @@ $(document).ready
                     return;
                 }
 
-                menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label">Menü</label>\n\
-                            <div class="col-lg-4"><select id="menukey" class="form-control">'+options+'</select></div></div>';
+                menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label">Menü</label>\n\
+                            <div class="col-lg-6"><select id="menukey" class="form-control">'+options+'</select></div></div>';
 
                 if ($(this).val() == '0') {
                     $('.dyn').html('');
@@ -230,6 +249,17 @@ $(document).ready
     );
     
 </script>
+<script>
+    function media(id){ $('#MediaModal').modal('show');
+        var src = iframeSingleUrlGallery+'id/'+id;
+        var height = '100%';
+        var width = '100%';
+
+        $("#MediaModal iframe").attr({'src': src,
+            'height': height,
+            'width': width});
+    };
+</script>
 <style>
     .item_delete {
         float: right;
@@ -303,6 +333,13 @@ $(document).ready
         display: none;
     }
 
+    .sortable > li > div > .view {
+        display: none;
+    }
+
+    .sortable > li > div > .count {
+        display: none;
+    }
     .sortable li.mjs-nestedSortable-collapsed > ol {
         display: none;
     }

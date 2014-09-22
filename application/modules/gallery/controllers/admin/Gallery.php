@@ -31,19 +31,19 @@ class Gallery extends BaseController
     public function indexAction() 
     {
         
-	}
+    }
 
     public function treatGalleryAction() 
     {
-        $imagemapper = new ImageMapper();
+        $imageMapper = new ImageMapper();
         $pagination = new \Ilch\Pagination();
-        $gallerymapper = new GalleryMapper();
+        $galleryMapper = new GalleryMapper();
         $id = $this->getRequest()->getParam('id');
-        $galleryTitle = $gallerymapper->getGalleryById($id);
+        $galleryTitle = $galleryMapper->getGalleryById($id);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
                 foreach($this->getRequest()->getPost('check_gallery') as $imageId) {
-                    $imagemapper->deleteById($imageId);
+                    $imageMapper->deleteById($imageId);
                 }
                 $this->addMessage('deleteSuccess');
                 $this->redirect(array('action' => 'treatgallery','id' => $id));
@@ -55,13 +55,34 @@ class Gallery extends BaseController
                 $model = new \Modules\Gallery\Models\Image();
                 $model->setImageId($imageId);
                 $model->setCat($catId);
-                $imagemapper->save($model);
+                $imageMapper->save($model);
             }
         }
+
         $pagination->setPage($this->getRequest()->getParam('page'));
-		$this->getView()->set('image', $imagemapper->getImageByGalleryId($id, $pagination));
+        $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('galleryTitle', $galleryTitle->getTitle());
+    }
+
+    public function treatImageAction() 
+    {
+        $imageMapper = new ImageMapper();
+        $id = $this->getRequest()->getParam('id');
+
+        if ($this->getRequest()->getPost()) {
+            $imageTitle = $this->getRequest()->getPost('imageTitle');
+            $imageDesc = $this->getRequest()->getPost('imageDesc');
+            $model = new \Modules\Gallery\Models\Image();
+            $model->setId($id);
+            $model->setImageTitle($imageTitle);
+            $model->setImageDesc($imageDesc);
+            $imageMapper->saveImageTreat($model);
+
+            $this->addMessage('Success');
+        }
+
+        $this->getView()->set('image', $imageMapper->getImageById($id));
     }
 
     public function delAction()
@@ -69,10 +90,11 @@ class Gallery extends BaseController
         if ($this->getRequest()) {
             $imageMapper = new ImageMapper();
             $id = $this->getRequest()->getParam('id');
+
             $imageMapper->deleteById($id);
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(array('action' => 'treatgallery','id' => $this->getRequest()->getParam('gallery')));
+            $this->redirect(array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')));
         }
     }
 }

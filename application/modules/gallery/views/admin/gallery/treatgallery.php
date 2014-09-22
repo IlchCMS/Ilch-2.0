@@ -13,22 +13,31 @@
         <colgroup>
                 <col class="icon_width" />
                 <col class="icon_width" />
+                <col class="icon_width" />
+                <col class="col-lg-2" />
+                <col class="col-lg-4" />
                 <col />
         </colgroup>
         <thead>
             <tr>
                 <th><?=$this->getCheckAllCheckbox('check_gallery')?></th>
                 <th></th>
-                <th><?php echo $this->getTrans('image'); ?></th>
+                <th></th>
+                <th><?php echo $this->getTrans('images'); ?></th>
+                <th><?php echo $this->getTrans('imageTitle'); ?></th>
+                <th><?php echo $this->getTrans('imageDesc'); ?></th>
             </tr>
         </thead>
         <tbody><?php foreach ($this->get('image') as $image) : ?>
             <tr>
                 <td><input value="<?=$image->getId()?>" type="checkbox" name="check_gallery[]" /></td>
+                <td><?=$this->getEditIcon(array('controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getCat(), 'id' => $image->getId()))?></td>
                 <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')))?></td>
                 <td>
-                    <img class="image thumbnail img-responsive" style="max-width: 150px;" src="<?php echo $this->getUrl().'/'.$image->getImageThumb(); ?>"/>
+                    <img class="image thumbnail img-responsive" src="<?php echo $this->getUrl().'/'.$image->getImageThumb(); ?>"/>
                 </td>
+                <td><?php echo $image->getImageTitle()?></td>
+                <td><?php echo $image->getImageDesc()?></td>
             </tr><?php endforeach; ?>
         </tbody>
     </table>
@@ -49,3 +58,13 @@
             'width': width});
     };
 </script>
+<style>
+    tbody tr td {
+        padding-bottom: 0 !important;
+    }
+    .image {
+        width: 100px;
+        max-width: 100px;
+        margin-bottom: 10px !important;
+    }
+</style>

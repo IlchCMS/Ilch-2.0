@@ -23,7 +23,7 @@ class Base extends \Ilch\Controller\Admin
     {
         $active = array();
 
-        foreach(array('index', 'gallery') as $controllerName) {
+        foreach(array('index', 'gallery', 'image') as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 
@@ -35,7 +35,7 @@ class Base extends \Ilch\Controller\Admin
                 array
                 (
                     'name' => 'menuGallery',
-                    'active' => $active['index'] or $active['gallery'],
+                    'active' => $active['index'] or $active['gallery'] or $active['image'],
                     'icon' => 'fa fa-th',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 )

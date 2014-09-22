@@ -26,7 +26,7 @@ return array
     'cat' => 'Kategorie',
     'noCat' => 'Keine Kategorie vorhanden',
     'menuActionGalleryInsertImage' => 'Bilder auswählen',
-    'menuActionGalleryEdit' => 'Gallerie Bearbeiten',
+    'menuActionGalleryEdit' => 'Galerie Bearbeiten',
     'generally' => 'Allgemein',
     'selectcat' => 'Kategorie auswählen',
     'galleryedit' => 'Galerie bearbeiten',
@@ -36,5 +36,14 @@ return array
     'menuGalleryOverview' => 'Galerie Übersicht',
     'comments' => 'Kommentare',
     'submit' => 'Eintragen',
+    'images' => 'Bilder',
+    'image' => 'Bild',
+    'treatImage' => 'Bild bearbeiten',
+    'menuGalleryBack' => 'zurück zur Galerie',
+    'imageTitle' => 'Titel',
+    'imageDesc' => 'Beschreibung',
+    'commentPost' => 'Kommentar schreiben',
+    'from' => 'Von',
+    'on' => 'Am',
     
 );

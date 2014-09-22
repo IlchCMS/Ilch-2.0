@@ -14,14 +14,36 @@ class Image extends \Ilch\Mapper
 {
     public function getImageById($id)
     {
-        $sql = 'SELECT g.image_id,g.cat,g.id as imgid, m.url, m.id, m.url_thumb
+        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visit,g.image_title,g.image_description, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
                            LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                           
+
                            WHERE g.id = '.$id;
         $imageRow = $this->db()->queryRow($sql);
         $entryModel = new ImageModel();
-        $entryModel->setImageId($imageRow['url']);
+        $entryModel->setImageId($imageRow['image_id']);
+        $entryModel->setImageUrl($imageRow['url']);
+        $entryModel->setImageTitle($imageRow['image_title']);
+        $entryModel->setImageDesc($imageRow['image_description']);
+        $entryModel->setVisit($imageRow['visit']);
+
+        return $entryModel;
+    }
+
+    public function getLastImageByGalleryId($id)
+    {
+        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visit,g.image_title,g.image_description, m.url, m.id, m.url_thumb
+                           FROM `[prefix]_gallery_imgs` AS g
+                           LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
+
+                           WHERE g.cat = '.$id.' ORDER by g.id DESC LIMIT 1';
+        $imageRow = $this->db()->queryRow($sql);
+        $entryModel = new ImageModel();
+        $entryModel->setImageId($imageRow['image_id']);
+        $entryModel->setImageThumb($imageRow['url_thumb']);
+        $entryModel->setImageTitle($imageRow['image_title']);
+        $entryModel->setImageDesc($imageRow['image_description']);
+        $entryModel->setVisit($imageRow['visit']);
 
         return $entryModel;
     }
@@ -58,10 +80,10 @@ class Image extends \Ilch\Mapper
 
     public function getImageByGalleryId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid, m.url, m.id, m.url_thumb
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid,g.image_title,g.image_description,g.visit, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
                            LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
-                           
+
                            WHERE g.cat = '.$id.' ORDER BY g.id DESC
                            LIMIT '.implode(',',$pagination->getLimit());
 
@@ -72,9 +94,13 @@ class Image extends \Ilch\Mapper
 
         foreach ($imageArray as $entries) {
             $entryModel = new ImageModel();
-            $entryModel->setImageId($entries['url']);
+            $entryModel->setImageUrl($entries['url']);
             $entryModel->setImageThumb($entries['url_thumb']);
             $entryModel->setId($entries['imgid']);
+            $entryModel->setImageTitle($entries['image_title']);
+            $entryModel->setImageDesc($entries['image_description']);
+            $entryModel->setVisit($entries['visit']);
+            $entryModel->setCat($entries['cat']);
             $entry[] = $entryModel;
         }
         return $entry;
@@ -85,5 +111,33 @@ class Image extends \Ilch\Mapper
             return $this->db()->delete('gallery_imgs')
             ->where(array('id' => $id))
             ->execute();
+    }
+
+    /**
+     * Updates visit.
+     *
+     * @param ImageModel $model
+     */
+    public function saveVisit(ImageModel $model)
+    {
+        if ($model->getVisit()) {
+            $this->db()->update('gallery_imgs')
+                    ->values(array('visit' => $model->getVisit()))
+                    ->where(array('image_id' => $model->getImageId()))
+                    ->execute();
+        }
+    }
+
+    /**
+     * Updates image meta.
+     *
+     * @param ImageModel $model
+     */
+    public function saveImageTreat(ImageModel $model)
+    {
+        $this->db()->update('gallery_imgs')
+                ->values(array('image_title' => $model->getImageTitle(),'image_description' => $model->getImageDesc()))
+                ->where(array('id' => $model->getId()))
+                ->execute();
     }
 }

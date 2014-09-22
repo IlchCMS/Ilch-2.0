@@ -7,8 +7,8 @@
 </ul>
 <?php echo $this->getTokenField(); ?>
 <?php if ($this->get('medias') != '') {?>
-<div id="ilchmedia">
-    
+    <div id="ilchmedia">
+        <div class="container-fluid">
         <?php if( $this->getRequest()->getParam('type') === 'image' OR $this->getRequest()->getParam('type') === 'multi'){ ?>
             <?php foreach ($this->get('medias') as $media) : ?>
                 <?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))): ?>
@@ -55,7 +55,8 @@
                 ?>
             <?php endforeach; ?>
         <?php }  ?>
-</div>
+        </div>
+    </div>
     
 <?php
 } else {
@@ -83,3 +84,17 @@
     });
 </script>
 <?php }  ?>
+<style>
+    .container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    }
+    .container-fluid > [class*="col-"] {
+        padding:0;
+    }
+    *, *:before, *:after {
+    box-sizing: border-box;
+    }
+</style>

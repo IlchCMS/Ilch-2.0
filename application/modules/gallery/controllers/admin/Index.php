@@ -8,6 +8,7 @@ namespace Modules\Gallery\Controllers\Admin;
 
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Controllers\Admin\Base as BaseController;
+use Modules\Gallery\Mappers\Image as ImageMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -15,7 +16,8 @@ class Index extends BaseController
 {
     public function indexAction() 
     {
-        $gallerymapper = new GalleryMapper();
+        $galleryMapper = new GalleryMapper();
+        $imageMapper = new ImageMapper();
 
         /*
          * Saves the item tree to database.
@@ -24,7 +26,7 @@ class Index extends BaseController
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
                 $items = $this->getRequest()->getPost('items');
-                $oldItems = $gallerymapper->getGalleryItems(1);
+                $oldItems = $galleryMapper->getGalleryItems(1);
 
                 /*
                  * Deletes old entries from database.
@@ -32,7 +34,7 @@ class Index extends BaseController
                 if (!empty($oldItems)) {
                     foreach ($oldItems as $oldItem) {
                         if (!isset($items[$oldItem->getId()])) {
-                            $gallerymapper->deleteItem($oldItem);
+                            $galleryMapper->deleteItem($oldItem);
                         }
                     }
                 }
@@ -59,7 +61,7 @@ class Index extends BaseController
                         $galleryItem->setType($item['type']);
                         $galleryItem->setTitle($item['title']);
                         $galleryItem->setDesc($item['desc']);
-                        $newId = $gallerymapper->saveItem($galleryItem);
+                        $newId = $galleryMapper->saveItem($galleryItem);
 
                         if (isset($tmpId)) {
                             foreach ($sortArray as $id => $parentId) {
@@ -82,7 +84,7 @@ class Index extends BaseController
                         $galleryItem->setId($id);
                         $galleryItem->setSort($sort);
                         $galleryItem->setParentId($parent);
-                        $gallerymapper->saveItem($galleryItem);
+                        $galleryMapper->saveItem($galleryItem);
                         $sort += 10;
                     }
                 }
@@ -91,8 +93,9 @@ class Index extends BaseController
             $this->addMessage('saveSuccess');
         }
 
-        $galleryItems = $gallerymapper->getGalleryItemsByParent(1, 0);
+        $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);
         $this->getView()->set('galleryItems', $galleryItems);
-        $this->getView()->set('gallerymapper', $gallerymapper);
+        $this->getView()->set('galleryMapper', $galleryMapper);
+        $this->getView()->set('imageMapper', $imageMapper);
     }
 }
