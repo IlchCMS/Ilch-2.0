@@ -14,7 +14,7 @@ class Image extends \Ilch\Mapper
 {
     public function getImageById($id)
     {
-        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visit,g.image_title,g.image_description, m.url, m.id, m.url_thumb
+        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
                            LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
 
@@ -25,14 +25,14 @@ class Image extends \Ilch\Mapper
         $entryModel->setImageUrl($imageRow['url']);
         $entryModel->setImageTitle($imageRow['image_title']);
         $entryModel->setImageDesc($imageRow['image_description']);
-        $entryModel->setVisit($imageRow['visit']);
+        $entryModel->setVisits($imageRow['visits']);
 
         return $entryModel;
     }
 
     public function getLastImageByGalleryId($id)
     {
-        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visit,g.image_title,g.image_description, m.url, m.id, m.url_thumb
+        $sql = 'SELECT g.image_id,g.cat,g.id as imgid,g.visits,g.image_title,g.image_description, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
                            LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
 
@@ -43,7 +43,7 @@ class Image extends \Ilch\Mapper
         $entryModel->setImageThumb($imageRow['url_thumb']);
         $entryModel->setImageTitle($imageRow['image_title']);
         $entryModel->setImageDesc($imageRow['image_description']);
-        $entryModel->setVisit($imageRow['visit']);
+        $entryModel->setVisits($imageRow['visits']);
 
         return $entryModel;
     }
@@ -80,7 +80,7 @@ class Image extends \Ilch\Mapper
 
     public function getImageByGalleryId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid,g.image_title,g.image_description,g.visit, m.url, m.id, m.url_thumb
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.image_id,g.cat,g.id as imgid,g.image_title,g.image_description,g.visits, m.url, m.id, m.url_thumb
                            FROM `[prefix]_gallery_imgs` AS g
                            LEFT JOIN `[prefix]_media` m ON g.image_id = m.id
 
@@ -99,7 +99,7 @@ class Image extends \Ilch\Mapper
             $entryModel->setId($entries['imgid']);
             $entryModel->setImageTitle($entries['image_title']);
             $entryModel->setImageDesc($entries['image_description']);
-            $entryModel->setVisit($entries['visit']);
+            $entryModel->setVisits($entries['visits']);
             $entryModel->setCat($entries['cat']);
             $entry[] = $entryModel;
         }
@@ -114,15 +114,15 @@ class Image extends \Ilch\Mapper
     }
 
     /**
-     * Updates visit.
+     * Updates visits.
      *
      * @param ImageModel $model
      */
-    public function saveVisit(ImageModel $model)
+    public function saveVisits(ImageModel $model)
     {
-        if ($model->getVisit()) {
+        if ($model->getVisits()) {
             $this->db()->update('gallery_imgs')
-                    ->values(array('visit' => $model->getVisit()))
+                    ->values(array('visits' => $model->getVisits()))
                     ->where(array('image_id' => $model->getImageId()))
                     ->execute();
         }

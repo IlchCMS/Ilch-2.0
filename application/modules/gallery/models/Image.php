@@ -46,11 +46,11 @@ class Image extends \Ilch\Model
     protected $cat;
 
     /**
-     * The visit of the image.
+     * The visits of the image.
      *
      * @var string
      */
-    protected $visit;
+    protected $visits;
 
     /**
      * The imageUrl of the image.
@@ -120,13 +120,13 @@ class Image extends \Ilch\Model
     }
 
     /**
-     * Gets the visit of the image.
+     * Gets the visits of the image.
      *
      * @return string
      */
-    public function getVisit()
+    public function getVisits()
     {
-        return $this->visit;
+        return $this->visits;
     }
 
     /**
@@ -200,13 +200,13 @@ class Image extends \Ilch\Model
     }
 
     /**
-     * Sets the visit of the image.
+     * Sets the visits of the image.
      *
-     * @param string $visit
+     * @param string $visits
      */
-    public function setVisit($visit)
+    public function setVisits($visits)
     {
-        $this->visit = (string)$visit;
+        $this->visits = (string)$visits;
     }
 
     /**

@@ -77,9 +77,9 @@ class Index extends \Ilch\Controller\Frontend
         $model = new ImageModel();
 
         $model->setImageId($image->getImageId());
-        $model->setVisit($image->getVisit() + 1);
+        $model->setVisits($image->getVisits() + 1);
 
-        $imageMapper->saveVisit($model);
+        $imageMapper->saveVisits($model);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$this->getTranslator()->trans('image').' - '.$image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$image->getImageDesc());

@@ -49,7 +49,7 @@ class Config extends \Ilch\Config\Install
                 `image_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                 `image_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                 `cat` mediumint(9) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
-                `visit` int(11) NOT NULL DEFAULT 0,
+                `visits` int(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
                 

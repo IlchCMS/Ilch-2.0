@@ -11,7 +11,7 @@
                 </div>
                 <div class="panel-footer text-center">
                     <i class="fa fa-comment-o"></i> <?=count($comments)?>
-                    <i class="fa fa-eye"> <?=$image->getVisit()?></i>
+                    <i class="fa fa-eye"> <?=$image->getVisits()?></i>
                 </div>
             </div>
         </div>
