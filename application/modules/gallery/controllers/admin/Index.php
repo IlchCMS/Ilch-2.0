@@ -91,6 +91,7 @@ class Index extends BaseController
             }
 
             $this->addMessage('saveSuccess');
+            $this->redirect(array('action' => 'index'));
         }
 
         $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);

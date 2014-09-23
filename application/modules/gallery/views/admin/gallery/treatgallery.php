@@ -1,13 +1,13 @@
 <legend>
-    <?php echo $this->getTrans('gallery'); ?>: <?php echo $this->get('galleryTitle'); ?>
+    <?=$this->getTrans('gallery'); ?>: <?=$this->get('galleryTitle'); ?>
 </legend>
-<?php echo $this->get('pagination')->getHtml($this, array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id'))); ?>
+<?=$this->get('pagination')->getHtml($this, array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id'))); ?>
 <?php 
     $image = $this->get('image');
     if (!empty($image)) {
 ?>
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
-    <?php echo $this->getTokenField(); ?>
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
+    <?=$this->getTokenField(); ?>
 
     <table class="table table-hover">
         <colgroup>
@@ -23,9 +23,9 @@
                 <th><?=$this->getCheckAllCheckbox('check_gallery')?></th>
                 <th></th>
                 <th></th>
-                <th><?php echo $this->getTrans('images'); ?></th>
-                <th><?php echo $this->getTrans('imageTitle'); ?></th>
-                <th><?php echo $this->getTrans('imageDesc'); ?></th>
+                <th><?=$this->getTrans('images'); ?></th>
+                <th><?=$this->getTrans('imageTitle'); ?></th>
+                <th><?=$this->getTrans('imageDesc'); ?></th>
             </tr>
         </thead>
         <tbody><?php foreach ($this->get('image') as $image) : ?>
@@ -34,10 +34,10 @@
                 <td><?=$this->getEditIcon(array('controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getCat(), 'id' => $image->getId()))?></td>
                 <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')))?></td>
                 <td>
-                    <img class="image thumbnail img-responsive" src="<?php echo $this->getUrl().'/'.$image->getImageThumb(); ?>"/>
+                    <img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb(); ?>"/>
                 </td>
-                <td><?php echo $image->getImageTitle()?></td>
-                <td><?php echo $image->getImageDesc()?></td>
+                <td><?=$image->getImageTitle()?></td>
+                <td><?=$image->getImageDesc()?></td>
             </tr><?php endforeach; ?>
         </tbody>
     </table>
@@ -49,13 +49,17 @@
 } ?>
 <script>
     function media(){ $('#MediaModal').modal('show');
-        var src = iframeSingleUrlGallery+'id/'+<?php echo $this->getRequest()->getParam('id') ?>;
+        var src = iframeSingleUrlGallery+'id/'+<?=$this->getRequest()->getParam('id') ?>;
         var height = '100%';
         var width = '100%';
 
         $("#MediaModal iframe").attr({'src': src,
             'height': height,
             'width': width});
+    };
+
+    function reload(){
+        setTimeout(function(){window.location.reload(1);}, 1000);
     };
 </script>
 <style>

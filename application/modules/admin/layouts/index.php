@@ -72,6 +72,7 @@
             #MediaModal{
                 z-index: 100000 !important;
                 visibility: visible;
+                overflow: hidden;
             }
             #MediaModal .modal-dialog {
                 width: 100%;
@@ -84,12 +85,17 @@
                 height: 96%;
                 border-radius: 0;
                 margin: 1%;
+                overflow: hidden;
             }
 
             #MediaModal .modal-body {
-                height: 75%;
+                height: 100%;
                 border-radius: 0;
                 padding: 0px !important;
+            }
+
+            #MediaModal .modal-footer {
+                display: none;
             }
 
             iframe {

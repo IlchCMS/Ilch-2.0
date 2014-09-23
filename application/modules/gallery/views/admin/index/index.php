@@ -259,6 +259,10 @@ $(document).ready
             'height': height,
             'width': width});
     };
+
+    function reload(){
+        setTimeout(function(){window.location.reload(1);}, 1000);
+    };
 </script>
 <style>
     .item_delete {

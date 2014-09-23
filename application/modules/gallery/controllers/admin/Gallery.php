@@ -87,7 +87,7 @@ class Gallery extends BaseController
 
     public function delAction()
     {
-        if ($this->getRequest()) {
+        if($this->getRequest()->isSecure()) {
             $imageMapper = new ImageMapper();
             $id = $this->getRequest()->getParam('id');
 

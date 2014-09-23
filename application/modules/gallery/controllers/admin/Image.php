@@ -7,7 +7,6 @@
 namespace Modules\Gallery\Controllers\Admin;
 
 use Modules\Gallery\Mappers\Image as ImageMapper;
-use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Controllers\Admin\Base as BaseController;
 
 defined('ACCESS') or die('no direct access');
@@ -36,7 +35,7 @@ class Image extends BaseController
     public function treatImageAction() 
     {
         $imageMapper = new ImageMapper();
-        $id = $this->getRequest()->getParam('id');
+        $id = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
             $imageTitle = $this->getRequest()->getPost('imageTitle');
