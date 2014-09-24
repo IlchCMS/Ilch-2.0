@@ -7,12 +7,12 @@
 </ul>
 <?php echo $this->getTokenField(); ?>
 <?php if ($this->get('medias') != '') {?>
-<div id="ilchmedia">
-    
+    <div id="ilchmedia">
+        <div class="container-fluid">
         <?php if( $this->getRequest()->getParam('type') === 'image' OR $this->getRequest()->getParam('type') === 'multi'){ ?>
             <?php foreach ($this->get('medias') as $media) : ?>
                 <?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))): ?>
-                    <div class="col-lg-2 col-md-3 col-xs-6 thumb">
+                    <div class="col-lg-1 col-md-2 col-sm-3 col-xs-4 co thumb">
                     <img class="image 
                         thumbnail 
                         img-responsive" 
@@ -55,7 +55,8 @@
                 ?>
             <?php endforeach; ?>
         <?php }  ?>
-</div>
+        </div>
+    </div>
     
 <?php
 } else {
@@ -68,7 +69,7 @@
 <script>
     $(".btn").click(function(){
         window.top.$('#MediaModal').modal('hide');
-        setTimeout(window.top.location.reload(1), 3000);
+        window.top.reload();
         
     });
     
@@ -83,3 +84,17 @@
     });
 </script>
 <?php }  ?>
+<style>
+    .container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    }
+    .container-fluid > [class*="col-"] {
+        padding:0;
+    }
+    *, *:before, *:after {
+    box-sizing: border-box;
+    }
+</style>

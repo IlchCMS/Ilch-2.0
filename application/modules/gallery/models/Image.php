@@ -25,11 +25,39 @@ class Image extends \Ilch\Model
     protected $image_id;
 
     /**
+     * Title of the image.
+     *
+     * @var string
+     */
+    protected $image_title;
+
+    /**
+     * Description of the image.
+     *
+     * @var string
+     */
+    protected $image_desc;
+
+    /**
      * The cat of the image.
      *
      * @var string
      */
     protected $cat;
+
+    /**
+     * The visits of the image.
+     *
+     * @var string
+     */
+    protected $visits;
+
+    /**
+     * The imageUrl of the image.
+     *
+     * @var string
+     */
+    protected $image_url;
 
    /**
      * Gets the id of the image.
@@ -62,6 +90,26 @@ class Image extends \Ilch\Model
     }
 
     /**
+     * Gets the image title.
+     *
+     * @return string
+     */
+    public function getImageTitle()
+    {
+        return $this->image_title;
+    }
+
+    /**
+     * Gets the image desc.
+     *
+     * @return string
+     */
+    public function getImageDesc()
+    {
+        return $this->image_desc;
+    }
+
+    /**
      * Gets the cat of the image.
      *
      * @return string
@@ -69,6 +117,26 @@ class Image extends \Ilch\Model
     public function getCat()
     {
         return $this->cat;
+    }
+
+    /**
+     * Gets the visits of the image.
+     *
+     * @return string
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
+    /**
+     * Gets the ImageUrl of the image.
+     *
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return $this->image_url;
     }
 
     /**
@@ -102,6 +170,26 @@ class Image extends \Ilch\Model
     }
 
     /**
+     * Sets the title.
+     *
+     * @param string $imageTitle
+     */
+    public function setImageTitle($imageTitle)
+    {
+        $this->image_title = (string) $imageTitle;
+    }
+
+    /**
+     * Sets the desc.
+     *
+     * @param string $imageDesc
+     */
+    public function setImageDesc($imageDesc)
+    {
+        $this->image_desc = (string) $imageDesc;
+    }
+
+    /**
      * Sets the cat of the image.
      *
      * @param string $cat
@@ -109,5 +197,25 @@ class Image extends \Ilch\Model
     public function setCat($cat)
     {
         $this->cat = (string)$cat;
+    }
+
+    /**
+     * Sets the visits of the image.
+     *
+     * @param string $visits
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = (string)$visits;
+    }
+
+    /**
+     * Sets the ImageUrl of the image.
+     *
+     * @param string $imageUrl
+     */
+    public function setImageUrl($imageUrl)
+    {
+        $this->image_url = (string)$imageUrl;
     }
 }

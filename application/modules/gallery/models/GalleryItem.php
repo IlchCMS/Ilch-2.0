@@ -57,7 +57,7 @@ class GalleryItem extends \Ilch\Model
     protected $title;
 
     /**
-     * Description of the layout.
+     * Description of the item.
      *
      * @var string
      */
@@ -116,7 +116,7 @@ class GalleryItem extends \Ilch\Model
     /**
      * Sets the type.
      *
-     * @param integer $id
+     * @param integer $type
      */
     public function setType($type)
     {

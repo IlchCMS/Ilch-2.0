@@ -92,7 +92,7 @@ class Index extends \Ilch\Controller\Admin
                     $thumb -> Thumbprefix = 'thumb_';
                     $thumb -> Thumblocation = $path;
                     $thumb -> Thumbsize = 300;
-                    $thumb -> Cropimage = array(3,1,50,50,50,50);
+                    $thumb -> Square = 300;
                     $thumb -> Createthumb($url,'file');
                 }
             }

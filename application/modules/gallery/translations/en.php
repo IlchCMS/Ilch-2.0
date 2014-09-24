@@ -35,5 +35,14 @@ return array
     'menuGalleryOverview' => 'Gallery Overview',
     'comments' => 'Comments',
     'submit' => 'Save',
+    'images' => 'Images',
+    'image' => 'Image',
+    'treatImage' => 'Treat image',
+    'menuGalleryBack' => 'back to Gallery',
+    'imageTitle' => 'Title',
+    'imageDesc' => 'Description',
+    'commentPost' => 'Write comment',
+    'from' => 'From',
+    'on' => 'On',
     
 );
