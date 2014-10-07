@@ -36,11 +36,6 @@ class Image extends BaseController
     {
         $imageMapper = new ImageMapper();
         $id = (int)$this->getRequest()->getParam('id');
-        $gallery = (int)$this->getRequest()->getParam('gallery');
-
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('gallery'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('treatImage'), array('action' => 'treatimage', 'gallery' => $gallery, 'id' => $id));
 
         if ($this->getRequest()->getPost()) {
             $imageTitle = $this->getRequest()->getPost('imageTitle');

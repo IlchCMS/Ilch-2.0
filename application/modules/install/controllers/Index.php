@@ -339,6 +339,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['partner']['types']   = array('clan', 'private');
         $modules['shoutbox']['types']  = array('clan', 'private');
         $modules['gallery']['types']   = array('clan', 'private');
+        $modules['downloads']['types'] = array('clan', 'private');
         $modules['rule']['types']      = array('clan', 'private');
         $modules['history']['types']   = array('clan', 'private');
 

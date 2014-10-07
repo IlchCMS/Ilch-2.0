@@ -40,7 +40,7 @@
         <label for="text" class="col-lg-2 control-label">
             <?php echo $this->getTrans('text'); ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-10">
             <textarea class="form-control"
                    name="text" 
                    id="ilch_bbcode"

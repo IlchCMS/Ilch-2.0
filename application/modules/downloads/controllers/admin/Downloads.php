@@ -4,15 +4,15 @@
  * @package ilch
  */
 
-namespace Modules\Gallery\Controllers\Admin;
+namespace Modules\Downloads\Controllers\Admin;
 
-use Modules\Gallery\Mappers\Image as ImageMapper;
-use Modules\Gallery\Mappers\Gallery as GalleryMapper;
-use Modules\Gallery\Controllers\Admin\Base as BaseController;
+use Modules\Downloads\Mappers\File as FileMapper;
+use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
+use Modules\Downloads\Controllers\Admin\Base as BaseController;
 
 defined('ACCESS') or die('no direct access');
 
-class Gallery extends BaseController 
+class Downloads extends BaseController 
 {
     public function init()
     {
@@ -21,7 +21,7 @@ class Gallery extends BaseController
         (
             array
             (
-                'name' => 'menuActionGalleryInsertImage',
+                'name' => 'menuActionDownloadsInsertImage',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => 'javascript:media();'
             )
@@ -33,17 +33,13 @@ class Gallery extends BaseController
         
     }
 
-    public function treatGalleryAction() 
+    public function treatDownloadsAction() 
     {
-        $imageMapper = new ImageMapper();
+        $fileMapper = new FileMapper();
         $pagination = new \Ilch\Pagination();
-        $galleryMapper = new GalleryMapper();
+        $downloadsMapper = new DownloadsMapper();
         $id = $this->getRequest()->getParam('id');
-        $galleryTitle = $galleryMapper->getGalleryById($id);
-
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('gallery'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans($galleryTitle->getTitle()), array('action' => 'treatgallery', 'id' => $id));
+        $downloadsTitle = $downloadsMapper->getDownloadsById($id);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
                 foreach($this->getRequest()->getPost('check_gallery') as $imageId) {
@@ -56,17 +52,17 @@ class Gallery extends BaseController
         if ($this->getRequest()->getPost()) {
             foreach($this->getRequest()->getPost('check_image') as $imageId ) {
                 $catId = $this->getRequest()->getParam('id');
-                $model = new \Modules\Gallery\Models\Image();
-                $model->setImageId($imageId);
+                $model = new \Modules\Downloads\Models\File();
+                $model->setFileId($imageId);
                 $model->setCat($catId);
-                $imageMapper->save($model);
+                $fileMapper->save($model);
             }
         }
 
         $pagination->setPage($this->getRequest()->getParam('page'));
-        $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
+        $this->getView()->set('image', $fileMapper->getFileByDownloadsId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('galleryTitle', $galleryTitle->getTitle());
+        $this->getView()->set('galleryTitle', $downloadsTitle->getTitle());
     }
 
     public function treatImageAction() 

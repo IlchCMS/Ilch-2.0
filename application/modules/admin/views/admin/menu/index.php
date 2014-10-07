@@ -156,6 +156,7 @@ function rec($item, $menuMapper, $obj)
     </ul>
     <br />
     <legend><?php echo $this->getTrans('menuChange'); ?></legend>
+    <div class="form-group">
         <div class="col-lg-6">
             <ol id="sortable" class="sortable">
                 <?php
@@ -199,6 +200,7 @@ function rec($item, $menuMapper, $obj)
                 <input type="button" id="menuItemAdd" value="<?php echo $this->getTrans('menuItemAdd'); ?>" class="btn">
             </div>
         </div>
+    </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
     <?=$this->getSaveBar('saveButton', 'deleteMenu')?>
 </form>
