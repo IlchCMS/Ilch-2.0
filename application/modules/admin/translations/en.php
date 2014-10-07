@@ -94,4 +94,5 @@ return array
     'installedVersion' => 'Installed Version',
     'serverVersion' => 'Server Version',
     'description' => 'Description',
+    'admincenter' => 'Admincenter',
 );

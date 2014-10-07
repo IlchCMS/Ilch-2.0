@@ -12,6 +12,8 @@
         <meta charset="utf-8">
         <title>Ilch - Login</title>
         <meta name="description" content="Ilch - Login">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->getStaticUrl('img/favicon.ico'); ?>">
         <link href="<?php echo $this->getStaticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/ilch.css'); ?>" rel="stylesheet">
@@ -21,7 +23,10 @@
         <script src="<?php echo $this->getStaticUrl('js/jquery-ui.js'); ?>"></script>
     </head>
     <body>
+        <div class="container">
+            <div class="row">
         <div class="login_container">
+            <div class="form_container">
             <img class="logo" src="<?php echo $this->getStaticUrl('img/ilch_logo.png'); ?>" />
             <?php
                 $errors = $this->get('errors');
@@ -63,6 +68,9 @@
                     }
                 ?>
             </form>
+        </div>
+            </div>
+            </div>
         </div>
     </body>
 </html>

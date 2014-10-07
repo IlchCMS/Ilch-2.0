@@ -95,4 +95,5 @@ return array
     'installedVersion' => 'Installierte Version',
     'serverVersion' => 'Server Version',
     'description' => 'Beschreibung',
+    'admincenter' => 'Admincenter',
 );

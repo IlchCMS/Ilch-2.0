@@ -1,5 +1,6 @@
 $(document).ready(function(){
     if ($("#ilch_html").length) {
+        CKEDITOR.env.isCompatible = true;
         CKEDITOR.replace('ilch_html', {
              removePlugins: 'bbcode',
              disableObjectResizing: false,
@@ -23,6 +24,7 @@ $(document).ready(function(){
     }
 
     if ($("#ilch_bbcode").length) {
+        CKEDITOR.env.isCompatible = true;
         CKEDITOR.replace('ilch_bbcode', {
             extraPlugins: 'bbcode',
             disableObjectResizing: true,

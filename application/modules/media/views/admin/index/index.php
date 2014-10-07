@@ -5,7 +5,8 @@ if ($this->get('medias') != '') {
 ?>
 <form class="form-horizontal" method="POST" action="">
 <?=$this->getTokenField()?>
-<table class="table table-hover">
+    <div class="table-responsive">
+<table class="table table-hover table-striped">
     <colgroup>
             <col class="icon_width" />
             <col class="icon_width" />
@@ -64,6 +65,7 @@ if ($this->get('medias') != '') {
         </tr><?php endforeach; ?>
     </tbody>
 </table>
+    </div>
 <?=$this->getListBar(array('delete' => 'delete'))?>
 </form>
 <?php

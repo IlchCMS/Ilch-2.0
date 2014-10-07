@@ -66,7 +66,7 @@
     </div>
     <br />
     <div class="form-group">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <textarea class="form-control"
                       id="ilch_html"
                       name="disclaimer" 

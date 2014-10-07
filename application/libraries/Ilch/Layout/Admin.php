@@ -33,6 +33,21 @@ class Admin extends Base
     }
 
     /**
+     * Adds layout helper.
+     *
+     * @todo adds helper dynamic from folder.
+     * @param \Ilch\Request $request
+     * @param \Ilch\Translator $translator
+     * @param \Ilch\Router $router
+     */
+    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
+    {
+        parent::__construct($request, $translator, $router);
+
+        $this->addHelper('getAdminHmenu', 'layout', new \Ilch\Layout\Helper\GetAdminHmenu($this));
+    }
+
+    /**
      * Add menu to layout.
      *
      * @param string $headKey
