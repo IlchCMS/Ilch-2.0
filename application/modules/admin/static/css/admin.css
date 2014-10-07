@@ -160,7 +160,7 @@ aside > nav > ul > li.active {
     border: 1px solid #ccc;
 }
 .watermark {
-    opacity: 0.2;
+    opacity: 0.5;
     position: fixed; 
     bottom: 0px; 
     width: 220px; 
@@ -290,13 +290,13 @@ body.container {
 aside {
     display: block;
     overflow: hidden;
-    background: #7A7A7A;
-    background: -moz-linear-gradient(left, #7A7A7A3 93%, #4A4847 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(93%, #7A7A7A), color-stop(100%, #4A4847));
-    background: -webkit-linear-gradient(left, #7A7A7A 93%, #4A4847 100%);
-    background: -o-linear-gradient(left, #7A7A7A 93%, #4A4847 100%);
-    background: -ms-linear-gradient(left, #7A7A7A 93%, #4A4847 100%);
-    background: linear-gradient(to right, #7A7A7A 93%, #4A4847 100%);
+    background: #8A8A8A;
+    background: -moz-linear-gradient(left, #8A8A8A 93%, #6A6867 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(93%, #8A8A8A), color-stop(100%, #6A6867));
+    background: -webkit-linear-gradient(left, #8A8A8A 93%, #6A6867 100%);
+    background: -o-linear-gradient(left, #8A8A8A 93%, #6A6867 100%);
+    background: -ms-linear-gradient(left, #8A8A8A 93%, #6A6867 100%);
+    background: linear-gradient(to right, #8A8A8A 93%, #6A6867 100%);
     min-height: 100%}
 #header {
     display: block;
@@ -344,7 +344,7 @@ aside {
 }
 #ribbon {
     height: 40px;
-    background: #7A7A7A;
+    background: #8A8A8A;
     padding: 0 13px;
     position: relative;
 }
