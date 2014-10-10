@@ -26,4 +26,6 @@ return array
     'comments' => 'Kommentare',
     'submit' => 'Eintragen',
     'articleImage' => 'Artikelbild',
+    'articlePreview' => 'Vorschau',
+    'articleShow' => 'Ansehen',
 );

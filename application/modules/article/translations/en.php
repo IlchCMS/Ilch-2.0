@@ -28,4 +28,6 @@ return array
     'comments' => 'Comments',
     'submit' => 'Save',
     'articleImage' => 'Article image',
+    'articlePreview' => 'Preview',
+    'articleShow' => 'Show',
 );

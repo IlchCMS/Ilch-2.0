@@ -4,13 +4,13 @@
  * @package ilch
  */
 
-namespace Modules\Gallery\Controllers;
+namespace Modules\Downloads\Controllers;
 
-use Modules\Gallery\Mappers\Gallery as GalleryMapper;
-use Modules\Gallery\Mappers\Image as ImageMapper;
-use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\Comment\Models\Comment as CommentModel;
-use Modules\Gallery\Models\Image as ImageModel;
+use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
+use Modules\Downloads\Mappers\File as FileMapper;
+use Modules\Downloads\Mappers\Comment as CommentMapper;
+use Modules\Downloads\Models\Comment as CommentModel;
+use Modules\Downloads\Models\File as FileModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -19,48 +19,48 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction() 
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'));
-        $galleryMapper = new GalleryMapper();
-        $imageMapper = new ImageMapper();
-        $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), array('action' => 'index'));
+        $downloadsMapper = new DownloadsMapper();
+        $fileMapper = new FileMapper();
+        $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(1, 0);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery'));
-        $this->getView()->set('galleryItems', $galleryItems);
-        $this->getView()->set('galleryMapper', $galleryMapper);
-        $this->getView()->set('imageMapper', $imageMapper);
+        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads'));
+        $this->getView()->set('downloadsItems', $downloadsItems);
+        $this->getView()->set('downloadsMapper', $downloadsMapper);
+        $this->getView()->set('fileMapper', $fileMapper);
     }
 
     public function showAction() 
     {
-        $imageMapper = new ImageMapper();
+        $fileMapper = new FileMapper();
         $pagination = new \Ilch\Pagination();
-        $galleryMapper = new GalleryMapper();
+        $downloadsMapper = new DownloadsMapper();
         $id = $this->getRequest()->getParam('id');
-        $gallery = $galleryMapper->getGalleryById($id);
+        $downloads = $downloadsMapper->getDownloadsById($id);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
+        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads').' - '.$downloads->getTitle());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$downloads->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'))
-                ->add($gallery->getTitle(), array('action' => 'show', 'id' => $id));
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), array('action' => 'index'))
+                ->add($downloads->getTitle(), array('action' => 'show', 'id' => $id));
         
         $pagination->setPage($this->getRequest()->getParam('page'));
         
-        $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
+        $this->getView()->set('file', $fileMapper->getFileByDownloadsId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
     }
 
-    public function showImageAction() 
+    public function showFileAction() 
     {
         $commentMapper = new CommentMapper;
-        $imageMapper = new ImageMapper();
-        $galleryMapper = new GalleryMapper();
+        $fileMapper = new FileMapper();
+        $downloadsMapper = new DownloadsMapper();
 
-        if ($this->getRequest()->getPost('gallery_comment_text')) {
+        if ($this->getRequest()->getPost('downloads_comment_text')) {
             $commentModel = new CommentModel();
-            $commentModel->setKey('gallery_'.$this->getRequest()->getParam('id'));
-            $commentModel->setText($this->getRequest()->getPost('gallery_comment_text'));
+            $commentModel->setKey('downloads_'.$this->getRequest()->getParam('id'));
+            $commentModel->setText($this->getRequest()->getPost('downloads_comment_text'));
 
             $date = new \Ilch\Date();
             $commentModel->setDateCreated($date);
@@ -69,26 +69,26 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $id = $this->getRequest()->getParam('id');
-        $galleryId = $this->getRequest()->getParam('gallery');
-        $gallery = $galleryMapper->getGalleryById($galleryId);
-        $comments = $commentMapper->getCommentsByKey('gallery_'.$this->getRequest()->getParam('id'));
-        $image = $imageMapper->getImageById($id);
+        $downloadsId = $this->getRequest()->getParam('gallery');
+        $downloads = $downloadsMapper->getDownloadsById($downloadsId);
+        $comments = $commentMapper->getCommentsByKey('downloads_'.$this->getRequest()->getParam('id'));
+        $file = $fileMapper->getFileById($id);
 
-        $model = new ImageModel();
+        $model = new FileModel();
 
-        $model->setImageId($image->getImageId());
-        $model->setVisits($image->getVisits() + 1);
+        $model->setFileId($file->getFileId());
+        $model->setVisits($file->getVisits() + 1);
 
-        $imageMapper->saveVisits($model);
+        $fileMapper->saveVisits($model);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$this->getTranslator()->trans('image').' - '.$image->getImageTitle());
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$image->getImageDesc());
+        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads').' - '.$this->getTranslator()->trans('file').' - '.$file->getFileTitle());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$file->getFileDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'))
-                ->add($gallery->getTitle(), array('action' => 'show', 'id' => $galleryId))
-                ->add($image->getImageTitle(), array('action' => 'showimage', 'gallery' => $galleryId, 'id' => $id));
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), array('action' => 'index'))
+                ->add($downloads->getTitle(), array('action' => 'show', 'id' => $downloadsId))
+                ->add($file->getFileTitle(), array('action' => 'showfile', 'downloads' => $downloadsId, 'id' => $id));
 
-        $this->getView()->set('image', $imageMapper->getImageById($id));
+        $this->getView()->set('file', $fileMapper->getFileById($id));
         $this->getView()->set('comments', $comments);
     }
 }

@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="">
+<form id="article_form" class="form-horizontal" method="POST" action="">
     <?php echo $this->getTokenField(); ?>
     <legend>
     <?php
@@ -83,14 +83,25 @@
                 class="col-lg-2 control-label">
             <?php echo $this->getTrans('articleImage'); ?>:
         </label>
-        <div class="col-lg-2 input-group">
-            <input class="form-control"
-                   type="text"
-                   name="articleImage"
-                   id="articleImage"
-                   placeholder="<?php echo $this->getTrans('articleImage'); ?>"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } ?>" />
-            <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <input class="form-control"
+                       type="text"
+                       name="articleImage"
+                       id="articleImage"
+                       placeholder="<?php echo $this->getTrans('articleImage'); ?>"
+                       value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } ?>" />
+                <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="articlePreview"
+                class="col-lg-2 control-label">
+            <?php echo $this->getTrans('articlePreview'); ?>:
+        </label>
+        <div class="col-lg-4">
+            <a id="preview" class="btn btn-default"><?php echo $this->getTrans('articleShow'); ?></a>
         </div>
     </div>
     <?php
@@ -128,14 +139,37 @@ $('#articleLanguageInput').change
         top.location.href = '<?php echo $this->getUrl(array('id' => $articleID)); ?>/locale/'+$(this).val();
     }
 );
-$('#media').click(function(){ $('#MediaModal').modal('show');
+$('#media').click
+(
+    function()
+    {
+        $('#MediaModal').modal('show');
 
-                            var src = iframeSingleUrlImage;
-                            var height = '100%';
-                            var width = '100%';
+        var src = iframeSingleUrlImage;
+        var height = '100%';
+        var width = '100%';
 
-                            $("#MediaModal iframe").attr({'src': src,
-                                'height': height,
-                                'width': width});
-                        });
+        $("#MediaModal iframe").attr
+        (
+            {
+                'src': src,
+                'height': height,
+                'width': width
+            }
+        );
+    }
+);
+                        
+$('#preview').click
+(
+    function(e) 
+    {
+        e.preventDefault();
+        $('#article_form').attr('action', '/index.php/article/index/show/preview/true');
+        $('#article_form').attr('target', '_blank');
+        $('#article_form').submit();
+        $('#article_form').attr('action', '');
+        $('#article_form').attr('target', '');
+    }
+);
 </script>

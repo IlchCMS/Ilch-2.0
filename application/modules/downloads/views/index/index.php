@@ -1,4 +1,4 @@
-<h3><?=$this->getTrans('gallery'); ?></h3>
+<h3><?=$this->getTrans('downloads'); ?></h3>
 <?php
 $galleryMapper = $this->get('galleryMapper');
 $galleryItems = $this->get('galleryItems');

@@ -6,6 +6,7 @@
 
 namespace Modules\Article\Controllers;
 use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\Article\Models\Article as ArticleModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Comment\Models\Comment as CommentModel;
 
@@ -48,16 +49,30 @@ class Index extends \Ilch\Controller\Frontend
             $commentMapper->save($commentModel);
         }
 
-        $articleMapper = new ArticleMapper();
+        if($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
+            $title = $this->getRequest()->getPost('articleTitle');
+            $content = $this->getRequest()->getPost('articleContent');
+            $image = $this->getRequest()->getPost('articleImage');
 
-        $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+            $articleModel = new ArticleModel();
+            $articleModel->setTitle($title);
+            $articleModel->setContent($content);
+            $articleModel->setArticleImage($image);
+            
+            $this->getView()->set('article', $articleModel);
+        } else {
+            $articleMapper = new ArticleMapper();
+
+            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+
+            $this->getLayout()->set('metaTitle', $article->getTitle());
+            $this->getLayout()->set('metaDescription', $article->getDescription());
+            $this->getView()->set('article', $article);
+
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
+                ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
+        }
         $comments = $commentMapper->getCommentsByKey('articles_'.$this->getRequest()->getParam('id'));
-
-        $this->getLayout()->set('metaTitle', $article->getTitle());
-        $this->getLayout()->set('metaDescription', $article->getDescription());
-        $this->getView()->set('article', $article);
         $this->getView()->set('comments', $comments);
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
-            ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
     }
 }
