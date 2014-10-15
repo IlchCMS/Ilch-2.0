@@ -249,6 +249,28 @@ abstract class Base
 
         $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<div class="quote">{param}</div>');
         $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('list', '<ul>{param}</ul>');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('*', '<li>{param}</li>');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('email', '<a href="mailto:{param}">{param}</a>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" alt="Image">');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('i', '<em>{param}</em>');
+        $parser->addCodeDefinition($builder->build());
+ 
+        $builder = new \JBBCode\CodeDefinitionBuilder('u', '<u>{param}</u>');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a href="{option}">{param}</a>');
+        $builder->setUseOption(true)->setOptionValidator(new \JBBCode\validators\UrlValidator());
+        $parser->addCodeDefinition($builder->build());
 
         $builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre class="code">{param}</pre>');
         $builder->setParseContent(false);
