@@ -217,7 +217,7 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                 continue;
             }
 
-            $boxesDir[$moduleKey] = str_replace('.php', '', strtolower(basename($box)));
+            $boxesDir[$moduleKey][] = str_replace('.php', '', strtolower(basename($box)));
         }
     }
 }
@@ -388,7 +388,7 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                 } else if ($(this).val() == '4') {
                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
                                     <div class="col-lg-4"><?php echo '<select id="boxkey" class="form-control">';
-                    foreach ($boxesDir as $moDir => $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; } foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
+                    foreach ($boxesDir as $moDir => $modulBoxes) { foreach($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
                 }
             });
 
