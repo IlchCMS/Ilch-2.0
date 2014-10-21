@@ -318,6 +318,15 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                     }
                     
                 }
+                
+                var modulKey = $('#modulekey').val();
+
+                if (typeof modulKey == "undefined")
+                {
+                    boxkey = $('#boxkey').val();
+                    boxkeyParts = boxkey.split('_');
+                    modulKey = boxkeyParts[0];
+                }
 
                 $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
                         +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
@@ -326,7 +335,7 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                         +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
                         +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
                         +'<input type="hidden" name="items[tmp_'+itemId+'][boxkey]" class="hidden_boxkey" value="'+$('#boxkey').val()+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+$('#modulekey').val()+'" />'
+                        +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+modulKey+'" />'
                         +'<input type="hidden" name="items[tmp_'+itemId+'][menukey]" class="hidden_menukey" value="'+$('#menukey').val()+'" />'
                         +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
                 itemId++;
@@ -340,12 +349,21 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                         return;
                     }
 
+                    var modulKey = $('#modulekey').val();
+
+                    if (typeof modulKey == "undefined")
+                    {
+                        boxkey = $('#boxkey').val();
+                        boxkeyParts = boxkey.split('_');
+                        modulKey = boxkeyParts[0];
+                    }
+
                     $('#'+$('#id').val()).find('.title:first').text($('#title').val());
                     $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
                     $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
                     $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
                     $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
-                    $('#'+$('#id').val()).find('.hidden_modulekey:first').val($('#modulekey').val());
+                    $('#'+$('#id').val()).find('.hidden_modulekey:first').val(modulKey);
                     $('#'+$('#id').val()).find('.hidden_boxkey:first').val($('#boxkey').val());
                     $('#'+$('#id').val()).find('.hidden_menukey:first').val($('#menukey').val());
                     resetBox();
