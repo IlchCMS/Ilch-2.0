@@ -16,6 +16,9 @@ class Index extends BaseController
 {
     public function indexAction() 
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('downloads'), array('action' => 'index'));
+
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
 

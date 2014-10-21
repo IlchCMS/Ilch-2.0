@@ -42,6 +42,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSite'), array('action' => 'index'));
+
         $pageMapper = new PageMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_pages')) {
@@ -69,6 +72,16 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
+        if ($this->getRequest()->getParam('id')) {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSite'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('editPage'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+        }  else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSite'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewSite'), array('action' => 'treat'));
+        }
+
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $pageMapper = new PageMapper();
 

@@ -42,6 +42,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'));
+
         $articleMapper = new ArticleMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_articles')) {
@@ -70,6 +73,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewSite'), array('action' => 'treat'));
+
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $articleMapper = new ArticleMapper();
 

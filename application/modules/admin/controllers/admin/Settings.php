@@ -44,6 +44,9 @@ class Settings extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('systemSettings'), array('action' => 'index'));
+
         $moduleMapper = new \Modules\Admin\Mappers\Module();
         $pageMapper = new \Modules\Page\Mappers\Page();
 

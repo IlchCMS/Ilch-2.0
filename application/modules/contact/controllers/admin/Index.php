@@ -42,6 +42,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'));
+
         $receiverMapper = new ReceiverMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_receivers')) {
@@ -69,7 +72,15 @@ class Index extends \Ilch\Controller\Admin
         $receiverMapper = new ReceiverMapper();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionEditReceiver'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+
             $this->getView()->set('receiver', $receiverMapper->getReceiverById($this->getRequest()->getParam('id')));
+        }  else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewReceiver'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {

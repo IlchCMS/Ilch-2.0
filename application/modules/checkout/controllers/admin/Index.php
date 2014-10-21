@@ -40,6 +40,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('checkout'), array('action' => 'index'));
+
         $ilchdate = new IlchDate;
         $checkoutMapper = new CheckoutMapper();
 
@@ -81,6 +84,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function settingsAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('checkout'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('settings'), array('action' => 'settings'));
+
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('checkout_contact', $this->getRequest()->getPost('checkout_contact'));
             $this->addMessage('saveSuccess');
@@ -92,6 +99,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatPaymentAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('checkout'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('treatpayment'), array('action' => 'treatpayment', 'id' => $this->getRequest()->getParam('id')));
+
         $checkoutMapper = new CheckoutMapper();
         $id = $this->getRequest()->getParam('id');
 

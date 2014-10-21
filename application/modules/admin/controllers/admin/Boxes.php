@@ -42,6 +42,9 @@ class Boxes extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('boxes'), array('action' => 'index'));
+
         $boxMapper = new BoxMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_boxes')) {

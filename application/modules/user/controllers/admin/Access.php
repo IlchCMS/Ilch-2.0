@@ -28,6 +28,9 @@ class Access extends BaseController
      */
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuAccess'), array('action' => 'index'));
+
         $postData = $this->getRequest()->getPost();
         $groupMapper = new GroupMapper();
         $groups = $groupMapper->getGroupList();

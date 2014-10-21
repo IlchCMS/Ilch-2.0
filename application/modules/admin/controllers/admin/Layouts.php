@@ -29,6 +29,9 @@ class Layouts extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('layouts'), array('action' => 'index'));
+
         $layouts = array();
 
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {

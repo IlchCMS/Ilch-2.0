@@ -343,7 +343,7 @@ aside {
     min-height: 500px;
 }
 #ribbon {
-    height: 40px;
+    min-height: 40px;
     background: #8A8A8A;
     padding: 0 13px;
     position: relative;

@@ -46,9 +46,10 @@ class Model
     public function __toString()
     {
         if (empty($this->data)) {
-            return '';
+            $html = '<ol class="breadcrumb">&raquo; <li><a href="'.$this->layout->getUrl('admin/admin/index/index').'">Admincenter</a></li></ol>';
+            return $html;
         }
-        $html = '<ol class="breadcrumb">&raquo; ';
+        $html = '<ol class="breadcrumb">&raquo; <li><a href="'.$this->layout->getUrl('admin/admin/index/index').'">Admincenter</a></li>';
         foreach ($this->data as $key => $value) {
             if (empty($value)) {
                 $html .= $this->layout->escape($key);

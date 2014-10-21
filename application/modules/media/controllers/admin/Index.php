@@ -44,16 +44,19 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction() 
     {
-        $MediaMapper = new MediaMapper();
-        
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('media'), array('action' => 'index'));
+
+        $mediaMapper = new MediaMapper();
+
         if ($this->getRequest()->getPost('action') == 'delete' and $this->getRequest()->getPost('check_medias') > 0) {
                 foreach($this->getRequest()->getPost('check_medias') as $mediaId) {
-                    $MediaMapper->delImage($mediaId);
+                    $mediaMapper->delImage($mediaId);
                 }
                 $this->addMessage('deleteSuccess');
                 $this->redirect(array('action' => 'index'));
         }
-        
+
         $MediaMapper = new MediaMapper();
         $this->getView()->set('medias', $MediaMapper->getMediaList());
         $this->getView()->set('catnames', $MediaMapper->getCatList());
@@ -64,11 +67,15 @@ class Index extends \Ilch\Controller\Admin
 
     public function uploadAction() 
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('media'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('mediaUpload'), array('action' => 'upload'));
+
         $ilchdate = new IlchDate;
         $mediaMapper = new MediaMapper();
-        
+
         if ($this->getRequest()->isPost()) {
-            
+
             $path = $this->getConfig()->get('media_uploadpath');
             $file = $_FILES['upl']['name'];
             $endung = pathinfo($file, PATHINFO_EXTENSION);
@@ -76,8 +83,7 @@ class Index extends \Ilch\Controller\Admin
             $filename = uniqid() . $name;
             $url = $path.$filename.'.'.$endung;
             $urlthumb = $path.'thumb_'.$filename.'.'.$endung;
-            
-            
+
             $model = new \Modules\Media\Models\Media();
             $model->setUrl($url);
             $model->setUrlThumb($urlthumb);
@@ -85,7 +91,7 @@ class Index extends \Ilch\Controller\Admin
             $model->setName($name);
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);
-            
+
             if(move_uploaded_file($_FILES['upl']['tmp_name'], $path.$filename.'.'.$endung)){
                 if(in_array($endung , explode(' ',$this->getConfig()->get('media_ext_img')))){
                     $thumb = new \Thumb\Thumbnail();
@@ -101,8 +107,8 @@ class Index extends \Ilch\Controller\Admin
 
 	public function delAction()
     {
-        $MediaMapper = new MediaMapper();
-        $MediaMapper->delImage($this->getRequest()->getParam('id'));
+        $mediaMapper = new MediaMapper();
+        $mediaMapper->delImage($this->getRequest()->getParam('id'));
         $this->addMessage('deleteSuccess');
         $this->redirect(array('action' => 'index'));
     }

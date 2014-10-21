@@ -22,6 +22,7 @@ class Index extends \Ilch\Controller\Frontend
         } else {
             $this->getLayout()->set('metaTitle', $page->getTitle());
             $this->getLayout()->set('metaDescription', $page->getDescription());
+            $this->getLayout()->getHmenu()->add($page->getTitle(), $page->getPerma());
             $this->getView()->set('content', $page->getContent());
         }
     }

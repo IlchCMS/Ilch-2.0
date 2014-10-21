@@ -20,6 +20,9 @@ class Menu extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menu'), array('action' => 'index'));
+        
         $menuId = 1;
 
         if ($this->getRequest()->getParam('menu')) {

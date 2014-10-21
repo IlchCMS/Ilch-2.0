@@ -42,6 +42,9 @@ class Index extends BaseController
      */
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'));
+
         $userMapper = new UserMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
@@ -67,6 +70,10 @@ class Index extends BaseController
      */
     public function treatAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('editUser'), array('action' => 'treat'));
+
         $userMapper = new UserMapper();
 
         if ($this->getRequest()->isPost()) {

@@ -42,6 +42,10 @@ class Group extends BaseController
      */
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuGroup'), array('action' => 'index'));
+
         $groupMapper = new GroupMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
@@ -70,6 +74,11 @@ class Group extends BaseController
      */
     public function treatAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuGroup'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('editGroup'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+
         $groupId = $this->getRequest()->getParam('id');
         $groupMapper = new GroupMapper();
 
@@ -79,8 +88,6 @@ class Group extends BaseController
         else {
             $group = new GroupModel();
         }
-
-        $groupMapper = new GroupMapper();
 
         $this->getView()->set('group', $group);
         $this->getView()->set('groupList', $groupMapper->getGroupList());

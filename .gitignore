@@ -1,6 +1,7 @@
 .htaccess
 application/config.php
 application/modules/media/static/upload
+application/modules/user/static/upload/avatar
 /nbproject/
 .idea
 /.vagrant

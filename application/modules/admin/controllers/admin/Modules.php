@@ -15,6 +15,9 @@ class Modules extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('modules'), array('action' => 'index'));
+
         $modules = new \Modules\Admin\Mappers\Module();
         $this->getView()->set('modules', $modules->getModules());
     }
