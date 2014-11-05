@@ -36,4 +36,7 @@ return array
     'setfree' => 'Freischalten ',
     'check' => 'Danke. Eintrag wird geprüft.',
     'settings' => 'Einstellungen',
+    'captcha' => 'Captcha',
+    'invalidCaptcha' => 'Captcha ist fehlerhaft',
+    'captchaRead' => 'Nicht lesbar? Text ändern!',
 );

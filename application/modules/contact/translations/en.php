@@ -20,4 +20,8 @@ return array
     'menuActionEditReceiver' => 'Edit Receiver',
     'noReceivers' => 'No receivers',
     'askIfDeleteReceiver' => 'Are you sure you want delete the receiver "%s"?',
+    'contactWebsite' => 'Contact Website ',
+    'captcha' => 'Captcha',
+    'invalidCaptcha' => 'Captcha is false',
+    'captchaRead' => 'Not readable? Change text!',
 );

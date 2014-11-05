@@ -36,4 +36,7 @@ return array
     'setfree' => 'Set free ',
     'check' => 'Thanks. Entry is checked.',
     'settings' => 'Settings',
+    'captcha' => 'Captcha',
+    'invalidCaptcha' => 'Captcha is false',
+    'captchaRead' => 'Not readable? Change text!',
 );

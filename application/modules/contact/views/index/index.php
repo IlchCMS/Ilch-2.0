@@ -1,3 +1,6 @@
+<?php 
+$receivers = $this->get('receivers');
+if(!empty($receivers)){ ?>
 <form method="POST" class="form-horizontal" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
     <?php echo $this->getTokenField(); ?>
     <div class="form-group">
@@ -9,7 +12,7 @@
                     class="form-control"
                     name="contact_receiver">
                 <?php
-                    foreach($this->get('receivers') as $receiver)
+                    foreach($receivers as $receiver)
                     {
                         echo '<option value="'.$receiver->getId().'">'.$this->escape($receiver->getName()).'</option>';
                     }
@@ -52,6 +55,23 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-lg-2 control-label">
+            <?=$this->getTrans('captcha'); ?>
+        </label>
+        <div class="col-lg-8">
+            <?=$this->getCaptchaField();?>
+            <input type="text"
+                  id="captcha-form"
+                  class="form-control"
+                  autocomplete="off"
+                  name="captcha" />
+            <a href="#" onclick="
+                document.getElementById('captcha').src='<?php $this->getUrl()?>/application/libraries/captcha/captcha.php?'+Math.random();
+                document.getElementById('captcha-form').focus();"
+                id="change-image"><?php echo $this->getTrans('captchaRead'); ?></a>
+        </div>
+    </div>
+    <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
             <button type="submit" class="btn" name="save">
                 <?php echo $this->getTrans('send'); ?>
@@ -59,3 +79,4 @@
         </div>
     </div>
 </form>
+<?php } ?>

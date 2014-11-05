@@ -37,13 +37,16 @@ class Index extends \Ilch\Controller\Frontend
             $email = trim($this->getRequest()->getPost('email'));
             $text = trim($this->getRequest()->getPost('text'));
             $homepage = trim($this->getRequest()->getPost('homepage'));
+            $captcha = trim(strtolower($this->getRequest()->getPost('captcha')));
 
-            if (empty($text)) {
-                $this->addMessage('missingText', 'danger');
+            if (empty($name)) {
+                $this->addMessage('missingName', 'danger');
             } elseif(empty($email)) {
                 $this->addMessage('missingEmail', 'danger');
-            } elseif(empty($name)) {
-                $this->addMessage('missingName', 'danger');
+            } elseif(empty($text)) {
+                $this->addMessage('missingText', 'danger');
+            } elseif (empty($_SESSION['captcha']) || $captcha != $_SESSION['captcha']) {
+                $this->addMessage('invalidCaptcha', 'danger');
             } else {
                 $model = new \Modules\Guestbook\Models\Entry();
                 $model->setName($name);
@@ -58,8 +61,10 @@ class Index extends \Ilch\Controller\Frontend
                     $this->addMessage('check', 'success');
                 }
 
+                unset($_SESSION['captcha']);
                 $this->redirect(array('action' => 'index'));
             }
+            unset($_SESSION['captcha']);
         }
     }
 }

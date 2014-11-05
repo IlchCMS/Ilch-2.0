@@ -365,6 +365,18 @@ abstract class Base
     }
 
     /**
+     * Gets the captcha image field.
+     *
+     * @return string
+     */
+    public function getCaptchaField()
+    {
+        $html = '<img src="'.$this->getUrl().'/application/libraries/captcha/captcha.php" id="captcha" />';
+
+        return $html;
+    }
+
+    /**
      * Gets the page loading time in microsecond.
      *
      * @return float

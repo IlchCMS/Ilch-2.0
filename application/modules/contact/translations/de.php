@@ -20,4 +20,8 @@ return array
     'menuActionEditReceiver' => 'Empfänger editieren',
     'noReceivers' => 'Keine Empfänger',
     'askIfDeleteReceiver' => 'Sind Sie sicher, dass das Empfänger "%s" entfernt werden soll?',
+    'contactWebsite' => 'Kontakt Webseite ',
+    'captcha' => 'Captcha',
+    'invalidCaptcha' => 'Captcha ist fehlerhaft',
+    'captchaRead' => 'Nicht lesbar? Text ändern!',
 );
