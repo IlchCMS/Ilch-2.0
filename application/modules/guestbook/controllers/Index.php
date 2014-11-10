@@ -126,9 +126,9 @@ class Index extends \Ilch\Controller\Frontend
             */
             $validation = Validation::create($post, [
                 'captcha'   => 'captcha',
-                'name'      => 'required|length,max:16,min:3',
-                'email'     => 'required,customErrorAlias:unsupportedEmailAddress|email',
-                'text'      => 'required|same,as:email',
+                'name'      => 'required',
+                'email'     => 'required|email',
+                'text'      => 'required',
                 'homepage'  => 'url',
             ]);
 
