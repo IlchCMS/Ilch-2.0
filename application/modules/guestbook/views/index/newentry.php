@@ -1,19 +1,6 @@
-<?php // Fehlerausgabe der Validation ?>
-<?php if($this->get('errors') !== null): ?>
-<div class="alert alert-danger" role="alert">
-    <strong> Es sind folgende Fehler aufgetreten:</strong>
-    <ul>
-    <?php foreach($this->get('errors') as $error): ?>
-        <li><?= $error; ?></li>
-    <?php endforeach; ?>
-    </ul>
-</div>
-<?php endif; ?>
-<?php // Ende Fehlerausgabe der Validation ?>
-
 <form action="" class="form-horizontal" method="POST">
     <?php echo $this->getTokenField(); ?>
-    <div class="form-group<?= in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('name'); ?>*
         </label>
@@ -22,34 +9,32 @@
                    class="form-control"
                    name="name"
                    placeholder="Name"
-                   value="<?= $this->get('post')['name']; ?>" />
+                   required />
         </div>
     </div>
-    <div class="form-group<?= in_array('email', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('email'); ?>*
         </label>
         <div class="col-lg-8">
             <input type="text"
                    class="form-control"
-                   name="email"
-                   placeholder="E-Mail"
-                   value="<?= $this->get('post')['email']; ?>" />
+                   name="email" 
+                   placeholder="E-Mail" />
         </div>
     </div>
-    <div class="form-group<?= in_array('homepage', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('page'); ?>
         </label>
         <div class="col-lg-8">
            <input type="text"
                   class="form-control"
-                  name="homepage"
-                  placeholder="<?php echo $this->getTrans('page'); ?>"
-                  value="<?= $this->get('post')['homepage']; ?>" />
+                  name="homepage" 
+                  placeholder="<?php echo $this->getTrans('page'); ?>" />
         </div>
     </div>
-    <div class="form-group<?= in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('message'); ?>*
         </label>
@@ -58,7 +43,6 @@
                       class="form-control"
                       name="text"
                       required>
-                <?= $this->get('post')['text']; ?>
             </textarea>
         </div>
     </div>
@@ -69,7 +53,7 @@
             echo $message;
         }
     ?>
-    <div class="form-group<?= in_array('captcha', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('captcha'); ?>
         </label>
@@ -79,18 +63,18 @@
                   id="captcha-form"
                   class="form-control"
                   autocomplete="off"
-                  name="captcha"
+                  name="captcha" 
                   placeholder="<?php echo $this->getTrans('captcha'); ?>" />
             <a href="#" onclick="
-                document.getElementById('captcha').src='<?php $this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
+                document.getElementById('captcha').src='<?php $this->getUrl()?>/application/libraries/captcha/captcha.php?'+Math.random();
                 document.getElementById('captcha-form').focus();"
                 id="change-image"><?php echo $this->getTrans('captchaRead'); ?></a>
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <input type="submit"
-                   name="saveEntry"
+            <input type="submit" 
+                   name="saveEntry" 
                    class="btn"
                    value="<?php echo $this->getTrans('submit'); ?>" />
         </div>
