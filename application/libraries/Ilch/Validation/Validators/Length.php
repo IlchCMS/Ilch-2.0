@@ -17,8 +17,8 @@ class Length extends Base
     {
         $data = $this->data;
 
-        $min = (int) $data->getParam('min');
-        $max = (int) $data->getParam('max');
+        $min = is_null($data->getParam('min')) ? null : (int) $data->getParam('min');
+        $max = is_null($data->getParam('max')) ? null : (int) $data->getParam('max');
 
         $val = $data->getValue();
 
