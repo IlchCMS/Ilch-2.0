@@ -15,10 +15,12 @@ class Email extends Base
 
     public function run()
     {
-        if (empty($this->data->getValue())) {
+        $value = $this->data->getValue();
+
+        if (empty($value)) {
             $result = true;
         } else {
-            $result = (bool) filter_var($this->data->getValue(), FILTER_VALIDATE_EMAIL);
+            $result = (bool) filter_var($value, FILTER_VALIDATE_EMAIL);
         }
 
         return [

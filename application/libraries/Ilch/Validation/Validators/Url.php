@@ -24,11 +24,12 @@ class Url extends Base
     public function run()
     {
         $data = $this->data;
+        $value = $data->getValue();
 
-        if (empty($data->getValue())) {
+        if (empty($value)) {
             $result = true;
         } else {
-            $result = (bool) preg_match(static::REGEXP, $data->getValue());
+            $result = (bool) preg_match(static::REGEXP, $value);
         }
 
         return [
