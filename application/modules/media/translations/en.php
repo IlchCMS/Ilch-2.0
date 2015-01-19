@@ -12,7 +12,7 @@ return array
 (
     'media' => 'Media',
     'menuMedia' => 'Media',
-    'menuActionAddNew' => 'Add New',
+    'menuActionAddNew' => 'Upload files',
     'description' => 'Description',
     'type' => 'Type',
     'options' => 'Options',
@@ -20,4 +20,19 @@ return array
     'noMedias' => 'no Medias',
     'name' => 'Name',
     'date' => 'Date added',
+    'writableMedia' => 'Upload folder is not writeable',
+    'settings' => 'Settings',
+    'allowedVideos' => 'allowed Videos',
+    'allowedFiles' => 'allowed Files',
+    'allowedImages' => 'allowed Images',
+    'close' => 'close',
+    'allowedMediaInfo' => 'Info',
+    'success' => 'Success',
+    'allowedMediaInfoText' => 'Here you can set the allowed extensions. Write <br/> the endings after another and only separated by a space <br/>. Be aware that you use an extension such as may "jpeg" only allowed images appear and has not allowed to look at videos or allowed Files!',
+
+    'cats' => 'Categories',
+    'catTitle' => 'Title',
+    'menuActionAddNewCat' => 'New Categorie',
+    'newCat' => 'Add New Categorie',
+    'noCats' => 'No cats available'
 );

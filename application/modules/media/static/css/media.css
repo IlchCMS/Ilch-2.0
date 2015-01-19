@@ -216,3 +216,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', end
     width: 100px;
     height: auto;
 }
+#filter-media .btn{
+    padding: 6px 12px !important;
+}
+#filter-panel
+*,
+*:before,
+*:after{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#filter-panel label{
+    padding-left: 0px;
+}

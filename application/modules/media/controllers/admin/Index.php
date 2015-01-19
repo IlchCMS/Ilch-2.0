@@ -7,7 +7,6 @@
 namespace Modules\Media\Controllers\Admin;
 
 use Modules\Media\Mappers\Media as MediaMapper;
-
 use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
@@ -27,10 +26,24 @@ class Index extends \Ilch\Controller\Admin
                     'active' => true,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
+                ),
+                array
+                (
+                    'name' => 'cats',
+                    'active' => false,
+                    'icon' => 'fa fa-list',
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'index'))
+                ),
+                array
+                (
+                    'name' => 'settings',
+                    'active' => false,
+                    'icon' => 'fa fa-cogs',
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
                 )
             )
         );
-        
+
         $this->getLayout()->addMenuAction
         (
             array
@@ -50,16 +63,34 @@ class Index extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' and $this->getRequest()->getPost('check_medias') > 0) {
-                foreach($this->getRequest()->getPost('check_medias') as $mediaId) {
-                    $mediaMapper->delImage($mediaId);
-                }
-                $this->addMessage('deleteSuccess');
-                $this->redirect(array('action' => 'index'));
+            foreach($this->getRequest()->getPost('check_medias') as $mediaId) {
+                $mediaMapper->delImage($mediaId);
+            }
+            $this->addMessage('deleteSuccess');
+            $this->redirect(array('action' => 'index'));
         }
 
-        $MediaMapper = new MediaMapper();
-        $this->getView()->set('medias', $MediaMapper->getMediaList());
-        $this->getView()->set('catnames', $MediaMapper->getCatList());
+        $pagination = new \Ilch\Pagination();
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
+        if ($this->getRequest()->getParam('rows')){
+            $pagination->setRowsPerPage($this->getRequest()->getParam('rows'));
+            $rows = array('rows' => $this->getRequest()->getParam('rows'));
+            $this->getView()->set('rows', $rows);
+        } else {
+            $rows = array();
+            $this->getView()->set('rows', $rows);
+        }
+
+        if ($this->getRequest()->getPost('search') == 'search') {
+                $pagination->setRowsPerPage($this->getRequest()->getPost('rows'));
+                $rows = array('rows' => $this->getRequest()->getPost('rows'));
+                $this->getView()->set('rows', $rows);
+        }
+
+        $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
+        $this->getView()->set('catnames', $mediaMapper->getCatList());
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
         $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
         $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
@@ -71,41 +102,32 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('media'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('mediaUpload'), array('action' => 'upload'));
 
+        if (!is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
+             $this->addMessage('writableMedia', 'danger');
+        }
+
         $ilchdate = new IlchDate;
         $mediaMapper = new MediaMapper();
 
         if ($this->getRequest()->isPost()) {
 
-            $path = $this->getConfig()->get('media_uploadpath');
-            $file = $_FILES['upl']['name'];
-            $endung = pathinfo($file, PATHINFO_EXTENSION);
-            $name = pathinfo($file, PATHINFO_FILENAME);
-            $filename = uniqid() . $name;
-            $url = $path.$filename.'.'.$endung;
-            $urlthumb = $path.'thumb_'.$filename.'.'.$endung;
+            $upload = new \Ilch\Upload();
+            $upload->setFile($_FILES['upl']['name']);
+            $upload->setPath($this->getConfig()->get('media_uploadpath'));
+            $upload->upload();
 
             $model = new \Modules\Media\Models\Media();
-            $model->setUrl($url);
-            $model->setUrlThumb($urlthumb);
-            $model->setEnding($endung);
-            $model->setName($name);
+            $model->setUrl($upload->getUrl());
+            $model->setUrlThumb($upload->getUrlThumb());
+            $model->setEnding($upload->getEnding());
+            $model->setName($upload->getName());
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);
 
-            if(move_uploaded_file($_FILES['upl']['tmp_name'], $path.$filename.'.'.$endung)){
-                if(in_array($endung , explode(' ',$this->getConfig()->get('media_ext_img')))){
-                    $thumb = new \Thumb\Thumbnail();
-                    $thumb -> Thumbprefix = 'thumb_';
-                    $thumb -> Thumblocation = $path;
-                    $thumb -> Thumbsize = 300;
-                    $thumb -> Square = 300;
-                    $thumb -> Createthumb($url,'file');
-                }
-            }
         }
     }
 
-	public function delAction()
+    public function delAction()
     {
         $mediaMapper = new MediaMapper();
         $mediaMapper->delImage($this->getRequest()->getParam('id'));

@@ -12,14 +12,16 @@ defined('ACCESS') or die('no direct access');
 
 class Media extends \Ilch\Mapper
 {
-    public function getMediaList() 
+    public function getMediaList($pagination = NULL) 
     {
-        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
                 LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                ORDER by m.id DESC';
+                ORDER by m.id DESC
+                LIMIT '.implode(',',$pagination->getLimit());
 
         $mediaArray = $this->db()->queryArray($sql);
+        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
         if (empty($mediaArray)) {
             return null;
@@ -38,7 +40,6 @@ class Media extends \Ilch\Mapper
             $entryModel->setCatName(($medias['cat_name']));
             $entryModel->setCatId(($medias['cat']));
             $media[] = $entryModel;
-
         }
 
         return $media;
@@ -51,23 +52,40 @@ class Media extends \Ilch\Mapper
             ->order(array('id' => 'DESC'))
             ->execute()
             ->fetchRows();
-        
 
         if (empty($mediaArray)) {
             return null;
         }
 
         $media = array();
-        
+
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
             $entryModel->setId($medias['id']);
             $entryModel->setCatName(($medias['cat_name']));
             $media[] = $entryModel;
-
         }
 
         return $media;
+    }
+
+    public function getCatById($id)
+    {
+        $catRow = $this->db()->select('*')
+            ->from('media_cats')
+            ->where(array('id' => $id))
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($catRow)) {
+            return null;
+        }
+
+        $mediaModel = new MediaModel();
+        $mediaModel->setId($catRow['id']);
+        $mediaModel->setCatName($catRow['cat_name']);
+
+        return $mediaModel;
     }
 
     public function save(MediaModel $model)
@@ -83,7 +101,7 @@ class Media extends \Ilch\Mapper
                 'cat_name' => 'Allgemein',
             ))
             ->execute();
-    }	
+    }
 
     public function delImage($id) 
     {
@@ -100,6 +118,42 @@ class Media extends \Ilch\Mapper
         }
         $this->db()->delete('media')
             ->where(array('id' => $id))
+            ->execute();
+    }
+
+    public function saveCat(MediaModel $model)
+    {
+        $this->db()->insert('media_cats')
+            ->values(array(
+                'cat_name' => $model->getCatName()
+            ))
+            ->execute();
+    }
+
+    public function delCat($id) 
+    {
+        $this->db()->delete('media_cats')
+            ->where(array('id' => $id))
+            ->execute();
+    }
+
+    public function setCat(MediaModel $model) 
+    {
+        $this->db()->update('media')
+            ->values(array(
+                'cat' => $model->getCatId()
+            ))
+            ->where(array('id' => $model->getId()))
+            ->execute();
+    }
+
+    public function treatCat(MediaModel $model) 
+    {
+        $this->db()->update('media_cats')
+            ->values(array(
+                'cat_name' => $model->getCatName()
+            ))
+            ->where(array('id' => $model->getCatId()))
             ->execute();
     }
 }

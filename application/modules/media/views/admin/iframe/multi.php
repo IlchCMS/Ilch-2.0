@@ -13,6 +13,7 @@
 <?php echo $this->getTokenField(); ?>
 <?php if ($this->get('medias') != '') {?>
     <div id="ilchmedia">
+    <?=$this->get('pagination')->getHtml($this,array('type' => 'multi', 'id' => $this->getRequest()->getParam('id'))); ?>
         <div class="container-fluid">
         <?php if( $this->getRequest()->getParam('type') === 'image' OR $this->getRequest()->getParam('type') === 'multi'){ ?>
             <?php foreach ($this->get('medias') as $media) : ?>
