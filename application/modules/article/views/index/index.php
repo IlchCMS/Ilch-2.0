@@ -7,6 +7,7 @@ if (!empty($articles)) {
         $date = new \Ilch\Date($article->getDateCreated());
         $comments = $commentMapper->getCommentsByKey('articles_'.$article->getId());
         $image = $article->getArticleImage();
+        $imageSource = $article->getArticleImageSource();
 ?>
 <h4>
     <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
@@ -16,7 +17,10 @@ if (!empty($articles)) {
 </div>
 <?php
 if (!empty($image)) {
-    echo '<img class="article_image" src="'.$image.'"/>';
+    echo '<figure><img class="article_image" src="'.$image.'"/>';
+    if (!empty($imageSource)) {
+        echo '<figcaption class="article_image_source">'.$this->getTrans('articleImageSource').': '.$imageSource.'</figcaption><figure>';
+    }
 }
 ?>
 <hr />

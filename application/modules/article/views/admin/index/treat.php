@@ -78,6 +78,7 @@
                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } ?>" />
         </div>
     </div>
+    <legend><?php echo $this->getTrans('articleOptions'); ?></legend>
     <div class="form-group">
         <label for="articleImage"
                 class="col-lg-2 control-label">
@@ -93,6 +94,19 @@
                        value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } ?>" />
                 <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
             </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="articleImageSource"
+                class="col-lg-2 control-label">
+            <?php echo $this->getTrans('articleImageSource'); ?>:
+        </label>
+        <div class="col-lg-4">
+            <input class="form-control"
+                    type="text"
+                    name="articleImageSource"
+                    placeholder="<?php echo $this->getTrans('articleImageSource'); ?>"
+                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImageSource()); } ?>" />
         </div>
     </div>
     <div class="form-group">

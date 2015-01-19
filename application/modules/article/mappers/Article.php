@@ -45,6 +45,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setArticleImage($articleRow['article_img']);
+            $articleModel->setArticleImageSource($articleRow['article_img_source']);
             $articles[] = $articleModel;
         }
 
@@ -60,7 +61,7 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleList($locale = '', $limit = null)
     {
-        $sql = 'SELECT `a`.`id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`
+        $sql = 'SELECT `a`.`id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`
                 FROM `[prefix]_articles` as `a`
                 LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
                     AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
@@ -85,6 +86,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setArticleImage($articleRow['article_img']);
+            $articleModel->setArticleImageSource($articleRow['article_img_source']);
             $articles[] = $articleModel;
         }
 
@@ -118,6 +120,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setPerma($articleRow['perma']);
         $articleModel->setDateCreated($articleRow['date_created']);
         $articleModel->setArticleImage($articleRow['article_img']);
+        $articleModel->setArticleImageSource($articleRow['article_img_source']);
 
         return $articleModel;
     }
@@ -154,8 +157,26 @@ class Article extends \Ilch\Mapper
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 $this->db()->update('articles_content')
-                    ->values(array('title' => $article->getTitle(), 'description' => $article->getDescription(), 'content' => $article->getContent(), 'perma' => $article->getPerma(), 'article_img' => $article->getArticleImage()))
-                    ->where(array('article_id' => $article->getId(), 'locale' => $article->getLocale()))
+                    ->values
+                    (
+                        array
+                        (
+                            'title' => $article->getTitle(), 
+                            'description' => $article->getDescription(), 
+                            'content' => $article->getContent(), 
+                            'perma' => $article->getPerma(), 
+                            'article_img' => $article->getArticleImage(), 
+                            'article_img_source' => $article->getArticleImageSource()
+                        )
+                    )
+                    ->where
+                    (
+                        array
+                        (
+                            'article_id' => $article->getId(), 
+                            'locale' => $article->getLocale()
+                        )
+                    )
                     ->execute();
             } else {
                 $this->db()->insert('articles_content')
@@ -169,7 +190,8 @@ class Article extends \Ilch\Mapper
                             'content' => $article->getContent(),
                             'perma' => $article->getPerma(),
                             'locale' => $article->getLocale(),
-                            'article_img' => $article->getArticleImage()
+                            'article_img' => $article->getArticleImage(),
+                            'article_img_source' => $article->getArticleImageSource()
                         )
                     )
                     ->execute();
@@ -191,7 +213,8 @@ class Article extends \Ilch\Mapper
                         'content' => $article->getContent(),
                         'perma' => $article->getPerma(),
                         'locale' => $article->getLocale(),
-                        'article_img' => $article->getArticleImage()
+                        'article_img' => $article->getArticleImage(),
+                        'article_img_source' => $article->getArticleImageSource()
                     )
                 )
                 ->execute();

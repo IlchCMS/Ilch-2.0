@@ -28,4 +28,6 @@ return array
     'articleImage' => 'Artikelbild',
     'articlePreview' => 'Vorschau',
     'articleShow' => 'Ansehen',
+    'articleImageSource' => 'Bild Quelle',
+    'articleOptions' => 'Optionen',
 );

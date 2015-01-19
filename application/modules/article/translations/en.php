@@ -30,4 +30,6 @@ return array
     'articleImage' => 'Article image',
     'articlePreview' => 'Preview',
     'articleShow' => 'Show',
+    'articleImageSource' => 'Image Source',
+    'articleOptions' => 'Options',
 );

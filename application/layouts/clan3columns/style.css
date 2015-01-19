@@ -20,6 +20,11 @@ label {
     font-weight: normal;
 }
 
+figcaption {
+    font-style: italic;
+    font-size: 0.8em;
+}
+
 @media (min-width: 991px) {
 	nav {
 		margin-top: 30px;

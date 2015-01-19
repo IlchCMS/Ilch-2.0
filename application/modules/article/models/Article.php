@@ -66,9 +66,16 @@ class Article extends \Ilch\Model
     /**
      * The articleImage of the article.
      *
-     * @var DateTime
+     * @var string
      */
     protected $articleImage;
+
+    /**
+     * The articleImageSource of the image.
+     *
+     * @var string
+     */
+    protected $articleImageSource;
 
     /**
      * Gets the id of the article.
@@ -213,11 +220,11 @@ class Article extends \Ilch\Model
     /**
      * Sets the articleImage of the article.
      *
-     * @param string $articleimage
+     * @param string $articleImage
      */
-    public function setArticleImage($articleimage)
+    public function setArticleImage($articleImage)
     {
-        $this->articleImage = $articleimage;
+        $this->articleImage = $articleImage;
     }
 
     /**
@@ -228,5 +235,25 @@ class Article extends \Ilch\Model
     public function getArticleImage()
     {
         return $this->articleImage;
+    }
+
+    /**
+     * Sets the articleImageSource of the image.
+     *
+     * @param string $articleImageSource
+     */
+    public function setArticleImageSource($articleImageSource)
+    {
+        $this->articleImageSource = $articleImageSource;
+    }
+
+    /**
+     * Gets the article Image Source.
+     *
+     * @return string
+     */
+    public function getArticleImageSource()
+    {
+        return $this->articleImageSource;
     }
 }
