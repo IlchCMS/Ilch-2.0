@@ -91,4 +91,36 @@ class Opponents extends Base
         $this->getView()->set('userInput', $userInput);
         $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
+
+    public function mediaQueryAction()
+    {
+        $mapper = new \Modules\Media\Mappers\Media();
+        $media = $mapper->getMediaList();
+
+        $aMedia = [];
+
+        foreach ($media as $image) {
+            $aMedia[] = [
+                'id'        => $image->getId(),
+                'url'       => $image->getUrl(),
+                'thumb'     => $image->getUrlThumb(),
+                'name'      => $image->getName(),
+                'date'      => $image->getDatetime(),
+                'ext'       => $image->getEnding(),
+                'catId'     => $image->getCatId(),
+                'catName'   => $image->getCatName()
+            ];
+        }
+
+        echo json_encode($aMedia);
+
+//        $entryModel->setId($medias['id']);
+//        $entryModel->setUrl($medias['url']);
+//        $entryModel->setUrlThumb($medias['url_thumb']);
+//        $entryModel->setName($medias['name']);
+//        $entryModel->setDatetime($medias['datetime']);
+//        $entryModel->setEnding($medias['ending']);
+//        $entryModel->setCatName(($medias['cat_name']));
+//        $entryModel->setCatId(($medias['cat']));
+    }
 }
