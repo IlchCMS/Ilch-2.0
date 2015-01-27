@@ -320,10 +320,10 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                 }
                 
                 var modulKey = $('#modulekey').val();
+                var boxkey = $('#boxkey').val();
 
-                if (typeof modulKey == "undefined")
+                if (typeof modulKey == "undefined" && typeof boxkey != "undefined")
                 {
-                    boxkey = $('#boxkey').val();
                     boxkeyParts = boxkey.split('_');
                     modulKey = boxkeyParts[0];
                 }
@@ -350,10 +350,11 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                     }
 
                     var modulKey = $('#modulekey').val();
+                    var boxkey = $('#boxkey').val();
 
-                    if (typeof modulKey == "undefined")
+                    if (typeof modulKey == "undefined" && typeof boxkey != "undefined")
                     {
-                        boxkey = $('#boxkey').val();
+                        
                         boxkeyParts = boxkey.split('_');
                         modulKey = boxkeyParts[0];
                     }
