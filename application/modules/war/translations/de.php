@@ -1,0 +1,96 @@
+<?php
+/**
+ * Translations file for the War module.
+ *
+ * @copyright Ilch 2.0
+ * @package ilch
+ */
+
+defined('ACCESS') or die('no direct access');
+
+return array
+(
+    'menuWars' => 'Wars',
+    'menuActionNewWar' => 'War hinzufügen',
+    'menuActionNewLastWar' => 'Last War hinzufügen',
+    'menuActionNewNextWar' => 'Next War hinzufügen',
+    'menuNextWars' => 'Next Wars',
+    'menuLastWars' => 'Last Wars',
+    'menuEnemy' => 'Gegner',
+    'menuActionNewEnemy' => 'Gegner hinzufügen',
+    'manageWarOverview' => 'Wars übersicht',
+    'send' => 'Absenden',
+
+    'menuGroups' => 'Gruppen',
+    'menuActionNewGroup' => 'Gruppe hinzufügen',
+    'manageGroups' => 'Gruppen verwalten',
+    'manageNewGroup' => 'Neue Gruppen erstellen',
+    'groupsName' => 'Name',
+    'groupTag' => 'Gruppen Tag',
+    'groupsTag' => 'Tag',
+    'groupsImage' => 'Bild',
+    'groupName' => 'Gruppen Name',
+    'groupImage' => 'Gruppen Bild',
+    'assignedMember' => 'Member auswählen',
+    'selectAssignedMember' => 'Member',
+
+    'manageNewEnemy' => 'Neuen Gegner erstellen',
+    'manageEnemy' => 'Gegner verwalten',
+    'enemyName' => 'Gegner Name',
+    'enemysName' => 'Name',
+    'enemyTag' => 'Gegner Tag',
+    'enemysTag' => 'Tag',
+    'enemyHomepage' => 'Gegner Homepage',
+    'enemyLogo' => 'Gegner Logo',
+    'enemysLogo' => 'Logo',
+    'enemyLogoInfo' => 'http://... oder auswählen',
+    'enemyContactName' => 'Gegner Kontakt Name',
+    'enemyContactEmail' => 'Gegner Kontakt Email',
+    'enemysContactName' => 'Kontakt Name',
+    'enemysContactEmail' => 'Kontakt Email',
+
+    'manageNextWar' => 'Next War erstellen',
+    'nextWarOverview' => 'Next War Übersicht',
+    'nextWarEnemy' => 'Gegner wählen',
+    'nextWarGroup' => 'Gruppe wählen',
+    'nextWarTime' => 'Datum/Uhrzeit',
+    'nextWarMap' => 'Map`s',
+    'nextWarServer' => 'Server',
+    'nextWarPassword' => 'Server Passwort',
+    'nextWarXonx' => 'XonX',
+    'nextWarGame' => 'Game',
+    'nextWarMatchtype' => 'Matchtype',
+    'nextWarReport' => 'Bericht',
+
+    'manageLastWar' => 'Last War erstellen',
+    'lastWarOverview' => 'Last War Übersicht',
+    'lastWarEnemy' => 'Gegner wählen',
+    'lastWarGroup' => 'Gruppe wählen',
+    'lastWarTime' => 'Datum/Uhrzeit',
+    'lastWarMap' => 'Map`s',
+    'lastWarServer' => 'Server',
+    'lastWarPassword' => 'Server Passwort',
+    'lastWarXonx' => 'XonX',
+    'lastWarGame' => 'Game',
+    'lastWarMatchtype' => 'Matchtype',
+    'lastWarReport' => 'Bericht',
+
+    'warStatus' => 'Status',
+    'warStatusOpen' => 'Offen',
+    'warStatusClose' => 'Geschlossen',
+    'warClose' => 'War schließen',
+    'warOpen' => 'War öffnen',
+    'noWars' => 'Keine Wars vorhanden',
+    'noGroup' => 'Keine Gruppen vorhanden',
+    'noEnemy' => 'Keine Gegner vorhanden',
+    'warEnemy' => 'Gegner wählen',
+    'warGroup' => 'Gruppe wählen',
+    'warTime' => 'Datum/Uhrzeit',
+    'warMap' => 'Map`s',
+    'warServer' => 'Server',
+    'warPassword' => 'Server Passwort',
+    'warXonx' => 'XonX',
+    'warGame' => 'Game',
+    'warMatchtype' => 'Matchtype',
+    'warReport' => 'Bericht',
+);

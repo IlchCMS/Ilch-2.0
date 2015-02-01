@@ -88,6 +88,24 @@ class Media extends \Ilch\Mapper
         return $mediaModel;
     }
 
+    public function getByWhere($where = [])
+    {
+        $mediaRow = $this->db()->select('*')
+            ->from('media')
+            ->where($where)
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($mediaRow)) {
+            return null;
+        }
+
+        $mediaModel = new MediaModel();
+        $mediaModel->setUrlThumb($mediaRow['url_thumb']);
+        
+        return $mediaModel;
+    }
+
     public function save(MediaModel $model)
     {
         $this->db()->insert('media')

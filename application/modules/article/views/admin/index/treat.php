@@ -89,7 +89,7 @@
                 <input class="form-control"
                        type="text"
                        name="articleImage"
-                       id="articleImage"
+                       id="selectedImage"
                        placeholder="<?php echo $this->getTrans('articleImage'); ?>"
                        value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } ?>" />
                 <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>

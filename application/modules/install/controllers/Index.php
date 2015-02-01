@@ -332,6 +332,7 @@ class Index extends \Ilch\Controller\Frontend
          * Optional-Modules.
          */
         $modules['checkout']['types']  = array('clan');
+        $modules['war']['types']       = array('clan');
         $modules['contact']['types']   = array('clan', 'private');
         $modules['guestbook']['types'] = array('clan', 'private');
         $modules['impressum']['types'] = array('clan', 'private');

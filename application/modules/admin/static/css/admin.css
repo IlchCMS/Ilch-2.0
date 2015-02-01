@@ -336,6 +336,11 @@ aside {
     z-index: 904;
     padding-top: 40px;
 }
+.divider {
+    height: 1px;
+    overflow: hidden;
+    background-color: #FFF;
+}
 #main {
     margin-left: 220px;
     padding: 0;

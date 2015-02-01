@@ -1,4 +1,9 @@
 <link href="<?php echo $this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
+<ul class="nav nav-pills navbar-fixed-top">
+    <li><a href="<?php echo $this->getUrl(array('controller' => 'iframe', 'action' => 'upload')); ?>">Upload</a></li>
+    <li><a href="<?=$this->getUrl('admin/media/iframe/index/type/image');?>">Media</a></li>
+    <li class="pull-right"><button class="btn btn-primary" name="save" type="submit" value="save">Hinzufügen…</button></li>
+</ul>
 <?php if ($this->get('medias') != '') {?>
 <div id="ilchmedia" class="container">
     <div class="row">
@@ -67,7 +72,7 @@
 <?php if( $this->getRequest()->getParam('type') === 'single'){ ?>
 <script>
     $(".image").click(function(){
-        window.top.$('#articleImage').val($(this).data('url'));
+        window.top.$('#selectedImage').val($(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
     });
 </script>
