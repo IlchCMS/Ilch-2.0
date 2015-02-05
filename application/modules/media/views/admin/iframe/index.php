@@ -6,6 +6,7 @@
 </ul>
 <?php if ($this->get('medias') != '') {?>
 <div id="ilchmedia" class="container">
+    <?=$this->get('pagination')->getHtml($this,array('type' => 'single')); ?>
     <div class="row">
         <?php if( $this->getRequest()->getParam('type') === 'image' OR $this->getRequest()->getParam('type') === 'single'){ ?>
             <?php foreach ($this->get('medias') as $media) : ?>

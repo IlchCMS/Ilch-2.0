@@ -40,6 +40,9 @@ class Layouts extends \Ilch\Controller\Admin
             include_once $layoutPath.'/config/config.php';
             $model->setAuthor($config['author']);
             $model->setDesc($config['desc']);
+            if(!empty($config['modulekey'])) {
+                $model->setModulekey($config['modulekey']);
+            }
             $layouts[] = $model;
         }
 

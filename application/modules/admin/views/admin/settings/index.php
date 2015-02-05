@@ -34,6 +34,25 @@
                     }
                 ?>
                 </optgroup>
+                <optgroup label="<?php echo $this->getTrans('layouts'); ?>">
+                <?php
+                    $layouts = array();
+
+                    foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+                        include_once $layoutPath.'/config/config.php';
+                        $module = $config['modulekey'];
+                        $selected = '';
+
+                        if ($this->get('startPage') == 'layouts_'.$module) {
+                            $selected = 'selected="selected"';
+                        }
+
+                        if(!empty($module)) {
+                            echo '<option '.$selected.' value="layouts_'.$module.'">'.$module.'</option>';
+                        }
+                    }
+                ?>
+                </optgroup>
             </select>
         </div>
     </div>

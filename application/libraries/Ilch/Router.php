@@ -267,6 +267,9 @@ class Router
             $this->request->setActionName('show');
             $this->request->setParam('id', str_replace('page_', '', $startPage));
             $this->request->setParam('locale', $locale);
+        } elseif (strpos($startPage, 'layouts_') !== false) {
+            $this->request->setModuleName(str_replace('layouts_', '', $startPage));
+            $this->request->setControllerName('index');
         } else {
             $this->request->setModuleName(DEFAULT_MODULE);
             $this->request->setControllerName('index');

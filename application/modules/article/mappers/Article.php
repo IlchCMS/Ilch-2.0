@@ -66,7 +66,7 @@ class Article extends \Ilch\Mapper
                 LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
                     AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
                 GROUP BY `a`.`id`
-                ORDER BY `a`.`date_created` ASC';
+                ORDER BY `a`.`date_created` DESC';
         
         if ($limit !== null) {
            $sql .= ' LIMIT '.(int)$limit;

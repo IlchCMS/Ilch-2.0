@@ -29,6 +29,11 @@
                                 }
                                 ?>
                             </a>
+                            <?php if($layout->getModulekey() != '') { ?>
+                            <a class="fa-2x" href="<?php echo $this->getUrl(array('module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index')); ?>">
+                                <i class="fa fa fa-cogs"></i> Settings
+                            </a>
+                            <?php } ?>
                             <span class="deleteLayout clickable fa fa-trash-o fa-2x text-danger pull-right"
                               data-clickurl="<?php echo $this->getUrl(array('action' => 'delete', 'key' => $layout->getKey())); ?>"
                               data-toggle="modal"

@@ -36,6 +36,13 @@ class Layout extends \Ilch\Model
     protected $desc;
 
     /**
+     * Module of the layout.
+     *
+     * @var string
+     */
+    protected $modulekey;
+
+    /**
      * Gets the key.
      *
      * @return string
@@ -93,5 +100,25 @@ class Layout extends \Ilch\Model
     public function setDesc($desc)
     {
         $this->desc = (string)$desc;
+    }
+
+    /**
+     * Gets the modulekey.
+     *
+     * @return string
+     */
+    public function getModulekey()
+    {
+        return $this->modulekey;
+    }
+
+    /**
+     * Sets the modulekey.
+     *
+     * @param string $modulekey
+     */
+    public function setModulekey($modulekey)
+    {
+        $this->modulekey = (string)$modulekey;
     }
 }
