@@ -1,5 +1,5 @@
-<link href="<?php echo $this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
-<legend><?php echo $this->getTrans('media'); ?></legend>
+<link href="<?=$this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
+<legend><?=$this->getTrans('media'); ?></legend>
 <?php
 if ($this->get('medias') != '') {
 ?>
@@ -71,10 +71,10 @@ if ($this->get('medias') != '') {
                 <tr>
                     <th><?=$this->getCheckAllCheckbox('check_medias')?></th>
                     <th></th>
-                    <th><?php echo $this->getTrans('type'); ?></th>
+                    <th><?=$this->getTrans('type'); ?></th>
                     <th></th>
-                    <th><?php echo $this->getTrans('name'); ?></th>
-                    <th><?php echo $this->getTrans('date'); ?></th>
+                    <th><?=$this->getTrans('name'); ?></th>
+                    <th><?=$this->getTrans('date'); ?></th>
                     <th>Kategorie</th>
                 </tr>
             </thead>
@@ -82,20 +82,20 @@ if ($this->get('medias') != '') {
                 <tr>
                     <td><input value="<?=$media->getId()?>" type="checkbox" name="check_medias[]" /></td>
                     <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $media->getId()))?></td>
-                    <td><?php echo $media->getEnding(); ?></td>
+                    <td><?=$media->getEnding(); ?></td>
                     <td><?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))){
-                        echo '<a href="'.$this->getStaticUrl().'../'.$media->getUrl().'" title="'.$media->getName().'"><img class="img-preview" src="'.$this->getStaticUrl().'../'.$media->getUrlThumb().'" alt=""></a>';
+                        echo '<a href="'.$this->getBaseUrl($media->getUrl()).'" title="'.$media->getName().'"><img class="img-preview" src="'.$this->getBaseUrl($media->getUrlThumb()).'" alt=""></a>';
                             }  else {
-                                echo '<img src="'.$this->getStaticUrl('../application/modules/media/static/img/nomedia.png').'" class="img-preview" style="width:50px; height:auto;"  />';
+                                echo '<img src="'.$this->getBaseUrl('application/modules/media/static/img/nomedia.png').'" class="img-preview" style="width:50px; height:auto;"  />';
                             }
                         ?>
                     </td>
-                    <td><?php echo $media->getName(); ?></td>
-                    <td><?php echo $media->getDatetime(); ?></td>
+                    <td><?=$media->getName(); ?></td>
+                    <td><?=$media->getDatetime(); ?></td>
                     <td><div class="btn-group dropdown">
                             <button class="btn btn-default dropdown-toggle" 
                                     data-toggle="dropdown" 
-                                    type="button"><?php echo $media->getCatName(); ?>
+                                    type="button"><?=$media->getCatName(); ?>
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu listChooser" role="menu">
@@ -104,7 +104,7 @@ if ($this->get('medias') != '') {
                                 ?>
                                 <?php foreach ($this->get('catnames') as $name) : ?>
                                 <li>
-                                    <a href="<?php echo $this->getUrl(array('controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId())) ?>"><?php echo $name->getCatName(); ?></a>
+                                    <a href="<?php echo $this->getUrl(array('controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId())) ?>"><?=$name->getCatName(); ?></a>
                                 </li>
                                 <?php endforeach; ?>
                                 <?php

@@ -46,6 +46,13 @@ class Enemy extends \Ilch\Model
     protected $enemyLogo;
 
     /**
+     * The Enemy LogoThumb.
+     *
+     * @var string
+     */
+    protected $enemyLogoThumb;
+
+    /**
      * The Enemy Land.
      *
      * @var string
@@ -164,6 +171,26 @@ class Enemy extends \Ilch\Model
     public function setEnemyLogo($enemyLogo)
     {
         $this->enemyLogo = (string)$enemyLogo;
+    }
+
+    /**
+     * Gets the enemy LogoThumb.
+     *
+     * @return string
+     */
+    public function getEnemyLogoThumb()
+    {
+        return $this->enemyLogoThumb;
+    }
+
+    /**
+     * Sets the enemy LogoThumb.
+     *
+     * @param string $enemyLogoThumb
+     */
+    public function setEnemyLogoThumb($enemyLogoThumb)
+    {
+        $this->enemyLogoThumb = (string)$enemyLogoThumb;
     }
 
     /**

@@ -242,7 +242,7 @@ hr {
 .clickable  {
     cursor:  pointer;
 }
-.cke_button__ilchmedia_label {
+.cke_button__ilchmedia_label, .cke_button__ilchps_label {
     display:  inline !important;
 }
 #MediaModal {

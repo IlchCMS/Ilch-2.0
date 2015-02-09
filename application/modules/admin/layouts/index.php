@@ -378,6 +378,7 @@
             var iframeSingleUrlGallery = "<?=$this->getUrl('admin/media/iframe/multi/type/multi/');?>";
             var iframeSingleUrlDownloads = "<?=$this->getUrl('admin/media/iframe/multi/type/file/');?>";
             var ilchMediaPlugin = "<?=$this->getStaticUrl('../application/modules/media/static/js/ilchmedia/');?>";
+            var ilchPsPlugin = "<?=$this->getStaticUrl('../application/modules/media/static/js/ilchps/');?>";
         </script>
 
     </body>

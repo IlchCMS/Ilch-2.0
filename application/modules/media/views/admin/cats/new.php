@@ -1,4 +1,4 @@
-<legend><?php echo $this->getTrans('newCat'); ?></legend>
+<legend><?=$this->getTrans('newCat'); ?></legend>
 <form class="form-horizontal" method="POST" action="">
 <?=$this->getTokenField()?>
     <div class="form-group form-group-options">

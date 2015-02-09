@@ -42,7 +42,7 @@ if ($this->get('groups') != '') {
                             <?php echo $this->escape($group->getGroupTag()); ?>
                         </td>
                         <td>
-                            <img class="group-image" src="<?php echo $this->escape($group->getGroupImage()); ?>" />
+                            <img class="group-image" src="<?=$this->getBaseUrl($this->escape($group->getGroupImage())); ?>" />
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -63,7 +63,7 @@ if ($this->get('groups') != '') {
 <style>
     .group-image{
         max-width: 100px;
-        height: auto;
-        margin: -10px;
+        height: 50px;
+        margin: -8px;
     }
 </style>

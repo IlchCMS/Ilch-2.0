@@ -1,4 +1,4 @@
-<legend><?php echo $this->getTrans('cats'); ?></legend>
+<legend><?=$this->getTrans('cats'); ?></legend>
 <?php
 if ($this->get('cats') != '') {
 ?>
@@ -16,7 +16,7 @@ if ($this->get('cats') != '') {
                 <th><?=$this->getCheckAllCheckbox('check_cats')?></th>
                 <th></th>
                 <th></th>
-                <th><?php echo $this->getTrans('catTitle'); ?></th>
+                <th><?=$this->getTrans('catTitle'); ?></th>
             </tr>
         </thead>
         <tbody>

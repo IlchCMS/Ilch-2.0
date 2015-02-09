@@ -3,12 +3,12 @@
     <div class="well well-sm">
         <div class="row">
             <div class="col-xs-3 col-md-3 text-center">
-                <img src="<?php echo $this->escape($group->getGroupImage()); ?>" alt=""
+                <img src="<?=$this->getBaseUrl($this->escape($group->getGroupImage())); ?>" alt=""
                     class="img-rounded img-responsive" />
             </div>
             <div class="col-xs-9 col-md-9 section-box">
                 <h2>
-                    <?php echo $this->escape($group->getGroupName()); ?> <a href=""><span class="glyphicon glyphicon-new-window">
+                    <?=$this->escape($group->getGroupName()); ?> <a href=""><span class="glyphicon glyphicon-new-window">
                     </span></a>
                 </h2>
                 <p>...</p>

@@ -6,6 +6,7 @@
 
 namespace Modules\Article\Mappers;
 use Modules\Article\Models\Article as ArticleModel;
+use Modules\Media\Mappers\Media as MediaMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -61,10 +62,11 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleList($locale = '', $limit = null)
     {
-        $sql = 'SELECT `a`.`id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`
+        $sql = 'SELECT `a`.`id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`,`m`.`url_thumb`,`m`.`url`
                 FROM `[prefix]_articles` as `a`
                 LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
-                    AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
+                AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
+                LEFT JOIN `[prefix]_media` `m` ON `ac`.`article_img` = `m`.`url`
                 GROUP BY `a`.`id`
                 ORDER BY `a`.`date_created` DESC';
         
@@ -86,6 +88,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setArticleImage($articleRow['article_img']);
+            $articleModel->setArticleImageThumb($articleRow['url_thumb']);
             $articleModel->setArticleImageSource($articleRow['article_img_source']);
             $articles[] = $articleModel;
         }

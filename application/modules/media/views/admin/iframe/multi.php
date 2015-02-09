@@ -1,9 +1,9 @@
-<link href="<?php echo $this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
+<link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
 <?php if( $this->getRequest()->getParam('type') === 'multi'){ ?>
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(); ?>/index.php/admin/gallery/gallery/treatgallery/id/<?=$this->getRequest()->getParam('id') ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(); ?>/index.php/admin/gallery/gallery/treatgallery/id/<?=$this->getRequest()->getParam('id') ?>">
 <?php } ?>
 <?php if( $this->getRequest()->getParam('type') === 'file'){ ?>
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(); ?>/index.php/admin/downloads/downloads/treatdownloads/id/<?=$this->getRequest()->getParam('id') ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(); ?>/index.php/admin/downloads/downloads/treatdownloads/id/<?=$this->getRequest()->getParam('id') ?>">
 <?php } ?>
     <ul class="nav nav-pills navbar-fixed-top">
     <li><a href="<?php echo $this->getUrl(array('controller' => 'iframe', 'action' => 'upload')); ?>/id/<?=$this->getRequest()->getParam('id') ?>">Upload</a></li>

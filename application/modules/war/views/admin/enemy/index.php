@@ -46,7 +46,7 @@ if ($this->get('enemy') != '') {
                             <?php echo $this->escape($enemy->getEnemyTag()); ?>
                         </td>
                         <td>
-                            <img class="group-image" src="<?php echo $this->escape($enemy->getEnemyLogo()); ?>" />
+                            <img class="group-image" src="<?=$this->getBaseUrl($this->escape($enemy->getEnemyLogo())); ?>" />
                         </td>
                         <td>
                             <?php echo $this->escape($enemy->getEnemyContactName()); ?>
@@ -73,7 +73,7 @@ if ($this->get('enemy') != '') {
 <style>
     .group-image{
         max-width: 100px;
-        height: auto;
-        margin: -10px;
+        height: 50px;
+        margin: -8px;
     }
 </style>

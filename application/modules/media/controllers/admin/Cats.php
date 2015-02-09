@@ -64,7 +64,7 @@ class Cats extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('action') == 'delete') {
                 foreach($this->getRequest()->getPost('check_cats') as $catId) {
-                    $mediaMapper->delCat($catId);
+                    $mediaMapper->delCatById($catId);
                 }
                 $this->addMessage('deleteSuccess');
                 $this->redirect(array('action' => 'index'));
@@ -99,7 +99,7 @@ class Cats extends \Ilch\Controller\Admin
     {
         if($this->getRequest()->isSecure()) {
             $mediaMapper = new MediaMapper();
-            $mediaMapper->delCat((int)$this->getRequest()->getParam('id'));
+            $mediaMapper->delCatById((int)$this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
             $this->redirect(array('action' => 'index'));

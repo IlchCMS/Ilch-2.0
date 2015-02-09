@@ -4,8 +4,9 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-    if (typeof ilchMediaPlugin != "undefined") {
+    if (typeof ilchMediaPlugin !== "undefined" && typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal( 'ilchmedia', ilchMediaPlugin);
-        config.extraPlugins = 'ilchmedia';
+        CKEDITOR.plugins.addExternal( 'ilchps', ilchPsPlugin);
+        config.extraPlugins = "ilchmedia,ilchps";
     }
 };

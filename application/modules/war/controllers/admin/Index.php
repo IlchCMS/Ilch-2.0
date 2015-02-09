@@ -95,7 +95,7 @@ class Index extends BaseController
             $enemyName = trim($this->getRequest()->getPost('warEnemy'));
             $groupName = trim($this->getRequest()->getPost('warGroup'));
             $warTime = new \Ilch\Date(trim($this->getRequest()->getPost('warTime')));
-            $warMap = $this->getRequest()->getPost('warMap');
+            $warMap = trim($this->getRequest()->getPost('warMap'));
             $warServer = trim($this->getRequest()->getPost('warServer'));
             $warPassword = $this->getRequest()->getPost('warPassword');
             $warReport = $this->getRequest()->getPost('warReport');

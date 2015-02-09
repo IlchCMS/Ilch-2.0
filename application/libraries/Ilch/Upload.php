@@ -222,6 +222,7 @@ class Upload extends \Ilch\Controller\Base
                 $thumb -> Thumblocation = $this->path;
                 $thumb -> Thumbsize = 300;
                 $thumb -> Square = 300;
+                $thumb -> Cropimage = array(3,1,50,50,50,50);
                 $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
             }
         }

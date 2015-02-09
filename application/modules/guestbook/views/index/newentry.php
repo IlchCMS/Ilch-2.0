@@ -13,6 +13,17 @@
 
 <form action="" class="form-horizontal" method="POST">
     <?php echo $this->getTokenField(); ?>
+    <div class="form-group hidden">
+        <label class="col-lg-2 control-label">
+            <?=$this->getTrans('bot'); ?>*
+        </label>
+        <div class="col-lg-8">
+            <input type="text"
+                   class="form-control"
+                   name="bot"
+                   placeholder="Bot" />
+        </div>
+    </div>
     <div class="form-group<?= in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('name'); ?>*

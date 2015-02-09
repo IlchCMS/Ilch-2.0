@@ -39,6 +39,13 @@ class Group extends \Ilch\Model
     protected $groupImage;
 
     /**
+     * The Group ImageThumb.
+     *
+     * @var string
+     */
+    protected $groupImageThumb;
+
+    /**
      * The Group Member.
      *
      * @var string
@@ -123,6 +130,26 @@ class Group extends \Ilch\Model
     public function setGroupImage($groupImage)
     {
         $this->groupImage = (string)$groupImage;
+    }
+
+    /**
+     * Gets the group ImageThumb.
+     *
+     * @return string
+     */
+    public function getGroupImageThumb()
+    {
+        return $this->groupImageThumb;
+    }
+
+    /**
+     * Sets the group ImageThumb.
+     *
+     * @param string $groupImageThumb
+     */
+    public function setGroupImageThumb($groupImageThumb)
+    {
+        $this->groupImageThumb = (string)$groupImageThumb;
     }
 
     /**

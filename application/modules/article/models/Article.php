@@ -71,6 +71,13 @@ class Article extends \Ilch\Model
     protected $articleImage;
 
     /**
+     * The articleImageThumb of the article.
+     *
+     * @var string
+     */
+    protected $articleImageThumb;
+
+    /**
      * The articleImageSource of the image.
      *
      * @var string
@@ -235,6 +242,26 @@ class Article extends \Ilch\Model
     public function getArticleImage()
     {
         return $this->articleImage;
+    }
+
+    /**
+     * Sets the articleImageThumb of the article.
+     *
+     * @param string $articleImageThumb
+     */
+    public function setArticleImageThumb($articleImageThumb)
+    {
+        $this->articleImageThumb = $articleImageThumb;
+    }
+
+    /**
+     * Gets the article ImageThumb.
+     *
+     * @return string
+     */
+    public function getArticleImageThumb()
+    {
+        return $this->articleImageThumb;
     }
 
     /**

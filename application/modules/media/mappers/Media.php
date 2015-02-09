@@ -12,6 +12,12 @@ defined('ACCESS') or die('no direct access');
 
 class Media extends \Ilch\Mapper
 {
+    /**
+     * Gets the Media List.
+     *
+     * @param \Ilch\Pagination|null $pagination
+     * @return MediaModel[]|array
+     */
     public function getMediaList($pagination = NULL) 
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
@@ -45,6 +51,11 @@ class Media extends \Ilch\Mapper
         return $media;
     }
 
+    /**
+     * Gets the Cats.
+     *
+     * @return MediaModel[]|array
+     */
     public function getCatList() 
     {
         $mediaArray = $this->db()->select('*')
@@ -69,6 +80,12 @@ class Media extends \Ilch\Mapper
         return $media;
     }
 
+    /**
+     * Get cat by id
+     *
+     * @param int $id
+     * @return MediaModel
+     */
     public function getCatById($id)
     {
         $catRow = $this->db()->select('*')
@@ -106,6 +123,11 @@ class Media extends \Ilch\Mapper
         return $mediaModel;
     }
 
+    /**
+     * Inserts Media
+     *
+     * @param MediaModel $model
+     */
     public function save(MediaModel $model)
     {
         $this->db()->insert('media')
@@ -121,7 +143,12 @@ class Media extends \Ilch\Mapper
             ->execute();
     }
 
-    public function delImage($id) 
+    /**
+     * Delete/Unlink Media by id.
+     *
+     * @param int $id
+     */
+    public function delMediaById($id) 
     {
         $mediaRow = $this->db()->select('*')
             ->from('media')
@@ -139,6 +166,11 @@ class Media extends \Ilch\Mapper
             ->execute();
     }
 
+    /**
+     * Inserts Cat
+     *
+     * @param MediaModel $model
+     */
     public function saveCat(MediaModel $model)
     {
         $this->db()->insert('media_cats')
@@ -148,13 +180,23 @@ class Media extends \Ilch\Mapper
             ->execute();
     }
 
-    public function delCat($id) 
+    /**
+     * Delete Cat by id.
+     *
+     * @param int $id
+     */
+    public function delCatById($id) 
     {
         $this->db()->delete('media_cats')
             ->where(array('id' => $id))
             ->execute();
     }
 
+    /**
+     * Set Cat on Media
+     *
+     * @param MediaModel $model
+     */
     public function setCat(MediaModel $model) 
     {
         $this->db()->update('media')
@@ -165,6 +207,11 @@ class Media extends \Ilch\Mapper
             ->execute();
     }
 
+    /**
+     * Update Cat
+     *
+     * @param MediaModel $model
+     */
     public function treatCat(MediaModel $model) 
     {
         $this->db()->update('media_cats')

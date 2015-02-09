@@ -2,7 +2,7 @@
 $comments = $this->get('comments');
 $article = $this->get('article');
 $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
-$image = $article->getArticleImage();
+$image = $this->getBaseUrl($article->getArticleImage());
 $imageSource = $article->getArticleImageSource();
 $preview = $this->getRequest()->getParam('preview');
 echo '<h4>'.$article->getTitle().'</h4>';

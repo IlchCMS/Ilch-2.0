@@ -6,7 +6,7 @@ if (!empty($articles)) {
     foreach($articles as $article) {
         $date = new \Ilch\Date($article->getDateCreated());
         $comments = $commentMapper->getCommentsByKey('articles_'.$article->getId());
-        $image = $article->getArticleImage();
+        $image = $this->getBaseUrl($article->getArticleImage());
         $imageSource = $article->getArticleImageSource();
 ?>
 <h4>

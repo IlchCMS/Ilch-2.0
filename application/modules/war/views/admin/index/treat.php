@@ -176,7 +176,7 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
             <label class="col-lg-2 control-label" for="textinput">Map Name
             </label>
             <div class="col-lg-4">
-                <input type="text" name="warMap" placeholder="Map Name" class="form-control">
+                <input type="text" name="warMapPlayed" placeholder="Map Name" class="form-control">
             </div>
         </div>
         <div class="form-group">

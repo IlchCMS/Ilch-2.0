@@ -64,7 +64,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('action') == 'delete' and $this->getRequest()->getPost('check_medias') > 0) {
             foreach($this->getRequest()->getPost('check_medias') as $mediaId) {
-                $mediaMapper->delImage($mediaId);
+                $mediaMapper->delMediaById($mediaId);
             }
             $this->addMessage('deleteSuccess');
             $this->redirect(array('action' => 'index'));
@@ -130,7 +130,7 @@ class Index extends \Ilch\Controller\Admin
     public function delAction()
     {
         $mediaMapper = new MediaMapper();
-        $mediaMapper->delImage($this->getRequest()->getParam('id'));
+        $mediaMapper->delMediaById($this->getRequest()->getParam('id'));
         $this->addMessage('deleteSuccess');
         $this->redirect(array('action' => 'index'));
     }
