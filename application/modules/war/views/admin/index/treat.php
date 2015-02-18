@@ -16,7 +16,9 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
                 <?php
                     foreach ($this->get('enemy') as $enemy) {
                         $selected = '';
-
+                        if ($this->get('war') != '' and $this->get('war')->getWarEnemy() == $enemy->getId()) {
+                        $selected = 'selected="selected"';
+                        }
                         echo '<option '.$selected.' value="'.$enemy->getId().'">'.$this->escape($enemy->getEnemyName()).'</option>';
                     }
                 ?>
@@ -34,7 +36,9 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
                 <?php
                     foreach ($this->get('group') as $group) {
                         $selected = '';
-
+                        if ($this->get('war') != '' and $this->get('war')->getWarGroup() == $group->getId()) {
+                        $selected = 'selected="selected"';
+                        }
                         echo '<option '.$selected.' value="'.$group->getId().'">'.$this->escape($group->getGroupName()).'</option>';
                     }
                 ?>
@@ -101,7 +105,11 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
                     <option value="neu">neu</option>
                     <?php if($this->get('warOptXonx') != ''){
                         foreach ($this->get('warOptXonx') as $opt) {
-                            echo '<option value="'.$opt->getWarXonx().'">'.$opt->getWarXonx().'</option>';
+                            $selected = '';
+                            if ($this->get('war') != '' and $this->get('war')->getWarXonx() == $opt->getWarXonx()) {
+                            $selected = 'selected="selected"';
+                            }
+                            echo '<option '.$selected.' value="'.$opt->getWarXonx().'">'.$opt->getWarXonx().'</option>';
                         }
                     }
                     ?>
@@ -127,7 +135,11 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
                     <option value="neu">neu</option>
                     <?php if($this->get('warOptGame') != ''){
                         foreach ($this->get('warOptGame') as $opt) {
-                            echo '<option value="'.$opt->getWarGame().'">'.$opt->getWarGame().'</option>';
+                            $selected = '';
+                            if ($this->get('war') != '' and $this->get('war')->getWarGame() == $opt->getWarGame()) {
+                            $selected = 'selected="selected"';
+                            }
+                            echo '<option '.$selected.' value="'.$opt->getWarGame().'">'.$opt->getWarGame().'</option>';
                         }
                     }
                     ?>
@@ -153,7 +165,11 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
                     <option value="neu">neu</option>
                     <?php if($this->get('warOptMatchtype') != ''){
                         foreach ($this->get('warOptMatchtype') as $opt) {
-                            echo '<option value="'.$opt->getWarMatchtype().'">'.$opt->getWarMatchtype().'</option>';
+                            $selected = '';
+                            if ($this->get('war') != '' and $this->get('war')->getWarMatchtype() == $opt->getWarMatchtype()) {
+                            $selected = 'selected="selected"';
+                            }
+                            echo '<option '.$selected.' value="'.$opt->getWarMatchtype().'">'.$opt->getWarMatchtype().'</option>';
                         }
                     }
                     ?>
@@ -176,17 +192,17 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
             <label class="col-lg-2 control-label" for="textinput">Map Name
             </label>
             <div class="col-lg-4">
-                <input type="text" name="warMapPlayed" placeholder="Map Name" class="form-control">
+                <input type="text" name="warMapPlayed[]" placeholder="Map Name" class="form-control">
             </div>
         </div>
         <div class="form-group">
             <label class="col-lg-2 control-label" for="textinput">Ergebnis
             </label>
             <div class="col-lg-2">
-                <input type="text" name="warErgebnisGroup" placeholder="Wir" class="form-control">
+                <input type="text" name="warErgebnisGroup[]" placeholder="Wir" class="form-control">
             </div>
             <div class="col-lg-2">
-                <input type="text"name="warErgebnisEnemy" placeholder="Gegner" class="form-control">
+                <input type="text"name="warErgebnisEnemy[]" placeholder="Gegner" class="form-control">
             </div>
         </div>
         <div class="form-group">

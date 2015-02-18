@@ -39,6 +39,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE `[prefix]_war`');
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_groups`');
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_enemy`');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_war_played`');
     }
 
     public function getInstallSql()
@@ -81,6 +82,14 @@ class Config extends \Ilch\Config\Install
                     `report` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     `status` tinyint(1) NOT NULL DEFAULT 0,
                     PRIMARY KEY (`id`)
-                )   ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+                )   ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_war_played` (
+                    `war_id` int(11) NOT NULL DEFAULT "0",
+                    `map` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT "",
+                    `group_pionts` mediumint(9) DEFAULT NULL,
+                    `enemy_pionts` mediumint(9) DEFAULT NULL,
+                    PRIMARY KEY (`war_id`)
+                )   ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }

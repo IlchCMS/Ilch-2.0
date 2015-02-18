@@ -11,6 +11,8 @@ use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\War as WarMapper;
 use Modules\War\Models\War as WarModel;
+use Modules\War\Models\Games as GamesModel;
+use Modules\War\Mappers\Games as GamesMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -58,6 +60,9 @@ class Index extends BaseController
         $enemyMapper = new EnemyMapper();
         $groupMapper = new GroupMapper();
         $warMapper = new WarMapper();
+        $warModel = new WarModel();
+        $gameMapper = new GamesMapper();
+        $gameModel = new GamesModel();
 
         if ($this->getRequest()->getParam('id')) {
             $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
@@ -68,25 +73,47 @@ class Index extends BaseController
         }
 
         if ($this->getRequest()->isPost()) {
-            $warModel = new WarModel();
+            if ($this->getRequest()->getPost('warMapPlayed')) {
+                $warId = $this->getRequest()->getParam('id');
+                $maps = $this->getRequest()->getPost('warMapPlayed');
+                $groupPoints = $this->getRequest()->getPost('warErgebnisGroup');
+                $enemyPoints = $this->getRequest()->getPost('warErgebnisEnemy');
+
+                $errorMaps = array_keys($groupPoints, true);
+            if (empty($errorMaps)) {
+                $this->addMessage('missingWarMapPlayed', 'danger');
+            } elseif(empty($groupPoints)) {
+                $this->addMessage('missingGroupPoints', 'danger');
+            } elseif(empty($enemyPoints)) {
+                $this->addMessage('missingEnemyPoints', 'danger');
+            } else {
+                for ($i = 0; $i < count($maps); $i++) {
+                    $gameModel->setWarId($warId);
+                    $gameModel->setMap($maps[$i]);
+                    $gameModel->setGroupPoints($groupPoints[$i]);
+                    $gameModel->setEnemyPoints($enemyPoints[$i]);
+                    $gameMapper->save($gameModel);
+                }$this->getView()->set('error', $errorMaps);
+            }
+            }
 
             if ($this->getRequest()->getParam('id')) {
                 $warModel->setId($this->getRequest()->getParam('id'));
             }
 
-            if ($this->getRequest()->getPost('warXonx') == 'neu' and $this->getRequest()->getPost('warXonxNew') !='') {
+            if ($this->getRequest()->getPost('warXonx') == 'neu') {
                 $warXonx = $this->getRequest()->getPost('warXonxNew');
             } else {
                 $warXonx = $this->getRequest()->getPost('warXonx');
             }
 
-            if ($this->getRequest()->getPost('warGame') == 'neu' and $this->getRequest()->getPost('warGameNew') !='') {
+            if ($this->getRequest()->getPost('warGame') == 'neu') {
                 $warGame = $this->getRequest()->getPost('warGameNew');
             } else {
                 $warGame = $this->getRequest()->getPost('warGame');
             }
 
-            if ($this->getRequest()->getPost('warMatchtype') == 'neu' and $this->getRequest()->getPost('warMatchtypeNew') !='') {
+            if ($this->getRequest()->getPost('warMatchtype') == 'neu') {
                 $warMatchtype = $this->getRequest()->getPost('warMatchtypeNew');
             } else {
                 $warMatchtype = $this->getRequest()->getPost('warMatchtype');
@@ -131,7 +158,7 @@ class Index extends BaseController
 
                 $this->addMessage('saveSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                //$this->redirect(array('action' => 'index'));
             }
         }
 

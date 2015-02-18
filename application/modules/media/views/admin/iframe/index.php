@@ -50,7 +50,7 @@
         window.top.$('#MediaModal').modal('hide');
     });
 </script>
-<?php }  ?>
+<?php } ?>
 <?php if( $this->getRequest()->getParam('type') === 'file'){ ?>
 <script>
     $(".image").click(function(){
@@ -60,7 +60,7 @@
         window.top.$('#MediaModal').modal('hide');
     });
 </script>
-<?php }  ?>
+<?php } ?>
 <?php if( $this->getRequest()->getParam('type') === 'media'){ ?>
 <script>
     $(".image").click(function(){
@@ -69,7 +69,7 @@
         window.top.$('#MediaModal').modal('hide');
     });
 </script>
-<?php }  ?>
+<?php } ?>
 <?php if( $this->getRequest()->getParam('type') === 'single'){ ?>
 <script>
     $(".image").click(function(){
@@ -77,4 +77,4 @@
         window.top.$('#MediaModal').modal('hide');
     });
 </script>
-<?php }  ?>
+<?php } ?>
