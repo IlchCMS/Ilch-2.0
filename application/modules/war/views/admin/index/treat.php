@@ -1,18 +1,18 @@
-<legend><?php echo $this->getTrans('manageWar'); ?></legend>
+<legend><?=$this->getTrans('manageWar'); ?></legend>
 <?php
 if ($this->get('group') != '' and $this->get('enemy') != '') {
 ?>
 <link href="<?=$this->getStaticUrl('../application/modules/war/static/datetimepicker/css/bootstrap-datetimepicker.min.css')?>" rel="stylesheet">
 
 <form class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField(); ?>
     <div class="form-group">
         <label for="warEnemy" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warEnemy'); ?>:
+            <?=$this->getTrans('warEnemy'); ?>:
         </label>
         <div class="col-lg-4">
             <select class="form-control" name="warEnemy" id="warEnemy">
-                <optgroup label="<?php echo $this->getTrans('enemysName'); ?>">
+                <optgroup label="<?=$this->getTrans('enemysName'); ?>">
                 <?php
                     foreach ($this->get('enemy') as $enemy) {
                         $selected = '';
@@ -28,11 +28,11 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warGroup" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warGroup'); ?>:
+            <?=$this->getTrans('warGroup'); ?>:
         </label>
         <div class="col-lg-4">
             <select class="form-control" name="warGroup" id="warGroup">
-                <optgroup label="<?php echo $this->getTrans('groupsName'); ?>">
+                <optgroup label="<?=$this->getTrans('groupsName'); ?>">
                 <?php
                     foreach ($this->get('group') as $group) {
                         $selected = '';
@@ -48,7 +48,7 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="dtp_input1" class="col-md-2 control-label">
-            <?php echo $this->getTrans('warTime'); ?>:
+            <?=$this->getTrans('warTime'); ?>:
         </label>
         <div class="input-group date form_datetime col-lg-4" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
             <input class="form-control" 
@@ -64,7 +64,7 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warMapInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warMap'); ?>:
+            <?=$this->getTrans('warMap'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -75,7 +75,7 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warServerInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warServer'); ?>:
+            <?=$this->getTrans('warServer'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -86,7 +86,7 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warPasswordInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warPassword'); ?>:
+            <?=$this->getTrans('warPassword'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -97,11 +97,11 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warXonxInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warXonx'); ?>:
+            <?=$this->getTrans('warXonx'); ?>:
         </label>
         <div class="col-lg-2">
             <select onchange="diasableXonx()" class="form-control" name="warXonx" id="warXonx">
-                <optgroup label="<?php echo $this->getTrans('warXonx'); ?>">
+                <optgroup label="<?=$this->getTrans('warXonx'); ?>">
                     <option value="neu">neu</option>
                     <?php if($this->get('warOptXonx') != ''){
                         foreach ($this->get('warOptXonx') as $opt) {
@@ -127,12 +127,12 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warGameInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warGame'); ?>:
+            <?=$this->getTrans('warGame'); ?>:
         </label>
         <div class="col-lg-2">
             <select onchange="diasableGame()" class="form-control" name="warGame" id="warGame">
-                <optgroup label="<?php echo $this->getTrans('warGame'); ?>">
-                    <option value="neu">neu</option>
+                <optgroup label="<?=$this->getTrans('warGame'); ?>">
+                    <option value="neu"><?=$this->getTrans('warNew'); ?></option>
                     <?php if($this->get('warOptGame') != ''){
                         foreach ($this->get('warOptGame') as $opt) {
                             $selected = '';
@@ -157,11 +157,11 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warMatchtypeInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warMatchtype'); ?>:
+            <?=$this->getTrans('warMatchtype'); ?>:
         </label>
         <div class="col-lg-2">
             <select onchange="diasableMatchtype()" class="form-control" name="warMatchtype" id="warMatchtype">
-                <optgroup label="<?php echo $this->getTrans('warMatchtype'); ?>">
+                <optgroup label="<?=$this->getTrans('warMatchtype'); ?>">
                     <option value="neu">neu</option>
                     <?php if($this->get('warOptMatchtype') != ''){
                         foreach ($this->get('warOptMatchtype') as $opt) {
@@ -185,49 +185,12 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
                    value="" />
         </div>
     </div>
-    <legend>Ergebnis</legend>
-    <div id="dup">
-    <div id="duplicater">
-        <div class="form-group">
-            <label class="col-lg-2 control-label" for="textinput">Map Name
-            </label>
-            <div class="col-lg-4">
-                <input type="text" name="warMapPlayed[]" placeholder="Map Name" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2 control-label" for="textinput">Ergebnis
-            </label>
-            <div class="col-lg-2">
-                <input type="text" name="warErgebnisGroup[]" placeholder="Wir" class="form-control">
-            </div>
-            <div class="col-lg-2">
-                <input type="text"name="warErgebnisEnemy[]" placeholder="Gegner" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-2" >
-            </label>
-            <div class="col-lg-4">
-                <legend></legend>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div class="form-group">
-        <label class="col-lg-2 control-label" for="textinput">
-        </label>
-        <div class="col-lg-2">
-            <a id="button-duplicater" class="btn btn-default" onlick="duplicate()">More Maps</a>
-        </div>
-        <div class="col-lg-2">
-            <a id="button-remover" class="btn btn-default" onlick="remove()">Remove Map</a>
-        </div>
-    </div>
-    <legend>Bericht</legend>
+    <legend><?=$this->getTrans('warResult'); ?></legend>
+    <div id="games"></div>
+    <legend><?=$this->getTrans('warReport'); ?></legend>
     <div class="form-group">
         <label for="warReportInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warReport'); ?>:
+            <?=$this->getTrans('warReport'); ?>:
         </label>
         <div class="col-lg-4">
             <textarea class="form-control" 
@@ -236,13 +199,13 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     </div>
     <div class="form-group">
         <label for="warStatus" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('warStatus'); ?>:
+            <?=$this->getTrans('warStatus'); ?>:
         </label>
         <div class="col-lg-4">
             <select class="form-control" name="warStatus" id="warStatus">
-                <optgroup label="<?php echo $this->getTrans('warStatus'); ?>">
-                    <option value="1"><?php echo $this->getTrans('warOpen'); ?></option>
-                    <option value="2"><?php echo $this->getTrans('warClose'); ?></option>
+                <optgroup label="<?=$this->getTrans('warStatus'); ?>">
+                    <option value="1"><?=$this->getTrans('warOpen'); ?></option>
+                    <option value="2"><?=$this->getTrans('warClose'); ?></option>
                 </optgroup>
             </select>
         </div>
@@ -254,20 +217,25 @@ if ($this->get('group') != '' and $this->get('enemy') != '') {
     echo $this->getTranslator()->trans('firstGroupEnemy');
 }
 ?>
-<script type="text/javascript" src="<?=$this->getStaticUrl('../application/modules/war/static/datetimepicker/js/jquery-1.8.3.min.js')?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('../application/modules/war/static/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('../application/modules/war/static/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getBaseUrl('application/modules/war/static/datetimepicker/js/jquery-1.8.3.min.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getBaseUrl('application/modules/war/static/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getBaseUrl('application/modules/war/static/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
-$(".form_datetime").datetimepicker({
-format: "dd-mm-yyyy hh:ii:ss",
-linkFormat: "dd-mm-yyyy hh:ii",
-autoclose: true,
-todayBtn: true,
-minuteStep: 30
-});
-</script> 
-<script type="text/javascript">
-    
+$( document ).ready(function()
+{
+    $(".form_datetime").datetimepicker({
+        format: "dd-mm-yyyy hh:ii:ss",
+        linkFormat: "dd-mm-yyyy hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        minuteStep: 30
+    });
+
+    diasableXonx();
+    diasableGame();
+    diasableMatchtype();
+    loadGames();
+
     function diasableXonx()
     {
         if(document.getElementById('warXonx').value==='neu'){
@@ -301,42 +269,14 @@ minuteStep: 30
         }
     };
 
-    $( document ).ready(function()
-    {
-        diasableXonx();
-        diasableGame();
-        diasableMatchtype();
-    });
-
-    document.getElementById('button-duplicater').onclick = duplicate;
-    document.getElementById('button-remover').onclick = remove;
-
-    var i = 0;
-    var original = document.getElementById('duplicater');
-
-    function duplicate()
-    {
-        var clone = original.cloneNode(true); // "deep" clone
-        clone.id = "duplicetor" + ++i; // there can only be one element with an ID
-        var dup = original.parentNode.appendChild(clone);
-        $("#duplicater").after(dup);
+    function loadGames() {
+        $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/game/id/'.$this->getRequest()->getParam('id').''); ?>');
     }
-
-    function remove()
-    {
-        var node = document.getElementById('dup');
-        if (node.hasChildNodes()){
-            if (node.childNodes.length > '2'){
-             node.removeChild(node.lastChild);
-            }
-        }
-    }
-
+});
 </script>
 <style>
 .date {
     padding-left: 15px !important;
     padding-right: 15px !important;
 }
-
 </style>

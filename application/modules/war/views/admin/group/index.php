@@ -1,4 +1,4 @@
-<legend><?php echo $this->getTrans('manageGroups'); ?></legend>
+<legend><?=$this->getTrans('manageGroups'); ?></legend>
 <?php
 if ($this->get('groups') != '') {
 ?>
@@ -19,9 +19,9 @@ if ($this->get('groups') != '') {
                     <th><?=$this->getCheckAllCheckbox('check_groups')?></th>
                     <th></th>
                     <th></th>
-                    <th><?php echo $this->getTrans('groupsName'); ?></th>
-                    <th><?php echo $this->getTrans('groupsTag'); ?></th>
-                    <th><?php echo $this->getTrans('groupsImage'); ?></th>
+                    <th><?=$this->getTrans('groupsName'); ?></th>
+                    <th><?=$this->getTrans('groupsTag'); ?></th>
+                    <th><?=$this->getTrans('groupsImage'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -29,17 +29,17 @@ if ($this->get('groups') != '') {
                     <tr>
                         <td><input value="<?=$group->getId()?>" type="checkbox" name="check_groups[]" /></td>
                         <td>
-                            <?php echo $this->getEditIcon(array('action' => 'treat', 'id' => $group->getId())); ?>
+                            <?=$this->getEditIcon(array('action' => 'treat', 'id' => $group->getId())); ?>
                         </td>
                         <td>
                             <?php $deleteArray = array('action' => 'del', 'id' => $group->getId()); ?>
                             <?=$this->getDeleteIcon($deleteArray)?>
                         </td>
                         <td>
-                            <?php echo $this->escape($group->getGroupName()); ?>
+                            <?=$this->escape($group->getGroupName()); ?>
                         </td>
                         <td>
-                            <?php echo $this->escape($group->getGroupTag()); ?>
+                            <?=$this->escape($group->getGroupTag()); ?>
                         </td>
                         <td>
                             <img class="group-image" src="<?=$this->getBaseUrl($this->escape($group->getGroupImage())); ?>" />

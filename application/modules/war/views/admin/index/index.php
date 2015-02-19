@@ -1,4 +1,4 @@
-<legend><?php echo $this->getTrans('manageWarOverview'); ?></legend>
+<legend><?=$this->getTrans('manageWarOverview'); ?></legend>
 <?php
 if ($this->get('war') != '') {
 ?>
@@ -45,10 +45,10 @@ if ($this->get('war') != '') {
                     <th><?=$this->getCheckAllCheckbox('check_war')?></th>
                     <th></th>
                     <th></th>
-                    <th><?php echo $this->getTrans('enemyName'); ?></th>
-                    <th><?php echo $this->getTrans('groupName'); ?></th>
-                    <th><?php echo $this->getTrans('nextWarTime'); ?></th>
-                    <th><?php echo $this->getTrans('warStatus'); ?></th>
+                    <th><?=$this->getTrans('enemyName'); ?></th>
+                    <th><?=$this->getTrans('groupName'); ?></th>
+                    <th><?=$this->getTrans('nextWarTime'); ?></th>
+                    <th><?=$this->getTrans('warStatus'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -56,20 +56,20 @@ if ($this->get('war') != '') {
                     <tr>
                         <td><input value="<?=$war->getId()?>" type="checkbox" name="check_war[]" /></td>
                         <td>
-                            <?php echo $this->getEditIcon(array('action' => 'treat', 'id' => $war->getId())); ?>
+                            <?=$this->getEditIcon(array('action' => 'treat', 'id' => $war->getId())); ?>
                         </td>
                         <td>
                             <?php $deleteArray = array('action' => 'del', 'id' => $war->getId()); ?>
                             <?=$this->getDeleteIcon($deleteArray)?>
                         </td>
                         <td>
-                            <?php echo $this->escape($war->getWarEnemy()); ?>
+                            <?=$this->escape($war->getWarEnemy()); ?>
                         </td>
                         <td>
-                            <?php echo $this->escape($war->getWarGroup()); ?>
+                            <?=$this->escape($war->getWarGroup()); ?>
                         </td>
                         <td>
-                            <?php echo $this->escape($war->getWarTime()); ?>
+                            <?=$this->escape($war->getWarTime()); ?>
                         </td>
                         <td>
                             <?php if ($this->escape($war->getWarStatus() == '1')){

@@ -6,7 +6,7 @@ if (!empty($articles)) {
     foreach($articles as $article) {
         $date = new \Ilch\Date($article->getDateCreated());
         $comments = $commentMapper->getCommentsByKey('articles_'.$article->getId());
-        $image = $this->getBaseUrl($article->getArticleImage());
+        $image = $article->getArticleImage();
         $imageSource = $article->getArticleImageSource();
 ?>
 <h4>
@@ -17,7 +17,7 @@ if (!empty($articles)) {
 </div>
 <?php
 if (!empty($image)) {
-    echo '<figure><img class="article_image" src="'.$image.'"/>';
+    echo '<figure><img class="article_image" src="'.$this->getBaseUrl($image).'"/>';
     if (!empty($imageSource)) {
         echo '<figcaption class="article_image_source">'.$this->getTrans('articleImageSource').': '.$imageSource.'</figcaption><figure>';
     }

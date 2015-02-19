@@ -75,6 +75,7 @@ return array
     'lastWarMatchtype' => 'Matchtype',
     'lastWarReport' => 'Report',
 
+    'manageWar' => 'War bearbeiten',
     'warStatus' => 'Status',
     'warStatusOpen' => 'Open',
     'warStatusClose' => 'Close',
@@ -93,4 +94,11 @@ return array
     'warGame' => 'Game',
     'warMatchtype' => 'Matchtype',
     'warReport' => 'Report',
+    'warMapName' => 'Map Name',
+    'warResult' => 'Result',
+    'warResultWe' => 'We',
+    'warResultEnemy' => 'Enemy',
+    'warMoreMaps' => 'More Maps',
+    'warRemoveMaps' => 'Map delete',
+    'warNew' => 'New',
 );

@@ -1,4 +1,4 @@
-<legend><?php echo $this->getTrans('manageNewGroup'); ?></legend>
+<legend><?=$this->getTrans('manageNewGroup'); ?></legend>
 <?php 
 if ($this->get('groups') != '') {
     $str = $this->escape($this->get('groups')->getGroupMember());
@@ -6,10 +6,10 @@ if ($this->get('groups') != '') {
 }
 ?>
 <form id="article_form" class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField(); ?>
     <div class="form-group">
         <label for="groupNameInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('groupName'); ?>:
+            <?=$this->getTrans('groupName'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -20,7 +20,7 @@ if ($this->get('groups') != '') {
     </div>
     <div class="form-group">
         <label for="groupTagInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('groupTag'); ?>:
+            <?=$this->getTrans('groupTag'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -32,7 +32,7 @@ if ($this->get('groups') != '') {
     <div class="form-group">
         <label for="groupImage"
                 class="col-lg-2 control-label">
-            <?php echo $this->getTrans('groupImage'); ?>:
+            <?=$this->getTrans('groupImage'); ?>:
         </label>
         <div class="col-lg-4">
             <div class="input-group">
@@ -40,7 +40,7 @@ if ($this->get('groups') != '') {
                        type="text"
                        name="groupImage"
                        id="selectedImage"
-                       placeholder="<?php echo $this->getTrans('groupImage'); ?>"
+                       placeholder="<?=$this->getTrans('groupImage'); ?>"
                        value="<?php if ($this->get('groups') != '') { echo $this->escape($this->get('groups')->getGroupImage()); } ?>" />
                 <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
             </div>
@@ -48,11 +48,11 @@ if ($this->get('groups') != '') {
     </div>
     <div class="form-group">
         <label for="assignedMember" class="col-lg-2 control-label">
-                <?php echo $this->getTrans('assignedMember'); ?>
+                <?=$this->getTrans('assignedMember'); ?>
         </label>
         <div class="col-lg-8">
             <select class="form-control" name="userGroup" id="warGroup">
-                <optgroup label="<?php echo $this->getTrans('groupsName'); ?>">
+                <optgroup label="<?=$this->getTrans('groupsName'); ?>">
                 <?php
                     foreach ($this->get('userGroupList') as $groupList) {
                         $selected = '';

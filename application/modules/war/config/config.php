@@ -85,11 +85,12 @@ class Config extends \Ilch\Config\Install
                 )   ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_war_played` (
-                    `war_id` int(11) NOT NULL DEFAULT "0",
+                    `id` int(11) NOT NULL AUTO_INCREMENT,
+                    `war_id` int(11) DEFAULT NULL,
                     `map` varchar(256) COLLATE utf8_unicode_ci NOT NULL DEFAULT "",
                     `group_pionts` mediumint(9) DEFAULT NULL,
                     `enemy_pionts` mediumint(9) DEFAULT NULL,
-                    PRIMARY KEY (`war_id`)
-                )   ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+                    PRIMARY KEY (`id`)
+                )   ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 }

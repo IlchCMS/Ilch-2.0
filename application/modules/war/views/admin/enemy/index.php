@@ -1,4 +1,4 @@
-<legend><?php echo $this->getTrans('manageEnemy');?></legend>
+<legend><?=$this->getTrans('manageEnemy');?></legend>
 <?php
 if ($this->get('enemy') != '') {
 ?>
@@ -21,11 +21,11 @@ if ($this->get('enemy') != '') {
                     <th><?=$this->getCheckAllCheckbox('check_Enemy')?></th>
                     <th></th>
                     <th></th>
-                    <th><?php echo $this->getTrans('enemysName'); ?></th>
-                    <th><?php echo $this->getTrans('enemysTag'); ?></th>
-                    <th><?php echo $this->getTrans('enemysLogo'); ?></th>
-                    <th><?php echo $this->getTrans('enemysContactName'); ?></th>
-                    <th><?php echo $this->getTrans('enemysContactEmail'); ?></th>
+                    <th><?=$this->getTrans('enemysName'); ?></th>
+                    <th><?=$this->getTrans('enemysTag'); ?></th>
+                    <th><?=$this->getTrans('enemysLogo'); ?></th>
+                    <th><?=$this->getTrans('enemysContactName'); ?></th>
+                    <th><?=$this->getTrans('enemysContactEmail'); ?></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,26 +33,26 @@ if ($this->get('enemy') != '') {
                     <tr>
                         <td><input value="<?=$enemy->getId()?>" type="checkbox" name="check_enemy[]" /></td>
                         <td>
-                            <?php echo $this->getEditIcon(array('action' => 'treat', 'id' => $enemy->getId())); ?>
+                            <?=$this->getEditIcon(array('action' => 'treat', 'id' => $enemy->getId())); ?>
                         </td>
                         <td>
                             <?php $deleteArray = array('action' => 'del', 'id' => $enemy->getId()); ?>
                             <?=$this->getDeleteIcon($deleteArray)?>
                         </td>
                         <td>
-                            <?php echo $this->escape($enemy->getEnemyName()); ?>
+                            <?=$this->escape($enemy->getEnemyName()); ?>
                         </td>
                         <td>
-                            <?php echo $this->escape($enemy->getEnemyTag()); ?>
+                            <?=$this->escape($enemy->getEnemyTag()); ?>
                         </td>
                         <td>
                             <img class="group-image" src="<?=$this->getBaseUrl($this->escape($enemy->getEnemyLogo())); ?>" />
                         </td>
                         <td>
-                            <?php echo $this->escape($enemy->getEnemyContactName()); ?>
+                            <?=$this->escape($enemy->getEnemyContactName()); ?>
                         </td>
                         <td>
-                            <?php echo $this->escape($enemy->getEnemyContactEmail()); ?>
+                            <?=$this->escape($enemy->getEnemyContactEmail()); ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

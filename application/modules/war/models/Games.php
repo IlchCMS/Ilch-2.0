@@ -11,6 +11,13 @@ defined('ACCESS') or die('no direct access');
 class Games extends \Ilch\Model
 {
     /**
+     * The id.
+     *
+     * @var integer
+     */
+    protected $id;
+
+    /**
      * The warId.
      *
      * @var integer
@@ -39,7 +46,27 @@ class Games extends \Ilch\Model
     protected $enemyPoints;
 
     /**
-     * Gets the id of the group.
+     * Gets the id.
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Sets the id.
+     *
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->id = (int)$id;
+    }
+
+    /**
+     * Gets the warId.
      *
      * @return integer
      */
@@ -49,7 +76,7 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Sets the id of the group.
+     * Sets the warId.
      *
      * @param integer $warId
      */
@@ -59,7 +86,7 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Gets the war enemy.
+     * Gets the map.
      *
      * @return string
      */
@@ -69,7 +96,7 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Sets the war enemy.
+     * Sets the map.
      *
      * @param string $map
      */
@@ -79,7 +106,7 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Gets the war group.
+     * Gets the groupPoints.
      *
      * @return string
      */
@@ -89,7 +116,7 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Sets the war group.
+     * Sets the groupPoints.
      *
      * @param string $groupPoints
      */
@@ -99,7 +126,7 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Gets the war time.
+     * Gets the enemyPoints.
      *
      * @return string
      */
@@ -109,7 +136,7 @@ class Games extends \Ilch\Model
     }
 
     /**
-     * Sets the war time.
+     * Sets the enemyPoints.
      *
      * @param string $enemyPoints
      */

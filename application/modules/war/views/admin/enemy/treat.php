@@ -1,9 +1,9 @@
-<legend><?php echo $this->getTrans('manageNewEnemy'); ?></legend>
+<legend><?=$this->getTrans('manageNewEnemy'); ?></legend>
 <form id="article_form" class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField(); ?>
     <div class="form-group">
         <label for="enemyNameInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('enemyName'); ?>:
+            <?=$this->getTrans('enemyName'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label for="enemyTagInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('enemyTag'); ?>:
+            <?=$this->getTrans('enemyTag'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -25,7 +25,7 @@
     </div>
     <div class="form-group">
         <label for="enemyHomepageInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('enemyHomepage'); ?>:
+            <?=$this->getTrans('enemyHomepage'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -37,7 +37,7 @@
     <div class="form-group">
         <label for="enemyLogo"
                 class="col-lg-2 control-label">
-            <?php echo $this->getTrans('enemyLogo'); ?>:
+            <?=$this->getTrans('enemyLogo'); ?>:
         </label>
         <div class="col-lg-4">
             <div class="input-group">
@@ -45,7 +45,7 @@
                        type="text"
                        name="enemyLogo"
                        id="selectedImage"
-                       placeholder="<?php echo $this->getTrans('enemyLogoInfo'); ?>"
+                       placeholder="<?=$this->getTrans('enemyLogoInfo'); ?>"
                        value="<?php if ($this->get('enemy') != '') { echo $this->escape($this->get('enemy')->getEnemyLogo()); } ?>" />
                 <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
             </div>
@@ -53,7 +53,7 @@
     </div>
     <div class="form-group">
         <label for="enemyContactNameInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('enemyContactName'); ?>:
+            <?=$this->getTrans('enemyContactName'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -64,7 +64,7 @@
     </div>
     <div class="form-group">
         <label for="enemyContactEmailInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('enemyContactEmail'); ?>:
+            <?=$this->getTrans('enemyContactEmail'); ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"

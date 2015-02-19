@@ -2,12 +2,12 @@
 $comments = $this->get('comments');
 $article = $this->get('article');
 $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
-$image = $this->getBaseUrl($article->getArticleImage());
+$image = $article->getArticleImage();
 $imageSource = $article->getArticleImageSource();
 $preview = $this->getRequest()->getParam('preview');
 echo '<h4>'.$article->getTitle().'</h4>';
 if (!empty($image)) {
-    echo '<figure><img class="article_image" src="'.$image.'"/>';
+    echo '<figure><img class="article_image" src="'.$this->getBaseUrl($image).'"/>';
     if (!empty($imageSource)) {
         echo '<figcaption class="article_image_source">'.$this->getTrans('articleImageSource').': '.$imageSource.'</figcaption><figure>';
     }

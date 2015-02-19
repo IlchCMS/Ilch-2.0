@@ -158,7 +158,7 @@ class Index extends BaseController
 
                 $this->addMessage('saveSuccess');
 
-                //$this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index'));
             }
         }
 
