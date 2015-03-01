@@ -37,6 +37,9 @@ class Index extends BaseController
         $warMapper = new WarMapper();
         $pagination = new \Ilch\Pagination();
 
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageWarOverview'), array('action' => 'index'));
+
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_war')) {
             foreach($this->getRequest()->getPost('check_war') as $warId) {
                 $warMapper->delete($warId);
@@ -65,11 +68,19 @@ class Index extends BaseController
         $gameModel = new GamesModel();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageWarOverview'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('manageWar'), array('action' => 'treat'));
+
             $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
             $this->getView()->set('war', $war);
             $this->getView()->set('warOptXonx', $warMapper->getWarOptDistinctXonx());
             $this->getView()->set('warOptGame', $warMapper->getWarOptDistinctGame());
             $this->getView()->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype());
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageWarOverview'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewWar'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {

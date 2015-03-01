@@ -1,4 +1,8 @@
-<legend><?=$this->getTrans('manageNewGroup'); ?></legend>
+<?php if($this->getRequest()->getParam('id') == ''){ ?>
+    <legend><?=$this->getTrans('manageNewGroup'); ?></legend>
+<?php }  else { ?>
+    <legend><?=$this->getTrans('treatGroup'); ?></legend>
+<?php } ?>
 <?php 
 if ($this->get('groups') != '') {
     $str = $this->escape($this->get('groups')->getGroupMember());

@@ -22,6 +22,7 @@ return array
     'send' => 'Absenden',
 
     'menuGroups' => 'Gruppen',
+    'treatGroup' => 'Gruppe bearbeiten',
     'menuActionNewGroup' => 'Gruppe hinzufügen',
     'manageGroups' => 'Gruppen verwalten',
     'manageNewGroup' => 'Neue Gruppen erstellen',
@@ -101,4 +102,5 @@ return array
     'warMoreMaps' => 'Mehr Maps',
     'warRemoveMaps' => 'Map entfernen',
     'warNew' => 'Neu',
+    'warsOverview' => 'Wars Übersicht',
 );

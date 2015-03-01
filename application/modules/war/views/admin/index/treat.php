@@ -1,4 +1,8 @@
-<legend><?=$this->getTrans('manageWar'); ?></legend>
+<?php if($this->getRequest()->getParam('id') == ''){ ?>
+    <legend><?=$this->getTrans('menuActionNewWar'); ?></legend>
+<?php }  else { ?>
+    <legend><?=$this->getTrans('manageWar'); ?></legend>
+<?php } ?>
 <?php
 if ($this->get('group') != '' and $this->get('enemy') != '') {
 ?>
@@ -235,6 +239,10 @@ $( document ).ready(function()
     diasableGame();
     diasableMatchtype();
     loadGames();
+
+    document.getElementById('warXonx').onchange = diasableXonx;
+    document.getElementById('warGame').onchange = diasableGame;
+    document.getElementById('warMatchtype').onchange = diasableMatchtype;
 
     function diasableXonx()
     {

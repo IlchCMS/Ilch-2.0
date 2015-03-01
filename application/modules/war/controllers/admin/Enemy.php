@@ -33,6 +33,9 @@ class Enemy extends BaseController
         $enemyMapper = new EnemyMapper();
         $pagination = new \Ilch\Pagination();
 
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageEnemy'), array('action' => 'index'));
+
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_enemy')) {
             foreach($this->getRequest()->getPost('check_enemy') as $enemyId) {
                 $enemyMapper->delete($enemyId);

@@ -34,6 +34,9 @@ class Group extends BaseController
         $groupMapper = new GroupMapper();
         $pagination = new \Ilch\Pagination();
 
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageGroups'), array('action' => 'index'));
+    
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
             foreach($this->getRequest()->getPost('check_groups') as $groupId) {
                 $groupMapper->delete($groupId);
@@ -52,8 +55,15 @@ class Group extends BaseController
         $userGroupMapper = new UserGroupMapper();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageGroups'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('treatGroup'), array('action' => 'treat'));
             $groups = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
             $this->getView()->set('groups', $groups);
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageGroups'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('manageNewGroup'), array('action' => 'treat'));
         }
 
         $userGroupList = $userGroupMapper->getGroupList();
