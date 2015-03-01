@@ -333,6 +333,8 @@ class Index extends \Ilch\Controller\Frontend
          */
         $modules['checkout']['types']  = array('clan');
         $modules['war']['types']       = array('clan');
+        $modules['history']['types']   = array('clan');
+        $modules['rule']['types']      = array('clan');
         $modules['contact']['types']   = array('clan', 'private');
         $modules['guestbook']['types'] = array('clan', 'private');
         $modules['impressum']['types'] = array('clan', 'private');
@@ -341,8 +343,6 @@ class Index extends \Ilch\Controller\Frontend
         $modules['shoutbox']['types']  = array('clan', 'private');
         $modules['gallery']['types']   = array('clan', 'private');
         $modules['downloads']['types'] = array('clan', 'private');
-        $modules['rule']['types']      = array('clan', 'private');
-        $modules['history']['types']   = array('clan', 'private');
 
         foreach ($modules as $key => $module) {
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
