@@ -18,10 +18,9 @@
                 <img class="thumbnail" src="<?php echo $this->getStaticUrl().'../'.$this->escape($profil->getAvatar()); ?>" title="<?php echo $this->escape($profil->getName()); ?>">
             </div>
             <div class="col-lg-5 col-xs-12">
-                <h3><?php echo $this->escape($profil->getName()); ?> (00)</h3><?php if($this->getUser() and $this->getUser()->getId() != $this->escape($profil->getID())){?><a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId())); ?>" >Neue Nachricht</a>
+                <h3><?php echo $this->escape($profil->getName()); ?></h3><?php if($this->getUser() and $this->getUser()->getId() != $this->escape($profil->getID())){?><a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId())); ?>" >Neue Nachricht</a>
                  <?php } ?>
                 <div class="detail">
-                    <i class="fa fa-star" title="<?php echo $this->getTrans('rank'); ?>"></i> {Rangname]<br />
                     <i class="fa fa-sign-in" title="<?php echo $this->getTrans('regist'); ?>"></i> <?php echo $this->escape($profil->getDateCreated()) ?>
                 </div>
             </div>

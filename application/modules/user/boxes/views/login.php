@@ -1,5 +1,5 @@
 <?php if($this->getUser() !== null) { ?>
-    <?php echo $this->getTrans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b>
+    <?php echo $this->getTrans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b>,
     <br />
     <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'index')); ?>">
         <?php echo $this->getTrans('panel'); ?>

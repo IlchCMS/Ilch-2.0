@@ -121,9 +121,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
 INSERT INTO `[prefix]_user_menu` (`id`, `key`, `title`) VALUES
 (1, "user/panel/index", "Panel"),
 (2, "user/panel/dialog", "Dialog"),
-(3, "user/panel/friends", "Freunde"),
-(4, "user/panel/groups", "Gruppen"),
-(5, "user/panel/settings", "Einstellungen");
+(3, "user/panel/settings", "Einstellungen");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
                   `c_id` int(10) NOT NULL AUTO_INCREMENT,
