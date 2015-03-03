@@ -15,6 +15,7 @@ return array
     'send' => 'Send',
     'hits' => 'Hits',
     'category' => 'Category',
+    'optionNoCategory' => 'No Category',
     'description' => 'Description',
     'missingName' => 'Name was not filled',
     'missingLink' => 'Link was not filled',

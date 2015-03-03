@@ -15,6 +15,7 @@ return array
     'send' => 'Absenden',
     'hits' => 'Ansichten',
     'category' => 'Kategorie',
+    'optionNoCategory' => 'Keine Kategorie',
     'description' => 'Beschreibung',
     'missingName' => 'Name muss ausgefüllt werden',
     'missingLink' => 'Link muss ausgefüllt werden',
