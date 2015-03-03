@@ -74,6 +74,8 @@ class Module extends \Ilch\Mapper
      */
     public function delete($key)
     {
+        $menuMapper = new \Modules\Admin\Mappers\Menu();
+        $menuMapper->deleteItemsByModuleKey($key);
         $this->db()->delete('modules')
             ->where(array('key' => $key))
             ->execute();

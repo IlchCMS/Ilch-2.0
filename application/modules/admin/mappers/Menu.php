@@ -223,6 +223,36 @@ class Menu extends \Ilch\Mapper
     }
 
     /**
+     * Delete items for the given modulkey.
+     *
+     * @param string $moduleKey
+     * @param int $parentID
+     */
+    public function deleteItemsByModuleKey($moduleKey, $parentID = null)
+    {
+        if ($parentID === null) {
+            $itemRows = $this->db()->select('*')
+                ->from('menu_items')
+                ->where(array('module_key' => $moduleKey))
+                ->execute()
+                ->fetchRows();
+        } else {
+            $itemRows = $this->db()->select('*')
+                ->from('menu_items')
+                ->where(array('parent_id' => $parentID))
+                ->execute()
+                ->fetchRows();
+         }
+
+         foreach ($itemRows as $item) {
+             $this->deleteItemsByModuleKey($moduleKey, $item['id']);
+             $this->db()->delete('menu_items')
+                ->where(array('id' => $item['id']))
+                ->execute();
+         }
+    }
+
+    /**
      * Delete the given menu.
      *
      * @param integer $id
