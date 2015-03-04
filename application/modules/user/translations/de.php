@@ -93,6 +93,7 @@ return array
     'fieldDiffersPassword' => 'Passwortfelder müssen gleich sein',
     'fieldEmail' => 'E-Mail ist nicht gültig',
     'rulesForRegist' => 'Regeln für die Registrierung',
+    'mailForRegist' => 'Text für die Bestätigungs-E-Mail',
     'acceptUserRegis' => 'Benutzerregistrierung erlauben?',
     'confirmRegistrationEmail' => 'Bestätigen der Registrierung per Link?',
     'yes' => 'Ja',

@@ -93,6 +93,7 @@ return array
     'fieldDiffersPassword' => 'passwords are different',
     'fieldEmail' => 'email is not valid',
     'rulesForRegist' => 'Rules for Registration',
+    'mailForRegist' => 'Text for confirm E-Mail',
     'acceptUserRegis' => 'Allow User Registration?',
     'confirmRegistrationEmail' => 'Confim the Registration via Link?',
     'yes' => 'Yes',
