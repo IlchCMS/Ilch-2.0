@@ -66,7 +66,7 @@ if(!empty($receivers)){ ?>
                   autocomplete="off"
                   name="captcha" />
             <a href="#" onclick="
-                document.getElementById('captcha').src='<?php $this->getUrl()?>/application/libraries/captcha/captcha.php?'+Math.random();
+                document.getElementById('captcha').src='<?php $this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
                 document.getElementById('captcha-form').focus();"
                 id="change-image"><?php echo $this->getTrans('captchaRead'); ?></a>
         </div>
