@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="regist_rules" class="col-lg-2 control-label">
+        <label for="regist_confirm_mail" class="col-lg-2 control-label">
             <?php echo $this->getTrans('mailForRegist'); ?>:
         </label>
         <div class="col-lg-4">
