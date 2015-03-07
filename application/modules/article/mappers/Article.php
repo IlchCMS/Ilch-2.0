@@ -25,8 +25,9 @@ class Article extends \Ilch\Mapper
      */
     public function getArticles($locale = '')
     {
-        $sql = 'SELECT pc.*, p.* FROM [prefix]_articles as p
-                LEFT JOIN [prefix]_articles_content as pc ON p.id = pc.article_id
+        $sql = 'SELECT pc.*, p.*
+                FROM `[prefix]_articles` as p
+                LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY p.id';
         $articleArray = $this->db()->queryArray($sql);
@@ -135,7 +136,7 @@ class Article extends \Ilch\Mapper
      */
     public function getArticlePermas()
     {
-        $sql = 'SELECT article_id, locale, perma FROM [prefix]_articles_content';
+        $sql = 'SELECT article_id, locale, perma FROM `[prefix]_articles_content`';
         $permas = $this->db()->queryArray($sql);
         $permaArray = array();
 

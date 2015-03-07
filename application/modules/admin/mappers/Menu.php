@@ -23,7 +23,8 @@ class Menu extends \Ilch\Mapper
      */
     public function getMenuIdForPosition($position)
     {
-        $sql = 'SELECT id FROM [prefix]_menu
+        $sql = 'SELECT id
+                FROM `[prefix]_menu`
                 ORDER BY id ASC
                 LIMIT '.(int)($position-1).', 1';
         $id = $this->db()->queryCell($sql);

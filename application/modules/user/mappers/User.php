@@ -125,8 +125,8 @@ class User extends \Ilch\Mapper
             foreach ($userRows as $userRow) {
                 $groups = array();
                 $sql = 'SELECT g.*
-                        FROM [prefix]_groups AS g
-                        INNER JOIN [prefix]_users_groups AS ug ON g.id = ug.group_id
+                        FROM `[prefix]_groups` AS g
+                        INNER JOIN `[prefix]_users_groups` AS ug ON g.id = ug.group_id
                         WHERE ug.user_id = ' . $userRow['id'];
                 $groupRows = $this->db()->queryArray($sql);
                 $groupMapper = new Group();

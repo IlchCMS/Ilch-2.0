@@ -70,7 +70,8 @@ class File
         $fileString .= "\n";
 
         foreach ($this->configData as $key => $value) {
-            $fileString .= '$config["'.$key.'"] = "'.$value.'";';
+            $value = str_replace("'", "\'", $value);
+            $fileString .= '$config["'.$key.'"] = \''.$value.'\';';
             $fileString .= "\n";
         }
 

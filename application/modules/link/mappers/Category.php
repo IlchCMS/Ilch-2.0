@@ -27,7 +27,7 @@ class Category extends \Ilch\Mapper
     {
         $sql = 'SELECT lc.*, COUNT(l.id) as count
                 FROM `[prefix]_link_cats` as lc
-                LEFT JOIN [prefix]_links as l ON l.cat_id = lc.id
+                LEFT JOIN `[prefix]_links` as l ON l.cat_id = lc.id
                 WHERE 1 ';
 
         foreach ($where as $key => $value) {

@@ -24,8 +24,8 @@ class Page extends \Ilch\Mapper
      */
     public function getPageList($locale = '')
     {
-        $sql = 'SELECT pc.title, pc.perma, p.id FROM [prefix]_pages as p
-                LEFT JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+        $sql = 'SELECT pc.title, pc.perma, p.id FROM `[prefix]_pages` as p
+                LEFT JOIN `[prefix]_pages_content` as pc ON p.id = pc.page_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY p.id';
         $pageArray = $this->db()->queryArray($sql);
@@ -83,7 +83,7 @@ class Page extends \Ilch\Mapper
      */
     public function getPagePermas()
     {
-        $sql = 'SELECT page_id, locale, perma FROM [prefix]_pages_content';
+        $sql = 'SELECT page_id, locale, perma FROM `[prefix]_pages_content`';
         $permas = $this->db()->queryArray($sql);
         $permaArray = array();
 
