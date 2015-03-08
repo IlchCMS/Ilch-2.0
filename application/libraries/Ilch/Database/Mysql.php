@@ -416,7 +416,7 @@ class Mysql
      */
     public function dropTablesByPrefix($prefix)
     {
-        $sql = 'SHOW TABLES LIKE `"' . $prefix . '%"`';
+        $sql = 'SHOW TABLES LIKE "' . $prefix . '%"';
         $tables = $this->queryArray($sql);
 
         foreach ($tables as $table) {
