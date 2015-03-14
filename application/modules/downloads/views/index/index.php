@@ -1,13 +1,13 @@
 <h3><?=$this->getTrans('downloads'); ?></h3>
 <?php
-$galleryMapper = $this->get('galleryMapper');
-$galleryItems = $this->get('galleryItems');
-$imageMapper = $this->get('imageMapper');
+$downloadsMapper = $this->get('downloadsMapper');
+$downloadsItems = $this->get('downloadsItems');
+$fileMapper = $this->get('fileMapper');
 
-function rec($item, $galleryMapper, $obj, $imageMapper)
+function rec($item, $downloadsMapper, $obj, $fileMapper)
 {
-    $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
-    $imageCount = $imageMapper->getCountImageById($item->getId());
+    $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
+    $fileCount = $fileMapper->getCountFileById($item->getId());
     
     if ($item->getType() === 0){
         echo '<div class="page-header">
@@ -15,13 +15,13 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
               </h4><hr>';
     }
     if ($item->getType() != 0){
-        $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
+        $lastFile = $fileMapper->getLastFileByDownloadsId($item->getId());
         echo '<div class="col-md-12 no-padding lib-item" data-category="view">
                 <div class="lib-panel">
                     <div class="row box-shadow">
                         <div class="col-md-4">
                             <a href="'.$obj->getUrl(array('controller' => 'index', 'action' => 'show','id' => $item->getId())).'" >
-                                <img class="lib-img-show" src="'.$obj->getUrl().'/'.$lastImage->getImageThumb().'">
+                                <img class="lib-img-show" src="'.$obj->getUrl().'/'.$lastFile->getFileThumb().'">
                             </a>
                         </div>
                         <div class="col-md-8">
@@ -29,7 +29,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                                 <a href="'.$obj->getUrl(array('controller' => 'index', 'action' => 'show','id' => $item->getId())).'" >
                                     '.$item->getTitle().'
                                 </a>
-                                <p class="text-left">'.$obj->getTrans('images').': '. count($imageCount).'</p>
+                                <p class="text-left">'.$obj->getTrans('files').': '. count($fileCount).'</p>
                                 <div class="lib-header-seperator"></div>
                                 
                             </div>
@@ -44,7 +44,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     }
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
-            rec($subItem, $galleryMapper, $obj, $imageMapper);
+            rec($subItem, $downloadsMapper, $obj, $fileMapper);
         }
     }
 }
@@ -52,9 +52,9 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 <div class="col-lg-12">
     <ul class="media-list">
         <?php
-            if (!empty($galleryItems)) {
-                foreach ($galleryItems as $item) {
-                    rec($item, $galleryMapper, $this, $imageMapper);
+            if (!empty($downloadsItems)) {
+                foreach ($downloadsItems as $item) {
+                    rec($item, $downloadsMapper, $this, $fileMapper);
                 }
             }
         ?>

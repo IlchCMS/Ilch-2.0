@@ -48,6 +48,7 @@ class Config extends \Ilch\Config\Install
                 `file_id` varchar(150) COLLATE utf8_unicode_ci NOT NULL ,
                 `file_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                 `file_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+                `file_image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
                 `cat` mediumint(9) COLLATE utf8_unicode_ci NOT NULL DEFAULT 0,
                 `visits` int(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)

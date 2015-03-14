@@ -39,6 +39,13 @@ class File extends \Ilch\Model
     protected $file_desc;
 
     /**
+     * Image of the file.
+     *
+     * @var string
+     */
+    protected $file_image;
+
+    /**
      * The cat of the file.
      *
      * @var string
@@ -110,6 +117,16 @@ class File extends \Ilch\Model
     }
 
     /**
+     * Gets the file image.
+     *
+     * @return string
+     */
+    public function getFileImage()
+    {
+        return $this->file_image;
+    }
+
+    /**
      * Gets the cat of the file.
      *
      * @return string
@@ -177,6 +194,16 @@ class File extends \Ilch\Model
     public function setFileTitle($fileTitle)
     {
         $this->file_title = (string) $fileTitle;
+    }
+
+    /**
+     * Sets the image.
+     *
+     * @param string $fileImage
+     */
+    public function setFileImage($fileImage)
+    {
+        $this->file_image = (string) $fileImage;
     }
 
     /**

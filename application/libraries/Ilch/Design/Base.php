@@ -377,6 +377,36 @@ abstract class Base
     }
 
     /**
+     * Gets the MediaModal.
+     * Place inside Javascript tag.
+     * 
+     * @param string $mediaButton
+     * Define Media Button by give URL
+     * 
+     * @param string $actionButton
+     * Define Action Button by give URL
+     * 
+     * @return string
+     */
+    public function getMediaModal($mediaButton = NULL, $actionButton = NULL)
+    {
+        session_start();
+        $_SESSION['media-url-media-button'] = $mediaButton;
+        $_SESSION['media-url-action-button'] = $actionButton;
+        $html = "function media(id){ $('#MediaModal').modal('show');
+        var src = '".$_SESSION['media-url-media-button']."'+id;
+        var height = '100%';
+        var width = '100%';
+
+        $('#MediaModal iframe').attr({'src': src,
+            'height': height,
+            'width': width});
+        };";
+
+        return $html;
+    }
+
+    /**
      * Gets the page loading time in microsecond.
      *
      * @return float

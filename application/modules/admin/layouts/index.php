@@ -33,6 +33,7 @@
         <script src="<?php echo $this->getStaticUrl('js/validate/ilch-validate.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ckeditor/ckeditor.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ilch.js'); ?>"></script>
+        <script src="<?php echo $this->getStaticUrl('../application/modules/user/static/js/jquery.nicescroll.js'); ?>"></script>
     </head>
     <body id="body" class="">
         <script>
@@ -371,15 +372,18 @@
         <!-- MAIN END -->
 
 	<script>
-            var iframeUrlImage = "<?=$this->getUrl('admin/media/iframe/index/type/image/');?>";
-            var iframeUrlFile = "<?=$this->getUrl('admin/media/iframe/index/type/file/');?>";
-            var iframeUrlMedia = "<?=$this->getUrl('admin/media/iframe/index/type/media/');?>";
-            var iframeSingleUrlImage = "<?=$this->getUrl('admin/media/iframe/index/type/single/');?>";
-            var iframeSingleUrlGallery = "<?=$this->getUrl('admin/media/iframe/multi/type/multi/');?>";
-            var iframeSingleUrlDownloads = "<?=$this->getUrl('admin/media/iframe/multi/type/file/');?>";
+            var iframeUrlMediaCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/single/');?>";
+            var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/file/');?>";
+            var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor');?>";
+            var iframeMediaMultiCkeditor = "<?=$this->getUrl('admin/media/iframe/multickeditor');?>";
+            var iframeMediaIndexCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor');?>";
+            var iframeUrlImageCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/image/');?>";
             var ilchMediaPlugin = "<?=$this->getStaticUrl('../application/modules/media/static/js/ilchmedia/');?>";
-            var ilchPsPlugin = "<?=$this->getStaticUrl('../application/modules/media/static/js/ilchps/');?>";
-        </script>
 
+            $("body, html").niceScroll({
+                cursorcolor:"#ccc",
+                cursorwidth: "8px"
+            });
+        </script>
     </body>
 </html>

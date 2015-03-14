@@ -1,10 +1,10 @@
 <legend>
-    <?=$this->getTrans('downloads'); ?>: <?=$this->get('galleryTitle'); ?>
+    <?=$this->getTrans('downloads'); ?>: <?=$this->get('downloadsTitle'); ?>
 </legend>
-<?=$this->get('pagination')->getHtml($this, array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id'))); ?>
+<?=$this->get('pagination')->getHtml($this, array('action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('id'))); ?>
 <?php 
-    $image = $this->get('image');
-    if (!empty($image)) {
+    $file = $this->get('file');
+    if (!empty($file)) {
 ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
     <?=$this->getTokenField(); ?>
@@ -20,21 +20,21 @@
         </colgroup>
         <thead>
             <tr>
-                <th><?=$this->getCheckAllCheckbox('check_gallery')?></th>
+                <th><?=$this->getCheckAllCheckbox('check_downloads')?></th>
                 <th></th>
                 <th></th>
-                <th><?=$this->getTrans('images'); ?></th>
-                <th><?=$this->getTrans('imageTitle'); ?></th>
-                <th><?=$this->getTrans('imageDesc'); ?></th>
+                <th><?=$this->getTrans('file'); ?></th>
+                <th><?=$this->getTrans('fileTitle'); ?></th>
+                <th><?=$this->getTrans('fileDesc'); ?></th>
             </tr>
         </thead>
-        <tbody><?php foreach ($this->get('image') as $image) : ?>
+        <tbody><?php foreach ($this->get('file') as $file) : ?>
             <tr>
-                <td><input value="<?=$image->getId()?>" type="checkbox" name="check_gallery[]" /></td>
-                <td><?=$this->getEditIcon(array('controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getCat(), 'id' => $image->getId()))?></td>
-                <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')))?></td>
+                <td><input value="<?=$file->getId()?>" type="checkbox" name="check_downloads[]" /></td>
+                <td><?=$this->getEditIcon(array('controller' => 'file', 'action' => 'treatfile', 'downloads' => $file->getCat(), 'id' => $file->getId()))?></td>
+                <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id')))?></td>
                 <td>
-                    <img class="image thumbnail img-responsive" src="<?=$this->getStaticUrl('../application/modules/media/static/img/nomedia.png')?>"/>
+                    <img class="file thumbnail img-responsive" src="<?=$this->getStaticUrl('../application/modules/media/static/img/nomedia.png')?>"/>
                 </td>
                 <td></td>
                 <td></td>
@@ -45,19 +45,12 @@
 </form>
 <?php
 } else {
-    echo $this->getTrans('noImage');
+    echo $this->getTrans('noFile');
 } ?>
 <script>
-    function media(){ $('#MediaModal').modal('show');
-        var src = iframeSingleUrlGallery+'id/'+<?=$this->getRequest()->getParam('id') ?>;
-        var height = '100%';
-        var width = '100%';
-
-        $("#MediaModal iframe").attr({'src': src,
-            'height': height,
-            'width': width});
-    };
-
+    <?php echo $this->getMediaModal(
+            $mediaButton = $this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')),
+            $actionButton =$this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id')))?>
     function reload(){
         setTimeout(function(){window.location.reload(1);}, 1000);
     };
@@ -66,7 +59,7 @@
     tbody tr td {
         padding-bottom: 0 !important;
     }
-    .image {
+    .file {
         width: 100px;
         max-width: 100px;
         margin-bottom: 10px !important;

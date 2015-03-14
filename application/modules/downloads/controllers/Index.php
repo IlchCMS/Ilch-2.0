@@ -8,7 +8,7 @@ namespace Modules\Downloads\Controllers;
 
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
-use Modules\Downloads\Mappers\Comment as CommentMapper;
+use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Downloads\Models\Comment as CommentModel;
 use Modules\Downloads\Models\File as FileModel;
 
@@ -69,7 +69,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $id = $this->getRequest()->getParam('id');
-        $downloadsId = $this->getRequest()->getParam('gallery');
+        $downloadsId = $this->getRequest()->getParam('downloads');
         $downloads = $downloadsMapper->getDownloadsById($downloadsId);
         $comments = $commentMapper->getCommentsByKey('downloads_'.$this->getRequest()->getParam('id'));
         $file = $fileMapper->getFileById($id);

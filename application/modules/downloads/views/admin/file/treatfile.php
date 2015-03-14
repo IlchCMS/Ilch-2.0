@@ -1,40 +1,40 @@
 <legend>
-    <?=$this->getTrans('treatImage'); ?>
+    <?=$this->getTrans('treatFile'); ?>
 </legend>
 <?php 
-$image = $this->get('image');
+$file = $this->get('file');
 ?>
 <form class="form-horizontal" method="POST" action="">
     <div id="gallery">
         <div class="row">
             <div class="col-md-4">
-                <a href="<?=$this->getUrl().'/'.$image->getImageUrl(); ?>">
-                    <img class="thumbnail" src="<?=$this->getUrl().'/'.$image->getImageUrl(); ?>"/>
+                <a href="<?=$this->getUrl().'/'.$file->getFileUrl(); ?>">
+                    <img class="thumbnail" src="<?=$this->getUrl().'/'.$file->getFileUrl(); ?>"/>
                 </a>
             </div>
             <div class="col-md-8">
                 <?=$this->getTokenField(); ?>
                 <div class="form-group">
-                    <label for="imageTitleInput" class="col-lg-2 control-label">
-                        <?=$this->getTrans('imageTitle'); ?>:
+                    <label for="fileTitleInput" class="col-lg-2 control-label">
+                        <?=$this->getTrans('fileTitle'); ?>:
                     </label>
                     <div class="col-lg-8">
                         <input class="form-control"
                                type="text"
-                               name="imageTitle"
-                               id="imageTitleInput"
-                               value="<?=$image->getImageTitle()?>" />
+                               name="fileTitle"
+                               id="fileTitleInput"
+                               value="<?=$file->getFileTitle()?>" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="imageDescInput" class="col-lg-2 control-label">
-                        <?=$this->getTrans('imageDesc'); ?>:
+                    <label for="fileDescInput" class="col-lg-2 control-label">
+                        <?=$this->getTrans('fileDesc'); ?>:
                     </label>
                     <div class="col-lg-8">
                         <textarea class="form-control"
-                                  id="imageDescInput"
+                                  id="fileDescInput"
                                   rows="8"
-                                  name="imageDesc"><?=$image->getImageDesc()?></textarea>
+                                  name="fileDesc"><?=$file->getFileDesc()?></textarea>
                     </div>
                 </div>
             </div>

@@ -21,7 +21,7 @@ class Downloads extends BaseController
         (
             array
             (
-                'name' => 'menuActionDownloadsInsertImage',
+                'name' => 'menuActionDownloadsInsertFile',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => 'javascript:media();'
             )
@@ -42,59 +42,59 @@ class Downloads extends BaseController
         $downloadsTitle = $downloadsMapper->getDownloadsById($id);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_gallery') as $imageId) {
-                    $imageMapper->deleteById($imageId);
+                foreach($this->getRequest()->getPost('check_downloads') as $fileId) {
+                    $fileMapper->deleteById($fileId);
                 }
                 $this->addMessage('deleteSuccess');
-                $this->redirect(array('action' => 'treatgallery','id' => $id));
+                $this->redirect(array('action' => 'treatdownloads','id' => $id));
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach($this->getRequest()->getPost('check_image') as $imageId ) {
+            foreach($this->getRequest()->getPost('check_image') as $fileId ) {
                 $catId = $this->getRequest()->getParam('id');
                 $model = new \Modules\Downloads\Models\File();
-                $model->setFileId($imageId);
+                $model->setFileId($fileId);
                 $model->setCat($catId);
                 $fileMapper->save($model);
             }
         }
 
         $pagination->setPage($this->getRequest()->getParam('page'));
-        $this->getView()->set('image', $fileMapper->getFileByDownloadsId($id, $pagination));
+        $this->getView()->set('file', $fileMapper->getFileByDownloadsId($id, $pagination));
         $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('galleryTitle', $downloadsTitle->getTitle());
+        $this->getView()->set('downloadsTitle', $downloadsTitle->getTitle());
     }
 
-    public function treatImageAction() 
+    public function treatFileAction() 
     {
-        $imageMapper = new ImageMapper();
+        $fileMapper = new FileMapper();
         $id = $this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
-            $imageTitle = $this->getRequest()->getPost('imageTitle');
-            $imageDesc = $this->getRequest()->getPost('imageDesc');
-            $model = new \Modules\Gallery\Models\Image();
+            $fileTitle = $this->getRequest()->getPost('fileTitle');
+            $fileDesc = $this->getRequest()->getPost('fileDesc');
+            $model = new \Modules\Downloads\Models\File();
             $model->setId($id);
-            $model->setImageTitle($imageTitle);
-            $model->setImageDesc($imageDesc);
-            $imageMapper->saveImageTreat($model);
+            $model->setFileTitle($fileTitle);
+            $model->setFileDesc($fileDesc);
+            $fileMapper->saveFileTreat($model);
 
             $this->addMessage('Success');
         }
 
-        $this->getView()->set('image', $imageMapper->getImageById($id));
+        $this->getView()->set('file', $fileMapper->getFileById($id));
     }
 
     public function delAction()
     {
         if($this->getRequest()->isSecure()) {
-            $imageMapper = new ImageMapper();
+            $fileMapper = new FileMapper();
             $id = $this->getRequest()->getParam('id');
 
-            $imageMapper->deleteById($id);
+            $fileMapper->deleteById($id);
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')));
+            $this->redirect(array('action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')));
         }
     }
 }

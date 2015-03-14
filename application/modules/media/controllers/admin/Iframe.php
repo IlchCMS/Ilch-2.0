@@ -19,15 +19,97 @@ class Iframe extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $pagination->setPage($this->getRequest()->getParam('page'));
+        $pageid = $this->getRequest()->getParam('pageid');
 
-        $this->getView()->set('pagination', $pagination);
-        $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
+        if($this->getRequest()->getParam('type') == 'multi' or $this->getRequest()->getParam('type') == 'single'){
+            $type  = $this->getConfig()->get('media_ext_img');
+        }
+
+        if($this->getRequest()->getParam('type') == 'file'){
+            $type  = $this->getConfig()->get('media_ext_file');
+        }
+
+        if($this->getRequest()->getParam('type') == 'video'){
+            $type  = $this->getConfig()->get('media_ext_video');
+        }
+
+        if ($pageid == ''){
+            $this->getView()->set('medias', $mediaMapper->getMediaLists($type,$pagination));
+        } else {
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+        }
+
+        $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
+        $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
+        $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
+    }
+
+    public function indexckeditorAction() 
+    {
+        $this->getLayout()->setFile('modules/admin/layouts/iframe');
+        $mediaMapper = new MediaMapper();
+        $pagination = new \Ilch\Pagination();
+
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
+        $pageid = $this->getRequest()->getParam('pageid');
+
+        if($this->getRequest()->getParam('type') == 'multi' or $this->getRequest()->getParam('type') == 'single'){
+            $type  = $this->getConfig()->get('media_ext_img');
+        }
+
+        if($this->getRequest()->getParam('type') == 'file'){
+            $type  = $this->getConfig()->get('media_ext_file');
+        }
+
+        if($this->getRequest()->getParam('type') == 'video'){
+            $type  = $this->getConfig()->get('media_ext_video');
+        }
+
+        if ($pageid == ''){
+            $this->getView()->set('medias', $mediaMapper->getMediaLists($type,$pagination));
+        } else {
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+        }
+
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
         $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
         $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
     }
 
     public function multiAction()
+    {
+        $this->getLayout()->setFile('modules/admin/layouts/iframe');
+        $mediaMapper = new MediaMapper();
+        $pagination = new \Ilch\Pagination();
+
+        $pagination->setPage($this->getRequest()->getParam('page'));
+        $pageid = $this->getRequest()->getParam('pageid');
+
+        if($this->getRequest()->getParam('type') == 'multi'){
+            $type  = $this->getConfig()->get('media_ext_img');
+        }
+
+        if($this->getRequest()->getParam('type') == 'file'){
+            $type  = $this->getConfig()->get('media_ext_file');
+        }
+
+        if($this->getRequest()->getParam('type') == 'video'){
+            $type  = $this->getConfig()->get('media_ext_video');
+        }
+
+        if ($pageid == ''){
+            $this->getView()->set('medias', $mediaMapper->getMediaLists($type,$pagination));
+        } else {
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+        }
+
+        $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
+        $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
+        $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
+    }
+
+    public function multickeditorAction()
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
         $mediaMapper = new MediaMapper();
@@ -43,6 +125,11 @@ class Iframe extends \Ilch\Controller\Admin
     }
 
     public function uploadAction() 
+    {
+        $this->getLayout()->setFile('modules/admin/layouts/iframe');
+    }
+
+    public function uploadckeditorAction() 
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
     }

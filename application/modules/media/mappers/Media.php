@@ -52,6 +52,87 @@ class Media extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Media Lists.
+     *
+     * @param \Ilch\Pagination|null $pagination
+     * @return MediaModel[]|array
+     */
+    public function getMediaLists($ending = NULL, $pagination = NULL) 
+    {
+        $pagination->setRowsPerPage('40');
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
+                FROM `[prefix]_media` as m
+                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
+                WHERE m.ending IN ("'.implode(',',array(str_replace(' ', '","', $ending))).'")
+                ORDER by m.id DESC
+                LIMIT '.implode(',',$pagination->getLimit());
+
+        $mediaArray = $this->db()->queryArray($sql);
+        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+
+        if (empty($mediaArray)) {
+            return null;
+        }
+
+        $media = array();
+
+        foreach ($mediaArray as $medias) {
+            $entryModel = new MediaModel();
+            $entryModel->setId($medias['id']);
+            $entryModel->setUrl($medias['url']);
+            $entryModel->setUrlThumb($medias['url_thumb']);
+            $entryModel->setName($medias['name']);
+            $entryModel->setDatetime($medias['datetime']);
+            $entryModel->setEnding($medias['ending']);
+            $entryModel->setCatName(($medias['cat_name']));
+            $entryModel->setCatId(($medias['cat']));
+            $media[] = $entryModel;
+        }
+
+        return $media;
+    }
+
+    /**
+     * Gets the Media List Scroll.
+     *
+     * @param \Ilch\Pagination|null $pagination
+     * @return MediaModel[]|array
+     */
+    public function getMediaListScroll($pagination = NULL) 
+    {
+        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
+                FROM `[prefix]_media` as m
+                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
+                WHERE m.id < '.$pagination.'
+                ORDER by m.id DESC
+                LIMIT 40
+                ';
+
+        $mediaArray = $this->db()->query($sql);
+
+        if (empty($mediaArray)) {
+            return null;
+        }
+
+        $media = array();
+
+        foreach ($mediaArray as $medias) {
+            $entryModel = new MediaModel();
+            $entryModel->setId($medias['id']);
+            $entryModel->setUrl($medias['url']);
+            $entryModel->setUrlThumb($medias['url_thumb']);
+            $entryModel->setName($medias['name']);
+            $entryModel->setDatetime($medias['datetime']);
+            $entryModel->setEnding($medias['ending']);
+            $entryModel->setCatName(($medias['cat_name']));
+            $entryModel->setCatId(($medias['cat']));
+            $media[] = $entryModel;
+        }
+
+        return $media;
+    }
+
+    /**
      * Gets the Cats.
      *
      * @return MediaModel[]|array

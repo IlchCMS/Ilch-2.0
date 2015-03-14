@@ -92,7 +92,7 @@
                        id="selectedImage"
                        placeholder="<?php echo $this->getTrans('articleImage'); ?>"
                        value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } ?>" />
-                <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
     </div>
@@ -153,27 +153,9 @@ $('#articleLanguageInput').change
         top.location.href = '<?php echo $this->getUrl(array('id' => $articleID)); ?>/locale/'+$(this).val();
     }
 );
-$('#media').click
-(
-    function()
-    {
-        $('#MediaModal').modal('show');
 
-        var src = iframeSingleUrlImage;
-        var height = '100%';
-        var width = '100%';
+<?=$this->getMediaModal($mediaButton = $this->getUrl('admin/media/iframe/index/type/single/'))?>
 
-        $("#MediaModal iframe").attr
-        (
-            {
-                'src': src,
-                'height': height,
-                'width': width
-            }
-        );
-    }
-);
-                        
 $('#preview').click
 (
     function(e) 
@@ -186,4 +168,6 @@ $('#preview').click
         $('#article_form').attr('target', '');
     }
 );
+
+var ilchPsPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchps/');?>";
 </script>

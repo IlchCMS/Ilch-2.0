@@ -210,7 +210,7 @@ class Media extends \Ilch\Model
     /**
      * Sets the cat_id of the media.
      *
-     * @param integer $catid
+     * @param integer $catname
      */
     public function setCatName($catname)
     {

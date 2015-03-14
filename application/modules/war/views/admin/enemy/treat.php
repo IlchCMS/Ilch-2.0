@@ -47,7 +47,7 @@
                        id="selectedImage"
                        placeholder="<?=$this->getTrans('enemyLogoInfo'); ?>"
                        value="<?php if ($this->get('enemy') != '') { echo $this->escape($this->get('enemy')->getEnemyLogo()); } ?>" />
-                <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
     </div>
@@ -82,24 +82,5 @@
     ?>
 </form>
 <script>
-$('#media').click
-(
-    function()
-    {
-        $('#MediaModal').modal('show');
-
-        var src = iframeSingleUrlImage;
-        var height = '100%';
-        var width = '100%';
-
-        $("#MediaModal iframe").attr
-        (
-            {
-                'src': src,
-                'height': height,
-                'width': width
-            }
-        );
-    }
-);
+<?=$this->getMediaModal($mediaButton = $this->getUrl('admin/media/iframe/index/type/single/'))?>
 </script>

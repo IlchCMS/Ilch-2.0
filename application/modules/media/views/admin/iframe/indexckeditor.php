@@ -1,8 +1,4 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
-<ul class="nav nav-pills navbar-fixed-top">
-    <li><a href="<?=$this->getUrl('admin/media/iframe/upload/'); ?>">Upload</a></li>
-    <li><a href="<?=$_SESSION['media-url-media-button']?>">Media</a></li>
-</ul>
 <?php if ($this->get('medias') != '') {?>
 <div id="ilchmedia" class="container-fluid">
     <?php if( $this->getRequest()->getParam('type') === 'image' OR $this->getRequest()->getParam('type') === 'single'){ ?>
@@ -17,7 +13,7 @@
     <?php if( $this->getRequest()->getParam('type') === 'media'){ ?>
         <?php foreach ($this->get('medias') as $media) : ?>
             <?php if( in_array($media->getEnding() , explode(' ',$this->get('media_ext_video')))){
-                echo '<div class="col-lg-2 col-sm-3 col-xs-4"><img class="image thumbnail img-responsive" data-url="'.$this->getUrl().'/'.$media->getUrl().'" src="'.$this->getBaseUrl('application/modules/media/static/img/nomedia.png').'" alt=""><div class="media-getending">Type: '.$media->getEnding().'</div><div class="media-getname">'.$media->getName().'</div></div>';
+                echo '<div class="col-lg-2 col-sm-3 col-xs-4"><img class="image thumbnail img-responsive" data-url="'.$media->getUrl().'" src="'.$this->getBaseUrl('application/modules/media/static/img/nomedia.png').'" alt=""><div class="media-getending">Type: '.$media->getEnding().'</div><div class="media-getname">'.$media->getName().'</div></div>';
                 }
             ?>
         <?php endforeach; ?>
@@ -26,7 +22,7 @@
     <?php if( $this->getRequest()->getParam('type') === 'file'){ ?>
         <?php foreach ($this->get('medias') as $media) : ?>
             <?php if( in_array($media->getEnding() , explode(' ',$this->get('media_ext_file')))){
-                echo '<div class="col-lg-2 col-sm-3 col-xs-4"><img class="image thumbnail img-responsive" data-alt="'.$media->getName().'" data-url="'.$this->getUrl().'/'.$media->getUrl().'" src="'.$this->getBaseUrl('application/modules/media/static/img/nomedia.png').'" alt=""><div class="media-getending">Type: '.$media->getEnding().'</div><div class="media-getname">'.$media->getName().'</div></div>';
+                echo '<div id="'.$media->getId().'" class="col-lg-2 col-sm-3 col-xs-4 media_loader"><img class="image thumbnail img-responsive" data-alt="'.$media->getName().'" data-url="'.$media->getUrl().'" src="'.$this->getBaseUrl('application/modules/media/static/img/nomedia.png').'" alt=""><div class="media-getending">Type: '.$media->getEnding().'</div><div class="media-getname">'.$media->getName().'</div></div>';
                 }
             ?>
         <?php endforeach; ?>
@@ -38,7 +34,7 @@
     echo $this->getTrans('noMedias');
 }
 ?>
-<?php if( $this->getRequest()->getParam('type') === 'image'){ ?>
+<?php if( $this->getRequest()->getParam('type') === 'image' or $this->getRequest()->getParam('type') === 'single'){ ?>
 <script>
     $(".image").click(function(){
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
@@ -74,16 +70,17 @@
     });
 </script>
 <?php } ?>
+
 <script type="text/javascript">
     $(document).ready(function()
     {
-        function media_loader() 
-        {
+	function media_loader() 
+        { 
             var ID=$(".media_loader:last").attr("id");
-            $.post("<?=$this->getUrl('admin/media/ajax/index/type/single/pageid/')?>"+ID,
-                function(data)
+            $.post("<?=$this->getUrl('admin/media/ajax/index/type/')?><?=$this->getRequest()->getParam('type')?>/pageid/"+ID,
+		function(data)
                 {
-                    if (data !== "") 
+                    if (data !== "")
                     {
                         $(".media_loader:last").after(data);
                     }

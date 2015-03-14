@@ -52,15 +52,9 @@
     echo $this->getTrans('noImage');
 } ?>
 <script>
-    function media(){ $('#MediaModal').modal('show');
-        var src = iframeSingleUrlGallery+'id/'+<?=$this->getRequest()->getParam('id') ?>;
-        var height = '100%';
-        var width = '100%';
-
-        $("#MediaModal iframe").attr({'src': src,
-            'height': height,
-            'width': width});
-    };
+    <?php echo $this->getMediaModal(
+            $mediaButton = $this->getUrl('admin/media/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id')),
+            $actionButton = $this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id')))?>
 
     function reload(){
         setTimeout(function(){window.location.reload(1);}, 1000);

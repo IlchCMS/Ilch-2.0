@@ -22,7 +22,7 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         onClick: function() {
                             $('#MediaModal').modal('show');
 
-                            var src = iframeUrlImage;
+                            var src = iframeUrlMediaCkeditor;
                             var height = '100%';
                             var width = '100%';
 
@@ -57,7 +57,7 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         onClick: function() {
                             $('#MediaModal').modal('show');
 
-                            var src = iframeUrlFile;
+                            var src = iframeUrlFileCkeditor;
                             var height = '100%';
                             var width = '100%';
 
@@ -107,7 +107,29 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         onClick: function() {
                             $('#MediaModal').modal('show');
 
-                            var src = iframeUrlMedia;
+                            var src = iframeUrlMediaCkeditor;
+                            var height = '100%';
+                            var width = '100%';
+
+                            $("#MediaModal iframe").attr({'src': src,
+                                'height': height,
+                                'width': width});
+                        }
+                    }
+                ]
+            },{
+                id: 'tab-upload',
+                label: 'Upload to Server',
+                elements: [
+                    {
+                        type: 'button',
+                        label: 'Upload to Server',
+                        labelStyle: 'font-weight: bold',
+                        id: 'uploadbutton',
+                        onClick: function() {
+                            $('#MediaModal').modal('show');
+
+                            var src = iframeMediaUploadCkeditor;
                             var height = '100%';
                             var width = '100%';
 

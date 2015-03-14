@@ -1,8 +1,4 @@
 <link href="<?php echo $this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
-<ul class="nav nav-pills">
-  <li><a href="<?php echo $this->getUrl(array('controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id'))); ?>">Upload</a></li>
-  <li><a href="<?=$_SESSION['media-url-media-button']?><?=$this->getRequest()->getParam('id')?>">Media</a></li>
-</ul>
 <legend><?php echo $this->getTrans('mediaUpload'); ?></legend>
 <div class="container">
     <form id="upload" method="post" action="<?php echo $this->getUrl('index.php/admin/media/index/upload'); ?>" enctype="multipart/form-data">

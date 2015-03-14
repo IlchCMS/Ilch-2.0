@@ -46,7 +46,7 @@ if ($this->get('groups') != '') {
                        id="selectedImage"
                        placeholder="<?=$this->getTrans('groupImage'); ?>"
                        value="<?php if ($this->get('groups') != '') { echo $this->escape($this->get('groups')->getGroupImage()); } ?>" />
-                <span class="input-group-addon"><a id="media" href="#"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
     </div>
@@ -83,26 +83,7 @@ if ($this->get('groups') != '') {
     ?>
 </form>
 <script>
-$('#media').click
-(
-    function()
-    {
-        $('#MediaModal').modal('show');
-
-        var src = iframeSingleUrlImage;
-        var height = '100%';
-        var width = '100%';
-
-        $("#MediaModal iframe").attr
-        (
-            {
-                'src': src,
-                'height': height,
-                'width': width
-            }
-        );
-    }
-);
+<?=$this->getMediaModal($mediaButton = $this->getUrl('admin/media/iframe/index/type/single/'))?>
 
 $('#assignedMember').chosen();
 $('#assignedMember_chosen').css('width', '100%'); // Workaround for chosen resize bug.
