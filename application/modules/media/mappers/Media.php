@@ -52,12 +52,13 @@ class Media extends \Ilch\Mapper
     }
 
     /**
-     * Gets the Media Lists.
+     * Gets the Media Lists by ending.
      *
+     * @param string $ending
      * @param \Ilch\Pagination|null $pagination
      * @return MediaModel[]|array
      */
-    public function getMediaLists($ending = NULL, $pagination = NULL) 
+    public function getMediaListByEnding($ending = NULL, $pagination = NULL) 
     {
         $pagination->setRowsPerPage('40');
         $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
@@ -95,18 +96,17 @@ class Media extends \Ilch\Mapper
     /**
      * Gets the Media List Scroll.
      *
-     * @param \Ilch\Pagination|null $pagination
+     * @param int $lastId
      * @return MediaModel[]|array
      */
-    public function getMediaListScroll($pagination = NULL) 
+    public function getMediaListScroll($lastId = NULL) 
     {
         $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
                 LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                WHERE m.id < '.$pagination.'
+                WHERE m.id < '.$lastId.'
                 ORDER by m.id DESC
-                LIMIT 40
-                ';
+                LIMIT 40';
 
         $mediaArray = $this->db()->query($sql);
 

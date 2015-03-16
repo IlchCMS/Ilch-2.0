@@ -20,12 +20,13 @@ class Ajax extends \Ilch\Controller\Admin
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $pageid = $this->getRequest()->getParam('pageid');
+        $lastId = $this->getRequest()->getParam('lastid');
         $this->getView()->set('pagination', $pagination);
-        if ($pageid == ''){
+
+        if ($lastId == ''){
             $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
         } else {
-            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
         }
 
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
@@ -41,12 +42,14 @@ class Ajax extends \Ilch\Controller\Admin
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $pageid = $this->getRequest()->getParam('pageid');
+        $lastId = $this->getRequest()->getParam('lastid');
+
         $this->getView()->set('pagination', $pagination);
-        if ($pageid == ''){
+
+        if ($lastId == ''){
             $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
         } else {
-            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
         }
 
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));

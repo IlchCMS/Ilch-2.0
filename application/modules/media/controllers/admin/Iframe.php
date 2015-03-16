@@ -19,7 +19,7 @@ class Iframe extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $pagination->setPage($this->getRequest()->getParam('page'));
-        $pageid = $this->getRequest()->getParam('pageid');
+        $lastId = $this->getRequest()->getParam('lastid');
 
         if($this->getRequest()->getParam('type') == 'multi' or $this->getRequest()->getParam('type') == 'single'){
             $type  = $this->getConfig()->get('media_ext_img');
@@ -33,10 +33,10 @@ class Iframe extends \Ilch\Controller\Admin
             $type  = $this->getConfig()->get('media_ext_video');
         }
 
-        if ($pageid == ''){
-            $this->getView()->set('medias', $mediaMapper->getMediaLists($type,$pagination));
+        if ($lastId == ''){
+            $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
-            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
         }
 
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
@@ -52,7 +52,7 @@ class Iframe extends \Ilch\Controller\Admin
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $pageid = $this->getRequest()->getParam('pageid');
+        $lastId = $this->getRequest()->getParam('lastid');
 
         if($this->getRequest()->getParam('type') == 'multi' or $this->getRequest()->getParam('type') == 'single'){
             $type  = $this->getConfig()->get('media_ext_img');
@@ -66,10 +66,10 @@ class Iframe extends \Ilch\Controller\Admin
             $type  = $this->getConfig()->get('media_ext_video');
         }
 
-        if ($pageid == ''){
-            $this->getView()->set('medias', $mediaMapper->getMediaLists($type,$pagination));
+        if ($lastId == ''){
+            $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
-            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
         }
 
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
@@ -84,7 +84,7 @@ class Iframe extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
 
         $pagination->setPage($this->getRequest()->getParam('page'));
-        $pageid = $this->getRequest()->getParam('pageid');
+        $lastId = $this->getRequest()->getParam('lastid');
 
         if($this->getRequest()->getParam('type') == 'multi'){
             $type  = $this->getConfig()->get('media_ext_img');
@@ -98,10 +98,10 @@ class Iframe extends \Ilch\Controller\Admin
             $type  = $this->getConfig()->get('media_ext_video');
         }
 
-        if ($pageid == ''){
-            $this->getView()->set('medias', $mediaMapper->getMediaLists($type,$pagination));
+        if ($lastId == ''){
+            $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
-            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($pageid));
+            $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
         }
 
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));

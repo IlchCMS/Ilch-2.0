@@ -80,7 +80,7 @@
         function media_loader() 
         {
             var ID=$(".media_loader:last").attr("id");
-            $.post("<?=$this->getUrl('admin/media/ajax/index/type/single/pageid/')?>"+ID,
+            $.post("<?=$this->getUrl('admin/media/ajax/index/type/single/lastid/')?>"+ID,
                 function(data)
                 {
                     if (data !== "") 

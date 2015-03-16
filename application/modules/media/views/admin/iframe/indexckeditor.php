@@ -77,7 +77,7 @@
 	function media_loader() 
         { 
             var ID=$(".media_loader:last").attr("id");
-            $.post("<?=$this->getUrl('admin/media/ajax/index/type/')?><?=$this->getRequest()->getParam('type')?>/pageid/"+ID,
+            $.post("<?=$this->getUrl('admin/media/ajax/index/type/')?><?=$this->getRequest()->getParam('type')?>/lastid/"+ID,
 		function(data)
                 {
                     if (data !== "")
