@@ -9,7 +9,6 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
     <?=$this->getTokenField(); ?>
 
-    <div class="col-xs-12">
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -44,7 +43,6 @@
             </tbody>
         </table>
     </div>
-    </div>
 <?=$this->getListBar(array('delete' => 'delete'))?>
 </form>
 <?php
@@ -53,8 +51,8 @@
 } ?>
 <script>
     <?php echo $this->getMediaModal(
-            $mediaButton = $this->getUrl('admin/media/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id')),
-            $actionButton = $this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id')))?>
+            $mediaButton = $this->getUrl('admin/media/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id').'/'),
+            $actionButton = $this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id').'/'))?>
 
     function reload(){
         setTimeout(function(){window.location.reload(1);}, 1000);

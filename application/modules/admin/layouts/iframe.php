@@ -32,15 +32,8 @@
         <script src="<?php echo $this->getStaticUrl('js/validate/ilch-validate.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ckeditor/ckeditor.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ilch.js'); ?>"></script>
-        <script src="<?php echo $this->getStaticUrl('../application/modules/user/static/js/jquery.nicescroll.js'); ?>"></script>
     </head>
     <body>
         <?php echo $this->getContent(); ?>
     </body>
-    <script>
-        $("body, html").niceScroll({
-            cursorcolor:"#ccc",
-            cursorwidth: "8px"
-        });
-    </script>
 </html>

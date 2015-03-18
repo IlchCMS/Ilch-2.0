@@ -22,7 +22,7 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         onClick: function() {
                             $('#MediaModal').modal('show');
 
-                            var src = iframeUrlMediaCkeditor;
+                            var src = iframeUrlImageCkeditor;
                             var height = '100%';
                             var width = '100%';
 
@@ -107,7 +107,7 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         onClick: function() {
                             $('#MediaModal').modal('show');
 
-                            var src = iframeUrlMediaCkeditor;
+                            var src = iframeUrlVideoCkeditor;
                             var height = '100%';
                             var width = '100%';
 

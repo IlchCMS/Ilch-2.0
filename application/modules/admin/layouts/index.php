@@ -33,7 +33,6 @@
         <script src="<?php echo $this->getStaticUrl('js/validate/ilch-validate.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ckeditor/ckeditor.js'); ?>"></script>
         <script src="<?php echo $this->getStaticUrl('js/ilch.js'); ?>"></script>
-        <script src="<?php echo $this->getStaticUrl('../application/modules/user/static/js/jquery.nicescroll.js'); ?>"></script>
     </head>
     <body id="body" class="">
         <script>
@@ -372,18 +371,12 @@
         <!-- MAIN END -->
 
 	<script>
-            var iframeUrlMediaCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/single/');?>";
-            var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/file/');?>";
-            var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor');?>";
-            var iframeMediaMultiCkeditor = "<?=$this->getUrl('admin/media/iframe/multickeditor');?>";
-            var iframeMediaIndexCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor');?>";
-            var iframeUrlImageCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/image/');?>";
-            var ilchMediaPlugin = "<?=$this->getStaticUrl('../application/modules/media/static/js/ilchmedia/');?>";
+            var iframeUrlImageCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/imageckeditor/');?>";
+            var iframeUrlVideoCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/videockeditor/');?>";
+            var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/');?>";
+            var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor/');?>";
 
-            $("body, html").niceScroll({
-                cursorcolor:"#ccc",
-                cursorwidth: "8px"
-            });
+            var ilchMediaPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchmedia/');?>";
         </script>
     </body>
 </html>

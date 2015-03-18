@@ -335,6 +335,10 @@ aside {
     z-index: 904;
     padding-top: 40px;
 }
+#left-panel > nav{
+    position: fixed;
+    width: 220px;
+}
 .divider {
     height: 1px;
     overflow: hidden;
@@ -344,7 +348,7 @@ aside {
     margin-left: 220px;
     padding: 0;
     padding-bottom: 52px;
-    min-height: 500px;
+    min-height: 590px;
 }
 #ribbon {
     min-height: 40px;
@@ -503,8 +507,8 @@ legend {
     left: 1px;
 }
 #left-panel {
-    -webkit-transition: 250ms cubic-bezier(0.1, .57, .1, 1);
-    transition: 250ms cubic-bezier(0.1, .57, .1, 1);
+    -webkit-transition: 500ms cubic-bezier(0.1, .57, .1, 1);
+    transition: 500ms cubic-bezier(0.1, .57, .1, 1);
 }
 #main {
     -webkit-transition: all .2s ease-out;
