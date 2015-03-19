@@ -34,6 +34,7 @@ class Iframe extends \Ilch\Controller\Admin
         }
 
         if ($lastId == ''){
+            $pagination->setRowsPerPage('40');
             $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
             $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
@@ -67,6 +68,7 @@ class Iframe extends \Ilch\Controller\Admin
         }
 
         if ($lastId == ''){
+            $pagination->setRowsPerPage('40');
             $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
             $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
@@ -99,6 +101,7 @@ class Iframe extends \Ilch\Controller\Admin
         }
 
         if ($lastId == ''){
+            $pagination->setRowsPerPage('40');
             $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
             $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));

@@ -60,7 +60,6 @@ class Media extends \Ilch\Mapper
      */
     public function getMediaListByEnding($ending = NULL, $pagination = NULL) 
     {
-        $pagination->setRowsPerPage('40');
         $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
                 LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id

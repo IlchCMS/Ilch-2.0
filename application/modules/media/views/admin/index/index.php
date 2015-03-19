@@ -41,7 +41,18 @@ if ($this->get('medias') != '') {
                         <option>Descendent</option>
                     </select>    
                 </div>
-            </div> 
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label" for="pref-orderbytype">Media Type:</label>
+                <div class="col-lg-2">
+                    <select id="pref-orderbytype" class="form-control" name="orderbytype">
+                        <option>All</option>
+                        <option>Image</option>
+                        <option>Video</option>
+                        <option>File</option>
+                    </select>    
+                </div>
+            </div>
             <div class="form-group">    
                 <button type="submit" class="btn btn-default filter-col" name="search" value="search">
                     <span class="fa fa-search"></span> Search
