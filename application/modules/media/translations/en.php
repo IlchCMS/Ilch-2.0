@@ -28,11 +28,18 @@ return array
     'close' => 'close',
     'allowedMediaInfo' => 'Info',
     'success' => 'Success',
+    'upload' => 'Upload',
+    'add' => 'Add...',
+    'drag' => 'drag and drop files here',
+    'or' => 'or',
+    'browse' => 'Browse',
     'allowedMediaInfoText' => 'Here you can set the allowed extensions. Write <br/> the endings after another and only separated by a space <br/>. Be aware that you use an extension such as may "jpeg" only allowed images appear and has not allowed to look at videos or allowed Files!',
 
     'cats' => 'Categories',
+    'cat' => 'Categorie',
     'catTitle' => 'Title',
     'menuActionAddNewCat' => 'New Categorie',
     'newCat' => 'Add New Categorie',
-    'noCats' => 'No cats available'
+    'noCats' => 'No cats available',
+    'treatCat' => 'Treat Cat'
 );

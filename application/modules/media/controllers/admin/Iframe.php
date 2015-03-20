@@ -21,7 +21,7 @@ class Iframe extends \Ilch\Controller\Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
         $lastId = $this->getRequest()->getParam('lastid');
 
-        if($this->getRequest()->getParam('type') == 'multi' or $this->getRequest()->getParam('type') == 'single'){
+        if($this->getRequest()->getParam('type') == 'multi' || $this->getRequest()->getParam('type') == 'single'){
             $type  = $this->getConfig()->get('media_ext_img');
         }
 
@@ -55,15 +55,15 @@ class Iframe extends \Ilch\Controller\Admin
 
         $lastId = $this->getRequest()->getParam('lastid');
 
-        if($this->getRequest()->getParam('type') == 'multi' or $this->getRequest()->getParam('type') == 'single' or $this->getRequest()->getParam('type') == 'imageckeditor'){
+        if($this->getRequest()->getParam('type') == 'multi' || $this->getRequest()->getParam('type') == 'single' || $this->getRequest()->getParam('type') == 'imageckeditor'){
             $type  = $this->getConfig()->get('media_ext_img');
         }
 
-        if($this->getRequest()->getParam('type') == 'file'){
+        if($this->getRequest()->getParam('type') == 'file' || $this->getRequest()->getParam('type') == 'fileckeditor'){
             $type  = $this->getConfig()->get('media_ext_file');
         }
 
-        if($this->getRequest()->getParam('type') == 'video'){
+        if($this->getRequest()->getParam('type') == 'video' || $this->getRequest()->getParam('type') == 'videockeditor'){
             $type  = $this->getConfig()->get('media_ext_video');
         }
 

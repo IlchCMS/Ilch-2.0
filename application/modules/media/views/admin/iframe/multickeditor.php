@@ -1,92 +1,80 @@
-<link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
-<form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button']?>">
-<?php echo $this->getTokenField(); ?>
-<?php if ($this->get('medias') != '') {?>
+<link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
+<form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button'] ?>">
+<?=$this->getTokenField(); ?>
+<?php if ($this->get('medias') != ''): ?>
     <div id="ilchmedia">
-    <?=$this->get('pagination')->getHtml($this,array('type' => 'multi', 'id' => $this->getRequest()->getParam('id'))); ?>
         <div class="container-fluid">
-        <?php if( $this->getRequest()->getParam('type') === 'image' OR $this->getRequest()->getParam('type') === 'multi'){ ?>
-            <?php foreach ($this->get('medias') as $media) : ?>
-                <?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))): ?>
-                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb">
-                    <img class="image 
-                        thumbnail 
-                        img-responsive" 
-                        data-url="<?php echo $this->getUrl().'/'.$media->getUrl() ?>" 
-                        src="<?php echo $this->getUrl().'/'.$media->getUrlThumb() ?>"
-                            alt="">
-                            <input
-                            type="checkbox"
-                            id="<?php echo $media->getId() ?> test" 
-                            class="regular-checkbox big-checkbox"
-                            name="check_image[]"
-                            value="<?php echo $media->getId() ?>" />
-                            <label for="<?php echo $media->getId() ?> test"></label>
-                            </img>
-                            </div>
-                            <input
-                            type="text"
-                            name="check_url[]"
-                            class="hidden"
-                            value="<?php echo $media->getUrl() ?>" />
-                    
-                <?php endif; ?>
-            <?php endforeach; ?>
-        <?php }  ?>
+            <?php if ($this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'multi'): ?>
+                <?php foreach ($this->get('medias') as $media): ?>
+                    <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb">
+                            <img class="image thumbnail img-responsive"
+                                 data-url="<?=$media->getUrl() ?>"
+                                 src="<?=$this->getUrl($media->getUrlThumb()) ?>"
+                                 alt="<?=$media->getName() ?>">
+                            <input type="checkbox"
+                                   id="<?=$media->getId() ?> test"
+                                   class="regular-checkbox big-checkbox"
+                                   name="check_image[]"
+                                   value="<?=$media->getId() ?>" />
+                            <label for="<?=$media->getId() ?> test"></label>
+                        </div>
+                        <input type="text"
+                               name="check_url[]"
+                               class="hidden"
+                               value="<?=$media->getUrl() ?>" />
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
 
-        <?php if( $this->getRequest()->getParam('type') === 'media'){ ?>
-            <?php foreach ($this->get('medias') as $media) : ?>
-                <?php if( in_array($media->getEnding() , explode(' ',$this->get('media_ext_video')))){
-                    echo '<div class="col-lg-2 col-sm-3 col-xs-4"><img class="image thumbnail img-responsive" data-url="'.$this->getUrl().'/'.$media->getUrl().'" src="'.$this->getStaticUrl('../application/modules/media/static/img/nomedia.png').'" alt=""><div class="media-getending">Type: '.$media->getEnding().'</div><div class="media-getname">'.$media->getName().'</div></div>';
-                    }
-                ?>
-            <?php endforeach; ?>
-        <?php }  ?>
+            <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
+                <?php foreach ($this->get('medias') as $media): ?>
+                    <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_video')))): ?>
+                        <div class="col-lg-2 col-sm-3 col-xs-4">
+                            <img class="image thumbnail img-responsive"
+                                 data-url="<?=$media->getUrl() ?>"
+                                 src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                 alt="<?=$media->getName() ?>">
+                            <div class="media-getending">Type: <?=$media->getEnding() ?></div>
+                            <div class="media-getname"><?=$media->getName() ?></div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
 
-        <?php if( $this->getRequest()->getParam('type') === 'file'){ ?>
-            <?php foreach ($this->get('medias') as $media) : ?>
-                <?php if( in_array($media->getEnding() , explode(' ',$this->get('media_ext_file')))): ?>
-                   <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb">
-                    <img class="image 
-                        thumbnail 
-                        img-responsive" 
-                        data-url="<?php echo $this->getUrl().'/'.$media->getUrl() ?>" 
-                        src="<?=$this->getStaticUrl('../application/modules/media/static/img/nomedia.png')?>"
-                            alt="">
-                            <input
-                            type="checkbox"
-                            id="<?php echo $media->getId() ?> test" 
-                            class="regular-checkbox big-checkbox"
-                            name="check_image[]"
-                            value="<?php echo $media->getId() ?>" />
-                            <label for="<?php echo $media->getId() ?> test"></label>
-                            </img>
-                            </div>
-                            <input
-                            type="text"
-                            name="check_url[]"
-                            class="hidden"
-                            value="<?php echo $media->getUrl() ?>" />
-                    
-                <?php endif; ?>
-            <?php endforeach; ?>
-        <?php }  ?>
+            <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
+                <?php foreach ($this->get('medias') as $media): ?>
+                    <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
+                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb">
+                            <img class="image thumbnail img-responsive"
+                                 data-url="<?=$media->getUrl() ?>"
+                                 src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                 alt="">
+                            <input type="checkbox"
+                                   id="<?=$media->getId() ?> test"
+                                   class="regular-checkbox big-checkbox"
+                                   name="check_image[]"
+                                   value="<?=$media->getId() ?>" />
+                            <label for="<?=$media->getId() ?> test"></label>
+                        </div>
+                        <input type="text"
+                               name="check_url[]"
+                               class="hidden"
+                               value="<?=$media->getUrl() ?>" />
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
-    
-<?php
-} else {
-    echo $this->getTrans('noMedias');
-}
-?>
-
+<?php else: ?>
+    <?=$this->getTrans('noMedias') ?>
+<?php endif; ?>
 </form>
-<?php if( $this->getRequest()->getParam('type') === 'multi'){ ?>
+<?php if ($this->getRequest()->getParam('type') === 'multi'): ?>
 <script>
     $(".btn").click(function(){
         window.top.$('#MediaModal').modal('hide');
         window.top.reload();
-        
     });
 
     $(".image").click(function() {
@@ -99,13 +87,12 @@
         };
     });
 </script>
-<?php }  ?>
-<?php if( $this->getRequest()->getParam('type') === 'file'){ ?>
+<?php endif; ?>
+<?php if ($this->getRequest()->getParam('type') === 'file'): ?>
 <script>
     $(".btn").click(function(){
         window.top.$('#MediaModal').modal('hide');
         window.top.reload();
-        
     });
 
     $(".image").click(function() {
@@ -118,7 +105,7 @@
         };
     });
 </script>
-<?php }  ?>
+<?php endif; ?>
 <style>
     .container-fluid {
         padding-right: 15px;

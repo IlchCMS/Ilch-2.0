@@ -1,12 +1,10 @@
-<link href="<?=$this->getStaticUrl('../application/modules/media/static/css/media.css'); ?>" rel="stylesheet">
-<legend><?=$this->getTrans('media'); ?></legend>
-<?php
-if ($this->get('medias') != '') {
-?>
+<link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
+<legend><?=$this->getTrans('media') ?></legend>
+<?php if ($this->get('medias') != ''): ?>
 <div id="filter-media" >
     <div id="filter-panel" class="collapse filter-panel">
         <form class="form-horizontal" method="POST" action="">
-            <?=$this->getTokenField()?>
+            <?=$this->getTokenField() ?>
             <div class="form-group">
                 <label class="col-lg-2 control-label" for="pref-perpage">Rows per page:</label>
                 <div class="col-lg-2">
@@ -64,9 +62,9 @@ if ($this->get('medias') != '') {
         <span class="fa fa-cogs"></span> Advanced Search
     </button>
 </div>
-<?=$this->get('pagination')->getHtml($this, $this->get('rows')); ?>
+<?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
 <form class="form-horizontal" method="POST" action="">
-<?=$this->getTokenField()?>
+<?=$this->getTokenField() ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -80,59 +78,61 @@ if ($this->get('medias') != '') {
             </colgroup>
             <thead>
                 <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_medias')?></th>
+                    <th><?=$this->getCheckAllCheckbox('check_medias') ?></th>
                     <th></th>
-                    <th><?=$this->getTrans('type'); ?></th>
+                    <th><?=$this->getTrans('type') ?></th>
                     <th></th>
-                    <th><?=$this->getTrans('name'); ?></th>
-                    <th><?=$this->getTrans('date'); ?></th>
-                    <th>Kategorie</th>
+                    <th><?=$this->getTrans('name') ?></th>
+                    <th><?=$this->getTrans('date') ?></th>
+                    <th><?=$this->getTrans('cat') ?></th>
                 </tr>
             </thead>
-            <tbody><?php foreach ($this->get('medias') as $media) : ?>
-                <tr>
-                    <td><input value="<?=$media->getId()?>" type="checkbox" name="check_medias[]" /></td>
-                    <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $media->getId()))?></td>
-                    <td><?=$media->getEnding(); ?></td>
-                    <td><?php if(in_array($media->getEnding() , explode(' ',$this->get('media_ext_img')))){
-                        echo '<a href="'.$this->getBaseUrl($media->getUrl()).'" title="'.$media->getName().'"><img class="img-preview" src="'.$this->getBaseUrl($media->getUrlThumb()).'" alt=""></a>';
-                            }  else {
-                                echo '<img src="'.$this->getBaseUrl('application/modules/media/static/img/nomedia.png').'" class="img-preview" style="width:50px; height:auto;"  />';
-                            }
-                        ?>
-                    </td>
-                    <td><?=$media->getName(); ?></td>
-                    <td><?=$media->getDatetime(); ?></td>
-                    <td><div class="btn-group dropdown">
-                            <button class="btn btn-default dropdown-toggle" 
-                                    data-toggle="dropdown" 
-                                    type="button"><?=$media->getCatName(); ?>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu listChooser" role="menu">
-                                <?php
-                                if ($this->get('catnames') != '') {
-                                ?>
-                                <?php foreach ($this->get('catnames') as $name) : ?>
-                                <li>
-                                    <a href="<?php echo $this->getUrl(array('controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId())) ?>"><?=$name->getCatName(); ?></a>
-                                </li>
-                                <?php endforeach; ?>
-                                <?php
-                                    }
-                                ?>
-                            </ul>
-                        </div>
-                    </td>
-                </tr><?php endforeach; ?>
+            <tbody>
+                <?php foreach ($this->get('medias') as $media): ?>
+                    <tr>
+                        <td><input value="<?=$media->getId() ?>" type="checkbox" name="check_medias[]" /></td>
+                        <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $media->getId())) ?></td>
+                        <td><?=$media->getEnding() ?></td>
+                        <td>
+                            <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
+                                <a href="<?=$this->getBaseUrl($media->getUrl()) ?>" title="<?=$media->getName() ?>">
+                                    <img class="img-preview" src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>" alt="<?=$media->getName() ?>">
+                                </a>
+                            <?php else: ?>
+                                <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                     class="img-preview"
+                                     alt="<?=$media->getName() ?>"
+                                     style="width:50px; height:auto;" />
+                            <?php endif; ?>
+                        </td>
+                        <td><?=$media->getName() ?></td>
+                        <td><?=$media->getDatetime() ?></td>
+                        <td>
+                            <div class="btn-group dropdown">
+                                <button class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        type="button"><?=$media->getCatName() ?>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu listChooser" role="menu">
+                                    <?php if ($this->get('catnames') != ''): ?>
+                                        <?php foreach ($this->get('catnames') as $name): ?>
+                                            <li>
+                                                <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId())) ?>"><?=$name->getCatName() ?></a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-<?=$this->get('pagination')->getHtml($this, $this->get('rows')); ?>
-<?=$this->getListBar(array('delete' => 'delete'))?>
+    <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
+    <?=$this->getListBar(array('delete' => 'delete')) ?>
 </form>
-<?php
-} else {
-    echo $this->getTrans('noMedias');
-    }
-?>
+<?php else: ?>
+    <?=$this->getTrans('noMedias') ?>
+<?php endif; ?>
