@@ -39,10 +39,12 @@ class File extends BaseController
 
         if ($this->getRequest()->getPost()) {
             $fileTitle = $this->getRequest()->getPost('fileTitle');
+            $fileImage = $this->getRequest()->getPost('fileImage');
             $fileDesc = $this->getRequest()->getPost('fileDesc');
 
             $model = new \Modules\Downloads\Models\File();
             $model->setId($id);
+            $model->setFileImage($fileImage);
             $model->setFileTitle($fileTitle);
             $model->setFileDesc($fileDesc);
             $fileMapper->saveFileTreat($model);

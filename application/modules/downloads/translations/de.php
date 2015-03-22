@@ -11,6 +11,7 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'downloads' => 'Downloads',
+    'download' => 'Download',
     'menuDownloads' => 'Downloads',
     'menuCat' => 'Kategorie',
     'menuActionNewDownloads' => 'Neue Downloads',

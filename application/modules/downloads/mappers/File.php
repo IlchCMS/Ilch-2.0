@@ -14,7 +14,7 @@ class File extends \Ilch\Mapper
 {
     public function getFileById($id)
     {
-        $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_description, m.url, m.id, m.url_thumb
+        $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_description,g.file_image, m.url, m.id, m.url_thumb
                            FROM `[prefix]_downloads_files` AS g
                            LEFT JOIN `[prefix]_media` m ON g.file_id = m.id
 
@@ -23,6 +23,7 @@ class File extends \Ilch\Mapper
         $entryModel = new FileModel();
         $entryModel->setFileId($fileRow['file_id']);
         $entryModel->setFileUrl($fileRow['url']);
+        $entryModel->setFileImage($fileRow['file_image']);
         $entryModel->setFileTitle($fileRow['file_title']);
         $entryModel->setFileDesc($fileRow['file_description']);
         $entryModel->setVisits($fileRow['visits']);
@@ -32,7 +33,7 @@ class File extends \Ilch\Mapper
 
     public function getLastFileByDownloadsId($id)
     {
-        $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_description, m.url, m.id, m.url_thumb
+        $sql = 'SELECT g.file_id,g.cat,g.id as fileid,g.visits,g.file_title,g.file_image,g.file_description, m.url, m.id, m.url_thumb
                            FROM `[prefix]_downloads_files` AS g
                            LEFT JOIN `[prefix]_media` m ON g.file_id = m.id
 
@@ -42,6 +43,7 @@ class File extends \Ilch\Mapper
         $entryModel->setFileId($fileRow['file_id']);
         $entryModel->setFileUrl($fileRow['url']);
         $entryModel->setFileTitle($fileRow['file_title']);
+        $entryModel->setFileImage($fileRow['file_image']);
         $entryModel->setFileDesc($fileRow['file_description']);
         $entryModel->setVisits($fileRow['visits']);
 
@@ -80,9 +82,9 @@ class File extends \Ilch\Mapper
 
     public function getFileByDownloadsId($id, $pagination = NULL)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.file_id,g.cat,g.id as fileid,g.file_title,g.file_description,g.visits, m.url, m.id, m.url_thumb
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.file_id,g.cat,g.id as fileid,g.file_title,g.file_image,g.file_description,g.visits, m.url, m.id, m.url_thumb
                            FROM `[prefix]_downloads_files` AS g
-                           LEFT JOIN `[prefix]_media` m ON g.file_id = m.id
+                           LEFT JOIN `[prefix]_media` m ON g.file_image = m.url
 
                            WHERE g.cat = '.$id.' ORDER BY g.id DESC
                            LIMIT '.implode(',',$pagination->getLimit());
@@ -98,6 +100,7 @@ class File extends \Ilch\Mapper
             $entryModel->setFileThumb($entries['url_thumb']);
             $entryModel->setId($entries['fileid']);
             $entryModel->setFileTitle($entries['file_title']);
+            $entryModel->setFileImage($entries['url_thumb']);
             $entryModel->setFileDesc($entries['file_description']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setCat($entries['cat']);
@@ -136,7 +139,7 @@ class File extends \Ilch\Mapper
     public function saveFileTreat(FileModel $model)
     {
         $this->db()->update('downloads_files')
-                ->values(array('file_title' => $model->getFileTitle(),'file_description' => $model->getFileDesc()))
+                ->values(array('file_title' => $model->getFileTitle(),'file_image' => $model->getFileImage(),'file_description' => $model->getFileDesc()))
                 ->where(array('id' => $model->getId()))
                 ->execute();
     }

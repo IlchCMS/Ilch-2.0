@@ -1,15 +1,21 @@
 <?php $file = $this->get('file');?>
-
+<?php $image = '' ?>
+<?php if($file->getFileImage() != ''): ?>
+    <?php $image = $this->getBaseUrl($file->getFileImage()) ?>
+<?php else: ?>
+    <?php $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>
+<?php endif; ?>
 <div id="gallery">
     <div class="row">
         <div class="col-md-6">
             <a href="<?=$this->getUrl().'/'.$file->getFileUrl(); ?>">
-                <img class="thumbnail" src="<?=$this->getUrl().'/'.$file->getFileUrl(); ?>" alt="<?=$file->getFileTitle();?>"/>
+                <img class="thumbnail" src="<?=$image ?>" alt="<?=$file->getFileTitle();?>"/>
             </a>
         </div>
         <div class="col-md-6">
             <h3><?=$file->getFileTitle();?></h3>
             <p><?=$file->getFileDesc();?></p>
+            <a href="<?=$this->getUrl().'/'.$file->getFileUrl(); ?>" class="btn btn-primary pull-right"><?=$this->getTrans('download') ?></a>
         </div>
     </div>
 </div>

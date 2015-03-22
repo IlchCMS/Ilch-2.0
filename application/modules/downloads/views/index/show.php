@@ -2,11 +2,17 @@
 <div id="gallery">
     <?php foreach ($this->get('file') as $file) : ?>
     <?php $comments = $commentMapper->getCommentsByKey('gallery_'.$file->getId());?>
+    <?php $image = '' ?>
+    <?php if($file->getFileImage() != ''): ?>
+        <?php $image = $this->getBaseUrl($file->getFileImage()) ?>
+    <?php else: ?>
+        <?php $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>
+    <?php endif; ?>
     <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-image thumbnail">
                     <a href="<?=$this->getUrl(array('action' => 'showfile', 'downloads'  => $this->getRequest()->getParam('id'), 'id' => $file->getId())) ; ?>">
-                        <img src="<?=$this->getUrl().'/'.$file->getFileThumb(); ?>" class="panel-image-preview" alt="<?=$file->getFileTitle();?>" />
+                        <img src="<?=$image ?>" class="panel-image-preview" alt="<?=$file->getFileTitle();?>" />
                     </a>
                 </div>
                 <div class="panel-footer text-center">

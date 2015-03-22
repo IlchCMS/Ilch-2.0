@@ -15,13 +15,19 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
               </h4><hr>';
     }
     if ($item->getType() != 0){
-        $lastFile = $fileMapper->getLastFileByDownloadsId($item->getId());
+        $lastFile = $fileMapper->getLastFileByDownloadsId($item->getId()) ;
+        $image = '';
+        if($lastFile->getFileImage() != '') {
+            $image = $obj->getBaseUrl($lastFile->getFileImage()) ;
+        } else {
+            $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png') ;
+        }
         echo '<div class="col-md-12 no-padding lib-item" data-category="view">
                 <div class="lib-panel">
                     <div class="row box-shadow">
                         <div class="col-md-4">
                             <a href="'.$obj->getUrl(array('controller' => 'index', 'action' => 'show','id' => $item->getId())).'" >
-                                <img class="lib-img-show" src="'.$obj->getUrl().'/'.$lastFile->getFileThumb().'">
+                                <img class="lib-img-show" src="'.$image.'">
                             </a>
                         </div>
                         <div class="col-md-8">
