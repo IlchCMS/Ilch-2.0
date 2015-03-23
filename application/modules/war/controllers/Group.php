@@ -22,4 +22,13 @@ class Group extends \Ilch\Controller\Frontend
         $this->getView()->set('groups', $groupMapper->getGroups(array(), $pagination));
         $this->getView()->set('pagination', $pagination);
     }
+
+    public function showAction()
+    {
+        $groupMapper = new GroupMapper();
+
+        $id = $this->getRequest()->getParam('id');
+
+        $this->getView()->set('group', $groupMapper->getGroupById($id));
+    }
 }

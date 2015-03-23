@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('war', $warMapper->getWarListByStatus('2', $pagination));
+        $this->getView()->set('war', $warMapper->getWarList($pagination));
         $this->getView()->set('pagination', $pagination);
         $this->getView()->set('groups', $groupMapper->getGroups());
     }
