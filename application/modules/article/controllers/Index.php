@@ -23,7 +23,7 @@ class Index extends \Ilch\Controller\Frontend
                 $locale = $this->getTranslator()->getLocale();
             }
         }
-        
+
         $this->locale = $locale;
     }
 
@@ -40,9 +40,9 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->getPost('article_comment_text')) {
             $commentModel = new CommentModel();
-            $commentModel->setKey('articles_'.$this->getRequest()->getParam('id'));
+            $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
             $commentModel->setText($this->getRequest()->getPost('article_comment_text'));
-            
+
             $date = new \Ilch\Date();
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
@@ -58,7 +58,7 @@ class Index extends \Ilch\Controller\Frontend
             $articleModel->setTitle($title);
             $articleModel->setContent($content);
             $articleModel->setArticleImage($image);
-            
+
             $this->getView()->set('article', $articleModel);
         } else {
             $articleMapper = new ArticleMapper();
@@ -72,7 +72,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
                 ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
         }
-        $comments = $commentMapper->getCommentsByKey('articles_'.$this->getRequest()->getParam('id'));
+        $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
         $this->getView()->set('comments', $comments);
     }
 }

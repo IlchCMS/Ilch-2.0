@@ -57,9 +57,12 @@ class Index extends \Ilch\Controller\Frontend
         $fileMapper = new FileMapper();
         $downloadsMapper = new DownloadsMapper();
 
+        $id = $this->getRequest()->getParam('id');
+        $downloadsId = $this->getRequest()->getParam('downloads');
+
         if ($this->getRequest()->getPost('downloads_comment_text')) {
             $commentModel = new CommentModel();
-            $commentModel->setKey('downloads_'.$this->getRequest()->getParam('id'));
+            $commentModel->setKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
             $commentModel->setText($this->getRequest()->getPost('downloads_comment_text'));
 
             $date = new \Ilch\Date();
@@ -68,10 +71,8 @@ class Index extends \Ilch\Controller\Frontend
             $commentMapper->save($commentModel);
         }
 
-        $id = $this->getRequest()->getParam('id');
-        $downloadsId = $this->getRequest()->getParam('downloads');
         $downloads = $downloadsMapper->getDownloadsById($downloadsId);
-        $comments = $commentMapper->getCommentsByKey('downloads_'.$this->getRequest()->getParam('id'));
+        $comments = $commentMapper->getCommentsByKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
         $file = $fileMapper->getFileById($id);
 
         $model = new FileModel();

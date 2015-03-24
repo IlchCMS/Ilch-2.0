@@ -1,7 +1,7 @@
 <?php $commentMapper = new \Modules\Comment\Mappers\Comment();?>
 <div id="gallery">
     <?php foreach ($this->get('image') as $image) : ?>
-    <?php $comments = $commentMapper->getCommentsByKey('gallery_'.$image->getId());?>
+    <?php $comments = $commentMapper->getCommentsByKey('gallery/index/showimage/gallery/'.$this->getRequest()->getParam('id').'/id/'.$image->getId());?>
     <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-image thumbnail">

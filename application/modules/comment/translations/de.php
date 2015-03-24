@@ -15,5 +15,6 @@ return array
     'commentDate' => 'Datum/Uhrzeit',
     'commentFrom' => 'Von',
     'commentText' => 'Text',
+    'commentLink' => 'Link',
     'noComments' => 'Keine Kommentare',
 );

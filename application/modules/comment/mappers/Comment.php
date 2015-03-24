@@ -46,9 +46,10 @@ class Comment extends \Ilch\Mapper
     public function getComments()
     {
         $commentsArray = $this->db()->select('*')
-			->from('comments')
-			->execute()
-                        ->fetchRows();
+            ->from('comments')
+            ->order(array('id' => 'DESC'))
+            ->execute()
+            ->fetchRows();
 
         if (empty($commentsArray)) {
             return NULL;
@@ -70,7 +71,7 @@ class Comment extends \Ilch\Mapper
     }
 
     /**
-     * @param ReceiverModel $receiver
+     * @param CommentModel $comment
      */
     public function save(CommentModel $comment)
     {

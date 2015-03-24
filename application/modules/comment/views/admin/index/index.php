@@ -7,8 +7,9 @@
                 <colgroup>
                     <col class="icon_width" />
                     <col class="icon_width" />
-                    <col class="col-lg-2" />
-                    <col class="col-lg-2" />
+                    <col class="col-1" />
+                    <col class="col-1" />
+                    <col class="col-1" />
                     <col />
                 </colgroup>
                 <thead>
@@ -17,6 +18,7 @@
                         <th></th>
                         <th><?=$this->getTrans('commentDate') ?></th>
                         <th><?=$this->getTrans('commentFrom') ?></th>
+                        <th><?=$this->getTrans('commentLink') ?></th>
                         <th><?=$this->getTrans('commentText') ?></th>
                     </tr>
                 </thead>
@@ -30,6 +32,7 @@
                             <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $comment->getId())) ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></td>
+                            <td><a target="_blank" href="<?=$this->getUrl($comment->getKey()) ?>"><?=$this->getTrans('commentLink') ?></a></td>
                             <td><?=nl2br($this->escape($comment->getText())) ?></td>
                         </tr>
                     <?php endforeach; ?>

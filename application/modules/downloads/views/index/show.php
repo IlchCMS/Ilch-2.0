@@ -1,7 +1,7 @@
 <?php $commentMapper = new \Modules\Comment\Mappers\Comment();?>
 <div id="gallery">
     <?php foreach ($this->get('file') as $file) : ?>
-    <?php $comments = $commentMapper->getCommentsByKey('gallery_'.$file->getId());?>
+    <?php $comments = $commentMapper->getCommentsByKey('downloads/index/showfile/downloads/'.$this->getRequest()->getParam('id').'/id/'.$file->getId());?>
     <?php $image = '' ?>
     <?php if($file->getFileImage() != ''): ?>
         <?php $image = $this->getBaseUrl($file->getFileImage()) ?>

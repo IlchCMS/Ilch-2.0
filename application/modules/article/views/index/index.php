@@ -5,7 +5,7 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
 if (!empty($articles)) {
     foreach($articles as $article) {
         $date = new \Ilch\Date($article->getDateCreated());
-        $comments = $commentMapper->getCommentsByKey('articles_'.$article->getId());
+        $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$article->getId());
         $image = $article->getArticleImage();
         $imageSource = $article->getArticleImageSource();
 ?>
