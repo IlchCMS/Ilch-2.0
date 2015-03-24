@@ -8,6 +8,26 @@ defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
+    public $config = array
+    (
+        'key' => 'comment',
+        'icon_small' => 'comment.png',
+        'system_module' => true,
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Kommentare',
+                'description' => 'Hier werden alle Kommentare verwaltet.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Comments',
+                'description' => 'Here you can manage all comments.',
+            ),
+        )
+    );
+
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
