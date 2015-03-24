@@ -31,7 +31,7 @@ if($this->getUser())
     <div class="form-group">
         <div class="col-lg-12">
             <textarea class="form-control"
-                    name="gallery_comment_text"
+                    name="downloads_comment_text"
                       required></textarea>
         </div>
     </div>

@@ -9,7 +9,7 @@ namespace Modules\Downloads\Controllers;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\Downloads\Models\Comment as CommentModel;
+use Modules\Comment\Models\Comment as CommentModel;
 use Modules\Downloads\Models\File as FileModel;
 
 defined('ACCESS') or die('no direct access');
