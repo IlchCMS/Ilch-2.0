@@ -1,5 +1,16 @@
 <form class="form-horizontal" action="" method="post">
    <?php echo $this->getTokenField(); ?>
+    <div class="form-group hidden">
+        <label class="col-lg-2 control-label">
+            <?=$this->getTrans('bot') ?>*
+        </label>
+        <div class="col-lg-8">
+            <input type="text"
+                   class="form-control"
+                   name="bot"
+                   placeholder="Bot" />
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-lg-12">
             <input class="form-control"
