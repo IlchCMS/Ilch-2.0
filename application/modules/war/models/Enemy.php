@@ -39,18 +39,18 @@ class Enemy extends \Ilch\Model
     protected $enemyHomepage;
 
     /**
-     * The Enemy Logo.
+     * The Enemy Image.
      *
      * @var string
      */
-    protected $enemyLogo;
+    protected $enemyImage;
 
     /**
-     * The Enemy LogoThumb.
+     * The Enemy ImageThumb.
      *
      * @var string
      */
-    protected $enemyLogoThumb;
+    protected $enemyImageThumb;
 
     /**
      * The Enemy Land.
@@ -154,43 +154,43 @@ class Enemy extends \Ilch\Model
     }
 
     /**
-     * Gets the enemy Logo.
+     * Gets the enemy Image.
      *
      * @return string
      */
-    public function getEnemyLogo()
+    public function getEnemyImage()
     {
-        return $this->enemyLogo;
+        return $this->enemyImage;
     }
 
     /**
-     * Sets the enemy Logo.
+     * Sets the enemy Image.
      *
-     * @param string $enemyLogo
+     * @param string $enemyImage
      */
-    public function setEnemyLogo($enemyLogo)
+    public function setEnemyImage($enemyImage)
     {
-        $this->enemyLogo = (string)$enemyLogo;
+        $this->enemyImage = (string)$enemyImage;
     }
 
     /**
-     * Gets the enemy LogoThumb.
+     * Gets the enemy ImageThumb.
      *
      * @return string
      */
-    public function getEnemyLogoThumb()
+    public function getEnemyImageThumb()
     {
-        return $this->enemyLogoThumb;
+        return $this->enemyImageThumb;
     }
 
     /**
-     * Sets the enemy LogoThumb.
+     * Sets the enemy ImageThumb.
      *
-     * @param string $enemyLogoThumb
+     * @param string $enemyImageThumb
      */
-    public function setEnemyLogoThumb($enemyLogoThumb)
+    public function setEnemyImageThumb($enemyImageThumb)
     {
-        $this->enemyLogoThumb = (string)$enemyLogoThumb;
+        $this->enemyImageThumb = (string)$enemyImageThumb;
     }
 
     /**

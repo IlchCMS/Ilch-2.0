@@ -36,7 +36,7 @@ class Group extends BaseController
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('manageGroups'), array('action' => 'index'));
-    
+
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
             foreach($this->getRequest()->getPost('check_groups') as $groupId) {
                 $groupMapper->delete($groupId);
@@ -45,7 +45,7 @@ class Group extends BaseController
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('groups', $groupMapper->getGroups(array(), $pagination));
+        $this->getView()->set('groups', $groupMapper->getGroupList($pagination));
         $this->getView()->set('pagination', $pagination);
     }
 

@@ -50,28 +50,28 @@ class Config extends \Ilch\Config\Install
                     `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     `tag` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     `image` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                    `member` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                    `member` int(11) NOT NULL,
                     PRIMARY KEY (`id`)
                 )   ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
                 
                 CREATE TABLE IF NOT EXISTS `[prefix]_war_enemy`
                 (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                    `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                    `name` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     `tag` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                    `homepage` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                    `logo` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                    `homepage` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                    `image` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     `land` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     `contact_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                    `contact_email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                    `contact_email` varchar(150) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     PRIMARY KEY (`id`)
                 )   ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_war`
                 (
                     `id` int(11) NOT NULL AUTO_INCREMENT,
-                    `enemy` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                    `group` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                    `enemy` int(11) NOT NULL,
+                    `group` int(11) NOT NULL,
                     `time` datetime NOT NULL,
                     `maps` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
                     `server` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,

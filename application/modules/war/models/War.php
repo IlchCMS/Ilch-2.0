@@ -13,21 +13,21 @@ class War extends \Ilch\Model
     /**
      * The id.
      *
-     * @var integer
+     * @var int
      */
     protected $id;
 
     /**
      * The War Enemy.
      *
-     * @var string
+     * @var int
      */
     protected $warEnemy;
 
     /**
      * The War Group.
      *
-     * @var string
+     * @var int
      */
     protected $warGroup;
 
@@ -97,7 +97,7 @@ class War extends \Ilch\Model
     /**
      * Gets the id of the group.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -107,7 +107,7 @@ class War extends \Ilch\Model
     /**
      * Sets the id of the group.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function setId($id)
     {
@@ -117,7 +117,7 @@ class War extends \Ilch\Model
     /**
      * Gets the war enemy.
      *
-     * @return string
+     * @return int
      */
     public function getWarEnemy()
     {
@@ -127,7 +127,7 @@ class War extends \Ilch\Model
     /**
      * Sets the war enemy.
      *
-     * @param string $warEnemy
+     * @param int $warEnemy
      */
     public function setWarEnemy($warEnemy)
     {
@@ -137,7 +137,7 @@ class War extends \Ilch\Model
     /**
      * Gets the war group.
      *
-     * @return string
+     * @return int
      */
     public function getWarGroup()
     {
@@ -147,7 +147,7 @@ class War extends \Ilch\Model
     /**
      * Sets the war group.
      *
-     * @param string $warGroup
+     * @param int $warGroup
      */
     public function setWarGroup($warGroup)
     {

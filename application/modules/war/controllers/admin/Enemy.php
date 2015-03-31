@@ -44,7 +44,7 @@ class Enemy extends BaseController
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('enemy', $enemyMapper->getEnemy(array(), $pagination));
+        $this->getView()->set('enemy', $enemyMapper->getEnemyList($pagination));
         $this->getView()->set('pagination', $pagination);
     }
 
@@ -53,8 +53,15 @@ class Enemy extends BaseController
         $enemyMapper = new EnemyMapper();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageEnemy'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('treatEnemy'), array('action' => 'treat'));
             $enemy = $enemyMapper->getEnemyById($this->getRequest()->getParam('id'));
             $this->getView()->set('enemy', $enemy);
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('manageEnemy'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('manageNewEnemy'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {
@@ -66,7 +73,7 @@ class Enemy extends BaseController
 
             $enemyName = trim($this->getRequest()->getPost('enemyName'));
             $enemyTag = trim($this->getRequest()->getPost('enemyTag'));
-            $enemyLogo = trim($this->getRequest()->getPost('enemyLogo'));
+            $enemyImage = trim($this->getRequest()->getPost('enemyImage'));
             $enemyHomepage = $this->getRequest()->getPost('enemyHomepage');
             $enemyContactName = $this->getRequest()->getPost('enemyContactName');
             $enemyContactEmail = $this->getRequest()->getPost('enemyContactEmail');
@@ -75,8 +82,8 @@ class Enemy extends BaseController
                 $this->addMessage('missingEnemyName', 'danger');
             } elseif(empty($enemyTag)) {
                 $this->addMessage('missingEnemyTag', 'danger');
-            } elseif(empty($enemyLogo)) {
-                $this->addMessage('missingEnemyLogo', 'danger');
+            } elseif(empty($enemyImage)) {
+                $this->addMessage('missingEnemyImage', 'danger');
             } elseif(empty($enemyHomepage)) {
                 $this->addMessage('missingEnemyHomepage', 'danger');
             } elseif(empty($enemyContactName)) {
@@ -86,7 +93,7 @@ class Enemy extends BaseController
             } else {
                 $enemyModel->setEnemyName($enemyName);
                 $enemyModel->setEnemyTag($enemyTag);
-                $enemyModel->setEnemyLogo($enemyLogo);
+                $enemyModel->setEnemyImage($enemyImage);
                 $enemyModel->setEnemyHomepage($enemyHomepage);
                 $enemyModel->setEnemyContactName($enemyContactName);
                 $enemyModel->setEnemyContactEmail($enemyContactEmail);

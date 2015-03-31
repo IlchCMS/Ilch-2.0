@@ -48,7 +48,45 @@ class Enemy extends \Ilch\Mapper
             $entryModel->setId($entries['id']);
             $entryModel->setEnemyName($entries['name']);
             $entryModel->setEnemyTag($entries['tag']);
-            $entryModel->setEnemyLogo($entries['logo']);
+            $entryModel->setEnemyImage($entries['image']);
+            $entryModel->setEnemyHomepage($entries['homepage']);
+            $entryModel->setEnemyContactName($entries['contact_name']);
+            $entryModel->setEnemyContactEmail($entries['contact_email']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
+
+    /**
+     * Gets the Enemy List
+     *
+     * @param \Ilch\Pagination|null $pagination
+     * @return EnemyModel[]|array
+     */
+    public function getEnemyList($pagination = null)
+    {
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS e.id, e.name, e.tag, e.image, e.homepage, e.contact_name, e.contact_email, m.url, m.url_thumb
+                FROM `[prefix]_war_enemy` as e
+                LEFT JOIN [prefix]_media m ON e.image = m.url
+                ORDER by e.id DESC
+                LIMIT '.implode(',',$pagination->getLimit());
+
+        $enemyArray = $this->db()->queryArray($sql);
+        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+
+        if (empty($enemyArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($enemyArray as $entries) {
+            $entryModel = new EnemyModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setEnemyName($entries['name']);
+            $entryModel->setEnemyTag($entries['tag']);
+            $entryModel->setEnemyImage($entries['url_thumb']);
             $entryModel->setEnemyHomepage($entries['homepage']);
             $entryModel->setEnemyContactName($entries['contact_name']);
             $entryModel->setEnemyContactEmail($entries['contact_email']);
@@ -80,7 +118,7 @@ class Enemy extends \Ilch\Mapper
         $enemyModel->setId($enemyRow['id']);
         $enemyModel->setEnemyName($enemyRow['name']);
         $enemyModel->setEnemyTag($enemyRow['tag']);
-        $enemyModel->setEnemyLogo($enemyRow['logo']);
+        $enemyModel->setEnemyImage($enemyRow['image']);
         $enemyModel->setEnemyHomepage($enemyRow['homepage']);
         $enemyModel->setEnemyContactName($enemyRow['contact_name']);
         $enemyModel->setEnemyContactEmail($enemyRow['contact_email']);
@@ -99,7 +137,7 @@ class Enemy extends \Ilch\Mapper
         (
             'name' => $model->getEnemyName(),
             'tag' => $model->getEnemyTag(),
-            'logo' => $model->getEnemyLogo(),
+            'image' => $model->getEnemyImage(),
             'homepage' => $model->getEnemyHomepage(),
             'contact_name' => $model->getEnemyContactName(),
             'contact_email' => $model->getEnemyContactEmail(),

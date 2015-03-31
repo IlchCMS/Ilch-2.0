@@ -57,6 +57,42 @@ class Group extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Group List
+     *
+     * @param \Ilch\Pagination|null $pagination
+     * @return GroupModel[]|array
+     */
+    public function getGroupList($pagination = null)
+    {
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.id, g.name, g.tag, g.image, g.member, m.url, m.url_thumb
+                FROM `[prefix]_war_groups` as g
+                LEFT JOIN [prefix]_media m ON g.image = m.url
+                ORDER by g.id DESC
+                LIMIT '.implode(',',$pagination->getLimit());
+
+        $groupArray = $this->db()->queryArray($sql);
+        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+
+        if (empty($groupArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($groupArray as $entries) {
+            $entryModel = new GroupModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setGroupName($entries['name']);
+            $entryModel->setGroupTag($entries['tag']);
+            $entryModel->setGroupImage($entries['url_thumb']);
+            $entryModel->setGroupMember($entries['member']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
+
+    /**
      * Gets group by id.
      *
      * @param integer $id

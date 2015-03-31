@@ -91,21 +91,21 @@ class Index extends BaseController
                 $enemyPoints = $this->getRequest()->getPost('warErgebnisEnemy');
 
                 $errorMaps = array_keys($groupPoints, true);
-            if (empty($errorMaps)) {
-                $this->addMessage('missingWarMapPlayed', 'danger');
-            } elseif(empty($groupPoints)) {
-                $this->addMessage('missingGroupPoints', 'danger');
-            } elseif(empty($enemyPoints)) {
-                $this->addMessage('missingEnemyPoints', 'danger');
-            } else {
-                for ($i = 0; $i < count($maps); $i++) {
-                    $gameModel->setWarId($warId);
-                    $gameModel->setMap($maps[$i]);
-                    $gameModel->setGroupPoints($groupPoints[$i]);
-                    $gameModel->setEnemyPoints($enemyPoints[$i]);
-                    $gameMapper->save($gameModel);
-                }$this->getView()->set('error', $errorMaps);
-            }
+                if (empty($errorMaps)) {
+                    $this->addMessage('missingWarMapPlayed', 'danger');
+                } elseif(empty($groupPoints)) {
+                    $this->addMessage('missingGroupPoints', 'danger');
+                } elseif(empty($enemyPoints)) {
+                    $this->addMessage('missingEnemyPoints', 'danger');
+                } else {
+                    for ($i = 0; $i < count($maps); $i++) {
+                        $gameModel->setWarId($warId);
+                        $gameModel->setMap($maps[$i]);
+                        $gameModel->setGroupPoints($groupPoints[$i]);
+                        $gameModel->setEnemyPoints($enemyPoints[$i]);
+                        $gameMapper->save($gameModel);
+                    }$this->getView()->set('error', $errorMaps);
+                }
             }
 
             if ($this->getRequest()->getParam('id')) {
