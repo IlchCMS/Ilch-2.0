@@ -43,7 +43,7 @@ class Regist extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('step2to3'), array('action' => 'input'));
-        
+
         $registMapper = new UserMapper();
         $errors = array();
 
@@ -52,6 +52,17 @@ class Regist extends \Ilch\Controller\Frontend
             $password = $this->getRequest()->getPost('password');
             $password2 = $this->getRequest()->getPost('password2');
             $email = trim($this->getRequest()->getPost('email'));
+
+            $profilName = $registMapper->getUserByName($name);
+            $profilEmail = $registMapper->getUserByEmail($email);
+
+            if (!empty($profilName)) {
+                $errors['name'] = 'nameExist';
+            }
+
+            if (!empty($profilEmail)) {
+                $errors['email'] = 'emailExist';
+            }
 
             if (empty($name)) {
                 $errors['name'] = 'fieldEmpty';
@@ -68,18 +79,18 @@ class Regist extends \Ilch\Controller\Frontend
             if ($password !== $password2) {
                 $errors['password'] = 'fieldDiffersPassword';
                 $errors['password2'] = 'fieldDiffersPassword';
-            }     
+            }
 
             if (empty($email)) {
                 $errors['email'] = 'fieldEmpty';
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errors['email'] = 'fieldEmail';
             }
-            
+
             if (empty($errors)) {
                     $groupMapper = new \Modules\User\Mappers\Group();
                     $userGroup = $groupMapper->getGroupById(2);
-                    $currentDate = new \Ilch\Date(); 
+                    $currentDate = new \Ilch\Date();
                     $model = new \Modules\User\Models\User();
                     $model->setName($name);
                     $model->setPassword(crypt($password));
@@ -87,26 +98,44 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setDateCreated($currentDate);
                     $model->addGroup($userGroup);
 
-                if ($this->getConfig()->get('regist_confirm') == 0){  
+                if ($this->getConfig()->get('regist_confirm') == 0){
                     $model->setDateConfirmed($currentDate);
-                }else{        
+                }else{
                     $confirmedCode = md5(uniqid(rand()));
                     $model->setConfirmed(1);
                     $model->setConfirmedCode($confirmedCode);
                 }
 
-                $registMapper->save($model);                   
-                
+                $registMapper->save($model);
+
                 $_SESSION["name"] = $name;
                 $_SESSION["email"] = $email;
 
+                if($this->getConfig()->get('regist_confirm') == '0'){
+                    $mail = new \Ilch\Mail();
+                    $mail->setTo($email,$name)
+                            ->setSubject('Automatische E-Mail')
+                            ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
+                            ->setMessage('Hallo '.$name.', Ihre Registrierung war erfolgreich. Ihr Benutzerkonto wurde erfolgreich aktiviert! Sie können sich jetzt mit dem von Ihnen bei der Registrierung gewählten Benutzernamen und Passwort anmelden.')
+                            ->addGeneralHeader('Content-type', 'text/plain; charset="utf-8"');
+                    $mail->send();
+                } else {
+                    $mail = new \Ilch\Mail();
+                    $mail->setTo($email,$name)
+                            ->setSubject('Automatische E-Mail')
+                            ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
+                            ->setMessage('Hallo '.$name.', um die Registrierung erfolgreich abzuschließen klicke Bitte auf folgenden Link.<a href="http://demo.imagooo.de/index.php/user/regist/confirm/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>')
+                            ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
+                    $mail->send();
+                }
+
                 $this->redirect(array('action' => 'finish'));
             }
-            
-            $this->getView()->set('errors', $errors); 
+
+            $this->getView()->set('errors', $errors);
         }
-        
-        $this->getView(); 
+
+        $this->getView();
     }
 
     public function finishAction()
