@@ -52,7 +52,7 @@
     }
     .shout_box .message_box {
             background: #FFFFFF;
-            height: 600px;
+            max-height: 400px;
             overflow:auto;
             border: 1px solid #CCC;
     }
