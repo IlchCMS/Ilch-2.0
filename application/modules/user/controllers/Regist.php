@@ -116,7 +116,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $mail->setTo($email,$name)
                             ->setSubject('Automatische E-Mail')
                             ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.', Ihre Registrierung war erfolgreich. Ihr Benutzerkonto wurde erfolgreich aktiviert! Sie können sich jetzt mit dem von Ihnen bei der Registrierung gewählten Benutzernamen und Passwort anmelden.')
+                            ->setMessage('Hallo '.$name.' '.$this->getConfig()->get('regist_confirm_mail'))
                             ->addGeneralHeader('Content-type', 'text/plain; charset="utf-8"');
                     $mail->send();
                 } else {
