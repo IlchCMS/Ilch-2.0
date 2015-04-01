@@ -124,7 +124,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $mail->setTo($email,$name)
                             ->setSubject('Automatische E-Mail')
                             ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.', um die Registrierung erfolgreich abzuschließen klicke Bitte auf folgenden Link.<a href="http://demo.imagooo.de/index.php/user/regist/confirm/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>')
+                            ->setMessage('Hallo '.$name.', um die Registrierung erfolgreich abzuschließen klicke Bitte auf folgenden Link.<a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>')
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
                     $mail->send();
                 }
