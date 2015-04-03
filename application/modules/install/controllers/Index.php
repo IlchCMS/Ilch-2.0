@@ -272,8 +272,11 @@ class Index extends \Ilch\Controller\Frontend
                 $menuItem->setType(0);
                 $menuMapper->saveItem($menuItem);
 
+                /*
+                 * Will not linked in menu
+                 */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page'))) {
+                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter'))) {
                         continue;
                     }
 
@@ -297,7 +300,8 @@ class Index extends \Ilch\Controller\Frontend
                         (1, 100, 0, 0, 0, 'user_stats', 4, 'Statistik', '', ''),
                         (1, 110, 0, 0, 0, 'user_online', 4, 'Online', '', ''),
                         (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
-                        (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', '')";
+                        (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
+                        (2, 30, 0, 0, 0, 'newsletter_newsletter', 4, 'Newsletter', '', '')";
                 $db->queryMulti($boxes);
 
                 unset($_SESSION['install']);
@@ -323,26 +327,27 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * System-Modules
          */
-        $modules['user']['types'] = array();
-        $modules['article']['types'] = array();
-        $modules['page']['types'] = array();
-        $modules['media']['types'] = array();
+        $modules['user']['types']       = array();
+        $modules['article']['types']    = array();
+        $modules['page']['types']       = array();
+        $modules['media']['types']      = array();
 
         /*
          * Optional-Modules.
          */
-        $modules['checkout']['types']  = array('clan');
-        $modules['war']['types']       = array('clan');
-        $modules['history']['types']   = array('clan');
-        $modules['rule']['types']      = array('clan');
-        $modules['contact']['types']   = array('clan', 'private');
-        $modules['guestbook']['types'] = array('clan', 'private');
-        $modules['impressum']['types'] = array('clan', 'private');
-        $modules['link']['types']      = array('clan', 'private');
-        $modules['partner']['types']   = array('clan', 'private');
-        $modules['shoutbox']['types']  = array('clan', 'private');
-        $modules['gallery']['types']   = array('clan', 'private');
-        $modules['downloads']['types'] = array('clan', 'private');
+        $modules['checkout']['types']   = array('clan');
+        $modules['war']['types']        = array('clan');
+        $modules['history']['types']    = array('clan');
+        $modules['rule']['types']       = array('clan');
+        $modules['contact']['types']    = array('clan', 'private');
+        $modules['guestbook']['types']  = array('clan', 'private');
+        $modules['impressum']['types']  = array('clan', 'private');
+        $modules['link']['types']       = array('clan', 'private');
+        $modules['partner']['types']    = array('clan', 'private');
+        $modules['shoutbox']['types']   = array('clan', 'private');
+        $modules['gallery']['types']    = array('clan', 'private');
+        $modules['downloads']['types']  = array('clan', 'private');
+        $modules['newsletter']['types']  = array('clan', 'private');
 
         foreach ($modules as $key => $module) {
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';

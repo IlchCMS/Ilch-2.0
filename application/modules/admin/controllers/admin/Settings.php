@@ -58,6 +58,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('page_title', $this->getRequest()->getPost('pageTitle'));
             $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
             $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
+            $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
             
             if ((int)$this->getRequest()->getPost('modRewrite')) {
                 $htaccess = <<<'HTACCESS'
@@ -86,6 +87,7 @@ HTACCESS;
         $this->getView()->set('pageTitle', $this->getConfig()->get('page_title'));
         $this->getView()->set('startPage', $this->getConfig()->get('start_page'));
         $this->getView()->set('modRewrite', $this->getConfig()->get('mod_rewrite'));
+        $this->getView()->set('standardMail', $this->getConfig()->get('standardMail'));
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
     }

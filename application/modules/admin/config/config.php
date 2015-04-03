@@ -20,6 +20,8 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
         $databaseConfig->set('default_layout', 'clan3columns');
         $databaseConfig->set('start_page', 'module_article');
+        $databaseConfig->set('page_title', 'ilch - Content Manage System');
+        $databaseConfig->set('standardMail', $_SESSION['install']['adminEmail']);
     }
 
     public function getInstallSql()

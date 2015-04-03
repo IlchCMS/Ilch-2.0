@@ -123,16 +123,19 @@
             </select>
         </div>
     </div>
-    <legend>SEO</legend>
     <div class="form-group">
-        <label for="descriptionInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('description'); ?>:
+        <label for="standardMailInput" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('standardMail'); ?>:
         </label>
         <div class="col-lg-8">
-            <textarea class="form-control" id="descriptionInput" name="description"><?php
-                echo $this->escape($this->get('description')); ?></textarea>
+            <input class="form-control"
+                   id="standardMailInput"
+                   name="standardMail"
+                   type="text"
+                   value="<?php echo $this->escape($this->get('standardMail')); ?>" />
         </div>
     </div>
+    <legend>SEO</legend>
     <div class="form-group">
         <label for="pageTitleInput" class="col-lg-2 control-label">
             <?php echo $this->getTrans('pageTitle'); ?>:
@@ -143,6 +146,15 @@
                    name="pageTitle"
                    type="text"
                    value="<?php echo $this->escape($this->get('pageTitle')); ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="descriptionInput" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('description'); ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control" id="descriptionInput" name="description"><?php
+                echo $this->escape($this->get('description')); ?></textarea>
         </div>
     </div>
     <div class="form-group">

@@ -30,6 +30,7 @@ return array
     'logout' => 'Ausloggen',
     'noUserEmailGiven' => 'Es wurde kein(e) Benutzername/E-Mail angegeben.',
     'contentLanguage' => 'Sprache des Inhaltes',
+    'standardMail' => 'Standard E-Mail Absender',
     'home'			 => 'Startseite',
     'navigation'	 => 'Menüs',
     'modules'		 => 'Module',

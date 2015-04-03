@@ -29,6 +29,7 @@ return array
     'logout' => 'Logout',
     'noUserEmailGiven' => 'No username/email was provided.',
     'contentLanguage' => 'Contentlanguage',
+    'standardMail' => 'Standard E-Mail sender',
     'home'			 => 'Start',
     'navigation'	 => 'Navigation',
     'modules'		 => 'Modules',
