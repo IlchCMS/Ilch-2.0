@@ -27,4 +27,5 @@ return array
     'delete' => 'Löschen',
     'send' => 'Absenden',
     'entry' => 'Ein- / Austragen',
+    'noEmails' => 'Keine E-Mail Adressen vorhanden'
 );

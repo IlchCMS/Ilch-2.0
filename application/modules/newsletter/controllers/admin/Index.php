@@ -93,6 +93,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuNewsletterTreat'), array('action' => 'treat'));
 
         $newsletterMapper = new NewsletterMapper();
+        $emails = $newsletterMapper->getMail();
 
         if ($this->getRequest()->isPost()) {
             $model = new NewsletterModel();
@@ -116,13 +117,11 @@ class Index extends \Ilch\Controller\Admin
                 $model->setText($this->getRequest()->getPost('text'));
                 $newsletterMapper->save($model);
 
-                $emails = $newsletterMapper->getMail();
-
                 foreach ($emails as $email) {
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email->getEmail(), '')
                             ->setSubject($this->getRequest()->getPost('subject'))
-                            ->setFrom($this->getConfig('standardMail'), $this->getConfig()->get('page_title'))
+                            ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
                             ->setMessage($this->getRequest()->getPost('text'))
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
                     $mail->send();
@@ -133,5 +132,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(array('action' => 'index'));
             }
         }
+
+        $this->getView()->set('emails', $emails);
     }
 }

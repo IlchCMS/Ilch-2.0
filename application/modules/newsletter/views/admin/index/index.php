@@ -2,8 +2,8 @@
 <?php if ($this->get('entries') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="responsive panel bordered">
-            <table class="table table-striped table-responsive">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
                 <colgroup>
                     <col class="icon_width">
                     <col class="icon_width">

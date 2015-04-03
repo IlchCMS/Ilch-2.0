@@ -18,7 +18,7 @@ class Newsletter extends \Ilch\Box
         if ($this->getRequest()->getPost('form_' . $uniqid) AND $this->getRequest()->getPost('email') != '') {
             $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
             if ($countEmails == 0) {
-                $newsletterModel = new \Modules\Newsletter\Models\Entry();
+                $newsletterModel = new \Modules\Newsletter\Models\Newsletter();
                 $newsletterModel->setEmail($this->getRequest()->getPost('email'));
                 $newsletterMapper->saveEmail($newsletterModel);
             } else {
