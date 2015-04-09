@@ -2,14 +2,49 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
     <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('privacy') != '') {
-            echo $this->getTrans('menuActionEditPrivacy');
-        } else {
-            echo $this->getTrans('menuActionNewPrivacy');
-        }
-    ?>
+    <?php if ($this->get('privacy') != ''): ?>
+        <?=$this->getTrans('menuActionEditPrivacy') ?>
+    <?php else: ?>
+        <?=$this->getTrans('menuActionNewPrivacy') ?>
+    <?php endif; ?>
     </legend>
+    <div class="form-group">
+        <label for="title" class="col-lg-2 control-label">
+            <?=$this->getTrans('show') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="show"
+                       id="show"
+                       value="1"
+                       <?php if ($this->get('privacy') != ''): ?>
+                           <?php if ($this->get('privacy')->getShow() == 1): ?>
+                               checked="checked"
+                           <?php endif; ?>
+                        <?php else: ?>
+                            checked="checked"
+                       <?php endif; ?>
+                       > <?=$this->getTrans('yes') ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="show"
+                       id="show"
+                       value="0"
+                       <?php if ($this->get('privacy') != ''): ?>
+                            <?php if ($this->get('privacy')->getShow() == 0): ?>
+                                checked="checked"
+                            <?php endif; ?>
+                       <?php endif; ?>
+                       > <?=$this->getTrans('no') ?>
+                </label>
+            </div>
+        </div>
+    </div>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
@@ -60,11 +95,9 @@
                    rows="5"><?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php
-    if ($this->get('privacy') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?php if ($this->get('privacy') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>

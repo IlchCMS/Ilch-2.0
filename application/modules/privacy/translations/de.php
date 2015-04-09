@@ -9,6 +9,9 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'privacy' => 'Datenschutzerklärung',
+    'show' => 'Anzeigen',
+    'yes' => 'Ja',
+    'no' => 'Nein',
     'title' => 'Titel',
     'urlTitle' => 'Titel der Quelle',
     'url' => 'Link',

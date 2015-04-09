@@ -40,6 +40,7 @@ class Privacy extends \Ilch\Mapper
             $entryModel->setUrlTitle($entries['urltitle']);
             $entryModel->setUrl($entries['url']);
             $entryModel->setText($entries['text']);
+            $entryModel->setShow($entries['show']);
             $privacy[] = $entryModel;
 
         }
@@ -72,6 +73,7 @@ class Privacy extends \Ilch\Mapper
             'urltitle' => $privacy->getUrlTitle(),
             'url' => $privacy->getUrl(),
             'text' => $privacy->getText(),
+            'show' => $privacy->getShow(),
         );
 
         if ($privacy->getId()) {
@@ -82,6 +84,32 @@ class Privacy extends \Ilch\Mapper
         } else {
             $this->db()->insert('privacy')
                 ->values($fields)
+                ->execute();
+        }
+    }
+
+    /**
+     * Updates privacy with given id.
+     *
+     * @param integer $id
+     */
+    public function update($id)
+    {
+        $show = (int) $this->db()->select('show')
+                        ->from('privacy')
+                        ->where(array('id' => $id))
+                        ->execute()
+                        ->fetchCell();
+
+        if ($show == 1) {
+            $this->db()->update('privacy')
+                ->values(array('show' => 0))
+                ->where(array('id' => $id))
+                ->execute();
+        } else {
+            $this->db()->update('privacy')
+                ->values(array('show' => 1))
+                ->where(array('id' => $id))
                 ->execute();
         }
     }

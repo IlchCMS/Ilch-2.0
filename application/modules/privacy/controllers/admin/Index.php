@@ -96,6 +96,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setUrlTitle($this->getRequest()->getPost('urltitle'));
                 $model->setUrl($this->getRequest()->getPost('url'));
                 $model->setText($text);
+                $model->setShow($this->getRequest()->getPost('show'));
                 $privacyMapper->save($model);
                 
                 $this->addMessage('saveSuccess');
@@ -103,6 +104,18 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(array('action' => 'index'));
             }
         }
+    }
+
+    public function updateAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $privacyMapper = new PrivacyMapper();
+            $privacyMapper->update($this->getRequest()->getParam('id'));
+
+            $this->addMessage('saveSuccess');
+        }
+
+        $this->redirect(array('action' => 'index'));
     }
 
     public function delAction()

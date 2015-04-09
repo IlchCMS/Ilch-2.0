@@ -46,6 +46,13 @@ class Privacy extends \Ilch\Model
     protected $text;
 
     /**
+     * The show of the privacy.
+     *
+     * @var int
+     */
+    protected $show;
+
+    /**
      * Gets the id of the privacy.
      *
      * @return int
@@ -156,6 +163,29 @@ class Privacy extends \Ilch\Model
     public function setText($text)
     {
         $this->text = (string)$text;
+
+        return $this;
+    }
+
+    /**
+     * Gets the show of the privacy.
+     *
+     * @return int
+     */
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+    /**
+     * Sets the show of the privacy.
+     *
+     * @param int $show
+     * @return this
+     */
+    public function setShow($show)
+    {
+        $this->show = (int)$show;
 
         return $this;
     }
