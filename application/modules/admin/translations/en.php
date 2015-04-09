@@ -30,6 +30,7 @@ return array
     'noUserEmailGiven' => 'No username/email was provided.',
     'contentLanguage' => 'Contentlanguage',
     'standardMail' => 'Standard E-Mail sender',
+    'timezone'		   => 'timezone',
     'home'			 => 'Start',
     'navigation'	 => 'Navigation',
     'modules'		 => 'Modules',

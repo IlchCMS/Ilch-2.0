@@ -29,7 +29,7 @@ class Article extends \Ilch\Mapper
                 FROM `[prefix]_articles` as p
                 LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY p.id';
+                GROUP BY p.id DESC';
         $articleArray = $this->db()->queryArray($sql);
 
         if (empty($articleArray)) {

@@ -59,6 +59,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
             $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
             $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
+            $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
             
             if ((int)$this->getRequest()->getPost('modRewrite')) {
                 $htaccess = <<<'HTACCESS'
@@ -88,8 +89,11 @@ HTACCESS;
         $this->getView()->set('startPage', $this->getConfig()->get('start_page'));
         $this->getView()->set('modRewrite', $this->getConfig()->get('mod_rewrite'));
         $this->getView()->set('standardMail', $this->getConfig()->get('standardMail'));
+        $this->getView()->set('timezones', \DateTimeZone::listIdentifiers());
+        $this->getView()->set('timezone', $this->getConfig()->get('timezone'));
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
+        
     }
     
     public function backupAction()

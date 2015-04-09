@@ -125,6 +125,27 @@
     </div>
     <div class="form-group">
         <label for="standardMailInput" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('timezone'); ?>:
+        </label>
+        <div class="col-lg-8">
+            <select id="timezone" name="timezone" class="form-control">
+                <?php
+                    $timezones = $this->get('timezones');
+
+                    for ($i = 0; $i < count($timezones); $i++) {
+                        $sel = '';
+                        if ($this->get('timezone') == $timezones[$i]) {
+                            $sel = 'selected="selected"';
+                        }
+
+                        echo '<option '.$sel.' value="'.$this->escape($timezones[$i]).'">'.$this->escape($timezones[$i]).'</option>';
+                    }
+                ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="standardMailInput" class="col-lg-2 control-label">
             <?php echo $this->getTrans('standardMail'); ?>:
         </label>
         <div class="col-lg-8">
