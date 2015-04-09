@@ -13,7 +13,7 @@
         
         <!-- STYLES -->
         <link href="<?php echo $this->getStaticUrl('css/bootstrap.css'); ?>" rel="stylesheet">
-        <link href="<?php echo $this->getStaticUrl('css/font-awesome.css'); ?>" rel="stylesheet">
+        <link href="<?php echo $this->getStaticUrl('css/font-awesome.min.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/ilch.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('../application/modules/admin/static/css/main.css'); ?>" rel="stylesheet">
         <link href="<?php echo $this->getStaticUrl('css/ui-lightness/jquery-ui.css'); ?>" rel="stylesheet">
