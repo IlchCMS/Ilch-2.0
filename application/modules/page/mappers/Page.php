@@ -31,7 +31,7 @@ class Page extends \Ilch\Mapper
         $pageArray = $this->db()->queryArray($sql);
 
         if (empty($pageArray)) {
-            return array();
+            return null;
         }
 
         $pages = array();

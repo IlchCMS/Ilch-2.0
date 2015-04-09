@@ -64,7 +64,7 @@ return array
     'box' => 'Box',
     'chooseAGroup' => 'Bitte wählen Sie eine Gruppe aus.',
     'group' => 'Gruppe',
-    
+
     'menuUserList' => 'Mitgliederliste',
     'profileDetails' => 'Profil Details',
     'others' => 'Sonstiges',
@@ -74,7 +74,7 @@ return array
     'website' => 'Homepage',
     'contact' => 'Kontakt',
     'profile' => 'Profil',
-    
+
     'menuRegist' => 'Registrierung',
     'menuConfirm' => 'Bestätigen',
     'confirmCode' => 'Aktivierungscode',
@@ -98,13 +98,13 @@ return array
     'confirmRegistrationEmail' => 'Bestätigen der Registrierung per Link?',
     'yes' => 'Ja',
     'no' => 'Nein',
-    
+
     'menuLogin' => 'Login',
     'login' => 'Login',
     'nameEmail' => 'Benutzername oder E-Mail',
     'register' => 'Registrieren',
     'forgotPassword' => 'Passwort vergessen?',
-    
+
     'nameEmail' => 'Name / E-Mail',
     'password' => 'Passwort',
     'login' => 'Login',
@@ -139,5 +139,4 @@ return array
     'profileCity' => 'Wohnort',
     'profileSubmit' => 'Absenden',
     'profileHomepage' => 'Homepage',
-    
 );

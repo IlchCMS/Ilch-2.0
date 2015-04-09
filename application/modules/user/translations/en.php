@@ -43,7 +43,7 @@ return array
     'delUserMsg' => 'User got deleted successfully.',
     'delLastAdminProhibited' => 'It is not allowed to delete the last user with the group "Administrator" assigned.',
     'delOwnUserProhibited' => 'It is not allowed to delete the your own user.',
-    
+
     'groupName' => 'Groupname',
     'groupAssignedUsers' => 'Number "Assigned users"',
     'editGroup' => 'Edit group',
@@ -53,7 +53,7 @@ return array
     'delGroupMsg' => 'Group got deleted successfully.',
     'delAdminGroup' => 'It is not allowed to delete the group "Administrator".',
     'noGroupsExist' => 'No groups exist.',
-    
+
     'menuAccess' => 'Grouprights',
     'lookAccess' => 'visible',
     'noAccess' => 'not visible',
@@ -64,7 +64,7 @@ return array
     'box' => 'Box',
     'chooseAGroup' => 'Please choose a group.',
     'group' => 'Group',
-    
+
     'menuUserList' => 'Userlist',
     'profileDetails' => 'Profile Details',
     'others' => 'Others',
@@ -74,7 +74,7 @@ return array
     'website' => 'Website',
     'contact' => 'Contact',
     'profile' => 'Profile',
-    
+
     'menuRegist' => 'Registration',
     'menuConfirm' => 'Confirm',
     'confirmCode' => 'Activation Code',
@@ -98,13 +98,13 @@ return array
     'confirmRegistrationEmail' => 'Confim the Registration via Link?',
     'yes' => 'Yes',
     'no' => 'No',
-    
+
     'menuLogin' => 'Login',
     'login' => 'Login',
     'nameEmail' => 'Username or E-Mail',
     'register' => 'Register',
     'forgotPassword' => 'Forgot password?',
-    
+
     'nameEmail' => 'Name / E-Mail',
     'password' => 'Password',
     'login' => 'Login',

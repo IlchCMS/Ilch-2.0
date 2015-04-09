@@ -28,7 +28,7 @@ class Shoutbox extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return null;
         }
 
         $shoutbox = array();
@@ -62,7 +62,7 @@ class Shoutbox extends \Ilch\Mapper
                 ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return null;
         }
 
         $shoutbox = array();

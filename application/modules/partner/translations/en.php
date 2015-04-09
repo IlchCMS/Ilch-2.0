@@ -21,7 +21,7 @@ return array
     'menuPartners' => 'Partners',
     'menuActionNewPartner' => 'Add Partner',
     'menuActionEditPartner' => 'Edit Partner',
-    'noPartners' => 'No partners',
+    'noPartners' => 'No partners available',
     'noNewPartners' => 'No new partners',
     'askIfDeletePartner' => 'Are you sure you want delete the partner "%s"?',
     'managenewentry' => 'New partner unlocking',

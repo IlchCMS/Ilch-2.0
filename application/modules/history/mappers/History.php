@@ -29,7 +29,7 @@ class History extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return null;
         }
 
         $entry = array();
@@ -64,7 +64,7 @@ class History extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($historyArray)) {
-            return array();
+            return null;
         }
 
         $historys = array();

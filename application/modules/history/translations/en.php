@@ -20,7 +20,7 @@ return array
     'menuHistorys' => 'Historys',
     'menuActionNewHistory' => 'Add History',
     'menuActionEditHistory' => 'Edit History',
-    'noHistorys' => 'No history',
+    'noHistorys' => 'No historys available',
     'askIfDeleteHistory' => 'Are you sure you want delete the History "%s"?',
     'manageHistorys' => 'Manage Historys',
     'manage' => 'Manage',

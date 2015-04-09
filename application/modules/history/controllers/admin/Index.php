@@ -43,6 +43,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuHistorys'), array('action' => 'index'));
+
         $historyMapper = new HistoryMapper();
         
         if ($this->getRequest()->getPost('check_entries')) {
@@ -70,8 +73,12 @@ class Index extends \Ilch\Controller\Admin
         $this->redirect(array('action' => 'index'));
     }
 
-    public function treatAction() 
+    public function treatAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuHistorys'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewHistory'), array('action' => 'treat'));
+
         $historyMapper = new HistoryMapper();
 
         if ($this->getRequest()->getParam('id')) {

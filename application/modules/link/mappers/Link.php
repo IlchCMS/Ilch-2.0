@@ -28,7 +28,7 @@ class Link extends \Ilch\Mapper
         $linkArray = $this->db()->select('*')->from('links')->where($where)->execute()->fetchRows();
 
         if (empty($linkArray)) {
-            return array();
+            return null;
         }
 
         $links = array();

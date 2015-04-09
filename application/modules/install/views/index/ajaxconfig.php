@@ -7,15 +7,15 @@ foreach ($this->get('modules') as $key => $module) {
         echo '<i>'.$this->getTrans('obligatoryModules').'</i><br /><br />';
     }
 
-    if ($i !== 0 && $i % 4 == 0) {
-        echo '</div><br />';
+    if ($i !== 0 && $i % 8 == 0) {
+        echo '</div>';
     }
 
-    if ($i == 4) {
-        echo '<i>'.$this->getTrans('optionalModules').'</i><br /><br />';
+    if ($i == 8) {
+        echo '<br /><i>'.$this->getTrans('optionalModules').'</i><br /><br />';
     }
 
-    if ($i % 4 == 0) {
+    if ($i % 8 == 0) {
         echo '<div class="row">';
     }
 ?>

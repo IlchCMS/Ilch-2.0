@@ -19,7 +19,7 @@ return array
     'menuRules' => 'Regeln',
     'menuActionNewRule' => 'Regel hinzufügen',
     'menuActionEditRule' => 'Regel editieren',
-    'noRules' => 'Keine Regeln',
+    'noRules' => 'Keine Regeln vorhanden',
     'askIfDeleteRule' => 'Sind Sie sicher, dass die Regel "%s" entfernt werden soll?',
     'manageRule' => 'Regeln verwalten',
     'manage' => 'Verwalten',

@@ -38,7 +38,7 @@ class Category extends \Ilch\Mapper
         $categoryArray = $this->db()->queryArray($sql);
 
         if (empty($categoryArray)) {
-            return array();
+            return null;
         }
 
         $categorys = array();

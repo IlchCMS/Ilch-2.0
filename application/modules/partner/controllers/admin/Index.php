@@ -43,6 +43,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'));
+
         $partnerMapper = new PartnerMapper();
         
         if ($this->getRequest()->getPost('check_entries')) {
@@ -103,6 +106,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction() 
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewPartner'), array('action' => 'treat'));
+
         $partnerMapper = new PartnerMapper();
 
         if ($this->getRequest()->getParam('id')) {

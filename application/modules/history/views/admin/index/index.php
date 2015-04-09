@@ -1,57 +1,58 @@
-<legend><?php echo $this->getTrans('manageHistorys'); ?></legend>
-<form class="form-horizontal" method="POST" action="">
-<?=$this->getTokenField()?>
-    <div class="responsive panel bordered">
-        <table class="table table-striped table-responsive">
-            <colgroup>
-                <col class="icon_width">
-                <col class="icon_width">
-                <col class="icon_width">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_entries')?></th>
-                    <th></th>
-                    <th></th>
-                    <th><?php echo $this->getTrans('date'); ?></th>
-                    <th><?php echo $this->getTrans('title'); ?></th>
-                    <th><?php echo $this->getTrans('text'); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($this->get('entries') as $entry) : ?>
+<legend><?= $this->getTrans('manageHistorys') ?></legend>
+<?php if ($this->get('entries') != ''): ?>
+    <form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField()?>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <colgroup>
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="col-lg-2">
+                    <col class="col-lg-2">
+                    <col />
+                </colgroup>
+                <thead>
                     <tr>
-                        <td><input value="<?=$entry->getId()?>" type="checkbox" name="check_entries[]" /></td>
-                        <td>
-                            <?php echo $this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId())); ?>
-                        </td>
-                        <td>
-                            <?php $deleteArray = array('action' => 'del', 'id' => $entry->getId()); ?>
-                            <?=$this->getDeleteIcon($deleteArray)?>
-                        </td>
-                        <td>
-                            <?php   
-                                $getDate = new \Ilch\Date($entry->getDate());
-                                echo $getDate->format('d-m-Y', true); 
-                            ?>
-                        </td>
-                        <td>
-                            <?php echo $this->escape($entry->getTitle()); ?>
-                        </td>
-                        <td>
-                            <?php echo nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))); ?>
-                        </td>
+                        <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
+                        <th></th>
+                        <th></th>
+                        <th><?=$this->getTrans('date') ?></th>
+                        <th><?=$this->getTrans('title') ?></th>
+                        <th><?=$this->getTrans('text') ?></th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <?php
-    $actions = array('delete' => 'delete');
-
-    echo $this->getListBar($actions);
-    ?>
-</form>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->get('entries') as $entry) : ?>
+                        <tr>
+                            <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
+                            <td>
+                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId())) ?>
+                            </td>
+                            <td>
+                                <?php $deleteArray = array('action' => 'del', 'id' => $entry->getId()); ?>
+                                <?=$this->getDeleteIcon($deleteArray) ?>
+                            </td>
+                            <td>
+                                <?php   
+                                    $getDate = new \Ilch\Date($entry->getDate());
+                                    echo $getDate->format('d.m.Y', true); 
+                                ?>
+                            </td>
+                            <td>
+                                <?=$this->escape($entry->getTitle()) ?>
+                            </td>
+                            <td>
+                                <?=$entry->getText() ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php $actions = array('delete' => 'delete') ?>
+        <?=$this->getListBar($actions) ?>
+    </form>
+<?php else: ?>
+    <?=$this->getTrans('noHistorys') ?>
+<?php endif; ?>

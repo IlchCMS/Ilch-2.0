@@ -20,7 +20,7 @@ return array
     'menuHistorys' => 'Geschichten',
     'menuActionNewHistory' => 'Geschichte hinzufügen',
     'menuActionEditHistory' => 'Geschichte editieren',
-    'noHistorys' => 'Keine Geschichte',
+    'noHistorys' => 'Keine Geschichten vorhanden',
     'askIfDeleteHistory' => 'Sind Sie sicher, dass die Geschichte "%s" entfernt werden soll?',
     'manageHistorys' => 'Geschichten verwalten',
     'manage' => 'Verwalten',

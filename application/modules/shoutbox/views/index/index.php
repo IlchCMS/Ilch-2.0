@@ -1,20 +1,22 @@
-<?php
-    $shoutbox = $this->get('shoutbox');
-?>
-
-<table class="table table-striped table-responsive">
-    <tbody>
-        <?php if (!empty($shoutbox)) {
-            foreach ($this->get('shoutbox') as $shoutbox) {
-                echo '<tr>';         
-                echo '<td><b>'.$this->escape($shoutbox->getName()).':</b> <span style="font-size:12px">'.$shoutbox->getTime().'</span></td>';  
-                echo '</tr>';
-                echo '<tr>';                
-                echo '<td>'.$this->escape($shoutbox->getTextarea()).'</td>';  
-                echo '</tr>';
-            }
-        } else {
-            echo '<tr><td>'.$this->getTrans('noEntrys').'</td></tr>';
-        } ?>
-    </tbody>
-</table>
+<?php $shoutbox = $this->get('shoutbox'); ?>
+<?php if ($shoutbox != ''): ?>
+    <table class="table table-striped table-responsive">
+        <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
+            <?php $userMapper = new \Modules\User\Mappers\User() ?>
+            <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+            <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
+            <tr>
+                <?php if ($shoutbox->getUid() == '0'): ?>
+                    <td><b><?=$this->escape($shoutbox->getName()) ?>:</b> <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span></td>
+                <?php else: ?>
+                    <td><b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$user->getName() ?></a>:</b> <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span></td>
+                <?php endif; ?>
+            </tr>
+            <tr>
+                <td><?=$this->escape($shoutbox->getTextarea()) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php else: ?>
+    <?=$this->getTrans('noEntrys') ?>
+<?php endif; ?>

@@ -19,7 +19,7 @@ return array
     'menuRules' => 'Rules',
     'menuActionNewRule' => 'Add Rule',
     'menuActionEditRule' => 'Edit Rule',
-    'noRules' => 'No rules',
+    'noRules' => 'No rules available',
     'askIfDeleteRule' => 'Are you sure you want delete the rule "%s"?',
     'manageRule' => 'Manage Rule',
     'manage' => 'Manage',

@@ -56,7 +56,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('link'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'));
 
         $linkMapper = new LinkMapper();
         $categoryMapper = new CategoryMapper();
@@ -119,6 +119,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatLinkAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewLink'), array('action' => 'treat'));
+
         $categoryMapper = new CategoryMapper();
         $linkMapper = new LinkMapper();
         $this->getView()->set('cats', $categoryMapper->getCategories());
@@ -157,6 +161,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatCatAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewCategory'), array('action' => 'treat'));
+
         $categorykMapper = new CategoryMapper();
 
         if ($this->getRequest()->getParam('id')) {

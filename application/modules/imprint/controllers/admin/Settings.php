@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Modules\Shoutbox\Controllers\Admin;
+namespace Modules\Imprint\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 
@@ -14,7 +14,7 @@ class Settings extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'menuShoutbox',
+            'menuImprint',
             array
             (
                 array
@@ -38,16 +38,14 @@ class Settings extends \Ilch\Controller\Admin
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShoutbox'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('manageShoutbox'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuImprint'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuSettings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('shoutbox_limit', $this->getRequest()->getPost('limit'));
-            $this->getConfig()->set('shoutbox_maxwordlength', $this->getRequest()->getPost('maxwordlength'));
+            $this->getConfig()->set('imprint_style', $this->getRequest()->getPost('imprintStyle'));
             $this->addMessage('saveSuccess');
         }
         
-        $this->getView()->set('limit', $this->getConfig()->get('shoutbox_limit'));
-        $this->getView()->set('maxwordlength', $this->getConfig()->get('shoutbox_maxwordlength'));
+        $this->getView()->set('imprintStyle', $this->getConfig()->get('imprint_style'));
     }
 }

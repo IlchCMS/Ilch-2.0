@@ -16,7 +16,7 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group collapse" id="modules">
-    <div id="modulesContent" class="col-lg-offset-2 col-lg-8"></div>
+    <div id="modulesContent" class="col-lg-offset-2 col-lg-9"></div>
 </div>
 <hr />
 <div class="form-group <?php if (!empty($errors['adminName'])) { echo 'has-error'; }; ?>">

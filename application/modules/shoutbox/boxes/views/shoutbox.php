@@ -1,8 +1,8 @@
 <form class="form-horizontal" action="" method="post">
-   <?php echo $this->getTokenField(); ?>
+   <?=$this->getTokenField() ?>
     <div class="form-group hidden">
         <label class="col-lg-2 control-label">
-            <?=$this->getTrans('bot') ?>*
+            <?=$this->getTrans('bot') ?>
         </label>
         <div class="col-lg-8">
             <input type="text"
@@ -30,33 +30,44 @@
                       cols="10" 
                       rows="5"
                       maxlength="50"
-                      placeholder="<?php echo $this->getTrans('message'); ?>"
+                      placeholder="<?=$this->getTrans('message') ?>"
                       required></textarea>
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-12">
-            <button type="submit" value="1" name="form_<?=$this->get('uniqid')?>" class="btn">
-                <?php echo $this->getTrans('send'); ?>
+            <button type="submit" value="1" name="form_<?=$this->get('uniqid') ?>" class="btn">
+                <?=$this->getTrans('send') ?>
             </button>
         </div>
     </div>
 </form>
 
-<table class="table table-bordered table-striped table-responsive">
-        <?php foreach ($this->get('shoutbox') as $shoutbox): {
-                echo '<tr>';         
-                echo '<td><b>'.$this->escape($shoutbox->getName()).'</b><br />';
-                echo '<span>'.$shoutbox->getTime().'</span></td>';  
-                echo '</tr>';
-                echo '<tr>';
+<?php if ($this->get('shoutbox') != ''): ?>
+    <table class="table table-bordered table-striped table-responsive">
+        <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
+            <?php $userMapper = new \Modules\User\Mappers\User() ?>
+            <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+            <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
+            <tr>
+                <?php if ($shoutbox->getUid() == '0'): ?>
+                    <td><b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
+                        <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span></td>
+                <?php else: ?>
+                    <td><b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$user->getName() ?></a>:</b><br />
+                        <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span></td>
+                <?php endif; ?>
+            </tr>
+            <tr>
+                <?php
                 /*
-                 * @todo should fix this regex. 
+                 * @todo should fix this regex.
                  */
-                echo '<td>' . preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) . '</td>';  
-                echo '</tr>';
-            }
-        endforeach; ?>
-</table>
+                ?>
+                <td><?=preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>
 
-<div align="center"><a href="<?php echo $this->getUrl(array('module' => 'shoutbox', 'controller' => 'index', 'action' => 'index')); ?>"><?php echo $this->getTrans('archive'); ?></a></div>
+<div align="center"><a href="<?=$this->getUrl(array('module' => 'shoutbox', 'controller' => 'index', 'action' => 'index')) ?>"><?=$this->getTrans('archive') ?></a></div>

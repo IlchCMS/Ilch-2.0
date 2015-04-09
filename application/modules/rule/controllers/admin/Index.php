@@ -43,6 +43,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuRules'), array('action' => 'index'));
+
         $ruleMapper = new RuleMapper();
         
         if ($this->getRequest()->getPost('check_entries')) {
@@ -72,6 +75,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction() 
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuRules'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewRule'), array('action' => 'treat'));
+
         $ruleMapper = new RuleMapper();
 
         if ($this->getRequest()->getParam('id')) {
