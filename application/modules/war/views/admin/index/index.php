@@ -70,7 +70,7 @@
                                 <?=$war->getWarGroup() ?>
                             </td>
                             <td>
-                                <?=$war->getWarTime() ?>
+                                <?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?>
                             </td>
                             <td>
                                 <?php if ($war->getWarStatus() == '1'): ?>

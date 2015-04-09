@@ -306,7 +306,7 @@ class War extends \Ilch\Mapper
 
     public function getWarListByStatusAndLimt($status = NULL, $limit = NULL) 
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,g.name as group_name,g.id as group_is,e.name as enemy_name,e.id as enemy_id
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS w.id as war_id,w.enemy,w.group,w.time,w.maps,w.server,w.password,w.xonx,w.game,w.matchtype,w.report,w.status,g.name as group_name,g.tag as group_tag,g.id as group_id,e.name as enemy_name,e.tag as enemy_tag,e.id as enemy_id
                 FROM `[prefix]_war` as w
                 LEFT JOIN [prefix]_war_groups as g ON w.group = g.id
                 LEFT JOIN [prefix]_war_enemy as e ON w.enemy = e.id
@@ -326,7 +326,9 @@ class War extends \Ilch\Mapper
             $entryModel = new WarModel();
             $entryModel->setId($entries['war_id']);
             $entryModel->setWarEnemy($entries['enemy_name']);
+            $entryModel->setWarEnemyTag($entries['enemy_tag']);
             $entryModel->setWarGroup($entries['group_name']);
+            $entryModel->setWarGroupTag($entries['group_tag']);
             $entryModel->setWarTime($entries['time']);
             $entryModel->setWarMaps($entries['maps']);
             $entryModel->setWarServer($entries['server']);
@@ -345,7 +347,7 @@ class War extends \Ilch\Mapper
     public function getWarOptDistinctXonx() 
     {
         $sql = 'SELECT DISTINCT xonx
-                FROM `[prefix]_war';
+                FROM [prefix]_war';
 
         $warArray = $this->db()->queryArray($sql);
 
@@ -367,7 +369,7 @@ class War extends \Ilch\Mapper
     public function getWarOptDistinctGame() 
     {
         $sql = 'SELECT DISTINCT game
-                FROM `[prefix]_war';
+                FROM [prefix]_war';
 
         $warArray = $this->db()->queryArray($sql);
 
@@ -389,7 +391,7 @@ class War extends \Ilch\Mapper
     public function getWarOptDistinctMatchtype() 
     {
         $sql = 'SELECT DISTINCT matchtype
-                FROM `[prefix]_war';
+                FROM [prefix]_war';
 
         $warArray = $this->db()->queryArray($sql);
 
@@ -406,5 +408,44 @@ class War extends \Ilch\Mapper
         }
 
         return $entry;
+    }
+    
+    public function url_check($url) 
+    { 
+        $hdrs = @get_headers($url); 
+        return is_array($hdrs) ? preg_match('/^HTTP\\/\\d+\\.\\d+\\s+2\\d\\d\\s+.*$/',$hdrs[0]) : false; 
+    }
+    
+    public function countdown($year, $month, $day, $hour, $minute)
+    {
+        $date = new \Ilch\Date();
+        $date = $date->format(null, true);
+
+        // make a unix timestamp for the given date
+        $the_countdown_date = mktime($hour, $minute, 0, $month, $day, $year, -1);
+
+        // get current unix timestamp
+        $today = strtotime($date);
+
+        $difference = $the_countdown_date - $today;
+        if ($difference < 0)
+            $difference = 0;
+
+        $days_left = floor($difference / 60 / 60 / 24);
+        $hours_left = floor(($difference - $days_left * 60 * 60 * 24) / 60 / 60);
+        $minutes_left = floor(($difference - $days_left * 60 * 60 * 24 - $hours_left * 60 * 60) / 60);
+
+        // OUTPUT
+        if ($days_left == '0') {
+            if ($hours_left == '0' AND $minutes_left > '0') {
+                echo '<i>'.$minutes_left . 'm</i>';
+            } elseif ($hours_left == '0' AND $minutes_left == '0') {
+                echo 'live';
+            } else  {
+                echo '<i>'.$hours_left . 'h ' . $minutes_left . 'm</i>';
+            }
+        } else {
+            echo '<i>'.$days_left . 'd ' . $hours_left . 'h</i>';
+        }
     }
 }

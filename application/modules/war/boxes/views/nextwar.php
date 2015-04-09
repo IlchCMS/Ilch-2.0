@@ -1,29 +1,34 @@
 <?php
 if ($this->get('war') != '') {
-foreach ($this->get('war') as $war) : ?>
-    <div class="games-schedule-items">
-        <div class="row games-team">
-            <div class="col-md-4">
-                <img src="http://placehold.it/115x67" alt="<?php echo $this->escape($war->getWarEnemy()); ?>">
-                <span><?php echo $this->escape($war->getWarEnemy()); ?></span>
-            </div>
-            <div class="col-md-4">
-                <h4 class="img-circle">VS</h4>
-            </div>
-            <div class="col-md-4">
-                <img src="http://placehold.it/115x67" alt="<?php echo $this->escape($war->getWarGroup()); ?>">
-                <span><?php echo $this->escape($war->getWarGroup()); ?></span>
+    foreach ($this->get('war') as $war) :        
+        $warMapper = new \Modules\War\Mappers\War();
+        $warTime = $war->getWarTime();    
+        $gameImg = $this->getBaseUrl('application/modules/war/static/img/'.$war->getWarGame().'.png');
+        if($warMapper->url_check($gameImg)){
+            $gameImg = '<img src="'.$this->getBaseUrl('application/modules/war/static/img/'.$war->getWarGame().'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
+        } else {
+            $gameImg = '<i class="fa fa-question-circle text-muted"></i>';        
+        }
+        ?>
+        <div class="games-schedule-items">
+            <div class="row games-team">
+                <a href="<?=$this->getUrl('war/index/show/id/' . $war->getId()) ?>">                
+                    <div class="col-md-5">
+                        <div style="width: 20px; float: left;"><?=$gameImg ?></div>
+                        <div><?=$this->escape($war->getWarEnemyTag()) ?></div>
+                    </div>
+                    <div class="small" style="margin-top: 3px; float: left;">vs.</div>
+                    <div class="col-md-3" style="padding-left: 5px;">
+                        <?=$this->escape($war->getWarGroupTag()) ?>
+                    </div>
+                </a>
+                <div class="small" style="margin-top: 3px; margin-right: 3px;" align="right">
+                    <?=$warMapper->countdown(date("Y", strtotime($warTime)), date("m", strtotime($warTime)), date("d", strtotime($warTime)), date("H", strtotime($warTime)), date("i", strtotime($warTime))) ?>
+                </div>
             </div>
         </div>
-        <div class="row games-info">
-            <div class="col-md-12">
-                <p><span class="glyphicon glyphicon-play-circle"></span> <?php echo $this->escape($war->getWarTime()); ?></p>
-                <p class="games-dash"></p>
-                <p><small><i class="fa fa-shield"></i><?php echo $this->escape($war->getWarGame()); ?></small></p>
-            </div>
-        </div>
-    </div>
-<?php endforeach; 
+    <?php
+    endforeach;
 } else {
     echo $this->getTranslator()->trans('noWars');
 }

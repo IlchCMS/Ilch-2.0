@@ -4,7 +4,7 @@
     <legend><?=$this->getTrans('manageWar') ?></legend>
 <?php endif; ?>
 <?php if ($this->get('group') != '' and $this->get('enemy') != ''): ?>
-    <link href="<?=$this->getBaseUrl('application/modules/war/static/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+    <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="form-group">
@@ -47,7 +47,7 @@
             <label for="dtp_input1" class="col-md-2 control-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
-            <div class="input-group date form_datetime col-lg-4" data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+            <div class="input-group date form_datetime col-lg-4">
                 <input class="form-control"
                        size="16"
                        type="text"
@@ -223,17 +223,15 @@
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getBaseUrl('application/modules/war/static/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getBaseUrl('application/modules/war/static/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
     $( document ).ready(function()
     {
         $(".form_datetime").datetimepicker({
-            format: "dd-mm-yyyy hh:ii:ss",
-            linkFormat: "dd-mm-yyyy hh:ii",
+            format: "dd.mm.yyyy hh:ii",
             autoclose: true,
-            todayBtn: true,
-            minuteStep: 30
+            minuteStep: 15
         });
 
         diasableXonx();

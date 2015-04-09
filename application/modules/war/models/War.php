@@ -25,11 +25,25 @@ class War extends \Ilch\Model
     protected $warEnemy;
 
     /**
+     * The War Enemy Tag.
+     *
+     * @var int
+     */
+    protected $warEnemyTag;
+
+    /**
      * The War Group.
      *
      * @var int
      */
     protected $warGroup;
+
+    /**
+     * The War Group Tag.
+     *
+     * @var int
+     */
+    protected $warGroupTag;
 
     /**
      * The War Time.
@@ -135,6 +149,26 @@ class War extends \Ilch\Model
     }
 
     /**
+     * Gets the war enemy tag.
+     *
+     * @return int
+     */
+    public function getWarEnemyTag()
+    {
+        return $this->warEnemyTag;
+    }
+
+    /**
+     * Sets the war enemy tag.
+     *
+     * @param int $warEnemyTag
+     */
+    public function setWarEnemyTag($warEnemyTag)
+    {
+        $this->warEnemyTag = (string)$warEnemyTag;
+    }
+
+    /**
      * Gets the war group.
      *
      * @return int
@@ -152,6 +186,26 @@ class War extends \Ilch\Model
     public function setWarGroup($warGroup)
     {
         $this->warGroup = (string)$warGroup;
+    }
+
+    /**
+     * Gets the war group tag.
+     *
+     * @return int
+     */
+    public function getWarGroupTag()
+    {
+        return $this->warGroupTag;
+    }
+
+    /**
+     * Sets the war group tag.
+     *
+     * @param int $warGroupTag
+     */
+    public function setWarGroupTag($warGroupTag)
+    {
+        $this->warGroupTag = (string)$warGroupTag;
     }
 
     /**
