@@ -1,3 +1,6 @@
+<legend>
+<?=$this->getTrans('menuNewsletterTreat') ?>
+</legend>
 <?php if ($this->get('emails') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

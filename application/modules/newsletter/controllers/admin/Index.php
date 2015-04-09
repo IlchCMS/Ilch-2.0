@@ -74,7 +74,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function showAction()
     {
-        if ($this->getRequest()->isPost('delete[')) {
+        if ($this->getRequest()->isPost('delete')) {
             $newsletterMapper = new NewsletterMapper();
             $newsletterMapper->delete($this->getRequest()->getParam('id'));
 
