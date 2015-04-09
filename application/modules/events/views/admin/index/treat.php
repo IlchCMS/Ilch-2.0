@@ -1,0 +1,92 @@
+<link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
+    <?php echo $this->getTokenField(); ?>
+    <legend>
+    <?php
+        if ($this->get('event') != '') {
+            echo $this->getTrans('menuActionEditEvent');
+        } else {
+            echo $this->getTrans('menuActionNewEvent');
+        }
+    ?>
+    </legend>
+    <div class="form-group">
+        <label for="dtp_input1" class="col-md-2 control-label">
+            <?=$this->getTrans('time') ?>:
+        </label>
+        <div class="col-lg-4 input-group date form_datetime">
+            <input class="form-control"
+                   size="16"
+                   type="text"
+                   name="dateCreated"
+                   value="<?php if ($this->get('event') != '') { echo $this->get('event')->getdateCreated(); } ?>"
+                   readonly>
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="title" class="col-lg-2 control-label">
+            <?=$this->getTrans('title') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input class="form-control"
+                   type="text"
+                   name="title"
+                   id="title"
+                   value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getTitle()); } ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="place" class="col-lg-2 control-label">
+            <?=$this->getTrans('place') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input class="form-control"
+                   type="text"
+                   name="place"
+                   id="place"
+                   value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getPlace()); } ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="text" class="col-lg-2 control-label">
+            <?=$this->getTrans('text') ?>:
+        </label>
+        <div class="col-lg-10">
+            <textarea class="form-control"
+                      name="text"
+                      id="ilch_html"
+                      rows="5"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
+        </div>
+    </div>
+    <?php
+    if ($this->get('event') != '') {
+        echo $this->getSaveBar('updateButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
+</form>
+
+<script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript">
+    $( document ).ready(function()
+    {
+        $(".form_datetime").datetimepicker({
+            format: "dd.mm.yyyy hh:ii",
+            autoclose: true,
+            language: 'de',
+            minuteStep: 15
+        });
+    });
+</script>
+
+<style>
+    .date {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+</style>

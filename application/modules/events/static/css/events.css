@@ -1,0 +1,97 @@
+.headPic {
+    z-index: 1;
+    float: left;
+    width: 100%;
+    border: 1px solid #dddddd;
+}
+.datePic {
+    z-index: 2;
+    background-color: rgba(150, 150, 150, 0.35);
+    margin: 7px 0 0 7px;
+    position: absolute;
+    width: 55px;
+    border: 2px solid #fff;
+    -webkit-border-radius: 5px;
+    text-align: center;
+}
+.dateDayPic {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 3px;
+}
+.dateMonthPic {
+    color: #fff;
+    font-size: 12px;
+    padding-bottom: 3px;
+}
+.titlePic {
+    position: absolute;
+    left: 80px;
+    margin: 7px 30px 0 7px;
+    color: #fff;
+    text-shadow: 2px 2px 2px rgba(150, 150, 150, 0.5);
+    font-size: 20px;
+}
+.naviPic {
+    clear: both;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    padding: 5px;
+    height: 41px;
+}
+.naviGast {
+    float: left;
+    margin-top: 5px;
+}
+.naviButtons {
+    float: right;
+    right: 10px;
+}
+.thumbnail {
+    width: 68px;
+    display: inline;
+    margin-bottom: 0px;
+}
+.eventBoxHead {
+    border-top: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    padding: 10px;
+}
+.eventBoxBottom {
+    border-top: 1px solid #efefef;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    padding: 10px;
+}
+.eventBoxContent {
+    border: 1px solid #dddddd;
+    padding: 10px;
+}
+.eventCommentSubmit {
+    border: 1px solid #dddddd;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+.eventTextarea {
+    height: 30px;
+    width: 100%;
+    border-style: none; 
+    border-color: Transparent; 
+    overflow: hidden;
+    resize: none;
+    box-shadow: none;
+}
+.eventTextarea:focus {
+    border: 0 none #FFF;
+    overflow: hidden;
+    outline: none;
+    box-shadow: none;
+}
+.eventSubmit {
+    border-top: 1px solid #efefef;
+    padding: 5px;
+    height: 41px;
+}

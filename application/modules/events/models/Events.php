@@ -1,0 +1,281 @@
+<?php
+/**
+ * @copyright Ilch 2.0
+ * @package ilch
+ */
+
+namespace Modules\Events\Models;
+
+defined('ACCESS') or die('no direct access');
+
+class Events extends \Ilch\Model
+{
+    /**
+     * The id of the event.
+     *
+     * @var int
+     */
+    protected $id;
+    /**
+     * The eventid of the event.
+     *
+     * @var int
+     */
+    protected $eventId;
+
+    /**
+     * The user of the event.
+     *
+     * @var integer
+     */
+    protected $userId;
+
+    /**
+     * The user of the event.
+     *
+     * @var integer
+     */
+    protected $eventUserId;
+
+    /**
+     * The date of the event.
+     *
+     * @var string
+     */
+    protected $dateCreated;
+
+    /**
+     * The title of the event.
+     *
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * The place of the event.
+     *
+     * @var string
+     */
+    protected $place;
+
+    /**
+     * The text of the event.
+     *
+     * @var string
+     */
+    protected $text;
+
+    /**
+     * The user status of the event.
+     *
+     * @var string
+     */
+    protected $status;
+
+    /**
+     * Gets the id of the event.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Sets the id of the event.
+     *
+     * @param int $id
+     * @return this
+     */
+    public function setId($id)
+    {
+        $this->id = (int)$id;
+
+        return $this;
+    }
+
+    /**
+     * Gets the eventid of the event.
+     *
+     * @return int
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
+    }
+
+    /**
+     * Sets the eventid of the event.
+     *
+     * @param int $eventId
+     * @return this
+     */
+    public function setEventId($eventId)
+    {
+        $this->eventId = (int)$eventId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the user of the event.
+     *
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Sets the userid of the event.
+     *
+     * @param integer $userId
+     * @return this
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = (int)$userId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the event userid of the event.
+     *
+     * @return integer
+     */
+    public function getEventUserId()
+    {
+        return $this->eventUserId;
+    }
+
+    /**
+     * Sets the event user of the event.
+     *
+     * @param integer $eventUserId
+     * @return this
+     */
+    public function setEventUserId($eventUserId)
+    {
+        $this->eventUserId = (int)$eventUserId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the date of the event.
+     *
+     * @return DateTime
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Sets the date of the event.
+     *
+     * @param DateTime $date
+     * @return this
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = (string)$dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Gets the title of the event.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Sets the title of the event.
+     *
+     * @param string $title
+     * @return this
+     */
+    public function setTitle($title)
+    {
+        $this->title = (string)$title;
+
+        return $this;
+    }
+
+    /**
+     * Gets the place of the event.
+     *
+     * @return string
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Sets the place of the event.
+     *
+     * @param string $place
+     * @return this
+     */
+    public function setPlace($place)
+    {
+        $this->place = (string)$place;
+
+        return $this;
+    }
+
+    /**
+     * Gets the text of the event.
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Sets the text of the event.
+     *
+     * @param string $text
+     * @return this
+     */
+    public function setText($text)
+    {
+        $this->text = (string)$text;
+
+        return $this;
+    }
+
+    /**
+     * Gets the status from user of the event.
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Sets the status from user of the event.
+     *
+     * @param integer $status
+     * @return this
+     */
+    public function setStatus($status)
+    {
+        $this->status = (int)$status;
+
+        return $this;
+    }
+}
