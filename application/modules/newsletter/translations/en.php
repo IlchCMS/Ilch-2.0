@@ -12,7 +12,7 @@ return array
     'subject' => 'Subject',
     'date' => 'Date',
     'text' => 'Text',
-    'user' => 'User',
+    'from' => 'from',
     'noNewsletter' => 'No Newsletter available.',
     'missingSubject' => 'Subject was not filled',
     'missingText' => 'Text was not filled',

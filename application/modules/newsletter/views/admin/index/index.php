@@ -17,7 +17,7 @@
                         <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
                         <th></th>
                         <th><?=$this->getTrans('date') ?></th>
-                        <th><?=$this->getTrans('user') ?></th>
+                        <th><?=$this->getTrans('from') ?></th>
                         <th><?=$this->getTrans('subject') ?></th>
                     </tr>
                 </thead>

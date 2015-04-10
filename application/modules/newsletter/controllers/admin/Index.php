@@ -74,6 +74,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function showAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuNewsletterShow'), array('action' => 'show'));
+
         if ($this->getRequest()->isPost('delete')) {
             $newsletterMapper = new NewsletterMapper();
             $newsletterMapper->delete($this->getRequest()->getParam('id'));

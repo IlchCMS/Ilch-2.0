@@ -12,7 +12,7 @@ return array
     'subject' => 'Betreff',
     'date' => 'Datum',
     'text' => 'Text',
-    'user' => 'Benutzer',
+    'from' => 'von',
     'noNewsletter' => 'Keine Newsletter vorhanden.',
     'missingSubject' => 'Betreff muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',

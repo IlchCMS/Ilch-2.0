@@ -17,8 +17,8 @@ $date = new \Ilch\Date($newsletter->getDateCreated());
             <div class="col-lg-4"><?=$date->format("d.m.Y H:i", true) ?></div>
         </div>
         <div class="form-group">
-            <label for="user" class="col-lg-2">
-                <?=$this->getTrans('user') ?>:
+            <label for="from" class="col-lg-2">
+                <?=$this->getTrans('from') ?>:
             </label>
             <div class="col-lg-4"><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></div>
         </div>
