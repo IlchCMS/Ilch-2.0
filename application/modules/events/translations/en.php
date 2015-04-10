@@ -49,4 +49,9 @@ return array
     'addButton' => 'Entry',
     'updateButton' => 'Update',
     'at' => 'at',
+    'naviEventsUpcoming' => 'Upcoming',
+    'naviEventsAll' => 'All',
+    'naviEventsPast' => 'Past',
+    'naviEventsAdd' => 'Add',
+    'naviEventsMy' => 'My',
 );

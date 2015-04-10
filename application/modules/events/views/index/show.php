@@ -4,9 +4,6 @@ $event = $this->get('event');
 $date = new \Ilch\Date($event->getDateCreated());
 $userMapper = new \Modules\User\Mappers\User();
 $user = $userMapper->getUserById($event->getEventUserId());
-
-$eventMapper = new \Modules\Events\Mappers\Events();
-$EventUser = $eventMapper->getEventEntrants($event->getId());
 ?>
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 <legend>

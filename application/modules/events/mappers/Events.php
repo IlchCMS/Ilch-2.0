@@ -78,8 +78,6 @@ class Events extends \Ilch\Mapper
 
         return $eventModel;
     }
-    
-
 
     /**
      * Gets eventid.
@@ -203,7 +201,7 @@ class Events extends \Ilch\Mapper
     /**
      * @return \Modules\Events\Mappers\Events[]
      */
-    public function getEventListUpcoming()
+    public function getEventListUpcoming($limit = null)
     {
         $eventMapper = new \Modules\Events\Mappers\Events();
 
@@ -229,7 +227,34 @@ class Events extends \Ilch\Mapper
     /**
      * @return \Modules\Events\Mappers\Events[]
      */
-    public function getEventListPast()
+    public function getEventListOther($limit = null)
+    {
+        $eventMapper = new \Modules\Events\Mappers\Events();
+
+        $sql = 'SELECT *
+                FROM `[prefix]_events`
+                WHERE DAY(date_created) > DAY(CURDATE()) AND MONTH(date_created) > MONTH(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE()+INTERVAL 2 MONTH)
+                ORDER BY date_created ASC
+                LIMIT '.$limit;
+        $rows = $this->db()->queryArray($sql);
+        
+        if (empty($rows)) {
+            return null;
+        }
+        
+        $events = array();
+
+        foreach ($rows as $row) {
+            $events[] = $eventMapper->getEventById($row['id']);
+        }
+
+        return $events;
+    }
+
+    /**
+     * @return \Modules\Events\Mappers\Events[]
+     */
+    public function getEventListPast($limit = null)
     {
         $eventMapper = new \Modules\Events\Mappers\Events();
 
@@ -294,7 +319,7 @@ class Events extends \Ilch\Mapper
             'user_id' => $event->getUserId(),
             'status' => $event->getStatus(),
         );
-        
+
         $userId = (int) $this->db()->select('user_id')
                         ->from('events_entrants')
                         ->where(array('user_id' => $event->getUserId()))
@@ -310,7 +335,6 @@ class Events extends \Ilch\Mapper
                     ->where(array('user_id' => $userId))
                     ->execute();
         } else {
-
             /*
              * User does not exist yet, insert.
              */

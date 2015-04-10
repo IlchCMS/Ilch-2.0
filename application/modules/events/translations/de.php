@@ -32,6 +32,7 @@ return array
     'delete' => 'Löschen',
 
     'menuEventUpcoming' => 'Bevorstehende Veranstaltungen',
+    'menuEventAll' => 'Alle Veranstaltungen',
     'menuEventPast' => 'Vergangene Veranstaltungen',
     'menuEventHost' => 'Meine Veranstaltungen',
     'menuEventOtherList' => 'weitere Veranstaltungen',
@@ -49,4 +50,9 @@ return array
     'addButton' => 'Erstellen',
     'updateButton' => 'Aktualisieren',
     'at' => 'um',
+    'naviEventsUpcoming' => 'Bevorstehende',
+    'naviEventsAll' => 'Alle',
+    'naviEventsPast' => 'Vergangene',
+    'naviEventsAdd' => 'Erstellen',
+    'naviEventsMy' => 'Meine',
 );

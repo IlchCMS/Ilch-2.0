@@ -30,10 +30,59 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->addMessage('saveSuccess');
         }
+        
+        $upcomingLimit = 5;
+        $otherLimit = 5;
+        $pastLimit = 5;
 
         $this->getView()->set('eventList', $eventMapper->getEntries());
+        $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit));
+        $this->getView()->set('getEventListOther', $eventMapper->getEventListOther($otherLimit));
+        $this->getView()->set('eventListPast', $eventMapper->getEventListPast($pastLimit));
+    }
+
+    public function upcomingAction()
+    {
+        $eventMapper = new EventMapper();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuEventList'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('naviEventsUpcoming'), array('action' => 'upcoming'));
+
         $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcoming());
+    }
+
+    public function allAction()
+    {
+        $eventMapper = new EventMapper();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuEventList'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('naviEventsAll'), array('action' => 'all'));
+
+        $this->getView()->set('eventList', $eventMapper->getEntries());
+    }
+
+    public function pastAction()
+    {
+        $eventMapper = new EventMapper();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuEventList'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('naviEventsPast'), array('action' => 'past'));
+
         $this->getView()->set('eventListPast', $eventMapper->getEventListPast());
+    }
+
+    public function myAction()
+    {
+        $eventMapper = new EventMapper();
+            
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuEventList'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('naviEventsMy'), array('action' => 'my'));
+
+        $this->getView()->set('eventList', $eventMapper->getEntries());
     }
 
     public function showAction()
