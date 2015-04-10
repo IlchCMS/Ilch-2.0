@@ -59,6 +59,13 @@ class Events extends \Ilch\Model
     protected $place;
 
     /**
+     * The image of the event.
+     *
+     * @var string
+     */
+    protected $image;
+
+    /**
      * The text of the event.
      *
      * @var string
@@ -229,6 +236,29 @@ class Events extends \Ilch\Model
     public function setPlace($place)
     {
         $this->place = (string)$place;
+
+        return $this;
+    }
+
+    /**
+     * Gets the image of the event.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Sets the image of the event.
+     *
+     * @param string $image
+     * @return this
+     */
+    public function setImage($image)
+    {
+        $this->image = (string)$image;
 
         return $this;
     }

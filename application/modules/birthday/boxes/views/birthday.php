@@ -7,4 +7,4 @@
     <?=$this->getTrans('noBirthdayToday') ?>
 <?php endif; ?>
 <hr />
-<div align="center"><a href="<?= $this->getUrl('events/birthday/index/') ?>"><?= $this->getTrans('upcomingBirthday') ?></a></div>
+<div align="center"><a href="<?=$this->getUrl('birthday/index/index/') ?>"><?=$this->getTrans('otherBirthday') ?></a></div>

@@ -276,7 +276,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter'))) {
+                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'birthday'))) {
                         continue;
                     }
 
@@ -302,7 +302,7 @@ class Index extends \Ilch\Controller\Frontend
                         (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
                         (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
                         (2, 30, 0, 0, 0, 'newsletter_newsletter', 4, 'Newsletter', '', ''),
-                        (2, 40, 0, 0, 0, 'events_birthday', 4, 'Geburtstag', '', ''),
+                        (2, 40, 0, 0, 0, 'birthday_birthday', 4, 'Geburtstag', '', ''),
                         (2, 50, 0, 0, 0, 'war_lastwar', 4, 'Letzten Wars', '', ''),
                         (2, 60, 0, 0, 0, 'war_nextwar', 4, 'Nächsten Wars', '', '')";
                 $db->queryMulti($boxes);
@@ -353,6 +353,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['gallery']['types']    = array('clan', 'private');
         $modules['downloads']['types']  = array('clan', 'private');
         $modules['newsletter']['types'] = array('clan', 'private');
+        $modules['birthday']['types']   = array('clan', 'private');
         $modules['events']['types']     = array('clan', 'private');
 
         foreach ($modules as $key => $module) {

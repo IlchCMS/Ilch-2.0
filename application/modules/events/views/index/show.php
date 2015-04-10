@@ -4,13 +4,25 @@ $event = $this->get('event');
 $date = new \Ilch\Date($event->getDateCreated());
 $userMapper = new \Modules\User\Mappers\User();
 $user = $userMapper->getUserById($event->getEventUserId());
+
+$eventMapper = new \Modules\Events\Mappers\Events();
+$EventUser = $eventMapper->getEventEntrants($event->getId());
 ?>
-<link href="<?=$this->getBaseUrl('application/modules/events/static/css/events.css') ?>" rel="stylesheet">
-<legend><?=$this->getTrans('event') ?></legend>
+<link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
+<legend>
+    <?=$this->getTrans('event') ?>
+    <?php if ($event->getEventUserId() == $this->getUser()->getId()): ?>
+        <div style="float: right;"><?=$this->getEditIcon(array('action' => 'treat', 'id' => $event->getId())) ?></div>
+    <?php endif; ?>
+</legend>
 <div class="form-horizontal">
     <div class="form-group">
         <div class="col-lg-6">
-            <img src="http://suessmichael.de/wp-content/uploads/2015/01/2014-12-19_mjs_082-450x150.jpg" class="headPic">
+            <?php if ($this->escape($event->getImage()) != ''): ?>
+                <img src="<?=$this->escape($event->getImage()) ?>" class="headPic">
+            <?php else: ?>
+                <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic">
+            <?php endif; ?>
             <div class="datePic">
                 <div class="dateDayPic"><?=$date->format("d", true) ?></div>
                 <div class="dateMonthPic"><?=$date->format("M", true) ?></div>
@@ -21,7 +33,6 @@ $user = $userMapper->getUserById($event->getEventUserId());
                 <div class="naviButtons">
                     <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
                     <?php if ($this->getUser()): ?>
-                    <?=$event->getStatus() ?>
                         <form class="form-horizontal" method="POST" action="">
                         <?=$this->getTokenField() ?>     
                             <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
@@ -33,7 +44,7 @@ $user = $userMapper->getUserById($event->getEventUserId());
                                     <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
                                         <?=$this->getTrans('maybe') ?>
                                     </button>
-                                <?php else: ?>      
+                                <?php else: ?>
                                     <?php if ($event->getStatus() == 1): ?>
                                         <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
                                             <?=$this->getTrans('maybe') ?>
@@ -45,10 +56,9 @@ $user = $userMapper->getUserById($event->getEventUserId());
                                     <?php endif; ?>
                                     <button type="submit" value="deleteUser" name="deleteUser" class="btn btn-sm btn-danger">
                                         <?=$this->getTrans('decline') ?>
-                                    </button>    
+                                    </button>
                                 <?php endif; ?>
-                            <?php endif; ?>
-                            <?php if ($event->getEventUserId() == $this->getUser()->getId()): ?>
+                            <?php else: ?>
                                 <?=$this->getTrans('event') ?>
                                 <button type="submit" value="deleteEvent" name="deleteEvent" class="btn btn-sm btn-danger">
                                     <?=$this->getTrans('decline') ?>
@@ -60,7 +70,7 @@ $user = $userMapper->getUserById($event->getEventUserId());
             </div>
             <br />
             <div class="eventBoxHead">
-                <i class="fa fa-clock-o"></i> <?=$date->format("l, d. F Y", true) ?> um <?=$date->format("H:i", true) ?> <?=$this->getTrans('clock') ?>
+                <i class="fa fa-clock-o"></i> <?=$date->format("l, d. F Y", true) ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i", true) ?> <?=$this->getTrans('clock') ?>
             </div>
             <div class="eventBoxBottom">
                 <i class="fa fa-map-marker"></i> <?=$event->getPlace() ?>

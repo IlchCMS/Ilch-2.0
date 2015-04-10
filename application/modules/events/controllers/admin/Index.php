@@ -33,7 +33,7 @@ class Index extends \Ilch\Controller\Admin
                 (
                 array
                     (
-                    'name' => 'menuActionNewEvent',
+                    'name' => 'menuNewEvent',
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
                 )
@@ -90,19 +90,18 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuEventTreat'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuActionNewEvent'), array('action' => 'treat'));
 
         $eventMapper = new EventMapper();
+        $eventModel = new EventModel();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
         }
 
         if ($this->getRequest()->isPost()) {
-            $model = new EventModel();
-
             if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
+                $eventModel->setId($this->getRequest()->getParam('id'));
             }
             
             $title = trim($this->getRequest()->getPost('title'));
@@ -119,12 +118,12 @@ class Index extends \Ilch\Controller\Admin
             } elseif(empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
-                $model->setUserId($this->getUser()->getId());
-                $model->setTitle($title);
-                $model->setDateCreated($dateCreated);
-                $model->setPlace($place);
-                $model->setText($text);
-                $eventMapper->save($model);
+                $eventModel->setUserId($this->getUser()->getId());
+                $eventModel->setTitle($title);
+                $eventModel->setDateCreated($dateCreated);
+                $eventModel->setPlace($place);
+                $eventModel->setText($text);
+                $eventMapper->save($eventModel);
                 
                 $this->addMessage('saveSuccess');
                 

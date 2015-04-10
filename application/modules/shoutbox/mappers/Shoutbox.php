@@ -45,6 +45,7 @@ class Shoutbox extends \Ilch\Mapper
 
         return $shoutbox;
     }
+
     /**
      * Gets the Shoutbox.
      *

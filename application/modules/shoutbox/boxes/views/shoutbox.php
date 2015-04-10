@@ -51,11 +51,15 @@
             <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
             <tr>
                 <?php if ($shoutbox->getUid() == '0'): ?>
-                    <td><b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
-                        <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span></td>
+                    <td>
+                        <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
+                        <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                    </td>
                 <?php else: ?>
-                    <td><b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$user->getName() ?></a>:</b><br />
-                        <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span></td>
+                    <td>
+                        <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$user->getName() ?></a>:</b><br />
+                        <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                    </td>
                 <?php endif; ?>
             </tr>
             <tr>
@@ -70,4 +74,4 @@
     </table>
 <?php endif; ?>
 
-<div align="center"><a href="<?=$this->getUrl(array('module' => 'shoutbox', 'controller' => 'index', 'action' => 'index')) ?>"><?=$this->getTrans('archive') ?></a></div>
+<div align="center"><a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a></div>

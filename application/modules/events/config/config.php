@@ -36,7 +36,8 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_events`;
-                                 DROP TABLE `[prefix]_events_entrants`;');
+                                 DROP TABLE `[prefix]_events_entrants`;
+                                 DROP TABLE `[prefix]_events_comments`;');
     }
 
     public function getInstallSql()
@@ -47,6 +48,7 @@ class Config extends \Ilch\Config\Install
                   `date_created` DATETIME NOT NULL,
                   `title` varchar(100) NOT NULL,
                   `place` varchar(100) NOT NULL,
+                  `image` varchar(255) NOT NULL,
                   `text` LONGTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

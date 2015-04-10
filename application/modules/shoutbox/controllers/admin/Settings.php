@@ -39,7 +39,7 @@ class Settings extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShoutbox'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('manageShoutbox'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('shoutbox_limit', $this->getRequest()->getPost('limit'));

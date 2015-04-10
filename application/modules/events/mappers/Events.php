@@ -24,7 +24,7 @@ class Events extends \Ilch\Mapper
         $entryArray = $this->db()->select('*')
                 ->from('events')
                 ->where($where)
-                ->order(array('date_created' => 'DESC'))
+                ->order(array('date_created' => 'ASC'))
                 ->execute()
                 ->fetchRows();
 
@@ -41,6 +41,7 @@ class Events extends \Ilch\Mapper
             $entryModel->setDateCreated($entries['date_created']);
             $entryModel->setTitle($entries['title']);
             $entryModel->setPlace($entries['place']);
+            $entryModel->setImage($entries['image']);
             $entryModel->setText($entries['text']);
             $entry[] = $entryModel;
         }
@@ -72,6 +73,7 @@ class Events extends \Ilch\Mapper
         $eventModel->setDateCreated($eventRow['date_created']);
         $eventModel->setTitle($eventRow['title']);
         $eventModel->setPlace($eventRow['place']);
+        $eventModel->setImage($eventRow['image']);
         $eventModel->setText($eventRow['text']);
 
         return $eventModel;
@@ -128,6 +130,7 @@ class Events extends \Ilch\Mapper
         $eventModel->setDateCreated($eventRow['date_created']);
         $eventModel->setTitle($eventRow['title']);
         $eventModel->setPlace($eventRow['place']);
+        $eventModel->setImage($eventRow['image']);
         $eventModel->setStatus($eventRow['status']);
         $eventModel->setText($eventRow['text']);
 
@@ -198,28 +201,55 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @return \Modules\Event\Models\User[]
+     * @return \Modules\Events\Mappers\Events[]
      */
-    public function getBirthdayUserListNOW()
+    public function getEventListUpcoming()
     {
-        $userMapper = new \Modules\User\Mappers\User();
+        $eventMapper = new \Modules\Events\Mappers\Events();
 
         $sql = 'SELECT *
-                FROM `[prefix]_users`
-                WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())';
+                FROM `[prefix]_events`
+                WHERE DAY(date_created) >= DAY(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE()) OR MONTH(date_created) = MONTH(CURDATE()+INTERVAL 1 MONTH)
+                ORDER BY date_created ASC';
         $rows = $this->db()->queryArray($sql);
         
         if (empty($rows)) {
             return null;
         }
         
-        $users = array();
+        $events = array();
 
         foreach ($rows as $row) {
-            $users[] = $userMapper->getUserById($row['id']);
+            $events[] = $eventMapper->getEventById($row['id']);
         }
 
-        return $users;
+        return $events;
+    }
+
+    /**
+     * @return \Modules\Events\Mappers\Events[]
+     */
+    public function getEventListPast()
+    {
+        $eventMapper = new \Modules\Events\Mappers\Events();
+
+        $sql = 'SELECT *
+                FROM `[prefix]_events`
+                WHERE date_created < CURDATE()
+                ORDER BY date_created DESC';
+        $rows = $this->db()->queryArray($sql);
+        
+        if (empty($rows)) {
+            return null;
+        }
+        
+        $events = array();
+
+        foreach ($rows as $row) {
+            $events[] = $eventMapper->getEventById($row['id']);
+        }
+
+        return $events;
     }
 
     /**
@@ -235,6 +265,7 @@ class Events extends \Ilch\Mapper
             'date_created' => $event->getDateCreated(),
             'title' => $event->getTitle(),
             'place' => $event->getPlace(),
+            'image' => $event->getImage(),
             'text' => $event->getText(),
         );
 

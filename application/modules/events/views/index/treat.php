@@ -1,22 +1,22 @@
 <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
-        <?php
-            if ($this->get('event') != '') {
-                echo $this->getTrans('menuEditEvent');
-            } else {
-                echo $this->getTrans('menuNewEvent');
-            }
-        ?>
+    <?php
+        if ($this->get('event') != '') {
+            echo $this->getTrans('menuEditEvent');
+        } else {
+            echo $this->getTrans('menuNewEvent');
+        }
+    ?>
     </legend>
     <div class="form-group">
         <label for="dtp_input1" class="col-md-2 control-label">
             <?=$this->getTrans('time') ?>:
         </label>
-        <div class="col-lg-2 input-group date form_datetime">
+        <div class="col-lg-3 input-group date form_datetime">
             <input class="form-control"
+                   size="16"
                    type="text"
                    name="dateCreated"
                    value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getdateCreated())); } ?>"
@@ -30,7 +30,7 @@
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <input class="form-control"
                    type="text"
                    name="title"
@@ -42,7 +42,7 @@
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('place') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-6">
             <input class="form-control"
                    type="text"
                    name="place"
@@ -61,13 +61,15 @@
                       rows="5"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php
-    if ($this->get('event') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <div style="float: right;">
+        <?php
+        if ($this->get('event') != '') {
+            echo $this->getSaveBar('updateButton');
+        } else {
+            echo $this->getSaveBar('addButton');
+        }
+        ?>
+    </div>
 </form>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>

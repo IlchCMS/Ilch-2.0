@@ -28,13 +28,9 @@
                         <?php $user = $userMapper->getUserById($event->getUserId()) ?>
                         <tr>
                             <td><input value="<?=$event->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td>
-                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $event->getId())) ?>
-                            </td>
-                            <td>
-                                <?=$this->getDeleteIcon(array('action' => 'del', 'id' => $event->getId())) ?>
-                            </td>
-                            <td><?=$event->getDateCreated() ?></td>
+                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $event->getId())) ?></td>
+                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $event->getId())) ?></td>
+                            <td><?=date('d.m.Y H:i', strtotime($event->getDateCreated())) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
                             <td><a href="<?=$this->getUrl('admin/event/index/show/id/'.$event->getId()) ?>"><?=$event->getTitle() ?></a></td>
                         </tr>
