@@ -1,16 +1,14 @@
 <?php 
 $code = $this->getRequest()->getParam('code');
 $confirm = $this->get('confirmed'); 
-
-if (empty($code) || empty($confirm)) { 
- ?>
-    <form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
-        <?php echo $this->getTokenField();
-            $errors = $this->get('errors');
-        ?>
+?>
+<?php if (empty($code) || empty($confirm)): ?>
+    <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+        <?=$this->getTokenField() ?>
+        <?php $errors = $this->get('errors'); ?>
         <div class="form-group <?php if (!empty($errors['confirmedCode'])) { echo 'has-error'; }; ?>">
             <label for="confirmedCode" class="control-label col-lg-3">
-                <?php echo $this->getTrans('confirmCode'); ?>:
+                <?=$this->getTrans('confirmCode') ?>:
             </label>
             <div class="col-lg-8">
                 <input value=""
@@ -18,16 +16,14 @@ if (empty($code) || empty($confirm)) {
                        name="confirmedCode"
                        class="form-control"
                        id="confirmedCode" />
-                <?php
-                    if (!empty($errors['confirmedCode'])) {
-                        echo '<span class="help-inline">'.$this->getTrans($errors['confirmedCode']).'</span>';
-                    }
-                ?>
+                <?php if (!empty($errors['confirmedCode'])): ?>
+                    <span class="help-inline"><?=$this->getTrans($errors['confirmedCode']) ?></span>
+                <?php endif; ?>
             </div>
         </div>
-        <button type="submit" name="save" class="btn pull-right"><?php echo $this->getTrans('menuConfirm'); ?></button>
+        <button type="submit" name="save" class="btn pull-right"><?=$this->getTrans('menuConfirm') ?></button>
     </form>
-<?php } else { ?>
+<?php else: ?>
     <div class="row">
         <div class="col-lg-1 fa-4x check">
             <i class="fa fa-check-circle text-success" title=""></i>
@@ -37,6 +33,4 @@ if (empty($code) || empty($confirm)) {
             Sie können sich jetzt mit Ihren Benutzerdaten anmelden.
         </div>
     </div>
-<?php
-}
-?>
+<?php endif; ?>

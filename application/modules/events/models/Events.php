@@ -16,12 +16,6 @@ class Events extends \Ilch\Model
      * @var int
      */
     protected $id;
-    /**
-     * The eventid of the event.
-     *
-     * @var int
-     */
-    protected $eventId;
 
     /**
      * The user of the event.
@@ -29,13 +23,6 @@ class Events extends \Ilch\Model
      * @var integer
      */
     protected $userId;
-
-    /**
-     * The user of the event.
-     *
-     * @var integer
-     */
-    protected $eventUserId;
 
     /**
      * The date of the event.
@@ -73,13 +60,6 @@ class Events extends \Ilch\Model
     protected $text;
 
     /**
-     * The user status of the event.
-     *
-     * @var string
-     */
-    protected $status;
-
-    /**
      * Gets the id of the event.
      *
      * @return int
@@ -103,29 +83,6 @@ class Events extends \Ilch\Model
     }
 
     /**
-     * Gets the eventid of the event.
-     *
-     * @return int
-     */
-    public function getEventId()
-    {
-        return $this->eventId;
-    }
-
-    /**
-     * Sets the eventid of the event.
-     *
-     * @param int $eventId
-     * @return this
-     */
-    public function setEventId($eventId)
-    {
-        $this->eventId = (int)$eventId;
-
-        return $this;
-    }
-
-    /**
      * Gets the user of the event.
      *
      * @return integer
@@ -144,29 +101,6 @@ class Events extends \Ilch\Model
     public function setUserId($userId)
     {
         $this->userId = (int)$userId;
-
-        return $this;
-    }
-
-    /**
-     * Gets the event userid of the event.
-     *
-     * @return integer
-     */
-    public function getEventUserId()
-    {
-        return $this->eventUserId;
-    }
-
-    /**
-     * Sets the event user of the event.
-     *
-     * @param integer $eventUserId
-     * @return this
-     */
-    public function setEventUserId($eventUserId)
-    {
-        $this->eventUserId = (int)$eventUserId;
 
         return $this;
     }
@@ -282,29 +216,6 @@ class Events extends \Ilch\Model
     public function setText($text)
     {
         $this->text = (string)$text;
-
-        return $this;
-    }
-
-    /**
-     * Gets the status from user of the event.
-     *
-     * @return integer
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * Sets the status from user of the event.
-     *
-     * @param integer $status
-     * @return this
-     */
-    public function setStatus($status)
-    {
-        $this->status = (int)$status;
 
         return $this;
     }

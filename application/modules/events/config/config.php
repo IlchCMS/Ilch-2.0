@@ -36,8 +36,7 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_events`;
-                                 DROP TABLE `[prefix]_events_entrants`;
-                                 DROP TABLE `[prefix]_events_comments`;');
+                                 DROP TABLE `[prefix]_events_entrants`;');
     }
 
     public function getInstallSql()
@@ -57,15 +56,6 @@ class Config extends \Ilch\Config\Install
                   `event_id` int(11) NOT NULL,
                   `user_id` int(11) NOT NULL,
                   `status` int(11) NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-                CREATE TABLE IF NOT EXISTS `[prefix]_events_comments` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `event_id` int(11) NOT NULL,
-                  `user_id` int(11) NOT NULL,
-                  `date_created` DATETIME NOT NULL,
-                  `text` MEDIUMTEXT NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }

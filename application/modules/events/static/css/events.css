@@ -96,6 +96,19 @@
     height: 41px;
 }
 
+
+.commentEventText {
+    padding: 5px;
+}
+.avatar {
+    width: 40px;
+    height: auto;
+    border: 1px solid #dddddd;
+}
+.userEventInfo {
+    margin-left: 48px;
+}
+
 .date {
     padding-left: 15px !important;
     padding-right: 15px !important;

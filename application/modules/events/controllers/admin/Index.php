@@ -103,12 +103,12 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $eventModel->setId($this->getRequest()->getParam('id'));
             }
-            
+
             $title = trim($this->getRequest()->getPost('title'));
             $dateCreated = new \Ilch\Date(trim($this->getRequest()->getPost('dateCreated')));
             $place = trim($this->getRequest()->getPost('place'));
             $text = trim($this->getRequest()->getPost('text'));
-            
+
             if (empty($dateCreated)) {
                 $this->addMessage('missingDate', 'danger');
             } elseif(empty($title)) {
@@ -124,9 +124,9 @@ class Index extends \Ilch\Controller\Admin
                 $eventModel->setPlace($place);
                 $eventModel->setText($text);
                 $eventMapper->save($eventModel);
-                
+
                 $this->addMessage('saveSuccess');
-                
+
                 $this->redirect(array('action' => 'index'));
             }
         }

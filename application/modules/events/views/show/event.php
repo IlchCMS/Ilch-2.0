@@ -1,15 +1,20 @@
 <?php
 $event = $this->get('event');
+$eventEntrants = $this->get('eventEntrants');
 
 $date = new \Ilch\Date($event->getDateCreated());
 $userMapper = new \Modules\User\Mappers\User();
-$user = $userMapper->getUserById($event->getEventUserId());
+$user = $userMapper->getUserById($event->getUserId());
 ?>
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
+<?php include APPLICATION_PATH.'/modules/events/views/index/naviHead.php'; ?>
 <legend>
     <?=$this->getTrans('event') ?>
-    <?php if ($event->getEventUserId() == $this->getUser()->getId()): ?>
-        <div style="float: right;"><?=$this->getEditIcon(array('action' => 'treat', 'id' => $event->getId())) ?></div>
+    <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId()): ?>
+        <div style="float: right;">
+            <?=$this->getEditIcon(array('controller' => 'index', 'action' => 'treat', 'id' => $event->getId())) ?>
+            <?=$this->getDeleteIcon(array('controller' => 'index', 'action' => 'del', 'id' => $event->getId())) ?>
+        </div>
     <?php endif; ?>
 </legend>
 <div class="form-horizontal">
@@ -33,33 +38,37 @@ $user = $userMapper->getUserById($event->getEventUserId());
                         <form class="form-horizontal" method="POST" action="">
                         <?=$this->getTokenField() ?>     
                             <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
-                            <?php if ($event->getEventUserId() != $this->getUser()->getId()): ?>
-                                <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
+                            <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
+                                <?php if ($eventEntrants != ''): ?>
+                                    <?php if ($eventEntrants->getUserId() != $this->getUser()->getId()): ?>
+                                        <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
+                                            <?=$this->getTrans('join') ?>
+                                        </button>
+                                        <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
+                                            <?=$this->getTrans('maybe') ?>
+                                        </button>
+                                    <?php else: ?>
+                                        <?php if ($eventEntrants->getStatus() == 1): ?>
+                                            <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
+                                                <?=$this->getTrans('maybe') ?>
+                                            </button>
+                                        <?php else: ?>
+                                            <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
+                                                <?=$this->getTrans('agree') ?>
+                                            </button>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                    <button type="submit" value="deleteUser" name="deleteUser" class="btn btn-sm btn-danger">
+                                        <?=$this->getTrans('decline') ?>
+                                    </button>
+                                <?php else: ?>
                                     <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
                                         <?=$this->getTrans('join') ?>
                                     </button>
                                     <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
                                         <?=$this->getTrans('maybe') ?>
                                     </button>
-                                <?php else: ?>
-                                    <?php if ($event->getStatus() == 1): ?>
-                                        <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
-                                            <?=$this->getTrans('maybe') ?>
-                                        </button>
-                                    <?php else: ?>
-                                        <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
-                                            <?=$this->getTrans('agree') ?>
-                                        </button>
-                                    <?php endif; ?>
-                                    <button type="submit" value="deleteUser" name="deleteUser" class="btn btn-sm btn-danger">
-                                        <?=$this->getTrans('decline') ?>
-                                    </button>
                                 <?php endif; ?>
-                            <?php else: ?>
-                                <?=$this->getTrans('event') ?>
-                                <button type="submit" value="deleteEvent" name="deleteEvent" class="btn btn-sm btn-danger">
-                                    <?=$this->getTrans('decline') ?>
-                                </button>
                             <?php endif; ?>
                         </form>
                     <?php endif; ?>
@@ -80,10 +89,10 @@ $user = $userMapper->getUserById($event->getEventUserId());
                 <div style="width: 45%; float: left;" align="right">
                     <?php $agree = 1; $maybe = 0; ?>
                     <?php if ($this->get('eventEntrantsCount') != ''): ?>
-                        <?php foreach ($this->get('eventEntrants') as $eventEntrants): ?>
-                            <?php if ($eventEntrants->getStatus() == 1): ?>
+                        <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
+                            <?php if ($eventEntrantsUser->getStatus() == 1): ?>
                                 <?php $agree++; ?>
-                            <?php elseif ($eventEntrants->getStatus() == 2): ?>
+                            <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
                                 <?php $maybe++; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -99,8 +108,8 @@ $user = $userMapper->getUserById($event->getEventUserId());
                 <div style="margin-left: 2px;">
                     <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>"></a>
                     <?php if ($this->get('eventEntrantsCount') != ''): ?>
-                        <?php foreach ($this->get('eventEntrants') as $eventEntrants): ?>
-                        <?php $entrantsUser = $userMapper->getUserById($eventEntrants->getUserId()); ?>
+                        <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
+                        <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -118,17 +127,20 @@ $user = $userMapper->getUserById($event->getEventUserId());
                 <?php $commentUser = $userMapper->getUserById($eventComments->getUserId()); ?>
                 <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
                     <div class="eventBoxContent">
-                        <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a>: <?=$commentDate->format("Y.m.d H:i", true) ?>
-                        <?php if ($this->getUser() AND $event->getEventUserId() == $this->getUser()->getId()): ?>
-                            <div style="float: right;"><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $eventComments->getId())) ?></div>
-                        <?php endif; ?>
-                        <br />
-                        <?=$this->escape($eventComments->getText()) ?>
+                        <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
+                        <div class="userEventInfo">
+                            <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
+                            <span class="small"><?=$commentDate->format("Y.m.d H:i", true) ?></span>
+                            <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId() OR $commentUser->getId() == $this->getUser()->getId()): ?>
+                                <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id'))) ?></div>
+                            <?php endif; ?>
+                        </div>                         
+                        <div class="commentEventText"><?=nl2br($eventComments->getText()) ?></div>
                     </div>
                     <br />
                 <?php endforeach; ?>
             <?php endif; ?>
-            <?php if ($this->getUser()): ?>
+            <?php if ($this->getUser() AND $eventEntrants != '' AND $eventEntrants->getUserId() == $this->getUser()->getId()): ?>
                 <div class="form-group eventCommentSubmit">
                     <form action="" class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
@@ -143,7 +155,7 @@ $user = $userMapper->getUserById($event->getEventUserId());
                         </div>                        
                         <div class="col-lg-12 eventSubmit">
                             <button type="submit" name="saveEntry" class="pull-right btn btn-sm">
-                                <?=$this->getTrans('submit') ?>
+                                <?=$this->getTrans('write') ?>
                             </button>
                         </div>
                     </form>
@@ -152,7 +164,8 @@ $user = $userMapper->getUserById($event->getEventUserId());
         </div>
     </div>
 </div>
-<script language="JavaScript" type="text/javascript">
+
+<script type="text/javascript">
 // Textarea AutoResize
 $('textarea').on('keyup', function() {
     $(this).css('height', 'auto');

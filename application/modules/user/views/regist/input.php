@@ -1,10 +1,9 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
-    <?php echo $this->getTokenField();
-        $errors = $this->get('errors');
-    ?>
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+    <?=$this->getTokenField() ?>
+    <?php $errors = $this->get('errors'); ?>
     <div class="form-group <?php if (!empty($errors['name'])) { echo 'has-error'; }; ?>">
         <label for="name" class="control-label col-lg-2">
-            <?php echo $this->getTrans('name'); ?>:
+            <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-8">
             <input value=""
@@ -12,16 +11,14 @@
                    name="name"
                    class="form-control"
                    id="name" />
-            <?php
-                if (!empty($errors['name'])) {
-                    echo '<span class="help-inline">'.$this->getTrans($errors['name']).'</span>';
-                }
-            ?>
+            <?php if (!empty($errors['name'])): ?>
+                <span class="help-inline"><?=$this->getTrans($errors['name']) ?></span>
+            <?php endif; ?>
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
         <label for="password" class="control-label col-lg-2">
-            <?php echo $this->getTrans('password'); ?>:
+            <?=$this->getTrans('password') ?>:
         </label>
         <div class="col-lg-8">
             <input value=""
@@ -29,16 +26,14 @@
                    class="form-control"
                    name="password"
                    id="password" />
-            <?php
-                if (!empty($errors['password'])) {
-                    echo '<span class="help-inline">'.$this->getTrans($errors['password']).'</span>';
-                }
-            ?>
+            <?php if (!empty($errors['password'])): ?>
+                <span class="help-inline"><?=$this->getTrans($errors['password']) ?></span>
+            <?php endif; ?>
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['password2'])) { echo 'has-error'; }; ?>">
         <label for="password2" class="control-label col-lg-2">
-            <?php echo $this->getTrans('password2'); ?>:
+            <?=$this->getTrans('password2') ?>:
         </label>
         <div class="col-lg-8">
             <input value=""
@@ -46,16 +41,14 @@
                    class="form-control"
                    name="password2"
                    id="pwd2" />
-            <?php
-                if (!empty($errors['password2'])) {
-                    echo '<span class="help-inline">'.$this->getTrans($errors['password2']).'</span>';
-                }
-            ?>
+            <?php if (!empty($errors['password2'])): ?>
+                <span class="help-inline"><?=$this->getTrans($errors['password2']) ?></span>
+            <?php endif; ?>
         </div>
     </div>
     <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
         <label for="email" class="control-label col-lg-2">
-            <?php echo $this->getTrans('email'); ?>:
+            <?=$this->getTrans('email') ?>:
         </label>
         <div class="col-lg-8">
             <input value=""
@@ -63,22 +56,19 @@
                    name="email"
                    class="form-control"
                    id="email" />
-            <?php
-                if (!empty($errors['email'])) {
-                    echo '<span class="help-inline">'.$this->getTrans($errors['email']).'</span>';
-                }
-            ?>
+            <?php if (!empty($errors['email'])): ?>
+                <span class="help-inline"><?=$this->getTrans($errors['email']) ?></span>
+            <?php endif; ?>
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <button type="submit" name="save" class="btn"><?php echo $this->getTrans('registButton'); ?></button>
+            <button type="submit" name="save" class="btn"><?=$this->getTrans('registButton'); ?></button>
         </div>
     </div>
 </form>
 
-<script src="<?php echo $this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
-
+<script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
 <script>
 $(document).ready(function(){
     $('#password').pStrength({

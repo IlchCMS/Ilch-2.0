@@ -1,13 +1,14 @@
 <?php 
-    $profil = $this->get('profil'); 
+$profil = $this->get('profil'); 
 ?>
+<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 <div id="panel">
     <div class="row">
         <div class="col-lg-2">
-            <img class="panel-profile-image" src="<?php echo $this->getStaticUrl().'../'.$this->escape($profil->getAvatar()); ?>" title="<?php echo $this->escape($profil->getName()); ?>">
+            <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
             <ul class="nav">
             <?php foreach ($this->get('usermenu') as $usermenu): ?>
-                <li><a class="" href="<?php echo $this->getUrl($usermenu->getKey()); ?>"><?php echo $usermenu->getTitle(); ?></a></li>
+                <li><a class="" href="<?=$this->getUrl($usermenu->getKey()) ?>"><?=$usermenu->getTitle() ?></a></li>
             <?php endforeach; ?>
             </ul>
         </div>
@@ -15,9 +16,9 @@
             <legend>Avatar</legend>
             <form action="" class="form-horizontal" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <?php echo $this->getTokenField(); ?>
+                    <?=$this->getTokenField(); ?>
                     <div class="col-lg-3 col-sm-3 col-3">
-                        <img class="panel-profile-image" src="<?php echo $this->getStaticUrl().'../'.$this->escape($profil->getAvatar()); ?>" title="<?php echo $this->escape($profil->getName()); ?>">
+                        <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
                     </div>
                     <div class="col-lg-9 col-sm-9 col-9">
                         <h4>Avatar Upload</h4>
@@ -40,13 +41,14 @@
                         <input type="submit" 
                                name="saveEntry" 
                                class="btn"
-                               value="<?php echo $this->getTrans('submit'); ?>" />
+                               value="<?=$this->getTrans('submit') ?>" />
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <script>
     $(document).on('change', '.btn-file :file', function() {
   var input = $(this),
@@ -70,27 +72,3 @@ $(document).ready( function() {
     });
 });
 </script>
-<style>
-.btn-file {
-  position: relative;
-  overflow: hidden;
-}
-.btn-file input[type=file] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-width: 100%;
-  min-height: 100%;
-  font-size: 999px;
-  text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  background: red;
-  cursor: inherit;
-  display: block;
-}
-input[readonly] {
-  background-color: white !important;
-  cursor: text !important;
-}
-</style>
