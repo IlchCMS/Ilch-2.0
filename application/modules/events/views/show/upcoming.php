@@ -19,32 +19,15 @@ $date = new \Ilch\Date();
                         <?php endif; ?>
                     </td>
                     <td class="col-lg-9">
-                        <form class="form-horizontal" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>" method="post">
-                            <?=$this->getTokenField(); ?>
-                            <div  style="margin-top: -3px;">
-                                <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><b><?=$this->escape($eventlist->getTitle()) ?></a>
-                                <div class="small">
-                                    <?=$date->format("l, d. F Y", true) ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i", true) ?><br />
-                                    <?=$this->escape($eventlist->getPlace()) ?><br />
-                                    <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
-                                    <?=count($entrantsMappers->getEventEntrantsById($eventlist->getId()))+1 ?> <?= $this->getTrans('guest') ?>
-                                </div>
-                                <!--
-                                <?php if ($this->getUser()): ?>
-                                    <input type="hidden" name="id" value="<?= $this->escape($eventlist->getId()) ?>">
-                                    <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
-                                        <?=$this->getTrans('join') ?>
-                                    </button>
-                                    <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
-                                        <?=$this->getTrans('maybe') ?>
-                                    </button>
-                                    <button type="submit" value="delete" name="delete" class="btn btn-sm btn-danger">
-                                        <?=$this->getTrans('decline') ?>
-                                    </button>
-                                <?php endif; ?>
-                                -->
+                        <div  style="margin-top: -3px;">
+                            <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><b><?=$this->escape($eventlist->getTitle()) ?></a>
+                            <div class="small">
+                                <?=$date->format("l, d. F Y", true) ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i", true) ?><br />
+                                <?=$this->escape($eventlist->getPlace()) ?><br />
+                                <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
+                                <?=count($entrantsMappers->getEventEntrantsById($eventlist->getId()))+1 ?> <?= $this->getTrans('guest') ?>
                             </div>
-                        </form>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>

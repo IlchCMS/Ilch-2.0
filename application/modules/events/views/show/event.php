@@ -34,10 +34,10 @@ $user = $userMapper->getUserById($event->getUserId());
                 <div class="naviGast"><?=$this->getTrans('by') ?> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></div>
                 <div class="naviButtons">
                     <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
-                    <?php if ($this->getUser()): ?>
+                    <?php if ($this->getUser() AND $event->getDateCreated() > new \Ilch\Date()): ?>
                         <form class="form-horizontal" method="POST" action="">
                         <?=$this->getTokenField() ?>     
-                            <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
+                            <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
                             <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
                                 <?php if ($eventEntrants != ''): ?>
                                     <?php if ($eventEntrants->getUserId() != $this->getUser()->getId()): ?>
@@ -131,8 +131,10 @@ $user = $userMapper->getUserById($event->getUserId());
                         <div class="userEventInfo">
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
                             <span class="small"><?=$commentDate->format("Y.m.d H:i", true) ?></span>
-                            <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId() OR $commentUser->getId() == $this->getUser()->getId()): ?>
-                                <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id'))) ?></div>
+                            <?php if ($this->getUser()): ?>
+                                <?php if ($event->getUserId() == $this->getUser()->getId() OR $commentUser->getId() == $this->getUser()->getId()): ?>
+                                    <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id'))) ?></div>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>                         
                         <div class="commentEventText"><?=nl2br($eventComments->getText()) ?></div>

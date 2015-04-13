@@ -35,6 +35,7 @@ return array
     'menuEventAll' => 'Alle Veranstaltungen',
     'menuEventPast' => 'Vergangene Veranstaltungen',
     'menuEventHost' => 'Meine Veranstaltungen',
+    'menuEventParticipation' => 'Veranstaltungsteilnahme',
     'menuEventOtherList' => 'weitere Veranstaltungen',
     'otherEvents' => 'weitere Veranstaltungen',
     'join' => 'Teilnehmen',
@@ -55,4 +56,5 @@ return array
     'naviEventsPast' => 'Vergangene',
     'naviEventsAdd' => 'Erstellen',
     'naviEventsMy' => 'Meine',
+    'naviEventsParticipation' => 'Teilnahme',
 );

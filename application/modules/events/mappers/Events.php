@@ -107,6 +107,32 @@ class Events extends \Ilch\Mapper
     /**
      * @return \Modules\Events\Mappers\Events[]
      */
+    public function getEventListParticipation($userId)
+    {
+        $eventMapper = new \Modules\Events\Mappers\Events();
+        
+        $entryRow = $this->db()->select('*')
+                ->from('events_entrants')
+                ->where(array('user_id' => $userId))
+                ->execute()
+                ->fetchRows();
+
+        if (empty($entryRow)) {
+            return null;
+        }
+        
+        $events = array();
+        
+        foreach ($entryRow as $row) {
+            $events[] = $eventMapper->getEventById($row['event_id']);
+        }
+
+        return $events;
+    }
+
+    /**
+     * @return \Modules\Events\Mappers\Events[]
+     */
     public function getEventListOther($limit = null)
     {
         $eventMapper = new \Modules\Events\Mappers\Events();

@@ -34,6 +34,7 @@ return array
     'menuEventUpcoming' => 'Upcoming Events',
     'menuEventPast' => 'Past Events',
     'menuEventHost' => 'My Events',
+    'menuEventParticipation' => 'Event participation',
     'menuEventOtherList' => 'other Events',
     'otherEvents' => 'other Events',
     'join' => 'Join',
@@ -54,4 +55,5 @@ return array
     'naviEventsPast' => 'Past',
     'naviEventsAdd' => 'Add',
     'naviEventsMy' => 'My',
+    'naviEventsParticipation' => 'Participation',
 );

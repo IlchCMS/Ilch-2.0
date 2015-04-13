@@ -49,7 +49,7 @@ class Show extends \Ilch\Controller\Frontend
                 $this->addMessage('saveSuccess');
             }
             if ($this->getRequest()->getPost('deleteUser')) {
-                $entrantsMapper->deleteUserOnEvent($this->getUser()->getId());
+                $entrantsMapper->deleteUserOnEvent($this->getRequest()->getParam('id'), $this->getUser()->getId());
 
                 $this->addMessage('deleteSuccess');
             }
@@ -92,6 +92,17 @@ class Show extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('naviEventsPast'), array('action' => 'past'));
 
         $this->getView()->set('eventListPast', $eventMapper->getEventListPast());
+    }
+
+    public function participationAction()
+    {
+        $eventMapper = new EventMapper();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuEventList'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('naviEventsParticipation'), array('action' => 'participation'));
+
+        $this->getView()->set('eventList', $eventMapper->getEventListParticipation($this->getUser()->getId()));
     }
 
     public function myAction()

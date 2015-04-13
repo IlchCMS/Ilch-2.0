@@ -6,7 +6,7 @@
                 <th><?=$this->escape($history->getTitle()).' am '.$this->escape($history->getDate()) ?></th>
             </tr>
             <tr>
-                <td><?=nl2br($this->getHtmlFromBBCode($this->escape($history->getText()))) ?></td>
+                <td><?=$history->getText() ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

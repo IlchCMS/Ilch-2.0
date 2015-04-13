@@ -40,7 +40,7 @@
                                 <?=$this->escape($entry->getTitle()) ?>
                             </td>
                             <td>
-                                <?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?>
+                                <?=$entry->getText() ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>

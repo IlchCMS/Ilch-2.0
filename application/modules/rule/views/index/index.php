@@ -6,7 +6,7 @@
                 <th>§<?=$this->escape($rule->getParagraph()).'. '.$this->escape($rule->getTitle()) ?></th>
             </tr>
             <tr>
-                <td><?=nl2br($this->getHtmlFromBBCode($this->escape($rule->getText()))) ?></td>
+                <td><?=$rule->getText() ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
