@@ -89,6 +89,36 @@ class Events extends \Ilch\Mapper
                 FROM `[prefix]_events`
                 WHERE DAY(date_created) >= DAY(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE()) OR MONTH(date_created) = MONTH(CURDATE()+INTERVAL 1 MONTH)
                 ORDER BY date_created ASC';
+
+        if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
+
+        $rows = $this->db()->queryArray($sql);
+
+        if (empty($rows)) {
+            return null;
+        }
+
+        $events = array();
+
+        foreach ($rows as $row) {
+            $events[] = $eventMapper->getEventById($row['id']);
+        }
+
+        return $events;
+    }
+
+    /**
+     * @return \Modules\Events\Mappers\Events[]
+     */
+    public function getEventListUpcomingALL()
+    {
+        $eventMapper = new \Modules\Events\Mappers\Events();
+
+        $sql = 'SELECT *
+                FROM `[prefix]_events`
+                WHERE date_created >= CURDATE()
+                ORDER BY date_created ASC';
+
         $rows = $this->db()->queryArray($sql);
 
         if (empty($rows)) {
@@ -140,8 +170,10 @@ class Events extends \Ilch\Mapper
         $sql = 'SELECT *
                 FROM `[prefix]_events`
                 WHERE DAY(date_created) > DAY(CURDATE()) AND MONTH(date_created) > MONTH(CURDATE()) AND MONTH(date_created) = MONTH(CURDATE()+INTERVAL 2 MONTH)
-                ORDER BY date_created ASC
-                LIMIT '.$limit;
+                ORDER BY date_created ASC';
+
+        if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
+
         $rows = $this->db()->queryArray($sql);
 
         if (empty($rows)) {
@@ -168,6 +200,9 @@ class Events extends \Ilch\Mapper
                 FROM `[prefix]_events`
                 WHERE date_created < CURDATE()
                 ORDER BY date_created DESC';
+
+        if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
+
         $rows = $this->db()->queryArray($sql);
         
         if (empty($rows)) {

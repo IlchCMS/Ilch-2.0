@@ -36,6 +36,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'bday_boxShow'");
     }
 
     public function getInstallSql()

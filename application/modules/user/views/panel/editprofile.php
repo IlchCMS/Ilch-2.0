@@ -90,9 +90,7 @@
                         <input class="form-control"
                                type="text"
                                name="birthday"
-                               placeholder="<?=$birthday->format('d.m.Y', true)?>"
-                               value="<?=$birthday->format('d.m.Y', true)?>"
-                               readonly>
+                               value="<?php if ($profil->getBirthday() == '0000-00-00') { echo date('d.m.Y'); } else { echo $birthday->format('d.m.Y', true); } ?>">
                         <span class="input-group-addon">
                             <span class="fa fa-calendar"></span>
                         </span>

@@ -17,6 +17,6 @@ class Events extends \Ilch\Box
         $date = new \Ilch\Date();
         $eventMapper = new EventMapper();
 
-        $this->getView()->set('eventList', $eventMapper->getEventListUpcoming());
+        $this->getView()->set('eventList', $eventMapper->getEventListUpcoming(5));
     }
 }

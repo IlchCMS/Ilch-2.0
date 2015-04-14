@@ -3,16 +3,20 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="shoutboxSettings" class="col-lg-2 control-label">
+        <label for="entrySettings" class="col-lg-2 control-label">
             <?=$this->getTrans('numberOfBirthsdayShow') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-2 input-group">
             <div class="container">
                 <div class="input-group spinner">
-                    <input type="text" class="form-control" id="entrySettings" name="entrySettings" value="<?=$this->get('setShow') ?>">
+                    <input class="form-control"
+                           type="text"
+                           id="entrySettings"
+                           name="entrySettings"
+                           value="<?=$this->get('setShow') ?>">
                     <div class="input-group-btn-vertical">
-                        <button class="btn btn-default"><i class="fa fa-caret-up"></i></button>
-                        <button class="btn btn-default"><i class="fa fa-caret-down"></i></button>
+                        <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
+                        <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
                     </div>
                 </div>
             </div>
@@ -20,6 +24,7 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
 <script language="JavaScript" type="text/javascript">
 (function ($) {
   $('.spinner .btn:first-of-type').on('click', function() {

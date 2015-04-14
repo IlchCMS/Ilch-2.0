@@ -80,7 +80,7 @@ class Show extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuEventList'), array('controller' => 'index', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('naviEventsUpcoming'), array('action' => 'upcoming'));
 
-        $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcoming());
+        $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcomingALL());
     }
 
     public function pastAction()

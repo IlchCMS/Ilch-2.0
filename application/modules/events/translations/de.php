@@ -24,7 +24,7 @@ return array
     'showEvent' => 'Veranstaltung anschauen',
     'menuActionNewEvent' => 'Erstellen',
     'menuActionEditEvent' => 'Bearbeiten',
-    'menuNewEvent' => 'Veranstaltung erstellen',
+    'menuNewEvent' => 'Erstellen',
     'menuEditEvent' => 'Veranstaltung bearbeiten',
     'askIfDeleteEvent' => 'Sind Sie sicher, dass der Event "%s" entfernt werden soll?',
     'manageEvents' => 'Veranstaltung verwalten',
