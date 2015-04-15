@@ -1,5 +1,5 @@
 <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-<?php include APPLICATION_PATH.'/modules/events/views/index/naviHead.php'; ?>
+<?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
     <?=$this->getTokenField() ?>
     <legend>

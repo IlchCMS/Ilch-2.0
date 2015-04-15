@@ -1,6 +1,6 @@
 <table class="table table-striped table-responsive">
     <tr align="center">
-        <td width="1%"><a class="list-group-item" href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index')); ?>"><i class="fa fa-bars"></i></a></td>
+        <td width="1%"><a class="list-group-item" href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index')); ?>"><i class="fa fa-list"></i></a></td>
         <td width="20%"><a class="list-group-item" href="<?=$this->getUrl(array('controller' => 'show', 'action' => 'upcoming')); ?>"><i class="fa fa-history fa-flip-horizontal"></i>&nbsp; <?=$this->getTrans('naviEventsUpcoming') ?></a></td>
         <td width="20%"><a class="list-group-item" href="<?=$this->getUrl(array('controller' => 'show', 'action' => 'past')); ?>"><i class="fa fa-history"></i>&nbsp; <?=$this->getTrans('naviEventsPast') ?></a></td>
         <?php if ($this->getUser()): ?>

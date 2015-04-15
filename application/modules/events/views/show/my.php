@@ -2,7 +2,7 @@
 $date = new \Ilch\Date();
 ?>
 <div class="table-responsive">
-    <?php include APPLICATION_PATH.'/modules/events/views/index/naviHead.php'; ?>
+    <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
     <?php $MyEventsCount = 0; ?>
     <?php if ($this->get('eventList') != ''): ?>
         <?php foreach ($this->get('eventList') as $eventlist): ?>

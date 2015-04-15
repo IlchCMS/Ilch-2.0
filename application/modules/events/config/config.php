@@ -42,20 +42,20 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_events` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL,
                   `date_created` DATETIME NOT NULL,
-                  `title` varchar(100) NOT NULL,
-                  `place` varchar(100) NOT NULL,
-                  `image` varchar(255) NOT NULL,
+                  `title` VARCHAR(100) NOT NULL,
+                  `place` VARCHAR(100) NOT NULL,
+                  `image` VARCHAR(255) NOT NULL,
                   `text` LONGTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_events_entrants` (
-                  `event_id` int(11) NOT NULL,
-                  `user_id` int(11) NOT NULL,
-                  `status` int(11) NOT NULL
+                  `event_id` INT(11) NOT NULL,
+                  `user_id` INT(11) NOT NULL,
+                  `status` INT(11) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }

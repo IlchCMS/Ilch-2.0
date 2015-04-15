@@ -4,6 +4,7 @@
  */
 
 namespace Modules\Calendar\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install

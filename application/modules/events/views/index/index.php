@@ -2,7 +2,7 @@
 $date = new \Ilch\Date();
 ?>
 <div class="table-responsive">
-    <?php include APPLICATION_PATH.'/modules/events/views/index/naviHead.php'; ?>
+    <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
     <?php if ($this->get('eventListUpcoming') == '' AND $this->get('getEventList') == '' AND $this->get('getEventListOther') == '' AND $this->get('eventListPast') == ''): ?>
         <table class="table table-striped table-responsive">
             <tr>
