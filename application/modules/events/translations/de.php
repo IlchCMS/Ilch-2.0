@@ -15,6 +15,7 @@ return array
     'place' => 'Ort',
     'time' => 'Datum/Uhrzeit',
     'text' => 'Text',
+    'image' => 'Bild',
     'creator' => 'Ersteller',
     'noEvent' => 'Keine Veranstaltungen vorhanden.',
     'missingText' => 'Text muss ausgefüllt werden',

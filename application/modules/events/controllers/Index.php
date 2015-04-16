@@ -68,6 +68,14 @@ class Index extends \Ilch\Controller\Frontend
             $place = trim($this->getRequest()->getPost('place'));
             $text = trim($this->getRequest()->getPost('text'));
 
+            $path = 'application/modules/events/static/upload/image/';
+            $file = $_FILES['image']['name'];
+            $endung = pathinfo($file, PATHINFO_EXTENSION);
+            $name = pathinfo($file, PATHINFO_FILENAME);
+            $image = $path.$name.'.'.$endung;
+            
+            move_uploaded_file($_FILES['image']['tmp_name'], $path.$name.'.'.$endung);
+            
             if (empty($dateCreated)) {
                 $this->addMessage('missingDate', 'danger');
             } elseif(empty($title)) {
@@ -81,6 +89,7 @@ class Index extends \Ilch\Controller\Frontend
                 $eventModel->setTitle($title);
                 $eventModel->setDateCreated($dateCreated);
                 $eventModel->setPlace($place);
+                $eventModel->setImage($image);
                 $eventModel->setText($text);
                 $eventMapper->save($eventModel);
 

@@ -18,7 +18,7 @@ $profil = $this->get('profil');
                 <div class="form-group">
                     <?=$this->getTokenField(); ?>
                     <div class="col-lg-3 col-sm-3 col-3">
-                        <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
+                        <img class="panel-profile-image" src="<?=$this->getBaseUrl().$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
                     </div>
                     <div class="col-lg-9 col-sm-9 col-9">
                         <h4>Avatar Upload</h4>

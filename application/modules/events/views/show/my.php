@@ -22,7 +22,7 @@ $date = new \Ilch\Date();
                     <tr>
                         <td class="col-lg-3">
                             <?php if ($this->escape($eventlist->getImage()) != ''): ?>
-                                <img src="<?=$this->escape($eventlist->getImage()) ?>">
+                                <img src="<?=$this->getBaseUrl().$this->escape($eventlist->getImage()) ?>">
                             <?php else: ?>
                                 <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>">
                             <?php endif; ?>

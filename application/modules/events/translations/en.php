@@ -15,6 +15,7 @@ return array
     'place' => 'Place',
     'time' => 'Date/Time',
     'text' => 'Text',
+    'image' => 'Image',
     'creator' => 'Creator',
     'noEvent' => 'No Event available.',
     'missingText' => 'Text was not filled',

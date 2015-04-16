@@ -21,7 +21,7 @@ $user = $userMapper->getUserById($event->getUserId());
     <div class="form-group">
         <div class="col-lg-6">
             <?php if ($this->escape($event->getImage()) != ''): ?>
-                <img src="<?=$this->escape($event->getImage()) ?>" class="headPic">
+                <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic">
             <?php else: ?>
                 <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic">
             <?php endif; ?>
