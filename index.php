@@ -9,7 +9,7 @@ if(!version_compare(phpversion(), '5.4.0', '>=')) {
 }
 
 @ini_set('display_errors', 'on');
-error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL);
 
 session_start();
 header('Content-Type: text/html; charset=utf-8');
