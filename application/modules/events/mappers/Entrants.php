@@ -70,36 +70,6 @@ class Entrants extends \Ilch\Mapper
     }
 
     /**
-     * Gets the Event entrants.
-     *
-     * @param integer $id
-     * @return EntrantsModel|null
-     */
-    public function getEventEntrantsCount($id)
-    {
-        $entryArray = $this->db()->select('*')
-                ->from('events_entrants')
-                ->where(array('event_id' => $id))
-                ->execute()
-                ->fetchRows();
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $entry = array();
-
-        foreach ($entryArray as $entries) {
-            $entryModel = new EntrantsModel();
-            $entryModel->setUserId($entries['user_id']);
-            $entryModel->setStatus($entries['status']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
-    }
-
-    /**
      * Inserts user on event model.
      *
      * @param EntrantsModel $event
@@ -142,7 +112,7 @@ class Entrants extends \Ilch\Mapper
      *
      * @param integer $id
      */
-    public function deleteUserOnEvent($eventId, $userId)
+    public function deleteUserFromEvent($eventId, $userId)
     {
         $this->db()->delete('events_entrants')
                 ->where(array('user_id' => $userId, 'event_id' => $eventId))

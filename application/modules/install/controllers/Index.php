@@ -346,6 +346,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['war']['types']        = array('clan');
         $modules['history']['types']    = array('clan');
         $modules['rule']['types']       = array('clan');
+        $modules['training']['types']   = array('clan');
         $modules['guestbook']['types']  = array('clan', 'private');
         $modules['link']['types']       = array('clan', 'private');
         $modules['partner']['types']    = array('clan', 'private');

@@ -33,7 +33,6 @@ $user = $userMapper->getUserById($event->getUserId());
             <div class="naviPic">
                 <div class="naviGast"><?=$this->getTrans('by') ?> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></div>
                 <div class="naviButtons">
-                    <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
                     <?php if ($this->getUser() AND $event->getDateCreated() > new \Ilch\Date()): ?>
                         <form class="form-horizontal" method="POST" action="">
                         <?=$this->getTokenField() ?>     
@@ -142,7 +141,7 @@ $user = $userMapper->getUserById($event->getUserId());
                     <br />
                 <?php endforeach; ?>
             <?php endif; ?>
-            <?php if ($this->getUser() AND $eventEntrants != '' AND $eventEntrants->getUserId() == $this->getUser()->getId()): ?>
+            <?php if ($this->getUser() AND ($eventEntrants != '' AND $eventEntrants->getUserId() == $this->getUser()->getId() OR $event->getUserId() == $this->getUser()->getId())): ?>
                 <div class="form-group eventCommentSubmit">
                     <form action="" class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>

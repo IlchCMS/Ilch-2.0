@@ -7,7 +7,6 @@
 namespace Modules\Events\Controllers;
 
 use Modules\Events\Mappers\Events as EventMapper;
-use Modules\Events\Models\Events as EventModel;
 use Modules\Events\Mappers\Entrants as EntrantsMapper;
 use Modules\Events\Models\Entrants as EntrantsModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;
@@ -49,7 +48,7 @@ class Show extends \Ilch\Controller\Frontend
                 $this->addMessage('saveSuccess');
             }
             if ($this->getRequest()->getPost('deleteUser')) {
-                $entrantsMapper->deleteUserOnEvent($this->getRequest()->getParam('id'), $this->getUser()->getId());
+                $entrantsMapper->deleteUserFromEvent($this->getRequest()->getParam('id'), $this->getUser()->getId());
 
                 $this->addMessage('deleteSuccess');
             }
@@ -68,7 +67,7 @@ class Show extends \Ilch\Controller\Frontend
 
         $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
         $this->getView()->set('eventEntrantsUser', $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id')));
-        $this->getView()->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsCount($this->getRequest()->getParam('id'))));
+        $this->getView()->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'))));
         $this->getView()->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')));
     }
 
