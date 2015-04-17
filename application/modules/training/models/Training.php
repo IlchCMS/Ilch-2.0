@@ -32,11 +32,32 @@ class Training extends \Ilch\Model
     protected $date;
 
     /**
+     * The time of the training.
+     *
+     * @var string
+     */
+    protected $time;
+
+    /**
      * The place of the training.
      *
      * @var string
      */
     protected $place;
+
+    /**
+     * The serverIP of the training.
+     *
+     * @var string
+     */
+    protected $serverIP;
+
+    /**
+     * The serverPW of the training.
+     *
+     * @var string
+     */
+    protected $serverPW;
 
     /**
      * The text of the training.
@@ -115,6 +136,29 @@ class Training extends \Ilch\Model
     }
 
     /**
+     * Gets the time of the training.
+     *
+     * @return int
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * Sets the time of the training.
+     *
+     * @param int $time
+     * @return this
+     */
+    public function setTime($time)
+    {
+        $this->time = (int)$time;
+
+        return $this;
+    }
+
+    /**
      * Gets the place of the training.
      *
      * @return string
@@ -133,6 +177,52 @@ class Training extends \Ilch\Model
     public function setPlace($place)
     {
         $this->place = (string)$place;
+
+        return $this;
+    }
+
+    /**
+     * Gets the serverIP of the training.
+     *
+     * @return string
+     */
+    public function getServerIP()
+    {
+        return $this->serverIP;
+    }
+
+    /**
+     * Sets the serverIP of the training.
+     *
+     * @param string $serverIP
+     * @return this
+     */
+    public function setServerIP($serverIP)
+    {
+        $this->serverIP = (string)$serverIP;
+
+        return $this;
+    }
+
+    /**
+     * Gets the serverPW of the training.
+     *
+     * @return string
+     */
+    public function getServerPW()
+    {
+        return $this->serverPW;
+    }
+
+    /**
+     * Sets the serverPW of the training.
+     *
+     * @param string $serverPW
+     * @return this
+     */
+    public function setServerPW($serverPW)
+    {
+        $this->serverPW = (string)$serverPW;
 
         return $this;
     }

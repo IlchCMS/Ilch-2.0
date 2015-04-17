@@ -48,8 +48,11 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
+        if ($this->getUser()) {
+            $this->getView()->set('trainEntrantUser', $entrantsMapper->getEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
+        }
+
         $this->getView()->set('training', $trainingMapper->getTrainingById($this->getRequest()->getParam('id')));
-        $this->getView()->set('trainEntrantUser', $entrantsMapper->getEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
         $this->getView()->set('trainEntrantsUserCount', count($entrantsMapper->getEntrantsById($this->getRequest()->getParam('id'))));
         $this->getView()->set('trainEntrantsUser', $entrantsMapper->getEntrantsById($this->getRequest()->getParam('id')));
     }

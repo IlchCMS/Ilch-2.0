@@ -13,9 +13,15 @@ $userMapper = new \Modules\User\Mappers\User();
     </div>
     <div class="form-group">
         <label for="date" class="col-lg-2">
-            <?=$this->getTrans('date') ?>:
+            <?=$this->getTrans('dateTime') ?>:
         </label>
         <div class="col-lg-10"><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></div>
+    </div>
+    <div class="form-group">
+        <label for="time" class="col-lg-2">
+            <?=$this->getTrans('time') ?>:
+        </label>
+        <div class="col-lg-10">~ <?=$this->escape($training->getTime()) ?> <?=$this->getTrans('min') ?></div>
     </div>
     <div class="form-group">
         <label for="place" class="col-lg-2">
@@ -23,6 +29,28 @@ $userMapper = new \Modules\User\Mappers\User();
         </label>
         <div class="col-lg-10"><?=$this->escape($training->getPlace()) ?></div>
     </div>
+    <?php if ($training->getServerIP() != ''): ?>
+    <div class="form-group">
+        <label for="serverIP" class="col-lg-2">
+            <?=$this->getTrans('serverIP') ?>:
+        </label>
+        <div class="col-lg-10"><?=$this->escape($training->getServerIP()) ?></div>
+    </div>
+    <?php endif; ?>
+    <?php if ($training->getServerPW() != ''): ?>
+        <div class="form-group">
+            <label for="serverPW" class="col-lg-2">
+                <?=$this->getTrans('serverPW') ?>:
+            </label>
+            <div class="col-lg-10">                
+                <?php if ($this->getUser() AND $this->get('trainEntrantUser') != ''): ?>
+                    <?=$this->escape($training->getServerPW()) ?>
+                <?php else: ?>
+                    <?=str_repeat('&bull;', strlen($this->escape($training->getServerPW()))) ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="form-group">
         <label for="entrant" class="col-lg-2">
             <?=$this->getTrans('entrant') ?>:

@@ -38,7 +38,10 @@ class Training extends \Ilch\Mapper
             $entryModel->setId($entries['id']);
             $entryModel->setTitle($entries['title']);
             $entryModel->setDate($entries['date']);
+            $entryModel->setTime($entries['time']);
             $entryModel->setPlace($entries['place']);
+            $entryModel->setServerIP($entries['server_ip']);
+            $entryModel->setServerPW($entries['server_pw']);
             $entryModel->setText($entries['text']);
             $training[] = $entryModel;
 
@@ -70,7 +73,10 @@ class Training extends \Ilch\Mapper
         (
             'title' => $training->getTitle(),
             'date' => $training->getDate(),
+            'time' => $training->getTime(),
             'place' => $training->getPlace(),
+            'server_ip' => $training->getServerIP(),
+            'server_pw' => $training->getServerPW(),
             'text' => $training->getText(),
         );
 

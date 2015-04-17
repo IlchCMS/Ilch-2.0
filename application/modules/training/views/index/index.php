@@ -12,7 +12,7 @@ $entrantsMapper = new Modules\Training\Mappers\Entrants();
         </colgroup>
         <thead>
             <tr>
-                <th><?=$this->getTrans('when') ?></th>
+                <th><?=$this->getTrans('dateTime') ?></th>
                 <th><?=$this->getTrans('title') ?></th>
                 <th><?=$this->getTrans('place') ?></th>
                 <th><?=$this->getTrans('entrant') ?></th>

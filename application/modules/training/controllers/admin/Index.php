@@ -92,7 +92,10 @@ class Index extends \Ilch\Controller\Admin
             } else {
                 $model->setTitle($title);
                 $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
+                $model->setTime($this->getRequest()->getPost('time'));
                 $model->setPlace($this->getRequest()->getPost('place'));
+                $model->setServerIP($this->getRequest()->getPost('serverIP'));
+                $model->setServerPW($this->getRequest()->getPost('serverPW'));
                 $model->setText($this->getRequest()->getPost('text'));
                 $trainingMapper->save($model);
                 

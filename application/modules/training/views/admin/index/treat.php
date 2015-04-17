@@ -1,4 +1,5 @@
 <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
 <?php $training = $this->get('training'); ?>
 <form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
     <?=$this->getTokenField() ?>
@@ -24,7 +25,7 @@
     </div>
     <div class="form-group">
         <label for="date" class="col-md-2 control-label">
-            <?=$this->getTrans('date') ?>:
+            <?=$this->getTrans('dateTime') ?>:
         </label>
         <div class="col-lg-2 input-group date form_datetime">
             <input class="form-control"
@@ -39,6 +40,27 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="time" class="col-lg-2 control-label">
+            <?=$this->getTrans('time') ?>:
+        </label>
+        <div class="col-lg-6 input-group">
+            <div class="container">
+                <div class="input-group spinner">
+                    <input class="form-control"
+                           type="text"
+                           id="time"
+                           name="time"
+                           value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTime()); } else { echo '30'; } ?>">
+                    <div class="input-group-btn-vertical">
+                        <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
+                        <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
+                    </div>
+                    &nbsp;<?=$this->getTrans('min') ?>
+                </div>
+            </div>
+        </div>      
+    </div>
+    <div class="form-group">
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -48,6 +70,32 @@
                    name="place"
                    id="place"
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getPlace()); } ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="serverIP" class="col-lg-2 control-label">
+            <?=$this->getTrans('serverIP') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input class="form-control"
+                   type="text"
+                   name="serverIP"
+                   id="serverIP"
+                   placeholder="IP:Port"
+                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getServerIP()); } ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="serverPW" class="col-lg-2 control-label">
+            <?=$this->getTrans('serverPW') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input class="form-control"
+                   type="text"
+                   name="serverPW"
+                   id="serverPW"
+                   placeholder="********"
+                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getServerPW()); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -80,10 +128,13 @@
             minuteStep: 15
         });
     });
+ 
+    (function ($) {
+      $('.spinner .btn:first-of-type').on('click', function() {
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+      });
+      $('.spinner .btn:last-of-type').on('click', function() {
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+      });
+    })(jQuery);
 </script>
-<style>
-.date {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-</style>

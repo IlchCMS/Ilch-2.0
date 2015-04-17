@@ -17,7 +17,7 @@
                         <th><?=$this->getCheckAllCheckbox('check_training') ?></th>
                         <th></th>
                         <th></th>
-                        <th><?=$this->getTrans('when') ?></th>
+                        <th><?=$this->getTrans('dateTime') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
                     </tr>
                 </thead>
