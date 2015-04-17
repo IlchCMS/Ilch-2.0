@@ -193,10 +193,10 @@ class Mysql
      * @param  string $table
      * @return true|false
      */
-    public function ifExists($table)
+    public function ifTableExists($table)
     {
         $sql = "SHOW TABLES LIKE '$table'";
-        $result = mysqli_query($this->conn, $this->getSqlWithPrefix($sql));
+        $result = $this->query($sql);
 
         if(mysqli_num_rows($result) > 0){
             return true;
