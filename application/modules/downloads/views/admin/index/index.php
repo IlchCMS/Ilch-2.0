@@ -250,9 +250,10 @@ $(document).ready
     
 </script>
 <script>
-    <?php echo $this->getMediaModal(
-            $mediaButton = $this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')),
-            $actionButton =$this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id')))?>
+    <?=$this->getMedia()
+                    ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')))
+                    ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id'))) ?>
+
     function reload(){
         setTimeout(function(){window.location.reload(1);}, 1000);
     };

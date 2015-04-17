@@ -250,9 +250,9 @@ $(document).ready
     
 </script>
 <script>
-    <?php echo $this->getMediaModal(
-            $mediaButton = $this->getUrl('admin/media/iframe/multi/type/multi/id/'),
-            $actionButton = $this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id')))?>
+    <?=$this->getMedia()
+                    ->addActionButton($this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id')))
+                    ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/multi/id/')) ?>
 
     function reload(){
         setTimeout(function(){window.location.reload(1);}, 1000);

@@ -84,7 +84,7 @@
 <?php if ($this->getRequest()->getParam('type') === 'single'): ?>
 <script>
     $(".image").click(function(){
-        window.top.$('#selectedImage').val($(this).data('url'));
+        window.top.$('#selectedImage<?=$this->getRequest()->getParam('input')?>').val($(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
     });
 </script>

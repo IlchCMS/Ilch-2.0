@@ -154,7 +154,8 @@ $('#articleLanguageInput').change
     }
 );
 
-<?=$this->getMediaModal($mediaButton = $this->getUrl('admin/media/iframe/index/type/single/'))?>
+<?=$this->getMedia()
+            ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/')) ?>
 
 $('#preview').click
 (

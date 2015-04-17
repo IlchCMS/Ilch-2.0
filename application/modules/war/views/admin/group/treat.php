@@ -40,10 +40,10 @@
                 <input class="form-control"
                        type="text"
                        name="groupImage"
-                       id="selectedImage"
+                       id="selectedImage_1"
                        placeholder="<?=$this->getTrans('groupImage') ?>"
                        value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupImage(); } ?>" />
-                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
     </div>
@@ -75,7 +75,10 @@
 </form>
 
 <script>
-    <?=$this->getMediaModal($mediaButton = $this->getUrl('admin/media/iframe/index/type/single/')) ?>
+    // Example for multiple input filds
+    <?=$this->getMedia()
+                    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+                    ->addInputId('_1') ?>
 
     $('#assignedMember').chosen();
     $('#assignedMember_chosen').css('width', '100%'); // Workaround for chosen resize bug.
