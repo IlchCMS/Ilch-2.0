@@ -30,6 +30,15 @@ class Frontend extends Base
             if(!empty($config['layouts'])) {
                 foreach ($config['layouts'] as $layoutKeyConfig => $layouts) {
                     foreach ($layouts as $url) {
+                        if(empty($url['action'])) {
+                            $url['action'] = '';
+                        }
+                        if(empty($url['controller'])) {
+                            $url['controller'] = '';
+                        }
+                        if(empty($url['module'])) {
+                            $url['module'] = '';
+                        }
                         if($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName()) {
                             $layoutFile = $layoutKeyConfig;
                             break 2;
