@@ -40,6 +40,9 @@
 
                     foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
                         include_once $layoutPath.'/config/config.php';
+                        if (empty($config['modulekey'])) {
+                            $config['modulekey'] = '';
+                        }
                         $module = $config['modulekey'];
                         $selected = '';
 
