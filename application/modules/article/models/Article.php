@@ -29,6 +29,13 @@ class Article extends \Ilch\Model
     protected $autorId;
 
     /**
+     * The visits of the article.
+     *
+     * @var int
+     */
+    protected $visits;
+
+    /**
      * The perma of the article.
      *
      * @var string
@@ -129,6 +136,26 @@ class Article extends \Ilch\Model
     public function setAutorId($autorId)
     {
         $this->autorId = (int) $autorId;
+    }
+
+    /**
+     * Gets the visits of the article.
+     *
+     * @return int
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
+    /**
+     * Sets the visits of the article.
+     *
+     * @param int $visits
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = (int) $visits;
     }
 
     /**

@@ -13,7 +13,10 @@ if (!empty($articles)) {
     <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
 </h4>
 <div>
-    <span><?=$date->format(null, true)?></span> <i class="fa fa-comment-o"></i> <?=count($comments)?></span>
+    <?=$date->format(null, true)?></span>
+</div>
+<div>
+    <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId().'#comment'))?>"><i class="fa fa-comment-o"></i> <?=count($comments)?></a> <i class="fa fa-eye"></i> <?=$article->getVisits() ?>
 </div>
 <?php
 if (!empty($image)) {

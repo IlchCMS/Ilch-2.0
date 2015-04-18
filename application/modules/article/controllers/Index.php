@@ -33,7 +33,7 @@ class Index extends \Ilch\Controller\Frontend
         $articleMapper = new ArticleMapper();
         $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
     }
-    
+
     public function showAction()
     {
         $commentMapper = new CommentMapper();
@@ -62,6 +62,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('article', $articleModel);
         } else {
             $articleMapper = new ArticleMapper();
+            $articleModel = new ArticleModel();
 
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
 
@@ -72,6 +73,11 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
                 ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
         }
+
+        $articleModel->setId($article->getId());
+        $articleModel->setVisits($article->getVisits() + 1);
+        $articleMapper->saveVisits($articleModel);
+
         $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
         $this->getView()->set('comments', $comments);
     }

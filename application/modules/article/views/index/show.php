@@ -26,13 +26,13 @@ if ($article->getAutorId() != ''){
 }
 if(empty($preview))
 {
-echo '<h5>'.$this->getTrans('comments').' ('.count($comments).')</h5>';
+echo '<div id="comment"><h5>'.$this->getTrans('comments').' ('.count($comments).')</h5></div>';
 
     if($this->getUser())
     {
     ?>
     <form action="" class="form-horizontal" method="POST">
-        <?php echo $this->getTokenField(); ?>
+        <?=$this->getTokenField() ?>
         <div class="form-group">
             <div class="col-lg-12">
                 <textarea class="form-control"
