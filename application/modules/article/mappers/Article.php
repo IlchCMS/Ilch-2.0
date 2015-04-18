@@ -41,6 +41,7 @@ class Article extends \Ilch\Mapper
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
+            $articleModel->setAutorId($articleRow['autor_id']);
             $articleModel->setDescription($articleRow['description']);
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setPerma($articleRow['perma']);
@@ -63,7 +64,7 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleList($locale = '', $limit = null)
     {
-        $sql = 'SELECT `a`.`id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`,`m`.`url_thumb`,`m`.`url`
+        $sql = 'SELECT `a`.`id`, `ac`.`autor_id`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`,`m`.`url_thumb`,`m`.`url`
                 FROM `[prefix]_articles` as `a`
                 LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
                 AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
@@ -86,6 +87,7 @@ class Article extends \Ilch\Mapper
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
+            $articleModel->setAutorId($articleRow['autor_id']);
             $articleModel->setTitle($articleRow['title']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setArticleImage($articleRow['article_img']);
@@ -117,6 +119,7 @@ class Article extends \Ilch\Mapper
 
         $articleModel = new ArticleModel();
         $articleModel->setId($articleRow['id']);
+        $articleModel->setAutorId($articleRow['autor_id']);
         $articleModel->setDescription($articleRow['description']);
         $articleModel->setTitle($articleRow['title']);
         $articleModel->setContent($articleRow['content']);
@@ -165,6 +168,7 @@ class Article extends \Ilch\Mapper
                     (
                         array
                         (
+                            'autor_id' => $article->getAutorId(),
                             'title' => $article->getTitle(), 
                             'description' => $article->getDescription(), 
                             'content' => $article->getContent(), 

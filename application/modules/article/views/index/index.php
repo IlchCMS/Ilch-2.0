@@ -35,6 +35,15 @@ if (!empty($image)) {
             echo $content;
         }   
 
+        if ($article->getAutorId() != ''){
+            $userMapper = new \Modules\User\Mappers\User();
+            $user = $userMapper->getUserById($article->getAutorId());
+            if ($user != ''){
+                echo '<hr />';
+                echo $this->getTrans('autor').': <a href="'.$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'">'.$this->escape($user->getName()).'</a>';
+                echo '<hr />';
+            }
+        }
         echo '<br /><br /><br /><br />';
     }
 }

@@ -16,6 +16,14 @@ echo '<br />';
 
 echo $content;
 echo '<hr />';
+if ($article->getAutorId() != ''){
+    $userMapper = new \Modules\User\Mappers\User();
+    $user = $userMapper->getUserById($article->getAutorId());
+    if ($user != ''){
+        echo $this->getTrans('autor').': <a href="'.$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'">'.$this->escape($user->getName()).'</a>';
+        echo '<hr />';
+    }
+}
 if(empty($preview))
 {
 echo '<h5>'.$this->getTrans('comments').' ('.count($comments).')</h5>';

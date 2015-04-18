@@ -22,6 +22,13 @@ class Article extends \Ilch\Model
     protected $id;
 
     /**
+     * The autorId of the article.
+     *
+     * @var int
+     */
+    protected $autorId;
+
+    /**
      * The perma of the article.
      *
      * @var string
@@ -102,6 +109,26 @@ class Article extends \Ilch\Model
     public function setId($id)
     {
         $this->id = (int) $id;
+    }
+
+    /**
+     * Gets the autorId of the article.
+     *
+     * @return int
+     */
+    public function getAutorId()
+    {
+        return $this->autorId;
+    }
+
+    /**
+     * Sets the autorId of the article.
+     *
+     * @param int $autorId
+     */
+    public function setAutorId($autorId)
+    {
+        $this->autorId = (int) $autorId;
     }
 
     /**
