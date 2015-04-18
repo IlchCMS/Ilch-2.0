@@ -16,11 +16,11 @@ echo '<br />';
 
 echo $content;
 echo '<hr />';
-if ($article->getAutorId() != ''){
+if ($article->getAuthorId() != ''){
     $userMapper = new \Modules\User\Mappers\User();
-    $user = $userMapper->getUserById($article->getAutorId());
+    $user = $userMapper->getUserById($article->getAuthorId());
     if ($user != ''){
-        echo $this->getTrans('autor').': <a href="'.$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'">'.$this->escape($user->getName()).'</a>';
+        echo $this->getTrans('author').': <a href="'.$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'">'.$this->escape($user->getName()).'</a>';
         echo '<hr />';
     }
 }

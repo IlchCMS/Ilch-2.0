@@ -24,7 +24,7 @@ return array
     'askIfDeleteArticle' => 'Sind Sie sicher dass die Artikel "%s" entfernt werden soll?',
     'readMore' => 'ganzen Artikel lesen',
     'comments' => 'Kommentare',
-    'autor' => 'Autor',
+    'author' => 'Autor',
     'submit' => 'Eintragen',
     'articleImage' => 'Artikelbild',
     'articlePreview' => 'Vorschau',

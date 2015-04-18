@@ -22,11 +22,11 @@ class Article extends \Ilch\Model
     protected $id;
 
     /**
-     * The autorId of the article.
+     * The authorId of the article.
      *
      * @var int
      */
-    protected $autorId;
+    protected $authorId;
 
     /**
      * The visits of the article.
@@ -119,23 +119,23 @@ class Article extends \Ilch\Model
     }
 
     /**
-     * Gets the autorId of the article.
+     * Gets the authorId of the article.
      *
      * @return int
      */
-    public function getAutorId()
+    public function getAuthorId()
     {
-        return $this->autorId;
+        return $this->authorId;
     }
 
     /**
-     * Sets the autorId of the article.
+     * Sets the authorId of the article.
      *
-     * @param int $autorId
+     * @param int $authorId
      */
-    public function setAutorId($autorId)
+    public function setAuthorId($authorId)
     {
-        $this->autorId = (int) $autorId;
+        $this->authorId = (int) $authorId;
     }
 
     /**

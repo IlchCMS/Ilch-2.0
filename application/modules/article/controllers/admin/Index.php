@@ -100,7 +100,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
-            $model->setAutorId($this->getUser()->getId());
+            $model->setAuthorId($this->getUser()->getId());
             $model->setDescription($this->getRequest()->getPost('description'));
             $model->setTitle($this->getRequest()->getPost('articleTitle'));
             $model->setContent($this->getRequest()->getPost('articleContent'));

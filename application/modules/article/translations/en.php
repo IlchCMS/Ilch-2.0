@@ -26,7 +26,7 @@ return array
     'askIfDeleteArticle' => 'Are you sure to delete article "%s"?',
     'readMore' => 'Read whole article',
     'comments' => 'Comments',
-    'autor' => 'Author',
+    'author' => 'Author',
     'submit' => 'Save',
     'articleImage' => 'Article image',
     'articlePreview' => 'Preview',

@@ -60,7 +60,7 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_content` (
                   `article_id` int(11) NOT NULL,
-                  `autor_id` int(11) NOT NULL,
+                  `author_id` int(11) NOT NULL,
                   `visits` int(11) NOT NULL,
                   `content` mediumtext COLLATE utf8_unicode_ci NOT NULL,
                   `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
