@@ -217,7 +217,12 @@ class Index extends \Ilch\Controller\Frontend
                 \Ilch\Registry::set('db', $db);
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
-                $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy'), $modulesToInstall);
+                if (!empty($modulesToInstall)) {
+                    $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy'), $modulesToInstall);
+                } else {
+                    $modulesToInstall = array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy');
+                }
+
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
 
                 /*
