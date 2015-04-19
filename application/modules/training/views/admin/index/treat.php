@@ -73,6 +73,24 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="contact" class="col-lg-2 control-label">
+            <?=$this->getTrans('contactPerson') ?>:
+        </label>
+        <div class="col-lg-2">
+            <select class="form-control" name="contact">
+                <?php foreach ($this->get('users') as $user) {
+                        $selected = '';
+
+                        if ($this->get('training') != '' AND $this->get('training')->getContact() == $user->getId()) {
+                            $selected = 'selected="selected"';
+                        }
+                        echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
+                    }
+                ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="voiceServer" class="col-lg-2 control-label">
             <?php echo $this->getTrans('voiceServer'); ?>:
         </label>

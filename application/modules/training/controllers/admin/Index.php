@@ -9,6 +9,7 @@ namespace Modules\Training\Controllers\Admin;
 use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Models\Training as TrainingModel;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -65,6 +66,7 @@ class Index extends \Ilch\Controller\Admin
     public function treatAction() 
     {
         $trainingMapper = new TrainingMapper();
+        $userMapper = new UserMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -94,6 +96,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
                 $model->setTime($this->getRequest()->getPost('time'));
                 $model->setPlace($this->getRequest()->getPost('place'));
+                $model->setContact($this->getRequest()->getPost('contact'));
                 $model->setVoiceServer($this->getRequest()->getPost('voiceServer'));
                 $model->setVoiceServerIP($this->getRequest()->getPost('voiceServerIP'));
                 $model->setVoiceServerPW($this->getRequest()->getPost('voiceServerPW'));
@@ -102,12 +105,14 @@ class Index extends \Ilch\Controller\Admin
                 $model->setGameServerPW($this->getRequest()->getPost('gameServerPW'));
                 $model->setText($this->getRequest()->getPost('text'));
                 $trainingMapper->save($model);
-                
+
                 $this->addMessage('saveSuccess');
-                
+
                 $this->redirect(array('action' => 'index'));
             }
         }
+
+            $this->getView()->set('users', $userMapper->getUserList(array('confirmed' => 1)));
     }
 
     public function delAction()
@@ -115,7 +120,7 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $trainingMapper = new TrainingMapper();
             $entrantsMapper = new EntrantsMapper();
-            
+
             $trainingMapper->delete($this->getRequest()->getParam('id'));
             $entrantsMapper->deleteAllUser($this->getRequest()->getParam('id'));
 

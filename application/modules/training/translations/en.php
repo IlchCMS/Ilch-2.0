@@ -35,4 +35,5 @@ return array
     'gameServerIP' => 'Gameserver IP',
     'gameServerPW' => 'Gameserver Password',
     'note' => 'Note',
+    'contactPerson' => 'Contact Person',
 );

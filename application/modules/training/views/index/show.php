@@ -29,6 +29,13 @@ $userMapper = new \Modules\User\Mappers\User();
         </label>
         <div class="col-lg-10"><?=$this->escape($training->getPlace()) ?></div>
     </div>
+    <div class="form-group">
+        <label for="contactPerson" class="col-lg-2">
+            <?=$this->getTrans('contactPerson') ?>:
+        </label>        
+        <?php $contactUser = $userMapper->getUserById($training->getContact()); ?>
+        <div class="col-lg-10"><a href="<?=$this->getUrl('user/profil/index/user/'.$contactUser->getId()) ?>" target="_blank"><?=$this->escape($contactUser->getName()) ?></a></div>
+    </div>
     <?php if ($training->getVoiceServer() != ''): ?>
         <?php if ($training->getVoiceServerIP() != ''): ?>
         <div class="form-group">

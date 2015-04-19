@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 defined('ACCESS') or die('no direct access');
 
 class Settings extends \Ilch\Controller\Admin

@@ -48,6 +48,7 @@ class Config extends \Ilch\Config\Install
                   `date` DATETIME NOT NULL,
                   `time` INT(11) NOT NULL,
                   `place` VARCHAR(100) NOT NULL,
+                  `contact` INT(11) NOT NULL,
                   `voice_server` INT(11) NOT NULL,
                   `voice_server_ip` VARCHAR(100) NOT NULL,
                   `voice_server_pw` VARCHAR(100) NOT NULL,

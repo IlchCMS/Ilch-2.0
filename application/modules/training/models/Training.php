@@ -46,6 +46,13 @@ class Training extends \Ilch\Model
     protected $place;
 
     /**
+     * The contact of the training.
+     *
+     * @var int
+     */
+    protected $contact;
+
+    /**
      * The voice server of the training.
      *
      * @var int
@@ -205,6 +212,29 @@ class Training extends \Ilch\Model
     public function setPlace($place)
     {
         $this->place = (string)$place;
+
+        return $this;
+    }
+
+    /**
+     * Gets the contact of the training.
+     *
+     * @return int
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    /**
+     * Sets the contact of the training.
+     *
+     * @param string $contact
+     * @return this
+     */
+    public function setContact($contact)
+    {
+        $this->contact = (int)$contact;
 
         return $this;
     }

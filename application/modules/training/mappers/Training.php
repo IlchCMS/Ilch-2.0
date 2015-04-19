@@ -40,6 +40,7 @@ class Training extends \Ilch\Mapper
             $entryModel->setDate($entries['date']);
             $entryModel->setTime($entries['time']);
             $entryModel->setPlace($entries['place']);
+            $entryModel->setContact($entries['contact']);
             $entryModel->setVoiceServer($entries['voice_server']);
             $entryModel->setVoiceServerIP($entries['voice_server_ip']);
             $entryModel->setVoiceServerPW($entries['voice_server_pw']);
@@ -79,6 +80,7 @@ class Training extends \Ilch\Mapper
             'date' => $training->getDate(),
             'time' => $training->getTime(),
             'place' => $training->getPlace(),
+            'contact' => $training->getContact(),
             'voice_server' => $training->getVoiceServer(),
             'voice_server_ip' => $training->getVoiceServerIP(),
             'voice_server_pw' => $training->getVoiceServerPW(),
