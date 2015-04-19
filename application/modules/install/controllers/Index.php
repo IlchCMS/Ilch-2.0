@@ -300,11 +300,7 @@ class Index extends \Ilch\Controller\Frontend
                         (1, 100, 0, 0, 0, 'user_stats', 4, 'Statistik', '', ''),
                         (1, 110, 0, 0, 0, 'user_online', 4, 'Online', '', ''),
                         (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
-                        (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
-                        (2, 30, 0, 0, 0, 'newsletter_newsletter', 4, 'Newsletter', '', ''),
-                        (2, 40, 0, 0, 0, 'birthday_birthday', 4, 'Geburtstag', '', ''),
-                        (2, 50, 0, 0, 0, 'war_lastwar', 4, 'Letzten Wars', '', ''),
-                        (2, 60, 0, 0, 0, 'war_nextwar', 4, 'Nächsten Wars', '', '')";
+                        (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', '')";
                 $db->queryMulti($boxes);
 
                 unset($_SESSION['install']);
