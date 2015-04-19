@@ -37,6 +37,7 @@ class Index extends \Ilch\Controller\Frontend
             if ($this->getRequest()->getPost('save')) {
                 $entrantsModel->setTrainId($this->getRequest()->getParam('id'));
                 $entrantsModel->setUserId($this->getUser()->getId());
+                $entrantsModel->setNote($this->getRequest()->getPost('train_textarea'));
                 $entrantsMapper->saveUserOnTrain($entrantsModel);
 
                 $this->addMessage('saveSuccess');

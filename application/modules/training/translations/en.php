@@ -28,6 +28,11 @@ return array
     'decline' => 'Decline',
     'entrys' => 'Entrys',
     'min' => 'Minutes',
-    'serverIP' => 'Server IP',
-    'serverPW' => 'Server Password',
+    'voiceServer' => 'Voiceserver',
+    'voiceServerIP' => 'Voiceserver IP',
+    'voiceServerPW' => 'Voiceserver Password',
+    'gameServer' => 'Gameserver',
+    'gameServerIP' => 'Gameserver IP',
+    'gameServerPW' => 'Gameserver Password',
+    'note' => 'Note',
 );

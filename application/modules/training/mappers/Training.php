@@ -40,8 +40,12 @@ class Training extends \Ilch\Mapper
             $entryModel->setDate($entries['date']);
             $entryModel->setTime($entries['time']);
             $entryModel->setPlace($entries['place']);
-            $entryModel->setServerIP($entries['server_ip']);
-            $entryModel->setServerPW($entries['server_pw']);
+            $entryModel->setVoiceServer($entries['voice_server']);
+            $entryModel->setVoiceServerIP($entries['voice_server_ip']);
+            $entryModel->setVoiceServerPW($entries['voice_server_pw']);
+            $entryModel->setGameServer($entries['game_server']);
+            $entryModel->setGameServerIP($entries['game_server_ip']);
+            $entryModel->setGameServerPW($entries['game_server_pw']);
             $entryModel->setText($entries['text']);
             $training[] = $entryModel;
 
@@ -75,8 +79,12 @@ class Training extends \Ilch\Mapper
             'date' => $training->getDate(),
             'time' => $training->getTime(),
             'place' => $training->getPlace(),
-            'server_ip' => $training->getServerIP(),
-            'server_pw' => $training->getServerPW(),
+            'voice_server' => $training->getVoiceServer(),
+            'voice_server_ip' => $training->getVoiceServerIP(),
+            'voice_server_pw' => $training->getVoiceServerPW(),
+            'game_server' => $training->getGameServer(),
+            'game_server_ip' => $training->getGameServerIP(),
+            'game_server_pw' => $training->getGameServerPW(),
             'text' => $training->getText(),
         );
 

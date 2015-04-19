@@ -25,6 +25,13 @@ class Entrants extends \Ilch\Model
     protected $userId;
 
     /**
+     * The note of the training entrants.
+     *
+     * @var string
+     */
+    protected $note;
+
+    /**
      * Gets the trainId of the training entrants.
      *
      * @return int
@@ -66,6 +73,29 @@ class Entrants extends \Ilch\Model
     public function setUserId($userId)
     {
         $this->userId = (int)$userId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the note of the training entrants.
+     *
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Sets the note of the training entrants.
+     *
+     * @param string $note
+     * @return this
+     */
+    public function setNote($note)
+    {
+        $this->note = (string)$note;
 
         return $this;
     }

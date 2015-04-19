@@ -46,18 +46,46 @@ class Training extends \Ilch\Model
     protected $place;
 
     /**
-     * The serverIP of the training.
+     * The voice server of the training.
      *
-     * @var string
+     * @var int
      */
-    protected $serverIP;
+    protected $voiceServer;
 
     /**
-     * The serverPW of the training.
+     * The voice server ip of the training.
      *
      * @var string
      */
-    protected $serverPW;
+    protected $voiceServerIP;
+
+    /**
+     * The voice server pw of the training.
+     *
+     * @var string
+     */
+    protected $voiceServerPW;
+
+    /**
+     * The game server of the training.
+     *
+     * @var int
+     */
+    protected $gameServer;
+
+    /**
+     * The game server ip of the training.
+     *
+     * @var string
+     */
+    protected $gameServerIP;
+
+    /**
+     * The game server pw of the training.
+     *
+     * @var string
+     */
+    protected $gameServerPW;
 
     /**
      * The text of the training.
@@ -182,47 +210,139 @@ class Training extends \Ilch\Model
     }
 
     /**
-     * Gets the serverIP of the training.
+     * Gets the voice server of the training.
      *
-     * @return string
+     * @return int
      */
-    public function getServerIP()
+    public function getVoiceServer()
     {
-        return $this->serverIP;
+        return $this->voiceServer;
     }
 
     /**
-     * Sets the serverIP of the training.
+     * Sets the voice server of the training.
      *
-     * @param string $serverIP
+     * @param int $voiceServer
      * @return this
      */
-    public function setServerIP($serverIP)
+    public function setVoiceServer($voiceServer)
     {
-        $this->serverIP = (string)$serverIP;
+        $this->voiceServer = (int)$voiceServer;
 
         return $this;
     }
 
     /**
-     * Gets the serverPW of the training.
+     * Gets the voice server ip of the training.
      *
      * @return string
      */
-    public function getServerPW()
+    public function getVoiceServerIP()
     {
-        return $this->serverPW;
+        return $this->voiceServerIP;
     }
 
     /**
-     * Sets the serverPW of the training.
+     * Sets the voice server ip of the training.
      *
-     * @param string $serverPW
+     * @param string $voiceServerIP
      * @return this
      */
-    public function setServerPW($serverPW)
+    public function setVoiceServerIP($voiceServerIP)
     {
-        $this->serverPW = (string)$serverPW;
+        $this->voiceServerIP = (string)$voiceServerIP;
+
+        return $this;
+    }
+
+    /**
+     * Gets the voice server pw of the training.
+     *
+     * @return string
+     */
+    public function getVoiceServerPW()
+    {
+        return $this->voiceServerPW;
+    }
+
+    /**
+     * Sets the voice server pw of the training.
+     *
+     * @param string $voiceServerPW
+     * @return this
+     */
+    public function setVoiceServerPW($voiceServerPW)
+    {
+        $this->voiceServerPW = (string)$voiceServerPW;
+
+        return $this;
+    }
+
+    /**
+     * Gets the game server of the training.
+     *
+     * @return int
+     */
+    public function getGameServer()
+    {
+        return $this->gameServer;
+    }
+
+    /**
+     * Sets the game server of the training.
+     *
+     * @param int $gameServer
+     * @return this
+     */
+    public function setGameServer($gameServer)
+    {
+        $this->gameServer = (int)$gameServer;
+
+        return $this;
+    }
+
+    /**
+     * Gets the game server ip of the training.
+     *
+     * @return string
+     */
+    public function getGameServerIP()
+    {
+        return $this->gameServerIP;
+    }
+
+    /**
+     * Sets the game server ip of the training.
+     *
+     * @param string $gameServerIP
+     * @return this
+     */
+    public function setGameServerIP($gameServerIP)
+    {
+        $this->gameServerIP = (string)$gameServerIP;
+
+        return $this;
+    }
+
+    /**
+     * Gets the game server pw of the training.
+     *
+     * @return string
+     */
+    public function getGameServerPW()
+    {
+        return $this->gameServerPW;
+    }
+
+    /**
+     * Sets the game server pw of the training.
+     *
+     * @param string $gameServerPW
+     * @return this
+     */
+    public function setGameServerPW($gameServerPW)
+    {
+        $this->gameServerPW = (string)$gameServerPW;
 
         return $this;
     }

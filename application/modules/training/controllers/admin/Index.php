@@ -94,8 +94,12 @@ class Index extends \Ilch\Controller\Admin
                 $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
                 $model->setTime($this->getRequest()->getPost('time'));
                 $model->setPlace($this->getRequest()->getPost('place'));
-                $model->setServerIP($this->getRequest()->getPost('serverIP'));
-                $model->setServerPW($this->getRequest()->getPost('serverPW'));
+                $model->setVoiceServer($this->getRequest()->getPost('voiceServer'));
+                $model->setVoiceServerIP($this->getRequest()->getPost('voiceServerIP'));
+                $model->setVoiceServerPW($this->getRequest()->getPost('voiceServerPW'));
+                $model->setGameServer($this->getRequest()->getPost('gameServer'));
+                $model->setGameServerIP($this->getRequest()->getPost('gameServerIP'));
+                $model->setGameServerPW($this->getRequest()->getPost('gameServerPW'));
                 $model->setText($this->getRequest()->getPost('text'));
                 $trainingMapper->save($model);
                 

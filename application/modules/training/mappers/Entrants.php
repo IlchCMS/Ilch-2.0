@@ -33,6 +33,7 @@ class Entrants extends \Ilch\Mapper
         $entryModel = new EntrantsModel();
         $entryModel->setTrainId($entryRow['train_id']);
         $entryModel->setUserId($entryRow['user_id']);
+        $entryModel->setNote($entryRow['note']);
 
         return $entryModel;
     }
@@ -60,6 +61,7 @@ class Entrants extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $entryModel = new EntrantsModel();
             $entryModel->setUserId($entries['user_id']);
+            $entryModel->setNote($entries['note']);
             $entry[] = $entryModel;
         }
 
@@ -77,6 +79,7 @@ class Entrants extends \Ilch\Mapper
         (
             'train_id' => $training->getTrainId(),
             'user_id' => $training->getUserId(),
+            'note' => $training->getNote(),
         );
         
         $this->db()->insert('training_entrants')

@@ -73,29 +73,97 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="serverIP" class="col-lg-2 control-label">
-            <?=$this->getTrans('serverIP') ?>:
+        <label for="voiceServer" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('voiceServer'); ?>:
         </label>
-        <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="serverIP"
-                   id="serverIP"
-                   placeholder="IP:Port"
-                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getServerIP()); } ?>" />
+        <div class="col-lg-2">
+            <input type="checkbox"
+                   name="voiceServer"
+                   value="1"
+                   onclick="showMe('voiceServerInfo', this)"
+                   <?php if ($this->get('training') != '' AND $this->get('training')->getVoiceServer() == 1) { echo 'checked="checked"';} ?>>
+        </div>
+    </div>
+    <?php if ($this->get('training') != ''): ?>
+        <?php if ($this->get('training')->getVoiceServer() == 0): ?>
+            <?php $voiceDisplay = 'style="display: none;"'; ?>
+        <?php else: ?>
+            <?php $voiceDisplay = ''; ?>
+        <?php endif; ?>
+    <?php else: ?>
+        <?php $voiceDisplay = 'style="display: none;"'; ?>
+    <?php endif; ?>
+    <div id="voiceServerInfo" <?=$voiceDisplay ?>>
+        <div class="form-group">
+            <label for="voiceServerIP" class="col-lg-2 control-label">
+                <?php echo $this->getTrans('voiceServerIP'); ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       name="voiceServerIP"
+                       placeholder="IP:Port"
+                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerIP()); } ?>" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="voiceServerPW" class="col-lg-2 control-label">
+                <?php echo $this->getTrans('voiceServerPW'); ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       name="voiceServerPW"
+                       placeholder="********"
+                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerPW()); } ?>" />
+            </div>
         </div>
     </div>
     <div class="form-group">
-        <label for="serverPW" class="col-lg-2 control-label">
-            <?=$this->getTrans('serverPW') ?>:
+        <label for="gameServer" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('gameServer'); ?>:
         </label>
-        <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="serverPW"
-                   id="serverPW"
-                   placeholder="********"
-                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getServerPW()); } ?>" />
+        <div class="col-lg-2">
+            <input type="checkbox"
+                   name="gameServer"
+                   value="1"
+                   onclick="showMe('gameServerInfo', this)"
+                   <?php if ($this->get('training') != '' AND $this->get('training')->getGameServer() == 1) { echo 'checked="checked"';} ?>>
+        </div>
+    </div>
+    <?php if ($this->get('training') != ''): ?>
+        <?php if ($this->get('training')->getGameServer() == 0): ?>
+            <?php $gameDisplay = 'style="display: none;"'; ?>
+        <?php else: ?>
+            <?php $gameDisplay = ''; ?>
+        <?php endif; ?>
+    <?php else: ?>
+        <?php $gameDisplay = 'style="display: none;"'; ?>
+    <?php endif; ?>
+    <div id="gameServerInfo" <?=$gameDisplay ?>>
+        <div class="form-group">
+            <label for="gameServerIP" class="col-lg-2 control-label">
+                <?php echo $this->getTrans('gameServerIP'); ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       name="gameServerIP"
+                       placeholder="IP:Port"
+                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerIP()); } ?>" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="gameServerPW" class="col-lg-2 control-label">
+                <?php echo $this->getTrans('gameServerPW'); ?>:
+            </label>
+            <div class="col-lg-4">
+                <input class="form-control"
+                       type="text"
+                       name="gameServerPW"
+                       placeholder="********"
+                       value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerPW()); } ?>" />
+            </div>
         </div>
     </div>
     <div class="form-group">
@@ -115,12 +183,11 @@
         <?=$this->getSaveBar('addButton') ?>
     <?php endif; ?>
 </form>
-
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
-    $( document ).ready(function()
-    {
+    $(document).ready(function() {
         $(".form_datetime").datetimepicker({
             format: "dd.mm.yyyy hh:ii",
             autoclose: true,
@@ -137,4 +204,10 @@
         $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
       });
     })(jQuery);
+
+
+    function showMe (it, box) { 
+        var vis = (box.checked) ? "block" : "none"; 
+        document.getElementById(it).style.display = vis;
+    } 
 </script>
