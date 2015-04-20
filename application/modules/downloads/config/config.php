@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Downloads\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install

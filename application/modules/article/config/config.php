@@ -1,9 +1,11 @@
 <?php
 /**
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Modules\Article\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install

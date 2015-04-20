@@ -7,7 +7,6 @@
 namespace Modules\Newsletter\Mappers;
 
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
-use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
 

@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Contact\Controllers;
+
 defined('ACCESS') or die('no direct access');
 
 use Modules\Contact\Mappers\Receiver as ReceiverMapper;

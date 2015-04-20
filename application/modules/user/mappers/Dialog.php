@@ -8,11 +8,6 @@ namespace Modules\User\Mappers;
 
 use Modules\User\Models\Dialog as DialogModel;
 
-/**
- * The userdialog mapper class.
- *
- * @package ilch
- */
 class Dialog extends \Ilch\Mapper
 {
     /**

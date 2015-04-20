@@ -1,11 +1,13 @@
 <?php
+/**
+ * @copyright Ilch 2.0
+ * @package ilch
+ */
+
 namespace Modules\User\Mappers;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * @package ilch
- */
 class Visit extends \Ilch\Mapper
 {
     /**

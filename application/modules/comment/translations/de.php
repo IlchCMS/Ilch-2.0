@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the comment module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

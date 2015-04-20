@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**

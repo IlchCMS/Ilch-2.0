@@ -8,12 +8,6 @@ namespace Modules\War\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * Handles the init for the war module.
- *
- * @copyright Ilch 2.0
- * @package ilch
- */
 class Base extends \Ilch\Controller\Admin
 {
     /**

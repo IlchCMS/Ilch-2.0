@@ -5,7 +5,9 @@
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 use Modules\User\Mappers\User as UserMapper;
+
 defined('ACCESS') or die('no direct access');
 
 /**

@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Article\Boxes;
+
 defined('ACCESS') or die('no direct access');
 
 class Article extends \Ilch\Box

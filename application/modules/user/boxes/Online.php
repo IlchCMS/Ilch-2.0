@@ -5,6 +5,7 @@
  */
 
 namespace Modules\User\Boxes;
+
 defined('ACCESS') or die('no direct access');
 
 class Online extends \Ilch\Box

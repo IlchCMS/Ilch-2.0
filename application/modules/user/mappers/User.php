@@ -9,11 +9,6 @@ namespace Modules\User\Mappers;
 use Modules\User\Models\User as UserModel;
 use Ilch\Date as IlchDate;
 
-/**
- * The user mapper class.
- *
- * @package ilch
- */
 class User extends \Ilch\Mapper
 {
     /**

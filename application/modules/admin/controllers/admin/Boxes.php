@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
 

@@ -6,11 +6,6 @@
 
 namespace Modules\User\Models;
 
-/**
- * The Dialog class.
- *
- * @package ilch
- */
 class Dialog extends \Ilch\Model
 {
     /**

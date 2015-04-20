@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Plugins;
+
 defined('ACCESS') or die('no direct access');
 
 /**

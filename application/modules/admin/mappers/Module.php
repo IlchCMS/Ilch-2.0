@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Mappers;
+
 defined('ACCESS') or die('no direct access');
 
 /**

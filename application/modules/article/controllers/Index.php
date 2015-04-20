@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Article\Controllers;
+
 use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\Article\Models\Article as ArticleModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;

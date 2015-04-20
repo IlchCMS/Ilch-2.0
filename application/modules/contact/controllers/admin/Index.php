@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Contact\Controllers\Admin;
+
 use Modules\Contact\Mappers\Receiver as ReceiverMapper;
 use Modules\Contact\Models\Receiver as ReceiverModel;
 

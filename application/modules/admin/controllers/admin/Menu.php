@@ -5,10 +5,12 @@
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Modules\Page\Mappers\Page as PageMapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
+
 defined('ACCESS') or die('no direct access');
 
 class Menu extends \Ilch\Controller\Admin

@@ -5,8 +5,8 @@
  */
 
 namespace Modules\Article\Mappers;
+
 use Modules\Article\Models\Article as ArticleModel;
-use Modules\Media\Mappers\Media as MediaMapper;
 
 defined('ACCESS') or die('no direct access');
 

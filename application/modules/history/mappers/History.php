@@ -7,7 +7,6 @@
 namespace Modules\History\Mappers;
 
 use Modules\History\Models\Entry as HistoryModel;
-use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
 

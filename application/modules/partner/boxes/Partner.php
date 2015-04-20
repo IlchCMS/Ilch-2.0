@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Partner\Boxes;
+
 defined('ACCESS') or die('no direct access');
 
 class Partner extends \Ilch\Box

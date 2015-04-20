@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Page\Mappers;
+
 use Modules\Page\Models\Page as PageModel;
 
 defined('ACCESS') or die('no direct access');

@@ -7,7 +7,6 @@
 namespace Modules\Shoutbox\Controllers\Admin;
 
 use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
-use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
 
 defined('ACCESS') or die('no direct access');
 

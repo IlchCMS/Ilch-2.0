@@ -6,11 +6,8 @@
 
 namespace Modules\User\Models;
 
-/**
- * The user model class.
- *
- * @package ilch
- */
+defined('ACCESS') or die('no direct access');
+
 class User extends \Ilch\Model
 {
     /**

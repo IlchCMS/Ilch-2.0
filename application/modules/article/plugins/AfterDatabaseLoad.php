@@ -1,10 +1,13 @@
 <?php
 /**
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Modules\Article\Plugins;
+
 use Modules\Article\Mappers\Article as ArticleMapper;
+
 defined('ACCESS') or die('no direct access');
 
 class AfterDatabaseLoad
