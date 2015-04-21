@@ -23,7 +23,14 @@
                         <?php endif; ?>
                     </div>
                     <div class="rank_info">
-                        <?=$awards->getSquad() ?><br />
+                        <?php if ($awards->getTyp() == 1): ?>
+                            <?=$awards->getUTId() ?>
+                        <?php else: ?>
+                            <?php $userMapper = new \Modules\User\Mappers\User(); ?>
+                            <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
+                            <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
+                        <?php endif; ?>
+                        <br />
                         <?=date('d.m.Y', strtotime($awards->getDate())) ?><br />
                         
                         <?php if ($awards->getEvent() != ''): ?>

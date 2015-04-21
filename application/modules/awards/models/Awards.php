@@ -46,11 +46,18 @@ class Awards extends \Ilch\Model
     protected $page;
 
     /**
-     * The squad of the awards.
+     * The utId of the awards.
      *
      * @var int
      */
-    protected $squad;
+    protected $utId;
+
+    /**
+     * The typ of the awards.
+     *
+     * @var int
+     */
+    protected $typ;
 
     /**
      * Gets the id of the awards.
@@ -168,24 +175,47 @@ class Awards extends \Ilch\Model
     }
 
     /**
-     * Gets the squad of the awards.
+     * Gets the utId of the awards.
      *
      * @return int
      */
-    public function getSquad()
+    public function getUTid()
     {
-        return $this->squad;
+        return $this->utId;
     }
 
     /**
-     * Sets the squad of the awards.
+     * Sets the utId of the awards.
      *
-     * @param int $squad
+     * @param int $utId
      * @return this
      */
-    public function setSquad($squad)
+    public function setUTId($utId)
     {
-        $this->squad = (int)$squad;
+        $this->utId = (int)$utId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the typ of the awards.
+     *
+     * @return int
+     */
+    public function getTyp()
+    {
+        return $this->typ;
+    }
+
+    /**
+     * Sets the typ of the awards.
+     *
+     * @param int $typ
+     * @return this
+     */
+    public function setTyp($typ)
+    {
+        $this->typ = (int)$typ;
 
         return $this;
     }

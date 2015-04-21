@@ -17,9 +17,9 @@
     <legend>
     <?php
         if ($this->get('awards') != '') {
-            echo $this->getTrans('menuActionEditAward');
+            echo $this->getTrans('edit');
         } else {
-            echo $this->getTrans('menuActionNewAward');
+            echo $this->getTrans('add');
         }
     ?>
     </legend>
@@ -59,14 +59,51 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="squad" class="col-lg-2 control-label">
-            <?=$this->getTrans('squad') ?>:
+        <label for="user" class="col-lg-1 control-label">
+            <?=$this->getTrans('user') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-1 userTeam">
+            <input type="radio"
+                   name="typ"
+                   id="typ_user"
+                   value="0"
+                   onchange="toggleStatus()"
+                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 0) { echo 'checked="checked"';} ?>>
+        </div>
+        <div class="col-lg-2">
+            <select class="form-control" name="utId" id="user" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>>
+                <?php foreach ($this->get('users') as $user) {
+                        $selected = '';
+
+                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $user->getId()) {
+                            $selected = 'selected="selected"';
+                        }
+                        echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
+                    }
+                ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="team" class="col-lg-1 control-label">
+            <?=$this->getTrans('team') ?>:
+        </label>
+        <div class="col-lg-1 userTeam">
+            <input type="radio"
+                   name="typ"
+                   id="typ_team"
+                   value="1"
+                   onchange="toggleStatus()"
+                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'checked="checked"';} ?>>
+        </div>
+        <div class="col-lg-2">
             <input class="form-control"
                    type="text"
-                   name="squad"
-                   value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getSquad()); } ?>" />
+                   name="utId"
+                   id="team"
+                   <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 0) { echo 'disabled';} ?>
+                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 0) { echo 'disabled';} ?>
+                   value="<?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() != 0) { echo $this->escape($this->get('awards')->getUTId()); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -102,8 +139,7 @@
 </form>
 
 <script type="text/javascript">
-    $( document ).ready(function()
-    {
+    $( document ).ready(function() {
         $(".form_datetime").datetimepicker({
             format: "dd.mm.yyyy",
             autoclose: true,
@@ -120,4 +156,23 @@
         $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
       });
     })(jQuery);
+    
+
+    window.onload = function() {
+        document.getElementById('typ_user').onchange = disablefield;
+        document.getElementById('typ_team').onchange = disablefield;
+    }
+
+    function toggleStatus() {
+        if ($('#typ_user').is(':checked')) {
+            $('#user').removeAttr('disabled');
+            $('#team').attr('disabled', true);
+        } else if ($('#typ_team').is(':checked')) {
+            $('#user').attr('disabled', true);
+            $('#team').removeAttr('disabled');
+        } else {
+            $('#user').attr('disabled', true);
+            $('#team').attr('disabled', true);            
+        }
+    }
 </script>

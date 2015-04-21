@@ -20,7 +20,7 @@
                         <th></th>
                         <th><?=$this->getTrans('date') ?></th>
                         <th><?=$this->getTrans('rank') ?></th>
-                        <th><?=$this->getTrans('squad') ?></th>
+                        <th><?=$this->getTrans('teamUser') ?></th>
                         <th><?=$this->getTrans('event') ?></th>
                     </tr>
                 </thead>
@@ -33,7 +33,13 @@
                             <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $awards->getId())) ?></td>
                             <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($awards->getRank()) ?></td>
-                            <td><?=$awards->getSquad() ?></td>
+                            <?php if ($awards->getTyp() == 1): ?>
+                                <td><?=$awards->getUTId() ?></td>
+                            <?php else: ?>
+                                <?php $userMapper = new \Modules\User\Mappers\User(); ?>
+                                <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
+                                <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
+                            <?php endif; ?>
                             <td><a href="<?=$awards->getPage() ?>" title="<?=$awards->getEvent() ?>" target="_blank"><?=$awards->getEvent() ?></td>
                         </tr>
                     <?php endforeach; ?>

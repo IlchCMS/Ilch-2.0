@@ -112,7 +112,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-            $this->getView()->set('users', $userMapper->getUserList(array('confirmed' => 1)));
+        $this->getView()->set('users', $userMapper->getUserList(array('confirmed' => 1)));
     }
 
     public function delAction()

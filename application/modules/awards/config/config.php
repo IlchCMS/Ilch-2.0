@@ -48,7 +48,8 @@ class Config extends \Ilch\Config\Install
                   `rank` INT(11) NOT NULL,
                   `event` VARCHAR(100) NOT NULL,
                   `page` VARCHAR(150) NOT NULL,
-                  `squad` INT(11) NOT NULL,
+                  `ut_id` INT(11) NOT NULL,
+                  `typ` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

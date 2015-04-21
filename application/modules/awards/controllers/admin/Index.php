@@ -8,6 +8,7 @@ namespace Modules\Awards\Controllers\Admin;
 
 use Modules\Awards\Mappers\Awards as AwardsMapper;
 use Modules\Awards\Models\Awards as AwardsModel;
+use Modules\User\Mappers\User as UserMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -34,7 +35,7 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
-                'name' => 'menuActionNewAward',
+                'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
@@ -61,11 +62,12 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
+        $awardsMapper = new AwardsMapper();
+        $userMapper = new UserMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewAward'), array('action' => 'treat'));
-
-        $awardsMapper = new AwardsMapper();
+                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
 
         if ($this->getRequest()->getParam('id')) {
             $this->getView()->set('awards', $awardsMapper->getAwardsById($this->getRequest()->getParam('id')));
@@ -80,20 +82,24 @@ class Index extends \Ilch\Controller\Admin
             
             $date = new \Ilch\Date(trim($this->getRequest()->getPost('date')));
             $rank = trim($this->getRequest()->getPost('rank'));
-            $squad = trim($this->getRequest()->getPost('squad'));
+            $utId = trim($this->getRequest()->getPost('utId'));
+            $typ = trim($this->getRequest()->getPost('typ'));
             
             if (empty($date)) {
                 $this->addMessage('missingDate', 'danger');
             } elseif(empty($rank)) {
                 $this->addMessage('missingRank', 'danger');
-            } elseif(empty($squad)) {
-                $this->addMessage('missingSquad', 'danger');
+            } elseif(empty($typ)) {
+                $this->addMessage('missingTyp', 'danger');
+            } elseif(empty($utId)) {
+                $this->addMessage('missingUTId', 'danger');
             } else {
                 $model->setDate($date);
                 $model->setRank($rank);
-                $model->setSquad($squad);
                 $model->setEvent($this->getRequest()->getPost('event'));
                 $model->setPage($this->getRequest()->getPost('page'));
+                $model->setUTId($utId);
+                $model->setTyp($typ);
                 $awardsMapper->save($model);
                 
                 $this->addMessage('saveSuccess');
@@ -101,6 +107,8 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(array('action' => 'index'));
             }
         }
+
+        $this->getView()->set('users', $userMapper->getUserList(array('confirmed' => 1)));
     }
 
     public function delAction()

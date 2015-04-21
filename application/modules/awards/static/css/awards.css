@@ -3,6 +3,10 @@
     padding-right: 15px !important;
 }
 
+.userTeam {
+    top: 7px;
+}
+
 .spinner {
     width: 100px;
 }
