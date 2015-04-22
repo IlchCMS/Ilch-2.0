@@ -46,8 +46,7 @@
                 </tbody>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noJobs') ?>

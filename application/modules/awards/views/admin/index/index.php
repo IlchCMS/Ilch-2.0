@@ -1,4 +1,4 @@
-<legend><?= $this->getTrans('manageAwards') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('awards') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField()?>
@@ -40,14 +40,13 @@
                                 <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                                 <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                             <?php endif; ?>
-                            <td><a href="<?=$awards->getPage() ?>" title="<?=$awards->getEvent() ?>" target="_blank"><?=$awards->getEvent() ?></td>
+                            <td><a href="<?=$awards->getURL() ?>" title="<?=$awards->getEvent() ?>" target="_blank"><?=$awards->getEvent() ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noAwards') ?>

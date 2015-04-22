@@ -33,7 +33,7 @@ class Index extends \Ilch\Controller\Admin
                 (
                 array
                     (
-                    'name' => 'menuActionNewNewsletter',
+                    'name' => 'add',
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
                 )
@@ -76,7 +76,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuNewsletterShow'), array('action' => 'show'));
+                ->add($this->getTranslator()->trans('show'), array('action' => 'show'));
 
         if ($this->getRequest()->isPost('delete')) {
             $newsletterMapper = new NewsletterMapper();
@@ -94,7 +94,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuNewsletterTreat'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
 
         $newsletterMapper = new NewsletterMapper();
         $emails = $newsletterMapper->getMail();

@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('manageRule') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('entries') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -12,43 +12,27 @@
                     <col class="col-lg-2" />
                     <col />
                 </colgroup>
-                <thead>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th>§</th>
+                    <th><?=$this->getTrans('title') ?></th>
+                    <th><?=$this->getTrans('text');?></th>
+                </tr>
+                <?php foreach ($this->get('entries') as $entry): ?>
                     <tr>
-                        <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
-                        <th></th>
-                        <th></th>
-                        <th>§</th>
-                        <th><?=$this->getTrans('title') ?></th>
-                        <th><?=$this->getTrans('text');?></th>
+                        <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
+                        <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId())) ?></td>
+                        <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $entry->getId())) ?></td>
+                        <td><?=$this->escape($entry->getParagraph()) ?></td>
+                        <td><?=$this->escape($entry->getTitle()) ?></td>
+                        <td><?=$entry->getText() ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($this->get('entries') as $entry): ?>
-                        <tr>
-                            <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td>
-                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId())) ?>
-                            </td>
-                            <td>
-                                <?php $deleteArray = array('action' => 'del', 'id' => $entry->getId()); ?>
-                                <?=$this->getDeleteIcon($deleteArray) ?>
-                            </td>
-                            <td>
-                                <?=$this->escape($entry->getParagraph()) ?>
-                            </td>
-                            <td>
-                                <?=$this->escape($entry->getTitle()) ?>
-                            </td>
-                            <td>
-                                <?=$entry->getText() ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
+                <?php endforeach; ?>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noRules') ?>

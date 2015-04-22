@@ -34,7 +34,7 @@
                         <?=date('d.m.Y', strtotime($awards->getDate())) ?><br />
                         
                         <?php if ($awards->getEvent() != ''): ?>
-                            <a href="<?=$this->escape($awards->getPage()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank"><?=$this->escape($awards->getEvent()) ?></a>
+                            <a href="<?=$this->escape($awards->getURL()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank"><?=$this->escape($awards->getEvent()) ?></a>
                         <?php else: ?>
                             <br />
                         <?php endif; ?>

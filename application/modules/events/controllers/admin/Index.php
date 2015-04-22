@@ -16,36 +16,37 @@ class Index extends \Ilch\Controller\Admin
     public function init()
     {
         $this->getLayout()->addMenu
-                (
-                'menuEvents', array
-            (
+        (
+            'menuEvents',
             array
+            (
+                array
                 (
-                'name' => 'manage',
-                'active' => true,
-                'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-            ),
-                )
+                    'name' => 'manage',
+                    'active' => true,
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
+                ),
+            )
         );
 
         $this->getLayout()->addMenuAction
-                (
-                array
-                    (
-                    'name' => 'menuNewEvent',
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-                )
+        (
+            array
+            (
+                'name' => 'add',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+            )
         );
     }
 
     public function indexAction()
     {
+        $eventMapper = new EventMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'));
-
-        $eventMapper = new EventMapper();
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -60,43 +61,21 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('event', $event);
     }
 
-    public function delAction()
-    {
-        if ($this->getRequest()->isSecure()) {
-            $eventMapper = new EventMapper();
-            $eventMapper->delete($this->getRequest()->getParam('id'));
-
-            $this->addMessage('deleteSuccess');
-        }
-
-        $this->redirect(array('action' => 'index'));
-    }
-
-    public function showAction()
-    {
-        if ($this->getRequest()->isPost('delete')) {
-            $eventMapper = new EventMapper();
-            $eventMapper->delete($this->getRequest()->getParam('id'));
-
-            $this->addMessage('deleteSuccess');
-
-            $this->redirect(array('action' => 'index'));
-        }
-        $eventMapper = new EventMapper();
-        $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
-    }
-
     public function treatAction()
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewEvent'), array('action' => 'treat'));
-
         $eventMapper = new EventMapper();
         $eventModel = new EventModel();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+
             $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
         if ($this->getRequest()->isPost()) {
@@ -130,5 +109,31 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(array('action' => 'index'));
             }
         }
+    }
+
+    public function showAction()
+    {
+        if ($this->getRequest()->isPost('delete')) {
+            $eventMapper = new EventMapper();
+            $eventMapper->delete($this->getRequest()->getParam('id'));
+
+            $this->addMessage('deleteSuccess');
+
+            $this->redirect(array('action' => 'index'));
+        }
+        $eventMapper = new EventMapper();
+        $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
+    }
+
+    public function delAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $eventMapper = new EventMapper();
+            $eventMapper->delete($this->getRequest()->getParam('id'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(array('action' => 'index'));
     }
 }

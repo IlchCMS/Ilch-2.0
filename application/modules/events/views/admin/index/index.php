@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('manageEvents') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('event') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
@@ -38,8 +38,7 @@
                 </tbody>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noEvent') ?>

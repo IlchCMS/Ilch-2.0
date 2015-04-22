@@ -1,15 +1,14 @@
-<link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
-        <?php
-            if ($this->get('event') != '') {
-                echo $this->getTrans('menuEditEvent');
-            } else {
-                echo $this->getTrans('menuNewEvent');
-            }
-        ?>
+        <?php if ($this->get('event') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
         <label for="dtp_input1" class="col-md-2 control-label">
@@ -61,13 +60,11 @@
                       rows="5"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php
-    if ($this->get('event') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?php if ($this->get('event') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>

@@ -43,7 +43,7 @@ class Awards extends \Ilch\Model
      *
      * @var string
      */
-    protected $page;
+    protected $url;
 
     /**
      * The utId of the awards.
@@ -152,24 +152,24 @@ class Awards extends \Ilch\Model
     }
 
     /**
-     * Gets the page of the awards.
+     * Gets the url of the awards.
      *
      * @return string
      */
-    public function getPage()
+    public function getURL()
     {
-        return $this->page;
+        return $this->url;
     }
 
     /**
-     * Sets the page of the awards.
+     * Sets the url of the awards.
      *
-     * @param string $page
+     * @param string $url
      * @return this
      */
-    public function setPage($page)
+    public function setURL($url)
     {
-        $this->page = (string)$page;
+        $this->url = (string)$url;
 
         return $this;
     }

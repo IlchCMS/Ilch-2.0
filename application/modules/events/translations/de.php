@@ -8,6 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'menuEvents' => 'Veranstaltungen',
     'event' => 'Veranstaltung',
     'date' => 'Datum',
     'creator' => 'Ersteller',
@@ -16,19 +17,13 @@ return array
     'time' => 'Datum/Uhrzeit',
     'text' => 'Text',
     'image' => 'Bild',
-    'creator' => 'Ersteller',
     'noEvent' => 'Keine Veranstaltungen vorhanden.',
+    'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',
-    'menuEvents' => 'Veranstaltungen',
-    'menuEventTreat' => 'Veranstaltung erstellen',
-    'menuEventList' => 'Veranstaltungen',
-    'showEvent' => 'Veranstaltung anschauen',
-    'menuActionNewEvent' => 'Erstellen',
-    'menuActionEditEvent' => 'Bearbeiten',
-    'menuNewEvent' => 'Erstellen',
-    'menuEditEvent' => 'Veranstaltung bearbeiten',
-    'askIfDeleteEvent' => 'Sind Sie sicher, dass der Event "%s" entfernt werden soll?',
-    'manageEvents' => 'Veranstaltung verwalten',
+    'missingDate' => 'Datum muss ausgefüllt werden',
+    'missingPlace' => 'Ort muss ausgefüllt werden',
+    'add' => 'Erstellen',
+    'edit' => 'Bearbeiten',
     'manage' => 'Verwalten',
     'delete' => 'Löschen',
 

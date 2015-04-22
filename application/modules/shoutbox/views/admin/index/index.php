@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('manageShoutbox') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php $shoutboxs = $this->get('shoutbox'); ?>
     <?php if ($shoutboxs != ''): ?>
     <form class="form-horizontal" method="POST" action="">
@@ -37,8 +37,7 @@
                 <?php endforeach; ?>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noEntrys') ?>

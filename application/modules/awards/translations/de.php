@@ -9,7 +9,6 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuAwards' => 'Auszeichnungen',
-    'manageAwards' => 'Auszeichnungen verwalten',
     'manage' => 'Verwalten',
     'add' => 'Hinzufügen',
     'edit' => 'Bearbeiten',

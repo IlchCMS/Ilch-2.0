@@ -1,13 +1,15 @@
-<link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
 <?php $training = $this->get('training'); ?>
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
+
+<link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
     <?=$this->getTokenField() ?>
     <legend>
         <?php if ($this->get('training') != ''): ?>
-            <?=$this->getTrans('menuEdit') ?>
+            <?=$this->getTrans('edit') ?>
         <?php else: ?>
-            <?=$this->getTrans('menuAdd') ?>
+            <?=$this->getTrans('add') ?>
         <?php endif; ?>
     </legend>
 
@@ -201,7 +203,7 @@
         <?=$this->getSaveBar('addButton') ?>
     <?php endif; ?>
 </form>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
@@ -222,7 +224,6 @@
         $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
       });
     })(jQuery);
-
 
     function showMe (it, box) { 
         var vis = (box.checked) ? "block" : "none"; 

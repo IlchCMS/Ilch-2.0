@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
                 (
                 array
                     (
-                    'name' => 'menuAdd',
+                    'name' => 'add',
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
                 )
@@ -71,13 +71,13 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuTraining'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('menuEdit'), array('action' => 'treat'));
+                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
 
             $this->getView()->set('training', $trainingMapper->getTrainingById($this->getRequest()->getParam('id')));
         }  else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuTraining'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('menuAdd'), array('action' => 'treat'));            
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
         if ($this->getRequest()->isPost()) {

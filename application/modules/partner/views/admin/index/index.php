@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('managePartner') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('entries') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -40,17 +40,18 @@
                         <tr>
                             <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
                             <td>
-                            <?php if($this->getRequest()->getParam('showsetfree')) {
-                                $freeArray = array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId());
+                                <?php 
+                                    if($this->getRequest()->getParam('showsetfree')) {
+                                        $freeArray = array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId());
 
-                                if($this->get('badge') > 1) {
-                                    $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
-                                }
-                            ?>
-                                <a href="<?php echo $this->getUrl($freeArray).'" title="'.$this->getTrans('setfree'); ?>"><i class="fa fa-check-square-o text-success"></i></a>
-                            <?php }else{
-                                echo $this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId()));
-                            } ?>
+                                        if($this->get('badge') > 1) {
+                                            $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
+                                        }
+                                        echo '<a href="'.$this->getUrl($freeArray).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
+                                    } else {
+                                        echo $this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId()));
+                                    } 
+                                ?>
                             </td>
                             <td>
                                 <?php
@@ -62,12 +63,8 @@
                                 ?>
                                 <?=$this->getDeleteIcon($deleteArray) ?>
                             </td>
-                            <td>
-                                <?=$this->escape($entry->getName()) ?>
-                            </td>
-                            <td>
-                                <a href='<?=$this->escape($entry->getLink()) ?>' target="_blank"><img src='<?=$this->escape($entry->getBanner()) ?>'></a>
-                            </td>
+                            <td><?=$this->escape($entry->getName()) ?></td>
+                            <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank"><img src='<?=$this->escape($entry->getBanner()) ?>'></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

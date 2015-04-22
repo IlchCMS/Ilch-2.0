@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'menuHistory',
+            'menuHistorys',
             array
             (
                 array
@@ -34,7 +34,7 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
-                'name' => 'menuActionNewHistory',
+                'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
@@ -75,14 +75,18 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuHistorys'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewHistory'), array('action' => 'treat'));
-
         $historyMapper = new HistoryMapper();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuHistorys'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+            
             $this->getView()->set('history', $historyMapper->getHistoryById($this->getRequest()->getParam('id')));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuHistorys'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
         if ($this->getRequest()->isPost()) {

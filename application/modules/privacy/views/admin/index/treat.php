@@ -3,9 +3,9 @@
     <?=$this->getTokenField() ?>
     <legend>
     <?php if ($this->get('privacy') != ''): ?>
-        <?=$this->getTrans('menuActionEditPrivacy') ?>
+        <?=$this->getTrans('edit') ?>
     <?php else: ?>
-        <?=$this->getTrans('menuActionNewPrivacy') ?>
+        <?=$this->getTrans('add') ?>
     <?php endif; ?>
     </legend>
     <div class="form-group">
@@ -54,7 +54,6 @@
                    type="text"
                    name="title"
                    id="title"
-                   placeholder="<?=$this->getTrans('title') ?>"
                    value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getTitle()); } ?>" />
         </div>
     </div>
@@ -67,7 +66,6 @@
                    type="text"
                    name="urltitle"
                    id="urltitle"
-                   placeholder="<?=$this->getTrans('urlTitle') ?>"
                    value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getUrlTitle()); } ?>" />
         </div>
     </div>

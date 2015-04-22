@@ -34,7 +34,7 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
-                'name' => 'menuActionNewRule',
+                'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
@@ -61,6 +61,49 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('entries', $entries);
     }
 
+    public function treatAction() 
+    {
+        $ruleMapper = new RuleMapper();
+
+        if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuRules'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+
+            $this->getView()->set('rule', $ruleMapper->getRuleById($this->getRequest()->getParam('id')));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuRules'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $model = new RuleModel();
+
+            if ($this->getRequest()->getParam('id')) {
+                $model->setId($this->getRequest()->getParam('id'));
+            }
+
+            $title = trim($this->getRequest()->getPost('title'));
+            $text = trim($this->getRequest()->getPost('text'));
+            
+            if (empty($title)) {
+                $this->addMessage('missingTitle', 'danger');
+            } elseif(empty($text)) {
+                $this->addMessage('missingText', 'danger');
+            } else {
+                $model->setParagraph($this->getRequest()->getPost('paragraph'));
+                $model->setTitle($title);
+                $model->setText($text);
+                $ruleMapper->save($model);
+                
+                $this->addMessage('saveSuccess');
+                
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+    }
+
     public function delAction()
     {
         if($this->getRequest()->isSecure()) {
@@ -71,45 +114,5 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->redirect(array('action' => 'index'));
-    }
-
-    public function treatAction() 
-    {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuRules'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewRule'), array('action' => 'treat'));
-
-        $ruleMapper = new RuleMapper();
-
-        if ($this->getRequest()->getParam('id')) {
-            $this->getView()->set('rule', $ruleMapper->getRuleById($this->getRequest()->getParam('id')));
-        }
-
-        if ($this->getRequest()->isPost()) {
-            $model = new RuleModel();
-
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
-            
-            $paragraph = $this->getRequest()->getPost('paragraph');
-            $title = trim($this->getRequest()->getPost('title'));
-            $text = trim($this->getRequest()->getPost('text'));
-            
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif(empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } else {
-                $model->setParagraph($this->getRequest()->getPost('paragraph'));
-                $model->setTitle($this->getRequest()->getPost('title'));
-                $model->setText($this->getRequest()->getPost('text'));
-                $ruleMapper->save($model);
-                
-                $this->addMessage('saveSuccess');
-                
-                $this->redirect(array('action' => 'index'));
-            }
-        }
     }
 }

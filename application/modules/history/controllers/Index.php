@@ -11,16 +11,12 @@ use Modules\History\Mappers\History as HistoryMapper;
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
-{    
+{
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuHistory'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuHistorys'), array('action' => 'index'));
         $historyMapper = new HistoryMapper();
-        
-        $historys = $historyMapper->getEntries();
 
-        $this->getView()->set('historys', $historys);
+        $this->getView()->set('historys', $historyMapper->getEntries());
     }
 }
-
-

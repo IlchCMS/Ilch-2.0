@@ -1,12 +1,12 @@
 <?php
-$newsletter = $this->get('newsletter');
+    $newsletter = $this->get('newsletter');
 
-$userMapper = new \Modules\User\Mappers\User();
-$user = $userMapper->getUserById($newsletter->getUserId());
-$date = new \Ilch\Date($newsletter->getDateCreated());
+    $userMapper = new \Modules\User\Mappers\User();
+    $user = $userMapper->getUserById($newsletter->getUserId());
+    $date = new \Ilch\Date($newsletter->getDateCreated());
 ?>
 
-<legend><?=$this->getTrans('showNewsletter') ?></legend>
+<legend><?=$this->getTrans('show') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-horizontal">

@@ -1,14 +1,13 @@
 <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
     <?php echo $this->getTokenField(); ?>
     <legend>
-        <?php
-            if ($this->get('event') != '') {
-                echo $this->getTrans('menuEditCalendar');
-            } else {
-                echo $this->getTrans('menuNewCalendar');
-            }
-        ?>
+        <?php if ($this->get('event') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
         <label for="start" class="col-lg-2 control-label">
@@ -91,13 +90,11 @@
                       rows="5"><?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php
-    if ($this->get('calendar') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?php if ($this->get('event') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>
 
 <style>

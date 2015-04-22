@@ -34,7 +34,7 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
-                'name' => 'menuActionNewPartner',
+                'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
@@ -106,14 +106,18 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction() 
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewPartner'), array('action' => 'treat'));
-
         $partnerMapper = new PartnerMapper();
 
         if ($this->getRequest()->getParam('id')) {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+
             $this->getView()->set('partner', $partnerMapper->getPartnerById($this->getRequest()->getParam('id')));
+        } else {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
         if ($this->getRequest()->isPost()) {
@@ -135,9 +139,9 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('missingBanner', 'danger');
             } else {
                 $model->setFree(1);
-                $model->setName($this->getRequest()->getPost('name'));
-                $model->setBanner($this->getRequest()->getPost('banner'));
-                $model->setLink($this->getRequest()->getPost('link'));
+                $model->setName($name);
+                $model->setBanner($banner);
+                $model->setLink($link);
                 $partnerMapper->save($model);
                 
                 $this->addMessage('saveSuccess');

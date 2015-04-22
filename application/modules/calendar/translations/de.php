@@ -9,8 +9,8 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuCalendar' => 'Kalender',
-    'menuActionNewCalendar' => 'Erstellen',
-    'menuNewCalendar' => 'Erstellen',
+    'add' => 'Erstellen',
+    'edit' => 'Bearbeiten',
     'manage' => 'Verwalten',
     'noCalendar' => 'keine Einträge vorhanden',
     'term' => 'Termin',

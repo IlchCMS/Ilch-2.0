@@ -1,4 +1,5 @@
 <link href="<?=$this->getModuleUrl('static/css/shoutbox.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('settings') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
@@ -37,21 +38,20 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<script language="JavaScript" type="text/javascript">
-(function ($) {
-  $('.limit .btn:first-of-type').on('click', function() {
-    $('.limit input').val( parseInt($('.limit input').val(), 10) + 1);
-  });
-  $('.limit .btn:last-of-type').on('click', function() {
-    $('.limit input').val( parseInt($('.limit input').val(), 10) - 1);
-  });
+<script type="text/javascript">
+    (function ($) {
+      $('.limit .btn:first-of-type').on('click', function() {
+        $('.limit input').val( parseInt($('.limit input').val(), 10) + 1);
+      });
+      $('.limit .btn:last-of-type').on('click', function() {
+        $('.limit input').val( parseInt($('.limit input').val(), 10) - 1);
+      });
 
-  $('.maxwordlength .btn:first-of-type').on('click', function() {
-    $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) + 1);
-  });
-  $('.maxwordlength .btn:last-of-type').on('click', function() {
-    $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) - 1);
-  });
-})(jQuery);
+      $('.maxwordlength .btn:first-of-type').on('click', function() {
+        $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) + 1);
+      });
+      $('.maxwordlength .btn:last-of-type').on('click', function() {
+        $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) - 1);
+      });
+    })(jQuery);
 </script>
-

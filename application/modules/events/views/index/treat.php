@@ -1,16 +1,15 @@
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
     <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('event') != '') {
-            echo $this->getTrans('menuEditEvent');
-        } else {
-            echo $this->getTrans('menuNewEvent');
-        }
-    ?>
+        <?php if ($this->get('event') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
         <label for="place" class="col-lg-2 control-label">
@@ -90,13 +89,11 @@
         </div>
     </div>
     <div style="float: right;">
-        <?php
-        if ($this->get('event') != '') {
-            echo $this->getSaveBar('updateButton');
-        } else {
-            echo $this->getSaveBar('addButton');
-        }
-        ?>
+        <?php if ($this->get('event') != ''): ?>
+            <?=$this->getSaveBar('updateButton') ?>
+        <?php else: ?>
+            <?=$this->getSaveBar('addButton') ?>
+        <?php endif; ?>
     </div>
 </form>
 

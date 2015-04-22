@@ -18,7 +18,7 @@ class Index extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEventList'), array('controller' => 'index'));
+                ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index'));
 
         if ($this->getRequest()->isPost()) {            
             $eventModel = new EventModel();
@@ -48,14 +48,14 @@ class Index extends \Ilch\Controller\Frontend
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
         if ($this->getRequest()->getParam('id')) {
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEventList'), array('action' => 'index'))
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
                     ->add($event->getTitle(), array('controller' => 'show', 'action' => 'event', 'id' => $event->getId()))
-                    ->add($this->getTranslator()->trans('menuActionEditEvent'), array('action' => 'treat', 'id' => $event->getId()));
+                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat', 'id' => $event->getId()));
 
             $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
         }  else {
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEventList'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('menuActionNewEvent'), array('action' => 'treat'));            
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
         if ($this->getRequest()->isPost()) {
@@ -73,9 +73,9 @@ class Index extends \Ilch\Controller\Frontend
             $endung = pathinfo($file, PATHINFO_EXTENSION);
             $name = pathinfo($file, PATHINFO_FILENAME);
             $image = $path.$name.'.'.$endung;
-            
+
             move_uploaded_file($_FILES['image']['tmp_name'], $path.$name.'.'.$endung);
-            
+
             if (empty($dateCreated)) {
                 $this->addMessage('missingDate', 'danger');
             } elseif(empty($title)) {

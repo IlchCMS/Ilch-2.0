@@ -1,14 +1,14 @@
 <link href="<?=$this->getModuleUrl('static/css/rule.css') ?>" rel="stylesheet">
+
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
     <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('rule') != '') {
-            echo $this->getTrans('menuActionEditRule');
-        } else {
-            echo $this->getTrans('menuActionNewRule');
-        }
-    ?>
+        <?php if ($this->get('rule') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
+    </legend>
     </legend>
     <div class="form-group">
         <label for="paragraph" class="col-lg-2 control-label">
@@ -39,7 +39,6 @@
                    type="text"
                    name="title"
                    id="title"
-                   placeholder="<?=$this->getTrans('title') ?>"
                    value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getTitle()); } ?>" />
         </div>
     </div>
@@ -54,22 +53,20 @@
                    rows="5"><?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php
-    if ($this->get('rule') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?php if ($this->get('rule') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>
 
-<script language="JavaScript" type="text/javascript">
-(function ($) {
-  $('.spinner .btn:first-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-  });
-  $('.spinner .btn:last-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-  });
-})(jQuery);
+<script type="text/javascript">
+    (function ($) {
+      $('.spinner .btn:first-of-type').on('click', function() {
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+      });
+      $('.spinner .btn:last-of-type').on('click', function() {
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+      });
+    })(jQuery);
 </script>

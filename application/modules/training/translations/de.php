@@ -9,8 +9,8 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuTraining' => 'Training',
-    'menuAdd' => 'Erstellen',
-    'menuEdit' => 'Bearbeiten',
+    'add' => 'Erstellen',
+    'edit' => 'Bearbeiten',
     'manage' => 'Verwalten',
     'noTraining' => 'keine Einträge vorhanden',
     'title' => 'Titel',
@@ -24,6 +24,7 @@ return array
     'noOtherInfo'=> 'keine weiteren Information vorhanden',
     'entrant' => 'Teilnehmer',
     'trainDetails' => 'Training Details',
+    'options' => 'Optionen',
     'join' => 'Teilnehmen',
     'decline' => 'Absagen',
     'entrys' => 'Angemeldet',

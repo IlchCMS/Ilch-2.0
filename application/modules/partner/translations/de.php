@@ -8,7 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'partner' => 'Partner',
+    'menuPartner' => 'Partner',
     'name' => 'Name',
     'banner' => 'Banner',
     'link' => 'Link',
@@ -17,15 +17,10 @@ return array
     'missingLink' => 'Link muss ausgefüllt werden',
     'missingBanner' => 'Banner muss ausgefüllt werden',
     'sendSuccess' => 'Partner erfolgreich eingetragen',
-    'menuPartner' => 'Partner',
-    'menuPartners' => 'Partners',
-    'menuActionNewPartner' => 'Partner hinzufügen',
-    'menuActionEditPartner' => 'Partner editieren',
+    'add' => 'Hinzufügen',
+    'edit' => 'Bearbeiten',
     'noPartners' => 'Keine Partner vorhanden',
-    'noNewPartners' => 'Keine neuen Partners',
-    'askIfDeletePartner' => 'Sind Sie sicher, dass der Partner "%s" entfernt werden soll?',
-    'managenewentry' => 'Neue Partner Freischalten',
-    'managePartner' => 'Partner verwalten',
+    'noNewPartners' => 'Keine neuen Partner vorhanden',
     'manage' => 'Verwalten',
     'setfree' => 'Freischalten',
     'delete' => 'Löschen',

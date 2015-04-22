@@ -19,6 +19,6 @@
 <style>
     .briefcase {
         padding: 8px 8px 0 8px;
-        border: 1px solid #e7e7e7;
+        border: 1px solid #e5e5e5;
     }
 </style>

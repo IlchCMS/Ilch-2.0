@@ -39,7 +39,7 @@ class Awards extends \Ilch\Mapper
             $awardsModel->setDate($entries['date']);
             $awardsModel->setRank($entries['rank']);
             $awardsModel->setEvent($entries['event']);
-            $awardsModel->setPage($entries['page']);
+            $awardsModel->setURL($entries['url']);
             $awardsModel->setUTId($entries['ut_id']);
             $awardsModel->setTyp($entries['typ']);
             $awards[] = $awardsModel;
@@ -71,7 +71,7 @@ class Awards extends \Ilch\Mapper
         $awardsModel->setDate($awardsRow['date']);
         $awardsModel->setRank($awardsRow['rank']);
         $awardsModel->setEvent($awardsRow['event']);
-        $awardsModel->setPage($awardsRow['page']);
+        $awardsModel->setURL($awardsRow['url']);
         $awardsModel->setUTId($awardsRow['ut_id']);
         $awardsModel->setTyp($awardsRow['typ']);
 
@@ -90,7 +90,7 @@ class Awards extends \Ilch\Mapper
             'date' => $awards->getDate(),
             'rank' => $awards->getRank(),
             'event' => $awards->getEvent(),
-            'page' => $awards->getPage(),
+            'url' => $awards->getURL(),
             'ut_id' => $awards->getUTId(),
             'typ' => $awards->getTyp(),
         );

@@ -9,7 +9,6 @@ defined('ACCESS') or die('no direct access');
 return array
 (    
     'menuAwards' => 'Awards',
-    'manageAwards' => 'Manage Awards',
     'manage' => 'Manage',
     'add' => 'Add',
     'edit' => 'Edit',

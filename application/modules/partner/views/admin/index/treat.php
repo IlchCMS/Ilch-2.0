@@ -1,24 +1,21 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
-    <?php echo $this->getTokenField(); ?>
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
+    <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('partner') != '') {
-            echo $this->getTrans('menuActionEditPartner');
-        } else {
-            echo $this->getTrans('menuActionNewPartner');
-        }
-    ?>
+        <?php if ($this->get('partner') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('name'); ?>:
+            <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="name"
                    id="name"
-                   placeholder="Name"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } ?>" />
         </div>
     </div>
@@ -48,11 +45,9 @@
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
         </div>
     </div>
-    <?php
-    if ($this->get('partner') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?php if ($this->get('partner') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>

@@ -33,7 +33,7 @@ class Index extends \Ilch\Controller\Admin
                 (
                 array
                     (
-                    'name' => 'menuNewCalendar',
+                    'name' => 'add',
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
                 )
@@ -62,15 +62,19 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuCalendar'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewCalendar'), array('action' => 'treat'));
-
         $calendarMapper = new CalendarMapper();
         $calendarModel = new CalendarModel();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuCalendar'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+
             $this->getView()->set('calendar', $calendarMapper->getCalendarById($this->getRequest()->getParam('id')));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuCalendar'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
         if ($this->getRequest()->isPost()) {

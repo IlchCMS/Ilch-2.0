@@ -65,12 +65,16 @@ class Index extends \Ilch\Controller\Admin
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
 
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuAwards'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
-
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuAwards'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+        
             $this->getView()->set('awards', $awardsMapper->getAwardsById($this->getRequest()->getParam('id')));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuAwards'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
         if ($this->getRequest()->isPost()) {
@@ -97,7 +101,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setDate($date);
                 $model->setRank($rank);
                 $model->setEvent($this->getRequest()->getPost('event'));
-                $model->setPage($this->getRequest()->getPost('page'));
+                $model->setURL($this->getRequest()->getPost('url'));
                 $model->setUTId($utId);
                 $model->setTyp($typ);
                 $awardsMapper->save($model);

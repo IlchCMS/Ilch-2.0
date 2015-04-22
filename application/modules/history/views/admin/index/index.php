@@ -1,4 +1,4 @@
-<legend><?= $this->getTrans('manageHistorys') ?></legend>
+<legend><?= $this->getTrans('manage') ?></legend>
 <?php if ($this->get('entries') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField()?>
@@ -26,13 +26,8 @@
                     <?php foreach ($this->get('entries') as $entry) : ?>
                         <tr>
                             <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td>
-                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId())) ?>
-                            </td>
-                            <td>
-                                <?php $deleteArray = array('action' => 'del', 'id' => $entry->getId()); ?>
-                                <?=$this->getDeleteIcon($deleteArray) ?>
-                            </td>
+                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId())) ?></td>
+                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $entry->getId())) ?></td>
                             <td>
                                 <?php   
                                     $getDate = new \Ilch\Date($entry->getDate());
@@ -50,8 +45,7 @@
                 </tbody>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noHistorys') ?>

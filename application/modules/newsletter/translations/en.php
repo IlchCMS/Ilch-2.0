@@ -8,7 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'newsletter' => 'Newsletter',
+    'menuNewsletter' => 'Newsletter',
     'subject' => 'Subject',
     'date' => 'Date',
     'text' => 'Text',
@@ -17,12 +17,8 @@ return array
     'missingSubject' => 'Subject was not filled',
     'missingText' => 'Text was not filled',
     'sendSuccess' => 'Newsletter sent successfully',
-    'menuNewsletter' => 'Newsletter',
-    'menuNewsletterTreat' => 'Newsletter write',
-    'showNewsletter' => 'Newsletter Show',
-    'menuActionNewNewsletter' => 'Newsletter write',
-    'askIfDeleteNewsletter' => 'Are you sure you want delete the Newsletter "%s"?',
-    'manageNewsletters' => 'Manage Newsletter',
+    'show' => 'Show',
+    'add' => 'Write',
     'manage' => 'Manage',
     'delete' => 'Delete',
     'send' => 'Send',
