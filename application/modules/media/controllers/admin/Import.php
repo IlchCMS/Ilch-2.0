@@ -101,5 +101,7 @@ class Import extends \Ilch\Controller\Admin
             }
         }
         $this->getView()->set('media', array_diff($newMediaArray, $existsMediaArray));
+        $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
+        $this->getView()->set('path', $directory);
     }
 }

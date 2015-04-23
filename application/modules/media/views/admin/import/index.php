@@ -9,7 +9,8 @@
             <colgroup>
                     <col class="icon_width" />
                     <col class="col-xs-1"/>
-                    <col class="col-lg-2" />
+                    <col class="col-lg-1" />
+                    <col class="col-lg-1" />
                     <col />
             </colgroup>
             <thead>
@@ -17,6 +18,7 @@
                     <th><?=$this->getCheckAllCheckbox('check_medias') ?></th>
                     <th><?=$this->getTrans('type') ?></th>
                     <th></th>
+                    <th><?=$this->getTrans('size') ?></th>
                     <th><?=$this->getTrans('name') ?></th>
                 </tr>
             </thead>
@@ -39,6 +41,7 @@
                                      style="width:50px; height:auto;" />
                             <?php endif; ?>
                         </td>
+                        <td><?=$upload->getSize() ?></td>
                         <td><?=$upload->getName() ?></td>
                     </tr>
                 <?php endforeach; ?>

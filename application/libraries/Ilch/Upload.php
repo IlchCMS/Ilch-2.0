@@ -48,6 +48,11 @@ class Upload extends \Ilch\Controller\Base
     protected $path;
 
     /**
+     * @var string $size
+     */
+    protected $size;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -68,6 +73,7 @@ class Upload extends \Ilch\Controller\Base
         $this->urlThumb = null;
         $this->path = null;
         $this->mediaExtImage = null;
+        $this->size = null;
         return $this;
     }
 
@@ -206,6 +212,27 @@ class Upload extends \Ilch\Controller\Base
     public function getUrlThumb()
     {
         return $this->urlThumb;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSize()
+    {
+        $bytes = sprintf('%u', filesize($this->file));
+
+        if ($bytes > 0)
+        {
+            $unit = intval(log($bytes, 1024));
+            $units = array('B', 'KB', 'MB', 'GB');
+
+            if (array_key_exists($unit, $units) === true)
+            {
+                return sprintf('%d %s', $bytes / pow(1024, $unit), $units[$unit]);
+            }
+        }
+
+        return $bytes;
     }
 
     public function upload()

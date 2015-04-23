@@ -14,6 +14,7 @@ return array
     'import' => 'Import neue Datei(en)',
     'mediaFromImport' => 'Neu Medien vom Upload Ordner hinzufügen',
     'description' => 'Beschreibung',
+    'size' => 'Größe',
     'type' => 'Art',
     'options' => 'Optionen',
     'mediaUpload' => 'Medien hochladen',

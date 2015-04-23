@@ -14,6 +14,7 @@ return array
     'import' => 'Import new media',
     'mediaFromImport' => 'Import new media from upload folder',
     'description' => 'Description',
+    'size' => 'Size',
     'type' => 'Type',
     'options' => 'Options',
     'mediaUpload' => 'Media Upload',
