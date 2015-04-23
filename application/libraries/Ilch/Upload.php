@@ -210,7 +210,6 @@ class Upload extends \Ilch\Controller\Base
 
     public function upload()
     {
-
         $hash = uniqid() . $this->getName();
         $this->setUrl($this->path.$hash.'.'.$this->getEnding());
         $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
@@ -225,6 +224,24 @@ class Upload extends \Ilch\Controller\Base
                 $thumb -> Cropimage = array(3,1,50,50,50,50);
                 $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
             }
+        }
+    }
+
+    public function save()
+    {
+        $hash = uniqid() . $this->getName();
+        $this->setUrl($this->path.$hash.'.'.$this->getEnding());
+        $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
+
+        rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
+        if(in_array($this->getEnding() , explode(' ',$this->getConfig()->get('media_ext_img')))){
+            $thumb = new \Thumb\Thumbnail();
+            $thumb -> Thumbprefix = 'thumb_';
+            $thumb -> Thumblocation = $this->path;
+            $thumb -> Thumbsize = 300;
+            $thumb -> Square = 300;
+            $thumb -> Cropimage = array(3,1,50,50,50,50);
+            $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
         }
     }
 }

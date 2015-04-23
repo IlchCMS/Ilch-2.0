@@ -33,6 +33,13 @@ class Settings extends \Ilch\Controller\Admin
                 ),
                 array
                 (
+                    'name' => 'import',
+                    'active' => false,
+                    'icon' => 'fa fa-download',
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'import', 'action' => 'index'))
+                ),
+                array
+                (
                     'name' => 'settings',
                     'active' => true,
                     'icon' => 'fa fa-cogs',
@@ -45,7 +52,8 @@ class Settings extends \Ilch\Controller\Admin
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('media'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost('save')) {
             $this->getConfig()->set('media_ext_img', $this->getRequest()->getPost('allowedImages'));

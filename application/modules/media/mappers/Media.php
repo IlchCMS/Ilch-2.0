@@ -52,6 +52,42 @@ class Media extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Media List.
+     *
+     * @return MediaModel[]|array
+     */
+    public function getMediaListAll()
+    {
+        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
+                FROM `[prefix]_media` as m
+                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
+                ORDER by m.id DESC';
+
+        $mediaArray = $this->db()->queryArray($sql);
+
+        if (empty($mediaArray)) {
+            return null;
+        }
+
+        $media = array();
+
+        foreach ($mediaArray as $medias) {
+            $entryModel = new MediaModel();
+            $entryModel->setId($medias['id']);
+            $entryModel->setUrl($medias['url']);
+            $entryModel->setUrlThumb($medias['url_thumb']);
+            $entryModel->setName($medias['name']);
+            $entryModel->setDatetime($medias['datetime']);
+            $entryModel->setEnding($medias['ending']);
+            $entryModel->setCatName(($medias['cat_name']));
+            $entryModel->setCatId(($medias['cat']));
+            $media[] = $entryModel;
+        }
+
+        return $media;
+    }
+
+    /**
      * Gets the Media Lists by ending.
      *
      * @param string $ending
@@ -199,6 +235,7 @@ class Media extends \Ilch\Mapper
 
         $mediaModel = new MediaModel();
         $mediaModel->setUrlThumb($mediaRow['url_thumb']);
+        $mediaModel->setUrl($mediaRow['url']);
         
         return $mediaModel;
     }

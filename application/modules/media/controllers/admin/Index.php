@@ -36,6 +36,13 @@ class Index extends \Ilch\Controller\Admin
                 ),
                 array
                 (
+                    'name' => 'import',
+                    'active' => false,
+                    'icon' => 'fa fa-download',
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'import', 'action' => 'index'))
+                ),
+                array
+                (
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',

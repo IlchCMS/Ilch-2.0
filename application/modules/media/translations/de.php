@@ -11,6 +11,8 @@ return array
     'media' => 'Medien',
     'menuMedia' => 'Medien',
     'menuActionAddNew' => 'Datei(en) hochladen',
+    'import' => 'Import neue Datei(en)',
+    'mediaFromImport' => 'Neu Medien vom Upload Ordner hinzufügen',
     'description' => 'Beschreibung',
     'type' => 'Art',
     'options' => 'Optionen',

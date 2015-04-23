@@ -35,6 +35,13 @@ class Cats extends \Ilch\Controller\Admin
                 ),
                 array
                 (
+                    'name' => 'import',
+                    'active' => false,
+                    'icon' => 'fa fa-download',
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'import', 'action' => 'index'))
+                ),
+                array
+                (
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
@@ -58,7 +65,7 @@ class Cats extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('media'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('settingscats'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('cats'), array('action' => 'index'));
 
         $mediaMapper = new MediaMapper();
 
