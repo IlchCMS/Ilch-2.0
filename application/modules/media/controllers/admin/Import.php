@@ -64,8 +64,8 @@ class Import extends \Ilch\Controller\Admin
         $directory = $this->getConfig()->get('media_uploadpath');
         $globMediaArray = glob($directory . "*.*");
 
-        if ($this->getRequest()->getPost('save') == 'save') {
-            foreach($this->getRequest()->getPost('check_medias') as $media) {
+        if ($this->getRequest()->getPost('save') === 'save') {
+            foreach ($this->getRequest()->getPost('check_medias') as $media) {
                 $upload = new \Ilch\Upload();
                 $upload->setFile($media);
                 $upload->setPath($directory);
@@ -89,14 +89,14 @@ class Import extends \Ilch\Controller\Admin
         }
 
         $newMediaArray = array();
-        foreach ($globMediaArray as $globMedia){
+        foreach ($globMediaArray as $globMedia) {
             $upload = new \Ilch\Upload();
             $upload->setFile($globMedia);
 
             $existsUrl = $mediaMapper->getByWhere(array('url' => $directory.$upload->getName().'.'.$upload->getEnding()));
             $existsUrlThumb = $mediaMapper->getByWhere(array('url_thumb' => $directory.$upload->getName().'.'.$upload->getEnding()));
 
-            if(!$existsUrl && !$existsUrlThumb){
+            if (!$existsUrl && !$existsUrlThumb) {
                 $newMediaArray[] = $directory.$upload->getName().'.'.$upload->getEnding();
             }
         }

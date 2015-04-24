@@ -69,7 +69,7 @@ class Index extends \Ilch\Controller\Admin
 
         $mediaMapper = new MediaMapper();
 
-        if ($this->getRequest()->getPost('action') == 'delete' and $this->getRequest()->getPost('check_medias') > 0) {
+        if ($this->getRequest()->getPost('action') === 'delete' && $this->getRequest()->getPost('check_medias') > 0) {
             foreach($this->getRequest()->getPost('check_medias') as $mediaId) {
                 $mediaMapper->delMediaById($mediaId);
             }
@@ -80,7 +80,7 @@ class Index extends \Ilch\Controller\Admin
         $pagination = new \Ilch\Pagination();
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        if ($this->getRequest()->getParam('rows')){
+        if ($this->getRequest()->getParam('rows')) {
             $pagination->setRowsPerPage($this->getRequest()->getParam('rows'));
             $rows = array('rows' => $this->getRequest()->getParam('rows'));
             $this->getView()->set('rows', $rows);
@@ -89,10 +89,10 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('rows', $rows);
         }
 
-        if ($this->getRequest()->getPost('search') == 'search') {
-                $pagination->setRowsPerPage($this->getRequest()->getPost('rows'));
-                $rows = array('rows' => $this->getRequest()->getPost('rows'));
-                $this->getView()->set('rows', $rows);
+        if ($this->getRequest()->getPost('search') === 'search') {
+            $pagination->setRowsPerPage($this->getRequest()->getPost('rows'));
+            $rows = array('rows' => $this->getRequest()->getPost('rows'));
+            $this->getView()->set('rows', $rows);
         }
 
         $this->getView()->set('pagination', $pagination);
@@ -110,7 +110,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('mediaUpload'), array('action' => 'upload'));
 
         if (!is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
-             $this->addMessage('writableMedia', 'danger');
+            $this->addMessage('writableMedia', 'danger');
         }
 
         $ilchdate = new IlchDate;
@@ -130,7 +130,6 @@ class Index extends \Ilch\Controller\Admin
             $model->setName($upload->getName());
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);
-
         }
     }
 
