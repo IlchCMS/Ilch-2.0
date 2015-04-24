@@ -96,4 +96,6 @@ return array
     'serverVersion' => 'Server Version',
     'description' => 'Beschreibung',
     'admincenter' => 'Admincenter',
+    'info' => 'Info',
+    'close' => 'Schließen',
 );

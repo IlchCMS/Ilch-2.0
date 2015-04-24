@@ -26,8 +26,6 @@ return array
     'allowedVideos' => 'allowed Videos',
     'allowedFiles' => 'allowed Files',
     'allowedImages' => 'allowed Images',
-    'close' => 'close',
-    'allowedMediaInfo' => 'Info',
     'success' => 'Success',
     'upload' => 'Upload',
     'add' => 'Add...',
@@ -35,6 +33,7 @@ return array
     'or' => 'or',
     'browse' => 'Browse',
     'allowedMediaInfoText' => 'Here you can set the allowed extensions. Write <br/> the endings after another and only separated by a space <br/>. Be aware that you use an extension such as may "jpeg" only allowed images appear and has not allowed to look at videos or allowed Files!',
+    'importInfoText' => 'Here you can add new files from the upload folder, but there are not in the database. This is particularly useful for large files, that can be easily uploaded via FTP to the upload folder.',
 
     'cats' => 'Categories',
     'cat' => 'Categorie',

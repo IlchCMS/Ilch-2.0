@@ -1,5 +1,9 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
-<legend><?=$this->getTrans('mediaFromImport') ?></legend>
+<legend><?=$this->getTrans('mediaFromImport') ?>
+    <a class="badge" data-toggle="modal" data-target="#infoModal">
+        <i class="fa fa-info" ></i>
+    </a>
+</legend>
 <?php $medias = $this->get('media'); ?>
 <?php if (!empty($medias)): ?>
 <form class="form-horizontal" method="POST" action="">
@@ -50,6 +54,27 @@
     </div>
     <?=$this->getSaveBar('add') ?>
 </form>
+<div class="modal fade" id="infoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><?=$this->getTrans('info') ?></h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalText"><?=$this->getTrans('importInfoText') ?></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal"><?=$this->getTrans('close') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 <?php else: ?>
     <?=$this->getTrans('noMedias') ?>
 <?php endif; ?>
