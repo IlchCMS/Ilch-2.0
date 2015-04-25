@@ -22,10 +22,6 @@ return array
     'missingText' => 'Text was not filled',
     'missingDate' => 'Date was not filled',
     'missingPlace' => 'Place was not filled',
-    'add' => 'Add',
-    'edit' => 'Edit',
-    'manage' => 'Manage',
-    'delete' => 'Delete',
 
     'menuEventUpcoming' => 'Upcoming Events',
     'menuEventAll' => 'All Events',
@@ -45,7 +41,6 @@ return array
     'guest' => 'Guest',
     'submit' => 'Entry',
     'addButton' => 'Entry',
-    'updateButton' => 'Update',
     'at' => 'at',
     'write' => 'Write',
     'naviEventsUpcoming' => 'Upcoming',

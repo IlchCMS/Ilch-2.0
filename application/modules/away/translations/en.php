@@ -10,7 +10,6 @@ return array
 (
     'menuAway' => 'Away list',
     'menuEntry' => 'Entry',
-    'manage' => 'Manage',
     'noAway' => 'no Entries available',
     'from' => 'From',
     'when' => 'When',

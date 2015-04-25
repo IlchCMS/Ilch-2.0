@@ -38,7 +38,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'addFaq',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat', 'catId' => $this->getRequest()->getParam('catId')))
             )
         );
 
@@ -48,7 +48,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'addCategory',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treatCat'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('catId')))
             )
         );
     }
@@ -59,12 +59,12 @@ class Index extends \Ilch\Controller\Admin
         $categoryMapper = new CategoryMapper();
 
         if ($this->getRequest()->getParam('catId')) {
-            $catTitle = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
+            $catQuestion = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
 
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'))
                     ->add($this->getTranslator()->trans('cat'), array('action' => 'index'))
-                    ->add($catTitle->getTitle(), array('action' => 'index', 'catId' => $this->getRequest()->getParam('catId')));
+                    ->add($catQuestion->getTitle(), array('action' => 'index', 'catId' => $this->getRequest()->getParam('catId')));
 
             $faqs = $faqMapper->getFaqs(array('cat_id' => $this->getRequest()->getParam('catId')));
         } else {
@@ -88,12 +88,14 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('catId')) {
             $faqs = $faqMapper->getFaqs(array('cat_id' => $this->getRequest()->getParam('catId')));
+            $categorys = $categoryMapper->getCategories(array('parent_id' => $this->getRequest()->getParam('catId')));
         } else {
             $faqs = $faqMapper->getFaqs(array('cat_id' => 0));
+            $categorys = $categoryMapper->getCategories(array('parent_id' => 0));
         }
 
         $this->getView()->set('faqs', $faqs);
-        $this->getView()->set('categorys', $categoryMapper->getCategories());
+        $this->getView()->set('categorys', $categorys);
     }
 
     public function treatAction()
@@ -120,22 +122,26 @@ class Index extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
-            $title = $this->getRequest()->getPost('title');
-            $text = $this->getRequest()->getPost('text');
+            $question = $this->getRequest()->getPost('question');
+            $answer = $this->getRequest()->getPost('answer');
 
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif(empty($text)) {
-                $this->addMessage('missingText', 'danger');
+            if (empty($question)) {
+                $this->addMessage('missingQuestion', 'danger');
+            } elseif(empty($answer)) {
+                $this->addMessage('missingAnswer', 'danger');
             } else {
-                $model->setTitle($title);
-                $model->setText($text);
+                $model->setQuestion($question);
+                $model->setAnswer($answer);
                 $model->setCatId($this->getRequest()->getPost('catId'));
                 $faqMapper->save($model);
 
                 $this->addMessage('saveSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                if ($this->getRequest()->getParam('catId')) {
+                    $this->redirect(array('action' => 'index', 'catId' => $this->getRequest()->getParam('catId')));
+                } else {
+                    $this->redirect(array('action' => 'index'));
+                }
             }
         }
 
@@ -166,8 +172,11 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
             }
+            if ($this->getRequest()->getParam('id') == '') {
+                $model->setParentID($this->getRequest()->getParam('parentId'));
+            }
 
-            $title = $this->getRequest()->getPost('title');
+            $title = $this->getRequest()->getPost('question');
             
             if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
@@ -177,7 +186,11 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                if ($this->getRequest()->getParam('parentId')) {
+                    $this->redirect(array('action' => 'index', 'catId' => $this->getRequest()->getParam('parentId')));
+                } else {
+                    $this->redirect(array('action' => 'index'));
+                }
             }   
         }
     }

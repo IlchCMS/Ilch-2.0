@@ -16,8 +16,6 @@ return array
     'sendSuccess' => 'Message send successfull',
     'menuReceiver' => 'Contact',
     'menuReceivers' => 'Receivers',
-    'menuActionNewReceiver' => 'Add Receiver',
-    'menuActionEditReceiver' => 'Edit Receiver',
     'noReceivers' => 'No receivers',
     'askIfDeleteReceiver' => 'Are you sure you want delete the receiver "%s"?',
     'contactWebsite' => 'Contact Website ',

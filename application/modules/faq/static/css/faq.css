@@ -1,0 +1,26 @@
+.trigger {
+    list-style: none;
+    margin-left: -20px;
+    color:#428BCA;
+    cursor:pointer;
+}
+.trigger div {
+    float: left;
+    width: 10px;
+    height: 10px;
+    margin-top: 6px;
+    background: url("../img/plus.png");
+}
+.trigger_active {
+    color:#000000;
+}
+.trigger_active div {
+    float: left;
+    width: 10px;
+    height: 10px;
+    margin-top: 6px;
+    background: url("../img/minus.png");
+}
+.toggle_container {
+    padding:5px 10px;
+}

@@ -23,7 +23,6 @@ return array
     'menuImprint' => 'Imprint',
     'menuSettings' => 'Settings',
     'manageImprint' => 'Manage Impressum',
-    'manage' => 'Manage',
     'settings' => 'Settings',
     'private' => 'Private',
     'company' => 'Company',

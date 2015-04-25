@@ -17,24 +17,42 @@ class Index extends \Ilch\Controller\Frontend
     {
         $categoryMapper = new CategoryMapper();
         $faqMapper = new FaqMapper();
-        
+
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'));
 
-        $this->getView()->set('categorys', $categoryMapper->getCategories());
-        $this->getView()->set('faqs', $faqMapper->getFaqs(array('cat_id' => '0')));
+        $this->getView()->set('faqs', $faqMapper->getFaqs(array('cat_id' => 0)));
+        $this->getView()->set('categorys', $categoryMapper->getCategories(array('parent_id' => 0)));
     }
 
     public function showCatAction()
     {
         $categoryMapper = new CategoryMapper();
         $faqMapper = new FaqMapper();
-        
-        $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'))
-                                      ->add($category->getTitle(), array('action' => 'index', 'catId' => $this->getRequest()->getParam('catId')));
+        if ($this->getRequest()->getParam('catId')) {
+            $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
+            $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
 
-        $this->getView()->set('categoryTitle', $category->getTitle());
-        $this->getView()->set('faqs', $faqMapper->getFaqs(array('cat_id' => $this->getRequest()->getParam('catId'))));
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'));
+
+            if (!empty($parentCategories)) {
+                foreach($parentCategories as $parent) {
+                    $this->getLayout()->getHmenu()->add($parent->getTitle(), array('action' => 'showCat', 'catId' => $parent->getId()));
+                }
+            }
+
+            $this->getLayout()->getHmenu()->add($category->getTitle(), array('action' => 'showCat', 'catId' => $this->getRequest()->getParam('catId')));
+
+            $faqs = $faqMapper->getFaqs(array('cat_id' => $this->getRequest()->getParam('catId')));
+            $categorys = $categoryMapper->getCategories(array('parent_id' => $this->getRequest()->getParam('catId')));
+        } else {
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'));
+
+            $faqs = $faqMapper->getFaqs();
+            $categorys = $categoryMapper->getCategories(array('parent_id' => $category->getId()));
+        }
+
+        $this->getView()->set('faqs', $faqs);
+        $this->getView()->set('categorys', $categorys);
     }
 }

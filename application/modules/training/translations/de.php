@@ -9,9 +9,6 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuTraining' => 'Training',
-    'add' => 'Erstellen',
-    'edit' => 'Bearbeiten',
-    'manage' => 'Verwalten',
     'noTraining' => 'keine Einträge vorhanden',
     'title' => 'Titel',
     'text' => 'Text',

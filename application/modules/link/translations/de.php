@@ -22,7 +22,6 @@ return array
     'menuLink' => 'Link',
     'menuLinks' => 'Links',
     'manageLink' => 'Links verwalten',
-    'manage' => 'Verwalten',
     'manageCategory' => 'Kategorien verwalten',
     'menuCategory' => 'Kategorien',
     'menuActionNewLink' => 'Link hinzufügen',
@@ -33,5 +32,4 @@ return array
     'noCategory' => 'Keine Kategorie vorhanden',
     'askIfDeleteLink' => 'Sind Sie sicher, dass der Link "%s" entfernt werden soll?',
     'askIfDeleteCat' => 'Sind Sie sicher, dass die Kategorie "%s" entfernt werden soll?',
-    'delete' => 'Löschen',
 );

@@ -1,7 +1,6 @@
 <link href="<?=$this->getModuleUrl('static/fullcalendar/fullcalendar.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('static/fullcalendar/fullcalendar.print.css') ?>" rel="stylesheet" media='print'>
 
-<!-- Calendar div -->
 <div id='calendar'></div>
 
 <style>
@@ -9,7 +8,7 @@
     width: 100%;
     margin: 0 auto;
 }
-
+.fc-basic-view .fc-body .fc-row { height: 112px; }
 .fc-today { background-color:#4295C9 !important; }
 .fc-sat { color:gray; }
 .fc-sun { color:red; }
@@ -19,7 +18,7 @@
 <script src="<?=$this->getModuleUrl('static/fullcalendar/fullcalendar.min.js') ?>"></script>
 <script src="<?=$this->getModuleUrl('static/fullcalendar/lang-all.js') ?>"></script>
 <script>    
-	$(document).ready(function() {
+    $(function() {
 		var date = new Date();
 		var d = date.getDate();
 		var m = date.getMonth();
@@ -36,6 +35,7 @@
             firstDay: '1',
             eventColor: '#32333B',
 			eventLimit: true,
+            contentHeight: 'auto',
 
 			dayClick: function(date, allDay, jsEvent, view) {
 				$('#calendar').fullCalendar( 'changeView', 'agendaDay' );
@@ -73,5 +73,5 @@
                     <?php endforeach; ?>
                     ],
 		});
-});
+    });
 </script>

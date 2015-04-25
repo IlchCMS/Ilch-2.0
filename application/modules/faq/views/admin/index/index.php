@@ -50,14 +50,14 @@
                         <th><?=$this->getCheckAllCheckbox('check_faqs')?></th>
                         <th></th>
                         <th></th>
-                        <th><?php echo $this->getTrans('title'); ?></th>
+                        <th><?php echo $this->getTrans('question'); ?></th>
                     </tr>
                     <?php foreach ($faqs as $faq): ?>
                         <tr>
                             <td><input value="<?=$faq->getId()?>" type="checkbox" name="check_faqs[]" /></td>
                             <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $faq->getId()))?></td>
                             <td><?=$this->getDeleteIcon(array('action' => 'delfaq', 'id' => $faq->getId()))?></td>
-                            <td><?=$faq->getTitle()?></td>
+                            <td><?=$faq->getQuestion()?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

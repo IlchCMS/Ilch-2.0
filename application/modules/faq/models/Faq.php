@@ -25,18 +25,18 @@ class Faq extends \Ilch\Model
     protected $catId;
 
     /**
-     * The title of the faq.
+     * The question of the faq.
      *
      * @var string
      */
-    protected $title;
+    protected $question;
 
     /**
-     * The text of the faq.
+     * The answer of the faq.
      *
      * @var string
      */
-    protected $text;
+    protected $answer;
 
     /**
      * Gets the id of the faq.
@@ -85,47 +85,47 @@ class Faq extends \Ilch\Model
     }
 
     /**
-     * Gets the title of the faq.
+     * Gets the question of the faq.
      *
      * @return string
      */
-    public function getTitle()
+    public function getQuestion()
     {
-        return $this->title;
+        return $this->question;
     }
 
     /**
-     * Sets the title of the faq.
+     * Sets the question of the faq.
      *
-     * @param string $title
+     * @param string $question
      * @return this
      */
-    public function setTitle($title)
+    public function setQuestion($question)
     {
-        $this->title = (string)$title;
+        $this->question = (string)$question;
 
         return $this;
     }
 
     /**
-     * Gets the text of the faq.
+     * Gets the answer of the faq.
      *
      * @return string
      */
-    public function getText()
+    public function getAnswer()
     {
-        return $this->text;
+        return $this->answer;
     }
 
     /**
-     * Sets the text of the faq.
+     * Sets the answer of the faq.
      *
-     * @param string $text
+     * @param string $answer
      * @return this
      */
-    public function setText($text)
+    public function setAnswer($answer)
     {
-        $this->text = (string)$text;
+        $this->answer = (string)$answer;
 
         return $this;
     }

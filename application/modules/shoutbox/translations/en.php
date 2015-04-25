@@ -12,7 +12,6 @@ return array
     'from' => 'From',
     'date' => 'Date',
     'name' => 'Name',
-    'manage' => 'Manage',
     'archive' => 'Archive',
     'message' => 'Message',
     'noEntrys' => 'no entries exist',

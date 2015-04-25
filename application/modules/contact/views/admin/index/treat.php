@@ -1,17 +1,15 @@
 <form class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('receiver') != '') {
-            echo $this->getTrans('menuActionEditReceiver');
-        } else {
-            echo $this->getTrans('menuActionNewReceiver');
-        }
-    ?>
+        <?php if ($this->get('receiver') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('name'); ?>:
+            <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
@@ -33,11 +31,9 @@
                    value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getEmail()); } ?>" />
         </div>
     </div>
-    <?php
-    if ($this->get('receiver') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?php if ($this->get('receiver') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>

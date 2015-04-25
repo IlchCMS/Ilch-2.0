@@ -98,4 +98,7 @@ return array
     'admincenter' => 'Admincenter',
     'info' => 'Info',
     'close' => 'Schließen',
+    'add' => 'Erstellen',
+    'edit' => 'Bearbeiten',
+    'manage' => 'Verwalten',    
 );

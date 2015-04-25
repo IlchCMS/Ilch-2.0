@@ -10,9 +10,6 @@ return array
 (    
     'menuJobs' => 'Jobs',
     'manageJobs' => 'Manage Jobs',
-    'manage' => 'Manage',
-    'add' => 'Add',
-    'edit' => 'Edit',
     'title' => 'Title',
     'email' => 'E-Mail address',
     'text' => 'Text',

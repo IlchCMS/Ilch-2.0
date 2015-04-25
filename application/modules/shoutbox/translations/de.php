@@ -12,7 +12,6 @@ return array
     'from' => 'Von',
     'date' => 'Datum',
     'name' => 'Name',
-    'manage' => 'Verwalten',
     'archive' => 'Archiv',
     'message' => 'Nachricht',
     'noEntrys' => 'Keine Einträge vorhanden',

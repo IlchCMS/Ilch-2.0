@@ -13,6 +13,7 @@ return array
     'updateButton' => 'Update',
     'saveSuccess' => 'Saved successful',
     'deleteSuccess' => 'Deleted successful',
+    'freeSuccess' => 'Successful activated',
     'treat' => 'Edit',
     'menuChange' => 'Menu change',
     'menuItemAdd' => 'Add menu item',
@@ -97,4 +98,7 @@ return array
     'admincenter' => 'Admincenter',
     'info' => 'Info',
     'close' => 'Close',
+    'add' => 'Add',
+    'edit' => 'Edit',
+    'manage' => 'Manage',
 );

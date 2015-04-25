@@ -16,6 +16,12 @@ class Category extends \Ilch\Mapper
      * @var int
      */
     private $id;
+    /**
+     * The parentId of the category.
+     *
+     * @var int
+     */
+    private $parentId;
 
     /**
      * The title of the category.
@@ -32,7 +38,7 @@ class Category extends \Ilch\Mapper
     private $text;
 
     /**
-     * Returns the user category id.
+     * Gets the category id.
      *
      * @return int
      */
@@ -42,7 +48,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the category id.
+     * Sets the id of the category.
      *
      * @param int $id
      */
@@ -52,7 +58,27 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Returns the category title.
+     * Gets the category parentId.
+     *
+     * @return int
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * Sets the parentId of the category.
+     *
+     * @param int $id
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = (int)$parentId;
+    }
+
+    /**
+     * Gets the title of the category.
      *
      * @return string
      */
@@ -62,7 +88,7 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the category title.
+     * Sets the title of the category.
      *
      * @param string $title
      */

@@ -36,8 +36,8 @@ class Faq extends \Ilch\Mapper
             $faqModel = new FaqModel();
             $faqModel->setId($faqRow['id']);
             $faqModel->setCatId($faqRow['cat_id']);
-            $faqModel->setTitle($faqRow['title']);
-            $faqModel->setText($faqRow['text']);
+            $faqModel->setQuestion($faqRow['question']);
+            $faqModel->setAnswer($faqRow['answer']);
          
             $faqs[] = $faqModel;
         }
@@ -81,8 +81,8 @@ class Faq extends \Ilch\Mapper
             $faqModel = new FaqModel();
             $faqModel->setId($faqRow['id']);
             $faqModel->setCatId($faqRow['cat_id']);
-            $faqModel->setTitle($faqRow['title']);
-            $faqModel->setText($faqRow['text']);
+            $faqModel->setQuestion($faqRow['question']);
+            $faqModel->setAnswer($faqRow['answer']);
          
             $faqs[] = $faqModel;
         }
@@ -100,8 +100,8 @@ class Faq extends \Ilch\Mapper
         $fields = array
         (
             'cat_id' => $faq->getCatId(),
-            'title' => $faq->getTitle(),
-            'text' => $faq->getText()
+            'question' => $faq->getQuestion(),
+            'answer' => $faq->getAnswer()
         );
 
         if ($faq->getId()) {

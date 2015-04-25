@@ -22,10 +22,6 @@ return array
     'missingText' => 'Text muss ausgefüllt werden',
     'missingDate' => 'Datum muss ausgefüllt werden',
     'missingPlace' => 'Ort muss ausgefüllt werden',
-    'add' => 'Erstellen',
-    'edit' => 'Bearbeiten',
-    'manage' => 'Verwalten',
-    'delete' => 'Löschen',
 
     'menuEventUpcoming' => 'Bevorstehende Veranstaltungen',
     'menuEventAll' => 'Alle Veranstaltungen',
@@ -45,7 +41,6 @@ return array
     'guest' => 'Gäste',
     'submit' => 'Erstellen',
     'addButton' => 'Erstellen',
-    'updateButton' => 'Aktualisieren',
     'at' => 'um',
     'write' => 'Schreiben',
     'naviEventsUpcoming' => 'Bevorstehende',

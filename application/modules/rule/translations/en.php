@@ -15,9 +15,5 @@ return array
     'missingTitle' => 'Title was not filled',
     'missingText' => 'Text was not filled',
     'sendSuccess' => 'Rule successfull entry',
-    'add' => 'Add',
-    'edit' => 'Edit',
     'noRules' => 'No rules available',
-    'manage' => 'Manage',
-    'delete' => 'Delete',
 );

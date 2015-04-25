@@ -1,21 +1,41 @@
 <?php
+    $categories = $this->get('categorys');
     $faqs = $this->get('faqs');
+
     $faqMappers = new Modules\Faq\Mappers\Faq();
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/faq.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('faqs') ?></legend>
-<?php if ($faqs != ''): ?>
-    <ul class="list-unstyled">
-        <?php $faqs = $faqMappers->getFaqsByCatId($this->getRequest()->getParam('catId')); ?>
-        <li><b><?=$this->get('categoryTitle') ?></b>
-            <?php foreach ($faqs as $faq): ?>
-                <ul>
-                    <li class="trigger"><?=$faq->getTitle() ?></li>
-                    <div class="toggle_container"><?=$faq->getText() ?></div>
-                </ul>
+<?php if ($categories != '' OR $faqs != ''): ?>
+    <?php if ($categories != ''): ?>
+        <ul class="list-unstyled">
+            <?php foreach ($categories as $category): ?>
+                <?php $catFaqs = $faqMappers->getFaqsByCatId($category->getId()); ?>
+                <li><a href="<?=$this->getUrl('faq/index/showCat/catId/'.$category->getId()) ?>"><b><?=$category->getTitle() ?></b></a>
+                    <?php if ($catFaqs != ''): ?>
+                        <?php foreach ($catFaqs as $faq): ?>
+                            <ul>
+                                <li class="trigger"><div></div> &nbsp;<?=$faq->getQuestion() ?></li>
+                                <div class="toggle_container"><?=$faq->getAnswer() ?></div>
+                            </ul>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </li>
+                <br />
             <?php endforeach; ?>
-        </li>
-    </ul>
+        </ul>
+    <?php endif; ?>
+    <?php if ($faqs != ''): ?>
+        <ul style="padding-left:21px;">
+            <?php $faqs = $faqMappers->getFaqsByCatId($this->getRequest()->getParam('catId')); ?>
+            <?php foreach ($faqs as $faq): ?>
+                <li class="trigger"><div></div> &nbsp;<?=$faq->getQuestion() ?></li>
+                <div class="toggle_container"><?=$faq->getAnswer() ?></div>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 <?php else: ?>
     <?=$this->getTrans('noFaqs') ?>
 <?php endif; ?>
@@ -38,17 +58,3 @@
         });
     });
 </script>
-
-<style>
-    .trigger {
-        list-style: square;
-        color:#428BCA;
-        cursor:pointer;
-    }
-    .trigger_active {
-        color:#000000;
-    }
-    .toggle_container {
-        padding:5px 10px;
-    }
-</style>

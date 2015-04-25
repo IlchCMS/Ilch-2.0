@@ -10,7 +10,6 @@ return array
 (
     'menuAway' => 'Abwesenheitsliste',
     'menuEntry' => 'Eintragen',
-    'manage' => 'Verwalten',
     'noAway' => 'keine Einträge vorhanden',
     'from' => 'Von',
     'when' => 'Wann',

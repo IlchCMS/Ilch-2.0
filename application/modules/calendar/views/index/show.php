@@ -4,14 +4,8 @@ $calendar = $this->get('calendar');
 $start = new \Ilch\Date($calendar->getStart());
 $end = new \Ilch\Date($calendar->getEnd());
 ?>
-<legend><?=$this->getTrans('term') ?></legend>
+<legend><?=$this->escape($calendar->getTitle()) ?></legend>
 <div class="form-horizontal">
-    <div class="form-group">
-        <label for="receiver" class="col-lg-2">
-            <?=$this->getTrans('title') ?>:
-        </label>
-        <div class="col-lg-10"><?=$this->escape($calendar->getTitle()) ?></div>
-    </div>
     <?php if ($calendar->getPlace()!= ''): ?>
         <div class="form-group">
             <label for="receiver" class="col-lg-2">

@@ -21,7 +21,6 @@ return array
     'manage' => 'Manage Guestbook',
     'manageentry' => 'Manage/delete entries',
     'text' => 'Text',
-    'delete' => 'Delete',
     'successful' => 'Successful',
     'missingText' => 'Text was not filled',
     'missingEmail' => 'E-Mail was not filled',

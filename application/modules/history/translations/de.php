@@ -16,9 +16,5 @@ return array
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',
     'sendSuccess' => 'Geschichte erfolgreich eingetragen',
-    'add' => 'Erstellen',
-    'edit' => 'Bearbeiten',
     'noHistorys' => 'Keine Geschichten vorhanden',
-    'manage' => 'Verwalten',
-    'delete' => 'Löschen',
 );

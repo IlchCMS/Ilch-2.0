@@ -17,11 +17,8 @@ return array
     'url' => 'Link',
     'text' => 'Text',
     'menuPrivacy' => 'Datenschutzerklärung',
-    'add' => 'Hinzufügen',
-    'edit' => 'Bearbeiten',
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',
     'managePrivacy' => 'Datenschutzerklärung verwalten',
     'noPrivacy' => 'Keine Datenschutzerklärung vorhanden',
-    'manage' => 'Verwalten',
 );

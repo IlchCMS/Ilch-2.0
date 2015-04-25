@@ -1,34 +1,55 @@
 <?php
     $categories = $this->get('categorys');
     $faqs = $this->get('faqs');
+
     $faqMappers = new Modules\Faq\Mappers\Faq();
+    $categoryMapper = new Modules\Faq\Mappers\Category();
 ?>
+
+<link href="<?=$this->getModuleUrl('static/css/faq.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('faqs') ?></legend>
 <?php if ($categories != '' OR $faqs != ''): ?>
     <?php if ($categories != ''): ?>
         <ul class="list-unstyled">
             <?php foreach ($categories as $category): ?>
+                <?php $cats = $categoryMapper->getCategories(array('parent_id' => $category->getId())); ?>
                 <?php $catFaqs = $faqMappers->getFaqsByCatId($category->getId()); ?>
                 <li><a href="<?=$this->getUrl('faq/index/showCat/catId/'.$category->getId()) ?>"><b><?=$category->getTitle() ?></b></a>
                     <?php if ($catFaqs != ''): ?>
                         <?php foreach ($catFaqs as $faq): ?>
                             <ul>
-                                <li class="trigger"><?=$faq->getTitle() ?></li>
-                                <div class="toggle_container"><?=$faq->getText() ?></div>
+                                <li class="trigger"><div></div> &nbsp;<?=$faq->getQuestion() ?></li>
+                                <div class="toggle_container"><?=$faq->getAnswer() ?></div>
                             </ul>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </li>
+                <br />
+                <ul style="list-style:none;">
+                    <?php foreach ($cats as $cat): ?>
+                        <?php $catFaqs = $faqMappers->getFaqsByCatId($cat->getId()); ?>
+                        <li><a href="<?=$this->getUrl('faq/index/showCat/catId/'.$cat->getId()) ?>"><b><?=$cat->getTitle() ?></b></a>
+                            <?php if ($catFaqs != ''): ?>
+                                <?php foreach ($catFaqs as $faq): ?>
+                                    <ul>
+                                        <li class="trigger"><div></div> &nbsp;<?=$faq->getQuestion() ?></li>
+                                        <div class="toggle_container"><?=$faq->getAnswer() ?></div>
+                                    </ul>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </li>
+                        <br />
+                    <?php endforeach; ?>
+                </ul>
             <?php endforeach; ?>
         </ul>
-        <br />
         <?php endif; ?>
     <?php if ($faqs != ''): ?>
         <?php foreach ($faqs as $faq): ?>
-            <ul>
-                <li class="trigger"><?=$faq->getTitle() ?></li>
-                <div class="toggle_container"><?=$faq->getText() ?></div>
+        <ul style="padding-left:21px;">
+                <li class="trigger"><div></div> &nbsp;<?=$faq->getQuestion() ?></li>
+                <div class="toggle_container"><?=$faq->getAnswer() ?></div>
             </ul>
         <?php endforeach; ?>
     <?php endif; ?>
@@ -54,17 +75,3 @@
         });
     });
 </script>
-
-<style>
-    .trigger {
-        list-style: square;
-        color:#428BCA;
-        cursor:pointer;
-    }
-    .trigger_active {
-        color:#000000;
-    }
-    .toggle_container {
-        padding:5px 10px;
-    }
-</style>

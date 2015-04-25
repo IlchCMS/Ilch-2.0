@@ -46,8 +46,8 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_faqs` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `cat_id` INT(11) NULL DEFAULT 0,
-                  `title` VARCHAR(100) NOT NULL,
-                  `text` MEDIUMTEXT NOT NULL,
+                  `question` VARCHAR(100) NOT NULL,
+                  `answer` MEDIUMTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
