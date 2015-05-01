@@ -14,7 +14,7 @@ return array
     'text' => 'Text',
     'symbol' => 'Symbol',
     'color' => 'Farbe',
-    'noSelect' => 'keins',
+    'noSelect' => 'Keins',
     'globeSelect' => 'Globus',
     'ideaSelect' => 'Idee',
     'capSelect' => 'Hut',
