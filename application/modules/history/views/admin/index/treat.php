@@ -9,6 +9,7 @@
 ?>
 
 <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
     <?=$this->getTokenField() ?>
@@ -36,7 +37,7 @@
     </div>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('title'); ?>:
+            <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -48,13 +49,43 @@
     </div>
     <div class="form-group">
         <label for="text" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('text'); ?>:
+            <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-10">
             <textarea class="form-control"
                    name="text" 
                    id="ilch_html"
                    rows="5"><?php if ($this->get('history') != '') { echo $this->escape($this->get('history')->getText()); } ?></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="typ" class="col-lg-2 control-label">
+            <?=$this->getTrans('symbol') ?>:
+        </label>
+        <div class="col-lg-2">
+            <select class="form-control fontawesome-select" name="typ" id="typ">
+                <option value="" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
+                <option value="globe" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'globe') { echo 'selected="selected"'; } ?>>&#xf015; <?=$this->getTrans('globeSelect') ?></option>
+                <option value="idea" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'idea') { echo 'selected="selected"'; } ?>>&#xf0eb; <?=$this->getTrans('ideaSelect') ?></option>
+                <option value="cap" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'cap') { echo 'selected="selected"'; } ?>>&#xf19d; <?=$this->getTrans('capSelect') ?></option>
+                <option value="picture" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'picture') { echo 'selected="selected"'; } ?>>&#xf030; <?=$this->getTrans('pictureSelect') ?></option>
+                <option value="video" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'video') { echo 'selected="selected"'; } ?>>&#xf03d; <?=$this->getTrans('videoSelect') ?></option>
+                <option value="location" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'location') { echo 'selected="selected"'; } ?>>&#xf041; <?=$this->getTrans('locationSelect') ?></option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="color" class="col-lg-2 control-label">
+            <?=$this->getTrans('color') ?>:
+        </label>
+        <div class="col-lg-2 input-group date">
+            <input class="form-control color {hash:true}"
+                   name="color"
+                   id="color"
+                   value="<?php if ($this->get('history') != '') { echo $this->get('history')->getColor(); } else { echo '#75ce66'; } ?>">
+            <span class="input-group-addon">
+                <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
+            </span>
         </div>
     </div>
     <?php if ($this->get('history') != ''): ?>
@@ -64,6 +95,7 @@
     <?php endif; ?>
 </form>
 
+<script type="text/javascript" src="<?=$this->getStaticUrl('jscolor/jscolor.js') ?>"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
@@ -77,10 +109,3 @@
         });
     });
 </script>
-
-<style>
-    .date {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-</style>

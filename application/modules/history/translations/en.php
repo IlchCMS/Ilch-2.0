@@ -8,10 +8,19 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuHistorys' => 'Historys',
+    'menuHistorys' => 'History',
     'date' => 'Date',
     'title' => 'Title',
-    'text' => 'Text',    
+    'text' => 'Text',
+    'symbol' => 'Symbol',
+    'color' => 'Farbe',
+    'noSelect' => 'None',
+    'globeSelect' => 'Globe',
+    'ideaSelect' => 'Idea',
+    'capSelect' => 'Hut',
+    'pictureSelect' => 'Picture',
+    'videoSelect' => 'Video',
+    'locationSelect' => 'Location',
     'missingDate' => 'Date was not filled',
     'missingTitle' => 'Title was not filled',
     'missingText' => 'Text was not filled',

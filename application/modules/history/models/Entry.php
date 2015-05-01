@@ -32,6 +32,20 @@ class Entry extends \Ilch\Model
     protected $title;
 
     /**
+     * The color of the history.
+     *
+     * @var string
+     */
+    protected $color;
+
+    /**
+     * The typ of the history.
+     *
+     * @var string
+     */
+    protected $typ;
+
+    /**
      * The text of the history.
      *
      * @var string
@@ -103,6 +117,52 @@ class Entry extends \Ilch\Model
     public function setTitle($title)
     {
         $this->title = (string)$title;
+
+        return $this;
+    }
+
+    /**
+     * Gets the color of the history.
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * Sets the color of the history.
+     *
+     * @param string $color
+     * @return this
+     */
+    public function setColor($color)
+    {
+        $this->color = (string)$color;
+
+        return $this;
+    }
+
+    /**
+     * Gets the typ of the history.
+     *
+     * @return string
+     */
+    public function getTyp()
+    {
+        return $this->typ;
+    }
+
+    /**
+     * Sets the typ of the history.
+     *
+     * @param string $typ
+     * @return this
+     */
+    public function setTyp($typ)
+    {
+        $this->typ = (string)$typ;
 
         return $this;
     }
