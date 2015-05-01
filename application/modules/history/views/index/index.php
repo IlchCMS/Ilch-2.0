@@ -1,4 +1,3 @@
-<link href='http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,700' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 
 <?php $historys = $this->get('historys'); ?>
