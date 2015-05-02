@@ -9,16 +9,14 @@
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2">
-            <col class="col-lg-3">
+            <col class="col-lg-5">
             <col class="col-lg-6">
-            <col class="col-lg-2">
+            <col class="col-lg-1">
         </colgroup>
         <thead>
             <tr>
-                <th><?=$this->getTrans('user') ?></th>
                 <th><?=$this->getTrans('when') ?></th>
-                <th><?=$this->getTrans('reason') ?></th>
+                <th><?=$this->getTrans('user') ?> / <?=$this->getTrans('reason') ?></th>
                 <th colspan="3"><?=$this->getTrans('status') ?></th>
             </tr>
         </thead>
@@ -29,13 +27,41 @@
                     <?php foreach ($this->get('aways') as $away): ?>
                         <?php $user = $userMapper->getUserById($away->getUserId()) ?>
                         <tr>
-                            <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
+                            <?php $startDate = new \Ilch\Date($away->getStart()); ?>
+                            <?php $endDate = new \Ilch\Date($away->getEnd()); ?>
                             <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
-                                <td style="color: #008000;"><?=$away->getStart() ?> - <?=$away->getEnd() ?></td>
+                                <td style="color: #008000; border-right: 1px solid #dddddd;">
+                                    <div class="agenda" style="float:left;">
+                                        <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
+                                        <div><?=$startDate->format('l', true) ?></div>
+                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>                                        
+                                    </div>
+                                    <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
+                                    <div>
+                                        <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
+                                        <div><?=$endDate->format('l', true) ?></div>
+                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>                                          
+                                    </div>
+                                </td>
                             <?php else: ?>
-                                <td style="color: #ff0000;"><?=$away->getStart() ?> - <?=$away->getEnd() ?></td>             
+                                <td style="color: #ff0000; border-right: 1px solid #dddddd;">
+                                    <div class="agenda" style="float:left;">
+                                        <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
+                                        <div><?=$startDate->format('l', true) ?></div>
+                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>                                        
+                                    </div>
+                                    <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
+                                    <div>
+                                        <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
+                                        <div><?=$endDate->format('l', true) ?></div>
+                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>                                          
+                                    </div>
+                                </td>
                             <?php endif; ?>
-                            <td><?=$away->getReason() ?></td>
+                                <td>
+                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a><br />
+                                    <?=$away->getReason() ?>
+                                </td>
                             <?php if ($away->getStatus() == 2): ?>
                                 <td style="color: #4295C9;"><?=$this->getTrans('reported') ?></td>
                             <?php elseif ($away->getStatus() == 0): ?>
@@ -69,7 +95,7 @@
                             </td>
                         </tr>
                         <tr>                            
-                            <td colspan="6"><?=$away->getText() ?></td>
+                            <td colspan="5"><?=$away->getText() ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -155,3 +181,28 @@
         });
     });
 </script>
+
+<style>
+.agenda {
+    width: 140px;
+}
+.agenda-arrow {
+    float:left;
+    width: 45px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 36px;
+    color: #000;
+}
+.dayofmonth {
+    width: 40px;
+    font-size: 36px;
+    line-height: 36px;
+    float: left;
+    text-align: right;
+    margin-right: 10px; 
+}
+.shortdate {
+    font-size: 0.75em; 
+}
+</style>

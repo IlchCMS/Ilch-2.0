@@ -43,10 +43,12 @@
                                 <?php endif; ?>
                             </td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
+                            <?php $startDate = new \Ilch\Date($away->getStart()); ?>
+                            <?php $endDate = new \Ilch\Date($away->getEnd()); ?>
                             <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
-                                <td style="color: #008000;"><?=$away->getStart() ?> - <?=$away->getEnd() ?></td>
+                                <td style="color: #008000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>
                             <?php else: ?>
-                                <td style="color: #ff0000;"><?=$away->getStart() ?> - <?=$away->getEnd() ?></td>             
+                                <td style="color: #ff0000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>             
                             <?php endif; ?>
                             <td><?=$away->getReason() ?></td>
                             <td><?=$away->getText() ?></td>

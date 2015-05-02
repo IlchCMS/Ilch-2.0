@@ -23,7 +23,7 @@ class Away extends \Ilch\Mapper
         $entryArray = $this->db()->select('*')
             ->from('away')
             ->where($where)
-            ->order(array('id' => 'ASC'))
+            ->order(array('start' => 'ASC'))
             ->execute()
             ->fetchRows();
 

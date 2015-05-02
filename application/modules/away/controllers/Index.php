@@ -28,6 +28,10 @@ class Index extends \Ilch\Controller\Frontend
 
             if (empty($reason)) {
                 $this->addMessage('missingReason', 'danger');
+            } elseif(strtotime($start) < strtotime(date('Y-m-d 00:00:00'))) {
+                $this->addMessage('falseStart', 'danger');
+            } elseif(strtotime($end) < strtotime(date('Y-m-d 00:00:00')) OR strtotime($end) < strtotime($start)) {
+                $this->addMessage('falseEnd', 'danger');
             } elseif(empty($start)) {
                 $this->addMessage('missingStart', 'danger');
             } elseif(empty($end)) {
