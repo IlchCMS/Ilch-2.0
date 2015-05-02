@@ -65,7 +65,7 @@
         <div class="col-lg-2">
             <select class="form-control fontawesome-select" name="typ" id="typ">
                 <option value="" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
-                <option value="globe" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'globe') { echo 'selected="selected"'; } ?>>&#xf015; <?=$this->getTrans('globeSelect') ?></option>
+                <option value="globe" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'globe') { echo 'selected="selected"'; } ?>>&#xf0ac; <?=$this->getTrans('globeSelect') ?></option>
                 <option value="idea" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'idea') { echo 'selected="selected"'; } ?>>&#xf0eb; <?=$this->getTrans('ideaSelect') ?></option>
                 <option value="cap" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'cap') { echo 'selected="selected"'; } ?>>&#xf19d; <?=$this->getTrans('capSelect') ?></option>
                 <option value="picture" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'picture') { echo 'selected="selected"'; } ?>>&#xf030; <?=$this->getTrans('pictureSelect') ?></option>
