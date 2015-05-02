@@ -143,6 +143,11 @@ aside > nav > ul > li.active {
     background-repeat:  repeat-x;
     border:  none !important;
 }
+.navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
+    padding-right: 15px;
+    padding-left: 0px;
+    border-bottom:  1px solid silver !important;
+}
 .navbar {
     border-radius:  0 !important;
     min-height:  30px !important;

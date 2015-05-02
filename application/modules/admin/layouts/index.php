@@ -48,12 +48,13 @@
         <!-- HEADER -->
         <header id="header">
             <!-- TOP NAVBAR -->
-            <nav class="navbar navbar-default topnavbar">
+            <?php $config = \Ilch\Registry::get('config') ?>
+            <nav class="navbar navbar-default topnavbar <?=$config->get('admin_layout_top_nav') ?>">
                 <!-- TOP NAVBAR LEFT -->
                 <div class="navbar-header leftbar">
 		<?php if ($this->hasSidebar()) { ?>
                     <div id="hide-menu" class="btn-header pull-left">
-			<a href="#" id="toggleLeftMenu" title="Collapse Menu">
+			<a href="javascript:void(0)" id="toggleLeftMenu" title="Collapse Menu">
                             <i class="fa fa-outdent"></i>
                         </a>
                     </div>

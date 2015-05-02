@@ -61,7 +61,13 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
             $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
             $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
-            
+            if ($this->getRequest()->getPost('navbarFixed') === '1') {
+                $this->getConfig()->set('admin_layout_top_nav', 'navbar-fixed-top');
+            }
+            if ($this->getRequest()->getPost('navbarFixed') === '0') {
+                $this->getConfig()->set('admin_layout_top_nav', '');
+            }
+
             if ((int)$this->getRequest()->getPost('modRewrite')) {
                 $htaccess = <<<'HTACCESS'
 <IfModule mod_rewrite.c>
@@ -94,6 +100,7 @@ HTACCESS;
         $this->getView()->set('timezone', $this->getConfig()->get('timezone'));
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
+        $this->getView()->set('navbarFixed', $this->getConfig()->get('admin_layout_top_nav'));
         
     }
     
