@@ -83,9 +83,12 @@ class Import extends \Ilch\Controller\Admin
             $this->redirect(array('action' => 'index'));
         }
 
+        $mediaListAll = $mediaMapper->getMediaListAll();
         $existsMediaArray = array();
-        foreach ($mediaMapper->getMediaListAll() as $existsMedia) {
-            $existsMediaArray[] = $directory.$existsMedia->getName().'.'.$existsMedia->getEnding();
+        if (!empty($mediaListAll)) {
+            foreach ($mediaListAll as $existsMedia) {
+                $existsMediaArray[] = $directory.$existsMedia->getName().'.'.$existsMedia->getEnding();
+            }
         }
 
         $newMediaArray = array();
