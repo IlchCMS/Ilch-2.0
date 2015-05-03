@@ -23,6 +23,13 @@ class Settings extends \Ilch\Controller\Admin
             ),
             array
             (
+                'name' => 'menuMaintenance',
+                'active' => false,
+                'icon' => 'fa fa-wrench',
+                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'maintenance'))
+            ),
+            array
+            (
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',
@@ -31,6 +38,8 @@ class Settings extends \Ilch\Controller\Admin
         );
         
         if ($this->getRequest()->getActionName() == 'backup') {
+            $items[2]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'maintenance') {
             $items[1]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
@@ -45,11 +54,11 @@ class Settings extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('systemSettings'), array('action' => 'index'));
-
         $moduleMapper = new \Modules\Admin\Mappers\Module();
         $pageMapper = new \Modules\Page\Mappers\Page();
+        
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('systemSettings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
@@ -104,6 +113,24 @@ HTACCESS;
         
     }
     
+    public function maintenanceAction()
+    {        
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuMaintenance'), array('action' => 'index'));
+        
+        if ($this->getRequest()->isPost()) {
+            $this->getConfig()->set('maintenance_date', new \Ilch\Date(trim($this->getRequest()->getPost('maintenanceDateTime'))));
+            $this->getConfig()->set('maintenance_status', $this->getRequest()->getPost('maintenanceStatus'));
+            $this->getConfig()->set('maintenance_text', $this->getRequest()->getPost('maintenanceText'));
+
+            $this->addMessage('saveSuccess');
+        }
+
+        $this->getView()->set('maintenanceDate', $this->getConfig()->get('maintenance_date'));
+        $this->getView()->set('maintenanceStatus', $this->getConfig()->get('maintenance_status'));
+        $this->getView()->set('maintenanceText', $this->getConfig()->get('maintenance_text'));
+    }
+
     public function backupAction()
     {
     }
