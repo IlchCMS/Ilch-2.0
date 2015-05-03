@@ -24,10 +24,10 @@
             <?=$this->getTrans('maintenanceStatus') ?>:
         </label>
         <div class="col-lg-4">
-          <div class="range">
-            <input type="range" name="maintenanceStatus" min="0" max="100" value="<?=$this->escape($this->get('maintenanceStatus')) ?>" onchange="range.value=value">
-            <output id="range"><?=$this->escape($this->get('maintenanceStatus')) ?></output>
-          </div>
+            <div class="range">
+                <input type="range" name="maintenanceStatus" min="0" max="100" value="<?=$this->escape($this->get('maintenanceStatus')) ?>" onchange="range.value=value">
+                <output id="range"><?=$this->escape($this->get('maintenanceStatus')) ?></output>
+            </div>
         </div>
     </div>
     <div class="form-group">
