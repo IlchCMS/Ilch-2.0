@@ -6,6 +6,8 @@
 
 namespace Modules\Admin\Plugins;
 
+use Modules\User\Mappers\User as UserMapper;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -29,9 +31,25 @@ class BeforeControllerLoad
 
         if (isset($pluginData['config'])) {
             $config = $pluginData['config'];
+            $userId = null;
 
-            if (!$request->isAdmin() && $config->get('maintenance_mode')) {
-                $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
+            if (isset($_SESSION['user_id'])) {
+                $userId = (int) $_SESSION['user_id'];
+            }
+
+            $userMapper = new UserMapper();
+            $translator = new \Ilch\Translator();
+            $user = $userMapper->getUserById($userId);
+
+            if ($config->get('maintenance_mode') && !$request->isAdmin()) {
+                if (empty($user)) {
+                    $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
+                } else {
+                    if (!$user->isAdmin()) {
+                        $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
+                    }
+                }
+                $_SESSION['messages'][] = array('text' => $translator->trans('siteMaintenanceMode'), 'type' => 'danger');
             }
         }
 

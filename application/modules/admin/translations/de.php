@@ -36,6 +36,7 @@ return array
     'layouts' => 'Layouts',
     'system' => 'Einstellungen',
     'maintenanceMode' => 'Wartungsmodus',
+    'siteMaintenanceMode' => 'Achtung, die Seite befindet sich im Wartungsmodus und ist nur für Administratoren sichtbar!',
     'on' => 'An',
     'off' => 'Aus',
     'yes' => 'Ja',

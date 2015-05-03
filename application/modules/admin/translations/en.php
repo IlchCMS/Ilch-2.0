@@ -36,6 +36,7 @@ return array
     'layouts' => 'Layouts',
     'system' => 'Settings',
     'maintenanceMode' => 'Maintenance-Mode',
+    'siteMaintenanceMode' => 'Warning, the site is in maintenance mode and is only to administrators visible!',
     'on'  => 'On',
     'off' => 'Off',
     'yes' => 'Yes',
