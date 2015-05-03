@@ -64,7 +64,7 @@ $maintenanceTime = $config->get('maintenance_date');
 </html>
 
 <script>
-$('#countdown').countdown('<?=date("Y/m/d", strtotime($maintenanceTime)) ?>').on('update.countdown', function(event) {
+$('#countdown').countdown('<?=date("Y/m/d H:i:s", strtotime($maintenanceTime)) ?>').on('update.countdown', function(event) {
     var $this = $(this).html(event.strftime(''
             + '<div class="countDays">'
                 + '<span class="position">'
