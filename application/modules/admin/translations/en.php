@@ -45,6 +45,7 @@ return array
     'maintenanceMinutes' => 'MINUTES',
     'maintenanceSeconds' => 'SECONDS',
     'siteMaintenanceMode' => 'Warning, the site is in maintenance mode and is only to administrators visible!',
+    'falseDate' => 'Date and Time must not be less than Now Date and Time',
     'on'  => 'On',
     'off' => 'Off',
     'yes' => 'Yes',
