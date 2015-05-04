@@ -27,5 +27,5 @@ return array
     'falseEnd' => 'End date must not be less than Now or Start date',
     'missingStart' => 'Start date was not filled',
     'missingEnd' => 'End date was not filled',
-    'missingText' => 'Text was not filled',
+    'missingText' => 'Description was not filled',
 );

@@ -3,6 +3,7 @@ $config = \Ilch\Registry::get('config');
 $translator = new \Ilch\Translator();
 $translator->load(APPLICATION_PATH.'/modules/admin/translations/');
 $maintenanceTime = $config->get('maintenance_date');
+$date = new \Ilch\Date();
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +38,51 @@ $maintenanceTime = $config->get('maintenance_date');
             <div class="maintranceHead"><?=$translator->trans('maintenanceMode') ?></div>
             <div class="countdownHead"><?=$translator->trans('maintenanceTime') ?></div>
             <div class="countdown">
-                <span id="countdown"></span>
+                <?php if(strtotime($config->get('maintenance_date')) > strtotime($date->format('Y-m-d H:i:00', true))): ?>
+                    <span id="countdown"></span>
+                <?php else: ?>
+                    <div class="countDays">
+                        <span class="position">
+                            <span style="top: 0px; opacity: 1;">00</span>
+                        </span>
+                        <span class="boxName">
+                            <span><?=$translator->trans('maintenanceDays') ?></span>
+                        </span>
+                    </div>
+
+                    <span class="points">:</span>
+
+                    <div class="countHours">
+                        <span class="position">
+                            <span style="top: 0px; opacity: 1;">00</span>
+                        </span>
+                        <span class="boxName">
+                            <span><?=$translator->trans('maintenanceHours') ?></span>
+                        </span>
+                    </div>
+
+                    <span class="points">:</span>
+
+                    <div class="countMinutes">
+                        <span class="position">
+                            <span style="top: 0px; opacity: 1;">00</span>
+                        </span>
+                        <span class="boxName">
+                            <span><?=$translator->trans('maintenanceMinutes') ?></span>
+                        </span>
+                    </div>
+
+                    <span class="points">:</span>
+
+                    <div class="countSeconds">
+                        <span class="position">
+                            <span style="top: 0px; opacity: 1;">00</span>
+                        </span>
+                        <span class="boxName">
+                            <span><?=$translator->trans('maintenanceSeconds') ?></span>
+                        </span>
+                    </div>
+                <?php endif; ?>
             </div>
             <b><?=$translator->trans('maintenanceStatus') ?></b>
             <div class="progress  progress-striped">
@@ -68,10 +113,10 @@ $('#countdown').countdown('<?=date("Y/m/d H:i:s", strtotime($maintenanceTime)) ?
     var $this = $(this).html(event.strftime(''
             + '<div class="countDays">'
                 + '<span class="position">'
-                    + '<span style="top: 0px; opacity: 1;">%D</span>'                            
+                    + '<span style="top: 0px; opacity: 1;">%D</span>'
                 + '</span>'
                 + '<span class="boxName">'
-                    + '<span><?=$translator->trans('maintenanceDays') ?></span>'                            
+                    + '<span><?=$translator->trans('maintenanceDays') ?></span>'
                 + '</span>'
             + '</div>'
 

@@ -5,6 +5,29 @@
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('menuMaintenance') ?></legend>
     <div class="form-group">
+        <label for="maintenanceMode" class="col-lg-2 control-label">
+            <?=$this->getTrans('maintenanceMode') ?>:
+        </label>
+        <div class="col-lg-2">
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="maintenanceMode"
+                       value="1"
+                <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> /> <?=$this->getTrans('on') ?>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio"
+                       name="maintenanceMode"
+                       value="0"
+                <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>> <?=$this->getTrans('off') ?>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="maintenanceDateTime" class="col-md-2 control-label">
             <?=$this->getTrans('maintenanceDateTime') ?>:
         </label>
@@ -50,7 +73,8 @@
     $( document ).ready(function()
     {
         $(".form_datetime").datetimepicker({
-            format: "dd.mm.yyyy hh:ii",
+            format: 'dd.mm.yyyy hh:ii',
+            startDate: new Date(),
             autoclose: true,
             language: 'de',
             minuteStep: 15

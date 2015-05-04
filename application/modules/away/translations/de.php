@@ -27,5 +27,5 @@ return array
     'falseEnd' => 'Enddatum darf nicht kleiner als Aktuelle- oder Startdatum sein',
     'missingStart' => 'Start Datum muss ausgefüllt werden',
     'missingEnd' => 'Enddatum muss ausgefüllt werden',
-    'missingText' => 'Text muss ausgefüllt werden',
+    'missingText' => 'Beschreibung muss ausgefüllt werden',
 );

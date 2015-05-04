@@ -175,6 +175,7 @@
     {
         $(".form_datetime").datetimepicker({
             format: "dd.mm.yyyy",
+            startDate: new Date(),
             autoclose: true,
             language: 'de',
             minView: 2

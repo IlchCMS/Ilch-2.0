@@ -61,7 +61,6 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('systemSettings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
             $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
             $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
             $this->getConfig()->set('description', $this->getRequest()->getPost('description'));
@@ -97,7 +96,6 @@ HTACCESS;
         }
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
-        $this->getView()->set('maintenanceMode', $this->getConfig()->get('maintenance_mode'));
         $this->getView()->set('multilingualAcp', $this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('description', $this->getConfig()->get('description'));
@@ -124,6 +122,7 @@ HTACCESS;
             if (strtotime($dateTime) < strtotime(date('Y-m-d H:i:00'))) {
                 $this->addMessage('falseDate', 'danger');
             } else {
+                $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
                 $this->getConfig()->set('maintenance_date', $dateTime);
                 $this->getConfig()->set('maintenance_status', $this->getRequest()->getPost('maintenanceStatus'));
                 $this->getConfig()->set('maintenance_text', $this->getRequest()->getPost('maintenanceText'));
@@ -132,6 +131,7 @@ HTACCESS;
             }
         }
 
+        $this->getView()->set('maintenanceMode', $this->getConfig()->get('maintenance_mode'));
         $this->getView()->set('maintenanceDate', $this->getConfig()->get('maintenance_date'));
         $this->getView()->set('maintenanceStatus', $this->getConfig()->get('maintenance_status'));
         $this->getView()->set('maintenanceText', $this->getConfig()->get('maintenance_text'));
