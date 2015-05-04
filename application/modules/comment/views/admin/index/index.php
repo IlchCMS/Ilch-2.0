@@ -23,16 +23,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $userMapper = new \Modules\User\Mappers\User() ?>
+                    <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                     <?php foreach ($this->get('comments') as $comment): ?>
                         <?php $user = $userMapper->getUserById($comment->getUserId()) ?>
                         <?php $date = new \Ilch\Date($comment->getDateCreated()) ?>
+                        <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
                         <tr>
                             <td><input value="<?=$comment->getId() ?>" type="checkbox" name="check_comments[]" /></td>
                             <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $comment->getId())) ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></td>
-                            <td><a target="_blank" href="<?=$this->getUrl($comment->getKey()) ?>"><?=$this->getTrans('commentLink') ?></a></td>
+                            <td><a target="_blank" href="<?=$this->getUrl($comment->getKey()) ?>#<?=$comment->getId() ?>"><?=$commentKey ?></a></td>
                             <td><?=nl2br($this->escape($comment->getText())) ?></td>
                         </tr>
                     <?php endforeach; ?>

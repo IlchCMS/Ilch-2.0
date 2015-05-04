@@ -125,7 +125,7 @@ $user = $userMapper->getUserById($event->getUserId());
                 <?php foreach ($this->get('eventComments') as $eventComments): ?>
                 <?php $commentUser = $userMapper->getUserById($eventComments->getUserId()); ?>
                 <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
-                    <div class="eventBoxContent">
+                    <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
                         <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
                         <div class="userEventInfo">
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />

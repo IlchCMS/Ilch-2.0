@@ -49,6 +49,7 @@ class Module extends \Ilch\Mapper
 
         return $modules;
     }
+
     /**
      * Inserts a module model in the database.
      *

@@ -89,9 +89,9 @@
     </div>
     <div style="float: right;">
         <?php if ($this->get('event') != ''): ?>
-            <?=$this->getSaveBar('updateButton') ?>
+            <?=$this->getSaveBar('edit') ?>
         <?php else: ?>
-            <?=$this->getSaveBar('addButton') ?>
+            <?=$this->getSaveBar('add') ?>
         <?php endif; ?>
     </div>
 </form>
