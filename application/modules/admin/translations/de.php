@@ -45,7 +45,6 @@ return array
     'maintenanceMinutes' => 'MINUTEN',
     'maintenanceSeconds' => 'SEKUNDEN',
     'siteMaintenanceMode' => 'Achtung, die Seite befindet sich im Wartungsmodus und ist nur für Administratoren sichtbar!',
-    'falseDate' => 'Datum und Uhrzeit dürfen nicht kleiner als Aktuelle Datum und Uhrzeit sein',
     'on' => 'An',
     'off' => 'Aus',
     'yes' => 'Ja',

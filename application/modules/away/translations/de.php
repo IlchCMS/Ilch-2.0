@@ -23,8 +23,6 @@ return array
     'approved' => 'genehmigt',
     'addButton' => 'Eintragen',
     'missingReason' => 'Grund muss ausgefüllt werden',
-    'falseStart' => 'Startdatum darf nicht kleiner als Aktuell Datum sein',
-    'falseEnd' => 'Enddatum darf nicht kleiner als Aktuelle- oder Startdatum sein',
     'missingStart' => 'Start Datum muss ausgefüllt werden',
     'missingEnd' => 'Enddatum muss ausgefüllt werden',
     'missingText' => 'Beschreibung muss ausgefüllt werden',

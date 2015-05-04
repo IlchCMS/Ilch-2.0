@@ -101,7 +101,7 @@ class Show extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('naviEventsParticipation'), array('action' => 'participation'));
 
-        $this->getView()->set('eventList', $eventMapper->getEventListParticipation($this->getUser()->getId()));
+        $this->getView()->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()));
     }
 
     public function myAction()
@@ -112,7 +112,7 @@ class Show extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('naviEventsMy'), array('action' => 'my'));
 
-        $this->getView()->set('eventList', $eventMapper->getEntries());
+        $this->getView()->set('eventListMy', $eventMapper->getEntries(array('user_id' => $this->getUser()->getId())));
     }
 
     public function delAction()

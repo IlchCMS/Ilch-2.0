@@ -6,7 +6,7 @@ $date = new \Ilch\Date($event->getDateCreated());
 $userMapper = new \Modules\User\Mappers\User();
 $user = $userMapper->getUserById($event->getUserId());
 ?>
-<link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
+
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 <legend>
     <?=$this->getTrans('event') ?>

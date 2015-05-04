@@ -1,4 +1,3 @@
-<link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
@@ -103,6 +102,7 @@
     $( document ).ready(function() {
         $(".form_datetime").datetimepicker({
             format: "dd.mm.yyyy hh:ii",
+            startDate: new Date(),
             autoclose: true,
             language: 'de',
             minuteStep: 15

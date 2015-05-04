@@ -1,149 +1,135 @@
 <?php
 $date = new \Ilch\Date();
 ?>
-<div class="table-responsive">
-    <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
-    <?php if ($this->get('eventListUpcoming') == '' AND $this->get('getEventList') == '' AND $this->get('getEventListOther') == '' AND $this->get('eventListPast') == ''): ?>
-        <table class="table table-striped table-responsive">
-            <tr>
-                <th colspan="2"><?=$this->getTrans('menuEventList') ?></th>
-            </tr>
-            <tr>
-                <td><?=$this->getTrans('noEvent') ?></td>
-            </tr>
-        </table>
-    <?php endif; ?>
 
-    <?php if ($this->get('eventListUpcoming') != ''): ?>
-        <table class="table table-striped table-responsive">
-            <tr>
-                <th colspan="2"><?=$this->getTrans('menuEventUpcoming') ?></th>
-            </tr>
-            <?php foreach ($this->get('eventListUpcoming') as $eventlist): ?>
-                <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
-                <tr>
-                    <td class="col-lg-3">
-                        <?php if ($this->escape($eventlist->getImage()) != ''): ?>
-                        <img src="<?=$this->getBaseUrl().$this->escape($eventlist->getImage()) ?>">
-                        <?php else: ?>
-                            <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>">
-                        <?php endif; ?>
-                    </td>
-                    <td class="col-lg-9">
-                        <form class="form-horizontal" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>" method="post">
-                            <?=$this->getTokenField(); ?>
-                            <div  style="margin-top: -3px;">
-                                <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><b><?=$this->escape($eventlist->getTitle()) ?></a>
-                                <div class="small">
-                                    <?=$date->format("l, d. F Y", true) ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i", true) ?><br />
-                                    <?=$this->escape($eventlist->getPlace()) ?><br />
-                                    <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
-                                    <?=count($entrantsMappers->getEventEntrantsById($eventlist->getId()))+1 ?> <?= $this->getTrans('guest') ?>
-                                </div>
-                                <!--
-                                <?php if ($this->getUser()): ?>
-                                    <input type="hidden" name="id" value="<?= $this->escape($eventlist->getId()) ?>">
-                                    <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
-                                        <?=$this->getTrans('join') ?>
-                                    </button>
-                                    <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
-                                        <?=$this->getTrans('maybe') ?>
-                                    </button>
-                                    <button type="submit" value="delete" name="delete" class="btn btn-sm btn-danger">
-                                        <?=$this->getTrans('decline') ?>
-                                    </button>
+<?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
+
+<?php if ($this->get('eventListUpcoming') == '' AND $this->get('getEventList') == '' AND $this->get('getEventListOther') == '' AND $this->get('eventListPast') == ''): ?>
+    <legend><?=$this->getTrans('menuEventAll') ?></legend>
+    <div class="row">
+        <div class="col-lg-12"><?=$this->getTrans('noEvent') ?></div>
+    </div>
+<?php endif; ?>
+
+<?php if ($this->get('eventListUpcoming') != ''): ?>
+    <legend><?=$this->getTrans('menuEventUpcoming') ?></legend>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="event-list">
+                <?php if ($this->get('eventListUpcoming') != ''): ?>
+                    <?php foreach ($this->get('eventListUpcoming') as $eventlist): ?>
+                        <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
+                        <li>
+                            <time>
+                                <span class="day"><?=$date->format("j", true) ?></span>
+                                <span class="month"><?=$date->format("M", true) ?></span>
+                            </time>
+                            <div class="info">
+                                <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><?=$this->escape($eventlist->getTitle()) ?></a></h2>
+                                <p class="desc"><?=$this->escape($eventlist->getPlace()) ?></p>
+                                <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
+                                <?php $agree = 1; $maybe = 0; ?>
+                                <?php if ($entrantsMappers->getEventEntrantsById($eventlist->getId()) != ''): ?>
+                                    <?php foreach ($entrantsMappers->getEventEntrantsById($eventlist->getId()) as $eventEntrantsUser): ?>
+                                        <?php if ($eventEntrantsUser->getStatus() == 1): ?>
+                                            <?php $agree++; ?>
+                                        <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
+                                            <?php $maybe++; ?>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
                                 <?php endif; ?>
-                                -->
+                                <ul>
+                                    <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
+                                    <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
+                                    <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                                </ul>
                             </div>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php endif; ?>
-
-    <?php if ($this->get('getEventListOther') != ''): ?>
-        <table class="table table-striped table-responsive">
-            <tr>
-                <th colspan="2">
-                    <?php if ($this->get('eventListUpcoming') != ''): ?>
-                        <?=$this->getTrans('menuEventOtherList') ?>
-                    <?php else: ?>
-                        <?=$this->getTrans('menuEventList') ?>
-                    <?php endif; ?>
-                </th>
-            </tr>
-            <?php foreach ($this->get('getEventListOther') as $eventlist): ?>
-                <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
-                <tr>
-                    <td class="col-lg-3">
-                        <?php if ($this->escape($eventlist->getImage()) != ''): ?>
-                            <img src="<?=$this->getBaseUrl().$this->escape($eventlist->getImage()) ?>">
-                        <?php else: ?>
-                            <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>">
-                        <?php endif; ?>
-                    </td>
-                    <td class="col-lg-9">
-                        <form class="form-horizontal" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>" method="post">
-                            <?=$this->getTokenField(); ?>
-                            <div  style="margin-top: -3px;">
-                                <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><b><?=$this->escape($eventlist->getTitle()) ?></a>
-                                <div class="small">
-                                    <?=$date->format("l, d. F Y", true) ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i", true) ?><br />
-                                    <?=$this->escape($eventlist->getPlace()) ?><br />
-                                    <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
-                                    <?=count($entrantsMappers->getEventEntrantsById($eventlist->getId()))+1 ?> <?= $this->getTrans('guest') ?>
-                                </div>
-                                <!--
-                                <?php if ($this->getUser()): ?>
-                                    <input type="hidden" name="id" value="<?= $this->escape($eventlist->getId()) ?>">
-                                    <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
-                                        <?=$this->getTrans('join') ?>
-                                    </button>
-                                    <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
-                                        <?=$this->getTrans('maybe') ?>
-                                    </button>
-                                    <button type="submit" value="delete" name="delete" class="btn btn-sm btn-danger">
-                                        <?=$this->getTrans('decline') ?>
-                                    </button>
-                                <?php endif; ?>
-                                -->
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php endif; ?>
-
-    <?php if ($this->get('eventListPast') != ''): ?>
-        <table class="table table-striped table-responsive">
-            <tr>
-                <th colspan="2"><?=$this->getTrans('menuEventPast') ?></th>
-            </tr>
-            <?php foreach ($this->get('eventListPast') as $eventlist): ?>
-                <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
-                <tr>
-                    <td class="col-lg-3">
-                        <?php if ($this->escape($eventlist->getImage()) != ''): ?>
-                            <img src="<?=$this->getBaseUrl().$this->escape($eventlist->getImage()) ?>">
-                        <?php else: ?>
-                            <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>">
-                        <?php endif; ?>
-                    </td>
-                    <td class="col-lg-9">
-                        <div  style="margin-top: -3px;">
-                            <a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><b><?=$this->escape($eventlist->getTitle()) ?></a>
-                            <div class="small">
-                                <?=$date->format("l, d. F Y", true) ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i", true) ?><br />
-                                <?=$this->escape($eventlist->getPlace()) ?><br />
-                                    <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
-                                    <?=count($entrantsMappers->getEventEntrantsById($eventlist->getId()))+1 ?> <?= $this->getTrans('guest') ?>
-                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?=$this->getTrans('noEvent') ?>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>
+    
+<?php if ($this->get('getEventListOther') != ''): ?>
+    <br />
+    <legend><?=$this->getTrans('menuEventOtherList') ?></legend>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="event-list">
+                <?php foreach ($this->get('getEventListOther') as $eventlist): ?>
+                    <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
+                    <li>
+                        <time>
+                            <span class="day"><?=$date->format("j", true) ?></span>
+                            <span class="month"><?=$date->format("M", true) ?></span>
+                        </time>
+                        <div class="info">
+                            <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><?=$this->escape($eventlist->getTitle()) ?></a></h2>
+                            <p class="desc"><?=$this->escape($eventlist->getPlace()) ?></p>
+                            <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
+                            <?php $agree = 1; $maybe = 0; ?>
+                            <?php if ($entrantsMappers->getEventEntrantsById($eventlist->getId()) != ''): ?>
+                                <?php foreach ($entrantsMappers->getEventEntrantsById($eventlist->getId()) as $eventEntrantsUser): ?>
+                                    <?php if ($eventEntrantsUser->getStatus() == 1): ?>
+                                        <?php $agree++; ?>
+                                    <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
+                                        <?php $maybe++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <ul>
+                                <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
+                                <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
+                                <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                            </ul>
                         </div>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php endif; ?>
-</div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>
+    
+<?php if ($this->get('eventListPast') != ''): ?>
+    <br />
+    <legend><?=$this->getTrans('menuEventPast') ?></legend>
+    <div class="row">
+        <div class="col-lg-12">
+            <ul class="event-list">
+                <?php foreach ($this->get('eventListPast') as $eventlist): ?>
+                    <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
+                    <li>
+                        <time>
+                            <span class="day"><?=$date->format("j", true) ?></span>
+                            <span class="month"><?=$date->format("M", true) ?></span>
+                        </time>
+                        <div class="info">
+                            <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><?=$this->escape($eventlist->getTitle()) ?></a></h2>
+                            <p class="desc"><?=$this->escape($eventlist->getPlace()) ?></p>
+                            <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
+                            <?php $agree = 1; $maybe = 0; ?>
+                            <?php if ($entrantsMappers->getEventEntrantsById($eventlist->getId()) != ''): ?>
+                                <?php foreach ($entrantsMappers->getEventEntrantsById($eventlist->getId()) as $eventEntrantsUser): ?>
+                                    <?php if ($eventEntrantsUser->getStatus() == 1): ?>
+                                        <?php $agree++; ?>
+                                    <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
+                                        <?php $maybe++; ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                            <ul>
+                                <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
+                                <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
+                                <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
+                            </ul>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>

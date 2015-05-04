@@ -117,18 +117,12 @@ HTACCESS;
                 ->add($this->getTranslator()->trans('menuMaintenance'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
+            $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
+            $this->getConfig()->set('maintenance_date', new \Ilch\Date(trim($this->getRequest()->getPost('maintenanceDateTime'))));
+            $this->getConfig()->set('maintenance_status', $this->getRequest()->getPost('maintenanceStatus'));
+            $this->getConfig()->set('maintenance_text', $this->getRequest()->getPost('maintenanceText'));
 
-            $dateTime = new \Ilch\Date(trim($this->getRequest()->getPost('maintenanceDateTime')));
-            if (strtotime($dateTime) < strtotime(date('Y-m-d H:i:00'))) {
-                $this->addMessage('falseDate', 'danger');
-            } else {
-                $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
-                $this->getConfig()->set('maintenance_date', $dateTime);
-                $this->getConfig()->set('maintenance_status', $this->getRequest()->getPost('maintenanceStatus'));
-                $this->getConfig()->set('maintenance_text', $this->getRequest()->getPost('maintenanceText'));
-
-                $this->addMessage('saveSuccess');
-            }
+            $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('maintenanceMode', $this->getConfig()->get('maintenance_mode'));

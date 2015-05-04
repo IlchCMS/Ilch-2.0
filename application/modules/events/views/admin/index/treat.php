@@ -74,6 +74,7 @@
     {
         $(".form_datetime").datetimepicker({
             format: "dd.mm.yyyy hh:ii",
+            startDate: new Date(),
             autoclose: true,
             language: 'de',
             minuteStep: 15
