@@ -24,6 +24,7 @@
         <!-- SCRIPTS -->
         <script src="<?=$this->getStaticUrl('js/jquery.js'); ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.js'); ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/jquery.ui.touch-punch.min.js'); ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery.mjs.nestedSortable.js'); ?>"></script>
         <script src="<?=$this->getStaticUrl('js/bootstrap.js'); ?>"></script>
         <script src="<?=$this->getStaticUrl('../application/modules/admin/static/js/functions.js'); ?>"></script>
