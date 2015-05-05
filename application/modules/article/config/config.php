@@ -35,15 +35,21 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
         
         $articleMapper = new \Modules\Article\Mappers\Article();
+        $catMapper = new \Modules\Article\Mappers\Category();
         
         /*
          * @todo change content for different types.
          */
         $article = new \Modules\Article\Models\Article();
-        $article->setContent('Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
+        $article->setCatId(1);
         $article->setTitle('Startseite');
+        $article->setContent('Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
         $article->setPerma('startseite.html');
         $articleMapper->save($article);
+        
+        $cat = new \Modules\Article\Models\Category();
+        $cat->setName('Allgemein');
+        $catMapper->save($cat);
     }
 
     public function uninstall()
