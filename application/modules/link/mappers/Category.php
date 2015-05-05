@@ -10,11 +10,6 @@ use Modules\Link\Models\Category as CategoryModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The user category mapper class.
- *
- * @package ilch
- */
 class Category extends \Ilch\Mapper
 {
     /**

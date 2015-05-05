@@ -1,10 +1,11 @@
+<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
 <?php if ($this->getRequest()->getParam('id') == ''): ?>
     <legend><?=$this->getTrans('menuActionNewWar') ?></legend>
 <?php else: ?>
     <legend><?=$this->getTrans('manageWar') ?></legend>
 <?php endif; ?>
 <?php if ($this->get('group') != '' and $this->get('enemy') != ''): ?>
-    <link href="<?=$this->getStaticUrl('datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="form-group">
@@ -223,8 +224,8 @@
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
     $( document ).ready(function()
     {

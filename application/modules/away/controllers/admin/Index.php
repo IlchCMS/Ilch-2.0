@@ -7,7 +7,6 @@
 namespace Modules\Away\Controllers\Admin;
 
 use Modules\Away\Mappers\Away as AwayMapper;
-use Modules\Away\Models\Away as AwayModel;
 
 defined('ACCESS') or die('no direct access');
 

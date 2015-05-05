@@ -7,8 +7,8 @@
 namespace Modules\Article\Controllers;
 
 use Modules\Article\Mappers\Article as ArticleMapper;
-use Modules\Article\Models\Article as ArticleModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;
+use Modules\Article\Models\Article as ArticleModel;
 use Modules\Comment\Models\Comment as CommentModel;
 
 defined('ACCESS') or die('no direct access');
@@ -30,8 +30,10 @@ class Index extends \Ilch\Controller\Frontend
 
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'));
         $articleMapper = new ArticleMapper();
+
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'));
+
         $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
     }
 
@@ -51,9 +53,13 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
-            $title = $this->getRequest()->getPost('articleTitle');
-            $content = $this->getRequest()->getPost('articleContent');
-            $image = $this->getRequest()->getPost('articleImage');
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('preview'), array('action' => 'index'));
+
+            $title = $this->getRequest()->getPost('title');
+            $content = $this->getRequest()->getPost('content');
+            $image = $this->getRequest()->getPost('image');
 
             $articleModel = new ArticleModel();
             $articleModel->setTitle($title);
@@ -71,13 +77,14 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->set('metaDescription', $article->getDescription());
             $this->getView()->set('article', $article);
 
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticles'), array('action' => 'index'))
-                ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
+                    ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
+            
+            $articleModel->setId($article->getId());
+            $articleModel->setVisits($article->getVisits() + 1);
+            $articleMapper->saveVisits($articleModel);
         }
-
-        $articleModel->setId($article->getId());
-        $articleModel->setVisits($article->getVisits() + 1);
-        $articleMapper->saveVisits($articleModel);
 
         $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
         $this->getView()->set('comments', $comments);

@@ -10,11 +10,6 @@ use Modules\Link\Models\Link as LinkModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The link mapper class.
- *
- * @package ilch
- */
 class Link extends \Ilch\Mapper
 {
     /**

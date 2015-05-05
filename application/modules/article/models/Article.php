@@ -23,6 +23,13 @@ class Article extends \Ilch\Model
     protected $id;
 
     /**
+     * The catId of the article.
+     *
+     * @var int
+     */
+    protected $catId;
+
+    /**
      * The authorId of the article.
      *
      * @var int
@@ -117,6 +124,26 @@ class Article extends \Ilch\Model
     public function setId($id)
     {
         $this->id = (int) $id;
+    }
+
+    /**
+     * Gets the catId of the article.
+     *
+     * @return int
+     */
+    public function getCatId()
+    {
+        return $this->catId;
+    }
+
+    /**
+     * Sets the catId of the article.
+     *
+     * @param int $catId
+     */
+    public function setCatId($catId)
+    {
+        $this->catId = (int) $catId;
     }
 
     /**

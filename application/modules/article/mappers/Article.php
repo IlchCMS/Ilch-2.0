@@ -28,12 +28,12 @@ class Article extends \Ilch\Mapper
         $sql = 'SELECT pc.*, p.*
                 FROM `[prefix]_articles` as p
                 LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
-                    AND pc.locale = "'.$this->db()->escape($locale).'"
+                AND pc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY p.id DESC';
         $articleArray = $this->db()->queryArray($sql);
 
         if (empty($articleArray)) {
-            return array();
+            return null;
         }
 
         $articles = array();
@@ -41,6 +41,48 @@ class Article extends \Ilch\Mapper
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
+            $articleModel->setCatId($articleRow['cat_id']);
+            $articleModel->setVisits($articleRow['visits']);
+            $articleModel->setAuthorId($articleRow['author_id']);
+            $articleModel->setDescription($articleRow['description']);
+            $articleModel->setTitle($articleRow['title']);
+            $articleModel->setPerma($articleRow['perma']);
+            $articleModel->setContent($articleRow['content']);
+            $articleModel->setDateCreated($articleRow['date_created']);
+            $articleModel->setArticleImage($articleRow['article_img']);
+            $articleModel->setArticleImageSource($articleRow['article_img_source']);
+            $articles[] = $articleModel;
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get articles.
+     *
+     * @param  string $locale
+     * @return Article_ArticleModel[]|array
+     */
+    public function getArticlesByCats($catId, $locale = '')
+    {
+        $sql = 'SELECT pc.*, p.*
+                FROM `[prefix]_articles` as p
+                LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
+                AND pc.locale = "'.$this->db()->escape($locale).'"
+                WHERE p.cat_id = "'.$catId.'"
+                GROUP BY p.id DESC';
+        $articleArray = $this->db()->queryArray($sql);
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = array();
+
+        foreach ($articleArray as $articleRow) {
+            $articleModel = new ArticleModel();
+            $articleModel->setId($articleRow['id']);
+            $articleModel->setCatId($articleRow['cat_id']);
             $articleModel->setVisits($articleRow['visits']);
             $articleModel->setAuthorId($articleRow['author_id']);
             $articleModel->setDescription($articleRow['description']);
@@ -65,7 +107,7 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleList($locale = '', $limit = null)
     {
-        $sql = 'SELECT `a`.`id`, `ac`.`author_id`, `ac`.`visits`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`,`m`.`url_thumb`,`m`.`url`
+        $sql = 'SELECT `a`.`id`, `a`.`cat_id`, `ac`.`author_id`, `ac`.`visits`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`,`m`.`url_thumb`,`m`.`url`
                 FROM `[prefix]_articles` as `a`
                 LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
                 AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
@@ -88,6 +130,7 @@ class Article extends \Ilch\Mapper
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
+            $articleModel->setCatId($articleRow['cat_id']);
             $articleModel->setAuthorId($articleRow['author_id']);
             $articleModel->setVisits($articleRow['visits']);
             $articleModel->setTitle($articleRow['title']);
@@ -121,6 +164,7 @@ class Article extends \Ilch\Mapper
 
         $articleModel = new ArticleModel();
         $articleModel->setId($articleRow['id']);
+        $articleModel->setCatId($articleRow['cat_id']);
         $articleModel->setAuthorId($articleRow['author_id']);
         $articleModel->setVisits($articleRow['visits']);
         $articleModel->setDescription($articleRow['description']);
@@ -181,16 +225,21 @@ class Article extends \Ilch\Mapper
     {
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
+                $this->db()->update('articles')
+                    ->values(array('cat_id' => $article->getCatId()))
+                    ->where(array('id' => $article->getId()))
+                    ->execute();
+
                 $this->db()->update('articles_content')
                     ->values
                     (
                         array
                         (
-                            'title' => $article->getTitle(), 
-                            'description' => $article->getDescription(), 
-                            'content' => $article->getContent(), 
-                            'perma' => $article->getPerma(), 
-                            'article_img' => $article->getArticleImage(), 
+                            'title' => $article->getTitle(),
+                            'description' => $article->getDescription(),
+                            'content' => $article->getContent(),
+                            'perma' => $article->getPerma(),
+                            'article_img' => $article->getArticleImage(),
                             'article_img_source' => $article->getArticleImageSource()
                         )
                     )
@@ -225,7 +274,14 @@ class Article extends \Ilch\Mapper
         } else {
             $date = new \Ilch\Date();
             $articleId = $this->db()->insert('articles')
-                ->values(array('date_created' => $date->toDb()))
+                ->values
+                (
+                    array
+                    (
+                        'cat_id' => $article->getCatId(),
+                        'date_created' => $date->toDb()
+                    )
+                )
                 ->execute();
 
             $this->db()->insert('articles_content')
