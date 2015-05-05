@@ -15,9 +15,5 @@ return array
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',
     'sendSuccess' => 'Regel erfolgreich eingetragen',
-    'add' => 'Hinzufügen',
-    'edit' => 'Bearbeiten',
     'noRules' => 'Keine Regeln vorhanden',
-    'manage' => 'Verwalten',
-    'delete' => 'Löschen',
 );

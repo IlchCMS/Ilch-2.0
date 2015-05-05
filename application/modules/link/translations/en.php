@@ -23,7 +23,6 @@ return array
     'menuLink' => 'Link',
     'menuLinks' => 'Links',
     'manageLink' => 'Manage Links',
-    'manage' => 'Manage',
     'manageCategory' => 'Manage Category',
     'menuCategory' => 'Category',
     'menuActionNewLink' => 'Add Link',
@@ -34,5 +33,4 @@ return array
     'noCategory' => 'No Category',
     'askIfDeleteLink' => 'Are you sure you want delete the Link "%s"?',
     'askIfDeleteCat' => 'Are you sure you want delete the Category "%s"?',
-    'delete' => 'Delete',
 );

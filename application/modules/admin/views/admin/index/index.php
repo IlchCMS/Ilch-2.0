@@ -1,8 +1,16 @@
 <script src="<?=ILCH_SERVER.'/versions/latest.txt'?>"></script>
+
+<?php
+    if($this->getUser()->getFirstName() != ''){
+        $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName();
+    }else{
+        $name = $this->getUser()->getName();
+    }
+?>
 <h3>
-    <?php echo $this->getTrans('welcomeBack', $this->getUser()->getName()); ?> !
+    <?=$this->getTrans('welcomeBack', $name) ?> !
 </h3>
-<?php echo $this->getTrans('welcomeBackDescripton'); ?>
+<?=$this->getTrans('welcomeBackDescripton') ?>
 <br /><br /><br />
 <h3>
     <?=$this->getTrans('system')?>
@@ -36,5 +44,3 @@
         </td>
     </tr>
 </table>
-
-

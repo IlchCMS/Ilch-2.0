@@ -17,12 +17,8 @@ return array
     'missingLink' => 'Link was not filled',
     'missingBanner' => 'Banner was not filled',
     'sendSuccess' => 'Partner successfull entry',
-    'add' => 'Add',
-    'edit' => 'Edit',
     'noPartners' => 'No partners available',
     'noNewPartners' => 'No new partner available',
-    'manage' => 'Manage',
     'setfree' => 'Set free',
-    'delete' => 'Delete',
     'entrys' => 'Entries',
 );

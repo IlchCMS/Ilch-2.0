@@ -21,19 +21,19 @@ class Iframe extends \Ilch\Controller\Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
         $lastId = $this->getRequest()->getParam('lastid');
 
-        if($this->getRequest()->getParam('type') == 'multi' || $this->getRequest()->getParam('type') == 'single'){
-            $type  = $this->getConfig()->get('media_ext_img');
+        if ($this->getRequest()->getParam('type') === 'multi' || $this->getRequest()->getParam('type') === 'single') {
+            $type = $this->getConfig()->get('media_ext_img');
         }
 
-        if($this->getRequest()->getParam('type') == 'file'){
-            $type  = $this->getConfig()->get('media_ext_file');
+        if ($this->getRequest()->getParam('type') === 'file') {
+            $type = $this->getConfig()->get('media_ext_file');
         }
 
-        if($this->getRequest()->getParam('type') == 'video'){
-            $type  = $this->getConfig()->get('media_ext_video');
+        if ($this->getRequest()->getParam('type') === 'video') {
+            $type = $this->getConfig()->get('media_ext_video');
         }
 
-        if ($lastId == ''){
+        if (empty($lastId)) {
             $pagination->setRowsPerPage('40');
             $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
@@ -55,19 +55,19 @@ class Iframe extends \Ilch\Controller\Admin
 
         $lastId = $this->getRequest()->getParam('lastid');
 
-        if($this->getRequest()->getParam('type') == 'multi' || $this->getRequest()->getParam('type') == 'single' || $this->getRequest()->getParam('type') == 'imageckeditor'){
-            $type  = $this->getConfig()->get('media_ext_img');
+        if ($this->getRequest()->getParam('type') === 'multi' || $this->getRequest()->getParam('type') === 'single' || $this->getRequest()->getParam('type') == 'imageckeditor') {
+            $type = $this->getConfig()->get('media_ext_img');
         }
 
-        if($this->getRequest()->getParam('type') == 'file' || $this->getRequest()->getParam('type') == 'fileckeditor'){
-            $type  = $this->getConfig()->get('media_ext_file');
+        if ($this->getRequest()->getParam('type') === 'file' || $this->getRequest()->getParam('type') === 'fileckeditor') {
+            $type = $this->getConfig()->get('media_ext_file');
         }
 
-        if($this->getRequest()->getParam('type') == 'video' || $this->getRequest()->getParam('type') == 'videockeditor'){
-            $type  = $this->getConfig()->get('media_ext_video');
+        if ($this->getRequest()->getParam('type') === 'video' || $this->getRequest()->getParam('type') === 'videockeditor') {
+            $type = $this->getConfig()->get('media_ext_video');
         }
 
-        if ($lastId == ''){
+        if (empty($lastId)) {
             $pagination->setRowsPerPage('40');
             $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {
@@ -88,19 +88,19 @@ class Iframe extends \Ilch\Controller\Admin
         $pagination->setPage($this->getRequest()->getParam('page'));
         $lastId = $this->getRequest()->getParam('lastid');
 
-        if($this->getRequest()->getParam('type') == 'multi'){
-            $type  = $this->getConfig()->get('media_ext_img');
+        if ($this->getRequest()->getParam('type') === 'multi') {
+            $type = $this->getConfig()->get('media_ext_img');
         }
 
-        if($this->getRequest()->getParam('type') == 'file'){
-            $type  = $this->getConfig()->get('media_ext_file');
+        if ($this->getRequest()->getParam('type') === 'file') {
+            $type = $this->getConfig()->get('media_ext_file');
         }
 
-        if($this->getRequest()->getParam('type') == 'video'){
-            $type  = $this->getConfig()->get('media_ext_video');
+        if ($this->getRequest()->getParam('type') === 'video') {
+            $type = $this->getConfig()->get('media_ext_video');
         }
 
-        if ($lastId == ''){
+        if (empty($lastId)) {
             $pagination->setRowsPerPage('40');
             $this->getView()->set('medias', $mediaMapper->getMediaListByEnding($type, $pagination));
         } else {

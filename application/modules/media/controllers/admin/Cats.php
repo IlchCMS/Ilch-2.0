@@ -69,12 +69,12 @@ class Cats extends \Ilch\Controller\Admin
 
         $mediaMapper = new MediaMapper();
 
-        if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_cats') as $catId) {
-                    $mediaMapper->delCatById($catId);
-                }
-                $this->addMessage('deleteSuccess');
-                $this->redirect(array('action' => 'index'));
+        if ($this->getRequest()->getPost('action') === 'delete') {
+            foreach ($this->getRequest()->getPost('check_cats') as $catId) {
+                $mediaMapper->delCatById($catId);
+            }
+            $this->addMessage('deleteSuccess');
+            $this->redirect(array('action' => 'index'));
         }
 
         $this->getView()->set('cats', $mediaMapper->getCatList());
@@ -90,21 +90,21 @@ class Cats extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
 
         if ($this->getRequest()->getPost('save')) {
-                foreach($this->getRequest()->getPost('title_option') as $catTitle) {
-                    if(!empty($catTitle)){
-                        $model = new \Modules\Media\Models\Media();
-                        $model->setCatName($catTitle);
-                        $mediaMapper->saveCat($model);
-                    }
+            foreach ($this->getRequest()->getPost('title_option') as $catTitle) {
+                if (!empty($catTitle)) {
+                    $model = new \Modules\Media\Models\Media();
+                    $model->setCatName($catTitle);
+                    $mediaMapper->saveCat($model);
                 }
-                $this->addMessage('Success');
-                $this->redirect(array('action' => 'index'));
+            }
+            $this->addMessage('Success');
+            $this->redirect(array('action' => 'index'));
         }
     }
 
     public function delCatAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $mediaMapper = new MediaMapper();
             $mediaMapper->delCatById((int)$this->getRequest()->getParam('id'));
 
@@ -134,13 +134,13 @@ class Cats extends \Ilch\Controller\Admin
         $catId = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('title_treat')) {
-                $model = new \Modules\Media\Models\Media();
-                $model->setCatId($catId);
-                $model->setCatName($this->getRequest()->getPost('title_treat'));
-                $mediaMapper->treatCat($model);
+            $model = new \Modules\Media\Models\Media();
+            $model->setCatId($catId);
+            $model->setCatName($this->getRequest()->getPost('title_treat'));
+            $mediaMapper->treatCat($model);
 
-                $this->addMessage('Success');
-                $this->redirect(array('action' => 'index'));
+            $this->addMessage('Success');
+            $this->redirect(array('action' => 'index'));
         }
 
        $this->getView()->set('cat', $mediaMapper->getCatById($catId));

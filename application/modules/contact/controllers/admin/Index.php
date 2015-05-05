@@ -34,7 +34,7 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
-                'name' => 'menuActionNewReceiver',
+                'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
@@ -75,13 +75,13 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionEditReceiver'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+                ->add($this->getTranslator()->trans('edit'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
 
             $this->getView()->set('receiver', $receiverMapper->getReceiverById($this->getRequest()->getParam('id')));
         }  else {
             $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewReceiver'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {

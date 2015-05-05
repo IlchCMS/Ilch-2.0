@@ -9,9 +9,6 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuCalendarList' => 'Calender',
-    'add' => 'Add',
-    'edit' => 'Edit',
-    'manage' => 'Manage',
     'noCalendar' => 'no Entries available',
     'term' => 'Term',
     'title' => 'Title',

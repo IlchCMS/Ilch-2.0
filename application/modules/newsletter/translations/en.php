@@ -19,8 +19,6 @@ return array
     'sendSuccess' => 'Newsletter sent successfully',
     'show' => 'Show',
     'add' => 'Write',
-    'manage' => 'Manage',
-    'delete' => 'Delete',
     'send' => 'Send',
     'entry' => 'Sub- / Unsubscribe',
     'noEmails' => 'No E-Mail addressen available'

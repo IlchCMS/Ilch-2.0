@@ -104,7 +104,7 @@
 }
 </style>
 
-<script type="text/javascript" src="<?=$this->getModuleUrl('static/jscolor/jscolor.js') ?>"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('jscolor/jscolor.js') ?>"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">

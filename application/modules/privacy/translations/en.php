@@ -17,11 +17,8 @@ return array
     'url' => 'Link',
     'text' => 'Text',
     'menuPrivacy' => 'Privacy Policy',
-    'add' => 'Add',
-    'edit' => 'Edit',
     'missingTitle' => 'Title was not filled',
     'missingText' => 'Text was not filled',
     'managePrivacy' => 'Manage Privacy Policy',
     'noPrivacy' => 'No Privacy Policy available',
-    'manage' => 'Manage',
 );

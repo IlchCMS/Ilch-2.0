@@ -23,7 +23,7 @@ class Ajax extends \Ilch\Controller\Admin
         $lastId = $this->getRequest()->getParam('lastid');
         $this->getView()->set('pagination', $pagination);
 
-        if ($lastId == ''){
+        if (empty($lastId)) {
             $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
         } else {
             $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
@@ -46,7 +46,7 @@ class Ajax extends \Ilch\Controller\Admin
 
         $this->getView()->set('pagination', $pagination);
 
-        if ($lastId == ''){
+        if (empty($lastId)) {
             $this->getView()->set('medias', $mediaMapper->getMediaList($pagination));
         } else {
             $this->getView()->set('medias', $mediaMapper->getMediaListScroll($lastId));
