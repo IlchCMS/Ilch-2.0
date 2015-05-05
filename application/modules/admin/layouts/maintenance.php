@@ -30,7 +30,7 @@ $date = new \Ilch\Date();
         <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.js') ?>"></script>        
         <script src="<?=$this->getStaticUrl('js/bootstrap.js') ?>"></script>
-        <script src="<?=$this->getStaticUrl('countdown/jquery.countdown.js') ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.js') ?>"></script>
     </head>
     <body>
         <div class="container install_container">

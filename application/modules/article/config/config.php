@@ -33,23 +33,24 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        
+
         $articleMapper = new \Modules\Article\Mappers\Article();
         $catMapper = new \Modules\Article\Mappers\Category();
-        
+
         /*
          * @todo change content for different types.
          */
+
+        $cat = new \Modules\Article\Models\Category();
+        $cat->setName('Allgemein');
+        $catMapper->save($cat);
+
         $article = new \Modules\Article\Models\Article();
         $article->setCatId(1);
         $article->setTitle('Startseite');
         $article->setContent('Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
         $article->setPerma('startseite.html');
         $articleMapper->save($article);
-        
-        $cat = new \Modules\Article\Models\Category();
-        $cat->setName('Allgemein');
-        $catMapper->save($cat);
     }
 
     public function uninstall()
@@ -62,29 +63,29 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_articles` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `cat_id` int(11) NULL DEFAULT 0,
-                  `date_created` datetime NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `cat_id` INT(11) NULL DEFAULT 0,
+                  `date_created` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_cats` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(100) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_content` (
-                  `article_id` int(11) NOT NULL,
-                  `author_id` int(11) NOT NULL,
-                  `visits` int(11) NOT NULL,
-                  `content` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-                  `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-                  `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `perma` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `article_img` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `article_img_source` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+                  `article_id` INT(11) NOT NULL,
+                  `author_id` INT(11) NOT NULL,
+                  `visits` INT(11) NOT NULL,
+                  `content` MEDIUMTEXT NOT NULL,
+                  `description` MEDIUMTEXT NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `perma` VARCHAR(255) NOT NULL,
+                  `article_img` VARCHAR(255) NOT NULL,
+                  `article_img_source` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 }
