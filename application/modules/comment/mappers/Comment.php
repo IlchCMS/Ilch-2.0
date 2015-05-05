@@ -32,6 +32,32 @@ class Comment extends \Ilch\Mapper
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
             $commentModel->setId($commentRow['id']);
+			$commentModel->setFKId($commentRow['fk_id']);
+            $commentModel->setKey($commentRow['key']);
+            $commentModel->setText($commentRow['text']);
+            $commentModel->setUserId($commentRow['user_id']);
+            $commentModel->setDateCreated($commentRow['date_created']);
+            $comments[] = $commentModel;
+        }
+
+        return $comments;
+    }
+	
+	public function getCommentsByFKid($key)
+    {
+        $commentsArray = $this->db()->select('*')
+			->from('comments')
+			->where(array('fk_id' => $key))
+            ->order(array('id' => 'DESC'))
+			->execute()
+            ->fetchRows();
+
+        $comments = array();
+
+        foreach ($commentsArray as $commentRow) {
+            $commentModel = new CommentModel();
+            $commentModel->setId($commentRow['id']);
+			$commentModel->setFKId($commentRow['fk_id']);
             $commentModel->setKey($commentRow['key']);
             $commentModel->setText($commentRow['text']);
             $commentModel->setUserId($commentRow['user_id']);
@@ -45,7 +71,7 @@ class Comment extends \Ilch\Mapper
     /**
      * @return CommentModel[]|null
      */
-    public function getComments()
+    public function getComments($locale = '')
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')
@@ -62,6 +88,7 @@ class Comment extends \Ilch\Mapper
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
             $commentModel->setId($commentRow['id']);
+			$commentModel->setFKId($commentRow['fk_id']);
             $commentModel->setKey($commentRow['key']);
             $commentModel->setText($commentRow['text']);
             $commentModel->setUserId($commentRow['user_id']);
@@ -86,6 +113,7 @@ class Comment extends \Ilch\Mapper
                     'text' => $comment->getText(),
                     'date_created' => $comment->getDateCreated(),
                     'user_id' => $comment->getUserId(),
+					'fk_id' => $comment->getFKId(),
                 )
             )
             ->execute();
