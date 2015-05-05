@@ -49,6 +49,7 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_articles`;
+                                 DROP TABLE `[prefix]_articles_cats`;
                                  DROP TABLE `[prefix]_articles_content`;');
     }
 
@@ -56,9 +57,16 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_articles` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `cat_id` int(11) NULL DEFAULT 0,
                   `date_created` datetime NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_articles_cats` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(100) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_content` (
                   `article_id` int(11) NOT NULL,
