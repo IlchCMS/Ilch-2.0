@@ -43,6 +43,7 @@ class Config extends \Ilch\Config\Install
 				  `text` mediumtext NOT NULL,
 				  `date_created` datetime NOT NULL,
 				  `user_id` int(11) NOT NULL,
+				  `fk_id` int(11) NOT NULL,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1';
     }

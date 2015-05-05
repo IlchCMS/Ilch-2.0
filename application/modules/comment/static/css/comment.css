@@ -85,3 +85,182 @@
 .comment-list .comment-post {
     margin-top: 6px;
 }
+
+
+
+
+
+
+
+
+
+section#blog .article {
+  margin: 25px 0;
+}
+section#blog .article span.divider {
+  float: none;
+  margin: 40px 0;
+}
+section#blog .article h3 a {
+  color: #333333;
+}
+section#blog .article h3 a:hover {
+  color: #22a3df;
+}
+section#blog .article .article-details {
+  margin: 15px 0;
+}
+section#blog .article .article-details .author, section#blog .article .article-details .tags {
+  display: inline-block;
+}
+section#blog .article .article-details .author a, section#blog .article .article-details .tags a {
+  color: #999999;
+}
+section#blog .article .article-details .author a:hover, section#blog .article .article-details .tags a:hover {
+  color: #22a3df;
+}
+section#blog .article .article-details .author i, section#blog .article .article-details .tags i {
+  color: #22a3df;
+}
+section#blog .article .article-details .tags {
+  margin-left: 5px;
+}
+section#blog .article .article-data {
+  color: #999999;
+  margin: 20px 0;
+}
+section#blog .article .type {
+  background: #22a3df;
+  text-align: center;
+  padding: 22px 0;
+  margin-bottom: 5px;
+  color: white;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+section#blog .article .date {
+  text-transform: uppercase;
+  color: white;
+  background: black;
+  text-align: center;
+  font-size: 22px;
+  line-height: 19px;
+  padding: 15px 0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+}
+section#blog .article .date span {
+  display: block;
+  font-size: 14px;
+}
+section#blog .article .share-post {
+  margin: 30px 0;
+}
+section#blog .article .share-post span {
+  margin-right: 20px;
+  border-right: 1px solid #CCC;
+  padding-right: 20px;
+}
+section#blog .article .share-post a {
+  margin: 0 5px;
+  color: #999999;
+}
+section#blog .article .share-post a:hover {
+  color: #22a3df;
+}
+section#blog .article .comments .media-comments {
+  position: relative;
+  padding: 15px;
+  background: #f2f2f2;
+  border: 2px solid white;
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+section#blog .article .comments .media-comments .media-object {
+  background: white;
+  width: 70px;
+  height: 70px;
+  padding: 15px;
+  margin: 10px auto;
+  color: #555555;
+}
+section#blog .article .comments .media-comments .media-body {
+  margin-top: 9px;
+}
+section#blog .article .comments .media-comments .media-body .media-heading span {
+  float: right;
+  font-size: 13px;
+}
+section#blog .article .comments .media-comments p.date {
+  background: none;
+  color: #CCC;
+  font-size: 12px;
+  text-align: left;
+  padding: 0;
+  text-transform: none;
+}
+section#blog .article .comments .media-comments:hover {
+  background: white;
+  border-color: #e6e6e6;
+}
+section#blog .article .comments .media-comments:hover .media-object {
+  background: #22a3df;
+  color: white;
+}
+section#blog .article .comments .media-comments:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-width: 0 25px 25px 0;
+  border-style: solid;
+  border-color: white white #cccccc #cccccc;
+  background: #cccccc;
+  display: block;
+  width: 0;
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+section#blog .article .comments .media-comments:hover:before {
+  border-width: 0;
+}
+section#blog .article .comments .media-comments.reply {
+  margin-left: 80px;
+  position: relative;
+  overflow: visible;
+}
+section#blog .article .comments .media-comments.reply:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: 0;
+  background: #e6e6e6;
+  left: -40px;
+}
+section#blog .pagination-wrapper {
+  text-align: center;
+}
+section#blog .pagination-wrapper .pagination > li > a, section#blog .pagination-wrapper .pagination > li > span {
+  color: #22a3df;
+}
+section#blog .pagination-wrapper .pagination > .active > a,
+section#blog .pagination-wrapper .pagination > .active > span,
+section#blog .pagination-wrapper .pagination > .active > a:hover,
+section#blog .pagination-wrapper .pagination > .active > span:hover,
+section#blog .pagination-wrapper .pagination > .active > a:focus,
+section#blog .pagination-wrapper .pagination > .active > span:focus {
+  background-color: #22a3df;
+  border-color: #22a3df;
+  color: white;
+}
