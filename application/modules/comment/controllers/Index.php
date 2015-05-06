@@ -34,7 +34,7 @@ class Index extends \Ilch\Controller\Frontend
 		
 		if ($this->getRequest()->getPost('comment_comment_text')) {
             $commentModel = new CommentModel();
-			$commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id').'/ida/'.$this->getRequest()->getParam('ida'));
+			$commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id_a').'/id_c/'.$this->getRequest()->getParam('id'));
             $commentModel->setFKId($this->getRequest()->getParam('id'));
             $commentModel->setText($this->getRequest()->getPost('comment_comment_text'));
 

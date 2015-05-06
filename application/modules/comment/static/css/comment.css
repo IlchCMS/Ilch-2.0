@@ -86,95 +86,11 @@
     margin-top: 6px;
 }
 
-
-
-
-
-
-
-
-
-section#blog .article {
-  margin: 25px 0;
-}
-section#blog .article span.divider {
-  float: none;
-  margin: 40px 0;
-}
-section#blog .article h3 a {
-  color: #333333;
-}
-section#blog .article h3 a:hover {
-  color: #22a3df;
-}
-section#blog .article .article-details {
-  margin: 15px 0;
-}
-section#blog .article .article-details .author, section#blog .article .article-details .tags {
-  display: inline-block;
-}
-section#blog .article .article-details .author a, section#blog .article .article-details .tags a {
-  color: #999999;
-}
-section#blog .article .article-details .author a:hover, section#blog .article .article-details .tags a:hover {
-  color: #22a3df;
-}
-section#blog .article .article-details .author i, section#blog .article .article-details .tags i {
-  color: #22a3df;
-}
-section#blog .article .article-details .tags {
-  margin-left: 5px;
-}
-section#blog .article .article-data {
-  color: #999999;
-  margin: 20px 0;
-}
-section#blog .article .type {
-  background: #22a3df;
-  text-align: center;
-  padding: 22px 0;
-  margin-bottom: 5px;
-  color: white;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-}
-section#blog .article .date {
-  text-transform: uppercase;
-  color: white;
-  background: black;
-  text-align: center;
-  font-size: 22px;
-  line-height: 19px;
-  padding: 15px 0;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-}
-section#blog .article .date span {
-  display: block;
-  font-size: 14px;
-}
-section#blog .article .share-post {
-  margin: 30px 0;
-}
-section#blog .article .share-post span {
-  margin-right: 20px;
-  border-right: 1px solid #CCC;
-  padding-right: 20px;
-}
-section#blog .article .share-post a {
-  margin: 0 5px;
-  color: #999999;
-}
-section#blog .article .share-post a:hover {
-  color: #22a3df;
-}
-section#blog .article .comments .media-comments {
+/**
+ * for comments
+ * look like a ticket
+ */
+.comment-list .panel .panel-bodylist {
   position: relative;
   padding: 15px;
   background: #f2f2f2;
@@ -184,38 +100,11 @@ section#blog .article .comments .media-comments {
   -moz-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
 }
-section#blog .article .comments .media-comments .media-object {
-  background: white;
-  width: 70px;
-  height: 70px;
-  padding: 15px;
-  margin: 10px auto;
-  color: #555555;
-}
-section#blog .article .comments .media-comments .media-body {
-  margin-top: 9px;
-}
-section#blog .article .comments .media-comments .media-body .media-heading span {
-  float: right;
-  font-size: 13px;
-}
-section#blog .article .comments .media-comments p.date {
-  background: none;
-  color: #CCC;
-  font-size: 12px;
-  text-align: left;
-  padding: 0;
-  text-transform: none;
-}
-section#blog .article .comments .media-comments:hover {
+.comment-list .panel .panel-bodylist:hover {
   background: white;
   border-color: #e6e6e6;
 }
-section#blog .article .comments .media-comments:hover .media-object {
-  background: #22a3df;
-  color: white;
-}
-section#blog .article .comments .media-comments:before {
+.comment-list .panel .panel-bodylist:before {
   content: "";
   position: absolute;
   top: 0;
@@ -231,36 +120,88 @@ section#blog .article .comments .media-comments:before {
   -moz-transition: all 0.25s ease-in-out;
   transition: all 0.25s ease-in-out;
 }
-section#blog .article .comments .media-comments:hover:before {
+.comment-list .panel .panel-bodylist:hover:before {
   border-width: 0;
 }
-section#blog .article .comments .media-comments.reply {
+.comment-list .panel .panel-bodylist span {
+  float: right;
+  font-size: 13px;
+}
+
+/**
+ * move comments for reply
+ * max 5 moves 
+ * more would stretch the design.
+ */
+.comment-list.reply1 {
   margin-left: 80px;
   position: relative;
   overflow: visible;
 }
-section#blog .article .comments .media-comments.reply:after {
+.comment-list.reply1:after {
   position: absolute;
   content: " ";
   width: 2px;
   height: 100%;
-  top: 0;
+  top: -30px;
   background: #e6e6e6;
   left: -40px;
 }
-section#blog .pagination-wrapper {
-  text-align: center;
+.comment-list.reply2 {
+  margin-left: 160px;
+  position: relative;
+  overflow: visible;
 }
-section#blog .pagination-wrapper .pagination > li > a, section#blog .pagination-wrapper .pagination > li > span {
-  color: #22a3df;
+.comment-list.reply2:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
 }
-section#blog .pagination-wrapper .pagination > .active > a,
-section#blog .pagination-wrapper .pagination > .active > span,
-section#blog .pagination-wrapper .pagination > .active > a:hover,
-section#blog .pagination-wrapper .pagination > .active > span:hover,
-section#blog .pagination-wrapper .pagination > .active > a:focus,
-section#blog .pagination-wrapper .pagination > .active > span:focus {
-  background-color: #22a3df;
-  border-color: #22a3df;
-  color: white;
+.comment-list.reply3 {
+  margin-left: 240px;
+  position: relative;
+  overflow: visible;
 }
+.comment-list.reply3:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+.comment-list.reply4 {
+  margin-left: 320px;
+  position: relative;
+  overflow: visible;
+}
+.comment-list.reply4:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+.comment-list.reply5 {
+  margin-left: 400px;
+  position: relative;
+  overflow: visible;
+}
+.comment-list.reply5:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+
+
