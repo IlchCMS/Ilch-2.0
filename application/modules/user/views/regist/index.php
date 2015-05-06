@@ -1,4 +1,5 @@
 <?php if ($this->get('regist_accept') == '1'): ?>
+    <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
         <?=$this->getTokenField() ?>
         <textarea class="form-control" style="height: 200px;" readonly><?=$this->escape($this->get('regist_rules')) ?></textarea>
