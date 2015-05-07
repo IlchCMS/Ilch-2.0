@@ -8,6 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'menuGuestbook' => 'Guestbook',
     'guestbook' => 'Guestbook',
     'from' => 'From',
     'date' => 'Date',

@@ -101,10 +101,16 @@ return array
     'no' => 'No',
 
     'menuLogin' => 'Login',
+    'menuForgotPassword' => 'Passwort vergessen?',
     'login' => 'Login',
     'nameEmail' => 'Username or E-Mail',
     'register' => 'Register',
     'forgotPassword' => 'Forgot password?',
+    'buttonNewPassword' => 'Get New Password',
+    'forgotPassword' => 'Forgot password?',
+    'missingNameEmail' => 'Name or E-Mail was not filled',
+    'newPasswordSuccess' => 'New Password send via E-Mail',
+    'newPasswordFailed' => 'User or E-Mail not available',
 
     'nameEmail' => 'Name / E-Mail',
     'password' => 'Password',
@@ -115,5 +121,4 @@ return array
     'hello' => 'Hello',
     'adminarea' => 'Adminarea',
     'register' => 'Register',
-    'forgotPassword' => 'Forgot password?',
 );

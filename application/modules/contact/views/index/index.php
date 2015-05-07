@@ -1,6 +1,6 @@
-<?php 
-$receivers = $this->get('receivers');
-?>
+<?php $receivers = $this->get('receivers'); ?>
+
+<legend><?=$this->getTrans('menuContact') ?></legend>
 <?php if ($receivers != ''): ?>
     <form method="POST" class="form-horizontal" action="">
         <?=$this->getTokenField() ?>

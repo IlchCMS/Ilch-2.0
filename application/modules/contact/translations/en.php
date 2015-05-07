@@ -8,6 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'menuContact' => 'Contact',
     'receiver' => 'Receiver',
     'name' => 'Name',
     'email' => 'Email',

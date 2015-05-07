@@ -9,6 +9,7 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuPartner' => 'Partner',
+    'menuPartnerAdd' => 'Partner hinzufügen',
     'name' => 'Name',
     'banner' => 'Banner',
     'link' => 'Link',

@@ -155,7 +155,7 @@ class Regist extends \Ilch\Controller\Frontend
         
         $errors = array();
         
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->getPost('saveConfirm')) {
             $confirmedCode = $this->getRequest()->getPost('confirmedCode');
 
             if (empty($confirmedCode)) {

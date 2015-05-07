@@ -1,4 +1,6 @@
 <?php $rules = $this->get('rules'); ?>
+
+<legend><?=$this->getTrans('menuRules') ?></legend>
 <?php if ($rules != ''): ?>
     <table class="table table-striped table-responsive">
         <?php foreach ($this->get('rules') as $rule): ?>

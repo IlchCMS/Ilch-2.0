@@ -11,7 +11,7 @@ $user = $userMapper->getUserById($event->getUserId());
 <legend>
     <?=$this->getTrans('event') ?>
     <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId()): ?>
-        <div style="float: right;">
+        <div class="pull-right">
             <?=$this->getEditIcon(array('controller' => 'index', 'action' => 'treat', 'id' => $event->getId())) ?>
             <?=$this->getDeleteIcon(array('controller' => 'index', 'action' => 'del', 'id' => $event->getId())) ?>
         </div>

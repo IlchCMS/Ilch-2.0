@@ -1,3 +1,4 @@
+<legend><?=$this->getTrans('menuJobs') ?></legend>
 <?php if ($this->get('jobs') != ''): ?>
     <div class="row">
         <?php foreach ($this->get('jobs') as $jobs): ?>
