@@ -21,4 +21,5 @@ return array
     'noNewPartners' => 'No new partner available',
     'setfree' => 'Set free',
     'entrys' => 'Entries',
+    'addButton' => 'Entry',
 );

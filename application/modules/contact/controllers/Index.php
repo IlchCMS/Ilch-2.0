@@ -20,7 +20,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()->set('receivers', $receivers);
 
-        if ($this->getRequest()->getPost()) {
+        if ($this->getRequest()->getPost('saveContact')) {
             $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('contact_receiver'));
             $name = $this->getRequest()->getPost('contact_name');
             $contactEmail = $this->getRequest()->getPost('contact_email');

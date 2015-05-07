@@ -21,4 +21,5 @@ return array
     'noNewPartners' => 'Keine neuen Partner vorhanden',
     'setfree' => 'Freischalten',
     'entrys' => 'Einträge',
+    'addButton' => 'Eintragen',
 );

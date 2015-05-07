@@ -22,4 +22,5 @@ return array
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha ist fehlerhaft',
     'captchaRead' => 'Nicht lesbar? Text ändern!',
+    'addButton' => 'Eintragen',
 );

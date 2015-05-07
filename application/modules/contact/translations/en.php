@@ -22,4 +22,5 @@ return array
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha is false',
     'captchaRead' => 'Not readable? Change text!',
+    'addButton' => 'Entry',
 );
