@@ -208,6 +208,7 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
 <script>
     $('[name="multilingualAcp"]').click(function () {
         if ($(this).val() == "1") {

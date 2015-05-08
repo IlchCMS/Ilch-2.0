@@ -202,7 +202,7 @@ function rec($item, $menuMapper, $obj)
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton', 'deleteMenu')?>
+    <?=$this->getSaveBar('saveButton', null, 'deleteMenu')?>
 </form>
 <?php
 $boxesDir = array();
