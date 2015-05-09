@@ -40,7 +40,7 @@
                             <?php $selected = 'selected="selected"'; ?>
                         <?php endif; ?>
 
-                        <option <?=$selected ?> value="'.$key.'"><?=$this->escape($value) ?></option>
+                        <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
