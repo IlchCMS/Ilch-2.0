@@ -231,7 +231,7 @@
                 <nav>
                     <ul>
                         <?php foreach ($this->getMenus() as $key => $items): ?>
-                            <li class="heading"><i class="fa fa-puzzle-piece"></i>  '.$this->getTrans($key).'</li>';
+                            <li class="heading"><i class="fa fa-puzzle-piece"></i> <?=$this->getTrans($key) ?></li>';
                             <?php foreach ($items as $key): ?>
                                 <?php $class = ''; ?>
                                 <?php if ($key['active']): ?>
