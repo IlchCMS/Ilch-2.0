@@ -1,13 +1,11 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <legend>
-        <?php
-        if ($this->get('box') != '') {
-            echo $this->getTrans('editBox');
-        } else {
-            echo $this->getTrans('addBox');
-        }
-        ?>
+        <?php if ($this->get('box') != ''): ?>
+            <?=$this->getTrans('editBox') ?>
+        <?php else: ?>
+            <?=$this->getTrans('addBox') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
         <label for="boxTitleInput" class="col-lg-2 control-label">
@@ -31,21 +29,19 @@
             </label>
             <div class="col-lg-2">
                 <select class="form-control" name="boxLanguage" id="boxLanguageInput">
-                    <?php
-                    foreach ($this->get('languages') as $key => $value) {
-                        $selected = '';
+                    <?php foreach ($this->get('languages') as $key => $value): ?>
+                        <?php $selected = ''; ?>
 
-                        if ($key == $this->get('contentLanguage')) {
-                            continue;
-                        }
+                        <?php if ($key == $this->get('contentLanguage')): ?>
+                            <?php continue; ?>
+                        <?php endif; ?>
 
-                        if ($this->getRequest()->getParam('locale') == $key) {
-                            $selected = 'selected="selected"';
-                        }
+                        <?php if ($this->getRequest()->getParam('locale') == $key): ?>
+                            <?php $selected = 'selected="selected"'; ?>
+                        <?php endif; ?>
 
-                        echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
-                    }
-                    ?>
+                        <option <?=$selected ?> value="'.$key.'"><?=$this->escape($value) ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -58,13 +54,11 @@
 </form>
 
 <script>
-<?php
-$boxID = '';
+<?php $boxID = ''; ?>
+<?php if ($this->get('box') != ''): ?>
+    <?php $boxID = $this->get('box')->getId(); ?>
+<?php endif; ?>
 
-if ($this->get('box') != '') {
-    $boxID = $this->get('box')->getId();
-}
-?>
 $('#boxLanguageInput').change
 (
     this,

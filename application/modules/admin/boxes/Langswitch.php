@@ -15,4 +15,3 @@ class Langswitch extends \Ilch\Box
         $this->getView()->set('language', $this->getTranslator()->getLocale());
     }
 }
-
