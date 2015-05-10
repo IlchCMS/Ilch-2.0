@@ -133,31 +133,42 @@ class Comment extends \Ilch\Mapper
 	
 	/**
      * @param integer $id
+	 * @param integer $uid
+	 * @param integer $req
      */
-    public function comments_comment($id, $uid, $dtm, $ebene){
+    public function comments_comment($id, $uid, $req){
         $CommentMappers = new CommentMappers();
         $userMapper = new \Modules\User\Mappers\User();
         $fk_comments = $CommentMappers->getCommentsByFKId($id);
-        $user = $userMapper->getUserById($uid);
-        $commentDate = new \Ilch\Date($dtm);
-
-        foreach($fk_comments as $fk_comment){
-                    $user = $userMapper->getUserById($fk_comment->getUserId());
-                    $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
-                    echo '<section class="comment-list reply'.$ebene.'">';
-                    echo '<article class="row" id="'.$fk_comment->getId().'">';
-                    echo '<div class="col-md-2 col-sm-2 hidden-xs"><figure class="thumbnail">';
-                    echo '<a href="#"><img src="http://lorempixel.com/70/70/" alt=""></a>';
-                    echo '</figure></div><div class="col-md-10 col-sm-10"><div class="panel panel-default arrow left"><div class="panel-bodylist"><header class="text-left">';
-                    // echo '<div class="comment-user"><i class="fa fa-user"></i> <a href="'.$base->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'">'.$this->escape($user->getName()).'</a></div>';
-                    echo '<div class="comment-user"><i class="fa fa-user"></i> <a href="link">'.$user->getName().'</a></div>';
-                    // echo '<span><a href="'.$base->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $fk_comment->getId(), 'id_a' => $article->getId())).'"><i class="fa fa-comment-o"></i> Reply</a></span>';
-                    echo '<span><a href="link"><i class="fa fa-comment-o"></i> Reply</a></span>';
-                    echo '<time class="comment-date"><i class="fa fa-clock-o"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
-                    // echo '</header><div class="comment-post"><p>'.nl2br($this->escape($fk_comment->getText())).'</p>';
-                    echo '</header><div class="comment-post"><p>'.nl2br($fk_comment->getText()).'</p>';
-                    echo '</div></div></div></div>';
-                    echo '</article></section>';
-                }
+		$user_rep = $userMapper->getUserById($uid);
+		foreach($fk_comments as $fk_comment){
+			$commentDate = new \Ilch\Date($fk_comment->getDateCreated());
+			$user = $userMapper->getUserById($fk_comment->getUserId());
+			echo '<section class="comment-list reply'.$req.'">';
+			echo '<article class="row" id="'.$fk_comment->getId().'">';
+			echo '<div class="col-md-2 col-sm-2 hidden-xs"><figure class="thumbnail">';
+			echo '<a href="'.BASE_URL.'/index.php/user/profil/index/user/'.$user->getId().'"><img class="img-responsive" src="'.BASE_URL.'/'.$user->getAvatar().'" alt="'.$user->getName().'"></a>';
+			echo '</figure></div><div class="col-md-10 col-sm-10"><div class="panel panel-default arrow left"><div class="panel-bodylist"><div class="panel-heading right">'.$user_rep->getName().'<i class="fa fa-reply"></i>Reply</div><header class="text-left">';
+			echo '<div class="comment-user"><i class="fa fa-user"></i> <a href="'.BASE_URL.'/index.php/user/profil/index/user/'.$fk_comment->getUserId().'">'.$user->getName().'</a></div>';
+			echo '<time class="comment-date"><i class="fa fa-clock-o"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
+			echo '</header><div class="comment-post"><p>'.nl2br($fk_comment->getText()).'</p></div>'; 
+			echo '<p class="text-right"><a href="'.BASE_URL.'/index.php/comment/index/index/id/'.$fk_comment->getId().'" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>';
+			echo '</div></div></div>';
+			echo '</article></section>';
+			$fkk_comments = $CommentMappers->getCommentsByFKId($fk_comment->getId());
+			if(count($fkk_comments) > 0){
+				$req++;
+			}
+			$i=1;
+			foreach($fkk_comments as $fkk_comment){
+				if($i == 1){
+					$CommentMappers->comments_comment($fk_comment->getId(), $fk_comment->getUserId(), $req);
+					$i++;
+				}	
+			}
+			if(count($fkk_comments) > 0){
+				$req--;
+			}
+		}
     }
 }

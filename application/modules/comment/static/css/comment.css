@@ -15,6 +15,7 @@
     /*Panel-heading border radius*/
     border-top-left-radius:0px;
     right: 16px;
+	color:#cccccc;
 }
 .comment-list .panel .panel-heading .panel-body {
     padding-top: 6px;

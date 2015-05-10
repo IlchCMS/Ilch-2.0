@@ -19,7 +19,7 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
             <?=$date->format(null, true)?></span>
         </div>
         <div>
-            <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId().'#comment'))?>"><i class="fa fa-comment-o"></i> <?=count($comments)?></a> <i class="fa fa-eye"></i> <?=$article->getVisits() ?>
+            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'id' => $article->getId().'#comment'))?>"><i class="fa fa-comment-o"></i> <?=count($comments)?></a> <i class="fa fa-eye"></i> <?=$article->getVisits() ?>
         </div>
         <?php if (!empty($image)): ?>
             <figure><img class="article_image" src="'.$this->getBaseUrl($image).'"/>

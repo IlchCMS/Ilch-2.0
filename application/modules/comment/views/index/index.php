@@ -6,8 +6,8 @@ echo '<link href="'.$this->getModuleUrl('../comment/static/css/comment.css').'" 
 if(!empty($comments)){
 	echo '<section class="comment-list">';
 	foreach($comments as $comment){
-		
 		if($this->getRequest()->getParam('id') == $comment->getId()){
+			$fk_comments = $commentMapper->getCommentsByFKId($comment->getId());
 			$date = new \Ilch\Date($comment->getDateCreated());
 			$userMapper = new \Modules\User\Mappers\User();
 			$user = $userMapper->getUserById($comment->getUserId());
@@ -35,7 +35,7 @@ if(!empty($comments)){
     <?php $nowDate = new \Ilch\Date(); ?>
     <div class="row">
         <div class="col-md-12">
-            <h3 class="page-header" id="comment"><?=$this->getTrans('comments') ?> (3)</h3>
+            <h3 class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=count($fk_comments) ?>)</h3>
             <?php if($this->getUser()): ?>            
                 <form action="" class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
@@ -91,10 +91,10 @@ if(!empty($comments)){
 					echo 				'<div class="comment-user"><i class="fa fa-user"></i> ';
 					echo 					'<a href="'.$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'">'.$this->escape($user->getName()).'</a>';
 					echo 				'</div>';
-					echo 				'<span><a href="'.$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId())).'"><i class="fa fa-comment-o"></i> Reply</a></span>';
 					echo 				'<time class="comment-date"><i class="fa fa-clock-o"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
-					echo 			'</header>';
+					echo 			'</header>';			
 					echo 			'<div class="comment-post"><p>'.nl2br($this->escape($comment->getText())).'</p></div>';
+					echo 			'<p class="text-right"><a href="'.$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId())).'" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>';
 					echo 		'</div></div></div>';
 					echo 	'</article>';
 				}
