@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users` (
   `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
   `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `signature` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date_created` datetime NOT NULL,
   `date_confirmed` datetime NOT NULL,
   `confirmed` int(11) DEFAULT 1,

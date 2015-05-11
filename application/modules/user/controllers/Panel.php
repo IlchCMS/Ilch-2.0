@@ -118,6 +118,28 @@ class Panel extends BaseController
         $this->getView()->set('profil', $profil);
     }
 
+    public function signatureAction()
+    {
+        $profilMapper = new UserMapper();
+        $profil = $profilMapper->getUserById($this->getUser()->getId());
+        
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
+                ->add($this->getTranslator()->trans('menuSignature'), array('controller' => 'panel', 'action' => 'signature'));
+
+        if ($this->getRequest()->isPost()) {            
+            $model = new \Modules\User\Models\User();
+            $model->setId($this->getUser()->getId());
+            $model->setSignature(trim($this->getRequest()->getPost('signature')));
+            $profilMapper->save($model);                   
+
+            $this->redirect(array('action' => 'signature'));
+        }
+
+        $this->getView()->set('profil', $profil);
+    }
+
     public function dialogAction()
     {
         $profilMapper = new UserMapper();
