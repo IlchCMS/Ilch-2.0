@@ -283,7 +283,7 @@ class User extends \Ilch\Mapper
         $fields['city'] = $user->getCity();
         $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();
-        $fields['signatur'] = $user->getSignatur();
+        $fields['signature'] = $user->getSignature();
 
         $userId = (int)$this->db()->select('id')
             ->from('users')
