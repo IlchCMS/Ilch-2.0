@@ -15,6 +15,7 @@
     /*Panel-heading border radius*/
     border-top-left-radius:0px;
     right: 16px;
+	color:#cccccc;
 }
 .comment-list .panel .panel-heading .panel-body {
     padding-top: 6px;
@@ -85,3 +86,123 @@
 .comment-list .comment-post {
     margin-top: 6px;
 }
+
+/**
+ * for comments
+ * look like a ticket
+ */
+.comment-list .panel .panel-bodylist {
+  position: relative;
+  padding: 15px;
+  background: #f2f2f2;
+  border: 2px solid white;
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+.comment-list .panel .panel-bodylist:hover {
+  background: white;
+  border-color: #e6e6e6;
+}
+.comment-list .panel .panel-bodylist:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-width: 0 25px 25px 0;
+  border-style: solid;
+  border-color: white white #cccccc #cccccc;
+  background: #cccccc;
+  display: block;
+  width: 0;
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  -moz-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+.comment-list .panel .panel-bodylist:hover:before {
+  border-width: 0;
+}
+.comment-list .panel .panel-bodylist span {
+  float: right;
+  font-size: 13px;
+}
+
+/**
+ * move comments for reply
+ * max 5 moves 
+ * more would stretch the design.
+ */
+.comment-list.reply1 {
+  margin-left: 80px;
+  position: relative;
+  overflow: visible;
+}
+.comment-list.reply1:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+.comment-list.reply2 {
+  margin-left: 160px;
+  position: relative;
+  overflow: visible;
+}
+.comment-list.reply2:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+.comment-list.reply3 {
+  margin-left: 240px;
+  position: relative;
+  overflow: visible;
+}
+.comment-list.reply3:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+.comment-list.reply4 {
+  margin-left: 320px;
+  position: relative;
+  overflow: visible;
+}
+.comment-list.reply4:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+.comment-list.reply5 {
+  margin-left: 400px;
+  position: relative;
+  overflow: visible;
+}
+.comment-list.reply5:after {
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 100%;
+  top: -30px;
+  background: #e6e6e6;
+  left: -40px;
+}
+
+
