@@ -20,7 +20,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAway'), array('action' => 'index'));
 
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->getPost('saveAway')) {
             $reason = trim($this->getRequest()->getPost('reason'));
             $start = new \Ilch\Date(trim($this->getRequest()->getPost('start')));
             $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));

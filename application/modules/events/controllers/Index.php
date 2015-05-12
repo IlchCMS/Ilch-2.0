@@ -20,17 +20,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index'));
 
-        if ($this->getRequest()->isPost()) {            
-            $eventModel = new EventModel();
-
-            $eventModel->setId(trim($this->getRequest()->getPost('id')));
-            $eventModel->setUserId($this->getUser()->getId());
-            $eventModel->setStatus(trim($this->getRequest()->getPost('save')));
-            $eventMapper->saveUserOnEvent($eventModel);
-
-            $this->addMessage('saveSuccess');
-        }
-
         $upcomingLimit = 5;
         $otherLimit = 5;
         $pastLimit = 5;

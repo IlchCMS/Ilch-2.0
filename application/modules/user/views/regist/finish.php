@@ -1,3 +1,4 @@
+<?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
 <?php if ($this->get('regist_confirm') == '1'): ?>
     <div class="row">
         <div class="col-lg-1 fa-4x check">

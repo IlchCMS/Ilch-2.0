@@ -1,11 +1,4 @@
-<style type="text/css">
-.at-ilch:after {
-    content:"\0040";
-} 
-.dot-ilch:after {
-    content:"\002E";
-} 
-</style>
+<legend><?=$this->getTrans('menuImprint') ?></legend>
 <?php if ($this->get('imprintStyle') == 0): ?>
     <?php 
         foreach ($this->get('imprint') as $imprint) {
@@ -82,3 +75,12 @@
         }
     ?>
 <?php endif; ?>
+
+<style type="text/css">
+.at-ilch:after {
+    content:"\0040";
+} 
+.dot-ilch:after {
+    content:"\002E";
+} 
+</style>

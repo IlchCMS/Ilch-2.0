@@ -12,17 +12,17 @@
             <div class="radio">
                 <label>
                     <input type="radio"
-                       name="maintenanceMode"
-                       value="1"
-                <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> /> <?=$this->getTrans('on') ?>
+                           name="maintenanceMode"
+                           value="1"
+                           <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"';} ?> /> <?=$this->getTrans('on') ?>
                 </label>
             </div>
             <div class="radio">
                 <label>
                     <input type="radio"
-                       name="maintenanceMode"
-                       value="0"
-                <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>> <?=$this->getTrans('off') ?>
+                           name="maintenanceMode"
+                           value="0"
+                           <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"';} ?>> <?=$this->getTrans('off') ?>
                 </label>
             </div>
         </div>
@@ -59,9 +59,9 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control"
-                   name="maintenanceText" 
-                   id="ilch_html"
-                   rows="5"><?=$this->escape($this->get('maintenanceText')) ?></textarea>
+                      name="maintenanceText"
+                      id="ilch_html"
+                      rows="5"><?=$this->escape($this->get('maintenanceText')) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar('updateButton') ?>
@@ -70,14 +70,14 @@
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
-    $( document ).ready(function()
-    {
-        $(".form_datetime").datetimepicker({
-            format: 'dd.mm.yyyy hh:ii',
-            startDate: new Date(),
-            autoclose: true,
-            language: 'de',
-            minuteStep: 15
-        });
+$( document ).ready(function()
+{
+    $(".form_datetime").datetimepicker({
+        format: 'dd.mm.yyyy hh:ii',
+        startDate: new Date(),
+        autoclose: true,
+        language: 'de',
+        minuteStep: 15
     });
+});
 </script>

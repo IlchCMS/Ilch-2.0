@@ -13,8 +13,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * The menu mapper class.
- *
- * @package ilch
  */
 class Menu extends \Ilch\Mapper
 {

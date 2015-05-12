@@ -7,7 +7,7 @@ $confirm = $this->get('confirmed');
         <?=$this->getTokenField() ?>
         <?php $errors = $this->get('errors'); ?>
         <div class="form-group <?php if (!empty($errors['confirmedCode'])) { echo 'has-error'; }; ?>">
-            <label for="confirmedCode" class="control-label col-lg-3">
+            <label for="confirmedCode" class="control-label col-lg-2">
                 <?=$this->getTrans('confirmCode') ?>:
             </label>
             <div class="col-lg-8">
@@ -21,7 +21,9 @@ $confirm = $this->get('confirmed');
                 <?php endif; ?>
             </div>
         </div>
-        <button type="submit" name="save" class="btn pull-right"><?=$this->getTrans('menuConfirm') ?></button>
+        <div class="col-lg-10" align="right">
+            <?=$this->getSaveBar('menuConfirm', 'Confirm') ?>
+        </div>
     </form>
 <?php else: ?>
     <div class="row">

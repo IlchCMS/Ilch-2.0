@@ -5,8 +5,7 @@ $pages = $this->get('pages');
 $modules = $this->get('modules');
 $boxes = $this->get('boxes');
 
-function rec($item, $menuMapper, $obj)
-{
+function rec($item, $menuMapper, $obj) {
     $subItems = $menuMapper->getMenuItemsByParent($obj->get('menu')->getId(), $item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
@@ -49,123 +48,36 @@ function rec($item, $menuMapper, $obj)
     echo '</li>';
 }
 ?>
-<style>
-    .item_delete {
-        float: right;
-        cursor: pointer;
-    }
 
-    .item_edit {
-        margin-right: 6px;
-        float: right;
-        cursor: pointer;
-    }
+<link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/main.css') ?>">
 
-    ol.sortable, ol.sortable ol {
-        margin: 0 0 0 25px;
-        padding: 0;
-        list-style-type: none;
-    }
-
-    ol.sortable {
-        margin: 0;
-    }
-
-    .sortable li {
-        margin: 5px 0 0 0;
-        padding: 0;
-    }
-
-    .sortable li div  {
-        border: 1px solid #d4d4d4;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-        padding: 6px;
-        margin: 0;
-        cursor: move;
-        background: #f6f6f6;
-        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%);
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed));
-        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
-    }
-
-    .sortable li.mjs-nestedSortable-branch div {
-        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #f0ece9 100%);
-        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#f0ece9 100%);
-
-    }
-
-    .sortable li.mjs-nestedSortable-leaf div {
-        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #bcccbc 100%);
-        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#bcccbc 100%);
-
-    }
-
-    li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
-        border-color: #999;
-        background: #fafafa;
-    }
-
-    .disclose {
-        cursor: pointer;
-        width: 18px;
-        display: none;
-    }
-
-    .sortable li.mjs-nestedSortable-collapsed > ol {
-        display: none;
-    }
-
-    .sortable li.mjs-nestedSortable-branch > div > .disclose {
-        display: inline-block;
-    }
-
-    .placeholder {
-        outline: 1px dashed #4183C4;
-        /*-webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        margin: -1px;*/
-    }
-</style>
-<form class="form-horizontal" id="menuForm" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId())); ?>">
-    <?php echo $this->getTokenField(); ?>
+<form class="form-horizontal" id="menuForm" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId())) ?>">
+    <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <?php
-        $iMenu = 1;
+        <?php $iMenu = 1; ?>
+        <?php foreach ($this->get('menus') as $menu): ?>
+            <?php $active = ''; ?>
 
-        foreach ($this->get('menus') as $menu) {
-            $active = '';
-
-            if($menu->getId() == $this->get('menu')->getId()) {
-                $active = 'active';
-            }
-            echo '<li class="'.$active.'">'
-                    . '<a href="'.$this->getUrl(array('menu' => $menu->getId())).'">'.$this->getTrans('menu').' '.$iMenu.'</a>'
-                    . '</li>';
-            $iMenu++;
-        }
-        ?>
-      <li><a href="<?php echo $this->getUrl(array('action' => 'add')); ?>">+</a></li>
+            <?php if($menu->getId() == $this->get('menu')->getId()): ?>
+                <?php $active = 'active'; ?>
+            <?php endif; ?>
+            <li class="<?=$active ?>">
+                <a href="<?=$this->getUrl(array('menu' => $menu->getId())) ?>"><?=$this->getTrans('menu') ?> <?=$iMenu ?></a>
+            </li>
+            <?php $iMenu++; ?>
+        <?php endforeach; ?>
+        <li><a href="<?=$this->getUrl(array('action' => 'add')) ?>">+</a></li>
     </ul>
     <br />
-    <legend><?php echo $this->getTrans('menuChange'); ?></legend>
+    <legend><?=$this->getTrans('menuChange') ?></legend>
     <div class="form-group">
         <div class="col-lg-6">
             <ol id="sortable" class="sortable">
-                <?php
-                    if (!empty($menuItems)) {
-                        foreach ($menuItems as $item) {
-                            rec($item, $menuMapper, $this);
-                        }
-                    }
-                ?>
+                <?php if (!empty($menuItems)): ?>
+                    <?php foreach ($menuItems as $item): ?>
+                        <?php rec($item, $menuMapper, $this); ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </ol>
         </div>
         <div class="col-lg-1"></div>
@@ -197,13 +109,14 @@ function rec($item, $menuMapper, $obj)
             </div>
             <div class="dyn"></div>
             <div class="actions">
-                <input type="button" id="menuItemAdd" value="<?php echo $this->getTrans('menuItemAdd'); ?>" class="btn">
+                <input type="button" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>" class="btn">
             </div>
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton', 'deleteMenu')?>
+    <?=$this->getSaveBar('saveButton', null, 'deleteMenu') ?>
 </form>
+
 <?php
 $boxesDir = array();
 
@@ -222,103 +135,134 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
     }
 }
 ?>
+
 <script>
-    function resetBox() {
-        $(':input','.changeBox')
-        .not(':button, :submit, :reset, :hidden')
-        .val('')
-        .removeAttr('checked')
-        .removeAttr('selected');
+function resetBox() {
+    $(':input','.changeBox')
+    .not(':button, :submit, :reset, :hidden')
+    .val('')
+    .removeAttr('checked')
+    .removeAttr('selected');
 
-        $('#type').change();
-    }
+    $('#type').change();
+}
 
-    $('.deleteMenu').on('click', function(event) {
-        $('#modalButton').data('clickurl', $(this).data('clickurl'));
-        $('#modalText').html($(this).data('modaltext'));
-    });
+$('.deleteMenu').on('click', function(event) {
+    $('#modalButton').data('clickurl', $(this).data('clickurl'));
+    $('#modalText').html($(this).data('modaltext'));
+});
 
-    $('#modalButton').on('click', function(event) {
-        window.location = $(this).data('clickurl');
-    });
+$('#modalButton').on('click', function(event) {
+    window.location = $(this).data('clickurl');
+});
 
-    $(document).ready
-    (
-        function () {
-            var itemId = 999;
-            $('.sortable').nestedSortable ({
-                forcePlaceholderSize: true,
-                handle: 'div',
-                helper:	'clone',
-                items: 'li',
-                opacity: .6,
-                placeholder: 'placeholder',
-                revert: 250,
-                tabSize: 25,
-                tolerance: 'pointer',
-                toleranceElement: '> div',
-                maxLevels: 8,
-                isTree: true,
-                expandOnHover: 700,
-                startCollapsed: false,
-                stop: function(event, ui){
-                    val = ui.item.find('input.hidden_type').val();
+$(document).ready
+(
+    function () {
+        var itemId = 999;
+        $('.sortable').nestedSortable ({
+            forcePlaceholderSize: true,
+            handle: 'div',
+            helper:	'clone',
+            items: 'li',
+            opacity: .6,
+            placeholder: 'placeholder',
+            revert: 250,
+            tabSize: 25,
+            tolerance: 'pointer',
+            toleranceElement: '> div',
+            maxLevels: 8,
+            isTree: true,
+            expandOnHover: 700,
+            startCollapsed: false,
+            stop: function(event, ui){
+                val = ui.item.find('input.hidden_type').val();
 
-                    if ((val == 4 || val == 0)) {
-                        if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() != undefined) {
-                            event.preventDefault();
-                        }
-                    } else {
-                        if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() == undefined) {
-                            event.preventDefault();
-                        }
+                if ((val == 4 || val == 0)) {
+                    if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() != undefined) {
+                        event.preventDefault();
+                    }
+                } else {
+                    if (ui.item.closest('ol').closest('li').find('input.hidden_type:first').val() == undefined) {
+                        event.preventDefault();
                     }
                 }
-            });
+            }
+        });
 
-            $('.disclose').on('click', function () {
-                $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
-                $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
-            });
+        $('.disclose').on('click', function () {
+            $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
+            $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
+        });
 
-            $('#menuForm').submit (
-                function () {
-                    $('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
+        $('#menuForm').submit (
+            function () {
+                $('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
+            }
+        );
+
+        $('#menuForm').on('click', '#menuItemAdd', function () {
+            if ($('#title').val() == '') {
+                alert('Es muss ein Titel angegeben werden');
+                return;
+            }
+
+            append = '#sortable';
+
+            if ($('#type').val() != 0 && $('#type').val() != 4 && $('#menukey').val() != 0) {
+                id = $('#menukey').val();
+
+                if ($('#sortable #'+id+' ol').length > 0) {
+
+                } else {
+                    $('<ol></ol>').appendTo('#sortable #'+id);
                 }
-            );
 
-            $('#menuForm').on('click', '#menuItemAdd', function () {
+                if (!isNaN(id)) {
+                    append = '#sortable #list_'+id+' ol';
+
+                    if($(append).length == 0) {
+                        $('<ol></ol>').appendTo('#sortable #list_'+id);
+                    }
+                } else {
+                    if($(append).length == 0) {
+                        $('<ol></ol>').appendTo('#sortable #'+id);
+                    }
+                    append = '#sortable #'+id+' ol';
+                }
+
+            }
+
+            var modulKey = $('#modulekey').val();
+            var boxkey = $('#boxkey').val();
+
+            if (typeof modulKey == "undefined" && typeof boxkey != "undefined")
+            {
+                boxkeyParts = boxkey.split('_');
+                modulKey = boxkeyParts[0];
+            }
+
+            $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][boxkey]" class="hidden_boxkey" value="'+$('#boxkey').val()+'" />'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+modulKey+'" />'
+                    +'<input type="hidden" name="items[tmp_'+itemId+'][menukey]" class="hidden_menukey" value="'+$('#menukey').val()+'" />'
+                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
+            itemId++;
+            resetBox();
+            }
+        );
+
+        $('#menuForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
                     alert('Es muss ein Titel angegeben werden');
                     return;
                 }
 
-                append = '#sortable';
-
-                if ($('#type').val() != 0 && $('#type').val() != 4 && $('#menukey').val() != 0) {
-                    id = $('#menukey').val();
-
-                    if ($('#sortable #'+id+' ol').length > 0) {
-
-                    } else {
-                        $('<ol></ol>').appendTo('#sortable #'+id);
-                    }
-
-                    if (!isNaN(id)) {
-                        append = '#sortable #list_'+id+' ol';
-
-                        if($(append).length == 0) {
-                            $('<ol></ol>').appendTo('#sortable #list_'+id);
-                        }
-                    } else {
-                        if($(append).length == 0) {
-                            $('<ol></ol>').appendTo('#sortable #'+id);
-                        }
-                        append = '#sortable #'+id+' ol';
-                    }
-                    
-                }
-                
                 var modulKey = $('#modulekey').val();
                 var boxkey = $('#boxkey').val();
 
@@ -328,107 +272,76 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
                     modulKey = boxkeyParts[0];
                 }
 
-                $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][boxkey]" class="hidden_boxkey" value="'+$('#boxkey').val()+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+modulKey+'" />'
-                        +'<input type="hidden" name="items[tmp_'+itemId+'][menukey]" class="hidden_menukey" value="'+$('#menukey').val()+'" />'
-                        +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
-                itemId++;
+                $('#'+$('#id').val()).find('.title:first').text($('#title').val());
+                $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
+                $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
+                $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
+                $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
+                $('#'+$('#id').val()).find('.hidden_modulekey:first').val(modulKey);
+                $('#'+$('#id').val()).find('.hidden_boxkey:first').val($('#boxkey').val());
+                $('#'+$('#id').val()).find('.hidden_menukey:first').val($('#menukey').val());
                 resetBox();
-                }
-            );
+            }
+        );
 
-            $('#menuForm').on('click', '#menuItemEdit', function () {
-                    if ($('#title').val() == '') {
-                        alert('Es muss ein Titel angegeben werden');
-                        return;
-                    }
+        $('.sortable').on('click', '.item_delete', function() {
+            $(this).closest('li').remove();
+        });
 
-                    var modulKey = $('#modulekey').val();
-                    var boxkey = $('#boxkey').val();
+        $('#menuForm').on('change', '#type', function() {
+            var options = '';
 
-                    if (typeof modulKey == "undefined" && typeof boxkey != "undefined")
-                    {
-                        
-                        boxkeyParts = boxkey.split('_');
-                        modulKey = boxkeyParts[0];
-                    }
-
-                    $('#'+$('#id').val()).find('.title:first').text($('#title').val());
-                    $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
-                    $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
-                    $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
-                    $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
-                    $('#'+$('#id').val()).find('.hidden_modulekey:first').val(modulKey);
-                    $('#'+$('#id').val()).find('.hidden_boxkey:first').val($('#boxkey').val());
-                    $('#'+$('#id').val()).find('.hidden_menukey:first').val($('#menukey').val());
-                    resetBox();
-                }
-            );
-
-            $('.sortable').on('click', '.item_delete', function() {
-                $(this).closest('li').remove();
-            });
-
-            $('#menuForm').on('change', '#type', function() {
-                var options = '';
-
-                $('#sortable').find('li').each(function(){
-                    if ($(this).find('input.hidden_type:first').val() == 0) {
-                        options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
-                    }
-                });
-                
-                if (options == '' && ($(this).val() == '1' || $(this).val() == '2' || $(this).val() == '3')) {
-                    alert('Es muss zuerst ein Menü hinzugefügt werden');
-                    $(this).val(0);
-                    return;
-                }
-
-                menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label">Menü</label>\n\
-                            <div class="col-lg-4"><select id="menukey" class="form-control">'+options+'</select></div></div>';
-
-                if ($(this).val() == '0') {
-                    $('.dyn').html('');
-                } else if($(this).val() == '1') {
-                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Adresse</label>\n\
-                                    <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
-                } else if ($(this).val() == '2') {
-                     $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
-                                    <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
-                } else if ($(this).val() == '3') {
-                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
-                                    <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){  $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; }else { echo 'Keine Module vorhanden'; } ?></div></div>'+menuHtml);
-                } else if ($(this).val() == '4') {
-                    $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
-                                    <div class="col-lg-4"><?php echo '<select id="boxkey" class="form-control">';
-                    foreach ($boxesDir as $moDir => $modulBoxes) { foreach($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
+            $('#sortable').find('li').each(function(){
+                if ($(this).find('input.hidden_type:first').val() == 0) {
+                    options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
                 }
             });
 
-            $('#menuForm').on('click', '#menuItemEditCancel', function() {
-                $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
-                resetBox();
-            });
+            if (options == '' && ($(this).val() == '1' || $(this).val() == '2' || $(this).val() == '3')) {
+                alert('Es muss zuerst ein Menü hinzugefügt werden');
+                $(this).val(0);
+                return;
+            }
 
-            $('.sortable').on('click', '.item_edit', function() {
-               $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
-                                   <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">');
-               $('#title').val($(this).parent().find('.hidden_title').val());
-               $('#type').val($(this).parent().find('.hidden_type').val());
-               $('#id').val($(this).closest('li').attr('id'));
-               $('#type').change();
-               $('#href').val($(this).parent().find('.hidden_href').val());
-               $('#siteid').val($(this).parent().find('.hidden_siteid').val());
-               $('#boxkey').val($(this).parent().find('.hidden_boxkey').val());
-               $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());
-               $('#menukey').val($(this).parent().find('.hidden_menukey').val());
-            });
-        }
-    );
+            menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label">Menü</label>\n\
+                        <div class="col-lg-4"><select id="menukey" class="form-control">'+options+'</select></div></div>';
+
+            if ($(this).val() == '0') {
+                $('.dyn').html('');
+            } else if($(this).val() == '1') {
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Adresse</label>\n\
+                                <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
+            } else if ($(this).val() == '2') {
+                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
+                                <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
+            } else if ($(this).val() == '3') {
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
+                                <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){  $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; }else { echo 'Keine Module vorhanden'; } ?></div></div>'+menuHtml);
+            } else if ($(this).val() == '4') {
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
+                                <div class="col-lg-4"><?php echo '<select id="boxkey" class="form-control">';
+                foreach ($boxesDir as $moDir => $modulBoxes) { foreach($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
+            }
+        });
+
+        $('#menuForm').on('click', '#menuItemEditCancel', function() {
+            $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
+            resetBox();
+        });
+
+        $('.sortable').on('click', '.item_edit', function() {
+           $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
+                               <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">');
+           $('#title').val($(this).parent().find('.hidden_title').val());
+           $('#type').val($(this).parent().find('.hidden_type').val());
+           $('#id').val($(this).closest('li').attr('id'));
+           $('#type').change();
+           $('#href').val($(this).parent().find('.hidden_href').val());
+           $('#siteid').val($(this).parent().find('.hidden_siteid').val());
+           $('#boxkey').val($(this).parent().find('.hidden_boxkey').val());
+           $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());
+           $('#menukey').val($(this).parent().find('.hidden_menukey').val());
+        });
+    }
+);
 </script>

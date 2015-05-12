@@ -35,7 +35,7 @@
 
 .profil-header .concatLinks, .concatLinks-lg a {
     font-size:22px;
-	padding: 5px;
+    padding: 5px;
 }
 
 .profil-header .concatLinks a:hover, .concatLinks-lg a:hover {
@@ -45,63 +45,63 @@
 
 /* Userlist */
 .user {
-	padding: 0 0 0 80px;
-	overflow: hidden;
-	margin-bottom: 10px;
-	min-height: 90px;
-	font-size: 14px;
-	line-height: 18px;
+    padding: 0 0 0 80px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    min-height: 90px;
+    font-size: 14px;
+    line-height: 18px;
 }
 
 .user img {
-	float: left;
-	margin: 2px 0 0 -80px;
-	width: 70px;
-	height: 70px;
+    float: left;
+    margin: 2px 0 0 -80px;
+    width: 70px;
+    height: 70px;
     border-radius: 100%;
 }
 
 .user h3 {
-	font-size: 17px;
+    font-size: 17px;
     font-weight: bold;
-	line-height: 21px;
-	margin: 0 0 2px 0;
+    line-height: 21px;
+    margin: 0 0 2px 0;
 }
 
 .userInfo,
 .userLinks {
-	-webkit-transition: all 1500ms ease-in-out;
-	-o-transition: all 1500ms ease-in-out;
-	-moz-transition: all 1500ms ease-in-out;
-	transition: all 1500ms ease-in-out;
+    -webkit-transition: all 1500ms ease-in-out;
+    -o-transition: all 1500ms ease-in-out;
+    -moz-transition: all 1500ms ease-in-out;
+    transition: all 1500ms ease-in-out;
 }
 
 .userInfo {
-	line-height: 21px;
+    line-height: 21px;
 }
 
 .user:hover .userInfo,
 .user:focus .userInfo {
-	display: none;
+    display: none;
 }
 
 .userLinks {
-	display: none;
+    display: none;
 }
 
 .user:hover .userLinks,
 .user:focus .userLinks {
-	display: block;
+    display: block;
 }
 
 .userLinks a {
     font-size:22px;
-	padding: 2px;
+    padding: 2px;
 }
 
 .userLinks a:hover,
 .userLinks a:focus {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 
@@ -120,7 +120,7 @@
 
 
 .check {
-	margin-top: -5px;
+    margin-top: -5px;
 }
 
 
@@ -158,13 +158,13 @@
     margin-bottom: 5px;
 }
 #panel .nav > li > a.active{
-  text-decoration: none;
-  background-color: #eeeeee;
+    text-decoration: none;
+    background-color: #eeeeee;
 }
 
 #panel hr{
-  margin-top: 0px;
-  margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 
 
@@ -300,6 +300,7 @@ input[readonly] {
 
 /*  Other  */
 .date {
-  padding-left: 15px !important;
-  padding-right: 15px !important;
+    min-width: 210px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 }

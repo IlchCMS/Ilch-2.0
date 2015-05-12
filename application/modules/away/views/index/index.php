@@ -163,7 +163,7 @@
             </div>
         </div>
         <div class="col-lg-8" align="right">
-            <?=$this->getSaveBar('addButton') ?>
+            <?=$this->getSaveBar('addButton', 'Away') ?>
         </div>
     </form>
 <?php endif; ?>

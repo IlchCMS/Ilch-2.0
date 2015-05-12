@@ -67,11 +67,18 @@ class User extends \Ilch\Model
     protected $birthday;
 
     /**
-     * The \Ilch\Date of when the user got created.
+     * The avatar of the user.
      *
-     * @var \Ilch\Date
+     * @var string
      */
     protected $avatar;
+
+    /**
+     * The signature of the user.
+     *
+     * @var string
+     */
+    protected $signature;
 
     /**
      * The password of the user.
@@ -451,7 +458,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the avatar of the user.
      *
      * @return string
      */
@@ -461,7 +468,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
+     * Saves the avatar of the user.
      *
      * @param string $avatar
      * @return User
@@ -474,7 +481,30 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the signature of the user.
+     *
+     * @return string
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
+    /**
+     * Saves the signature of the user.
+     *
+     * @param string $signature
+     * @return User
+     */
+    public function setSignature($signature)
+    {
+        $this->signature = (string)$signature;
+
+        return $this;
+    }
+
+    /**
+     * Returns the city of the user.
      *
      * @return string
      */
@@ -484,7 +514,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
+     * Saves the city of the user.
      *
      * @param string $city
      * @return User

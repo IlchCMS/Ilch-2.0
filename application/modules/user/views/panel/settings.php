@@ -31,6 +31,15 @@ $profil = $this->get('profil');
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail media">
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'signature')) ?>"><?=$this->getTrans('settingsSignature') ?></a></h4>
+                        <hr>
+                        <p><?=$this->getTrans('settingsSignatureInfo') ?></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

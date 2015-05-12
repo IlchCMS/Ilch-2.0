@@ -50,10 +50,10 @@ class View extends Design\Base
      * @param string $deleteKey
      * @return string
      */
-    public function getSaveBar($saveKey = 'saveButton', $deleteKey = '')
+    public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
     {
         $html = '<div class="content_savebox">
-                    <button value="save" type="submit" name="save" class="btn">
+                    <button value="save" type="submit" name="save'.$nameKey.'" class="btn">
                         '.$this->getTrans($saveKey).'
                     </button>';
 

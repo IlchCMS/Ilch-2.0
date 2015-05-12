@@ -36,7 +36,7 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'backup'))
             ),
         );
-        
+
         if ($this->getRequest()->getActionName() == 'backup') {
             $items[2]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'maintenance') {
@@ -56,7 +56,7 @@ class Settings extends \Ilch\Controller\Admin
     {
         $moduleMapper = new \Modules\Admin\Mappers\Module();
         $pageMapper = new \Modules\Page\Mappers\Page();
-        
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('systemSettings'), array('action' => 'index'));
 
@@ -108,11 +108,10 @@ HTACCESS;
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('navbarFixed', $this->getConfig()->get('admin_layout_top_nav'));
-        
     }
-    
+
     public function maintenanceAction()
-    {        
+    {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuMaintenance'), array('action' => 'index'));
 
@@ -133,6 +132,6 @@ HTACCESS;
 
     public function backupAction()
     {
+        
     }
-
 }

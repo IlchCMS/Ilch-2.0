@@ -21,17 +21,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuCalendar'), array('controller' => 'index'));
 
-        if ($this->getRequest()->isPost()) {            
-            $calendarModel = new EventModel();
-
-            $calendarModel->setTitle($this->getRequest()->getPost('title'));
-            $calendarModel->setStart($this->getRequest()->getPost('start'));
-            $calendarModel->setEnd($this->getRequest()->getPost('end'));
-            $calendarMapper->saveUserOnEvent($calendarModel);
-
-            $this->addMessage('saveSuccess');
-        }
-
         $this->getView()->set('calendarList', $calendarMapper->getEntries());
         $this->getView()->set('birthdayList', $userMapper->getUserList());
     }

@@ -26,18 +26,18 @@ figcaption {
 }
 
 @media (min-width: 991px) {
-	nav {
-		margin-top: 30px;
-	}
-	.navbar-brand {
-		display: none;
-	}
+    nav {
+        margin-top: 30px;
+    }
+    .navbar-brand {
+        display: none;
+    }
 }
 
 @media (max-width: 990px) {
-	.carousel-caption {
-		display: none;
-	}
+    .carousel-caption {
+        display: none;
+    }
 }
 
 .navbar-gaming {

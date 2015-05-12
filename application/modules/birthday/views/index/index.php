@@ -13,6 +13,8 @@ $months = array(1=>"Januar",
                 11=>"November",
                 12=>"Dezember");
 ?>
+
+<legend><?=$this->getTrans('menuBirthdayList') ?></legend>
 <?php if ($this->get('birthdayListNOW') != ''): ?>
 <table class="table table-striped table-responsive">
     <tr>

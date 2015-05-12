@@ -10,8 +10,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * The module model class.
- *
- * @package ilch
  */
 class Module extends \Ilch\Model
 {

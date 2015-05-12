@@ -1,4 +1,5 @@
-<form method="POST" class="form-horizontal" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<legend><?=$this->getTrans('menuPartnerAdd') ?></legend>
+<form method="POST" class="form-horizontal" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
@@ -38,11 +39,7 @@
                    value="<?php if($this->get('banner') != ''){ echo $this->escape($this->get('banner')); } ?>" />
         </div>
     </div>
-   <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-8">
-            <button type="submit" class="btn" name="save">
-                <?=$this->getTrans('send') ?>
-            </button>
-        </div>
+    <div class="col-lg-10" align="right">
+        <?=$this->getSaveBar('addButton', 'Partner') ?>
     </div>
 </form>

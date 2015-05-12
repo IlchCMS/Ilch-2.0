@@ -12,9 +12,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * Does admin operations before the controller loads.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class BeforeControllerLoad
 {

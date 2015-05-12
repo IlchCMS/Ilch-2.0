@@ -1,17 +1,15 @@
 <form class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('box') != '') {
-            echo $this->getTrans('editBox');
-        } else {
-            echo $this->getTrans('addBox');
-        }
-    ?>
+        <?php if ($this->get('box') != ''): ?>
+            <?=$this->getTrans('editBox') ?>
+        <?php else: ?>
+            <?=$this->getTrans('addBox') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
         <label for="boxTitleInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('boxTitle'); ?>:
+            <?=$this->getTrans('boxTitle') ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
@@ -24,51 +22,43 @@
     <div class="form-group">
         <textarea class="form-control" id="ilch_html" name="boxContent"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
     </div>
-    <?php
-        if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
-    ?>
-    <div class="form-group">
-        <label for="boxLanguageInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('boxLanguage'); ?>:
-        </label>
-        <div class="col-lg-2">
-            <select class="form-control" name="boxLanguage" id="boxLanguageInput">
-                <?php
-                foreach ($this->get('languages') as $key => $value) {
-                    $selected = '';
-                    
-                    if ($key == $this->get('contentLanguage')) {
-                        continue;
-                    }
+    <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
+        <div class="form-group">
+            <label for="boxLanguageInput" class="col-lg-2 control-label">
+                <?=$this->getTrans('boxLanguage') ?>:
+            </label>
+            <div class="col-lg-2">
+                <select class="form-control" name="boxLanguage" id="boxLanguageInput">
+                    <?php foreach ($this->get('languages') as $key => $value): ?>
+                        <?php $selected = ''; ?>
 
-                    if ($this->getRequest()->getParam('locale') == $key) {
-                        $selected = 'selected="selected"';
-                    }
+                        <?php if ($key == $this->get('contentLanguage')): ?>
+                            <?php continue; ?>
+                        <?php endif; ?>
 
-                    echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
-                }
-                ?>
-            </select>
+                        <?php if ($this->getRequest()->getParam('locale') == $key): ?>
+                            <?php $selected = 'selected="selected"'; ?>
+                        <?php endif; ?>
+
+                        <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </div>
-    </div>
-    <?php
-        }
-
-        if ($this->get('box') != '') {
-            echo $this->getSaveBar('updateButtonBox');
-        } else {
-            echo $this->getSaveBar('addButtonBox');
-        }
-    ?>
+    <?php endif; ?>
+    <?php if ($this->get('box') != ''): ?>
+        <?=$this->getSaveBar('updateButtonBox') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButtonBox') ?>
+    <?php endif; ?>
 </form>
-<script>
-<?php
-$boxID = '';
 
-if ($this->get('box') != '') {
-    $boxID = $this->get('box')->getId();
-}
-?>
+<script>
+<?php $boxID = ''; ?>
+<?php if ($this->get('box') != ''): ?>
+    <?php $boxID = $this->get('box')->getId(); ?>
+<?php endif; ?>
+
 $('#boxLanguageInput').change
 (
     this,

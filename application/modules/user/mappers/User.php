@@ -192,6 +192,10 @@ class User extends \Ilch\Mapper
             
         }
 
+        if (isset($userRow['signature'])) {
+            $user->setSignature($userRow['signature']);
+        }
+
         if (isset($userRow['password'])) {
             $user->setPassword($userRow['password']);
         }
@@ -279,6 +283,7 @@ class User extends \Ilch\Mapper
         $fields['city'] = $user->getCity();
         $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();
+        $fields['signature'] = $user->getSignature();
 
         $userId = (int)$this->db()->select('id')
             ->from('users')

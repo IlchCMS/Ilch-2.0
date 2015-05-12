@@ -51,13 +51,13 @@ class Layouts extends \Ilch\Controller\Admin
         $this->getView()->set('defaultLayout', $this->getConfig()->get('default_layout'));
         $this->getView()->set('layouts', $layouts);
     }
-    
+
     public function defaultAction()
     {
         $this->getConfig()->set('default_layout', $this->getRequest()->getParam('key'));
         $this->redirect(array('action' => 'index'));
     }
-    
+
     public function deleteAction()
     {
         if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {

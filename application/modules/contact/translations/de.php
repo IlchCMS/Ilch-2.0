@@ -8,6 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'menuContact' => 'Kontakt',
     'receiver' => 'Empfänger',
     'name' => 'Name',
     'email' => 'Email',
@@ -22,4 +23,5 @@ return array
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha ist fehlerhaft',
     'captchaRead' => 'Nicht lesbar? Text ändern!',
+    'addButton' => 'Eintragen',
 );

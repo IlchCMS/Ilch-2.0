@@ -10,8 +10,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * The box model class.
- *
- * @package ilch
  */
 class Box extends \Ilch\Model
 {

@@ -1,3 +1,4 @@
+<?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
     <?php $errors = $this->get('errors'); ?>

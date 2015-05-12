@@ -15,4 +15,3 @@ class Layoutswitch extends \Ilch\Box
         $this->getView()->set('layouts', glob(APPLICATION_PATH.'/layouts/*'));
     }
 }
-

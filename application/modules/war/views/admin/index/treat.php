@@ -1,10 +1,12 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<?php if ($this->getRequest()->getParam('id') == ''): ?>
-    <legend><?=$this->getTrans('menuActionNewWar') ?></legend>
-<?php else: ?>
-    <legend><?=$this->getTrans('manageWar') ?></legend>
-<?php endif; ?>
+<legend>
+    <?php if ($this->getRequest()->getParam('id') == ''): ?>
+        <?=$this->getTrans('menuActionNewWar') ?></legend>
+    <?php else: ?>
+        <?=$this->getTrans('manageWar') ?>
+    <?php endif; ?>
+</legend>
 <?php if ($this->get('group') != '' and $this->get('enemy') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
@@ -183,46 +185,53 @@
         <?php if ($this->getRequest()->getParam('id')): ?>
             <legend><?=$this->getTrans('warResult') ?></legend>
             <div id="games"></div>
-            <?php else: ?>
-                <legend><?=$this->getTrans('warResultInfo') ?></legend>
-                <div class="form-group">
-                    <label for="warReportInfo" class="col-lg-2 control-label">
-                        <?=$this->getTrans('warResultInfo') ?>:
-                    </label>
-                    <div class="col-lg-4">
-                        <span><?=$this->getTrans('warResultInfoText') ?></span>
-                    </div>
-                </div>
-            <?php endif; ?>
-            <legend><?=$this->getTrans('warReport') ?></legend>
+        <?php else: ?>
+            <legend><?=$this->getTrans('warResultInfo') ?></legend>
             <div class="form-group">
-                <div class="col-lg-offset-2 col-lg-8">
-                    <textarea class="form-control" id="ilch_html" name="warReport"><?php if ($this->get('war') != '') { echo $this->get('war')->getWarReport(); } ?></textarea>
-                </div>
-            </div>
-            <legend><?=$this->getTrans('warStatus') ?></legend>
-            <div class="form-group">
-                <label for="warStatus" class="col-lg-2 control-label">
-                    <?=$this->getTrans('warStatus') ?>:
+                <label for="warReportInfo" class="col-lg-2 control-label">
+                    <?=$this->getTrans('warResultInfo') ?>:
                 </label>
                 <div class="col-lg-4">
-                    <select class="form-control" name="warStatus" id="warStatus">
-                        <optgroup label="<?=$this->getTrans('warStatus') ?>">
-                            <option <?php if ($this->get('war') != '' && $this->get('war')->getWarStatus() == '1'): ?>
-                                        <?='selected="selected"'; ?>
-                                    <?php endif; ?> value="1"><?=$this->getTrans('warStatusOpen') ?></option>
-                            <option <?php if ($this->get('war') != '' && $this->get('war')->getWarStatus() == '2'): ?>
-                                        <?='selected="selected"'; ?>
-                                    <?php endif; ?> value="2"><?=$this->getTrans('warStatusClose') ?></option>
-                        </optgroup>
-                    </select>
+                    <span><?=$this->getTrans('warResultInfoText') ?></span>
                 </div>
             </div>
-            <?=$this->getSaveBar()?>
+        <?php endif; ?>
+        <legend><?=$this->getTrans('warReport') ?></legend>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-8">
+                <textarea class="form-control" id="ilch_html" name="warReport"><?php if ($this->get('war') != '') { echo $this->get('war')->getWarReport(); } ?></textarea>
+            </div>
+        </div>
+        <legend><?=$this->getTrans('warStatus') ?></legend>
+        <div class="form-group">
+            <label for="warStatus" class="col-lg-2 control-label">
+                <?=$this->getTrans('warStatus') ?>:
+            </label>
+            <div class="col-lg-4">
+                <select class="form-control" name="warStatus" id="warStatus">
+                    <optgroup label="<?=$this->getTrans('warStatus') ?>">
+                        <option <?php if ($this->get('war') != '' && $this->get('war')->getWarStatus() == '1'): ?>
+                                    <?='selected="selected"'; ?>
+                                <?php endif; ?> value="1"><?=$this->getTrans('warStatusOpen') ?></option>
+                        <option <?php if ($this->get('war') != '' && $this->get('war')->getWarStatus() == '2'): ?>
+                                    <?='selected="selected"'; ?>
+                                <?php endif; ?> value="2"><?=$this->getTrans('warStatusClose') ?></option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <?=$this->getSaveBar()?>
     </form>
 <?php else: ?>
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>
 <?php endif; ?>
+
+<style>
+    .date {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+</style>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
@@ -282,10 +291,3 @@
         };
     });
 </script>
-
-<style>
-    .date {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
-    }
-</style>

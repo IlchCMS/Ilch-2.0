@@ -1,3 +1,4 @@
+<legend><?=$this->getTrans('menuUserList') ?></legend>
 <div class="row">
     <?php foreach ($this->get('userList') as $userlist): ?>        
         <div class="col-lg-4">

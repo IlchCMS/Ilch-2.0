@@ -10,8 +10,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * The layout model class.
- *
- * @package ilch
  */
 class Layout extends \Ilch\Model
 {
