@@ -44,23 +44,25 @@
                 <?php
                     $gameMapper = new \Modules\War\Mappers\Games();
                     $games = $gameMapper->getGamesByWarId($war->getId());
-                    if ($games != ''){
-                        $enemyPoints = '';
-                        $groupPoints = 0;
-                        $class = '';
-                        foreach ($games as $game){
+                    $enemyPoints = '';
+                    $groupPoints = '';
+                    $class = '';
+                    $ergebniss = '';
+                    if ($games != '') {
+                        
+                        foreach ($games as $game) {
                             $groupPoints += $game->getGroupPoints();
                             $enemyPoints += $game->getEnemyPoints();
                         }
-                        if ($groupPoints > $enemyPoints){
+                        if ($groupPoints > $enemyPoints) {
                             $class = 'class="war_win"';
                             $ergebniss = $this->getTrans('warWin');
                         }
-                        if ($groupPoints < $enemyPoints){
+                        if ($groupPoints < $enemyPoints) {
                             $class = 'class="war_lost"';
                             $ergebniss = $this->getTrans('warLost');
                         }
-                        if ($groupPoints == $enemyPoints){
+                        if ($groupPoints == $enemyPoints) {
                             $class = 'class="war_drawn"';
                             $ergebniss = $this->getTrans('warDrawn');
                         }
