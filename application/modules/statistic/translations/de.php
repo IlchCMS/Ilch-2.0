@@ -34,5 +34,6 @@ return array
     'yearMonth' => 'Jahr - Monat',
     'browser' => 'Browser',
     'os' => 'OS-System',
+    'osUnknown' => 'Unbekannt',
     'numberVisits' => 'Besucher',
 );

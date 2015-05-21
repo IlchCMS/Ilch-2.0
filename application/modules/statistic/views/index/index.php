@@ -87,8 +87,8 @@
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <tr>
                     <td>
-                        <?php if ($statisticList->getBrowser() == ''): ?>
-                            unbekannt
+                        <?php if ($statisticList->getBrowser() == '0'): ?>
+                            <?=$this->getTrans('osUnknown') ?>
                         <?php else: ?>
                             <?=$statisticList->getBrowser() ?>
                         <?php endif; ?>
@@ -129,8 +129,8 @@
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <tr>
                     <td>
-                        <?php if ($statisticList->getOS() ==  ''): ?>
-                            unbekannt
+                        <?php if ($statisticList->getOS() ==  '0'): ?>
+                            <?=$this->getTrans('osUnknown') ?>
                         <?php else: ?>
                             <?=$statisticList->getOS() ?>
                         <?php endif; ?>
