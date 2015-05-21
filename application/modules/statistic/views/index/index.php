@@ -86,7 +86,13 @@
                 <?php $progressWidth = $statisticList->getVisits() / $this->get('visitsTotal') * 100; ?>
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <tr>
-                    <td><?=$statisticList->getBrowser() ?></td>
+                    <td>
+                        <?php if ($statisticList->getBrowser() == 0): ?>
+                            unbekannt
+                        <?php else: ?>
+                            <?=$statisticList->getBrowser() ?>
+                        <?php endif; ?>
+                    </td>
                     <td>
                         <div class="progress" style="margin-bottom: 0px;">
                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?=$progressWidth ?>%;">
@@ -122,7 +128,13 @@
                 <?php $progressWidth = $statisticList->getVisits() / $this->get('visitsTotal') * 100; ?>
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <tr>
-                    <td><?=$statisticList->getOS() ?></td>
+                    <td>
+                        <?php if ($statisticList->getOS() == 0): ?>
+                            unbekannt
+                        <?php else: ?>
+                            <?=$statisticList->getOS() ?>
+                        <?php endif; ?>
+                    </td>
                     <td>
                         <div class="progress" style="margin-bottom: 0px;">
                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?=$progressWidth ?>%;">

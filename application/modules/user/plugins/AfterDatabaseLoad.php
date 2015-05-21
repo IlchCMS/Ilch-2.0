@@ -44,7 +44,7 @@ class AfterDatabaseLoad
             $ip = '128.0.0.1';
         }
 
-        if (empty($_SERVER['PATH_INFO'])) {
+        if (empty($_SERVER['PATH_INFO']) OR strpos($_SERVER['PATH_INFO'], 'admin', 1)) {
             $site = '';
         } else {
             $site = $_SERVER['PATH_INFO'];

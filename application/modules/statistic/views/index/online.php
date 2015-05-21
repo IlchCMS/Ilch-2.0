@@ -49,7 +49,7 @@
                             <td><?=$userOnlineList->getOS() ?> / <?=$userOnlineList->getBrowser() ?></td>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <td><a href="<?=$this->getUrl($userOnlineList->getSite()) ?>"><?=$userOnlineList->getSite() ?></a></td>
+                    <td><a href="<?=$this->getUrl(substr($userOnlineList->getSite(),1)) ?>"><?=implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)) ?></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
