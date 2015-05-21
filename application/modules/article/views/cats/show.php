@@ -34,7 +34,7 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
             <?php $contentParts = explode('[PREVIEWSTOP]', $content); ?>
             <?=reset($contentParts) ?>
             <br />
-            <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId())) ?>" class="pull-right"><?=$this->getTrans('readMore') ?></a>
+            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'id' => $article->getId())) ?>" class="pull-right"><?=$this->getTrans('readMore') ?></a>
         <?php else: ?>
             <?=$content ?>
         <?php endif; ?>
