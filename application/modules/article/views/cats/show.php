@@ -13,7 +13,7 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
         <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
 
         <h4>
-            <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId()))?>"><?=$articlesCats->getName()?></a>: <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
+            <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId()))?>"><?=$articlesCats->getName()?></a>: <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
         </h4>
         <div>
             <?=$date->format(null, true)?></span>
