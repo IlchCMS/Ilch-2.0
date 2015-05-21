@@ -1,12 +1,12 @@
-.group-image{
-        width: 100px;
-        margin: 0px;
-        padding: 0px;
-    }
-#war_index{
+.group-image {
+    width: 100px;
+    margin: 0px;
+    padding: 0px;
+}
+#war_index {
     overflow: hidden;
 }
-#war_index .col-lg-12{
+#war_index .col-lg-12 {
     border-width: 0px 0px 1px;
     border-style: none none solid;
     border-color: -moz-use-text-color -moz-use-text-color #E5E5E5;
@@ -18,29 +18,26 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
-#war_index h3{
+#war_index h3 {
     margin-top: 0px;
 }
-#war_index .thumbnail{
+#war_index .thumbnail {
     display: inline-block;
     float: left;
     margin: 5px 10px 5px 0px;
 }
-.center-text{
+.center-text {
     text-align: center;
 }
-.plays-vs{
+.plays-vs {
     margin: 60px 0;
 }
-.war_win{
+.war_win {
     color: #0C0;
 }
-.war_lost{
+.war_lost {
     color: #F00;
 }
-.war_drawn{
+.war_drawn {
     color: #006FFF;
-}
-.table {
-    border: 1px solid #CCC;
 }

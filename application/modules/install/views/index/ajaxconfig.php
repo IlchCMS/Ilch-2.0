@@ -7,19 +7,19 @@ foreach ($this->get('modules') as $key => $module) {
         echo '<i>'.$this->getTrans('obligatoryModules').'</i><br /><br />';
     }
 
-    if ($i !== 0 && $i % 8 == 0) {
+    if ($i !== 0 && $i % 9 == 0) {
         echo '</div>';
     }
 
-    if ($i == 8) {
+    if ($i == 9) {
         echo '<br /><i>'.$this->getTrans('optionalModules').'</i><br /><br />';
     }
 
-    if ($i % 8 == 0) {
+    if ($i % 9 == 0) {
         echo '<div class="row">';
     }
 ?>
-    <div class="col-lg-3">
+    <div class="col-lg-4">
         <input id="module_<?=$key?>" <?php if(isset($module['config']->config['system_module'])) { echo 'disabled="disabled"';} ?>
             <?php if(
                         isset($module['config']->config['system_module'])
