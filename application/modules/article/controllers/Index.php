@@ -74,7 +74,7 @@ class Index extends \Ilch\Controller\Frontend
             $categoryMapper = new CategoryMapper();
 
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
-            $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
+            $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 
             $this->getLayout()->set('metaTitle', $article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());

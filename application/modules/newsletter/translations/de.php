@@ -21,5 +21,6 @@ return array
     'add' => 'Schreiben',
     'send' => 'Absenden',
     'entry' => 'Ein- / Austragen',
+    'email' => 'E-Mail',
     'noEmails' => 'Keine E-Mail Adressen vorhanden'
 );

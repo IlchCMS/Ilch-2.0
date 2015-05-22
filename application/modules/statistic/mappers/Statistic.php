@@ -41,7 +41,7 @@ class Statistic extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->toDb().'"
+                WHERE `date_last_activity` > "'.$date->format("Y-m-d H:i:s", true).'"
                 ORDER BY date_last_activity DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -66,11 +66,61 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsDate()
+    public function getVisitsYearMonthDay()
+    {
+        $sql = 'SELECT *, COUNT(id) AS visits
+                FROM `[prefix]_visits_stats`
+                GROUP BY date
+                ORDER BY date DESC';
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $statisticModel = new StatisticModel();
+            $statisticModel->setVisits($entries['visits']);
+            $statisticModel->setDate($entries['date']);
+            $entry[] = $statisticModel;
+        }
+
+        return $entry;
+    }
+
+    public function getVisitsYearMonth()
     {
         $sql = 'SELECT *, COUNT(id) AS visits
                 FROM `[prefix]_visits_stats`
                 GROUP BY YEAR(date), MONTH(date)
+                ORDER BY date DESC';
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $statisticModel = new StatisticModel();
+            $statisticModel->setVisits($entries['visits']);
+            $statisticModel->setDate($entries['date']);
+            $entry[] = $statisticModel;
+        }
+
+        return $entry;
+    }
+
+    public function getVisitsYear()
+    {
+        $sql = 'SELECT *, COUNT(id) AS visits
+                FROM `[prefix]_visits_stats`
+                GROUP BY YEAR(date)
                 ORDER BY date DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -222,12 +272,12 @@ class Statistic extends \Ilch\Mapper
 
         if ($visitId) {
             $this->db()->update('visits_online')
-                ->values(array('site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'date_last_activity' => $date->toDb()))
+                ->values(array('site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'date_last_activity' => $date->format("Y-m-d H:i:s", true)))
                 ->where(array('id' => $visitId))
                 ->execute();
         } else {
             $this->db()->insert('visits_online')
-                ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date_last_activity' => $date->toDb()))
+                ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date_last_activity' => $date->format("Y-m-d H:i:s", true)))
                 ->execute();
         }
         

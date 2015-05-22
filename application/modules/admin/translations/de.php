@@ -18,7 +18,7 @@ return array
     'menuChange' => 'Menü bearbeiten',
     'menuItemAdd' => 'Menüitem hinzufügen',
     'loginWelcome' => 'Bitte loggen Sie sich ein',
-    'emailname' => 'Benutzername oder E-mail',
+    'emailname' => 'Benutzername oder E-Mail',
     'password' => 'Passwort',
     'rememberMe' => 'Eingeloggt bleiben',
     'signIn' => 'Einloggen',

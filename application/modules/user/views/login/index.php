@@ -8,12 +8,15 @@
                 <?=$this->getTrans('nameEmail') ?>:
             </label>
             <div class="col-lg-8">
-                <input class="form-control"
-                       name="loginContent_emailname"
-                       type="text" />
-                <?php if (!empty($errors['loginContent_emailname'])): ?>
-                    <span class="help-inline"><?=$this->getTrans($errors['loginContent_emailname']) ?></span>
-                <?php endif; ?>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                    <input class="form-control"
+                           name="loginContent_emailname"
+                           type="text" />
+                    <?php if (!empty($errors['loginContent_emailname'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['loginContent_emailname']) ?></span>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <div class="form-group <?php if (!empty($errors['loginContent_password'])) { echo 'has-error'; }; ?>">
@@ -21,12 +24,15 @@
                 <?=$this->getTrans('password') ?>:
             </label>
             <div class="col-lg-8">
-                <input class="form-control"
-                       name="loginContent_password"
-                       type="password" />
-                <?php if (!empty($errors['loginContent_password'])): ?>
-                    <span class="help-inline"><?=$this->getTrans($errors['loginContent_password']) ?></span>
-                <?php endif; ?>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                    <input class="form-control"
+                           name="loginContent_password"
+                           type="password" />
+                    <?php if (!empty($errors['loginContent_password'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['loginContent_password']) ?></span>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         

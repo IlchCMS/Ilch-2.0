@@ -23,8 +23,10 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('visitsMonth', $statisticMapper->getVisitsMonthCount());
         $this->getView()->set('visitsYear', $statisticMapper->getVisitsYearCount());
         $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount());
-        
-        $this->getView()->set('statisticList', $statisticMapper->getVisitsDate());
+
+        $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay());
+        $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth());
+        $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear());
         $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser());
         $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS());
     }

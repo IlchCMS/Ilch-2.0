@@ -26,18 +26,24 @@
             ?>
             <div class="form-group">
                 <div class="col-lg-12">
-                    <input name="loginbox_emailname"
-                           class="form-control"
-                           type="text"
-                           placeholder="<?php echo $this->getTrans('nameEmail')?>" />
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                        <input name="loginbox_emailname"
+                               class="form-control"
+                               type="text"
+                               placeholder="<?php echo $this->getTrans('nameEmail')?>" />
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-12">
-                    <input name="loginbox_password"
-                           class="form-control"
-                           type="password"
-                           placeholder="<?php echo $this->getTrans('password')?>" />
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                        <input name="loginbox_password"
+                               class="form-control"
+                               type="password"
+                               placeholder="<?php echo $this->getTrans('password')?>" />
+                    </div>
                 </div>
             </div>
             <div class="form-group">
