@@ -94,39 +94,38 @@
                                 <?php $content = $module->getContentForLocale($this->getTranslator()->getLocale()); ?>
 
                                 <?php if ($module->getSystemModule()): ?>
-                                    <?php $systemModuleHtml .= '<li>
-                                            <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                    <?php $systemModuleHtml .= '<a class="list-group-item " href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
                                                 <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
-                                                .$content['name'].'</a>
-                                        </li>'; ?>
+                                                .$content['name'].'</a>'; ?>
                                 <?php else: ?>
-                                    <?php $modulesHtml .= '<li>
-                                            <a href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                    <?php $modulesHtml .= '<a class="list-group-item " href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
                                                 <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
-                                                .$content['name'].'</a>
-                                        </li>'; ?>
+                                                .$content['name'].'</a>'; ?>
                                 <?php endif; ?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                         <?php if(!empty($modulesHtml) || !empty($systemModuleHtml)): ?>
-                            <li class="dropdown <?php if($this->getRequest()->getModuleName() !== 'admin') { echo 'active'; } ?>">
+                            <li id="ilch_dropdown" class="dropdown <?php if($this->getRequest()->getModuleName() !== 'admin') { echo 'active'; } ?>">
                                 <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
                                     <i class="fa fa-puzzle-piece"></i> <?=$this->getTrans('modules') ?>
                                     <b class="caret"></b>
                                 </a>
-                                <ul role="menu" class="dropdown-menu">
+                                <ul role="menu" class="dropdown-menu full">
                                     <?php if($this->getUser()->isAdmin()): ?>
+                                        <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'modules', 'action' => 'index')) ?>">
+                                            <i class="fa fa-list-ol"></i> <?=$this->getTrans('overview') ?>
+                                        </a>
+                                        <div class="divider"></div>
                                         <li>
-                                            <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'modules', 'action' => 'index')) ?>">
-                                                <i class="fa fa-list-ol"></i> <?=$this->getTrans('overview') ?>
-                                            </a>
+                                            <div class="list-group list-group-horizontal">
+                                                <?=$systemModuleHtml ?>
+                                            </div>
+                                            <div class="divider"></div>
+                                            <div class="list-group list-group-horizontal">
+                                                <?=$modulesHtml ?>
+                                            </div>
                                         </li>
-                                        <li class="divider"></li>
                                     <?php endif; ?>
-
-                                    <?=$systemModuleHtml ?>
-                                    <li class="divider"></li>
-                                    <?=$modulesHtml ?>
                                 </ul>
                             </li>
                         <?php endif; ?>
