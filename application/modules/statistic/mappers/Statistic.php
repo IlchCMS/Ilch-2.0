@@ -272,18 +272,18 @@ class Statistic extends \Ilch\Mapper
 
         if ($visitId) {
             $this->db()->update('visits_online')
-                ->values(array('site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'date_last_activity' => $date->format("Y-m-d H:i:s", true)))
+                ->values(array('site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
                 ->where(array('id' => $visitId))
                 ->execute();
         } else {
             $this->db()->insert('visits_online')
-                ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date_last_activity' => $date->format("Y-m-d H:i:s", true)))
+                ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
                 ->execute();
         }
 
         $uniqueUser = (int)$this->db()->select('id')
             ->from('visits_stats')
-            ->where(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
+            ->where(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d', true)))
             ->execute()
             ->fetchCell();
 
@@ -294,7 +294,7 @@ class Statistic extends \Ilch\Mapper
                 ->execute();
         } else {
             $this->db()->insert('visits_stats')
-                ->values(array('referer' => $row['referer'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
+                ->values(array('referer' => $row['referer'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date' => $date->format('Y-m-d', true)))
                 ->execute();
         }
     }
