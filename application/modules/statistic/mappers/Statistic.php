@@ -16,11 +16,11 @@ class Statistic extends \Ilch\Mapper
     {
         $userMapper = new \Modules\User\Mappers\User();
         $date = new \Ilch\Date();
-        $date->modify('-3 minutes');
+        $date->modify('-5 minutes');
 
         $sql = 'SELECT *
                 FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->toDb().'"
+                WHERE `date_last_activity` > "'.$date->format("Y-m-d H:i:s", true).'"
                 AND `user_id` > 0';
 
         $rows = $this->db()->queryArray($sql);
@@ -37,7 +37,7 @@ class Statistic extends \Ilch\Mapper
     public function getVisitsOnline()
     {
         $date = new \Ilch\Date();
-        $date->modify('-3 minutes');
+        $date->modify('-5 minutes');
 
         $sql = 'SELECT *
                 FROM `[prefix]_visits_online`
@@ -280,13 +280,13 @@ class Statistic extends \Ilch\Mapper
                 ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date_last_activity' => $date->format("Y-m-d H:i:s", true)))
                 ->execute();
         }
-        
+
         $uniqueUser = (int)$this->db()->select('id')
             ->from('visits_stats')
             ->where(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d')))
             ->execute()
             ->fetchCell();
-        
+
         if ($uniqueUser) {
             $this->db()->update('visits_stats')
                 ->values(array('os' => $row['os'], 'browser' => $row['browser']))

@@ -21,4 +21,3 @@ class Online extends \Ilch\Box
         $this->getView()->set('guestOnline', $allCount - count($users));
     }
 }
-

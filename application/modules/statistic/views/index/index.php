@@ -42,7 +42,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('statisticYearMonthDayList') as $statisticList): ?>            
+            <?php foreach ($this->get('statisticYearMonthDayList') as $statisticList): ?>
                 <?php $progressWidth = $statisticList->getVisits() / $this->get('visitsTotal') * 100; ?>
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
@@ -76,7 +76,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('statisticYearMonthList') as $statisticList): ?>            
+            <?php foreach ($this->get('statisticYearMonthList') as $statisticList): ?>
                 <?php $progressWidth = $statisticList->getVisits() / $this->get('visitsTotal') * 100; ?>
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
@@ -110,7 +110,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('statisticYearList') as $statisticList): ?>            
+            <?php foreach ($this->get('statisticYearList') as $statisticList): ?>
                 <?php $progressWidth = $statisticList->getVisits() / $this->get('visitsTotal') * 100; ?>
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
@@ -147,7 +147,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('statisticBrowserList') as $statisticList): ?>            
+            <?php foreach ($this->get('statisticBrowserList') as $statisticList): ?>
                 <?php $progressWidth = $statisticList->getVisits() / $this->get('visitsTotal') * 100; ?>
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <tr>
@@ -189,12 +189,12 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('statisticOSList') as $statisticList): ?>            
+            <?php foreach ($this->get('statisticOSList') as $statisticList): ?>
                 <?php $progressWidth = $statisticList->getVisits() / $this->get('visitsTotal') * 100; ?>
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <tr>
                     <td>
-                        <?php if ($statisticList->getOS() ==  '0'): ?>
+                        <?php if ($statisticList->getOS() == '0'): ?>
                             <?=$this->getTrans('osUnknown') ?>
                         <?php else: ?>
                             <?=$statisticList->getOS() ?>

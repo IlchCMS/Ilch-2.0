@@ -48,31 +48,22 @@ class Module extends \Ilch\Mapper
         return $modules;
     }
 
-    public function getModulesByKey($key)
+    public function getModulesByKey($key, $locale)
     {
         $modulesRows = $this->db()->select('*')
-            ->from('modules')
-            ->where(array('key' => $key))
+            ->from('modules_content')
+            ->where(array('key' => $key, 'locale' => $locale))
             ->execute()
-            ->fetchRows();
+            ->fetchAssoc();
 
-        foreach ($modulesRows as $moduleRow) {
-            $moduleModel = new \Modules\Admin\Models\Module();
-            $moduleModel->setKey($moduleRow['key']);
-            $contentRows = $this->db()->select('*')
-                ->from('modules_content')
-                ->where(array('key' => $moduleRow['key']))
-                ->execute()
-                ->fetchRows();
-
-            foreach ($contentRows as $contentRow) {
-                $moduleModel->addContent($contentRow['locale'], array('name' => $contentRow['name'], 'description' => $contentRow['description']));
-            }
-
-            $modules[] = $moduleModel;
+        if (empty($modulesRows)) {
+            return null;
         }
 
-        return $modules;
+        $modulesModel = new \Modules\Admin\Models\Module();
+        $modulesModel->setName($modulesRows['name']);
+
+        return $modulesModel;
     }
 
     /**

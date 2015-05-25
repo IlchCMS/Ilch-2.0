@@ -38,6 +38,11 @@ class Module extends \Ilch\Model
     protected $author;
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Gets the key.
      *
      * @return string
@@ -150,5 +155,25 @@ class Module extends \Ilch\Model
     public function getContent()
     {
         return $this->content;
+    }
+    
+    /**
+     * Gets the name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
     }
 }

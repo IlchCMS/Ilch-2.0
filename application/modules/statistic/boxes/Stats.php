@@ -24,4 +24,3 @@ class Stats extends \Ilch\Box
         $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount());
     }
 }
-

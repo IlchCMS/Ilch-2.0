@@ -34,7 +34,9 @@
             <?php foreach ($this->get('userOnlineList') as $userOnlineList): ?>
                 <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                 <?php $user = $userMapper->getUserById($userOnlineList->getUserId()); ?>
-                <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>             
+                <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>
+                <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
+                <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
                 <tr>
                     <td>
                         <?php if ($userOnlineList->getUserId() == 0): ?>
@@ -50,7 +52,7 @@
                             <td><?=$userOnlineList->getOS() ?> / <?=$userOnlineList->getBrowser() ?></td>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <td><a href="<?=$this->getUrl(substr($userOnlineList->getSite(),1)) ?>"><?=$moduleKey ?></a></td>
+                    <td><a href="<?=$this->getUrl(substr($userOnlineList->getSite(),1)) ?>"><?=$module->getName() ?></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
