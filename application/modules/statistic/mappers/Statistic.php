@@ -197,11 +197,11 @@ class Statistic extends \Ilch\Mapper
     public function getVisitsCountOnline()
     {
         $date = new \Ilch\Date();
-        $date->modify('-3 minutes');
+        $date->modify('-5 minutes');
 
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_online`
-                WHERE `date_last_activity` > "'.$date->toDb().'"';
+                WHERE `date_last_activity` > "'.$date->format("Y-m-d H:i:s", true).'"';
         
         $visits = $this->db()->queryCell($sql);
 

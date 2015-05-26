@@ -35,8 +35,13 @@
                 <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                 <?php $user = $userMapper->getUserById($userOnlineList->getUserId()); ?>
                 <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>
-                <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
-                <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
+                <?php if($moduleKey != ''): ?>                    
+                    <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
+                    <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
+                    <?php $moduleName = $module->getName() ?>
+                <?php else: ?>
+                    <?php $moduleName = '' ?>
+                <?php endif; ?>
                 <tr>
                     <td>
                         <?php if ($userOnlineList->getUserId() == 0): ?>
@@ -52,7 +57,7 @@
                             <td><?=$userOnlineList->getOS() ?> / <?=$userOnlineList->getBrowser() ?></td>
                         <?php endif; ?>
                     <?php endif; ?>
-                    <td><a href="<?=$this->getUrl(substr($userOnlineList->getSite(),1)) ?>"><?=$module->getName() ?></a></td>
+                    <td><a href="<?=$this->getUrl(substr($userOnlineList->getSite(),1)) ?>"><?=$moduleName ?></a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
