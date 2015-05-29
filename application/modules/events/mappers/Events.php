@@ -42,6 +42,7 @@ class Events extends \Ilch\Mapper
             $entryModel->setPlace($entries['place']);
             $entryModel->setImage($entries['image']);
             $entryModel->setText($entries['text']);
+            $entryModel->setShow($entries['show']);
             $entry[] = $entryModel;
         }
 
@@ -74,6 +75,7 @@ class Events extends \Ilch\Mapper
         $eventModel->setPlace($eventRow['place']);
         $eventModel->setImage($eventRow['image']);
         $eventModel->setText($eventRow['text']);
+        $eventModel->setShow($eventRow['show']);
 
         return $eventModel;
     }
@@ -218,6 +220,13 @@ class Events extends \Ilch\Mapper
         return $events;
     }
 
+    public function existsTable($table)
+    {
+        $module = $this->db()->ifTableExists($table);
+
+        return $module;
+    }
+
     /**
      * Inserts or updates event model.
      *
@@ -233,6 +242,7 @@ class Events extends \Ilch\Mapper
             'place' => $event->getPlace(),
             'image' => $event->getImage(),
             'text' => $event->getText(),
+            'show' => $event->getShow(),
         );
 
         if ($event->getId()) {

@@ -8,6 +8,7 @@ namespace Modules\Calendar\Controllers;
 
 use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Events\Mappers\Events as EventsMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -17,12 +18,17 @@ class Index extends \Ilch\Controller\Frontend
     {
         $calendarMapper = new CalendarMapper();
         $userMapper = new UserMapper();
+        $eventsMapper = new EventsMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuCalendar'), array('controller' => 'index'));
 
         $this->getView()->set('calendarList', $calendarMapper->getEntries());
         $this->getView()->set('birthdayList', $userMapper->getUserList());
+
+        if ($calendarMapper->existsTable('ilch_events') == true) {
+            $this->getView()->set('eventList', $eventsMapper->getEntries(array('show' => 1)));
+        }
     }
 
     public function showAction()

@@ -22,6 +22,7 @@ return array
     'missingText' => 'Text was not filled',
     'missingDate' => 'Date was not filled',
     'missingPlace' => 'Place was not filled',
+    'calendarShow' => 'Event show in the Calendar?',
 
     'menuEventUpcoming' => 'Upcoming Events',
     'menuEventAll' => 'All Events',

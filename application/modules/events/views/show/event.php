@@ -75,7 +75,7 @@ $user = $userMapper->getUserById($event->getUserId());
             </div>
             <br />
             <div class="eventBoxHead">
-                <i class="fa fa-clock-o"></i> <?=$date->format("l, d. F Y", true) ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i", true) ?> <?=$this->getTrans('clock') ?>
+                <i class="fa fa-clock-o"></i> <?=$date->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i") ?> <?=$this->getTrans('clock') ?>
             </div>
             <div class="eventBoxBottom">
                 <i class="fa fa-map-marker"></i> <?=$event->getPlace() ?>

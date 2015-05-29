@@ -67,13 +67,24 @@
                             <?php if ($birthdayList->getBirthday() != '0000-00-00'): ?>
                                 {
                                     title  : '<?=$birthdayList->getName() ?> (<?=floor(($year.date('md') - str_replace("-", "", $birthdayList->getBirthday())) / 10000) ?>)',
-                                    url    : '<?=$this->getUrl('user/profil/index/user/' . $birthdayList->getId()) ?>',
                                     start  : '<?=$year.'-'.date('m-d', strtotime($birthdayList->getBirthday())) ?>',
-                                    color  : '#257e4a'
+                                    color  : '#257e4a',
+                                    url    : '<?=$this->getUrl('user/profil/index/user/' . $birthdayList->getId()) ?>'
                                 },
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endforeach; ?>
+
+                    <?php if ($this->get('eventList') != ''): ?>
+                        <?php foreach ($this->get('eventList') as $eventList): ?>
+                            {
+                                title  : '<?=$eventList->getTitle() ?>',
+                                start  : '<?=$eventList->getDateCreated() ?>',
+                                color  : '#C52C66',
+                                url    : '<?=$this->getUrl('events/show/event/id/' . $eventList->getId()) ?>'
+                            },
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                     ],
 		});
     });
