@@ -102,6 +102,8 @@ a {
 }
 .rightbar {
     border-color: #ccc !important;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .rightbar .navbar-nav > li {
     border-left: 1px solid silver;
