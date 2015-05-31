@@ -28,7 +28,6 @@ header .rightbar li > #search-header {
     cursor: pointer;
     text-align: center;
     display: inline-block;
-    padding: 13px;
     padding: 10px;
     line-height: 20px;
 }
@@ -103,6 +102,8 @@ a {
 }
 .rightbar {
     border-color: #ccc !important;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 .rightbar .navbar-nav > li {
     border-left: 1px solid silver;
@@ -144,7 +145,7 @@ aside > nav > ul > li.active {
     border:  none !important;
 }
 .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
-    padding-right: 15px;
+    padding-right: 0px;
     padding-left: 0px;
     border-bottom:  1px solid silver !important;
 }
@@ -340,14 +341,14 @@ aside {
     z-index: 904;
     padding-top: 40px;
 }
-#left-panel > nav{
+#left-panel > nav {
     position: fixed;
     width: 220px;
 }
-.divider {
+.dropdown-menu .divider {
     height: 1px;
     overflow: hidden;
-    background-color: #FFF;
+    background-color: #ccc;
 }
 #main {
     margin-left: 220px;
@@ -378,7 +379,7 @@ aside {
 nav ul {
     padding: 40px 28px 25px 0;
     padding: 0;
-    margin: 0;
+    margin: 0 !important;
     font-size: 13px;
     line-height: .5em;
     list-style: none;
@@ -405,7 +406,7 @@ nav ul li.active.open>a:before {
 nav ul li a {
     line-height: normal;
     font-size: 14px;
-    padding: 10px 10px 10px 11px;
+    padding: 10px 10px 10px 15px;
     color: #fff;
     display: block;
     font-weight: 400;
@@ -535,6 +536,41 @@ legend {
     display: block;
     background-color: transparent;
 }
+#ilch_dropdown {
+    position: static !important;
+}
+#ilch_dropdown .full {
+    width: 100%;
+    left: auto !important;
+    right: auto !important;
+}
+#ilch_dropdown .full a {
+    color: #777;
+    width: 32.7584%;
+}
+#ilch_dropdown .full a:hover, #ilch_dropdown .full a:hover:focus {
+    color: #000;
+}
+#ilch_dropdown .list-group-horizontal .list-group-item {
+    display: inline-flex;
+    background: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border: none;
+}
+#ilch_dropdown a.list-group-item {
+    padding: 7px 0px 7px 20px;
+}
+#ilch_dropdown a.list-group-item:hover {
+    background: none;
+}
+#ilch_dropdown .list-group-item:hover, .list-group-item {
+    color: #000;
+}
+#ilch_dropdown .list-group {
+    margin-bottom: 0 !important;
+}
 @media (max-width:991px) {
     #main {
         width: 100%!important;
@@ -542,6 +578,9 @@ legend {
     #search-div{
         width: 93%;
         top: 0px;
+    }
+    header .rightbar li > #search-header {
+        padding-left: 20px !important;
     }
     body.container {
         border: none!important;
@@ -745,5 +784,14 @@ legend {
         position: relative;
         left: 210px;
         overflow-x: hidden;
+    }
+    #ilch_dropdown .list-group-horizontal .list-group-item {
+    width: 100%;
+    color: #000;
+    }
+    #ilch_dropdown .list-group-horizontal .list-group-item a {
+    width: 100%;
+    color: #000;
+    padding: 7px 7px !important;
     }
 }

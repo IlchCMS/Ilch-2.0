@@ -6,6 +6,10 @@ body {
     background-size: cover;
 }
 
+.table {
+    border: 1px solid #CCC;
+}
+
 img {
     height: auto !important;
     max-width: 100% !important;

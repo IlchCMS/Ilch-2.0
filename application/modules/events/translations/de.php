@@ -22,6 +22,7 @@ return array
     'missingText' => 'Text muss ausgefüllt werden',
     'missingDate' => 'Datum muss ausgefüllt werden',
     'missingPlace' => 'Ort muss ausgefüllt werden',
+    'calendarShow' => 'Event im Kalender Anzeigen?',
 
     'menuEventUpcoming' => 'Bevorstehende Veranstaltungen',
     'menuEventAll' => 'Alle Veranstaltungen',

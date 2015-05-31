@@ -98,7 +98,7 @@
                   name="captcha"
                   placeholder="<?=$this->getTrans('captcha') ?>" />
             <span class="input-group-addon">
-                <a href="#" onclick="
+                <a href="javascript:void(0)" onclick="
                     document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
                     document.getElementById('captcha-form').focus();"
                     id="change-image">

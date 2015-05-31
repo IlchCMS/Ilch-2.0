@@ -20,7 +20,7 @@ class Events extends \Ilch\Model
     /**
      * The user of the event.
      *
-     * @var integer
+     * @var int
      */
     protected $userId;
 
@@ -60,6 +60,13 @@ class Events extends \Ilch\Model
     protected $text;
 
     /**
+     * The show of the event.
+     *
+     * @var int
+     */
+    protected $show;
+
+    /**
      * Gets the id of the event.
      *
      * @return int
@@ -85,7 +92,7 @@ class Events extends \Ilch\Model
     /**
      * Gets the user of the event.
      *
-     * @return integer
+     * @return int
      */
     public function getUserId()
     {
@@ -95,7 +102,7 @@ class Events extends \Ilch\Model
     /**
      * Sets the userid of the event.
      *
-     * @param integer $userId
+     * @param int $userId
      * @return this
      */
     public function setUserId($userId)
@@ -216,6 +223,29 @@ class Events extends \Ilch\Model
     public function setText($text)
     {
         $this->text = (string)$text;
+
+        return $this;
+    }
+
+    /**
+     * Gets the show of the event.
+     *
+     * @return int
+     */
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+    /**
+     * Sets the show of the event.
+     *
+     * @param int $show
+     * @return this
+     */
+    public function setShow($show)
+    {
+        $this->show = (int)$show;
 
         return $this;
     }

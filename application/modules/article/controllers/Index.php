@@ -7,6 +7,7 @@
 namespace Modules\Article\Controllers;
 
 use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Article\Models\Article as ArticleModel;
 use Modules\Comment\Models\Comment as CommentModel;
@@ -70,8 +71,10 @@ class Index extends \Ilch\Controller\Frontend
         } else {
             $articleMapper = new ArticleMapper();
             $articleModel = new ArticleModel();
+            $categoryMapper = new CategoryMapper();
 
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+            $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 
             $this->getLayout()->set('metaTitle', $article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());
@@ -79,6 +82,8 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
+                    ->add($this->getTranslator()->trans('menuCats'), array('controller' => 'cats', 'action' => 'index'))
+                    ->add($articlesCats->getName(), array('controller' => 'cats', 'action' => 'show', 'id' => $articlesCats->getId()))
                     ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
             
             $articleModel->setId($article->getId());

@@ -19,7 +19,7 @@ class Calendar extends \Ilch\Mapper
      * @return CalendarModel[]|array
      */
     public function getEntries($where = array())
-    {
+    {        
         $entryArray = $this->db()->select('*')
                 ->from('calendar')
                 ->where($where)
@@ -104,6 +104,13 @@ class Calendar extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
+    }
+
+    public function existsTable($table)
+    {
+        $module = $this->db()->ifTableExists($table);
+
+        return $module;
     }
 
     /**

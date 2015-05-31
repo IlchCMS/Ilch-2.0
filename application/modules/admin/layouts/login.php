@@ -16,6 +16,7 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>">
         <link href="<?=$this->getStaticUrl('css/bootstrap.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getStaticUrl('css/font-awesome.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/login.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.css') ?>" rel="stylesheet">
@@ -35,17 +36,23 @@
                             <?=$this->getTokenField() ?>
                             <h4><?=$this->getTrans('loginWelcome') ?></h4>
                             <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; }; ?>">
-                                <input type="text"
-                                       name="emailname"
-                                       class="form-control"
-                                       placeholder="<?=$this->getTrans('emailname') ?>"
-                                       value="<?=$this->escape($emailname) ?>">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                    <input type="text"
+                                           name="emailname"
+                                           class="form-control"
+                                           placeholder="<?=$this->getTrans('emailname') ?>"
+                                           value="<?=$this->escape($emailname) ?>">
+                                </div>
                             </div>
                             <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; }; ?>">
-                                <input type="password"
-                                       name="password"
-                                       class="form-control"
-                                       placeholder="<?=$this->getTrans('password') ?>">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                                    <input type="password"
+                                           name="password"
+                                           class="form-control"
+                                           placeholder="<?=$this->getTrans('password') ?>">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <select class="form-control" name="language">

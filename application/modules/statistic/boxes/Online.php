@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Modules\User\Boxes;
+namespace Modules\Statistic\Boxes;
 
 defined('ACCESS') or die('no direct access');
 
@@ -12,13 +12,12 @@ class Online extends \Ilch\Box
 {
     public function render()
     {
-        $visitMapper = new \Modules\User\Mappers\Visit();
+        $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
         
-        $allCount = $visitMapper->getVisitsCountOnline();
-        $users = $visitMapper->getVisitsOnlineUser();
+        $allCount = $statisticMapper->getVisitsCountOnline();
+        $users = $statisticMapper->getVisitsOnlineUser();
 
         $this->getView()->set('usersOnline', $users);
         $this->getView()->set('guestOnline', $allCount - count($users));
     }
 }
-

@@ -219,9 +219,9 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy'), $modulesToInstall);
+                    $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic'), $modulesToInstall);
                 } else {
-                    $modulesToInstall = array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy');
+                    $modulesToInstall = array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic');
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -282,7 +282,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'birthday'))) {
+                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'birthday', 'statistic'))) {
                         continue;
                     }
 
@@ -303,8 +303,8 @@ class Index extends \Ilch\Controller\Frontend
                $boxes = "INSERT INTO `[prefix]_menu_items` (`menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
                         (1, 80, 0, 0, 0, 'user_login', 4, 'Login', '', ''),
                         (1, 90, 0, 0, 0, 'admin_layoutswitch', 4, 'Layout', '', ''),
-                        (1, 100, 0, 0, 0, 'user_stats', 4, 'Statistik', '', ''),
-                        (1, 110, 0, 0, 0, 'user_online', 4, 'Online', '', ''),
+                        (1, 100, 0, 0, 0, 'statistic_stats', 4, 'Statistik', '', ''),
+                        (1, 110, 0, 0, 0, 'statistic_online', 4, 'Online', '', ''),
                         (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
                         (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', '')";
                 $db->queryMulti($boxes);
@@ -340,6 +340,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['contact']['types']    = array();
         $modules['imprint']['types']    = array();
         $modules['privacy']['types']    = array();
+        $modules['statistic']['types']  = array();
 
         /*
          * Optional-Modules.

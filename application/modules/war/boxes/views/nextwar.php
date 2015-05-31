@@ -1,6 +1,5 @@
-<?php
-if ($this->get('war') != '') {
-    foreach ($this->get('war') as $war) :        
+<?php if ($this->get('war') != ''): 
+    foreach ($this->get('war') as $war):        
         $warMapper = new \Modules\War\Mappers\War();
         $warTime = $war->getWarTime();    
         $gameImg = $this->getBaseUrl('application/modules/war/static/img/'.$war->getWarGame().'.png');
@@ -27,9 +26,7 @@ if ($this->get('war') != '') {
                 </div>
             </div>
         </div>
-    <?php
-    endforeach;
-} else {
-    echo $this->getTranslator()->trans('noWars');
-}
-?>
+    <?php endforeach; ?>
+<?php else: ?>
+    <?=$this->getTranslator()->trans('noWars'); ?>
+<?php endif; ?>

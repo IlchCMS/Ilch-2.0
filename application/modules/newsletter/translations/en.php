@@ -21,5 +21,6 @@ return array
     'add' => 'Write',
     'send' => 'Send',
     'entry' => 'Sub- / Unsubscribe',
+    'email' => 'E-Mail',
     'noEmails' => 'No E-Mail addressen available'
 );
