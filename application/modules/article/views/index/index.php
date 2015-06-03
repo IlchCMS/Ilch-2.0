@@ -22,9 +22,9 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
             <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId().'#comment'))?>"><i class="fa fa-comment-o"></i> <?=count($comments)?></a> <i class="fa fa-eye"></i> <?=$article->getVisits() ?>
         </div>
         <?php if (!empty($image)): ?>
-            <figure><img class="article_image" src="'.$this->getBaseUrl($image).'"/>
+            <figure><img class="article_image" src="<?=$this->getBaseUrl($image) ?>"></figure>
             <?php if (!empty($imageSource)): ?>
-                <figcaption class="article_image_source">'.$this->getTrans('articleImageSource').': '.$imageSource.'</figcaption><figure>
+                <figcaption class="article_image_source"><?=$this->getTrans('imageSource') ?>: <?=$imageSource ?></figcaption>
             <?php endif; ?>
         <?php endif; ?>
         <hr />
