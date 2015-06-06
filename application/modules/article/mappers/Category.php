@@ -42,7 +42,7 @@ class Category extends \Ilch\Mapper
 
         return $categorys;
     }
-    
+
     /**
      * Returns category found by the id.
      *

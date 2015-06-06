@@ -98,6 +98,83 @@ class Article extends \Ilch\Mapper
         return $articles;
     }
 
+    public function getArticlesByDate($date)
+    {
+        $sql = 'SELECT pc.*, p.*
+                FROM `[prefix]_articles` as p
+                LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
+                WHERE YEAR(p.date_created) = YEAR("'.$date.'") AND MONTH(p.date_created) = MONTH("'.$date.'")
+                GROUP BY p.id DESC';
+        $articleArray = $this->db()->queryArray($sql);
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = array();
+
+        foreach ($articleArray as $articleRow) {
+            $articleModel = new ArticleModel();
+            $articleModel->setId($articleRow['id']);
+            $articleModel->setCatId($articleRow['cat_id']);
+            $articleModel->setVisits($articleRow['visits']);
+            $articleModel->setAuthorId($articleRow['author_id']);
+            $articleModel->setDescription($articleRow['description']);
+            $articleModel->setTitle($articleRow['title']);
+            $articleModel->setPerma($articleRow['perma']);
+            $articleModel->setContent($articleRow['content']);
+            $articleModel->setDateCreated($articleRow['date_created']);
+            $articleModel->setArticleImage($articleRow['article_img']);
+            $articleModel->setArticleImageSource($articleRow['article_img_source']);
+            $articles[] = $articleModel;
+        }
+
+        return $articles;
+    }
+
+    public function getCountArticlesByMonthYear($date = null)
+    {
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_articles`';
+        
+        if ($date != null) {
+            $sql .= ' WHERE YEAR(date_created) = YEAR("'.$date.'") AND MONTH(date_created) = MONTH("'.$date.'")';
+        }
+
+        $article = $this->db()->queryCell($sql);
+
+        return $article;
+    }
+
+    public function getArticleDateList($limit = null)
+    {
+        $sql = 'SELECT *
+                FROM `[prefix]_articles`
+                GROUP BY YEAR(date_created), MONTH(date_created)
+                ORDER BY `date_created` DESC';
+        
+        if ($limit !== null) {
+           $sql .= ' LIMIT '.(int)$limit;
+        }
+
+        $articleArray = $this->db()->queryArray($sql);
+
+        if (empty($articleArray)) {
+            return null;
+        }
+
+        $articles = array();
+
+        foreach ($articleArray as $articleRow) {
+            $articleModel = new ArticleModel();
+            $articleModel->setId($articleRow['id']);
+            $articleModel->setDateCreated($articleRow['date_created']);
+            $articles[] = $articleModel;
+        }
+
+        return $articles;
+    }
+
     /**
      * Get article lists for overview.
      *

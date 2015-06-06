@@ -9,13 +9,11 @@ $preview = $this->getRequest()->getParam('preview');
 
 <legend><?=$article->getTitle() ?></legend>
 <?php if (!empty($image)): ?>
-    <figure>
-        <img class="article_image" src="<?=$this->getBaseUrl($image) ?>" />
+    <figure><img class="article_image" src="<?=$this->getBaseUrl($image) ?>"></figure>
         <?php if (!empty($imageSource)): ?>
-            <figcaption class="article_image_source"><?=$this->getTrans('articleImageSource') ?>: <?=$imageSource ?></figcaption>
+            <figcaption class="article_image_source"><?=$this->getTrans('imageSource') ?>: <?=$imageSource ?></figcaption>
             <br />
         <?php endif; ?>
-    <figure>
 <?php endif; ?>
 
 <?=$content ?>

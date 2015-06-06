@@ -13,19 +13,21 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
         <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
 
         <h4>
-            <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId()))?>"><?=$articlesCats->getName()?></a>: <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
+            <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId())) ?>"><?=$article->getTitle() ?></a>
         </h4>
         <div>
-            <?=$date->format(null, true)?></span>
-        </div>
-        <div>
-            <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId().'#comment'))?>"><i class="fa fa-comment-o"></i> <?=count($comments)?></a> <i class="fa fa-eye"></i> <?=$article->getVisits() ?>
+            <i class="fa fa-clock-o" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true))) ?>"><?=$date->format('d. F Y', true) ?></a>
+            &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('menuCats') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId())) ?>"><?=$articlesCats->getName() ?></a>
+            &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId().'#comment')) ?>"><?=count($comments) ?></a>
+            &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('show') ?>"></i> <?=$article->getVisits() ?>
         </div>
         <?php if (!empty($image)): ?>
-            <figure><img class="article_image" src="<?=$this->getBaseUrl($image) ?>"></figure>
-            <?php if (!empty($imageSource)): ?>
-                <figcaption class="article_image_source"><?=$this->getTrans('imageSource') ?>: <?=$imageSource ?></figcaption>
-            <?php endif; ?>
+            <figure>
+                <img class="article_image" src="<?=$this->getBaseUrl($image) ?>">
+                <?php if (!empty($imageSource)): ?>
+                    <figcaption class="article_image_source"><?=$this->getTrans('imageSource') ?>: <?=$imageSource ?></figcaption>
+                <?php endif; ?>
+            </figure>
         <?php endif; ?>
         <hr />
         <?php $content = $article->getContent(); ?>
