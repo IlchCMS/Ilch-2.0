@@ -135,7 +135,7 @@
  * more would stretch the design.
  */
 .comment-list.reply1 {
-  margin-left: 80px;
+  left: 55px;
   position: relative;
   overflow: visible;
 }
@@ -149,7 +149,7 @@
   left: -40px;
 }
 .comment-list.reply2 {
-  margin-left: 160px;
+  left: 110px;
   position: relative;
   overflow: visible;
 }
@@ -163,7 +163,7 @@
   left: -40px;
 }
 .comment-list.reply3 {
-  margin-left: 240px;
+  left: 165px;
   position: relative;
   overflow: visible;
 }
@@ -177,7 +177,7 @@
   left: -40px;
 }
 .comment-list.reply4 {
-  margin-left: 320px;
+  left: 230px;
   position: relative;
   overflow: visible;
 }
@@ -191,7 +191,7 @@
   left: -40px;
 }
 .comment-list.reply5 {
-  margin-left: 400px;
+  left: 285px;
   position: relative;
   overflow: visible;
 }

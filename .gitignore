@@ -8,3 +8,4 @@ application/modules/events/static/upload/image
 /.vagrant
 /Vagrantfile
 /tests/config.php
+/application/layout/simpleBW

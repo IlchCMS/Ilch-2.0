@@ -144,11 +144,15 @@ class Comment extends \Ilch\Mapper
 		foreach($fk_comments as $fk_comment){
 			$commentDate = new \Ilch\Date($fk_comment->getDateCreated());
 			$user = $userMapper->getUserById($fk_comment->getUserId());
+			if($req > 5){
+				$req = 5;
+			}
+			$col = 10 - $req;
 			echo '<section class="comment-list reply'.$req.'">';
 			echo '<article class="row" id="'.$fk_comment->getId().'">';
 			echo '<div class="col-md-2 col-sm-2 hidden-xs"><figure class="thumbnail">';
 			echo '<a href="'.BASE_URL.'/index.php/user/profil/index/user/'.$user->getId().'"><img class="img-responsive" src="'.BASE_URL.'/'.$user->getAvatar().'" alt="'.$user->getName().'"></a>';
-			echo '</figure></div><div class="col-md-10 col-sm-10"><div class="panel panel-default arrow left"><div class="panel-bodylist"><div class="panel-heading right">'.$user_rep->getName().'<i class="fa fa-reply"></i>Reply</div><header class="text-left">';
+			echo '</figure></div><div class="col-md-'.$col.' col-sm-'.$col.'"><div class="panel panel-default arrow left"><div class="panel-bodylist"><div class="panel-heading right">'.$user_rep->getName().'<i class="fa fa-reply"></i>Reply</div><header class="text-left">';
 			echo '<div class="comment-user"><i class="fa fa-user"></i> <a href="'.BASE_URL.'/index.php/user/profil/index/user/'.$fk_comment->getUserId().'">'.$user->getName().'</a></div>';
 			echo '<time class="comment-date"><i class="fa fa-clock-o"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
 			echo '</header><div class="comment-post"><p>'.nl2br($fk_comment->getText()).'</p></div>'; 
