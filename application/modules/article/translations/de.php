@@ -9,6 +9,7 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuArticle' => 'Artikel',
+    'menuArchives' => 'Archiv',
     'title' => 'Titel',
     'language' => 'Sprache',
     'permaLink' => 'Permalink',
@@ -27,5 +28,8 @@ return array
     'noCats' => 'Keine Kategorien vorhanden',
     'title' => 'Titel',
     'name' => 'Name',
+    'date' => 'Datum',
     'cats' => 'Kategorie',
+    'catArchives' => 'Kategorienarchiv',
+    'monthArchives' => 'Monatsarchiv',
 );

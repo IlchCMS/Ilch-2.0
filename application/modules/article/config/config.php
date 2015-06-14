@@ -48,6 +48,7 @@ class Config extends \Ilch\Config\Install
         $article = new \Modules\Article\Models\Article();
         $article->setCatId(1);
         $article->setTitle('Startseite');
+        $article->setAuthorId(1);
         $article->setContent('Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
         $article->setPerma('startseite.html');
         $articleMapper->save($article);

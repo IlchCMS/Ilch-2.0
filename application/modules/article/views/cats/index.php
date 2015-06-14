@@ -1,7 +1,8 @@
 <?php
-$cats = $this->get('cats');
 $articleMapper = new \Modules\Article\Mappers\Article();
+$cats = $this->get('cats');
 ?>
+
 <legend><?=$this->getTrans('menuCats') ?></legend>
 <?php if ($cats != ''): ?>
     <ul class="list-group">
