@@ -43,6 +43,9 @@ class Index extends \Ilch\Controller\Frontend
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
         }
+		
+		$comments = $commentMapper->getComments('comment/index/index/id/'.$this->getRequest()->getParam('id'));
+        $this->getView()->set('comments', $comments);
     }
 }
 
