@@ -387,7 +387,7 @@ class Select extends QueryBuilder
             $tableName = reset($table);
             $tableAlias = key($table);
         } else {
-            $tableName = $this->table;
+            $tableName = $table;
         }
 
         $sql = $this->db->quote('[prefix]_' . $tableName);
