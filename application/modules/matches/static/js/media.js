@@ -14,7 +14,7 @@ $(document).ready(function () {
         req.done(function (data) {
             $(mainContainer).find("h3").removeClass('hidden').addClass('show');
 
-            $.each(data, function (i, obj) {
+            $.each(data.media, function (i, obj) {
                 var container, item;
 
                 container = $('<div>').attr('class', 'col-xs-2');

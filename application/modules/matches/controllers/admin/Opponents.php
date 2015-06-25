@@ -97,22 +97,31 @@ class Opponents extends Base
         $mapper = new \Modules\Media\Mappers\Media();
         $media = $mapper->getMediaList();
 
-        $aMedia = [];
+        $aMedia = ['media' => []];
 
-        foreach ($media as $image) {
-            $aMedia[] = [
-                'id'        => $image->getId(),
-                'url'       => $image->getUrl(),
-                'thumb'     => $image->getUrlThumb(),
-                'name'      => $image->getName(),
-                'date'      => $image->getDatetime(),
-                'ext'       => $image->getEnding(),
-                'catId'     => $image->getCatId(),
-                'catName'   => $image->getCatName()
-            ];
+        if ($media === null) {
+            $aMedia['status'] = 'error';
+            $aMedia['message'] = 'No media found.';
+        } else {
+            $aMedia['status'] = 'success';
+            $aMedia['message'] = 'Media loaded.';
+
+            foreach ($media as $image) {
+                $aMedia['media'][] = [
+                    'id'        => $image->getId(),
+                    'url'       => $image->getUrl(),
+                    'thumb'     => $image->getUrlThumb(),
+                    'name'      => $image->getName(),
+                    'date'      => $image->getDatetime(),
+                    'ext'       => $image->getEnding(),
+                    'catId'     => $image->getCatId(),
+                    'catName'   => $image->getCatName()
+                ];
+            }
         }
 
         echo json_encode($aMedia);
+
 
 //        $entryModel->setId($medias['id']);
 //        $entryModel->setUrl($medias['url']);
