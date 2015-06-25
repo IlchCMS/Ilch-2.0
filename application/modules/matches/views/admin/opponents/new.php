@@ -40,7 +40,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="mediaContainer" class="row">
                 <h3 class="hidden">Media</h3>
             </div>

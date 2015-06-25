@@ -72,6 +72,7 @@ $(document).ready(function () {
         });
 
         req.done(function (data) {
+            data = data.replace("</form>", '<input type="hidden" name="catId" value="1"></form>');
             $("#mediaUploadModal .modal-body").html(data);
         });
     });
