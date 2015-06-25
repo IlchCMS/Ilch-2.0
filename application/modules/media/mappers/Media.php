@@ -12,53 +12,79 @@ defined('ACCESS') or die('no direct access');
 
 class Media extends \Ilch\Mapper
 {
-    public function getMediaList() 
+    /**
+     * @var array Default criteria for opponents (default scope)
+     */
+    protected $default_criteria = array(
+        'where' => null,
+        'order' => array('m.name' => 'ASC'),
+        'limit' => false,
+    );
+
+    public function getMediaList($criteria = null, $pagination = null)
     {
-        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
-                FROM `[prefix]_media` as m
-                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                ORDER by m.id DESC';
+        $select = $this->db()->select();
+        $result = $select->fields([ 'm.id', 'm.url', 'm.url_thumb', 'm.name', 'm.datetime', 'm.ending', 'm.cat'])
+            ->from(['m' => 'media'])
+            ->join(['c' => 'media_cats'], 'm.cat = c.id', 'LEFT', ['c.cat_name']);
 
-        $mediaArray = $this->db()->queryArray($sql);
+        $dbCriteria = $this->default_criteria;
+        if ($criteria !== null && is_array($criteria)) {
+            $dbCriteria = array_merge($dbCriteria, $criteria);
+        }
+        if ($dbCriteria['where']) {
+            $result->where($dbCriteria['where']);
+        }
+        if ($dbCriteria['order']) {
+            $result->order($dbCriteria['order']);
+        }
+        if ($dbCriteria['limit']) {
+            $result->limit($dbCriteria['limit']);
+        }
+        if ($pagination !== null) {
+            $result->limit($pagination->getLimit());
+            $pagination->setRows($result->getNumRows());
+        }
 
-        if (empty($mediaArray)) {
+        $result = $result->execute();
+
+        if ($result->getNumRows() === 0) {
             return null;
         }
 
         $media = array();
 
-        foreach ($mediaArray as $medias) {
+        while ($row = $result->fetchAssoc()) {
             $entryModel = new MediaModel();
-            $entryModel->setId($medias['id']);
-            $entryModel->setUrl($medias['url']);
-            $entryModel->setUrlThumb($medias['url_thumb']);
-            $entryModel->setName($medias['name']);
-            $entryModel->setDatetime($medias['datetime']);
-            $entryModel->setEnding($medias['ending']);
-            $entryModel->setCatName(($medias['cat_name']));
-            $entryModel->setCatId(($medias['cat']));
+            $entryModel->setId($row['id']);
+            $entryModel->setUrl($row['url']);
+            $entryModel->setUrlThumb($row['url_thumb']);
+            $entryModel->setName($row['name']);
+            $entryModel->setDatetime($row['datetime']);
+            $entryModel->setEnding($row['ending']);
+            $entryModel->setCatName(($row['cat_name']));
+            $entryModel->setCatId(($row['cat']));
             $media[] = $entryModel;
-
         }
 
         return $media;
     }
 
-    public function getCatList() 
+    public function getCatList()
     {
         $mediaArray = $this->db()->select('*')
             ->from('media_cats')
             ->order(array('id' => 'DESC'))
             ->execute()
             ->fetchRows();
-        
+
 
         if (empty($mediaArray)) {
             return null;
         }
 
         $media = array();
-        
+
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
             $entryModel->setId($medias['id']);
@@ -79,13 +105,13 @@ class Media extends \Ilch\Mapper
                 'name' => $model->getName(),
                 'datetime' => $model->getDatetime(),
                 'ending' => $model->getEnding(),
-                'cat' => '0',
+                'cat' => $model->getCatId() == 0 ? 0 : $model->getCatId(),
                 'cat_name' => 'Allgemein',
             ))
             ->execute();
-    }	
+    }
 
-    public function delImage($id) 
+    public function delImage($id)
     {
         $mediaRow = $this->db()->select('*')
             ->from('media')
