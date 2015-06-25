@@ -18,7 +18,7 @@ class Media extends \Ilch\Mapper
     protected $default_criteria = array(
         'where' => null,
         'order' => array('m.name' => 'ASC'),
-        'limit' => false,
+        'limit' => null,
     );
 
     public function getMediaList($criteria = null, $pagination = null)
