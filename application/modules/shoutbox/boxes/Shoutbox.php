@@ -15,7 +15,7 @@ class Shoutbox extends \Ilch\Box
         $shoutboxMapper = new \Modules\Shoutbox\Mappers\Shoutbox();
         $uniqid = $this->getUniqid();
 
-        if ($this->getRequest()->getPost('form_'.$uniqid)) {
+        if ($this->getRequest()->getPost('form_'.$uniqid) and $this->getRequest()->getPost('bot') === '') {
             $name = $this->getRequest()->getPost('shoutbox_name');
             $textarea = $this->getRequest()->getPost('shoutbox_textarea');
             $uid = 0;

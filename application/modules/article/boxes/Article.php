@@ -5,13 +5,17 @@
  */
 
 namespace Modules\Article\Boxes;
+
+use Modules\Article\Mappers\Article as ArticleMapper;
+
 defined('ACCESS') or die('no direct access');
 
 class Article extends \Ilch\Box
 {
     public function render()
     {
-        $articleMapper = new \Modules\Article\Mappers\Article();
+        $articleMapper = new ArticleMapper();
+
         $this->getView()->set('articles', $articleMapper->getArticleList('', 5));
     }
 }

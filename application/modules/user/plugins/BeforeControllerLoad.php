@@ -5,17 +5,11 @@
  */
 
 namespace Modules\User\Plugins;
+
 use Modules\User\Mappers\User as UserMapper;
-use Modules\User\Mappers\Group as GroupMapper;
-use Modules\Admin\Mappers\Module as ModuleMapper;
+
 defined('ACCESS') or die('no direct access');
 
-/**
- * Does user operations before the controller loads.
- *
- * @copyright Ilch 2.0
- * @package ilch
- */
 class BeforeControllerLoad
 {
     /**

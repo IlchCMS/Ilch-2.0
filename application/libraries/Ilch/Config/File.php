@@ -68,12 +68,8 @@ class File
     {
         $fileString = '<?php';
         $fileString .= "\n";
-
-        foreach ($this->configData as $key => $value) {
-            $fileString .= '$config["'.$key.'"] = "'.$value.'";';
-            $fileString .= "\n";
-        }
-
+        $fileString .= '$config = '.var_export($this->configData, true).';';
+        $fileString .= "\n";
         $fileString .= '?>';
         file_put_contents($fileName, $fileString);
     }

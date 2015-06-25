@@ -4,14 +4,14 @@
  * @package ilch
  */
 
-namespace Modules\Gallery\Controllers\Admin;
+namespace Modules\Downloads\Controllers\Admin;
 
-use Modules\Gallery\Mappers\Image as ImageMapper;
-use Modules\Gallery\Controllers\Admin\Base as BaseController;
+use Modules\Downloads\Mappers\File as FileMapper;
+use Modules\Downloads\Controllers\Admin\Base as BaseController;
 
 defined('ACCESS') or die('no direct access');
 
-class Image extends BaseController 
+class File extends BaseController 
 {
     public function init()
     {
@@ -20,9 +20,9 @@ class Image extends BaseController
         (
             array
             (
-                'name' => 'menuGalleryBack',
+                'name' => 'menuDownloadsBack',
                 'icon' => 'fa fa-arrow-left',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'gallery', 'action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'downloads', 'action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')))
             )
         );
     }
@@ -32,24 +32,26 @@ class Image extends BaseController
         
     }
 
-    public function treatImageAction() 
+    public function treatFileAction() 
     {
-        $imageMapper = new ImageMapper();
+        $fileMapper = new FileMapper();
         $id = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
-            $imageTitle = $this->getRequest()->getPost('imageTitle');
-            $imageDesc = $this->getRequest()->getPost('imageDesc');
+            $fileTitle = $this->getRequest()->getPost('fileTitle');
+            $fileImage = $this->getRequest()->getPost('fileImage');
+            $fileDesc = $this->getRequest()->getPost('fileDesc');
 
-            $model = new \Modules\Gallery\Models\Image();
+            $model = new \Modules\Downloads\Models\File();
             $model->setId($id);
-            $model->setImageTitle($imageTitle);
-            $model->setImageDesc($imageDesc);
-            $imageMapper->saveImageTreat($model);
+            $model->setFileImage($fileImage);
+            $model->setFileTitle($fileTitle);
+            $model->setFileDesc($fileDesc);
+            $fileMapper->saveFileTreat($model);
 
             $this->addMessage('Success');
         }
 
-        $this->getView()->set('image', $imageMapper->getImageById($id));
+        $this->getView()->set('file', $fileMapper->getFileById($id));
     }
 }

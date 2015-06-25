@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the admin module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -64,7 +62,7 @@ return array
     'box' => 'Box',
     'chooseAGroup' => 'Bitte wählen Sie eine Gruppe aus.',
     'group' => 'Gruppe',
-    
+
     'menuUserList' => 'Mitgliederliste',
     'profileDetails' => 'Profil Details',
     'others' => 'Sonstiges',
@@ -74,7 +72,7 @@ return array
     'website' => 'Homepage',
     'contact' => 'Kontakt',
     'profile' => 'Profil',
-    
+
     'menuRegist' => 'Registrierung',
     'menuConfirm' => 'Bestätigen',
     'confirmCode' => 'Aktivierungscode',
@@ -84,7 +82,10 @@ return array
     'nextButton' => 'Weiter',
     'step1to3' => 'Step 1 von 3',
     'step2to3' => 'Step 2 von 3',
-    'step3to3' => 'Step 3 von 3',    
+    'step3to3' => 'Step 3 von 3',
+    'rules' => 'Regeln',
+    'logindata' => 'Logindaten',
+    'finish' => 'Abgeschlossen',
     'name' => 'Name',
     'password' => 'Passwort',
     'password2' => 'Passwort Wiederholung',
@@ -93,17 +94,24 @@ return array
     'fieldDiffersPassword' => 'Passwortfelder müssen gleich sein',
     'fieldEmail' => 'E-Mail ist nicht gültig',
     'rulesForRegist' => 'Regeln für die Registrierung',
+    'mailForRegist' => 'Text für die Bestätigungs-E-Mail',
     'acceptUserRegis' => 'Benutzerregistrierung erlauben?',
     'confirmRegistrationEmail' => 'Bestätigen der Registrierung per Link?',
     'yes' => 'Ja',
     'no' => 'Nein',
-    
+
     'menuLogin' => 'Login',
+    'menuForgotPassword' => 'Passwort vergessen?',
     'login' => 'Login',
     'nameEmail' => 'Benutzername oder E-Mail',
     'register' => 'Registrieren',
     'forgotPassword' => 'Passwort vergessen?',
-    
+    'buttonNewPassword' => 'Neues Passwort anfordern',
+    'forgotPassword' => 'Passwort vergessen?',
+    'missingNameEmail' => 'Name oder E-Mail muss ausgefüllt werden',
+    'newPasswordSuccess' => 'Neues Passwort wurde per E-Mail zugesendet',
+    'newPasswordFailed' => 'Benutzer oder E-Mail nicht vorhanden',
+
     'nameEmail' => 'Name / E-Mail',
     'password' => 'Passwort',
     'login' => 'Login',
@@ -113,7 +121,6 @@ return array
     'hello' => 'Hallo',
     'adminarea' => 'Adminbereich',
     'register' => 'Registrieren',
-    'forgotPassword' => 'Passwort vergessen?',
 
     'panel' => 'User Panel',
     'welcome' => 'Willkommen',
@@ -122,10 +129,13 @@ return array
     'menuPanel' => 'User Panel',
     'menuSettings' => 'Einstellungen',
     'menuEditProfile' => 'Profil editieren',
+    'menuSignature' => 'Signatur',
     'menuAvatar' => 'Avatar',
     'successAvatar' => 'Avatar erfolgreich geändert',
     'settingsAvatar' => 'Avatar',
     'settingsProfile' => 'Profil',
+    'settingsSignature' => 'Signatur',
+    'settingsSignatureInfo' => 'Hier kannst du deine Signatur einsehen und bearbeiten.',
     'settingsAvatarInfo' => 'Hier kannst du dein Avatar einsehen und bearbeiten.',
     'settingsProfileInfo' => 'Hier kannst du deine Profildaten einsehen und bearbeiten.',
     'emailError' => 'E-Mail ist nicht gültig.',
@@ -136,7 +146,7 @@ return array
     'profileLastName' => 'Nachname',
     'profileBirthday' => 'Geburtstag',
     'profileCity' => 'Wohnort',
-    'profileSubmit' => 'Absenden',
     'profileHomepage' => 'Homepage',
-    
+    'profileSignature' => 'Signatur',
+    'profileSubmit' => 'Absenden',
 );

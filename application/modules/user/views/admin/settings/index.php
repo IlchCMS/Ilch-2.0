@@ -58,5 +58,16 @@
                       rows="5"><?php echo $this->get('regist_rules'); ?></textarea>
         </div>
     </div>
+    <div class="form-group">
+        <label for="regist_confirm_mail" class="col-lg-2 control-label">
+            <?php echo $this->getTrans('mailForRegist'); ?>:
+        </label>
+        <div class="col-lg-4">
+            <textarea class="form-control"
+                      name="regist_confirm_mail" 
+                      cols="60" 
+                      rows="5"><?php echo $this->get('regist_confirm_mail'); ?></textarea>
+        </div>
+    </div>
     <?=$this->getSaveBar()?>
 </form>

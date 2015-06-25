@@ -188,6 +188,24 @@ class Mysql
     }
 
     /**
+     * Check if table exists.
+     *
+     * @param  string $table
+     * @return true|false
+     */
+    public function ifTableExists($table)
+    {
+        $sql = "SHOW TABLES LIKE '$table'";
+        $result = $this->query($sql);
+
+        if(mysqli_num_rows($result) > 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Select one row from table.
      *
      * @param  string $sql

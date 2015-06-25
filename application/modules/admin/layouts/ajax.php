@@ -1,1 +1,1 @@
-<?php echo $this->getContent(); ?>
+<?=$this->getContent() ?>

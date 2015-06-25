@@ -8,11 +8,6 @@ namespace Modules\Link\Models;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The user category model class.
- *
- * @package ilch
- */
 class Category extends \Ilch\Mapper
 {
     /**

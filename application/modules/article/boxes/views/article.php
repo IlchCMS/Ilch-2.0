@@ -1,12 +1,12 @@
-<?php $articles = $this->get('articles');?>
-<?php
-if (!empty($articles)) {
-    echo '<ul class="list-unstyled">';
-    foreach($articles as $article) {
-        echo '<li><a href="'.$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId())).'">'
-            .$this->escape($article->getTitle())
-            .'</a></li>';
-    }
-    echo '</ul>';
-}
-?>
+<?php $articles = $this->get('articles') ?>
+<?php if (!empty($articles)): ?>
+    <ul class="list-unstyled">
+        <?php foreach ($articles as $article): ?>
+            <li>
+                <a href="<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId())) ?>">
+                    <?=$article->getTitle() ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>

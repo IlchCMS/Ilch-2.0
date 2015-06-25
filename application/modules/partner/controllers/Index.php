@@ -14,10 +14,10 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuPartners'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuPartnerAdd'), array('action' => 'index'));
         $partnerMapper = new PartnerMapper();
 
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->getPost('savePartner')) {
             $name = $this->getRequest()->getPost('name');
             $link = trim($this->getRequest()->getPost('link'));
             $banner = trim($this->getRequest()->getPost('banner'));
@@ -41,5 +41,3 @@ class Index extends \Ilch\Controller\Frontend
         }
     }
 }
-
-

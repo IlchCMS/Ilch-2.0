@@ -1,9 +1,11 @@
 <?php
 /**
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Modules\Contact\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
@@ -11,8 +13,8 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'contact',
-        'author' => 'Meyer Dominik',
         'icon_small' => 'contact.png',
+        'system_module' => true,
         'languages' => array
         (
             'de_DE' => array
@@ -37,11 +39,6 @@ class Config extends \Ilch\Config\Install
         $user = $userMapper->getUserById(1);
         $model->setName('Webmaster')->setEmail($user->getEmail());
         $receiverMapper->save($model);
-    }
-
-    public function uninstall()
-    {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_contact_receivers`');
     }
 
     public function getInstallSql()

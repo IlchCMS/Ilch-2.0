@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for install module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */

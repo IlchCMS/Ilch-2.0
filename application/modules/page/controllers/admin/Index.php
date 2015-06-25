@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Page\Controllers\Admin;
+
 use Modules\Page\Mappers\Page as PageMapper;
 use Modules\Page\Models\Page as PageModel;
 
@@ -43,7 +44,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSite'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuSites'), array('action' => 'index'));
 
         $pageMapper = new PageMapper();
 

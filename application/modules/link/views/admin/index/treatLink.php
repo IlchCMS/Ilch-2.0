@@ -59,6 +59,27 @@
                       rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } ?></textarea>
         </div>
     </div>
+    <div class="form-group">
+        <label for="desc" class="col-lg-2 control-label">
+            <?=$this->getTrans('category'); ?>:
+        </label>
+        <div class="col-lg-4">
+            <select class="form-control" name="catId">
+                <option>-- <?=$this->getTrans('optionNoCategory')?> --</option>
+                <?php
+                foreach ($this->get('cats') as $model) {
+                    $selected = '';
+
+                    if ($this->get('link') != '' && $this->get('link')->getCatId() == $model->getId()) {
+                        $selected = 'selected="selected"';
+                    }
+
+                    echo '<option '.$selected.' value="'.$model->getId().'">'.$this->escape($model->getName()).'</option>';
+                }
+                ?>
+            </select>
+        </div>
+    </div>
     <?php
     if ($this->get('link') != '') {
         echo $this->getSaveBar('updateButton');

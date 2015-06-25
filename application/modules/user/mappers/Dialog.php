@@ -8,11 +8,6 @@ namespace Modules\User\Mappers;
 
 use Modules\User\Models\Dialog as DialogModel;
 
-/**
- * The userdialog mapper class.
- *
- * @package ilch
- */
 class Dialog extends \Ilch\Mapper
 {
     /**
@@ -53,8 +48,13 @@ class Dialog extends \Ilch\Mapper
                 $mailModel->setAvatar('static/img/noavatar.jpg');
             }
             $last = $this->getLastOneDialog($mail['c_id']);
-            $mailModel->setText($last->getText());
-            $mailModel->setTime($last->getTime());
+            if ($last != null){
+                $mailModel->setText($last->getText());
+                $mailModel->setTime($last->getTime());
+            } else {
+                $mailModel->setText('');
+                $mailModel->setTime('');
+            }
 
             $mails[] = $mailModel;
 

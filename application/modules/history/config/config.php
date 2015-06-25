@@ -1,9 +1,11 @@
 <?php
 /**
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Modules\History\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
@@ -18,12 +20,12 @@ class Config extends \Ilch\Config\Install
             'de_DE' => array
             (
                 'name' => 'Geschichte',
-                'description' => 'Hier kann die Geschichte erstellt werden.',
+                'description' => 'Hier kann die Geschichte der Seite erstellt werden.',
             ),
             'en_EN' => array
             (
                 'name' => 'History',
-                'description' => 'Here you can create history.',
+                'description' => 'Here you can create history from your Site.',
             ),
         )
     );
@@ -41,9 +43,11 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_history` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `date` DATE NOT NULL,
-                  `title` varchar(100) NOT NULL,
+                  `title` VARCHAR(100) NOT NULL,
+                  `color` VARCHAR(10) NOT NULL,
+                  `typ` VARCHAR(100) NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';

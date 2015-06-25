@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the Guestbook module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -10,6 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'menuGuestbook' => 'Gästebuch',
     'guestbook' => 'Gästebuch',
     'from' => 'Von',
     'date' => 'Datum',
@@ -23,7 +22,6 @@ return array
     'manage' => 'Gästebuch verwalten',
     'manageentry' => 'Einträge verwalten/löschen',
     'text' => 'Text',
-    'delete' => 'Löschen',
     'successful' => 'Erfolgreich',
     'missingText' => 'Nachricht muss ausgefüllt werden',
     'missingEmail' => 'E-Mail muss ausgefüllt werden',
@@ -48,5 +46,4 @@ return array
     'validation.errors.length.tooShortAndOrTooLong' => '%s muss mindestens %s und darf höchstens %s Zeichen lang sein',
     'validation.errors.url.noValidUrl'              => '%s muss eine gültige URL sein.',
     'validation.errors.email.noValidEmail'          => '%s muss eine gültige E-Mail-Adresse sein.',
-
 );

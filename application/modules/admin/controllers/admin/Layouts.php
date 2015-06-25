@@ -1,9 +1,11 @@
 <?php
 /**
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 defined('ACCESS') or die('no direct access');
 
 class Layouts extends \Ilch\Controller\Admin
@@ -40,19 +42,22 @@ class Layouts extends \Ilch\Controller\Admin
             include_once $layoutPath.'/config/config.php';
             $model->setAuthor($config['author']);
             $model->setDesc($config['desc']);
+            if(!empty($config['modulekey'])) {
+                $model->setModulekey($config['modulekey']);
+            }
             $layouts[] = $model;
         }
 
         $this->getView()->set('defaultLayout', $this->getConfig()->get('default_layout'));
         $this->getView()->set('layouts', $layouts);
     }
-    
+
     public function defaultAction()
     {
         $this->getConfig()->set('default_layout', $this->getRequest()->getParam('key'));
         $this->redirect(array('action' => 'index'));
     }
-    
+
     public function deleteAction()
     {
         if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {

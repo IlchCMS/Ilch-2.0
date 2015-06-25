@@ -35,7 +35,7 @@
 
 .profil-header .concatLinks, .concatLinks-lg a {
     font-size:22px;
-	padding: 5px;
+    padding: 5px;
 }
 
 .profil-header .concatLinks a:hover, .concatLinks-lg a:hover {
@@ -45,63 +45,63 @@
 
 /* Userlist */
 .user {
-	padding: 0 0 0 80px;
-	overflow: hidden;
-	margin-bottom: 10px;
-	min-height: 90px;
-	font-size: 14px;
-	line-height: 18px;
+    padding: 0 0 0 80px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    min-height: 90px;
+    font-size: 14px;
+    line-height: 18px;
 }
 
 .user img {
-	float: left;
-	margin: 2px 0 0 -80px;
-	width: 70px;
-	height: 70px;
+    float: left;
+    margin: 2px 0 0 -80px;
+    width: 70px;
+    height: 70px;
     border-radius: 100%;
 }
 
 .user h3 {
-	font-size: 17px;
+    font-size: 17px;
     font-weight: bold;
-	line-height: 21px;
-	margin: 0 0 2px 0;
+    line-height: 21px;
+    margin: 0 0 2px 0;
 }
 
 .userInfo,
 .userLinks {
-	-webkit-transition: all 1500ms ease-in-out;
-	-o-transition: all 1500ms ease-in-out;
-	-moz-transition: all 1500ms ease-in-out;
-	transition: all 1500ms ease-in-out;
+    -webkit-transition: all 1500ms ease-in-out;
+    -o-transition: all 1500ms ease-in-out;
+    -moz-transition: all 1500ms ease-in-out;
+    transition: all 1500ms ease-in-out;
 }
 
 .userInfo {
-	line-height: 21px;
+    line-height: 21px;
 }
 
 .user:hover .userInfo,
 .user:focus .userInfo {
-	display: none;
+    display: none;
 }
 
 .userLinks {
-	display: none;
+    display: none;
 }
 
 .user:hover .userLinks,
 .user:focus .userLinks {
-	display: block;
+    display: block;
 }
 
 .userLinks a {
     font-size:22px;
-	padding: 2px;
+    padding: 2px;
 }
 
 .userLinks a:hover,
 .userLinks a:focus {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 
@@ -120,15 +120,15 @@
 
 
 .check {
-	margin-top: -5px;
+    margin-top: -5px;
 }
 
+
 /*  Passwort  */
-/* Ãbereinstummung */
+/* Übereinstummung */
 .w.error .pwcheck { border: 1px solid #F00; }
 .w.valid .pwcheck { border: 1px solid #0C0; }
 
-/*  Passwort  */
 /* Sicherheits test */
 .is0{background:url(http://www.ilch.de/include/images/icons/usercp/pwprogress.png) no-repeat 0 0;width:158px;height:7px; margin: 3px 0 0;}
 .is10{background-position:0 -7px;}
@@ -158,15 +158,149 @@
     margin-bottom: 5px;
 }
 #panel .nav > li > a.active{
-  text-decoration: none;
-  background-color: #eeeeee;
+    text-decoration: none;
+    background-color: #eeeeee;
 }
 
 #panel hr{
-  margin-top: 0px;
-  margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
-.birthday {
-  padding-left: 15px !important;
-  padding-right: 15px !important;
+
+
+/*  Avatar  */
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background: red;
+    cursor: inherit;
+    display: block;
+}
+input[readonly] {
+    background-color: white !important;
+    cursor: text !important;
+}
+
+
+/*  Dialog  */
+.dialog {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.dialog li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.dialog li.left .dialog-body {
+    margin-left: 60px;
+}
+
+.dialog li.right .dialog-body {
+    margin-right: 60px;
+}
+.dialog li .dialog-body p {
+    margin: 0;
+    padding-top: 10px;
+    color: #777777;
+}
+.avatar {
+    width: 40px;
+    height: auto;
+}
+.panel-primary {
+    border-color: #DDD;
+}
+.panel-primary > .panel-heading {
+    color: #000;
+    background-color: #DDD;
+    border-color: #DDD;
+}
+
+/*  Dialog View  */
+.shout_box {
+    overflow: hidden;
+    bottom: 0;
+    right: 20%;
+    z-index:9;
+}
+.shout_box .message_box {
+    background: #FFFFFF;
+    max-height: 400px;
+    overflow:auto;
+    border: 1px solid #CCC;
+}
+.user_info input {
+    width: 98%;
+    height: 25px;
+    border: 1px solid #CCC;
+    border-top: none;
+    padding: 3px 0px 0px 3px;
+    font: 11px 'lucida grande', tahoma, verdana, arial, sans-serif;
+}
+.avatar{
+    width: 40px;
+    height: auto;
+}
+.panel{
+    border: none;
+}
+.panel-primary {
+    border-color: #DDD;
+}
+.panel-primary > .panel-heading {
+    color: #000;
+    background-color: #DDD;
+    border-color: #DDD;
+}
+
+/*  View Message  */
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+.chat li .chat-body p
+{
+    margin: 0;
+    padding-top: 10px;
+    color: #777777;
+}
+
+
+/*  Other  */
+.date {
+    min-width: 210px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 }

@@ -41,7 +41,7 @@ class Index extends \Ilch\Controller\Frontend
             'homepage'  => ''
         ];
 
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->isPost() and ($this->getRequest()->getPost('bot') === '')) {
             $post = [
                 'name'      => $this->getRequest()->getPost('name'),
                 'email'     => trim($this->getRequest()->getPost('email')),

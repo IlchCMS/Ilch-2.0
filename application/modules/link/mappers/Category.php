@@ -10,11 +10,6 @@ use Modules\Link\Models\Category as CategoryModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The user category mapper class.
- *
- * @package ilch
- */
 class Category extends \Ilch\Mapper
 {
     /**
@@ -27,7 +22,7 @@ class Category extends \Ilch\Mapper
     {
         $sql = 'SELECT lc.*, COUNT(l.id) as count
                 FROM `[prefix]_link_cats` as lc
-                LEFT JOIN [prefix]_links as l ON l.cat_id = lc.id
+                LEFT JOIN `[prefix]_links` as l ON l.cat_id = lc.id
                 WHERE 1 ';
 
         foreach ($where as $key => $value) {
@@ -38,7 +33,7 @@ class Category extends \Ilch\Mapper
         $categoryArray = $this->db()->queryArray($sql);
 
         if (empty($categoryArray)) {
-            return array();
+            return null;
         }
 
         $categorys = array();

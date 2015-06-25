@@ -5,10 +5,12 @@
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 use Modules\Admin\Mappers\Menu as MenuMapper;
 use Modules\Page\Mappers\Page as PageMapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
+
 defined('ACCESS') or die('no direct access');
 
 class Menu extends \Ilch\Controller\Admin
@@ -22,7 +24,7 @@ class Menu extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menu'), array('action' => 'index'));
-        
+
         $menuId = 1;
 
         if ($this->getRequest()->getParam('menu')) {
@@ -75,13 +77,13 @@ class Menu extends \Ilch\Controller\Admin
                         $menuItem->setSiteId($item['siteid']);
                         $menuItem->setHref($item['href']);
                         $menuItem->setTitle($item['title']);
-                        
+
                         if((int)$item['boxkey'] > 0) {
                             $menuItem->setBoxId($item['boxkey']);
                         } else {
                             $menuItem->setBoxKey($item['boxkey']);
                         }
-                        
+
                         $menuItem->setModuleKey($item['modulekey']);
 
                         $newId = $menuMapper->saveItem($menuItem);
@@ -119,8 +121,8 @@ class Menu extends \Ilch\Controller\Admin
 
             if ($this->getRequest()->getPost('delete')) {
                 $id = (int)$this->getRequest()->getParam('menu');
-                $menuMapper->delete($id);        
-                $this->redirect(array('action' => 'index'));   
+                $menuMapper->delete($id);
+                $this->redirect(array('action' => 'index'));
             }
 
             $this->addMessage('saveSuccess');
@@ -129,7 +131,7 @@ class Menu extends \Ilch\Controller\Admin
         $menuItems = $menuMapper->getMenuItemsByParent($menuId, 0);
         $menu = $menuMapper->getMenu($menuId);
         $menus = $menuMapper->getMenus();
-        
+
         $moduleMapper = new \Modules\Admin\Mappers\Module();
         $boxMapper = new \Modules\Admin\Mappers\Box();
 

@@ -5,12 +5,11 @@
  */
 
 namespace Modules\Admin\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The menu model class.
- *
- * @package ilch
  */
 class Menu extends \Ilch\Model
 {

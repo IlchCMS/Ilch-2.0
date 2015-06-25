@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the Gallery module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -10,37 +8,39 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'gallery' => 'Gallery',
-    'menuGallery' => 'Gallery overview',
+    'downloads' => 'Downloads',
+    'download' => 'Download',
+    'menuDownloads' => 'Downloads overview',
     'menuCat' => 'Category',
-    'menuActionNewGallery' => 'New gallery',
+    'menuActionNewDownloads' => 'New downloads',
     'menuActionNewCat' => 'New category',
-    'newGallery' => 'Create new gallery',
+    'newDownloads' => 'Create new Downloads',
     'newCat' => 'Create new category',
-    'noGallery' => 'No galery available',
+    'noDownloads' => 'No downloads available',
     'noCats' => 'No category available',
-    'noImage' => 'No image available',
+    'noFile' => 'No files available',
     'name' => 'Name',
     'description' => 'description',
+    'cats' => 'Category`s',
     'cat' => 'Category',
     'noCat' => 'No category available',
-    'menuActionGalleryInsertImage' => 'Select images',
-    'menuActionGalleryEdit' => 'Galery edit',
+    'menuActionDownloadsInsertFile' => 'Select file',
+    'menuActionDownloadsEdit' => 'Downloads edit',
     'generally' => 'Generally',
     'selectcat' => 'Select category',
-    'galleryedit' => 'Gallery edit',
+    'downloadsedit' => 'Downloadsedit edit',
     'title' => 'Title',
     'type' => 'Type',
-    'galleryItemAdd' => 'Append',
-    'menuGalleryOverview' => 'Gallery Overview',
+    'downloadsItemAdd' => 'Append',
+    'menuGalleryOverview' => 'Downloads Overview',
     'comments' => 'Comments',
     'submit' => 'Save',
-    'images' => 'Images',
+    'file' => 'File',
     'image' => 'Image',
-    'treatImage' => 'Treat image',
-    'menuGalleryBack' => 'back to Gallery',
-    'imageTitle' => 'Title',
-    'imageDesc' => 'Description',
+    'treatFile' => 'Treat file',
+    'menuDownloadsBack' => 'back to Downloads',
+    'fileTitle' => 'Title',
+    'fileDesc' => 'Description',
     'commentPost' => 'Write comment',
     'from' => 'From',
     'on' => 'On',

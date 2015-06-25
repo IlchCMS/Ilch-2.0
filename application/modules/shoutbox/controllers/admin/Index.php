@@ -7,7 +7,6 @@
 namespace Modules\Shoutbox\Controllers\Admin;
 
 use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
-use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -40,6 +39,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuShoutbox'), array('action' => 'index'));
+
         $shoutboxMapper = new ShoutboxMapper();    
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_entries')) {

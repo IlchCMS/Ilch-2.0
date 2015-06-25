@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Boxes;
+
 defined('ACCESS') or die('no direct access');
 
 class Langswitch extends \Ilch\Box
@@ -14,4 +15,3 @@ class Langswitch extends \Ilch\Box
         $this->getView()->set('language', $this->getTranslator()->getLocale());
     }
 }
-

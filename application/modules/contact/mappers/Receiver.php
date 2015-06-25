@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Contact\Mappers;
+
 use Modules\Contact\Models\Receiver as ReceiverModel;
 
 defined('ACCESS') or die('no direct access');
@@ -24,7 +25,7 @@ class Receiver extends \Ilch\Mapper
     public function getReceivers()
     {
         $sql = 'SELECT *
-                FROM [prefix]_contact_receivers';
+                FROM `[prefix]_contact_receivers`';
         $receiverArray = $this->db()->queryArray($sql);
 
         if (empty($receiverArray)) {

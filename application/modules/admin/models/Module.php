@@ -5,12 +5,11 @@
  */
 
 namespace Modules\Admin\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The module model class.
- *
- * @package ilch
  */
 class Module extends \Ilch\Model
 {
@@ -37,6 +36,11 @@ class Module extends \Ilch\Model
      * @var string
      */
     protected $author;
+
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * Gets the key.
@@ -151,5 +155,25 @@ class Module extends \Ilch\Model
     public function getContent()
     {
         return $this->content;
+    }
+    
+    /**
+     * Gets the name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
     }
 }

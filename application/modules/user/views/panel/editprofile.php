@@ -2,8 +2,9 @@
     $profil = $this->get('profil');
     $birthday = new \Ilch\Date($profil->getBirthday());
 ?>
-<link href="<?=$this->getStaticUrl('datepicker/css/datepicker.css')?>" rel="stylesheet">
-<script type="text/javascript" src="<?=$this->getStaticUrl('datepicker/js/bootstrap-datepicker.js')?>"></script>
+
+<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
 <div id="panel">
     <div class="row">
         <div class="col-lg-2">
@@ -83,13 +84,14 @@
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileBirthday'); ?>
                     </label>
-                    <div class="col-lg-4 input-group date birthday" id="dp1" data-date="01-01-1980" data-date-format="dd-mm-yyyy">
+                    <div class="col-lg-2 input-group date form_datetime">
                         <input class="form-control"
                                type="text"
                                name="birthday"
-                               placeholder="<?=$birthday->format('d-m-Y', true)?>"
-                               value="<?=$birthday->format('d-m-Y', true)?>">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                               value="<?php if ($profil->getBirthday() == '0000-00-00') { echo date('d.m.Y'); } else { echo $birthday->format('d.m.Y', true); } ?>">
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -104,6 +106,17 @@
         </div>
     </div>
 </div>
-<script>
-    $(".input-group.date").datepicker({});
+
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript">
+    $( document ).ready(function()
+    {
+        $(".form_datetime").datetimepicker({
+            format: "dd.mm.yyyy",
+            autoclose: true,
+            language: 'de',
+            minView: 2
+        });
+    });
 </script>

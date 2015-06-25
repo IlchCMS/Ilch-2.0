@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the Downloads module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -11,6 +9,7 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'downloads' => 'Downloads',
+    'download' => 'Download',
     'menuDownloads' => 'Downloads',
     'menuCat' => 'Kategorie',
     'menuActionNewDownloads' => 'Neue Downloads',
@@ -19,13 +18,13 @@ return array
     'newCat' => 'Neue Kategorie erstellen',
     'noDownloads' => 'Keine Downloads vorhanden',
     'noCats' => 'Keine Kategorie vorhanden',
-    'noImage' => 'Keine Bilder vorhanden',
+    'noFile' => 'Keine Files vorhanden',
     'name' => 'Name',
     'description' => 'Beschreibung',
     'cats' => 'Kategorien',
     'cat' => 'Kategorie',
     'noCat' => 'Keine Kategorie vorhanden',
-    'menuActionDownloadsInsertImage' => 'Bilder auswählen',
+    'menuActionDownloadsInsertFile' => 'File auswählen',
     'menuActionDownloadsEdit' => 'Downloads Bearbeiten',
     'generally' => 'Allgemein',
     'selectcat' => 'Kategorie auswählen',
@@ -36,12 +35,12 @@ return array
     'menuDownloadsOverview' => 'Downloads Übersicht',
     'comments' => 'Kommentare',
     'submit' => 'Eintragen',
-    'images' => 'Bilder',
+    'file' => 'File',
     'image' => 'Bild',
-    'treatImage' => 'Bild bearbeiten',
+    'treatFile' => 'File bearbeiten',
     'menuDownloadsBack' => 'zurück zu Downloads',
-    'imageTitle' => 'Titel',
-    'imageDesc' => 'Beschreibung',
+    'fileTitle' => 'Titel',
+    'fileDesc' => 'Beschreibung',
     'commentPost' => 'Kommentar schreiben',
     'from' => 'Von',
     'on' => 'Am',

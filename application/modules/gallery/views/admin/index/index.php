@@ -28,7 +28,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                     <i class="fa fa-edit"></i>
                 </span>
                 <span class="upload" style="float:right; margin-right: 6px;">
-                    <a href="javascript:media('.$item->getId().')">
+                    <a id="'.$item->getId().'" href="javascript:media('.$item->getId().')">
                         <i class="fa fa-cloud-upload"></i>
                     </a>
                 </span>
@@ -250,15 +250,9 @@ $(document).ready
     
 </script>
 <script>
-    function media(id){ $('#MediaModal').modal('show');
-        var src = iframeSingleUrlGallery+'id/'+id;
-        var height = '100%';
-        var width = '100%';
-
-        $("#MediaModal iframe").attr({'src': src,
-            'height': height,
-            'width': width});
-    };
+    <?=$this->getMedia()
+                    ->addActionButton($this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id')))
+                    ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/multi/id/')) ?>
 
     function reload(){
         setTimeout(function(){window.location.reload(1);}, 1000);

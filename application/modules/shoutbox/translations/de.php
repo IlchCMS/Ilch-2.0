@@ -8,13 +8,10 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'shoutbox' => 'Shoutbox',
+    'menuShoutbox' => 'Shoutbox',
     'from' => 'Von',
     'date' => 'Datum',
     'name' => 'Name',
-    'menuShoutbox' => 'Shoutbox',
-    'manageShoutbox' => 'Shoutbox verwalten',
-    'manage' => 'Verwalten',
     'archive' => 'Archiv',
     'message' => 'Nachricht',
     'noEntrys' => 'Keine Einträge vorhanden',

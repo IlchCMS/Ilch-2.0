@@ -57,9 +57,12 @@ class Index extends \Ilch\Controller\Frontend
         $imageMapper = new ImageMapper();
         $galleryMapper = new GalleryMapper();
 
+        $id = $this->getRequest()->getParam('id');
+        $galleryId = $this->getRequest()->getParam('gallery');
+
         if ($this->getRequest()->getPost('gallery_comment_text')) {
             $commentModel = new CommentModel();
-            $commentModel->setKey('gallery_'.$this->getRequest()->getParam('id'));
+            $commentModel->setKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id);
             $commentModel->setText($this->getRequest()->getPost('gallery_comment_text'));
 
             $date = new \Ilch\Date();
@@ -68,10 +71,8 @@ class Index extends \Ilch\Controller\Frontend
             $commentMapper->save($commentModel);
         }
 
-        $id = $this->getRequest()->getParam('id');
-        $galleryId = $this->getRequest()->getParam('gallery');
         $gallery = $galleryMapper->getGalleryById($galleryId);
-        $comments = $commentMapper->getCommentsByKey('gallery_'.$this->getRequest()->getParam('id'));
+        $comments = $commentMapper->getCommentsByKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id);
         $image = $imageMapper->getImageById($id);
 
         $model = new ImageModel();

@@ -1,20 +1,31 @@
-<?php
-    $historys = $this->get('historys');
-?>
+<link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 
-<table class="table table-striped table-responsive">
-    <tbody>
-        <?php if (!empty($historys)) {
-            foreach ($this->get('historys') as $history) {
-                echo '<tr>';        
-                echo '<th>'.$this->escape($history->getTitle()).' am '.$this->escape($history->getDate()).'</th>';    
-                echo '</tr>';
-                echo '<tr>';        
-                echo '<td>'.nl2br($this->getHtmlFromBBCode($this->escape($history->getText()))).'</td>';
-                echo '</tr>';               
-            }
-        }  else {
-            echo '<tr><td>'.$this->getTrans('noHistorys').'</td></tr>';
-        } ?>
-    </tbody>
-</table>
+<?php $historys = $this->get('historys'); ?>
+<legend><?=$this->getTrans('menuHistorys') ?></legend>
+<?php if ($historys != ''): ?>
+	<section id="cd-timeline" class="cd-container">
+        <?php foreach ($this->get('historys') as $history): ?>
+            <div class="cd-timeline-block">
+                <div class="cd-timeline-img" style="background: <?=$history->getColor() ?>;">
+                    <?php 
+                        if ($history->getTyp() != '') {
+                            echo '<img src="'.$this->getModuleUrl('static/img/'.$history->getTyp().'.png').'" alt="">';
+                        }
+                    ?>
+                </div>
+
+                <div class="cd-timeline-content">
+                    <h3><?=$this->escape($history->getTitle()) ?></h3>
+                    <?=$history->getText() ?>
+                    <?php $getDate = new \Ilch\Date($history->getDate()); ?>
+                    <span class="cd-date"><?=$getDate->format('d. F Y', true) ?></span>
+                </div>
+            </div>
+        <?php endforeach; ?>
+	</section>
+<?php else: ?>
+    <?=$this->getTrans('noHistorys') ?>
+<?php endif; ?>
+
+<script src="<?=$this->getModuleUrl('static/js/modernizr.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/main.js') ?>"></script>

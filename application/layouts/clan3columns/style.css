@@ -6,6 +6,10 @@ body {
     background-size: cover;
 }
 
+.table {
+    border: 1px solid #CCC;
+}
+
 img {
     height: auto !important;
     max-width: 100% !important;
@@ -20,19 +24,24 @@ label {
     font-weight: normal;
 }
 
+figcaption {
+    font-style: italic;
+    font-size: 0.8em;
+}
+
 @media (min-width: 991px) {
-	nav {
-		margin-top: 30px;
-	}
-	.navbar-brand {
-		display: none;
-	}
+    nav {
+        margin-top: 30px;
+    }
+    .navbar-brand {
+        display: none;
+    }
 }
 
 @media (max-width: 990px) {
-	.carousel-caption {
-		display: none;
-	}
+    .carousel-caption {
+        display: none;
+    }
 }
 
 .navbar-gaming {

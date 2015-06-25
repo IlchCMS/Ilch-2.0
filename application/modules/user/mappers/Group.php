@@ -10,11 +10,6 @@ use Modules\User\Models\Group as GroupModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The user group mapper class.
- *
- * @package ilch
- */
 class Group extends \Ilch\Mapper
 {
     /**

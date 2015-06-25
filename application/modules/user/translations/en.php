@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the admin module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -43,7 +41,7 @@ return array
     'delUserMsg' => 'User got deleted successfully.',
     'delLastAdminProhibited' => 'It is not allowed to delete the last user with the group "Administrator" assigned.',
     'delOwnUserProhibited' => 'It is not allowed to delete the your own user.',
-    
+
     'groupName' => 'Groupname',
     'groupAssignedUsers' => 'Number "Assigned users"',
     'editGroup' => 'Edit group',
@@ -53,7 +51,7 @@ return array
     'delGroupMsg' => 'Group got deleted successfully.',
     'delAdminGroup' => 'It is not allowed to delete the group "Administrator".',
     'noGroupsExist' => 'No groups exist.',
-    
+
     'menuAccess' => 'Grouprights',
     'lookAccess' => 'visible',
     'noAccess' => 'not visible',
@@ -64,7 +62,7 @@ return array
     'box' => 'Box',
     'chooseAGroup' => 'Please choose a group.',
     'group' => 'Group',
-    
+
     'menuUserList' => 'Userlist',
     'profileDetails' => 'Profile Details',
     'others' => 'Others',
@@ -74,7 +72,7 @@ return array
     'website' => 'Website',
     'contact' => 'Contact',
     'profile' => 'Profile',
-    
+
     'menuRegist' => 'Registration',
     'menuConfirm' => 'Confirm',
     'confirmCode' => 'Activation Code',
@@ -84,7 +82,10 @@ return array
     'nextButton' => 'Next',
     'step1to3' => 'Step 1 of 3',
     'step2to3' => 'Step 2 of 3',
-    'step3to3' => 'Step 3 of 3',    
+    'step3to3' => 'Step 3 of 3',
+    'rules' => 'Rules',
+    'logindata' => 'Login data',
+    'finish' => 'Finish',
     'name' => 'Name',
     'password' => 'Password',
     'password2' => 'Password confirm',
@@ -93,17 +94,24 @@ return array
     'fieldDiffersPassword' => 'passwords are different',
     'fieldEmail' => 'email is not valid',
     'rulesForRegist' => 'Rules for Registration',
+    'mailForRegist' => 'Text for confirm E-Mail',
     'acceptUserRegis' => 'Allow User Registration?',
     'confirmRegistrationEmail' => 'Confim the Registration via Link?',
     'yes' => 'Yes',
     'no' => 'No',
-    
+
     'menuLogin' => 'Login',
+    'menuForgotPassword' => 'Passwort vergessen?',
     'login' => 'Login',
     'nameEmail' => 'Username or E-Mail',
     'register' => 'Register',
     'forgotPassword' => 'Forgot password?',
-    
+    'buttonNewPassword' => 'Get New Password',
+    'forgotPassword' => 'Forgot password?',
+    'missingNameEmail' => 'Name or E-Mail was not filled',
+    'newPasswordSuccess' => 'New Password send via E-Mail',
+    'newPasswordFailed' => 'User or E-Mail not available',
+
     'nameEmail' => 'Name / E-Mail',
     'password' => 'Password',
     'login' => 'Login',
@@ -113,5 +121,32 @@ return array
     'hello' => 'Hello',
     'adminarea' => 'Adminarea',
     'register' => 'Register',
-    'forgotPassword' => 'Forgot password?',
+
+    'panel' => 'User Panel',
+    'welcome' => 'Welcome',
+    'dialog' => 'Messages',
+    'noDialog' => 'No Messages available.',
+    'menuPanel' => 'User Panel',
+    'menuSettings' => 'Settings',
+    'menuEditProfile' => 'Profil edit',
+    'menuSignature' => 'Signature',
+    'menuAvatar' => 'Avatar',
+    'successAvatar' => 'Avatar changed successfully',
+    'settingsAvatar' => 'Avatar',
+    'settingsProfile' => 'Profile',
+    'settingsSignature' => 'Signature',
+    'settingsSignatureInfo' => 'Here you can see and manage your Signature.',
+    'settingsAvatarInfo' => 'Here you can see and manage your Avatar.',
+    'settingsProfileInfo' => 'Here you can see and manage your Profile data.',
+    'emailError' => 'E-Mail is not valid.',
+    'emailEmpty' => 'E-Mail was not filled.',
+    'profileSettings' => 'Profile Settings',
+    'profileEmail' => 'E-Mail',
+    'profileFirstName' => 'First name',
+    'profileLastName' => 'Last name',
+    'profileBirthday' => 'Birthday',
+    'profileCity' => 'City',
+    'profileHomepage' => 'Homepage',
+    'profileSignature' => 'Signature',
+    'profileSubmit' => 'Send',
 );

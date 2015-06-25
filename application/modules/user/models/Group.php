@@ -8,11 +8,6 @@ namespace Modules\User\Models;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The user group model class.
- *
- * @package ilch
- */
 class Group extends \Ilch\Mapper
 {
     /**

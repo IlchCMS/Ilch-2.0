@@ -1,10 +1,13 @@
 <?php
 /**
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Modules\Page\Plugins;
+
 use Modules\Page\Mappers\Page as PageMapper;
+
 defined('ACCESS') or die('no direct access');
 
 class AfterDatabaseLoad

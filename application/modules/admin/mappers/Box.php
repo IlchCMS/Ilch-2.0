@@ -5,14 +5,13 @@
  */
 
 namespace Modules\Admin\Mappers;
+
 use Modules\Admin\Models\Box as BoxModel;
 
 defined('ACCESS') or die('no direct access');
 
 /**
  * The box mapper class.
- *
- * @package ilch
  */
 class Box extends \Ilch\Mapper
 {
@@ -26,7 +25,7 @@ class Box extends \Ilch\Mapper
     {
         $sql = 'SELECT bc.title, b.id FROM [prefix]_boxes as b
                 LEFT JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
-                    AND bc.locale = "'.$this->db()->escape($locale).'"
+                AND bc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY b.id';
         $boxArray = $this->db()->queryArray($sql);
 

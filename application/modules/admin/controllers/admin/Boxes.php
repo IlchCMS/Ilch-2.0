@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
 
@@ -35,7 +36,7 @@ class Boxes extends \Ilch\Controller\Admin
             (
                 'name' => 'menuActionNewBox',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'boxes', 'action' => 'treat'))
+                'url' => $this->getLayout()->getUrl(array('controller' => 'boxes', 'action' => 'treat'))
             )
         );
     }

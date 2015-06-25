@@ -28,7 +28,7 @@ class Rule extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return null;
         }
 
         $entry = array();
@@ -63,7 +63,7 @@ class Rule extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($ruleArray)) {
-            return array();
+            return null;
         }
 
         $rules = array();

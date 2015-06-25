@@ -1,5 +1,5 @@
 <?php if($this->getUser() !== null) { ?>
-    <?php echo $this->getTrans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b>
+    <?php echo $this->getTrans('hello'); ?> <b><?php echo $this->escape($this->getUser()->getName()); ?></b>,
     <br />
     <a href="<?php echo $this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'index')); ?>">
         <?php echo $this->getTrans('panel'); ?>
@@ -8,7 +8,8 @@
     <?php
         if($this->getUser()->isAdmin()) {
     ?>
-    <a href="<?php echo $this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')); ?>">
+    <a target="_blank"
+       href="<?php echo $this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')); ?>">
         <?php echo $this->getTrans('adminarea'); ?>
     </a>
     <br />
@@ -25,18 +26,24 @@
             ?>
             <div class="form-group">
                 <div class="col-lg-12">
-                    <input name="loginbox_emailname"
-                           class="form-control"
-                           type="text"
-                           placeholder="<?php echo $this->getTrans('nameEmail')?>" />
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                        <input name="loginbox_emailname"
+                               class="form-control"
+                               type="text"
+                               placeholder="<?php echo $this->getTrans('nameEmail')?>" />
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-12">
-                    <input name="loginbox_password"
-                           class="form-control"
-                           type="password"
-                           placeholder="<?php echo $this->getTrans('password')?>" />
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                        <input name="loginbox_password"
+                               class="form-control"
+                               type="password"
+                               placeholder="<?php echo $this->getTrans('password')?>" />
+                    </div>
                 </div>
             </div>
             <div class="form-group">

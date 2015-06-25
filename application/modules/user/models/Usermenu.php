@@ -6,11 +6,8 @@
 
 namespace Modules\User\Models;
 
-/**
- * The usermenu model class.
- *
- * @package ilch
- */
+defined('ACCESS') or die('no direct access');
+
 class Usermenu extends \Ilch\Model
 {
     /**

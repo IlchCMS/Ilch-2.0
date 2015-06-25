@@ -9,11 +9,6 @@ namespace Modules\User\Mappers;
 use Modules\User\Models\User as UserModel;
 use Ilch\Date as IlchDate;
 
-/**
- * The user mapper class.
- *
- * @package ilch
- */
 class User extends \Ilch\Mapper
 {
     /**
@@ -125,8 +120,8 @@ class User extends \Ilch\Mapper
             foreach ($userRows as $userRow) {
                 $groups = array();
                 $sql = 'SELECT g.*
-                        FROM [prefix]_groups AS g
-                        INNER JOIN [prefix]_users_groups AS ug ON g.id = ug.group_id
+                        FROM `[prefix]_groups` AS g
+                        INNER JOIN `[prefix]_users_groups` AS ug ON g.id = ug.group_id
                         WHERE ug.user_id = ' . $userRow['id'];
                 $groupRows = $this->db()->queryArray($sql);
                 $groupMapper = new Group();
@@ -195,6 +190,10 @@ class User extends \Ilch\Mapper
                 $user->setAvatar('static/img/noavatar.jpg');
             }
             
+        }
+
+        if (isset($userRow['signature'])) {
+            $user->setSignature($userRow['signature']);
         }
 
         if (isset($userRow['password'])) {
@@ -284,6 +283,7 @@ class User extends \Ilch\Mapper
         $fields['city'] = $user->getCity();
         $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();
+        $fields['signature'] = $user->getSignature();
 
         $userId = (int)$this->db()->select('id')
             ->from('users')

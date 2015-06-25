@@ -7,7 +7,6 @@
 namespace Modules\History\Mappers;
 
 use Modules\History\Models\Entry as HistoryModel;
-use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
 
@@ -29,7 +28,7 @@ class History extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return null;
         }
 
         $entry = array();
@@ -39,6 +38,8 @@ class History extends \Ilch\Mapper
             $entryModel->setId($entries['id']);
             $entryModel->setDate($entries['date']);
             $entryModel->setTitle($entries['title']);
+            $entryModel->setColor($entries['color']);
+            $entryModel->setTyp($entries['typ']);
             $entryModel->setText($entries['text']);
             $entry[] = $entryModel;
 
@@ -64,7 +65,7 @@ class History extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($historyArray)) {
-            return array();
+            return null;
         }
 
         $historys = array();
@@ -74,6 +75,8 @@ class History extends \Ilch\Mapper
             $historyModel->setId($historyRow['id']);
             $historyModel->setDate($historyRow['date']);
             $historyModel->setTitle($historyRow['title']);
+            $historyModel->setColor($historyRow['color']);
+            $historyModel->setTyp($historyRow['typ']);
             $historyModel->setText($historyRow['text']);
             $historys[] = $historyModel;
         }
@@ -103,6 +106,8 @@ class History extends \Ilch\Mapper
         $historyModel->setId($historyRow['id']);
         $historyModel->setDate($historyRow['date']);
         $historyModel->setTitle($historyRow['title']);
+        $historyModel->setColor($historyRow['color']);
+        $historyModel->setTyp($historyRow['typ']);
         $historyModel->setText($historyRow['text']);
 
         return $historyModel;

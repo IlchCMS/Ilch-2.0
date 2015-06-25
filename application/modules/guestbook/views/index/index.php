@@ -1,41 +1,34 @@
-<a href="<?php echo $this->getUrl(array('action' => 'newentry')); ?>">
-       <?php echo $this->getTrans('entry'); ?>
-</a>
-<br /><br />
-<?php
-    foreach ($this->get('entries') as $entry) :
-?>
-    <table>
+<legend>
+    <?=$this->getTrans('menuGuestbook') ?>
+    <div class="pull-right">
+        <a href="<?=$this->getUrl(array('action' => 'newentry')) ?>"><?=$this->getTrans('entry') ?></a>
+    </div>
+</legend>
+<?php foreach ($this->get('entries') as $entry): ?>
+    <table class="table table-striped">
         <colgroup>
-            <col style="width: 200px;" />
-            <col style="width: 100px;" />
+            <col class="col-lg-3">
+            <col class="col-lg-2">
             <col />
         </colgroup>
-        <tbody>
-            <tr>
-                <td>
-                    <?php echo $this->getTrans('from'); ?>: <?php echo $this->escape($entry->getName()); ?>
-                </td>
-                <td>
-                    <a target="_blank" href="<?php echo $this->escape($entry->getHomepage()); ?>">
+        <tr>
+            <td><?=$this->getTrans('from'); ?>: <?=$this->escape($entry->getName()) ?></td>
+            <td>
+                <?php if ($entry->getHomepage() != ''): ?>
+                    <a target="_blank" href="<?=$this->escape($entry->getHomepage()) ?>">
                         <span class="glyphicon glyphicon-home"></span>
                     </a>
-                    <a target="_blank" href="mailto:<?php echo $this->escape($entry->getEmail()); ?>">
-                        <span class="glyphicon glyphicon-envelope"></span>
-                    </a>
-                </td>
-                <td>
-                    <?php echo $this->getTrans('date'); ?>: <?php echo $this->escape($entry->getDatetime()); ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"><?php echo nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))); ?></td>
-            </tr>
-        </tbody>
+                <?php endif; ?>
+                <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </a>
+            </td>
+            <td><?=$this->getTrans('date') ?>: <?=$this->escape($entry->getDatetime()) ?></td>
+        </tr>
+        <tr>
+            <td colspan="3"><?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?></td>
+        </tr>
     </table>
-    <br /><br />
-<?php
-    endforeach;
+<?php endforeach; ?>
 
-    echo $this->get('pagination')->getHtml($this, array('action' => 'index'));
-?>
+<?=$this->get('pagination')->getHtml($this, array('action' => 'index')) ?>

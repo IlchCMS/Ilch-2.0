@@ -10,11 +10,6 @@ use Modules\Link\Models\Link as LinkModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The link mapper class.
- *
- * @package ilch
- */
 class Link extends \Ilch\Mapper
 {
     /**
@@ -28,7 +23,7 @@ class Link extends \Ilch\Mapper
         $linkArray = $this->db()->select('*')->from('links')->where($where)->execute()->fetchRows();
 
         if (empty($linkArray)) {
-            return array();
+            return null;
         }
 
         $links = array();

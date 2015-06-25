@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the Guestbook module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -10,6 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'menuGuestbook' => 'Guestbook',
     'guestbook' => 'Guestbook',
     'from' => 'From',
     'date' => 'Date',
@@ -23,7 +22,6 @@ return array
     'manage' => 'Manage Guestbook',
     'manageentry' => 'Manage/delete entries',
     'text' => 'Text',
-    'delete' => 'Delete',
     'successful' => 'Successful',
     'missingText' => 'Text was not filled',
     'missingEmail' => 'E-Mail was not filled',

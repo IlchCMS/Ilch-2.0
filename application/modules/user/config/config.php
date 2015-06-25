@@ -5,6 +5,7 @@
  */
 
 namespace Modules\User\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
@@ -41,6 +42,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('regist_accept', '1');
         $databaseConfig->set('regist_confirm', '1');
         $databaseConfig->set('regist_rules', "Die Registrierung ist völlig Kostenlos.\nDie Betreiber der Seite übernehmen keine Haftung.\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.");
+        $databaseConfig->set('regist_confirm_mail', "Willkommen auf dieser Seite!\n\nDa Ihr Passwort nur verschlüsselt in der Datenbank gespeichert wurde, heben Sie es bitte gut auf.\n\nMit freundlichen Grüßn\nAdministrator.");
         $databaseConfig->set('avatar_uploadpath', 'application/modules/user/static/upload/avatar/');
         $user = new \Modules\User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
@@ -76,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users` (
   `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `birthday` date NOT NULL,
   `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `signature` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date_created` datetime NOT NULL,
   `date_confirmed` datetime NOT NULL,
   `confirmed` int(11) DEFAULT 1,
@@ -121,9 +124,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
 INSERT INTO `[prefix]_user_menu` (`id`, `key`, `title`) VALUES
 (1, "user/panel/index", "Panel"),
 (2, "user/panel/dialog", "Dialog"),
-(3, "user/panel/friends", "Freunde"),
-(4, "user/panel/groups", "Gruppen"),
-(5, "user/panel/settings", "Einstellungen");
+(3, "user/panel/settings", "Einstellungen");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
                   `c_id` int(10) NOT NULL AUTO_INCREMENT,

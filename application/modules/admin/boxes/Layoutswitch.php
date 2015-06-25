@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Admin\Boxes;
+
 defined('ACCESS') or die('no direct access');
 
 class Layoutswitch extends \Ilch\Box
@@ -14,4 +15,3 @@ class Layoutswitch extends \Ilch\Box
         $this->getView()->set('layouts', glob(APPLICATION_PATH.'/layouts/*'));
     }
 }
-

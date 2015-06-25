@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'Guestbook',
+            'guestbook',
             array
             (
                 array

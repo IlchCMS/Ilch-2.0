@@ -250,15 +250,9 @@ $(document).ready
     
 </script>
 <script>
-    function media(id){ $('#MediaModal').modal('show');
-        var src = iframeSingleUrlDownloads+'id/'+id;
-        var height = '100%';
-        var width = '100%';
-
-        $("#MediaModal iframe").attr({'src': src,
-            'height': height,
-            'width': width});
-    };
+    <?=$this->getMedia()
+                    ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')))
+                    ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id'))) ?>
 
     function reload(){
         setTimeout(function(){window.location.reload(1);}, 1000);

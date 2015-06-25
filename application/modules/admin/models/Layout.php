@@ -5,12 +5,11 @@
  */
 
 namespace Modules\Admin\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The layout model class.
- *
- * @package ilch
  */
 class Layout extends \Ilch\Model
 {
@@ -34,6 +33,13 @@ class Layout extends \Ilch\Model
      * @var string
      */
     protected $desc;
+
+    /**
+     * Module of the layout.
+     *
+     * @var string
+     */
+    protected $modulekey;
 
     /**
      * Gets the key.
@@ -93,5 +99,25 @@ class Layout extends \Ilch\Model
     public function setDesc($desc)
     {
         $this->desc = (string)$desc;
+    }
+
+    /**
+     * Gets the modulekey.
+     *
+     * @return string
+     */
+    public function getModulekey()
+    {
+        return $this->modulekey;
+    }
+
+    /**
+     * Sets the modulekey.
+     *
+     * @param string $modulekey
+     */
+    public function setModulekey($modulekey)
+    {
+        $this->modulekey = (string)$modulekey;
     }
 }

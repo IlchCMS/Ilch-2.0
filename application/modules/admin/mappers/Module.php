@@ -5,12 +5,11 @@
  */
 
 namespace Modules\Admin\Mappers;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The module mapper class.
- *
- * @package ilch
  */
 class Module extends \Ilch\Mapper
 {
@@ -48,6 +47,25 @@ class Module extends \Ilch\Mapper
 
         return $modules;
     }
+
+    public function getModulesByKey($key, $locale)
+    {
+        $modulesRows = $this->db()->select('*')
+            ->from('modules_content')
+            ->where(array('key' => $key, 'locale' => $locale))
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($modulesRows)) {
+            return null;
+        }
+
+        $modulesModel = new \Modules\Admin\Models\Module();
+        $modulesModel->setName($modulesRows['name']);
+
+        return $modulesModel;
+    }
+
     /**
      * Inserts a module model in the database.
      *
@@ -74,6 +92,8 @@ class Module extends \Ilch\Mapper
      */
     public function delete($key)
     {
+        $menuMapper = new \Modules\Admin\Mappers\Menu();
+        $menuMapper->deleteItemsByModuleKey($key);
         $this->db()->delete('modules')
             ->where(array('key' => $key))
             ->execute();

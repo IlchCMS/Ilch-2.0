@@ -8,11 +8,6 @@ namespace Modules\Link\Models;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The link model class.
- *
- * @package ilch
- */
 class Link extends \Ilch\Model
 {
     /**

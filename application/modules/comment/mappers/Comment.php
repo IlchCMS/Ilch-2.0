@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Comment\Mappers;
+
 use Modules\Comment\Models\Comment as CommentModel;
 
 defined('ACCESS') or die('no direct access');
@@ -22,6 +23,7 @@ class Comment extends \Ilch\Mapper
         $commentsArray = $this->db()->select('*')
 			->from('comments')
 			->where(array('key' => $key))
+            ->order(array('id' => 'DESC'))
 			->execute()
             ->fetchRows();
 
@@ -31,9 +33,9 @@ class Comment extends \Ilch\Mapper
             $commentModel = new CommentModel();
             $commentModel->setId($commentRow['id']);
             $commentModel->setKey($commentRow['key']);
-			$commentModel->setText($commentRow['text']);
-			$commentModel->setUserId($commentRow['user_id']);
-			$commentModel->setDateCreated($commentRow['date_created']);
+            $commentModel->setText($commentRow['text']);
+            $commentModel->setUserId($commentRow['user_id']);
+            $commentModel->setDateCreated($commentRow['date_created']);
             $comments[] = $commentModel;
         }
 
@@ -41,7 +43,37 @@ class Comment extends \Ilch\Mapper
     }
 
     /**
-     * @param ReceiverModel $receiver
+     * @return CommentModel[]|null
+     */
+    public function getComments()
+    {
+        $commentsArray = $this->db()->select('*')
+            ->from('comments')
+            ->order(array('id' => 'DESC'))
+            ->execute()
+            ->fetchRows();
+
+        if (empty($commentsArray)) {
+            return NULL;
+        }
+
+        $comments = array();
+
+        foreach ($commentsArray as $commentRow) {
+            $commentModel = new CommentModel();
+            $commentModel->setId($commentRow['id']);
+            $commentModel->setKey($commentRow['key']);
+            $commentModel->setText($commentRow['text']);
+            $commentModel->setUserId($commentRow['user_id']);
+            $commentModel->setDateCreated($commentRow['date_created']);
+            $comments[] = $commentModel;
+        }
+
+        return $comments;
+    }
+
+    /**
+     * @param CommentModel $comment
      */
     public function save(CommentModel $comment)
     {

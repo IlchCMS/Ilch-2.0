@@ -5,14 +5,13 @@
  */
 
 namespace Modules\Admin\Controllers\Admin;
+
 use Modules\User\Mappers\User as UserMapper;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * Handles the login functionality.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Login extends \Ilch\Controller\Admin
 {
@@ -26,7 +25,7 @@ class Login extends \Ilch\Controller\Admin
 
     /**
      * Shows the standard login page.
-     * %akes the request data for the login and tries to login the user.
+     * Takes the request data for the login and tries to login the user.
      */
     public function indexAction()
     {
@@ -40,7 +39,7 @@ class Login extends \Ilch\Controller\Admin
             $emailName = $this->getRequest()->getPost('emailname');
 
             if ($emailName === '') {
-                $errors['noEmailGiven']  = 'noUserEmailGiven';
+                $errors['noEmailGiven'] = 'noUserEmailGiven';
             } else {
                 $mapper = new UserMapper();
                 $user = $mapper->getUserByEmail($emailName);

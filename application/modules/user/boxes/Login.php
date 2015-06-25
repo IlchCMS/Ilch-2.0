@@ -5,6 +5,7 @@
  */
 
 namespace Modules\User\Boxes;
+
 use Modules\User\Mappers\User as UserMapper;
 
 defined('ACCESS') or die('no direct access');

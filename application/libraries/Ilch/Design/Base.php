@@ -63,7 +63,7 @@ abstract class Base
      * @var boolean
      */
     private $modRewrite;
-    
+
     /**
      * Injects request and translator to layout/view.
      *
@@ -371,9 +371,22 @@ abstract class Base
      */
     public function getCaptchaField()
     {
-        $html = '<img src="'.$this->getUrl().'/application/libraries/captcha/captcha.php" id="captcha" />';
+        $html = '<img src="'.$this->getUrl().'/application/libraries/Captcha/Captcha.php" id="captcha" />';
 
         return $html;
+    }
+
+    /**
+     * Gets the MediaModal.
+     * Place inside Javascript tag.
+     * 
+     * @param string $mediaButton Define Media Button by given URL
+     * @param string $actionButton Define Action Button by given URL
+     * @return string
+     */
+    public function getMedia($mediaButton = null, $actionButton = null, $inputId = null)
+    {
+        return  new \Ilch\Layout\Helper\GetMedia($this, $mediaButton, $actionButton, $inputId);
     }
 
     /**

@@ -1,42 +1,40 @@
 $(document).ready(function(){
+    function remove() {
+        $('body').removeClass('hidden-menu');
+    };
 
-                function remove() {
-                    $('body').removeClass('hidden-menu');
-                };
+    function add() {
+        $('body').addClass('hidden-menu');
+    };
 
-                function add() {
-                    $('body').addClass('hidden-menu');
-                };
+    var menu = document.getElementById('toggleLeftMenu');
 
-                var menu = document.getElementById('toggleLeftMenu');
+    if (menu !== null) {
+        menu.onclick = function() {
+            if($('body').hasClass('hidden-menu')){
+                remove();
+            }else {
+                add();
+            }
+        };
+    }
 
-                if (menu !== null) {
-                    menu.onclick = function() {
-                        if($('body').hasClass('hidden-menu')){
-                            remove();
-                        }else {
-                            add();
-                        }
-                    };
-                }
-            
+    function removeSearch() {
+            $('#search-div').removeClass('opens');
+        };
 
-                function removeSearch() {
-                        $('#search-div').removeClass('opens');
-                    };
+    function addSearch() {
+        $('#search-div').addClass('opens');
+    };
 
-                function addSearch() {
-                    $('#search-div').addClass('opens');
-                };
-
-                document.getElementById('search-header').onclick = function() {
-                    if($('#search-div').hasClass('opens')){
-                        removeSearch();
-                    }else {
-                        addSearch();
-                    }
-                };
-            });
+    document.getElementById('search-header').onclick = function() {
+        if($('#search-div').hasClass('opens')){
+            removeSearch();
+        }else {
+            addSearch();
+        }
+    };
+});
 
 $(document).ready
 (
@@ -75,6 +73,27 @@ $(document).ready
             {
                 if (!confirm("Sollen der Eintrag wirklich gelöscht werden ?")) {
                     event.preventDefault();
+                }
+            }
+        );
+    }
+);
+
+$(document).ready
+(
+    function() 
+    {
+        $(window).scrollTop(0);
+        var headerTop = $('#header').offset().top;
+
+        $(window).scroll
+        (
+            function()
+            {
+                if($(window).scrollTop() > headerTop){
+                    $('#left-panel').css('padding', '0px');
+                } else {
+                    $('#left-panel').css('padding', '40px 0 0');
                 }
             }
         );

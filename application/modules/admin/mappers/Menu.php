@@ -5,14 +5,14 @@
  */
 
 namespace Modules\Admin\Mappers;
+
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The menu mapper class.
- *
- * @package ilch
  */
 class Menu extends \Ilch\Mapper
 {
@@ -23,7 +23,8 @@ class Menu extends \Ilch\Mapper
      */
     public function getMenuIdForPosition($position)
     {
-        $sql = 'SELECT id FROM [prefix]_menu
+        $sql = 'SELECT id
+                FROM `[prefix]_menu`
                 ORDER BY id ASC
                 LIMIT '.(int)($position-1).', 1';
         $id = $this->db()->queryCell($sql);
@@ -220,6 +221,36 @@ class Menu extends \Ilch\Mapper
         $this->db()->delete('menu_items')
             ->where(array('id' => $menuItem->getId()))
             ->execute();
+    }
+
+    /**
+     * Delete items for the given modulkey.
+     *
+     * @param string $moduleKey
+     * @param int $parentID
+     */
+    public function deleteItemsByModuleKey($moduleKey, $parentID = null)
+    {
+        if ($parentID === null) {
+            $itemRows = $this->db()->select('*')
+                ->from('menu_items')
+                ->where(array('module_key' => $moduleKey))
+                ->execute()
+                ->fetchRows();
+        } else {
+            $itemRows = $this->db()->select('*')
+                ->from('menu_items')
+                ->where(array('parent_id' => $parentID))
+                ->execute()
+                ->fetchRows();
+         }
+
+         foreach ($itemRows as $item) {
+             $this->deleteItemsByModuleKey($moduleKey, $item['id']);
+             $this->db()->delete('menu_items')
+                ->where(array('id' => $item['id']))
+                ->execute();
+         }
     }
 
     /**

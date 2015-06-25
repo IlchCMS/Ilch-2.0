@@ -56,7 +56,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('link'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'));
 
         $linkMapper = new LinkMapper();
         $categoryMapper = new CategoryMapper();
@@ -74,9 +74,6 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->getParam('cat_id')) {
-            $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
-            $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
-            
             $links = $linkMapper->getLinks(array('cat_id' => $this->getRequest()->getParam('cat_id')));
             $categorys = $categoryMapper->getCategories(array('parent_id' => $this->getRequest()->getParam('cat_id')));
         } else {
@@ -122,7 +119,13 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatLinkAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewLink'), array('action' => 'treat'));
+
+        $categoryMapper = new CategoryMapper();
         $linkMapper = new LinkMapper();
+        $this->getView()->set('cats', $categoryMapper->getCategories());
 
         if ($this->getRequest()->getParam('id')) {
             $this->getView()->set('link', $linkMapper->getLinkById($this->getRequest()->getParam('id')));
@@ -147,22 +150,21 @@ class Index extends \Ilch\Controller\Admin
                 $model->setLink($this->getRequest()->getPost('link'));
                 $model->setBanner($this->getRequest()->getPost('banner'));
                 $model->setDesc($this->getRequest()->getPost('desc'));
-                $model->setCatId($this->getRequest()->getParam('catId'));
+                $model->setCatId($this->getRequest()->getPost('catId'));
                 $linkMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-            
-                if ($this->getRequest()->getParam('catId')) {
-                    $this->redirect(array('action' => 'index', 'cat_id' => $this->getRequest()->getParam('catId')));
-                } else {
-                    $this->redirect(array('action' => 'index'));
-                }    
+                $this->redirect(array('action' => 'index'));
             }
         }
     }
 
     public function treatCatAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuActionNewCategory'), array('action' => 'treat'));
+
         $categorykMapper = new CategoryMapper();
 
         if ($this->getRequest()->getParam('id')) {

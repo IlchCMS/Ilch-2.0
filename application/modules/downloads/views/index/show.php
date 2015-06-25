@@ -1,17 +1,23 @@
 <?php $commentMapper = new \Modules\Comment\Mappers\Comment();?>
 <div id="gallery">
-    <?php foreach ($this->get('image') as $image) : ?>
-    <?php $comments = $commentMapper->getCommentsByKey('gallery_'.$image->getId());?>
+    <?php foreach ($this->get('file') as $file) : ?>
+    <?php $comments = $commentMapper->getCommentsByKey('downloads/index/showfile/downloads/'.$this->getRequest()->getParam('id').'/id/'.$file->getId());?>
+    <?php $image = '' ?>
+    <?php if($file->getFileImage() != ''): ?>
+        <?php $image = $this->getBaseUrl($file->getFileImage()) ?>
+    <?php else: ?>
+        <?php $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>
+    <?php endif; ?>
     <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-image thumbnail">
-                    <a href="<?=$this->getUrl(array('action' => 'showimage', 'gallery'  => $this->getRequest()->getParam('id'), 'id' => $image->getId())) ; ?>">
-                        <img src="<?=$this->getUrl().'/'.$image->getImageThumb(); ?>" class="panel-image-preview" alt="<?=$image->getImageTitle();?>" />
+                    <a href="<?=$this->getUrl(array('action' => 'showfile', 'downloads'  => $this->getRequest()->getParam('id'), 'id' => $file->getId())) ; ?>">
+                        <img src="<?=$image ?>" class="panel-image-preview" alt="<?=$file->getFileTitle();?>" />
                     </a>
                 </div>
                 <div class="panel-footer text-center">
                     <i class="fa fa-comment-o"></i> <?=count($comments)?>
-                    <i class="fa fa-eye"> <?=$image->getVisits()?></i>
+                    <i class="fa fa-eye"> <?=$file->getVisits()?></i>
                 </div>
             </div>
         </div>
@@ -52,5 +58,8 @@
         position:relative;
         overflow:hidden;
         margin-bottom: 0px !important;
+    }
+    #gallery img{
+        min-height: 20px;
     }
 </style>
