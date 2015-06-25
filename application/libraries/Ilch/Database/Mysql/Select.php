@@ -321,7 +321,7 @@ class Select extends QueryBuilder
             $sql .= ' ORDER BY';
 
             foreach ($this->order as $column => $direction) {
-                $sql .= ' `'. $column.'` '.$direction;
+                $sql .= ' '. $this->db->quote($column).' '.$direction;
             }
         }
 
@@ -387,7 +387,7 @@ class Select extends QueryBuilder
             $tableName = reset($table);
             $tableAlias = key($table);
         } else {
-            $tableName = $this->table;
+            $tableName = $table;
         }
 
         $sql = $this->db->quote('[prefix]_' . $tableName);
