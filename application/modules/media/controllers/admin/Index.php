@@ -11,7 +11,7 @@ use Ilch\Date as IlchDate;
 
 defined('ACCESS') or die('no direct access');
 
-class Index extends \Ilch\Controller\Admin 
+class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
@@ -62,7 +62,7 @@ class Index extends \Ilch\Controller\Admin
         );
     }
 
-    public function indexAction() 
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('media'), array('action' => 'index'));
@@ -103,7 +103,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
     }
 
-    public function uploadAction() 
+    public function uploadAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('media'), array('action' => 'index'))
@@ -124,10 +124,11 @@ class Index extends \Ilch\Controller\Admin
             $upload->upload();
 
             $model = new \Modules\Media\Models\Media();
-            $model->setUrl($upload->getUrl());
-            $model->setUrlThumb($upload->getUrlThumb());
-            $model->setEnding($upload->getEnding());
-            $model->setName($upload->getName());
+            $model->setUrl($url);
+            $model->setUrlThumb($urlthumb);
+            $model->setEnding($endung);
+            $model->setCatId($this->getRequest()->getPost('catId') === null ? 0 : $this->getRequest()->getPost('catId'));
+            $model->setName($name);
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);
         }

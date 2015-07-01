@@ -17,7 +17,7 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
             <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'id' => $article->getId()))?>"><?=$article->getTitle()?></a>
         </h4>
         <div>
-            <i class="fa fa-clock-o" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'date', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true))) ?>"><?=$date->format('d. F Y', true) ?></a>
+            <i class="fa fa-clock-o" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true))) ?>"><?=$date->format('d. F Y', true) ?></a>
             &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('menuCats') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId())) ?>"><?=$articlesCats->getName() ?></a>
             &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'id' => $article->getId().'#comment')) ?>"><?=count($comments) ?></a>
             &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('show') ?>"></i> <?=$article->getVisits() ?>
