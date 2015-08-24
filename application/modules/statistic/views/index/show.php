@@ -3,7 +3,7 @@ $month = $this->getRequest()->getParam('month');
 $year = $this->getRequest()->getParam('year');
 ?>
 
-<?php if ($year != '' AND $month != ''): ?>
+<?php if ($this->get('statisticYearMonthDayList') != '' AND $year != '' AND $month != ''): ?>
     <?php $date = new \Ilch\Date($this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01'); ?>
     <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('F Y', true) ?></i></legend>
     <div class="table-responsive">
@@ -39,7 +39,7 @@ $year = $this->getRequest()->getParam('year');
             </tbody>
         </table>
     </div>
-<?php elseif ($year != ''): ?>
+<?php elseif ($this->get('statisticYearMonthList') != '' AND $year != ''): ?>
     <?php $date = new \Ilch\Date($this->getRequest()->getParam('year').'-01-01'); ?>
     <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('Y', true) ?></i></legend>
     <div class="table-responsive">
@@ -75,4 +75,9 @@ $year = $this->getRequest()->getParam('year');
             </tbody>
         </table>
     </div>
+<?php endif; ?>
+
+<?php if ($this->get('statisticYearMonthDayList') == '' AND $this->get('statisticYearMonthList') == ''): ?>
+    <legend><?=$this->getTrans('menuStatistic') ?></legend>
+    <?=$this->getTrans('noStatistic') ?>
 <?php endif; ?>

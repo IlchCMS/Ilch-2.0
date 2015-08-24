@@ -38,4 +38,5 @@ return array
     'os' => 'OS-System',
     'osUnknown' => 'Unknown',
     'numberVisits' => 'Visitor',
+    'noStatistic' => 'No Statistic available',
 );
