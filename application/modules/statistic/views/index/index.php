@@ -1,3 +1,7 @@
+<?php 
+$date = new \Ilch\Date();
+?>
+
 <?php if($this->getUser()): ?>
     <?php $userMapper = new \Modules\User\Mappers\User() ?>
     <?php $userCheck = $userMapper->getUserById($this->getUser()->getId()) ?>
@@ -20,8 +24,8 @@
         <tbody>
             <tr>
                 <td><?=$this->getTrans('statToday') ?>: <?=$this->get('visitsToday') ?></td>
-                <td><?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?></td>
-                <td><?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?></td>
+                <td><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?></a></td>
+                <td><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?></a></td>
                 <td><?=$this->getTrans('statTotal') ?>: <?=$this->get('visitsTotal') ?></td>
             </tr>
         </tbody>
@@ -81,7 +85,7 @@
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                 <tr>
-                    <td><?=$date->format("Y - F", true) ?></td>
+                    <td><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$date->format("Y - F", true) ?></a></td>
                     <td>
                         <div class="progress" style="margin-bottom: 0px;">
                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?=$progressWidth ?>%; min-width: 2em;">
@@ -115,7 +119,7 @@
                 <?php $progressWidth = round($progressWidth, 0); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                 <tr>
-                    <td><?=$date->format("Y", true) ?></td>
+                    <td><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></td>
                     <td>
                         <div class="progress" style="margin-bottom: 0px;">
                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?=$progressWidth ?>%; min-width: 2em;">

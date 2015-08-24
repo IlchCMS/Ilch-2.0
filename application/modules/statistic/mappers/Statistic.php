@@ -66,12 +66,16 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsYearMonthDay()
+    public function getVisitsYearMonthDay($date = null)
     {
         $sql = 'SELECT *, COUNT(id) AS visits
-                FROM `[prefix]_visits_stats`
-                WHERE YEAR(date) = YEAR(CURDATE()) AND MONTH(date) = MONTH(CURDATE())
-                GROUP BY date
+                FROM `[prefix]_visits_stats`';
+        if ($date != null) {
+            $sql .= ' WHERE YEAR(date) = YEAR("'.$date.'") AND MONTH(date) = MONTH("'.$date.'")';
+        } else {
+            $sql .= ' WHERE YEAR(date) = YEAR(CURDATE()) AND MONTH(date) = MONTH(CURDATE())';
+        }
+        $sql .= ' GROUP BY date
                 ORDER BY date DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -92,11 +96,14 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsYearMonth()
+    public function getVisitsYearMonth($date = null)
     {
         $sql = 'SELECT *, COUNT(id) AS visits
-                FROM `[prefix]_visits_stats`
-                GROUP BY YEAR(date), MONTH(date)
+                FROM `[prefix]_visits_stats`';
+        if ($date != null) {
+            $sql .= ' WHERE YEAR(date) = YEAR("'.$date.'")';
+        }
+        $sql .= ' GROUP BY YEAR(date), MONTH(date)
                 ORDER BY date DESC';
 
         $entryArray = $this->db()->queryArray($sql);
