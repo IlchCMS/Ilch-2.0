@@ -57,7 +57,7 @@ class AfterDatabaseLoad
                 'Windows 7' => '=Windows NT 6.1|Windows 7=',
                 'Windows 8' => '=Windows NT 6.2|Windows 8=',
                 'Windows 8.1' => '=Windows NT 6.3|Windows 8.1=',
-                'Windows 10' => '=Windows NT 6.4|Windows 10=',
+                'Windows 10' => '=Windows NT 10.0|Windows 10=',
                 'Windows 2000' => '=Windows NT 5.0|Windows 2000=',
                 'Windows Server 2003\\Windows XP x64' => '=Windows NT 5\.2|Windows Server 2003|Windows XP x64=',
                 'Windows NT' => '=Windows NT 4|WinNT4=',
@@ -97,6 +97,12 @@ class AfterDatabaseLoad
                     $browser[1] = $tmp[0] . '.' . $tmp[1];
                 }
                 return "Opera " . $browser[1];
+            } elseif (preg_match("=Edge/([0-9\.]*)=", $useragent, $browser)) {
+                $tmp = explode('.', $browser[1]);
+                if (count($tmp) > 2) {
+                    $browser[1] = $tmp[0] . '.' . $tmp[1];
+                }
+                return "Edge " . $browser[1];
             } elseif (preg_match("=Chrome/([0-9\.]*)=", $useragent, $browser)) {
                 $tmp = explode('.', $browser[1]);
                 if (count($tmp) > 2) {

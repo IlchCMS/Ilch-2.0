@@ -70,6 +70,7 @@ class Statistic extends \Ilch\Mapper
     {
         $sql = 'SELECT *, COUNT(id) AS visits
                 FROM `[prefix]_visits_stats`
+                WHERE YEAR(date) = YEAR(CURDATE()) AND MONTH(date) = MONTH(CURDATE())
                 GROUP BY date
                 ORDER BY date DESC';
 
