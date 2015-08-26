@@ -36,7 +36,8 @@ return array
     'year' => 'Year',
     'browser' => 'Browser',
     'os' => 'OS-System',
-    'osUnknown' => 'Unknown',
+    'language' => 'Language',
+    'unknown' => 'Unknown',
     'numberVisits' => 'Visitor',
     'noStatistic' => 'No Statistic available',
 );

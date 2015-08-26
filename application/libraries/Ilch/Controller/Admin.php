@@ -5,6 +5,7 @@
  */
 
 namespace Ilch\Controller;
+
 defined('ACCESS') or die('no direct access');
 
 class Admin extends Base

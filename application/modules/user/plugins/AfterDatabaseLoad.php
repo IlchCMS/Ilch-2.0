@@ -131,9 +131,11 @@ class AfterDatabaseLoad
         }  else {
             $referer = $_SERVER["HTTP_REFERER"];
         }
+        
+        $lang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
 
         $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
-        $statisticMapper->saveVisit(array('user_id' => $userId, 'site' => $site, 'referer' => $referer, 'os' => $os, 'browser' => $browser, 'ip' => $ip));
+        $statisticMapper->saveVisit(array('user_id' => $userId, 'site' => $site, 'referer' => $referer, 'os' => $os, 'browser' => $browser, 'ip' => $ip, 'lang' => $lang));
 
         if ($pluginData['request']->getParam('language')) {
             $_SESSION['language'] = $pluginData['request']->getParam('language');
