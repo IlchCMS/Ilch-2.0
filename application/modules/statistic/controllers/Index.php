@@ -62,7 +62,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($this->getTranslator()->getLocale(), $year, $month));
             $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($year, $month));
         } elseif ($month == '' AND $year != '') {
-            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount($year));
+            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
             $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth($year));
             $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear($year));
             $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($year));

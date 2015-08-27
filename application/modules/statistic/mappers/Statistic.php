@@ -284,7 +284,7 @@ class Statistic extends \Ilch\Mapper
     /**
      * @return integer
      */
-    public function getVisitsCount($year = null, $month = null)
+    public function getVisitsCount($date = null, $year = null, $month = null)
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`';
@@ -294,6 +294,8 @@ class Statistic extends \Ilch\Mapper
         } else if ($month == null AND $year != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(date) = YEAR("'.$date.'")';
+        } else if ($date != null) {
+            $sql .= 'WHERE `date` = "'.$date.'"';
         }
 
         $visits = $this->db()->queryCell($sql);
