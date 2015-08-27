@@ -1,14 +1,18 @@
 <?php 
-    $profil = $this->get('profil'); 
-    $birthday = new \Ilch\Date($profil->getBirthday());
-    $groups = '';
-    foreach($profil->getGroups() as $group) {
-        if ($groups != '') {
-            $groups .= ', ';
-        }
+$userMapper = new Modules\User\Mappers\User();
 
-        $groups .= $group->getName();
-    } 
+$profil = $this->get('profil'); 
+$birthday = new \Ilch\Date($profil->getBirthday());
+$homepage = $userMapper->getHomepage($this->escape($profil->getHomepage()));
+
+$groups = '';
+foreach($profil->getGroups() as $group) {
+    if ($groups != '') {
+        $groups .= ', ';
+    }
+
+    $groups .= $group->getName();
+} 
 ?>
 
 <div class="profil">
@@ -63,14 +67,16 @@
                 <?=$this->escape($profil->getCity()) ?>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-2 detail bold">
-                <?=$this->getTrans('profileHomepage') ?>:
+        <?php if ($profil->getHomepage() != ''): ?>
+            <div class="row">
+                <div class="col-lg-2 detail bold">
+                    <?=$this->getTrans('profileHomepage') ?>:
+                </div>
+                <div class="col-lg-8 detail">
+                    <a href="<?=$homepage ?>" title="<?=$homepage ?>" target="_blank"><?=$homepage ?></a>
+                </div>
             </div>
-            <div class="col-lg-8 detail">
-                <?=$this->escape($profil->getHomepage()) ?>
-            </div>
-        </div>
+        <?php endif; ?>
         <div class="row">
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileBirthday') ?>:

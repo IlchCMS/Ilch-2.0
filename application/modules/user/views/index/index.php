@@ -1,3 +1,7 @@
+<?php 
+$userMapper = new Modules\User\Mappers\User();
+?>
+
 <legend><?=$this->getTrans('menuUserList') ?></legend>
 <div class="row">
     <?php foreach ($this->get('userList') as $userlist): ?>        
@@ -12,9 +16,13 @@
                     <?=$this->getTrans('contact'); ?>:
                     <br>
                     <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $userlist->getId())) ?>" class="fa fa-user" title="<?=$this->escape($userlist->getName()) ?>s <?=$this->getTrans('profile') ?>"></a>
-                    <a href="mailto:<?=$this->escape($userlist->getEmail()) ?>" class="fa fa-envelope" title="E-Mail"></a>
-                    <a href="#" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>                    
-                    <a href="#" class="fa fa-comment" title="ICQ"></a>
+                    <?php if($this->getUser() and $this->getUser()->getId() != $this->escape($userlist->getID())): ?>
+                        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $userlist->getId())) ?>" class="fa fa-comment" title="<?=$this->getTrans('privateMessage') ?>"></a>
+                     <?php endif; ?>
+                    <a href="#" class="fa fa-envelope" title="E-Mail"></a>
+                    <?php if($this->escape($userlist->getHomepage()) != ''): ?>
+                        <a href="<?=$userMapper->getHomepage($this->escape($userlist->getHomepage())) ?>" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
+                    <?php endif; ?>
                     <a href="#" class="fa fa-skype" title="Skype"></a>
                 </div>
             </div>

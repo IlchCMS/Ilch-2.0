@@ -166,7 +166,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(date) = YEAR("'.$date.'")';
         }
-        $sql .= 'GROUP BY browser
+        $sql .= ' GROUP BY browser
                 ORDER BY visits DESC';
 
         $entryArray = $this->db()->queryArray($sql);
