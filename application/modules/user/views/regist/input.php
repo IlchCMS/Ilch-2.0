@@ -41,7 +41,7 @@
                    type="password"
                    class="form-control"
                    name="password2"
-                   id="pwd2" />
+                   id="password2" />
             <?php if (!empty($errors['password2'])): ?>
                 <span class="help-inline"><?=$this->getTrans($errors['password2']) ?></span>
             <?php endif; ?>

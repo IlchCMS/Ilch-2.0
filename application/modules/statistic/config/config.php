@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
                 `ip_address` VARCHAR(255) NOT NULL,
                 `referer` VARCHAR(255) NOT NULL,
                 `lang` VARCHAR(11) NOT NULL,
-                `date` DATE NOT NULL,
+                `date` DATETIME NOT NULL,
                 PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

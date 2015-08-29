@@ -1,6 +1,7 @@
 <?php 
 $profil = $this->get('profil'); 
 ?>
+
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 <div id="panel">
     <div class="row">
@@ -17,10 +18,10 @@ $profil = $this->get('profil');
             <form action="" class="form-horizontal" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <?=$this->getTokenField(); ?>
-                    <div class="col-lg-3 col-sm-3 col-3">
+                    <div class="col-lg-2 col-sm-2 col-2">
                         <img class="panel-profile-image" src="<?=$this->getBaseUrl().$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
                     </div>
-                    <div class="col-lg-9 col-sm-9 col-9">
+                    <div class="col-lg-10 col-sm-10 col-10">
                         <h4>Avatar Upload</h4>
                         <p>Maximale Bildgröße: 80 Pixel breit, 80 Pixel hoch.</p>
                         <p>Maximale Dateigröße: 48.83 KB.</p>
@@ -37,7 +38,7 @@ $profil = $this->get('profil');
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-lg-offset-3 col-lg-8">
+                    <div class="col-lg-offset-2 col-lg-12">
                         <input type="submit" 
                                name="saveEntry" 
                                class="btn"

@@ -2,7 +2,9 @@
 $code = $this->getRequest()->getParam('code');
 $confirm = $this->get('confirmed'); 
 ?>
+
 <?php if (empty($code) || empty($confirm)): ?>
+    <legend><?=$this->getTrans('unlockUserAcc'); ?></legend>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
         <?=$this->getTokenField() ?>
         <?php $errors = $this->get('errors'); ?>

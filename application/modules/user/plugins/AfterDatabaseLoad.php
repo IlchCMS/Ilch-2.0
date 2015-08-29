@@ -131,7 +131,7 @@ class AfterDatabaseLoad
         }  else {
             $referer = $_SERVER["HTTP_REFERER"];
         }
-        
+
         $lang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
 
         $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
@@ -140,7 +140,7 @@ class AfterDatabaseLoad
         if ($pluginData['request']->getParam('language')) {
             $_SESSION['language'] = $pluginData['request']->getParam('language');
         }
-        
+
         if ($pluginData['request']->getParam('ilch_layout')) {
             $_SESSION['layout'] = $pluginData['request']->getParam('ilch_layout');
         }

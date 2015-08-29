@@ -167,6 +167,8 @@ class Panel extends BaseController
             }
 
             if (!empty($password) AND !empty($password2) AND $password == $password2) {
+                $password = crypt($password);
+
                 $model = new \Modules\User\Models\User();
                 $model->setId($this->getUser()->getId());
                 $model->setPassword($password);

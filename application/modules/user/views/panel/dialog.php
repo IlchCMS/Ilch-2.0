@@ -1,6 +1,7 @@
 <?php
 $profil = $this->get('profil');
 ?>
+
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 <div id="panel">
     <div class="row">

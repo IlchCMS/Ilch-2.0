@@ -153,16 +153,17 @@
 .formLine .checkbox {
 }
 
-.panel-profile-image{
-    width: 100%;
-    margin-bottom: 5px;
+.panel-profile-image {
+    width: 80%;
+    margin-top: 15px;
+    margin-left: 10%;
 }
-#panel .nav > li > a.active{
+#panel .nav > li > a.active {
     text-decoration: none;
     background-color: #eeeeee;
 }
 
-#panel hr{
+#panel hr {
     margin-top: 0px;
     margin-bottom: 10px;
 }

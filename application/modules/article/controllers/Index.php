@@ -73,7 +73,7 @@ class Index extends \Ilch\Controller\Frontend
             $articleModel = new ArticleModel();
             $categoryMapper = new CategoryMapper();
 
-            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
+            $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $this->locale);
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 
             $this->getLayout()->set('metaTitle', $article->getTitle());

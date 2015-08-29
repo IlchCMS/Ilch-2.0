@@ -102,7 +102,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setDateConfirmed($currentDate);
                 }else{
                     $confirmedCode = md5(uniqid(rand()));
-                    $model->setConfirmed(1);
+                    $model->setConfirmed(0);
                     $model->setConfirmedCode($confirmedCode);
                 }
 
@@ -116,7 +116,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $mail->setTo($email,$name)
                             ->setSubject('Automatische E-Mail')
                             ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.' '.$this->getConfig()->get('regist_confirm_mail'))
+                            ->setMessage('Hallo '.$name.',\n\nWillkommen auf '.$this->getConfig()->get('page_title').' Sie können sich nun mit ihren Angegebenen Datein einloggen.\n\nMit freundlichen Grüßen\nAdministrator.')
                             ->addGeneralHeader('Content-type', 'text/plain; charset="utf-8"');
                     $mail->send();
                 } else {
@@ -124,7 +124,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $mail->setTo($email,$name)
                             ->setSubject('Automatische E-Mail')
                             ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.', um die Registrierung erfolgreich abzuschließen klicke Bitte auf folgenden Link.<a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>')
+                            ->setMessage('Hallo '.$name.',\n\num die Registrierung erfolgreich abzuschließen klicke Sie Bitte auf folgenden Link. <a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>\n\nMit freundlichen Grüßen\nAdministrator.')
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
                     $mail->send();
                 }
@@ -176,7 +176,7 @@ class Regist extends \Ilch\Controller\Frontend
             if (!empty($confirmed)) {
                 if(!empty($user)) {
                     $user->setConfirmedCode($confirmed);
-                    $user->setConfirmed(0);
+                    $user->setConfirmed(1);
                     $user->setConfirmedCode('');
                     $userId = $userMapper->save($user);
 

@@ -47,6 +47,32 @@
             </td>
         </tr>
         <tr>
+            <td><?php echo $this->getTrans('writable').' "/application/modules/user/static/upload/avatar/"' ?></td>
+            <td class="text-success">writable</td>
+            <td>
+                <?php
+                    if (is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')) {
+                        echo '<span class="text-success">writable</span>';
+                    } else {
+                        echo '<span class="text-danger">not writable</span>';
+                    }
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->getTrans('writable').' "/application/modules/events/static/upload/image/"' ?></td>
+            <td class="text-success">writable</td>
+            <td>
+                <?php
+                    if (is_writable(APPLICATION_PATH.'/modules/events/static/upload/image/')) {
+                        echo '<span class="text-success">writable</span>';
+                    } else {
+                        echo '<span class="text-danger">not writable</span>';
+                    }
+                ?>
+            </td>
+        </tr>
+        <tr>
             <td><?php echo $this->getTrans('writable').' "/.htaccess"' ?></td>
             <td class="text-success">writable</td>
             <td>

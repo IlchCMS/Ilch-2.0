@@ -10,7 +10,11 @@ $userMapper = new Modules\User\Mappers\User();
                 <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($userlist->getAvatar()) ?>" alt="">
                 <h3><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $userlist->getId())) ?>" title="<?=$this->escape($userlist->getName()) ?>s <?=$this->getTrans('profile') ?>"><?=$this->escape($userlist->getName()) ?></a></h3>
                 <div class="userInfo">
-                    <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($userlist->getDateCreated()) ?>
+                    <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($userlist->getDateCreated()) ?><br />
+                    <?php $dateLastActivity = $userlist->getDateLastActivity(); ?>
+                    <?php if($dateLastActivity->getTimestamp() != 0): ?>
+                        <i class="fa fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($dateLastActivity) ?>
+                    <?php endif; ?>
                 </div>
                 <div class="userLinks">
                     <?=$this->getTrans('contact'); ?>:

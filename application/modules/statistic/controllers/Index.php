@@ -22,9 +22,13 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('visitsToday', $statisticMapper->getVisitsCount($date->format('Y-m-d')));
         $this->getView()->set('visitsMonth', $statisticMapper->getVisitsMonthCount());
         $this->getView()->set('visitsYear', $statisticMapper->getVisitsYearCount());
-        $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount());
+        $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount($date->format('Y-m-d')));
+        $this->getView()->set('visitsYearTotal', $statisticMapper->getVisitsCount('', $date->format('Y')));
+        $this->getView()->set('visitsAllTotal', $statisticMapper->getVisitsCount());
 
-        $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay());
+        $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour());
+        $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay());
+        $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay($date->format('Y'), $date->format('m')));
         $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth());
         $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear());
         $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser());
@@ -56,6 +60,8 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($year != '' AND $month != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsMonthCount($year, $month));
+            $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year, $month));
+            $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($year, $month));
             $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay($year, $month));
             $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear($year));
             $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($year, $month));
@@ -63,6 +69,8 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($year, $month));
         } elseif ($month == '' AND $year != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
+            $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year));
+            $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($year));
             $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth($year));
             $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear($year));
             $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($year));

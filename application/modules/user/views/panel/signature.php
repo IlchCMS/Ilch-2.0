@@ -1,4 +1,6 @@
-<?php $profil = $this->get('profil'); ?>
+<?php 
+$profil = $this->get('profil');
+?>
 
 <div id="panel">
     <div class="row">

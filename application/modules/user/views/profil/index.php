@@ -27,7 +27,11 @@ foreach($profil->getGroups() as $group) {
                     <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId())) ?>" >Neue Nachricht</a>
                  <?php endif; ?>
                 <div class="detail">
-                    <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?>
+                    <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
+                    <?php $dateLastActivity = $profil->getDateLastActivity(); ?>
+                    <?php if($dateLastActivity->getTimestamp() != 0): ?>
+                        <i class="fa fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($profil->getDateLastActivity()) ?>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="col-lg-4 hidden-xs concatLinks-lg">
@@ -82,7 +86,7 @@ foreach($profil->getGroups() as $group) {
                 <?=$this->getTrans('profileBirthday') ?>:
             </div>
             <div class="col-lg-8 detail">
-                <?=$birthday->format('d-m-Y', true) ?>
+                <?php if ($profil->getBirthday() != '0000-00-00') {  echo $birthday->format('d-m-Y', true); } ?>
             </div>
         </div>
         <?php if ($profil->getSignature() != ''): ?>

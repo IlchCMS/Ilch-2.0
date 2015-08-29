@@ -1,6 +1,6 @@
 <?php
-    $profil = $this->get('profil');
-    $birthday = new \Ilch\Date($profil->getBirthday());
+$profil = $this->get('profil');
+$birthday = new \Ilch\Date($profil->getBirthday());
 ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
