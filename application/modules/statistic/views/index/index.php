@@ -12,7 +12,7 @@
 </style>
 
 <?php 
-$StatisticMapper = new \Modules\Statistic\Mappers\Statistic();
+$statisticMapper = new \Modules\Statistic\Mappers\Statistic();
 $date = new \Ilch\Date();
 ?>
 
@@ -61,7 +61,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticHourList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                 <tr>
                     <td><?=$date->format("H") ?>:00 <?=$this->getTrans('clock') ?></td>
@@ -92,7 +92,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticDayList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                 <tr>
                     <td><?=$date->format("l") ?></td>
@@ -123,7 +123,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticYearMonthDayList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsMonth')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsMonth')); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                 <tr>
                     <td><?=$date->format("Y-m-d", true) ?></td>
@@ -154,7 +154,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticYearMonthList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                 <tr>
                     <td><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$date->format("Y - F", true) ?></a></td>
@@ -185,7 +185,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticYearList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                 <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                 <tr>
                     <td><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></td>
@@ -219,7 +219,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticBrowserList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                 <tr>
                     <td>
                         <?php if ($statisticList->getBrowser() == '0'): ?>
@@ -253,7 +253,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticLanguageList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                 <tr>
                     <td>
                         <?php if ($statisticList->getLang() == '0'): ?>
@@ -292,7 +292,7 @@ $date = new \Ilch\Date();
         </thead>
         <tbody>
             <?php foreach ($this->get('statisticOSList') as $statisticList): ?>
-                <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                 <tr>
                     <td>
                         <?php if ($statisticList->getOS() == '0'): ?>

@@ -44,6 +44,10 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('regist_rules', "Die Registrierung ist völlig Kostenlos.\nDie Betreiber der Seite übernehmen keine Haftung.\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.");
         $databaseConfig->set('regist_confirm_mail', "Willkommen auf dieser Seite!\n\nDa Ihr Passwort nur verschlüsselt in der Datenbank gespeichert wurde, heben Sie es bitte gut auf.\n\nMit freundlichen Grüßen\nAdministrator.");
         $databaseConfig->set('avatar_uploadpath', 'application/modules/user/static/upload/avatar/');
+        $databaseConfig->set('avatar_height', '120');
+        $databaseConfig->set('avatar_width', '120');
+        $databaseConfig->set('avatar_size', '24995');
+        $databaseConfig->set('avatar_filetypes', 'jpg jpeg png gif');
         $user = new \Modules\User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
         $user->setPassword(crypt($_SESSION['install']['adminPassword']));

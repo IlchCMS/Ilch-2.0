@@ -1,10 +1,10 @@
 <h2>
-    <?php echo $this->getTrans('welcomeToInstall', (string)VERSION); ?>
+    <?=$this->getTrans('welcomeToInstall', (string)VERSION) ?>
 </h2>
 <br />
 <div class="form-group">
     <label for="languageInput" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('chooseLanguage'); ?>:
+        <?=$this->getTrans('chooseLanguage') ?>:
     </label>
     <div class="col-lg-3">
         <select name="language" id="languageInput" class="form-control">
@@ -24,7 +24,7 @@
 </div>
 <div class="form-group">
     <label for="timezone" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('timezone'); ?>:
+        <?=$this->getTrans('timezone') ?>:
     </label>
     <div class="col-lg-3">
         <select id="timezone" name="timezone" class="form-control">
@@ -43,12 +43,12 @@
         </select>
     </div>
 </div>
+
 <script>
-    $('#languageInput').change
-    (
-        this,
-        function () {
-            top.location.href = '<?php echo $this->getUrl(array('action' => 'index')); ?>/language/'+$(this).val();
-        }
-    );
+$('#languageInput').change (
+    this,
+    function () {
+        top.location.href = '<?=$this->getUrl(array('action' => 'index')) ?>/language/'+$(this).val();
+    }
+);
 </script>

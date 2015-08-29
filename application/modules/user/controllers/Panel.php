@@ -8,6 +8,7 @@ namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Dialog as DialogMapper;
+use Modules\User\Mappers\Setting as SettingMapper;
 use Modules\User\Controllers\Base as BaseController;
 use Ilch\Date as IlchDate;
 
@@ -87,7 +88,12 @@ class Panel extends BaseController
     public function avatarAction()
     {
         $profilMapper = new UserMapper();
+
         $profil = $profilMapper->getUserById($this->getUser()->getId());
+        $avatarAllowedFiletypes = $this->getConfig()->get('avatar_filetypes');
+        $avatarHeight = $this->getConfig()->get('avatar_height');
+        $avatarWidth = $this->getConfig()->get('avatar_width');
+        $avatarSize = $this->getConfig()->get('avatar_size');
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
@@ -97,23 +103,52 @@ class Panel extends BaseController
         if ($this->getRequest()->isPost() & !empty($_FILES['avatar']['name'])) {
             $path = $this->getConfig()->get('avatar_uploadpath');
             $file = $_FILES['avatar']['name'];
+            $file_tmpe = $_FILES['avatar']['tmp_name'];
             $endung = pathinfo($file, PATHINFO_EXTENSION);
-            $name = pathinfo($file, PATHINFO_FILENAME);
-            $avatar = $path.$name.'.'.$endung;
+            $file_size = $_FILES['avatar']['size'];
 
-            $model = new \Modules\User\Models\User();
-            $model->setId($this->getUser()->getId());
-            $model->setAvatar($avatar);
-            $profilMapper->save($model);
+            if (in_array($endung, explode(' ', $avatarAllowedFiletypes))) {
+                $size = getimagesize($file_tmpe);
+                $width = $size[0];
+                $height = $size[1];
 
-            if (move_uploaded_file($_FILES['avatar']['tmp_name'], $path.$name.'.'.$endung)) {
-                $this->addMessage('successAvatar');
+                if ($file_size <= $avatarSize AND $width == $avatarWidth AND $height == $avatarHeight) {
+                    $avatar = $path.$this->getUser()->getId().'.'.$endung;
+
+                    if ($profil->getAvatar() != '') {
+                        $settingMapper = new SettingMapper();
+                        $settingMapper->delAvatarById($this->getUser()->getId());
+                    }
+                    
+                    $model = new \Modules\User\Models\User();
+                    $model->setId($this->getUser()->getId());
+                    $model->setAvatar($avatar);
+                    $profilMapper->save($model);
+
+                    if (move_uploaded_file($file_tmpe, $avatar)) {
+                        $this->addMessage('successAvatar');
+                    }
+                } else {
+                    $this->addMessage('failedFilesize', 'warning');
+                }
+            } else {
+                $this->addMessage('failedFiletypes', 'warning');
             }
 
+            $this->redirect(array('action' => 'avatar'));
+        } elseif ($this->getRequest()->isPost() & !empty($this->getRequest()->getPost('avatar_delete'))) {
+            $settingMapper = new SettingMapper();
+            $settingMapper->delAvatarById($this->getUser()->getId());
+
+            $this->addMessage('avatarSuccessDelete');
             $this->redirect(array('action' => 'avatar'));
         }
 
         $this->getView()->set('profil', $profil);
+        $this->getView()->set('avatar_height', $avatarHeight);
+        $this->getView()->set('avatar_width', $avatarWidth);
+        $this->getView()->set('avatar_size', $avatarSize);
+        $this->getView()->set('avatar_filetypes', $avatarAllowedFiletypes);
     }
 
     public function signatureAction()

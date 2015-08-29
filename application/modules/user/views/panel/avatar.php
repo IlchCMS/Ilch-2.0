@@ -1,5 +1,6 @@
 <?php 
-$profil = $this->get('profil'); 
+$profil = $this->get('profil');
+$settingMapper = new \Modules\User\Mappers\Setting();
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
@@ -20,11 +21,17 @@ $profil = $this->get('profil');
                     <?=$this->getTokenField(); ?>
                     <div class="col-lg-2 col-sm-2 col-2">
                         <img class="panel-profile-image" src="<?=$this->getBaseUrl().$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
+                        
+                        <?php if ($profil->getAvatar() != 'static/img/noavatar.jpg'): ?>
+                            <label for="avatar_delete" style="margin-left: 10px; margin-top: 10px;">
+                                <input type="checkbox" name="avatar_delete" id="avatar_delete"> <?=$this->getTrans('avatarDelete') ?>
+                            </label>
+                        <?php endif; ?>
                     </div>
                     <div class="col-lg-10 col-sm-10 col-10">
-                        <h4>Avatar Upload</h4>
-                        <p>Maximale Bildgröße: 80 Pixel breit, 80 Pixel hoch.</p>
-                        <p>Maximale Dateigröße: 48.83 KB.</p>
+                        <p><?=$this->getTrans('avatarSize') ?>: <?=$this->get('avatar_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('avatar_height') ?> Pixel <?=$this->getTrans('height') ?>.</p>
+                        <p><?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('avatar_size')) ?>.</p>
+                        <p><?=$this->getTrans('avatarAllowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('avatar_filetypes')) ?></p>
                         <div class="input-group col-lg-6">
                             <span class="input-group-btn">
                                 <span class="btn btn-primary btn-file">
@@ -37,6 +44,7 @@ $profil = $this->get('profil');
                         </div>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-12">
                         <input type="submit" 

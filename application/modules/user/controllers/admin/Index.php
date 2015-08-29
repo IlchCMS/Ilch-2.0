@@ -9,6 +9,7 @@ namespace Modules\User\Controllers\Admin;
 use Modules\User\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Mappers\Setting as SettingMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use \Ilch\Registry as Registry;
@@ -142,7 +143,11 @@ class Index extends BaseController
                  * Delete adminuser only if he is not the last admin.
                  */
             } else {
-                if ($userMapper->delete($userId)) {
+                if ($deleteUser->getAvatar() != '') {
+                    unlink($deleteUser->getAvatar());
+                }
+
+                if ($userMapper->delete($userId)) {                    
                     $this->addMessage('delUserMsg');
                 }
             }

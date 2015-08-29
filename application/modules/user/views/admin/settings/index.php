@@ -48,6 +48,54 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="avatar_height" class="col-lg-2 control-label">
+            <?=$this->getTrans('avatar_height') ?>
+        </label>
+        <div class="col-lg-2">
+            <input name="avatar_height"
+                   type="text"
+                   id="avatar_height"
+                   class="form-control required"
+                   value="<?=$this->get('avatar_height') ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="avatar_width" class="col-lg-2 control-label">
+            <?=$this->getTrans('avatar_width') ?>
+        </label>
+        <div class="col-lg-2">
+            <input name="avatar_width"
+                   type="text"
+                   id="avatar_width"
+                   class="form-control required"
+                   value="<?=$this->get('avatar_width') ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="avatar_size" class="col-lg-2 control-label">
+            <?=$this->getTrans('avatar_size') ?>
+        </label>
+        <div class="col-lg-2">
+            <input name="avatar_size"
+                   type="text"
+                   id="avatar_size"
+                   class="form-control required"
+                   value="<?=$this->get('avatar_size') ?>" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="avatar_filetypes" class="col-lg-2 control-label">
+            <?=$this->getTrans('avatarAllowedFileExtensions') ?>
+        </label>
+        <div class="col-lg-2">
+            <input name="avatar_filetypes"
+                   type="text"
+                   id="avatar_filetypes"
+                   class="form-control required"
+                   value="<?=$this->get('avatar_filetypes') ?>" />
+        </div>
+    </div>
+    <div class="form-group">
         <label for="regist_rules" class="col-lg-2 control-label">
             <?php echo $this->getTrans('rulesForRegist'); ?>:
         </label>

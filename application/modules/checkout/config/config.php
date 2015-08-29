@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'checkout',
-        'author' => 'Thomas Stantin',
+        'author' => 'Stantin Thomas',
         'icon_small' => 'checkout.png',
         'languages' => array
         (
