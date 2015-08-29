@@ -1,17 +1,17 @@
 <form class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
-    <?php
+        <?php
         if ($this->get('category') != '') {
             echo $this->getTrans('menuActionEditCategory');
         } else {
             echo $this->getTrans('menuActionNewCategory');
         }
-    ?>
+        ?>
     </legend>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('name'); ?>:
+            <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label for="desc" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('description'); ?>:
+            <?=$this->getTrans('description') ?>:
         </label>
         <div class="col-lg-4">
             <textarea class="form-control"

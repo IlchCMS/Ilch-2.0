@@ -7,15 +7,14 @@ if ($user->getId()) {
     $fieldsetLegend = $this->getTrans('addUser');
 }
 ?>
+
 <fieldset>
-    <legend>
-        <?=$fieldsetLegend ?>
-    </legend>
+    <legend><?=$fieldsetLegend ?></legend>
     <form action="<?=$this->getUrl(array('action' => 'treat')) ?>"
           method="POST"
           class="form-horizontal"
           id="userForm">
-        <?php echo $this->getTokenField(); ?>
+        <?=$this->getTokenField() ?>
         <input name="user[id]"
                type="hidden"
                value="<?=$user->getId() ?>" />
@@ -121,7 +120,7 @@ if ($user->getId()) {
                                         }
                                     }
                                     ?>>
-                                <?php echo $this->escape($group->getName()); ?>
+                                <?=$this->escape($group->getName()) ?>
                             </option>
                             <?php
                         }
@@ -129,7 +128,7 @@ if ($user->getId()) {
                 </select>
             </div>
         </div>
-        <?=$this->getSaveBar()?>
+        <?=$this->getSaveBar() ?>
     </form>
 </fieldset>
 

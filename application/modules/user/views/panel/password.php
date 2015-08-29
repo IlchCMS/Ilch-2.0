@@ -47,7 +47,7 @@ $profil = $this->get('profil');
                         <input type="submit"
                                name="saveEntry"
                                class="btn"
-                               value="<?php echo $this->getTrans('profileSubmit'); ?>" />
+                               value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>
             </form>

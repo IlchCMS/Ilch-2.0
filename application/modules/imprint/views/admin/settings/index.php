@@ -12,7 +12,7 @@
                        name="imprintStyle"
                        id="imprintStyle"
                        value="0"
-                <?php if ($this->get('imprintStyle') == '0') { echo 'checked="checked"';} ?> /> <?php echo $this->getTrans('private'); ?>
+                    <?php if ($this->get('imprintStyle') == '0') { echo 'checked="checked"';} ?> /> <?=$this->getTrans('private') ?>
                 </label>
             </div>
             <div class="radio">
@@ -21,7 +21,7 @@
                        name="imprintStyle"
                        id="imprintStyle"
                        value="1"
-                <?php if ($this->get('imprintStyle') == '1') { echo 'checked="checked"';} ?>> <?php echo $this->getTrans('company'); ?>
+                    <?php if ($this->get('imprintStyle') == '1') { echo 'checked="checked"';} ?>> <?=$this->getTrans('company') ?>
                 </label>
             </div>
         </div>

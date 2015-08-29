@@ -1,17 +1,17 @@
 <form class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
     <?php
-        if ($this->get('page') != '') {
-            echo $this->getTrans('editPage');
-        } else {
-            echo $this->getTrans('addPage');
-        }
+    if ($this->get('page') != '') {
+        echo $this->getTrans('editPage');
+    } else {
+        echo $this->getTrans('addPage');
+    }
     ?>
     </legend>
     <div class="form-group">
         <label for="pageTitleInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('pageTitle'); ?>:
+            <?=$this->getTrans('pageTitle') ?>:
         </label>
         <div class="col-lg-8">
             <input class="form-control"
@@ -27,11 +27,11 @@
         </div>
     </div>
     <?php
-        if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
+    if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
     ?>
     <div class="form-group">
         <label for="pageLanguageInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('pageLanguage'); ?>:
+            <?=$this->getTrans('pageLanguage') ?>:
         </label>
         <div class="col-lg-8">
             <select class="form-control" name="pageLanguage" id="pageLanguageInput">
@@ -59,7 +59,7 @@
     <legend>SEO</legend>
     <div class="form-group">
         <label for="descriptionInput" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('description'); ?>:
+            <?=$this->getTrans('description') ?>:
         </label>
         <div class="col-lg-8">
             <textarea class="form-control" id="descriptionInput" name="description"><?php if ($this->get('page') != '')
@@ -68,10 +68,10 @@
     </div>
     <div class="form-group">
         <label for="pagePerma" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('permaLink'); ?>:
+            <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-8">
-            <?php echo $this->getUrl(); ?>/index.php/<input
+            <?=$this->getUrl() ?>/index.php/<input
                    type="text"
                    name="pagePerma"
                    id="pagePerma"
@@ -86,6 +86,7 @@
     }
     ?>
 </form>
+
 <script>
 <?php
 $pageID = '';
@@ -94,8 +95,7 @@ if ($this->get('page') != '') {
     $pageID = $this->get('page')->getId();
 }
 ?>
-$('#pageTitleInput').change
-(
+$('#pageTitleInput').change (
     function () {
         $('#pagePerma').val
         (
@@ -106,11 +106,10 @@ $('#pageTitleInput').change
     }
 );
 
-$('#pageLanguageInput').change
-(
+$('#pageLanguageInput').change (
     this,
     function () {
-        top.location.href = '<?php echo $this->getUrl(array('id' => $pageID)); ?>/locale/'+$(this).val();
+        top.location.href = '<?=$this->getUrl(array('id' => $pageID)); ?>/locale/'+$(this).val()
     }
 );
 </script>

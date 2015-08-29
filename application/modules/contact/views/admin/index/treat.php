@@ -20,9 +20,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="email" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('email'); ?>:
-        </label>
+        <label for="email" class="col-lg-2 control-label"><?=$this->getTrans('email') ?>:</label>
         <div class="col-lg-2">
             <input class="form-control"
                    type="text"

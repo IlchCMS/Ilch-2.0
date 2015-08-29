@@ -1,19 +1,15 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->getUrl(array('action' => $this->getRequest()->getActionName())); ?>">
-    <?php echo $this->getTokenField(); ?>
-    <legend>
-        <?php echo $this->getTrans('treatpayment'); ?>
-    </legend>
-    <?php
-        foreach ($this->get('checkout') as $checkout) :
-    ?>
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+    <?=$this->getTokenField() ?>
+    <legend><?=$this->getTrans('treatpayment') ?></legend>
+    <?php foreach ($this->get('checkout') as $checkout): ?>
     <div class="form-group">
         <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="name"
                    id="name"
-                   placeholder="<?php echo $this->getTrans('name'); ?>"
-                   value="<?php echo $this->escape($checkout->getName()); ?>" />
+                   placeholder="<?=$this->getTrans('name') ?>"
+                   value="<?=$this->escape($checkout->getName()) ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -22,8 +18,8 @@
                    type="text"
                    name="datetime"
                    id="datetime"
-                   placeholder="<?php echo $this->getTrans('datetime'); ?>"
-                   value="<?php echo $this->escape($checkout->getDatetime()); ?>" />
+                   placeholder="<?=$this->getTrans('datetime') ?>"
+                   value="<?=$this->escape($checkout->getDatetime()) ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -32,8 +28,8 @@
                    type="text"
                    name="usage"
                    id="usage"
-                   placeholder="<?php echo $this->getTrans('usage'); ?>"
-                   value="<?php echo $this->escape($checkout->getUsage()); ?>" />
+                   placeholder="<?=$this->getTrans('usage') ?>"
+                   value="<?=$this->escape($checkout->getUsage()) ?>" />
         </div>
     </div>
     <div class="form-group hidden">
@@ -42,7 +38,7 @@
                    type="text"
                    name="id"
                    id="id"
-                   value="<?php echo $this->escape($checkout->getId()); ?>" />
+                   value="<?=$this->escape($checkout->getId()) ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -51,20 +47,19 @@
                    type="text"
                    name="amount"
                    id="amount"
-                   placeholder="<?php echo $this->getTrans('amount'); ?>"
-                   data-content="<?php echo $this->getTrans('amountinfo'); ?>" 
+                   placeholder="<?=$this->getTrans('amount') ?>"
+                   data-content="<?=$this->getTrans('amountinfo') ?>" 
                    rel="popover" 
                    data-placement="bottom" 
-                   data-original-title="<?php echo $this->getTrans('amount'); ?>" 
+                   data-original-title="<?=$this->getTrans('amount') ?>" 
                    data-trigger="hover"
-                   value="<?php echo $this->escape($checkout->getAmount()); ?>" />
+                   value="<?=$this->escape($checkout->getAmount()) ?>" />
         </div>
     </div>
-    <?php
-        endforeach;
-    ?>
-    <?=$this->getSaveBar('updateButton')?>
+    <?php endforeach; ?>
+    <?=$this->getSaveBar('updateButton') ?>
 </form>
+
 <script>
-    $('#amount').popover();
+$('#amount').popover();
 </script>
