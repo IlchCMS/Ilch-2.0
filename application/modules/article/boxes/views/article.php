@@ -1,4 +1,5 @@
 <?php $articles = $this->get('articles') ?>
+
 <?php if (!empty($articles)): ?>
     <ul class="list-unstyled">
         <?php foreach ($articles as $article): ?>

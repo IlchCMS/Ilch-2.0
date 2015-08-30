@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'calendar',
-        'author' => 'Veldscholten Kevin',
+        'author' => 'Veldscholten, Kevin',
         'icon_small' => 'calendar.png',
         'languages' => array
         (

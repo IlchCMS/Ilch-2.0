@@ -27,11 +27,11 @@ class Regist extends \Ilch\Controller\Frontend
                     $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
                     $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
                 }
-            }else{
+            } else {
                 $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
                 $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
             }
-        }else{
+        } else {
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'));
         
             $this->getView();   
@@ -100,7 +100,7 @@ class Regist extends \Ilch\Controller\Frontend
 
                 if ($this->getConfig()->get('regist_confirm') == 0){
                     $model->setDateConfirmed($currentDate);
-                }else{
+                } else {
                     $confirmedCode = md5(uniqid(rand()));
                     $model->setConfirmed(0);
                     $model->setConfirmedCode($confirmedCode);
@@ -111,20 +111,14 @@ class Regist extends \Ilch\Controller\Frontend
                 $_SESSION["name"] = $name;
                 $_SESSION["email"] = $email;
 
-                if($this->getConfig()->get('regist_confirm') == '0'){
+                if ($this->getConfig()->get('regist_confirm') == 1) {
+                    $sitetitle = $this->getConfig()->get('page_title');
+                    $comfirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'">'.$this->getTranslator()->trans('confirmRegistrationEmaillink').'</a>';
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email,$name)
-                            ->setSubject('Automatische E-Mail')
-                            ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.',\n\nWillkommen auf '.$this->getConfig()->get('page_title').' Sie können sich nun mit ihren Angegebenen Datein einloggen.\n\nMit freundlichen Grüßen\nAdministrator.')
-                            ->addGeneralHeader('Content-type', 'text/plain; charset="utf-8"');
-                    $mail->send();
-                } else {
-                    $mail = new \Ilch\Mail();
-                    $mail->setTo($email,$name)
-                            ->setSubject('Automatische E-Mail')
-                            ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.',\n\num die Registrierung erfolgreich abzuschließen klicke Sie Bitte auf folgenden Link. <a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>\n\nMit freundlichen Grüßen\nAdministrator.')
+                            ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                            ->setFrom($this->getTranslator()->trans('automaticEmail'), $this->getConfig()->get('page_title'))
+                            ->setMessage('Hallo '.$name.',\n\nWillkommen auf '.$sitetitle.'.\num die Registrierung erfolgreich abzuschließen klicke Sie Bitte auf folgenden Link.\n'.$comfirmCode.'\n\nMit freundlichen Grüßen\nAdministrator.')
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
                     $mail->send();
                 }
@@ -168,7 +162,7 @@ class Regist extends \Ilch\Controller\Frontend
             
             $this->getView()->set('errors', $errors);
             
-        }else{
+        } else {
             $userMapper = new UserMapper();
             $confirmed = $this->getRequest()->getParam('code');
             $user = $userMapper->getUserByConfirmedCode($confirmed);

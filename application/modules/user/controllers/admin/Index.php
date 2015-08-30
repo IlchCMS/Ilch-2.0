@@ -9,7 +9,6 @@ namespace Modules\User\Controllers\Admin;
 use Modules\User\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
-use Modules\User\Mappers\Setting as SettingMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use \Ilch\Registry as Registry;
@@ -18,9 +17,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * Handles action for the main admin configuration page.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Index extends BaseController
 {

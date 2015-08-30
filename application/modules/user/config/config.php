@@ -46,7 +46,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('avatar_uploadpath', 'application/modules/user/static/upload/avatar/');
         $databaseConfig->set('avatar_height', '120');
         $databaseConfig->set('avatar_width', '120');
-        $databaseConfig->set('avatar_size', '24995');
+        $databaseConfig->set('avatar_size', '51200');
         $databaseConfig->set('avatar_filetypes', 'jpg jpeg png gif');
         $user = new \Modules\User\Models\User();
         $user->setName($_SESSION['install']['adminName']);

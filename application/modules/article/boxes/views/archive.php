@@ -2,6 +2,7 @@
 $articleMapper = new \Modules\Article\Mappers\Article();
 $archive = $this->get('archive')
 ?>
+
 <?php if (!empty($archive)): ?>
     <ul class="list-unstyled">
         <?php foreach ($archive as $archiv): ?>

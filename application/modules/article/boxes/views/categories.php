@@ -2,6 +2,7 @@
 $articleMapper = new \Modules\Article\Mappers\Article();
 $cats = $this->get('cats');
 ?>
+
 <?php if ($cats != ''): ?>
     <ul class="list-unstyled">
         <?php foreach ($cats as $cat): ?>

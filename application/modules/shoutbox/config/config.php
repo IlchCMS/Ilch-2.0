@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'shoutbox',
-        'author' => 'Veldscholten Kevin',
+        'author' => 'Veldscholten, Kevin',
         'icon_small' => 'shoutbox.png',
         'languages' => array
         (
@@ -42,6 +42,8 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_shoutbox`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_limit'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_maxwordlength'");
     }
 
     public function getInstallSql()

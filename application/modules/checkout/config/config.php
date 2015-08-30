@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'checkout',
-        'author' => 'Stantin Thomas',
+        'author' => 'Stantin, Thomas',
         'icon_small' => 'checkout.png',
         'languages' => array
         (
@@ -40,6 +40,7 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_checkout`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'checkout_contact'");
     }
 
     public function getInstallSql()

@@ -168,6 +168,7 @@
             </div>
         </div>
     </div>
+
     <legend><?=$this->getTrans('backendFunctions') ?></legend>
     <div class="form-group">
         <label for="navbarFixed" class="col-lg-2 control-label">

@@ -34,7 +34,19 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+            )
+        );
+
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
                 'name' => 'add',
+                'active' => false,
                 'icon' => 'fa fa-plus-circle',
                 'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )

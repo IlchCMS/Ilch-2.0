@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
     public $config = array
     (
         'key' => 'war',
-        'author' => 'Stantin Thomas',
+        'author' => 'Stantin, Thomas',
         'icon_small' => 'war.png',
         'languages' => array
         (

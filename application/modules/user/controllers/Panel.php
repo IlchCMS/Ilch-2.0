@@ -104,7 +104,7 @@ class Panel extends BaseController
             $path = $this->getConfig()->get('avatar_uploadpath');
             $file = $_FILES['avatar']['name'];
             $file_tmpe = $_FILES['avatar']['tmp_name'];
-            $endung = pathinfo($file, PATHINFO_EXTENSION);
+            $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
             $file_size = $_FILES['avatar']['size'];
 
             if (in_array($endung, explode(' ', $avatarAllowedFiletypes))) {

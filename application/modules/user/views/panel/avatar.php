@@ -9,9 +9,9 @@ $settingMapper = new \Modules\User\Mappers\Setting();
         <div class="col-lg-2">
             <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
             <ul class="nav">
-            <?php foreach ($this->get('usermenu') as $usermenu): ?>
-                <li><a class="" href="<?=$this->getUrl($usermenu->getKey()) ?>"><?=$usermenu->getTitle() ?></a></li>
-            <?php endforeach; ?>
+                <?php foreach ($this->get('usermenu') as $usermenu): ?>
+                    <li><a class="" href="<?=$this->getUrl($usermenu->getKey()) ?>"><?=$usermenu->getTitle() ?></a></li>
+                <?php endforeach; ?>
             </ul>
         </div>
         <div class="col-lg-10">
@@ -59,25 +59,25 @@ $settingMapper = new \Modules\User\Mappers\Setting();
 </div>
 
 <script>
-    $(document).on('change', '.btn-file :file', function() {
-  var input = $(this),
-      numFiles = input.get(0).files ? input.get(0).files.length : 1,
-      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-  input.trigger('fileselect', [numFiles, label]);
+$(document).on('change', '.btn-file :file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
 });
 
 $(document).ready( function() {
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-        
+
         var input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
-        
+
         if( input.length ) {
             input.val(log);
         } else {
             if( log ) alert(log);
         }
-        
+
     });
 });
 </script>
