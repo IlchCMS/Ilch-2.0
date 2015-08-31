@@ -15,4 +15,6 @@ return array
     'commentText' => 'Text',
     'commentLink' => 'Link',
     'noComments' => 'Keine Kommentare',
+	'commentModul' => 'Modul',
+	'commentID' => 'ID',
 );
