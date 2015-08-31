@@ -33,7 +33,9 @@ $rewriteBaseParts = explode('index.php', str_replace('Index.php', 'index.php', $
 $rewriteBaseParts = rtrim(reset($rewriteBaseParts), '/');
 
 define('REWRITE_BASE', $rewriteBaseParts);
-define('BASE_URL', 'http://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
+$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
+
 
 require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
 $loader = new \Ilch\Loader();
