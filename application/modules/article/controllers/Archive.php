@@ -40,7 +40,7 @@ class Archive extends \Ilch\Controller\Frontend
     {
         $articleMapper = new ArticleMapper();
 
-        $date = new \Ilch\Date($this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
+        $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), array('controller' => 'index', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('menuArchives'), array('action' => 'index'))

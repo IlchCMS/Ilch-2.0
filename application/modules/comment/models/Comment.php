@@ -19,6 +19,11 @@ class Comment extends \Ilch\Model
      * @var integer
      */
     protected $id;
+	
+	/**
+     * @var integer
+     */
+    protected $fkid;
 
     /**
      * @var string
@@ -55,6 +60,25 @@ class Comment extends \Ilch\Model
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
+    }
+	
+	/**
+     * @return integer
+     */
+    public function getFKId()
+    {
+        return $this->fk_id;
+    }
+
+    /**
+     * @param integer $fkid
+     * @return this
+     */
+    public function setFKId($fkid)
+    {
+        $this->fk_id = (int)$fkid;
 
         return $this;
     }
