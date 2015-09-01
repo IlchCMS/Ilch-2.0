@@ -15,5 +15,8 @@ return array
     'commentText' => 'Text',
     'commentLink' => 'Link',
     'noComments' => 'No Comments',
-	'commentModul' => 'Modul',
+    'commentModul' => 'Modul',
+    'commentID' => 'ID',
+    'submit' => 'Save',
+    'reply' => 'Reply',
 );

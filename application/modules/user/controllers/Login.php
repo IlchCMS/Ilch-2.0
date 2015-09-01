@@ -127,7 +127,7 @@ class Login extends \Ilch\Controller\Frontend
                     $user = $userMapper->getUserByName($name);
                 }
 
-                if(!empty($user)) {
+                if (!empty($user)) {
                     $confirmedCode = md5(uniqid(rand()));
                     $user->setConfirmed(0);
                     $user->setConfirmedCode($confirmedCode);
@@ -135,17 +135,36 @@ class Login extends \Ilch\Controller\Frontend
 
                     $name = $user->getName();
                     $email = $user->getEmail();
+                    $sitetitle = $this->getConfig()->get('page_title');
+                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $date = new \Ilch\Date();
+
+                    if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
+                    } else {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
+                    }
+                    $messageReplace = array(
+                            '{content}' => $this->getConfig()->get('password_change_mail'),
+                            '{sitetitle}' => $sitetitle,
+                            '{date}' => $date->format("l, d. F Y", true),
+                            '{name}' => $name,
+                            '{confirm}' => $confirmCode,
+                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                    );
+                    $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email,$name)
-                            ->setSubject('Automatische E-Mail')
-                            ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.',<br><br>um ihr neues Passwort zu erstellen klicke Sie bitte auf folgenden Link. <a href="'.BASE_URL.'/index.php/user/login/newpassword/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>\n\nMit freundlichen Grüßen\nAdministrator.')
+                            ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                            ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
+                            ->setMessage($message)
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
                     $mail->send();
 
                     $this->addMessage('newPasswordEMailSuccess');
                 } else {
-                    $this->addMessage('newPasswordFailed', 'danger');                    
+                    $this->addMessage('newPasswordFailed', 'danger');
                 }
             }
         }

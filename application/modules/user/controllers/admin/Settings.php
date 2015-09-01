@@ -26,6 +26,7 @@ class Settings extends BaseController
             $this->getConfig()->set('avatar_filetypes', $this->getRequest()->getPost('avatar_filetypes'));
             $this->getConfig()->set('regist_rules', $this->getRequest()->getPost('regist_rules'));
             $this->getConfig()->set('regist_confirm_mail', $this->getRequest()->getPost('regist_confirm_mail'));
+            $this->getConfig()->set('password_change_mail', $this->getRequest()->getPost('password_change_mail'));
             $this->addMessage('saveSuccess');
         }
         
@@ -37,5 +38,6 @@ class Settings extends BaseController
         $this->getView()->set('avatar_filetypes', $this->getConfig()->get('avatar_filetypes'));
         $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
         $this->getView()->set('regist_confirm_mail', $this->getConfig()->get('regist_confirm_mail'));
+        $this->getView()->set('password_change_mail', $this->getConfig()->get('password_change_mail'));
     }
 }

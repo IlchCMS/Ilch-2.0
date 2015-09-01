@@ -92,6 +92,23 @@
             </select>
         </div>
     </div>
+    <div id="contentLanguage" class="form-group">
+        <label for="localeInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('locale') ?>:
+        </label>
+        <div class="col-lg-2">
+            <select class="form-control" name="locale" id="languageInput">
+                <?php foreach ($this->get('languages') as $key => $value): ?>
+                    <?php $selected = ''; ?>
+                    <?php if ($this->get('locale') == $key): ?>
+                        <?php $selected = 'selected="selected"'; ?>
+                    <?php endif; ?>
+
+                    <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <div class="form-group">
         <label for="standardMailInput" class="col-lg-2 control-label">
             <?=$this->getTrans('timezone') ?>:

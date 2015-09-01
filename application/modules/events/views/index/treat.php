@@ -20,9 +20,11 @@ $settingMapper = new \Modules\User\Mappers\Setting();
         </label>
         <div class="col-lg-10">
             <?php if ($this->get('event') != ''): ?>
-            <div class="col-lg-7 col-sm-7 col-7">
-                <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>">
-            </div>
+                <div class="col-lg-7 col-sm-7 col-7">
+                    <?php if ($this->escape($this->get('event')->getImage()) != ''): ?>
+                        <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>">
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
             <div class="col-lg-7">
                 <p><?=$this->getTrans('imageSize') ?>: <?=$this->get('image_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('image_height') ?> Pixel <?=$this->getTrans('height') ?>.</p>

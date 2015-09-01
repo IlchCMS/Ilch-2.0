@@ -100,7 +100,7 @@ class Panel extends BaseController
                 ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
                 ->add($this->getTranslator()->trans('menuAvatar'), array('controller' => 'panel', 'action' => 'avatar'));
 
-        if ($this->getRequest()->isPost() & !empty($_FILES['avatar']['name'])) {
+        if ($this->getRequest()->isPost() && !empty($_FILES['avatar']['name'])) {
             $path = $this->getConfig()->get('avatar_uploadpath');
             $file = $_FILES['avatar']['name'];
             $file_tmpe = $_FILES['avatar']['tmp_name'];
@@ -136,7 +136,7 @@ class Panel extends BaseController
             }
 
             $this->redirect(array('action' => 'avatar'));
-        } elseif ($this->getRequest()->isPost() & !empty($this->getRequest()->getPost('avatar_delete'))) {
+        } elseif ($this->getRequest()->isPost() && $this->getRequest()->getPost('avatar_delete') != '') {
             $settingMapper = new SettingMapper();
             $settingMapper->delAvatarById($this->getUser()->getId());
 

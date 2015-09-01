@@ -15,4 +15,6 @@ $archive = $this->get('archive')
             </li>
         <?php endforeach; ?>
     </ul>
+<?php else: ?>
+    <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

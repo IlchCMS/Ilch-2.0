@@ -36,7 +36,7 @@ $preview = $this->getRequest()->getParam('preview');
     <div class="row">
         <div class="col-md-12">
             <h3 class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=count($comments) ?>)</h3>
-            <?php if($this->getUser()): ?>            
+            <?php if($this->getUser()): ?>
                 <form action="" class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
                     <section class="comment-list">
@@ -54,11 +54,11 @@ $preview = $this->getRequest()->getParam('preview');
                                             <time class="comment-date"><i class="fa fa-clock-o"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?></time>
                                         </header>
                                         <div class="comment-post">
-                                            <p>                                                
+                                            <p>
                                                 <textarea class="form-control"
                                                           accesskey=""
                                                           name="article_comment_text"
-                                                          required></textarea>                                             
+                                                          required></textarea>
                                             </p>
                                         </div>
                                         <p class="text-right submit">
@@ -73,40 +73,36 @@ $preview = $this->getRequest()->getParam('preview');
                         </article>
                     </section>
                 </form>
-            <?php endif; 
-
-			foreach($comments as $comment){
-				$user = $userMapper->getUserById($comment->getUserId());
-				$commentDate = new \Ilch\Date($comment->getDateCreated());
-				?>
-				<section class="comment-list">
-				<article class="row" id="<?=$comment->getId() ?>">
-					<div class="col-md-2 col-sm-2 hidden-xs">
-						<figure class="thumbnail">
-							<a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>"></a>
-						</figure>
-					</div>
-					<div class="col-md-10 col-sm-10"><div class="panel panel-default arrow left"><div class="panel-bodylist">
-						<header class="text-left">
-							<div class="comment-user"><i class="fa fa-user"></i> 
-								<a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())) ?>"><?=$this->escape($user->getName()) ?></a>
-							</div>
-							<time class="comment-date"><i class="fa fa-clock-o"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
-						</header>
-						<div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>
-						<p class="text-right"><a href="<?=$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId(), 'id_a' => $article->getId())) ?>" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-					</div></div></div>
-				</article>
-				</section>
-				<?php
-				$fk_comments = $commentMapper->getCommentsByFKId($comment->getId());
-				$commentMapper->comments_comment(
-					$comment->getId(), 
-					$comment->getUserId(),
-					1
-				);
-			}		
-			?>    
+            <?php endif; ?>
+            <?php foreach ($comments as $comment): ?>
+                <?php $user = $userMapper->getUserById($comment->getUserId()); ?>
+                <?php $commentDate = new \Ilch\Date($comment->getDateCreated()); ?>
+                <section class="comment-list">
+                    <article class="row" id="<?=$comment->getId() ?>">
+                        <div class="col-md-2 col-sm-2 hidden-xs">
+                            <figure class="thumbnail">
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>"></a>
+                            </figure>
+                        </div>
+                            <div class="col-md-10 col-sm-10">
+                                <div class="panel panel-default arrow left">
+                                    <div class="panel-bodylist">
+                                        <header class="text-left">
+                                            <div class="comment-user"><i class="fa fa-user"></i> 
+                                                <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())) ?>"><?=$this->escape($user->getName()) ?></a>
+                                            </div>
+                                            <time class="comment-date"><i class="fa fa-clock-o"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
+                                        </header>
+                                        <div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>
+                                        <p class="text-right"><a href="<?=$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId(), 'id_a' => $article->getId())) ?>" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                    </article>
+                </section>
+                <?php $fk_comments = $commentMapper->getCommentsByFKId($comment->getId()); ?>
+                <?php $commentMapper->comments_comment($comment->getId(), $comment->getUserId(), 1); ?>
+            <?php endforeach; ?>
         </div>
     </div>
 <?php endif; ?>

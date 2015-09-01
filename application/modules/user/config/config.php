@@ -42,7 +42,21 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('regist_accept', '1');
         $databaseConfig->set('regist_confirm', '1');
         $databaseConfig->set('regist_rules', "Die Registrierung ist völlig Kostenlos.\nDie Betreiber der Seite übernehmen keine Haftung.\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.");
-        $databaseConfig->set('regist_confirm_mail', "Willkommen auf dieser Seite!\n\nDa Ihr Passwort nur verschlüsselt in der Datenbank gespeichert wurde, heben Sie es bitte gut auf.\n\nMit freundlichen Grüßen\nAdministrator.");
+        $databaseConfig->set('regist_confirm_mail', '<p>Hallo <b>{name}</b>,</p>
+                              <p>&nbsp;</p>
+                              <p>Willkommen auf <i>{sitetitle}</i>.</p>
+                              <p>um die Registrierung erfolgreich abzuschlie&szlig;en klicken Sie Bitte auf folgenden Link.</p>
+                              <p>{comfirm}</p>
+                              <p>&nbsp;</p>
+                              <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                              <p>Administrator</p>');
+        $databaseConfig->set('password_change_mail', '<p>Hallo <b>{name}</b>,</p>
+                              <p>&nbsp;</p>
+                              <p>um Ihr Passwort auf <i>{sitetitle}</i> zu ändern klicken Sie Bitte auf folgenden Link.</p>
+                              <p>{comfirm}</p>
+                              <p>&nbsp;</p>
+                              <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                              <p>Administrator</p>');
         $databaseConfig->set('avatar_uploadpath', 'application/modules/user/static/upload/avatar/');
         $databaseConfig->set('avatar_height', '120');
         $databaseConfig->set('avatar_width', '120');

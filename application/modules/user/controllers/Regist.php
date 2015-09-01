@@ -105,7 +105,6 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setConfirmed(0);
                     $model->setConfirmedCode($confirmedCode);
                 }
-
                 $registMapper->save($model);
 
                 $_SESSION["name"] = $name;
@@ -113,12 +112,29 @@ class Regist extends \Ilch\Controller\Frontend
 
                 if ($this->getConfig()->get('regist_confirm') == 1) {
                     $sitetitle = $this->getConfig()->get('page_title');
-                    $comfirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'">'.$this->getTranslator()->trans('confirmRegistrationEmaillink').'</a>';
+                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $date = new \Ilch\Date();
+
+                    if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/registconfirm.php')) {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/registconfirm.php');
+                    } else {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/registconfirm.php');
+                    }
+                    $messageReplace = array(
+                            '{content}' => $this->getConfig()->get('regist_confirm_mail'),
+                            '{sitetitle}' => $sitetitle,
+                            '{date}' => $date->format("l, d. F Y", true),
+                            '{name}' => $name,
+                            '{confirm}' => $confirmCode,
+                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                    );
+                    $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email,$name)
                             ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                            ->setFrom($this->getTranslator()->trans('automaticEmail'), $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.',\n\nWillkommen auf '.$sitetitle.'.\num die Registrierung erfolgreich abzuschließen klicke Sie Bitte auf folgenden Link.\n'.$comfirmCode.'\n\nMit freundlichen Grüßen\nAdministrator.')
+                            ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
+                            ->setMessage($message)
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
                     $mail->send();
                 }
@@ -169,10 +185,9 @@ class Regist extends \Ilch\Controller\Frontend
             
             if (!empty($confirmed)) {
                 if(!empty($user)) {
-                    $user->setConfirmedCode($confirmed);
                     $user->setConfirmed(1);
                     $user->setConfirmedCode('');
-                    $userId = $userMapper->save($user);
+                    $userMapper->save($user);
 
                     $confirmed = '1';
                     $this->getView()->set('confirmed', $confirmed);

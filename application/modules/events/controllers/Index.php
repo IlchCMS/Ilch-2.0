@@ -83,7 +83,6 @@ class Index extends \Ilch\Controller\Frontend
                         }
 
                         $eventModel->setImage($image);
-                        $eventMapper->save($eventModel);
 
                         if (move_uploaded_file($file_tmpe, $image)) {
                             $this->addMessage('successImage');

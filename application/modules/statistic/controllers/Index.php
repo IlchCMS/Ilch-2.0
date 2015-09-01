@@ -28,7 +28,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour());
         $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay());
-        $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay($date->format('Y'), $date->format('m')));
+        $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay($date->format('Y', true), $date->format('m', true)));
         $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth());
         $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear());
         $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser());
