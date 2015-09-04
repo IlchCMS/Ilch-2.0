@@ -59,11 +59,10 @@
     <?php $boxID = $this->get('box')->getId(); ?>
 <?php endif; ?>
 
-$('#boxLanguageInput').change
-(
+$('#boxLanguageInput').change (
     this,
     function () {
-        top.location.href = '<?php echo $this->getUrl(array('id' => $boxID)); ?>/locale/'+$(this).val();
+        top.location.href = '<?=$this->getUrl(array('id' => $boxID)); ?>/locale/'+$(this).val()
     }
 );
 </script>

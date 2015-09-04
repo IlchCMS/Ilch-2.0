@@ -1,8 +1,9 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('mediaUpload') ?></legend>
 <div class="container">
     <form id="upload" method="post" action="<?=$this->getUrl('index.php/admin/media/index/upload') ?>" enctype="multipart/form-data">
-    <?php echo $this->getTokenField() ?>
+        <?=$this->getTokenField() ?>
         <div id="drop">
             <p><?=$this->getTrans('drag') ?></p>
             <i class="fa fa-cloud-upload"></i>

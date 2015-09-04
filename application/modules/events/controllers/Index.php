@@ -47,9 +47,15 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
         }
 
+        $imageAllowedFiletypes = $this->getConfig()->get('event_filetypes');
+        $imageHeight = $this->getConfig()->get('event_height');
+        $imageWidth = $this->getConfig()->get('event_width');
+        $imageSize = $this->getConfig()->get('event_size');
+
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getParam('id')) {
                 $eventModel->setId($this->getRequest()->getParam('id'));
+                $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
             }
 
             $title = trim($this->getRequest()->getPost('title'));
@@ -57,14 +63,36 @@ class Index extends \Ilch\Controller\Frontend
             $place = trim($this->getRequest()->getPost('place'));
             $text = trim($this->getRequest()->getPost('text'));
 
-            if(!empty($_FILES['image']['name'])) {
-                $path = 'application/modules/events/static/upload/image/';
+            if (!empty($_FILES['image']['name'])) {
+                $path = $this->getConfig()->get('event_uploadpath');
                 $file = $_FILES['image']['name'];
-                $endung = pathinfo($file, PATHINFO_EXTENSION);
-                $name = pathinfo($file, PATHINFO_FILENAME);
-                $image = $path.$name.'.'.$endung;
+                $file_tmpe = $_FILES['image']['tmp_name'];
+                $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                $file_size = $_FILES['image']['size'];
 
-                move_uploaded_file($_FILES['image']['tmp_name'], $path.$name.'.'.$endung);
+                if (in_array($endung, explode(' ', $imageAllowedFiletypes))) {
+                    $size = getimagesize($file_tmpe);
+                    $width = $size[0];
+                    $height = $size[1];
+
+                    if ($file_size <= $imageSize AND $width == $imageWidth AND $height == $imageHeight) {
+                        $image = $path.$title.'-'.time().'.'.$endung;
+
+                        if ($this->getRequest()->getParam('id') AND $event->getImage() != '') {
+                            $eventMapper->delImageById($this->getUser()->getId());
+                        }
+
+                        $eventModel->setImage($image);
+
+                        if (move_uploaded_file($file_tmpe, $image)) {
+                            $this->addMessage('successImage');
+                        }
+                    } else {
+                        $this->addMessage('failedFilesize', 'warning');
+                    }
+                } else {
+                    $this->addMessage('failedFiletypes', 'warning');
+                }
             }
 
             if (empty($dateCreated)) {
@@ -101,6 +129,11 @@ class Index extends \Ilch\Controller\Frontend
         if ($eventMapper->existsTable('ilch_calendar') == true) {
             $this->getView()->set('calendarShow', 1);
         }
+
+        $this->getView()->set('image_height', $imageHeight);
+        $this->getView()->set('image_width', $imageWidth);
+        $this->getView()->set('image_size', $imageSize);
+        $this->getView()->set('image_filetypes', $imageAllowedFiletypes);
     }
 
     public function delAction()

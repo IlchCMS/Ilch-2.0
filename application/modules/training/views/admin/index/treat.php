@@ -94,7 +94,7 @@
     </div>
     <div class="form-group">
         <label for="voiceServer" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('voiceServer'); ?>:
+            <?=$this->getTrans('voiceServer') ?>:
         </label>
         <div class="col-lg-2">
             <input type="checkbox"
@@ -116,7 +116,7 @@
     <div id="voiceServerInfo" <?=$voiceDisplay ?>>
         <div class="form-group">
             <label for="voiceServerIP" class="col-lg-2 control-label">
-                <?php echo $this->getTrans('voiceServerIP'); ?>:
+                <?=$this->getTrans('voiceServerIP') ?>:
             </label>
             <div class="col-lg-4">
                 <input class="form-control"
@@ -128,7 +128,7 @@
         </div>
         <div class="form-group">
             <label for="voiceServerPW" class="col-lg-2 control-label">
-                <?php echo $this->getTrans('voiceServerPW'); ?>:
+                <?=$this->getTrans('voiceServerPW') ?>:
             </label>
             <div class="col-lg-4">
                 <input class="form-control"
@@ -141,7 +141,7 @@
     </div>
     <div class="form-group">
         <label for="gameServer" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('gameServer'); ?>:
+            <?=$this->getTrans('gameServer') ?>:
         </label>
         <div class="col-lg-2">
             <input type="checkbox"
@@ -163,7 +163,7 @@
     <div id="gameServerInfo" <?=$gameDisplay ?>>
         <div class="form-group">
             <label for="gameServerIP" class="col-lg-2 control-label">
-                <?php echo $this->getTrans('gameServerIP'); ?>:
+                <?=$this->getTrans('gameServerIP') ?>:
             </label>
             <div class="col-lg-4">
                 <input class="form-control"
@@ -175,7 +175,7 @@
         </div>
         <div class="form-group">
             <label for="gameServerPW" class="col-lg-2 control-label">
-                <?php echo $this->getTrans('gameServerPW'); ?>:
+                <?=$this->getTrans('gameServerPW') ?>:
             </label>
             <div class="col-lg-4">
                 <input class="form-control"
@@ -207,26 +207,26 @@
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $(".form_datetime").datetimepicker({
-            format: "dd.mm.yyyy hh:ii",
-            autoclose: true,
-            language: 'de',
-            minuteStep: 15
-        });
+$(document).ready(function() {
+    $(".form_datetime").datetimepicker({
+        format: "dd.mm.yyyy hh:ii",
+        autoclose: true,
+        language: 'de',
+        minuteStep: 15
     });
- 
-    (function ($) {
-      $('.spinner .btn:first-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-      });
-      $('.spinner .btn:last-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-      });
-    })(jQuery);
+});
 
-    function showMe (it, box) { 
-        var vis = (box.checked) ? "block" : "none"; 
-        document.getElementById(it).style.display = vis;
-    } 
+(function ($) {
+  $('.spinner .btn:first-of-type').on('click', function() {
+    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+  });
+  $('.spinner .btn:last-of-type').on('click', function() {
+    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+  });
+})(jQuery);
+
+function showMe (it, box) { 
+    var vis = (box.checked) ? "block" : "none"; 
+    document.getElementById(it).style.display = vis;
+} 
 </script>

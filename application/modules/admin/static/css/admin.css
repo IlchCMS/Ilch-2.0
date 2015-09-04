@@ -36,20 +36,20 @@ header .rightbar li > #search-header:hover {
     background: #e7e7e7;
 }
 header .rightbar .opens {
-    right: 0;
-    top: 40px;
-    padding: 4px;
+    right: 0; 
+    top: 40px; 
+    padding: 4px; 
     position: absolute;
-    background: #e7e7e7;
+    background: #e7e7e7; 
     border: solid 1px #ccc;
-    box-shadow: 0 1px 3px #ddd;
+    box-shadow: 0 1px 3px #ddd; 
     display: inherit !important
 }
 header .rightbar .search-close {
     display: none;
 }
 header .rightbar .search-opens form {
-    margin: 0;
+    margin: 0;	
 }
 header .rightbar > li > #search-header:hover {
     color: #fff !important;
@@ -125,14 +125,9 @@ aside > nav > ul > li.heading {
     border-width: 1px 0px;
     box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1) inset, 0px -1px 0px rgba(0, 0, 0, 0.07) inset;
     width: 100%;
-    margin: 15px 0 0 0 !important;
+    margin: 0px !important;
     box-sizing: border-box;
 }
-
-aside > nav > ul > li.heading:first-child {
-    margin: 0 !important;
-}
-
 aside > nav > ul > li.active {
     background: #C9C9C9;
     background: -moz-linear-gradient(left, #C9C9C9 93%, #4A4847 100%);
@@ -171,11 +166,11 @@ aside > nav > ul > li.active {
 }
 .watermark {
     opacity: 0.5;
-    position: fixed;
-    bottom: 0px;
-    width: 220px;
+    position: fixed; 
+    bottom: 0px; 
+    width: 220px; 
     height: auto;
-    -webkit-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; 
     -webkit-transform: translate(0px, 0) translateZ(0px);
 }
 .navbar-nav > li > a  {

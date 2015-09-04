@@ -35,6 +35,7 @@
     width: 88px;
     margin: 0px auto;
 }
+
 /* Portrait tablets and medium desktops */
 @media (min-width: 768px) {
     .comment-list .arrow:after, .comment-list .arrow:before {

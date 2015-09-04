@@ -1,9 +1,10 @@
 <?php
 $errors = $this->get('errors');
 ?>
+
 <div class="form-group">
     <label for="dbEngine" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('dbEngine'); ?>:
+        <?=$this->getTrans('dbEngine') ?>:
     </label>
     <div class="col-lg-8">
         <select name="dbEngine" class="form-control" id="dbEngine">
@@ -13,7 +14,7 @@ $errors = $this->get('errors');
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
     <label for="dbHost" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('dbHost'); ?>:
+        <?=$this->getTrans('dbHost') ?>:
     </label>
     <div class="col-lg-8 input-group">
         <input value="<?php if ($this->get('dbHost') != '') { echo $this->escape($this->get('dbHost')); } else { echo 'localhost'; } ?>"
@@ -21,7 +22,7 @@ $errors = $this->get('errors');
                class="form-control"
                name="dbHost"
                id="dbHost" />
-        <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbHostInfo'); ?>"><i class="fa fa-info-circle"></i></div>
+        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa fa-info-circle"></i></div>
     </div>    
     <?php
         if (!empty($errors['dbConnection'])) {
@@ -31,7 +32,7 @@ $errors = $this->get('errors');
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
     <label for="dbUser" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('dbUser'); ?>:
+        <?=$this->getTrans('dbUser') ?>:
     </label>
     <div class="col-lg-8 input-group">
         <input value="<?php if ($this->get('dbUser') != '') { echo $this->escape($this->get('dbUser')); } ?>"
@@ -39,12 +40,12 @@ $errors = $this->get('errors');
                class="form-control"
                name="dbUser"
                id="dbUser" />
-        <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbUserInfo'); ?>"><i class="fa fa-info-circle"></i></div>
+        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbUserInfo') ?>"><i class="fa fa-info-circle"></i></div>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
     <label for="dbPassword" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('dbPassword'); ?>:
+        <?=$this->getTrans('dbPassword') ?>:
     </label>
     <div class="col-lg-8">
         <input value="<?php if ($this->get('dbPassword') != '') { echo $this->escape($this->get('dbPassword')); } ?>"
@@ -56,7 +57,7 @@ $errors = $this->get('errors');
 </div>
 <div class="form-group <?php if (!empty($errors['dbDatabase'])) { echo 'has-error'; }; ?>">
         <label for="dbName" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('dbName'); ?>:
+            <?=$this->getTrans('dbName') ?>:
         </label>
         <div class="col-lg-8 input-group">
             <input value="<?php if ($this->get('dbName') != '') { echo $this->escape($this->get('dbName')); } ?>"
@@ -64,7 +65,7 @@ $errors = $this->get('errors');
                    name="dbName"
                    class="form-control"
                    id="dbName" />
-            <div class="input-group-addon" rel="tooltip" title="<?php echo $this->getTrans('dbNameInfo'); ?>"><i class="fa fa-info-circle"></i></div>
+            <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbNameInfo') ?>"><i class="fa fa-info-circle"></i></div>
         </div> 
         <?php
             if (!empty($errors['dbDatabase'])) {
@@ -75,7 +76,7 @@ $errors = $this->get('errors');
 </div>
 <div class="form-group">
     <label for="dbPrefix" class="col-lg-2 control-label">
-        <?php echo $this->getTrans('dbPrefix'); ?>:
+        <?=$this->getTrans('dbPrefix') ?>:
     </label>
     <div class="col-lg-8">
         <input value="<?php if ($this->get('dbPrefix') != '') { echo $this->escape($this->get('dbPrefix')); } else { echo 'ilch_'; } ?>"
@@ -85,16 +86,18 @@ $errors = $this->get('errors');
                id="dbPrefix" />
     </div>
 </div>
+
 <script type="text/javascript">
-    $(function () {
-        $("[rel='tooltip']").tooltip({
-            'placement': 'bottom',
-            'container': 'body'
-        });
+$(function () {
+    $("[rel='tooltip']").tooltip({
+        'placement': 'bottom',
+        'container': 'body'
     });
+});
 </script>
+
 <style>
-    .form-group .col-lg-8 {
-        padding: 0px;
-    }
+.form-group .col-lg-8 {
+    padding: 0px;
+}
 </style>

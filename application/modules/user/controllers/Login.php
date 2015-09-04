@@ -28,9 +28,9 @@ class Login extends \Ilch\Controller\Frontend
 
             if (empty($emailName)) {
                 $errors['loginContent_emailname'] = 'fieldEmpty';
-            }elseif (empty($password)) {
+            } elseif (empty($password)) {
                 $errors['loginContent_password'] = 'fieldEmpty';
-            }else {
+            } else {
                 $mapper = new UserMapper();
                 $user = $mapper->getUserByEmail($emailName);
 
@@ -40,10 +40,15 @@ class Login extends \Ilch\Controller\Frontend
 
                 if ($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('loginContent_password'), $user->getPassword())) {
                     $_SESSION['messages'][] = array('text' => 'Sie haben einen fehlerhaften Benutzername, E-Mail oder Passwort angegeben. Bitte prüfen Sie ihre Angaben und versuche Sie es erneut.', 'type' => 'warning');
+                } elseif ($user->getConfirmed() == 0) {               
+                    $_SESSION['messages'][] = array('text' => 'Benutzer nicht freigeschaltet! Bitte bestätigen Sie ihren Account in der verschickten E-Mail oder fordern Sie eine neue E-Mail mit einen Freischaltlink an.', 'type' => 'warning');
+                    
+                    $this->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
                 } else {
                     $_SESSION['user_id'] = $user->getId();
-
-                    $this->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));  
+                    
+                    $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
+                    $this->redirect();
                 }
             }
 
@@ -51,6 +56,56 @@ class Login extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
+    }
+
+    public function newpasswordAction()
+    {        
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('newPassword'), array('action' => 'newpassword'));
+
+        if ($this->getRequest()->getPost('saveNewPassword')) {
+            $confirmedCode = $this->getRequest()->getParam('code');
+
+            if (empty($confirmedCode)) {
+                $this->addMessage('missingConfirmedCode', 'danger');
+            } else {
+                $userMapper = new UserMapper();
+                $user = $userMapper->getUserByConfirmedCode($confirmedCode);
+
+                if(!empty($user)) {
+                    $password = trim($this->getRequest()->getPost('password'));
+                    $password2 = trim($this->getRequest()->getPost('password2'));
+
+                    if (empty($password)) {
+                        $this->addMessage('passwordEmpty', $type = 'danger');
+                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                    } elseif (empty($password2)) {
+                        $this->addMessage('passwordRetypeEmpty', $type = 'danger');
+                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                    } elseif (strlen($password) < 6 OR strlen($password) > 30) {
+                        $this->addMessage('passwordLength', $type = 'danger');
+                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                    } elseif ($password != $password2) {
+                        $this->addMessage('passwordNotEqual', $type = 'danger');
+                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                    }
+
+                    if (!empty($password) AND !empty($password2) AND $password == $password2) {
+                        $password = crypt($password);
+                        $user->setConfirmed(1);
+                        $user->setConfirmedCode('');
+                        $user->setPassword($password);
+                        $userMapper->save($user);
+
+                        $this->addMessage('newPasswordSuccess');
+                        $this->redirect(array('action' => 'index'));
+                    }
+                } else {
+                    $this->addMessage('newPasswordFailed', 'danger');                    
+                }
+            }
+        }
     }
 
     public function forgotpasswordAction()
@@ -72,27 +127,44 @@ class Login extends \Ilch\Controller\Frontend
                     $user = $userMapper->getUserByName($name);
                 }
 
-                if(!empty($user)) {
+                if (!empty($user)) {
                     $confirmedCode = md5(uniqid(rand()));
-                    $password = substr(md5(rand()),0,10);
-                    $user->setConfirmed(1);
+                    $user->setConfirmed(0);
                     $user->setConfirmedCode($confirmedCode);
-                    $user->setPassword(crypt($password));
                     $userMapper->save($user);
 
                     $name = $user->getName();
                     $email = $user->getEmail();
+                    $sitetitle = $this->getConfig()->get('page_title');
+                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $date = new \Ilch\Date();
+
+                    if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
+                    } else {
+                        $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
+                    }
+                    $messageReplace = array(
+                            '{content}' => $this->getConfig()->get('password_change_mail'),
+                            '{sitetitle}' => $sitetitle,
+                            '{date}' => $date->format("l, d. F Y", true),
+                            '{name}' => $name,
+                            '{confirm}' => $confirmCode,
+                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                    );
+                    $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email,$name)
-                            ->setSubject('Automatische E-Mail')
-                            ->setFrom('Automatische E-Mail', $this->getConfig()->get('page_title'))
-                            ->setMessage('Hallo '.$name.',<br><br>dein neues Passwort: '.$password.'<br><br>um das neue Passwort zu bestätigen einfach auf den folgenden Link klicken. <a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'">BITTE HIER KLICKEN</a>')
+                            ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                            ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
+                            ->setMessage($message)
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
                     $mail->send();
 
-                    $this->addMessage('newPasswordSuccess');
+                    $this->addMessage('newPasswordEMailSuccess');
                 } else {
-                    $this->addMessage('newPasswordFailed', 'danger');                    
+                    $this->addMessage('newPasswordFailed', 'danger');
                 }
             }
         }

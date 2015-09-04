@@ -13,57 +13,74 @@ defined('ACCESS') or die('no direct access');
 class Media extends \Ilch\Mapper
 {
     /**
-     * @var array Default criteria for opponents (default scope)
+     * Gets the Media List.
+     *
+     * @param \Ilch\Pagination|null $pagination
+     * @return MediaModel[]|array
      */
-    protected $default_criteria = array(
-        'where' => null,
-        'order' => array('m.name' => 'ASC'),
-        'limit' => null,
-    );
-
-    public function getMediaList($criteria = null, $pagination = null)
+    public function getMediaList($pagination = NULL) 
     {
-        $select = $this->db()->select();
-        $result = $select->fields([ 'm.id', 'm.url', 'm.url_thumb', 'm.name', 'm.datetime', 'm.ending', 'm.cat'])
-            ->from(['m' => 'media'])
-            ->join(['c' => 'media_cats'], 'm.cat = c.id', 'LEFT', ['c.cat_name']);
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
+                FROM `[prefix]_media` as m
+                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
+                ORDER by m.id DESC
+                LIMIT '.implode(',',$pagination->getLimit());
 
-        $dbCriteria = $this->default_criteria;
-        if ($criteria !== null && is_array($criteria)) {
-            $dbCriteria = array_merge($dbCriteria, $criteria);
-        }
-        if ($dbCriteria['where']) {
-            $result->where($dbCriteria['where']);
-        }
-        if ($dbCriteria['order']) {
-            $result->order($dbCriteria['order']);
-        }
-        if ($dbCriteria['limit']) {
-            $result->limit($dbCriteria['limit']);
-        }
-        if ($pagination !== null) {
-            $result->limit($pagination->getLimit());
-            $pagination->setRows($result->getNumRows());
-        }
+        $mediaArray = $this->db()->queryArray($sql);
+        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
-        $result = $result->execute();
-
-        if ($result->getNumRows() === 0) {
+        if (empty($mediaArray)) {
             return null;
         }
 
         $media = array();
 
-        while ($row = $result->fetchAssoc()) {
+        foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
-            $entryModel->setId($row['id']);
-            $entryModel->setUrl($row['url']);
-            $entryModel->setUrlThumb($row['url_thumb']);
-            $entryModel->setName($row['name']);
-            $entryModel->setDatetime($row['datetime']);
-            $entryModel->setEnding($row['ending']);
-            $entryModel->setCatName(($row['cat_name']));
-            $entryModel->setCatId(($row['cat']));
+            $entryModel->setId($medias['id']);
+            $entryModel->setUrl($medias['url']);
+            $entryModel->setUrlThumb($medias['url_thumb']);
+            $entryModel->setName($medias['name']);
+            $entryModel->setDatetime($medias['datetime']);
+            $entryModel->setEnding($medias['ending']);
+            $entryModel->setCatName(($medias['cat_name']));
+            $entryModel->setCatId(($medias['cat']));
+            $media[] = $entryModel;
+        }
+
+        return $media;
+    }
+
+    /**
+     * Gets the Media List.
+     *
+     * @return MediaModel[]|array
+     */
+    public function getMediaListAll()
+    {
+        $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
+                FROM `[prefix]_media` as m
+                LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
+                ORDER by m.id DESC';
+
+        $mediaArray = $this->db()->queryArray($sql);
+
+        if (empty($mediaArray)) {
+            return null;
+        }
+
+        $media = array();
+
+        foreach ($mediaArray as $medias) {
+            $entryModel = new MediaModel();
+            $entryModel->setId($medias['id']);
+            $entryModel->setUrl($medias['url']);
+            $entryModel->setUrlThumb($medias['url_thumb']);
+            $entryModel->setName($medias['name']);
+            $entryModel->setDatetime($medias['datetime']);
+            $entryModel->setEnding($medias['ending']);
+            $entryModel->setCatName(($medias['cat_name']));
+            $entryModel->setCatId(($medias['cat']));
             $media[] = $entryModel;
         }
 
@@ -77,7 +94,7 @@ class Media extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return MediaModel[]|array
      */
-    public function getMediaListByEnding($ending = NULL, $pagination = NULL)
+    public function getMediaListByEnding($ending = NULL, $pagination = NULL) 
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
@@ -117,7 +134,7 @@ class Media extends \Ilch\Mapper
      * @param int $lastId
      * @return MediaModel[]|array
      */
-    public function getMediaListScroll($lastId = NULL)
+    public function getMediaListScroll($lastId = NULL) 
     {
         $sql = 'SELECT m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
@@ -155,7 +172,7 @@ class Media extends \Ilch\Mapper
      *
      * @return MediaModel[]|array
      */
-    public function getCatList()
+    public function getCatList() 
     {
         $mediaArray = $this->db()->select('*')
             ->from('media_cats')
@@ -219,7 +236,7 @@ class Media extends \Ilch\Mapper
         $mediaModel = new MediaModel();
         $mediaModel->setUrlThumb($mediaRow['url_thumb']);
         $mediaModel->setUrl($mediaRow['url']);
-
+        
         return $mediaModel;
     }
 
@@ -237,7 +254,7 @@ class Media extends \Ilch\Mapper
                 'name' => $model->getName(),
                 'datetime' => $model->getDatetime(),
                 'ending' => $model->getEnding(),
-                'cat' => $model->getCatId() == 0 ? 0 : $model->getCatId(),
+                'cat' => '0',
                 'cat_name' => 'Allgemein',
             ))
             ->execute();
@@ -248,7 +265,7 @@ class Media extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delMediaById($id)
+    public function delMediaById($id) 
     {
         $mediaRow = $this->db()->select('*')
             ->from('media')
@@ -285,7 +302,7 @@ class Media extends \Ilch\Mapper
      *
      * @param int $id
      */
-    public function delCatById($id)
+    public function delCatById($id) 
     {
         $this->db()->delete('media_cats')
             ->where(array('id' => $id))
@@ -297,7 +314,7 @@ class Media extends \Ilch\Mapper
      *
      * @param MediaModel $model
      */
-    public function setCat(MediaModel $model)
+    public function setCat(MediaModel $model) 
     {
         $this->db()->update('media')
             ->values(array(
@@ -312,7 +329,7 @@ class Media extends \Ilch\Mapper
      *
      * @param MediaModel $model
      */
-    public function treatCat(MediaModel $model)
+    public function treatCat(MediaModel $model) 
     {
         $this->db()->update('media_cats')
             ->values(array(

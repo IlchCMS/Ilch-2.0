@@ -17,9 +17,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * Handles action for the main admin configuration page.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Index extends BaseController
 {
@@ -142,7 +139,11 @@ class Index extends BaseController
                  * Delete adminuser only if he is not the last admin.
                  */
             } else {
-                if ($userMapper->delete($userId)) {
+                if ($deleteUser->getAvatar() != '') {
+                    unlink($deleteUser->getAvatar());
+                }
+
+                if ($userMapper->delete($userId)) {                    
                     $this->addMessage('delUserMsg');
                 }
             }

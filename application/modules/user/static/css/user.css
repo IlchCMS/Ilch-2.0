@@ -18,9 +18,9 @@
 }
 
 .profil-header img {
-    width: 100px; 
-    height:100px; 
-    border-radius:100%;
+    width: 120px; 
+    height: 100px; 
+    border-radius: 100%;
 }
 
 .profil-header .concatLinks-lg {
@@ -123,46 +123,15 @@
     margin-top: -5px;
 }
 
-
-/*  Passwort  */
-/* Übereinstummung */
-.w.error .pwcheck { border: 1px solid #F00; }
-.w.valid .pwcheck { border: 1px solid #0C0; }
-
-/* Sicherheits test */
-.is0{background:url(http://www.ilch.de/include/images/icons/usercp/pwprogress.png) no-repeat 0 0;width:158px;height:7px; margin: 3px 0 0;}
-.is10{background-position:0 -7px;}
-.is20{background-position:0 -14px;}
-.is30{background-position:0 -21px;}
-.is40{background-position:0 -28px;}
-.is50{background-position:0 -35px;}
-.is60{background-position:0 -42px;}
-.is70{background-position:0 -49px;}
-.is80{background-position:0 -56px;}
-.is90{background-position:0 -63px;}
-.is100{background-position:0 -70px;}
-
-.formLine {margin: 0 0 5px}
-.formLine div {display: inline-block; vertical-align: middle}
-.formLine .label {
-    width: 45%;
-}
-.formLine .inputField {
-    width: 170px;
-}
-.formLine .checkbox {
-}
-
-.panel-profile-image{
+.panel-profile-image {
     width: 100%;
-    margin-bottom: 5px;
 }
-#panel .nav > li > a.active{
+#panel .nav > li > a.active {
     text-decoration: none;
     background-color: #eeeeee;
 }
 
-#panel hr{
+#panel hr {
     margin-top: 0px;
     margin-bottom: 10px;
 }
@@ -251,11 +220,11 @@ input[readonly] {
     padding: 3px 0px 0px 3px;
     font: 11px 'lucida grande', tahoma, verdana, arial, sans-serif;
 }
-.avatar{
+.avatar {
     width: 40px;
     height: auto;
 }
-.panel{
+.panel {
     border: none;
 }
 .panel-primary {
@@ -268,30 +237,25 @@ input[readonly] {
 }
 
 /*  View Message  */
-.chat
-{
+.chat {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-.chat li
-{
+.chat li {
     margin-bottom: 10px;
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
 }
 
-.chat li.left .chat-body
-{
+.chat li.left .chat-body {
     margin-left: 60px;
 }
 
-.chat li.right .chat-body
-{
+.chat li.right .chat-body {
     margin-right: 60px;
 }
-.chat li .chat-body p
-{
+.chat li .chat-body p {
     margin: 0;
     padding-top: 10px;
     color: #777777;

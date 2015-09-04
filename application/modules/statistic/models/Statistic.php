@@ -60,6 +60,13 @@ class Statistic extends \Ilch\Model
     protected $browser;
 
     /**
+     * The lang of the Statistic.
+     *
+     * @var string
+     */
+    protected $lang;
+
+    /**
      * The Date last Activity of the Statistic.
      *
      * @var string
@@ -149,7 +156,7 @@ class Statistic extends \Ilch\Model
      * Saves the site.
      *
      * @param string $site
-     * @return User
+     * @return Site
      */
     public function setSite($site)
     {
@@ -172,7 +179,7 @@ class Statistic extends \Ilch\Model
      * Saves the referer.
      *
      * @param string $referer
-     * @return User
+     * @return Referer
      */
     public function setReferer($referer)
     {
@@ -195,7 +202,7 @@ class Statistic extends \Ilch\Model
      * Saves the ipAdress.
      *
      * @param string $ipAdress
-     * @return User
+     * @return IPAdress
      */
     public function setIPAdress($ipAdress)
     {
@@ -218,7 +225,7 @@ class Statistic extends \Ilch\Model
      * Saves the os.
      *
      * @param string $os
-     * @return User
+     * @return OS
      */
     public function setOS($os)
     {
@@ -241,11 +248,34 @@ class Statistic extends \Ilch\Model
      * Saves the browser.
      *
      * @param string $browser
-     * @return User
+     * @return Browser
      */
     public function setBrowser($browser)
     {
         $this->browser = (string)$browser;
+
+        return $this;
+    }
+
+    /**
+     * Returns the lang.
+     *
+     * @return string
+     */
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
+    /**
+     * Saves the lang.
+     *
+     * @param string $lang
+     * @return Lang
+     */
+    public function setLang($lang)
+    {
+        $this->lang = (string)$lang;
 
         return $this;
     }

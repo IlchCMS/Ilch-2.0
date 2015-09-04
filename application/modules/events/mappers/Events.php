@@ -264,6 +264,16 @@ class Events extends \Ilch\Mapper
      */
     public function delete($id)
     {
+        $imageRow = $this->db()->select('*')
+            ->from('events')
+            ->where(array('id' => $id))
+            ->execute()
+            ->fetchAssoc();
+
+        if (file_exists($imageRow['image'])) {
+            unlink($imageRow['image']);
+        }
+
         $this->db()->delete('events')
                 ->where(array('id' => $id))
                 ->execute();
@@ -275,5 +285,28 @@ class Events extends \Ilch\Mapper
         $this->db()->delete('comments')
                 ->where(array('key' => 'events/show/event/id/'.$id))
                 ->execute();
+    }
+
+    /**
+     * Delete/Unlink Image by id.
+     *
+     * @param int $id
+     */
+    public function delImageById($id) 
+    {
+        $imageRow = $this->db()->select('*')
+            ->from('events')
+            ->where(array('id' => $id))
+            ->execute()
+            ->fetchAssoc();
+
+        if (file_exists($imageRow['image'])) {
+            unlink($imageRow['image']);
+        }
+
+        $this->db()->update('events')
+            ->values(array('image' => ''))
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

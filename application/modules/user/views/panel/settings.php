@@ -1,6 +1,7 @@
 <?php
 $profil = $this->get('profil');
 ?>
+
 <div id="panel">
     <div class="row">
         <div class="col-sm-3 col-md-2 col-lg-2">
@@ -16,7 +17,7 @@ $profil = $this->get('profil');
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail media">
                     <div class="media-body">
-                        <h4 class="media-heading"><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'editprofile')) ?>"><?=$this->getTrans('settingsProfile') ?></a></h4>
+                        <h4 class="media-heading"><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'profile')) ?>"><?=$this->getTrans('settingsProfile') ?></a></h4>
                         <hr>
                         <p><?=$this->getTrans('settingsProfileInfo') ?></p>
                     </div>
@@ -37,6 +38,15 @@ $profil = $this->get('profil');
                         <h4 class="media-heading"><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'signature')) ?>"><?=$this->getTrans('settingsSignature') ?></a></h4>
                         <hr>
                         <p><?=$this->getTrans('settingsSignatureInfo') ?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail media">
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'password')) ?>"><?=$this->getTrans('settingsPassword') ?></a></h4>
+                        <hr>
+                        <p><?=$this->getTrans('settingsPasswordInfo') ?></p>
                     </div>
                 </div>
             </div>

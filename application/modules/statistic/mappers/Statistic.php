@@ -66,11 +66,81 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsYearMonthDay()
+    public function getVisitsHour($year = null, $month = null)
     {
         $sql = 'SELECT *, COUNT(id) AS visits
-                FROM `[prefix]_visits_stats`
-                GROUP BY date
+                FROM `[prefix]_visits_stats`';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } elseif ($year != null) {
+            $date = $year.'-01-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        }
+        $sql .= ' GROUP BY HOUR(`date`)
+                ORDER BY `date` DESC';
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $statisticModel = new StatisticModel();
+            $statisticModel->setVisits($entries['visits']);
+            $statisticModel->setDate($entries['date']);
+            $entry[] = $statisticModel;
+        }
+
+        return $entry;
+    }
+
+    public function getVisitsDay($year = null, $month = null)
+    {
+        $sql = 'SELECT *, COUNT(id) AS visits
+                FROM `[prefix]_visits_stats`';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } elseif ($year != null) {
+            $date = $year.'-01-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        }
+        $sql .= ' GROUP BY DAY(`date`)
+                ORDER BY `date` DESC';
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $statisticModel = new StatisticModel();
+            $statisticModel->setVisits($entries['visits']);
+            $statisticModel->setDate($entries['date']);
+            $entry[] = $statisticModel;
+        }
+
+        return $entry;
+    }
+
+    public function getVisitsYearMonthDay($year = null, $month = null)
+    {
+        $sql = 'SELECT *, COUNT(id) AS visits
+                FROM `[prefix]_visits_stats`';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } else {
+            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';
+        }
+        $sql .= ' GROUP BY Year(`date`), Month(`date`), DAY(`date`)
                 ORDER BY date DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -91,12 +161,18 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsYearMonth()
+    public function getVisitsYearMonth($year = null)
     {
         $sql = 'SELECT *, COUNT(id) AS visits
-                FROM `[prefix]_visits_stats`
-                GROUP BY YEAR(date), MONTH(date)
-                ORDER BY date DESC';
+                FROM `[prefix]_visits_stats`';
+        if ($year != null) {
+            $date = $year.'-01-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        } else {
+            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';            
+        }
+        $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`)
+                ORDER BY `date` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -116,12 +192,16 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsYear()
+    public function getVisitsYear($year = null)
     {
         $sql = 'SELECT *, COUNT(id) AS visits
-                FROM `[prefix]_visits_stats`
-                GROUP BY YEAR(date)
-                ORDER BY date DESC';
+                FROM `[prefix]_visits_stats`';
+        if ($year != null) {
+            $date = $year.'-01-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        }
+        $sql .= ' GROUP BY YEAR(`date`)
+                ORDER BY `date` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -141,11 +221,18 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsBrowser()
+    public function getVisitsBrowser($year = null, $month = null)
     {
         $sql = 'SELECT *, COUNT(id) AS visits
-                FROM `[prefix]_visits_stats`
-                GROUP BY browser
+                FROM `[prefix]_visits_stats`';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } else if ($month == null AND $year != null) {
+            $date = $year.'-01-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        }
+        $sql .= ' GROUP BY browser
                 ORDER BY visits DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -166,11 +253,52 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsOS()
+    public function getVisitsLanguage($locale, $year = null, $month = null)
+    {
+        $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
+
+        $sql = 'SELECT *, COUNT(id) AS visits
+                FROM `[prefix]_visits_stats`';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } else if ($month == null AND $year != null) {
+            $date = $year.'-01-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        }
+        $sql .= ' GROUP BY lang
+                ORDER BY visits DESC';
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $statisticModel = new StatisticModel();
+            $statisticModel->setVisits($entries['visits']);
+            $statisticModel->setLang($languageCodes->statisticLanguage($entries['lang'], $locale));
+            $entry[] = $statisticModel;
+        }
+
+        return $entry;
+    }
+
+    public function getVisitsOS($year = null, $month = null)
     {
         $sql = 'SELECT *, COUNT(id) AS visits
-                FROM `[prefix]_visits_stats`
-                GROUP BY os
+                FROM `[prefix]_visits_stats`';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } else if ($month == null AND $year != null) {
+            $date = $year.'-01-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        }
+        $sql .= ' GROUP BY os
                 ORDER BY visits DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -222,13 +350,18 @@ class Statistic extends \Ilch\Mapper
     /**
      * @return integer
      */
-    public function getVisitsCount($date = null)
+    public function getVisitsCount($date = null, $year = null, $month = null)
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`';
-        
-        if ($date != null) {
-            $sql .= 'WHERE `date` = "'.$date.'"';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01 00:00:00';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } elseif ($month == null AND $year != null) {
+            $date = $year.'-01-01 00:00:00';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
+        } elseif ($date != null) {
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND DAY(`date`) = DAY("'.$date.'")';
         }
 
         $visits = $this->db()->queryCell($sql);
@@ -236,11 +369,16 @@ class Statistic extends \Ilch\Mapper
         return $visits;
     }
 
-    public function getVisitsMonthCount()
+    public function getVisitsMonthCount($year = null, $month = null)
     {
         $sql = 'SELECT COUNT(*)
-                FROM `[prefix]_visits_stats`
-                WHERE YEAR(date) = YEAR(CURDATE()) AND MONTH(date) = MONTH(CURDATE())';
+                FROM `[prefix]_visits_stats`';
+        if ($month != null AND $year != null) {
+            $date = $year.'-'.$month.'-01';
+            $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
+        } else {
+            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';            
+        }
 
         $visits = $this->db()->queryCell($sql);
 
@@ -251,11 +389,18 @@ class Statistic extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_stats`
-                WHERE YEAR(date) = YEAR(CURDATE())';
+                WHERE YEAR(`date`) = YEAR(CURDATE())';
 
         $visits = $this->db()->queryCell($sql);
 
         return $visits;
+    }
+
+    public function getPercent($count, $totalcount)
+    {
+        $percent = round(($count / $totalcount) * 100);
+
+        return $percent;
     }
 
     /**
@@ -272,29 +417,36 @@ class Statistic extends \Ilch\Mapper
 
         if ($visitId) {
             $this->db()->update('visits_online')
-                ->values(array('site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
+                ->values(array('site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
                 ->where(array('id' => $visitId))
                 ->execute();
+
+            if ($row['user_id']) {
+                $this->db()->update('users')
+                    ->values(array('date_last_activity' => $date->format('Y-m-d H:i:s', true)))
+                    ->where(array('id' => $row['user_id']))
+                    ->execute();
+            }
         } else {
             $this->db()->insert('visits_online')
-                ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
+                ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
                 ->execute();
         }
 
-        $uniqueUser = (int)$this->db()->select('id')
-            ->from('visits_stats')
-            ->where(array('ip_address' => $row['ip'], 'date' => $date->format('Y-m-d', true)))
-            ->execute()
-            ->fetchCell();
+        $sql = 'SELECT id
+                FROM `[prefix]_visits_stats`
+                WHERE ip_address = "'.$row['ip'].'" AND YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE()) AND DAY(`date`) = DAY(CURDATE())';
+
+        $uniqueUser = $this->db()->queryCell($sql);
 
         if ($uniqueUser) {
             $this->db()->update('visits_stats')
-                ->values(array('os' => $row['os'], 'browser' => $row['browser']))
+                ->values(array('os' => $row['os'], 'browser' => $row['browser'], 'lang' => $row['lang']))
                 ->where(array('id' => $uniqueUser))
                 ->execute();
         } else {
             $this->db()->insert('visits_stats')
-                ->values(array('referer' => $row['referer'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'date' => $date->format('Y-m-d', true)))
+                ->values(array('referer' => $row['referer'], 'os' => $row['os'], 'browser' => $row['browser'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date' => $date->format('Y-m-d H:i:s', true)))
                 ->execute();
         }
     }

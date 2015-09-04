@@ -324,6 +324,19 @@ class User extends \Ilch\Mapper
         return $userId;
     }
 
+    /*
+     * @param string $homepage
+     * @return string
+     */
+    public function getHomepage($homepage) {
+        $homepage = trim($homepage);
+        if (preg_match('~^https?://~', $homepage) === 0) {
+            $homepage = 'http://' . $homepage;
+        }
+
+        return $homepage;
+    }
+
     /**
      * Gets the counter of all users with group "administrator".
      *

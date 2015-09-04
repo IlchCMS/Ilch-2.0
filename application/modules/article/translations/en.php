@@ -17,6 +17,7 @@ return array
     'noArticles' => 'No articles',
     'readMore' => 'Read whole article',
     'comments' => 'Comments',
+    'reply' => 'Reply',
     'author' => 'Author',
     'submit' => 'Save',
     'image' => 'Image',

@@ -1,3 +1,7 @@
+<?php 
+$settingMapper = new \Modules\User\Mappers\Setting();
+?>
+
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
@@ -16,13 +20,16 @@
         </label>
         <div class="col-lg-10">
             <?php if ($this->get('event') != ''): ?>
-            <div class="col-lg-7 col-sm-7 col-7">
-                <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>">
-            </div>
+                <div class="col-lg-7 col-sm-7 col-7">
+                    <?php if ($this->escape($this->get('event')->getImage()) != ''): ?>
+                        <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>">
+                    <?php endif; ?>
+                </div>
             <?php endif; ?>
             <div class="col-lg-7">
-                <p>Bildgröße: 450 Pixel breit, 450 Pixel hoch.</p>
-                <p>Maximale Dateigröße: 48.83 KB.</p>
+                <p><?=$this->getTrans('imageSize') ?>: <?=$this->get('image_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('image_height') ?> Pixel <?=$this->getTrans('height') ?>.</p>
+                <p><?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('image_size')) ?>.</p>
+                <p><?=$this->getTrans('imageAllowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('image_filetypes')) ?></p>
             </div>
             <div class="input-group col-lg-7">
                 <span class="input-group-btn">

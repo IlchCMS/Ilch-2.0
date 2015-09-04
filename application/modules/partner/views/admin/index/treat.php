@@ -21,7 +21,7 @@
     </div>
     <div class="form-group">
         <label for="link" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('link'); ?>:
+            <?=$this->getTrans('link') ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"
@@ -34,7 +34,7 @@
     </div>
     <div class="form-group">
         <label for="banner" class="col-lg-2 control-label">
-            <?php echo $this->getTrans('banner'); ?>:
+            <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-4">
             <input class="form-control"

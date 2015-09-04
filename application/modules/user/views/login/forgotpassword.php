@@ -1,3 +1,4 @@
+<legend><?=$this->getTrans('newPassword'); ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">

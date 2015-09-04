@@ -63,6 +63,7 @@ return array
     'needAcknowledgement' => 'Confirmation required',
     'pageTitle' => 'Pagetitle',
     'startPage' => 'Startpage',
+    'locale' => 'Standard page locale',
     'pages' => 'Pages',
     'menuTitle' => 'Menutitle',
     'openFrontend' => 'Open Frontend',

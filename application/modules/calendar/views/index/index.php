@@ -66,7 +66,7 @@
                         <?php foreach ($this->get('birthdayList') as $birthdayList): ?>
                             <?php if ($birthdayList->getBirthday() != '0000-00-00'): ?>
                                 {
-                                    title  : '<?=$birthdayList->getName() ?> (<?=floor(($year.date('md') - str_replace("-", "", $birthdayList->getBirthday())) / 10000) ?>)',
+                                    title  : '<?=$birthdayList->getName() ?> (<?=floor(($year.date('md') - str_replace("-", "", $birthdayList->getBirthday())) / 10000 + 1) ?>)',
                                     start  : '<?=$year.'-'.date('m-d', strtotime($birthdayList->getBirthday())) ?>',
                                     color  : '#257e4a',
                                     url    : '<?=$this->getUrl('user/profil/index/user/' . $birthdayList->getId()) ?>'

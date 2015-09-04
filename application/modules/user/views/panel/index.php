@@ -1,6 +1,7 @@
 <?php
 $profil = $this->get('profil');
 ?>
+
 <div id="panel">
     <div class="row">
         <div class="col-lg-2">

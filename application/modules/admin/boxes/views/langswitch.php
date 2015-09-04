@@ -12,11 +12,10 @@
 </form>
 
 <script>
-$('.languageInput').change
-(
+$('.languageInput').change (
     this,
     function () {
-        top.location.href = '<?php echo $this->getUrl($this->getRouter()->getQuery()); ?>/language/'+$(this).val();
+        top.location.href = '<?=$this->getUrl($this->getRouter()->getQuery()); ?>/language/'+$(this).val()
     }
 );
 </script>

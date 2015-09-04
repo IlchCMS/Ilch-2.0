@@ -1,8 +1,9 @@
-<legend><?=$this->getTrans('manageLink') ?></legend>
 <?php
 $categories = $this->get('categorys');
 $links = $this->get('links');
 ?>
+
+<legend><?=$this->getTrans('manageLink') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?php if ($categories != ''): ?>
         <?=$this->getTokenField() ?>
@@ -16,19 +17,19 @@ $links = $this->get('links');
                     </colgroup>
                     <thead>
                         <tr>
-                            <th><?=$this->getCheckAllCheckbox('check_cats')?></th>
+                            <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
                             <th></th>
                             <th></th>
-                            <th><?php echo $this->getTrans('category'); ?></th>
-                            <th style="text-align:center"><?php echo $this->getTrans('links'); ?></th>
+                            <th><?=$this->getTrans('category') ?></th>
+                            <th style="text-align:center"><?=$this->getTrans('links') ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($this->get('categorys') as $category) { ?>
                         <tr>
                                 <td><input value="<?=$category->getId()?>" type="checkbox" name="check_cats[]" /></td>
-                                <td><?=$this->getEditIcon(array('action' => 'treatCat', 'id' => $category->getId()))?></td>
-                                <td><?=$this->getDeleteIcon(array('action' => 'deleteCat', 'id' => $category->getId()))?></td>
+                                <td><?=$this->getEditIcon(array('action' => 'treatCat', 'id' => $category->getId())) ?></td>
+                                <td><?=$this->getDeleteIcon(array('action' => 'deleteCat', 'id' => $category->getId())) ?></td>
                         <?php
                                 $getDesc = $this->escape($category->getDesc());
 
@@ -59,18 +60,18 @@ $links = $this->get('links');
                     </colgroup>
                     <thead>
                         <tr>
-                            <th><?=$this->getCheckAllCheckbox('check_links')?></th>
+                            <th><?=$this->getCheckAllCheckbox('check_links') ?></th>
                             <th></th>
                             <th></th>
-                            <th><?php echo $this->getTrans('links'); ?></th>
+                            <th><?=$this->getTrans('links') ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($links as $link) { ?>
                         <tr>
                             <td><input value="<?=$link->getId()?>" type="checkbox" name="check_links[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treatLink', 'id' => $link->getId()))?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'deleteLink', 'id' => $link->getId()))?></td>
+                            <td><?=$this->getEditIcon(array('action' => 'treatLink', 'id' => $link->getId())) ?></td>
+                            <td><?=$this->getDeleteIcon(array('action' => 'deleteLink', 'id' => $link->getId())) ?></td>
                             <?php
                             $getBanner = $this->escape($link->getBanner());
                             $getDesc = $this->escape($link->getDesc());

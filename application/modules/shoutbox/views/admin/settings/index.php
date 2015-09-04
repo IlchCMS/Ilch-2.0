@@ -39,19 +39,19 @@
 </form>
 
 <script type="text/javascript">
-    (function ($) {
-      $('.limit .btn:first-of-type').on('click', function() {
+(function ($) {
+    $('.limit .btn:first-of-type').on('click', function() {
         $('.limit input').val( parseInt($('.limit input').val(), 10) + 1);
-      });
-      $('.limit .btn:last-of-type').on('click', function() {
+    });
+    $('.limit .btn:last-of-type').on('click', function() {
         $('.limit input').val( parseInt($('.limit input').val(), 10) - 1);
-      });
+    });
 
-      $('.maxwordlength .btn:first-of-type').on('click', function() {
+    $('.maxwordlength .btn:first-of-type').on('click', function() {
         $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) + 1);
-      });
-      $('.maxwordlength .btn:last-of-type').on('click', function() {
+    });
+    $('.maxwordlength .btn:last-of-type').on('click', function() {
         $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) - 1);
-      });
-    })(jQuery);
+    });
+})(jQuery);
 </script>

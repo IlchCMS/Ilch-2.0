@@ -14,10 +14,10 @@ class Stats extends \Ilch\Box
     {
         $date = new \Ilch\Date();
         $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
-        $this->getView()->set('visitsToday', $statisticMapper->getVisitsCount($date->format('Y-m-d')));
+        $this->getView()->set('visitsToday', $statisticMapper->getVisitsCount($date->format('Y-m-d', true)));
         $this->getView()->set('visitsOnline', $statisticMapper->getVisitsCountOnline());
         $date->modify('-1 day');
-        $this->getView()->set('visitsYesterday', $statisticMapper->getVisitsCount($date->format('Y-m-d')));
+        $this->getView()->set('visitsYesterday', $statisticMapper->getVisitsCount($date->format('Y-m-d', true)));
         $this->getView()->set('visitsMonth', $statisticMapper->getVisitsMonthCount());
         $this->getView()->set('visitsYear', $statisticMapper->getVisitsYearCount());
         $this->getView()->set('visitsRegistUser', $statisticMapper->getRegistUserCount());

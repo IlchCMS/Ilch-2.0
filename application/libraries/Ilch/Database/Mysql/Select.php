@@ -321,7 +321,7 @@ class Select extends QueryBuilder
             $sql .= ' ORDER BY';
 
             foreach ($this->order as $column => $direction) {
-                $sql .= ' '. $this->db->quote($column).' '.$direction;
+                $sql .= ' `'. $column.'` '.$direction;
             }
         }
 

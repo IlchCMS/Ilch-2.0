@@ -17,6 +17,7 @@ return array
     'noArticles' => 'Keine Artikel vorhanden',
     'readMore' => 'ganzen Artikel lesen',
     'comments' => 'Kommentare',
+    'reply' => 'Antworten',
     'author' => 'Autor',
     'submit' => 'Eintragen',
     'image' => 'Bild',

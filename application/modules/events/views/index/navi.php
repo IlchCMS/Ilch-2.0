@@ -1,4 +1,4 @@
-<link href="<?= $this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">

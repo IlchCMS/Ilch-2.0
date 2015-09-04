@@ -19,4 +19,3 @@ class Archive extends \Ilch\Box
         $this->getView()->set('archive', $articleMapper->getArticleDateList(10));
     }
 }
-
