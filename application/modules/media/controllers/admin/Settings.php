@@ -47,6 +47,16 @@ class Settings extends \Ilch\Controller\Admin
                 )
             )
         );
+        
+        $this->getLayout()->addMenuAction
+        (
+            array
+            (
+                'name' => 'menuActionAddNew',
+                'icon' => 'fa fa-plus-circle',
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'upload'))
+            )
+        );
     }
 
     public function indexAction() 

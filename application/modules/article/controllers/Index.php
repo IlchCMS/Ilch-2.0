@@ -45,7 +45,7 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getPost('article_comment_text')) {
             $commentModel = new CommentModel();
             $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
-			$commentModel->setFKId($this->getRequest()->getParam('id'));
+            $commentModel->setFKId(0);
             $commentModel->setText($this->getRequest()->getPost('article_comment_text'));
 
             $date = new \Ilch\Date();

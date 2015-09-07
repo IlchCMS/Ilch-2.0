@@ -19,4 +19,11 @@ return array
     'commentID' => 'ID',
     'submit' => 'Eintragen',
     'reply' => 'Antworten',
+    'menuCommentCFG' => 'Konfiguration',
+    'allowedCommentComment' => 'Auf Kommentare antworten ?',
+    'countComment' => 'Anzahl Anworten',
+    'showAvatar' => 'Avatar anzeigen ?',
+    'showDate' => 'Datum anzeigen ?',
+    'CommentCommentInfoText' => 'Information zur Konfiguration der Kommentare.',
+    'settings' => 'Einstellungen',
 );

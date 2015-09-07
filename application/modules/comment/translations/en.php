@@ -19,4 +19,11 @@ return array
     'commentID' => 'ID',
     'submit' => 'Save',
     'reply' => 'Reply',
+    'menuCommentCFG' => 'Config',
+    'allowedCommentComment' => 'Answrering Comments ?',
+    'countComment' => 'How many Answers ?',
+    'showAvatar' => 'show Avatar ?',
+    'showDate' => 'show Date ?',
+    'CommentCommentInfoText' => 'Information of Commentconfiguration.',
+    'settings' => 'Settings',
 );
