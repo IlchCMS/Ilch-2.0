@@ -253,10 +253,8 @@ class Statistic extends \Ilch\Mapper
         return $entry;
     }
 
-    public function getVisitsLanguage($locale, $year = null, $month = null)
+    public function getVisitsLanguage($year = null, $month = null)
     {
-        $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
-
         $sql = 'SELECT *, COUNT(id) AS visits
                 FROM `[prefix]_visits_stats`';
         if ($month != null AND $year != null) {
@@ -280,7 +278,7 @@ class Statistic extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setLang($languageCodes->statisticLanguage($entries['lang'], $locale));
+            $statisticModel->setLang($entries['lang']);
             $entry[] = $statisticModel;
         }
 

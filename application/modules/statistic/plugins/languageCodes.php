@@ -155,6 +155,8 @@ class LanguageCodes
             'za' => 'Zhuang',
             'zh' => 'Chinesisch',
             'zu' => 'Zulu',
+            'zu' => 'Zulu',
+            '' => '',
         );
 
         $languageENArray = array(

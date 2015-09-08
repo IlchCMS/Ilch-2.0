@@ -32,7 +32,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth());
         $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear());
         $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser());
-        $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($this->getTranslator()->getLocale()));
+        $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage());
         $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS());
     }
 
@@ -65,7 +65,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay($year, $month));
             $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear($year));
             $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($year, $month));
-            $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($this->getTranslator()->getLocale(), $year, $month));
+            $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($year, $month));
             $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($year, $month));
         } elseif ($month == '' AND $year != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
@@ -74,7 +74,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth($year));
             $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear($year));
             $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($year));
-            $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($this->getTranslator()->getLocale(), $year));
+            $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($year));
             $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($year));
         }
     }
