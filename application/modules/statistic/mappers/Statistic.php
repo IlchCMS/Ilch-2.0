@@ -78,7 +78,7 @@ class Statistic extends \Ilch\Mapper
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
         $sql .= ' GROUP BY HOUR(`date`)
-                ORDER BY `date` DESC';
+                ORDER BY HOUR(`date`) DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
