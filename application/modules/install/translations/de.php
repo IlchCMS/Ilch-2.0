@@ -29,7 +29,7 @@ return array
     'dbPassword' => 'Password',
     'dbName' => 'Name',
     'dbPrefix'=> 'Prefix',
-    'dbConnectionError'  => 'Konnte keine Verbindung zur Datenbank herstellen',
+    'dbConnectionError' => 'Konnte keine Verbindung zur Datenbank herstellen',
     'dbDatabaseError' => 'Die Datenbank existiert nicht',
     'dbHostInfo' => 'Die Adresse des Datenbankservers meistens localhost',
     'dbUserInfo' => 'Dein MySQL Benutzername',

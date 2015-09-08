@@ -8,11 +8,11 @@ $errors = $this->get('errors');
     </label>
     <div class="col-lg-8">
         <select name="usage" id="usage" class="form-control">
-            <option value="private"><?=$this->getTrans('private')?></option>
-            <option <?php if ($this->get('usage') == 'clan') { echo 'selected="selected"'; } ?> value="clan"><?=$this->getTrans('clan')?></option>
+            <option value="private"><?=$this->getTrans('private') ?></option>
+            <option <?php if ($this->get('usage') == 'clan') { echo 'selected="selected"'; } ?> value="clan"><?=$this->getTrans('clan') ?></option>
         </select>
         <a href="#" data-toggle="collapse" data-target="#modules">
-          <?=$this->getTrans('custom')?> &dArr;
+            <?=$this->getTrans('custom')?> &dArr;
         </a>
     </div>
 </div>
@@ -30,11 +30,9 @@ $errors = $this->get('errors');
                name="adminName"
                class="form-control"
                id="adminName" />
-        <?php
-            if (!empty($errors['adminName'])) {
-                echo '<span class="help-inline">'.$this->getTrans($errors['adminName']).'</span>';
-            }
-        ?>
+        <?php if (!empty($errors['adminName'])): ?>
+            <span class="help-inline"><?=$this->getTrans($errors['adminName']) ?></span>
+        <?php endif; ?>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword'])) { echo 'has-error'; }; ?>">
@@ -47,11 +45,9 @@ $errors = $this->get('errors');
                class="form-control"
                name="adminPassword"
                id="adminPassword" />
-        <?php
-            if (!empty($errors['adminPassword'])) {
-                echo '<span class="help-inline">'.$this->getTrans($errors['adminPassword']).'</span>';
-            }
-        ?>
+        <?php if (!empty($errors['adminPassword'])): ?>
+            <span class="help-inline"><?=$this->getTrans($errors['adminPassword']) ?></span>
+        <?php endif; ?>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword2'])) { echo 'has-error'; }; ?>">
@@ -64,11 +60,9 @@ $errors = $this->get('errors');
                class="form-control"
                name="adminPassword2"
                id="adminPassword2" />
-        <?php
-            if (!empty($errors['adminPassword2'])) {
-                echo '<span class="help-inline">'.$this->getTrans($errors['adminPassword2']).'</span>';
-            }
-        ?>
+        <?php if (!empty($errors['adminPassword2'])): ?>
+            <span class="help-inline"><?=$this->getTrans($errors['adminPassword2']) ?></span>
+        <?php endif; ?>
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminEmail'])) { echo 'has-error'; }; ?>">
@@ -81,21 +75,19 @@ $errors = $this->get('errors');
                name="adminEmail"
                class="form-control"
                id="adminEmail" />
-        <?php
-            if (!empty($errors['adminEmail'])) {
-                echo '<span class="help-inline">'.$this->getTrans($errors['adminEmail']).'</span>';
-            }
-        ?>
+        <?php if (!empty($errors['adminEmail'])): ?>
+            <span class="help-inline"><?=$this->getTrans($errors['adminEmail']) ?></span>
+        <?php endif; ?>
     </div>
 </div>
 
 <script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
 <script>
 $('#usage').change(function(){
-    $('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig'))?>/type/'+$('#usage').val());
+    $('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig')) ?>/type/'+$('#usage').val());
 });
 
-$('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig'))?>/type/'+$('#usage').val());
+$('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig')) ?>/type/'+$('#usage').val());
 
 $(document).ready(function(){
     $('#adminPassword').pStrength({

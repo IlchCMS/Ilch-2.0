@@ -1,40 +1,53 @@
 body {
-	padding-top: 65px;
-	padding-bottom: 40px;
-	background-color: #EEE;
+    padding-top: 65px;
+    padding-bottom: 40px;
+    background-color: #EEE;
 }
 
 .container {
-	padding: 60px;
-	background-color: white;
+    padding: 60px;
+    background-color: white;
 }
 
 .install_container {
-	border: 1px solid #BBB;
-	width: 900px;
-	min-height: 500px;
-	border-bottom: none;
+    border: 1px solid #BBB;
+    width: 900px;
+    min-height: 500px;
+    border-bottom: none;
 }
 
 .save_box {
-	background-color: #ECECFB;
-	padding: 20px;
-	position: relative;
-	border: 1px solid #BBB;
-	width: 900px;
-	border-radius: 0px 0px 0px 0px;
+    background-color: #ECECFB;
+    padding: 20px;
+    position: relative;
+    border: 1px solid #BBB;
+    width: 900px;
+    border-radius: 0px 0px 0px 0px;
 }
 
 .logo {
-	margin-top: -180px;
-	margin-left: -141px;
-	position: relative;
-	width: 220px;
+    margin-top: -180px;
+    margin-left: -141px;
+    position: relative;
+    width: 220px;
 }
 
 .logo_text {
-	margin-top: -180px;
-	margin-left: -141px;
-	position: relative;
-	width: 220px;
+    margin-top: -180px;
+    margin-left: -141px;
+    position: relative;
+    width: 220px;
+}
+
+.btn {
+    background-image: none;
+    border: 1px solid silver;
+    border-color: silver;
+    -webkit-border-radius: 0px;
+       -moz-border-radius: 0px;
+            border-radius: 0px;
+}
+
+label {
+    font-weight: normal;
 }

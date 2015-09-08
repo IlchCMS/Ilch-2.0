@@ -41,7 +41,7 @@ return array
     'adminPassword' => 'admin password',
     'adminPassword2' => 'admin password confirm',
     'adminEmail' => 'admin email',
-    'successInstalled' => 'Ilch CMS  successfully installed',
+    'successInstalled' => 'Ilch CMS successfully installed',
     'fieldEmpty' => 'field must be filled',
     'fieldDiffersPassword' => 'passwords are different',
     'fieldEmail' => 'email is not valid',
