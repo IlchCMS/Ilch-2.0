@@ -22,65 +22,65 @@
         </tr>
         <tr>
             <td><?=$this->getTrans('writable').' "/application/"' ?></td>
-            <td class="text-success">writable</td>
+            <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php
                     if (is_writable(CONFIG_PATH)) {
-                        echo '<span class="text-success">writable</span>';
+                        echo '<span class="text-success">'.$this->getTrans('writable').'</span>';
                     } else {
-                        echo '<span class="text-danger">not writable</span>';
+                        echo '<span class="text-danger">'.$this->getTrans('notWritable').'</span>';
                     }
                 ?>
             </td>
         </tr>
         <tr>
             <td><?=$this->getTrans('writable').' "/application/modules/media/static/upload/"' ?></td>
-            <td class="text-success">writable</td>
+            <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php
                     if (is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
-                        echo '<span class="text-success">writable</span>';
+                        echo '<span class="text-success">'.$this->getTrans('writable').'</span>';
                     } else {
-                        echo '<span class="text-danger">not writable</span>';
+                        echo '<span class="text-danger">'.$this->getTrans('notWritable').'</span>';
                     }
                 ?>
             </td>
         </tr>
         <tr>
             <td><?=$this->getTrans('writable').' "/application/modules/user/static/upload/avatar/"' ?></td>
-            <td class="text-success">writable</td>
+            <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php
                     if (is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')) {
-                        echo '<span class="text-success">writable</span>';
+                        echo '<span class="text-success">'.$this->getTrans('writable').'</span>';
                     } else {
-                        echo '<span class="text-danger">not writable</span>';
+                        echo '<span class="text-danger">'.$this->getTrans('notWritable').'</span>';
                     }
                 ?>
             </td>
         </tr>
         <tr>
             <td><?=$this->getTrans('writable').' "/application/modules/events/static/upload/image/"' ?></td>
-            <td class="text-success">writable</td>
+            <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php
                     if (is_writable(APPLICATION_PATH.'/modules/events/static/upload/image/')) {
-                        echo '<span class="text-success">writable</span>';
+                        echo '<span class="text-success">'.$this->getTrans('writable').'</span>';
                     } else {
-                        echo '<span class="text-danger">not writable</span>';
+                        echo '<span class="text-danger">'.$this->getTrans('notWritable').'</span>';
                     }
                 ?>
             </td>
         </tr>
         <tr>
             <td><?=$this->getTrans('writable').' "/.htaccess"' ?></td>
-            <td class="text-success">writable</td>
+            <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php
                     if (is_writable(APPLICATION_PATH.'/../.htaccess')) {
-                        echo '<span class="text-success">writable</span>';
+                        echo '<span class="text-success">'.$this->getTrans('writable').'</span>';
                     } else {
-                        echo '<span class="text-danger">not writable</span>';
+                        echo '<span class="text-danger">'.$this->getTrans('notWritable').'</span>';
                     }
                 ?>
             </td>
