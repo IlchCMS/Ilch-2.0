@@ -33,18 +33,21 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('comment_interleaving', '5');
     }
 
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_comments` (
-				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `key` varchar(255) NOT NULL,
-				  `text` mediumtext NOT NULL,
-				  `date_created` datetime NOT NULL,
-				  `user_id` int(11) NOT NULL,
-				  `fk_id` int(11) NOT NULL,
-				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1';
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `key` varchar(255) NOT NULL,
+                  `text` mediumtext NOT NULL,
+                  `date_created` datetime NOT NULL,
+                  `user_id` int(11) NOT NULL,
+                  `fk_id` int(11) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1';
     }
 }

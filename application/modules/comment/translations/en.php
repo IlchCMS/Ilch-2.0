@@ -19,4 +19,6 @@ return array
     'commentID' => 'ID',
     'submit' => 'Save',
     'reply' => 'Reply',
+    'settings' => 'Settings',
+    'interleaving' => 'Reply interleaving',
 );

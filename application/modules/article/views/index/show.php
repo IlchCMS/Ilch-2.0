@@ -13,27 +13,29 @@ function rec($id, $uid, $req, $obj)
     $userMapper = new \Modules\User\Mappers\User();
     $fk_comments = $CommentMappers->getCommentsByFKId($id);
     $user_rep = $userMapper->getUserById($uid);
+    $translator = new \Ilch\Translator();
+    $translator->load(APPLICATION_PATH.'/modules/article/translations/');
 
     foreach ($fk_comments as $fk_comment) {
         $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
         $user = $userMapper->getUserById($fk_comment->getUserId());
+        $config = \Ilch\Registry::get('config');
 
-        if ($req > 5) {
-            $req = 5;
+        if ($req > $config->get('comment_interleaving')) {
+            $req = $config->get('comment_interleaving');
         }
 
         $col = 10 - $req;
-        echo '<section class="comment-list reply'.$req.'">';
         echo '<article class="row" id="'.$fk_comment->getId().'">';
-        echo '<div class="col-md-2 col-sm-2 hidden-xs"><figure class="thumbnail">';
+        echo '<div class="col-md-2 col-sm-2 col-md-offset-'.$req.' col-sm-offset-'.$req.' hidden-xs"><figure class="thumbnail">';
         echo '<a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'"><img class="img-responsive" src="'.$obj->getBaseUrl($user->getAvatar()).'" alt="'.$user->getName().'"></a>';
-        echo '</figure></div><div class="col-md-'.$col.' col-sm-'.$col.'"><div class="panel panel-default arrow left"><div class="panel-bodylist"><div class="panel-heading right">'.$user_rep->getName().' <i class="fa fa-reply"></i> Reply</div><header class="text-left">';
+        echo '</figure></div><div class="col-md-'.$col.' col-sm-'.$col.'"><div class="panel panel-default arrow left"><div class="panel-bodylist"><div class="panel-heading right">'.$user_rep->getName().' <i class="fa fa-reply"></i> '.$translator->trans('reply').'</div><header class="text-left">';
         echo '<div class="comment-user"><i class="fa fa-user"></i> <a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $fk_comment->getUserId())).'">'.$user->getName().'</a></div>';
         echo '<time class="comment-date"><i class="fa fa-clock-o"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
         echo '</header><div class="comment-post"><p>'.nl2br($fk_comment->getText()).'</p></div>';
-        echo '<p class="text-right"><a href="'.$obj->getUrl(array('module' => 'comment', 'controller' => 'index', 'action' => 'index', 'id' => $fk_comment->getId())).'" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>';
+        echo '<p class="text-right"><a href="'.$obj->getUrl(array('module' => 'comment', 'controller' => 'index', 'action' => 'index', 'id' => $fk_comment->getId())).'" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> '.$translator->trans('reply').'</a></p>';
         echo '</div></div></div>';
-        echo '</article></section>';
+        echo '</article>';
 
         $fkk_comments = $CommentMappers->getCommentsByFKId($fk_comment->getId());
 
@@ -55,6 +57,7 @@ function rec($id, $uid, $req, $obj)
     }
 }
 ?>
+
 <legend><?=$article->getTitle() ?></legend>
 <?php if (!empty($image)): ?>
     <figure>
@@ -146,8 +149,8 @@ function rec($id, $uid, $req, $obj)
                             </div>
                         </div>
                     </article>
+                    <?php rec($comment->getId(), $comment->getUserId(), 1, $this) ?>
                 </section>
-                <?php rec($comment->getId(), $comment->getUserId(), 1, $this) ?>
             <?php endforeach; ?>
         </div>
     </div>

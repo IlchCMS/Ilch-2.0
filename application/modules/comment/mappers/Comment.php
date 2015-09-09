@@ -7,7 +7,6 @@
 namespace Modules\Comment\Mappers;
 
 use Modules\Comment\Models\Comment as CommentModel;
-use Modules\Comment\Mappers\Comment as CommentMappers;
 
 defined('ACCESS') or die('no direct access');
 
@@ -69,7 +68,7 @@ class Comment extends \Ilch\Mapper
     /**
      * @return CommentModel[]|null
      */
-    public function getComments($locale = '')
+    public function getComments()
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')

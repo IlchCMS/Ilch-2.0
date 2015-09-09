@@ -42,13 +42,15 @@ class Index extends \Ilch\Controller\Frontend
     {
         $commentMapper = new CommentMapper();
 
+        $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
+
         if ($this->getRequest()->getPost('article_comment_text')) {
+            $date = new \Ilch\Date();
+
             $commentModel = new CommentModel();
             $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
-			$commentModel->setFKId($this->getRequest()->getParam('id'));
+            $commentModel->setFKId($this->getRequest()->getParam('id'));
             $commentModel->setText($this->getRequest()->getPost('article_comment_text'));
-
-            $date = new \Ilch\Date();
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
@@ -92,7 +94,6 @@ class Index extends \Ilch\Controller\Frontend
             $articleMapper->saveVisits($articleModel);
         }
 
-        $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
         $this->getView()->set('comments', $comments);
     }
 }
