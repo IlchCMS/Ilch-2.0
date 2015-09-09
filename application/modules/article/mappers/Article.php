@@ -12,8 +12,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * The article mapper class.
- *
- * @package ilch
  */
 class Article extends \Ilch\Mapper
 {
@@ -23,14 +21,19 @@ class Article extends \Ilch\Mapper
      * @param  string $locale
      * @return Article_ArticleModel[]|array
      */
+
     public function getArticles($locale = '')
     {
-        $sql = 'SELECT pc.*, p.*
-                FROM `[prefix]_articles` as p
-                LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
-                AND pc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY p.id DESC';
-        $articleArray = $this->db()->queryArray($sql);
+        $select = $this->db()->select();
+        $result = $select->fields(['p.id', 'p.cat_id', 'p.date_created'])
+            ->from(['p' => 'articles'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source'])
+            ->where(['pc.locale' => $this->db()->escape($locale)])
+            ->group(['p.id']);
+
+        $items = $result->execute();
+
+        $articleArray = $items->fetchRows();
 
         if (empty($articleArray)) {
             return null;

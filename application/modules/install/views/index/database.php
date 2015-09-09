@@ -24,11 +24,9 @@ $errors = $this->get('errors');
                id="dbHost" />
         <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa fa-info-circle"></i></div>
     </div>    
-    <?php
-        if (!empty($errors['dbConnection'])) {
-            echo '<span class="col-lg-2"></span><span class="col-lg-8 help-block">'.$this->getTrans($errors['dbConnection']).'</span>';
-        }
-    ?>
+    <?php if (!empty($errors['dbConnection'])): ?>
+        <span class="col-lg-2"></span><span class="col-lg-8 help-block"><?=$this->getTrans($errors['dbConnection']) ?></span>
+    <?php endif; ?>
 </div>
 <div class="form-group <?php if (!empty($errors['dbConnection'])) { echo 'has-error'; }; ?>">
     <label for="dbUser" class="col-lg-2 control-label">
@@ -56,22 +54,20 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['dbDatabase'])) { echo 'has-error'; }; ?>">
-        <label for="dbName" class="col-lg-2 control-label">
-            <?=$this->getTrans('dbName') ?>:
-        </label>
-        <div class="col-lg-8 input-group">
-            <input value="<?php if ($this->get('dbName') != '') { echo $this->escape($this->get('dbName')); } ?>"
-                   type="text"
-                   name="dbName"
-                   class="form-control"
-                   id="dbName" />
-            <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbNameInfo') ?>"><i class="fa fa-info-circle"></i></div>
-        </div> 
-        <?php
-            if (!empty($errors['dbDatabase'])) {
-                echo '<span class="col-lg-2"></span><span class="col-lg-8 help-block">'.$this->getTrans($errors['dbDatabase']).'</span>';
-            }
-        ?>
+    <label for="dbName" class="col-lg-2 control-label">
+        <?=$this->getTrans('dbName') ?>:
+    </label>
+    <div class="col-lg-8 input-group">
+        <input value="<?php if ($this->get('dbName') != '') { echo $this->escape($this->get('dbName')); } ?>"
+               type="text"
+               name="dbName"
+               class="form-control"
+               id="dbName" />
+        <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbNameInfo') ?>"><i class="fa fa-info-circle"></i></div>
+    </div> 
+    <?php if (!empty($errors['dbDatabase'])): ?>
+        <span class="col-lg-2"></span><span class="col-lg-8 help-block"><?=$this->getTrans($errors['dbDatabase']) ?></span>
+    <?php endif; ?>
     </div>
 </div>
 <div class="form-group">

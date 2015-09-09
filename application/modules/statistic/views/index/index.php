@@ -13,6 +13,7 @@
 
 <?php 
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
+$languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $date = new \Ilch\Date();
 ?>
 
@@ -256,10 +257,10 @@ $date = new \Ilch\Date();
                 <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                 <tr>
                     <td>
-                        <?php if ($statisticList->getLang() == '0'): ?>
+                        <?php if ($statisticList->getLang() == ''): ?>
                             <?=$this->getTrans('unknown') ?>
                         <?php else: ?>
-                            <?=$statisticList->getLang() ?>
+                            <?=$languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
                         <?php endif; ?>
                     </td>
                     <td>

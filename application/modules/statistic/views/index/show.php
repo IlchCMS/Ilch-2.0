@@ -13,6 +13,7 @@
 
 <?php
 $StatisticMapper = new \Modules\Statistic\Mappers\Statistic();
+$languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $month = $this->getRequest()->getParam('month');
 $year = $this->getRequest()->getParam('year');
 ?>
@@ -208,10 +209,10 @@ $year = $this->getRequest()->getParam('year');
                     <?php $progressWidth = $StatisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                     <tr>
                         <td>
-                            <?php if ($statisticList->getLang() == '0'): ?>
+                            <?php if ($statisticList->getLang() == ''): ?>
                                 <?=$this->getTrans('unknown') ?>
                             <?php else: ?>
-                                <?=$statisticList->getLang() ?>
+                                <?=$languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
                             <?php endif; ?>
                         </td>
                         <td>

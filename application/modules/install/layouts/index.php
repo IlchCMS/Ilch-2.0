@@ -13,20 +13,6 @@
         <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.js') ?>"></script>        
         <script src="<?=$this->getStaticUrl('js/bootstrap.js') ?>"></script>
-        <style>
-        .btn {
-            background-image: none;
-            border: 1px solid silver;
-            border-color: silver;
-            -webkit-border-radius: 0px;
-               -moz-border-radius: 0px;
-                    border-radius: 0px;
-        }
-
-        label {
-            font-weight: normal;
-        }
-        </style>
     </head>
     <body>
         <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
@@ -34,27 +20,23 @@
             <div class="container install_container">
                 <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>" />
                 <ul class="nav nav-tabs" id="install_steps">
-                    <?php
-                        $done = 1;
-                        $menuCounter = count($this->get('menu'));
-                        $lastAction = '';
+                    <?php $done = 1; ?>
+                    <?php $menuCounter = count($this->get('menu')); ?>
+                    <?php $lastAction = ''; ?>
 
-                        foreach ($this->get('menu') as $key => $values) {
-                            if (isset($values['done'])) {
-                                $done++;
-                                $lastAction = $key;
-                            }
-                            ?>
-                                <li class="<?=$this->getRequest()->getActionName() == $key ? 'active': '' ?>">
-                                    <a data-toggle="tab">
-                                        <?=$this->getTrans($values['langKey']) ?>
-                                    </a>
-                                </li>
-                        <?php
-                        }
+                    <?php foreach ($this->get('menu') as $key => $values): ?>
+                        <?php if (isset($values['done'])): ?>
+                            <?php $done++; ?>
+                            <?php $lastAction = $key; ?>
+                        <?php endif; ?>
+                        <li class="<?=$this->getRequest()->getActionName() == $key ? 'active': '' ?>">
+                            <a data-toggle="tab">
+                                <?=$this->getTrans($values['langKey']) ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
 
-                        $progress = 100 / $menuCounter * $done;
-                    ?>
+                    <?php $progress = 100 / $menuCounter * $done; ?>
                 </ul>
                 <br />
                 <div class="progress  progress-striped">
@@ -71,33 +53,23 @@
                 </div>
             </div>
             <div class="container save_box">
-                <?php
-                    if (!in_array($this->getRequest()->getActionName(), array('index', 'finish'))) {
-                ?>
-                        <a href="<?=$this->getUrl(array('action' => $lastAction)) ?>" class="btn pull-left">
-                            <?=$this->getTrans('backButton') ?>
-                        </a>
-                <?php
-                    }
-                ?>
+                <?php if (!in_array($this->getRequest()->getActionName(), array('index', 'finish'))): ?>
+                    <a href="<?=$this->getUrl(array('action' => $lastAction)) ?>" class="btn pull-left">
+                        <?=$this->getTrans('backButton') ?>
+                    </a>
+                <?php endif; ?>
 
-                <?php
-                    if ($this->getRequest()->getActionName() != 'finish') {
-                ?>
-                        <button type="submit" name="save" class="btn pull-right">
-                            <?php
-                                $buttonTrans = 'nextButton';
+                <?php if ($this->getRequest()->getActionName() != 'finish'): ?>
+                    <button type="submit" name="save" class="btn pull-right">
+                        <?php $buttonTrans = 'nextButton'; ?>
 
-                                if ($this->getRequest()->getActionName() == 'config') {
-                                    $buttonTrans = 'installButton';
-                                }
+                        <?php if ($this->getRequest()->getActionName() == 'config'): ?>
+                            <?php $buttonTrans = 'installButton'; ?>
+                        <?php endif; ?>
 
-                                echo $this->getTrans($buttonTrans);
-                            ?>
-                        </button>
-                <?php
-                    }
-                ?>
+                        <?=$this->getTrans($buttonTrans) ?>
+                    </button>
+                <?php endif; ?>
             </div>
         </form>
     </body>
