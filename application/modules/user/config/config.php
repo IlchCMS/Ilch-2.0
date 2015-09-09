@@ -103,8 +103,21 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users` (
     `date_last_activity` datetime NOT NULL,
     `confirmed` int(11) DEFAULT 1,
     `confirmed_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+	`regist_id` int(11) DEFAULT 0,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_regist` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `strname` varchar(255) NOT NULL,
+	`strcode` varchar(255) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `[prefix]_regist` (`strname`, `strcode`) VALUES
+("Facebook", "fb"),
+("Google+", "g+"),
+("Twitter", "t");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
     `user_id` int(11) NOT NULL,
