@@ -6,6 +6,7 @@ $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
 $image = $article->getArticleImage();
 $imageSource = $article->getArticleImageSource();
 $preview = $this->getRequest()->getParam('preview');
+$config = \Ilch\Registry::get('config');
 
 function rec($id, $uid, $req, $obj)
 {
@@ -148,7 +149,7 @@ function rec($id, $uid, $req, $obj)
                                         <time class="comment-date"><i class="fa fa-clock-o"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
                                     </header>
                                     <div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>
-                                    <?php if ($this->get('comment_reply') == 1): ?>
+                                    <?php if ($config->get('comment_reply') == 1): ?>
                                         <p class="text-right"><a href="<?=$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId(), 'id_a' => $article->getId())) ?>" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?></a></p>
                                     <?php endif; ?>
                                 </div>
