@@ -1,6 +1,14 @@
 <link href="<?=$this->getModuleUrl('static/css/comment.css') ?>" rel="stylesheet">
 
+<<<<<<< HEAD
 <legend><?=$this->getTrans('settings') ?></legend>
+=======
+<legend><?=$this->getTrans('settings') ?>
+    <a class="badge" data-toggle="modal" data-target="#infoComment">
+        <i class="fa fa-info" ></i>
+    </a>
+</legend>
+>>>>>>> master
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
@@ -13,7 +21,11 @@
                        name="reply" 
                        id="reply_yes" 
                        value="1" 
+<<<<<<< HEAD
                        <?php if ($this->get('comment_reply') == '1') { echo 'checked="checked"';} ?>>
+=======
+                       <?php if ($this->get('comment_reply') == '1') { echo 'checked="checked"';} ?> />
+>>>>>>> master
                        <label for="reply_yes"><?=$this->getTrans('yes') ?></label>
             </label>
             <label class="checkbox-inline">
@@ -21,7 +33,11 @@
                        name="reply" 
                        id="reply_no" 
                        value="0" 
+<<<<<<< HEAD
                        <?php if ($this->get('comment_reply') == '0') { echo 'checked="checked"';} ?>>
+=======
+                       <?php if ($this->get('comment_reply') == '0') { echo 'checked="checked"';} ?> />
+>>>>>>> master
                        <label for="reply_no"><?=$this->getTrans('no') ?></label>
             </label>
         </div>
@@ -42,8 +58,56 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <?=$this->getSaveBar() ?>
 </form>
+=======
+    <div class="form-group">
+        <label for="showAvatarInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('showAvatar') ?>:
+        </label>
+        <div class="col-lg-8">
+            <input type="checkbox" 
+                   name="check_avatar" 
+                   value="1"
+                   <?php if ($this->get('comment_avatar') == '1') { echo 'checked="checked"';} ?> />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="showDateInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('showDate') ?>:
+        </label>
+        <div class="col-lg-8">
+            <input type="checkbox" 
+                   name="check_date" 
+                   value="1"
+                   <?php if ($this->get('comment_date') == '1') { echo 'checked="checked"';} ?> />
+        </div>
+    </div>
+    <?=$this->getSaveBar() ?>
+</form>
+<div class="modal fade" id="infoComment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                <h4 class="modal-title"><?=$this->getTrans('info') ?></h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalText"><?=$this->getTrans('CommentCommentInfoText') ?></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal"><?=$this->getTrans('close') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> master
 
 <script type="text/javascript">
 (function ($) {
