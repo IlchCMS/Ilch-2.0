@@ -25,6 +25,76 @@
         </div>
     </div>
     <div class="form-group">
+        Achtung der Bereich mit fremden Logins ist noch nicht fertig.
+        <label for="facebook_login_accept" class="col-lg-2 control-label">
+            <?=$this->getTrans('acceptUserRegisFacebook') ?>:
+        </label>
+        <div class="col-lg-4">
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="facebook_login" 
+                       id="facebook_login_yes" 
+                       value="1" 
+                       <?php if ($this->get('facebook_login') == '1') { echo 'checked="checked"';} ?>>
+                       <label for="facebook_login_yes"><?=$this->getTrans('yes') ?></label>
+            </label>
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="facebook_login" 
+                       id="facebook_login_no" 
+                       value="0" 
+                       <?php if ($this->get('facebook_login') == '0') { echo 'checked="checked"';} ?>>
+                       <label for="facebook_login_no"><?=$this->getTrans('no') ?></label>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="google_login" class="col-lg-2 control-label">
+            <?=$this->getTrans('acceptUserRegisGoogle') ?>:
+        </label>
+        <div class="col-lg-4">
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="google_login" 
+                       id="google_login_yes" 
+                       value="1" 
+                       <?php if ($this->get('google_login') == '1') { echo 'checked="checked"';} ?>>
+                       <label for="google_login_yes"><?=$this->getTrans('yes') ?></label>
+            </label>
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="google_login" 
+                       id="google_login_no" 
+                       value="0" 
+                       <?php if ($this->get('google_login') == '0') { echo 'checked="checked"';} ?>>
+                       <label for="google_login_no"><?=$this->getTrans('no') ?></label>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="twitter_login" class="col-lg-2 control-label">
+            <?=$this->getTrans('acceptUserRegisTwitter') ?>:
+        </label>
+        <div class="col-lg-4">
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="twitter_login" 
+                       id="twitter_login_yes" 
+                       value="1" 
+                       <?php if ($this->get('twitter_login') == '1') { echo 'checked="checked"';} ?>>
+                       <label for="twitter_login_yes"><?=$this->getTrans('yes') ?></label>
+            </label>
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="twitter_login" 
+                       id="twitter_login_no" 
+                       value="0" 
+                       <?php if ($this->get('twitter_login') == '0') { echo 'checked="checked"';} ?>>
+                       <label for="twitter_login_no"><?=$this->getTrans('no') ?></label>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="regist_confirm" class="col-lg-2 control-label">
             <?=$this->getTrans('confirmRegistrationEmail') ?>:
         </label>

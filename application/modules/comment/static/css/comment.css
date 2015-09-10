@@ -37,7 +37,7 @@
 }
 
 /* Portrait tablets and medium desktops */
-@media (min-width: 768px) {
+@media (min-width: 868px) {
     .comment-list .arrow:after, .comment-list .arrow:before {
         content: "";
         position: absolute;
@@ -131,116 +131,40 @@
 }
 
 /**
- * move comments for reply
- * max 5 moves 
- * more would stretch the design.
- */
-.comment-list.reply1 {
-  left: 55px;
-  position: relative;
-  overflow: visible;
-}
-.comment-list.reply1:after {
-  position: absolute;
-  content: " ";
-  width: 2px;
-  height: 100%;
-  top: -30px;
-  background: #e6e6e6;
-  left: -40px;
-}
-.comment-list.reply2 {
-  left: 110px;
-  position: relative;
-  overflow: visible;
-}
-.comment-list.reply2:after {
-  position: absolute;
-  content: " ";
-  width: 2px;
-  height: 100%;
-  top: -30px;
-  background: #e6e6e6;
-  left: -40px;
-}
-.comment-list.reply3 {
-  left: 165px;
-  position: relative;
-  overflow: visible;
-}
-.comment-list.reply3:after {
-  position: absolute;
-  content: " ";
-  width: 2px;
-  height: 100%;
-  top: -30px;
-  background: #e6e6e6;
-  left: -40px;
-}
-.comment-list.reply4 {
-  left: 230px;
-  position: relative;
-  overflow: visible;
-}
-.comment-list.reply4:after {
-  position: absolute;
-  content: " ";
-  width: 2px;
-  height: 100%;
-  top: -30px;
-  background: #e6e6e6;
-  left: -40px;
-}
-.comment-list.reply5 {
-  left: 285px;
-  position: relative;
-  overflow: visible;
-}
-.comment-list.reply5:after {
-  position: absolute;
-  content: " ";
-  width: 2px;
-  height: 100%;
-  top: -30px;
-  background: #e6e6e6;
-  left: -40px;
-}
-
-/**
- * for CommentAdminscenter
+ * Backend spinner
  */
 .spinner {
-  width: 100px;
+    width: 100px;
 }
 .spinner input {
-  text-align: right;
+    text-align: right;
 }
 .input-group-btn-vertical {
-  position: relative;
-  white-space: nowrap;
-  width: 1%;
-  vertical-align: middle;
-  display: table-cell;
+    position: relative;
+    white-space: nowrap;
+    width: 1%;
+    vertical-align: middle;
+    display: table-cell;
 }
 .input-group-btn-vertical > .btn {
-  display: block;
-  float: none;
-  width: 100%;
-  max-width: 100%;
-  padding: 8px;
-  margin-left: -1px;
-  position: relative;
-  border-radius: 0;
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 8px;
+    margin-left: -1px;
+    position: relative;
+    border-radius: 0;
 }
 .input-group-btn-vertical > .btn:first-child {
-  border-top-right-radius: 4px;
+    border-top-right-radius: 4px;
 }
 .input-group-btn-vertical > .btn:last-child {
-  margin-top: -2px;
-  border-bottom-right-radius: 4px;
+    margin-top: -2px;
+    border-bottom-right-radius: 4px;
 }
 .input-group-btn-vertical i{
-  position: absolute;
-  top: 0;
-  left: 4px;
+    position: absolute;
+    top: 0;
+    left: 4px;
 }

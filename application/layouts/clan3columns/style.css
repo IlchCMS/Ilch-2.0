@@ -46,9 +46,9 @@ figcaption {
 
 .navbar-gaming {
     background: #40434E; 
-    border-bottom-width:5px;
-    border-bottom-style:solid;
-    border-bottom-color:#32333B;
+    border-bottom-width: 5px;
+    border-bottom-style: solid;
+    border-bottom-color: #32333B;
 }
 
 .navbar-gaming .navbar-nav > li > a:hover, .navbar-gaming .navbar-nav > li > a:focus {
@@ -73,7 +73,7 @@ header nav ul > li > a {
     *zoom: 1;
 }
 
-header nav ul > li > ul > li > a{
+header nav ul > li > ul > li > a {
     color: #eee !important;
 }
 
@@ -85,7 +85,7 @@ header nav ul > li > ul > li > a{
     background-color: #eeeeee;
 }
 
-#main{
+#main {
     margin: auto;
     padding-left: 20px;
     padding-right: 20px;
@@ -93,9 +93,9 @@ header nav ul > li > ul > li > a{
     background-color: #F1F1F1;
     padding-top: 30px;
     margin-top: 30px;
-    border-width:5px;
-    border-style:solid;
-    border-color:#32333B;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #32333B;
 }
 
 .panel-gaming > .panel-heading {
@@ -113,14 +113,14 @@ header nav ul > li > ul > li > a{
     border-top-left-radius: 0px !important;
 }
 
-.panel-gaming > .panel-body  li{
+.panel-gaming > .panel-body  li {
     line-height: 35px;
-    border-bottom-width:1px;
-    border-bottom-style:solid;
-    border-bottom-color:#DDDDDD;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #DDDDDD;
 }
 
-.panel-gaming > .panel-body  a{
+.panel-gaming > .panel-body  a {
     color: #4295C9;
     text-decoration: none;
 }

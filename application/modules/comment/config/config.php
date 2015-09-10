@@ -33,27 +33,24 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('comment_reply', '1');
+        $databaseConfig->set('comment_interleaving', '5');
+        $databaseConfig->set('comment_avatar', '1');
+        $databaseConfig->set('comment_date', '1');
     }
 
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_comments` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `key` varchar(255) NOT NULL,
-		  `text` mediumtext NOT NULL,
-		  `date_created` datetime NOT NULL,
-		  `user_id` int(11) NOT NULL,
-		  `fk_id` int(11) NOT NULL,
-		  PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-                                
-
-                CREATE TABLE IF NOT EXISTS `[prefix]_cfg_comments` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `cc_strname` VARCHAR(100) NOT NULL,
-                  `cc_strcode` VARCHAR(100) NOT NULL,
-                  `cc_bolactive` VARCHAR(100) NOT NULL,
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `key` varchar(255) NOT NULL,
+                  `text` mediumtext NOT NULL,
+                  `date_created` datetime NOT NULL,
+                  `user_id` int(11) NOT NULL,
+                  `fk_id` int(11) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1';
     }
 }

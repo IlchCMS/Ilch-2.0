@@ -1,52 +1,73 @@
-<link href="<?=$this->getModuleUrl('static/css/comments.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/comment.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('settings') ?>
     <a class="badge" data-toggle="modal" data-target="#infoComment">
         <i class="fa fa-info" ></i>
     </a>
 </legend>
-<form class="form-horizontal" method="POST" action="">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
-        <div class="form-group">
-            <label for="allowedCommentCommentInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('allowedCommentComment') ?>:
+    <div class="form-group">
+        <label for="reply" class="col-lg-2 control-label">
+            <?=$this->getTrans('acceptReply') ?>:
+        </label>
+        <div class="col-lg-4">
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="reply" 
+                       id="reply_yes" 
+                       value="1" 
+                       <?php if ($this->get('comment_reply') == '1') { echo 'checked="checked"';} ?> />
+                       <label for="reply_yes"><?=$this->getTrans('yes') ?></label>
             </label>
-            <div class="col-lg-8">
-                <input value="1" type="checkbox" name="check_answer" />
-            </div>
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="reply" 
+                       id="reply_no" 
+                       value="0" 
+                       <?php if ($this->get('comment_reply') == '0') { echo 'checked="checked"';} ?> />
+                       <label for="reply_no"><?=$this->getTrans('no') ?></label>
+            </label>
         </div>
-        <div class="form-group">
-            <label for="countCommentInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('countComment') ?>:
-            </label>
-            <div class="col-lg-8">             
-                <div class="container">
-                    <div class="input-group spinner">
-                        <input type="text" class="form-control" value="1">
-                        <div class="input-group-btn-vertical">
-                            <button class="btn btn-default" type="button"><i class="fa fa-caret-up"></i></button>
-                            <button class="btn btn-default" type="button"><i class="fa fa-caret-down"></i></button>
-                        </div>
+    </div>
+    <div class="form-group">
+        <label for="interleaving" class="col-lg-2 control-label">
+            <?=$this->getTrans('interleaving') ?>:
+        </label>
+        <div class="col-lg-2">
+            <div class="container">
+                <div class="input-group spinner interleaving">
+                    <input type="text" class="form-control" id="interleaving" name="interleaving" value="<?=$this->get('comment_interleaving') ?>">
+                    <div class="input-group-btn-vertical">
+                        <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
+                        <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="showAvatarInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('showAvatar') ?>:
-            </label>
-            <div class="col-lg-8">
-                <input value="1" type="checkbox" name="check_avatar" />
-            </div>
+    </div>
+    <div class="form-group">
+        <label for="showAvatarInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('showAvatar') ?>:
+        </label>
+        <div class="col-lg-8">
+            <input type="checkbox" 
+                   name="check_avatar" 
+                   value="1"
+                   <?php if ($this->get('comment_avatar') == '1') { echo 'checked="checked"';} ?> />
         </div>
-        <div class="form-group">
-            <label for="showDateInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('showDate') ?>:
-            </label>
-            <div class="col-lg-8">
-                <input value="1" type="checkbox" name="check_date" />
-            </div>
+    </div>
+    <div class="form-group">
+        <label for="showDateInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('showDate') ?>:
+        </label>
+        <div class="col-lg-8">
+            <input type="checkbox" 
+                   name="check_date" 
+                   value="1"
+                   <?php if ($this->get('comment_date') == '1') { echo 'checked="checked"';} ?> />
         </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 <div class="modal fade" id="infoComment">
@@ -72,12 +93,12 @@
 </div>
 
 <script type="text/javascript">
-    (function ($) {
-      $('.spinner .btn:first-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-      });
-      $('.spinner .btn:last-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-      });
-    })(jQuery);
+(function ($) {
+    $('.interleaving .btn:first-of-type').on('click', function() {
+        $('.interleaving input').val( parseInt($('.interleaving input').val(), 10) + 1);
+    });
+    $('.interleaving .btn:last-of-type').on('click', function() {
+        $('.interleaving input').val( parseInt($('.interleaving input').val(), 10) - 1);
+    });
+})(jQuery);
 </script>

@@ -10,8 +10,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * The comment model class.
- *
- * @package ilch
  */
 class Comment extends \Ilch\Model
 {
@@ -20,7 +18,7 @@ class Comment extends \Ilch\Model
      */
     protected $id;
 	
-	/**
+    /**
      * @var integer
      */
     protected $fkid;
@@ -35,12 +33,12 @@ class Comment extends \Ilch\Model
      */
     protected $text;
 
-	/**
+    /**
      * @var integer
      */
     protected $userId;
 	
-	/**
+    /**
      * @var DateTime
      */
     protected $dateCreated;
@@ -64,7 +62,7 @@ class Comment extends \Ilch\Model
         return $this;
     }
 	
-	/**
+    /**
      * @return integer
      */
     public function getFKId()
@@ -121,7 +119,7 @@ class Comment extends \Ilch\Model
         return $this;
     }
 	
-	/**
+    /**
      * @return integer
      */
     public function getUserId()
@@ -140,7 +138,7 @@ class Comment extends \Ilch\Model
         return $this;
     }
 	
-	/**
+    /**
      * @return DateTime
      */
     public function getDateCreated()

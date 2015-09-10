@@ -13,16 +13,16 @@
             <div class="row">
                 <div class="col-lg-2">
                     <?php
-                        echo $this->getMenu
-                        (
-                            1,
-                            '<div class="panel panel-gaming">
-                                 <div class="panel-heading">%s</div>
-                                    <div class="panel-body">
-                                        %c
-                                    </div>
-                             </div>'
-                        );
+                    echo $this->getMenu
+                    (
+                        1,
+                        '<div class="panel panel-gaming">
+                             <div class="panel-heading">%s</div>
+                                <div class="panel-body">
+                                    %c
+                                </div>
+                         </div>'
+                    );
                     ?>
                 </div>
                 <div class="col-lg-8">
@@ -36,16 +36,16 @@
                 </div>
                 <div class="col-lg-2">
                     <?php
-                        echo $this->getMenu
-                        (
-                            2,
-                            '<div class="panel panel-gaming">
-                                 <div class="panel-heading">%s</div>
-                                    <div class="panel-body">
-                                        %c
-                                    </div>
-                             </div>'
-                        );
+                    echo $this->getMenu
+                    (
+                        2,
+                        '<div class="panel panel-gaming">
+                             <div class="panel-heading">%s</div>
+                                <div class="panel-body">
+                                    %c
+                                </div>
+                         </div>'
+                    );
                     ?>
                 </div>
             </div>
@@ -58,5 +58,5 @@
              });
         });
         </script>
-	</body>
+    </body>
 </html>

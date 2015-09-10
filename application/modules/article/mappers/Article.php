@@ -29,7 +29,8 @@ class Article extends \Ilch\Mapper
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source'])
             ->where(['pc.locale' => $this->db()->escape($locale)])
-            ->group(['p.id']);
+            ->group(['p.id'])
+            ->order(['date_created' => 'DESC']);
 
         $items = $result->execute();
 

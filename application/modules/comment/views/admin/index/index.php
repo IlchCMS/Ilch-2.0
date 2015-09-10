@@ -18,10 +18,10 @@
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_comments') ?></th>
                         <th></th>
-			<th><?=$this->getTrans('commentID') ?></th>
+                        <th><?=$this->getTrans('commentID') ?></th>
                         <th><?=$this->getTrans('commentDate') ?></th>
                         <th><?=$this->getTrans('commentFrom') ?></th>
-			<th><?=$this->getTrans('commentModul') ?></th>
+                        <th><?=$this->getTrans('commentModul') ?></th>
                         <th><?=$this->getTrans('commentLink') ?></th>
                         <th><?=$this->getTrans('commentText') ?></th>
                     </tr>
@@ -31,7 +31,7 @@
                     <?php foreach ($this->get('comments') as $comment): ?>
                         <?php $user = $userMapper->getUserById($comment->getUserId()) ?>
                         <?php $date = new \Ilch\Date($comment->getDateCreated()) ?>
-			<?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
+                        <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
                         <tr>
                             <td><input value="<?=$comment->getId() ?>" type="checkbox" name="check_comments[]" /></td>
                             <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $comment->getId())) ?></td>
