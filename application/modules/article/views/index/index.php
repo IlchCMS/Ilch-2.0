@@ -12,11 +12,11 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
         <?php $imageSource = $article->getArticleImageSource(); ?>
         <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
 
-        <div class="col-lg-12"><h4>
-            <div class="col-lg-8">
+        <div class="col-lg-12" style="padding-left: 0px;">
+            <div class="col-lg-8" style="padding-left: 0px;">
                 <h4><a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId())) ?>"><?=$articlesCats->getName() ?></a></h4>
             </div>
-            <div class="col-lg-4 text-right">
+            <div class="col-lg-4 text-right" style="padding-right: 0px;">
                 <h4><a href="<?=$this->getUrl(array('controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true))) ?>"><?=$date->format('d. F Y', true) ?></a></h4>
             </div>
         </div>
