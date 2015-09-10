@@ -37,8 +37,11 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('comment_reply', '1');
         $databaseConfig->set('comment_interleaving', '5');
+<<<<<<< HEAD
+=======
         $databaseConfig->set('comment_avatar', '1');
         $databaseConfig->set('comment_date', '1');
+>>>>>>> master
     }
 
     public function getInstallSql()

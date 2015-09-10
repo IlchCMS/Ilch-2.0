@@ -32,6 +32,7 @@ return array
     'title' => 'Title',
     'name' => 'Name',
     'date' => 'Date',
+    'clock' => 'o\'clock',
     'cats' => 'Categorie',
     'catArchives' => 'Category Archives',
     'monthArchives' => 'Month Archives',
