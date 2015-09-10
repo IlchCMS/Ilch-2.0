@@ -1,14 +1,10 @@
 <link href="<?=$this->getModuleUrl('static/css/comment.css') ?>" rel="stylesheet">
 
-<<<<<<< HEAD
-<legend><?=$this->getTrans('settings') ?></legend>
-=======
 <legend><?=$this->getTrans('settings') ?>
     <a class="badge" data-toggle="modal" data-target="#infoComment">
         <i class="fa fa-info" ></i>
     </a>
 </legend>
->>>>>>> master
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
@@ -21,11 +17,7 @@
                        name="reply" 
                        id="reply_yes" 
                        value="1" 
-<<<<<<< HEAD
-                       <?php if ($this->get('comment_reply') == '1') { echo 'checked="checked"';} ?>>
-=======
                        <?php if ($this->get('comment_reply') == '1') { echo 'checked="checked"';} ?> />
->>>>>>> master
                        <label for="reply_yes"><?=$this->getTrans('yes') ?></label>
             </label>
             <label class="checkbox-inline">
@@ -33,11 +25,7 @@
                        name="reply" 
                        id="reply_no" 
                        value="0" 
-<<<<<<< HEAD
-                       <?php if ($this->get('comment_reply') == '0') { echo 'checked="checked"';} ?>>
-=======
                        <?php if ($this->get('comment_reply') == '0') { echo 'checked="checked"';} ?> />
->>>>>>> master
                        <label for="reply_no"><?=$this->getTrans('no') ?></label>
             </label>
         </div>
@@ -58,10 +46,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-    <?=$this->getSaveBar() ?>
-</form>
-=======
     <div class="form-group">
         <label for="showAvatarInput" class="col-lg-2 control-label">
             <?=$this->getTrans('showAvatar') ?>:
@@ -107,7 +91,6 @@
         </div>
     </div>
 </div>
->>>>>>> master
 
 <script type="text/javascript">
 (function ($) {

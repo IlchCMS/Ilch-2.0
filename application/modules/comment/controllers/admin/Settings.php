@@ -44,20 +44,14 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('comment_reply', $this->getRequest()->getPost('reply'));
             $this->getConfig()->set('comment_interleaving', $this->getRequest()->getPost('interleaving'));
-<<<<<<< HEAD
-=======
             $this->getConfig()->set('comment_avatar', strlen($this->getRequest()->getPost('check_avatar')));
             $this->getConfig()->set('comment_date', strlen($this->getRequest()->getPost('check_date')));
->>>>>>> master
             $this->addMessage('saveSuccess');
         }
         
         $this->getView()->set('comment_reply', $this->getConfig()->get('comment_reply'));
         $this->getView()->set('comment_interleaving', $this->getConfig()->get('comment_interleaving'));
-<<<<<<< HEAD
-=======
         $this->getView()->set('comment_avatar', $this->getConfig()->get('comment_avatar'));
         $this->getView()->set('comment_date', $this->getConfig()->get('comment_date'));
->>>>>>> master
     }
 }
