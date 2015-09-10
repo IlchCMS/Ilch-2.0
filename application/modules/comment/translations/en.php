@@ -21,4 +21,5 @@ return array
     'reply' => 'Reply',
     'settings' => 'Settings',
     'interleaving' => 'Reply interleaving',
+    'acceptReply' => 'Comment reply allow?',
 );

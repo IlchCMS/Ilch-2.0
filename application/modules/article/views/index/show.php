@@ -33,7 +33,11 @@ function rec($id, $uid, $req, $obj)
         echo '<div class="comment-user"><i class="fa fa-user"></i> <a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $fk_comment->getUserId())).'">'.$user->getName().'</a></div>';
         echo '<time class="comment-date"><i class="fa fa-clock-o"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
         echo '</header><div class="comment-post"><p>'.nl2br($fk_comment->getText()).'</p></div>';
-        echo '<p class="text-right"><a href="'.$obj->getUrl(array('module' => 'comment', 'controller' => 'index', 'action' => 'index', 'id' => $fk_comment->getId())).'" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> '.$translator->trans('reply').'</a></p>';
+
+        if ($config->get('comment_reply') == 1) {
+            echo '<p class="text-right"><a href="'.$obj->getUrl(array('module' => 'comment', 'controller' => 'index', 'action' => 'index', 'id' => $fk_comment->getId())).'" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> '.$translator->trans('reply').'</a></p>';
+        }
+
         echo '</div></div></div>';
         echo '</article>';
 
@@ -144,7 +148,9 @@ function rec($id, $uid, $req, $obj)
                                         <time class="comment-date"><i class="fa fa-clock-o"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
                                     </header>
                                     <div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>
-                                    <p class="text-right"><a href="<?=$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId(), 'id_a' => $article->getId())) ?>" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?></a></p>
+                                    <?php if ($this->get('comment_reply') == 1): ?>
+                                        <p class="text-right"><a href="<?=$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId(), 'id_a' => $article->getId())) ?>" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?></a></p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

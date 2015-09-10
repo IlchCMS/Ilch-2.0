@@ -35,6 +35,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('comment_reply', '1');
         $databaseConfig->set('comment_interleaving', '5');
     }
 

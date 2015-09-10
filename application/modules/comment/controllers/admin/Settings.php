@@ -42,10 +42,12 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
+            $this->getConfig()->set('comment_reply', $this->getRequest()->getPost('reply'));
             $this->getConfig()->set('comment_interleaving', $this->getRequest()->getPost('interleaving'));
             $this->addMessage('saveSuccess');
         }
         
+        $this->getView()->set('comment_reply', $this->getConfig()->get('comment_reply'));
         $this->getView()->set('comment_interleaving', $this->getConfig()->get('comment_interleaving'));
     }
 }

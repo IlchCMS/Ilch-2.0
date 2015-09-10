@@ -21,4 +21,5 @@ return array
     'reply' => 'Antworten',
     'settings' => 'Einstellungen',
     'interleaving' => 'Antworten Verschachtelung',
+    'acceptReply' => 'Kommentar antworten erlauben?',
 );

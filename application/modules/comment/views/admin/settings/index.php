@@ -4,6 +4,29 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
+        <label for="reply" class="col-lg-2 control-label">
+            <?=$this->getTrans('acceptReply') ?>:
+        </label>
+        <div class="col-lg-4">
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="reply" 
+                       id="reply_yes" 
+                       value="1" 
+                       <?php if ($this->get('comment_reply') == '1') { echo 'checked="checked"';} ?>>
+                       <label for="reply_yes"><?=$this->getTrans('yes') ?></label>
+            </label>
+            <label class="checkbox-inline">
+                <input type="radio" 
+                       name="reply" 
+                       id="reply_no" 
+                       value="0" 
+                       <?php if ($this->get('comment_reply') == '0') { echo 'checked="checked"';} ?>>
+                       <label for="reply_no"><?=$this->getTrans('no') ?></label>
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="interleaving" class="col-lg-2 control-label">
             <?=$this->getTrans('interleaving') ?>:
         </label>
