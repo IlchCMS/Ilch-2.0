@@ -18,6 +18,7 @@ return array
     'readMore' => 'ganzen Artikel lesen',
     'comments' => 'Kommentare',
     'reply' => 'Antworten',
+    'replyof' => 'Antwort',
     'author' => 'Autor',
     'submit' => 'Eintragen',
     'image' => 'Bild',

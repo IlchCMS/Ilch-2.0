@@ -32,9 +32,11 @@ function rec($id, $uid, $req, $obj)
         $col = 10 - $req;
         echo '<article class="row" id="'.$fk_comment->getId().'">';
         echo '<div class="col-md-2 col-sm-2 col-md-offset-'.$req.' col-sm-offset-'.$req.' hidden-xs">';
-        echo '<figure class="thumbnail">';
-        echo '<a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'"><img class="img-responsive" src="'.$obj->getBaseUrl($user->getAvatar()).'" alt="'.$user->getName().'"></a>';
-        echo '</figure>';
+        if ($config->get('comment_avatar') == 1) {
+            echo '<figure class="thumbnail">';
+            echo '<a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'"><img class="img-responsive" src="'.$obj->getBaseUrl($user->getAvatar()).'" alt="'.$user->getName().'"></a>';
+            echo '</figure>';
+        }
         echo '</div>';
         echo '<div class="col-md-'.$col.' col-sm-'.$col.'">';
         echo '<div class="panel panel-default arrow left">';
@@ -44,7 +46,9 @@ function rec($id, $uid, $req, $obj)
         echo '<div class="comment-user">';
         echo '<i class="fa fa-user"></i> <a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $fk_comment->getUserId())).'">'.$user->getName().'</a>';
         echo '</div>';
-        echo '<time class="comment-date"><i class="fa fa-clock-o" title="'.$translator->trans('date').'"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
+        if ($config->get('comment_date') == 1) {
+            echo '<time class="comment-date"><i class="fa fa-clock-o" title="'.$translator->trans('date').'"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
+        }
         echo '</header>';
         echo '<div class="comment-post"><p>'.nl2br($fk_comment->getText()).'</p></div>';
 
