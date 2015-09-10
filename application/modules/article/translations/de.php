@@ -24,6 +24,7 @@ return array
     'image' => 'Bild',
     'preview' => 'Vorschau',
     'show' => 'Ansehen',
+    'hits' => 'Zugriffe',
     'imageSource' => 'Bild Quelle',
     'options' => 'Optionen',
     'menuCats' => 'Kategorien',

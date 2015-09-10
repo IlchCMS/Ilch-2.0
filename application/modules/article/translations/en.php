@@ -24,6 +24,7 @@ return array
     'image' => 'Image',
     'preview' => 'Preview',
     'show' => 'Show',
+    'hits' => 'Hits',
     'imageSource' => 'Image Source',
     'options' => 'Options',
     'menuCats' => 'Categories',
