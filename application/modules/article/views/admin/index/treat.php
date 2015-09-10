@@ -161,7 +161,7 @@ $('#language').change
 (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(array('id' => $articleID)); ?>/locale/'+$(this).val();
+        top.location.href = '<?=$this->getUrl(array('id' => $articleID)) ?>/locale/'+$(this).val();
     }
 );
 
@@ -173,7 +173,7 @@ $('#preview').click
     function(e) 
     {
         e.preventDefault();
-        $('#article_form').attr('action', '/index.php/article/index/show/preview/true');
+        $('#article_form').attr('action', '<?=$this->getUrl('index.php/article/index/show/preview/true') ?>');
         $('#article_form').attr('target', '_blank');
         $('#article_form').submit();
         $('#article_form').attr('action', '');
@@ -181,5 +181,5 @@ $('#preview').click
     }
 );
 
-var ilchPsPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchps/');?>";
+var ilchPsPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchps/') ?>";
 </script>
