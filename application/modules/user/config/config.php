@@ -103,14 +103,8 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users` (
     `date_last_activity` datetime NOT NULL,
     `confirmed` int(11) DEFAULT 1,
     `confirmed_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-    `registart` varchar(255) DEFAULT 0,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-
-INSERT INTO `[prefix]_config` (`key`, `value`, `autoload`) VALUES
-("facebook_login", "1", 0),
-("google_login", "1", 0),
-("twitter_login", "1", 0);
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
     `user_id` int(11) NOT NULL,

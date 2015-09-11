@@ -42,20 +42,15 @@
             </div>
         </div>
         <div class="form-group">
-             <div class="col-lg-12">
-                <button type="submit" class="btn btn-primary" name="login">
+             <div class="col-lg-4">
+                <button type="submit" class="btn" name="login">
                     <?=$this->getTrans('login') ?>
                 </button>
-                <?php if ($this->get('regist_accept') == '1'): ?>
-                    <a class="btn btn-default" href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')) ?>"><?=$this->getTrans('register') ?></a>
-                <?php endif; ?>
-             </div>
-        </div>
-        <div class="form-group">
-             <div class="col-lg-12">
-                <fb:login-button class="btn" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>
              </div>
         </div>
     </form>
+    <?php if ($this->get('regist_accept') == '1'): ?>
+        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')) ?>"><?=$this->getTrans('register') ?></a><br />
+    <?php endif; ?>
     <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword')) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>

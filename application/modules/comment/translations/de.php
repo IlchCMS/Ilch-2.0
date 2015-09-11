@@ -22,7 +22,4 @@ return array
     'settings' => 'Einstellungen',
     'interleaving' => 'Antworten Verschachtelung',
     'acceptReply' => 'Kommentar antworten erlauben?',
-    'showAvatar' => 'Avatar anzeigen?',
-    'showDate' => 'Datum anzeigen?',
-    'CommentCommentInfoText' => 'Information zur Konfiguration der Kommentare.',
 );

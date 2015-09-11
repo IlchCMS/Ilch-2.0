@@ -30,12 +30,17 @@ class Index extends \Ilch\Controller\Frontend
     {
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuComments'), array('action' => 'index'));
         $commentMapper = new CommentMapper();
+
         $this->getView()->set('comments', $commentMapper->getComments($this->locale));
 
         if ($this->getRequest()->getPost('comment_comment_text')) {
             $commentModel = new CommentModel();
             $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id_a').'/id_c/'.$this->getRequest()->getParam('id'));
-            $commentModel->setFKId($this->getRequest()->getParam('id'));
+            if ($this->getRequest()->getParam('id') != 1) {
+                $commentModel->setFKId($this->getRequest()->getParam('id'));
+            } else {
+                $commentModel->setFKId(0);
+            }
             $commentModel->setText($this->getRequest()->getPost('comment_comment_text'));
 
             $date = new \Ilch\Date();
@@ -45,7 +50,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $comments = $commentMapper->getComments('comment/index/index/id/'.$this->getRequest()->getParam('id'));
-        $this->getView()->set('comment_reply', $this->getConfig()->get('comment_reply'));
+
         $this->getView()->set('comments', $comments);
     }
 }

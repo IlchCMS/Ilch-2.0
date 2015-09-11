@@ -40,7 +40,7 @@ class Comment extends \Ilch\Mapper
         return $comments;
     }
 	
-    public function getCommentsByFKid($key)
+	public function getCommentsByFKid($key)
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')

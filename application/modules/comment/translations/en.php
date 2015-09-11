@@ -22,7 +22,4 @@ return array
     'settings' => 'Settings',
     'interleaving' => 'Reply interleaving',
     'acceptReply' => 'Comment reply allow?',
-    'showAvatar' => 'show Avatar ?',
-    'showDate' => 'show Date ?',
-    'CommentCommentInfoText' => 'Information of Commentconfiguration.',
 );
