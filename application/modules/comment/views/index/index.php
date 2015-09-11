@@ -106,7 +106,9 @@ $preview = $this->getRequest()->getParam('preview');
                                                 <time class="comment-date"><i class="fa fa-clock-o"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
                                             </header>		
                                             <div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>
+                                            <?php if ($this->get('comment_reply') == 1) : ?>
                                             <p class="text-right"><a href="<?=$this->getUrl(array('module' => 'comment', 'action' => 'index', 'id' => $comment->getId())) ?>" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?></a></p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
