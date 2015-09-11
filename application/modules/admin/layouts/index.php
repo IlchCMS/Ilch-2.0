@@ -176,7 +176,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="http://redmine.ilch2.de/projects/dev2/wiki" target="_blank">
+                                    <a href="http://www.ilch.de/redmine/projects/dev2/wiki" target="_blank">
                                         <i class="fa fa-book"></i>
                                         <?=$this->getTrans('documentationFAQ') ?>
                                     </a>

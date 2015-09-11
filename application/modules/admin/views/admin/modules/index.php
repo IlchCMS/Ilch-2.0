@@ -1,7 +1,7 @@
 <table class="table table-hover">
     <colgroup>
-        <col class="col-lg-3" />
-        <col class="col-lg-9" />
+        <col class="col-lg-2" />
+        <col class="col-lg-10" />
     </colgroup>
     <thead>
         <tr>

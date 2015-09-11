@@ -117,4 +117,5 @@ return array
     'add' => 'Add',
     'edit' => 'Edit',
     'manage' => 'Manage',
+    'settings' => 'Settings',
 );

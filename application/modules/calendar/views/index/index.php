@@ -45,8 +45,9 @@
 				$('#calendar').fullCalendar( 'gotoDate', date );
             },
 
-            // events from database
+            // from database
             events: [
+                    // calendar entries
                     <?php if ($this->get('calendarList') != ''): ?>
                         <?php foreach ($this->get('calendarList') as $calendarList): ?>
                             {
@@ -59,6 +60,7 @@
                         <?php endforeach; ?>
                     <?php endif; ?>
 
+                    // birthday entries
                     <?php $yearBegin = date("Y") - 5; ?>
                     <?php $yearEnd = $yearBegin + 15; ?>
                     <?php $years = range($yearBegin, $yearEnd, 1); ?>
@@ -75,6 +77,7 @@
                         <?php endforeach; ?>
                     <?php endforeach; ?>
 
+                    // event entries
                     <?php if ($this->get('eventList') != ''): ?>
                         <?php foreach ($this->get('eventList') as $eventList): ?>
                             {

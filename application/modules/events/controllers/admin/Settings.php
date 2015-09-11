@@ -26,6 +26,13 @@ class Settings extends \Ilch\Controller\Admin
                 ),
                 array
                 (
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                ),
+                array
+                (
                     'name' => 'menuSettings',
                     'active' => true,
                     'icon' => 'fa fa-cogs',

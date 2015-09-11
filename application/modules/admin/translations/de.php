@@ -117,4 +117,5 @@ return array
     'add' => 'Erstellen',
     'edit' => 'Bearbeiten',
     'manage' => 'Verwalten',    
+    'settings' => 'Einstellungen',
 );

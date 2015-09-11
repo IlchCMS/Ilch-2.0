@@ -19,7 +19,7 @@
             </td>
         </tr>
         <tr>
-            <td><?=$this->getTrans('writable').' "/application/"' ?></td>
+            <td>"/application/"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php if (is_writable(CONFIG_PATH)): ?>
@@ -30,7 +30,7 @@
             </td>
         </tr>
         <tr>
-            <td><?=$this->getTrans('writable').' "/application/modules/media/static/upload/"' ?></td>
+            <td>"/application/modules/media/static/upload/"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php if (is_writable(APPLICATION_PATH.'/modules/media/static/upload/')): ?>
@@ -41,7 +41,7 @@
             </td>
         </tr>
         <tr>
-            <td><?=$this->getTrans('writable').' "/application/modules/user/static/upload/avatar/"' ?></td>
+            <td>"/application/modules/user/static/upload/avatar/"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php if (is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')): ?>
@@ -52,7 +52,7 @@
             </td>
         </tr>
         <tr>
-            <td><?=$this->getTrans('writable').' "/application/modules/events/static/upload/image/"' ?></td>
+            <td>"/application/modules/events/static/upload/image/"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php if (is_writable(APPLICATION_PATH.'/modules/events/static/upload/image/')): ?>
@@ -63,7 +63,7 @@
             </td>
         </tr>
         <tr>
-            <td><?=$this->getTrans('writable').' "/.htaccess"' ?></td>
+            <td>"/.htaccess"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
                 <?php if (is_writable(APPLICATION_PATH.'/../.htaccess')): ?>
