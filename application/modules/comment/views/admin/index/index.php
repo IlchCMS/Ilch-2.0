@@ -39,7 +39,7 @@
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></td>
                             <td><?=substr($comment->getKey(), 0, strpos($comment->getKey(), '/')) ?></td>
-                            <td><a target="_blank" href="<?=$this->getUrl($comment->getKey()) ?>#<?=$comment->getId() ?>"><?=$commentKey ?></a></td>                       
+                            <td><a target="_blank" href="<?=$this->getUrl($comment->getKey()) ?>#<?=$comment->getId() ?>"><?=$commentKey ?></a></td>
                             <td><?=nl2br($this->escape($comment->getText())) ?></td>
                         </tr>
                     <?php endforeach; ?>

@@ -32,7 +32,7 @@ class Cats extends \Ilch\Controller\Admin
                     'name' => 'menuCats',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'index'))
                 ),
             )
         );
@@ -43,7 +43,7 @@ class Cats extends \Ilch\Controller\Admin
             (
                 'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'treat'))
+                'url' => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'treat'))
             )
         );
     }
@@ -83,7 +83,7 @@ class Cats extends \Ilch\Controller\Admin
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
                     ->add($this->getTranslator()->trans('menuCats'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {

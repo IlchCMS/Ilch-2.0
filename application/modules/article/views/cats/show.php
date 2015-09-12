@@ -59,5 +59,5 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
         <br /><br /><br />
     <?php endforeach; ?>
 <?php else: ?>
-    <?=$this->getTrans('noArticles') ?>        
+    <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

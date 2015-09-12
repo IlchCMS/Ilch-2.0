@@ -60,5 +60,5 @@ $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRe
         <br /><br /><br />
     <?php endforeach; ?>
 <?php else: ?>
-    <?=$this->getTrans('noArticles') ?>        
+    <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

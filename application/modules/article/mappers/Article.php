@@ -18,7 +18,7 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles.
      *
-     * @param  string $locale
+     * @param string $locale
      * @return Article_ArticleModel[]|array
      */
 
@@ -64,7 +64,7 @@ class Article extends \Ilch\Mapper
     /**
      * Get articles.
      *
-     * @param  string $locale
+     * @param string $locale
      * @return Article_ArticleModel[]|array
      */
     public function getArticlesByCats($catId, $locale = '')
@@ -228,8 +228,8 @@ class Article extends \Ilch\Mapper
     /**
      * Returns article model found by the key.
      *
-     * @param  string              $id
-     * @param  string              $locale
+     * @param string $id
+     * @param string $locale
      * @return Article_ArticleModel|null
      */
     public function getArticleByIdLocale($id, $locale = '')

@@ -19,7 +19,6 @@ return array
     'commentID' => 'ID',
     'submit' => 'Eintragen',
     'reply' => 'Antworten',
-    'settings' => 'Einstellungen',
     'interleaving' => 'Antworten Verschachtelung',
     'acceptReply' => 'Kommentar antworten erlauben?',
     'showAvatar' => 'Avatar anzeigen?',

@@ -62,5 +62,5 @@
         <?=$this->getListBar(array('delete' => 'delete'))?>
     </form>
 <?php else: ?>
-    <?=$this->getTrans('noArticles') ?>        
+    <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

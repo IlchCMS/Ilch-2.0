@@ -46,7 +46,7 @@ class Category extends \Ilch\Mapper
     /**
      * Returns category found by the id.
      *
-     * @param  int $id
+     * @param int $id
      * @return false|CategoryModel
      */
     public function getCategoryById($id)

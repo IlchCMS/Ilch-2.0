@@ -23,5 +23,5 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
     <?php endforeach; ?>
 </ul>
 <?php else: ?>
-    <?=$this->getTrans('noArticles') ?>        
+    <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

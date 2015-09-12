@@ -39,7 +39,7 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
             <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId())) ?>" class="pull-right"><?=$this->getTrans('readMore') ?></a>
         <?php else: ?>
             <?=$content ?>
-        <?php endif; ?>            
+        <?php endif; ?>
         <hr />
         <div>
             <?php if ($article->getAuthorId() != ''): ?>
@@ -58,5 +58,5 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
         <br /><br /><br />
     <?php endforeach; ?>
 <?php else: ?>
-    <?=$this->getTrans('noArticles') ?>        
+    <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

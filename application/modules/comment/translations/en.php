@@ -19,10 +19,9 @@ return array
     'commentID' => 'ID',
     'submit' => 'Save',
     'reply' => 'Reply',
-    'settings' => 'Settings',
     'interleaving' => 'Reply interleaving',
     'acceptReply' => 'Comment reply allow?',
-    'showAvatar' => 'show Avatar ?',
-    'showDate' => 'show Date ?',
-    'CommentCommentInfoText' => 'Information of Commentconfiguration.',
+    'showAvatar' => 'show Avatar?',
+    'showDate' => 'show Date?',
+    'CommentCommentInfoText' => 'Information of Comment configuration.',
 );

@@ -10,8 +10,6 @@ defined('ACCESS') or die('no direct access');
 
 /**
  * The article model class.
- *
- * @package ilch
  */
 class Article extends \Ilch\Model
 {
