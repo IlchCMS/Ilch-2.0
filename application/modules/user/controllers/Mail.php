@@ -36,6 +36,21 @@ class Mail extends \Ilch\Controller\Frontend
                 $this->addMessage('messageEmpty');
                 $this->redirect(array('action' => 'index', 'user' => $this->getRequest()->getParam('user')));
             } else {
+                $sitetitle = $this->getConfig()->get('page_title');
+                $date = new \Ilch\Date();
+
+                if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/usermail.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/usermail.php');
+                } else {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/usermail.php');
+                }
+                $messageReplace = array(
+                        '{content}' => $message,
+                        '{sitetitle}' => $sitetitle,
+                        '{date}' => $date->format("l, d. F Y", true)
+                );
+                $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
                 $mail = new \Ilch\Mail();
                 $mail->setTo($profil->getEmail(), $profil->getName())
                         ->setSubject($subject)

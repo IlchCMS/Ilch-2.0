@@ -227,9 +227,9 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic'), $modulesToInstall);
+                    $modulesToInstall = array_merge(array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic'), $modulesToInstall);
                 } else {
-                    $modulesToInstall = array('admin', 'user', 'article', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic');
+                    $modulesToInstall = array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic');
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -290,7 +290,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'birthday', 'statistic'))) {
+                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'statistic'))) {
                         continue;
                     }
 
@@ -362,6 +362,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['training']['types']   = array('clan');
         $modules['guestbook']['types']  = array('clan', 'private');
         $modules['link']['types']       = array('clan', 'private');
+        $modules['linkus']['types']     = array('clan', 'private');
         $modules['partner']['types']    = array('clan', 'private');
         $modules['shoutbox']['types']   = array('clan', 'private');
         $modules['gallery']['types']    = array('clan', 'private');
@@ -374,7 +375,6 @@ class Index extends \Ilch\Controller\Frontend
         $modules['awards']['types']     = array('clan', 'private');
         $modules['jobs']['types']       = array('clan', 'private');
         $modules['faq']['types']        = array('clan', 'private');
-        $modules['linkus']['types']     = array('clan', 'private');
 
         foreach ($modules as $key => $module) {
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';

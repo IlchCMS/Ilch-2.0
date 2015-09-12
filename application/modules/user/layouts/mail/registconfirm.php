@@ -208,11 +208,9 @@
             <tr>
                 <td></td>
                 <td class="container">
-                    <!-- content -->
                     <div class="content" align="center">
                         <p>{footer}</p>
                     </div>
-                    <!-- /content -->
                 </td>
                 <td></td>
             </tr>

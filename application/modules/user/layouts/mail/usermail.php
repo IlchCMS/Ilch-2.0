@@ -202,19 +202,5 @@
             </tr>
         </table>
         <!-- /body -->
-
-        <!-- footer -->
-        <table class="footer-wrap">
-            <tr>
-                <td></td>
-                <td class="container">
-                    <div class="content" align="center">
-                        <p>{footer}</p>
-                    </div>
-                </td>
-                <td></td>
-            </tr>
-        </table>
-        <!-- /footer -->
     </body>
 </html>

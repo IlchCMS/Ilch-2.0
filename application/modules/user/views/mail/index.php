@@ -11,10 +11,10 @@
                     <?=$this->getTrans('subject') ?>:
                 </label>
                 <div class="col-lg-8">
-                    <input id="name"
-                           class="form-control"
-                           name="subject"
-                           type="text"
+                    <input id="subject" 
+                           class="form-control" 
+                           name="subject" 
+                           type="text" 
                            value="" />
                 </div>
             </div>
@@ -23,10 +23,10 @@
                     <?=$this->getTrans('message') ?>:
                 </label>
                 <div class="col-lg-8">
-                    <textarea id="message" 
-                              class="form-control"
-                              rows="5"
-                              name="message"></textarea>
+                    <textarea class="form-control" 
+                              rows="5" 
+                              name="message" 
+                              id="ilch_html"></textarea>
                 </div>
             </div>
             <div class="col-lg-offset-2 col-lg-10">
