@@ -49,6 +49,7 @@
             <div class="col-lg-8">
                 <textarea id="message" 
                           class="form-control"
+                          rows="5"
                           name="contact_message"></textarea>
             </div>
         </div>

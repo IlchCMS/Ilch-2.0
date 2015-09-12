@@ -6,7 +6,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
 $homepage = $userMapper->getHomepage($this->escape($profil->getHomepage()));
 
 $groups = '';
-foreach($profil->getGroups() as $group) {
+foreach ($profil->getGroups() as $group) {
     if ($groups != '') {
         $groups .= ', ';
     }
@@ -23,8 +23,8 @@ foreach($profil->getGroups() as $group) {
             </div>
             <div class="col-lg-5 col-xs-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
-                <?php if($this->getUser() and $this->getUser()->getId() != $this->escape($profil->getID())): ?>
-                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId())) ?>" >Neue Nachricht</a>
+                <?php if($this->getUser() AND $this->getUser()->getId() != $this->escape($profil->getID())): ?>
+                    <a href="<?=$this->getUrl(array('controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId())) ?>" >Neue Nachricht</a>
                  <?php endif; ?>
                 <div class="detail">
                     <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
@@ -35,8 +35,12 @@ foreach($profil->getGroups() as $group) {
                 </div>
             </div>
             <div class="col-lg-4 hidden-xs concatLinks-lg">
-                <a class="fa fa-envelope" title="E-Mail"></a>
-                <a class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
+                <?php if ($this->getUser() AND $profil->getOptMail() == 1 AND $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
+                    <a href="<?=$this->getUrl(array('controller' => 'mail', 'action' => 'index', 'user' => $profil->getId())) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
+                <?php endif; ?>
+                <?php if ($profil->getHomepage() != ''): ?>
+                    <a href="<?=$homepage ?>" target="_blank" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
+                <?php endif; ?>
                 <a class="fa fa-facebook" title="Facebook"></a>
                 <a class="fa fa-google-plus" title="Goggle+"></a>
                 <a class="fa fa-twitter" title="Twitter"></a>

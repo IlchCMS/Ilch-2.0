@@ -185,6 +185,8 @@ class Regist extends \Ilch\Controller\Frontend
             
             if (!empty($confirmed)) {
                 if(!empty($user)) {
+                    $currentDate = new \Ilch\Date();
+                    $user->setDateConfirmed($currentDate);
                     $user->setConfirmed(1);
                     $user->setConfirmedCode('');
                     $userMapper->save($user);

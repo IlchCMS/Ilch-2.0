@@ -217,6 +217,28 @@ class Panel extends BaseController
         $this->getView()->set('profil', $profil);
     }
 
+    public function settingAction()
+    {
+        $profilMapper = new UserMapper();
+        $profil = $profilMapper->getUserById($this->getUser()->getId());
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
+                ->add($this->getTranslator()->trans('menuSetting'), array('controller' => 'panel', 'action' => 'setting'));
+
+        if ($this->getRequest()->isPost()) {
+            $model = new \Modules\User\Models\User();
+            $model->setId($this->getUser()->getId());
+            $model->setOptMail($this->getRequest()->getPost('opt_mail'));
+            $profilMapper->save($model);
+
+            $this->redirect(array('action' => 'setting'));
+        }
+
+        $this->getView()->set('profil', $profil);
+    }
+
     public function dialogAction()
     {
         $profilMapper = new UserMapper();

@@ -88,6 +88,13 @@ class User extends \Ilch\Model
     protected $password;
 
     /**
+     * The opt_mail of the user.
+     *
+     * @var int
+     */
+    protected $opt_mail;
+
+    /**
      * The \Ilch\Date of when the user got created.
      *
      * @var \Ilch\Date
@@ -217,6 +224,29 @@ class User extends \Ilch\Model
     public function setPassword($password)
     {
         $this->password = (string)$password;
+
+        return $this;
+    }
+
+    /**
+     * Returns the opt_mail of the user.
+     *
+     * @return int
+     */
+    public function getOptMail()
+    {
+        return $this->opt_mail;
+    }
+
+    /**
+     * Saves the opt_mail of the user.
+     *
+     * @param int $opt_mail
+     * @return User
+     */
+    public function setOptMail($opt_mail)
+    {
+        $this->opt_mail = (string)$opt_mail;
 
         return $this;
     }

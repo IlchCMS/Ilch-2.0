@@ -200,6 +200,10 @@ class User extends \Ilch\Mapper
             $user->setPassword($userRow['password']);
         }
 
+        if (isset($userRow['opt_mail'])) {
+            $user->setOptMail($userRow['opt_mail']);
+        }
+
         if (isset($userRow['date_created'])) {
             $dateCreated = new IlchDate($userRow['date_created']);
             $user->setDateCreated($dateCreated);
@@ -284,6 +288,7 @@ class User extends \Ilch\Mapper
         $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();
         $fields['signature'] = $user->getSignature();
+        $fields['opt_mail'] = $user->getOptMail();
 
         $userId = (int)$this->db()->select('id')
             ->from('users')

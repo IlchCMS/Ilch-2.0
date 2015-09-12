@@ -49,7 +49,7 @@
     </div>
     <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
         <label for="email" class="control-label col-lg-2">
-            <?=$this->getTrans('email') ?>:
+            <?=$this->getTrans('emailAdress') ?>:
         </label>
         <div class="col-lg-8">
             <input value=""

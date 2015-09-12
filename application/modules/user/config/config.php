@@ -46,14 +46,14 @@ class Config extends \Ilch\Config\Install
                               <p>&nbsp;</p>
                               <p>Willkommen auf <i>{sitetitle}</i>.</p>
                               <p>um die Registrierung erfolgreich abzuschlie&szlig;en klicken Sie Bitte auf folgenden Link.</p>
-                              <p>{comfirm}</p>
+                              <p>{confirm}</p>
                               <p>&nbsp;</p>
                               <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                               <p>Administrator</p>');
         $databaseConfig->set('password_change_mail', '<p>Hallo <b>{name}</b>,</p>
                               <p>&nbsp;</p>
                               <p>um Ihr Passwort auf <i>{sitetitle}</i> zu ändern klicken Sie Bitte auf folgenden Link.</p>
-                              <p>{comfirm}</p>
+                              <p>{confirm}</p>
                               <p>&nbsp;</p>
                               <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                               <p>Administrator</p>');
@@ -98,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users` (
     `birthday` date NOT NULL,
     `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
     `signature` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `opt_mail` int(11) DEFAULT 1,
     `date_created` datetime NOT NULL,
     `date_confirmed` datetime NOT NULL,
     `date_last_activity` datetime NOT NULL,
