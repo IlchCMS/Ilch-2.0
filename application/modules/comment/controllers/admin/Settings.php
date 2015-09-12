@@ -14,7 +14,7 @@ class Settings extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'menuComment',
+            'menuComments',
             array
             (
                 array
@@ -38,7 +38,7 @@ class Settings extends \Ilch\Controller\Admin
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuComment'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuComments'), array('controller' => 'index', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {

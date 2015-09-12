@@ -95,6 +95,22 @@ class Comment extends \Ilch\Mapper
 
         return $comments;
     }
+    
+    /**
+     * Gets the counter of all comments with given $key.
+     *
+     * @return integer
+     */
+    public function getCountComments($key)
+    {
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_comments`
+                WHERE `key` LIKE "'.$key.'%" ';
+
+        $article = $this->db()->queryCell($sql);
+
+        return $article;
+    }
 
     /**
      * @param CommentModel $comment
