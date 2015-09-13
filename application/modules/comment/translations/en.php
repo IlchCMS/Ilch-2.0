@@ -8,10 +8,8 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuComment' => 'Comment',
     'menuComments' => 'Comments',
-    'menuOtherComments' => 'other Comments',
-    'commentDate' => 'Date/Time',
+    'commentDate/Time' => 'Date/Time',
     'commentFrom' => 'From',
     'commentText' => 'Text',
     'commentLink' => 'Link',
@@ -20,10 +18,11 @@ return array
     'commentID' => 'ID',
     'submit' => 'Save',
     'reply' => 'Reply',
-    'date' => 'Date',
+    'dateTime' => 'Date/Time',
+    'commentUser' => 'User',
     'interleaving' => 'Reply interleaving',
     'acceptReply' => 'Comment reply allow?',
     'showAvatar' => 'show Avatar?',
-    'showDate' => 'show Date?',
+    'showDateTime' => 'show Date/Time?',
     'CommentCommentInfoText' => 'Information of Comment configuration.',
 );

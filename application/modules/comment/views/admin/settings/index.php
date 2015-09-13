@@ -59,7 +59,7 @@
     </div>
     <div class="form-group">
         <label for="showDateInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('showDate') ?>:
+            <?=$this->getTrans('showDateTime') ?>:
         </label>
         <div class="col-lg-8">
             <input type="checkbox" 

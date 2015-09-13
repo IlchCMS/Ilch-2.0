@@ -19,7 +19,7 @@
                         <th><?=$this->getCheckAllCheckbox('check_comments') ?></th>
                         <th></th>
                         <th><?=$this->getTrans('commentID') ?></th>
-                        <th><?=$this->getTrans('commentDate') ?></th>
+                        <th><?=$this->getTrans('commentDateTime') ?></th>
                         <th><?=$this->getTrans('commentFrom') ?></th>
                         <th><?=$this->getTrans('commentModul') ?></th>
                         <th><?=$this->getTrans('commentLink') ?></th>

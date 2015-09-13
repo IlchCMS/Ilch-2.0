@@ -32,7 +32,7 @@ function rec($id, $uid, $req, $obj)
         echo '<article class="row" id="'.$fk_comment->getId().'">';
         if ($config->get('comment_avatar') == 1) {
             echo '<div class="col-md-2 col-sm-2 col-md-offset-'.$req.' col-sm-offset-'.$req.' hidden-xs">';
-            echo '<figure class="thumbnail">';
+            echo '<figure class="thumbnail" title="'.$user->getName().'">';
             echo '<a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())).'"><img class="img-responsive" src="'.$obj->getBaseUrl($user->getAvatar()).'" alt="'.$user->getName().'"></a>';
             echo '</figure>';
             echo '</div>';
@@ -46,10 +46,10 @@ function rec($id, $uid, $req, $obj)
         echo '<div class="panel-heading right"><i class="fa fa-reply"></i> '.$user_rep->getName().'</div>';
         echo '<header class="text-left">';
         echo '<div class="comment-user">';
-        echo '<i class="fa fa-user"></i> <a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $fk_comment->getUserId())).'">'.$user->getName().'</a>';
+        echo '<i class="fa fa-user" title="'.$obj->getTrans('commentUser').'"></i> <a href="'.$obj->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $fk_comment->getUserId())).'">'.$user->getName().'</a>';
         echo '</div>';
         if ($config->get('comment_date') == 1) {
-            echo '<time class="comment-date"><i class="fa fa-clock-o" title="'.$obj->getTrans('date').'"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
+            echo '<time class="comment-date"><i class="fa fa-clock-o" title="'.$obj->getTrans('commentDateTime').'"></i> '.$commentDate->format("d.m.Y - H:i", true).'</time>';
         }
         echo '</header>';
         echo '<div class="comment-post"><p>'.nl2br($fk_comment->getText()).'</p></div>';
@@ -113,7 +113,7 @@ function rec($id, $uid, $req, $obj)
         <?php endif; ?>
     <?php endif; ?>
     <i class="fa fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true))) ?>"><?=$date->format('d. F Y', true) ?></a>
-    &nbsp;&nbsp;<i class="fa fa-clock-o" title="<?=$this->getTrans('clock') ?>"></i> <?=$date->format('H:i', true) ?>
+    &nbsp;&nbsp;<i class="fa fa-clock-o" title="<?=$this->getTrans('time') ?>"></i> <?=$date->format('H:i', true) ?>
     &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId())) ?>"><?=$articlesCats->getName() ?></a>
     &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId().'#comment')) ?>"><?=$commentsCount ?></a>
     &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
@@ -136,7 +136,7 @@ function rec($id, $uid, $req, $obj)
                         <article class="row">
                             <?php if ($config->get('comment_avatar') == 1): ?>
                                 <div class="col-md-2 col-sm-2 hidden-xs">
-                                    <figure class="thumbnail">
+                                    <figure class="thumbnail" title="<?=$this->getUser()->getName() ?>">
                                         <a href="<?=$this->getUrl('user/profil/index/user/'.$this->getUser()->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" alt="<?=$this->getUser()->getName() ?>"></a>
                                     </figure>
                                 </div>
@@ -146,10 +146,10 @@ function rec($id, $uid, $req, $obj)
                                     <div class="panel-body">
                                         <header class="text-left">
                                             <div class="comment-user">
-                                                <i class="fa fa-user"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->getUser()->getId())) ?>"><?=$this->getUser()->getName() ?></a>
+                                                <i class="fa fa-user" title="<?=$this->getTrans('commentUser') ?>"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->getUser()->getId())) ?>"><?=$this->getUser()->getName() ?></a>
                                             </div>
                                             <?php if ($config->get('comment_date') == 1): ?>
-                                                <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('date') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?></time>
+                                                <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?></time>
                                             <?php endif; ?>
                                         </header>
                                         <div class="comment-post">
@@ -181,7 +181,7 @@ function rec($id, $uid, $req, $obj)
                     <article class="row" id="<?=$comment->getId() ?>">
                         <?php if ($config->get('comment_avatar') == 1): ?>
                             <div class="col-md-2 col-sm-2 hidden-xs">
-                                <figure class="thumbnail">
+                                <figure class="thumbnail" title="<?=$this->getUser()->getName() ?>">
                                     <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>"></a>
                                 </figure>
                             </div>
@@ -191,10 +191,10 @@ function rec($id, $uid, $req, $obj)
                                 <div class="panel-bodylist">
                                     <header class="text-left">
                                         <div class="comment-user">
-                                            <i class="fa fa-user"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())) ?>"><?=$this->escape($user->getName()) ?></a>
+                                            <i class="fa fa-user" title="<?=$this->getTrans('commentUser') ?>"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())) ?>"><?=$this->escape($user->getName()) ?></a>
                                         </div>
                                         <?php if ($config->get('comment_date') == 1): ?>
-                                            <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('date') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
+                                            <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
                                         <?php endif; ?>
                                     </header>
                                     <div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>

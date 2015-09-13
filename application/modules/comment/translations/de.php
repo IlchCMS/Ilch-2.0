@@ -8,9 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
-    'menuComment' => 'Kommentar',
     'menuComments' => 'Kommentare',
-    'menuOtherComments' => 'Andere Kommentare',
     'commentDate' => 'Datum/Uhrzeit',
     'commentFrom' => 'Von',
     'commentText' => 'Text',
@@ -20,10 +18,11 @@ return array
     'commentID' => 'ID',
     'submit' => 'Eintragen',
     'reply' => 'Antworten',
-    'date' => 'Datum',
+    'dateTime' => 'Datum/Uhrzeit',
+    'commentUser' => 'Benutzer',
     'interleaving' => 'Antworten Verschachtelung',
     'acceptReply' => 'Kommentar antworten erlauben?',
     'showAvatar' => 'Avatar anzeigen?',
-    'showDate' => 'Datum anzeigen?',
+    'showDateTime' => 'Datum/Uhrzeit anzeigen?',
     'CommentCommentInfoText' => 'Information zur Konfiguration der Kommentare.',
 );

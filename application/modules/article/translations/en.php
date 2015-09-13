@@ -31,8 +31,10 @@ return array
     'title' => 'Title',
     'name' => 'Name',
     'date' => 'Date',
-    'clock' => 'o\'clock',
+    'time' => 'Time',
     'cats' => 'Categorie',
     'catArchives' => 'Category Archives',
     'monthArchives' => 'Month Archives',
+    'commentUser' => 'User',
+    'commentDateTime' => 'Date/Time',
 );
