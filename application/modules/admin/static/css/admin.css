@@ -209,6 +209,7 @@ ul > .heading {
     margin-left: -15px;
     border-top: 1px solid silver;
     border-left: 1px solid silver;
+    z-index: 4;
     bottom: 0px;
     width:100%;
     position: fixed;
@@ -571,6 +572,76 @@ legend {
 #ilch_dropdown .list-group {
     margin-bottom: 0 !important;
 }
+
+.flipswitch {
+    position: relative;
+    height: 34px;
+    width: 120px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.flipswitch-label {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 58px;
+    line-height: 36px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.35);
+    text-align: center;
+    cursor: pointer;
+}
+
+.flipswitch-label:active {
+    font-weight: bold;
+}
+
+.flipswitch-label-on {
+    padding-left: 2px;
+}
+
+.flipswitch-label-off {
+    padding-right: 2px;
+}
+
+.flipswitch-input {
+    display: none;
+}
+
+.flipswitch-input:checked + .flipswitch-label {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    -webkit-transition: 0.15s ease-out;
+    -moz-transition: 0.15s ease-out;
+    -o-transition: 0.15s ease-out;
+    transition: 0.15s ease-out;
+}
+
+.flipswitch-input:checked + .flipswitch-label-off ~ .flipswitch-selection {
+    left: 60px;
+}
+
+.flipswitch-selection {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 2px;
+    left: 2px;
+    width: 58px;
+    height: 30px;
+    background-color: rgb(153, 153, 153);
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+    -webkit-transition: left 0.15s ease-out;
+    -moz-transition: left 0.15s ease-out;
+    -o-transition: left 0.15s ease-out;
+    transition: left 0.15s ease-out;
+}
+
 @media (max-width:991px) {
     #main {
         width: 100%!important;
@@ -786,12 +857,12 @@ legend {
         overflow-x: hidden;
     }
     #ilch_dropdown .list-group-horizontal .list-group-item {
-    width: 100%;
-    color: #000;
+        width: 100%;
+        color: #000;
     }
     #ilch_dropdown .list-group-horizontal .list-group-item a {
-    width: 100%;
-    color: #000;
-    padding: 7px 7px !important;
+        width: 100%;
+        color: #000;
+        padding: 7px 7px !important;
     }
 }
