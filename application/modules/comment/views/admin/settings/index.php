@@ -14,9 +14,9 @@
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" name="reply" value="1" id="reply-yes" <?php if ($this->get('comment_reply') == '1') {echo 'checked="checked"';} ?> />
-                <label for="reply-yes" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('yes') ?></label>
+                <label for="reply-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" name="reply" value="0" id="reply-no" <?php if ($this->get('comment_reply') != '1') {echo 'checked="checked"';} ?> />
-                <label for="reply-no" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('no') ?></label>
+                <label for="reply-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
          </div>
