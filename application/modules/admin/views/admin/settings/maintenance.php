@@ -10,10 +10,10 @@
         </label>
         <div class="col-lg-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="maintenanceMode" value="1" id="maintenanceMode-on" <?php if ($this->get('maintenanceMode') == '1') {echo 'checked="checked"';} ?> />
-                <label for="maintenanceMode-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" name="maintenanceMode" value="0" id="maintenanceMode-off" <?php if ($this->get('maintenanceMode') != '1') {echo 'checked="checked"';} ?> />
-                <label for="maintenanceMode-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" name="maintenanceMode" value="1" id="maintenanceMode-on" <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="maintenanceMode-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" name="maintenanceMode" value="0" id="maintenanceMode-off" <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="maintenanceMode-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>

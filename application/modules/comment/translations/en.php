@@ -9,7 +9,7 @@ defined('ACCESS') or die('no direct access');
 return array
 (
     'menuComments' => 'Comments',
-    'commentDate/Time' => 'Date/Time',
+    'commentDateTime' => 'Date/Time',
     'commentFrom' => 'From',
     'commentText' => 'Text',
     'commentLink' => 'Link',

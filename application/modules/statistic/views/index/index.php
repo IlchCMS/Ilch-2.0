@@ -1,5 +1,5 @@
-<link href="<?=$this->getModuleUrl('static/css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
-<script type="text/javascript" src="<?=$this->getModuleUrl('static/js/bootstrap-progressbar.js') ?>"></script>
+<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
 
 <style>
 .progress-bar {

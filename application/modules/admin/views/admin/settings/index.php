@@ -57,15 +57,15 @@
         </label>
         <div class="col-lg-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="multilingualAcp" value="1" id="multilingualAcp-on" <?php if ($this->get('multilingualAcp') == '1') {echo 'checked="checked"';} ?> />
-                <label for="multilingualAcp-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" name="multilingualAcp" value="0" id="multilingualAcp-off" <?php if ($this->get('multilingualAcp') != '1') {echo 'checked="checked"';} ?> />
-                <label for="multilingualAcp-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" name="multilingualAcp" value="1" id="multilingualAcp-on" <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="multilingualAcp-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" name="multilingualAcp" value="0" id="multilingualAcp-off" <?php if ($this->get('multilingualAcp') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="multilingualAcp-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-    <div id="contentLanguage" class="form-group <?php if($this->get('multilingualAcp') != '1'){ echo 'hidden'; } ?>">
+    <div id="contentLanguage" class="form-group <?php if($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
         <label for="languageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('contentLanguage') ?>:
         </label>
@@ -157,10 +157,10 @@
         </label>
         <div class="col-lg-8">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="modRewrite" value="1" id="modRewrite-on" <?php if ($this->get('modRewrite') == '1') {echo 'checked="checked"';} ?> />
-                <label for="modRewrite-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" name="modRewrite" value="0" id="modRewrite-off" <?php if ($this->get('modRewrite') != '1') {echo 'checked="checked"';} ?> />
-                <label for="modRewrite-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" name="modRewrite" value="1" id="modRewrite-on" <?php if ($this->get('modRewrite') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="modRewrite-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" name="modRewrite" value="0" id="modRewrite-off" <?php if ($this->get('modRewrite') != '1') { echo 'checked="checked"'; } ?> />
+                <label for="modRewrite-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
@@ -173,10 +173,10 @@
         </label>
         <div class="col-lg-8">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="navbarFixed" value="1" id="navbarFixed-on" <?php if ($this->get('navbarFixed') === 'navbar-fixed-top') {echo 'checked="checked"';} ?> />
-                <label for="navbarFixed-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" name="navbarFixed" value="0" id="navbarFixed-off" <?php if ($this->get('navbarFixed') === '') {echo 'checked="checked"';} ?> />
-                <label for="navbarFixed-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('off') ?></label>
+                <input type="radio" class="flipswitch-input" name="navbarFixed" value="1" id="navbarFixed-on" <?php if ($this->get('navbarFixed') == 'navbar-fixed-top') { echo 'checked="checked"'; } ?> />
+                <label for="navbarFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" name="navbarFixed" value="0" id="navbarFixed-off" <?php if ($this->get('navbarFixed') == '') { echo 'checked="checked"'; } ?> />
+                <label for="navbarFixed-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>

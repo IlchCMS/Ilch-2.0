@@ -20,12 +20,12 @@ class Config extends \Ilch\Config\Install
             'de_DE' => array
             (
                 'name' => 'Artikel',
-                'description' => 'Hier können neue Artikel / News erstellt werden.',
+                'description' => 'Hier kann man die Artikel / News verwalten.',
             ),
             'en_EN' => array
             (
                 'name' => 'Articles',
-                'description' => 'Here you can create articles.',
+                'description' => 'Here you can magnage the Articles / News.',
             ),
         )
     );
@@ -49,7 +49,7 @@ class Config extends \Ilch\Config\Install
         $article->setCatId(1);
         $article->setTitle('Startseite');
         $article->setAuthorId(1);
-        $article->setContent('Guten Tag und willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
+        $article->setContent('Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
         $article->setPerma('startseite.html');
         $articleMapper->save($article);
     }
