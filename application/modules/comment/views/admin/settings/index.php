@@ -44,9 +44,9 @@
         <div class="col-lg-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" name="check_avatar" value="1" id="avatar-yes" <?php if ($this->get('comment_avatar') == '1') {echo 'checked="checked"';} ?> />
-                <label for="avatar-yes" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('yes') ?></label>
+                <label for="avatar-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" name="check_avatar" value="" id="avatar-no" <?php if ($this->get('comment_avatar') != '1') {echo 'checked="checked"';} ?> />
-                <label for="avatar-no" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('no') ?></label>
+                <label for="avatar-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
@@ -58,9 +58,9 @@
         <div class="col-lg-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" name="check_date" value="1" id="date-yes" <?php if ($this->get('comment_date') == '1') {echo 'checked="checked"';} ?> />
-                <label for="date-yes" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('yes') ?></label>
+                <label for="date-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" name="check_date" value="" id="date-no" <?php if ($this->get('comment_date') != '1') {echo 'checked="checked"';} ?> />
-                <label for="date-no" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('no') ?></label>
+                <label for="date-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
