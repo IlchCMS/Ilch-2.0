@@ -22,13 +22,13 @@
                        <?php else: ?>
                            checked="checked"
                        <?php endif; ?> />  
-                <label for="show-on" class="flipswitch-label flipswitch-label-on"><?= $this->getTrans('yes') ?></label>
+                <label for="show-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" name="show" value="0" id="show-off" <?php if ($this->get('privacy') != ''): ?>
                     <?php if ($this->get('privacy')->getShow() == 0): ?>
                                checked="checked"
                            <?php endif; ?>
                        <?php endif; ?> />  
-                <label for="show-off" class="flipswitch-label flipswitch-label-off"><?= $this->getTrans('no') ?></label>
+                <label for="show-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>  
         </div>
