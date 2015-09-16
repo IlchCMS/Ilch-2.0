@@ -13,36 +13,24 @@
             <?=$this->getTrans('show') ?>:
         </label>
         <div class="col-lg-4">
-            <div class="radio">
-                <label>
-                    <input type="radio" 
-                       name="show" 
-                       id="show" 
-                       value="1" 
-                       <?php if ($this->get('privacy') != ''): ?>
-                           <?php if ($this->get('privacy')->getShow() == 1): ?>
+
+            <div class="flipswitch">  
+                <input type="radio" class="flipswitch-input" name="show" value="1" id="show-on" <?php if ($this->get('privacy') != ''): ?>
+                    <?php if ($this->get('privacy')->getShow() == 1): ?>
                                checked="checked"
                            <?php endif; ?>
-                        <?php else: ?>
-                            checked="checked"
-                       <?php endif; ?>
-                       > <?=$this->getTrans('yes') ?>
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio" 
-                       name="show" 
-                       id="show" 
-                       value="0" 
-                       <?php if ($this->get('privacy') != ''): ?>
-                            <?php if ($this->get('privacy')->getShow() == 0): ?>
-                                checked="checked"
-                            <?php endif; ?>
-                       <?php endif; ?>
-                       > <?=$this->getTrans('no') ?>
-                </label>
-            </div>
+                       <?php else: ?>
+                           checked="checked"
+                       <?php endif; ?> />  
+                <label for="show-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" name="show" value="0" id="show-off" <?php if ($this->get('privacy') != ''): ?>
+                    <?php if ($this->get('privacy')->getShow() == 0): ?>
+                               checked="checked"
+                           <?php endif; ?>
+                       <?php endif; ?> />  
+                <label for="show-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>  
         </div>
     </div>
     <div class="form-group">
