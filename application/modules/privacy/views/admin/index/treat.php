@@ -10,7 +10,7 @@
     </legend>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
-            <?= $this->getTrans('show') ?>:
+            <?=$this->getTrans('show') ?>:
         </label>
         <div class="col-lg-4">
 
