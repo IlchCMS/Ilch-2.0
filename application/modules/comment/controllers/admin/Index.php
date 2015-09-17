@@ -51,6 +51,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('comments', $commentMapper->getComments());
+        $this->getView()->set('locale', $this->getConfig()->get('locale'));
     }
 
     public function deleteAction()
