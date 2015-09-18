@@ -2,8 +2,9 @@
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('accountdata') ?></legend>
     <div class="form-group">
-        <textarea class="form-control"
-                  id="ilch_html"
+        <textarea class="form-control ckeditor"
+                  id="ck_1"
+                  toolbar="ilch_html"
                   name="checkout_contact"><?php if ($this->get('checkout_contact') != '') { echo $this->get('checkout_contact') ; } ?>
         </textarea>
     </div>

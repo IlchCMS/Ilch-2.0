@@ -47,10 +47,11 @@
                 <?=$this->getTrans('answer') ?>:
             </label>
             <div class="col-lg-10">
-                <textarea class="form-control"
+                <textarea class="form-control ckeditor"
                           name="answer"
                           cols="45"
-                          id="ilch_html"
+                          id="ck_1"
+                          toolbar="ilch_html"
                           rows="3"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } ?></textarea>
             </div>
         </div>

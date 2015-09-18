@@ -187,13 +187,14 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="ilch_html" class="col-lg-2 control-label">
+        <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('otherInfo') ?>:
         </label>
         <div class="col-lg-10">
-            <textarea class="form-control"
+            <textarea class="form-control ckeditor"
                    name="text"
-                   id="ilch_html"
+                   id="ck_1"
+                   toolbar="ilch_html"
                    rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
         </div>
     </div>

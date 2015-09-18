@@ -18,8 +18,9 @@ $profil = $this->get('profil');
                 <?=$this->getTokenField(); ?>
                 <div class="form-group">
                     <div class="col-lg-12">
-                        <textarea class="form-control"
-                                  id="ilch_bbcode"
+                        <textarea class="form-control ckeditor"
+                                  id="ck_1"
+                                  toolbar="ilch_bbcode"
                                   name="signature"><?=$this->escape($profil->getSignature()) ?></textarea>
                     </div>
                 </div>

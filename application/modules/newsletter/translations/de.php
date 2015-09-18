@@ -22,5 +22,9 @@ return array
     'send' => 'Absenden',
     'entry' => 'Ein- / Austragen',
     'email' => 'E-Mail',
-    'noEmails' => 'Keine E-Mail Adressen vorhanden'
+    'noEmails' => 'Keine E-Mail Adressen vorhanden',
+    'subscribeSuccess' => 'E-Mail wurde erfolgreich eingetragen.',
+    'unsubscribeSuccess' => 'E-Mail wurde erfolgreich ausgetragen.',
+    'noReplyMailFooter' => 'Bitte antworten Sie nicht auf diese E-Mail. Dieses Postfach wird nicht überwacht, deshalb werden Sie keine Antwort erhalten.',
+    'mailUnsubscribe' => 'Wenn Sie keine Newsletter von uns erhalten wollen, können Sie diese jederzeit <a href="'.BASE_URL.'/index.php/newsletter/index/index/">hier</a> abmelden.',
 );

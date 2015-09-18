@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="form-group">
-        <textarea class="form-control" id="ilch_html" name="boxContent"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
+        <textarea class="form-control ckeditor" id="ck_1" name="boxContent" toolbar="ilch_html"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
         <div class="form-group">

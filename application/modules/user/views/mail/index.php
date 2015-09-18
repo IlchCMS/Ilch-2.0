@@ -23,10 +23,11 @@
                     <?=$this->getTrans('message') ?>:
                 </label>
                 <div class="col-lg-8">
-                    <textarea class="form-control" 
+                    <textarea class="form-control ckeditor"
                               rows="5" 
-                              name="message" 
-                              id="ilch_html"></textarea>
+                              name="message"
+                              toolbar="ilch_html"
+                              id="ck_1"></textarea>
                 </div>
             </div>
             <div class="col-lg-offset-2 col-lg-10">

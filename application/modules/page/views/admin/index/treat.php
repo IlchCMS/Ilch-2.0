@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <textarea class="form-control" id="ilch_html" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
+            <textarea class="form-control ckeditor" id="ck_1" toolbar="ilch_html" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
         </div>
     </div>
     <?php

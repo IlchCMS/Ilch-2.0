@@ -27,9 +27,10 @@ $profil = $this->get('profil');
                     <?=$this->getTokenField() ?>
                         <div class="input-group col-lg-12">
                             <textarea name="ilch_bbcode"
-                                    id="ilch_bbcode"
+                                    id="ck_1"
                                     type="text"
-                                    class="form-control">
+                                    class="form-control ckeditor"
+                                    toolbar="ilch_bbcode">
                             </textarea>
                         </div>
                         <div>
@@ -61,7 +62,7 @@ $(document).ready(function() {
     document.getElementById("myBtn").onclick = function () {
 
         var token = document.body.querySelector('[name="ilch_token"]').value;
-        var editorText = CKEDITOR.instances.ilch_bbcode.getData();
+        var editorText = CKEDITOR.instances.ck_1.getData();
         var imessage = editorText;
 
         post_data = {'text':imessage, 'ilch_token':token};
@@ -69,7 +70,7 @@ $(document).ready(function() {
         $.post('<?=$this->getUrl('user/panel/dialogview/id/');?>'+id, post_data,
         function() {
 
-            CKEDITOR.instances.ilch_bbcode.setData("");
+            CKEDITOR.instances.ck_1.setData("");
             var scrolltoh = $('.message_box')[0].scrollHeight;
             $('.message_box').scrollTop(scrolltoh);
 

@@ -1,9 +1,8 @@
 <?php
-    $newsletter = $this->get('newsletter');
-
-    $userMapper = new \Modules\User\Mappers\User();
-    $user = $userMapper->getUserById($newsletter->getUserId());
-    $date = new \Ilch\Date($newsletter->getDateCreated());
+$newsletter = $this->get('newsletter');
+$userMapper = new \Modules\User\Mappers\User();
+$user = $userMapper->getUserById($newsletter->getUserId());
+$date = new \Ilch\Date($newsletter->getDateCreated());
 ?>
 
 <legend><?=$this->getTrans('show') ?></legend>

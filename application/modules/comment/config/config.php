@@ -44,12 +44,12 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_comments` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `key` varchar(255) NOT NULL,
-                  `text` mediumtext NOT NULL,
-                  `date_created` datetime NOT NULL,
-                  `user_id` int(11) NOT NULL,
-                  `fk_id` int(11) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `key` VARCHAR(255) NOT NULL,
+                  `text` MEDIUMTEXT NOT NULL,
+                  `date_created` DATETIME NOT NULL,
+                  `user_id` INT(11) NOT NULL,
+                  `fk_id` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1';
     }

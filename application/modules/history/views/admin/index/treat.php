@@ -52,9 +52,10 @@
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-10">
-            <textarea class="form-control"
+            <textarea class="form-control ckeditor"
                    name="text" 
-                   id="ilch_html"
+                   id="ck_1"
+                   toolbar="ilch_html"
                    rows="5"><?php if ($this->get('history') != '') { echo $this->escape($this->get('history')->getText()); } ?></textarea>
         </div>
     </div>

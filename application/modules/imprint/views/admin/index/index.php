@@ -106,8 +106,9 @@
                 <?=$this->getTrans('disclaimer') ?>:
             </label>
             <div class="col-lg-12">
-                <textarea class="form-control"
-                          id="ilch_html"
+                <textarea class="form-control ckeditor"
+                          id="ck_1"
+                          toolbar="ilch_html"
                           name="disclaimer" 
                           cols="60"
                           rows="5"><?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getDisclaimer()); } ?></textarea>
@@ -267,8 +268,9 @@
                 <?=$this->getTrans('other') ?>:
             </label>
             <div class="col-lg-12">
-               <textarea class="form-control"
-                          id="ilch_html"
+               <textarea class="form-control ckeditor"
+                          id="ck_2"
+                          toolbar="ilch_html"
                           name="other" 
                           cols="60" 
                           rows="5"><?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getOther()); } ?></textarea>
@@ -280,8 +282,9 @@
                 <?=$this->getTrans('disclaimer') ?>:
             </label>
             <div class="col-lg-12">
-                <textarea class="form-control"
-                          id="ilch_html"
+                <textarea class="form-control ckeditor"
+                          id="ck_3"
+                          toolbar="ilch_html"
                           name="disclaimer" 
                           cols="60" 
                           rows="5"><?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getDisclaimer()); } ?></textarea>
