@@ -32,11 +32,11 @@ $locale = $this->get('locale');
                 </thead>
                 <tbody>
                     <?php $userMapper = new \Modules\User\Mappers\User() ?>
+                    <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
                     <?php foreach ($this->get('comments') as $comment): ?>
                         <?php $user = $userMapper->getUserById($comment->getUserId()) ?>
                         <?php $date = new \Ilch\Date($comment->getDateCreated()) ?>
-                        <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>                    
-                        <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
+                        <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
                         <?php $modules = $modulesMapper->getModulesByKey($commentKey, $locale); ?>
                         <tr>
                             <td><input value="<?=$comment->getId() ?>" type="checkbox" name="check_comments[]" /></td>

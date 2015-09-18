@@ -10,8 +10,7 @@
                 <input class="form-control"
                        type="text"
                        name="subject"
-                       id="subject"
-                       value="" />
+                       id="subject" />
             </div>
         </div>
         <div class="form-group">
