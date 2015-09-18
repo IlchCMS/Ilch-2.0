@@ -6,47 +6,28 @@
             <?=$this->getTrans('showHtml') ?>:
         </label>
         <div class="col-lg-4">
-            <label class="checkbox-inline">
-                <input type="radio" 
-                       name="html" 
-                       id="html_yes" 
-                       value="1" 
-                       <?php if ($this->get('linkus_html') == '1') { echo 'checked="checked"';} ?>>
-                       <label for="html_yes"><?=$this->getTrans('yes') ?></label>
-            </label>
-            <label class="checkbox-inline">
-                <input type="radio" 
-                       name="html" 
-                       id="html_no" 
-                       value="0" 
-                       <?php if ($this->get('linkus_html') == '0') { echo 'checked="checked"';} ?>>
-                       <label for="html_no"><?=$this->getTrans('no') ?></label>
-            </label>
+            <div class="flipswitch">  
+                <input type="radio" class="flipswitch-input" name="html" value="1" id="html-yes" <?php if ($this->get('linkus_html') == '1') { echo 'checked="checked"'; } ?> />  
+                <label for="html-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
+                <input type="radio" class="flipswitch-input" name="html" value="0" id="html-no" <?php if ($this->get('linkus_html') != '1') { echo 'checked="checked"'; } ?> />  
+                <label for="html-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
+                <span class="flipswitch-selection"></span>  
+            </div>  
         </div>
     </div>
-
-    <div class="form-group">
+<div class="form-group">
         <label for="bbcode" class="col-lg-2 control-label">
             <?=$this->getTrans('showBBBCode') ?>:
         </label>
-        <div class="col-lg-4">
-            <label class="checkbox-inline">
-                <input type="radio" 
-                       name="bbcode" 
-                       id="bbcode_yes" 
-                       value="1" 
-                       <?php if ($this->get('linkus_bbcode') == '1') { echo 'checked="checked"';} ?>>
-                       <label for="bbcode_yes"><?=$this->getTrans('yes') ?></label>
-            </label>
-            <label class="checkbox-inline">
-                <input type="radio" 
-                       name="bbcode" 
-                       id="bbcode_no" 
-                       value="0" 
-                       <?php if ($this->get('linkus_bbcode') == '0') { echo 'checked="checked"';} ?>>
-                       <label for="bbcode_no"><?=$this->getTrans('no') ?></label>
-            </label>
+    <div class="col-lg-4">
+        <div class="flipswitch">  
+            <input type="radio" class="flipswitch-input" name="bbcode" value="1" id="bbcode-yes" <?php if ($this->get('linkus_bbcode') == '1') { echo 'checked="checked"'; } ?> />  
+            <label for="bbcode-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
+            <input type="radio" class="flipswitch-input" name="bbcode" value="0" id="bbcode-no" <?php if ($this->get('linkus_bbcode') != '1') { echo 'checked="checked"'; } ?> />  
+            <label for="bbcode-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
+            <span class="flipswitch-selection"></span>  
         </div>
     </div>
+</div>
     <?=$this->getSaveBar() ?>
 </form>
