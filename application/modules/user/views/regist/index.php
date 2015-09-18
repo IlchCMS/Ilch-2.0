@@ -1,13 +1,28 @@
+<style>
+.regist .panel-body {
+    background: #eee;
+}
+</style>
+
 <?php if ($this->get('regist_accept') == '1'): ?>
     <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
         <?=$this->getTokenField() ?>
-        <textarea class="form-control" style="height: 200px;" readonly><?=$this->escape($this->get('regist_rules')) ?></textarea>
+        <div class="regist panel panel-default">
+            <div class="panel-heading">
+                <?=$this->getTrans('rules') ?>
+            </div>
+            <div class="panel-body">
+                <?=$this->get('regist_rules') ?>
+            </div>
+        </div>
         <label class="checkbox inline <?php if ($this->get('error') != '') { echo 'text-danger'; } ?>" style="margin-left: 20px;">
             <input type="checkbox" name="acceptRule" value="1"> <?=$this->getTrans('acceptRule') ?>
         </label>
-        <button type="submit" name="save" class="btn pull-right"><?=$this->getTrans('nextButton') ?></button>
+        <div class="col-lg-12" align="right">
+            <?=$this->getSaveBar('nextButton', 'Regist') ?>
+        </div>
     </form>
 <?php else: ?>
-    Der Administrator hat festgelegt dass man sich nicht registrieren kann.
+    <?=$this->getTrans('noRegistAccept') ?>
 <?php endif; ?>

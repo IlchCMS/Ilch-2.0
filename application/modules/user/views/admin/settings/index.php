@@ -1,65 +1,72 @@
+<legend><?=$this->getTrans('menuSettings') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
-    <legend><?=$this->getTrans('menuSettings') ?></legend>
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="regist_accept" class="col-lg-2 control-label">
             <?=$this->getTrans('acceptUserRegis') ?>:
         </label>
         <div class="col-lg-4">
-            <div class="flipswitch">  
+            <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" name="regist_accept" value="1" id="regist-accept-yes" <?php if ($this->get('regist_accept') == '1') { echo 'checked="checked"'; } ?> />  
-                <label for="regist-accept-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
+                <label for="regist-accept-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                 <input type="radio" class="flipswitch-input" name="regist_accept" value="0" id="regist-accept-no" <?php if ($this->get('regist_accept') != '1') { echo 'checked="checked"'; } ?> />  
-                <label for="regist-accept-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
-                <span class="flipswitch-selection"></span>  
+                <label for="regist-accept-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
-    <div id="registRules" class="form-group <?php if ($this->get('regist_accept') != '1') { echo 'hidden'; } ?>">
+    <div id="registRules" <?php if ($this->get('regist_accept') != '1') { echo 'class="hidden"'; } ?>>
         <div class="form-group">
             <label for="regist_confirm" class="col-lg-2 control-label">
                 <?=$this->getTrans('confirmRegistrationEmail') ?>:
             </label>
             <div class="col-lg-4">
-                <div class="flipswitch">  
+                <div class="flipswitch">
                     <input type="radio" class="flipswitch-input" name="regist_confirm" value="1" id="regist-confirm-yes" <?php if ($this->get('regist_confirm') == '1') { echo 'checked="checked"'; } ?> />  
-                    <label for="regist-confirm-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
+                    <label for="regist-confirm-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
                     <input type="radio" class="flipswitch-input" name="regist_confirm" value="0" id="regist-confirm-no" <?php if ($this->get('regist_confirm') != '1') { echo 'checked="checked"'; } ?> />  
-                    <label for="regist-confirm-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
-                    <span class="flipswitch-selection"></span>  
+                    <label for="regist-confirm-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                    <span class="flipswitch-selection"></span>
                 </div>
             </div>
         </div>
     </div>
-    <div id="rulesForRegist" class="form-group <?php if ($this->get('regist_accept') != '1') { echo 'hidden'; } ?>">
-        <label for="regist_rules" class="col-lg-2 control-label">
-                <?=$this->getTrans('rulesForRegist') ?>:
-        </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
-                      name="regist_rules" 
-                      cols="60" 
-                      rows="5"><?=$this->get('regist_rules') ?></textarea>
+    <div id="rulesForRegist" <?php if ($this->get('regist_accept') != '1') { echo 'class="hidden"'; } ?>>
+        <div class="form-group">
+            <label for="regist_rules" class="col-lg-2 control-label">
+                    <?=$this->getTrans('rulesForRegist') ?>:
+            </label>
+            <div class="col-lg-10">
+                <textarea class="form-control ckeditor"
+                          name="regist_rules"
+                          cols="60"
+                          id="ck_1"
+                          toolbar="ilch_html"
+                          rows="5"><?=$this->get('regist_rules') ?></textarea>
+            </div>
         </div>
     </div>
-    <div id="registAccept" class="form-group <?php if ($this->get('regist_accept') != '1') { echo 'hidden'; } ?>">
-        <div id="confirmMail" class="form-group <?php if ($this->get('regist_confirm') != '1') { echo 'hidden'; } ?>">
-            <label for="regist_confirm_mail" class="col-lg-2 control-label">
-                <?=$this->getTrans('mailForRegist') ?>:
-                <br /><br />
-                <div class="small">
-                    <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
-                    <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
-                    <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?><br />
-                    <b>{comfirm}</b> = <?=$this->getTrans('settingsRegistVariablesComfirm') ?>
+    <div id="registAccept" <?php if ($this->get('regist_accept') != '1') { echo 'class="hidden"'; } ?>>
+        <div id="confirmMail" <?php if ($this->get('regist_confirm') != '1') { echo 'class="hidden"'; } ?>>
+            <div class="form-group">
+                <label for="regist_confirm_mail" class="col-lg-2 control-label">
+                    <?=$this->getTrans('mailForRegist') ?>:
+                    <br /><br />
+                    <div class="small">
+                        <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
+                        <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
+                        <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?><br />
+                        <b>{comfirm}</b> = <?=$this->getTrans('settingsRegistVariablesComfirm') ?>
+                    </div>
+                </label>
+                <div class="col-lg-10">
+                    <textarea class="form-control ckeditor"
+                              name="regist_confirm_mail"
+                              cols="60"
+                              id="ck_2"
+                              toolbar="ilch_html"
+                              rows="5"><?=$this->get('regist_confirm_mail') ?></textarea>
                 </div>
-            </label>
-            <div class="col-lg-4">
-                <textarea class="form-control" 
-                          name="regist_confirm_mail" 
-                          cols="60" 
-                          id="ilch_html" 
-                          rows="5"><?=$this->get('regist_confirm_mail') ?></textarea>
             </div>
         </div>
     </div>
@@ -74,11 +81,12 @@
                 <b>{comfirm}</b> = <?=$this->getTrans('settingsRegistVariablesComfirm') ?>
             </div>
         </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
-                      name="password_change_mail" 
-                      cols="60" 
-                      id="ilch_html" 
+        <div class="col-lg-10">
+            <textarea class="form-control ckeditor"
+                      name="password_change_mail"
+                      cols="60"
+                      id="ck_3"
+                      toolbar="ilch_html"
                       rows="5"><?=$this->get('password_change_mail') ?></textarea>
         </div>
     </div>

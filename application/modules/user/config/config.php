@@ -41,7 +41,9 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('regist_accept', '1');
         $databaseConfig->set('regist_confirm', '1');
-        $databaseConfig->set('regist_rules', "Die Registrierung ist völlig Kostenlos.\nDie Betreiber der Seite übernehmen keine Haftung.\nBitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.");
+        $databaseConfig->set('regist_rules', '<p>Die Registrierung ist völlig Kostenlos</p>
+                              <p>nDie Betreiber der Seite übernehmen keine Haftung.</p>
+                              <p>Bitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.</p>');
         $databaseConfig->set('regist_confirm_mail', '<p>Hallo <b>{name}</b>,</p>
                               <p>&nbsp;</p>
                               <p>Willkommen auf <i>{sitetitle}</i>.</p>

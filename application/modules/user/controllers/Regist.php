@@ -19,8 +19,8 @@ class Regist extends \Ilch\Controller\Frontend
                     ->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'))
                     ->add($this->getTranslator()->trans('step1to3'), array('action' => 'index'));
 
-            if ($this->getRequest()->isPost()) {
-                if ($this->getRequest()->getPost('acceptRule')) {
+            if ($this->getRequest()->getPost('saveRegist')) {
+                if ($this->getRequest()->getPost('acceptRule') == 1) {
                     $this->redirect(array('action' => 'input'));
                 } else {
                     $this->getView()->set('error', true);
@@ -47,7 +47,7 @@ class Regist extends \Ilch\Controller\Frontend
         $registMapper = new UserMapper();
         $errors = array();
 
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->getPost('saveRegist')) {
             $name = $this->getRequest()->getPost('name');
             $password = $this->getRequest()->getPost('password');
             $password2 = $this->getRequest()->getPost('password2');

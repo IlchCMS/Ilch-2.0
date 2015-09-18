@@ -7,8 +7,7 @@
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-8">
-            <input value=""
-                   type="text"
+            <input type="text"
                    name="name"
                    class="form-control"
                    id="name" />
@@ -22,8 +21,7 @@
             <?=$this->getTrans('password') ?>:
         </label>
         <div class="col-lg-8">
-            <input value=""
-                   type="password"
+            <input type="password"
                    class="form-control"
                    name="password"
                    id="password" />
@@ -37,8 +35,7 @@
             <?=$this->getTrans('password2') ?>:
         </label>
         <div class="col-lg-8">
-            <input value=""
-                   type="password"
+            <input type="password"
                    class="form-control"
                    name="password2"
                    id="password2" />
@@ -52,8 +49,7 @@
             <?=$this->getTrans('emailAdress') ?>:
         </label>
         <div class="col-lg-8">
-            <input value=""
-                   type="text"
+            <input type="text"
                    name="email"
                    class="form-control"
                    id="email" />
@@ -64,7 +60,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <button type="submit" name="save" class="btn"><?=$this->getTrans('registButton'); ?></button>
+            <?=$this->getSaveBar('registButton', 'Regist') ?>
         </div>
     </div>
 </form>

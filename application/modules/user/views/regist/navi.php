@@ -15,6 +15,7 @@ if ($this->getRequest()->getActionName('regist') == 'index') {
 ?>
 <link href="<?= $this->getModuleUrl('static/css/regist.css') ?>" rel="stylesheet">
 
+<legend><?=$this->getTrans('menuRegist') ?></legend>
 <div class="process">
     <div class="process-row">
         <div class="process-step">

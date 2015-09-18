@@ -87,6 +87,7 @@ return array
     'step1to3' => 'Step 1 of 3',
     'step2to3' => 'Step 2 of 3',
     'step3to3' => 'Step 3 of 3',
+    'noRegistAccept' => 'The administrator has specified that you can not register.',
     'rules' => 'Rules',
     'logindata' => 'Login data',
     'finish' => 'Finish',
