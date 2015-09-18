@@ -18,7 +18,7 @@
     <div id="registRules" class="form-group <?php if ($this->get('regist_accept') != '1') { echo 'hidden'; } ?>">
         <div class="form-group">
             <label for="regist_confirm" class="col-lg-2 control-label">
-<?=$this->getTrans('confirmRegistrationEmail') ?>:
+                <?=$this->getTrans('confirmRegistrationEmail') ?>:
             </label>
             <div class="col-lg-4">
                 <div class="flipswitch">  
@@ -45,7 +45,7 @@
     <div id="registAccept" class="form-group <?php if ($this->get('regist_accept') != '1') { echo 'hidden'; } ?>">
         <div id="confirmMail" class="form-group <?php if ($this->get('regist_confirm') != '1') { echo 'hidden'; } ?>">
             <label for="regist_confirm_mail" class="col-lg-2 control-label">
-<?=$this->getTrans('mailForRegist') ?>:
+                <?=$this->getTrans('mailForRegist') ?>:
                 <br /><br />
                 <div class="small">
                     <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
@@ -65,7 +65,7 @@
     </div>
     <div id="confirmMail" class="form-group">
         <label for="password_change_mail" class="col-lg-2 control-label">
-<?=$this->getTrans('mailForNewPassword') ?>:
+            <?=$this->getTrans('mailForNewPassword') ?>:
             <br /><br />
             <div class="small">
                 <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
@@ -86,7 +86,7 @@
     <legend><?=$this->getTrans('menuSettingsAvatar') ?></legend>
     <div class="form-group">
         <label for="avatar_height" class="col-lg-2 control-label">
-<?=$this->getTrans('avatarHeight') ?>
+            <?=$this->getTrans('avatarHeight') ?>
         </label>
         <div class="col-lg-2">
             <input name="avatar_height" 
@@ -98,7 +98,7 @@
     </div>
     <div class="form-group">
         <label for="avatar_width" class="col-lg-2 control-label">
-<?=$this->getTrans('avatarWidth') ?>
+            <?=$this->getTrans('avatarWidth') ?>
         </label>
         <div class="col-lg-2">
             <input name="avatar_width" 
@@ -110,7 +110,7 @@
     </div>
     <div class="form-group">
         <label for="avatar_size" class="col-lg-2 control-label">
-<?=$this->getTrans('avatarSizeBytes') ?>
+            <?=$this->getTrans('avatarSizeBytes') ?>
         </label>
         <div class="col-lg-2">
             <input name="avatar_size" 
@@ -122,7 +122,7 @@
     </div>
     <div class="form-group">
         <label for="avatar_filetypes" class="col-lg-2 control-label">
-<?=$this->getTrans('avatarAllowedFileExtensions') ?>
+            <?=$this->getTrans('avatarAllowedFileExtensions') ?>
         </label>
         <div class="col-lg-2">
             <input name="avatar_filetypes" 
@@ -132,27 +132,27 @@
                    value="<?=$this->get('avatar_filetypes') ?>" />
         </div>
     </div>
-<?=$this->getSaveBar() ?>
+    <?=$this->getSaveBar() ?>
 </form>
 
 <script>
-    $('[name="regist_accept"]').click(function () {
-        if ($(this).val() == "1") {
-            $('#registRules').removeClass('hidden');
-            $('#rulesForRegist').removeClass('hidden');
-            $('#registAccept').removeClass('hidden');
-        } else {
-            $('#registRules').addClass('hidden');
-            $('#rulesForRegist').addClass('hidden');
-            $('#registAccept').addClass('hidden');
+$('[name="regist_accept"]').click(function () {
+    if ($(this).val() == "1") {
+        $('#registRules').removeClass('hidden');
+        $('#rulesForRegist').removeClass('hidden');
+        $('#registAccept').removeClass('hidden');
+    } else {
+        $('#registRules').addClass('hidden');
+        $('#rulesForRegist').addClass('hidden');
+        $('#registAccept').addClass('hidden');
         }
-    });
+});
 
-    $('[name="regist_confirm"]').click(function () {
-        if ($(this).val() == "1") {
-            $('#confirmMail').removeClass('hidden');
-        } else {
-            $('#confirmMail').addClass('hidden');
-        }
-    });
+$('[name="regist_confirm"]').click(function () {
+    if ($(this).val() == "1") {
+        $('#confirmMail').removeClass('hidden');
+    } else {
+        $('#confirmMail').addClass('hidden');
+    }
+});
 </script>
