@@ -199,7 +199,7 @@
         <legend><?=$this->getTrans('warReport') ?></legend>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8">
-                <textarea class="form-control" id="ilch_html" name="warReport"><?php if ($this->get('war') != '') { echo $this->get('war')->getWarReport(); } ?></textarea>
+                <textarea class="form-control ckeditor" id="ck_1" toolbar="ilch_html" name="warReport"><?php if ($this->get('war') != '') { echo $this->get('war')->getWarReport(); } ?></textarea>
             </div>
         </div>
         <legend><?=$this->getTrans('warStatus') ?></legend>

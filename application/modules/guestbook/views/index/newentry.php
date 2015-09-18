@@ -66,8 +66,9 @@
             <?=$this->getTrans('message') ?>*
         </label>
         <div class="col-lg-8">
-            <textarea id="ilch_bbcode"
-                      class="form-control"
+            <textarea id="ck_1"
+                      class="form-control ckeditor"
+                      toolbar="ilch_bbcode"
                       name="text"
                       required>
                 <?=$this->get('post')['text'] ?>

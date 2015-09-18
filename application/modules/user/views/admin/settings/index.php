@@ -51,8 +51,10 @@
         <label for="regist_rules" class="col-lg-2 control-label">
             <?=$this->getTrans('rulesForRegist') ?>:
         </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
+        <div class="col-lg-10">
+            <textarea class="form-control ckeditor"
+                      id="ck_1"
+                      toolbar="ilch_html"
                       name="regist_rules" 
                       cols="60" 
                       rows="5"><?=$this->get('regist_rules') ?></textarea>
@@ -69,11 +71,12 @@
                 <b>{comfirm}</b> = <?=$this->getTrans('settingsRegistVariablesComfirm') ?>
             </div>
         </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
+        <div class="col-lg-10">
+            <textarea class="form-control ckeditor"
                       name="regist_confirm_mail" 
                       cols="60" 
-                      id="ilch_html" 
+                      id="ck_2"
+                      toolbar="ilch_html"
                       rows="5"><?=$this->get('regist_confirm_mail') ?></textarea>
         </div>
     </div>
@@ -88,11 +91,12 @@
                 <b>{comfirm}</b> = <?=$this->getTrans('settingsRegistVariablesComfirm') ?>
             </div>
         </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
+        <div class="col-lg-10">
+            <textarea class="form-control ckeditor"
                       name="password_change_mail" 
                       cols="60" 
-                      id="ilch_html" 
+                      id="ck_3"
+                      toolbar="ilch_html"
                       rows="5"><?=$this->get('password_change_mail') ?></textarea>
         </div>
     </div>
