@@ -73,6 +73,16 @@ class Newsletter extends \Ilch\Mapper
 
         return $entry;
     }
+    
+    public function getLastId()
+    {
+        $sql = 'SELECT MAX(id)
+                FROM `[prefix]_newsletter`';
+
+        $entry = $this->db()->queryCell($sql);
+
+        return $entry;
+    }
 
     /**
      * Gets newsletter.

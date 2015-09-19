@@ -1,9 +1,15 @@
+<?php
+$config = \Ilch\Registry::get('config');
+$translator = new \Ilch\Translator();
+$translator->load(APPLICATION_PATH.'/modules/newsletter/translations/');
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta name="viewport" content="width=device-width" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>{sitetitle}</title>
+        <title><?=$config->get('page_title'); ?></title>
         <style>
         /* -------------------------------------
             GLOBAL
@@ -189,10 +195,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <p class="small text-muted">{date}</p>
-                                    <p>&nbsp;</p>
-                                    <p><b>{subject}</b></p>
-                                    <p>{content}</p>
+                                    <?=$this->getContent() ?>
                                 </td>
                             </tr>
                         </table>
@@ -210,9 +213,8 @@
                 <td></td>
                 <td class="container">
                     <div class="content" align="center">
-                        <p>{footer}</p>
-                        <p>{unreadable}</p>
-                        <p>{unsubscribe}</p>
+                        <p><?=$translator->trans('noReplyMailFooter') ?></p>
+                        <p><?=$translator->trans('mailUnsubscribe', $this->getRequest()->getParam('email')) ?></p>
                     </div>
                 </td>
                 <td></td>

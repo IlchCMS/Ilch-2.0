@@ -101,10 +101,6 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new NewsletterModel();
 
-            if ($this->getRequest()->getParam('id')) {
-                $newsletterModel->setId($this->getRequest()->getParam('id'));
-            }
-
             $subject = trim($this->getRequest()->getPost('subject'));
             $text = trim($this->getRequest()->getPost('text'));
 
@@ -125,17 +121,20 @@ class Index extends \Ilch\Controller\Admin
                 } else {
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/newsletter/layouts/mail/newsletter.php');
                 }
-                $messageReplace = array(
-                        '{content}' => $this->getRequest()->getPost('text'),
-                        '{sitetitle}' => $this->getConfig()->get('page_title'),
-                        '{date}' => $date->format("l, d. F Y", true),
-                        '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
-                        '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe'),
-                );
-                $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $emails = $newsletterMapper->getMail();
                 foreach ($emails as $email) {
+                    $messageReplace = array(
+                            '{subject}' => $this->getRequest()->getPost('subject'),
+                            '{content}' => $this->getRequest()->getPost('text'),
+                            '{sitetitle}' => $this->getConfig()->get('page_title'),
+                            '{date}' => $date->format("l, d. F Y", true),
+                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
+                            '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
+                            '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getEmail()),
+                    );
+                    $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+                    
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email->getEmail(), '')
                             ->setSubject($this->getRequest()->getPost('subject'))
@@ -151,6 +150,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $emails = $newsletterMapper->getMail();
         $this->getView()->set('emails', $emails);
     }
 }

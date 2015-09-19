@@ -87,7 +87,7 @@ return array
     'step1to3' => 'Step 1 von 3',
     'step2to3' => 'Step 2 von 3',
     'step3to3' => 'Step 3 von 3',
-    'noRegistAccept' => 'Der Administrator hat festgelegt dass man sich nicht registrieren kann.',
+    'noRegistAccept' => 'Der Administrator hat festgelegt, dass man sich nicht registrieren kann.',
     'rules' => 'Regeln',
     'logindata' => 'Logindaten',
     'finish' => 'Abgeschlossen',
