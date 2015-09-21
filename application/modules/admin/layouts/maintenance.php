@@ -86,7 +86,7 @@ $date = new \Ilch\Date();
             </div>
             <b><?=$translator->trans('maintenanceStatus') ?></b>
             <div class="progress  progress-striped">
-                <div class="progress-bar progress-bar-success"
+                <div class="progress-bar progress-bar-success active"
                     role="progressbar"
                     aria-valuenow="<?=$config->get('maintenance_status'); ?>"
                     aria-valuemin="0"

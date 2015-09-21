@@ -36,7 +36,7 @@ return array
     'layouts' => 'Layouts',
     'system' => 'Settings',
     'maintenanceMode' => 'Maintenance-Mode',
-    'maintenanceDateTime' => 'Date / Time',
+    'maintenanceEndDateTime' => 'End Date / Time',
     'maintenanceText' => 'Text',
     'maintenanceTime' => 'Time Remaining Before Launch',
     'maintenanceStatus' => 'Status',

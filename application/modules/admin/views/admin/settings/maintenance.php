@@ -20,7 +20,7 @@
     </div>
     <div class="form-group">
         <label for="maintenanceDateTime" class="col-md-2 control-label">
-            <?=$this->getTrans('maintenanceDateTime') ?>:
+            <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
         <div class="col-lg-2 input-group date form_datetime">
             <input class="form-control"
