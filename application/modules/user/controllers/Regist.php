@@ -52,9 +52,14 @@ class Regist extends \Ilch\Controller\Frontend
             $password = $this->getRequest()->getPost('password');
             $password2 = $this->getRequest()->getPost('password2');
             $email = trim($this->getRequest()->getPost('email'));
+            $captcha = trim(strtolower($this->getRequest()->getPost('captcha')));
 
             $profilName = $registMapper->getUserByName($name);
             $profilEmail = $registMapper->getUserByEmail($email);
+
+            if (empty($_SESSION['captcha']) || $captcha != $_SESSION['captcha']) {
+                $errors['captcha'] = 'invalidCaptcha';
+            }
 
             if (!empty($profilName)) {
                 $errors['name'] = 'nameExist';

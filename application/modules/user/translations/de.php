@@ -98,6 +98,8 @@ return array
     'password2' => 'Passwort Wiederholung',
     'emailAdress' => 'E-Mail Adresse',
     'fieldEmpty' => 'Feld darf nicht leer sein',
+    'captcha' => 'Captcha',
+    'invalidCaptcha' => 'Captcha ist fehlerhaft',
     'fieldDiffersPassword' => 'Passwortfelder müssen gleich sein',
     'fieldEmail' => 'E-Mail ist nicht gültig',
     'avatarHeight' => 'Avatar Höhe',

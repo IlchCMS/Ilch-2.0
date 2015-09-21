@@ -59,15 +59,24 @@
             </label>
             <div class="col-lg-8">
                 <?=$this->getCaptchaField() ?>
+            </div>   
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-8 input-group captcha">
                 <input type="text"
                       id="captcha-form"
                       class="form-control"
                       autocomplete="off"
-                      name="captcha" />
-                <a href="#" onclick="
-                    document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
-                    document.getElementById('captcha-form').focus();"
-                    id="change-image"><?=$this->getTrans('captchaRead') ?></a>
+                      name="captcha"
+                      placeholder="<?=$this->getTrans('captcha') ?>" />
+                <span class="input-group-addon">
+                    <a href="javascript:void(0)" onclick="
+                        document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
+                        document.getElementById('captcha-form').focus();"
+                        id="change-image">
+                        <i class="fa fa-refresh"></i>
+                    </a>
+                </span>
             </div>
         </div>
         <div class="col-lg-10" align="right">

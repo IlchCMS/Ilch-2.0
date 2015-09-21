@@ -98,6 +98,8 @@ return array
     'password2' => 'Password confirm',
     'emailAdress' => 'E-Mail address',
     'fieldEmpty' => 'field must be filled',
+    'captcha' => 'Captcha',
+    'invalidCaptcha' => 'Captcha is false',
     'fieldDiffersPassword' => 'passwords are different',
     'fieldEmail' => 'email is not valid',
     'avatarHeight' => 'Avatar height',

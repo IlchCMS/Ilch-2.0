@@ -117,10 +117,3 @@
         </div>
     </div>
 </form>
-
-<style>
-.captcha {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-</style>

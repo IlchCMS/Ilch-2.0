@@ -58,6 +58,37 @@
             <?php endif; ?>
         </div>
     </div>
+    <div class="form-group <?php if (!empty($errors['captcha'])) { echo 'has-error'; }; ?>">
+        <label class="col-lg-2 control-label">
+            <?=$this->getTrans('captcha') ?>:
+        </label>
+        <div class="col-lg-8">
+            <?=$this->getCaptchaField() ?>
+        </div>
+    </div>
+    <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
+        <div class="col-lg-offset-2 col-lg-8 input-group captcha">
+            <input type="text"
+                  id="captcha-form"
+                  class="form-control"
+                  autocomplete="off"
+                  name="captcha"
+                  placeholder="<?=$this->getTrans('captcha') ?>" />
+            <span class="input-group-addon">
+                <a href="javascript:void(0)" onclick="
+                    document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
+                    document.getElementById('captcha-form').focus();"
+                    id="change-image">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            </span>
+        </div>
+        <div class="col-lg-offset-2 col-lg-10">
+            <?php if (!empty($errors['captcha'])): ?>
+                <span class="help-inline"><?=$this->getTrans($errors['captcha']) ?></span>
+            <?php endif; ?>
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
             <?=$this->getSaveBar('registButton', 'Regist') ?>
