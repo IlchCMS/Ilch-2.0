@@ -18,8 +18,10 @@ return array
     'no' => 'No',
     'missingTitle' => 'Title was not filled',
     'missingText' => 'Text was not filled',
-    'missingEmail' => 'Email was not filled',
+    'missingEmail' => 'E-Mail was not filled',
+    'sendSuccess' => 'Apply successfull send',
     'noJobs' => 'No Jobs available',
     'jobs' => 'Jobs',
-    'applicationTo' => 'Application to',
+    'apply' => 'Apply',
+    'applyAs' => 'Apply as',
 );

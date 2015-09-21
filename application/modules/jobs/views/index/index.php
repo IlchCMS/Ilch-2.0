@@ -1,3 +1,10 @@
+<style>
+.briefcase {
+    padding: 8px 8px 0 8px;
+    border: 1px solid #e5e5e5;
+}
+</style>
+
 <legend><?=$this->getTrans('menuJobs') ?></legend>
 <?php if ($this->get('jobs') != ''): ?>
     <div class="row">
@@ -8,18 +15,13 @@
             <div class="col-lg-11" style="margin-bottom: 35px;">
                 <legend><?=$this->escape($jobs->getTitle()) ?></legend>
                 <?=$jobs->getText() ?>
-                <br />
-                <?=$this->getTrans('applicationTo') ?> <a href="mailto:<?=$jobs->getEmail() ?>"><?=$jobs->getEmail() ?></a>
+                <?php if ($this->getUser()): ?>
+                    <br />
+                    <a href="<?=$this->getUrl('jobs/index/show/id/' . $jobs->getId()) ?>" class="btn btn-primary" role="button"><?=$this->getTrans('apply') ?></a>
+                <?php endif; ?>
             </div>
         <?php endforeach; ?>
     </div>
 <?php else: ?>
     <?=$this->getTrans('noJobs') ?>
 <?php endif; ?>
-
-<style>
-    .briefcase {
-        padding: 8px 8px 0 8px;
-        border: 1px solid #e5e5e5;
-    }
-</style>

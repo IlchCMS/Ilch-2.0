@@ -18,8 +18,10 @@ return array
     'no' => 'Nein',
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',
-    'missingEmail' => 'Email muss ausgefüllt werden',
+    'missingEmail' => 'E-Mail muss ausgefüllt werden',
+    'sendSuccess' => 'Bewerbung erfolgreich versendet',
     'noJobs' => 'Keine Jobs vorhanden',
     'jobs' => 'Jobs',
-    'applicationTo' => 'Bewerbungen an',
+    'apply' => 'Bewerben',
+    'applyAs' => 'Bewerbungen als',
 );
