@@ -154,3 +154,13 @@ function array_dot_set(&$array, $key, $value)
 
     return $array;
 }
+
+function is_in_array($needle, $haystack)
+{
+    foreach ($needle as $stack) {
+        if (in_array($stack, $haystack)) {
+             return true;
+        }
+    }
+    return false;
+}
