@@ -360,6 +360,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['history']['types']    = array('clan');
         $modules['rule']['types']       = array('clan');
         $modules['training']['types']   = array('clan');
+        $modules['forum']['types']      = array('clan', 'private');
         $modules['guestbook']['types']  = array('clan', 'private');
         $modules['link']['types']       = array('clan', 'private');
         $modules['linkus']['types']     = array('clan', 'private');
