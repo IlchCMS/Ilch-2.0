@@ -42,13 +42,18 @@ class Login extends \Ilch\Controller\Frontend
                     $_SESSION['messages'][] = array('text' => 'Sie haben einen fehlerhaften Benutzername, E-Mail oder Passwort angegeben. Bitte prüfen Sie ihre Angaben und versuche Sie es erneut.', 'type' => 'warning');
                 } elseif ($user->getConfirmed() == 0) {               
                     $_SESSION['messages'][] = array('text' => 'Benutzer nicht freigeschaltet! Bitte bestätigen Sie ihren Account in der verschickten E-Mail oder fordern Sie eine neue E-Mail mit einen Freischaltlink an.', 'type' => 'warning');
-                    
+
                     $this->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
                 } else {
                     $_SESSION['user_id'] = $user->getId();
-                    
-                    $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
-                    $this->redirect();
+
+                    if ($_SESSION['redirect']) {
+                        $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
+                        $this->redirect($_SESSION['redirect']);
+                    } else {
+                        $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
+                        $this->redirect();
+                    }
                 }
             }
 
