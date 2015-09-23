@@ -20,7 +20,7 @@ class Config extends \Ilch\Config\Install
             'de_DE' => array
             (
                 'name' => 'Forum',
-                'description' => 'Hier können das Forum verwaltet werden.',
+                'description' => 'Hier kann das Forum verwaltet werden.',
             ),
             'en_EN' => array
             (

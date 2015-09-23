@@ -28,7 +28,7 @@ return array
     'newPost' => 'New post',
     'add' => 'Create',
     'statistics' => 'Statistics',
-    'whoOnline' => 'Who is Online',
+    'whoOnline' => 'Who is online',
     'loginTopic' => 'Login to create',
     'loginPost' => 'Login to replies',
     'createNewTopic' => 'Create New Topic',
