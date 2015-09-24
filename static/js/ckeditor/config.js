@@ -11,9 +11,10 @@ CKEDITOR.editorConfig = function( config ) {
     }
     else if (typeof ilchMediaPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal( 'ilchmedia', ilchMediaPlugin);
-        config.extraPlugins = "ilchmedia";
+        config.extraPlugins = "ilchmedia,showprotected";
     }
 
+    config.protectedSource.push(/<\?[\s\S]*?\?>/g);
     config.toolbar = 'ilch_html';
     config.toolbar_ilch_html =
         [
