@@ -57,7 +57,7 @@ if ($this->getUser()) {
                         <a id="<?=$post->getId() ?>" href="#<?=$post->getId() ?>">
                             <img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11">
                         </a>
-                        by
+                        <?=$this->getTrans('by') ?>
                         <strong>
                             <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId())) ?>" style="color: #AA0000;" class="username-coloured">
                                 <?=$post->getAutor()->getName() ?>
@@ -81,7 +81,7 @@ if ($this->getUser()) {
                     </dt>
                     <dd>Site Admin</dd>
                     <dd>&nbsp;</dd>
-                    <dd><strong>Posts:</strong> 16</dd><dd><strong>Joined:</strong> <?=$post->getAutor()->getDateCreated() ?></dd>
+                    <dd><strong><?=$this->getTrans('posts') ?>:</strong> 16</dd><dd><strong><?=$this->getTrans('joined') ?>:</strong> <?=$post->getAutor()->getDateCreated() ?></dd>
                 </dl>
             </div>
         <?php endforeach; ?>

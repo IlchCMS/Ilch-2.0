@@ -40,5 +40,6 @@ return array
     'forumTypeFixed' => 'Fixed Topic',
     'yes' => 'Yes',
     'no' => 'No',
+    'joined' => 'Joined',
 
 );
