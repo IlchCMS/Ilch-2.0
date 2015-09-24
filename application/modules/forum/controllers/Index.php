@@ -9,7 +9,7 @@ namespace Modules\Forum\Controllers;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
-use Modules\Forum\Mappers\Forumstatistics as ForumStaticsMapper;
+use Modules\Forum\Mappers\ForumStatistics as ForumStaticsMapper;
 
 defined('ACCESS') or die('no direct access');
 
