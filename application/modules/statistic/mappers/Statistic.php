@@ -334,6 +334,26 @@ class Statistic extends \Ilch\Mapper
         return $visits;
     }
 
+    public function getArticlesCount()
+    {
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_articles`';
+        
+        $entries = $this->db()->queryCell($sql);
+
+        return $entries;
+    }
+
+    public function getCommentsCount()
+    {
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_comments`';
+        
+        $entries = $this->db()->queryCell($sql);
+
+        return $entries;
+    }
+
     public function getRegistUserCount()
     {
         $sql = 'SELECT COUNT(*)

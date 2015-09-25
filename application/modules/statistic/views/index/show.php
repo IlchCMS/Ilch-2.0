@@ -1,22 +1,6 @@
+<link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
-
-<style>
-.panel-body .list-group {
-    margin-bottom: 0;
-}
-.panel-body .progress {
-    margin-bottom: 0px;
-}
-
-.progress-bar {
-    -webkit-transition: width 4s ease-in-out;
-    -moz-transition: width 4s ease-in-out;
-    -ms-transition: width 4s ease-in-out;
-    -o-transition: width 4s ease-in-out;
-    transition: width 4s ease-in-out;
-}
-</style>
 
 <?php
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();

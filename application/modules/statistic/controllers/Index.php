@@ -22,6 +22,9 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('dateCmsInstalled', $this->getConfig()->get('date_cms_installed'));
         $this->getView()->set('registUserCount', $statisticMapper->getRegistUserCount());
         $this->getView()->set('registNewUser', $statisticMapper->getRegistNewUser());
+        $this->getView()->set('articlesCount', $statisticMapper->getArticlesCount());
+        $this->getView()->set('commentsCount', $statisticMapper->getCommentsCount());
+        $this->getView()->set('CMSVersion', $this->getConfig()->get('version'));
 
         $this->getView()->set('visitsToday', $statisticMapper->getVisitsCount($date->format('Y-m-d')));
         $this->getView()->set('visitsMonth', $statisticMapper->getVisitsMonthCount());

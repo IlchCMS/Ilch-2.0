@@ -1,0 +1,43 @@
+.ilch-logo {
+    background-image: url('../img/ilch_statistic_panel_head.png');
+    background-repeat: no-repeat;
+    background-position: bottom right
+}
+
+.panel-ilch {
+    background-color: #B71E00 !important;
+}
+.ilch-title {
+    color: #fff !important;
+}
+.ilch-body{
+    color: #000 !important;
+}
+
+.status .panel-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: #000;
+}
+.status a {
+    color: #428BCA;
+    text-decoration: none;
+}
+.status a:hover {
+    text-decoration: none;
+}
+
+.panel-body .list-group {
+    margin-bottom: 0;
+}
+.panel-body .progress {
+    margin-bottom: 0px;
+}
+
+.progress-bar {
+    -webkit-transition: width 4s ease-in-out;
+    -moz-transition: width 4s ease-in-out;
+    -ms-transition: width 4s ease-in-out;
+    -o-transition: width 4s ease-in-out;
+    transition: width 4s ease-in-out;
+}

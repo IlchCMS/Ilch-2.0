@@ -1,37 +1,6 @@
+<link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
-
-<style>
-.status .panel-title {
-    font-size: 30px;
-    font-weight: bold;
-    color: #000;
-    padding-top: 10px;
-    margin-bottom: -17px;
-}
-.status a {
-    color: #428BCA;
-    text-decoration: none;
-}
-.status a:hover {
-    text-decoration: none;
-}
-
-.panel-body .list-group {
-    margin-bottom: 0;
-}
-.panel-body .progress {
-    margin-bottom: 0px;
-}
-
-.progress-bar {
-    -webkit-transition: width 4s ease-in-out;
-    -moz-transition: width 4s ease-in-out;
-    -ms-transition: width 4s ease-in-out;
-    -o-transition: width 4s ease-in-out;
-    transition: width 4s ease-in-out;
-}
-</style>
 
 <?php 
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
@@ -65,8 +34,9 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                     <div class="col-xs-12 col-md-6 col-lg-3">
                         <div class="panel status panel-default">
                             <div class="panel-heading">
-                                <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>">
-                                    <h1 class="panel-title text-center"><?=$this->get('registUserCount') ?>
+                                <h1 class="panel-title text-center">
+                                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>">
+                                        <?=$this->get('registUserCount') ?>
                                     </a>
                                 </h1>
                             </div>
@@ -88,6 +58,49 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('lastUser') ?></strong>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center">
+                                    <a href="<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'index')) ?>">
+                                        <?=$this->get('articlesCount') ?>
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('totalArticles') ?></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center"><?=$this->get('commentsCount') ?></h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('totalComments') ?></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 col-lg-offset-3 col-lg-3">
+                        <div class="panel status panel-default">
+                            <a href="http://ilch.de" target="_blank">
+                                <div class="ilch-logo">
+                                    <div class="panel-heading panel-ilch">
+                                        <h1 class="panel-title ilch-title text-center">
+                                            <?=$this->get('CMSVersion') ?>
+                                        </h1>                                
+                                    </div>
+                                    <div class="panel-body ilch-body text-left">
+                                        <strong><?=$this->getTrans('IlchCMSVersion') ?></strong>
+                                    </div>                                    
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
