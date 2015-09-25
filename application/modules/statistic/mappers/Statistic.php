@@ -345,6 +345,17 @@ class Statistic extends \Ilch\Mapper
         return $entries;
     }
 
+    public function getRegistNewUser()
+    {
+        $sql = 'SELECT MAX(id)
+                FROM `[prefix]_users`
+                WHERE `confirmed` = 1';
+        
+        $entries = $this->db()->queryCell($sql);
+
+        return $entries;
+    }
+
     /**
      * @return integer
      */

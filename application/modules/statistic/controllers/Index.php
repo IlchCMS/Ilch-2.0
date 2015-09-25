@@ -19,6 +19,10 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'));
 
         $date = new \Ilch\Date();
+        $this->getView()->set('dateCmsInstalled', $this->getConfig()->get('date_cms_installed'));
+        $this->getView()->set('registUserCount', $statisticMapper->getRegistUserCount());
+        $this->getView()->set('registNewUser', $statisticMapper->getRegistNewUser());
+
         $this->getView()->set('visitsToday', $statisticMapper->getVisitsCount($date->format('Y-m-d')));
         $this->getView()->set('visitsMonth', $statisticMapper->getVisitsMonthCount());
         $this->getView()->set('visitsYear', $statisticMapper->getVisitsYearCount());

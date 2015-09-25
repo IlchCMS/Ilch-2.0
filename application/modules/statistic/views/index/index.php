@@ -2,6 +2,21 @@
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
 
 <style>
+.status .panel-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+    padding-top: 10px;
+    margin-bottom: -17px;
+}
+.status a {
+    color: #428BCA;
+    text-decoration: none;
+}
+.status a:hover {
+    text-decoration: none;
+}
+
 .panel-body .list-group {
     margin-bottom: 0;
 }
@@ -20,11 +35,67 @@
 
 <?php 
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
+$userMapper = new \Modules\User\Mappers\User();
 $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $date = new \Ilch\Date();
+$dateCmsInstalled = new \Ilch\Date($this->get('dateCmsInstalled'));
+$registNewUser = $userMapper->getUserById($this->get('registNewUser'));
 ?>
 
 <legend><?=$this->getTrans('menuStatistic') ?></legend>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title"><?=$this->getTrans('siteStatistic') ?></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-4">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center"><?=$dateCmsInstalled->format("Y-m-d", true) ?></h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('siteOnlineSince') ?></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>">
+                                    <h1 class="panel-title text-center"><?=$this->get('registUserCount') ?>
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('totalUsers') ?></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-12 col-lg-5">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">                                
+                                <h1 class="panel-title text-center">
+                                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $registNewUser->getId())) ?>">
+                                        <?=$registNewUser->getName() ?>
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('lastUser') ?></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
@@ -33,21 +104,60 @@ $date = new \Ilch\Date();
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-3">
-                        <?=$this->getTrans('statToday') ?>: <?=$this->get('visitsToday') ?>
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center"><?=$this->get('visitsToday') ?></h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('statToday') ?></strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-3">
-                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?></a>
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center">
+                                    <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>">
+                                        <?=$this->get('visitsMonth') ?>
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('statMonth') ?></strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-3">
-                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?></a>
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center">
+                                    <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>">
+                                        <?=$this->get('visitsYear') ?>
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('statYear') ?></strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-3">
-                        <?=$this->getTrans('statTotal') ?>: <?=$this->get('visitsAllTotal') ?>
+
+                    <div class="col-xs-12 col-md-6 col-lg-3">
+                        <div class="panel status panel-default">
+                            <div class="panel-heading">
+                                <h1 class="panel-title text-center"><?=$this->get('visitsAllTotal') ?></h1>
+                            </div>
+                            <div class="panel-body text-center">
+                                <strong><?=$this->getTrans('statTotal') ?></strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="panel-footer">
                 <h4 class="panel-title"><?=$this->getTrans('hour') ?></h4>
             </div>

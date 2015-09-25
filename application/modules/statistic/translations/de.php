@@ -19,6 +19,9 @@ return array
     'onlineGuest' => 'Gäste',
     'onlineUser' => 'User',
 
+    'totalUsers' => 'Mitglieder Gesamt',
+    'lastUser' => 'Neuste Mitglied',
+    'siteOnlineSince' => 'Seite Online seit',
     'statOnline' => 'Online',
     'statToday' => 'Heute',
     'statYesterday' => 'Gestern',
