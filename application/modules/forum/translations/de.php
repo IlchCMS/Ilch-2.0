@@ -40,5 +40,6 @@ return array
     'forumTypeFixed' => 'Thema fixieren',
     'yes' => 'Ja',
     'no' => 'Nein',
+    'joined' => 'Dabei seit',
     
 );

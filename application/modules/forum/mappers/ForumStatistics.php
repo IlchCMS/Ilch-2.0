@@ -10,7 +10,7 @@ use Modules\Forum\Models\ForumStatistics as ForumStatisticsModel;
 
 defined('ACCESS') or die('no direct access');
 
-class Forumstatistics extends \Ilch\Mapper
+class ForumStatistics extends \Ilch\Mapper
 {
     public function getForumStatisticsTopics()
     {
