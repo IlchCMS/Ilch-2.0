@@ -224,6 +224,10 @@ $year = $this->getRequest()->getParam('year');
         <div class="col-lg-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
+                    <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
+                </div>
+            
+                <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('hour') ?></h4>
                 </div>
                 <div class="panel-body">
@@ -243,14 +247,8 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            
+                <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('day') ?></h4>
                 </div>
                 <div class="panel-body">
@@ -270,14 +268,8 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            
+                <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('yearMonth') ?></h4>
                 </div>
                 <div class="panel-body">
@@ -297,14 +289,8 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+            
+                <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('year') ?></h4>
                 </div>
                 <div class="panel-body">
