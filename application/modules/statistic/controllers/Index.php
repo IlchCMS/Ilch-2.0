@@ -7,6 +7,7 @@
 namespace Modules\Statistic\Controllers;
 
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
+use Modules\Admin\Mappers\Module as ModuleMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -15,6 +16,7 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $statisticMapper = new StatisticMapper();
+        $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'));
 
@@ -24,7 +26,10 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('registNewUser', $statisticMapper->getRegistNewUser());
         $this->getView()->set('articlesCount', $statisticMapper->getArticlesCount());
         $this->getView()->set('commentsCount', $statisticMapper->getCommentsCount());
+        $this->getView()->set('modulesCount', $statisticMapper->getModulesCount());
         $this->getView()->set('CMSVersion', $this->getConfig()->get('version'));
+
+        $this->getView()->set('modules', $moduleMapper->getModules());
 
         $this->getView()->set('visitsToday', $statisticMapper->getVisitsCount($date->format('Y-m-d')));
         $this->getView()->set('visitsMonth', $statisticMapper->getVisitsMonthCount());
@@ -62,7 +67,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year));        
+                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year));
         }
 
         if ($year != '' AND $month != '') {

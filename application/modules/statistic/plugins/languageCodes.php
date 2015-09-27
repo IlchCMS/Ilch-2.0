@@ -306,8 +306,8 @@ class LanguageCodes
 
         if ($locale == 'de_DE') {
             $language = $languageDEArray[$language];
-        }  else {
-            $language = $languageENArray[$language];            
+        } else {
+            $language = $languageENArray[$language];
         }
 
         return $language;

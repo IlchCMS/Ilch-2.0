@@ -35,7 +35,7 @@
                 <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                 <?php $user = $userMapper->getUserById($userOnlineList->getUserId()); ?>
                 <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>
-                <?php if($moduleKey != ''): ?>                    
+                <?php if($moduleKey != ''): ?>
                     <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
                     <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
                     <?php $moduleName = $module->getName() ?>

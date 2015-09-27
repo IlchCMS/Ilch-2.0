@@ -169,7 +169,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         } else {
-            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';            
+            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';
         }
         $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`)
                 ORDER BY `date` DESC';
@@ -328,7 +328,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_visits_online`
                 WHERE `date_last_activity` > "'.$date->format("Y-m-d H:i:s", true).'"';
-        
+
         $visits = $this->db()->queryCell($sql);
 
         return $visits;
@@ -338,7 +338,7 @@ class Statistic extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_articles`';
-        
+
         $entries = $this->db()->queryCell($sql);
 
         return $entries;
@@ -348,7 +348,18 @@ class Statistic extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_comments`';
-        
+
+        $entries = $this->db()->queryCell($sql);
+
+        return $entries;
+    }
+
+    public function getModulesCount()
+    {
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_modules`
+                WHERE `system` = 0';
+
         $entries = $this->db()->queryCell($sql);
 
         return $entries;
@@ -359,7 +370,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_users`
                 WHERE `confirmed` = 1';
-        
+
         $entries = $this->db()->queryCell($sql);
 
         return $entries;
@@ -370,7 +381,7 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT MAX(id)
                 FROM `[prefix]_users`
                 WHERE `confirmed` = 1';
-        
+
         $entries = $this->db()->queryCell($sql);
 
         return $entries;
@@ -406,7 +417,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")';
         } else {
-            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';            
+            $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';
         }
 
         $visits = $this->db()->queryCell($sql);

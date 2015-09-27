@@ -17,8 +17,9 @@ $year = $this->getRequest()->getParam('year');
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('hour') ?></h4>
                 </div>
@@ -28,7 +29,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><?=$date->format("H") ?>:00 <?=$this->getTrans('clock') ?></b>
+                                <strong><?=$date->format("H") ?>:00 <?=$this->getTrans('clock') ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -39,7 +40,7 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('day') ?></h4>
                 </div>
@@ -49,7 +50,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><?=$date->format("l") ?></b>
+                                <strong><?=$date->format("l") ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -60,7 +61,7 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('yearMonthDay') ?></h4>
                 </div>
@@ -70,7 +71,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><?=$date->format("Y-m-d", true) ?></b>
+                                <strong><?=$date->format("Y-m-d", true) ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -81,7 +82,7 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('year') ?></h4>
                 </div>
@@ -91,7 +92,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></b>
+                                <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -111,6 +112,7 @@ $year = $this->getRequest()->getParam('year');
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('browser') ?>
@@ -120,13 +122,13 @@ $year = $this->getRequest()->getParam('year');
                         <?php foreach ($this->get('statisticBrowserList') as $statisticList): ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
-                                <b>
+                                <strong>
                                     <?php if ($statisticList->getBrowser() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$statisticList->getBrowser() ?>
                                     <?php endif; ?>
-                                </b>
+                                </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -146,13 +148,13 @@ $year = $this->getRequest()->getParam('year');
                         <?php foreach ($this->get('statisticLanguageList') as $statisticList): ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
-                                <b>
+                                <strong>
                                     <?php if ($statisticList->getLang() == ''): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
                                     <?php endif; ?>
-                                </b>
+                                </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -172,6 +174,7 @@ $year = $this->getRequest()->getParam('year');
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('os') ?>
@@ -181,13 +184,13 @@ $year = $this->getRequest()->getParam('year');
                         <?php foreach ($this->get('statisticOSList') as $statisticList): ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
-                                <b>
+                                <strong>
                                     <?php if ($statisticList->getOS() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$statisticList->getOS() ?>
                                     <?php endif; ?>
-                                </b>
+                                </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -209,8 +212,9 @@ $year = $this->getRequest()->getParam('year');
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('hour') ?></h4>
                 </div>
@@ -220,7 +224,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><?=$date->format("H") ?>:00 <?=$this->getTrans('clock') ?></b>
+                                <strong><?=$date->format("H") ?>:00 <?=$this->getTrans('clock') ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -231,7 +235,7 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('day') ?></h4>
                 </div>
@@ -241,7 +245,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><?=$date->format("l") ?></b>
+                                <strong><?=$date->format("l") ?></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -252,7 +256,7 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('yearMonth') ?></h4>
                 </div>
@@ -262,7 +266,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$date->format("Y - F", true) ?></a></b>
+                                <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$date->format("Y - F", true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -273,7 +277,7 @@ $year = $this->getRequest()->getParam('year');
                         <?php endforeach; ?>
                     </div>
                 </div>
-            
+
                 <div class="panel-footer">
                     <h4 class="panel-title"><?=$this->getTrans('year') ?></h4>
                 </div>
@@ -283,7 +287,7 @@ $year = $this->getRequest()->getParam('year');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <b><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></b>
+                                <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -303,6 +307,7 @@ $year = $this->getRequest()->getParam('year');
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('browser') ?>
@@ -312,13 +317,13 @@ $year = $this->getRequest()->getParam('year');
                         <?php foreach ($this->get('statisticBrowserList') as $statisticList): ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
-                                <b>
+                                <strong>
                                     <?php if ($statisticList->getBrowser() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$statisticList->getBrowser() ?>
                                     <?php endif; ?>
-                                </b>
+                                </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -338,13 +343,13 @@ $year = $this->getRequest()->getParam('year');
                         <?php foreach ($this->get('statisticLanguageList') as $statisticList): ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
-                                <b>
+                                <strong>
                                     <?php if ($statisticList->getLang() == ''): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$languageCodes->statisticLanguage($statisticList->getLang(), $this->getTranslator()->getLocale()) ?>
                                     <?php endif; ?>
-                                </b>
+                                </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -364,6 +369,7 @@ $year = $this->getRequest()->getParam('year');
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
                 </div>
                 <div class="panel-footer">
                     <?=$this->getTrans('os') ?>
@@ -373,13 +379,13 @@ $year = $this->getRequest()->getParam('year');
                         <?php foreach ($this->get('statisticOSList') as $statisticList): ?>
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
-                                <b>
+                                <strong>
                                     <?php if ($statisticList->getOS() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$statisticList->getOS() ?>
                                     <?php endif; ?>
-                                </b>
+                                </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -404,4 +410,17 @@ $year = $this->getRequest()->getParam('year');
 $(document).ready(function() {
     $('.progress .progress-bar').progressbar();
 });
+
+$(document).on('click', '.panel-heading span.clickable', function(e){
+    var $this = $(this);
+    if(!$this.hasClass('panel-collapsed')) {
+        $this.closest('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    } else {
+        $this.closest('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    }
+})
 </script>

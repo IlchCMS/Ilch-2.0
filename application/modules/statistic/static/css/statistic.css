@@ -4,6 +4,11 @@
     background-position: bottom right
 }
 
+.stats-default {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
+
 .panel-ilch {
     background-color: #B71E00 !important;
 }
@@ -14,16 +19,16 @@
     color: #000 !important;
 }
 
-.status .panel-title {
+.stats .panel-title {
     font-size: 25px;
     font-weight: bold;
     color: #000;
 }
-.status a {
+.stats a {
     color: #428BCA;
     text-decoration: none;
 }
-.status a:hover {
+.stats a:hover {
     text-decoration: none;
 }
 
@@ -35,9 +40,49 @@
 }
 
 .progress-bar {
-    -webkit-transition: width 4s ease-in-out;
-    -moz-transition: width 4s ease-in-out;
-    -ms-transition: width 4s ease-in-out;
-    -o-transition: width 4s ease-in-out;
-    transition: width 4s ease-in-out;
+    -webkit-transition: width 4s ease-in-out !important;
+    -moz-transition: width 4s ease-in-out !important;
+    -ms-transition: width 4s ease-in-out !important;
+    -o-transition: width 4s ease-in-out !important;
+    transition: width 4s ease-in-out !important;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+.panel-heading span {
+    margin-top: -16px;
+    font-size: 15px;
+}
+
+.box > .icon {
+    text-align: center;
+    position: relative;
+}
+.box > .icon > .image {
+    position: relative;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #e0e0e0;
+    line-height: 42px;
+    border-radius: 50%;
+    background: #fff;
+    vertical-align: middle;
+}
+.box > .icon > .info {
+    margin-top: -48px;
+    margin-left: 22px;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid #e0e0e0;
+    padding: 0 0 5px 0;
+}
+.box > .icon > .info > h3.title {
+    text-align: left;
+    margin-left: 25px;
+    font-size: 14px;
+}
+.box .space {
+    height: 15px;
 }
