@@ -5,6 +5,7 @@
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
 
 class Box extends \Ilch\Controller\Base

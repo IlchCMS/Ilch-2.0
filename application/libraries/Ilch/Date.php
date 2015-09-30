@@ -5,13 +5,11 @@
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * Tests the Ilch_Date class.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Date extends \DateTime
 {

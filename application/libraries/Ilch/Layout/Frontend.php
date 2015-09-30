@@ -5,6 +5,7 @@
  */
 
 namespace Ilch\Layout;
+
 defined('ACCESS') or die('no direct access');
 
 class Frontend extends Base

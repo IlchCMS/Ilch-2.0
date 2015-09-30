@@ -1,14 +1,14 @@
 <?php
-
 /**
- * Same validation class
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Ilch\Validation\Validators;
 
+/**
+ * Same validation class
+ */
 class Same extends Base
 {
     protected $errorKey = 'validation.errors.same.fieldsDontMatch';

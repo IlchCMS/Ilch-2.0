@@ -1,14 +1,14 @@
 <?php
-
 /**
- * Email validation class
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Ilch\Validation\Validators;
 
+/**
+ * Email validation class
+ */
 class Email extends Base
 {
     protected $errorKey = 'validation.errors.email.noValidEmail';
