@@ -376,7 +376,6 @@ class Index extends \Ilch\Controller\Frontend
         $modules['awards']['types']     = array('clan', 'private');
         $modules['jobs']['types']       = array('clan', 'private');
         $modules['faq']['types']        = array('clan', 'private');
-        $modules['vote']['types']       = array('clan', 'private');
 
         foreach ($modules as $key => $module) {
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';

@@ -5,7 +5,6 @@
  */
 
 namespace Ilch\Database;
-
 defined('ACCESS') or die('no direct access');
 
 class Factory

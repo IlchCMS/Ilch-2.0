@@ -1,5 +1,7 @@
 <?php
 /**
+ * Ilch/Upload class.
+ *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -8,9 +10,6 @@ namespace Ilch;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * Ilch/Upload class.
- */
 class Upload extends \Ilch\Controller\Base
 {
     /**
