@@ -158,7 +158,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statToday') ?>: <?=$this->get('visitsToday') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center"><?=$this->get('visitsToday') ?></h1>
                             </div>
@@ -169,7 +169,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
                                     <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>">
@@ -184,7 +184,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
                                     <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>">
@@ -199,7 +199,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statTotal') ?>: <?=$this->get('visitsAllTotal') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center"><?=$this->get('visitsAllTotal') ?></h1>
                             </div>

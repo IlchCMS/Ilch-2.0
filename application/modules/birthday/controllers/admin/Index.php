@@ -31,7 +31,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuBirthdaySettings'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('bday_boxShow', $this->getRequest()->getPost('entrySettings'));
