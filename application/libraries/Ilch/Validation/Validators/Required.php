@@ -1,14 +1,14 @@
 <?php
-
 /**
- * Required validation class
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Ilch\Validation\Validators;
 
+/**
+ * Required validation class
+ */
 class Required extends Base
 {
     protected $errorKey = 'validation.errors.required.fieldIsRequired';

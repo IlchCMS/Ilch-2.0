@@ -1,16 +1,15 @@
 <?php
-
 /**
- * Length validation class
- *
- * Checks a string for a minimum and/or maximum length
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Ilch\Validation\Validators;
 
+/**
+ * Length validation class
+ * Checks a string for a minimum and/or maximum length
+ */
 class Length extends Base
 {
     public function run()

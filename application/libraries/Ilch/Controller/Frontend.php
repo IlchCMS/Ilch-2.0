@@ -4,6 +4,7 @@
  */
 
 namespace Ilch\Controller;
+
 defined('ACCESS') or die('no direct access');
 
 class Frontend extends Base

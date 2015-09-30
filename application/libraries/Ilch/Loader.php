@@ -1,10 +1,13 @@
 <?php
 /**
+ * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
+
 require_once APPLICATION_PATH.'/libraries/Ilch/Functions.php';
 
 class Loader

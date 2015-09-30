@@ -1,15 +1,15 @@
 <?php
-
 /**
- * Validation error class
- *
- * This is just a mapper for a single error
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
+
 namespace Ilch\Validation;
 
+/**
+ * Validation error class
+ * This is just a mapper for a single error
+ */
 class Error
 {
     protected $key;

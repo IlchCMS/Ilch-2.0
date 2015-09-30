@@ -1,15 +1,15 @@
 <?php
-
 /**
- * Validation data class
- *
- * This is just a mapper for the data a validations receives
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
+
 namespace Ilch\Validation;
 
+/**
+ * Validation data class
+ * This is just a mapper for the data a validations receives
+ */
 class Data
 {
     protected $field;

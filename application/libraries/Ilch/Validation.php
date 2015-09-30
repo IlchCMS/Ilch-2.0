@@ -1,16 +1,17 @@
 <?php
-
 /**
- * Validation class
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
+
 namespace Ilch;
 
 use Ilch\Validation\Data;
 use Ilch\Validation\Error;
 
+/**
+ * Validation class
+ */
 class Validation
 {
 
