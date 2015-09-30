@@ -126,7 +126,7 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        if ($eventMapper->existsTable('ilch_calendar') == true) {
+        if ($eventMapper->existsTable('calendar') == true) {
             $this->getView()->set('calendarShow', 1);
         }
 

@@ -15,6 +15,7 @@ return array
     'upcomingBirthday' => 'upcoming birthday',
     'writeCongratulations' => 'Write congratulations',
     'numberOfBirthsdayShow' => 'Number of birthdays Displayed',
+    'otherBirthday' => 'other birthday',
     'will' => 'will',
     'yearsOld' => 'years old',
     'people' => 'others',

@@ -1,4 +1,5 @@
 <link href="<?=$this->getModuleUrl('static/css/birthday.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('settings') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
@@ -27,11 +28,11 @@
 
 <script language="JavaScript" type="text/javascript">
 (function ($) {
-  $('.spinner .btn:first-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-  });
-  $('.spinner .btn:last-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
+    $('.spinner .btn:first-of-type').on('click', function() {
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+    });
+    $('.spinner .btn:last-of-type').on('click', function() {
+        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
   });
 })(jQuery);
 </script>

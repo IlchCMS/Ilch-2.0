@@ -15,6 +15,7 @@ return array
     'upcomingBirthday' => 'Bevorstehende Geburtstage',
     'writeCongratulations' => 'Glückwünsche schreiben',
     'numberOfBirthsdayShow' => 'Anzahl angezeigter Geburtstage',
+    'otherBirthday' => 'weitere Geburtstage',
     'will' => 'wird',
     'yearsOld' => 'Jahre alt',
     'people' => 'Personen',

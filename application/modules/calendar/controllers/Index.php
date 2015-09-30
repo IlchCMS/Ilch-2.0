@@ -26,7 +26,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('calendarList', $calendarMapper->getEntries());
         $this->getView()->set('birthdayList', $userMapper->getUserList());
 
-        if ($calendarMapper->existsTable('ilch_events') == true) {
+        if ($calendarMapper->existsTable('calendar') == true) {
             $this->getView()->set('eventList', $eventsMapper->getEntries(array('show' => 1)));
         }
     }

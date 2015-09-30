@@ -1,3 +1,5 @@
+<link href="<?=$this->getModuleUrl('static/css/birthday.css') ?>" rel="stylesheet">
+
 <?php
 $date = new \Ilch\Date();
 ?>
@@ -14,16 +16,21 @@ $date = new \Ilch\Date();
         <?php foreach ($this->get('birthdayListNOW') as $birthdaylist): ?>
             <div class="panel-body">
                 <div class="col-lg-12">
-                    <div class="col-lg-2"><img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69"></div>
+                    <div class="col-lg-2 confetti">
+                        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><img class="thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69"></a>
+                    </div>
                     <div class="col-lg-10">
-                        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><b><?=$this->escape($birthdaylist->getName()) ?></b></a><br />
+                        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><strong><?=$this->escape($birthdaylist->getName()) ?></strong></a><br />
                         <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($birthdaylist->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
-                        <?php if($this->getUser() AND $this->getUser()->getId() != $this->escape($birthdaylist->getID())) { ?><a href="<?=$this->getUrl('user/panel/dialognew/id/' . $birthdaylist->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a><?php } ?>
+                        <?php if($this->getUser() AND $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>
+                            <a href="<?=$this->getUrl('user/panel/dialognew/id/' . $birthdaylist->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>        
         <?php endforeach; ?>
     </div>
+    <br />
 <?php endif; ?>
 
 <?php $monthsUserCount = 0; ?>
