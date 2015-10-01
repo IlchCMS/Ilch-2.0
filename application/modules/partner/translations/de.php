@@ -23,7 +23,7 @@ return array
     'setfree' => 'Freischalten',
     'entrys' => 'Einträge',
     'addButton' => 'Eintragen',
-    'httpOrMeida' => 'http:// oder Medien',
+    'httpOrMedia' => 'http:// oder Medien',
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha ist fehlerhaft',
     'captchaRead' => 'Nicht lesbar? Text ändern!',

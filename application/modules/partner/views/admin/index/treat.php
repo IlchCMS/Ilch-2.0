@@ -40,7 +40,7 @@
                        type="text"
                        name="banner"
                        id="selectedImage_1"
-                       placeholder="<?=$this->getTrans('httpOrMeida') ?>"
+                       placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
