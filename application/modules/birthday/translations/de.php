@@ -11,6 +11,7 @@ return array
     'menuBirthday' => 'Geburtstag',
     'settings' => 'Einstellungen',
     'menuBirthdayList' => 'Geburtstagsliste',
+    'noBirthdayToday' => 'Heute hat keiner Geburtstag',
     'noBirthdayMonth' => 'Diesen Monat hat keiner Geburtstag',
     'upcomingBirthday' => 'Bevorstehende Geburtstage',
     'writeCongratulations' => 'Glückwünsche schreiben',

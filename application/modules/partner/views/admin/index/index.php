@@ -37,6 +37,11 @@
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('entries') as $entry): ?>
+                        <?php if (substr($entry->getBanner(), 0, 11) == 'application'): ?>
+                            <?php $banner = $this->getBaseUrl($entry->getBanner()); ?>
+                        <?php else: ?>
+                            <?php $banner = $entry->getBanner(); ?>
+                        <?php endif; ?>
                         <tr>
                             <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
                             <td>
@@ -64,7 +69,7 @@
                                 <?=$this->getDeleteIcon($deleteArray) ?>
                             </td>
                             <td><?=$this->escape($entry->getName()) ?></td>
-                            <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank"><img src='<?=$this->escape($entry->getBanner()) ?>'></a></td>
+                            <td><a href='<?=$this->escape($entry->getLink()) ?>' target="_blank"><img src='<?=$banner ?>'></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

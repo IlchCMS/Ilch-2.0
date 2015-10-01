@@ -11,6 +11,7 @@ return array
     'menuBirthday' => 'Birthday',
     'settings' => 'Settings',
     'menuBirthdayList' => 'birthday list',
+    'noBirthdayToday' => 'today no birthday',
     'noBirthdayMonth' => 'this Month no birthday',
     'upcomingBirthday' => 'upcoming birthday',
     'writeCongratulations' => 'Write congratulations',

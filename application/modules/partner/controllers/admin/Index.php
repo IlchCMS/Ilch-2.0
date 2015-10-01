@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
@@ -94,7 +94,7 @@ class Index extends \Ilch\Controller\Admin
         $model->setId($this->getRequest()->getParam('id'));
         $model->setFree(1);
         $partnerMapper->save($model);
-            
+
         $this->addMessage('freeSuccess');
 
         if ($this->getRequest()->getParam('showsetfree')) {
@@ -117,7 +117,7 @@ class Index extends \Ilch\Controller\Admin
         } else {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
+                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {
@@ -126,11 +126,11 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
             }
-            
+
             $name = $this->getRequest()->getPost('name');
             $banner = trim($this->getRequest()->getPost('banner'));
             $link = trim($this->getRequest()->getPost('link'));
-            
+
             if (empty($name)) {
                 $this->addMessage('missingName', 'danger');
             } elseif(empty($link)) {
@@ -143,9 +143,9 @@ class Index extends \Ilch\Controller\Admin
                 $model->setBanner($banner);
                 $model->setLink($link);
                 $partnerMapper->save($model);
-                
+
                 $this->addMessage('saveSuccess');
-                
+
                 $this->redirect(array('action' => 'index'));
             }
         }

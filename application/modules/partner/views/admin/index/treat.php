@@ -15,7 +15,6 @@
             <input class="form-control"
                    type="text"
                    name="name"
-                   id="name"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } ?>" />
         </div>
     </div>
@@ -27,7 +26,6 @@
             <input class="form-control"
                    type="text"
                    name="link"
-                   id="link"
                    placeholder="http://"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } ?>" />
         </div>
@@ -37,12 +35,15 @@
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="banner"
-                   id="banner"
-                   placeholder="http://"
-                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
+            <div class="input-group">
+                <input class="form-control"
+                       type="text"
+                       name="banner"
+                       id="selectedImage_1"
+                       placeholder="<?=$this->getTrans('httpOrMeida') ?>"
+                       value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
+                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
+            </div>
         </div>
     </div>
     <?php if ($this->get('partner') != ''): ?>
@@ -51,3 +52,10 @@
         <?=$this->getSaveBar('addButton') ?>
     <?php endif; ?>
 </form>
+
+<script>
+    // Example for multiple input filds
+    <?=$this->getMedia()
+                    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+                    ->addInputId('_1') ?>
+</script>

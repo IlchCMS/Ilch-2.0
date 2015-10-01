@@ -21,8 +21,11 @@ class Index extends \Ilch\Controller\Frontend
             $name = $this->getRequest()->getPost('name');
             $link = trim($this->getRequest()->getPost('link'));
             $banner = trim($this->getRequest()->getPost('banner'));
+            $captcha = trim(strtolower($this->getRequest()->getPost('captcha')));
            
-            if (empty($name)) {
+            if (empty($_SESSION['captcha']) || $captcha != $_SESSION['captcha']) {
+                $this->addMessage('invalidCaptcha', 'danger');
+            } elseif (empty($name)) {
                 $this->addMessage('missingName', 'danger');
             } elseif(empty($link)) {
                 $this->addMessage('missingLink', 'danger');

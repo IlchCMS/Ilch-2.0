@@ -147,15 +147,11 @@ class Entry extends \Ilch\Model
      */
     public function setBanner($banner)
     {
-        if (substr($banner, 0, 7) != 'http://') {
-            $banner = 'http://'.$banner;
-        }
-
         $this->banner = (string)$banner;
 
         return $this;
     }
-    
+
     /**
      * Set the free of the entry.
      *
