@@ -1,10 +1,10 @@
-<?php 
+<?php
 $userMapper = new Modules\User\Mappers\User();
 ?>
 
 <legend><?=$this->getTrans('menuUserList') ?></legend>
 <div class="row">
-    <?php foreach ($this->get('userList') as $userlist): ?>        
+    <?php foreach ($this->get('userList') as $userlist): ?>
         <div class="col-lg-4">
             <div class="user">
                 <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($userlist->getAvatar()) ?>" alt="">

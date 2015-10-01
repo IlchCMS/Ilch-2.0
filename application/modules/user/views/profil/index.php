@@ -45,8 +45,7 @@ foreach ($profil->getGroups() as $group) {
                 <a class="fa fa-google-plus" title="Goggle+"></a>
                 <a class="fa fa-twitter" title="Twitter"></a>
             </div>
-        </div>
-        
+        </div>        
     </div>
     <br />
     <div class="profil-content">
@@ -90,7 +89,7 @@ foreach ($profil->getGroups() as $group) {
                 <?=$this->getTrans('profileBirthday') ?>:
             </div>
             <div class="col-lg-8 detail">
-                <?php if ($profil->getBirthday() != '0000-00-00') {  echo $birthday->format('d-m-Y', true); } ?>
+                <?php if ($profil->getBirthday() != '0000-00-00') { echo $birthday->format('d-m-Y', true); } ?>
             </div>
         </div>
         <?php if ($profil->getSignature() != ''): ?>

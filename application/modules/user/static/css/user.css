@@ -14,17 +14,16 @@
 }
 
 .profil-header {
-    position: relative; 
+    position: relative;
 }
 
 .profil-header img {
-    width: 120px; 
-    height: 100px; 
-    border-radius: 100%;
+    width: 120px;
+    height: 100px;
 }
 
 .profil-header .concatLinks-lg {
-    position: absolute; 
+    position: absolute;
     bottom: 6px;
     right: 0px;
 }
@@ -34,7 +33,7 @@
 }
 
 .profil-header .concatLinks, .concatLinks-lg a {
-    font-size:22px;
+    font-size: 22px;
     padding: 5px;
 }
 
@@ -58,7 +57,6 @@
     margin: 2px 0 0 -80px;
     width: 70px;
     height: 70px;
-    border-radius: 100%;
 }
 
 .user h3 {
@@ -137,7 +135,7 @@
 }
 
 
-/*  Avatar  */
+/* Avatar */
 .btn-file {
     position: relative;
     overflow: hidden;
@@ -162,7 +160,7 @@ input[readonly] {
 }
 
 
-/*  Dialog  */
+/* Dialog */
 .dialog {
     list-style: none;
     margin: 0;
@@ -199,17 +197,17 @@ input[readonly] {
     border-color: #DDD;
 }
 
-/*  Dialog View  */
+/* Dialog View */
 .shout_box {
     overflow: hidden;
     bottom: 0;
     right: 20%;
-    z-index:9;
+    z-index: 9;
 }
 .shout_box .message_box {
     background: #FFFFFF;
     max-height: 400px;
-    overflow:auto;
+    overflow: auto;
     border: 1px solid #CCC;
 }
 .user_info input {
@@ -236,7 +234,7 @@ input[readonly] {
     border-color: #DDD;
 }
 
-/*  View Message  */
+/* View Message */
 .chat {
     list-style: none;
     margin: 0;
@@ -247,11 +245,9 @@ input[readonly] {
     padding-bottom: 5px;
     border-bottom: 1px dotted #B3A9A9;
 }
-
 .chat li.left .chat-body {
     margin-left: 60px;
 }
-
 .chat li.right .chat-body {
     margin-right: 60px;
 }
@@ -262,7 +258,7 @@ input[readonly] {
 }
 
 
-/*  Other  */
+/* Other */
 .date {
     min-width: 210px;
     padding-left: 15px !important;

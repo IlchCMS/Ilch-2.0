@@ -120,10 +120,6 @@ class Entry extends \Ilch\Model
      */
     public function setLink($link)
     {
-        if (substr($link, 0, 7) != 'http://') {
-            $link = 'http://'.$link;
-        }
-
         $this->link = (string)$link;
 
         return $this;
