@@ -36,7 +36,7 @@ class Index extends \Ilch\Controller\Admin
                 ),
                 array
                 (
-                    'name' => 'menuSettings',
+                    'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
                     'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))

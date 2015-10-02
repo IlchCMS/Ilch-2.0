@@ -33,11 +33,19 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('partners_slider', '0');
+        $databaseConfig->set('partners_box_height', '90');
+        $databaseConfig->set('partners_slider_speed', '6000');
     }
 
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_partners`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_box_height'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider_speed'");
     }
 
     public function getInstallSql()

@@ -27,4 +27,7 @@ return array
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha ist fehlerhaft',
     'captchaRead' => 'Nicht lesbar? Text ändern!',
+    'slider' => 'Slider',
+    'boxSliderSpeed' => 'Geschwindigkeit des Slider in ms',
+    'boxSliderHeight' => 'Höhe der Slider Box',
 );

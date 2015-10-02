@@ -27,4 +27,7 @@ return array
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha is false',
     'captchaRead' => 'Not readable? Change text!',
+    'slider' => 'Slider',
+    'boxSliderSpeed' => 'Speed of the slider in ms',
+    'boxSliderHeight' => 'Height of Slider Box',
 );

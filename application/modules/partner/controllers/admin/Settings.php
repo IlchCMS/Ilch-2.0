@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Modules\Events\Controllers\Admin;
+namespace Modules\Partner\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 
@@ -14,7 +14,7 @@ class Settings extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'menuEvents',
+            'menuPartner',
             array
             (
                 array
@@ -29,7 +29,7 @@ class Settings extends \Ilch\Controller\Admin
                     'name' => 'add',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
                 ),
                 array
                 (
@@ -45,20 +45,18 @@ class Settings extends \Ilch\Controller\Admin
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuPartner'), array('controller' => 'index', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('event_height', $this->getRequest()->getPost('event_height'));
-            $this->getConfig()->set('event_width', $this->getRequest()->getPost('event_width'));
-            $this->getConfig()->set('event_size', $this->getRequest()->getPost('event_size'));
-            $this->getConfig()->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'));
+            $this->getConfig()->set('partners_slider', $this->getRequest()->getPost('slider'));
+            $this->getConfig()->set('partners_box_height', $this->getRequest()->getPost('boxHeight'));
+            $this->getConfig()->set('partners_slider_speed', $this->getRequest()->getPost('sliderSpeed'));
             $this->addMessage('saveSuccess');
         }
 
-        $this->getView()->set('event_height', $this->getConfig()->get('event_height'));
-        $this->getView()->set('event_width', $this->getConfig()->get('event_width'));
-        $this->getView()->set('event_size', $this->getConfig()->get('event_size'));
-        $this->getView()->set('event_filetypes', $this->getConfig()->get('event_filetypes'));
+        $this->getView()->set('slider', $this->getConfig()->get('partners_slider'));
+        $this->getView()->set('boxHeight', $this->getConfig()->get('partners_box_height'));
+        $this->getView()->set('sliderSpeed', $this->getConfig()->get('partners_slider_speed'));
     }
 }
