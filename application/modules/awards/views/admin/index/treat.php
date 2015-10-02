@@ -1,5 +1,5 @@
 <?php
-    $awards = $this->get('awards');   
+    $awards = $this->get('awards');
 
     if ($awards != '') {
         $getDate = new \Ilch\Date($awards->getDate());
@@ -45,6 +45,7 @@
                            type="text"
                            id="rank"
                            name="rank"
+                           min="1"
                            value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getRank()); } else { echo '1'; } ?>">
                     <div class="input-group-btn-vertical">
                         <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
@@ -135,40 +136,51 @@
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
-    $( document ).ready(function() {
-        $(".form_datetime").datetimepicker({
-            format: "dd.mm.yyyy",
-            autoclose: true,
-            language: 'de',
-            minView: 2
-        });
+$( document ).ready(function() {
+    $(".form_datetime").datetimepicker({
+        format: "dd.mm.yyyy",
+        autoclose: true,
+        language: 'de',
+        minView: 2
     });
-    
-    (function ($) {
-      $('.spinner .btn:first-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-      });
-      $('.spinner .btn:last-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-      });
-    })(jQuery);
-    
+});
 
-    window.onload = function() {
-        document.getElementById('typ_user').onchange = disablefield;
-        document.getElementById('typ_team').onchange = disablefield;
-    }
-
-    function toggleStatus() {
-        if ($('#typ_user').is(':checked')) {
-            $('#user').removeAttr('disabled');
-            $('#team').attr('disabled', true);
-        } else if ($('#typ_team').is(':checked')) {
-            $('#user').attr('disabled', true);
-            $('#team').removeAttr('disabled');
+$(function() {
+    $('.spinner .btn:first-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+            input.val(parseInt(input.val(), 10) + 1);
         } else {
-            $('#user').attr('disabled', true);
-            $('#team').attr('disabled', true);            
+            btn.next("disabled", true);
         }
+    });
+    $('.spinner .btn:last-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
+    });
+})
+
+window.onload = function() {
+    document.getElementById('typ_user').onchange = disablefield;
+    document.getElementById('typ_team').onchange = disablefield;
+}
+
+function toggleStatus() {
+    if ($('#typ_user').is(':checked')) {
+        $('#user').removeAttr('disabled');
+        $('#team').attr('disabled', true);
+    } else if ($('#typ_team').is(':checked')) {
+        $('#user').attr('disabled', true);
+        $('#team').removeAttr('disabled');
+    } else {
+        $('#user').attr('disabled', true);
+        $('#team').attr('disabled', true);
     }
+}
 </script>

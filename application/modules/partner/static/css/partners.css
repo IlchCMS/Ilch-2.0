@@ -37,15 +37,15 @@
 .partnersslider .bx-wrapper {
     margin: 0px;
 }
-.partnersslider .bx-wrapper .bx-viewport {
+.partnersslider .bx-viewport {
     border: 0px;
     box-shadow: none !important;
     left: 0px;
 }
-.partnersslider .bx-wrapper .bx-viewport ul {
+.partnersslider .bx-viewport ul {
     margin-left: -36px;
 }
-.partnersslider .bx-wrapper .bx-viewport li {
+.partnersslider .bx-viewport li {
     margin-bottom: 10px;
     border-bottom-width: 0px !important;
 }

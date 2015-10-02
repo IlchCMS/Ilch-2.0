@@ -1,4 +1,6 @@
-<?php $training = $this->get('training'); ?>
+<?php
+$training = $this->get('training');
+?>
 
 <link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
@@ -45,22 +47,22 @@
         <label for="time" class="col-lg-2 control-label">
             <?=$this->getTrans('time') ?>:
         </label>
-        <div class="col-lg-6 input-group">
+        <div class="col-lg-2 input-group">
             <div class="container">
                 <div class="input-group spinner">
                     <input class="form-control"
                            type="text"
                            id="time"
                            name="time"
+                           min="0"
                            value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTime()); } else { echo '30'; } ?>">
                     <div class="input-group-btn-vertical">
                         <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
                         <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
                     </div>
-                    &nbsp;<?=$this->getTrans('min') ?>
                 </div>
             </div>
-        </div>      
+        </div>
     </div>
     <div class="form-group">
         <label for="place" class="col-lg-2 control-label">
@@ -217,14 +219,26 @@ $(document).ready(function() {
     });
 });
 
-(function ($) {
-  $('.spinner .btn:first-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-  });
-  $('.spinner .btn:last-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-  });
-})(jQuery);
+$(function() {
+    $('.spinner .btn:first-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+            input.val(parseInt(input.val(), 10) + 1);
+        } else {
+            btn.next("disabled", true);
+        }
+    });
+    $('.spinner .btn:last-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
+    });
+})
 
 function showMe (it, box) { 
     var vis = (box.checked) ? "block" : "none"; 

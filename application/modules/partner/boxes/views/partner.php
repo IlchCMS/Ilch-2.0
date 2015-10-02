@@ -3,7 +3,7 @@
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.js') ?>"></script>
 
 <style>
-.partnersslider .bx-wrapper .bx-viewport {
+.partnersslider .bx-viewport {
     height: <?=$this->get('boxHeight') ?>px !important;
 }
 </style>

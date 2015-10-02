@@ -17,14 +17,14 @@
             </div>
         </div>
     </div>
-    <div id="contentHeight" class="<?php if($this->get('slider') != '1') { echo 'hidden'; } ?>">        
+    <div id="contentHeight" class="<?php if($this->get('slider') != '1') { echo 'hidden'; } ?>">
         <div class="form-group">
             <label for="boxHeight" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderHeight') ?>:
             </label>
             <div class="col-lg-2 input-group">
                 <div class="container">
-                    <div class="input-group spinner boxHeight">
+                    <div class="input-group spinner">
                         <input class="form-control"
                                type="text"
                                name="boxHeight"
@@ -44,7 +44,7 @@
             </label>
             <div class="col-lg-2 input-group">
                 <div class="container">
-                    <div class="input-group spinner sliderSpeed">
+                    <div class="input-group spinner">
                         <input class="form-control"
                                type="text"
                                name="sliderSpeed"
@@ -70,19 +70,24 @@ $('[name="slider"]').click(function () {
     }
 });
 
-(function ($) {
-    $('.boxHeight .btn:first-of-type').on('click', function() {
-        $('.boxHeight input').val( parseInt($('.boxHeight input').val(), 10) + 1);
+$(function() {
+    $('.spinner .btn:first-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+            input.val(parseInt(input.val(), 10) + 1);
+        } else {
+            btn.next("disabled", true);
+        }
     });
-    $('.boxHeight .btn:last-of-type').on('click', function() {
-        $('.boxHeight input').val( parseInt($('.boxHeight input').val(), 10) - 1);
+    $('.spinner .btn:last-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
     });
-
-    $('.sliderSpeed .btn:first-of-type').on('click', function() {
-        $('.sliderSpeed input').val( parseInt($('.sliderSpeed input').val(), 10) + 1);
-    });
-    $('.sliderSpeed .btn:last-of-type').on('click', function() {
-        $('.sliderSpeed input').val( parseInt($('.sliderSpeed input').val(), 10) - 1);
-    });
-})(jQuery);
+})
 </script>

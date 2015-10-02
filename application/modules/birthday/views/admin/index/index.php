@@ -14,6 +14,7 @@
                            type="text"
                            id="entrySettings"
                            name="entrySettings"
+                           min="1"
                            value="<?=$this->get('setShow') ?>">
                     <div class="input-group-btn-vertical">
                         <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
@@ -27,12 +28,24 @@
 </form>
 
 <script language="JavaScript" type="text/javascript">
-(function ($) {
+$(function() {
     $('.spinner .btn:first-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+            input.val(parseInt(input.val(), 10) + 1);
+        } else {
+            btn.next("disabled", true);
+        }
     });
     $('.spinner .btn:last-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-  });
-})(jQuery);
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
+    });
+})
 </script>

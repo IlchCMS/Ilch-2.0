@@ -21,6 +21,7 @@
                            type="text"
                            id="paragraph"
                            name="paragraph"
+                           min="1"
                            value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getParagraph()); } else { echo '1'; } ?>">
                     <div class="input-group-btn-vertical">
                         <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
@@ -62,12 +63,24 @@
 </form>
 
 <script type="text/javascript">
-    (function ($) {
-      $('.spinner .btn:first-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-      });
-      $('.spinner .btn:last-of-type').on('click', function() {
-        $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-      });
-    })(jQuery);
+$(function() {
+    $('.spinner .btn:first-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+            input.val(parseInt(input.val(), 10) + 1);
+        } else {
+            btn.next("disabled", true);
+        }
+    });
+    $('.spinner .btn:last-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
+    });
+})
 </script>

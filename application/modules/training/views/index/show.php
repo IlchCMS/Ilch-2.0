@@ -22,7 +22,7 @@
         <label for="time" class="col-lg-3">
             <?=$this->getTrans('time') ?>:
         </label>
-        <div class="col-lg-9">~ <?=$this->escape($training->getTime()) ?> <?=$this->getTrans('min') ?></div>
+        <div class="col-lg-9">~ <?=$this->escape($training->getTime()) ?></div>
     </div>
     <div class="form-group">
         <label for="place" class="col-lg-3">
