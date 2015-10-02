@@ -27,8 +27,8 @@
         </label>
         <div class="col-lg-2">
             <div class="container">
-                <div class="input-group spinner interleaving">
-                    <input type="text" class="form-control" id="interleaving" name="interleaving" value="<?=$this->get('comment_interleaving') ?>">
+                <div class="input-group spinner">
+                    <input type="text" class="form-control" id="interleaving" name="interleaving" min="0" value="<?=$this->get('comment_interleaving') ?>">
                     <div class="input-group-btn-vertical">
                         <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
                         <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
@@ -90,12 +90,24 @@
 </div>
 
 <script type="text/javascript">
-(function ($) {
-    $('.interleaving .btn:first-of-type').on('click', function() {
-        $('.interleaving input').val( parseInt($('.interleaving input').val(), 10) + 1);
+$(function() {
+    $('.spinner .btn:first-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+            input.val(parseInt(input.val(), 10) + 1);
+        } else {
+            btn.next("disabled", true);
+        }
     });
-    $('.interleaving .btn:last-of-type').on('click', function() {
-        $('.interleaving input').val( parseInt($('.interleaving input').val(), 10) - 1);
+    $('.spinner .btn:last-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
     });
-})(jQuery);
+})
 </script>

@@ -9,8 +9,8 @@
         </label>
         <div class="col-lg-2">
             <div class="container">
-                <div class="input-group spinner limit">
-                    <input type="text" class="form-control" id="limit" name="limit" value="<?=$this->get('limit') ?>">
+                <div class="input-group spinner">
+                    <input type="text" class="form-control" id="limit" name="limit" min="1" value="<?=$this->get('limit') ?>">
                     <div class="input-group-btn-vertical">
                         <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
                         <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
@@ -25,8 +25,8 @@
         </label>
         <div class="col-lg-2">
             <div class="container">
-                <div class="input-group spinner maxwordlength">
-                    <input type="text" class="form-control" id="maxwordlength" name="maxwordlength" value="<?=$this->get('maxwordlength') ?>">
+                <div class="input-group spinner">
+                    <input type="text" class="form-control" id="maxwordlength" name="maxwordlength" min="1" value="<?=$this->get('maxwordlength') ?>">
                     <div class="input-group-btn-vertical">
                         <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
                         <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
@@ -39,19 +39,24 @@
 </form>
 
 <script type="text/javascript">
-(function ($) {
-    $('.limit .btn:first-of-type').on('click', function() {
-        $('.limit input').val( parseInt($('.limit input').val(), 10) + 1);
+$(function() {
+    $('.spinner .btn:first-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
+            input.val(parseInt(input.val(), 10) + 1);
+        } else {
+            btn.next("disabled", true);
+        }
     });
-    $('.limit .btn:last-of-type').on('click', function() {
-        $('.limit input').val( parseInt($('.limit input').val(), 10) - 1);
+    $('.spinner .btn:last-of-type').on('click', function() {
+        var btn = $(this);
+        var input = btn.closest('.spinner').find('input');
+        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
+            input.val(parseInt(input.val(), 10) - 1);
+        } else {
+            btn.prev("disabled", true);
+        }
     });
-
-    $('.maxwordlength .btn:first-of-type').on('click', function() {
-        $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) + 1);
-    });
-    $('.maxwordlength .btn:last-of-type').on('click', function() {
-        $('.maxwordlength input').val( parseInt($('.maxwordlength input').val(), 10) - 1);
-    });
-})(jQuery);
+})
 </script>
