@@ -1,10 +1,10 @@
 <?php
-    $awards = $this->get('awards');
+$awards = $this->get('awards');
 
-    if ($awards != '') {
-        $getDate = new \Ilch\Date($awards->getDate());
-        $date = $getDate->format('d.m.Y', true);
-    }
+if ($awards != '') {
+    $getDate = new \Ilch\Date($awards->getDate());
+    $date = $getDate->format('d.m.Y', true);
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
@@ -134,14 +134,16 @@
 </form>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
     $(".form_datetime").datetimepicker({
         format: "dd.mm.yyyy",
         autoclose: true,
-        language: 'de',
-        minView: 2
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minView: 2,
+        todayHighlight: true,
+        toggleActive: true
     });
 });
 

@@ -1,11 +1,11 @@
 <?php
-    $adate = new \Ilch\Date(); 
-    $history = $this->get('history');   
+$adate = new \Ilch\Date(); 
+$history = $this->get('history');
 
-    if ($history != '') {
-        $getDate = new \Ilch\Date($history->getDate());
-        $date = $getDate->format('d.m.Y', true);
-    }
+if ($history != '') {
+    $getDate = new \Ilch\Date($history->getDate());
+    $date = $getDate->format('d.m.Y', true);
+}
 ?>
 
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
@@ -98,15 +98,17 @@
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
-    $( document ).ready(function()
-    {
-        $(".form_datetime").datetimepicker({
-            format: "dd.mm.yyyy",
-            autoclose: true,
-            language: 'de',
-            minView: 2
-        });
+$( document ).ready(function()
+{
+    $(".form_datetime").datetimepicker({
+        format: "dd.mm.yyyy",
+        autoclose: true,
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minView: 2,
+        todayHighlight: true,
+        toggleActive: true
     });
+});
 </script>

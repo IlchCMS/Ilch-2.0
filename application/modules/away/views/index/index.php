@@ -1,9 +1,34 @@
-<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-
 <?php $userMapper = new \Modules\User\Mappers\User() ?>
 <?php if($this->getUser()): ?>
     <?php $userCheck = $userMapper->getUserById($this->getUser()->getId()) ?>
 <?php endif; ?>
+
+<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
+<style>
+.agenda {
+    width: 140px;
+}
+.agenda-arrow {
+    float:left;
+    width: 45px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 36px;
+    color: #000;
+}
+.dayofmonth {
+    width: 40px;
+    font-size: 36px;
+    line-height: 36px;
+    float: left;
+    text-align: right;
+    margin-right: 10px; 
+}
+.shortdate {
+    font-size: 0.75em; 
+}
+</style>
 
 <legend><?=$this->getTrans('menuAway') ?></legend>
 <div class="table-responsive">
@@ -38,13 +63,13 @@
                                     <div class="agenda" style="float:left;">
                                         <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
                                         <div><?=$startDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>                                        
+                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>
                                     </div>
                                     <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
                                     <div>
                                         <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
                                         <div><?=$endDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>                                          
+                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>
                                     </div>
                                 </td>
                             <?php else: ?>
@@ -52,13 +77,13 @@
                                     <div class="agenda" style="float:left;">
                                         <div class="dayofmonth"><?=$startDate->format('d', true) ?></div>
                                         <div><?=$startDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>                                        
+                                        <div class="shortdate"><?=$startDate->format('F, Y', true) ?></div>
                                     </div>
                                     <div class="agenda-arrow"><i class="fa fa-chevron-right"></i></div>
                                     <div>
                                         <div class="dayofmonth"><?=$endDate->format('d', true) ?></div>
                                         <div><?=$endDate->format('l', true) ?></div>
-                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>                                          
+                                        <div class="shortdate"><?=$endDate->format('F, Y', true) ?></div>
                                     </div>
                                 </td>
                             <?php endif; ?>
@@ -80,13 +105,13 @@
                                             <?php else: ?>
                                                 <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $away->getId()), null, true) ?>">
                                                     <span class="fa fa-square-o text-info"></span>
-                                                </a>                                    
+                                                </a>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </td>
-                            <td>                                
+                            <td>
                                 <?php if($this->getUser()): ?>
                                     <?php if ($away->getUserId() == $this->getUser()->getId() OR $userCheck->isAdmin()): ?>
                                         <?=$this->getDeleteIcon(array('action' => 'del', 'id' => $away->getId())) ?>
@@ -94,7 +119,7 @@
                                 <?php endif; ?>
                             </td>
                         </tr>
-                        <tr>                            
+                        <tr>
                             <td colspan="5"><?=$away->getText() ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -129,7 +154,7 @@
             <label for="start" class="col-md-2 control-label">
                 <?=$this->getTrans('when') ?>:
             </label>
-            <div class="col-lg-3 input-group date form_datetime" style="float: left;">
+            <div class="col-lg-3 input-group date form_datetime pull-left">
                 <input class="form-control"
                        size="16"
                        type="text"
@@ -169,7 +194,7 @@
 <?php endif; ?>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js')?>" charset="UTF-8"></script>
 <script type="text/javascript">
 $( document ).ready(function()
 {
@@ -177,33 +202,10 @@ $( document ).ready(function()
         format: "dd.mm.yyyy",
         startDate: new Date(),
         autoclose: true,
-        language: 'de',
-        minView: 2
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minView: 2,
+        todayHighlight: true,
+        toggleActive: true
     });
 });
 </script>
-
-<style>
-.agenda {
-    width: 140px;
-}
-.agenda-arrow {
-    float:left;
-    width: 45px;
-    text-align: center;
-    font-weight: bold;
-    line-height: 36px;
-    color: #000;
-}
-.dayofmonth {
-    width: 40px;
-    font-size: 36px;
-    line-height: 36px;
-    float: left;
-    text-align: right;
-    margin-right: 10px; 
-}
-.shortdate {
-    font-size: 0.75em; 
-}
-</style>

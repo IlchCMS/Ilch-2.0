@@ -1,5 +1,12 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
+<style>
+.date {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+</style>
+
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
     <?=$this->getTokenField() ?>
     <legend>
@@ -98,23 +105,18 @@
     <?php endif; ?>
 </form>
 
-<style>
-.date {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-</style>
-
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js') ?>" charset="UTF-8"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.de.js') ?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
     $(".form_datetime").datetimepicker({
         format: "dd.mm.yyyy hh:ii",
         autoclose: true,
-        language: 'de',
-        minuteStep: 15
+        language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+        minuteStep: 15,
+        todayHighlight: true,
+        toggleActive: true
     });
 });
 </script>

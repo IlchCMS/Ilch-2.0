@@ -74,6 +74,7 @@
     this.container = options.container || 'body';
 
     this.language = options.language || this.element.data('date-language') || 'en';
+    this.language = this.language in dates ? this.language : this.language.split('-')[0]; // fr-CA fallback to fr
     this.language = this.language in dates ? this.language : 'en';
     this.isRTL = dates[this.language].rtl || false;
     this.formatType = options.formatType || this.element.data('format-type') || 'standard';
@@ -106,6 +107,13 @@
     this.icontype = this.fontAwesome ? 'fa' : 'glyphicon';
 
     this._attachEvents();
+
+    this.clickedOutside = function (e) {
+        // Clicked outside the datetimepicker, hide it
+        if ($(e.target).closest('.datetimepicker').length === 0) {
+            that.hide();
+        }
+    }
 
     this.formatViewType = 'datetime';
     if ('formatViewType' in options) {
@@ -210,12 +218,8 @@
       var selector = this.bootcssVer === 3 ? '.prev span, .next span' : '.prev i, .next i';
       this.picker.find(selector).toggleClass(this.icons.leftArrow + ' ' + this.icons.rightArrow);
     }
-    $(document).on('mousedown', function (e) {
-      // Clicked outside the datetimepicker, hide it
-      if ($(e.target).closest('.datetimepicker').length === 0) {
-        that.hide();
-      }
-    });
+
+    $(document).on('mousedown', this.clickedOutside);
 
     this.autoclose = false;
     if ('autoclose' in options) {
@@ -361,6 +365,7 @@
 
     remove: function () {
       this._detachEvents();
+      $(document).off('mousedown', this.clickedOutside);
       this.picker.remove();
       delete this.picker;
       delete this.element.data().datetimepicker;
@@ -514,9 +519,10 @@
         left = offset.left;
       }
 
-      if(left+220 > document.body.clientWidth){
-                  left = document.body.clientWidth-220;
-              }
+      var bodyWidth = document.body.clientWidth || window.innerWidth;
+      if (left + 220 > bodyWidth) {
+        left = bodyWidth - 220;
+      }
 
       if (this.pickerPosition == 'top-left' || this.pickerPosition == 'top-right') {
         top = offset.top - this.picker.outerHeight();
@@ -526,10 +532,6 @@
 
       top = top - containerOffset.top;
       left = left - containerOffset.left;
-
-            if( !elementOrParentIsFixed(this.element) ){
-          top = top + document.body.scrollTop;
-            }
 
       this.picker.css({
         top:    top,
@@ -1448,7 +1450,7 @@
       }
       return {separators: separators, parts: parts};
     },
-    parseDate:        function (date, format, language, type) {
+    parseDate: function (date, format, language, type) {
       if (date instanceof Date) {
         var dateUTC = new Date(date.valueOf() - date.getTimezoneOffset() * 60000);
         dateUTC.setMilliseconds(0);
