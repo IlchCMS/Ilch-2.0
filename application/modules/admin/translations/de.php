@@ -28,7 +28,7 @@ return array
     'logout' => 'Ausloggen',
     'noUserEmailGiven' => 'Es wurde kein(e) Benutzername/E-Mail angegeben.',
     'contentLanguage' => 'Sprache des Inhaltes',
-    'standardMail' => 'Standard E-Mail Absender',    
+    'standardMail' => 'Standard E-Mail Absender',
     'timezone' => 'Zeitzone',
     'home' => 'Startseite',
     'navigation' => 'Menüs',
@@ -116,6 +116,6 @@ return array
     'close' => 'Schließen',
     'add' => 'Erstellen',
     'edit' => 'Bearbeiten',
-    'manage' => 'Verwalten',    
+    'manage' => 'Verwalten',
     'settings' => 'Einstellungen',
 );

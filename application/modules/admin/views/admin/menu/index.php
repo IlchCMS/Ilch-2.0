@@ -316,7 +316,7 @@ $(document).ready
                                 <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
-                                <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){  $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; }else { echo 'Keine Module vorhanden'; } ?></div></div>'+menuHtml);
+                                <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; }else { echo 'Keine Module vorhanden'; } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
                                 <div class="col-lg-4"><?='<select id="boxkey" class="form-control">';

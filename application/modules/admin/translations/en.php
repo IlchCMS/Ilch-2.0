@@ -45,7 +45,7 @@ return array
     'maintenanceMinutes' => 'MINUTES',
     'maintenanceSeconds' => 'SECONDS',
     'siteMaintenanceMode' => 'Warning, the site is in maintenance mode and is only to administrators visible!',
-    'on'  => 'On',
+    'on' => 'On',
     'off' => 'Off',
     'yes' => 'Yes',
     'no' => 'No',

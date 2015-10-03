@@ -12,7 +12,7 @@ $date = new \Ilch\Date();
         <title><?=$config->get('page_title'); ?> - <?=$translator->trans('maintenanceMode') ?></title>
 
         <!-- META -->
-        <meta charset="utf-8">        
+        <meta charset="utf-8">
         <meta name="description" content="<?=$config->get('page_title'); ?> - <?=$translator->trans('maintenanceMode') ?>">
 
         <!-- FAVICON -->
@@ -28,7 +28,7 @@ $date = new \Ilch\Date();
 
         <!-- SCRIPTS -->
         <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
-        <script src="<?=$this->getStaticUrl('js/jquery-ui.js') ?>"></script>        
+        <script src="<?=$this->getStaticUrl('js/jquery-ui.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/bootstrap.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.js') ?>"></script>
     </head>
@@ -85,7 +85,7 @@ $date = new \Ilch\Date();
                 <?php endif; ?>
             </div>
             <b><?=$translator->trans('maintenanceStatus') ?></b>
-            <div class="progress  progress-striped">
+            <div class="progress progress-striped">
                 <div class="progress-bar progress-bar-success active"
                     role="progressbar"
                     aria-valuenow="<?=$config->get('maintenance_status'); ?>"

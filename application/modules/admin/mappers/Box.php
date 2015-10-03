@@ -18,7 +18,7 @@ class Box extends \Ilch\Mapper
     /**
      * Get box lists for overview.
      *
-     * @param  string $locale
+     * @param string $locale
      * @return BoxModel[]|array
      */
     public function getBoxList($locale)
@@ -49,8 +49,8 @@ class Box extends \Ilch\Mapper
     /**
      * Returns box model found by the key.
      *
-     * @param  string              $id
-     * @param  string              $locale
+     * @param string $id
+     * @param string $locale
      * @return BoxModel|null
      */
     public function getBoxByIdLocale($id, $locale = '')

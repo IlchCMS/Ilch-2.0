@@ -182,7 +182,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>                                                
+                        </li>
                         <?php if($this->getUser()->getFirstName() != ''): ?>
                             <?php $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName(); ?>
                             <?php $nameInfo = $this->getUser()->getFirstName().'<br />'.$this->getUser()->getLastName(); ?>
@@ -212,7 +212,7 @@
                                         <button class="btn btn-default" type="button">Go</button>
                                     </span>
                                 </div>
-                            </div>    
+                            </div>
                         </li>
                         <!-- Search Block End -->
                     </ul>

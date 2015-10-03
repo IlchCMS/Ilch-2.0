@@ -1,3 +1,9 @@
+<style>
+.deleteLink {
+    padding-left: 10px;
+}
+</style>
+
 <?php if ($this->get('boxes') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
@@ -75,12 +81,6 @@
 <?php else: ?>
     <?=$this->getTrans('noBoxes') ?>
 <?php endif; ?>
-
-<style>
-.deleteLink {
-    padding-left: 10px;
-}
-</style>
 
 <script>
 $('.deleteBox').on('click', function(event) {

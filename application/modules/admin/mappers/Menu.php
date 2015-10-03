@@ -147,7 +147,7 @@ class Menu extends \Ilch\Mapper
     /**
      * Save one menu item.
      *
-     * @param  MenuItem $menuItem
+     * @param MenuItem $menuItem
      * @return integer
      */
     public function saveItem(MenuItem $menuItem)
@@ -214,7 +214,7 @@ class Menu extends \Ilch\Mapper
     /**
      * Delete the given menu item.
      *
-     * @param  MenuItem $menuItem
+     * @param MenuItem $menuItem
      */
     public function deleteItem($menuItem)
     {

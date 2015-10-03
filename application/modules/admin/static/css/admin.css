@@ -1,7 +1,7 @@
 @font-face {
-    font-family:  'Glyphicons Halflings';
-    src:  url('../fonts/glyphicons-halflings-regular.eot');
-    src:  url('../font/sglyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),  url('../fonts/glyphicons-halflings-regular.woff') format('woff'),  url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'),  url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+    font-family: 'Glyphicons Halflings';
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../font/sglyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 html {
     margin: 0;
@@ -16,7 +16,7 @@ body {
     height: 100%;
     width: 100%;
     direction: ltr;
-    overflow-x:  hidden;
+    overflow-x: hidden;
 }
 body.modal-open {
     overflow: hidden!important;
@@ -70,16 +70,16 @@ header .rightbar .search-opens .btn {
     padding: 4px;
 }
 header {
-    padding:  0 !important;
+    padding: 0 !important;
 }
 a {
     color: black;
 }
 #hide-menu {
-    padding-left:  10px;
+    padding-left: 10px;
 }
 #content .row {
-    margin-left:  0 !important;
+    margin-left: 0 !important;
 }
 #content .form-horizontal .form-group {
     margin-left: 0px;
@@ -139,19 +139,19 @@ aside > nav > ul > li.active {
 }
 .topnavbar {
     margin-bottom: 0px !important;
-    background-color:  #F3F3F3;
-    background-image:  linear-gradient(to bottom,  #F3F3F3,  #E2E2E2);
-    background-repeat:  repeat-x;
-    border:  none !important;
+    background-color: #F3F3F3;
+    background-image: linear-gradient(to bottom, #F3F3F3, #E2E2E2);
+    background-repeat: repeat-x;
+    border: none !important;
 }
 .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
     padding-right: 0px;
     padding-left: 0px;
-    border-bottom:  1px solid silver !important;
+    border-bottom: 1px solid silver !important;
 }
 .navbar {
-    border-radius:  0 !important;
-    min-height:  30px !important;
+    border-radius: 0 !important;
+    min-height: 30px !important;
 }
 #rightbar ul li.active > a:before {
     color: #000;
@@ -173,9 +173,9 @@ aside > nav > ul > li.active {
     -webkit-backface-visibility: hidden; 
     -webkit-transform: translate(0px, 0) translateZ(0px);
 }
-.navbar-nav > li > a  {
-    padding-top:  10px !important;
-    padding-bottom:  10px !important;
+.navbar-nav > li > a {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
 }
 .leftbar > div > button {
     padding: 5px;
@@ -203,7 +203,7 @@ ul > .heading {
     position: relative;
 }
 .content_full {
-    margin-left:  0 !important;
+    margin-left: 0 !important;
 }
 .content_savebox {
     margin-left: -15px;
@@ -223,62 +223,62 @@ ul > .heading {
     margin-left: -15px;
 }
 .btn {
-    background-image:  none;
-    border:  1px solid silver;
-    border-color:  silver;
-    -webkit-border-radius:  0px;
-    -moz-border-radius:  0px;
-    border-radius:  0px;
+    background-image: none;
+    border: 1px solid silver;
+    border-color: silver;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
 }
 .form-horizontal .form-group .control-label {
-    text-align:  left;
+    text-align: left;
 }
 label {
-    font-weight:  normal;
+    font-weight: normal;
 }
 legend {
-    font-size:  18px;
+    font-size: 18px;
 }
 header i {
-    color:  black;
+    color: black;
 }
 hr {
-    margin:  10px 0;
+    margin: 10px 0;
 }
-.clickable  {
-    cursor:  pointer;
+.clickable {
+    cursor: pointer;
 }
 .cke_button__ilchmedia_label, .cke_button__ilchps_label {
-    display:  inline !important;
+    display: inline !important;
 }
 #MediaModal {
-    z-index:  100000 !important;
-    visibility:  visible;
-    overflow:  hidden;
+    z-index: 100000 !important;
+    visibility: visible;
+    overflow: hidden;
 }
 #MediaModal .modal-dialog {
-    width:  100%;
-    height:  100%;
-    padding:  0;
-    margin:  auto !important;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: auto !important;
 }
 #MediaModal .modal-content {
-    height:  96%;
-    border-radius:  0;
-    margin:  1%;
-    overflow:  hidden;
+    height: 96%;
+    border-radius: 0;
+    margin: 1%;
+    overflow: hidden;
 }
 #MediaModal .modal-body {
-    height:  100%;
-    border-radius:  0;
+    height: 100%;
+    border-radius: 0;
     padding: 0px 0px 57px !important;
 }
 #MediaModal .modal-footer {
-    display:  none;
+    display: none;
 }
 iframe {
-    width:  100%;
-    min-height:  100%;
+    width: 100%;
+    min-height: 100%;
 }
 #content {
     padding: 10px 15px;
