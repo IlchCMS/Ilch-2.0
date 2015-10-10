@@ -183,7 +183,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="<?=$this->getUrl(array('controller' => 'infos')) ?>">
+                                    <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos')) ?>">
                                         <i class="fa fa-info-circle"></i>
                                         <?=$this->getTrans('menuInfos') ?>
                                     </a>
