@@ -15,12 +15,14 @@ class Shoutbox extends \Ilch\Box
         $shoutboxMapper = new \Modules\Shoutbox\Mappers\Shoutbox();
         $uniqid = $this->getUniqid();
 
-        if ($this->getRequest()->getPost('form_'.$uniqid) and $this->getRequest()->getPost('bot') === '') {
+        if (($this->getRequest()->getPost('form_'.$uniqid) || $this->getRequest()->isAjax())
+            && $this->getRequest()->getPost('bot') === ''
+        ) {
             $name = $this->getRequest()->getPost('shoutbox_name');
             $textarea = $this->getRequest()->getPost('shoutbox_textarea');
             $uid = 0;
 
-            if($this->getUser() !== null) {
+            if ($this->getUser() !== null) {
                 $uid = $this->getUser()->getId();
             }
 
@@ -31,9 +33,11 @@ class Shoutbox extends \Ilch\Box
             $shoutboxMapper->save($shoutboxModel);
         }
 
-        $this->getView()->set('uniqid', $uniqid);
-        $this->getView()->set('shoutbox', $shoutboxMapper->getShoutboxLimit(array(), $this->getConfig()->get('shoutbox_limit')));
-        $this->getView()->set('maxwordlength', $this->getConfig()->get('shoutbox_maxwordlength'));
+        $this->getView()->setArray([
+            'uniqid'        => $uniqid,
+            'shoutbox'      => $shoutboxMapper->getShoutboxLimit(array(), $this->getConfig()->get('shoutbox_limit')),
+            'maxwordlength' => $this->getConfig()->get('shoutbox_maxwordlength')
+        ]);
     }
 }
 

@@ -1,3 +1,32 @@
+<script type="text/javascript" >
+    $(function() {
+        var $shoutboxContainer = $('.shoutbox-container');
+
+        $shoutboxContainer.on('click', 'button[type=submit]', function(ev) {
+            ev.preventDefault();
+            var $btn = $(this),
+                $form = $btn.closest('form'),
+                btnDataString = '&' + $btn.attr('name') + '=' + $btn.attr('value'),
+                dataString = $form.serialize() + btnDataString ;
+
+            if ($form.find('[name=shoutbox_name]').val() == '' || $form.find('[name=shoutbox_textarea]').val() == '') {
+                alert("Please Enter Some Text");
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "<?=$this->getUrl('shoutbox/index/ajax')?>",
+                    data: dataString,
+                    cache: false,
+                    success: function(html){
+                        var $htmlWithoutScript = $(html).filter('.shoutbox-container');
+                        $form.closest('.shoutbox-container').html($htmlWithoutScript.html());
+                    }
+                });
+            }
+        });
+    });
+</script>
+<div class="shoutbox-container">
 <form class="form-horizontal" action="" method="post">
    <?=$this->getTokenField() ?>
     <div class="form-group hidden">
@@ -75,3 +104,4 @@
 <?php endif; ?>
 
 <div align="center"><a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a></div>
+</div>

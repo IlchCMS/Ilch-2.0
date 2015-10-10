@@ -21,6 +21,14 @@ class Index extends \Ilch\Controller\Frontend
         
         $this->getView()->set('shoutbox', $shoutbox);
     }
+
+    /**
+     * For use of ajax shoutbox
+     */
+    public function ajaxAction()
+    {
+        echo $this->getLayout()->getBox('Shoutbox', 'Shoutbox');
+    }
 }
 
 

@@ -11,29 +11,29 @@ defined('ACCESS') or die('no direct access');
 class Base
 {
     /**
-     * @var Ilch_Request
+     * @var \Ilch\Request
      */
     private $request;
 
     /**
-     * @var Ilch_Translator
+     * @var \Ilch\Translator
      */
     private $translator;
 
     /**
-     * @var Ilch_Layout_Base
+     * @var \Ilch\Layout\Base
      */
     private $layout;
 
     /**
-     * @var Ilch_View
+     * @var \Ilch\View
      */
     private $view;
 
     /**
      * The currently logged in user or null if the user is a guest.
      *
-     * @var User_UserModel
+     * @var \Modules\User\Models\User
      */
     private $user;
 
@@ -44,10 +44,15 @@ class Base
      * @param \Ilch\View        $view
      * @param \Ilch\Request     $request
      * @param \Ilch\Router      $router
-     * @param Ilch_Translator   $translator
+     * @param \Ilch\Translator   $translator
      */
-    public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
-    {
+    public function __construct(
+        \Ilch\Layout\Base $layout,
+        \Ilch\View $view,
+        \Ilch\Request $request,
+        \Ilch\Router $router,
+        \Ilch\Translator $translator
+    ) {
         $this->layout = $layout;
         $this->view = $view;
         $this->request = $request;
@@ -72,7 +77,7 @@ class Base
     /**
      * Gets the request object.
      *
-     * @return Ilch_Request
+     * @return \Ilch\Request
      */
     public function getRequest()
     {
@@ -82,7 +87,7 @@ class Base
     /**
      * Gets the router object.
      *
-     * @return Ilch_Router
+     * @return \Ilch\Router
      */
     public function getRouter()
     {
@@ -92,7 +97,7 @@ class Base
     /**
      * Gets the config object.
      *
-     * @return Ilch_Config
+     * @return \Ilch\Config\Database
      */
     public function getConfig()
     {
@@ -102,7 +107,7 @@ class Base
     /**
      * Gets the translator object.
      *
-     * @return Ilch_Translator
+     * @return \Ilch\Translator
      */
     public function getTranslator()
     {
@@ -112,7 +117,7 @@ class Base
     /**
      * Gets the layout object.
      *
-     * @return Ilch_Layout_Base
+     * @return \Ilch\Layout\Base
      */
     public function getLayout()
     {
@@ -122,17 +127,17 @@ class Base
     /**
      * Gets the view object.
      *
-     * @return Ilch_Request
+     * @return \Ilch\View
      */
     public function getView()
     {
         return $this->view;
-    }    
+    }
     
     /**
      * Gets the user object.
      *
-     * @return User_UserModel
+     * @return \Modules\User\Models\User
      */
     public function getUser()
     {

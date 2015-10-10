@@ -44,7 +44,7 @@ class Factory
      * Gets database adapter by engine name.
      *
      * @param  string           $engine
-     * @return \Ilch\Database\*
+     * @return \Ilch\Database\MySql
      */
     public function getInstanceByEngine($engine)
     {
