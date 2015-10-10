@@ -113,14 +113,14 @@ header nav ul > li > ul > li > a {
     border-top-left-radius: 0px !important;
 }
 
-.panel-gaming > .panel-body  li {
+.panel-gaming > .panel-body li {
     line-height: 35px;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: #DDDDDD;
 }
 
-.panel-gaming > .panel-body  a {
+.panel-gaming > .panel-body a {
     color: #4295C9;
     text-decoration: none;
 }

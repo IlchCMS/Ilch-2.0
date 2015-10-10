@@ -118,4 +118,18 @@ return array
     'edit' => 'Edit',
     'manage' => 'Manage',
     'settings' => 'Settings',
+
+    'menuInfos' => 'Information',
+    'menuPHPInfo' => 'PHP Info',
+    'menuFolderRights' => 'Folder Rights',
+    'hmenuInfos' => 'Information',
+    'hmenuPHPInfo' => 'PHP Info',
+    'hmenuFolderRights' => 'Folder Rights',
+    'phpInfo' => 'PHP Info',
+    'folderRights' => 'Folder Rights',
+    'folder' => 'Folder',
+    'required' => 'Required',
+    'available' => 'Available',
+    'writable' => 'writable',
+    'notWritable' => 'not writable',
 );

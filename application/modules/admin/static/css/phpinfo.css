@@ -1,0 +1,87 @@
+#phpinfo {
+    border: none;
+    background: #FFF;
+    font-weight: normal;
+    color: #000;
+}
+#phpinfo h1, h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 0px !important;
+    margin-bottom: 10px;
+}
+#phpinfo pre {
+    margin: 0px;
+}
+#phpinfo a:link {
+    text-decoration: none;
+}
+#phpinfo a:hover {
+    text-decoration: underline;
+}
+#phpinfo table {
+    border-collapse: collapse;
+    width: 100%;
+    border: none;
+}
+#phpinfo .center {
+    text-align: center;
+    font-weight: normal;
+}
+#phpinfo .center table {
+    text-align: left;
+}
+#phpinfo .center th {
+    text-align: center !important;
+    background: none repeat scroll 0 0 #EEE;
+}
+#phpinfo td, tr {
+    border: 1px solid silver;
+    padding: 8px;
+    font-weight: normal;
+}
+#phpinfo th {
+    font-weight: bold;
+    border: 1px solid silver;
+    padding: 8px;
+}
+#phpinfo h1 {
+    font-size: 24px;
+}
+#phpinfo h2 {
+    font-size: 18px;
+}
+#phpinfo .e {
+    font-weight: bold;
+    background-color: #F5F5F5;
+}
+#phpinfo .h {
+    background-color: #EEE;
+    font-weight: bold;
+    border: 1px solid silver;
+    padding: 8px;
+}
+#phpinfo .h:hover {
+    background-color: #EEE;
+}
+#phpinfo .v {
+    background-color: #FFF;
+}
+#phpinfo .v:hover {
+    background-color: #F5F5F5;
+}
+#phpinfo .vr {
+    background-color: #CCCCCC;
+    text-align: right;
+}
+#phpinfo img {
+    float: left;
+    border: 0px;
+    padding: 5px;
+}
+#phpinfo .green {
+    color: #090;
+}
+#phpinfo .red {
+    color: #F00;
+}

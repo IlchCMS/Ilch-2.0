@@ -181,6 +181,13 @@
                                         <?=$this->getTrans('documentationFAQ') ?>
                                     </a>
                                 </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="<?=$this->getUrl(array('controller' => 'infos')) ?>">
+                                        <i class="fa fa-info-circle"></i>
+                                        <?=$this->getTrans('menuInfos') ?>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <?php if($this->getUser()->getFirstName() != ''): ?>
