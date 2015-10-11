@@ -5,4 +5,4 @@ then
     echo "phpcs is not installed, run /vagrant/development/bin/setup.sh";
 fi
 
-/vagrant/development/bin/phpcs --standard=PSR2 $@
+/vagrant/development/bin/phpcs --standard=/vagrant/phpcs.xml $@

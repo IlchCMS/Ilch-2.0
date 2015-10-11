@@ -6,8 +6,7 @@
             ev.preventDefault();
             var $btn = $(this),
                 $form = $btn.closest('form'),
-                btnDataString = '&' + $btn.attr('name') + '=' + $btn.attr('value'),
-                dataString = $form.serialize() + btnDataString ;
+                dataString = $form.serialize();
 
             if ($form.find('[name=shoutbox_name]').val() == '' || $form.find('[name=shoutbox_textarea]').val() == '') {
                 alert("Please Enter Some Text");

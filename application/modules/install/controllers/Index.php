@@ -6,8 +6,6 @@
 
 namespace Modules\Install\Controllers;
 
-use Symfony\Component\Yaml\Exception\RuntimeException;
-
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
@@ -160,7 +158,7 @@ class Index extends \Ilch\Controller\Frontend
                     $this->getRequest()->getPost('dbPassword'),
                     $port
                 );
-            } catch (RuntimeException $ex) {
+            } catch (\RuntimeException $ex) {
                 $errors['dbConnection'] = 'dbConnectionError';
             }
 
