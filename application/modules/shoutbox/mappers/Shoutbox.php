@@ -15,14 +15,12 @@ class Shoutbox extends \Ilch\Mapper
     /**
      * Gets the Shoutbox.
      *
-     * @param array $where
      * @return ShoutboxModel[]|array
      */
-    public function getShoutbox($where = array())
+    public function getShoutbox()
     {
         $entryArray = $this->db()->select('*')
                 ->from('shoutbox')
-                ->where($where)
                 ->order(array('id' => 'DESC'))
                 ->execute()
                 ->fetchRows();
@@ -49,14 +47,12 @@ class Shoutbox extends \Ilch\Mapper
     /**
      * Gets the Shoutbox.
      *
-     * @param array $where
      * @return ShoutboxModel[]|array
      */
-    public function getShoutboxLimit($where = array(), $limit = null)
+    public function getShoutboxLimit($limit = null)
     {
         $entryArray = $this->db()->select('*')
                 ->from('shoutbox')
-                ->where($where)
                 ->order(array('id' => 'DESC'))
                 ->limit($limit)
                 ->execute()

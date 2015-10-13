@@ -29,7 +29,7 @@ class Settings extends \Ilch\Controller\Admin
                     'name' => 'settings',
                     'active' => true,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
                 )
             )
         );
@@ -46,7 +46,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('shoutbox_maxwordlength', $this->getRequest()->getPost('maxwordlength'));
             $this->addMessage('saveSuccess');
         }
-        
+
         $this->getView()->set('limit', $this->getConfig()->get('shoutbox_limit'));
         $this->getView()->set('maxwordlength', $this->getConfig()->get('shoutbox_maxwordlength'));
     }

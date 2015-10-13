@@ -14,12 +14,11 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShoutbox'), array('action' => 'index'));
         $shoutboxMapper = new ShoutboxMapper();
-        
-        $shoutbox = $shoutboxMapper->getShoutbox();
-        
-        $this->getView()->set('shoutbox', $shoutbox);
+
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShoutbox'), array('action' => 'index'));
+
+        $this->getView()->set('shoutbox', $shoutboxMapper->getShoutbox());
     }
 
     /**
@@ -30,5 +29,3 @@ class Index extends \Ilch\Controller\Frontend
         echo $this->getLayout()->getBox('Shoutbox', 'Shoutbox');
     }
 }
-
-

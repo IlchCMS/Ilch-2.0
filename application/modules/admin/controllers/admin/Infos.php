@@ -64,8 +64,8 @@ class Infos extends \Ilch\Controller\Admin
         $phpinfo = preg_replace('/<hr \/>/', '', $phpinfo);
 
         # Schlüsselwörter grün oder rot einfärben
-        $phpinfo = preg_replace('#>(on|enabled|active)#i', '><span class="green">$1</span>', $phpinfo);
-        $phpinfo = preg_replace('#>(off|disabled)#i', '><span class="red">$1</span>', $phpinfo);
+        $phpinfo = preg_replace('#>(on|enabled|active)#i', '><span class="text-success">$1</span>', $phpinfo);
+        $phpinfo = preg_replace('#>(off|disabled)#i', '><span class="text-danger">$1</span>', $phpinfo);
 
         $this->getView()->set('phpinfo', $phpinfo);
     }

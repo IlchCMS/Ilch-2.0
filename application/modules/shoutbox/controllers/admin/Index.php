@@ -31,7 +31,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
                 )
             )
         );
@@ -39,10 +39,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $shoutboxMapper = new ShoutboxMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShoutbox'), array('action' => 'index'));
-
-        $shoutboxMapper = new ShoutboxMapper();    
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_entries')) {
             foreach($this->getRequest()->getPost('check_entries') as $entryId) {
@@ -50,10 +50,9 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $shoutbox = $shoutboxMapper->getShoutbox();
-        $this->getView()->set('shoutbox', $shoutbox);
+        $this->getView()->set('shoutbox', $shoutboxMapper->getShoutbox());
     }
-    
+
     public function deleteAction()
     {
         if($this->getRequest()->isSecure()) {

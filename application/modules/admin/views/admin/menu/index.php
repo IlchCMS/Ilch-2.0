@@ -163,7 +163,7 @@ $(document).ready
         $('.sortable').nestedSortable ({
             forcePlaceholderSize: true,
             handle: 'div',
-            helper:	'clone',
+            helper: 'clone',
             items: 'li',
             opacity: .6,
             placeholder: 'placeholder',
