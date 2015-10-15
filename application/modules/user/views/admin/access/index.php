@@ -1,117 +1,148 @@
-<?php
-/**
- * Viewfile for the access page.
- *
- * @copyright Ilch 2.0
- * @package ilch
- */
-
-if ($this->get('groupAccessList') != '') {
-    $groupAccessList = $this->get('groupAccessList');
-    $accessLevelsTrans = array(
-        0 => 'noAccess',
-        1 => 'lookAccess',
-        2 => 'modifyAccess'
-    );
-    ?>
-
-    <form action="<?php echo $this->url(array('module' => 'user', 'controller' => 'access', 'action' => 'save')); ?>"
-          method="POST"
-          class="form-horizontal"
-          id="groupAccessForm">
-        <?php echo $this->getTokenField(); ?>
-        <?php
-        foreach($this->get('accessTypes') as $accessType => $typeData) {
-        ?>
-            <table class="table table-hover table-striped">
-                <colgroup>
-                    <col class="col-xs-2">
-                    <col />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th><?php echo $this->trans($accessType); ?></th>
-                        <?php
-                        foreach($this->get('groups') as $group) {
-                            echo '<th>'.$this->escape($group->getName()).'</th>';
-                        }
-                        ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach($typeData as $type) {
+<form action="<?=$this->getUrl(array('module' => 'user', 'controller' => 'access', 'action' => 'save')) ?>"
+      method="POST"
+      class="form-horizontal"
+      role="form"
+      id="groupAccessForm">
+    <?=$this->getTokenField() ?>
+    <div class="form-group">
+        <label for="groupId" class="control-label col-sm-2"><?=$this->getTrans('group') ?></label>
+        <div class="col-sm-10">
+            <select name="groupId"
+                    id="groupId"
+                    class="form-control">
+                <option value="0"
+                        <?=((int)$this->get('activeGroupId') == null) ? 'selected="selected"' : '' ?>>
+                        <?=$this->getTrans('chooseAGroup') ?>
+                </option>
+                <?php
+                foreach($this->get('groups') as $group) {
                     ?>
+                    <option value="<?=$group->getId() ?>"
+                            <?=((int)$this->get('activeGroupId') == $group->getId()) ? 'selected="selected"' : '' ?>>
+                            <?=$this->escape($group->getName()) ?>
+                    </option>
+                    <?php
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+    <?php
+    if ($this->get('groupAccessList') != '') {
+        $groupAccessList = $this->get('groupAccessList');
+        $accessLevelsTrans = array(
+            0 => 'noAccess',
+            1 => 'lookAccess',
+            2 => 'modifyAccess',
+        );
+        $activeGroup = $this->get('activeGroup');
+        ?>
+            <?php
+            foreach($this->get('accessTypes') as $accessType => $typeData) {
+                if(empty($typeData)) {
+                    continue;
+                }
+                ?>
+                <table class="table table-hover table-striped">
+                    <colgroup>
+                        <col class="col-lg-9">
+                        <col class="col-lg-1">
+                        <col class="col-lg-1">
+                        <col class="col-lg-1">
+                    </colgroup>
+                    <thead>
                         <tr>
-                            <td style="vertical-align:middle">
-                                <?php
-                                if($accessType == 'module') {
-                                    echo $this->escape($type->getName($this->getTranslator()->getLocale()));
-                                } elseif($accessType == 'article') {
-                                   echo $this->escape($type->getTitle());
-                                } elseif($accessType == 'page') {
-                                    echo $this->escape($type->getTitle());
-                                }
-                                ?>
-                            </td>
+                            <th><?=$this->getTrans($accessType) ?></th>
                             <?php
-                            foreach($this->get('groups') as $group) {
+                            foreach($accessLevelsTrans as $transKey) {
+                                echo '<th class="text-center">'.$this->getTrans($transKey).'</th>';
+                            }
+                            ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach($typeData as $type) {
+                            if ($accessType == 'module') {
+                                $content = $type->getContentForLocale($this->getTranslator()->getLocale());
+                            }
+                        ?>
+                            <tr>
+                                <td style="vertical-align:middle">
+                                    <?php
+                                    if($accessType == 'module') {
+                                        echo $this->escape($content['name']);
+                                    } elseif($accessType == 'article') {
+                                       echo $this->escape($type->getTitle());
+                                    } elseif($accessType == 'page') {
+                                        echo $this->escape($type->getTitle());
+                                    } elseif($accessType == 'box') {
+                                        echo $this->escape($type->getTitle());
+                                    }
+                                    ?>
+                                </td>
+                                <?php
                                 $groupHasEntries = true;
 
-                                if(isset($groupAccessList[$group->getId()]['entries'][$accessType.'s'])) {
-                                    $typeEntries = $groupAccessList[$group->getId()]['entries'][$accessType.'s'];
+                                if(isset($groupAccessList['entries'][$accessType])) {
+                                    $typeEntries = $groupAccessList['entries'][$accessType];
                                 } else {
                                     $groupHasEntries = false;
                                 }
 
                                 ?>
-                                <td>
                                 <?php
                                 $typeAccessLevel = 1;
 
                                 if($groupHasEntries) {
-                                    if(isset($typeEntries[$type->getId()])) {
-                                        $typeAccessLevel = (int)$typeEntries[$type->getId()];
+                                    if($accessType == 'module') {
+                                        if(isset($typeEntries[$type->getKey()])) {
+                                            $typeAccessLevel = (int)$typeEntries[$type->getKey()];
+                                        }
+                                    } else {
+                                        if(isset($typeEntries[$type->getId()])) {
+                                            $typeAccessLevel = (int)$typeEntries[$type->getId()];
+                                        }
                                     }
                                 }
 
-                                foreach($accessLevelsTrans as $accessLevel => $text) {
+                                foreach($accessLevelsTrans as $accessLevel => $transKey) {
                                     ?>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio"
-                                                   name="groupsAccess<?php echo '['.$accessType.']['.$group->getId().']['.$type->getId().']'; ?>"
-                                                   value="<?php echo $accessLevel; ?>"
-                                                   <?php echo ($accessLevel == $typeAccessLevel) ? 'checked' : '' ?>/>
-                                            <?php echo $this->trans($text); ?>
-                                        </label>
-                                    </div>
+                                    <td class="text-center">
+                                        <input type="radio"
+                                           <?php
+                                             if($accessType == 'module') {
+                                                 echo 'name="groupAccess['.$accessType.']['.$type->getKey().']"';
+                                              } else {
+                                                  echo 'name="groupAccess['.$accessType.']['.$type->getId().']"';
+                                              }
+                                          ?>
+                                           value="<?=$accessLevel ?>"
+                                           <?=($accessLevel == $typeAccessLevel) ? 'checked' : '' ?>/>
+                                    </td>
                                     <?php
                                 }
-
                                 ?>
-                                </td>
-                                <?php
-                            }
-                            ?>
-                        </tr>
-                    <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            <?php
+        }
+        ?>
+        <?=$this->getSaveBar()?>
         <?php
     }
     ?>
-    <div class="content_savebox">
-        <input id="formSubmit"
-               type="submit"
-               class="btn btn-default"
-               value="<?php echo $this->trans('save'); ?>" />
-    </div>
-    </form>
-    <?php
-} else {
-    echo $this->trans('noGroupsExist');
-}
-?>
+</form>
+
+<script>
+$('#groupId').on('change', function() {
+    if($(this).val() != 0) {
+        $('#groupAccessForm').attr('action', '<?=$this->getUrl(array('module' => 'user', 'controller' => 'access', 'action' => 'index')) ?>');
+        $('#groupAccessForm').submit();
+    }
+});
+</script>

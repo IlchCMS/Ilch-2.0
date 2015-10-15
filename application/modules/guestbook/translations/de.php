@@ -1,7 +1,5 @@
 <?php
 /**
- * Translations file for the Guestbook module.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
@@ -10,6 +8,7 @@ defined('ACCESS') or die('no direct access');
 
 return array
 (
+    'menuGuestbook' => 'Gästebuch',
     'guestbook' => 'Gästebuch',
     'from' => 'Von',
     'date' => 'Datum',
@@ -23,9 +22,9 @@ return array
     'manage' => 'Gästebuch verwalten',
     'manageentry' => 'Einträge verwalten/löschen',
     'text' => 'Text',
-    'delete' => 'Löschen',
     'successful' => 'Erfolgreich',
     'missingText' => 'Nachricht muss ausgefüllt werden',
+    'missingEmail' => 'E-Mail muss ausgefüllt werden',
     'missingName' => 'Name muss ausgefüllt werden',
     'settings' => 'Einstellungen',
     'entrySettings' => 'Einträge sofort freigeben',
@@ -35,4 +34,16 @@ return array
     'setfree' => 'Freischalten ',
     'check' => 'Danke. Eintrag wird geprüft.',
     'settings' => 'Einstellungen',
+    'captcha' => 'Captcha',
+    'invalidCaptcha' => 'Captcha ist fehlerhaft',
+    'captchaRead' => 'Nicht lesbar? Text ändern!',
+
+    'validation.errors.required.fieldIsRequired'    => '%s muss ausgefüllt werden.',
+    'validation.errors.same.fieldsDontMatch'        => '%s muss mit %s übereinstimmen.',
+    'validation.errors.captcha.wrongCaptcha'        => '%s entspricht nicht der gezeigten Zeichenkombination',
+    'validation.errors.length.tooShort'             => '%s muss mindestens %s Zeichen lang sein.',
+    'validation.errors.length.tooLong'              => '%s darf höchstens %s Zeichen lang sein.',
+    'validation.errors.length.tooShortAndOrTooLong' => '%s muss mindestens %s und darf höchstens %s Zeichen lang sein',
+    'validation.errors.url.noValidUrl'              => '%s muss eine gültige URL sein.',
+    'validation.errors.email.noValidEmail'          => '%s muss eine gültige E-Mail-Adresse sein.',
 );

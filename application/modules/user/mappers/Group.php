@@ -1,22 +1,15 @@
 <?php
 /**
- * Holds class Group.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace User\Mappers;
+namespace Modules\User\Mappers;
 
-use User\Models\Group as GroupModel;
+use Modules\User\Models\Group as GroupModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The user group mapper class.
- *
- * @package ilch
- */
 class Group extends \Ilch\Mapper
 {
     /**
@@ -32,7 +25,7 @@ class Group extends \Ilch\Mapper
             'id' => (int) $id,
         );
 
-        $groups = $this->_getBy($where);
+        $groups = $this->getBy($where);
 
         if (!empty($groups)) {
             return reset($groups);
@@ -54,7 +47,7 @@ class Group extends \Ilch\Mapper
             'name' => $name,
         );
 
-        $groups = $this->_getBy($where);
+        $groups = $this->getBy($where);
 
         if (!empty($groups)) {
             return reset($groups);
@@ -70,14 +63,13 @@ class Group extends \Ilch\Mapper
      * @param  mixed[]            $where
      * @return false|GroupModel[]
      */
-    protected function _getBy($where = null)
+    protected function getBy($where = [])
     {
-        $groupRows = $this->db()->selectArray
-        (
-            '*',
-            'groups',
-            $where
-        );
+        $groupRows = $this->db()->select('*')
+            ->from('groups')
+            ->where($where)
+            ->execute()
+            ->fetchRows();
 
         if (!empty($groupRows)) {
             $groups = array_map(array($this, 'loadFromArray'), $groupRows);
@@ -116,12 +108,9 @@ class Group extends \Ilch\Mapper
      */
     public function getUsersForGroup($groupId)
     {
-        $userIds = $this->db()->selectList
-        (
-            'user_id',
-            'users_groups',
-            array('group_id' => $groupId)
-        );
+        $userIds = $this->db()->select('user_id', 'users_groups', array('group_id' => $groupId))
+            ->execute()
+            ->fetchList();
 
         return $userIds;
     }
@@ -140,38 +129,25 @@ class Group extends \Ilch\Mapper
             $fields['name'] = $group->getName();
         }
 
-        $groupId = (int) $this->db()->selectCell
-        (
-            'id',
-            'groups',
-            array
-            (
-                'id' => $group->getId(),
-            )
-        );
+        $groupId = (int) $this->db()->select('id', 'groups', array('id' => $group->getId()))
+            ->execute()
+            ->fetchCell();
 
         if ($groupId) {
             /*
              * Group does exist already, update.
              */
-            $this->db()->update
-            (
-                $fields,
-                'groups',
-                array
-                (
-                    'id' => $groupId,
-                )
-            );
+            $this->db()->update('groups')
+                ->values($fields)
+                ->where(array('id' => $groupId))
+                ->execute();
         } else {
             /*
              * Group does not exist yet, insert.
              */
-            $groupId = $this->db()->insert
-            (
-                $fields,
-                'groups'
-            );
+            $groupId = $this->db()->insert('groups')
+                ->values($fields)
+                ->execute();
         }
 
         return $groupId;
@@ -184,7 +160,7 @@ class Group extends \Ilch\Mapper
      */
     public function getGroupList()
     {
-        return $this->_getBy();
+        return $this->getBy();
     }
 
     /**
@@ -195,17 +171,9 @@ class Group extends \Ilch\Mapper
      */
     public function groupWithIdExists($groupId)
     {
-        $groupExists = (boolean)$this->db()->selectCell
-        (
-            'COUNT(*)',
-            'groups',
-            array
-            (
-                'id' => (int)$groupId
-            )
-        );
-
-        return $groupExists;
+        return (boolean) $this->db()->select('COUNT(*)', 'groups', array('id' => (int)$groupId))
+            ->execute()
+            ->fetchCell();
     }
 
     /**
@@ -217,59 +185,66 @@ class Group extends \Ilch\Mapper
      */
     public function delete($groupId)
     {
-        if(is_a($groupId, '\User\Models\Group'))
+        if(is_a($groupId, '\Modules\User\Models\Group'))
         {
             $groupId = $groupId->getId();
         }
 
-        $this->db()->delete('users_groups', array('group_id' => $groupId));
-        return $this->db()->delete('groups', array('id' => $groupId));
+        $this->db()->delete('users_groups')
+            ->where(array('group_id' => $groupId))
+            ->execute();
+
+        return $this->db()->delete('groups')
+            ->where(array('id' => $groupId))
+            ->execute();
     }
 
     /**
      * Returns the group access list from the database.
      *
+     * @param  int     $groupId
      * @return mixed[]
      */
-    public function getGroupAccessList()
+    public function getGroupAccessList($groupId)
     {
         $sql = 'SELECT g.name AS group_name, ga.*
                 FROM [prefix]_groups_access AS ga
-                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id';
+                INNER JOIN [prefix]_groups AS g ON ga.group_id = g.id
+                WHERE ga.group_id = '.(int)$groupId;
         $accessDbList = $this->db()->queryArray($sql);
         $accessList = array();
-        $entries = array(
-            'pages' => array(),
-            'modules' => array(),
-            'articles' => array(),
+        $accessList['entries'] = array(
+            'page' => array(),
+            'module' => array(),
+            'article' => array(),
+            'box' => array(),
+        );
+        $accessTypes = array(
+            'module',
+            'page',
+            'article',
+            'box',
         );
 
         foreach($accessDbList as $accessDbListEntry) {
-            $groupId = $accessDbListEntry['group_id'];
-
-            if(!isset($accessList[$groupId])) {
+            if(empty($accessList['group_name'])) {
                 /*
-                 * First entry for this group
+                 * Only on first entry.
                  */
-                $groupName = $accessDbListEntry['group_name'];
-                unset($accessDbListEntry['group_id']);
-                unset($accessDbListEntry['group_name']);
-                $accessList[$groupId]['group_name'] = $groupName;
-                $accessList[$groupId]['entries'] = $entries;
+                $accessList['group_name'] = $accessDbListEntry['group_name'];
             }
 
-            if(!empty($accessDbListEntry['module_id'])) {
-                $entryType = 'modules';
-                $entryId = $accessDbListEntry['module_id'];
-            } elseif(!empty($accessDbListEntry['page_id'])) {
-                $entryType = 'pages';
-                $entryId = $accessDbListEntry['page_id'];
-            } elseif(!empty($accessDbListEntry['article_id'])) {
-                $entryType = 'articles';
-                $entryId = $accessDbListEntry['article_id'];
+            foreach($accessTypes as $accessType) {
+                if(!empty($accessDbListEntry[$accessType.'_id'])) {
+                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_id']] = $accessDbListEntry['access_level'];
+                    break;
+                }
+                
+                if(!empty($accessDbListEntry[$accessType.'_key'])) {
+                    $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_key']] = $accessDbListEntry['access_level'];
+                    break;
+                }
             }
-
-            $accessList[$groupId]['entries'][$entryType][$entryId] = $accessDbListEntry['access_level'];
         }
 
         return $accessList;
@@ -279,24 +254,39 @@ class Group extends \Ilch\Mapper
      * Saves or updates an access data entry to the db.
      *
      * @param  int    $groupId
-     * @param  int    $typeId
+     * @param  mixed  $value
      * @param  int    $accessLevel
      * @param  string $type
      */
-    public function saveAccessData($groupId, $typeId, $accessLevel, $type)
+    public function saveAccessData($groupId, $value, $accessLevel, $type)
     {
         $rec = array(
             'group_id' => (int)$groupId,
-            $type.'_id' => (int)$typeId,
         );
+
+        if ($type == 'module') {
+            $rec['module_key'] = $value;
+        } else {
+            $rec[$type.'_id'] = (int)$value;
+        }
+
         $fields = $rec;
         $fields['access_level'] = (int)$accessLevel;
-        $entryExists = $this->db()->selectCell('COUNT(*)', 'groups_access', $rec);
+        $entryExists = (bool)$this->db()->select('COUNT(*)')
+            ->from('groups_access')
+            ->where($rec)
+            ->execute()
+            ->fetchCell();
 
         if($entryExists) {
-            $this->db()->update($fields, 'groups_access', $rec);
+            $this->db()->update('groups_access')
+                ->values($fields)
+                ->where($rec)
+                ->execute();
         } else {
-            $this->db()->insert($fields, 'groups_access');
+            $this->db()->insert('groups_access')
+                ->values($fields)
+                ->execute();
         }
     }
 }

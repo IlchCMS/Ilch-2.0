@@ -1,19 +1,19 @@
 <form class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
     <?php
-        if ($this->get('page') != '') {
-            echo $this->trans('editPage');
-        } else {
-            echo $this->trans('addPage');
-        }
+    if ($this->get('page') != '') {
+        echo $this->getTrans('editPage');
+    } else {
+        echo $this->getTrans('addPage');
+    }
     ?>
     </legend>
     <div class="form-group">
-        <label for="pageTitleInput" class="col-xs-2 control-label">
-            <?php echo $this->trans('pageTitle'); ?>:
+        <label for="pageTitleInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('pageTitle') ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-8">
             <input class="form-control"
                    type="text"
                    name="pageTitle"
@@ -22,16 +22,18 @@
         </div>
     </div>
     <div class="form-group">
-        <textarea class="form-control" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
+        <div class="col-lg-offset-2 col-lg-8">
+            <textarea class="form-control ckeditor" id="ck_1" toolbar="ilch_html" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
+        </div>
     </div>
     <?php
-        if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
+    if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
     ?>
     <div class="form-group">
-        <label for="pageLanguageInput" class="col-xs-2 control-label">
-            <?php echo $this->trans('pageLanguage'); ?>:
+        <label for="pageLanguageInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('pageLanguage') ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-8">
             <select class="form-control" name="pageLanguage" id="pageLanguageInput">
                 <?php
                 foreach ($this->get('languages') as $key => $value) {
@@ -54,31 +56,37 @@
     <?php
     }
     ?>
+    <legend>SEO</legend>
     <div class="form-group">
-        <label for="pagePerma" class="col-xs-2 control-label">
-            <?php echo $this->trans('permaLink'); ?>:
+        <label for="descriptionInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('description') ?>:
         </label>
-        <div class="col-xs-5">
-            <?php echo $this->url(); ?>/index.php/<input
+        <div class="col-lg-8">
+            <textarea class="form-control" id="descriptionInput" name="description"><?php if ($this->get('page') != '')
+                { echo $this->escape($this->get('page')->getDescription()); } ?></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="pagePerma" class="col-lg-2 control-label">
+            <?=$this->getTrans('permaLink') ?>:
+        </label>
+        <div class="col-lg-8">
+            <?=$this->getUrl() ?>/index.php/<input
                    type="text"
                    name="pagePerma"
                    id="pagePerma"
                    value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } ?>" />
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('page') != '') {
-                echo $this->trans('editButton');
-            } else {
-                echo $this->trans('addButton');
-            }
-            ?>
-        </button>
-    </div>
+    <?php
+    if ($this->get('page') != '') {
+        echo $this->getSaveBar('updateButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>
-<script type="text/javascript" src="<?php echo $this->staticUrl('js/tinymce/tinymce.min.js') ?>"></script>
+
 <script>
 <?php
 $pageID = '';
@@ -87,8 +95,7 @@ if ($this->get('page') != '') {
     $pageID = $this->get('page')->getId();
 }
 ?>
-$('#pageTitleInput').change
-(
+$('#pageTitleInput').change (
     function () {
         $('#pagePerma').val
         (
@@ -99,19 +106,10 @@ $('#pageTitleInput').change
     }
 );
 
-$('#pageLanguageInput').change
-(
+$('#pageLanguageInput').change (
     this,
     function () {
-        top.location.href = '<?php echo $this->url(array('id' => $pageID)); ?>/locale/'+$(this).val();
-    }
-);
-
-tinymce.init
-(
-    {
-        height: 400,
-        selector: "textarea"
+        top.location.href = '<?=$this->getUrl(array('id' => $pageID)); ?>/locale/'+$(this).val()
     }
 );
 </script>

@@ -1,33 +1,19 @@
-<legend><?php echo $this->trans('settings'); ?></legend>
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName())); ?>">
-    <?php echo $this->getTokenField(); ?>
+<legend><?=$this->getTrans('settings') ?></legend>
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+    <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="guestbookSettings" class="col-xs-2 control-label">
-            <?php echo $this->trans('entrySettings'); ?>:
+        <label for="guestbookSettings" class="col-lg-2 control-label">
+            <?=$this->getTrans('entrySettings') ?>:
         </label>
-        <div class="col-xs-2">
-            <div class="radio">
-                <label>
-                    <input type="radio"
-                       name="entrySettings"
-                       id="entrySettings"
-                       value="0"
-                <?php if ($this->get('setfree') == '0') { echo 'checked="checked"';} ?> /> <?php echo $this->trans('no'); ?>
-                </label>
-            </div>
-            <div class="radio">
-                <label>
-                    <input type="radio"
-                       name="entrySettings"
-                       value="1"
-                <?php if ($this->get('setfree') == '1') { echo 'checked="checked"';} ?>> <?php echo $this->trans('yes'); ?>
-                </label>
-            </div>
+        <div class="col-lg-2">
+            <div class="flipswitch">  
+                <input type="radio" class="flipswitch-input" name="entrySettings" value="1" id="setfree-yes" <?php if ($this->get('setfree') == '1') { echo 'checked="checked"'; } ?> />  
+                <label for="setfree-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
+                <input type="radio" class="flipswitch-input" name="entrySettings" value="0" id="setfree-no" <?php if ($this->get('setfree') != '1') { echo 'checked="checked"'; } ?> />  
+                <label for="setfree-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
+                <span class="flipswitch-selection"></span>  
+            </div>  
         </div>
     </div> 
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php echo $this->trans('saveButton'); ?>
-        </button>
-    </div>
+    <?=$this->getSaveBar()?>
 </form>

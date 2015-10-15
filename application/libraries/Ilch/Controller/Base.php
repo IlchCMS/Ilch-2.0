@@ -5,36 +5,37 @@
  */
 
 namespace Ilch\Controller;
+
 defined('ACCESS') or die('no direct access');
 
 class Base
 {
     /**
-     * @var Ilch_Request
+     * @var \Ilch\Request
      */
-    private $_request;
+    private $request;
 
     /**
-     * @var Ilch_Translator
+     * @var \Ilch\Translator
      */
-    private $_translator;
+    private $translator;
 
     /**
-     * @var Ilch_Layout_Base
+     * @var \Ilch\Layout\Base
      */
-    private $_layout;
+    private $layout;
 
     /**
-     * @var Ilch_View
+     * @var \Ilch\View
      */
-    private $_view;
+    private $view;
 
     /**
      * The currently logged in user or null if the user is a guest.
      *
-     * @var User_UserModel
+     * @var \Modules\User\Models\User
      */
-    private $_user;
+    private $user;
 
     /**
      * Injects the layout/view to the controller.
@@ -43,16 +44,21 @@ class Base
      * @param \Ilch\View        $view
      * @param \Ilch\Request     $request
      * @param \Ilch\Router      $router
-     * @param Ilch_Translator   $translator
+     * @param \Ilch\Translator   $translator
      */
-    public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
-    {
-        $this->_layout = $layout;
-        $this->_view = $view;
-        $this->_request = $request;
-        $this->_router = $router;
-        $this->_translator = $translator;
-        $this->_user = \Ilch\Registry::get('user');
+    public function __construct(
+        \Ilch\Layout\Base $layout,
+        \Ilch\View $view,
+        \Ilch\Request $request,
+        \Ilch\Router $router,
+        \Ilch\Translator $translator
+    ) {
+        $this->layout = $layout;
+        $this->view = $view;
+        $this->request = $request;
+        $this->router = $router;
+        $this->translator = $translator;
+        $this->user = \Ilch\Registry::get('user');
     }
 
     /**
@@ -64,34 +70,34 @@ class Base
      */
     public function redirect($urlArray, $route = null, $rewrite = false)
     {
-        header("location: ".$this->getLayout()->url($urlArray, $route, $rewrite));
+        header("location: ".$this->getLayout()->getUrl($urlArray, $route, $rewrite));
         exit;
     }
 
     /**
      * Gets the request object.
      *
-     * @return Ilch_Request
+     * @return \Ilch\Request
      */
     public function getRequest()
     {
-        return $this->_request;
+        return $this->request;
     }
 
     /**
      * Gets the router object.
      *
-     * @return Ilch_Router
+     * @return \Ilch\Router
      */
     public function getRouter()
     {
-        return $this->_router;
+        return $this->router;
     }
 
     /**
      * Gets the config object.
      *
-     * @return Ilch_Config
+     * @return \Ilch\Config\Database
      */
     public function getConfig()
     {
@@ -101,31 +107,41 @@ class Base
     /**
      * Gets the translator object.
      *
-     * @return Ilch_Translator
+     * @return \Ilch\Translator
      */
     public function getTranslator()
     {
-        return $this->_translator;
+        return $this->translator;
     }
 
     /**
      * Gets the layout object.
      *
-     * @return Ilch_Layout_Base
+     * @return \Ilch\Layout\Base
      */
     public function getLayout()
     {
-        return $this->_layout;
+        return $this->layout;
     }
 
     /**
      * Gets the view object.
      *
-     * @return Ilch_Request
+     * @return \Ilch\View
      */
     public function getView()
     {
-        return $this->_view;
+        return $this->view;
+    }
+    
+    /**
+     * Gets the user object.
+     *
+     * @return \Modules\User\Models\User
+     */
+    public function getUser()
+    {
+        return \Ilch\Registry::get('user');
     }
 
     /**

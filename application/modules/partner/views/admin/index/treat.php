@@ -1,62 +1,61 @@
-<form class="form-horizontal" method="POST" action="<?php echo $this->url(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))); ?>">
-    <?php echo $this->getTokenField(); ?>
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
+    <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('partner') != '') {
-            echo $this->trans('menuActionEditPartner');
-        } else {
-            echo $this->trans('menuActionNewPartner');
-        }
-    ?>
+        <?php if ($this->get('partner') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
-        <label for="name" class="col-xs-2 control-label">
-            <?php echo $this->trans('name'); ?>:
+        <label for="name" class="col-lg-2 control-label">
+            <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="name"
-                   id="name"
-                   placeholder="Name"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } ?>" />
         </div>
     </div>
     <div class="form-group">
-        <label for="link" class="col-xs-2 control-label">
-            <?php echo $this->trans('link'); ?>:
+        <label for="link" class="col-lg-2 control-label">
+            <?=$this->getTrans('link') ?>:
         </label>
-        <div class="col-xs-4">
+        <div class="col-lg-4">
             <input class="form-control"
                    type="text"
                    name="link"
-                   id="link"
                    placeholder="http://"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } ?>" />
         </div>
     </div>
     <div class="form-group">
-        <label for="banner" class="col-xs-2 control-label">
-            <?php echo $this->trans('banner'); ?>:
+        <label for="banner" class="col-lg-2 control-label">
+            <?=$this->getTrans('banner') ?>:
         </label>
-        <div class="col-xs-4">
-            <input class="form-control"
-                   type="text"
-                   name="banner"
-                   id="banner"
-                   placeholder="http://"
-                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
+        <div class="col-lg-4">
+            <div class="input-group">
+                <input class="form-control"
+                       type="text"
+                       name="banner"
+                       id="selectedImage_1"
+                       placeholder="<?=$this->getTrans('httpOrMedia') ?>"
+                       value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
+                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
+            </div>
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('partner') != '') {
-                echo $this->trans('editButton');
-            } else {
-                echo $this->trans('addButton');
-            }
-            ?>
-        </button>
-    </div>
+    <?php if ($this->get('partner') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>
+
+<script>
+    // Example for multiple input filds
+    <?=$this->getMedia()
+                    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+                    ->addInputId('_1') ?>
+</script>

@@ -1,19 +1,14 @@
 <?php
 /**
- * Holds the class Index.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace User\Controllers\Admin;
+namespace Modules\User\Controllers\Admin;
 
-use User\Controllers\Admin\Base as BaseController;
-use User\Mappers\User as UserMapper;
-use User\Mappers\Group as GroupMapper;
-use User\Models\User as UserModel;
-use User\Models\Group as GroupModel;
-use \Ilch\Registry as Registry;
+use Modules\User\Controllers\Admin\Base as BaseController;
+use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Models\Group as GroupModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -34,7 +29,7 @@ class Group extends BaseController
             (
                 'name' => 'menuActionNewGroup',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
             )
         );
     }
@@ -44,7 +39,20 @@ class Group extends BaseController
      */
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuGroup'), array('action' => 'index'));
+
         $groupMapper = new GroupMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
+            foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
+                if ($groupId != 1) {
+                    $groupMapper->delete($groupId);
+                }
+            }
+        }
+        
         $groupList = $groupMapper->getGroupList();
         $groupUsers = array();
 
@@ -63,6 +71,11 @@ class Group extends BaseController
      */
     public function treatAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuGroup'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('editGroup'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+
         $groupId = $this->getRequest()->getParam('id');
         $groupMapper = new GroupMapper();
 
@@ -72,8 +85,6 @@ class Group extends BaseController
         else {
             $group = new GroupModel();
         }
-
-        $groupMapper = new GroupMapper();
 
         $this->getView()->set('group', $group);
         $this->getView()->set('groupList', $groupMapper->getGroupList());
@@ -109,10 +120,7 @@ class Group extends BaseController
         $groupMapper = new GroupMapper();
         $groupId = $this->getRequest()->getParam('id');
 
-        if ($groupId) {
-            $deletegroup = $groupMapper->getGroupById($groupId);
-            $usersForGroup = $groupMapper->getUsersForGroup($groupId);
-
+        if ($groupId && $this->getRequest()->isSecure()) {
             /*
              * Admingroup has always id "1" and is not allowed to be deleted.
              */

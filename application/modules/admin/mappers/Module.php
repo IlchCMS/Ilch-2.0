@@ -1,48 +1,45 @@
 <?php
 /**
- * Holds Admin_ModuleMapper.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Admin\Mappers;
+namespace Modules\Admin\Mappers;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The module mapper class.
- *
- * @package ilch
  */
 class Module extends \Ilch\Mapper
 {
     /**
      * Gets all modules.
      *
-     * @return null|Admin_ModuleModel[]
+     * @return array|Admin_ModuleModel[]
      */
     public function getModules()
     {
         $modules = array();
-        $modulesRows = $this->db()->selectArray
-        (
-            '*',
-            'modules'
-        );
-
-        if (empty($modulesRows)) {
-            return null;
-        }
+        $modulesRows = $this->db()->select('*')
+            ->from('modules')
+            ->execute()
+            ->fetchRows();
 
         foreach ($modulesRows as $moduleRow) {
-            $moduleModel = new \Admin\Models\Module();
-            $moduleModel->setId($moduleRow['id']);
+            $moduleModel = new \Modules\Admin\Models\Module();
             $moduleModel->setKey($moduleRow['key']);
+            $moduleModel->setAuthor($moduleRow['author']);
+            $moduleModel->setSystemModule($moduleRow['system']);
             $moduleModel->setIconSmall($moduleRow['icon_small']);
-            $nameRows = $this->db()->selectArray('*', 'modules_names', array('module_id' => $moduleRow['id']));
+            $contentRows = $this->db()->select('*')
+                ->from('modules_content')
+                ->where(array('key' => $moduleRow['key']))
+                ->execute()
+                ->fetchRows();
 
-            foreach ($nameRows as $nameRow) {
-                $moduleModel->addName($nameRow['locale'], $nameRow['name']);
+            foreach ($contentRows as $contentRow) {
+                $moduleModel->addContent($contentRow['locale'], array('name' => $contentRow['name'], 'description' => $contentRow['description']));
             }
 
             $modules[] = $moduleModel;
@@ -50,31 +47,59 @@ class Module extends \Ilch\Mapper
 
         return $modules;
     }
+
+    public function getModulesByKey($key, $locale)
+    {
+        $modulesRows = $this->db()->select('*')
+            ->from('modules_content')
+            ->where(array('key' => $key, 'locale' => $locale))
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($modulesRows)) {
+            return null;
+        }
+
+        $modulesModel = new \Modules\Admin\Models\Module();
+        $modulesModel->setName($modulesRows['name']);
+
+        return $modulesModel;
+    }
+
     /**
      * Inserts a module model in the database.
      *
-     * @param \Admin\Models\Module $module
+     * @param \Modules\Admin\Models\Module $module
      */
-    public function save(\Admin\Models\Module $module)
+    public function save(\Modules\Admin\Models\Module $module)
     {
-        $moduleId = $this->db()->insert
-        (
-            array
-            (
-                'key' => $module->getKey(),
-                'icon_small' => $module->getIconSmall(),
-            ),
-            'modules'
-        );
+        $moduleId = $this->db()->insert('modules')
+            ->values(array('key' => $module->getKey(), 'system' => $module->getSystemModule(),
+                'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor()))
+            ->execute();
 
-        foreach ($module->getNames() as $key => $value) {
-            $this->db()->insert
-            (
-                array('module_id' => $moduleId, 'locale' => $key, 'name' => $value),
-                'modules_names'
-            );
+        foreach ($module->getContent() as $key => $value) {
+            $this->db()->insert('modules_content')
+                ->values(array('key' => $module->getKey(), 'locale' => $key, 'name' => $value['name'], 'description' => $value['description']))
+                ->execute();
         }
 
         return $moduleId;
+    }
+
+    /**
+     * @param string $key
+     */
+    public function delete($key)
+    {
+        $menuMapper = new \Modules\Admin\Mappers\Menu();
+        $menuMapper->deleteItemsByModuleKey($key);
+        $this->db()->delete('modules')
+            ->where(array('key' => $key))
+            ->execute();
+        
+        $this->db()->delete('modules_content')
+            ->where(array('key' => $key))
+            ->execute();
     }
 }

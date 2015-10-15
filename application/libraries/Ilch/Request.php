@@ -5,34 +5,40 @@
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
 
 class Request
 {
     /**
-     * @var string
+     * @var boolean
      */
-    protected $_isAdmin = false;
+    protected $isAdmin = false;
+
+    /**
+     * @var boolean
+     */
+    protected $isAjax = false;
 
     /**
      * @var string
      */
-    protected $_moduleName;
+    protected $moduleName;
 
     /**
      * @var string
      */
-    protected $_controllerName;
+    protected $controllerName;
 
     /**
      * @var string
      */
-    protected $_actionName;
+    protected $actionName;
 
     /**
      * @var array
      */
-    protected $_params;
+    protected $params;
 
     /**
      * Gets admin request flag.
@@ -41,17 +47,41 @@ class Request
      */
     public function isAdmin()
     {
-        return $this->_isAdmin;
+        return $this->isAdmin;
     }
 
     /**
      * Sets admin request flag.
      *
-     * @param string $name
+     * @param boolean $admin
      */
     public function setIsAdmin($admin)
     {
-        $this->_isAdmin = $admin;
+        $this->isAdmin = $admin;
+    }
+
+    /**
+     * Gets Ajax request flag.
+     *
+     * @return boolean
+     */
+    public function isAjax()
+    {
+        if ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest") || $this->isAjax) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Sets ajax request flag.
+     *
+     * @param boolean $ajax
+     */
+    public function setIsAjax($ajax)
+    {
+        $this->isAjax = $ajax;
     }
 
     /**
@@ -61,7 +91,7 @@ class Request
      */
     public function getModuleName()
     {
-        return $this->_moduleName;
+        return $this->moduleName;
     }
 
     /**
@@ -71,7 +101,7 @@ class Request
      */
     public function setModuleName($name)
     {
-        $this->_moduleName = $name;
+        $this->moduleName = $name;
     }
 
     /**
@@ -81,7 +111,7 @@ class Request
      */
     public function getControllerName()
     {
-        return $this->_controllerName;
+        return $this->controllerName;
     }
 
     /**
@@ -91,7 +121,7 @@ class Request
      */
     public function setControllerName($name)
     {
-        $this->_controllerName = $name;
+        $this->controllerName = $name;
     }
 
     /**
@@ -101,7 +131,7 @@ class Request
      */
     public function getActionName()
     {
-        return $this->_actionName;
+        return $this->actionName;
     }
 
     /**
@@ -111,7 +141,7 @@ class Request
      */
     public function setActionName($name)
     {
-        $this->_actionName = $name;
+        $this->actionName = $name;
     }
 
     /**
@@ -121,8 +151,8 @@ class Request
      */
     public function getParam($key)
     {
-        if (isset($this->_params[$key])) {
-            return $this->_params[$key];
+        if (isset($this->params[$key])) {
+            return $this->params[$key];
         }
 
         return null;
@@ -136,7 +166,7 @@ class Request
      */
     public function setParam($key, $value)
     {
-        $this->_params[$key] = $value;
+        $this->params[$key] = $value;
     }
 
     /**
@@ -146,7 +176,7 @@ class Request
      */
     public function getParams()
     {
-        return $this->_params;
+        return $this->params;
     }
 
     /**
@@ -156,7 +186,7 @@ class Request
      */
     public function setParams($params)
     {
-        $this->_params = $params;
+        $this->params = $params;
     }
 
     /**
@@ -170,20 +200,20 @@ class Request
     }
 
     /**
-     * Get post-value by key.
+     * Gets post-value by key.
+     *
+     * Supports 'dot' notation for arrays
+     * e.g.
+     *      foo.bar     > foo['bar']
+     *      foo.bar.baz > foo['bar']['baz']
      *
      * @param  string $key
+     * @param  string $default This gets returned if $key does not exist
      * @return mixed
      */
-    public function getPost($key = '')
+    public function getPost($key = null, $default = null)
     {
-        if ($key === '') {
-            return $_POST;
-        } elseif (isset($_POST[$key])) {
-            return $_POST[$key];
-        } else {
-            return null;
-        }
+        return array_dot($_POST, $key, $default);
     }
 
     /**
@@ -201,5 +231,20 @@ class Request
         } else {
             return null;
         }
+    }
+
+    /**
+     * Checks if request is secure.
+     *
+     * @return boolean
+     */
+    public function isSecure()
+    {
+        if (isset($_SESSION['token'][$this->getPost('ilch_token')])
+               || isset($_SESSION['token'][$this->getParam('ilch_token')])) {
+            return true;
+        }
+
+        return false;
     }
 }

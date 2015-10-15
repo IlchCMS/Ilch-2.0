@@ -1,102 +1,78 @@
-<?php
-/**
- * Viewfile for the userlist.
- *
- * @copyright Ilch 2.0
- * @package ilch
- */
+<?php if ($this->get('userList') != ''): ?>
+    <form class="form-horizontal" method="POST" action="">
+        <?=$this->getTokenField() ?>
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col class="icon_width" />
+                <col class="icon_width">
+                <col class="icon_width" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col class="col-lg-2" />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('check_users') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th><?=$this->getTrans('userName') ?></th>
+                    <th><?=$this->getTrans('userEmail') ?></th>
+                    <th><?=$this->getTrans('userDateCreated') ?></th>
+                    <th><?=$this->getTrans('userGroups') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($this->get('userList') as $user) {
+                    $groups = '';
 
-if ($this->get('userList') != '') {
-?>
-    <table class="table table-hover table-striped">
-        <colgroup>
-            <col />
-            <col class="col-xs-2">
-            <col />
-            <col class="col-xs-2">
-            <col class="col-xs-2">
-            <col class="col-xs-2">
-        </colgroup>
-        <thead>
-            <tr>
-                <th><?php echo $this->trans('treat'); ?></th>
-                <th><?php echo $this->trans('userName'); ?></th>
-                <th><?php echo $this->trans('userEmail'); ?></th>
-                <th><?php echo $this->trans('userDateCreated'); ?></th>
-                <th><?php echo $this->trans('userDateConfirmed'); ?></th>
-                <th><?php echo $this->trans('userDateLastActivity'); ?></th>
-                <th><?php echo $this->trans('userGroups'); ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            foreach ($this->get('userList') as $user) {
-                $groups = '';
+                    foreach($user->getGroups() as $group) {
+                        if ($groups != '') {
+                            $groups .= ', ';
+                        }
 
-                foreach($user->getGroups() as $group) {
-                    if ($groups != '') {
-                        $groups .= ', ';
+                        $groups .= $group->getName();
                     }
 
-                    $groups .= $group->getName();
-                }
+                    if ($groups === '') {
+                        $groups = $this->getTrans('noGroupsAssigned');
+                    }
 
-                if ($groups === '') {
-                    $groups = $this->trans('noGroupsAssigned');
-                }
+                    $dateConfirmed = $user->getDateConfirmed();
 
-                $dateConfirmed = $user->getDateConfirmed();
+                    if ($dateConfirmed->getTimestamp() == 0) {
+                        $dateConfirmed = $this->getTrans('notConfirmedYet');
+                    }
 
-                if ($dateConfirmed->getTimestamp() == 0) {
-                    $dateConfirmed = $this->trans('notConfirmedYet');
-                }
+                    $dateLastActivity = $user->getDateLastActivity();
 
-                $dateLastActivity = $user->getDateLastActivity();
-
-                if ($dateLastActivity->getTimestamp() == 0) {
-                    $dateLastActivity = $this->trans('neverLoggedIn');
+                    if ($dateLastActivity !== null && $dateLastActivity->getTimestamp() == 0) {
+                        $dateLastActivity = $this->getTrans('neverLoggedIn');
+                    }
+                    ?>
+                    <tr>
+                        <td>
+                            <input value="<?=$user->getId()?>" type="checkbox" name="check_users[]" />
+                        </td>
+                        <td>
+                            <?=$this->getEditIcon(array('action' => 'treat', 'id' => $user->getId())) ?>
+                        </td>
+                        <td>
+                            <?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $user->getId())) ?>
+                        </td>
+                        <td><?=$this->escape($user->getName()) ?></td>
+                        <td><?=$this->escape($user->getEmail()) ?></td>
+                        <td><?=$this->escape($user->getDateCreated()) ?></td>
+                        <td><?=$this->escape($groups) ?></td>
+                    </tr>
+                    <?php
                 }
                 ?>
-                <tr>
-                    <td>
-                        <span class="editUser clickable fa fa-edit"
-                              data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'treat', 'id' => $user->getId())); ?>"
-                              title="<?php echo $this->trans('editUser'); ?>"></span>
-                        <span class="deleteUser clickable fa fa-times-circle"
-                              data-clickurl="<?php echo $this->url(array('module' => 'user', 'controller' => 'index', 'action' => 'delete', 'id' => $user->getId())); ?>"
-                              data-toggle="modal"
-                              data-target="#deleteModal"
-                              data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteUser', $user->getName())); ?>"
-                              title="<?php echo $this->trans('deleteUser'); ?>"></span>
-                    </td>
-                    <td><?php echo $this->escape($user->getName()); ?></td>
-                    <td><?php echo $this->escape($user->getEmail()); ?></td>
-                    <td><?php echo $this->escape($user->getDateCreated()); ?></td>
-                    <td><?php echo $this->escape($dateConfirmed); ?></td>
-                    <td><?php echo $this->escape($dateLastActivity); ?></td>
-                    <td><?php echo $this->escape($groups); ?></td>
-                </tr>
-                <?php
-            }
-            ?>
-        </tbody>
-    </table>
-    <script>
-    $('.editUser').on('click', function(event) {
-        window.location = $(this).data('clickurl');
-    });
-
-    $('.deleteUser').on('click', function(event) {
-        $('#modalButton').data('clickurl', $(this).data('clickurl'));
-        $('#modalText').html($(this).data('modaltext'));
-    });
-
-    $('#modalButton').on('click', function(event) {
-        window.location = $(this).data('clickurl');
-    });
-    </script>
-<?php
-} else {
-    echo $this->trans('noUsersExist');
-}
-?>
+            </tbody>
+        </table>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
+    </form>
+<?php else: ?>
+    <?=$this->getTrans('noUsersExist') ?>
+<?php endif; ?>

@@ -5,6 +5,7 @@
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
 
 class Page
@@ -12,70 +13,68 @@ class Page
     /**
      * @var Ilch_Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var Ilch_Translator
      */
-    private $_translator;
+    private $translator;
 
     /**
      * @var Ilch_Router
      */
-    private $_router;
+    private $router;
 
     /**
      * @var Ilch_Plugin
      */
-    private $_plugin;
+    private $plugin;
 
     /**
      * @var Ilch_Layout_Base
      */
-    private $_layout;
+    private $layout;
 
     /**
      * @var Ilch_View
      */
-    private $_view;
+    private $view;
 
     /**
      * @var Ilch_Config_File
      */
-    private $_fileConfig;
+    private $fileConfig;
 
     /**
      * Initialize all needed objects.
      */
     public function __construct()
     {
-        $this->_request = new Request();
-        $this->_translator = new Translator();
-        $this->_router = new Router($this->_request);
-        $this->_plugin = new Plugin();
-        $this->_view = new View($this->_request, $this->_translator, $this->_router);
+        $this->request = new Request();
+        $this->translator = new Translator();
+        $this->router = new Router($this->request);
+        $this->plugin = new Plugin();
+        $this->view = new View($this->request, $this->translator, $this->router);
 
-        $this->_fileConfig = new Config\File();
-        $this->_router->execute();
+        $this->fileConfig = new Config\File();
+        $this->router->execute();
 
-        if ($this->_request->isAdmin()) {
-            $this->_layout = new Layout\Admin($this->_request, $this->_translator, $this->_router);
+        if ($this->request->isAdmin()) {
+            $this->layout = new Layout\Admin($this->request, $this->translator, $this->router);
         } else {
-            $this->_layout = new Layout\Frontend($this->_request, $this->_translator, $this->_router);
+            $this->layout = new Layout\Frontend($this->request, $this->translator, $this->router);
         }
 
-        if ($this->_request->isPost()) {
-            $token = $this->_request->getPost('ilch_token');
-
-            if (empty($token) || !isset($_SESSION['token'][$token])) {
-                throw new \InvalidArgumentException('token wrong');
-            }
+        if ($this->request->isPost() && !$this->request->isSecure()) {
+            throw new \InvalidArgumentException(
+                'no valid secure token given, add function getTokenField() to formular'
+            );
         }
 
-        $this->_plugin->detectPlugins();
-        $this->_plugin->addPluginData('request', $this->_request);
-        $this->_plugin->addPluginData('layout', $this->_layout);
-        $this->_plugin->addPluginData('router', $this->_router);
+        $this->plugin->detectPlugins();
+        $this->plugin->addPluginData('request', $this->request);
+        $this->plugin->addPluginData('layout', $this->layout);
+        $this->plugin->addPluginData('router', $this->router);
     }
 
     /**
@@ -83,38 +82,36 @@ class Page
      */
     public function loadCms()
     {
-        include_once CONFIG_PATH.'/config.php';
+        $this->fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
 
-        if (!empty($config['dbUser'])) {
+        if (($this->fileConfig->get('dbUser')) !== null) {
             /*
              * Cms is installed
              */
-            $this->_fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
-
-            if ($this->_fileConfig->get('debugModus') === false) {
+            if ($this->fileConfig->get('debugModus') === false) {
                 @ini_set('display_errors', 'off');
                 error_reporting(0);
             }
 
             $dbFactory = new Database\Factory();
-            $db = $dbFactory->getInstanceByConfig($this->_fileConfig);
+            $db = $dbFactory->getInstanceByConfig($this->fileConfig);
             $databaseConfig = new Config\Database($db);
             $databaseConfig->loadConfigFromDatabase();
             Registry::set('db', $db);
             Registry::set('config', $databaseConfig);
-            $this->_plugin->addPluginData('db', $db);
-            $this->_plugin->addPluginData('config', $databaseConfig);
-            $this->_plugin->addPluginData('translator', $this->_translator);
-            $this->_plugin->execute('AfterDatabaseLoad');
-            $this->_router->defineStartPage($databaseConfig->get('start_page'), $this->_translator);
+            $this->plugin->addPluginData('db', $db);
+            $this->plugin->addPluginData('config', $databaseConfig);
+            $this->plugin->addPluginData('translator', $this->translator);
+            $this->plugin->execute('AfterDatabaseLoad');
+            $this->router->defineStartPage($databaseConfig->get('start_page'), $this->translator);
         } else {
             /*
              * Cms not installed yet.
              */
-            $this->_request->setModuleName('install');
+            $this->request->setModuleName('install');
 
             if (!empty($_SESSION['language'])) {
-                $this->_translator->setLocale($_SESSION['language']);
+                $this->translator->setLocale($_SESSION['language']);
             }
         }
     }
@@ -124,40 +121,47 @@ class Page
      */
     public function loadPage()
     {
-        $this->_translator->load(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/translations');
+        $this->translator->load(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/translations');
         
-        if($this->_request->isAdmin()) {
-            $this->_translator->load(APPLICATION_PATH.'/modules/admin/translations');
+        if($this->request->isAdmin()) {
+            $this->translator->load(APPLICATION_PATH.'/modules/admin/translations');
         }
 
-        $controller = $this->_loadController();
-        $controllerName = $this->_request->getControllerName();
+        $controller = $this->loadController();
+        $controllerName = $this->request->getControllerName();
         $findSub = strpos($controllerName, '_');
         $dir = '';
 
         if ($findSub !== false) {
-            $controllerParts = explode('_', $this->_request->getControllerName());
+            $controllerParts = explode('_', $this->request->getControllerName());
             $controllerName = $controllerParts[1];
             $dir = ucfirst($controllerParts[0]).'\\';
         }
         
-        $this->_plugin->addPluginData('controller', $controller);
-        $this->_plugin->execute('AfterControllerLoad');
+        $this->plugin->addPluginData('controller', $controller);
+        $this->plugin->execute('AfterControllerLoad');
         
-
-        if ($this->_request->isAdmin()) {
-            $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/admin/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php');
+        if ($this->request->isAdmin()) {
+            $viewOutput = $this->view->loadScript(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/views/admin/'.$dir.$controllerName.'/'.$this->request->getActionName().'.php');
         } else {
-            $viewOutput = $this->_view->loadScript(APPLICATION_PATH.'/modules/'.$this->_request->getModuleName().'/views/'.$dir.$controllerName.'/'.$this->_request->getActionName().'.php');
+            $viewPath = APPLICATION_PATH.'/'.dirname($controller->getLayout()->getFile()).'/views/modules/'.$this->request->getModuleName().'/'.$dir.$controllerName.'/'.$this->request->getActionName().'.php';
+
+            if (!file_exists($viewPath)) {
+                $viewPath = APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/views/'.$dir.$controllerName.'/'.$this->request->getActionName().'.php';
+            }
+
+            $viewOutput = $this->view->loadScript($viewPath);
         }
 
         if (!empty($viewOutput)) {
             $controller->getLayout()->setContent($viewOutput);
         }
 
-        if ($controller->getLayout()->getDisabled() === false) {
+        if ($this->request->isAjax()) {
+            echo $viewOutput;
+        } elseif ($controller->getLayout()->getDisabled() === false) {
             if ($controller->getLayout()->getFile() != '') {
-                $this->_layout->loadScript(APPLICATION_PATH.'/'.$controller->getLayout()->getFile().'.php');
+                $this->layout->loadScript(APPLICATION_PATH.'/'.$controller->getLayout()->getFile().'.php');
             }
         }
     }
@@ -167,29 +171,29 @@ class Page
      *
      * @return Ilch_Controller_Base
      */
-    protected function _loadController()
+    protected function loadController()
     {
-        $controllerName = $this->_request->getControllerName();
+        $controllerName = $this->request->getControllerName();
         $findSub = strpos($controllerName, '_');
         $dir = '';
 
         if ($findSub !== false) {
-            $controllerParts = explode('_', $this->_request->getControllerName());
+            $controllerParts = explode('_', $this->request->getControllerName());
             $controllerName = $controllerParts[1];
             $dir = ucfirst($controllerParts[0]).'\\';
         }
 
-        if ($this->_request->isAdmin()) {
-            $controller = ucfirst($this->_request->getModuleName()).'\\Controllers\\Admin\\'.$dir.ucfirst($controllerName);
+        if ($this->request->isAdmin()) {
+            $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\Admin\\'.$dir.ucfirst($controllerName);
         } else {
-            $controller = ucfirst($this->_request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
+            $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
         }
 
-        $controller = new $controller($this->_layout, $this->_view, $this->_request, $this->_router, $this->_translator);
-        $action = $this->_request->getActionName().'Action';
+        $controller = new $controller($this->layout, $this->view, $this->request, $this->router, $this->translator);
+        $action = $this->request->getActionName().'Action';
 
-        $this->_plugin->addPluginData('controller', $controller);
-        $this->_plugin->execute('BeforeControllerLoad');
+        $this->plugin->addPluginData('controller', $controller);
+        $this->plugin->execute('BeforeControllerLoad');
 
         if (method_exists($controller, 'init')) {
             $controller->init();
@@ -209,7 +213,7 @@ class Page
      */
     public function getView()
     {
-        return $this->_view;
+        return $this->view;
     }
 
     /**
@@ -219,6 +223,6 @@ class Page
      */
     public function getRequest()
     {
-        return $this->_request;
+        return $this->request;
     }
 }

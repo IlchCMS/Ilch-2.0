@@ -1,18 +1,15 @@
 <?php
 /**
- * Holds Article_ArticleModel.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Article\Models;
+namespace Modules\Article\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The article model class.
- *
- * @package ilch
  */
 class Article extends \Ilch\Model
 {
@@ -21,42 +18,91 @@ class Article extends \Ilch\Model
      *
      * @var int
      */
-    protected $_id;
+    protected $id;
+
+    /**
+     * The catId of the article.
+     *
+     * @var int
+     */
+    protected $catId;
+
+    /**
+     * The authorId of the article.
+     *
+     * @var int
+     */
+    protected $authorId;
+
+    /**
+     * The visits of the article.
+     *
+     * @var int
+     */
+    protected $visits;
 
     /**
      * The perma of the article.
      *
      * @var string
      */
-    protected $_perma;
+    protected $perma;
 
     /**
      * The title of the article.
      *
      * @var string
      */
-    protected $_title;
+    protected $title;
 
     /**
      * The content of the article.
      *
      * @var string
      */
-    protected $_content;
+    protected $content;
+    
+    /**
+     * The description of the article.
+     *
+     * @var string
+     */
+    protected $description;
 
     /**
      * The locale of the article.
      *
      * @var string
      */
-    protected $_locale;
+    protected $locale;
 
     /**
      * The datetime when the article got created.
      *
      * @var DateTime
      */
-    protected $_dateCreated;
+    protected $dateCreated;
+
+    /**
+     * The articleImage of the article.
+     *
+     * @var string
+     */
+    protected $articleImage;
+
+    /**
+     * The articleImageThumb of the article.
+     *
+     * @var string
+     */
+    protected $articleImageThumb;
+
+    /**
+     * The articleImageSource of the image.
+     *
+     * @var string
+     */
+    protected $articleImageSource;
 
     /**
      * Gets the id of the article.
@@ -65,7 +111,7 @@ class Article extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -75,7 +121,67 @@ class Article extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
+    }
+
+    /**
+     * Gets the catId of the article.
+     *
+     * @return int
+     */
+    public function getCatId()
+    {
+        return $this->catId;
+    }
+
+    /**
+     * Sets the catId of the article.
+     *
+     * @param int $catId
+     */
+    public function setCatId($catId)
+    {
+        $this->catId = (int) $catId;
+    }
+
+    /**
+     * Gets the authorId of the article.
+     *
+     * @return int
+     */
+    public function getAuthorId()
+    {
+        return $this->authorId;
+    }
+
+    /**
+     * Sets the authorId of the article.
+     *
+     * @param int $authorId
+     */
+    public function setAuthorId($authorId)
+    {
+        $this->authorId = (int) $authorId;
+    }
+
+    /**
+     * Gets the visits of the article.
+     *
+     * @return int
+     */
+    public function getVisits()
+    {
+        return $this->visits;
+    }
+
+    /**
+     * Sets the visits of the article.
+     *
+     * @param int $visits
+     */
+    public function setVisits($visits)
+    {
+        $this->visits = (int) $visits;
     }
 
     /**
@@ -85,7 +191,7 @@ class Article extends \Ilch\Model
      */
     public function getPerma()
     {
-        return $this->_perma;
+        return $this->perma;
     }
 
     /**
@@ -95,7 +201,7 @@ class Article extends \Ilch\Model
      */
     public function setPerma($perma)
     {
-        $this->_perma = $perma;
+        $this->perma = $perma;
     }
 
     /**
@@ -105,7 +211,7 @@ class Article extends \Ilch\Model
      */
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
 
     /**
@@ -115,7 +221,7 @@ class Article extends \Ilch\Model
      */
     public function setTitle($title)
     {
-        $this->_title = (string) $title;
+        $this->title = (string) $title;
     }
 
     /**
@@ -125,7 +231,7 @@ class Article extends \Ilch\Model
      */
     public function getContent()
     {
-        return $this->_content;
+        return $this->content;
     }
 
     /**
@@ -135,7 +241,27 @@ class Article extends \Ilch\Model
      */
     public function setContent($content)
     {
-        $this->_content = (string) $content;
+        $this->content = (string) $content;
+    }
+
+    /**
+     * Gets the description of the page.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets the description of the page.
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = (string)$description;
     }
 
     /**
@@ -145,7 +271,7 @@ class Article extends \Ilch\Model
      */
     public function getLocale()
     {
-        return $this->_locale;
+        return $this->locale;
     }
 
     /**
@@ -155,7 +281,7 @@ class Article extends \Ilch\Model
      */
     public function setLocale($locale)
     {
-        $this->_locale = (string) $locale;
+        $this->locale = (string)$locale;
     }
 
     /**
@@ -165,7 +291,7 @@ class Article extends \Ilch\Model
      */
     public function getDateCreated()
     {
-        return $this->_dateCreated;
+        return $this->dateCreated;
     }
 
     /**
@@ -175,6 +301,66 @@ class Article extends \Ilch\Model
      */
     public function setDateCreated($dateCreated)
     {
-        $this->_dateCreated = $dateCreated;
+        $this->dateCreated = $dateCreated;
+    }
+
+    /**
+     * Sets the articleImage of the article.
+     *
+     * @param string $articleImage
+     */
+    public function setArticleImage($articleImage)
+    {
+        $this->articleImage = $articleImage;
+    }
+
+    /**
+     * Gets the article Image.
+     *
+     * @return string
+     */
+    public function getArticleImage()
+    {
+        return $this->articleImage;
+    }
+
+    /**
+     * Sets the articleImageThumb of the article.
+     *
+     * @param string $articleImageThumb
+     */
+    public function setArticleImageThumb($articleImageThumb)
+    {
+        $this->articleImageThumb = $articleImageThumb;
+    }
+
+    /**
+     * Gets the article ImageThumb.
+     *
+     * @return string
+     */
+    public function getArticleImageThumb()
+    {
+        return $this->articleImageThumb;
+    }
+
+    /**
+     * Sets the articleImageSource of the image.
+     *
+     * @param string $articleImageSource
+     */
+    public function setArticleImageSource($articleImageSource)
+    {
+        $this->articleImageSource = $articleImageSource;
+    }
+
+    /**
+     * Gets the article Image Source.
+     *
+     * @return string
+     */
+    public function getArticleImageSource()
+    {
+        return $this->articleImageSource;
     }
 }

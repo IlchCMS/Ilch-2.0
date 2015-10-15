@@ -1,81 +1,103 @@
-<legend><?php echo $this->trans('manageLink'); ?></legend>
-<table class="table table-bordered table-striped table-responsive">
-    <colgroup>
-        <col class="col-xs-1" />
-        <col class="col-xs-2" />
-        <col class="col-xs-5" />
-    </colgroup>
-    <thead>
-        <tr>
-            <th><?php echo $this->trans('treat'); ?></th>
-            <th><?php echo $this->trans('name'); ?></th>
-            <th><?php echo $this->trans('description'); ?></th>
-            <th><?php echo $this->trans('category'); ?></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if ($this->get('links') != '') {
-            foreach ($this->get('links') as $link) {
-                $getBanner = $this->escape($link->getBanner());
-                if ($getBanner != '') {
-                    $getBanner = '<a href='.$this->escape($link->getLink()).' target="_blank" rel="popover" data-img="'.$this->escape($link->getBanner()).'">'.$this->escape($link->getName()).' <i class="fa fa-picture-o"></i></a>';
-                }else{
-                    $getBanner = '<a href='.$this->escape($link->getLink()).' target="_blank">'.$this->escape($link->getName()).'</a>';
-                }
-                echo '<tr>
-                        <td>
-                        <a href="'.$this->url(array('action' => 'treat', 'id' => $link->getId())).'" title="'.$this->trans('treat').'"><i class="fa fa-edit"></i></a> ';
-        ?>
-                    <span class="deleteLink clickable fa fa-times-circle"
-                                  data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $link->getId())); ?>"
-                                  data-toggle="modal"
-                                  data-target="#deleteModal"
-                                  data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteLink', $this->escape($link->getName()))); ?>"
-                                  title="<?php echo $this->trans('delete'); ?>"></span>
-        <?php
-                echo '</td>';
-                echo '<td>'.$getBanner.'</td>';
-                echo '<td>'.$this->escape($link->getDesc()).'</td>';
-                echo '<td>'.$this->escape($link->getCatId()).'</td>';
-                echo '</tr>';
-            }
-        } else {
-            echo '<tr>';
-            echo '<td colspan="4">'.$this->trans('noLinks').'</td>';
-            echo '</tr>';
-        }
+<?php
+$categories = $this->get('categorys');
+$links = $this->get('links');
 ?>
-    </tbody>
-</table>
 
-<script>
-$('.deleteLink').on('click', function(event) {
-    $('#modalButton').data('clickurl', $(this).data('clickurl'));
-    $('#modalText').html($(this).data('modaltext'));
-});
+<legend><?=$this->getTrans('manageLink') ?></legend>
+<form class="form-horizontal" method="POST" action="">
+    <?php if ($categories != ''): ?>
+        <?=$this->getTokenField() ?>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <colgroup>
+                        <col class="icon_width" />
+                        <col class="icon_width" />
+                        <col class="icon_width" />
+                        <col />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th><?=$this->getCheckAllCheckbox('check_cats') ?></th>
+                            <th></th>
+                            <th></th>
+                            <th><?=$this->getTrans('category') ?></th>
+                            <th style="text-align:center"><?=$this->getTrans('links') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($this->get('categorys') as $category) { ?>
+                        <tr>
+                                <td><input value="<?=$category->getId()?>" type="checkbox" name="check_cats[]" /></td>
+                                <td><?=$this->getEditIcon(array('action' => 'treatCat', 'id' => $category->getId())) ?></td>
+                                <td><?=$this->getDeleteIcon(array('action' => 'deleteCat', 'id' => $category->getId())) ?></td>
+                        <?php
+                                $getDesc = $this->escape($category->getDesc());
 
-$('#modalButton').on('click', function(event) {
-    window.location = $(this).data('clickurl');
-});
+                                if ($getDesc != '') {
+                                    $getDesc = '&raquo; '.$this->escape($category->getDesc());
+                                }else{
+                                    $getDesc = '';
+                                }
 
-$(function () {
-    $('a[rel=popover]').popover({
-        html: true,
-        trigger: 'hover',
-        placement: 'right',
-        title: 'Banner Vorschau',
-        content: function(){return '<img src="'+$(this).data('img') + '" />';}
-    });
-});
-</script>
-<style>
-    .deleteLink {
-        padding-left: 10px;
-    }
-    .popover{
-        display:block !important;
-        max-width: 500px!important;
-        width:auto;
-    }
-</style>
+                                echo '<td><a href='.$this->getUrl(array('action' => 'index', 'cat_id' => $category->getId())).' title="'.$this->escape($category->getName()).'">'.$this->escape($category->getName()).'</a><br>'.$getDesc.'</td>';    
+                                echo '<td align="center" style="vertical-align:middle">'.$category->getLinksCount().'</td>';
+                                echo '</tr>';
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                <br />
+            </div>
+    <?php endif; ?>
+    <?php if ($links != ''): ?>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <colgroup>
+                        <col class="icon_width" />
+                        <col class="icon_width" />
+                        <col class="icon_width" />
+                        <col />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th><?=$this->getCheckAllCheckbox('check_links') ?></th>
+                            <th></th>
+                            <th></th>
+                            <th><?=$this->getTrans('links') ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($links as $link) { ?>
+                        <tr>
+                            <td><input value="<?=$link->getId()?>" type="checkbox" name="check_links[]" /></td>
+                            <td><?=$this->getEditIcon(array('action' => 'treatLink', 'id' => $link->getId())) ?></td>
+                            <td><?=$this->getDeleteIcon(array('action' => 'deleteLink', 'id' => $link->getId())) ?></td>
+                            <?php
+                            $getBanner = $this->escape($link->getBanner());
+                            $getDesc = $this->escape($link->getDesc());
 
+                            if (!empty($getDesc)) {
+                                $getDesc = '&raquo; '.$this->escape($link->getDesc());
+                            }else{
+                                $getDesc = '';
+                            }
+
+                            if (!empty($getBanner)) {
+                                $getBanner = '<img src="'.$getBanner.'">';
+                            }else{
+                                $getBanner = $this->escape($link->getName());
+                            }
+
+                            echo '<td><a href='.$this->escape($link->getLink()).' target="_blank" title="'.$this->escape($link->getName()).'">'.$getBanner.'</a><br />'.$getDesc.'</td>';    
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+    <?php else: ?>
+        <?=$this->getTrans('noLinks') ?>
+    <?php endif; ?>
+    <?php $actions = array('delete' => 'delete') ?>
+    <?=$this->getListBar($actions) ?>
+</form>

@@ -4,8 +4,10 @@
  * @package ilch
  */
 
-namespace Page\Controllers;
-use Page\Mappers\Page as PageMapper;
+namespace Modules\Page\Controllers;
+
+use Modules\Page\Mappers\Page as PageMapper;
+
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
@@ -20,6 +22,9 @@ class Index extends \Ilch\Controller\Frontend
         if ($page == null) {
             $this->getView()->set('content', 'page not found');
         } else {
+            $this->getLayout()->set('metaTitle', $page->getTitle());
+            $this->getLayout()->set('metaDescription', $page->getDescription());
+            $this->getLayout()->getHmenu()->add($page->getTitle(), $page->getPerma());
             $this->getView()->set('content', $page->getContent());
         }
     }

@@ -1,30 +1,32 @@
 <?php
 /**
- * Holds class Libraries_Ilch_RequestTest.
- *
  * @package ilch_phpunit
  */
+
+namespace Ilch;
+
+use PHPUnit\Ilch\TestCase;
 
 /**
  * Tests the request object.
  *
  * @package ilch_phpunit
  */
-class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
+class RequestTest extends TestCase
 {
     /**
      * The object to test with.
      *
-     * @var Ilch_Request
+     * @var Request
      */
-    protected $_request;
+    protected $request;
 
     /**
      * Initializes an empty request object.
      */
     public function setUp()
     {
-        $this->_request = new \Ilch\Request();
+        $this->request = new Request();
         $_REQUEST = array();
         $_GET = array();
         $_POST = array();
@@ -37,12 +39,12 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testSetAndGetParams()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
-        $this->_request->setParams($params);
-        $actualParams = $this->_request->getParams();
+        $this->request->setParams($params);
+        $actualParams = $this->request->getParams();
 
         $this->assertEquals($params, $actualParams, 'Param array got manipulated unexpectedly.');
     }
@@ -53,13 +55,13 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testGetSingleParam()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
-        $this->_request->setParams($params);
+        $this->request->setParams($params);
 
-        $this->assertEquals(123, $actualParam = $this->_request->getParam('id'), 'Param got manipulated unexpectedly.');
+        $this->assertEquals(123, $actualParam = $this->request->getParam('id'), 'Param got manipulated unexpectedly.');
     }
 
     /**
@@ -68,14 +70,18 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testGetSingleParamNull()
     {
         $params = array(
-            'name' => 'testuser',
-            'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'name'      => 'testuser',
+            'email'     => 'testuser@testmail.com',
+            'id'        => 123,
             'nullParam' => null,
         );
-        $this->_request->setParams($params);
+        $this->request->setParams($params);
 
-        $this->assertEquals(null, $actualParam = $this->_request->getParam('nullParam'), 'Param got manipulated unexpectedly.');
+        $this->assertEquals(
+            null,
+            $actualParam = $this->request->getParam('nullParam'),
+            'Param got manipulated unexpectedly.'
+        );
     }
 
     /**
@@ -85,13 +91,13 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testSaveParamsWithNullValue()
     {
         $params = array(
-            'name' => 'testuser',
-            'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'name'      => 'testuser',
+            'email'     => 'testuser@testmail.com',
+            'id'        => 123,
             'nullParam' => null,
         );
-        $this->_request->setParams($params);
-        $actualParams = $this->_request->getParams();
+        $this->request->setParams($params);
+        $actualParams = $this->request->getParams();
 
         $this->assertArrayHasKey('nullParam', $actualParams, 'The param with value null got deleted.');
     }
@@ -101,8 +107,8 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
      */
     public function testSaveSingleParamWithNullValue()
     {
-        $this->_request->setParam('nullParam', null);
-        $actualParams = $this->_request->getParams();
+        $this->request->setParam('nullParam', null);
+        $actualParams = $this->request->getParams();
 
         $this->assertArrayHasKey('nullParam', $actualParams, 'The param with value null got deleted.');
     }
@@ -112,8 +118,8 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
      */
     public function testSaveSingleParam()
     {
-        $this->_request->setParam('username', 'testuser');
-        $actualParams = $this->_request->getParams();
+        $this->request->setParam('username', 'testuser');
+        $actualParams = $this->request->getParams();
 
         $this->assertArrayHasKey('username', $actualParams, 'The saved param got deleted.');
     }
@@ -125,14 +131,14 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testSetAndManipulateSourceParams()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
         $expectedParams = $params;
-        $this->_request->setParams($params);
+        $this->request->setParams($params);
         $params['testvar'] = false;
-        $actualParams = $this->_request->getParams();
+        $actualParams = $this->request->getParams();
 
         $this->assertEquals($expectedParams, $actualParams, 'Param array got manipulated unexpectedly.');
     }
@@ -142,8 +148,8 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
      */
     public function testGetModuleName()
     {
-        $this->_request->setModuleName('moduleNameTest');
-        $this->assertEquals('moduleNameTest', $this->_request->getModuleName(), 'Modulename changed.');
+        $this->request->setModuleName('moduleNameTest');
+        $this->assertEquals('moduleNameTest', $this->request->getModuleName(), 'Modulename changed.');
     }
 
     /**
@@ -151,8 +157,8 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
      */
     public function testGetControllerName()
     {
-        $this->_request->setControllerName('controllerNameTest');
-        $this->assertEquals('controllerNameTest', $this->_request->getControllerName(), 'Controllername changed.');
+        $this->request->setControllerName('controllerNameTest');
+        $this->assertEquals('controllerNameTest', $this->request->getControllerName(), 'Controllername changed.');
     }
 
     /**
@@ -160,8 +166,8 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
      */
     public function testGetActionName()
     {
-        $this->_request->setActionName('actionNameTest');
-        $this->assertEquals('actionNameTest', $this->_request->getActionName(), 'Actionname changed.');
+        $this->request->setActionName('actionNameTest');
+        $this->assertEquals('actionNameTest', $this->request->getActionName(), 'Actionname changed.');
     }
 
     /**
@@ -170,14 +176,14 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     public function testIsPost()
     {
         $params = array(
-            'name' => 'testuser',
+            'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
-            'id' => 123,
+            'id'    => 123,
         );
         $_POST = $params;
         $_REQUEST = $params;
 
-        $this->assertTrue($this->_request->isPost());
+        $this->assertTrue($this->request->isPost());
     }
 
     /**
@@ -187,7 +193,11 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     {
         $_GET['username'] = 'testuser';
 
-        $this->assertEquals('testuser', $this->_request->getQuery('username'), 'The request object didnt returned the GET parameter.');
+        $this->assertEquals(
+            'testuser',
+            $this->request->getQuery('username'),
+            'The request object didnt returned the GET parameter.'
+        );
     }
 
     /**
@@ -197,6 +207,10 @@ class Libraries_Ilch_RequestTest extends PHPUnit_Ilch_TestCase
     {
         $_POST['username'] = 'testuser';
 
-        $this->assertEquals('testuser', $this->_request->getPost('username'), 'The request object didnt returned the POST parameter.');
+        $this->assertEquals(
+            'testuser',
+            $this->request->getPost('username'),
+            'The request object didnt returned the POST parameter.'
+        );
     }
 }

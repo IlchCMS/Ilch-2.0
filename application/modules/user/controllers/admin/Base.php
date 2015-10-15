@@ -1,20 +1,15 @@
 <?php
 /**
- * Holds the class Index.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace User\Controllers\Admin;
+namespace Modules\User\Controllers\Admin;
 
 defined('ACCESS') or die('no direct access');
 
 /**
  * Handles the init for the user module.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Base extends \Ilch\Controller\Admin
 {
@@ -25,7 +20,7 @@ class Base extends \Ilch\Controller\Admin
     {
         $active = array();
 
-        foreach(array('group', 'index', 'access') as $controllerName) {
+        foreach(array('group', 'index', 'access', 'settings') as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 
@@ -39,22 +34,29 @@ class Base extends \Ilch\Controller\Admin
                     'name' => 'menuUser',
                     'active' => $active['index'],
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'menuGroup',
                     'active' => $active['group'],
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'group', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'group', 'action' => 'index'))
                 ),
                 array
                 (
                     'name' => 'menuAccess',
                     'active' => $active['access'],
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'access', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'access', 'action' => 'index'))
                 ),
+                array
+                (
+                    'name' => 'menuSettings',
+                    'active' => $active['settings'],
+                    'icon' => 'fa fa-cogs',
+                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+                )
             )
         );
     }

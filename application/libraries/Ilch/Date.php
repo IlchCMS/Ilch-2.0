@@ -1,19 +1,15 @@
 <?php
 /**
- * Holds class Ilch_Date.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * Tests the Ilch_Date class.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Date extends \DateTime
 {
@@ -22,28 +18,28 @@ class Date extends \DateTime
      *
      * @var DateTimeZone
      */
-    private $_timeZone;
+    private $timeZone;
 
     /**
      * The local DateTimeZone.
      *
      * @var DateTimeZone
      */
-    private $_timeZoneLocal;
+    private $timeZoneLocal;
 
     /**
      * The default format for outputs.
      *
      * @var string
      */
-    private $_defaultFormat = 'Y-m-d H:i:s';
+    private $defaultFormat = 'Y-m-d H:i:s';
 
     /**
      * The format used for outputs for the database.
      *
      * @var string
      */
-    private $_dbFormat = 'Y-m-d H:i:s';
+    private $dbFormat = 'Y-m-d H:i:s';
 
     /**
      * Generates a DateTime object using the given parameters.
@@ -54,16 +50,20 @@ class Date extends \DateTime
     public function __construct($time = 'now', $timezone = 'UTC')
     {
         if (Registry::has('config')) {
-            $this->_timeZoneLocal = new \DateTimeZone(Registry::get('config')->get('timezone'));
-        } else {
-            $this->_timeZoneLocal = new \DateTimeZone(SERVER_TIMEZONE);
+            $timezoneString = Registry::get('config')->get('timezone');
+            if (!empty($timezoneString)) {
+                $this->timeZoneLocal = new \DateTimeZone($timezoneString);
+            }
+        }
+        if (!isset($this->timeZoneLocal)) {
+            $this->timeZoneLocal = new \DateTimeZone(SERVER_TIMEZONE);
         }
 
         if (is_string($timezone)) {
             $timezone = new \DateTimeZone($timezone);
         }
 
-        $this->_timeZone = $timezone;
+        $this->timeZone = $timezone;
         parent::__construct($time, $timezone);
     }
 
@@ -76,12 +76,12 @@ class Date extends \DateTime
     public function toDb($local = false)
     {
         if ($local) {
-            $timezone = $this->_timeZoneLocal;
+            $timezone = $this->timeZoneLocal;
         } else {
-            $timezone = $this->_timeZone;
+            $timezone = $this->timeZone;
         }
 
-        return $this->_format($this->_dbFormat, $local);
+        return $this->ownFormat($this->dbFormat, $local);
     }
 
     /**
@@ -91,7 +91,7 @@ class Date extends \DateTime
      */
     public function __toString()
     {
-        return $this->format($this->_defaultFormat);
+        return $this->format($this->defaultFormat);
     }
 
     /**
@@ -106,10 +106,10 @@ class Date extends \DateTime
     public function format($format = null, $local = false)
     {
         if ($format === null) {
-            $format = $this->_defaultFormat;
+            $format = $this->defaultFormat;
         }
 
-        return $this->_format($format, $local);
+        return $this->ownFormat($format, $local);
     }
 
     /**
@@ -119,12 +119,12 @@ class Date extends \DateTime
      * @param  boolean $local
      * @return string
      */
-    protected function _format($format, $local)
+    protected function ownFormat($format, $local)
     {
         if ($local) {
-            $this->setTimezone($this->_timeZoneLocal);
+            $this->setTimezone($this->timeZoneLocal);
             $formattedTime = parent::format($format);
-            $this->setTimezone($this->_timeZone);
+            $this->setTimezone($this->timeZone);
         } else {
             $formattedTime = parent::format($format);
         }
@@ -139,7 +139,7 @@ class Date extends \DateTime
      */
     public function setDbFormat($format)
     {
-        $this->_dbFormat = $format;
+        $this->dbFormat = $format;
     }
 
     /**
@@ -149,6 +149,6 @@ class Date extends \DateTime
      */
     public function setDefaultFormat($format)
     {
-        $this->_defaultFormat = $format;
+        $this->defaultFormat = $format;
     }
 }

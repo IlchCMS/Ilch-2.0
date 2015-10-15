@@ -4,17 +4,12 @@
  * @package ilch
  */
 
-namespace Link\Mappers;
+namespace Modules\Link\Mappers;
 
-use Link\Models\Link as LinkModel;
+use Modules\Link\Models\Link as LinkModel;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The link mapper class.
- *
- * @package ilch
- */
 class Link extends \Ilch\Mapper
 {
     /**
@@ -25,10 +20,10 @@ class Link extends \Ilch\Mapper
      */
     public function getLinks($where = array())
     {
-        $linkArray = $this->db()->selectArray('*', 'links', $where);
+        $linkArray = $this->db()->select('*')->from('links')->where($where)->execute()->fetchRows();
 
         if (empty($linkArray)) {
-            return array();
+            return null;
         }
 
         $links = array();
@@ -42,6 +37,7 @@ class Link extends \Ilch\Mapper
             $linkModel->setLink($linkRow['link']);
             $linkModel->setBanner($linkRow['banner']);
             $linkModel->setHits($linkRow['hits']);
+         
             $links[] = $linkModel;
         }
 
@@ -56,27 +52,8 @@ class Link extends \Ilch\Mapper
      */
     public function getLinkById($id)
     {
-        $linkRow = $this->db()->selectRow
-        (
-            '*',
-            'links',
-            array('id' => $this->db()->escape($id))
-        );
-
-        if (empty($linkRow)) {
-            return null;
-        }
-
-        $linkModel = new LinkModel();
-        $linkModel->setId($linkRow['id']);
-        $linkModel->setCatID($linkRow['cat_id']);
-        $linkModel->setName($linkRow['name']);
-        $linkModel->setDesc($linkRow['desc']);
-        $linkModel->setLink($linkRow['link']);
-        $linkModel->setBanner($linkRow['banner']);
-        $linkModel->setHits($linkRow['hits']);
-
-        return $linkModel;
+        $links = $this->getLinks(array('id' => $id));
+        return reset($links);
     }
 
     /**
@@ -86,36 +63,25 @@ class Link extends \Ilch\Mapper
      */
     public function save(LinkModel $link)
     {
+        $fields = array
+        (
+            'name' => $link->getName(),
+            'link' => $link->getLink(),
+            'banner' => $link->getBanner(),
+            'desc' => $link->getDesc(),
+            'cat_id' => $link->getCatId(),
+            'hits' => $link->getHits()
+        );
+
         if ($link->getId()) {
-            $this->db()->update
-            (
-                array
-                (
-                    'name' => $link->getName(),
-                    'link' => $link->getLink(),
-                    'banner' => $link->getBanner(),
-                    'desc' => $link->getDesc(),
-                    'cat_id' => $link->getCatId()
-                ),
-                'links',
-                array
-                (
-                    'id' => $link->getId(),
-                )
-            );
+            $this->db()->update('links')
+                ->values($fields)
+                ->where(array('id' => $link->getId()))
+                ->execute();
         } else {
-            $this->db()->insert
-            (
-                array
-                (
-                    'name' => $link->getName(),
-                    'link' => $link->getLink(),
-                    'banner' => $link->getBanner(),
-                    'desc' => $link->getDesc(),
-                    'cat_id' => $link->getCatId()
-                ),
-                'links'
-            );
+            $this->db()->insert('links')
+                ->values($fields)
+                ->execute();
         }
     }
 
@@ -126,10 +92,8 @@ class Link extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'links',
-            array('id' => $id)
-        );
+        $this->db()->delete('links')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

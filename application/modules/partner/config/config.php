@@ -1,32 +1,51 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Partner\Config;
+namespace Modules\Partner\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'partner';
-    public $author = 'Veldscholten Kevin';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Partner',
-        'de_DE' => 'Partner',
+        'key' => 'partner',
+        'author' => 'Veldscholten, Kevin',
+        'icon_small' => 'partner.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Partner',
+                'description' => 'Hier können neue Partner erstellt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Partner',
+                'description' => 'Here you can create new partners.',
+            ),
+        )
     );
-    public $icon_small = 'partner.png';
 
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('partners_slider', '0');
+        $databaseConfig->set('partners_box_height', '90');
+        $databaseConfig->set('partners_slider_speed', '6000');
     }
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_partners`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_box_height'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'partners_slider_speed'");
     }
 
     public function getInstallSql()

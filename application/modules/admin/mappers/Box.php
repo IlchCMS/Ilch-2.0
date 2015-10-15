@@ -1,34 +1,31 @@
 <?php
 /**
- * Holds Box\Mappers\Box.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Admin\Mappers;
-use Admin\Models\Box as BoxModel;
+namespace Modules\Admin\Mappers;
+
+use Modules\Admin\Models\Box as BoxModel;
 
 defined('ACCESS') or die('no direct access');
 
 /**
  * The box mapper class.
- *
- * @package ilch
  */
 class Box extends \Ilch\Mapper
 {
     /**
      * Get box lists for overview.
      *
-     * @param  string $locale
+     * @param string $locale
      * @return BoxModel[]|array
      */
     public function getBoxList($locale)
     {
         $sql = 'SELECT bc.title, b.id FROM [prefix]_boxes as b
                 LEFT JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
-                    AND bc.locale = "'.$this->db()->escape($locale).'"
+                AND bc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY b.id';
         $boxArray = $this->db()->queryArray($sql);
 
@@ -52,8 +49,8 @@ class Box extends \Ilch\Mapper
     /**
      * Returns box model found by the key.
      *
-     * @param  string              $id
-     * @param  string              $locale
+     * @param string $id
+     * @param string $locale
      * @return BoxModel|null
      */
     public function getBoxByIdLocale($id, $locale = '')
@@ -83,72 +80,37 @@ class Box extends \Ilch\Mapper
      */
     public function save(BoxModel $box)
     {
-        if ($box->getId() && $box->getLocale()) {
+        if ($box->getId()) {
             if ($this->getBoxByIdLocale($box->getId(), $box->getLocale())) {
-                $this->db()->update
-                (
-                    array
-                    (
-                        'title' => $box->getTitle(),
-                        'content' => $box->getContent(),
-                    ),
-                    'boxes_content',
-                    array
-                    (
-                        'box_id' => $box->getId(),
-                        'locale' => $box->getLocale(),
-                    )
-                );
+                $this->db()->update('boxes_content')
+                    ->values(array('title' => $box->getTitle(), 'content' => $box->getContent()))
+                    ->where(array('box_id' => $box->getId(), 'locale' => $box->getLocale()))
+                    ->execute();
             } else {
-                $this->db()->insert
-                (
-                    array
-                    (
-                        'box_id' => $box->getId(),
-                        'title' => $box->getTitle(),
-                        'content' => $box->getContent(),
-                        'locale' => $box->getLocale()
-                    ),
-                    'boxes_content'
-                );
+                $this->db()->insert('boxes_content')
+                    ->values(array('box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                    ->execute();
             }
         } else {
             $date = new \Ilch\Date();
-            $boxId = $this->db()->insert
-            (
-                array
-                (
-                    'date_created' => $date->toDb()
-                ),
-                'boxes'
-            );
+            $boxId = $this->db()->insert('boxes')
+                ->values(array('date_created' => $date->toDb()))
+                ->execute();
 
-            $this->db()->insert
-            (
-                array
-                (
-                    'box_id' => $boxId,
-                    'title' => $box->getTitle(),
-                    'content' => $box->getContent(),
-                    'locale' => $box->getLocale()
-                ),
-                'boxes_content'
-            );
+            $this->db()->insert('boxes_content')
+                ->values(array('box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                ->execute();
         }
     }
 
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'boxes',
-            array('id' => $id)
-        );
+        $this->db()->delete('boxes')
+            ->where(array('id' => $id))
+            ->execute();
 
-        $this->db()->delete
-        (
-            'boxes_content',
-            array('box_id' => $id)
-        );
+        $this->db()->delete('boxes_content')
+            ->where(array('box_id' => $id))
+            ->execute();
     }
 }

@@ -1,38 +1,44 @@
 <?php
 /**
- * Holds Admin\Config\Config.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Contact\Config;
+namespace Modules\Contact\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'contact';
-    public $author = 'Meyer Dominik';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Contact',
-        'de_DE' => 'Kontakt',
+        'key' => 'contact',
+        'icon_small' => 'contact.png',
+        'system_module' => true,
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Kontakt',
+                'description' => 'Hier können die Kontakte gepflegt werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Contact',
+                'description' => 'Here you can manage your contacts.',
+            ),
+        )
     );
-    public $icon_small = 'contact.png';
 
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        $receiverMapper = new \Contact\Mappers\Receiver();
-        $model = new \Contact\Models\Receiver();
-        $userMapper = new \User\Mappers\User();
+        $receiverMapper = new \Modules\Contact\Mappers\Receiver();
+        $model = new \Modules\Contact\Models\Receiver();
+        $userMapper = new \Modules\User\Mappers\User();
         $user = $userMapper->getUserById(1);
         $model->setName('Webmaster')->setEmail($user->getEmail());
         $receiverMapper->save($model);
-    }
-
-    public function uninstall()
-    {
     }
 
     public function getInstallSql()

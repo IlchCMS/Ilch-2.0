@@ -5,6 +5,7 @@
  */
 
 namespace Ilch\Design;
+
 defined('ACCESS') or die('no direct access');
 
 abstract class Base
@@ -12,9 +13,9 @@ abstract class Base
     /**
      * Holds all Helpers.
      *
-     * @var array 
+     * @var array
      */
-    private $_helpers = array();
+    private $helpers = array();
 
     /**
      * Adds view/layout helper.
@@ -25,7 +26,7 @@ abstract class Base
      */
     public function addHelper($name, $type, $obj)
     {
-        $this->_helpers[$type][$name] = $obj;
+        $this->helpers[$type][$name] = $obj;
     }
 
     /**
@@ -36,28 +37,47 @@ abstract class Base
      */
     public function getHelper($name, $type)
     {
-        return $this->_helpers[$type][$name];
+        return $this->helpers[$type][$name];
     }
 
     /**
      * @var Ilch_Request
      */
-    private $_request;
+    private $request;
 
     /**
      * @var Ilch_Translator
      */
-    private $_translator;
+    private $translator;
 
     /**
      * @var Ilch_Router
      */
-    private $_router;
+    private $router;
 
     /**
      * @var array
      */
-    private $_data = array();
+    private $data = array();
+
+    /**
+     * @var boolean
+     */
+    private $modRewrite;
+
+    /**
+     * Injects request and translator to layout/view.
+     *
+     * @param \Ilch\Request    $request
+     * @param \Ilch\Translator $translator
+     * @param \Ilch\Router     $router
+     */
+    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
+    {
+        $this->request = $request;
+        $this->translator = $translator;
+        $this->router = $router;
+    }
 
     /**
      * Gets view data.
@@ -67,8 +87,8 @@ abstract class Base
      */
     public function get($key)
     {
-        if (isset($this->_data[$key])) {
-            return $this->_data[$key];
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
         }
 
         return null;
@@ -82,21 +102,17 @@ abstract class Base
      */
     public function set($key, $value)
     {
-        $this->_data[$key] = $value;
+        $this->data[$key] = $value;
     }
 
     /**
-     * Injects request and translator to layout/view.
+     * Sets view data array.
      *
-     * @param \Ilch\Request    $request
-     * @param \Ilch\Translator $translator
-     * @param \Ilch\Router     $router
+     * @param mixed[] $data
      */
-    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
+    public function setArray($data = array())
     {
-        $this->_request = $request;
-        $this->_translator = $translator;
-        $this->_router = $router;
+        $this->data = array_merge($this->data, $data);
     }
 
     /**
@@ -106,9 +122,9 @@ abstract class Base
      */
     public function getRequest()
     {
-        return $this->_request;
+        return $this->request;
     }
-    
+
     /**
      * Gets the router object.
      *
@@ -116,7 +132,7 @@ abstract class Base
      */
     public function getRouter()
     {
-        return $this->_router;
+        return $this->router;
     }
 
     /**
@@ -126,7 +142,7 @@ abstract class Base
      */
     public function getTranslator()
     {
-        return $this->_translator;
+        return $this->translator;
     }
 
     /**
@@ -143,12 +159,13 @@ abstract class Base
      * Returns the translated text for a specific key.
      *
      * @param string $key
-     * @param mixed[]
+     * @param [, mixed $args [, mixed $... ]]
      * @return string
      */
-    public function trans($key, $placeholders = array())
+    public function getTrans($key)
     {
-        return $this->getTranslator()->trans($key, $placeholders);
+      $args = func_get_args();
+      return call_user_func_array(array($this->getTranslator(), 'trans'), $args);
     }
 
     /**
@@ -157,24 +174,54 @@ abstract class Base
      * @param  sting  $url
      * @return string
      */
-    public function baseUrl($url = '')
+    public function getBaseUrl($url = '')
     {
         return BASE_URL.'/'.$url;
     }
 
+   /**
+     * Gets the layout url.
+     *
+     * @param string $url
+     * @return string
+     */
+    public function getLayoutUrl($url = '')
+    {
+        if (empty($url)) {
+            return BASE_URL.'/application/layouts/'.$this->layoutKey.'/';
+        }
+
+        return BASE_URL.'/application/layouts/'.$this->layoutKey.'/'.$url;
+    }
+
     /**
-     * Gets the static url.
+     * Gets the module url.
+     *
+     * @param string $url
+     * @return string
+     */
+    public function getModuleUrl($url = '')
+    {
+        if (empty($url)) {
+            return BASE_URL.'/application/modules/'.$this->getRequest()->getModuleName();
+        }
+
+        return BASE_URL.'/application/modules/'.$this->getRequest()->getModuleName().'/'.$url;
+    }
+
+    /**
+     * Gets the system, static url.
      *
      * @param  string $url
      * @return string
      */
-    public function staticUrl($url = '')
+    public function getStaticUrl($url = '')
     {
         if (empty($url)) {
-            return STATIC_URL;
+            return BASE_URL.'/static/';
         }
 
-        return STATIC_URL.'/'.$url;
+        return BASE_URL.'/static/'.$url;
     }
 
     /**
@@ -189,19 +236,72 @@ abstract class Base
     }
 
     /**
+     * Gets html from bbcode.
+     *
+     * @param string $bbcode
+     * @return string
+     */
+    public function getHtmlFromBBCode($bbcode)
+    {
+        require_once APPLICATION_PATH.'/libraries/jbbcode/Parser.php';
+
+        $parser = new \JBBCode\Parser();
+        $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<div class="quote">{param}</div>');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('list', '<ul>{param}</ul>');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('*', '<li>{param}</li>');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('email', '<a href="mailto:{param}">{param}</a>');
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" alt="Image">');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('i', '<em>{param}</em>');
+        $parser->addCodeDefinition($builder->build());
+ 
+        $builder = new \JBBCode\CodeDefinitionBuilder('u', '<u>{param}</u>');
+        $parser->addCodeDefinition($builder->build());
+        
+        $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a href="{option}">{param}</a>');
+        $builder->setUseOption(true)->setOptionValidator(new \JBBCode\validators\UrlValidator());
+        $parser->addCodeDefinition($builder->build());
+
+        $builder = new \JBBCode\CodeDefinitionBuilder('code', '<pre class="code">{param}</pre>');
+        $builder->setParseContent(false);
+        $parser->addCodeDefinition($builder->build());
+
+        $parser->parse($bbcode);
+
+        return $parser->getAsHTML();
+    }
+
+    /**
      * Creates a full url for the given parts.
      *
      * @param  array   $urlArray
      * @param  string  $route
-     * @param  boolean $rewrite
+     * @param  boolean $secure
      * @return string
      */
-    public function url($urlArray = array(), $route = null, $rewrite  = false)
+    public function getUrl($urlArray = array(), $route = null, $secure  = false)
     {
+        $config = \Ilch\Registry::get('config');
+
+        if($config !== null && $this->modRewrite === null) {
+            $this->modRewrite = (bool)$config->get('mod_rewrite');
+        }
+
         if (empty($urlArray)) {
             return BASE_URL;
         }
-        
+
         if (is_string($urlArray)) {
             return BASE_URL.'/index.php/'.$urlArray;
         }
@@ -233,13 +333,23 @@ abstract class Base
             $urlParts[] = $key.'/'.$value;
         }
 
+        if ($secure) {
+            $token = uniqid();
+            $_SESSION['token'][$token] = $token;
+            $urlParts[] = 'ilch_token/'.$token;
+        }
+
         $s = '';
 
         if (($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin')) {
             $s = 'admin/';
         }
 
-        return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
+        if ($this->modRewrite && empty($s)) {
+            return BASE_URL.'/'.$s.implode('/', $urlParts);
+        } else {
+            return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
+        }
     }
 
     /**
@@ -253,6 +363,31 @@ abstract class Base
         $_SESSION['token'][$token] = $token;
 
         return '<input type="hidden" name="ilch_token" value="'.$token.'" />'."\n";
+    }
+
+    /**
+     * Gets the captcha image field.
+     *
+     * @return string
+     */
+    public function getCaptchaField()
+    {
+        $html = '<img src="'.$this->getUrl().'/application/libraries/Captcha/Captcha.php" id="captcha" />';
+
+        return $html;
+    }
+
+    /**
+     * Gets the MediaModal.
+     * Place inside Javascript tag.
+     * 
+     * @param string $mediaButton Define Media Button by given URL
+     * @param string $actionButton Define Action Button by given URL
+     * @return string
+     */
+    public function getMedia($mediaButton = null, $actionButton = null, $inputId = null)
+    {
+        return  new \Ilch\Layout\Helper\GetMedia($this, $mediaButton, $actionButton, $inputId);
     }
 
     /**
@@ -293,5 +428,25 @@ abstract class Base
         } else {
             return preg_replace("/[^ ]*$/", '', substr($str, 0, $length)).'...';
         }
+    }
+
+    /**
+     * Gets the key of the layout.
+     *
+     * @return string
+     */
+    public function getLayoutKey()
+    {
+        return $this->layoutKey;
+    }
+
+    /**
+     * Set the key of the layout.
+     *
+     * @param string $layoutKey
+     */
+    public function setLayoutKey($layoutKey)
+    {
+        $this->layoutKey = $layoutKey;
     }
 }

@@ -1,59 +1,37 @@
-<?php
-if ($this->get('receivers') != '') {
-?>
-<table class="table table-hover">
-    <colgroup>
-        <col class="col-xs-1" />
-        <col class="col-xs-2" />
-        <col class="col-xs-2" />
-    </colgroup>
-    <thead>
-        <tr>
-            <th><?php echo $this->trans('treat'); ?></th>
-            <th><?php echo $this->trans('name'); ?></th>
-            <th><?php echo $this->trans('email'); ?></th>
-        </tr>
-    </thead>
-    <tbody>
-<?php
-        foreach ($this->get('receivers') as $receiver) {
-            echo '<tr>
-                    <td>
-                    <a href="'.$this->url(array('action' => 'treat', 'id' => $receiver->getId())).'"><i class="fa fa-edit"></i></a> ';
-?>
-                <span class="deleteReceiver clickable fa fa-times-circle"
-                              data-clickurl="<?php echo $this->url(array('action' => 'delete', 'id' => $receiver->getId())); ?>"
-                              data-toggle="modal"
-                              data-target="#deleteModal"
-                              data-modaltext="<?php echo $this->escape($this->trans('askIfDeleteReceiver', $this->escape($receiver->getName()))); ?>"
-                              title="<?php echo $this->trans('deleteReceiver'); ?>"></span>
-<?php
-            echo '</td>';
-            echo '<td>'.$this->escape($receiver->getName()).'</td>';
-            echo '<td>'.$this->escape($receiver->getEmail()).'</td>';
-            echo '</tr>';
-        }
-?>
-    </tbody>
-</table>
-<?php
-} else {
-    echo $this->trans('noReceivers');
-}
-?>
-
-<script>
-$('.deleteReceiver').on('click', function(event) {
-    $('#modalButton').data('clickurl', $(this).data('clickurl'));
-    $('#modalText').html($(this).data('modaltext'));
-});
-
-$('#modalButton').on('click', function(event) {
-    window.location = $(this).data('clickurl');
-});
-</script>
-<style>
-    .deleteLink {
-        padding-left: 10px;
-    }
-</style>
+<?php if ($this->get('receivers') != ''): ?>
+    <form class="form-horizontal" method="POST" action="">
+        <?=$this->getTokenField() ?>
+        <table class="table table-hover">
+            <colgroup>
+                <col class="icon_width" />
+                <col class="icon_width" />
+                <col class="icon_width" />
+                <col class="col-lg-2" />
+                <col />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('check_receivers') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th><?=$this->getTrans('name') ?></th>
+                    <th><?=$this->getTrans('email') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->get('receivers') as $receiver): ?>
+                    <tr>
+                        <td><input value="<?=$receiver->getId()?>" type="checkbox" name="check_receivers[]" /></td>
+                        <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $receiver->getId()))?></td>
+                        <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $receiver->getId()))?></td>
+                        <td><?=$this->escape($receiver->getName()) ?></td>
+                        <td><?=$this->escape($receiver->getEmail()) ?></td>
+                    </tr>
+               <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
+    </form>
+<?php else: ?>
+    <?=$this->getTrans('noReceivers') ?>
+<?php endif; ?>

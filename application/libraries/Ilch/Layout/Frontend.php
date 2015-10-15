@@ -5,6 +5,7 @@
  */
 
 namespace Ilch\Layout;
+
 defined('ACCESS') or die('no direct access');
 
 class Frontend extends Base
@@ -34,31 +35,67 @@ class Frontend extends Base
     public function getTitle()
     {
         $config = \Ilch\Registry::get('config');
+        $metaTitle = $this->get('metaTitle');
 
-        /*
-         * @todo page modul handling
-         */
+        if (!empty($metaTitle)) {
+            return $metaTitle;
+        }
 
         if (!empty($config) && $config->get('page_title') !== '') {
-            return $this->escape($config->get('page_title'));
-        } else {
-            return 'Ilch '.VERSION.' Frontend';
+            return $config->get('page_title');
         }
+
+        return '';
+    }
+ 
+    /**
+     * Gets page description from config or meta settings.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        $config = \Ilch\Registry::get('config');
+        $metaDescription = $this->get('metaDescription');
+
+        if (!empty($metaDescription)) {
+            return $metaDescription;
+        }
+
+        if (!empty($config) && $config->get('description') !== '') {
+            return $config->get('description');
+        }
+
+        return '';
     }
 
     /**
      * Gets the box with the given key.
      *
+     * @param string $moduleKey
+     * @param string $boxKey
      * @return string
      */
-    public function getBox($boxKey)
+    public function getBox($moduleKey, $boxKey = '')
     {
-        $class = 'Boxes\\'.ucfirst($boxKey).'\\Index';
+        if (empty($boxKey)) {
+            $boxKey = $moduleKey;
+        }
+
+        $class = '\\Modules\\'.ucfirst($moduleKey).'\\Boxes\\'.ucfirst($boxKey);
         $view = new \Ilch\View($this->getRequest(), $this->getTranslator(), $this->getRouter());
+        $this->getTranslator()->load(APPLICATION_PATH.'/modules/'.$moduleKey.'/translations');
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
         $boxObj->render();
+        $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/override/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
 
-        return $view->loadScript(APPLICATION_PATH.'/boxes/'.$boxKey.'/render.php');
+        if (!file_exists($viewPath)) {
+            $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
+        }
+        
+        $view->setLayoutKey($this->getLayoutKey());
+
+        return $view->loadScript($viewPath);
     }
 
     /**
@@ -69,17 +106,36 @@ class Frontend extends Base
     public function getHeader()
     {
         $html = '<meta charset="utf-8">
-                <title>'.$this->getTitle().'</title>
-                <meta name="description" content="">';
+                <title>'.$this->escape($this->getTitle()).'</title>
+                <meta name="description" content="'.$this->escape($this->getDescription()).'">';
 
-        $html .= '<link href="'.$this->staticUrl('css/bootstrap.css').'" rel="stylesheet">
-                <link href="'.$this->staticUrl('css/font-awesome.css').'" rel="stylesheet">
-                <link href="'.$this->staticUrl('css/global.css').'" rel="stylesheet">
-                <link href="'.$this->staticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
-                <script src="'.$this->staticUrl('js/jquery.js').'"></script>
-                <script src="'.$this->staticUrl('js/bootstrap.js').'"></script>
-                <script src="'.$this->staticUrl('js/jquery-ui.js').'"></script>';
+        $html .= '<link href="'.$this->getStaticUrl('css/normalize.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/font-awesome.min.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('../application/modules/user/static/css/user.css').'" rel="stylesheet">
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/ckeditor/ckeditor.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>';
         return $html;
     }
-}
+        
+    /**
+     * Loads a layout file.
+     *
+     * @param string $file
+     * @param mixed[] $data
+     */
+    public function load($file, $data = array())
+    {
+        $request = $this->getRequest();
+        $layout = new \Ilch\Layout\Frontend($request,
+            $this->getTranslator(),
+            $this->getRouter());
+        $layout->setArray($data);
+        $layout->setFile($this->getFile(), $this->getLayoutKey());
 
+        echo $layout->loadScript(APPLICATION_PATH.'/'.dirname($this->getFile()).'/'.$file);
+    }
+}

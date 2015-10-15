@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Guestbook\Models;
+namespace Modules\Guestbook\Models;
 
 defined('ACCESS') or die('no direct access');
 
@@ -15,49 +15,49 @@ class Entry extends \Ilch\Model
      *
      * @var integer
      */
-    protected $_id;
+    protected $id;
 
     /**
      * The email of the entry.
      *
      * @var string
      */
-    protected $_email;
+    protected $email;
 
     /**
      * The text of the entry.
      *
      * @var string
      */
-    protected $_text;
+    protected $text;
 
     /**
      * The name of the entry.
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * The homepage of the entry.
      *
      * @var string
      */
-    protected $_homepage;
+    protected $homepage;
 
     /**
      * The datetime of the entry.
      *
      * @var string
      */
-    protected $_datetime;
+    protected $datetime;
 
     /**
      * The setfee of the entry.
      *
      * @var integer
      */
-    protected $_setFree;
+    protected $setFree;
 
     /**
      * Gets the id of the entry.
@@ -66,7 +66,7 @@ class Entry extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -76,7 +76,7 @@ class Entry extends \Ilch\Model
      */
     public function getEmail()
     {
-        return $this->_email;
+        return $this->email;
     }
 
     /**
@@ -86,7 +86,7 @@ class Entry extends \Ilch\Model
      */
     public function getText()
     {
-        return $this->_text;
+        return $this->text;
     }
 
     /**
@@ -96,7 +96,7 @@ class Entry extends \Ilch\Model
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -106,7 +106,7 @@ class Entry extends \Ilch\Model
      */
     public function getHomepage()
     {
-        return $this->_homepage;
+        return $this->homepage;
     }
 
     /**
@@ -116,7 +116,7 @@ class Entry extends \Ilch\Model
      */
     public function getDatetime()
     {
-        return $this->_datetime;
+        return $this->datetime;
     }
 
     /**
@@ -126,7 +126,7 @@ class Entry extends \Ilch\Model
      */
     public function getFree()
     {
-        return $this->_setFree;
+        return $this->setFree;
     }
 
     /**
@@ -136,7 +136,7 @@ class Entry extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int)$id;
+        $this->id = (int)$id;
     }
 
     /**
@@ -146,7 +146,7 @@ class Entry extends \Ilch\Model
      */
     public function setEmail($email)
     {
-        $this->_email = (string)$email;
+        $this->email = (string)$email;
     }
 
     /**
@@ -156,7 +156,7 @@ class Entry extends \Ilch\Model
      */
     public function setText($text)
     {
-        $this->_text = (string)$text;
+        $this->text = (string)$text;
     }
 
     /**
@@ -166,7 +166,7 @@ class Entry extends \Ilch\Model
      */
     public function setName($name)
     {
-        $this->_name = (string)$name;
+        $this->name = (string)$name;
     }
 
     /**
@@ -176,7 +176,7 @@ class Entry extends \Ilch\Model
      */
     public function setHomepage($homepage)
     {
-        $this->_homepage = (string)$homepage;
+        $this->homepage = (string)$homepage;
     }
 
     /**
@@ -186,7 +186,7 @@ class Entry extends \Ilch\Model
      */
     public function setDatetime($datetime)
     {
-        $this->_datetime = (string)$datetime;
+        $this->datetime = (string)$datetime;
     }
 
     /**
@@ -196,6 +196,6 @@ class Entry extends \Ilch\Model
      */
     public function setFree($free)
     {
-        $this->_setFree = (integer)$free;
+        $this->setFree = (integer)$free;
     }
 }

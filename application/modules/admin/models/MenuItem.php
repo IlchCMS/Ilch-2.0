@@ -1,18 +1,15 @@
 <?php
 /**
- * Holds class Menu.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Admin\Models;
+namespace Modules\Admin\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The menu item model class.
- *
- * @package ilch
  */
 class MenuItem extends \Ilch\Model
 {
@@ -21,70 +18,77 @@ class MenuItem extends \Ilch\Model
      *
      * @var integer
      */
-    protected $_id;
+    protected $id;
     
     /**
      * Sort of the item.
      *
      * @var integer
      */
-    protected $_sort;
+    protected $sort;
 
     /**
      * Type of the item.
      *
      * @var integer
      */
-    protected $_type;
+    protected $type;
 
     /**
      * Key of the item.
      *
      * @var string
      */
-    protected $_moduleKey;
+    protected $moduleKey;
 
     /**
      * Siteid of the item.
      *
      * @var integer
      */
-    protected $_siteId;
+    protected $siteId;
+    
+    /**
+     * Boxid of the item.
+     *
+     * @var integer
+     */
+    protected $boxId;
 
     /**
      * Boxid of the item.
      *
      * @var string
      */
-    protected $_boxKey;
+    protected $boxKey;
 
     /**
      * MenuId of the item.
      *
      * @var integer
      */
-    protected $_menuId;
+    protected $menuId;
 
     /**
      * ParentId of the item.
      *
      * @var integer
      */
-    protected $_parentId;
+    protected $parentId;
 
     /**
      * Title of the item.
      *
      * @var string
      */
-    protected $_title;
+    protected $title;
 
     /**
      * Href of the item.
      *
      * @var string
      */
-    protected $_href;
+    protected $href;
 
     /**
      * Gets the id.
@@ -93,7 +97,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -103,7 +107,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
     }
 
     /**
@@ -113,7 +117,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getSort()
     {
-        return $this->_sort;
+        return $this->sort;
     }
 
     /**
@@ -123,7 +127,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setSort($sort)
     {
-        $this->_sort = (int)$sort;
+        $this->sort = (int)$sort;
     }
 
     /**
@@ -133,7 +137,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getType()
     {
-        return $this->_type;
+        return $this->type;
     }
 
     /**
@@ -143,7 +147,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setType($type)
     {
-        $this->_type = (int)$type;
+        $this->type = (int)$type;
     }
 
     /**
@@ -153,7 +157,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getSiteId()
     {
-        return $this->_siteId;
+        return $this->siteId;
     }
 
     /**
@@ -163,7 +167,27 @@ class MenuItem extends \Ilch\Model
      */
     public function setSiteId($id)
     {
-        $this->_siteId = (int)$id;
+        $this->siteId = (int)$id;
+    }
+    
+    /**
+     * Gets the boxid.
+     *
+     * @return integer
+     */
+    public function getBoxId()
+    {
+        return $this->boxId;
+    }
+
+    /**
+     * Sets the boxid.
+     *
+     * @param integer $id
+     */
+    public function setBoxId($id)
+    {
+        $this->boxId = (int)$id;
     }
 
     /**
@@ -173,7 +197,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getBoxKey()
     {
-        return $this->_boxKey;
+        return $this->boxKey;
     }
 
     /**
@@ -183,7 +207,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setBoxKey($key)
     {
-        $this->_boxKey = (string)$key;
+        $this->boxKey = (string)$key;
     }
 
     /**
@@ -193,7 +217,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getModuleKey()
     {
-        return $this->_moduleKey;
+        return $this->moduleKey;
     }
 
     /**
@@ -203,7 +227,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setModuleKey($key)
     {
-        $this->_moduleKey = (string)$key;
+        $this->moduleKey = (string)$key;
     }
 
     /**
@@ -213,7 +237,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getMenuId()
     {
-        return $this->_menuId;
+        return $this->menuId;
     }
 
     /**
@@ -223,7 +247,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setMenuId($id)
     {
-        $this->_menuId = (int) $id;
+        $this->menuId = (int) $id;
     }
 
     /**
@@ -233,7 +257,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getParentId()
     {
-        return $this->_parentId;
+        return $this->parentId;
     }
 
     /**
@@ -243,7 +267,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setParentId($id)
     {
-        $this->_parentId = (int) $id;
+        $this->parentId = (int) $id;
     }
 
     /**
@@ -253,7 +277,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
 
     /**
@@ -263,7 +287,7 @@ class MenuItem extends \Ilch\Model
      */
     public function setTitle($title)
     {
-        $this->_title = (string) $title;
+        $this->title = (string) $title;
     }
 
     /**
@@ -273,7 +297,7 @@ class MenuItem extends \Ilch\Model
      */
     public function getHref()
     {
-        return $this->_href;
+        return $this->href;
     }
 
     /**
@@ -283,6 +307,6 @@ class MenuItem extends \Ilch\Model
      */
     public function setHref($href)
     {
-        $this->_href = (string) $href;
+        $this->href = (string) $href;
     }
 }

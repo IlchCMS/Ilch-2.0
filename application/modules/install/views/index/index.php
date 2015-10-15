@@ -1,54 +1,48 @@
-<h2>
-    <?php echo $this->trans('welcomeToInstall', (string)VERSION); ?>
-</h2>
+<h2><?=$this->getTrans('welcomeToInstall', (string)VERSION) ?></h2>
 <br />
 <div class="form-group">
-    <label for="languageInput" class="col-xs-2 control-label">
-        <?php echo $this->trans('chooseLanguage'); ?>:
+    <label for="languageInput" class="col-lg-2 control-label">
+        <?=$this->getTrans('chooseLanguage') ?>:
     </label>
-    <div class="col-xs-3">
+    <div class="col-lg-3">
         <select name="language" id="languageInput" class="form-control">
-            <?php
-            foreach ($this->get('languages') as $key => $value) {
-                $selected = '';
+            <?php foreach ($this->get('languages') as $key => $value): ?>
+                <?php $selected = ''; ?>
 
-                if ($this->getTranslator()->getLocale() == $key) {
-                    $selected = 'selected="selected"';
-                }
+                <?php if ($this->getTranslator()->getLocale() == $key): ?>
+                    <?php $selected = 'selected="selected"'; ?>
+                <?php endif; ?>
 
-                echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
-            }
-            ?>
+                <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+            <?php endforeach; ?>
         </select>
     </div>
 </div>
 <div class="form-group">
-    <label for="timezone" class="col-xs-2 control-label">
-        <?php echo $this->trans('timezone'); ?>:
+    <label for="timezone" class="col-lg-2 control-label">
+        <?=$this->getTrans('timezone') ?>:
     </label>
-    <div class="col-xs-3">
+    <div class="col-lg-3">
         <select id="timezone" name="timezone" class="form-control">
-            <?php
-                $timezones = $this->get('timezones');
+            <?php $timezones = $this->get('timezones'); ?>
 
-                for ($i = 0; $i < count($timezones); $i++) {
-                    $sel = '';
-                    if ($this->get('timezone') == $timezones[$i]) {
-                        $sel = 'selected="selected"';
-                    }
+            <?php for ($i = 0; $i < count($timezones); $i++): ?>
+                <?php $sel = ''; ?>
+                <?php if ($this->get('timezone') == $timezones[$i]): ?>
+                    <?php $sel = 'selected="selected"'; ?>
+                <?php endif; ?>
 
-                    echo '<option '.$sel.' value="'.$this->escape($timezones[$i]).'">'.$this->escape($timezones[$i]).'</option>';
-                }
-            ?>
+                <option <?=$sel ?> value="<?=$this->escape($timezones[$i]) ?>"><?=$this->escape($timezones[$i]) ?></option>
+            <?php endfor; ?>
         </select>
     </div>
 </div>
+
 <script>
-    $('#languageInput').change
-    (
-        this,
-        function () {
-            top.location.href = '<?php echo $this->url(array('action' => 'index')); ?>/language/'+$(this).val();
-        }
-    );
+$('#languageInput').change (
+    this,
+    function () {
+        top.location.href = '<?=$this->getUrl(array('action' => 'index')) ?>/language/'+$(this).val();
+    }
+);
 </script>

@@ -5,6 +5,7 @@
  */
 
 namespace Ilch\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Install extends \Ilch\Mapper
@@ -12,14 +13,14 @@ class Install extends \Ilch\Mapper
     /**
      * @var \Ilch\Translator 
      */
-    private $_translator;
+    private $translator;
 
     /**
      * @param \Ilch\Translator $translator
      */
-    public function __construct(\Ilch\Translator $translator)
+    public function __construct(\Ilch\Translator $translator = null)
     {
-        $this->_translator = $translator;
+        $this->translator = $translator;
         parent::__construct();
     }
 
@@ -28,6 +29,6 @@ class Install extends \Ilch\Mapper
      */
     public function getTranslator()
     {
-        return $this->_translator;
+        return $this->translator;
     }
 }

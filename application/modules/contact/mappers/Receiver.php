@@ -1,13 +1,12 @@
 <?php
 /**
- * Holds Box\Mappers\Box.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Contact\Mappers;
-use Contact\Models\Receiver as ReceiverModel;
+namespace Modules\Contact\Mappers;
+
+use Modules\Contact\Models\Receiver as ReceiverModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -26,7 +25,7 @@ class Receiver extends \Ilch\Mapper
     public function getReceivers()
     {
         $sql = 'SELECT *
-                FROM [prefix]_contact_receivers';
+                FROM `[prefix]_contact_receivers`';
         $receiverArray = $this->db()->queryArray($sql);
 
         if (empty($receiverArray)) {
@@ -56,7 +55,7 @@ class Receiver extends \Ilch\Mapper
     {
         $sql = 'SELECT *
                 FROM [prefix]_contact_receivers
-                WHERE id = '.$this->db()->escape($id);
+                WHERE id = '.(int)$this->db()->escape($id);
         $receiverRow = $this->db()->queryRow($sql);
 
         if (empty($receiverRow)) {
@@ -79,29 +78,14 @@ class Receiver extends \Ilch\Mapper
     public function save(ReceiverModel $receiver)
     {
         if ($receiver->getId()) {
-            $this->db()->update
-            (
-                array
-                (
-                    'name' => $receiver->getName(),
-                    'email' => $receiver->getEmail(),
-                ),
-                'contact_receivers',
-                array
-                (
-                    'id' => $receiver->getId(),
-                )
-            );
+            $this->db()->update('contact_receivers')
+                ->values(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
+                ->where(array('id' => $receiver->getId()))
+                ->execute();
         } else {
-            $this->db()->insert
-            (
-                array
-                (
-                    'name' => $receiver->getName(),
-                    'email' => $receiver->getEmail(),
-                ),
-                'contact_receivers'
-            );
+            $this->db()->insert('contact_receivers')
+                ->values(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
+                ->execute();
         }
     }
 
@@ -112,10 +96,8 @@ class Receiver extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'contact_receivers',
-            array('id' => $id)
-        );
+        $this->db()->delete('contact_receivers')
+            ->where(array('id' => $id))
+            ->execute();
     }
 }

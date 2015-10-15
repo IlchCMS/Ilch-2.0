@@ -5,34 +5,42 @@
  */
 
 namespace Ilch\Layout\Helper\Menu;
-defined('ACCESS') or die('no direct access');
 
 class Mapper
 {
     /**
+     * @var \Ilch\Database\Mysql
+     */
+    protected $db;
+
+    /**
+     * @var \Ilch\Layout\Base
+     */
+    protected $layout;
+
+    /**
      * Injects layout and gets database.
      *
-     * @param Ilch\Layout $layout
+     * @param \Ilch\Layout\Base $layout
      */
     public function __construct($layout)
     {
-        $this->_db = \Ilch\Registry::get('db');
-        $this->_layout = $layout;
+        $this->db = \Ilch\Registry::get('db');
+        $this->layout = $layout;
     }
 
     /**
      * Gets the menus.
      *
-     * @return Ilch\Layout\Helper\Menu\Model[]
+     * @return \Ilch\Layout\Helper\Menu\Model[]
      */
     public function getMenus()
     {
         $menus = array();
-        $menuRows = $this->_db->selectArray
-        (
-            array('id'),
-            'menu'
-        );
+        $menuRows = $this->db->select(array('id'))
+            ->from('menu')
+            ->execute()
+            ->fetchRows();
 
         foreach ($menuRows as $menuRow) {
             $menu = $this->getMenu($menuRow['id']);
@@ -45,18 +53,19 @@ class Mapper
     /**
      * Gets the menu for the given id.
      *
-     * @return Ilch\Layout\Helper\Menu\Model
+     * @param int $menuId
+     *
+     * @return \Ilch\Layout\Helper\Menu\Model
      */
     public function getMenu($menuId)
     {
-        $menu = new \Ilch\Layout\Helper\Menu\Model($this->_layout);
+        $menu = new \Ilch\Layout\Helper\Menu\Model($this->layout);
 
-        $menuRow = $this->_db->selectRow
-        (
-            array('id','title'),
-            'menu',
-            array('id' => $menuId)
-        );
+        $menuRow = $this->db->select(array('id', 'title'))
+            ->from('menu')
+            ->where(array('id' => $menuId))
+            ->execute()
+            ->fetchAssoc();
 
         $menu->setId($menuRow['id']);
         $menu->setTitle($menuRow['title']);

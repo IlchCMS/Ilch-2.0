@@ -1,66 +1,46 @@
 <?php
 /**
- * Holds class Admin_ModuleModel.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Admin\Models;
+namespace Modules\Admin\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
  * The module model class.
- *
- * @package ilch
  */
 class Module extends \Ilch\Model
 {
-    /**
-     * Id of the module.
-     *
-     * @var int
-     */
-    protected $_id = null;
-
     /**
      * Key of the module.
      *
      * @var string
      */
-    protected $_key = '';
-
-    /**
-     * Names of the module.
-     *
-     * @var array
-     */
-    protected $_names;
+    protected $key = '';
 
     /**
      * Small icon of the module.
+     *
+     * @var string
      */
-    protected $_iconSmall;
+    protected $iconSmall;
 
     /**
-     * Gets the id.
-     *
-     * @return int
+     * @var boolean
      */
-    public function getId()
-    {
-        return $this->_id;
-    }
+    protected $systemModule = false;
 
     /**
-     * Sets the id.
-     *
-     * @param int $id
+     * @var string
      */
-    public function setId($id)
-    {
-        $this->_id = (int) $id;
-    }
+    protected $author;
+
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * Gets the key.
@@ -69,7 +49,7 @@ class Module extends \Ilch\Model
      */
     public function getKey()
     {
-        return $this->_key;
+        return $this->key;
     }
 
     /**
@@ -79,9 +59,29 @@ class Module extends \Ilch\Model
      */
     public function setKey($key)
     {
-        $this->_key = (string) $key;
+        $this->key = (string) $key;
+    }
+    
+    /**
+     * Gets the author.
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 
+    /**
+     * Sets the author.
+     *
+     * @param string $author
+     */
+    public function setAuthor($author)
+    {
+        $this->author = (string)$author;
+    }
+    
     /**
      * Gets the small icon.
      *
@@ -89,7 +89,27 @@ class Module extends \Ilch\Model
      */
     public function getIconSmall()
     {
-        return $this->_iconSmall;
+        return $this->iconSmall;
+    }
+
+    /**
+     * Sets system module flag.
+     *
+     * @param boolean $system
+     */
+    public function setSystemModule($system)
+    {
+        $this->systemModule = (bool)$system;
+    }
+
+    /**
+     * Gets system module flag.
+     *
+     * @return boolean
+     */
+    public function getSystemModule()
+    {
+        return $this->systemModule;
     }
 
     /**
@@ -99,37 +119,61 @@ class Module extends \Ilch\Model
      */
     public function setIconSmall($icon)
     {
-        $this->_iconSmall = (string) $icon;
+        $this->iconSmall = (string) $icon;
     }
 
     /**
-     * Add a module name for given language.
+     * Add content for given language.
      *
      * @param string $langKey
-     * @param string $name
+     * @param string $content
      */
-    public function addName($langKey, $name)
+    public function addContent($langKey, $content)
     {
-        $this->_names[$langKey] = (string) $name;
+        $this->content[$langKey] = $content;
     }
 
     /**
-     * Gets module name for given language.
+     * Gets content for given language.
      *
-     * @return string
+     * @return string|null
      */
-    public function getName($langKey)
+    public function getContentForLocale($langKey)
     {
-        return $this->_names[$langKey];
+        if (!isset($this->content[$langKey])) {
+            return null;
+        }
+
+        return $this->content[$langKey];
     }
 
     /**
-     * Gets alle module names.
+     * Gets all content.
      *
      * @return array
      */
-    public function getNames()
+    public function getContent()
     {
-        return $this->_names;
+        return $this->content;
+    }
+    
+    /**
+     * Gets the name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
     }
 }

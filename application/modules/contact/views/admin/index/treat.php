@@ -1,19 +1,17 @@
 <form class="form-horizontal" method="POST" action="">
-    <?php echo $this->getTokenField(); ?>
+    <?=$this->getTokenField() ?>
     <legend>
-    <?php
-        if ($this->get('receiver') != '') {
-            echo $this->trans('menuActionEditReceiver');
-        } else {
-            echo $this->trans('menuActionNewReceiver');
-        }
-    ?>
+        <?php if ($this->get('receiver') != ''): ?>
+            <?=$this->getTrans('edit') ?>
+        <?php else: ?>
+            <?=$this->getTrans('add') ?>
+        <?php endif; ?>
     </legend>
     <div class="form-group">
-        <label for="name" class="col-xs-2 control-label">
-            <?php echo $this->trans('name'); ?>:
+        <label for="name" class="col-lg-2 control-label">
+            <?=$this->getTrans('name') ?>:
         </label>
-        <div class="col-xs-2">
+        <div class="col-lg-2">
             <input class="form-control"
                    type="text"
                    name="name"
@@ -22,10 +20,8 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="email" class="col-xs-2 control-label">
-            <?php echo $this->trans('email'); ?>:
-        </label>
-        <div class="col-xs-2">
+        <label for="email" class="col-lg-2 control-label"><?=$this->getTrans('email') ?>:</label>
+        <div class="col-lg-2">
             <input class="form-control"
                    type="text"
                    name="email"
@@ -33,15 +29,9 @@
                    value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getEmail()); } ?>" />
         </div>
     </div>
-    <div class="content_savebox">
-        <button type="submit" name="save" class="btn">
-            <?php
-            if ($this->get('receiver') != '') {
-                echo $this->trans('editButton');
-            } else {
-                echo $this->trans('addButton');
-            }
-            ?>
-        </button>
-    </div>
+    <?php if ($this->get('receiver') != ''): ?>
+        <?=$this->getSaveBar('updateButton') ?>
+    <?php else: ?>
+        <?=$this->getSaveBar('addButton') ?>
+    <?php endif; ?>
 </form>

@@ -5,6 +5,7 @@
  */
 
 namespace Ilch;
+
 defined('ACCESS') or die('no direct access');
 
 class Session
@@ -73,7 +74,7 @@ class Session
     public function _close()
     {
         /* call the garbage collector */
-        $this->_gc(100);
+        $this->gc(100);
 
         return true;
     }

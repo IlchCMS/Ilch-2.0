@@ -1,20 +1,20 @@
 body {
-	background-color: #EEE;
-	margin-top: 150px;
+    background-color: #EEE;
+    margin-top: 150px;
 }
 
 .login_container {
-	margin:0 auto;
-	padding: 20px;
-	background-color: white;
-	border: 1px solid #BBB;
-	width: 300px;
-	border-radius: 0px 0px 0px 0px;
+    margin:0 auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #BBB;
+    width: 300px;
+    border-radius: 0px 0px 0px 0px;
 }
 
 .logo {
-	margin-top: -100px;
-	margin-left: -70px;
-	position: relative;
-	width: 220px;
+    margin-top: -100px;
+    margin-left: -70px;
+    position: relative;
+    width: 220px;
 }

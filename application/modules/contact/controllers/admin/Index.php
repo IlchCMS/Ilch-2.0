@@ -4,9 +4,10 @@
  * @package ilch
  */
 
-namespace Contact\Controllers\Admin;
-use Contact\Mappers\Receiver as ReceiverMapper;
-use Contact\Models\Receiver as ReceiverModel;
+namespace Modules\Contact\Controllers\Admin;
+
+use Modules\Contact\Mappers\Receiver as ReceiverMapper;
+use Modules\Contact\Models\Receiver as ReceiverModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -24,7 +25,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'menuReceivers',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->url(array('controller' => 'index', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
                 ),
             )
         );
@@ -33,24 +34,37 @@ class Index extends \Ilch\Controller\Admin
         (
             array
             (
-                'name' => 'menuActionNewReceiver',
+                'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat'))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
 
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'));
+
         $receiverMapper = new ReceiverMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_receivers')) {
+            foreach($this->getRequest()->getPost('check_receivers') as $receiveId) {
+                $receiverMapper->delete($receiveId);
+            }
+        }
+
         $receivers = $receiverMapper->getReceivers();
         $this->getView()->set('receivers', $receivers);
     }
 
     public function deleteAction()
     {
-        $receiverMapper = new ReceiverMapper();
-        $receiverMapper->delete($this->getRequest()->getParam('id'));
+        if($this->getRequest()->isSecure()) {
+            $receiverMapper = new ReceiverMapper();
+            $receiverMapper->delete($this->getRequest()->getParam('id'));
+        }
+
         $this->redirect(array('action' => 'index'));
     }
 
@@ -59,7 +73,15 @@ class Index extends \Ilch\Controller\Admin
         $receiverMapper = new ReceiverMapper();
 
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('edit'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+
             $this->getView()->set('receiver', $receiverMapper->getReceiverById($this->getRequest()->getParam('id')));
+        }  else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {

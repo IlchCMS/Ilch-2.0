@@ -5,6 +5,7 @@
  */
 
 namespace Ilch\Layout;
+
 defined('ACCESS') or die('no direct access');
 
 class Admin extends Base
@@ -12,24 +13,39 @@ class Admin extends Base
     /**
      * @var array
      */
-    private $_menus = array();
+    private $menus = array();
 
     /**
      * @var array
      */
-    private $_menuActions = array();
+    private $menuActions = array();
 
     /**
      * @var boolean
      */
-    private $_showSidebar = true;
+    private $showSidebar = true;
 
     /**
      * @return array
      */
     public function getMenus()
     {
-        return $this->_menus;
+        return $this->menus;
+    }
+
+    /**
+     * Adds layout helper.
+     *
+     * @todo adds helper dynamic from folder.
+     * @param \Ilch\Request $request
+     * @param \Ilch\Translator $translator
+     * @param \Ilch\Router $router
+     */
+    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
+    {
+        parent::__construct($request, $translator, $router);
+
+        $this->addHelper('getAdminHmenu', 'layout', new \Ilch\Layout\Helper\GetAdminHmenu($this));
     }
 
     /**
@@ -40,7 +56,7 @@ class Admin extends Base
      */
     public function addMenu($headKey, $items)
     {
-        $this->_menus[$headKey] = $items;
+        $this->menus[$headKey] = $items;
      }
 
     /**
@@ -50,7 +66,7 @@ class Admin extends Base
      */
     public function addMenuAction($actionArray)
     {
-        $this->_menuActions[] = $actionArray;
+        $this->menuActions[] = $actionArray;
     }
 
     /**
@@ -58,7 +74,7 @@ class Admin extends Base
      */
     public function getMenuAction()
     {
-        return $this->_menuActions;
+        return $this->menuActions;
     }
 
     /**
@@ -66,7 +82,7 @@ class Admin extends Base
      */
     public function removeSidebar()
     {
-        $this->_showSidebar = false;
+        $this->showSidebar = false;
     }
 
     /**
@@ -76,6 +92,6 @@ class Admin extends Base
      */
     public function hasSidebar()
     {
-        return (bool)$this->_showSidebar;
+        return (bool)$this->showSidebar;
     }
 }

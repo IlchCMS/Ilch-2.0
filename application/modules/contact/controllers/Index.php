@@ -4,10 +4,11 @@
  * @package ilch
  */
 
-namespace Contact\Controllers;
+namespace Modules\Contact\Controllers;
+
 defined('ACCESS') or die('no direct access');
 
-use Contact\Mappers\Receiver as ReceiverMapper;
+use Modules\Contact\Mappers\Receiver as ReceiverMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -19,21 +20,36 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()->set('receivers', $receivers);
 
-        if ($this->getRequest()->isPost()) {
-            $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('receiver'));
-            $subject = 'Kontakt Website <'.$this->getRequest()->getPost('name').'>('.$this->getRequest()->getPost('email').')';
+        if ($this->getRequest()->getPost('saveContact')) {
+            $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('contact_receiver'));
+            $name = $this->getRequest()->getPost('contact_name');
+            $contactEmail = $this->getRequest()->getPost('contact_email');
+            $subject = $this->getTranslator()->trans('contactWebsite').$this->getConfig()->get('page_title').':<'.$name.'>('.$contactEmail.')';
+            $captcha = trim(strtolower($this->getRequest()->getPost('captcha')));
+            $message = $this->getRequest()->getPost('contact_message');
 
-            /*
-             * @todo We should create a \Ilch\Mail class.
-             */
-            mail
-            (
-                $receiver->getEmail(),
-                $subject,
-                $this->getRequest()->getPost('message')#
-            );
+            if (empty($_SESSION['captcha']) || $captcha != $_SESSION['captcha']) {
+                $this->addMessage('invalidCaptcha', 'danger');
+            } elseif (empty($message)) {
+                $this->addMessage('missingText', 'danger');
+            } elseif(empty($name)) {
+                $this->addMessage('missingName', 'danger');
+            } elseif(empty($contactEmail)) {
+                $this->addMessage('missingEmail', 'danger');
+            } else {
+                /*
+                * @todo create a general sender.
+                */
+                $mail = new \Ilch\Mail();
+                $mail->setTo($receiver->getEmail(),$receiver->getName())
+                        ->setSubject($subject)
+                        ->setFrom('address@domain.tld','automatische eMail')
+                        ->setMessage($message)
+                        ->addGeneralHeader('Content-type', 'text/plain; charset="utf-8"');
+                $mail->send();
 
-            $this->addMessage('sendSuccess');
+                $this->addMessage('sendSuccess');
+            }
         }
     }
 }

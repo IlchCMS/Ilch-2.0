@@ -12,8 +12,8 @@ class Model
     /**
      * @var array
      */
-    protected $_data;
-    
+    protected $data;
+
     /**
      * Injects the layout.
      *
@@ -21,7 +21,7 @@ class Model
      */
     public function __construct($layout)
     {
-        $this->_layout = $layout;
+        $this->layout = $layout;
     }
 
     /**
@@ -33,7 +33,7 @@ class Model
      */
     public function add($key, $value = '')
     {
-        $this->_data[$key] = $value;
+        $this->data[$key] = $value;
 
         return $this;
     }
@@ -45,35 +45,19 @@ class Model
      */
     public function __toString()
     {
-        if (empty($this->_data)) {
+        if (empty($this->data)) {
             return '';
         }
 
-        $html = '<div id="breadcrumbs">
-                    <div class="breadcrumb-button blue">
-                        <span class="breadcrumb-label">
-                            <a href="'.$this->_layout->url().'">
-                                <i class="fa fa-home"></i>
-                            </a>
-                        </span>
-                        <span class="breadcrumb-arrow">
-                            <span></span>
-                        </span>
-                    </div>';
+        $html = '<a href="'.$this->layout->getUrl().'">Start</a>';
 
-        foreach ($this->_data as $key => $value) {
-            $html .= '<div class="breadcrumb-button"><span class="breadcrumb-label">';
-
+        foreach ($this->data as $key => $value) {
             if (empty($value)) {
-                $html .= $this->_layout->escape($key);
+                $html .= $this->layout->escape($key);
             } else {
-                $html .= '<a href="'.$this->_layout->url($value).'">'.$this->_layout->escape($key).'</a>';
+                $html .= ' &rArr; <a href="'.$this->layout->getUrl($value).'">'.$this->layout->escape($key).'</a>';
             }
-
-            $html .=  '</span><span class="breadcrumb-arrow"><span></span></span></div>';
         }
-
-        $html .= '</div>';
 
         return $html;
     }

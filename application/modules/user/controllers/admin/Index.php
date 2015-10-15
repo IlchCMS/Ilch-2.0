@@ -1,27 +1,22 @@
 <?php
 /**
- * Holds the class Index.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace User\Controllers\Admin;
+namespace Modules\User\Controllers\Admin;
 
-use User\Controllers\Admin\Base as BaseController;
-use User\Mappers\User as UserMapper;
-use User\Mappers\Group as GroupMapper;
-use User\Models\User as UserModel;
-use User\Models\Group as GroupModel;
+use Modules\User\Controllers\Admin\Base as BaseController;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Models\User as UserModel;
+use Modules\User\Models\Group as GroupModel;
 use \Ilch\Registry as Registry;
 
 defined('ACCESS') or die('no direct access');
 
 /**
  * Handles action for the main admin configuration page.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Index extends BaseController
 {
@@ -34,7 +29,7 @@ class Index extends BaseController
             (
                 'name' => 'menuActionNewUser',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->url(array('controller' => 'index', 'action' => 'treat', 'id' => 0))
+                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
@@ -44,7 +39,23 @@ class Index extends BaseController
      */
     public function indexAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'));
+
         $userMapper = new UserMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
+            foreach($this->getRequest()->getPost('check_users') as $userId) {
+                $deleteUser = $userMapper->getUserById($userId);
+
+                if ($deleteUser->getId() != Registry::get('user')->getId()) {
+                    if($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() == 1) {} else {
+                        $userMapper->delete($deleteUser->getId());
+                    }
+                }
+            }
+        }
+
         $userList = $userMapper->getUserList();
         $this->getView()->set('userList', $userList);
         $this->getView()->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'));
@@ -56,8 +67,42 @@ class Index extends BaseController
      */
     public function treatAction()
     {
-        $userId = $this->getRequest()->getParam('id');
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('editUser'), array('action' => 'treat'));
+
         $userMapper = new UserMapper();
+
+        if ($this->getRequest()->isPost()) {
+            $userData = $this->getRequest()->getPost('user');
+            
+            if (!empty($userData['password'])) {
+                $userData['password'] = crypt($userData['password']);
+            }
+
+            $user = $userMapper->loadFromArray($userData);
+
+            if (!empty($userData['groups'])) {
+                foreach ($userData['groups'] as $groupId) {
+                    $group = new GroupModel();
+                    $group->setId($groupId);
+                    $user->addGroup($group);
+                }
+            }
+
+            $date = new \Ilch\Date();
+            $user->setDateCreated($date);
+
+            $userId = $userMapper->save($user);
+
+            if (!empty($userId) && empty($userData['id'])) {
+                $this->addMessage('newUserMsg');
+            }
+        }
+
+        if (empty($userId)) {
+            $userId = $this->getRequest()->getParam('id');
+        }
 
         if ($userMapper->userWithIdExists($userId)) {
             $user = $userMapper->getUserById($userId);
@@ -73,38 +118,6 @@ class Index extends BaseController
     }
 
     /**
-     * Saves the given user.
-     */
-    public function saveAction()
-    {
-        $postData = $this->getRequest()->getPost();
-
-        if (isset($postData['user'])) {
-            $userData = $postData['user'];
-
-            $userMapper = new UserMapper();
-            $user = $userMapper->loadFromArray($userData);
-            $user->setDateCreated(time());
-
-            if (!empty($userData['groups'])) {
-                foreach ($userData['groups'] as $groupId) {
-                    $group = new GroupModel();
-                    $group->setId($groupId);
-                    $user->addGroup($group);
-                }
-            }
-
-            $userId = $userMapper->save($user);
-
-            if (!empty($userId) && empty($userData['id'])) {
-                $this->addMessage('newUserMsg');
-            }
-
-            $this->redirect(array('action' => 'treat', 'id' => $userId));
-        }
-    }
-
-    /**
      * Deletes the given user.
      */
     public function deleteAction()
@@ -112,7 +125,7 @@ class Index extends BaseController
         $userMapper = new UserMapper();
         $userId = $this->getRequest()->getParam('id');
 
-        if ($userId) {
+        if ($userId && $this->getRequest()->isSecure()) {
             $deleteUser = $userMapper->getUserById($userId);
 
             /*
@@ -126,7 +139,11 @@ class Index extends BaseController
                  * Delete adminuser only if he is not the last admin.
                  */
             } else {
-                if ($userMapper->delete($userId)) {
+                if ($deleteUser->getAvatar() != '') {
+                    unlink($deleteUser->getAvatar());
+                }
+
+                if ($userMapper->delete($userId)) {                    
                     $this->addMessage('delUserMsg');
                 }
             }

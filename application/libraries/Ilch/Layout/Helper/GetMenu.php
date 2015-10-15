@@ -16,7 +16,7 @@ class GetMenu
      */
     public function __construct($layout)
     {
-        $this->_layout = $layout;
+        $this->layout = $layout;
     }
 
     /**
@@ -30,10 +30,14 @@ class GetMenu
     {
         $menuId = $args[0];
 
-        $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->_layout);
-        $menuMapper = new \Admin\Mappers\Menu();
+        $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->layout);
+        $menuMapper = new \Modules\Admin\Mappers\Menu();
 
         $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
+
+        if (isset($args[1]) && isset($args[2])) {
+            return $menu->getItems($args[1], $args[2]);
+        }
 
         if (isset($args[1])) {
             return $menu->getItems($args[1]);

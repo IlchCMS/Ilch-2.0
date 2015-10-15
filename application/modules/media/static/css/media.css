@@ -1,0 +1,224 @@
+/**
+ * @copyright Ilch 2.0
+ * @package ilch
+ */
+
+#upload{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#drop{
+    padding: 20px 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size:16px;
+    font-weight:bold;
+    color:#7f858a;
+}
+
+#drop i{
+    color:#7f858a;
+    font-size: 150px;
+    opacity: 0.5;
+    display: block;
+    cursor:default;
+}
+
+#drop p{
+    color:#7f858a;
+    cursor:default;
+}
+
+#drop a:hover{
+    background-color:#0986a3;
+}
+
+#drop input{
+    display:none;
+}
+
+#upload ul{
+    list-style:none;
+}
+
+#upload ul li{
+	margin-left: -40px;
+background: rgb(53,53,53); /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM1MzUzNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM2JSIgc3RvcC1jb2xvcj0iIzJkMmQyZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMyODM0M2IiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  rgba(53,53,53,1) 0%, rgba(45,45,45,1) 36%, rgba(40,52,59,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(53,53,53,1)), color-stop(36%,rgba(45,45,45,1)), color-stop(100%,rgba(40,52,59,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(53,53,53,1) 0%,rgba(45,45,45,1) 36%,rgba(40,52,59,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(53,53,53,1) 0%,rgba(45,45,45,1) 36%,rgba(40,52,59,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(53,53,53,1) 0%,rgba(45,45,45,1) 36%,rgba(40,52,59,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(53,53,53,1) 0%,rgba(45,45,45,1) 36%,rgba(40,52,59,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', endColorstr='#28343b',GradientType=0 ); /* IE6-8 */
+
+    border-top:1px solid #3d4043;
+    border-bottom:1px solid #2b2e31;
+    padding:15px;
+    height: 75px;
+
+    position: relative;
+}
+
+#upload ul li span{
+    position: absolute;
+    right: 15px;
+    top: 30px;
+    color: #fff;
+}
+
+#upload ul li input{
+    display: none;
+}
+
+#upload ul li p{
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #EEE;
+    font-size: 16px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 100px;
+}
+
+#upload ul li i{
+    font-weight: normal;
+    font-style:normal;
+    color:#7f7f7f;
+    display:block;
+}
+
+#upload ul li canvas{
+    top: 15px;
+    left: 32px;
+    position: absolute;
+}
+
+#upload ul li p i{
+    top: 34px;
+    right: 33px;
+    cursor:default;
+}
+
+#upload ul li.working i{
+    height: 18px;
+    background-position: 0 -12px;
+}
+
+#upload ul li.error p{
+    color:red;
+}
+
+#upload ul li.error span{
+    color:red;
+    cursor: pointer;
+}
+
+#upload ul li.finish span{
+    color:#00C928;
+    cursor: pointer;
+}
+
+#upload ul li b.suss-none{
+    display: none;
+}
+
+#upload ul li.finish b.suss{
+    position: absolute;
+    right: 50px;
+    top: 30px;
+    color: rgb(0, 201, 40);
+    cursor: default;
+}
+
+#ilchmedia{
+    margin-top: 60px;
+}
+
+#ilchmedia .thumbnail {
+    margin-bottom:7px;
+    width: 100%;
+}
+
+#ilchmedia .chacked {
+    border-color:#0099FF;
+    border-style:solid;
+}
+
+#ilchmedia .thumb {
+    margin-bottom: 30px;
+}
+
+.media-getname{
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+}
+
+.regular-checkbox {
+    display: none;
+}
+
+.regular-checkbox + label {
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    top: 5px;
+    right: 9px;
+    outline: 0px none;
+    border: 1px solid #575757;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #F1F1F1, #E1E1E1) repeat scroll 0% 0% #F1F1F1;
+}
+
+.regular-checkbox + label:active, .regular-checkbox:checked + label:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.regular-checkbox:checked + label {
+}
+
+.regular-checkbox:checked + label:after {
+    content: '\2714';
+    font-size: 16px;
+    position: absolute;
+    top: 0px;
+    left: 5px;
+    color: #0099FF;
+}
+
+.nav-pills{
+    border-bottom: 1px solid #E5E5E5;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.btn {
+    padding: 9px 12px !important;
+    border-radius: 0px;
+}
+
+.img-preview{
+    width: 100px;
+    height: auto;
+}
+#filter-media .btn{
+    padding: 6px 12px !important;
+}
+#filter-panel
+*,
+*:before,
+*:after{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#filter-panel label{
+    padding-left: 0px;
+}

@@ -16,7 +16,7 @@ class GetMenus
      */
     public function __construct($layout)
     {
-        $this->_layout = $layout;
+        $this->layout = $layout;
     }
 
     /**
@@ -26,7 +26,7 @@ class GetMenus
      */
     public function getMenus()
     {
-        $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->_layout);
+        $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->layout);
 
         return $helperMapper->getMenus();
     }

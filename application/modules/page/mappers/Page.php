@@ -1,13 +1,12 @@
 <?php
 /**
- * Holds Page_PageMapper.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Page\Mappers;
-use Page\Models\Page as PageModel;
+namespace Modules\Page\Mappers;
+
+use Modules\Page\Models\Page as PageModel;
 
 defined('ACCESS') or die('no direct access');
 
@@ -26,8 +25,8 @@ class Page extends \Ilch\Mapper
      */
     public function getPageList($locale = '')
     {
-        $sql = 'SELECT pc.title, pc.perma, p.id FROM [prefix]_pages as p
-                LEFT JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+        $sql = 'SELECT pc.title, pc.perma, p.id FROM `[prefix]_pages` as p
+                LEFT JOIN `[prefix]_pages_content` as pc ON p.id = pc.page_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
                 GROUP BY p.id';
         $pageArray = $this->db()->queryArray($sql);
@@ -69,6 +68,7 @@ class Page extends \Ilch\Mapper
 
         $pageModel = new PageModel();
         $pageModel->setId($pageRow['id']);
+        $pageModel->setDescription($pageRow['description']);
         $pageModel->setTitle($pageRow['title']);
         $pageModel->setContent($pageRow['content']);
         $pageModel->setLocale($pageRow['locale']);
@@ -84,7 +84,7 @@ class Page extends \Ilch\Mapper
      */
     public function getPagePermas()
     {
-        $sql = 'SELECT page_id, locale, perma FROM [prefix]_pages_content';
+        $sql = 'SELECT page_id, locale, perma FROM `[prefix]_pages_content`';
         $permas = $this->db()->queryArray($sql);
         $permaArray = array();
 
@@ -108,73 +108,65 @@ class Page extends \Ilch\Mapper
     {
         if ($page->getId()) {
             if ($this->getPageByIdLocale($page->getId(), $page->getLocale())) {
-                $this->db()->update
-                (
-                    array
-                    (
+                $this->db()->update('pages_content')
+                    ->values(array(
                         'title' => $page->getTitle(),
+                        'description' => $page->getDescription(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
-                    ),
-                    'pages_content',
-                    array
-                    (
+                    ))
+                    ->where(array(
                         'page_id' => $page->getId(),
                         'locale' => $page->getLocale(),
-                    )
-                );
+                    ))
+                    ->execute();
             } else {
-                $this->db()->insert
+                $this->db()->insert('pages_content')
+                    ->values
+                    (
+                        array
+                        (
+                            'page_id' => $page->getId(),
+                            'description' => $page->getDescription(),
+                            'title' => $page->getTitle(),
+                            'content' => $page->getContent(),
+                            'perma' => $page->getPerma(),
+                            'locale' => $page->getLocale()
+                        )
+                    )
+                    ->execute();
+            }
+        } else {
+            $date = new \Ilch\Date();
+            $pageId = $this->db()->insert('pages')
+                ->values(array('date_created' => $date->toDb()))
+                ->execute();
+
+            $this->db()->insert('pages_content')
+                ->values
                 (
                     array
                     (
-                        'page_id' => $page->getId(),
+                        'page_id' => $pageId,
+                        'description' => $page->getDescription(),
                         'title' => $page->getTitle(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
                         'locale' => $page->getLocale()
-                    ),
-                    'pages_content'
-                );
-            }
-        } else {
-            $date = new \Ilch\Date();
-            $pageId = $this->db()->insert
-            (
-                array
-                (
-                    'date_created' => $date->toDb()
-                ),
-                'pages'
-            );
-
-            $this->db()->insert
-            (
-                array
-                (
-                    'page_id' => $pageId,
-                    'title' => $page->getTitle(),
-                    'content' => $page->getContent(),
-                    'perma' => $page->getPerma(),
-                    'locale' => $page->getLocale()
-                ),
-                'pages_content'
-            );
+                    )  
+                )
+                ->execute();
         }
     }
 
     public function delete($id)
     {
-        $this->db()->delete
-        (
-            'pages',
-            array('id' => $id)
-        );
-
-        $this->db()->delete
-        (
-            'pages_content',
-            array('page_id' => $id)
-        );
+        $this->db()->delete('pages')
+            ->where(array('id' => $id))
+            ->execute();
+        
+        $this->db()->delete('pages_content')
+            ->where(array('page_id' => $id))
+            ->execute();
     }
 }

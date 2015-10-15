@@ -1,0 +1,45 @@
+users:
+  -
+    id: 1
+    name: "Testuser1"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+  -
+    id: 2
+    name: "Testuser2"
+    password: "hash"
+    email: "testuser1@host.de"
+    date_created: "2014-01-01 12:12:12"
+    date_confirmed: "2014-01-01 12:12:12"
+    confirmed: 1
+    confirmed_code: "123"
+
+groups:
+  -
+    id: 1
+    name: "Admin"
+
+  -
+    id: 2
+    name: "Guest"
+
+  -
+    id: 3
+    name: "Moderator"
+
+users_groups:
+  -
+    user_id: 1
+    group_id: 1
+
+  -
+    user_id: 1
+    group_id: 3
+
+  -
+    user_id: 2
+    group_id: 3

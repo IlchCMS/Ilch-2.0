@@ -2,15 +2,15 @@ language: php
 
 php:
   - 5.4
+  - 5.5
+  - 5.6
 
-before_script:
+install:
+  - bash development/bin/setup.sh travis
   - mysql -e 'create database ilch2_test;'
-  - pear config-set auto_discover 1
-  - pear install pear.phpunit.de/DbUnit
-  - phpenv rehash
-  - cd tests
 
-script: phpunit .
+
+script: cd tests && ../development/bin/phpunit
 
 notifications:
   webhooks:

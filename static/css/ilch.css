@@ -1,0 +1,23 @@
+.article_image {
+    padding: 10px;
+    border-radius: 4px;
+    display:block;
+    margin: 10px auto 10px auto;
+    width: 100%;
+}
+
+#gallery {
+    float: none;
+    width: 100%;
+    display:inline-block;
+}
+
+#gallery img{
+    width: 100%;
+    height: auto;
+}
+
+.captcha {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}

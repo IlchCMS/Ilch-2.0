@@ -1,24 +1,34 @@
 <?php
 /**
- * Holds Guestbook\Config\Config.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Guestbook\Config;
+namespace Modules\Guestbook\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Config extends \Ilch\Config\Install
 {
-    public $key = 'guestbook';
-    public $author = 'Stantin Thomas';
-    public $name = array
+    public $config = array
     (
-        'en_EN' => 'Guestbook',
-        'de_DE' => 'Gästebuch',
+        'key' => 'guestbook',
+        'author' => 'Stantin, Thomas',
+        'icon_small' => 'guestbook.png',
+        'languages' => array
+        (
+            'de_DE' => array
+            (
+                'name' => 'Gästebuch',
+                'description' => 'Hier kann das Gästebuch verwaltet werden.',
+            ),
+            'en_EN' => array
+            (
+                'name' => 'Guestbook',
+                'description' => 'Here you can manage your guestbook entries.',
+            ),
+        )
     );
-    public $icon_small = 'guestbook.png';
 
     public function install()
     {
@@ -29,6 +39,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
+        $this->db()->queryMulti('DROP TABLE `[prefix]_gbook`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'gbook_autosetfree'");
     }
     
     public function getInstallSql()

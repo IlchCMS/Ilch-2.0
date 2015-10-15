@@ -1,12 +1,11 @@
 <?php
 /**
- * Holds Page_PageModel.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Page\Models;
+namespace Modules\Page\Models;
+
 defined('ACCESS') or die('no direct access');
 
 /**
@@ -21,42 +20,49 @@ class Page extends \Ilch\Model
      *
      * @var int
      */
-    protected $_id;
+    protected $id;
 
     /**
      * The perma of the page.
      *
      * @var string
      */
-    protected $_perma;
+    protected $perma;
 
     /**
      * The title of the page.
      *
      * @var string
      */
-    protected $_title;
+    protected $title;
 
     /**
      * The content of the page.
      *
      * @var string
      */
-    protected $_content;
+    protected $content;
+
+    /**
+     * The description of the page.
+     *
+     * @var string
+     */
+    protected $description;
 
     /**
      * The locale of the page.
      *
      * @var string
      */
-    protected $_locale;
+    protected $locale;
 
     /**
      * The datetime when the page got created.
      *
      * @var DateTime
      */
-    protected $_dateCreated;
+    protected $dateCreated;
 
     /**
      * Gets the id of the page.
@@ -65,7 +71,7 @@ class Page extends \Ilch\Model
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -75,7 +81,7 @@ class Page extends \Ilch\Model
      */
     public function setId($id)
     {
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
     }
 
     /**
@@ -85,7 +91,7 @@ class Page extends \Ilch\Model
      */
     public function getPerma()
     {
-        return $this->_perma;
+        return $this->perma;
     }
 
     /**
@@ -95,7 +101,7 @@ class Page extends \Ilch\Model
      */
     public function setPerma($perma)
     {
-        $this->_perma = $perma;
+        $this->perma = $perma;
     }
 
     /**
@@ -105,7 +111,7 @@ class Page extends \Ilch\Model
      */
     public function getTitle()
     {
-        return $this->_title;
+        return $this->title;
     }
 
     /**
@@ -115,7 +121,7 @@ class Page extends \Ilch\Model
      */
     public function setTitle($title)
     {
-        $this->_title = (string) $title;
+        $this->title = (string) $title;
     }
 
     /**
@@ -125,7 +131,7 @@ class Page extends \Ilch\Model
      */
     public function getContent()
     {
-        return $this->_content;
+        return $this->content;
     }
 
     /**
@@ -135,7 +141,27 @@ class Page extends \Ilch\Model
      */
     public function setContent($content)
     {
-        $this->_content = (string) $content;
+        $this->content = (string) $content;
+    }
+
+    /**
+     * Gets the description of the page.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Sets the description of the page.
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = (string)$description;
     }
 
     /**
@@ -145,7 +171,7 @@ class Page extends \Ilch\Model
      */
     public function getLocale()
     {
-        return $this->_locale;
+        return $this->locale;
     }
 
     /**
@@ -155,7 +181,7 @@ class Page extends \Ilch\Model
      */
     public function setLocale($locale)
     {
-        $this->_locale = (string) $locale;
+        $this->locale = (string) $locale;
     }
 
     /**
@@ -165,7 +191,7 @@ class Page extends \Ilch\Model
      */
     public function getDateCreated()
     {
-        return $this->_dateCreated;
+        return $this->dateCreated;
     }
 
     /**
@@ -175,6 +201,6 @@ class Page extends \Ilch\Model
      */
     public function setDateCreated($dateCreated)
     {
-        $this->_dateCreated = $dateCreated;
+        $this->dateCreated = $dateCreated;
     }
 }

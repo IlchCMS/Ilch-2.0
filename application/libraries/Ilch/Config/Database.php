@@ -5,28 +5,29 @@
  */
 
 namespace Ilch\Config;
+
 defined('ACCESS') or die('no direct access');
 
 class Database
 {
     /**
-     * @var Ilch_Database_*
+     * @var \Ilch\Database\Mysql
      */
-    private $_db;
+    private $db;
 
     /**
      * @var array
      */
-    protected $_configData;
+    protected $configData;
 
     /**
      * Injects database adapter to config.
      *
-     * @param Ilch_Database_* $db
+     * @param \Ilch\Database\Mysql $db
      */
     public function __construct($db)
     {
-        $this->_db = $db;
+        $this->db = $db;
     }
 
     /**
@@ -38,22 +39,21 @@ class Database
      */
     public function get($key, $alwaysLoad = false)
     {
-        if (isset($this->_configData[$key]['value']) && !$alwaysLoad) {
-            return $this->_configData[$key]['value'];
+        if (isset($this->configData[$key]['value']) && !$alwaysLoad) {
+            return $this->configData[$key]['value'];
         } else {
-            $configRow = $this->_db->selectRow
-            (
-                array('value', 'key', 'autoload'),
-                'config',
-                array('key' => $key)
-            );
+            $configRow = $this->db->select(array('value', 'key', 'autoload'))
+                ->from('config')
+                ->where(array('key' => $key))
+                ->execute()
+                ->fetchAssoc();
 
             if (empty($configRow)) {
                 return null;
             }
 
-            $this->_configData[$key]['value'] = $configRow['value'];
-            $this->_configData[$key]['autoload'] = $configRow['autoload'];
+            $this->configData[$key]['value'] = $configRow['value'];
+            $this->configData[$key]['autoload'] = $configRow['autoload'];
 
             return $configRow['value'];
         }
@@ -68,46 +68,32 @@ class Database
      */
     public function set($key, $value, $autoload = 0)
     {
-        $oldValue = (string) $this->_db->selectCell
-        (
-            'value',
-            'config',
-            array('key' => $key)
-        );
+        $oldValue = $this->db->select('value')
+            ->from('config')
+            ->where(array('key' => $key))
+            ->execute()
+            ->fetchCell();
 
-        if ($oldValue != null) {
+        if ($oldValue !== null) {
             if ($value !== $oldValue) {
-
-                $this->_db->update
-                (
-                    array
-                    (
-                        'value' => $value,
-                        'autoload' => $autoload
-                    ),
-                    'config',
-                    array
-                    (
-                        'key' => $key
-                    )
-
-                );
+                $this->db->update('config')
+                    ->values(array(
+                            'value' => $value,
+                            'autoload' => $autoload))
+                    ->where(array('key' => $key))
+                    ->execute();
             }
         } else {
-            $this->_db->insert
-            (
-                array
-                (
-                    'key' => $key,
-                    'value' => $value,
-                    'autoload' => $autoload
-                ),
-                'config'
-            );
+                $this->db->insert('config')
+                    ->values(array(
+                        'key' => $key,
+                        'value' => $value,
+                        'autoload' => $autoload))
+                    ->execute();
         }
 
-        $this->_configData[$key]['value'] = $value;
-        $this->_configData[$key]['autoload'] = $autoload;
+        $this->configData[$key]['value'] = $value;
+        $this->configData[$key]['autoload'] = $autoload;
     }
 
     /**
@@ -115,16 +101,15 @@ class Database
      */
     public function loadConfigFromDatabase()
     {
-        $configs = $this->_db->selectArray
-        (
-            array('key', 'value'),
-            'config',
-            array('autoload' => 1)
-        );
+        $configs = $this->db->select(array('key', 'value'))
+            ->from('config')
+            ->where(array('autoload' => 1))
+            ->execute()
+            ->fetchRows();
 
         foreach ($configs as $config) {
-            $this->_configData[$config['key']]['value'] = $config['value'];
-            $this->_configData[$config['key']]['autoload'] = 1;
+            $this->configData[$config['key']]['value'] = $config['value'];
+            $this->configData[$config['key']]['autoload'] = 1;
         }
     }
 }

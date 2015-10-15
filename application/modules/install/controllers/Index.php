@@ -4,7 +4,8 @@
  * @package ilch
  */
 
-namespace Install\Controllers;
+namespace Modules\Install\Controllers;
+
 defined('ACCESS') or die('no direct access');
 
 class Index extends \Ilch\Controller\Frontend
@@ -16,7 +17,7 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * Dont set a time limit for installer.
          */
-        set_time_limit(0);
+        @set_time_limit(0);
 
         $menu = array
         (
@@ -100,16 +101,28 @@ class Index extends \Ilch\Controller\Frontend
         $errors = array();
         $this->getView()->set('phpVersion', phpversion());
 
-        if (!version_compare(phpversion(), '5.4.0', '>')) {
+        if (!version_compare(phpversion(), '5.4.0', '>=')) {
             $errors['version'] = true;
         }
 
-        if (!is_writable(CONFIG_PATH.'/config.php')) {
+        if (!is_writable(CONFIG_PATH)) {
             $errors['writableConfig'] = true;
         }
 
         if (!is_writable(APPLICATION_PATH.'/../.htaccess')) {
             $errors['writableHtaccess'] = true;
+        }
+
+        if (!is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
+             $errors['writableMedia'] = true;
+        }
+
+        if (!is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')) {
+             $errors['writableAvatar'] = true;
+        }
+
+        if (!is_writable(APPLICATION_PATH.'/modules/events/static/upload/image/')) {
+             $errors['writableEvents'] = true;
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
@@ -131,13 +144,25 @@ class Index extends \Ilch\Controller\Frontend
 
             $ilch = new \Ilch\Database\Factory();
             $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
-            $dbConnect = $db->connect($this->getRequest()->getPost('dbHost'), $this->getRequest()->getPost('dbUser'), $this->getRequest()->getPost('dbPassword'));
+            $hostParts = explode(':', $this->getRequest()->getPost('dbHost'));
+            $port = null;
 
-            if (!$dbConnect) {
+            if (!empty($hostParts[1])) {
+                $port = $hostParts[1];
+            }
+
+            try {
+                $db->connect(
+                    reset($hostParts),
+                    $this->getRequest()->getPost('dbUser'),
+                    $this->getRequest()->getPost('dbPassword'),
+                    $port
+                );
+            } catch (\RuntimeException $ex) {
                 $errors['dbConnection'] = 'dbConnectionError';
             }
 
-            if ($dbConnect && !$db->setDatabase($this->getRequest()->getPost('dbName'))) {
+            if (!$db->setDatabase($this->getRequest()->getPost('dbName'))) {
                 $errors['dbDatabase'] = 'dbDatabaseError';
             }
 
@@ -160,11 +185,12 @@ class Index extends \Ilch\Controller\Frontend
         $errors = array();
 
         if ($this->getRequest()->isPost()) {
+            $_SESSION['install']['usage'] = $this->getRequest()->getPost('usage');
+            $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']] = $this->getRequest()->getPost('modulesToInstall');
             $_SESSION['install']['adminName'] = $this->getRequest()->getPost('adminName');
             $_SESSION['install']['adminPassword'] = $this->getRequest()->getPost('adminPassword');
             $_SESSION['install']['adminPassword2'] = $this->getRequest()->getPost('adminPassword2');
             $_SESSION['install']['adminEmail'] = $this->getRequest()->getPost('adminEmail');
-            $_SESSION['install']['cmsType'] = $this->getRequest()->getPost('cmsType');
 
             if (empty($_SESSION['install']['adminName'])) {
                 $errors['adminName'] = 'fieldEmpty';
@@ -204,11 +230,14 @@ class Index extends \Ilch\Controller\Frontend
                 $db = $dbFactory->getInstanceByConfig($fileConfig);
                 \Ilch\Registry::set('db', $db);
 
-                /*
-                 * Install every registered module.
-                 */
-                $modulesToInstall = array('admin', 'user', 'article', 'page', 'guestbook', 'contact', 'partner', 'link');
-                $moduleMapper = new \Admin\Mappers\Module();
+                $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
+                if (!empty($modulesToInstall)) {
+                    $modulesToInstall = array_merge(array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic'), $modulesToInstall);
+                } else {
+                    $modulesToInstall = array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic');
+                }
+
+                $moduleMapper = new \Modules\Admin\Mappers\Module();
 
                 /*
                  * Clear old tables.
@@ -216,24 +245,84 @@ class Index extends \Ilch\Controller\Frontend
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
-                    $configClass = $module.'\\Config\\Config';
+                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\config';
                     $config = new $configClass($this->getTranslator());
                     $config->install();
 
-                    if (!empty($config->name)) {
-                        $moduleModel = new \Admin\Models\Module();
-                        $moduleModel->setKey($config->key);
+                    if (!empty($config->config)) {
+                        $moduleModel = new \Modules\Admin\Models\Module();
+                        $moduleModel->setKey($config->config['key']);
 
-                        foreach ($config->name as $key => $value) {
-                            $moduleModel->addName($key, $value);
+                        if (isset($config->config['author'])) {
+                            $moduleModel->setAuthor($config->config['author']);
                         }
 
-                        $moduleModel->setIconSmall($config->icon_small);
+                        if (isset($config->config['languages'])) {
+                            foreach ($config->config['languages'] as $key => $value) {
+                                $moduleModel->addContent($key, $value);
+                            }
+                        }
+
+                        if (isset($config->config['system_module'])) {
+                            $moduleModel->setSystemModule(true);
+                        }
+
+                        $moduleModel->setIconSmall($config->config['icon_small']);
                         $moduleMapper->save($moduleModel);
                     }
                 }
 
-                $db->queryMulti(file_get_contents(APPLICATION_PATH.'/modules/install/install/install_'.$_SESSION['install']['cmsType'].'.sql'));
+                $menuMapper = new \Modules\Admin\Mappers\Menu();
+                $menu1 = new \Modules\Admin\Models\Menu();
+                $menu1->setId(1);
+                $menu1->setTitle('Hauptmenü');
+                $menuMapper->save($menu1);
+
+                $menu2 = new \Modules\Admin\Models\Menu();
+                $menu2->setId(2);
+                $menu2->setTitle('Hauptmenü 2');
+                $menuMapper->save($menu2);
+
+                $sort = 0;
+                $menuItem = new \Modules\Admin\Models\MenuItem();
+                $menuItem->setMenuId(1);
+                $menuItem->setParentId(0);
+                $menuItem->setTitle('Menü');
+                $menuItem->setType(0);
+                $menuMapper->saveItem($menuItem);
+
+                /*
+                 * Will not linked in menu
+                 */
+                foreach ($modulesToInstall as $module) {
+                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'statistic'))) {
+                        continue;
+                    }
+
+                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\config';
+                    $config = new $configClass($this->getTranslator());
+
+                    $menuItem = new \Modules\Admin\Models\MenuItem();
+                    $menuItem->setMenuId(1);
+                    $menuItem->setSort($sort);
+                    $menuItem->setParentId(1);
+                    $menuItem->setType(3);
+                    $menuItem->setModuleKey($config->config['key']);
+                    $menuItem->setTitle($config->config['languages'][$this->getTranslator()->getLocale()]['name']);
+                    $menuMapper->saveItem($menuItem);
+                    $sort += 10;
+                }
+
+               $boxes = "INSERT INTO `[prefix]_menu_items` (`menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
+                        (1, 80, 0, 0, 0, 'user_login', 4, 'Login', '', ''),
+                        (1, 90, 0, 0, 0, 'admin_layoutswitch', 4, 'Layout', '', ''),
+                        (1, 100, 0, 0, 0, 'statistic_stats', 4, 'Statistik', '', ''),
+                        (1, 110, 0, 0, 0, 'statistic_online', 4, 'Online', '', ''),
+                        (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
+                        (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
+                        (2, 30, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
+                        (2, 40, 0, 0, 0, 'article_archive', 4, 'Archive', '', '')";
+                $db->queryMulti($boxes);
 
                 unset($_SESSION['install']);
                 $this->redirect(array('action' => 'finish'));
@@ -242,11 +331,77 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('errors', $errors);
         }
 
-        foreach (array('adminName', 'adminPassword', 'adminPassword2', 'adminEmail') as $name) {
+        foreach (array('modulesToInstall', 'usage', 'adminName', 'adminPassword', 'adminPassword2', 'adminEmail') as $name) {
             if (!empty($_SESSION['install'][$name])) {
                 $this->getView()->set($name, $_SESSION['install'][$name]);
             }
         }
+    }
+
+    public function ajaxconfigAction()
+    {
+        $type = $this->getRequest()->getParam('type');
+        $this->getRequest()->setIsAjax(true);
+        $modules = array();
+
+        /*
+         * System-Modules
+         */
+        $modules['user']['types']       = array();
+        $modules['article']['types']    = array();
+        $modules['page']['types']       = array();
+        $modules['media']['types']      = array();
+        $modules['comment']['types']    = array();
+        $modules['contact']['types']    = array();
+        $modules['imprint']['types']    = array();
+        $modules['privacy']['types']    = array();
+        $modules['statistic']['types']  = array();
+
+        /*
+         * Optional-Modules.
+         */
+        $modules['checkout']['types']   = array('clan');
+        $modules['war']['types']        = array('clan');
+        $modules['history']['types']    = array('clan');
+        $modules['rule']['types']       = array('clan');
+        $modules['training']['types']   = array('clan');
+        $modules['forum']['types']      = array('clan', 'private');
+        $modules['guestbook']['types']  = array('clan', 'private');
+        $modules['link']['types']       = array('clan', 'private');
+        $modules['linkus']['types']     = array('clan', 'private');
+        $modules['partner']['types']    = array('clan', 'private');
+        $modules['shoutbox']['types']   = array('clan', 'private');
+        $modules['gallery']['types']    = array('clan', 'private');
+        $modules['downloads']['types']  = array('clan', 'private');
+        $modules['newsletter']['types'] = array('clan', 'private');
+        $modules['birthday']['types']   = array('clan', 'private');
+        $modules['events']['types']     = array('clan', 'private');
+        $modules['calendar']['types']   = array('clan', 'private');
+        $modules['away']['types']       = array('clan', 'private');
+        $modules['awards']['types']     = array('clan', 'private');
+        $modules['jobs']['types']       = array('clan', 'private');
+        $modules['faq']['types']        = array('clan', 'private');
+
+        foreach ($modules as $key => $module) {
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
+            $config = new $configClass($this->getTranslator());
+            $modules[$key]['config'] = $config;
+
+            if(in_array($type, $module['types']))
+            {
+               $modules[$key]['checked'] = true;
+            }
+        }
+
+        $modulesToInstall = array();
+
+        if(!empty($_SESSION['install']['modulesToInstall'][$type]))
+        {
+            $modulesToInstall = $_SESSION['install']['modulesToInstall'][$type];
+        }
+
+        $this->getView()->set('modulesToInstall', $modulesToInstall);
+        $this->getView()->set('modules', $modules);
     }
 
     public function finishAction()

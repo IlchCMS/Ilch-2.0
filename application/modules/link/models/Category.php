@@ -1,20 +1,13 @@
 <?php
 /**
- * Holds class Category.
- *
  * @copyright Ilch 2.0
  * @package ilch
  */
 
-namespace Link\Models;
+namespace Modules\Link\Models;
 
 defined('ACCESS') or die('no direct access');
 
-/**
- * The user category model class.
- *
- * @package ilch
- */
 class Category extends \Ilch\Mapper
 {
     /**
@@ -22,28 +15,35 @@ class Category extends \Ilch\Mapper
      *
      * @var int
      */
-    private $_id;
+    private $id;
 
     /**
      * The name of the category.
      *
      * @var string
      */
-    private $_name = '';
+    private $name;
 
     /**
      * The catid of the category.
      *
      * @var string
      */
-    private $_cat = '';
+    private $cat;
 
     /**
      * The description of the category.
      *
      * @var string
      */
-    private $_desc = '';
+    private $desc;
+    
+    /**
+     * The links count of the category.
+     *
+     * @var integer
+     */
+    private $linksCount;
 
     /**
      * Returns the user category id.
@@ -52,7 +52,7 @@ class Category extends \Ilch\Mapper
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -62,7 +62,7 @@ class Category extends \Ilch\Mapper
      */
     public function setId($id)
     {
-        $this->_id = (int) $id;
+        $this->id = (int) $id;
     }
 
     /**
@@ -72,7 +72,7 @@ class Category extends \Ilch\Mapper
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -80,9 +80,9 @@ class Category extends \Ilch\Mapper
      *
      * @param string $name
      */
-    public function setCatId($cat)
+    public function setParentId($cat)
     {
-        $this->_cat = (string) $cat;
+        $this->cat_id = (string)$cat;
     }
 
     /**
@@ -90,9 +90,9 @@ class Category extends \Ilch\Mapper
      *
      * @return string
      */
-    public function getCatId()
+    public function getParentId()
     {
-        return $this->_cat;
+        return $this->cat_id;
     }
 
     /**
@@ -102,28 +102,51 @@ class Category extends \Ilch\Mapper
      */
     public function setName($name)
     {
-        $this->_name = (string) $name;
+        $this->name = (string) $name;
     }
 
     /**
-     * Gets the description of the link.
+     * Gets the description of the category.
      *
      * @return string
      */
     public function getDesc()
     {
-        return $this->_desc;
+        return $this->desc;
     }
 
     /**
-     * Sets the description of the link.
+     * Sets the description of the category.
      *
      * @param string $desc
      * @return this
      */
     public function setDesc($desc)
     {
-        $this->_desc = (string)$desc;
+        $this->desc = (string)$desc;
+
+        return $this;
+    }
+    
+    /**
+     * Gets the links count of the category.
+     *
+     * @return integer
+     */
+    public function getLinksCount()
+    {
+        return $this->linksCount;
+    }
+
+    /**
+     * Sets the links count of the category.
+     *
+     * @param integer $count
+     * @return this
+     */
+    public function setLinksCount($count)
+    {
+        $this->linksCount = $count;
 
         return $this;
     }

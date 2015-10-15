@@ -15,6 +15,7 @@ return array
     'send' => 'Send',
     'hits' => 'Hits',
     'category' => 'Category',
+    'optionNoCategory' => 'No Category',
     'description' => 'Description',
     'missingName' => 'Name was not filled',
     'missingLink' => 'Link was not filled',
@@ -30,6 +31,6 @@ return array
     'menuActionEditCategory' => 'Edit Category',
     'noLinks' => 'No Links',
     'noCategory' => 'No Category',
-    'askIfDeletePartner' => 'Are you sure you want delete the partner "%s"?',
-    'delete' => 'Delete',
+    'askIfDeleteLink' => 'Are you sure you want delete the Link "%s"?',
+    'askIfDeleteCat' => 'Are you sure you want delete the Category "%s"?',
 );

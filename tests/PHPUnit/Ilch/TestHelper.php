@@ -1,39 +1,40 @@
 <?php
 /**
- * Holds class PHPUnit_Ilch_TestHelper.
- *
  * @package ilch_phpunit
  */
 
+namespace PHPUnit\Ilch;
+
 use Ilch\Registry as Registry;
+use Ilch\Config\File as Config;
 
 /**
  * Helper class for the PHPUnit execution.
  *
  * @package ilch_phpunit
  */
-class PHPUnit_Ilch_TestHelper
+class TestHelper
 {
     /**
      * The config variable which will be set for the tests.
      *
      * @static Static so we can dont have to connect for every test again.
-     * @var Ilch\Config\File
+     * @var \Ilch\Config\File
      */
     static private $config = null;
 
     /**
      * Filling the config object with individual testcase data and injecting it into the registry.
      */
-    public function setConfigInRegistry($configData)
+    public static function setConfigInRegistry($configData)
     {
-        if (self::$config === null) {
-            if (!Registry::has('config') && file_exists(CONFIG_PATH.'/config.php')) {
-                self::$config = new \Ilch\Config\File();
-                self::$config->loadConfigFromFile(CONFIG_PATH.'/config.php');
+        if (static::$config === null) {
+            if (!Registry::has('config') && file_exists(CONFIG_PATH . '/config.php')) {
+                static::$config = new Config();
+                static::$config->loadConfigFromFile(CONFIG_PATH . '/config.php');
 
                 foreach ($configData as $configKey => $configValue) {
-                    self::$config->set($configKey, $configValue);
+                    static::$config->set($configKey, $configValue);
                 }
             }
         }
