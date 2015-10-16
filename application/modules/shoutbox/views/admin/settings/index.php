@@ -35,6 +35,23 @@
             </div>
         </div>
     </div>
+
+    <div class="form-group">
+        <label for="maxtextlength" class="col-lg-2 control-label">
+            <?=$this->getTrans('maximumTextLength') ?>:
+        </label>
+        <div class="col-lg-2">
+            <div class="container">
+                <div class="input-group spinner">
+                    <input type="text" class="form-control" id="maxwordlength" name="maxtextlength" min="1" value="<?=$this->get('maxtextlength') ?>">
+                    <div class="input-group-btn-vertical">
+                        <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
+                        <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

@@ -46,6 +46,6 @@
     margin-left: -36px;
 }
 .partnersslider .bx-viewport li {
-    margin-bottom: 10px;
     border-bottom-width: 0px !important;
+    width: 99% !important;
 }

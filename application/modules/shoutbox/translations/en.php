@@ -17,6 +17,7 @@ return array
     'noEntrys' => 'no entries exist',
     'numberOfMessagesDisplayed' => 'Number of Messages Displayed',
     'maximumWordLength' => 'Maximum word length',
+    'maximumTextLength' => 'Maximum text length',
     'askIfDeleteShoutbox' => 'Are you sure you want delete the shoutbox entry from "%s"?',
     'settings' => 'Settings',
     'answer' => 'Answer',

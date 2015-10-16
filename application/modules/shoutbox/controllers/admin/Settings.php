@@ -44,10 +44,12 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('shoutbox_limit', $this->getRequest()->getPost('limit'));
             $this->getConfig()->set('shoutbox_maxwordlength', $this->getRequest()->getPost('maxwordlength'));
+            $this->getConfig()->set('shoutbox_maxtextlength', $this->getRequest()->getPost('maxtextlength'));
             $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('limit', $this->getConfig()->get('shoutbox_limit'));
         $this->getView()->set('maxwordlength', $this->getConfig()->get('shoutbox_maxwordlength'));
+        $this->getView()->set('maxtextlength', $this->getConfig()->get('shoutbox_maxtextlength'));
     }
 }

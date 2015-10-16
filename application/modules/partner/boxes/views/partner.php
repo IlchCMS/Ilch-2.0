@@ -19,7 +19,11 @@
             <?php else: ?>
                 <?php $banner = $partner->getBanner(); ?>
             <?php endif; ?>
-            <a href="<?=$link ?>" title="<?=$partner->getName() ?>" target="_blank"><img src="<?=$banner ?>"></a><br />
+
+            <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
+                <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
+            </a>
+            <br />
         </div>
     <?php endforeach; ?>
 <?php else: ?>
@@ -35,7 +39,11 @@
                     <?php $banner = $partner->getBanner(); ?>
                 <?php endif; ?>
 
-                <li><a href="<?=$link ?>" title="<?=$partner->getName() ?>" target="_blank"><img src="<?=$banner ?>"></a></li>
+                <li>
+                    <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
+                        <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
+                    </a>
+                </li>
             <?php endforeach; ?>
         </ul>
     </div>
@@ -45,6 +53,7 @@
 $('.bxslider').bxSlider({
     mode: 'vertical',
     ticker: true,
+    slideMargin: 10,
     speed: <?=$this->get('sliderSpeed') ?>,
     useCSS: false,
     tickerHover: true

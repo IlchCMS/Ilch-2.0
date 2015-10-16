@@ -17,6 +17,7 @@ return array
     'noEntrys' => 'Keine Einträge vorhanden',
     'numberOfMessagesDisplayed' => 'Anzahl angezeigter Nachrichten',
     'maximumWordLength' => 'Maximale Wortlänge',
+    'maximumTextLength' => 'Maximale Textlänge',
     'askIfDeleteShoutbox' => 'Sind Sie sicher, dass der Shoutbox eintrag von "%s" entfernt werden soll?',
     'settings' => 'Einstellungen',
     'answer' => 'Antworten',

@@ -127,7 +127,7 @@ $(function() {
                               style="resize: vertical"
                               cols="10" 
                               rows="5"
-                              maxlength="50"
+                              maxlength="<?=$config->get('shoutbox_maxtextlength') ?>"
                               placeholder="<?=$this->getTrans('message') ?>"
                               required></textarea>
                 </div>

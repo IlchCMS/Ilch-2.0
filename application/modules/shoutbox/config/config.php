@@ -37,6 +37,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('shoutbox_limit', '5');
         $databaseConfig->set('shoutbox_maxwordlength', '10');
+        $databaseConfig->set('shoutbox_maxtextlength', '50');
     }
 
     public function uninstall()
