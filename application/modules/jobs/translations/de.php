@@ -23,5 +23,5 @@ return array
     'noJobs' => 'Keine Jobs vorhanden',
     'jobs' => 'Jobs',
     'apply' => 'Bewerben',
-    'applyAs' => 'Bewerbungen als',
+    'applyAs' => 'Bewerbung als',
 );

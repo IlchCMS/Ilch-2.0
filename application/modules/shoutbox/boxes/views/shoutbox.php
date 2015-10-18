@@ -52,48 +52,21 @@ $(function() {
 <?php $config = \Ilch\Registry::get('config'); ?>
 
 <div id="shoutbox-container">
-    <?php if ($this->get('shoutbox') != ''): ?>
-        <table class="table table-bordered table-striped table-responsive">
-            <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
-                <?php $userMapper = new \Modules\User\Mappers\User() ?>
-                <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
-                <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
-                <tr>
-                    <?php if ($shoutbox->getUid() == '0'): ?>
-                        <td>
-                            <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
-                            <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
-                        </td>
-                    <?php else: ?>
-                        <td>
-                            <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$user->getName() ?></a></b>:<br />
-                            <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
-                        </td>
-                    <?php endif; ?>
-                </tr>
-                <tr>
-                    <?php
-                    /*
-                     * @todo should fix this regex.
-                     */
-                    ?>
-                    <td><?=preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php endif; ?>
-
-    <div id="shoutbox-button-container">
-        <div class="pull-left">
-            <button id="shoutbox-slide-down" class="btn"><?=$this->getTrans('answer') ?></button>
-        </div>
-        <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
-            <div class="pull-right">
-                <button class="btn">
-                    <a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a>
-                </button>
+    <div id="shoutbox-button-container" class="form-horizontal">
+        <div class="form-group">
+            <div class="col-lg-12">
+                <div class="pull-left">
+                    <button id="shoutbox-slide-down" class="btn"><?=$this->getTrans('answer') ?></button>
+                </div>
+                <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
+                    <div class="pull-right">
+                        <button class="btn">
+                            <a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a>
+                        </button>
+                    </div>
+                <?php endif; ?>
             </div>
-        <?php endif; ?>
+        </div>
     </div>
 
     <div id="shoutbox-form-container" style="display: none;">
@@ -132,18 +105,53 @@ $(function() {
                               required></textarea>
                 </div>
             </div>
-            <div class="pull-left">
-                <button type="submit" name="form_<?=$this->get('uniqid') ?>" class="btn">
-                    <?=$this->getTrans('answer') ?>
-                </button>
-            </div>
-            <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
-                <div class="pull-right">
-                    <button class="btn">
-                        <a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a>
-                    </button>
+            <div class="form-group">
+                <div class="col-lg-12">
+                    <div class="pull-left">
+                        <button type="submit" name="form_<?=$this->get('uniqid') ?>" class="btn">
+                            <?=$this->getTrans('answer') ?>
+                        </button>
+                    </div>
+                    <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
+                        <div class="pull-right">
+                            <button class="btn">
+                                <a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a>
+                            </button>
+                        </div>
+                    <?php endif; ?>
                 </div>
-            <?php endif; ?>
+            </div>
         </form>
     </div>
+    
+    <?php if ($this->get('shoutbox') != ''): ?>
+        <table class="table table-bordered table-striped table-responsive">
+            <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
+                <?php $userMapper = new \Modules\User\Mappers\User() ?>
+                <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+                <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
+                <tr>
+                    <?php if ($shoutbox->getUid() == '0'): ?>
+                        <td>
+                            <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
+                            <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                        </td>
+                    <?php else: ?>
+                        <td>
+                            <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$user->getName() ?></a></b>:<br />
+                            <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                        </td>
+                    <?php endif; ?>
+                </tr>
+                <tr>
+                    <?php
+                    /*
+                     * @todo should fix this regex.
+                     */
+                    ?>
+                    <td><?=preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php endif; ?>
 </div>

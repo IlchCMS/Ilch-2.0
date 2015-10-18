@@ -41,6 +41,7 @@ class Cats extends \Ilch\Controller\Frontend
     {
         $articleMapper = new ArticleMapper();
         $categoryMapper = new CategoryMapper();
+
         $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 
         $this->getLayout()->getHmenu()

@@ -23,5 +23,5 @@ return array
     'noJobs' => 'No Jobs available',
     'jobs' => 'Jobs',
     'apply' => 'Apply',
-    'applyAs' => 'Apply as',
+    'applyAs' => 'Application as',
 );
