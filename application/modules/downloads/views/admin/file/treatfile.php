@@ -42,7 +42,7 @@
                                        name="fileImage"
                                        id="selectedImage"
                                        placeholder="<?=$this->getTrans('fileImageInfo'); ?>"
-                                       value="" />
+                                       value="<?=$file->getFileImage() ?>" />
                                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
                             </div>
                         </div>
