@@ -109,7 +109,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY DAY(`date`)
+        $sql .= ' GROUP BY WEEKDAY(`date`)
                 ORDER BY `date` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
