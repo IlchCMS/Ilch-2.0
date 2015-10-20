@@ -37,8 +37,8 @@
                         <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id'))) ?></td>
                         <td><img class="file thumbnail img-responsive" src="<?=$image ?>"/>
                         </td>
-                        <td></td>
-                        <td></td>
+                        <td><?=$file->getFileTitle() ?></td>
+                        <td><?=$file->getFileDesc() ?></td>
                     </tr>
                  <?php endforeach; ?>
             </tbody>
