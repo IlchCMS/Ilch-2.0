@@ -1,22 +1,27 @@
 <script type="text/javascript" >
 $(function() {
-    var $shoutboxContainer = $('#shoutbox-container');
+    var $shoutboxContainer = $('#shoutbox-container'),
+        showForm = function() {
+            $("#shoutbox-button-container").slideUp(200, function() {
+                $("#shoutbox-form-container").slideDown(400);
+            });
+        },
+        hideForm = function(afterHide) {
+            $("#shoutbox-form-container").slideUp(400, function() {
+                $("#shoutbox-button-container").slideDown(200, afterHide);
+            });
+        };
+
 
     //slideup-down
-    $shoutboxContainer.on('click', '#shoutbox-slide-down', function(ev) {
-        $("#shoutbox-button-container").slideUp(200, function() {
-            $("#shoutbox-form-container").slideDown(400);
-        });
-    });
+    $shoutboxContainer.on('click', '#shoutbox-slide-down', showForm);
 
     //slideup-down reset on click out
     $(document.body).on('mousedown', function(event) {
         var target = $(event.target);
 
         if (!target.parents().andSelf().is('#shoutbox-container')) {
-            $("#shoutbox-form-container").slideUp(400, function() {
-                $("#shoutbox-button-container").slideDown(200);
-            });
+            hideForm();
         }
     });
 
@@ -37,7 +42,9 @@ $(function() {
                 cache: false,
                 success: function(html) {
                     var $htmlWithoutScript = $(html).filter('#shoutbox-container');
-                    $shoutboxContainer.html($htmlWithoutScript.html());
+                    hideForm(function() {
+                        $shoutboxContainer.html($htmlWithoutScript.html());
+                    });
                 }
             });
         }
