@@ -1,25 +1,26 @@
 <script type="text/javascript" >
-$(document).ready(function() {
-    $("#shoutbox-slide-down").click(function() {
+$(function() {
+    var $shoutboxContainer = $('#shoutbox-container');
+
+    //slideup-down
+    $shoutboxContainer.on('click', '#shoutbox-slide-down', function(ev) {
         $("#shoutbox-button-container").slideUp(200, function() {
             $("#shoutbox-form-container").slideDown(400);
         });
     });
-});
 
-$(document.body).mousedown(function(event) {
-    var target = $(event.target);
+    //slideup-down reset on click out
+    $(document.body).on('mousedown', function(event) {
+        var target = $(event.target);
 
-    if (!target.parents().andSelf().is('#shoutbox-container')) {
-        $('#shoutbox-form-container').slideUp(400, function() {
-            $("#shoutbox-button-container").slideDown(200);
-        });
-    }
-});
+        if (!target.parents().andSelf().is('#shoutbox-container')) {
+            $("#shoutbox-form-container").slideUp(400, function() {
+                $("#shoutbox-button-container").slideDown(200);
+            });
+        }
+    });
 
-$(function() {
-    var $shoutboxContainer = $('#shoutbox-container');
-
+    //ajax send
     $shoutboxContainer.on('click', 'button[type=submit]', function(ev) {
         ev.preventDefault();
         var $btn = $(this),
@@ -36,12 +37,7 @@ $(function() {
                 cache: false,
                 success: function(html) {
                     var $htmlWithoutScript = $(html).filter('#shoutbox-container');
-
-                    $('#shoutbox-form-container').slideUp(400, function() {
-                        $("#shoutbox-button-container").slideDown(200, function() {
-                            $form.closest('#shoutbox-container').html($htmlWithoutScript.html());
-                        });
-                    });
+                    $shoutboxContainer.html($htmlWithoutScript.html());
                 }
             });
         }
