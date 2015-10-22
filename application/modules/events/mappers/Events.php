@@ -7,6 +7,7 @@
 namespace Modules\Events\Mappers;
 
 use Modules\Events\Models\Events as EventModel;
+use Modules\Events\Mappers\Events as EventMapper;
 
 defined('ACCESS') or die('no direct access');
 
@@ -85,7 +86,7 @@ class Events extends \Ilch\Mapper
      */
     public function getEventListUpcoming($limit = null)
     {
-        $eventMapper = new \Modules\Events\Mappers\Events();
+        $eventMapper = new EventMapper();
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
@@ -114,7 +115,7 @@ class Events extends \Ilch\Mapper
      */
     public function getEventListUpcomingALL()
     {
-        $eventMapper = new \Modules\Events\Mappers\Events();
+        $eventMapper = new EventMapper();
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
@@ -141,10 +142,10 @@ class Events extends \Ilch\Mapper
      */
     public function getEventListParticipation($userId)
     {
-        $eventMapper = new \Modules\Events\Mappers\Events();
+        $eventMapper = new EventMapper();
         
         $entryRow = $this->db()->select('*')
-                ->from('events_entrants')
+                ->from('events')
                 ->where(array('user_id' => $userId))
                 ->execute()
                 ->fetchRows();
@@ -156,7 +157,7 @@ class Events extends \Ilch\Mapper
         $events = array();
         
         foreach ($entryRow as $row) {
-            $events[] = $eventMapper->getEventById($row['event_id']);
+            $events[] = $eventMapper->getEventById($row['id']);
         }
 
         return $events;
@@ -167,7 +168,7 @@ class Events extends \Ilch\Mapper
      */
     public function getEventListOther($limit = null)
     {
-        $eventMapper = new \Modules\Events\Mappers\Events();
+        $eventMapper = new EventMapper();
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
@@ -196,7 +197,7 @@ class Events extends \Ilch\Mapper
      */
     public function getEventListPast($limit = null)
     {
-        $eventMapper = new \Modules\Events\Mappers\Events();
+        $eventMapper = new EventMapper();
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`

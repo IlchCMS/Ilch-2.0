@@ -46,6 +46,8 @@ return array
     'edit' => 'Bearbeiten',
     'at' => 'um',
     'write' => 'Schreiben',
+    'description' => 'Beschreibung',
+    'comments' => 'Kommentare',
     'navigation' => 'Navigation',
     'naviEventsAll' => 'Alle',
     'naviEventsUpcoming' => 'Bevorstehende',

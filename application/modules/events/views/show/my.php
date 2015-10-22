@@ -10,8 +10,8 @@ $date = new \Ilch\Date();
             <?php if ($this->get('eventListMy') != ''): ?>
                 <?php foreach ($this->get('eventListMy') as $eventlist): ?>
                     <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
-                    <li>
-                        <time>
+                    <li>                        
+                        <time>                            
                             <span class="day"><?=$date->format("j", true) ?></span>
                             <span class="month"><?=$date->format("M", true) ?></span>
                         </time>
@@ -30,17 +30,17 @@ $date = new \Ilch\Date();
                                 <?php endforeach; ?>
                             <?php endif; ?>
                             <ul>
-                                <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
+                                <li style="width:33%;"><strong><?=$this->getTrans('guest') ?></strong></li>
                                 <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
                                 <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
                             </ul>
                         </div>
-						<div class="adminInfo">
-							<ul>
-								<li class="edit" style="width:33%;"><?=$this->getEditIcon(array('controller' => 'index', 'action' => 'treat', 'id' => $eventlist->getId())) ?></li>
-								<li class="del" style="width:33%;"><?=$this->getDeleteIcon(array('controller' => 'index', 'action' => 'del', 'id' => $eventlist->getId())) ?></li>
-							</ul>
-						</div>
+                        <div class="adminInfo">
+                            <ul>
+                                <li class="edit" style="width:33%;"><?=$this->getEditIcon(array('controller' => 'index', 'action' => 'treat', 'id' => $eventlist->getId())) ?></li>
+                                <li class="del" style="width:33%;"><?=$this->getDeleteIcon(array('controller' => 'index', 'action' => 'del', 'id' => $eventlist->getId())) ?></li>
+                            </ul>
+                        </div>
                     </li>
                 <?php endforeach; ?>
             <?php else: ?>

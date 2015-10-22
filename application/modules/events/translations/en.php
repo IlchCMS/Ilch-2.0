@@ -46,6 +46,8 @@ return array
     'edit' => 'Edit',
     'at' => 'at',
     'write' => 'Write',
+    'description' => 'Description',
+    'comments' => 'Comments',
     'navigation' => 'Navigation',
     'naviEventsAll' => 'All',
     'naviEventsUpcoming' => 'Upcoming',

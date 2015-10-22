@@ -110,15 +110,13 @@ $birthday = new \Ilch\Date($profil->getBirthday());
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js') ?>" charset="UTF-8"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <script type="text/javascript">
-$( document ).ready(function()
-{
+$(document).ready(function() {
     $(".form_datetime").datetimepicker({
         format: "dd.mm.yyyy",
         autoclose: true,
         language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
         minView: 2,
-        todayHighlight: true,
-        toggleActive: true
+        todayHighlight: true
     });
 });
 </script>
