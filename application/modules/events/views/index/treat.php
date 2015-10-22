@@ -27,6 +27,12 @@ $settingMapper = new \Modules\User\Mappers\Setting();
                 </div>
             <?php endif; ?>
             <div class="col-lg-7">
+                <?php if ($this->get('event') != '' AND $this->get('event')->getImage() != ''): ?>
+                    <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
+                        <input type="checkbox" name="image_delete" id="image_delete"> <?=$this->getTrans('imageDelete') ?>
+                    </label>
+                <?php endif; ?>
+
                 <p><?=$this->getTrans('imageSize') ?>: <?=$this->get('image_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('image_height') ?> Pixel <?=$this->getTrans('height') ?>.</p>
                 <p><?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('image_size')) ?>.</p>
                 <p><?=$this->getTrans('imageAllowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('image_filetypes')) ?></p>

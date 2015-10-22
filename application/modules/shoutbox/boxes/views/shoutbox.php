@@ -63,9 +63,7 @@ $(function() {
                 </div>
                 <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
                     <div class="pull-right">
-                        <button class="btn">
-                            <a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a>
-                        </button>
+                        <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
                     </div>
                 <?php endif; ?>
             </div>
@@ -117,9 +115,7 @@ $(function() {
                     </div>
                     <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
                         <div class="pull-right">
-                            <button class="btn">
-                                <a href="<?=$this->getUrl('shoutbox/index/index/') ?>"><?=$this->getTrans('archive') ?></a>
-                            </button>
+                            <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
                         </div>
                     <?php endif; ?>
                 </div>

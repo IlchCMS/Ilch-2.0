@@ -61,6 +61,16 @@
                       rows="5"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
         </div>
     </div>
+    <?php if ($this->get('calendarShow') == 1): ?>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <input value="1" type="checkbox" name="calendarShow" id="calendarShow" <?php if ($this->get('event') != '' AND $this->get('event')->getShow() == 1) { echo 'checked'; } ?> />
+                <label for="calendarShow">
+                    <?=$this->getTrans('calendarShow') ?>
+                </label>
+            </div>
+        </div>
+    <?php endif; ?>
     <?php if ($this->get('event') != ''): ?>
         <?=$this->getSaveBar('updateButton') ?>
     <?php else: ?>

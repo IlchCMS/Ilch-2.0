@@ -91,6 +91,7 @@ class Index extends \Ilch\Controller\Admin
             $dateCreated = new \Ilch\Date(trim($this->getRequest()->getPost('dateCreated')));
             $place = trim($this->getRequest()->getPost('place'));
             $text = trim($this->getRequest()->getPost('text'));
+            $show = trim($this->getRequest()->getPost('calendarShow'));
 
             if (empty($dateCreated)) {
                 $this->addMessage('missingDate', 'danger');
@@ -106,12 +107,17 @@ class Index extends \Ilch\Controller\Admin
                 $eventModel->setDateCreated($dateCreated);
                 $eventModel->setPlace($place);
                 $eventModel->setText($text);
+                $eventModel->setShow($show);
                 $eventMapper->save($eventModel);
 
                 $this->addMessage('saveSuccess');
 
                 $this->redirect(array('action' => 'index'));
             }
+        }
+
+        if ($eventMapper->existsTable('calendar') == true) {
+            $this->getView()->set('calendarShow', 1);
         }
     }
 

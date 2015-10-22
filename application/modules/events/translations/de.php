@@ -58,6 +58,7 @@ return array
     'imageSizeBytes' => 'Bild max Größe in Bytes',
     'height' => 'hoch',
     'width' => 'breit',
+    'imageDelete' => 'Bild löschen?',
     'imageSize' => 'Bildgröße',
     'maxFilesize' => 'Maximale Dateigröße',
     'imageAllowedFileExtensions' => 'Erlaubte Dateiendungen',

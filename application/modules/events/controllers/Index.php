@@ -76,10 +76,10 @@ class Index extends \Ilch\Controller\Frontend
                     $height = $size[1];
 
                     if ($file_size <= $imageSize AND $width == $imageWidth AND $height == $imageHeight) {
-                        $image = $path.$title.'-'.time().'.'.$endung;
+                        $image = $path.time().'.'.$endung;
 
                         if ($this->getRequest()->getParam('id') AND $event->getImage() != '') {
-                            $eventMapper->delImageById($this->getUser()->getId());
+                            $eventMapper->delImageById($this->getRequest()->getParam('id'));
                         }
 
                         $eventModel->setImage($image);
@@ -116,6 +116,13 @@ class Index extends \Ilch\Controller\Frontend
                 $eventMapper->save($eventModel);
 
                 $this->addMessage('saveSuccess');
+
+
+                if ($this->getRequest()->getPost('image_delete') != '') {
+                    $eventMapper->delImageById($this->getRequest()->getParam('id'));
+
+                    $this->redirect(array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+                }
 
                 if ($this->getRequest()->getParam('id')) {
                     $eventId = $this->getRequest()->getParam('id');

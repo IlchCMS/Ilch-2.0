@@ -58,6 +58,7 @@ return array
     'imageSizeBytes' => 'Image max Size in Bytes',
     'height' => 'height',
     'width' => 'width',
+    'imageDelete' => 'Image delete?',
     'avatarSize' => 'image Size',
     'maxFilesize' => 'Maximum file size',
     'avatarAllowedFileExtensions' => 'Allowed file extensions',
