@@ -13,8 +13,13 @@
                 <i class="fa fa-briefcase fa-4x briefcase"></i>
             </div>
             <div class="col-lg-11" style="margin-bottom: 35px;">
-                <legend><?=$this->escape($jobs->getTitle()) ?></legend>
+                <legend>
+                    <a href="<?=$this->getUrl('jobs/index/show/id/' . $jobs->getId()) ?>">
+                        <?=$this->escape($jobs->getTitle()) ?>
+                    </a>
+                </legend>
                 <?=$jobs->getText() ?>
+
                 <?php if ($this->getUser()): ?>
                     <br />
                     <a href="<?=$this->getUrl('jobs/index/show/id/' . $jobs->getId()) ?>" class="btn btn-primary" role="button"><?=$this->getTrans('apply') ?></a>

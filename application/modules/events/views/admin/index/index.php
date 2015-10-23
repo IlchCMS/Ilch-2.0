@@ -17,7 +17,7 @@
                         <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
                         <th></th>
                         <th></th>
-                        <th><?=$this->getTrans('date') ?></th>
+                        <th><?=$this->getTrans('dateTime') ?></th>
                         <th><?=$this->getTrans('creator') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
                     </tr>
@@ -30,7 +30,12 @@
                             <td><input value="<?=$event->getId() ?>" type="checkbox" name="check_entries[]" /></td>
                             <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $event->getId())) ?></td>
                             <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $event->getId())) ?></td>
-                            <td><?=date('d.m.Y H:i', strtotime($event->getDateCreated())) ?></td>
+                            <td>
+                                <?=date('d.m.Y H:i', strtotime($event->getStart())) ?>
+                                <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
+                                    - <?=date('H:i', strtotime($event->getEnd())) ?>
+                                <?php endif; ?>
+                            </td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
                             <td><a href="<?=$this->getUrl('admin/event/index/show/id/'.$event->getId()) ?>"><?=$event->getTitle() ?></a></td>
                         </tr>

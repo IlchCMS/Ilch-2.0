@@ -32,14 +32,14 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'add',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
                 ),
                 array
                 (
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
                 )
             )
         );
@@ -79,7 +79,7 @@ class Index extends \Ilch\Controller\Admin
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));            
+                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {
@@ -88,12 +88,16 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $title = trim($this->getRequest()->getPost('title'));
-            $dateCreated = new \Ilch\Date(trim($this->getRequest()->getPost('dateCreated')));
+            $start = new \Ilch\Date(trim($this->getRequest()->getPost('start')));
             $place = trim($this->getRequest()->getPost('place'));
             $text = trim($this->getRequest()->getPost('text'));
             $show = trim($this->getRequest()->getPost('calendarShow'));
 
-            if (empty($dateCreated)) {
+            if ($this->getRequest()->getPost('end') != '') {
+                $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
+            }
+
+            if (empty($start)) {
                 $this->addMessage('missingDate', 'danger');
             } elseif(empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
@@ -104,7 +108,8 @@ class Index extends \Ilch\Controller\Admin
             } else {
                 $eventModel->setUserId($this->getUser()->getId());
                 $eventModel->setTitle($title);
-                $eventModel->setDateCreated($dateCreated);
+                $eventModel->setStart($start);
+                $eventModel->setEnd($end);
                 $eventModel->setPlace($place);
                 $eventModel->setText($text);
                 $eventModel->setShow($show);

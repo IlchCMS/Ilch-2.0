@@ -1,4 +1,4 @@
-<?php if (!empty($this->get('jobs'))): ?>
+<?php if ($this->get('jobs') != ''): ?>
     <ul class="list-unstyled">
         <?php foreach ($this->get('jobs') as $job): ?>
             <li>

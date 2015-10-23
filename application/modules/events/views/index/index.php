@@ -18,7 +18,7 @@ $date = new \Ilch\Date();
             <ul class="event-list">
                 <?php if ($this->get('eventListUpcoming') != ''): ?>
                     <?php foreach ($this->get('eventListUpcoming') as $eventlist): ?>
-                        <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
+                        <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                         <li>
                             <time>
                                 <span class="day"><?=$date->format("j", true) ?></span>
@@ -61,7 +61,7 @@ $date = new \Ilch\Date();
         <div class="col-lg-12">
             <ul class="event-list">
                 <?php foreach ($this->get('getEventListOther') as $eventlist): ?>
-                    <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
+                    <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                     <li>
                         <time>
                             <span class="day"><?=$date->format("j", true) ?></span>
@@ -101,7 +101,7 @@ $date = new \Ilch\Date();
         <div class="col-lg-12">
             <ul class="event-list">
                 <?php foreach ($this->get('eventListPast') as $eventlist): ?>
-                    <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
+                    <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                     <li>
                         <time>
                             <span class="day"><?=$date->format("j", true) ?></span>

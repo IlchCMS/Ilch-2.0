@@ -58,7 +58,8 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_events` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL,
-                  `date_created` DATETIME NOT NULL,
+                  `start` DATETIME NOT NULL,
+                  `end` DATETIME NOT NULL,
                   `title` VARCHAR(100) NOT NULL,
                   `place` VARCHAR(100) NOT NULL,
                   `image` VARCHAR(255) NOT NULL,

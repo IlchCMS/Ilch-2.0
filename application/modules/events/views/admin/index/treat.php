@@ -1,5 +1,22 @@
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<style>
+.input-group > .input-group-addon:not(:last-child):not(:nth-last-child(2)) {
+    border-right-width: 0;
+}
+.input-group > :not(.input-group-addon):not(.input-group-btn) + .input-group-addon {
+    border-left-width: 0;
+}
+.input-group > .input-group-btn:not(:first-child) > .btn,
+.input-group > .input-group-btn:not(:first-child) > .btn-group > .btn {
+    margin-left: -1px;
+    margin-right: -1px;
+}
+.input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn,
+.input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn-group > .btn {
+    border-radius: 0;
+}
+</style>
 
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
     <?=$this->getTokenField() ?>
@@ -11,15 +28,35 @@
         <?php endif; ?>
     </legend>
     <div class="form-group">
-        <label for="dtp_input1" class="col-md-2 control-label">
-            <?=$this->getTrans('time') ?>:
+        <label for="start" class="col-md-2 control-label">
+            <?=$this->getTrans('startTime') ?>:
         </label>
-        <div class="col-lg-2 input-group date form_datetime">
+        <div class="col-lg-3 input-group date form_datetime">
             <input class="form-control"
                    type="text"
-                   name="dateCreated"
-                   value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getdateCreated())); } ?>"
+                   id="start"
+                   name="start"
+                   value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } ?>"
                    readonly>
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="end" class="col-md-2 control-label">
+            <?=$this->getTrans('endTime') ?>:
+        </label>
+        <div class="col-lg-3 input-group date form_datetime">
+            <input class="form-control"
+                   type="text"
+                   id="end"
+                   name="end"
+                   value="<?php if ($this->get('event') != '' AND $this->get('event')->getEnd() != '0000-00-00 00:00:00') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } ?>"
+                   readonly>
+            <span class="input-group-addon">
+                <span class="fa fa-times"></span>
+            </span>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
             </span>
@@ -88,7 +125,9 @@ $(document).ready(function() {
         autoclose: true,
         language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
         minuteStep: 15,
-        todayHighlight: true
+        todayHighlight: true,
+        linkField: "end",
+        linkFormat: "dd.mm.yyyy hh:ii"
     });
 });
 </script>

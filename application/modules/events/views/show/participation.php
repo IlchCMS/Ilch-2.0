@@ -9,7 +9,7 @@ $date = new \Ilch\Date();
         <ul class="event-list">
             <?php if ($this->get('eventListParticipation') != ''): ?>
                 <?php foreach ($this->get('eventListParticipation') as $eventlist): ?>
-                    <?php $date = new \Ilch\Date($eventlist->getDateCreated()); ?>
+                    <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
                     <li>
                         <time>
                             <span class="day"><?=$date->format("j", true) ?></span>

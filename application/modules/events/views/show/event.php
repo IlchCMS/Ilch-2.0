@@ -2,7 +2,8 @@
 $event = $this->get('event');
 $eventEntrants = $this->get('eventEntrants');
 
-$date = new \Ilch\Date($event->getDateCreated());
+$start = new \Ilch\Date($event->getStart());
+$end = new \Ilch\Date($event->getEnd());
 $userMapper = new \Modules\User\Mappers\User();
 $user = $userMapper->getUserById($event->getUserId());
 ?>
@@ -27,8 +28,8 @@ $user = $userMapper->getUserById($event->getUserId());
                 <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic">
             <?php endif; ?>
             <div class="datePic">
-                <div class="dateDayPic"><?=$date->format("d", true) ?></div>
-                <div class="dateMonthPic"><?=$date->format("M", true) ?></div>
+                <div class="dateDayPic"><?=$start->format("d", true) ?></div>
+                <div class="dateMonthPic"><?=$start->format("M", true) ?></div>
             </div>
             <div class="titlePic"><?=$event->getTitle() ?></div>
         </div>
@@ -37,7 +38,7 @@ $user = $userMapper->getUserById($event->getUserId());
                 <strong><?=$this->getTrans('by') ?></strong> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
             </div>
             <div class="naviButtons">
-                <?php if ($this->getUser() AND $event->getDateCreated() > new \Ilch\Date()): ?>
+                <?php if ($this->getUser() AND $event->getStart() > new \Ilch\Date()): ?>
                     <form class="form-horizontal" method="POST" action="">
                     <?=$this->getTokenField() ?>     
                         <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
@@ -79,7 +80,13 @@ $user = $userMapper->getUserById($event->getUserId());
         </div>
         <br />
         <div class="eventBoxHead">
-            <i class="fa fa-clock-o"></i> <?=$date->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$date->format("H:i") ?> <?=$this->getTrans('clock') ?>
+            <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
+                <?php $eventDate = $start->format("H:i").' - '.$end->format("H:i"); ?>
+            <?php else: ?>
+                <?php $eventDate = $start->format("H:i"); ?>
+            <?php endif; ?>
+
+            <i class="fa fa-clock-o"></i> <?=$start->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
         </div>
         <div class="eventBoxBottom">
             <i class="fa fa-map-marker"></i> <?=$event->getPlace() ?>

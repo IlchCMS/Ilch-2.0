@@ -24,6 +24,10 @@ class Comment extends \Ilch\Mapper
             ->execute()
             ->fetchRows();
 
+        if (empty($commentsArray)) {
+            return null;
+        }
+
         $comments = array();
 
         foreach ($commentsArray as $commentRow) {

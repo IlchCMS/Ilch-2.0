@@ -1,10 +1,30 @@
+<style>
+.briefcase {
+    padding: 8px 8px 0 8px;
+    border: 1px solid #e5e5e5;
+}
+</style>
+
 <?php
 $job = $this->get('job');
 $jobs = $this->get('jobs');
 ?>
 
-<legend><?=$this->getTrans('menuJobs') ?></legend>
-<?php if ($job != '' AND $this->getUser()): ?>
+<legend><?=$this->getTrans('menuJob') ?></legend>
+<?php if ($job != ''): ?>
+    <div class="row">
+        <div class="col-lg-1">
+            <i class="fa fa-briefcase fa-4x briefcase"></i>
+        </div>
+        <div class="col-lg-11" style="margin-bottom: 35px;">
+            <legend><?=$this->escape($job->getTitle()) ?></legend>
+            <?=$job->getText() ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if ($this->getUser()): ?>
+    <legend><?=$this->getTrans('apply') ?></legend>
     <form action="" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="form-group">

@@ -227,85 +227,87 @@ function rec($id, $uid, $req, $obj)
                     </form>
                 </div>
             <?php endif; ?>
-            <?php foreach ($comments as $comment): ?>
-                <?php $user = $userMapper->getUserById($comment->getUserId()); ?>
-                <?php $commentDate = new \Ilch\Date($comment->getDateCreated()); ?>
-                <section class="comment-list">
-                    <article class="row" id="comment_<?=$comment->getId() ?>">
-                        <?php if ($config->get('comment_avatar') == 1): ?>
-                            <div class="col-md-2 col-sm-2 hidden-xs">
-                                <figure class="thumbnail" title="<?=$user->getName() ?>">
-                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>"></a>
-                                </figure>
-                            </div>
-                        <?php endif; ?>
-                        <div class="col-md-<?=$col ?> col-sm-<?=$col ?>">
-                            <div class="panel panel-default">
-                                <div class="panel-bodylist">
-                                    <header class="text-left">
-                                        <div class="comment-user">
-                                            <i class="fa fa-user" title="<?=$this->getTrans('commentUser') ?>"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())) ?>"><?=$this->escape($user->getName()) ?></a>
-                                        </div>
-                                        <?php if ($config->get('comment_date') == 1): ?>
-                                            <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
+            <?php if ($comments != ''): ?>
+                <?php foreach ($comments as $comment): ?>
+                    <?php $user = $userMapper->getUserById($comment->getUserId()); ?>
+                    <?php $commentDate = new \Ilch\Date($comment->getDateCreated()); ?>
+                    <section class="comment-list">
+                        <article class="row" id="comment_<?=$comment->getId() ?>">
+                            <?php if ($config->get('comment_avatar') == 1): ?>
+                                <div class="col-md-2 col-sm-2 hidden-xs">
+                                    <figure class="thumbnail" title="<?=$user->getName() ?>">
+                                        <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>"></a>
+                                    </figure>
+                                </div>
+                            <?php endif; ?>
+                            <div class="col-md-<?=$col ?> col-sm-<?=$col ?>">
+                                <div class="panel panel-default">
+                                    <div class="panel-bodylist">
+                                        <header class="text-left">
+                                            <div class="comment-user">
+                                                <i class="fa fa-user" title="<?=$this->getTrans('commentUser') ?>"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())) ?>"><?=$this->escape($user->getName()) ?></a>
+                                            </div>
+                                            <?php if ($config->get('comment_date') == 1): ?>
+                                                <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$commentDate->format("d.m.Y - H:i", true) ?></time>
+                                            <?php endif; ?>
+                                        </header>
+                                        <div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>
+                                        <?php if ($this->getUser() AND $config->get('comment_reply') == 1): ?>
+                                            <p class="text-right"><a href="javascript:slideReply('reply_<?=$comment->getId() ?>');" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?></a></p>
                                         <?php endif; ?>
-                                    </header>
-                                    <div class="comment-post"><p><?=nl2br($this->escape($comment->getText())) ?></p></div>
-                                    <?php if ($this->getUser() AND $config->get('comment_reply') == 1): ?>
-                                        <p class="text-right"><a href="javascript:slideReply('reply_<?=$comment->getId() ?>');" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?></a></p>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
 
-                    <?php if($this->getUser()): ?>
-                        <div class="replyHidden" id="reply_<?=$comment->getId() ?>">
-                            <form action="" class="form-horizontal" method="POST">
-                                <?=$this->getTokenField() ?>
-                                <article class="row">
-                                    <?php if ($config->get('comment_avatar') == 1): ?>
-                                        <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1 hidden-xs">
-                                            <figure class="thumbnail" title="<?=$this->getUser()->getName() ?>">
-                                                <a href="<?=$this->getUrl('user/profil/index/user/'.$this->getUser()->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" alt="<?=$this->getUser()->getName() ?>"></a>
-                                            </figure>
-                                        </div>
-                                    <?php endif; ?>
-                                    <div class="col-md-<?=$col+-1 ?> col-sm-<?=$col-1 ?>">
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <div class="panel-heading right"><i class="fa fa-reply"></i> <?=$this->escape($user->getName()) ?></div>
-                                                <header class="text-left">
-                                                    <div class="comment-user">
-                                                        <i class="fa fa-user" title="<?=$this->getTrans('commentUser') ?>"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->getUser()->getId())) ?>"><?=$this->getUser()->getName() ?></a>
+                        <?php if($this->getUser()): ?>
+                            <div class="replyHidden" id="reply_<?=$comment->getId() ?>">
+                                <form action="" class="form-horizontal" method="POST">
+                                    <?=$this->getTokenField() ?>
+                                    <article class="row">
+                                        <?php if ($config->get('comment_avatar') == 1): ?>
+                                            <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-1 hidden-xs">
+                                                <figure class="thumbnail" title="<?=$this->getUser()->getName() ?>">
+                                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$this->getUser()->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$this->getUser()->getAvatar() ?>" alt="<?=$this->getUser()->getName() ?>"></a>
+                                                </figure>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="col-md-<?=$col+-1 ?> col-sm-<?=$col-1 ?>">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <div class="panel-heading right"><i class="fa fa-reply"></i> <?=$this->escape($user->getName()) ?></div>
+                                                    <header class="text-left">
+                                                        <div class="comment-user">
+                                                            <i class="fa fa-user" title="<?=$this->getTrans('commentUser') ?>"></i> <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->getUser()->getId())) ?>"><?=$this->getUser()->getName() ?></a>
+                                                        </div>
+                                                        <?php if ($config->get('comment_date') == 1): ?>
+                                                            <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?></time>
+                                                        <?php endif; ?>
+                                                    </header>
+                                                    <div class="comment-post">
+                                                        <p>
+                                                            <textarea class="form-control"
+                                                                      accesskey=""
+                                                                      name="article_comment_text"
+                                                                      style="resize: vertical"
+                                                                      required></textarea>
+                                                        </p>
                                                     </div>
-                                                    <?php if ($config->get('comment_date') == 1): ?>
-                                                        <time class="comment-date"><i class="fa fa-clock-o" title="<?=$this->getTrans('commentDateTime') ?>"></i> <?=$nowDate->format("d.m.Y - H:i", true) ?></time>
-                                                    <?php endif; ?>
-                                                </header>
-                                                <div class="comment-post">
-                                                    <p>
-                                                        <textarea class="form-control"
-                                                                  accesskey=""
-                                                                  name="article_comment_text"
-                                                                  style="resize: vertical"
-                                                                  required></textarea>
+                                                    <input type="hidden" name="fkId" value="<?=$comment->getId() ?>" />
+                                                    <p class="text-right submit">
+                                                        <?=$this->getSaveBar('submit', 'Comment') ?>
                                                     </p>
                                                 </div>
-                                                <input type="hidden" name="fkId" value="<?=$comment->getId() ?>" />
-                                                <p class="text-right submit">
-                                                    <?=$this->getSaveBar('submit', 'Comment') ?>
-                                                </p>
                                             </div>
                                         </div>
-                                    </div>
-                                </article>
-                            </form>
-                        </div>
-                    <?php endif; ?>
-                    <?php rec($comment->getId(), $comment->getUserId(), 1, $this) ?>
-                </section>
-            <?php endforeach; ?>
+                                    </article>
+                                </form>
+                            </div>
+                        <?php endif; ?>
+                        <?php rec($comment->getId(), $comment->getUserId(), 1, $this) ?>
+                    </section>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 <?php endif; ?>

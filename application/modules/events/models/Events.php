@@ -25,11 +25,18 @@ class Events extends \Ilch\Model
     protected $userId;
 
     /**
-     * The date of the event.
+     * The start date of the event.
      *
      * @var string
      */
-    protected $dateCreated;
+    protected $start;
+
+    /**
+     * The end date of the event.
+     *
+     * @var string
+     */
+    protected $end;
 
     /**
      * The title of the event.
@@ -113,24 +120,47 @@ class Events extends \Ilch\Model
     }
 
     /**
-     * Gets the date of the event.
+     * Gets the start date of the event.
      *
      * @return DateTime
      */
-    public function getDateCreated()
+    public function getStart()
     {
-        return $this->dateCreated;
+        return $this->start;
     }
 
     /**
-     * Sets the date of the event.
+     * Sets the start date of the event.
      *
-     * @param DateTime $date
+     * @param DateTime $start
      * @return this
      */
-    public function setDateCreated($dateCreated)
+    public function setStart($start)
     {
-        $this->dateCreated = (string)$dateCreated;
+        $this->start = (string)$start;
+
+        return $this;
+    }
+
+    /**
+     * Gets the end date of the event.
+     *
+     * @return DateTime
+     */
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    /**
+     * Sets the end date of the event.
+     *
+     * @param DateTime $end
+     * @return this
+     */
+    public function setEnd($end)
+    {
+        $this->end = (string)$end;
 
         return $this;
     }

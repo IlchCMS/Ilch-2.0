@@ -9,6 +9,7 @@ defined('ACCESS') or die('no direct access');
 return array
 (    
     'menuJobs' => 'Jobs',
+    'menuJob' => 'Job',
     'manageJobs' => 'Manage Jobs',
     'title' => 'Title',
     'email' => 'E-Mail address',
