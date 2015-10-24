@@ -8,8 +8,6 @@ namespace Modules\Partner\Mappers;
 
 use Modules\Partner\Models\Entry as PartnerModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Partner extends \Ilch\Mapper
 {
     /**

@@ -10,9 +10,7 @@ use Modules\Gallery\Mappers\Image as ImageMapper;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Controllers\Admin\Base as BaseController;
 
-defined('ACCESS') or die('no direct access');
-
-class Gallery extends BaseController 
+class Gallery extends BaseController
 {
     public function init()
     {

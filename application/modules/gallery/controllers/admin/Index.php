@@ -10,9 +10,7 @@ use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Controllers\Admin\Base as BaseController;
 use Modules\Gallery\Mappers\Image as ImageMapper;
 
-defined('ACCESS') or die('no direct access');
-
-class Index extends BaseController 
+class Index extends BaseController
 {
     public function indexAction() 
     {

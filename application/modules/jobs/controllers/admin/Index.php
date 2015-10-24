@@ -9,8 +9,6 @@ namespace Modules\Jobs\Controllers\Admin;
 use Modules\Jobs\Mappers\Jobs as JobsMapper;
 use Modules\Jobs\Models\Jobs as JobsModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

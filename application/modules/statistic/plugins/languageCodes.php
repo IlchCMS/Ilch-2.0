@@ -6,8 +6,6 @@
 
 namespace Modules\Statistic\Plugins;
 
-defined('ACCESS') or die('no direct access');
-
 class LanguageCodes
 {
     public function statisticLanguage($language, $locale)

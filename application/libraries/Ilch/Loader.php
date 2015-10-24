@@ -6,8 +6,6 @@
 
 namespace Ilch;
 
-defined('ACCESS') or die('no direct access');
-
 require_once APPLICATION_PATH.'/libraries/Ilch/Functions.php';
 
 class Loader

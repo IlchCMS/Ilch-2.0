@@ -8,8 +8,6 @@ namespace Modules\Admin\Plugins;
 
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Does admin operations before the controller loads.
  */

@@ -6,8 +6,6 @@
 
 namespace Modules\Statistic\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Statistic extends \Ilch\Model
 {
     /**

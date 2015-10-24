@@ -14,8 +14,6 @@ use Modules\War\Models\War as WarModel;
 use Modules\War\Models\Games as GamesModel;
 use Modules\War\Mappers\Games as GamesMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends BaseController
 {
     public function init()

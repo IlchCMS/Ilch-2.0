@@ -6,8 +6,6 @@
 
 namespace Ilch\Config;
 
-defined('ACCESS') or die('no direct access');
-
 class Database
 {
     /**

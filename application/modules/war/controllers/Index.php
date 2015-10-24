@@ -6,8 +6,6 @@
 
 namespace Modules\War\Controllers;
 
-defined('ACCESS') or die('no direct access');
-
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\Games as GameMapper;

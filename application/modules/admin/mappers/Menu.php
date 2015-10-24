@@ -9,8 +9,6 @@ namespace Modules\Admin\Mappers;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The menu mapper class.
  */

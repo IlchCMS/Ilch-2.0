@@ -6,8 +6,6 @@
 
 namespace Modules\Gallery\Models;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The gallery item model class.
  *

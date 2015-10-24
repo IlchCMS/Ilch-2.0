@@ -8,9 +8,7 @@ namespace Modules\Downloads\Mappers;
 
 use Modules\Downloads\Models\File as FileModel;
 
-defined('ACCESS') or die('no direct access');
-
-class File extends \Ilch\Mapper 
+class File extends \Ilch\Mapper
 {
     public function getFileById($id)
     {

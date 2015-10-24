@@ -10,8 +10,6 @@ use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Showtopics extends \Ilch\Controller\Frontend
 {
     public function indexAction() 

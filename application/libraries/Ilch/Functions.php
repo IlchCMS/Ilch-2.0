@@ -4,8 +4,6 @@
  * @package ilch
  */
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Improves "var_dump" function with pre - tags.
  */
@@ -155,6 +153,12 @@ function array_dot_set(&$array, $key, $value)
     return $array;
 }
 
+/**
+ * Check if a needle is in a nested array (just one level)
+ * @param mixed $needle
+ * @param array|Traversable $haystack
+ * @return bool
+ */
 function is_in_array($needle, $haystack)
 {
     foreach ($needle as $stack) {

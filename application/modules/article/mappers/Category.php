@@ -8,8 +8,6 @@ namespace Modules\Article\Mappers;
 
 use Modules\Article\Models\Category as CategoryModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Category extends \Ilch\Mapper
 {
     /**

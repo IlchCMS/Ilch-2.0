@@ -6,8 +6,6 @@
 
 namespace Modules\Shoutbox\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Shoutbox extends \Ilch\Model
 {
     /**

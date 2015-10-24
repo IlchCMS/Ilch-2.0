@@ -10,9 +10,7 @@ use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\Group as UserGroupMapper;
 
-defined('ACCESS') or die('no direct access');
-
-class Index extends BaseController 
+class Index extends BaseController
 {
     public function indexAction() 
     {

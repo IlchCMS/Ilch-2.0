@@ -8,8 +8,6 @@ namespace Modules\Admin\Mappers;
 
 use Modules\Admin\Models\Box as BoxModel;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The box mapper class.
  */

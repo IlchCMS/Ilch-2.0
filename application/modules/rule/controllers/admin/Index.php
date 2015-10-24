@@ -9,8 +9,6 @@ namespace Modules\Rule\Controllers\Admin;
 use Modules\Rule\Mappers\Rule as RuleMapper;
 use Modules\Rule\Models\Entry as RuleModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

@@ -8,8 +8,6 @@ namespace Modules\War\Mappers;
 
 use Modules\War\Models\Games as GamesModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Games extends \Ilch\Mapper
 {
     /**

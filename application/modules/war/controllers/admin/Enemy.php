@@ -10,8 +10,6 @@ use Modules\War\Controllers\Admin\Base as BaseController;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Models\Enemy as EnemyModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Enemy extends BaseController
 {
     public function init()

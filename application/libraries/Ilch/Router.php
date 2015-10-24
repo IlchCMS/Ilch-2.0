@@ -6,8 +6,6 @@
 
 namespace Ilch;
 
-defined('ACCESS') or die('no direct access');
-
 class Router
 {
     const DEFAULT_REGEX_PATTERN = '/?(?P<admin>admin)?/?(?P<module>\w+)/(?P<controller>\w+)(/(?P<action>\w+)?)?(/(?P<params>[a-zA-Z0-9_/]+)?)?';

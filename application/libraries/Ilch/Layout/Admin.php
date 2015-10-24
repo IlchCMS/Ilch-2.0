@@ -6,8 +6,6 @@
 
 namespace Ilch\Layout;
 
-defined('ACCESS') or die('no direct access');
-
 class Admin extends Base
 {
     /**

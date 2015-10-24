@@ -6,8 +6,6 @@
 
 namespace Ilch;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Tests the Ilch_Date class.
  */

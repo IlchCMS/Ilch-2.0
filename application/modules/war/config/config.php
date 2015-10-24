@@ -6,8 +6,6 @@
 
 namespace Modules\War\Config;
 
-defined('ACCESS') or die('no direct access');
-
 class Config extends \Ilch\Config\Install
 {
     public $config = array

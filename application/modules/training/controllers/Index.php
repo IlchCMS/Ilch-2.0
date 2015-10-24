@@ -10,8 +10,6 @@ use Modules\Training\Mappers\Training as TrainingMapper;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
 use Modules\Training\Models\Entrants as EntrantsModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

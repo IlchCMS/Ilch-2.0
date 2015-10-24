@@ -6,8 +6,6 @@
 
 namespace Modules\War\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Enemy extends \Ilch\Model
 {
     /**

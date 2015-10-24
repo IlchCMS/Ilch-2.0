@@ -8,8 +8,6 @@ namespace Modules\War\Mappers;
 
 use Modules\War\Models\Enemy as EnemyModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Enemy extends \Ilch\Mapper
 {
     /**

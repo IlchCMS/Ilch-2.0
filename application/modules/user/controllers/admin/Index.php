@@ -13,8 +13,6 @@ use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use \Ilch\Registry as Registry;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Handles action for the main admin configuration page.
  */

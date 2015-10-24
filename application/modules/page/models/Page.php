@@ -6,8 +6,6 @@
 
 namespace Modules\Page\Models;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The page model class.
  *

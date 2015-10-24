@@ -10,8 +10,6 @@ use Modules\Forum\Models\ForumItem as ForumItem;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Forum extends \Ilch\Mapper
 {
     public function getForumItemsByParent($forumId, $itemId)

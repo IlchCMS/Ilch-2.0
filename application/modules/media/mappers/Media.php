@@ -8,8 +8,6 @@ namespace Modules\Media\Mappers;
 
 use Modules\Media\Models\Media as MediaModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Media extends \Ilch\Mapper
 {
     /**

@@ -4,8 +4,6 @@
  * @package ilch
  */
 
-defined('ACCESS') or die('no direct access');
-
 return array
 (
     'menuNewsletter' => 'Newsletter',

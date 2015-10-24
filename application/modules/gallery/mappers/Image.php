@@ -8,9 +8,7 @@ namespace Modules\Gallery\Mappers;
 
 use Modules\Gallery\Models\Image as ImageModel;
 
-defined('ACCESS') or die('no direct access');
-
-class Image extends \Ilch\Mapper 
+class Image extends \Ilch\Mapper
 {
     public function getImageById($id)
     {

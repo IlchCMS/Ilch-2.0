@@ -6,8 +6,6 @@
 
 namespace Modules\Checkout\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Entry extends \Ilch\Model
 {
     /**

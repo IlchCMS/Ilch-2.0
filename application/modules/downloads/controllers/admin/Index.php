@@ -10,9 +10,7 @@ use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Controllers\Admin\Base as BaseController;
 use Modules\Downloads\Mappers\File as FileMapper;
 
-defined('ACCESS') or die('no direct access');
-
-class Index extends BaseController 
+class Index extends BaseController
 {
     public function indexAction() 
     {

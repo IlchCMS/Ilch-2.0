@@ -8,8 +8,6 @@ namespace Modules\Article\Mappers;
 
 use Modules\Article\Models\Article as ArticleModel;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The article mapper class.
  */

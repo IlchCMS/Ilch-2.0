@@ -11,8 +11,6 @@ use Modules\Link\Mappers\Category as CategoryMapper;
 use Modules\Link\Models\Link as LinkModel;
 use Modules\Link\Models\Category as CategoryModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

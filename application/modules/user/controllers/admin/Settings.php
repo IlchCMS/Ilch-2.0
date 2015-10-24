@@ -8,8 +8,6 @@ namespace Modules\User\Controllers\Admin;
 
 use Modules\User\Controllers\Admin\Base as BaseController;
 
-defined('ACCESS') or die('no direct access');
-
 class Settings extends BaseController
 {
     public function indexAction() 

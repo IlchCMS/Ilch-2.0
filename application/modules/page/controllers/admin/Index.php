@@ -9,8 +9,6 @@ namespace Modules\Page\Controllers\Admin;
 use Modules\Page\Mappers\Page as PageMapper;
 use Modules\Page\Models\Page as PageModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

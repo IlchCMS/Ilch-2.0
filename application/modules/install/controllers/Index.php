@@ -6,8 +6,6 @@
 
 namespace Modules\Install\Controllers;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function init()

@@ -6,8 +6,6 @@
 
 namespace Modules\Sample\Mappers;
 
-defined('ACCESS') or die('no direct access');
-
 class Sample extends \Ilch\Mapper
 {
 }

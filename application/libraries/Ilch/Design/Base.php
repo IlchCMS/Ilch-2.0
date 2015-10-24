@@ -6,8 +6,6 @@
 
 namespace Ilch\Design;
 
-defined('ACCESS') or die('no direct access');
-
 abstract class Base
 {
     /**

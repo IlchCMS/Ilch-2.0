@@ -8,8 +8,6 @@ namespace Modules\Events\Boxes;
 
 use Modules\Events\Mappers\Events as EventMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Events extends \Ilch\Box
 {
     public function render()

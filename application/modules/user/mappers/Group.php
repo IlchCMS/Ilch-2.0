@@ -8,8 +8,6 @@ namespace Modules\User\Mappers;
 
 use Modules\User\Models\Group as GroupModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Group extends \Ilch\Mapper
 {
     /**

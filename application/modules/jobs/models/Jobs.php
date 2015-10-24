@@ -6,8 +6,6 @@
 
 namespace Modules\Jobs\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Jobs extends \Ilch\Model
 {
     /**

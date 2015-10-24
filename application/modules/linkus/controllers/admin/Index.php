@@ -9,8 +9,6 @@ namespace Modules\Linkus\Controllers\Admin;
 use Modules\Linkus\Mappers\Linkus as LinkusMapper;
 use Modules\Linkus\Models\Linkus as LinkusModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

@@ -9,8 +9,6 @@ namespace Modules\Privacy\Controllers\Admin;
 use Modules\Privacy\Mappers\Privacy as PrivacyMapper;
 use Modules\Privacy\Models\Privacy as PrivacyModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

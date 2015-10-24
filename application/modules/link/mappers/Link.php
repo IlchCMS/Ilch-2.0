@@ -8,8 +8,6 @@ namespace Modules\Link\Mappers;
 
 use Modules\Link\Models\Link as LinkModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Link extends \Ilch\Mapper
 {
     /**

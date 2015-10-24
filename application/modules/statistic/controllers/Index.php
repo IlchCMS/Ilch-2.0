@@ -9,8 +9,6 @@ namespace Modules\Statistic\Controllers;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Admin\Mappers\Module as ModuleMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

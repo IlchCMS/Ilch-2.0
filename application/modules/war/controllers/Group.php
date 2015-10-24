@@ -9,8 +9,6 @@ namespace Modules\War\Controllers;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\War as WarMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Group extends \Ilch\Controller\Frontend
 {
     public function indexAction()

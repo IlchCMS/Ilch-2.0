@@ -8,9 +8,7 @@ namespace Modules\Media\Controllers\Admin;
 
 use Modules\Media\Mappers\Media as MediaMapper;
 
-defined('ACCESS') or die('no direct access');
-
-class Iframe extends \Ilch\Controller\Admin 
+class Iframe extends \Ilch\Controller\Admin
 {
     public function indexAction() 
     {

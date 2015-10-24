@@ -9,8 +9,6 @@ namespace Modules\Forum\Mappers;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Post extends \Ilch\Mapper
 {
     public function getPostsByTopicId($id)

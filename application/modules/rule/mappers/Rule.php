@@ -8,8 +8,6 @@ namespace Modules\Rule\Mappers;
 
 use Modules\Rule\Models\Entry as RuleModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Rule extends \Ilch\Mapper
 {
     /**

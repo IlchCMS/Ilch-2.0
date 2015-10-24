@@ -6,8 +6,6 @@
 
 namespace Modules\War\Controllers\Admin;
 
-defined('ACCESS') or die('no direct access');
-
 class Base extends \Ilch\Controller\Admin
 {
     /**

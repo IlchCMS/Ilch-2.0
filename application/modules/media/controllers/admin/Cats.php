@@ -8,9 +8,7 @@ namespace Modules\Media\Controllers\Admin;
 
 use Modules\Media\Mappers\Media as MediaMapper;
 
-defined('ACCESS') or die('no direct access');
-
-class Cats extends \Ilch\Controller\Admin 
+class Cats extends \Ilch\Controller\Admin
 {
     public function init()
     {

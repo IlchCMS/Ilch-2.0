@@ -9,9 +9,7 @@ namespace Modules\Downloads\Controllers\Admin;
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Controllers\Admin\Base as BaseController;
 
-defined('ACCESS') or die('no direct access');
-
-class File extends BaseController 
+class File extends BaseController
 {
     public function init()
     {

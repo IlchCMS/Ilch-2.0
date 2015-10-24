@@ -13,8 +13,6 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Newtopic extends \Ilch\Controller\Frontend
 {
     public function indexAction() 

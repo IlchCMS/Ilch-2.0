@@ -8,8 +8,6 @@ namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Login extends \Ilch\Controller\Frontend
 {
     public function indexAction()

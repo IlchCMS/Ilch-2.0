@@ -9,9 +9,7 @@ namespace Modules\Media\Controllers\Admin;
 use Modules\Media\Mappers\Media as MediaMapper;
 use Ilch\Date as IlchDate;
 
-defined('ACCESS') or die('no direct access');
-
-class Index extends \Ilch\Controller\Admin 
+class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {

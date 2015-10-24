@@ -6,8 +6,6 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

@@ -9,8 +9,6 @@ namespace Modules\War\Controllers\Admin;
 use Modules\War\Controllers\Admin\Base as BaseController;
 use Modules\War\Mappers\Games as GamesMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Ajax extends BaseController
 {
     public function gameAction()

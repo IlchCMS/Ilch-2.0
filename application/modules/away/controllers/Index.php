@@ -9,8 +9,6 @@ namespace Modules\Away\Controllers;
 use Modules\Away\Mappers\Away as AwayMapper;
 use Modules\Away\Models\Away as AwayModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

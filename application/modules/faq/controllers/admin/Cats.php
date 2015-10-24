@@ -10,9 +10,7 @@ use Modules\Faq\Mappers\Category as CategoryMapper;
 use Modules\Faq\Models\Category as CategoryModel;
 use Modules\Faq\Mappers\Faq as FaqMapper;
 
-defined('ACCESS') or die('no direct access');
-
-class Cats extends \Ilch\Controller\Admin 
+class Cats extends \Ilch\Controller\Admin
 {
     public function init()
     {

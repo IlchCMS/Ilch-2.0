@@ -6,8 +6,6 @@
 
 namespace Modules\Link\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Category extends \Ilch\Mapper
 {
     /**

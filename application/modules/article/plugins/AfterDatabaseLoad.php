@@ -8,8 +8,6 @@ namespace Modules\Article\Plugins;
 
 use Modules\Article\Mappers\Article as ArticleMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class AfterDatabaseLoad
 {
     public function __construct(array $pluginData)

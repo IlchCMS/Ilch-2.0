@@ -9,8 +9,6 @@ namespace Modules\History\Controllers\Admin;
 use Modules\History\Mappers\History as HistoryMapper;
 use Modules\History\Models\Entry as HistoryModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

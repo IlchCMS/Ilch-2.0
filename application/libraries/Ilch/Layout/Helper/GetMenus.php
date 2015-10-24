@@ -5,7 +5,6 @@
  */
 
 namespace Ilch\Layout\Helper;
-defined('ACCESS') or die('no direct access');
 
 class GetMenus
 {

@@ -12,9 +12,7 @@ use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Comment\Models\Comment as CommentModel;
 use Modules\Downloads\Models\File as FileModel;
 
-defined('ACCESS') or die('no direct access');
-
-class Index extends \Ilch\Controller\Frontend 
+class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction() 
     {

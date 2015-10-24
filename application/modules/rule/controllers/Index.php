@@ -8,8 +8,6 @@ namespace Modules\Rule\Controllers;
 
 use Modules\Rule\Mappers\Rule as RuleMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {    
     public function indexAction()

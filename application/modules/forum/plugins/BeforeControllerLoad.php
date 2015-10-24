@@ -6,8 +6,6 @@
 
 namespace Modules\Forum\Plugins;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Does forum operations before the controller loads.
  */

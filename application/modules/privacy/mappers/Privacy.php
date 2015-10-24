@@ -8,8 +8,6 @@ namespace Modules\Privacy\Mappers;
 
 use Modules\Privacy\Models\Privacy as PrivacyModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Privacy extends \Ilch\Mapper
 {
     /**

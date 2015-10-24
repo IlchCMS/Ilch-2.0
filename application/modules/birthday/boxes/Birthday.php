@@ -8,8 +8,6 @@ namespace Modules\Birthday\Boxes;
 
 use Modules\Birthday\Mappers\Birthday as BirthdayMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Birthday extends \Ilch\Box
 {
     public function render()

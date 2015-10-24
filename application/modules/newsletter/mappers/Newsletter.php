@@ -8,8 +8,6 @@ namespace Modules\Newsletter\Mappers;
 
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Newsletter extends \Ilch\Mapper
 {
     /**

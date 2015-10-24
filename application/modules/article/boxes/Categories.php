@@ -8,8 +8,6 @@ namespace Modules\Article\Boxes;
 
 use Modules\Article\Mappers\Category as CategoryMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Categories extends \Ilch\Box
 {
     public function render()

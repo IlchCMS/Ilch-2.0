@@ -9,8 +9,6 @@ namespace Modules\Article\Controllers;
 use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\Article\Mappers\Category as CategoryMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Cats extends \Ilch\Controller\Frontend
 {
     public function init()

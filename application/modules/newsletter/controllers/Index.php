@@ -8,8 +8,6 @@ namespace Modules\Newsletter\Controllers;
 
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

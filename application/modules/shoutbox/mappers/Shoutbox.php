@@ -8,8 +8,6 @@ namespace Modules\Shoutbox\Mappers;
 
 use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Shoutbox extends \Ilch\Mapper
 {
     /**

@@ -6,8 +6,6 @@
 
 namespace Modules\Admin\Boxes;
 
-defined('ACCESS') or die('no direct access');
-
 class Layoutswitch extends \Ilch\Box
 {
     public function render()

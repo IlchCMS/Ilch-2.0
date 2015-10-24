@@ -8,8 +8,6 @@ namespace Modules\Away\Mappers;
 
 use Modules\Away\Models\Away as AwayModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Away extends \Ilch\Mapper
 {
     /**

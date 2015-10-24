@@ -8,8 +8,6 @@ namespace Modules\Awards\Mappers;
 
 use Modules\Awards\Models\Awards as AwardsModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Awards extends \Ilch\Mapper
 {
     /**

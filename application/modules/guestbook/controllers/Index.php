@@ -10,8 +10,6 @@ use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

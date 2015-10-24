@@ -9,8 +9,6 @@ namespace Modules\Calendar\Controllers\Admin;
 use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 use Modules\Calendar\Models\Calendar as CalendarModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

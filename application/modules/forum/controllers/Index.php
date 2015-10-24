@@ -11,9 +11,7 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Forum\Mappers\ForumStatistics as ForumStaticsMapper;
 
-defined('ACCESS') or die('no direct access');
-
-class Index extends \Ilch\Controller\Frontend 
+class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction() 
     {

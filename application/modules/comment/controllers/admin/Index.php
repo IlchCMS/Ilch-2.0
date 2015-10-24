@@ -8,8 +8,6 @@ namespace Modules\Comment\Controllers\Admin;
 
 use Modules\Comment\Mappers\Comment as CommentMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

@@ -8,8 +8,6 @@ namespace Modules\Shoutbox\Controllers;
 
 use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

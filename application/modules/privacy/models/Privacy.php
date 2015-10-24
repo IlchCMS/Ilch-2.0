@@ -6,8 +6,6 @@
 
 namespace Modules\Privacy\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Privacy extends \Ilch\Model
 {
     /**

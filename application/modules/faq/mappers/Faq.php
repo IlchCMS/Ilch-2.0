@@ -8,8 +8,6 @@ namespace Modules\Faq\Mappers;
 
 use Modules\Faq\Models\Faq as FaqModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Faq extends \Ilch\Mapper
 {
     /**

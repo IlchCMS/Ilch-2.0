@@ -10,8 +10,6 @@ use Modules\User\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\Group as GroupModel;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Handles action for the main admin configuration page.
  *

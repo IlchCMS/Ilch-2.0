@@ -6,8 +6,6 @@
 
 namespace Modules\Training\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Entrants extends \Ilch\Model
 {
     /**

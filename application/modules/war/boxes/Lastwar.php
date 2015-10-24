@@ -8,8 +8,6 @@ namespace Modules\War\Boxes;
 
 use Modules\War\Mappers\War as WarMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Lastwar extends \Ilch\Box
 {
     public function render()

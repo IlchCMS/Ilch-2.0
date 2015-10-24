@@ -8,8 +8,6 @@ namespace Modules\Imprint\Mappers;
 
 use Modules\Imprint\Models\Imprint as ImprintModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Imprint extends \Ilch\Mapper
 {
     /**

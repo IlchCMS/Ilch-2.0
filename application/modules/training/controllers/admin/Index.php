@@ -11,8 +11,6 @@ use Modules\Training\Models\Training as TrainingModel;
 use Modules\Training\Mappers\Entrants as EntrantsMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

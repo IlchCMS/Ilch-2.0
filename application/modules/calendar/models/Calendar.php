@@ -6,8 +6,6 @@
 
 namespace Modules\Calendar\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Calendar extends \Ilch\Model
 {
     /**

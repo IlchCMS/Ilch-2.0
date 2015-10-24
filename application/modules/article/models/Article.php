@@ -6,8 +6,6 @@
 
 namespace Modules\Article\Models;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The article model class.
  */

@@ -8,8 +8,6 @@ namespace Modules\Calendar\Mappers;
 
 use Modules\Calendar\Models\Calendar as CalendarModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Calendar extends \Ilch\Mapper
 {
     /**

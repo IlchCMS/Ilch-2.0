@@ -8,8 +8,6 @@ namespace Modules\Article\Controllers;
 
 use Modules\Article\Mappers\Article as ArticleMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Archive extends \Ilch\Controller\Frontend
 {
     public function init()

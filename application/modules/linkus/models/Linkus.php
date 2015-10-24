@@ -6,8 +6,6 @@
 
 namespace Modules\Linkus\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Linkus extends \Ilch\Model
 {
     /**

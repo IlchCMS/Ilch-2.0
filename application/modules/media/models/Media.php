@@ -6,9 +6,7 @@
 
 namespace Modules\Media\Models;
 
-defined('ACCESS') or die('no direct access');
-
-class Media extends \Ilch\Model 
+class Media extends \Ilch\Model
 {
     /**
      * The id of the media.

@@ -8,8 +8,6 @@ namespace Modules\Linkus\Mappers;
 
 use Modules\Linkus\Models\Linkus as LinkusModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Linkus extends \Ilch\Mapper
 {
     /**

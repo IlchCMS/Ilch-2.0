@@ -8,8 +8,6 @@ namespace Modules\Forum\Plugins;
 
 use Modules\Forum\Mappers\Forum as ForumMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class AfterDatabaseLoad
 {
     public function __construct(array $pluginData)

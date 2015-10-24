@@ -13,8 +13,6 @@ use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Showposts extends \Ilch\Controller\Frontend
 {
     public function indexAction() 

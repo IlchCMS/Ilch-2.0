@@ -6,8 +6,6 @@
 
 namespace Modules\Downloads\Controllers\Admin;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Handles the init for the gallery module.
  *

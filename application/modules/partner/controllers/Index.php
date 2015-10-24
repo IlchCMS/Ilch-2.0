@@ -8,8 +8,6 @@ namespace Modules\Partner\Controllers;
 
 use Modules\Partner\Mappers\Partner as PartnerMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

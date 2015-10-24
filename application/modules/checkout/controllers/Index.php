@@ -9,8 +9,6 @@ namespace Modules\Checkout\Controllers;
 use Modules\Checkout\Mappers\Checkout as CheckoutMapper;
 use Ilch\Date as IlchDate;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

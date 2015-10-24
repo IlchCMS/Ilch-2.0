@@ -6,8 +6,6 @@
 
 namespace Modules\Forum\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class ForumTopic extends \Ilch\Model
 {
     /**

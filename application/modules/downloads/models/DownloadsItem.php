@@ -6,8 +6,6 @@
 
 namespace Modules\Downloads\Models;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The Downloads item model class.
  *

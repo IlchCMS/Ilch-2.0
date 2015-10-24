@@ -6,8 +6,6 @@
 
 namespace Modules\Imprint\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Imprint extends \Ilch\Model
 {
     /**

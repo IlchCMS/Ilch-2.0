@@ -9,8 +9,6 @@ namespace Modules\Imprint\Controllers\Admin;
 use Modules\Imprint\Mappers\Imprint as ImprintMapper;
 use Modules\Imprint\Models\Imprint as ImprintModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

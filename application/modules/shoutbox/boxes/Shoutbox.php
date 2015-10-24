@@ -6,8 +6,6 @@
 
 namespace Modules\Shoutbox\Boxes;
 
-defined('ACCESS') or die('no direct access');
-
 class Shoutbox extends \Ilch\Box
 {
     public function render()

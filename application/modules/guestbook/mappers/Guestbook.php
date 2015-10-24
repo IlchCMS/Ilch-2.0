@@ -8,8 +8,6 @@ namespace Modules\Guestbook\Mappers;
 
 use Modules\Guestbook\Models\Entry as GuestbookModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Guestbook extends \Ilch\Mapper
 {
     /**

@@ -6,8 +6,6 @@
 
 namespace Modules\War\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class War extends \Ilch\Model
 {
     /**

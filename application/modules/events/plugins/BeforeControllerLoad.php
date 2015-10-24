@@ -8,8 +8,6 @@ namespace Modules\Events\Plugins;
 
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Does user operations before the controller loads.
  *

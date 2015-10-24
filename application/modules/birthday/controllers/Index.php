@@ -9,8 +9,6 @@ namespace Modules\Birthday\Controllers;
 use Modules\Birthday\Mappers\Birthday as BirthdayMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

@@ -8,9 +8,7 @@ namespace Modules\Gallery\Mappers;
 
 use Modules\Gallery\Models\GalleryItem as GalleryItem;
 
-defined('ACCESS') or die('no direct access');
-
-class Gallery extends \Ilch\Mapper 
+class Gallery extends \Ilch\Mapper
 {
     /**
      * Gets all gallery items by parent item id.

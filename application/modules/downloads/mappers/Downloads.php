@@ -8,9 +8,7 @@ namespace Modules\Downloads\Mappers;
 
 use Modules\Downloads\Models\DownloadsItem as DownloadsItem;
 
-defined('ACCESS') or die('no direct access');
-
-class Downloads extends \Ilch\Mapper 
+class Downloads extends \Ilch\Mapper
 {
     /**
      * Gets all Downloads items by parent item id.

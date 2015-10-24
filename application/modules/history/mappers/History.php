@@ -8,8 +8,6 @@ namespace Modules\History\Mappers;
 
 use Modules\History\Models\Entry as HistoryModel;
 
-defined('ACCESS') or die('no direct access');
-
 class History extends \Ilch\Mapper
 {
     /**

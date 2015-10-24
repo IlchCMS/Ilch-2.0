@@ -6,8 +6,6 @@
 
 namespace Modules\Statistic\Boxes;
 
-defined('ACCESS') or die('no direct access');
-
 class Stats extends \Ilch\Box
 {
     public function render()

@@ -11,8 +11,6 @@ use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Models\Group as GroupModel;
 use Modules\User\Mappers\Group as UserGroupMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Group extends BaseController
 {
     public function init()

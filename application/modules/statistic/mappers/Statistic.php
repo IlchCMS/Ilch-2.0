@@ -8,8 +8,6 @@ namespace Modules\Statistic\Mappers;
 
 use Modules\Statistic\Models\Statistic as StatisticModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Statistic extends \Ilch\Mapper
 {
     public function getVisitsOnlineUser()

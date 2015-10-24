@@ -8,8 +8,6 @@ namespace Modules\Page\Plugins;
 
 use Modules\Page\Mappers\Page as PageMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class AfterDatabaseLoad
 {
     public function __construct(array $pluginData)

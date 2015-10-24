@@ -6,8 +6,6 @@
 
 namespace Modules\Comment\Models;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The comment model class.
  */

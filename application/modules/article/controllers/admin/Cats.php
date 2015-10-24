@@ -9,9 +9,7 @@ namespace Modules\Article\Controllers\Admin;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Article\Models\Category as CategoryModel;
 
-defined('ACCESS') or die('no direct access');
-
-class Cats extends \Ilch\Controller\Admin 
+class Cats extends \Ilch\Controller\Admin
 {
     public function init()
     {

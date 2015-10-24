@@ -10,8 +10,6 @@ use Modules\Awards\Mappers\Awards as AwardsMapper;
 use Modules\Awards\Models\Awards as AwardsModel;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

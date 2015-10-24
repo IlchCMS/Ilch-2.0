@@ -8,8 +8,6 @@ namespace Modules\Training\Mappers;
 
 use Modules\Training\Models\Training as TrainingModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Training extends \Ilch\Mapper
 {
     /**

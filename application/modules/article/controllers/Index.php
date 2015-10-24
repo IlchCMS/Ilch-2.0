@@ -12,8 +12,6 @@ use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Article\Models\Article as ArticleModel;
 use Modules\Comment\Models\Comment as CommentModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function init()

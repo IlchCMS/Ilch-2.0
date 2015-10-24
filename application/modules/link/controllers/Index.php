@@ -9,8 +9,6 @@ namespace Modules\Link\Controllers;
 use Modules\Link\Mappers\Link as LinkMapper;
 use Modules\Link\Mappers\Category as CategoryMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

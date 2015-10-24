@@ -6,8 +6,6 @@
 
 namespace Modules\Birthday\Mappers;
 
-defined('ACCESS') or die('no direct access');
-
 class Birthday extends \Ilch\Mapper
 {
     /**

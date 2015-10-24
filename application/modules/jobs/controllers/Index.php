@@ -9,8 +9,6 @@ namespace Modules\Jobs\Controllers;
 use Modules\Jobs\Mappers\Jobs as JobsMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

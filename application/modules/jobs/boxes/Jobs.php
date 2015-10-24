@@ -8,8 +8,6 @@ namespace Modules\Jobs\Boxes;
 
 use Modules\Jobs\Mappers\Jobs as JobsMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Jobs extends \Ilch\Box
 {
     public function render()

@@ -6,8 +6,6 @@
 
 namespace Modules\User\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class User extends \Ilch\Model
 {
     /**

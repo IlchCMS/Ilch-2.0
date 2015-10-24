@@ -8,8 +8,6 @@ namespace Modules\Forum\Mappers;
 
 use Modules\Forum\Models\ForumStatistics as ForumStatisticsModel;
 
-defined('ACCESS') or die('no direct access');
-
 class ForumStatistics extends \Ilch\Mapper
 {
     public function getForumStatisticsTopics()

@@ -8,8 +8,6 @@ namespace Modules\War\Mappers;
 
 use Modules\War\Models\War as WarModel;
 
-defined('ACCESS') or die('no direct access');
-
 class War extends \Ilch\Mapper
 {
     /**

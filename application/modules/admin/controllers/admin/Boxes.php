@@ -9,8 +9,6 @@ namespace Modules\Admin\Controllers\Admin;
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Boxes extends \Ilch\Controller\Admin
 {
     public function init()

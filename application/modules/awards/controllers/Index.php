@@ -8,8 +8,6 @@ namespace Modules\Awards\Controllers;
 
 use Modules\Awards\Mappers\Awards as AwardsMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {    
     public function indexAction()

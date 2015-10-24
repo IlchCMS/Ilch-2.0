@@ -5,7 +5,6 @@
  */
 
 namespace Ilch\Layout\Helper\Menu;
-defined('ACCESS') or die('no direct access');
 
 class Model
 {

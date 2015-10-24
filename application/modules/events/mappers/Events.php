@@ -9,8 +9,6 @@ namespace Modules\Events\Mappers;
 use Modules\Events\Models\Events as EventModel;
 use Modules\Events\Mappers\Events as EventMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Events extends \Ilch\Mapper
 {
     /**

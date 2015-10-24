@@ -8,8 +8,6 @@ namespace Modules\Checkout\Mappers;
 
 use Modules\Checkout\Models\Entry as CheckoutModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Checkout extends \Ilch\Mapper
 {
     /**

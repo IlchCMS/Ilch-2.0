@@ -10,8 +10,6 @@ use Modules\Calendar\Mappers\Calendar as CalendarMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Events\Mappers\Events as EventsMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

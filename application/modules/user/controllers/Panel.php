@@ -12,8 +12,6 @@ use Modules\User\Mappers\Setting as SettingMapper;
 use Modules\User\Controllers\Base as BaseController;
 use Ilch\Date as IlchDate;
 
-defined('ACCESS') or die('no direct access');
-
 class Panel extends BaseController
 {
     public function indexAction()

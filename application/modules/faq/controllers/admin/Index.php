@@ -10,8 +10,6 @@ use Modules\Faq\Mappers\Faq as FaqMapper;
 use Modules\Faq\Models\Faq as FaqModel;
 use Modules\Faq\Mappers\Category as CategoryMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

@@ -6,8 +6,6 @@
 
 namespace Modules\Awards\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Awards extends \Ilch\Model
 {
     /**

@@ -8,8 +8,6 @@ namespace Modules\Guestbook\Controllers\Admin;
 
 use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

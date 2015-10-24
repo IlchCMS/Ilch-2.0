@@ -21,8 +21,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 namespace Thumb;
 
-defined('ACCESS') or die('no direct access');
-
 class Thumbnail {
 	
 	/**

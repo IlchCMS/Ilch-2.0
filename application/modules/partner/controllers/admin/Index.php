@@ -9,8 +9,6 @@ namespace Modules\Partner\Controllers\Admin;
 use Modules\Partner\Mappers\Partner as PartnerMapper;
 use Modules\Partner\Models\Entry as PartnerModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

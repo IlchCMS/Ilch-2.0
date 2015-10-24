@@ -13,8 +13,6 @@ use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Page\Mappers\Page as PageMapper;
 use Modules\Article\Mappers\Article as ArticleMapper;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * Handles actions for the access assignment page.
  *

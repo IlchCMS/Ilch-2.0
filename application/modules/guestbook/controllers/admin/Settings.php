@@ -6,9 +6,7 @@
 
 namespace Modules\Guestbook\Controllers\Admin;
 
-defined('ACCESS') or die('no direct access');
-
-class Settings extends \Ilch\Controller\Admin 
+class Settings extends \Ilch\Controller\Admin
 {
     public function init()
     {

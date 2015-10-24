@@ -10,8 +10,6 @@ use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Article\Models\Article as ArticleModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

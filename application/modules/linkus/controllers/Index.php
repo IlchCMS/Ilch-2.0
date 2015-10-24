@@ -8,8 +8,6 @@ namespace Modules\Linkus\Controllers;
 
 use Modules\Linkus\Mappers\Linkus as LinkusMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

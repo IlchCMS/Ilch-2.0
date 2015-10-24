@@ -10,8 +10,6 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Newpost extends \Ilch\Controller\Frontend
 {
     public function indexAction()

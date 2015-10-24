@@ -6,8 +6,6 @@
 
 namespace Modules\Newsletter\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Newsletter extends \Ilch\Model
 {
     /**

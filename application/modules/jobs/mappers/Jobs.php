@@ -8,8 +8,6 @@ namespace Modules\Jobs\Mappers;
 
 use Modules\Jobs\Models\Jobs as JobsModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Jobs extends \Ilch\Mapper
 {
     /**

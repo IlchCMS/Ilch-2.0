@@ -8,8 +8,6 @@ namespace Modules\Away\Controllers\Admin;
 
 use Modules\Away\Mappers\Away as AwayMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

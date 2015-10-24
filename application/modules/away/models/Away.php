@@ -6,8 +6,6 @@
 
 namespace Modules\Away\Models;
 
-defined('ACCESS') or die('no direct access');
-
 class Away extends \Ilch\Model
 {
     /**

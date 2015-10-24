@@ -5,8 +5,6 @@
 
 namespace Ilch\Controller;
 
-defined('ACCESS') or die('no direct access');
-
 class Frontend extends Base
 {
     public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)

@@ -8,8 +8,6 @@ namespace Modules\Contact\Mappers;
 
 use Modules\Contact\Models\Receiver as ReceiverModel;
 
-defined('ACCESS') or die('no direct access');
-
 /**
  * The receiver mapper class.
  *

@@ -12,8 +12,6 @@ use Modules\Events\Models\Entrants as EntrantsModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Comment\Models\Comment as CommentModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Show extends \Ilch\Controller\Frontend
 {
     public function eventAction()

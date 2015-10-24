@@ -11,8 +11,6 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Topic extends \Ilch\Mapper
 {
     public function getTopicsByForumId($id, $pagination = NULL)

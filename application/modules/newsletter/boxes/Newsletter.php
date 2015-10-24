@@ -8,8 +8,6 @@ namespace Modules\Newsletter\Boxes;
 
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Newsletter extends \Ilch\Box
 {
     public function render()

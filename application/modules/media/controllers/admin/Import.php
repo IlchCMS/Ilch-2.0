@@ -9,8 +9,6 @@ namespace Modules\Media\Controllers\Admin;
 use Modules\Media\Mappers\Media as MediaMapper;
 use Ilch\Date as IlchDate;
 
-defined('ACCESS') or die('no direct access');
-
 class Import extends \Ilch\Controller\Admin
 {
     public function init()

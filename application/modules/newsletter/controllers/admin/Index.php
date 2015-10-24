@@ -9,8 +9,6 @@ namespace Modules\Newsletter\Controllers\Admin;
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Admin
 {
     public function init()

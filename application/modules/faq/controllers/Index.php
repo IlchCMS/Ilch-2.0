@@ -9,8 +9,6 @@ namespace Modules\Faq\Controllers;
 use Modules\Faq\Mappers\Category as CategoryMapper;
 use Modules\Faq\Mappers\Faq as FaqMapper;
 
-defined('ACCESS') or die('no direct access');
-
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()

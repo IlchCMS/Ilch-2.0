@@ -9,9 +9,7 @@ namespace Modules\Gallery\Controllers\Admin;
 use Modules\Gallery\Mappers\Image as ImageMapper;
 use Modules\Gallery\Controllers\Admin\Base as BaseController;
 
-defined('ACCESS') or die('no direct access');
-
-class Image extends BaseController 
+class Image extends BaseController
 {
     public function init()
     {
