@@ -52,7 +52,7 @@
             </tr>
             <tr>
                 <td><span class="key-shortcut">&uArr; SHIFT</span> + <span class="key-shortcut">I</span></td>
-                <td><?=$this->getTrans('shortcutOfficalSite') ?></td>
+                <td><?=$this->getTrans('shortcutOfficialSite') ?></td>
             </tr>        
         </tbody>
     </table>

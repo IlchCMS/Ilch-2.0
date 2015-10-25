@@ -74,8 +74,8 @@ return array
     'overview' => 'Übersicht',
     'help' => 'Hilfe',
     'documentationFAQ' => 'Dokumentation / FAQ',
-    'officalSupportForum' => 'Offizielles Support Forum',
-    'officalSite' => 'Offizielle Homepage',
+    'officialSupportForum' => 'Offizielles Support Forum',
+    'officialSite' => 'Offizielle Homepage',
     'setDefault' => 'Als Standard setzen',
     'isDefault' => 'Ist Standard',
     'delete' => 'Löschen',
@@ -141,5 +141,5 @@ return array
     'shortcutPHPInfo' => 'Öffnet die PHP Info',
     'shortcutSettings' => 'Öffnet die Seiten Einstellungen',
     'shortcutKeybord' => 'Öffnet die Tastaturkürzel',
-    'shortcutOfficalSite' => 'Öffnet die Offizielle Homepage',
+    'shortcutOfficialSite' => 'Öffnet die offizielle Homepage',
 );

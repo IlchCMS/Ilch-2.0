@@ -52,7 +52,7 @@
                 window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts')) ?>';
             });
             $(document).hotkey('shift+i', function() {
-                window.location.href ='http://ilch.de/';
+                window.open('http://ilch.de/', '_blank');
             });
         </script>
     </head>
@@ -186,14 +186,14 @@
                                 <li>
                                     <a href="http://www.ilch.de" target="_blank">
                                         <i class="fa fa-home"></i>
-                                        <?=$this->getTrans('officalSite') ?>
+                                        <?=$this->getTrans('officialSite') ?>
                                     </a>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="http://www.ilch.de/forum.html" target="_blank">
                                         <i class="fa fa-comments-o"></i>
-                                        <?=$this->getTrans('officalSupportForum') ?>
+                                        <?=$this->getTrans('officialSupportForum') ?>
                                     </a>
                                 </li>
                                 <li>
