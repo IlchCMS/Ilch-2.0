@@ -19,11 +19,25 @@ class Layout extends \Ilch\Model
     protected $key;
 
     /**
+     * Name of the layout.
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Author of the layout.
      *
      * @var string
      */
     protected $author;
+
+    /**
+     * Link of the layout.
+     *
+     * @var string
+     */
+    protected $link;
 
     /**
      * Description of the layout.
@@ -60,6 +74,26 @@ class Layout extends \Ilch\Model
     }
 
     /**
+     * Gets the name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the name.
+     *
+     * @param string $key
+     */
+    public function setName($name)
+    {
+        $this->name = (string)$name;
+    }
+
+    /**
      * Gets the author.
      *
      * @return string
@@ -77,6 +111,26 @@ class Layout extends \Ilch\Model
     public function setAuthor($author)
     {
         $this->author = (string)$author;
+    }
+
+    /**
+     * Gets the link.
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * Sets the link.
+     *
+     * @param string $link
+     */
+    public function setLink($link)
+    {
+        $this->link = (string)$link;
     }
     
     /**

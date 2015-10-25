@@ -38,7 +38,11 @@ class Layouts extends \Ilch\Controller\Admin
             $model = new \Modules\Admin\Models\Layout();
             $model->setKey(basename($layoutPath));
             include_once $layoutPath.'/config/config.php';
+            $model->setName($config['name']);
             $model->setAuthor($config['author']);
+            if(!empty($config['link'])) {
+                $model->setLink($config['link']);
+            }
             $model->setDesc($config['desc']);
             if(!empty($config['modulekey'])) {
                 $model->setModulekey($config['modulekey']);

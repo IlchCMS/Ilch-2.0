@@ -16,7 +16,22 @@
                     <div class="thumbnail">
                         <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" />
                         <div class="caption">
-                            <h3><?=$this->escape($layout->getKey()) ?></h3>
+                            <div class="clearfix">
+                                <span class="pull-left">
+                                    <h3 style="margin-top: 0px;"><?=$this->escape($layout->getName()) ?></h3>
+                                </span>
+                                <span class="pull-right">
+                                    <p style="margin-top: 4px;">
+                                        <?php if($layout->getLink() != ''): ?>
+                                        <a href="<?=$layout->getLink() ?>" alt="<?=$this->escape($layout->getAuthor()) ?>" title="<?=$this->escape($layout->getAuthor()) ?>" target="_blank">
+                                                <i><?=$this->escape($layout->getAuthor()) ?></i>
+                                            </a>
+                                        <?php else: ?>
+                                            <i><?=$this->escape($layout->getAuthor()) ?></i>
+                                        <?php endif; ?>
+                                    </p>
+                                </span>                                
+                            </div>
                             <p><?=$this->escape($layout->getDesc()) ?></p>
                             <p>
                                 <a title="<?php if ($this->get('defaultLayout') == $layout->getKey()) { echo $this->getTrans('isDefault'); } else { echo $this->getTrans('setDefault'); } ?>"
