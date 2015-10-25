@@ -1,8 +1,12 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
+
+<?php
+$war = $this->get('war');
+$group = $this->get('group');
+$enemy = $this->get('enemy');
+?>
+
 <legend><?=$this->getTrans('warPlay') ?></legend>
-<?php $war = $this->get('war') ?>
-<?php $group = $this->get('group') ?>
-<?php $enemy = $this->get('enemy') ?>
 <div class="row">
     <div class="center-text">
         <div class="col-md-5">
@@ -42,35 +46,33 @@
             </div>
             <div class="panel-body">
                 <?php
-                    $gameMapper = new \Modules\War\Mappers\Games();
-                    $games = $gameMapper->getGamesByWarId($war->getId());
-                    $enemyPoints = '';
-                    $groupPoints = '';
-                    $class = '';
-                    $ergebniss = '';
-                    if ($games != '') {
-                        
-                        foreach ($games as $game) {
-                            $groupPoints += $game->getGroupPoints();
-                            $enemyPoints += $game->getEnemyPoints();
-                        }
-                        if ($groupPoints > $enemyPoints) {
-                            $class = 'class="war_win"';
-                            $ergebniss = $this->getTrans('warWin');
-                        }
-                        if ($groupPoints < $enemyPoints) {
-                            $class = 'class="war_lost"';
-                            $ergebniss = $this->getTrans('warLost');
-                        }
-                        if ($groupPoints == $enemyPoints) {
-                            $class = 'class="war_drawn"';
-                            $ergebniss = $this->getTrans('warDrawn');
-                        }
+                $gameMapper = new \Modules\War\Mappers\Games();
+                $games = $gameMapper->getGamesByWarId($war->getId());
+                $enemyPoints = '';
+                $groupPoints = '';
+                $class = '';
+                $ergebniss = '';
+                if ($games != '') {
+
+                    foreach ($games as $game) {
+                        $groupPoints += $game->getGroupPoints();
+                        $enemyPoints += $game->getEnemyPoints();
                     }
+                    if ($groupPoints > $enemyPoints) {
+                        $class = 'class="war_win"';
+                        $ergebniss = $this->getTrans('warWin');
+                    }
+                    if ($groupPoints < $enemyPoints) {
+                        $class = 'class="war_lost"';
+                        $ergebniss = $this->getTrans('warLost');
+                    }
+                    if ($groupPoints == $enemyPoints) {
+                        $class = 'class="war_drawn"';
+                        $ergebniss = $this->getTrans('warDrawn');
+                    }
+                }
                 ?>
-                <span <?=$class ?>>
-                    <?=$groupPoints ?>:<?=$enemyPoints ?> <?=$ergebniss ?>
-                </span>
+                <span <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?> <?=$ergebniss ?></span>
             </div>
         </div>
     </div>

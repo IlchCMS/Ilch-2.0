@@ -1,7 +1,7 @@
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('entries') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField() ?>
+        <?=$this->getTokenField() ?>
         <ul class="nav nav-tabs">
             <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index')) ?>">

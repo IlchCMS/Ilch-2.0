@@ -1,3 +1,7 @@
+<?php
+$userMapper = new \Modules\User\Mappers\User()
+?>
+
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('entries') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
@@ -23,7 +27,6 @@
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('entries') as $entry): ?>
-                        <?php $userMapper = new \Modules\User\Mappers\User() ?>
                         <?php $user = $userMapper->getUserById($entry->getUserId()) ?>
                         <?php $date = new \Ilch\Date($entry->getDateCreated()) ?>
                         <tr>
@@ -40,8 +43,7 @@
                 </tbody>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noNewsletter') ?>

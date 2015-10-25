@@ -1,6 +1,7 @@
 <?php 
 $entrantsMapper = new Modules\Training\Mappers\Entrants();
 ?>
+
 <legend><?=$this->getTrans('menuTraining') ?></legend>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
@@ -18,21 +19,21 @@ $entrantsMapper = new Modules\Training\Mappers\Entrants();
                 <th><?=$this->getTrans('entrant') ?></th>
             </tr>
         </thead>
-        <?php if ($this->get('training') != ''): ?>
-                <tbody>
-                    <?php foreach ($this->get('training') as $training): ?>
-                        <tr>
-                            <td><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></td>    
-                            <td><a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>"><?=$training->getTitle() ?></a></td>
-                            <td><?=$training->getPlace() ?></td>
-                            <td align="center"><?=count($entrantsMapper->getEntrantsById($training->getId())) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-        <?php else: ?>
-            <tr>
-                <td colspan="4"><?=$this->getTrans('noTraining') ?></td>
-            </tr>
-        <?php endif; ?>
+        <tbody>
+            <?php if ($this->get('training') != ''): ?>
+                <?php foreach ($this->get('training') as $training): ?>
+                    <tr>
+                        <td><?=date('d.m.Y', strtotime($training->getDate())) ?> <?=$this->getTrans('at') ?> <?=date('H:i', strtotime($training->getDate())) ?> <?=$this->getTrans('clock') ?></td>    
+                        <td><a href="<?=$this->getUrl('training/index/show/id/' . $training->getId()) ?>"><?=$training->getTitle() ?></a></td>
+                        <td><?=$training->getPlace() ?></td>
+                        <td align="center"><?=count($entrantsMapper->getEntrantsById($training->getId())) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4"><?=$this->getTrans('noTraining') ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
     </table>
 </div>

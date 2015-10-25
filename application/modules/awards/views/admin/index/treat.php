@@ -63,12 +63,12 @@ if ($awards != '') {
             <input type="radio"
                    name="typ"
                    id="typ_user"
-                   value="0"
+                   value="1"
                    onchange="toggleStatus()"
-                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 0) { echo 'checked="checked"';} ?>>
+                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'checked="checked"';} ?>>
         </div>
         <div class="col-lg-2">
-            <select class="form-control" name="utId" id="user" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>>
+            <select class="form-control" name="utId" id="user" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 2) { echo 'disabled';} ?>>
                 <?php foreach ($this->get('users') as $user) {
                         $selected = '';
 
@@ -89,18 +89,18 @@ if ($awards != '') {
             <input type="radio"
                    name="typ"
                    id="typ_team"
-                   value="1"
+                   value="2"
                    onchange="toggleStatus()"
-                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'checked="checked"';} ?>>
+                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2) { echo 'checked="checked"';} ?>>
         </div>
         <div class="col-lg-2">
             <input class="form-control"
                    type="text"
                    name="utId"
                    id="team"
-                   <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 0) { echo 'disabled';} ?>
-                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 0) { echo 'disabled';} ?>
-                   value="<?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() != 0) { echo $this->escape($this->get('awards')->getUTId()); } ?>" />
+                   <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>
+                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>
+                   value="<?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() != 1) { echo $this->escape($this->get('awards')->getUTId()); } ?>" />
         </div>
     </div>
     <div class="form-group">

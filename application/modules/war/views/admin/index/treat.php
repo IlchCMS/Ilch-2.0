@@ -9,7 +9,7 @@
 
 <legend>
     <?php if ($this->getRequest()->getParam('id') == ''): ?>
-        <?=$this->getTrans('menuActionNewWar') ?></legend>
+        <?=$this->getTrans('menuActionNewWar') ?>
     <?php else: ?>
         <?=$this->getTrans('manageWar') ?>
     <?php endif; ?>

@@ -1,12 +1,15 @@
-<?php if ($this->getRequest()->getParam('id') == ''): ?>
-    <legend><?=$this->getTrans('manageNewGroup') ?></legend>
-<?php else: ?>
-    <legend><?=$this->getTrans('treatGroup') ?></legend>
-<?php endif; ?>
 <?php if ($this->get('groups') != ''): ?>
     <?php $str = $this->get('groups')->getGroupMember() ?>
     <?php $memberArray =  explode(" ", $str) ?>
 <?php endif; ?>
+
+<legend>
+    <?php if ($this->getRequest()->getParam('id') == ''): ?>
+        <?=$this->getTrans('manageNewGroup') ?>
+    <?php else: ?>
+        <?=$this->getTrans('treatGroup') ?>
+    <?php endif; ?>
+</legend>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="form-group">
@@ -75,11 +78,11 @@
 </form>
 
 <script>
-    // Example for multiple input filds
-    <?=$this->getMedia()
-                    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
-                    ->addInputId('_1') ?>
+// Example for multiple input filds
+<?=$this->getMedia()
+        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+        ->addInputId('_1') ?>
 
-    $('#assignedMember').chosen();
-    $('#assignedMember_chosen').css('width', '100%'); // Workaround for chosen resize bug.
+$('#assignedMember').chosen();
+$('#assignedMember_chosen').css('width', '100%'); // Workaround for chosen resize bug.
 </script>

@@ -34,6 +34,27 @@
         <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ckeditor/ckeditor.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/jquery-hotkeys.js') ?>"></script>
+        <script>
+            $(document).hotkey('shift+a', function() {
+                window.location.href ='<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'index')) ?>';
+            });
+            $(document).hotkey('shift+u', function() {
+                window.location.href ='<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>';
+            });
+            $(document).hotkey('shift+s', function() {
+                window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')) ?>';
+            });
+            $(document).hotkey('shift+h', function() {
+                window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>';
+            });
+            $(document).hotkey('shift+k', function() {
+                window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts')) ?>';
+            });
+            $(document).hotkey('shift+i', function() {
+                window.location.href ='http://ilch.de/';
+            });
+        </script>
     </head>
     <body id="body" class="">
         <script>
@@ -182,6 +203,12 @@
                                     </a>
                                 </li>
                                 <li class="divider"></li>
+                                <li>
+                                    <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'controller' => 'shortcuts')) ?>">
+                                        <i class="fa fa-keyboard-o"></i>
+                                        <?=$this->getTrans('menuKeyboardShortcuts') ?>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos')) ?>">
                                         <i class="fa fa-info-circle"></i>

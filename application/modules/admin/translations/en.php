@@ -130,4 +130,15 @@ return array
     'available' => 'Available',
     'writable' => 'writable',
     'notWritable' => 'not writable',
+
+    'menuKeyboardShortcuts' => 'Keyboard Shortcuts',
+    'keyboardShortcuts' => 'Keyboard Shortcuts',
+    'shortcut' => 'Shortcut',
+    'shortcutOption' => 'Option',
+    'shortcutArticle' => 'Opens the Article Module',
+    'shortcutUser' => 'Opens the User Module',
+    'shortcutPHPInfo' => 'Opens the PHP Info',
+    'shortcutSettings' => 'Opens the Site Settings',
+    'shortcutKeybord' => 'Opens the Keyboard Shortcuts',
+    'shortcutOfficalSite' => 'Opens the Offical Site',
 );

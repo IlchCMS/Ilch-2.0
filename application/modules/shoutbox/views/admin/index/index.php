@@ -1,8 +1,7 @@
 <legend><?=$this->getTrans('manage') ?></legend>
-<?php $shoutboxs = $this->get('shoutbox'); ?>
-    <?php if ($shoutboxs != ''): ?>
+<?php if ($this->get('shoutbox') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField() ?>
+        <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>

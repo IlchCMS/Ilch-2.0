@@ -1,10 +1,6 @@
-<?php
-$linkus = $this->get('linkus');
-?>
-
 <legend><?=$this->getTrans('manage') ?></legend>
-<form class="form-horizontal" method="POST" action="">
-    <?php if ($linkus != ''): ?>
+<?php if ($this->get('linkus') != ''): ?>
+    <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -23,7 +19,7 @@ $linkus = $this->get('linkus');
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($linkus as $linkus): ?>
+                    <?php foreach ($this->get('linkus') as $linkus): ?>
                         <tr>
                             <td><input value="<?=$linkus->getId() ?>" type="checkbox" name="check_linkus[]" /></td>
                             <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $linkus->getId())) ?></td>
@@ -38,8 +34,8 @@ $linkus = $this->get('linkus');
                 </tbody>
             </table>
         </div>
-    <?php else: ?>
-        <?=$this->getTrans('noLinkus') ?>
-    <?php endif; ?>
-    <?=$this->getListBar(array('delete' => 'delete')) ?>
-</form>
+        <?=$this->getListBar(array('delete' => 'delete')) ?>
+    </form>
+<?php else: ?>
+    <?=$this->getTrans('noLinkus') ?>
+<?php endif; ?>

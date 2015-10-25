@@ -1,7 +1,7 @@
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('awards') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField()?>
+        <?=$this->getTokenField()?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -33,7 +33,7 @@
                             <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $awards->getId())) ?></td>
                             <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($awards->getRank()) ?></td>
-                            <?php if ($awards->getTyp() == 1): ?>
+                            <?php if ($awards->getTyp() == 2): ?>
                                 <td><?=$awards->getUTId() ?></td>
                             <?php else: ?>
                                 <?php $userMapper = new \Modules\User\Mappers\User(); ?>

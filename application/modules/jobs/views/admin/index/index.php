@@ -1,7 +1,7 @@
 <legend><?= $this->getTrans('manageJobs') ?></legend>
 <?php if ($this->get('jobs') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField()?>
+        <?=$this->getTokenField()?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>

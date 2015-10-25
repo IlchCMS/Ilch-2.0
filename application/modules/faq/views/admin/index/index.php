@@ -1,11 +1,11 @@
 <?php
-    $faqs = $this->get('faqs');
-    $categoryMapper = new \Modules\Faq\Mappers\Category();
+$categoryMapper = new \Modules\Faq\Mappers\Category();
 ?>
 
 <legend><?=$this->getTrans('manage') ?></legend>
-<?php if ($faqs != ''): ?>
+<?php if ($this->get('faqs') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
+        <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -15,23 +15,27 @@
                     <col class="col-lg-2">
                     <col />
                 </colgroup>
-                <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_faqs')?></th>
-                    <th></th>
-                    <th></th>
-                    <th><?=$this->getTrans('cat') ?></th>
-                    <th><?=$this->getTrans('question') ?></th>
-                </tr>
-                <?php foreach ($faqs as $faq): ?>
-                    <?php $faqsCats = $categoryMapper->getCategoryById($faq->getCatId()); ?>
+                <thead>
                     <tr>
-                        <td><input value="<?=$faq->getId()?>" type="checkbox" name="check_faqs[]" /></td>
-                        <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $faq->getId()))?></td>
-                        <td><?=$this->getDeleteIcon(array('action' => 'delfaq', 'id' => $faq->getId()))?></td>
-                        <td><?=$faqsCats->getTitle() ?></td>
-                        <td><?=$faq->getQuestion()?></td>
+                        <th><?=$this->getCheckAllCheckbox('check_faqs')?></th>
+                        <th></th>
+                        <th></th>
+                        <th><?=$this->getTrans('cat') ?></th>
+                        <th><?=$this->getTrans('question') ?></th>
                     </tr>
-                <?php endforeach; ?>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->get('faqs') as $faq): ?>
+                        <?php $faqsCats = $categoryMapper->getCategoryById($faq->getCatId()); ?>
+                        <tr>
+                            <td><input value="<?=$faq->getId()?>" type="checkbox" name="check_faqs[]" /></td>
+                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $faq->getId()))?></td>
+                            <td><?=$this->getDeleteIcon(array('action' => 'delfaq', 'id' => $faq->getId()))?></td>
+                            <td><?=$faqsCats->getTitle() ?></td>
+                            <td><?=$faq->getQuestion()?></td>
+                        </tr>
+                    <?php endforeach; ?>                    
+                </tbody>
             </table>
         </div>
         <?=$this->getListBar(array('delete' => 'delete')) ?>

@@ -1,7 +1,9 @@
-<?php $userMapper = new \Modules\User\Mappers\User() ?>
-<?php if($this->getUser()): ?>
-    <?php $userCheck = $userMapper->getUserById($this->getUser()->getId()) ?>
-<?php endif; ?>
+<?php
+$userMapper = new \Modules\User\Mappers\User();
+if ($this->getUser()) {
+    $userCheck = $userMapper->getUserById($this->getUser()->getId());
+}
+?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 

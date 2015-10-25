@@ -130,4 +130,15 @@ return array
     'available' => 'Vorhanden',
     'writable' => 'Beschreibbar',
     'notWritable' => 'nicht beschreibbar',
+
+    'menuKeyboardShortcuts' => 'Tastaturkürzel',
+    'keyboardShortcuts' => 'Tastaturkürzel',
+    'shortcut' => 'Kürzel',
+    'shortcutOption' => 'Option',
+    'shortcutArticle' => 'Öffnet das Artikel Modul',
+    'shortcutUser' => 'Öffnet das Benutzer Modul',
+    'shortcutPHPInfo' => 'Öffnet die PHP Info',
+    'shortcutSettings' => 'Öffnet die Seiten Einstellungen',
+    'shortcutKeybord' => 'Öffnet die Tastaturkürzel',
+    'shortcutOfficalSite' => 'Öffnet die Offizielle Homepage',
 );

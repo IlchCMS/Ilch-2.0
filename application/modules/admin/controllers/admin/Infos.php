@@ -26,10 +26,19 @@ class Infos extends \Ilch\Controller\Admin
                 'icon' => 'fa fa-folder-open',
                 'url' => $this->getLayout()->getUrl(array('controller' => 'infos', 'action' => 'folderrights'))
             ),
+            array
+            (
+                'name' => 'menuKeyboardShortcuts',
+                'active' => false,
+                'icon' => 'fa fa-keyboard-o',
+                'url' => $this->getLayout()->getUrl(array('controller' => 'infos', 'action' => 'shortcuts'))
+            ),
         );
 
         if ($this->getRequest()->getActionName() == 'folderrights') {
             $items[1]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'shortcuts') {
+            $items[2]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -73,7 +82,10 @@ class Infos extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('hmenuInfos'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('hmenuFolderRights'), array('action' => 'folderrights'));
+    }
 
-        $this->getView();
+    public function shortcutsAction()
+    {
+
     }
 }

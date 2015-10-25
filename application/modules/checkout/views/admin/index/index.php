@@ -1,6 +1,6 @@
+<legend><?=$this->getTrans('bookings') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
-    <legend><?=$this->getTrans('bookings') ?></legend>
     <div class="form-group">
         <div class="col-lg-4">
             <input class="form-control"

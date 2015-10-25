@@ -1,4 +1,5 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('menuGroups') ?></legend>
 <?php if ($this->get('groups') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, array()) ?>

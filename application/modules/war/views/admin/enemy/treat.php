@@ -82,5 +82,5 @@
 
 <script>
     <?=$this->getMedia()
-                    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/')) ?>
+            ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/')) ?>
 </script>
