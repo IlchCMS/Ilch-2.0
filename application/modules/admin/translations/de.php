@@ -132,6 +132,7 @@ return array
     'notWritable' => 'nicht beschreibbar',
 
     'menuKeyboardShortcuts' => 'Tastaturkürzel',
+    'hmenuKeyboardShortcuts' => 'Tastaturkürzel',
     'keyboardShortcuts' => 'Tastaturkürzel',
     'shortcut' => 'Kürzel',
     'shortcutOption' => 'Option',

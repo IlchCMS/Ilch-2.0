@@ -132,6 +132,7 @@ return array
     'notWritable' => 'not writable',
 
     'menuKeyboardShortcuts' => 'Keyboard Shortcuts',
+    'hmenuKeyboardShortcuts' => 'Keyboard Shortcuts',
     'keyboardShortcuts' => 'Keyboard Shortcuts',
     'shortcut' => 'Shortcut',
     'shortcutOption' => 'Option',

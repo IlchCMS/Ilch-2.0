@@ -204,13 +204,7 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'controller' => 'shortcuts')) ?>">
-                                        <i class="fa fa-keyboard-o"></i>
-                                        <?=$this->getTrans('menuKeyboardShortcuts') ?>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos')) ?>">
+                                    <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>">
                                         <i class="fa fa-info-circle"></i>
                                         <?=$this->getTrans('menuInfos') ?>
                                     </a>

@@ -86,6 +86,9 @@ class Infos extends \Ilch\Controller\Admin
 
     public function shortcutsAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('hmenuInfos'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('hmenuKeyboardShortcuts'), array('action' => 'shortcuts'));
 
     }
 }
