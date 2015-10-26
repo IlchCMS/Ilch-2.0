@@ -31,27 +31,27 @@
         </thead>
         <tbody>
             <tr>
-                <td><span class="key-shortcut">&uArr; SHIFT</span> + <span class="key-shortcut">A</span></td>
+                <td><span class="key-shortcut">ALT</span> + <span class="key-shortcut">A</span></td>
                 <td><?=$this->getTrans('shortcutArticle') ?></td>
             </tr>
             <tr>
-                <td><span class="key-shortcut">&uArr; SHIFT</span> + <span class="key-shortcut">U</span></td>
+                <td><span class="key-shortcut">ALT</span> + <span class="key-shortcut">U</span></td>
                 <td><?=$this->getTrans('shortcutUser') ?></td>
             </tr>
             <tr>
-                <td><span class="key-shortcut">&uArr; SHIFT</span> + <span class="key-shortcut">S</span></td>
+                <td><span class="key-shortcut">ALT</span> + <span class="key-shortcut">S</span></td>
                 <td><?=$this->getTrans('shortcutSettings') ?></td>
             </tr>
             <tr>
-                <td><span class="key-shortcut">&uArr; SHIFT</span> + <span class="key-shortcut">H</span></td>
+                <td><span class="key-shortcut">ALT</span> + <span class="key-shortcut">H</span></td>
                 <td><?=$this->getTrans('shortcutPHPInfo') ?></td>
             </tr>
             <tr>
-                <td><span class="key-shortcut">&uArr; SHIFT</span> + <span class="key-shortcut">K</span></td>
+                <td><span class="key-shortcut">ALT</span> + <span class="key-shortcut">K</span></td>
                 <td><?=$this->getTrans('shortcutKeybord') ?></td>
             </tr>
             <tr>
-                <td><span class="key-shortcut">&uArr; SHIFT</span> + <span class="key-shortcut">I</span></td>
+                <td><span class="key-shortcut">ALT</span> + <span class="key-shortcut">I</span></td>
                 <td><?=$this->getTrans('shortcutOfficialSite') ?></td>
             </tr>        
         </tbody>

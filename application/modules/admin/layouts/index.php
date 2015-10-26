@@ -36,22 +36,22 @@
         <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-hotkeys.js') ?>"></script>
         <script>
-            $(document).hotkey('shift+a', function() {
+            $(document).hotkey('alt+a', function() {
                 window.location.href ='<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'index')) ?>';
             });
-            $(document).hotkey('shift+u', function() {
+            $(document).hotkey('alt+u', function() {
                 window.location.href ='<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>';
             });
-            $(document).hotkey('shift+s', function() {
+            $(document).hotkey('alt+s', function() {
                 window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')) ?>';
             });
-            $(document).hotkey('shift+h', function() {
+            $(document).hotkey('alt+h', function() {
                 window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>';
             });
-            $(document).hotkey('shift+k', function() {
+            $(document).hotkey('alt+k', function() {
                 window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts')) ?>';
             });
-            $(document).hotkey('shift+i', function() {
+            $(document).hotkey('alt+i', function() {
                 window.open('http://ilch.de/', '_blank');
             });
         </script>
