@@ -4,14 +4,14 @@
     -moz-border-radius: 4px;
     -o-border-radius: 4px;
     -khtml-border-radius: 4px;
-    border-radius: 4px;
-    border-style: outset;
-    border: 1px solid #aaa;
-    background: #fafafa;
-    padding: 3px 4px 3px 4px;
-    margin: 0px 0px 0px 0px;
     display: inline-block;
-    min-width: 22px;
+    padding: 3px 4px 3px 4px;
+    line-height: 14px;
+    background-color: #fcfcfc;
+    border: solid 1px #ccc;
+    border-bottom-color: #bbb;
+    box-shadow: inset 0 -1px 0 #bbb;
+    min-width: 24px;
     text-align: center;
 }
 </style>
