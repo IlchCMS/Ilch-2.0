@@ -1,1 +1,1 @@
-<?php eval("?>".utf8_encode($this->get('content'))."<?");
+<?=$this->get('content');
