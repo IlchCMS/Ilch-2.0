@@ -44,10 +44,15 @@ class Login extends \Ilch\Controller\Frontend
                     $this->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
                 } else {
                     $_SESSION['user_id'] = $user->getId();
+                    $redirect = '';
 
-                    if ($_SESSION['redirect']) {
+                    if (isset($_SESSION['redirect'])) {
+                        $redirect = $_SESSION['redirect'];
+                    }
+
+                    if ($redirect) {
                         $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
-                        $this->redirect($_SESSION['redirect']);
+                        $this->redirect($redirect);
                     } else {
                         $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
                         $this->redirect();
