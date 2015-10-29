@@ -137,7 +137,7 @@ class Index extends BaseController
                  * Delete adminuser only if he is not the last admin.
                  */
             } else {
-                if ($deleteUser->getAvatar() != '') {
+                if ($deleteUser->getAvatar() != 'static/img/noavatar.jpg') {
                     unlink($deleteUser->getAvatar());
                 }
 
