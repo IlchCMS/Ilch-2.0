@@ -34,27 +34,15 @@
         <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ckeditor/ckeditor.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
-        <script src="<?=$this->getStaticUrl('js/jquery-hotkeys.js') ?>"></script>
-        <script>
-            $(document).hotkey('alt+a', function() {
-                window.location.href ='<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'index')) ?>';
-            });
-            $(document).hotkey('alt+u', function() {
-                window.location.href ='<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>';
-            });
-            $(document).hotkey('alt+s', function() {
-                window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')) ?>';
-            });
-            $(document).hotkey('alt+h', function() {
-                window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>';
-            });
-            $(document).hotkey('alt+k', function() {
-                window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts')) ?>';
-            });
-            $(document).hotkey('alt+i', function() {
-                window.open('http://ilch.de/', '_blank');
-            });
-        </script>
+        <script src="<?=$this->getStaticUrl('js/jquery.key.js') ?>"></script>
+	<script type="text/javascript">
+        $.key('alt+a', function() { window.location.href ='<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'index')) ?>'; });
+        $.key('alt+u', function() { window.location.href ='<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>'; });
+        $.key('alt+s', function() { window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')) ?>'; });
+        $.key('alt+h', function() { window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>'; });
+        $.key('alt+k', function() { window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts')) ?>'; });
+        $.key('alt+i', function() { window.open('http://ilch.de/', '_blank'); });
+	</script>
     </head>
     <body id="body" class="">
         <script>
