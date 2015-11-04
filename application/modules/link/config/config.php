@@ -63,6 +63,6 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_links` (`id`, `name`, `desc`, `banner`, `link`) VALUES
-                (1, "ilch", "Du suchst ein einfach strukturiertes Content Management System? Dann bist du bei ilch genau richtig! ", "http://ilch.de/include/images/linkus/468x60.png", "http://ilch.de");';
+                (1, "ilch", "Du suchst ein einfach strukturiertes Content Management System? Dann bist du bei ilch genau richtig! ", "http://www.ilch.de/include/images/linkus/468x60.png", "http://ilch.de");';
     }
 }
