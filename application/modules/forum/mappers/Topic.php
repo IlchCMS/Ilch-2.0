@@ -43,6 +43,35 @@ class Topic extends \Ilch\Mapper
         return $entry;
     }
 
+    public function getTopics($pagination = NULL)
+    {
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
+                FROM `[prefix]_forum_topics`
+                GROUP by type, id
+                ORDER by type DESC, id DESC
+                LIMIT '.implode(',',$pagination->getLimit());
+
+        $fileArray = $this->db()->queryArray($sql);
+        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+
+        $entry = array();
+
+        foreach ($fileArray as $entries) {
+            $entryModel = new TopicModel();
+            $userMapper = new UserMapper();
+            $entryModel->setId($entries['id']);
+            $entryModel->setText($entries['text']);
+            $entryModel->setTopicId($entries['topic_id']);
+            $entryModel->setVisits($entries['visits']);
+            $entryModel->setType($entries['type']);
+            $entryModel->setAuthor($userMapper->getUserById($entries['creator_id']));
+            $entryModel->setTopicTitle($entries['topic_title']);
+            $entryModel->setDateCreated($entries['date_created']);
+            $entry[] = $entryModel;
+        }
+        return $entry;
+    }
+
     public function getPostById($id)
     {
         $sql = 'SELECT *

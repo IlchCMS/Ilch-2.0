@@ -59,7 +59,7 @@ if ($this->getUser()) {
                     <li class="row bg1">
                         <dl class="icon" style="
                             <?php if ($this->getUser()): ?>
-                                <?php if (in_array($this->getUser()->getId(), explode('|', $lastPost->getRead()))): ?>
+                                <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                     background-image: url(<?=$this->getModuleUrl('static/img/forum_read.png') ?>);
                                 <?php else: ?>
                                     background-image: url(<?=$this->getModuleUrl('static/img/topic_unread.png') ?>);

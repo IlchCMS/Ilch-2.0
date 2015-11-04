@@ -47,7 +47,7 @@ function rec($item, $forumMapper, $obj, $readAccess, $i)
                 <li class="row">
                     <dl class="icon" style="
                         <?php if ($obj->getUser() && $lastPost): ?>
-                            <?php if (in_array($obj->getUser()->getId(), explode('|', $lastPost->getRead()))): ?>
+                            <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                 background-image: url(<?=$obj->getModuleUrl('static/img/forum_read.png') ?>);
                             <?php else: ?>
                                 background-image: url(<?=$obj->getModuleUrl('static/img/topic_unread.png') ?>);
@@ -91,6 +91,17 @@ function rec($item, $forumMapper, $obj, $readAccess, $i)
 ?>
 <div id="forum" class="col-lg-12">
     <h3><?=$this->getTrans('forumOverview') ?></h3>
+    <div class="topic-actions">
+        <?php if($this->getUser()): ?>
+            <div class="buttons">
+                <a href="<?=$this->getUrl(array('controller' => 'showunread', 'action' => 'index')) ?>" class="btn btn-labeled bgblue">
+                    <span class="btn-label">
+                        <i class="fa fa-eye"></i>
+                    </span><?=$this->getTrans('showNewPosts') ?>
+                </a>
+            </div>
+        <?php endif; ?>
+    </div>
     <?php if (!empty($forumItems)): ?>
         <?php foreach ($forumItems as $item): ?>
             <div class="forabg">

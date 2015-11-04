@@ -37,7 +37,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                 <li class="row">
                     <dl class="icon" style="
                         <?php if ($obj->getUser() && $lastPost): ?>
-                            <?php if (in_array($obj->getUser()->getId(), explode('|', $lastPost->getRead()))): ?>
+                            <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
                                 background-image: url(<?=$obj->getModuleUrl('static/img/forum_read.png') ?>);
                             <?php else: ?>
                                 background-image: url(<?=$obj->getModuleUrl('static/img/topic_unread.png') ?>);

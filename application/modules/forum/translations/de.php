@@ -39,5 +39,6 @@ return array
     'yes' => 'Ja',
     'no' => 'Nein',
     'joined' => 'Dabei seit',
+    'showNewPosts' => 'Neue Beiträge',
     
 );
