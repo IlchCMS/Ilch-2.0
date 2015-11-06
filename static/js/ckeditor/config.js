@@ -7,11 +7,11 @@ CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchMediaPlugin !== "undefined" && typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal( 'ilchmedia', ilchMediaPlugin);
         CKEDITOR.plugins.addExternal( 'ilchps', ilchPsPlugin);
-        config.extraPlugins = "ilchmedia,ilchps";
+        config.extraPlugins = "ilchmedia,ilchps,justify";
     }
     else if (typeof ilchMediaPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal( 'ilchmedia', ilchMediaPlugin);
-        config.extraPlugins = "ilchmedia,showprotected";
+        config.extraPlugins = "ilchmedia,showprotected,justify";
     }
 
     config.protectedSource.push(/<\?[\s\S]*?\?>/g);

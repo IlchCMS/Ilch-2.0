@@ -15,6 +15,27 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         labelStyle: 'font-weight: bold'
                     },
                     {
+                        type: 'hbox',
+                        widths: ['50%', '50%'],
+                        children:
+                                [
+                                    {
+                                        type: 'text',
+                                        id: 'width',
+                                        label: 'Width (optional)',
+                                        labelStyle: 'font-weight: bold',
+                                        style: 'float:left;display:inline;'
+                                    },
+                                    {
+                                        type: 'text',
+                                        id: 'height',
+                                        label: 'Height (optional)',
+                                        labelStyle: 'font-weight: bold',
+                                        style: 'float:left;display:inline;'
+                                    }
+                                ]
+                    },
+                    {
                         type: 'button',
                         label: 'Select from Server',
                         labelStyle: 'font-weight: bold',
@@ -145,7 +166,11 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
             var dialog = this;
             if (dialog.getValueOf('tab-basic', 'src') !== '') {
                 var custimage = editor.document.createElement('img');
+                var width = dialog.getValueOf('tab-basic', 'width');
+                var height = dialog.getValueOf('tab-basic', 'height');
                 custimage.setAttribute('src', dialog.getValueOf('tab-basic', 'src'));
+                custimage.setAttribute('width', width);
+                custimage.setAttribute('height', height);
                 editor.insertElement(custimage);
             }
 
