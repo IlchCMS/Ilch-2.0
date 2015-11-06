@@ -1,4 +1,3 @@
-<h3><?=$this->getTrans('gallery'); ?></h3>
 <?php
 $galleryMapper = $this->get('galleryMapper');
 $galleryItems = $this->get('galleryItems');
@@ -8,20 +7,28 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 {
     $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
     $imageCount = $imageMapper->getCountImageById($item->getId());
-    
+
     if ($item->getType() === 0){
         echo '<div class="page-header">
-              <h4>'.$obj->getTrans('cat').': '.$item->getTitle().'  <small>'.$item->getDesc().'</small>
+              <h4>'.$obj->getTrans('cat').': '.$item->getTitle().' <small>'.$item->getDesc().'</small>
               </h4><hr>';
     }
+
     if ($item->getType() != 0){
         $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
+
+        if(!empty($lastImage->getImageThumb())) {
+            $image = $obj->getBaseUrl($lastImage->getImageThumb());
+        } else {
+            $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png');
+        }
+
         echo '<div class="col-md-12 no-padding lib-item" data-category="view">
                 <div class="lib-panel">
                     <div class="row box-shadow">
                         <div class="col-md-4">
                             <a href="'.$obj->getUrl(array('controller' => 'index', 'action' => 'show','id' => $item->getId())).'" >
-                                <img class="lib-img-show" src="'.$obj->getUrl().'/'.$lastImage->getImageThumb().'">
+                                <img class="lib-img-show" src="'.$image.'">
                             </a>
                         </div>
                         <div class="col-md-8">
@@ -42,6 +49,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
             </div>';
         
     }
+
     if (!empty($subItems)) {
         foreach ($subItems as $subItem) {
             rec($subItem, $galleryMapper, $obj, $imageMapper);
@@ -49,19 +57,9 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     }
 }
 ?>
-<div class="col-lg-12">
-    <ul class="media-list">
-        <?php
-            if (!empty($galleryItems)) {
-                foreach ($galleryItems as $item) {
-                    rec($item, $galleryMapper, $this, $imageMapper);
-                }
-            }
-        ?>
-    </ul>
-</div>
+
 <style>
-    .lib-panel {
+.lib-panel {
     margin-bottom: 20Px;
 }
 .lib-panel img {
@@ -74,7 +72,6 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     padding: 0;
     background-color: #FFFFFF;
 }
-
 
 .lib-panel .lib-row {
     padding: 0 20px 0 20px;
@@ -119,3 +116,14 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     font-size: 15px;
 }
 </style>
+
+<legend><?=$this->getTrans('menuGallery') ?></legend>
+<div class="col-lg-12">
+    <ul class="media-list">
+        <?php if (!empty($galleryItems)): ?>
+            <?php foreach ($galleryItems as $item): ?>
+                <?php rec($item, $galleryMapper, $this, $imageMapper); ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </ul>
+</div>
