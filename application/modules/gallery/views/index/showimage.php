@@ -128,7 +128,7 @@ function rec($id, $uid, $req, $obj)
 }
 ?>
 
-<link href="<?= $this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 <style>
 .replyHidden {
     display: none;

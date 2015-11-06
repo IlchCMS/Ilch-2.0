@@ -132,6 +132,7 @@ function rec($id, $uid, $req, $obj)
 }
 ?>
 
+<link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 <style>
 .replyHidden {
     display: none;
@@ -172,8 +173,6 @@ function rec($id, $uid, $req, $obj)
     &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $article->getId().'#comment')) ?>"><?=$commentsCount ?></a>
     &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
 </div>
-
-<link href="<?= $this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 
 <?php if(empty($preview)): ?>
     <?php $userMapper = new \Modules\User\Mappers\User(); ?>

@@ -41,5 +41,4 @@ return array
     'commentPost' => 'Write comment',
     'from' => 'From',
     'on' => 'On',
-    
 );

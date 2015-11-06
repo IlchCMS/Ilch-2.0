@@ -46,8 +46,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                         </div>
                     </div>
                 </div>
-            </div>';
-        
+            </div>';        
     }
 
     if (!empty($subItems)) {
