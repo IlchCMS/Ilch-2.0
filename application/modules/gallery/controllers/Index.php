@@ -16,10 +16,12 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction() 
     {
-        $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'));
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'));
+
         $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery'));
@@ -58,12 +60,17 @@ class Index extends \Ilch\Controller\Frontend
         $id = $this->getRequest()->getParam('id');
         $galleryId = $this->getRequest()->getParam('gallery');
 
-        if ($this->getRequest()->getPost('gallery_comment_text')) {
-            $commentModel = new CommentModel();
-            $commentModel->setKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id);
-            $commentModel->setText($this->getRequest()->getPost('gallery_comment_text'));
-
+        if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();
+
+            $commentModel = new CommentModel();
+            if ($this->getRequest()->getPost('fkId')) {
+                $commentModel->setKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
+                $commentModel->setFKId($this->getRequest()->getPost('fkId'));
+            } else {
+                $commentModel->setKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id);
+            }
+            $commentModel->setText($this->getRequest()->getPost('gallery_comment_text'));
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);

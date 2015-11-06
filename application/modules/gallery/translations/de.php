@@ -31,6 +31,7 @@ return array
     'galleryItemAdd' => 'Hinzufügen',
     'menuGalleryOverview' => 'Galerie Übersicht',
     'comments' => 'Kommentare',
+    'reply' => 'Antworten',
     'submit' => 'Eintragen',
     'images' => 'Bilder',
     'image' => 'Bild',
