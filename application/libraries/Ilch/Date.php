@@ -7,21 +7,21 @@
 namespace Ilch;
 
 /**
- * Tests the Ilch_Date class.
+ * A Date class with additional functions for \DateTime
  */
 class Date extends \DateTime
 {
     /**
      * The DateTimeZone used by the database.
      *
-     * @var DateTimeZone
+     * @var \DateTimeZone
      */
     private $timeZone;
 
     /**
      * The local DateTimeZone.
      *
-     * @var DateTimeZone
+     * @var \DateTimeZone
      */
     private $timeZoneLocal;
 
@@ -43,7 +43,7 @@ class Date extends \DateTime
      * Generates a DateTime object using the given parameters.
      *
      * @param string              $time     A string which represents the current time.
-     * @param string|DateTimeZone $timezone The locale to set the timezone.
+     * @param string|\DateTimeZone $timezone The locale to set the timezone.
      */
     public function __construct($time = 'now', $timezone = 'UTC')
     {
@@ -68,18 +68,12 @@ class Date extends \DateTime
     /**
      * Returns the datetime string for the db.
      *
-     * @param  boolean $local
+     * @param  boolean $localTimezone
      * @return string  A formatted date string.
      */
-    public function toDb($local = false)
+    public function toDb($localTimezone = false)
     {
-        if ($local) {
-            $timezone = $this->timeZoneLocal;
-        } else {
-            $timezone = $this->timeZone;
-        }
-
-        return $this->ownFormat($this->dbFormat, $local);
+        return $this->ownFormat($this->dbFormat, $localTimezone);
     }
 
     /**
@@ -114,12 +108,12 @@ class Date extends \DateTime
      * Formats and returns the date considering local.
      *
      * @param  string  $format
-     * @param  boolean $local
+     * @param  boolean $localTimezone
      * @return string
      */
-    protected function ownFormat($format, $local)
+    protected function ownFormat($format, $localTimezone)
     {
-        if ($local) {
+        if ($localTimezone) {
             $this->setTimezone($this->timeZoneLocal);
             $formattedTime = parent::format($format);
             $this->setTimezone($this->timeZone);

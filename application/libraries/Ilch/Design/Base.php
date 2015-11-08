@@ -16,6 +16,13 @@ abstract class Base
     private $helpers = array();
 
     /**
+     * Name of the layout that will be used
+     *
+     * @var string
+     */
+    private $layoutKey;
+
+    /**
      * Adds view/layout helper.
      *
      * @param string $name
@@ -39,17 +46,17 @@ abstract class Base
     }
 
     /**
-     * @var Ilch_Request
+     * @var \Ilch\Request
      */
     private $request;
 
     /**
-     * @var Ilch_Translator
+     * @var \Ilch\Translator
      */
     private $translator;
 
     /**
-     * @var Ilch_Router
+     * @var \Ilch\Router
      */
     private $router;
 
@@ -95,7 +102,7 @@ abstract class Base
     /**
      * Set view data.
      *
-     * @param sting $key
+     * @param string $key
      * @param mixed $value
      */
     public function set($key, $value)
@@ -116,7 +123,7 @@ abstract class Base
     /**
      * Gets the request object.
      *
-     * @return Ilch_Request
+     * @return \Ilch\Request
      */
     public function getRequest()
     {
@@ -136,7 +143,7 @@ abstract class Base
     /**
      * Gets the translator object.
      *
-     * @return Ilch_Translator
+     * @return \Ilch\Translator
      */
     public function getTranslator()
     {
@@ -146,7 +153,7 @@ abstract class Base
     /**
      * Gets the user object.
      *
-     * @return User_UserModel
+     * @return \Modules\User\Models\User
      */
     public function getUser()
     {
@@ -169,7 +176,7 @@ abstract class Base
     /**
      * Gets the base url.
      *
-     * @param  sting  $url
+     * @param  string  $url
      * @return string
      */
     public function getBaseUrl($url = '')

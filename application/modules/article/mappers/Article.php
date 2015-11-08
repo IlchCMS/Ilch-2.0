@@ -17,9 +17,8 @@ class Article extends \Ilch\Mapper
      * Get articles.
      *
      * @param string $locale
-     * @return Article_ArticleModel[]|array
+     * @return ArticleModel[]|array
      */
-
     public function getArticles($locale = '')
     {
         $select = $this->db()->select();
@@ -63,7 +62,7 @@ class Article extends \Ilch\Mapper
      * Get articles.
      *
      * @param string $locale
-     * @return Article_ArticleModel[]|array
+     * @return ArticleModel[]|array
      */
     public function getArticlesByCats($catId, $locale = '')
     {
@@ -182,7 +181,7 @@ class Article extends \Ilch\Mapper
      *
      * @param string $locale
      * @param integer $limit
-     * @return Article_ArticleModel[]|null
+     * @return ArticleModel[]|null
      */
     public function getArticleList($locale = '', $limit = null)
     {
@@ -228,7 +227,7 @@ class Article extends \Ilch\Mapper
      *
      * @param string $id
      * @param string $locale
-     * @return Article_ArticleModel|null
+     * @return ArticleModel|null
      */
     public function getArticleByIdLocale($id, $locale = '')
     {

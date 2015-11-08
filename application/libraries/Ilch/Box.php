@@ -32,7 +32,7 @@ class Box extends \Ilch\Controller\Base
      * @param \Ilch\View        $view
      * @param \Ilch\Request     $request
      * @param \Ilch\Router      $router
-     * @param Ilch_Translator   $translator
+     * @param \Ilch\Translator   $translator
      */
     public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
     {

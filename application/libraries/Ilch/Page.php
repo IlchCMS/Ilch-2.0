@@ -9,37 +9,37 @@ namespace Ilch;
 class Page
 {
     /**
-     * @var Ilch_Request
+     * @var \Ilch\Request
      */
     private $request;
 
     /**
-     * @var Ilch_Translator
+     * @var \Ilch\Translator
      */
     private $translator;
 
     /**
-     * @var Ilch_Router
+     * @var \Ilch\Router
      */
     private $router;
 
     /**
-     * @var Ilch_Plugin
+     * @var \Ilch\Plugin
      */
     private $plugin;
 
     /**
-     * @var Ilch_Layout_Base
+     * @var \Ilch\Layout\Base
      */
     private $layout;
 
     /**
-     * @var Ilch_View
+     * @var \Ilch\View
      */
     private $view;
 
     /**
-     * @var Ilch_Config_File
+     * @var \Ilch\Config\File
      */
     private $fileConfig;
 
@@ -167,7 +167,7 @@ class Page
     /**
      * Loads controller defined by the request object.
      *
-     * @return Ilch_Controller_Base
+     * @return \Ilch\Controller\Base
      */
     protected function loadController()
     {
@@ -207,7 +207,7 @@ class Page
     /**
      * Returns the view object.
      *
-     * @return Ilch_View
+     * @return \Ilch\View
      */
     public function getView()
     {
@@ -217,7 +217,7 @@ class Page
     /**
      * Returns the request object.
      *
-     * @return Ilch_Request
+     * @return \Ilch\Request
      */
     public function getRequest()
     {

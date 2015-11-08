@@ -14,7 +14,7 @@ class Module extends \Ilch\Mapper
     /**
      * Gets all modules.
      *
-     * @return array|Admin_ModuleModel[]
+     * @return array|\Modules\Admin\Models\Module[]
      */
     public function getModules()
     {
