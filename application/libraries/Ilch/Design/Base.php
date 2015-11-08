@@ -193,10 +193,10 @@ abstract class Base
     public function getLayoutUrl($url = '')
     {
         if (empty($url)) {
-            return BASE_URL.'/application/layouts/'.$this->layoutKey.'/';
+            return BASE_URL.'/application/layouts/'.$this->getLayoutKey().'/';
         }
 
-        return BASE_URL.'/application/layouts/'.$this->layoutKey.'/'.$url;
+        return BASE_URL.'/application/layouts/'.$this->getLayoutKey().'/'.$url;
     }
 
     /**
