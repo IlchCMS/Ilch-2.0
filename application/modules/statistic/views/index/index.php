@@ -300,7 +300,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             </div>
             <div class="panel-body">
                 <div class="list-group">
-                    <?php foreach ($this->get('statisticYearMonthList') as $statisticList): ?>
+                    <?php foreach ($this->get('statisticYearList') as $statisticList): ?>
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
