@@ -60,15 +60,18 @@ class Base
     }
 
     /**
-     * Redirect to given params.
+     * Redirect to given url or url params.
      *
-     * @param array   $urlArray
+     * @param array|string $url
      * @param string  $route
      * @param boolean $rewrite
      */
-    public function redirect($urlArray, $route = null, $rewrite = false)
+    public function redirect($url = array(), $route = null, $rewrite = false)
     {
-        header("location: ".$this->getLayout()->getUrl($urlArray, $route, $rewrite));
+        if (!is_string($url) || preg_match('~^[a-z]+://.*~', $url) === 0) {
+            $url = $this->getLayout()->getUrl($url, $route, $rewrite);
+        }
+        header("Location: " . $url);
         exit;
     }
 

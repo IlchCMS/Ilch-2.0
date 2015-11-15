@@ -207,7 +207,7 @@ class Request
      *
      * @param  string $key
      * @param  string $default This gets returned if $key does not exist
-     * @return mixed
+     * @return string|null
      */
     public function getPost($key = null, $default = null)
     {

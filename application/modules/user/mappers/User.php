@@ -14,7 +14,7 @@ class User extends \Ilch\Mapper
     /**
      * Returns user model found by the id.
      *
-     * @param  mixed[] $id
+     * @param  int $id
      * @return null|\Modules\User\Models\User
      */
     public function getUserById($id)
@@ -103,8 +103,8 @@ class User extends \Ilch\Mapper
      * Returns an array with user models found by the where clause of false if
      * none found.
      *
-     * @param  mixed[] $where
-     * @return null|\Modules\User\Models\User
+     * @param  array $where
+     * @return null|\Modules\User\Models\User[]
      */
     protected function getBy($where = [])
     {

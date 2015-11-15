@@ -27,6 +27,13 @@ class Translator
     private $translations = array();
 
     /**
+     * Holds the loaded translation directories
+     *
+     * @var array
+     */
+    private $translationDirectories = array();
+
+    /**
      * The locale in which the texts should be translated.
      *
      * @var string
@@ -59,6 +66,8 @@ class Translator
         if (!is_dir($transDir)) {
             return false;
         }
+
+        $this->translationDirectories[] = $transDir;
 
         $localeShort = $this->shortenLocale($this->locale);
         $transFile = $transDir.'/'.$localeShort.'.php';
@@ -147,9 +156,16 @@ class Translator
      * Sets the locale used for the translation.
      *
      * @param string
+     * @param bool $reloadTranslations
      */
-    public function setLocale($locale)
+    public function setLocale($locale, $reloadTranslations = false)
     {
         $this->locale = $locale;
+        if ($reloadTranslations) {
+            $this->translations = array();
+            foreach ($this->translationDirectories as $translationDirectory) {
+                $this->load($translationDirectory);
+            }
+        }
     }
 }

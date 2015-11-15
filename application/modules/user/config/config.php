@@ -6,6 +6,8 @@
 
 namespace Modules\User\Config;
 
+use Modules\User\Service\Password as PasswordService;
+
 class Config extends \Ilch\Config\Install
 {
     public $config = array
@@ -64,7 +66,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('avatar_filetypes', 'jpg jpeg png gif');
         $user = new \Modules\User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
-        $user->setPassword(crypt($_SESSION['install']['adminPassword']));
+        $user->setPassword((new PasswordService())->hash($_SESSION['install']['adminPassword']));
         $user->setEmail($_SESSION['install']['adminEmail']);
         $user->addGroup($adminGroup);
         $user->addGroup($usersGroup);

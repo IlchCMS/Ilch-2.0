@@ -2,35 +2,38 @@
     <legend><?=$this->getTrans('menuLogin') ?></legend>
     <form class="form-horizontal" action="" method="post">
         <?=$this->getTokenField() ?>
+        <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl');?>" />
         <?php $errors = $this->get('errors'); ?>
-        <div class="form-group <?php if (!empty($errors['loginContent_emailname'])) { echo 'has-error'; }; ?>">
-            <label for="loginContent_emailname" class="col-lg-2 control-label">
+        <div class="form-group <?php if (!empty($errors['login_emailname'])) { echo 'has-error'; }; ?>">
+            <label for="login_emailname" class="col-lg-2 control-label">
                 <?=$this->getTrans('nameEmail') ?>:
             </label>
             <div class="col-lg-8">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
                     <input class="form-control"
-                           name="loginContent_emailname"
+                           name="login_emailname"
+                           id="login_emailname"
                            type="text" />
-                    <?php if (!empty($errors['loginContent_emailname'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['loginContent_emailname']) ?></span>
+                    <?php if (!empty($errors['login_emailname'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['login_emailname']) ?></span>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
-        <div class="form-group <?php if (!empty($errors['loginContent_password'])) { echo 'has-error'; }; ?>">
-            <label class="col-lg-2 control-label">
+        <div class="form-group <?php if (!empty($errors['login_password'])) { echo 'has-error'; }; ?>">
+            <label for="login_password" class="col-lg-2 control-label">
                 <?=$this->getTrans('password') ?>:
             </label>
             <div class="col-lg-8">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
                     <input class="form-control"
-                           name="loginContent_password"
+                           name="login_password"
+                           id="login_password"
                            type="password" />
-                    <?php if (!empty($errors['loginContent_password'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['loginContent_password']) ?></span>
+                    <?php if (!empty($errors['login_password'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['login_password']) ?></span>
                     <?php endif; ?>
                 </div>
             </div>

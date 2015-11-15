@@ -10,6 +10,7 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Dialog as DialogMapper;
 use Modules\User\Mappers\Setting as SettingMapper;
 use Modules\User\Controllers\Base as BaseController;
+use Modules\User\Service\Password as PasswordService;
 use Ilch\Date as IlchDate;
 
 class Panel extends BaseController
@@ -200,7 +201,7 @@ class Panel extends BaseController
             }
 
             if (!empty($password) AND !empty($password2) AND $password == $password2) {
-                $password = crypt($password);
+                $password = (new PasswordService())->hash($password);
 
                 $model = new \Modules\User\Models\User();
                 $model->setId($this->getUser()->getId());

@@ -15,7 +15,8 @@
         <?=$this->getTrans('logout') ?>
     </a>
 <?php else: ?>
-    <form action="" class="form-horizontal" method="post">
+    <form action="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'index')) ?>" class="form-horizontal" method="post">
+        <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl')?>" />
         <?=$this->getTokenField();
         $errors = $this->get('errors');
         ?>
@@ -23,7 +24,7 @@
             <div class="col-lg-12">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                    <input name="loginbox_emailname"
+                    <input name="login_emailname"
                            class="form-control"
                            type="text"
                            placeholder="<?=$this->getTrans('nameEmail') ?>" />
@@ -34,7 +35,7 @@
             <div class="col-lg-12">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
-                    <input name="loginbox_password"
+                    <input name="login_password"
                            class="form-control"
                            type="password"
                            placeholder="<?=$this->getTrans('password') ?>" />
@@ -50,7 +51,7 @@
         </div>
     </form>
     <?php if ($this->get('regist_accept') == '1'): ?>
-        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')) ?>"><?=$this->getTrans('register') ?></a><br />
+        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')); ?>"><?=$this->getTrans('register'); ?></a><br />
     <?php endif; ?>
     <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword')) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>

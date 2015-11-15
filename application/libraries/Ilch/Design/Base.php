@@ -290,12 +290,12 @@ abstract class Base
     /**
      * Creates a full url for the given parts.
      *
-     * @param  array   $urlArray
+     * @param  array|string $url
      * @param  string  $route
      * @param  boolean $secure
      * @return string
      */
-    public function getUrl($urlArray = array(), $route = null, $secure  = false)
+    public function getUrl($url = array(), $route = null, $secure  = false)
     {
         $config = \Ilch\Registry::get('config');
 
@@ -303,38 +303,38 @@ abstract class Base
             $this->modRewrite = (bool)$config->get('mod_rewrite');
         }
 
-        if (empty($urlArray)) {
+        if (empty($url)) {
             return BASE_URL;
         }
 
-        if (is_string($urlArray)) {
-            return BASE_URL.'/index.php/'.$urlArray;
+        if (is_string($url)) {
+            return BASE_URL.'/index.php/'.$url;
         }
 
         $urlParts = array();
 
-        if (!isset($urlArray['module'])) {
+        if (!isset($url['module'])) {
             $urlParts[] = $this->getRequest()->getModuleName();
         } else {
-            $urlParts[] = $urlArray['module'];
-            unset($urlArray['module']);
+            $urlParts[] = $url['module'];
+            unset($url['module']);
         }
 
-        if (!isset($urlArray['controller'])) {
+        if (!isset($url['controller'])) {
             $urlParts[] = $this->getRequest()->getControllerName();
         } else {
-            $urlParts[] = $urlArray['controller'];
-            unset($urlArray['controller']);
+            $urlParts[] = $url['controller'];
+            unset($url['controller']);
         }
 
-        if (!isset($urlArray['action'])) {
+        if (!isset($url['action'])) {
             $urlParts[] = $this->getRequest()->getActionName();
         } else {
-            $urlParts[] = $urlArray['action'];
-            unset($urlArray['action']);
+            $urlParts[] = $url['action'];
+            unset($url['action']);
         }
 
-        foreach ($urlArray as $key => $value) {
+        foreach ($url as $key => $value) {
             $urlParts[] = $key.'/'.$value;
         }
 
@@ -355,6 +355,30 @@ abstract class Base
         } else {
             return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
         }
+    }
+
+    /**
+     * Returns a full url for the current url with only the given parts changed
+     * @param array $urlParts
+     * @param bool $resetParams
+     * @param bool $secure
+     * @return string
+     */
+    public function getCurrentUrl(array $urlParts = array(), $resetParams = true, $secure = false)
+    {
+        $currentUrlParts = array(
+            'module' => $this->request->getModuleName(),
+            'controller' => $this->request->getControllerName(),
+            'action' => $this->request->getActionName()
+        );
+
+        $urlParams = array_merge(
+            $currentUrlParts,
+            $resetParams ? array() : $this->request->getParams(),
+            $urlParts
+        );
+
+        return $this->getUrl($urlParams, null, $secure);
     }
 
     /**

@@ -7,6 +7,8 @@
 namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Service\Password as PasswordService;
+use Modules\User\Service\Login as LoginService;
 
 class Login extends \Ilch\Controller\Frontend
 {
@@ -15,55 +17,47 @@ class Login extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLogin'), array('action' => 'index'));
 
         $errors = array();
+        $redirectUrl = '';
 
         if ($this->getRequest()->isPost()) {
             if (\Ilch\Registry::get('user')) {
                 $errors['alreadyLoggedIn'] = 'alreadyLoggedIn';
             }
 
-            $emailName = $this->getRequest()->getPost('loginContent_emailname');
-            $password = $this->getRequest()->getPost('loginContent_password');
+            $emailName = $this->getRequest()->getPost('login_emailname');
+            $password = $this->getRequest()->getPost('login_password');
+            $redirectUrl = $this->getRequest()->getPost('login_redirect_url');
 
             if (empty($emailName)) {
-                $errors['loginContent_emailname'] = 'fieldEmpty';
+                $errors['login_emailname'] = 'fieldEmpty';
             } elseif (empty($password)) {
-                $errors['loginContent_password'] = 'fieldEmpty';
+                $errors['login_password'] = 'fieldEmpty';
             } else {
-                $mapper = new UserMapper();
-                $user = $mapper->getUserByEmail($emailName);
+                $result  = LoginService::factory()->perform($emailName, $password);
 
-                if ($user == null) {
-                    $user = $mapper->getUserByName($emailName);
-                }
-
-                if ($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('loginContent_password'), $user->getPassword())) {
-                    $_SESSION['messages'][] = array('text' => 'Sie haben einen fehlerhaften Benutzername, E-Mail oder Passwort angegeben. Bitte prüfen Sie ihre Angaben und versuche Sie es erneut.', 'type' => 'warning');
-                } elseif ($user->getConfirmed() == 0) {               
-                    $_SESSION['messages'][] = array('text' => 'Benutzer nicht freigeschaltet! Bitte bestätigen Sie ihren Account in der verschickten E-Mail oder fordern Sie eine neue E-Mail mit einen Freischaltlink an.', 'type' => 'warning');
-
-                    $this->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
+                if ($result->isSuccessful()) {
+                    $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
                 } else {
-                    $_SESSION['user_id'] = $user->getId();
-                    $redirect = '';
-
-                    if (isset($_SESSION['redirect'])) {
-                        $redirect = $_SESSION['redirect'];
-                    }
-
-                    if ($redirect) {
-                        $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
-                        $this->redirect($redirect);
-                    } else {
-                        $_SESSION['messages'][] = array('text' => 'Sie haben sich erfolgreich eingeloggt.', 'type' => 'success');
-                        $this->redirect();
-                    }
+                    $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
+                    $redirectUrl = array('module' => 'user', 'controller' => 'login', 'action' => 'index');
                 }
+
+                $this->redirect($redirectUrl);
             }
 
             $this->getView()->set('errors', $errors);
         }
 
-        $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
+        if (!empty($_SESSION['redirect'])) {
+            $redirectUrl = $_SESSION['redirect'];
+            unset($_SESSION['redirect']);
+        }
+
+        $this->getView()->setArray([
+            'errors' => $errors,
+            'regist_accept' => $this->getConfig()->get('regist_accept'),
+            'redirectUrl' => $redirectUrl
+        ]);
     }
 
     public function newpasswordAction()
@@ -100,7 +94,7 @@ class Login extends \Ilch\Controller\Frontend
                     }
 
                     if (!empty($password) AND !empty($password2) AND $password == $password2) {
-                        $password = crypt($password);
+                        $password = (new PasswordService())->hash($password);
                         $user->setConfirmed(1);
                         $user->setConfirmedCode('');
                         $user->setPassword($password);

@@ -11,6 +11,7 @@ use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
+use Modules\User\Service\Password as PasswordService;
 use \Ilch\Registry as Registry;
 
 /**
@@ -75,7 +76,7 @@ class Index extends BaseController
             $userData = $this->getRequest()->getPost('user');
             
             if (!empty($userData['password'])) {
-                $userData['password'] = crypt($userData['password']);
+                $userData['password'] = (new PasswordService())->hash($userData['password']);
             }
 
             $user = $userMapper->loadFromArray($userData);

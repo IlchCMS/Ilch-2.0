@@ -7,6 +7,7 @@
 namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Service\Password as PasswordService;
 
 class Regist extends \Ilch\Controller\Frontend
 {
@@ -96,7 +97,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $currentDate = new \Ilch\Date();
                     $model = new \Modules\User\Models\User();
                     $model->setName($name);
-                    $model->setPassword(crypt($password));
+                    $model->setPassword((new PasswordService())->hash($password));
                     $model->setEmail($email);
                     $model->setDateCreated($currentDate);
                     $model->addGroup($userGroup);

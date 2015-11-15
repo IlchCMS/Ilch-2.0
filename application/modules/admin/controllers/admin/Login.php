@@ -6,7 +6,7 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
-use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Service\Login as LoginService;
 
 /**
  * Handles the login functionality.
@@ -31,34 +31,28 @@ class Login extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             if (\Ilch\Registry::get('user')) {
-                $errors['alreadyLoggedIn'] = 'alreadyLoggedIn';
+                $errors[] = 'alreadyLoggedIn';
             }
 
             $emailName = $this->getRequest()->getPost('emailname');
 
             if ($emailName === '') {
-                $errors['noEmailGiven'] = 'noUserEmailGiven';
+                $errors[] = 'noUserEmailGiven';
             } else {
-                $mapper = new UserMapper();
-                $user = $mapper->getUserByEmail($emailName);
+                $password = $this->getRequest()->getPost('password');
+                $language = $this->getRequest()->getPost('language');
 
-                if ($user == null) {
-                    $user = $mapper->getUserByName($emailName);
+                if (!empty($language)) {
+                    $_SESSION['language'] = $language;
+                    $this->getTranslator()->setLocale($language, true);
                 }
 
-                if ($user == null || $user->getPassword() !== crypt($this->getRequest()->getPost('password'), $user->getPassword())) {
-                    $errors['userNotFound'] = 'userNotFound';
-                } else {
-                    /*
-                     * A use was found. Set his id in the session and redirect to the admincenter.
-                     */
-                    $_SESSION['user_id'] = $user->getId();
-                    
-                    if ($this->getRequest()->getPost('language') != '') {
-                        $_SESSION['language'] = $this->getRequest()->getPost('language');
-                    }
+                $result = LoginService::factory()->perform($emailName, $password);
 
+                if ($result->isSuccessful()) {
                     $this->redirect(array('controller' => 'index', 'action' => 'index'));
+                } else {
+                    $errors[] = $result->getError();
                 }
             }
 
@@ -76,10 +70,6 @@ class Login extends \Ilch\Controller\Admin
     {
         unset($_SESSION['user_id']);
         \Ilch\Registry::remove('user');
-
-        /*
-         * @todo flash message helper for show logout message on next site.
-         */
 
         if ($this->getRequest()->getParam('from_frontend')) {
             $this->redirect(array());

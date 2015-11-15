@@ -9,21 +9,6 @@ namespace Ilch\Layout;
 abstract class Base extends \Ilch\Design\Base
 {
     /**
-     * Loads layout helper.
-     *
-     * @param string $name
-     * @param mixed $args
-     */
-    public function __call($name, $args)
-    {
-        $layout = $this->getHelper($name, 'layout');
-
-        if(!empty($layout)) {
-            return $layout->$name($args);
-        }
-    }
-
-    /**
      * Defines if layout is disabled.
      *
      * @var boolean
@@ -43,6 +28,24 @@ abstract class Base extends \Ilch\Design\Base
      * @var string
      */
     protected $file;
+
+    /**
+     * Loads layout helper.
+     *
+     * @param string $name
+     * @param mixed $args
+     * @return mixed|null
+     */
+    public function __call($name, $args)
+    {
+        $layout = $this->getHelper($name, 'layout');
+
+        if (!empty($layout)) {
+            return $layout->$name($args);
+        }
+
+        return null;
+    }
 
     /**
      * Set layout disabled flag.
@@ -77,14 +80,14 @@ abstract class Base extends \Ilch\Design\Base
     /**
      * Gets the view output.
      *
-     * @param string $content
+     * @return string
      */
     public function getContent()
     {
         $html = '';
         $messages = array();
 
-        if(!empty($_SESSION['messages'])) {
+        if (!empty($_SESSION['messages'])) {
             $messages = $_SESSION['messages'];
         }
 
@@ -115,10 +118,11 @@ abstract class Base extends \Ilch\Design\Base
      * Sets the file of the layout.
      *
      * @param string $file
+     * @param string $layoutKey
      */
     public function setFile($file, $layoutKey = '')
     {
-        $this->layoutKey = $layoutKey;
+        $this->setLayoutKey($layoutKey);
         $this->file = $file;
     }
 
@@ -130,15 +134,5 @@ abstract class Base extends \Ilch\Design\Base
     public function getFile()
     {
         return $this->file;
-    }
-
-    /**
-     * Gets the key of the layout.
-     *
-     * @return string
-     */
-    public function getLayoutKey()
-    {
-        return $this->layoutKey;
     }
 }

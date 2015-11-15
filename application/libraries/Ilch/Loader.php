@@ -24,7 +24,7 @@ class Loader
          * Loads all needed files for the given class.
          *
          * @param string $class
-         * @throws InvalidArgumentException
+         * @throws \InvalidArgumentException
          */
         spl_autoload_register(function ($class) {
             $class = str_replace('\\', '/', $class);
@@ -35,7 +35,7 @@ class Loader
             /*
              * Libraries path handling.
              */
-            foreach($this->namespaces as $nameSpace) {
+            foreach ($this->namespaces as $nameSpace) {
                 if (strpos($classParts[0], $nameSpace) !== false) {
                     $type = 'libraries';
                     $path = $path.'/libraries';

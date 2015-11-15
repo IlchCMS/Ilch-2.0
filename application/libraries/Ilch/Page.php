@@ -187,6 +187,8 @@ class Page
             $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
         }
 
+        //TODO: React properly for controllers / modules / actions that don't exist
+
         $controller = new $controller($this->layout, $this->view, $this->request, $this->router, $this->translator);
         $action = $this->request->getActionName().'Action';
 

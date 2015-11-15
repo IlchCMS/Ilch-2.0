@@ -71,12 +71,13 @@ class Box extends \Ilch\Controller\Base
     /**
      * Dummy function for original redirect.
      *
-     * @param array $urlArray
+     * @param array $url
      * @param string $route
      * @param boolean $rewrite
+     * @throws \LogicException
      */
-    public function redirect($urlArray, $route = null, $rewrite = false)
+    public function redirect($url = array(), $route = null, $rewrite = false)
     {
-        throw new \LogicExceptionheader('php redirect is not possible in boxes');
+        throw new \LogicException('php redirect is not possible in boxes');
     }
 }
