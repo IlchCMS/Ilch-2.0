@@ -203,6 +203,10 @@ class User extends \Ilch\Mapper
         if (isset($userRow['opt_mail'])) {
             $user->setOptMail($userRow['opt_mail']);
         }
+        
+        if (isset($userRow['bolnewsletter'])) {
+            $user->setNewsletter($userRow['bolnewsletter']);
+        }
 
         if (isset($userRow['date_created'])) {
             $dateCreated = new IlchDate($userRow['date_created']);
@@ -240,6 +244,7 @@ class User extends \Ilch\Mapper
     public function save(UserModel $user)
     {
         $fields = array();
+        $field_newsletter = array();
         $name = $user->getName();
         $password = $user->getPassword();
         $email = $user->getEmail();
@@ -248,6 +253,7 @@ class User extends \Ilch\Mapper
         $dateCreated = $user->getDateCreated();
         $confirmed = $user->getConfirmed();
         $confirmedCode = $user->getConfirmedCode();
+        $bolnewsletter = $user->getNewsletter();
 
         if (!empty($name)) {
             $fields['name'] = $user->getName();
@@ -289,6 +295,29 @@ class User extends \Ilch\Mapper
         $fields['avatar'] = $user->getAvatar();
         $fields['signature'] = $user->getSignature();
         $fields['opt_mail'] = $user->getOptMail();
+        $fields['bolnewsletter'] = $bolnewsletter;
+        
+        /**
+         * Insert Mail to Newsletter
+         */
+        if ($bolnewsletter !== null) {
+            $userMail = $this->db()->select('email')
+                    ->from('users')
+                    ->where(array('id' => $user->getId()))
+                    ->execute()
+                    ->fetchRows();
+            $field_newsletter['email'] = $userMail[0]['email'];
+            if ($bolnewsletter == '1') {    
+                $field_newsletter['email'] = $userMail[0]['email'];
+                $this->db()->insert('newsletter_mails')
+                    ->values($field_newsletter)
+                    ->execute();
+            }else{
+                $this->db()->delete('newsletter_mails')
+                    ->where($field_newsletter)
+                    ->execute();
+            }
+        }
 
         $userId = (int)$this->db()->select('id')
             ->from('users')

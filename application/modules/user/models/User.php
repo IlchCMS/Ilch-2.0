@@ -128,6 +128,13 @@ class User extends \Ilch\Model
     protected $confirmedCode;
 
     /**
+     * Confirmed Code of the user.
+     *
+     * @var int
+     */
+    protected $bolnewsletter;
+    
+    /**
      * The associated user group object.
      *
      * @var \Modules\User\Models\Group[]
@@ -577,6 +584,29 @@ class User extends \Ilch\Model
         return $this;
     }
 
+    /**
+     * Returns the bolnewsletter of the user.
+     *
+     * @return int
+     */
+    public function getNewsletter()
+    {
+        return $this->bolnewsletter;
+    }
+
+    /**
+     * Saves the bolnewsletter of the user.
+     *
+     * @param int $bolnewsletter
+     * @return User
+     */
+    public function setNewsletter($bolnewsletter)
+    {
+        $this->bolnewsletter = (string)$bolnewsletter;
+
+        return $this;
+    }
+    
     /**
      * Checks if user has admin group.
      *
