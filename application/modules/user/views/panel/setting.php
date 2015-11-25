@@ -16,28 +16,34 @@ $profil = $this->get('profil');
             <legend><?=$this->getTrans('settingsSetting') ?></legend>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
+                
                 <div class="form-group">
                     <label for="opt_mail" class="col-lg-3 control-label">
                         <?=$this->getTrans('optMail') ?>:
                     </label>
                     <div class="col-lg-4">
-                        <label class="checkbox-inline">
-                            <input type="radio" 
-                                   name="opt_mail" 
-                                   id="opt_mail_yes" 
-                                   value="1" 
-                                   <?php if ($profil->getOptMail() == '1') { echo 'checked="checked"';} ?> />
-                                   <label for="opt_mail_yes"><?=$this->getTrans('yes') ?></label>
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="radio" 
-                                   name="opt_mail" 
-                                   id="opt_mail_no" 
-                                   value="0" 
-                                   <?php if ($profil->getOptMail() == '0') { echo 'checked="checked"';} ?> />
-                                   <label for="opt_mail_no"><?=$this->getTrans('no') ?></label>
-                        </label>
-                    </div>
+                        <div class="flipswitch">
+                            <input type="radio" class="flipswitch-input" name="opt_mail" value="1" id="opt_mail_yes" <?php if ($profil->getOptMail() == '1') { echo 'checked="checked"'; } ?> />
+                            <label for="opt_mail_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                            <input type="radio" class="flipswitch-input" name="opt_mail" value="0" id="opt_mail_no" <?php if ($profil->getOptMail() == '0') { echo 'checked="checked"'; } ?> />
+                            <label for="opt_mail_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                            <span class="flipswitch-selection"></span>
+                        </div>
+                     </div>
+                </div>                
+                <div class="form-group">
+                    <label for="bolnewsletter" class="col-lg-3 control-label">
+                        <?=$this->getTrans('acceptNewsletter') ?>:
+                    </label>
+                    <div class="col-lg-4">
+                        <div class="flipswitch">
+                            <input type="radio" class="flipswitch-input" name="bolnewsletter" value="1" id="newsletter_yes" <?php if ($profil->getNewsletter() == '1') { echo 'checked="checked"'; } ?> />
+                            <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                            <input type="radio" class="flipswitch-input" name="bolnewsletter" value="0" id="newsletter_no" <?php if ($profil->getNewsletter() == '0') { echo 'checked="checked"'; } ?> />
+                            <label for="newsletter_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                            <span class="flipswitch-selection"></span>
+                        </div>
+                     </div>
                 </div>
 
                 <div class="form-group">
