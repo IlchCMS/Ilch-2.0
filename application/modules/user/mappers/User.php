@@ -204,8 +204,8 @@ class User extends \Ilch\Mapper
             $user->setOptMail($userRow['opt_mail']);
         }
         
-        if (isset($userRow['bolnewsletter'])) {
-            $user->setNewsletter($userRow['bolnewsletter']);
+        if (isset($userRow['opt_newsletter'])) {
+            $user->setNewsletter($userRow['opt_newsletter']);
         }
 
         if (isset($userRow['date_created'])) {
@@ -253,7 +253,7 @@ class User extends \Ilch\Mapper
         $dateCreated = $user->getDateCreated();
         $confirmed = $user->getConfirmed();
         $confirmedCode = $user->getConfirmedCode();
-        $bolnewsletter = $user->getNewsletter();
+        $opt_newsletter = $user->getNewsletter();
 
         if (!empty($name)) {
             $fields['name'] = $user->getName();
@@ -295,20 +295,19 @@ class User extends \Ilch\Mapper
         $fields['avatar'] = $user->getAvatar();
         $fields['signature'] = $user->getSignature();
         $fields['opt_mail'] = $user->getOptMail();
-        $fields['bolnewsletter'] = $bolnewsletter;
+        $fields['opt_newsletter'] = $opt_newsletter;
         
         /**
          * Insert Mail to Newsletter
          */
-        if ($bolnewsletter !== null) {
+        if ($opt_newsletter !== null) {
             $userMail = $this->db()->select('email')
                     ->from('users')
                     ->where(array('id' => $user->getId()))
                     ->execute()
                     ->fetchRows();
             $field_newsletter['email'] = $userMail[0]['email'];
-            if ($bolnewsletter == '1') {    
-                $field_newsletter['email'] = $userMail[0]['email'];
+            if ($opt_newsletter == '1') {    
                 $this->db()->insert('newsletter_mails')
                     ->values($field_newsletter)
                     ->execute();

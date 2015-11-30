@@ -32,14 +32,14 @@ $profil = $this->get('profil');
                      </div>
                 </div>                
                 <div class="form-group">
-                    <label for="bolnewsletter" class="col-lg-3 control-label">
+                    <label for="opt_newsletter" class="col-lg-3 control-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
                     </label>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" name="bolnewsletter" value="1" id="newsletter_yes" <?php if ($profil->getNewsletter() == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="1" id="newsletter_yes" <?php if ($profil->getNewsletter() == '1') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" name="bolnewsletter" value="0" id="newsletter_no" <?php if ($profil->getNewsletter() == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="0" id="newsletter_no" <?php if ($profil->getNewsletter() == '0') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>

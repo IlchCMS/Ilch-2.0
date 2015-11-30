@@ -132,7 +132,7 @@ class User extends \Ilch\Model
      *
      * @var int
      */
-    protected $bolnewsletter;
+    protected $opt_newsletter;
     
     /**
      * The associated user group object.
@@ -585,24 +585,24 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the bolnewsletter of the user.
+     * Returns the opt_newsletter of the user.
      *
      * @return int
      */
     public function getNewsletter()
     {
-        return $this->bolnewsletter;
+        return $this->opt_newsletter;
     }
 
     /**
-     * Saves the bolnewsletter of the user.
+     * Saves the opt_newsletter of the user.
      *
-     * @param int $bolnewsletter
+     * @param int $opt_newsletter
      * @return User
      */
-    public function setNewsletter($bolnewsletter)
+    public function setNewsletter($opt_newsletter)
     {
-        $this->bolnewsletter = (string)$bolnewsletter;
+        $this->opt_newsletter = (string)$opt_newsletter;
 
         return $this;
     }
