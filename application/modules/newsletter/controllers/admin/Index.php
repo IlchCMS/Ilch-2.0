@@ -27,6 +27,13 @@ class Index extends \Ilch\Controller\Admin
                 ),
                 array
                 (
+                    'name' => 'settings',
+                    'active' => false,
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+                ),
+                array
+                (
                     'name' => 'add',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
