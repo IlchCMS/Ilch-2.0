@@ -31,6 +31,9 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+        
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('newsletter_config', 'all');
     }
 
     public function uninstall()
@@ -53,6 +56,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_newsletter_mails` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `email` VARCHAR(100) NOT NULL,
+                  `opt_send` TINYINT(1) NULL DEFAULT 1,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

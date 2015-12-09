@@ -127,7 +127,7 @@ class Index extends \Ilch\Controller\Admin
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/newsletter/layouts/mail/newsletter.php');
                 }
 
-                $emails = $newsletterMapper->getMail();
+                $emails = $newsletterMapper->getSendMail();
                 foreach ($emails as $email) {
                     $messageReplace = array(
                             '{subject}' => $this->getRequest()->getPost('subject'),

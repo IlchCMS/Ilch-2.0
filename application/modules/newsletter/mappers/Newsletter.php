@@ -72,6 +72,29 @@ class Newsletter extends \Ilch\Mapper
         return $entry;
     }
     
+    public function getSendMail()
+    {
+        $entryArray = $this->db()->select('*')
+                ->from('newsletter_mails')
+                ->where('opt_send = 1')
+                ->execute()
+                ->fetchRows();
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = array();
+
+        foreach ($entryArray as $entries) {
+            $entryModel = new NewsletterModel();
+            $entryModel->setEmail($entries['email']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
+    
     public function getLastId()
     {
         $sql = 'SELECT MAX(id)

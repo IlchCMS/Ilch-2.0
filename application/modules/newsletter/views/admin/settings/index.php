@@ -8,18 +8,21 @@ $userMapper = new \Modules\User\Mappers\User()
         <div class="form-group">
             <div class="btn-group btn-group-justified" role="group" aria-label="...">
                 <div class="btn-group" role="group">
-                    <input type="button" name="all" class="btn btn-default active" value="Alle"/>
+                    <input type="button" name="all" class="btn btn-default <?php if ($this->get('newsletter_config') == 'all') { echo 'active'; } ?>" value="Alle"/>
                 </div>
                 <div class="btn-group" role="group">
-                    <input type="button" name="group" class="btn btn-default" value="Gruppe"/>
+                    <input type="button" name="group" class="btn btn-default <?php if ($this->get('newsletter_config') == 'group') { echo 'active'; } ?>" value="Gruppe"/>
                 </div>
                 <div class="btn-group" role="group">
-                    <input type="button" name="user" class="btn btn-default" value="Einzelne User"/>
+                    <input type="button" name="user" class="btn btn-default <?php if ($this->get('newsletter_config') == 'user') { echo 'active'; } ?>" value="Einzelne User"/>
                 </div>
             </div>
         </div>
         
-        <div id="confirmGroup" <?php if ($this->get('regist_confirm') != '1') { echo 'class="hidden"'; } ?>>
+
+        
+        
+        <div id="confirmGroup" <?php if ($this->get('newsletter_config') != 'group') { echo 'class="hidden"'; } ?>>
             
             <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -33,8 +36,6 @@ $userMapper = new \Modules\User\Mappers\User()
                 <thead>
                     <tr>
                         <th><input type="checkbox" class="check_all" data-childs="check_groups" /></th>
-                        <th></th>
-                        <th></th>
                         <th><?=$this->getTrans('groupName') ?></th>
                         <th><?=$this->getTrans('groupAssignedUsers') ?></th>
                     </tr>
@@ -48,13 +49,7 @@ $userMapper = new \Modules\User\Mappers\User()
                         ?>
                         <tr>
                             <td>
-                                <input value="<?=$group->getId()?>" type="checkbox" name="check_groups[]" />
-                            </td>
-                            <td>
-                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $group->getId())) ?>
-                            </td>
-                            <td>
-                                <?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $group->getId())) ?>
+                               <input value="<?=$group->getId()?>" type="checkbox" name="check_groups[]" />
                             </td>
                             <td><?=$this->escape($group->getName()) ?></td>
                             <td><?=count($assignedUsers) ?></td>
@@ -88,7 +83,7 @@ $userMapper = new \Modules\User\Mappers\User()
         
         
         
-        <div id="confirmUser" <?php if ($this->get('regist_confirm') != '1') { echo 'class="hidden"'; } ?>>
+        <div id="confirmUser" <?php if ($this->get('newsletter_config') != 'user') { echo 'class="hidden"'; } ?>>
             
             <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -104,8 +99,6 @@ $userMapper = new \Modules\User\Mappers\User()
                 <thead>
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_users') ?></th>
-                        <th></th>
-                        <th></th>
                         <th><?=$this->getTrans('userName') ?></th>
                         <th><?=$this->getTrans('userEmail') ?></th>
                         <th><?=$this->getTrans('userDateCreated') ?></th>
@@ -143,13 +136,17 @@ $userMapper = new \Modules\User\Mappers\User()
                         ?>
                         <tr>
                             <td>
-                                <input value="<?=$user->getId()?>" type="checkbox" name="check_users[]" />
-                            </td>
-                            <td>
-                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $user->getId())) ?>
-                            </td>
-                            <td>
-                                <?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $user->getId())) ?>
+                                <?php 
+                                $checked = '';
+                                if (!empty($this->get('emails'))){
+                                    foreach ($this->get('emails') as $email) {
+                                        if ($user->getEmail() == $email->getEmail()){
+                                            $checked = 'checked';
+                                        }
+                                    }
+                                }
+                                ?>
+                                <input value="<?=$user->getEmail()?>" type="checkbox" name="check_users[]" <?php echo $checked; ?>/>
                             </td>
                             <td><?=$this->escape($user->getName()) ?></td>
                             <td><?=$this->escape($user->getEmail()) ?></td>
