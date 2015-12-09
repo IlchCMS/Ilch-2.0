@@ -53,6 +53,40 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
 
         
+        if ($this->getRequest()->isPost()) {
+            /*
+            if ($this->getRequest()->getPost('all') == 'Alle') {
+                $this->getConfig()->set('newsletter_config','all');
+            }
+            if ($this->getRequest()->getPost('group') == 'Gruppe') {
+                $this->getConfig()->set('newsletter_config','group');
+            }
+            if ($this->getRequest()->getPost('user') == 'Einzelne User') {
+                $this->getConfig()->set('newsletter_config','user');
+            }
+             */
+            
+            
+            $newsletterModel = new NewsletterModel();
+            
+            foreach ($this->getRequest()->getPost('check_users') as $userEmail) {           
+                if ($userEmail != '') {
+                    $newsletterModel->setEmail($userEmail);
+                    $newsletterMapper->saveEmail($newsletterModel);
+                    //$newsletterMapper->activeEmail($newsletterModel);
+                }      
+            }
+            $this->addMessage('saveSuccess');
+        }
+        
+        $emails = $newsletterMapper->getMail();
+        $this->getView()->set('emails', $emails);
+        
+        $this->getView()->set('newsletter_config', $this->getConfig()->get('newsletter_config'));
+        
+        
+        
+        
         
         $groupMapper = new GroupMapper();
 
@@ -80,6 +114,10 @@ class Settings extends \Ilch\Controller\Admin
         
         
         
+        
+        
+        
+        
         $userMapper = new UserMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
@@ -100,39 +138,6 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('errorMsg', $this->getRequest()->getParam('errorMsg'));
         
      
-    }
-
-    public function delAction()
-    {
-        $newsletterMapper = new NewsletterMapper();
-
-        if ($this->getRequest()->isSecure()) {
-            $newsletterMapper->delete($this->getRequest()->getParam('id'));
-
-            $this->addMessage('deleteSuccess');
-        }
-
-        $this->redirect(array('action' => 'index'));
-    }
-
-    public function showAction()
-    {        
-        $newsletterMapper = new NewsletterMapper();
-
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('show'), array('action' => 'show'));
-
-        if ($this->getRequest()->isPost('delete')) {
-            $newsletterMapper->delete($this->getRequest()->getParam('id'));
-
-            $this->addMessage('deleteSuccess');
-
-            $this->redirect(array('action' => 'index'));
-        }
-
-        $this->getView()->set('newsletter', $newsletterMapper->getNewsletterById($this->getRequest()->getParam('id')));
-    }
-
-    
+   
+    }   
 }
