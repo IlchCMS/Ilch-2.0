@@ -2,7 +2,7 @@
 
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>       
-    <div id="confirmUser" <?php if ($this->get('newsletter_config') != 'user') { echo 'class="hidden"'; } ?>>        
+    
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -30,5 +30,5 @@
                 </tbody>
             </table>
         </div>           
-    </div>   
+       
 </form>

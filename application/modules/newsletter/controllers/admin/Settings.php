@@ -50,18 +50,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
         
-        if ($this->getRequest()->isPost()) {
-            /*
-            if ($this->getRequest()->getPost('all') == 'Alle') {
-                $this->getConfig()->set('newsletter_config','all');
-            }
-            if ($this->getRequest()->getPost('group') == 'Gruppe') {
-                $this->getConfig()->set('newsletter_config','group');
-            }
-            if ($this->getRequest()->getPost('user') == 'Einzelne User') {
-                $this->getConfig()->set('newsletter_config','user');
-            }
-             */      
+        if ($this->getRequest()->isPost()) {    
             $newsletterModel = new NewsletterModel();
             
             foreach ($this->getRequest()->getPost('check_users') as $userEmail) {           
@@ -76,21 +65,6 @@ class Settings extends \Ilch\Controller\Admin
         
         $emails = $newsletterMapper->getMail();
         $this->getView()->set('emails', $emails);
-        
-        $this->getView()->set('newsletter_config', $this->getConfig()->get('newsletter_config')); 
-        /*
-        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
-            foreach($this->getRequest()->getPost('check_users') as $userId) {
-                $deleteUser = $userMapper->getUserById($userId);
-
-                if ($deleteUser->getId() != Registry::get('user')->getId()) {
-                    if($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() == 1) {} else {
-                        $userMapper->delete($deleteUser->getId());
-                    }
-                }
-            }
-        }
-        */
         $userList = $newsletterMapper->getSendMailUser();
         $this->getView()->set('userList', $userList);
 

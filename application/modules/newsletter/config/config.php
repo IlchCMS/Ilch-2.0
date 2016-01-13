@@ -31,9 +31,6 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        
-        $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('newsletter_config', 'all');
     }
 
     public function uninstall()
