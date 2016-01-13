@@ -33,4 +33,5 @@ return array
     'userGroups' => 'Benutzergruppen',
     'groupName' => 'Gruppenname',
     'groupAssignedUsers' => 'Anzahl "Zugeordnete Benutzer"',
+    'receiver' => 'Empf&auml;nger',
 );

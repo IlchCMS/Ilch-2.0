@@ -33,4 +33,5 @@ return array
     'userGroups' => 'Usergroups',
     'groupName' => 'Groupname',
     'groupAssignedUsers' => 'Number "Assigned users"',
+    'receiver' => 'Receiver',
 );

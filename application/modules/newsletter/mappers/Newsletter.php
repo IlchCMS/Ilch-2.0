@@ -72,29 +72,6 @@ class Newsletter extends \Ilch\Mapper
         return $entry;
     }
     
-    public function getSendMail()
-    {
-        $entryArray = $this->db()->select('*')
-                ->from('newsletter_mails')
-                ->where('opt_send = 1')
-                ->execute()
-                ->fetchRows();
-
-        if (empty($entryArray)) {
-            return null;
-        }
-
-        $entry = array();
-
-        foreach ($entryArray as $entries) {
-            $entryModel = new NewsletterModel();
-            $entryModel->setEmail($entries['email']);
-            $entry[] = $entryModel;
-        }
-
-        return $entry;
-    }
-    
     public function getLastId()
     {
         $sql = 'SELECT MAX(id)
@@ -211,5 +188,21 @@ class Newsletter extends \Ilch\Mapper
         $this->db()->delete('newsletter')
                 ->where(array('id' => $id))
                 ->execute();
+    }
+    
+    /**
+     * Gets the Newsletter entries.
+     *
+     * @param array $where
+     * @return NewsletterModel[]|array
+     */
+    public function getSendMailUser()
+    {
+        return $this->db()->select()
+                ->fields(['nm.email'])
+                ->from(['nm' => 'newsletter_mails'])
+                ->join(['u' => 'users'], 'u.email = nm.email', 'LEFT', ['name' => 'u.name'])
+                ->execute()
+                ->fetchRows();
     }
 }

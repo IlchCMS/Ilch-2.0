@@ -30,28 +30,28 @@ class User extends \Ilch\Model
     protected $email;
 
     /**
-     * The email address of the user.
+     * The firstname of the user.
      *
      * @var string
      */
     protected $firstname;
 
     /**
-     * The email address of the user.
+     * The lastname of the user.
      *
      * @var string
      */
     protected $lastname;
 
     /**
-     * The email address of the user.
+     * The homepage address of the user.
      *
      * @var string
      */
     protected $homepage;
 
     /**
-     * The email address of the user.
+     * The city of the user.
      *
      * @var string
      */
@@ -424,7 +424,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the firstname of the user.
      *
      * @return string
      */
@@ -434,7 +434,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
+     * Saves the firstname of the user.
      *
      * @param string $firstname
      * @return User
@@ -447,7 +447,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the lastname of the user.
      *
      * @return string
      */
@@ -457,7 +457,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
+     * Saves the lastname of the user.
      *
      * @param string $lastname
      * @return User
@@ -470,7 +470,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the homepage address of the user.
      *
      * @return string
      */
@@ -480,8 +480,8 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
-     *
+     * Saves the homepage address of the user.
+     * 
      * @param string $homepage
      * @return User
      */

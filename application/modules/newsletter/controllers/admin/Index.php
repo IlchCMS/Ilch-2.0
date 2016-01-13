@@ -27,7 +27,7 @@ class Index extends \Ilch\Controller\Admin
                 ),
                 array
                 (
-                    'name' => 'settings',
+                    'name' => 'receiver',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
@@ -127,7 +127,7 @@ class Index extends \Ilch\Controller\Admin
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/newsletter/layouts/mail/newsletter.php');
                 }
 
-                $emails = $newsletterMapper->getSendMail();
+                $emails = $newsletterMapper->getMail();
                 foreach ($emails as $email) {
                     $messageReplace = array(
                             '{subject}' => $this->getRequest()->getPost('subject'),
