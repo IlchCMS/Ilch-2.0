@@ -124,6 +124,9 @@ return array
     'settingsRegistVariablesComfirm' => 'Confirm button to complete the registration',
     'yes' => 'Yes',
     'no' => 'No',
+    'acceptUserRegisFacebook' => 'Allow Login with Facebook?',
+    'acceptUserRegisGoogle' => 'Allow Login with google+?',
+    'acceptUserRegisTwitter' => 'Allow Login with twitter?',
 
     'menuLogin' => 'Login',
     'menuForgotPassword' => 'Passwort vergessen?',
@@ -145,6 +148,10 @@ return array
     'userPanel' => 'UserPanel',
     'hello' => 'Hello',
     'adminarea' => 'Adminarea',
+
+    'register' => 'Register',
+    'menuLoginWith' => 'Login with',
+    'or' => 'or',
 
     'profileNewPassword' => 'New Password',
     'profileNewPasswordRetype' => 'Confirm New Password',
@@ -193,6 +200,7 @@ return array
     'profileSignature' => 'Signature',
     'profilePassword' => 'Password',
     'profileSubmit' => 'Send',
+    'acceptNewsletter' => 'Receive Newsletter ?',
 
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail to',

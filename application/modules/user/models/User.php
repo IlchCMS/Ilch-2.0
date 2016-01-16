@@ -30,28 +30,28 @@ class User extends \Ilch\Model
     protected $email;
 
     /**
-     * The email address of the user.
+     * The firstname of the user.
      *
      * @var string
      */
     protected $firstname;
 
     /**
-     * The email address of the user.
+     * The lastname of the user.
      *
      * @var string
      */
     protected $lastname;
 
     /**
-     * The email address of the user.
+     * The homepage address of the user.
      *
      * @var string
      */
     protected $homepage;
 
     /**
-     * The email address of the user.
+     * The city of the user.
      *
      * @var string
      */
@@ -127,6 +127,13 @@ class User extends \Ilch\Model
      */
     protected $confirmedCode;
 
+    /**
+     * Confirmed Code of the user.
+     *
+     * @var int
+     */
+    protected $opt_newsletter;
+    
     /**
      * The associated user group object.
      *
@@ -417,7 +424,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the firstname of the user.
      *
      * @return string
      */
@@ -427,7 +434,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
+     * Saves the firstname of the user.
      *
      * @param string $firstname
      * @return User
@@ -440,7 +447,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the lastname of the user.
      *
      * @return string
      */
@@ -450,7 +457,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
+     * Saves the lastname of the user.
      *
      * @param string $lastname
      * @return User
@@ -463,7 +470,7 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Returns the email address of the user.
+     * Returns the homepage address of the user.
      *
      * @return string
      */
@@ -473,8 +480,8 @@ class User extends \Ilch\Model
     }
 
     /**
-     * Saves the email address of the user.
-     *
+     * Saves the homepage address of the user.
+     * 
      * @param string $homepage
      * @return User
      */
@@ -577,6 +584,29 @@ class User extends \Ilch\Model
         return $this;
     }
 
+    /**
+     * Returns the opt_newsletter of the user.
+     *
+     * @return int
+     */
+    public function getNewsletter()
+    {
+        return $this->opt_newsletter;
+    }
+
+    /**
+     * Saves the opt_newsletter of the user.
+     *
+     * @param int $opt_newsletter
+     * @return User
+     */
+    public function setNewsletter($opt_newsletter)
+    {
+        $this->opt_newsletter = (string)$opt_newsletter;
+
+        return $this;
+    }
+    
     /**
      * Checks if user has admin group.
      *
