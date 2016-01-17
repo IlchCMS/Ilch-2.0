@@ -34,4 +34,12 @@ return array
     'groupName' => 'Groupname',
     'groupAssignedUsers' => 'Number "Assigned users"',
     'receiver' => 'Receiver',
+
+    'menuPanel' => 'User Panel',
+    'menuSettings' => 'Settings',
+    'setting' => 'Setting',
+    'submit' => 'Send',
+    'acceptNewsletter' => 'Receive Newsletter?',
+    'yes' => 'Yes',
+    'no' => 'No',
 );

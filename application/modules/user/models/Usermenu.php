@@ -30,6 +30,13 @@ class Usermenu extends \Ilch\Model
     protected $title;
 
     /**
+     * Text of the menu.
+     *
+     * @var string
+     */
+    protected $text;
+
+    /**
      * Sets the menu id.
      *
      * @param integer $id
@@ -87,5 +94,25 @@ class Usermenu extends \Ilch\Model
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Sets the menu text.
+     *
+     * @param string $text
+     */
+    public function setText($text)
+    {
+        $this->text = (string)$text;
+    }
+
+    /**
+     * Gets the menu text.
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
     }
 }

@@ -24,7 +24,9 @@ class Base extends \Ilch\Controller\Frontend
         $UserMenuMapper = new UserMenuMapper();
         
         $menu = $UserMenuMapper->getUserMenu();
+        $menuLinks = $UserMenuMapper->getUserMenuSettingsLinks();
         
         $this->getView()->set('usermenu', $menu);
+        $this->getView()->set('usermenusettingslinks', $menuLinks);
     }
 }

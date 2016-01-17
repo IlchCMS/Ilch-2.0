@@ -59,6 +59,17 @@ $profil = $this->get('profil');
                     </div>
                 </div>
             </div>
+            <?php foreach ($this->get('usermenusettingslinks') as $usermenulinks): ?>
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail media">
+                        <div class="media-body">
+                            <h4 class="media-heading"><a href="<?=$this->getUrl($usermenulinks->getKey()) ?>"><?=$usermenulinks->getTitle() ?></a></h4>
+                            <hr>
+                            <p><?=$usermenulinks->getText() ?></p>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

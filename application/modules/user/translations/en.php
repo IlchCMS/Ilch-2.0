@@ -167,7 +167,6 @@ return array
     'dialog' => 'Messages',
     'noDialog' => 'No Messages available.',
     'menuPanel' => 'User Panel',
-    'menuSettings' => 'Settings',
     'menuSetting' => 'Setting',
     'menuSettingsAvatar' => 'Avatar',
     'menuEditProfile' => 'Profile',
@@ -200,7 +199,6 @@ return array
     'profileSignature' => 'Signature',
     'profilePassword' => 'Password',
     'profileSubmit' => 'Send',
-    'acceptNewsletter' => 'Receive Newsletter ?',
 
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail to',

@@ -106,7 +106,6 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users` (
     `date_last_activity` datetime NOT NULL,
     `confirmed` int(11) DEFAULT 1,
     `confirmed_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-    `opt_newsletter` tinyint(1) DEFAULT 0,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -142,6 +141,14 @@ CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `key` varchar(255) NOT NULL,
     `title` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_user_menu_settings_links` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `key` varchar(255) NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `text` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
                 

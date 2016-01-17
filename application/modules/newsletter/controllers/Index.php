@@ -7,8 +7,10 @@
 namespace Modules\Newsletter\Controllers;
 
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Controllers\Base as BaseController;
 
-class Index extends \Ilch\Controller\Frontend
+class Index extends BaseController
 {
     public function indexAction()
     {
@@ -64,5 +66,27 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->redirect(array('action' => 'index'));
+    }
+
+    public function settingsAction()
+    {
+        $profilMapper = new UserMapper();
+        $profil = $profilMapper->getUserById($this->getUser()->getId());
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuPanel'), array('module' => 'user', 'controller' => 'panel', 'action' => 'index'))
+                ->add($this->getTranslator()->trans('menuSettings'), array('module' => 'user', 'controller' => 'panel', 'action' => 'settings'))
+                ->add($this->getTranslator()->trans('menuNewsletter'), array('controller' => 'index', 'action' => 'settings'));
+
+        if ($this->getRequest()->isPost()) {
+            $model = new \Modules\User\Models\User();
+            $model->setId($this->getUser()->getId());
+            $model->setNewsletter($this->getRequest()->getPost('opt_newsletter'));
+            $profilMapper->save($model);
+
+            $this->redirect(array('action' => 'settings'));
+        }
+
+        $this->getView()->set('profil', $profil);
     }
 }

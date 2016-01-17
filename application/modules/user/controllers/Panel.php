@@ -230,7 +230,6 @@ class Panel extends BaseController
             $model = new \Modules\User\Models\User();
             $model->setId($this->getUser()->getId());
             $model->setOptMail($this->getRequest()->getPost('opt_mail'));
-            $model->setNewsletter($this->getRequest()->getPost('opt_newsletter'));
             $profilMapper->save($model);
 
             $this->redirect(array('action' => 'setting'));
