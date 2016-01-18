@@ -58,7 +58,8 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `title`, `text`) VALUES
-                ("newsletter/index/settings", "Newsletter", "Hier kannst du deine Newsletter Einstellungen bearbeiten.");';
+                INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `locale`, `description`, `name`) VALUES
+                ("newsletter/index/settings", "de_DE", "Hier kannst du deine Newsletter Einstellungen bearbeiten.", "Newsletter"),
+                ("newsletter/index/settings", "en_EN", "Here you can manage your Newsletter settings.", "Newsletter");';
     }
 }

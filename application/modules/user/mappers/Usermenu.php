@@ -7,6 +7,7 @@
 namespace Modules\User\Mappers;
 
 use Modules\User\Models\Usermenu as UserMenuModel;
+use Modules\User\Models\Usermenusettings as UserMenuSettingsModel;
 
 class Usermenu extends \Ilch\Mapper
 {
@@ -39,15 +40,16 @@ class Usermenu extends \Ilch\Mapper
     }
 
     /**
-     * Gets the usermenu.
+     * Gets the usermenusettings.
      * @param
-     * @return null|\Modules\User\Models\Usermenu
+     * @return null|\Modules\User\Models\Usermenusettings
      */
-    public function getUserMenuSettingsLinks()
+    public function getUserMenuSettingsLinks($locale)
     {
         $usermenu = array();
         $usermenuRows = $this->db()->select('*')
                 ->from('user_menu_settings_links')
+                ->where(array('locale' => $locale))
                 ->execute()
                 ->fetchRows();
 
@@ -55,14 +57,15 @@ class Usermenu extends \Ilch\Mapper
             return null;
         }
 
-        foreach ($usermenuRows as $item) {
-            $usermenuModel = new UserMenuModel();
-            $usermenuModel->setId($item['id']);
-            $usermenuModel->setKey($item['key']);
-            $usermenuModel->setTitle($item['title']);
-            $usermenuModel->setText($item['text']);
+        foreach ($usermenuRows as $usermenuRow) {
+            $usermenuModel = new UserMenuSettingsModel();
+            $usermenuModel->setKey($usermenuRow['key']);
+            $usermenuModel->setLocale($usermenuRow['locale']);
+            $usermenuModel->setName($usermenuRow['name']);
+            $usermenuModel->setDescription($usermenuRow['description']);
+
             $usermenu[] = $usermenuModel;
-        }
+        }        
 
         return $usermenu;
     }
