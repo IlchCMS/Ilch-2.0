@@ -126,13 +126,6 @@ class User extends \Ilch\Model
      * @var string
      */
     protected $confirmedCode;
-
-    /**
-     * Confirmed Code of the user.
-     *
-     * @var int
-     */
-    protected $opt_newsletter;
     
     /**
      * The associated user group object.
@@ -584,29 +577,6 @@ class User extends \Ilch\Model
         return $this;
     }
 
-    /**
-     * Returns the opt_newsletter of the user.
-     *
-     * @return int
-     */
-    public function getNewsletter()
-    {
-        return $this->opt_newsletter;
-    }
-
-    /**
-     * Saves the opt_newsletter of the user.
-     *
-     * @param int $opt_newsletter
-     * @return User
-     */
-    public function setNewsletter($opt_newsletter)
-    {
-        $this->opt_newsletter = (string)$opt_newsletter;
-
-        return $this;
-    }
-    
     /**
      * Checks if user has admin group.
      *

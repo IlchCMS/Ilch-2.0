@@ -7,9 +7,9 @@ $profil = $this->get('profil');
         <div class="col-sm-3 col-md-2 col-lg-2">
             <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
             <ul class="nav">
-            <?php foreach ($this->get('usermenu') as $usermenu): ?>
-                <li><a class="" href="<?=$this->getUrl($usermenu->getKey()); ?>"><?=$usermenu->getTitle() ?></a></li>
-            <?php endforeach; ?>
+                <?php foreach ($this->get('usermenu') as $usermenu): ?>
+                    <li><a class="" href="<?=$this->getUrl($usermenu->getKey()); ?>"><?=$usermenu->getTitle() ?></a></li>
+                <?php endforeach; ?>
             </ul>
         </div>
         <div class=" col-sm-9 col-md-10 col-lg-10">

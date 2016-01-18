@@ -38,7 +38,6 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE `[prefix]_newsletter`;
                                  DROP TABLE `[prefix]_newsletter_mails`;');
         $this->db()->queryMulti("DELETE FROM `[prefix]_user_menu_settings_links` WHERE `key` = 'newsletter/index/settings'");
-        $this->db()->queryMulti("ALTER TABLE `[prefix]_users` DROP `opt_newsletter`");
     }
 
     public function getInstallSql()
@@ -60,8 +59,6 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_user_menu_settings_links` (`key`, `title`, `text`) VALUES
-                ("newsletter/index/settings", "Newsletter", "Hier kannst du deine Newsletter Einstellungen bearbeiten.");
-
-                ALTER TABLE `[prefix]_users` ADD `opt_newsletter` tinyint(1) DEFAULT 0;';
+                ("newsletter/index/settings", "Newsletter", "Hier kannst du deine Newsletter Einstellungen bearbeiten.");';
     }
 }

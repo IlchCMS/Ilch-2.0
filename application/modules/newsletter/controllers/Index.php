@@ -70,23 +70,27 @@ class Index extends BaseController
 
     public function settingsAction()
     {
+        $newsletterMapper = new NewsletterMapper();
         $profilMapper = new UserMapper();
-        $profil = $profilMapper->getUserById($this->getUser()->getId());
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPanel'), array('module' => 'user', 'controller' => 'panel', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('menuSettings'), array('module' => 'user', 'controller' => 'panel', 'action' => 'settings'))
                 ->add($this->getTranslator()->trans('menuNewsletter'), array('controller' => 'index', 'action' => 'settings'));
 
+        $profil = $profilMapper->getUserById($this->getUser()->getId());
+        $countMail = $newsletterMapper->countEmails($this->getUser()->getEmail());
+
         if ($this->getRequest()->isPost()) {
-            $model = new \Modules\User\Models\User();
-            $model->setId($this->getUser()->getId());
-            $model->setNewsletter($this->getRequest()->getPost('opt_newsletter'));
-            $profilMapper->save($model);
+            $newsletterModel = new \Modules\Newsletter\Models\Newsletter();
+            $newsletterModel->setId($this->getUser()->getId());
+            $newsletterModel->setNewsletter($this->getRequest()->getPost('opt_newsletter'));
+            $newsletterMapper->saveUserEmail($newsletterModel);
 
             $this->redirect(array('action' => 'settings'));
         }
 
         $this->getView()->set('profil', $profil);
+        $this->getView()->set('countMail', $countMail);
     }
 }

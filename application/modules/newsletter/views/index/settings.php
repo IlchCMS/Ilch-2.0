@@ -1,5 +1,6 @@
 <?php
 $profil = $this->get('profil');
+$countMail = $this->get('countMail');
 ?>
 
 <div id="panel">
@@ -7,9 +8,9 @@ $profil = $this->get('profil');
         <div class="col-lg-2">
             <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
             <ul class="nav">
-            <?php foreach ($this->get('usermenu') as $usermenu): ?>
-                <li><a class="" href="<?=$this->getUrl($usermenu->getKey()) ?>"><?=$usermenu->getTitle() ?></a></li>
-            <?php endforeach; ?>
+                <?php foreach ($this->get('usermenu') as $usermenu): ?>
+                    <li><a class="" href="<?=$this->getUrl($usermenu->getKey()) ?>"><?=$usermenu->getTitle() ?></a></li>
+                <?php endforeach; ?>
             </ul>
         </div>
         <div class="col-lg-10">
@@ -23,9 +24,9 @@ $profil = $this->get('profil');
                     </label>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="1" id="newsletter_yes" <?php if ($profil->getNewsletter() == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="1" id="newsletter_yes" <?php if ($countMail == '1') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="0" id="newsletter_no" <?php if ($profil->getNewsletter() == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="0" id="newsletter_no" <?php if ($countMail == '0') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>
