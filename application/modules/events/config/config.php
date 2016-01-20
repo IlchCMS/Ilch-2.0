@@ -49,6 +49,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_width'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_size'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_filetypes'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events'");
     }
 
     public function getInstallSql()
@@ -70,6 +71,9 @@ class Config extends \Ilch\Config\Install
                   `event_id` INT(11) NOT NULL,
                   `user_id` INT(11) NOT NULL,
                   `status` INT(11) NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES
+                ("events", "static/upload/image");';
     }
 }

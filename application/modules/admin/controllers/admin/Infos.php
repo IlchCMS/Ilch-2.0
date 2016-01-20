@@ -6,6 +6,8 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Modules\Admin\Mappers\Infos as InfosMapper;
+
 class Infos extends \Ilch\Controller\Admin
 {
     public function init()
@@ -63,6 +65,9 @@ class Infos extends \Ilch\Controller\Admin
         # Body-Content entfernen
         $phpinfo = preg_replace('#^.*<body>(.*)</body>.*$#s', '$1', $phpinfo);
 
+        # Div center entfernen
+        $phpinfo = preg_replace('#^.*<div class="center">(.*)</div>.*$#s', '$1', $phpinfo);
+
         # <font> durch <span> ersetzen
         $phpinfo = str_replace('<font', '<span', $phpinfo);
         $phpinfo = str_replace('</font>', '</span>', $phpinfo);
@@ -79,9 +84,13 @@ class Infos extends \Ilch\Controller\Admin
 
     public function folderrightsAction()
     {
+        $InfosMapper = new InfosMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('hmenuInfos'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('hmenuFolderRights'), array('action' => 'folderrights'));
+
+        $this->getView()->set('folderrights', $InfosMapper->getModulesFolderRights());
     }
 
     public function shortcutsAction()
