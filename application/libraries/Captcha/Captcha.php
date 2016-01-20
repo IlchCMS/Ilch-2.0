@@ -32,7 +32,7 @@ class Captcha
     public $height = 70;
 
     /** Dictionary word file (empty for random text) */
-    public $wordsFile = 'words/en.php';
+    public $wordsFile = '';
 
     /**
      * Path for resource files (fonts, words, etc.)
