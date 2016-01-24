@@ -12,7 +12,7 @@ class Login extends \Ilch\Box
     {
         $this->getView()->setArray([
             'regist_accept' => $this->getConfig()->get('regist_accept'),
-            'redirectUrl' => $this->getView()->getCurrentUrl()
+            'redirectUrl' => $this->getRouter()->getQuery()
         ]);
     }
 }
