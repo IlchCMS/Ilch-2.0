@@ -19,6 +19,5 @@ class Login extends \Ilch\Box
             'regist_accept' => $this->getConfig()->get('regist_accept'),
             'redirectUrl' => $redirectUrl
         ]);
-        unset($_SESSION['redirect']);
     }
 }
