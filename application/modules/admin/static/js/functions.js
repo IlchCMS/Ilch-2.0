@@ -27,13 +27,16 @@ $(document).ready(function(){
         $('#search-div').addClass('opens');
     };
 
-    document.getElementById('search-header').onclick = function() {
-        if($('#search-div').hasClass('opens')){
-            removeSearch();
-        }else {
-            addSearch();
-        }
-    };
+    var element = document.getElementById('search-header');
+    if (typeof(element) !== 'undefined' && element !== null) {
+        document.getElementById('search-header').onclick = function() {
+            if($('#search-div').hasClass('opens')){
+                removeSearch();
+            }else {
+                addSearch();
+            }
+        };
+    }
 });
 
 $(document).ready

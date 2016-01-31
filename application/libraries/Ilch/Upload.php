@@ -42,6 +42,11 @@ class Upload extends \Ilch\Controller\Base
     protected $urlThumb;
 
     /**
+     * @var string $types
+     */
+    protected $types;
+
+    /**
      * @var string $path
      */
     protected $path;
@@ -84,6 +89,7 @@ class Upload extends \Ilch\Controller\Base
     public function setFile($file)
     {
         $this->file = $file;
+
         return $this;
     }
 
@@ -103,6 +109,7 @@ class Upload extends \Ilch\Controller\Base
     public function setEnding($ending)
     {
         $this->ending = $ending;
+
         return $this;
     }
 
@@ -112,6 +119,7 @@ class Upload extends \Ilch\Controller\Base
     public function getEnding()
     {
         $this->ending = strtolower(pathinfo($this->file, PATHINFO_EXTENSION));
+
         return $this->ending;
     }
 
@@ -123,6 +131,7 @@ class Upload extends \Ilch\Controller\Base
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -134,6 +143,7 @@ class Upload extends \Ilch\Controller\Base
         $search = array("Ä", "Ö", "Ü", "ä", "ö", "ü", "ß", "´", " ");
         $replace = array("Ae", "Oe", "Ue", "ae", "oe", "ue", "ss", "", "");
         $this->name = str_replace($search, $replace, pathinfo($this->file, PATHINFO_FILENAME));
+
         return $this->name;
     }
 
@@ -145,6 +155,7 @@ class Upload extends \Ilch\Controller\Base
     public function setFileName($fileName)
     {
         $this->fileName = $fileName;
+
         return $this;
     }
 
@@ -164,6 +175,7 @@ class Upload extends \Ilch\Controller\Base
     public function setUrl($url)
     {
         $this->url = $url;
+
         return $this;
     }
 
@@ -176,6 +188,26 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * @param string $types
+     *
+     * @return string types
+     */
+    public function setTypes($types)
+    {
+        $this->types = $types;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypes()
+    {
+        return $this->types;
+    }
+
+    /**
      * @param string $path
      *
      * @return string path
@@ -183,6 +215,7 @@ class Upload extends \Ilch\Controller\Base
     public function setPath($path)
     {
         $this->path = $path;
+
         return $this;
     }
 
@@ -202,6 +235,7 @@ class Upload extends \Ilch\Controller\Base
     public function setUrlThumb($urlThumb)
     {
         $this->urlThumb = $urlThumb;
+
         return $this;
     }
 
@@ -241,7 +275,7 @@ class Upload extends \Ilch\Controller\Base
         $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
 
         if(move_uploaded_file($_FILES['upl']['tmp_name'], $this->path.$hash.'.'.$this->getEnding())){
-            if(in_array($this->getEnding() , explode(' ',$this->getConfig()->get('media_ext_img')))){
+            if(in_array($this->getEnding() , explode(' ', $this->types))){
                 $thumb = new \Thumb\Thumbnail();
                 $thumb -> Thumbprefix = 'thumb_';
                 $thumb -> Thumblocation = $this->path;
@@ -260,7 +294,7 @@ class Upload extends \Ilch\Controller\Base
         $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
 
         rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
-        if(in_array($this->getEnding() , explode(' ',$this->getConfig()->get('media_ext_img')))){
+        if(in_array($this->getEnding() , explode(' ', $this->types))){
             $thumb = new \Thumb\Thumbnail();
             $thumb -> Thumbprefix = 'thumb_';
             $thumb -> Thumblocation = $this->path;

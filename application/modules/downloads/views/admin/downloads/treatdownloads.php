@@ -64,7 +64,9 @@ tbody tr td {
 <script>
 <?=$this->getMedia()
         ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id').'/'))
-        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id').'/')) ?>
+        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id').'/'))
+        ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
 
 function reload(){
     setTimeout(function(){window.location.reload(1);}, 1000);

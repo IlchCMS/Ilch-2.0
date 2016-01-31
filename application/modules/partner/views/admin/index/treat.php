@@ -54,8 +54,10 @@
 </form>
 
 <script>
-    // Example for multiple input filds
-    <?=$this->getMedia()
-                    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
-                    ->addInputId('_1') ?>
+// Example for multiple input filds
+<?=$this->getMedia()
+        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+        ->addInputId('_1')
+        ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
 </script>

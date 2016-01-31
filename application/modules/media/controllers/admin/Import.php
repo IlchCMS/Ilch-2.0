@@ -60,12 +60,14 @@ class Import extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('import'), array('action' => 'index'));
 
         $directory = $this->getConfig()->get('media_uploadpath');
+        $filetypes = $this->getConfig()->get('media_ext_img');
         $globMediaArray = glob($directory . "*.*");
 
         if ($this->getRequest()->getPost('save') === 'save') {
             foreach ($this->getRequest()->getPost('check_medias') as $media) {
                 $upload = new \Ilch\Upload();
                 $upload->setFile($media);
+                $upload->setTypes($filetypes);
                 $upload->setPath($directory);
                 $upload->save();
 
@@ -101,6 +103,7 @@ class Import extends \Ilch\Controller\Admin
                 $newMediaArray[] = $directory.$upload->getName().'.'.$upload->getEnding();
             }
         }
+
         $this->getView()->set('media', array_diff($newMediaArray, $existsMediaArray));
         $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
         $this->getView()->set('path', $directory);

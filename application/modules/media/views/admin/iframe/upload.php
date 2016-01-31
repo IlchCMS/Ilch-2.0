@@ -1,12 +1,14 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
+
 <ul class="nav nav-pills">
     <li><a href="<?=$this->getUrl(array('controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id'))) ?>"><?=$this->getTrans('upload') ?></a></li>
     <li><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>"><?=$this->getTrans('media') ?></a></li>
 </ul>
+
 <legend><?=$this->getTrans('mediaUpload') ?></legend>
 <div class="container">
-    <form id="upload" method="post" action="<?=$this->getUrl('index.php/admin/media/index/upload') ?>" enctype="multipart/form-data">
-    <?=$this->getTokenField() ?>
+    <form id="upload" method="post" action="<?=$_SESSION['media-url-upload-controller'] ?>" enctype="multipart/form-data">
+        <?=$this->getTokenField() ?>
         <div id="drop">
             <p><?=$this->getTrans('drag') ?></p>
             <i class="fa fa-cloud-upload"></i>

@@ -31,7 +31,7 @@
                             <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id'))) ?></td>
                             <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
                             <td><?=$image->getImageTitle() ?></td>
-                            <td><div  class="table_text"><?=$image->getImageDesc() ?></div></td>
+                            <td><div class="table_text"><?=$image->getImageDesc() ?></div></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -46,7 +46,9 @@
 <script>
 <?=$this->getMedia()
         ->addActionButton($this->getUrl('admin/gallery/gallery/treatgallery/id/'.$this->getRequest()->getParam('id').'/'))
-        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id').'/')) ?>
+        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id').'/'))
+        ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
 
 function reload(){
     setTimeout(function(){window.location.reload(1);}, 1000);

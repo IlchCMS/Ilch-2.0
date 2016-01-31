@@ -167,7 +167,9 @@ $('#language').change
 );
 
 <?=$this->getMedia()
-            ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/')) ?>
+        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
+        ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
 
 $('#preview').click
 (

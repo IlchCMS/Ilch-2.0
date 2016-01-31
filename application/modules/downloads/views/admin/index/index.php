@@ -57,51 +57,51 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
 <form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('downloads') ?></legend>
-        <div class="col-lg-6">
-            <ol id="sortable" class="sortable">
-                <?php
-                    if (!empty($downloadsItems)) {
-                        foreach ($downloadsItems as $item) {
-                            rec($item, $downloadsMapper, $this, $fileMapper);
-                        }
+    <div class="col-lg-6">
+        <ol id="sortable" class="sortable">
+            <?php
+                if (!empty($downloadsItems)) {
+                    foreach ($downloadsItems as $item) {
+                        rec($item, $downloadsMapper, $this, $fileMapper);
                     }
-                ?>
-            </ol>
-        </div>
-        <div class="col-lg-6 changeBox">
-            <input type="hidden" id="id" value="" />
-            <div class="form-group">
-                <label for="title" class="col-lg-3 control-label">
-                    <?=$this->getTrans('title') ?>
-                </label>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" id="title" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="desc" class="col-lg-3 control-label">
-                    <?=$this->getTrans('description') ?>
-                </label>
-                <div class="col-lg-6">
-                    <textarea class="form-control" rows="3" cols="45" type="text" id="desc" name="desc"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="type" class="col-lg-3 control-label">
-                    <?=$this->getTrans('type') ?>
-                </label>
-                <div class="col-lg-6">
-                    <select id="type" class="form-control">
-                        <option value="0"><?=$this->getTrans('cat') ?></option>
-                        <option value="1"><?=$this->getTrans('downloads') ?></option>
-                    </select>
-                </div>
-            </div>
-            <div class="dyn"></div>
-            <div class="col-lg-offset-3 actions">
-                <input type="button" id="menuItemAdd" value="<?=$this->getTrans('downloadsItemAdd') ?>" class="btn">
+                }
+            ?>
+        </ol>
+    </div>
+    <div class="col-lg-6 changeBox">
+        <input type="hidden" id="id" value="" />
+        <div class="form-group">
+            <label for="title" class="col-lg-3 control-label">
+                <?=$this->getTrans('title') ?>
+            </label>
+            <div class="col-lg-6">
+                <input type="text" class="form-control" id="title" />
             </div>
         </div>
+        <div class="form-group">
+            <label for="desc" class="col-lg-3 control-label">
+                <?=$this->getTrans('description') ?>
+            </label>
+            <div class="col-lg-6">
+                <textarea class="form-control" rows="3" cols="45" type="text" id="desc" name="desc"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="type" class="col-lg-3 control-label">
+                <?=$this->getTrans('type') ?>
+            </label>
+            <div class="col-lg-6">
+                <select id="type" class="form-control">
+                    <option value="0"><?=$this->getTrans('cat') ?></option>
+                    <option value="1"><?=$this->getTrans('downloads') ?></option>
+                </select>
+            </div>
+        </div>
+        <div class="dyn"></div>
+        <div class="col-lg-offset-3 actions">
+            <input type="button" id="menuItemAdd" value="<?=$this->getTrans('downloadsItemAdd') ?>" class="btn">
+        </div>
+    </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
     <?=$this->getSaveBar('saveButton') ?>
 </form>
@@ -251,8 +251,10 @@ $(document).ready (
 </script>
 <script>
 <?=$this->getMedia()
-                ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')))
-                ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id'))) ?>
+        ->addMediaButton($this->getUrl('admin/media/iframe/multi/type/file/id/'.$this->getRequest()->getParam('id')))
+        ->addActionButton($this->getUrl('admin/downloads/downloads/treatdownloads/id/'.$this->getRequest()->getParam('id')))
+        ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
 
 function reload(){
     setTimeout(function(){window.location.reload(1);}, 1000);

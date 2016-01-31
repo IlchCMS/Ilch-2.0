@@ -81,6 +81,8 @@
 </form>
 
 <script>
-    <?=$this->getMedia()
-            ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/')) ?>
+<?=$this->getMedia()
+        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
+        ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
 </script>

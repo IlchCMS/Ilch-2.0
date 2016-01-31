@@ -38,7 +38,6 @@ return array
     'menuGalleryBack' => 'back to Gallery',
     'imageTitle' => 'Title',
     'imageDesc' => 'Description',
-    'commentPost' => 'Write comment',
     'from' => 'From',
     'on' => 'On',
 );

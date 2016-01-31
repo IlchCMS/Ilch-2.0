@@ -21,6 +21,11 @@ class GetMedia
     /**
      * @var string
      */
+    protected $uploadController;
+
+    /**
+     * @var string
+     */
     protected $inputId;
 
     /**
@@ -43,6 +48,18 @@ class GetMedia
     public function addActionButton($actionButton)
     {
         $this->actionButton = $actionButton;
+
+        return $this;
+    }
+
+    /**
+     * Sets the uploadController.
+     *
+     * @param string $uploadController
+     */
+    public function addUploadController($uploadController)
+    {
+        $this->uploadController = $uploadController;
 
         return $this;
     }
@@ -85,6 +102,7 @@ class GetMedia
     {
         $_SESSION['media-url-media-button'] = $this->mediaButton;
         $_SESSION['media-url-action-button'] = $this->actionButton;
+        $_SESSION['media-url-upload-controller'] = $this->uploadController;
         $html = "function media".$this->inputId."(id){ $('#MediaModal').modal('show');
         var src = '".$_SESSION['media-url-media-button']."'+id;
         var height = '100%';
