@@ -15,6 +15,8 @@ foreach ($profil->getGroups() as $group) {
 } 
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+
 <div class="profil">
     <div class="profil-header">
         <div class="row">
@@ -41,6 +43,9 @@ foreach ($profil->getGroups() as $group) {
                 <?php if ($profil->getHomepage() != ''): ?>
                     <a href="<?=$homepage ?>" target="_blank" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
                 <?php endif; ?>
+                <?php if ($this->get('gallery') != 0 AND $profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
+                    <a href="<?=$this->getUrl(array('controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId())) ?>" class="fa fa-picture-o" title="<?=$this->getTrans('gallery') ?>"></a>
+                <?php endif; ?>
                 <a class="fa fa-facebook" title="Facebook"></a>
                 <a class="fa fa-google-plus" title="Goggle+"></a>
                 <a class="fa fa-twitter" title="Twitter"></a>
@@ -54,7 +59,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileFirstName') ?>:
             </div>
-            <div class="col-lg-8 detail">
+            <div class="col-lg-10 detail">
                 <?=$this->escape($profil->getFirstName()) ?>
             </div>
         </div>
@@ -62,7 +67,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileLastName') ?>:
             </div>
-            <div class="col-lg-8 detail">
+            <div class="col-lg-10 detail">
                 <?=$this->escape($profil->getLastName()) ?>
             </div>
         </div>
@@ -70,7 +75,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileCity') ?>:
             </div>
-            <div class="col-lg-8 detail">
+            <div class="col-lg-10 detail">
                 <?=$this->escape($profil->getCity()) ?>
             </div>
         </div>
@@ -79,7 +84,7 @@ foreach ($profil->getGroups() as $group) {
                 <div class="col-lg-2 detail bold">
                     <?=$this->getTrans('profileHomepage') ?>:
                 </div>
-                <div class="col-lg-8 detail">
+                <div class="col-lg-10 detail">
                     <a href="<?=$homepage ?>" title="<?=$homepage ?>" target="_blank"><?=$homepage ?></a>
                 </div>
             </div>
@@ -88,7 +93,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileBirthday') ?>:
             </div>
-            <div class="col-lg-8 detail">
+            <div class="col-lg-10 detail">
                 <?php if ($profil->getBirthday() != '0000-00-00') { echo $birthday->format('d-m-Y', true); } ?>
             </div>
         </div>
@@ -109,7 +114,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('groups') ?>:
             </div>
-            <div class="col-lg-8 detail">
+            <div class="col-lg-10 detail">
                 <?=$this->escape($groups) ?>
             </div>
         </div>

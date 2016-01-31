@@ -142,6 +142,17 @@ class Index extends BaseController
                     unlink($deleteUser->getAvatar());
                 }
 
+                if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
+                    $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
+                    $files = array_diff(scandir($path), array('.', '..'));
+
+                    foreach ($files as $file) {
+                        unlink(realpath($path).'/'.$file);
+                    }
+
+                    rmdir($path);
+                }
+
                 if ($userMapper->delete($userId)) {                    
                     $this->addMessage('delUserMsg');
                 }

@@ -1,47 +1,43 @@
-<?php 
+<?php
 $profil = $this->get('profil'); 
 ?>
 
-<?php if(!empty($profil)): ?>
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
-<div id="panel">
-    <div class="row">
-        <div class="col-lg-2">
-            <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
-            <ul class="nav">
-                <?php foreach ($this->get('usermenu') as $key): ?>
-                    <li><a class="" href="<?=$this->getUrl($key->getKey()); ?>"><?=$key->getTitle() ?></a></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-        <div class="col-lg-10">
-            <legend>Willkommen <?=$this->escape($profil->getName()) ?></legend>
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-comment"></span> Dialog
-                </div>
-                <div class="shout_box">
-                    <div class="message_box" id="niceScroll">
+
+<?php if(!empty($profil)): ?>
+    <div id="panel">
+        <div class="row">
+            <div class="col-lg-2">
+                <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+            </div>
+            <div class="col-lg-10">
+                <legend>Willkommen <?=$this->escape($profil->getName()) ?></legend>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-comment"></span> Dialog
                     </div>
-                    <div class="user_info">
-                    <?=$this->getTokenField() ?>
-                        <div class="input-group col-lg-12">
-                            <textarea name="ilch_bbcode"
-                                    id="ck_1"
-                                    type="text"
-                                    class="form-control ckeditor"
-                                    toolbar="ilch_bbcode">
-                            </textarea>
+                    <div class="shout_box">
+                        <div class="message_box" id="niceScroll">
                         </div>
-                        <div>
-                            <button class="btn btn-default pull-right" id="myBtn">Absenden</button>
+                        <div class="user_info">
+                        <?=$this->getTokenField() ?>
+                            <div class="input-group col-lg-12">
+                                <textarea name="ilch_bbcode"
+                                        id="ck_1"
+                                        type="text"
+                                        class="form-control ckeditor"
+                                        toolbar="ilch_bbcode">
+                                </textarea>
+                            </div>
+                            <div>
+                                <button class="btn btn-default pull-right" id="myBtn">Absenden</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
  <?php endif; ?>
 
 <script src="<?=$this->getStaticUrl('../application/modules/user/static/js/jquery.nicescroll.js') ?>"></script>

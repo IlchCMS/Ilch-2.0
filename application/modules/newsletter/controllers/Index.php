@@ -7,7 +7,6 @@
 namespace Modules\Newsletter\Controllers;
 
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
-use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Controllers\Base as BaseController;
 
 class Index extends BaseController
@@ -71,15 +70,11 @@ class Index extends BaseController
     public function settingsAction()
     {
         $newsletterMapper = new NewsletterMapper();
-        $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPanel'), array('module' => 'user', 'controller' => 'panel', 'action' => 'index'))
                 ->add($this->getTranslator()->trans('menuSettings'), array('module' => 'user', 'controller' => 'panel', 'action' => 'settings'))
                 ->add($this->getTranslator()->trans('menuNewsletter'), array('controller' => 'index', 'action' => 'settings'));
-
-        $profil = $profilMapper->getUserById($this->getUser()->getId());
-        $countMail = $newsletterMapper->countEmails($this->getUser()->getEmail());
 
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new \Modules\Newsletter\Models\Newsletter();
@@ -90,7 +85,6 @@ class Index extends BaseController
             $this->redirect(array('action' => 'settings'));
         }
 
-        $this->getView()->set('profil', $profil);
-        $this->getView()->set('countMail', $countMail);
+        $this->getView()->set('countMail', $newsletterMapper->countEmails($this->getUser()->getEmail()));
     }
 }

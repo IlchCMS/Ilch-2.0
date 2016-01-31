@@ -1,6 +1,7 @@
+<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+
 <?php if ($this->get('inbox') != ''): ?>
     <?php $inbox = $this->get('inbox') ?>
-    <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
     <div class="panel-body" id="boxscroll">
         <ul class="chat">
             <?php foreach ($inbox as $key): ?>

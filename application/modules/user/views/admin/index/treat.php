@@ -99,6 +99,20 @@ if ($user->getId()) {
         }
         ?>
         <div class="form-group">
+            <label for="usergallery_allowed" class="col-lg-3 control-label">
+                <?=$this->getTrans('usergalleryAllowed') ?>:
+            </label>
+            <div class="col-lg-9">
+                <div class="flipswitch">
+                    <input type="radio" class="flipswitch-input" name="user[opt_gallery]" value="1" id="opt-gallery-yes" <?php if ($user->getOptGallery() == '1') { echo 'checked="checked"'; } ?> />  
+                    <label for="opt-gallery-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                    <input type="radio" class="flipswitch-input" name="user[opt_gallery]" value="0" id="opt-gallery-no" <?php if ($user->getOptGallery() != '1') { echo 'checked="checked"'; } ?> />  
+                    <label for="opt-gallery-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                    <span class="flipswitch-selection"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <label for="assignedGroups" class="col-lg-3 control-label">
                     <?=$this->getTrans('assignedGroups') ?>
             </label>

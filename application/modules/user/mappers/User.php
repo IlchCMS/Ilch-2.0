@@ -204,6 +204,10 @@ class User extends \Ilch\Mapper
             $user->setOptMail($userRow['opt_mail']);
         }
 
+        if (isset($userRow['opt_gallery'])) {
+            $user->setOptGallery($userRow['opt_gallery']);
+        }
+
         if (isset($userRow['date_created'])) {
             $dateCreated = new IlchDate($userRow['date_created']);
             $user->setDateCreated($dateCreated);
@@ -289,6 +293,7 @@ class User extends \Ilch\Mapper
         $fields['avatar'] = $user->getAvatar();
         $fields['signature'] = $user->getSignature();
         $fields['opt_mail'] = $user->getOptMail();
+        $fields['opt_gallery'] = $user->getOptGallery();
 
         $userId = (int)$this->db()->select('id')
             ->from('users')
@@ -398,6 +403,18 @@ class User extends \Ilch\Mapper
         }
 
         $this->db()->delete('users_groups')
+            ->where(array('user_id' => $userId))
+            ->execute();
+
+        $this->db()->delete('users_gallery_imgs')
+            ->where(array('user_id' => $userId))
+            ->execute();
+
+        $this->db()->delete('users_gallery_items')
+            ->where(array('user_id' => $userId))
+            ->execute();
+
+        $this->db()->delete('users_media')
             ->where(array('user_id' => $userId))
             ->execute();
 

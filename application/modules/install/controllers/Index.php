@@ -119,6 +119,10 @@ class Index extends \Ilch\Controller\Frontend
              $errors['writableAvatar'] = true;
         }
 
+        if (!is_writable(APPLICATION_PATH.'/modules/user/static/upload/gallery/')) {
+             $errors['writableAvatar'] = true;
+        }
+
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(array('action' => 'database'));
         }

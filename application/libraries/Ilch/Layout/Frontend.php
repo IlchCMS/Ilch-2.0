@@ -111,11 +111,13 @@ class Frontend extends Base
                 <link href="'.$this->getStaticUrl('css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
-                <link href="'.$this->getStaticUrl('../application/modules/user/static/css/user.css').'" rel="stylesheet">
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ckeditor/ckeditor.js').'"></script>
-                <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>';
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
+
         return $html;
     }
         

@@ -33,7 +33,7 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        
+
         $groupMapper = new \Modules\User\Mappers\Group();
         $adminGroup = $groupMapper->getGroupById(1);
         $usersGroup = $groupMapper->getGroupById(2);
@@ -64,6 +64,9 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('avatar_width', '120');
         $databaseConfig->set('avatar_size', '51200');
         $databaseConfig->set('avatar_filetypes', 'jpg jpeg png gif');
+        $databaseConfig->set('usergallery_allowed', '1');
+        $databaseConfig->set('usergallery_uploadpath', 'application/modules/user/static/upload/gallery/');
+        $databaseConfig->set('usergallery_filetypes', 'jpg jpeg png gif');
         $user = new \Modules\User\Models\User();
         $user->setName($_SESSION['install']['adminName']);
         $user->setPassword((new PasswordService())->hash($_SESSION['install']['adminPassword']));
@@ -81,31 +84,32 @@ class Config extends \Ilch\Config\Install
         return <<<'SQL'
 CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+    `name` varchar(255) CHARACTER SET utf8 NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2;
 
 INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
 (1, "Administrator"),(2, "User");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `homepage` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `city` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `password` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `first_name` varchar(255) NOT NULL,
+    `last_name` varchar(255) NOT NULL,
+    `homepage` varchar(255) NOT NULL,
+    `city` varchar(255) NOT NULL,
     `birthday` date NOT NULL,
-    `avatar` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `signature` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `avatar` varchar(255) NOT NULL,
+    `signature` varchar(255) NOT NULL,
     `opt_mail` int(11) DEFAULT 1,
+    `opt_gallery` int(11) DEFAULT 1,
     `date_created` datetime NOT NULL,
     `date_confirmed` datetime NOT NULL,
     `date_last_activity` datetime NOT NULL,
     `confirmed` int(11) DEFAULT 1,
-    `confirmed_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+    `confirmed_code` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -117,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users_groups` (
 CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
     `group_id` int(11) NOT NULL,
     `page_id` int(11) DEFAULT 0,
-    `module_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `module_key` varchar(255) NOT NULL,
     `article_id` int(11) DEFAULT 0,
     `box_id` int(11) DEFAULT 0,
     `access_level` int(11) DEFAULT 0,
@@ -127,12 +131,12 @@ CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
 CREATE TABLE IF NOT EXISTS `[prefix]_profile_content` (
     `user_id` int(11) NOT NULL,
     `field_id` int(11) NOT NULL,
-    `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+    `value` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-    `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+    `name` varchar(255) NOT NULL,
     `type` int(11) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -142,19 +146,20 @@ CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
     `key` varchar(255) NOT NULL,
     `title` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS `[prefix]_user_menu_settings_links` (
     `key` varchar(255) NOT NULL,
     `locale` varchar(255) NOT NULL,
     `description` varchar(255) NOT NULL,
     `name` varchar(255) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-                
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 INSERT INTO `[prefix]_user_menu` (`id`, `key`, `title`) VALUES
 (1, "user/panel/index", "Panel"),
 (2, "user/panel/dialog", "Dialog"),
-(3, "user/panel/settings", "Einstellungen");
+(3, "user/panel/gallery", "Gallerie"),
+(4, "user/panel/settings", "Einstellungen");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
     `c_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -173,11 +178,45 @@ CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
     `read` int(11) DEFAULT 0,
     PRIMARY KEY (`cr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_users_media` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `name` varchar(50) NOT NULL DEFAULT 0,
+    `url` varchar(150) NOT NULL DEFAULT 0,
+    `url_thumb` varchar(150) NOT NULL DEFAULT 0,
+    `ending` varchar(5) NOT NULL DEFAULT 0,
+    `datetime` datetime NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_imgs` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `image_id` varchar(150)NOT NULL ,
+    `image_title` varchar(255) NOT NULL,
+    `image_description` varchar(255) NOT NULL,
+    `cat` mediumint(9) NOT NULL DEFAULT 0,
+    `visits` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_items` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `gallery_id` int(11) NOT NULL,
+    `sort` int(11) NOT NULL,
+    `parent_id` int(11) NOT NULL,
+    `type` int(11) NOT NULL,
+    `title` varchar(255) NOT NULL,
+    `description` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
  
 CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
     `field_id` int(11) NOT NULL,
-    `locale` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-    `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+    `locale` varchar(255) NOT NULL,
+    `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SQL;
     }

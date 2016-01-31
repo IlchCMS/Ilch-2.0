@@ -3,15 +3,11 @@ $profil = $this->get('profil');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+
 <div id="panel">
     <div class="row">
         <div class="col-lg-2">
-            <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
-            <ul class="nav">
-                <?php foreach ($this->get('usermenu') as $sermenu): ?>
-                    <li><a class="" href="<?=$this->getUrl($sermenu->getKey()) ?>"><?=$sermenu->getTitle() ?></a></li>
-                <?php endforeach; ?>
-            </ul>
+            <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
         </div>
         <div class="col-lg-10">
             <legend><?=$this->getTrans('dialog'); ?></legend>

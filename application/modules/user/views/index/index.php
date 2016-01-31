@@ -2,6 +2,8 @@
 $userMapper = new Modules\User\Mappers\User();
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('menuUserList') ?></legend>
 <div class="row">
     <?php foreach ($this->get('userList') as $userlist): ?>

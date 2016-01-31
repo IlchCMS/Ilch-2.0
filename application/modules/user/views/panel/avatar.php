@@ -4,15 +4,11 @@ $settingMapper = new \Modules\User\Mappers\Setting();
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
+
 <div id="panel">
     <div class="row">
         <div class="col-lg-2">
-            <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
-            <ul class="nav">
-                <?php foreach ($this->get('usermenu') as $usermenu): ?>
-                    <li><a class="" href="<?=$this->getUrl($usermenu->getKey()) ?>"><?=$usermenu->getTitle() ?></a></li>
-                <?php endforeach; ?>
-            </ul>
+            <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
         </div>
         <div class="col-lg-10">
             <legend>Avatar</legend>
@@ -31,7 +27,7 @@ $settingMapper = new \Modules\User\Mappers\Setting();
                     <div class="col-lg-10 col-sm-10 col-10">
                         <p><?=$this->getTrans('avatarSize') ?>: <?=$this->get('avatar_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('avatar_height') ?> Pixel <?=$this->getTrans('height') ?>.</p>
                         <p><?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('avatar_size')) ?>.</p>
-                        <p><?=$this->getTrans('avatarAllowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('avatar_filetypes')) ?></p>
+                        <p><?=$this->getTrans('allowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('avatar_filetypes')) ?></p>
                         <div class="input-group col-lg-6">
                             <span class="input-group-btn">
                                 <span class="btn btn-primary btn-file">

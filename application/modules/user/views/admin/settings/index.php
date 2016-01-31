@@ -130,7 +130,7 @@
     </div>
     <div class="form-group">
         <label for="avatar_filetypes" class="col-lg-2 control-label">
-            <?=$this->getTrans('avatarAllowedFileExtensions') ?>
+            <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
         <div class="col-lg-2">
             <input name="avatar_filetypes" 
@@ -138,6 +138,34 @@
                    id="avatar_filetypes" 
                    class="form-control required" 
                    value="<?=$this->get('avatar_filetypes') ?>" />
+        </div>
+    </div>
+
+    <legend><?=$this->getTrans('menuSettingsGallery') ?></legend>
+    <div class="form-group">
+        <label for="usergallery_allowed" class="col-lg-2 control-label">
+            <?=$this->getTrans('usergalleryAllowed') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" name="usergallery_allowed" value="1" id="usergallery-allowed-yes" <?php if ($this->get('usergallery_allowed') == '1') { echo 'checked="checked"'; } ?> />  
+                <label for="usergallery-allowed-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" name="usergallery_allowed" value="0" id="usergallery-allowed-no" <?php if ($this->get('usergallery_allowed') != '1') { echo 'checked="checked"'; } ?> />  
+                <label for="usergallery-allowed-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="usergallery_filetypes" class="col-lg-2 control-label">
+            <?=$this->getTrans('allowedFileExtensions') ?>
+        </label>
+        <div class="col-lg-2">
+            <input name="usergallery_filetypes" 
+                   type="text" 
+                   id="usergallery_filetypes" 
+                   class="form-control required" 
+                   value="<?=$this->get('usergallery_filetypes') ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

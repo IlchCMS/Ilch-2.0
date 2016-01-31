@@ -93,6 +93,12 @@ class User extends \Ilch\Model
     protected $opt_mail;
 
     /**
+     * The opt_gallery of the user.
+     *
+     * @var int
+     */
+    protected $opt_gallery;
+    /**
      * The \Ilch\Date of when the user got created.
      *
      * @var \Ilch\Date
@@ -245,6 +251,29 @@ class User extends \Ilch\Model
     public function setOptMail($opt_mail)
     {
         $this->opt_mail = (string)$opt_mail;
+
+        return $this;
+    }
+
+    /**
+     * Returns the opt_gallery of the user.
+     *
+     * @return int
+     */
+    public function getOptGallery()
+    {
+        return $this->opt_gallery;
+    }
+
+    /**
+     * Saves the opt_gallery of the user.
+     *
+     * @param int $opt_gallery
+     * @return User
+     */
+    public function setOptGallery($opt_gallery)
+    {
+        $this->opt_gallery = (string)$opt_gallery;
 
         return $this;
     }
