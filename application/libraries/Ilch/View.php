@@ -59,7 +59,7 @@ class View extends Design\Base
         if (!empty($deleteKey)) {
             $html .= '<button value="delete" type="submit" name="delete" class="delete_button pull-right btn">
                         '.$this->getTrans($deleteKey).'
-                       </button>';
+                      </button>';
         }
 
         $html .= '</div>';
@@ -78,17 +78,15 @@ class View extends Design\Base
     {
         $html = '<div class="content_savebox">
                     <input class="content_savebox_hidden" name="action" type="hidden" value="" />
-                    <div class="btn-group dropup">
-                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        markierte... <span class="caret"></span>
-                      </button>
-                      <ul class="dropdown-menu listChooser" role="menu">';
-        
-        foreach($actions as $key => $name) {
-            $html .= '<li><a href="#" data-hiddenkey="'.$key.'">'.$this->getTrans($name).'</a></li>';
-        }
-
-        $html .= '</ul></div>';
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                markierte... <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu listChooser" role="menu">';
+                                foreach($actions as $key => $name) {
+                                    $html .= '<li><a href="#" data-hiddenkey="'.$key.'">'.$this->getTrans($name).'</a></li>';
+                                }
+        $html .= '</ul></div></div>';
 
         return $html; 
     }
