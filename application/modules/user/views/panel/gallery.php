@@ -28,7 +28,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                     <i class="fa fa-edit"></i>
                 </span>
                 <span class="upload" style="float:right; margin-right: 6px;">
-                    <a id="'.$item->getId().'" href="javascript:media('.$item->getId().')">
+                    <a href="javascript:media('.$item->getId().')">
                         <i class="fa fa-cloud-upload"></i>
                     </a>
                 </span>

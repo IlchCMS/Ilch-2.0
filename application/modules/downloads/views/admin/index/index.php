@@ -123,7 +123,7 @@ $(document).ready (
         $('.sortable').nestedSortable ({
             forcePlaceholderSize: true,
             handle: 'div',
-            helper:	'clone',
+            helper: 'clone',
             items: 'li',
             opacity: .6,
             placeholder: 'placeholder',
@@ -135,7 +135,7 @@ $(document).ready (
             isTree: true,
             expandOnHover: 700,
             startCollapsed: false,
-            protectRoot:true
+            protectRoot: true
         });
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
