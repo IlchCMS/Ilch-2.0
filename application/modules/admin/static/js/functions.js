@@ -86,19 +86,22 @@ $(document).ready
 (
     function() 
     {
-        $(window).scrollTop(0);
-        var headerTop = $('#header').offset().top;
+        var element = document.getElementById('header');
+        if (typeof(element) !== 'undefined' && element !== null) {
+            $(window).scrollTop(0);
+            var headerTop = $('#header').offset().top;
 
-        $(window).scroll
-        (
-            function()
-            {
-                if($(window).scrollTop() > headerTop){
-                    $('#left-panel').css('padding', '0px');
-                } else {
-                    $('#left-panel').css('padding', '40px 0 0');
+            $(window).scroll
+            (
+                function()
+                {
+                    if($(window).scrollTop() > headerTop){
+                        $('#left-panel').css('padding', '0px');
+                    } else {
+                        $('#left-panel').css('padding', '40px 0 0');
+                    }
                 }
-            }
-        );
+            );
+        }        
     }
 );
