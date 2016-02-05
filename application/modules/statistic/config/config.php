@@ -6,6 +6,8 @@
 
 namespace Modules\Statistic\Config;
 
+defined('ACCESS') or die('no direct access');
+
 class Config extends \Ilch\Config\Install
 {
     public $config = array
@@ -40,7 +42,9 @@ class Config extends \Ilch\Config\Install
                 `user_id` INT(11) NOT NULL,
                 `site` VARCHAR(255) NOT NULL,
                 `os` VARCHAR(255) NOT NULL,
+                `os_version` VARCHAR(255) NOT NULL,
                 `browser` VARCHAR(255) NOT NULL,
+                `browser_version` VARCHAR(255) NOT NULL,
                 `ip_address` VARCHAR(255) NOT NULL,
                 `lang` VARCHAR(11) NOT NULL,
                 `date_last_activity` DATETIME NOT NULL,
@@ -50,7 +54,9 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_visits_stats` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `os` VARCHAR(255) NOT NULL,
+                `os_version` VARCHAR(255) NOT NULL,
                 `browser` VARCHAR(255) NOT NULL,
+                `browser_version` VARCHAR(255) NOT NULL,
                 `ip_address` VARCHAR(255) NOT NULL,
                 `referer` VARCHAR(255) NOT NULL,
                 `lang` VARCHAR(11) NOT NULL,

@@ -51,11 +51,25 @@ class Statistic extends \Ilch\Model
     protected $os;
 
     /**
+     * The os version of the Statistic.
+     *
+     * @var string
+     */
+    protected $osVersion;
+
+    /**
      * The browser of the Statistic.
      *
      * @var string
      */
     protected $browser;
+
+    /**
+     * The browser version of the Statistic.
+     *
+     * @var string
+     */
+    protected $browserVersion;
 
     /**
      * The lang of the Statistic.
@@ -233,6 +247,29 @@ class Statistic extends \Ilch\Model
     }
 
     /**
+     * Returns the os.
+     *
+     * @return string
+     */
+    public function getOSVersion()
+    {
+        return $this->osVersion;
+    }
+
+    /**
+     * Saves the os.
+     *
+     * @param string $osVersion
+     * @return osVersion
+     */
+    public function setOSVersion($osVersion)
+    {
+        $this->osVersion = (string)$osVersion;
+
+        return $this;
+    }
+
+    /**
      * Returns the browser.
      *
      * @return string
@@ -251,6 +288,29 @@ class Statistic extends \Ilch\Model
     public function setBrowser($browser)
     {
         $this->browser = (string)$browser;
+
+        return $this;
+    }
+
+    /**
+     * Returns the browser version.
+     *
+     * @return string
+     */
+    public function getBrowserVersion()
+    {
+        return $this->browserVersion;
+    }
+
+    /**
+     * Saves the browser version.
+     *
+     * @param string $browserVersion
+     * @return Browser Version
+     */
+    public function setBrowserVersion($browserVersion)
+    {
+        $this->browserVersion = (string)$browserVersion;
 
         return $this;
     }

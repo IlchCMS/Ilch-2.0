@@ -7,9 +7,85 @@ $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
 $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $month = $this->getRequest()->getParam('month');
 $year = $this->getRequest()->getParam('year');
+$os = $this->getRequest()->getParam('os');
+$browser = $this->getRequest()->getParam('browser');
 ?>
 
-<?php if ($this->get('statisticYearMonthDayList') != '' AND $year != '' AND $month != ''): ?>
+<?php if ($this->get('statisticOSVersionList') != '' AND $os != ''): ?>
+    <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - Windows</i></legend>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+                <div class="panel-footer">
+                    <?=$this->getTrans('os') ?>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <?php foreach ($this->get('statisticOSVersionList') as $statisticList): ?>
+                            <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <div class="list-group-item">
+                                <strong>
+                                    <?php if ($statisticList->getOS() == '0'): ?>
+                                        <?=$this->getTrans('unknown') ?>
+                                    <?php else: ?>
+                                        <?=$statisticList->getOS() ?> <?=$statisticList->getOSVersion() ?>
+                                    <?php endif; ?>
+                                </strong>
+                                <span class="pull-right"><?=$statisticList->getVisits() ?></span>
+                                <div class="radio">
+                                    <div class="progress" style="margin-bottom: 0px;">
+                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php elseif ($this->get('statisticBrowserVersionList') != '' AND $browser != ''): ?>
+    <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - <?=$browser ?></i></legend>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+                <div class="panel-footer">
+                    <?=$this->getTrans('browser') ?>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <?php foreach ($this->get('statisticBrowserVersionList') as $statisticList): ?>
+                            <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
+                            <div class="list-group-item">
+                                <strong>
+                                    <?php if ($statisticList->getBrowser() == '0'): ?>
+                                        <?=$this->getTrans('unknown') ?>
+                                    <?php else: ?>
+                                        <?=$statisticList->getBrowser() ?> <?=$statisticList->getBrowserVersion() ?>
+                                    <?php endif; ?>
+                                </strong>
+                                <span class="pull-right"><?=$statisticList->getVisits() ?></span>
+                                <div class="radio">
+                                    <div class="progress" style="margin-bottom: 0px;">
+                                        <div class="progress-bar" role="progressbar" data-transitiongoal="<?=$progressWidth ?>"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php elseif ($this->get('statisticYearMonthDayList') != '' AND $year != '' AND $month != ''): ?>
     <?php $date = new \Ilch\Date($year.'-'.$month.'-01'); ?>
     <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('F Y', true) ?></i></legend>
     <div class="row">
@@ -126,7 +202,7 @@ $year = $this->getRequest()->getParam('year');
                                     <?php if ($statisticList->getBrowser() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
-                                        <?=$statisticList->getBrowser() ?>
+                                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $statisticList->getBrowser()))?>"><?=$statisticList->getBrowser() ?></a>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -188,7 +264,11 @@ $year = $this->getRequest()->getParam('year');
                                     <?php if ($statisticList->getOS() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
-                                        <?=$statisticList->getOS() ?>
+                                        <?php if ($statisticList->getOS() == 'Windows'): ?>
+                                            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'os' => $statisticList->getOS()))?>"><?=$statisticList->getOS() ?></a>
+                                        <?php else: ?>
+                                            <?=$statisticList->getOS() ?>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -204,7 +284,7 @@ $year = $this->getRequest()->getParam('year');
             </div>
         </div>
     </div>
-<?php elseif ($this->get('statisticYearMonthList') != '' AND $year != ''): ?>
+<?php elseif ($this->get('statisticYearMonthList') != '' AND $year != '' AND $month == '' AND $os == ''): ?>
     <?php $date = new \Ilch\Date($year.'-01-01'); ?>
     <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('Y', true) ?></i></legend>
     <div class="row">
@@ -321,7 +401,7 @@ $year = $this->getRequest()->getParam('year');
                                     <?php if ($statisticList->getBrowser() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
-                                        <?=$statisticList->getBrowser() ?>
+                                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'browser' => $statisticList->getBrowser()))?>"><?=$statisticList->getBrowser() ?></a>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -383,7 +463,11 @@ $year = $this->getRequest()->getParam('year');
                                     <?php if ($statisticList->getOS() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
-                                        <?=$statisticList->getOS() ?>
+                                        <?php if ($statisticList->getOS() == 'Windows'): ?>
+                                            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'os' => $statisticList->getOS()))?>"><?=$statisticList->getOS() ?></a>
+                                        <?php else: ?>
+                                            <?=$statisticList->getOS() ?>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -399,11 +483,6 @@ $year = $this->getRequest()->getParam('year');
             </div>
         </div>
     </div>
-<?php endif; ?>
-
-<?php if ($this->get('statisticYearMonthDayList') == '' AND $this->get('statisticYearMonthList') == ''): ?>
-    <legend><?=$this->getTrans('menuStatistic') ?></legend>
-    <?=$this->getTrans('noStatistic') ?>
 <?php endif; ?>
 
 <script type="text/javascript">

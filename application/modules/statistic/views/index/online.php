@@ -54,7 +54,7 @@
                     <?php if($this->getUser()): ?>
                         <?php if($userCheck->isAdmin()): ?>
                             <td><?=$userOnlineList->getIPAdress() ?></td>
-                            <td><?=$userOnlineList->getOS() ?> / <?=$userOnlineList->getBrowser() ?></td>
+                            <td><?=$userOnlineList->getOS() ?> <?=$userOnlineList->getOSVersion() ?> / <?=$userOnlineList->getBrowser() ?> <?=$userOnlineList->getBrowserVersion() ?></td>
                         <?php endif; ?>
                     <?php endif; ?>
                     <td><a href="<?=$this->getUrl(substr($userOnlineList->getSite(),1)) ?>"><?=$moduleName ?></a></td>

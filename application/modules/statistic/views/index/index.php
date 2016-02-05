@@ -217,7 +217,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="list-group">
                     <?php foreach ($this->get('statisticHourList') as $statisticList): ?>
-                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
                             <strong><?=$date->format("H") ?>:00 <?=$this->getTrans('clock') ?></strong>
@@ -238,7 +238,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="list-group">
                     <?php foreach ($this->get('statisticDayList') as $statisticList): ?>
-                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
                             <strong><?=$date->format("l") ?></strong>
@@ -259,7 +259,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="list-group">
                     <?php foreach ($this->get('statisticYearMonthDayList') as $statisticList): ?>
-                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
                             <strong><?=$date->format("Y-m-d", true) ?></strong>
@@ -280,7 +280,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="list-group">
                     <?php foreach ($this->get('statisticYearMonthList') as $statisticList): ?>
-                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
                             <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$date->format("Y - F", true) ?></a></strong>
@@ -332,13 +332,14 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="list-group">
                     <?php foreach ($this->get('statisticBrowserList') as $statisticList): ?>
-                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                        <?php $date = new \Ilch\Date(); ?>
+                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <div class="list-group-item">
                             <strong>
                                 <?php if ($statisticList->getBrowser() == '0'): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
-                                    <?=$statisticList->getBrowser() ?>
+                                    <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'browser' => $statisticList->getBrowser()))?>"><?=$statisticList->getBrowser() ?></a>
                                 <?php endif; ?>
                             </strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -358,7 +359,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="list-group">
                     <?php foreach ($this->get('statisticLanguageList') as $statisticList): ?>
-                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <div class="list-group-item">
                             <strong>
                                 <?php if ($statisticList->getLang() == ''): ?>
@@ -394,13 +395,18 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             <div class="panel-body">
                 <div class="list-group">
                     <?php foreach ($this->get('statisticOSList') as $statisticList): ?>
-                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
+                        <?php $date = new \Ilch\Date(); ?>
+                        <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <div class="list-group-item">
                             <strong>
                                 <?php if ($statisticList->getOS() == '0'): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
-                                    <?=$statisticList->getOS() ?>
+                                    <?php if ($statisticList->getOS() == 'Windows'): ?>
+                                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()))?>"><?=$statisticList->getOS() ?></a>
+                                    <?php else: ?>
+                                        <?=$statisticList->getOS() ?>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>

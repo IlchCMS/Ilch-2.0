@@ -48,11 +48,11 @@ $(document).ready
             function()
             {
                 if ($(this).data('hiddenkey') == 'setfree') {
-                    txt = 'Sollen die markierten Einträge wirklich freigeschalten werden ?'
+                    txt = 'Sollen die markierten Einträge wirklich freigeschaltet werden?'
                 }
 
                 if ($(this).data('hiddenkey') == 'delete') {
-                    txt = 'Sollen die markierten Einträge wirklich gelöscht werden ?'
+                    txt = 'Sollen die markierten Einträge wirklich gelöscht werden?'
                 }
 
                 if (confirm(txt)) {
@@ -74,7 +74,7 @@ $(document).ready
         (
             function(event)
             {
-                if (!confirm("Sollen der Eintrag wirklich gelöscht werden ?")) {
+                if (!confirm("Sollen der Eintrag wirklich gelöscht werden?")) {
                     event.preventDefault();
                 }
             }
@@ -102,6 +102,6 @@ $(document).ready
                     }
                 }
             );
-        }        
+        }
     }
 );

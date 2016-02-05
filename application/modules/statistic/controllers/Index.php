@@ -36,14 +36,14 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('visitsYearTotal', $statisticMapper->getVisitsCount('', $date->format('Y')));
         $this->getView()->set('visitsAllTotal', $statisticMapper->getVisitsCount());
 
-        $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour());
-        $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay());
+        $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($date->format('Y', true)));
+        $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($date->format('Y', true)));
         $this->getView()->set('statisticYearMonthDayList', $statisticMapper->getVisitsYearMonthDay($date->format('Y', true), $date->format('m', true)));
         $this->getView()->set('statisticYearMonthList', $statisticMapper->getVisitsYearMonth());
         $this->getView()->set('statisticYearList', $statisticMapper->getVisitsYear());
-        $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser());
-        $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage());
-        $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS());
+        $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($date->format('Y', true)));
+        $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($date->format('Y', true)));
+        $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($date->format('Y', true)));
     }
 
     public function showAction()
@@ -52,7 +52,43 @@ class Index extends \Ilch\Controller\Frontend
 
         $month = $this->getRequest()->getParam('month');
         $year = $this->getRequest()->getParam('year');
+        $os = $this->getRequest()->getParam('os');
+        $browser = $this->getRequest()->getParam('browser');
 
+        if ($year != '' AND $month != '' AND $os != '') {
+            $date = new \Ilch\Date($year.'-'.$month.'-01');
+
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
+                    ->add($date->format('F', true), array('action' => 'show', 'year' => $year, 'month' => $month))
+                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
+                    ->add($os, array('action' => 'show', 'year' => $year, 'month' => $month, 'os' => $os));
+        }
+        if ($year != '' AND $os != '') {
+            $date = new \Ilch\Date($year.'-01-01');
+
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
+                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
+                    ->add($os, array('action' => 'show', 'year' => $year, 'os' => $os));
+        }
+        if ($year != '' AND $month != '' AND $browser != '') {
+            $date = new \Ilch\Date($year.'-'.$month.'-01');
+
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
+                    ->add($date->format('F', true), array('action' => 'show', 'year' => $year, 'month' => $month))
+                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
+                    ->add($browser, array('action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $browser));
+        }
+        if ($month == '' AND $year != '' AND $browser != '') {
+            $date = new \Ilch\Date($year.'-01-01');
+
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
+                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
+                    ->add($browser, array('action' => 'show', 'year' => $year, 'browser' => $browser));
+        }
         if ($year != '' AND $month != '') {
             $date = new \Ilch\Date($year.'-'.$month.'-01');
 
@@ -60,7 +96,8 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
                     ->add($date->format('F', true), array('action' => 'show', 'year' => $year, 'month' => $month))
                     ->add($date->format('Y', true), array('action' => 'show', 'year' => $year));
-        } elseif ($year != '') {
+        }
+        if ($year != '') {
             $date = new \Ilch\Date($year.'-01-01');
 
             $this->getLayout()->getHmenu()
@@ -68,7 +105,19 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($date->format('Y', true), array('action' => 'show', 'year' => $year));
         }
 
-        if ($year != '' AND $month != '') {
+        if ($month != '' AND $year != '' AND $os != '') {
+            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year, $month));
+            $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, $month, $os));
+        } elseif ($year != '' AND $os != '') {
+            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
+            $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, '', $os));
+        } elseif ($month != '' AND $year != '' AND $browser != '') {
+            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year, $month));
+            $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, $month, $browser));
+        } elseif ($year != '' AND $browser != '') {
+            $this->getView()->set('visitsTotal', $statisticMapper->getVisitsCount('', $year));
+            $this->getView()->set('statisticBrowserVersionList', $statisticMapper->getVisitsBrowser($year, '', $browser));
+        } elseif ($year != '' AND $month != '') {
             $this->getView()->set('visitsTotal', $statisticMapper->getVisitsMonthCount($year, $month));
             $this->getView()->set('statisticHourList', $statisticMapper->getVisitsHour($year, $month));
             $this->getView()->set('statisticDayList', $statisticMapper->getVisitsDay($year, $month));
@@ -86,6 +135,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($year));
             $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($year));
             $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($year));
+            $this->getView()->set('statisticOSVersionList', $statisticMapper->getVisitsOS($year, $month, $os));
         }
     }
 
