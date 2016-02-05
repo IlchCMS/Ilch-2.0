@@ -34,10 +34,13 @@ class Config extends \Ilch\Config\Install
 
         $articleMapper = new \Modules\Article\Mappers\Article();
         $catMapper = new \Modules\Article\Mappers\Category();
+        $databaseConfig = new \Ilch\Config\Database($this->db());
 
         /*
          * @todo change content for different types.
          */
+  
+        $databaseConfig->set('article_p_page', '10');
 
         $cat = new \Modules\Article\Models\Category();
         $cat->setName('Allgemein');

@@ -32,6 +32,13 @@ class Cats extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'index'))
                 ),
+                array
+                (
+                    'name' => 'menuSettings',
+                    'active' => false,
+                    'icon' => 'fa fa-cogs',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
+                ),
             )
         );
 
