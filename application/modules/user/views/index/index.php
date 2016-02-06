@@ -31,7 +31,15 @@ $userMapper = new Modules\User\Mappers\User();
                     <?php if($this->escape($userlist->getHomepage()) != ''): ?>
                         <a href="<?=$userMapper->getHomepage($this->escape($userlist->getHomepage())) ?>" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
                     <?php endif; ?>
-                    <a href="#" class="fa fa-skype" title="Skype"></a>
+                    <?php if($this->escape($userlist->getFacebook()) != ''): ?>
+                        <a href="<?=$userMapper->getHomepage($this->escape($userlist->getFacebook())) ?>" class="fa fa-facebook" title="<?=$this->getTrans('profileFacebook') ?>"></a>
+                    <?php endif; ?>
+                    <?php if($this->escape($userlist->getTwitter()) != ''): ?>
+                        <a href="<?=$userMapper->getHomepage($this->escape($userlist->getTwitter())) ?>" class="fa fa-twitter" title="<?=$this->getTrans('profileTwitter') ?>"></a>
+                    <?php endif; ?>
+                    <?php if($this->escape($userlist->getGoogle()) != ''): ?>
+                        <a href="<?=$userMapper->getHomepage($this->escape($userlist->getGoogle())) ?>" class="fa fa-google-plus" title="<?=$this->getTrans('profileGoogle') ?>"></a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

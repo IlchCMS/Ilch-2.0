@@ -51,6 +51,27 @@ class User extends \Ilch\Model
     protected $homepage;
 
     /**
+     * The facebook address of the user.
+     *
+     * @var string
+     */
+    protected $facebook;
+
+    /**
+     * The twitter address of the user.
+     *
+     * @var string
+     */
+    protected $twitter;
+
+    /**
+     * The google address of the user.
+     *
+     * @var string
+     */
+    protected $google;
+
+    /**
      * The city of the user.
      *
      * @var string
@@ -510,6 +531,75 @@ class User extends \Ilch\Model
     public function setHomepage($homepage)
     {
         $this->homepage = (string)$homepage;
+
+        return $this;
+    }
+
+    /**
+     * Returns the facebook address of the user.
+     *
+     * @return string
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * Saves the facebook address of the user.
+     * 
+     * @param string $facebook
+     * @return User
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = (string)$facebook;
+
+        return $this;
+    }
+
+    /**
+     * Returns the twitter address of the user.
+     *
+     * @return string
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * Saves the twitter address of the user.
+     * 
+     * @param string $twitter
+     * @return User
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = (string)$twitter;
+
+        return $this;
+    }
+
+    /**
+     * Returns the google address of the user.
+     *
+     * @return string
+     */
+    public function getGoogle()
+    {
+        return $this->google;
+    }
+
+    /**
+     * Saves the google address of the user.
+     * 
+     * @param string $google
+     * @return User
+     */
+    public function setGoogle($google)
+    {
+        $this->google = (string)$google;
 
         return $this;
     }

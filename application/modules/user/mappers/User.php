@@ -175,6 +175,18 @@ class User extends \Ilch\Mapper
             $user->setHomepage($userRow['homepage']);
         }
 
+        if (isset($userRow['facebook'])) {
+            $user->setFacebook($userRow['facebook']);
+        }
+
+        if (isset($userRow['twitter'])) {
+            $user->setTwitter($userRow['twitter']);
+        }
+
+        if (isset($userRow['google'])) {
+            $user->setGoogle($userRow['google']);
+        }
+
         if (isset($userRow['city'])) {
             $user->setCity($userRow['city']);
         }
@@ -288,6 +300,9 @@ class User extends \Ilch\Mapper
         $fields['first_name'] = $user->getFirstName();
         $fields['last_name'] = $user->getLastName();
         $fields['homepage'] = $user->getHomepage();
+        $fields['facebook'] = $user->getFacebook();
+        $fields['twitter'] = $user->getTwitter();
+        $fields['google'] = $user->getGoogle();
         $fields['city'] = $user->getCity();
         $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();

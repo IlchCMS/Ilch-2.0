@@ -51,6 +51,9 @@ class Panel extends BaseController
             $firstname = trim($this->getRequest()->getPost('first-name'));
             $lastname = trim($this->getRequest()->getPost('last-name'));
             $homepage = trim($this->getRequest()->getPost('homepage'));
+            $facebook = trim($this->getRequest()->getPost('facebook'));
+            $twitter = trim($this->getRequest()->getPost('twitter'));
+            $google = trim($this->getRequest()->getPost('google'));
             $city = trim($this->getRequest()->getPost('city'));
             $birthday = new \Ilch\Date(trim($this->getRequest()->getPost('birthday')));
 
@@ -63,15 +66,17 @@ class Panel extends BaseController
             }
 
             if (empty($errors)) {
-                    $model = new UserModel();
-                    $model->setId($this->getUser()->getId());
-                    $model->setEmail($email);
-                    $model->setFirstName($firstname);
-                    $model->setLastName($lastname);
-                    $model->setHomepage($homepage);
-                    $model->setCity($city);
-                    $model->setBirthday($birthday);
-
+                $model = new UserModel();
+                $model->setId($this->getUser()->getId());
+                $model->setEmail($email);
+                $model->setFirstName($firstname);
+                $model->setLastName($lastname);
+                $model->setHomepage($homepage);
+                $model->setFacebook($facebook);
+                $model->setTwitter($twitter);
+                $model->setGoogle($google);
+                $model->setCity($city);
+                $model->setBirthday($birthday);
                 $profilMapper->save($model);
 
                 $this->redirect(array('action' => 'profile'));

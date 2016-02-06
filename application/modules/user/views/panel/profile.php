@@ -65,6 +65,42 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('profileFacebook'); ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="facebook"
+                              placeholder="<?=$this->escape($profil->getFacebook()) ?>"
+                              value="<?=$this->escape($profil->getFacebook()) ?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('profileTwitter'); ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="twitter"
+                              placeholder="<?=$this->escape($profil->getTwitter()) ?>"
+                              value="<?=$this->escape($profil->getTwitter()) ?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('profileGoogle'); ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="google"
+                              placeholder="<?=$this->escape($profil->getGoogle()) ?>"
+                              value="<?=$this->escape($profil->getGoogle()) ?>" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileCity'); ?>
                     </label>
                     <div class="col-lg-8">

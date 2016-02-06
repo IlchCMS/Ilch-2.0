@@ -1,9 +1,7 @@
 <?php 
 $userMapper = new Modules\User\Mappers\User();
-
 $profil = $this->get('profil'); 
 $birthday = new \Ilch\Date($profil->getBirthday());
-$homepage = $userMapper->getHomepage($this->escape($profil->getHomepage()));
 
 $groups = '';
 foreach ($profil->getGroups() as $group) {
@@ -40,15 +38,21 @@ foreach ($profil->getGroups() as $group) {
                 <?php if ($this->getUser() AND $profil->getOptMail() == 1 AND $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
                     <a href="<?=$this->getUrl(array('controller' => 'mail', 'action' => 'index', 'user' => $profil->getId())) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                 <?php endif; ?>
-                <?php if ($profil->getHomepage() != ''): ?>
-                    <a href="<?=$homepage ?>" target="_blank" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
-                <?php endif; ?>
                 <?php if ($this->get('gallery') != 0 AND $profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
                     <a href="<?=$this->getUrl(array('controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId())) ?>" class="fa fa-picture-o" title="<?=$this->getTrans('gallery') ?>"></a>
                 <?php endif; ?>
-                <a class="fa fa-facebook" title="Facebook"></a>
-                <a class="fa fa-google-plus" title="Goggle+"></a>
-                <a class="fa fa-twitter" title="Twitter"></a>
+                <?php if ($profil->getHomepage() != ''): ?>
+                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getHomepage())) ?>" target="_blank" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
+                <?php endif; ?>
+                <?php if ($profil->getFacebook() != ''): ?>
+                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getFacebook())) ?>" target="_blank" class="fa fa-facebook" title="<?=$this->getTrans('profileFacebook') ?>"></a>
+                <?php endif; ?>
+                <?php if ($profil->getTwitter() != ''): ?>
+                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getTwitter())) ?>" target="_blank" class="fa fa-twitter" title="<?=$this->getTrans('profileTwitter') ?>"></a>
+                <?php endif; ?>
+                <?php if ($profil->getGoogle() != ''): ?>
+                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getGoogle())) ?>" target="_blank" class="fa fa-google-plus" title="<?=$this->getTrans('profileGoogle') ?>"></a>
+                <?php endif; ?>
             </div>
         </div>        
     </div>
@@ -79,16 +83,6 @@ foreach ($profil->getGroups() as $group) {
                 <?=$this->escape($profil->getCity()) ?>
             </div>
         </div>
-        <?php if ($profil->getHomepage() != ''): ?>
-            <div class="row">
-                <div class="col-lg-2 detail bold">
-                    <?=$this->getTrans('profileHomepage') ?>:
-                </div>
-                <div class="col-lg-10 detail">
-                    <a href="<?=$homepage ?>" title="<?=$homepage ?>" target="_blank"><?=$homepage ?></a>
-                </div>
-            </div>
-        <?php endif; ?>
         <div class="row">
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileBirthday') ?>:

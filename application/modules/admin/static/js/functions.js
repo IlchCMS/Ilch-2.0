@@ -74,7 +74,7 @@ $(document).ready
         (
             function(event)
             {
-                if (!confirm("Sollen der Eintrag wirklich gelöscht werden?")) {
+                if (!confirm("Soll der Eintrag wirklich gelöscht werden?")) {
                     event.preventDefault();
                 }
             }
