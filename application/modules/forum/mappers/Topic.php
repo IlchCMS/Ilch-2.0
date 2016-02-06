@@ -16,11 +16,11 @@ class Topic extends \Ilch\Mapper
     public function getTopicsByForumId($id, $pagination = NULL)
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                           FROM `[prefix]_forum_topics`
-                           WHERE forum_id = '.$id.'
-                               GROUP by type, id
-                               ORDER by type DESC, id DESC
-                           LIMIT '.implode(',',$pagination->getLimit());
+                FROM `[prefix]_forum_topics`
+                WHERE forum_id = '.$id.'
+                GROUP by type, id
+                ORDER by type DESC, id DESC
+                LIMIT '.implode(',',$pagination->getLimit());
 
         $fileArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
@@ -40,19 +40,27 @@ class Topic extends \Ilch\Mapper
             $entryModel->setDateCreated($entries['date_created']);
             $entry[] = $entryModel;
         }
+
         return $entry;
     }
 
-    public function getTopics($pagination = NULL)
+    public function getTopics($pagination = NULL, $limit = NULL)
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
                 FROM `[prefix]_forum_topics`
                 GROUP by type, id
-                ORDER by type DESC, id DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+                ORDER by type DESC, id DESC';
+        if ($pagination != null) {
+            $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
+        } elseif ($limit != null) {
+            $sql .= ' LIMIT '.$limit;  
+        }
 
         $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+
+        if ($pagination != null) {
+            $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        }
 
         $entry = array();
 
@@ -61,6 +69,7 @@ class Topic extends \Ilch\Mapper
             $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
             $entryModel->setText($entries['text']);
+            $entryModel->setForumId($entries['forum_id']);
             $entryModel->setTopicId($entries['topic_id']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
@@ -69,15 +78,17 @@ class Topic extends \Ilch\Mapper
             $entryModel->setDateCreated($entries['date_created']);
             $entry[] = $entryModel;
         }
+
         return $entry;
     }
 
     public function getPostById($id)
     {
         $sql = 'SELECT *
-                           FROM `[prefix]_forum_topics`
-                           WHERE id = '.$id;
+                FROM `[prefix]_forum_topics`
+                WHERE id = '.$id;
         $fileRow = $this->db()->queryRow($sql);
+
         $entryModel = new TopicModel();
         $userMapper = new UserMapper();
         $entryModel->setId($fileRow['id']);
@@ -88,7 +99,6 @@ class Topic extends \Ilch\Mapper
         $entryModel->setAuthor($userMapper->getUserById($fileRow['creator_id']));
         $entryModel->setDateCreated($fileRow['date_created']);
 
-
         return $entryModel;
     }
 
@@ -97,11 +107,13 @@ class Topic extends \Ilch\Mapper
         $sql = 'SELECT p.id, p.topic_id, p.date_created, p.user_id, p.read
                 FROM [prefix]_forum_posts as p 
                 WHERE p.topic_id = '.$id.'
-                  ORDER BY p.id DESC         ';
+                ORDER BY p.date_created DESC';
         $fileRow = $this->db()->queryRow($sql);
+
         if (empty($fileRow)) {
             return null;
         }
+
         $entryModel = new PostModel();
         $userMapper = new UserMapper();
         $forumMapper = new ForumMapper();
@@ -155,9 +167,9 @@ class Topic extends \Ilch\Mapper
     public function getPostByTopicId($id, $pagination = NULL)
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                           FROM `[prefix]_forum_topics`
-                           WHERE topic_id = '.$id.'
-                           LIMIT '.implode(',',$pagination->getLimit());
+                FROM `[prefix]_forum_topics`
+                WHERE topic_id = '.$id.'
+                LIMIT '.implode(',',$pagination->getLimit());
 
         $fileArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
@@ -172,6 +184,7 @@ class Topic extends \Ilch\Mapper
             $entryModel->setTopicTitle($entries['topic_title']);
             $entry[] = $entryModel;
         }
+
         return $entry;
     }
 

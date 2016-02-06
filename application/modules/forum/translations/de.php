@@ -40,5 +40,5 @@ return array
     'no' => 'Nein',
     'joined' => 'Dabei seit',
     'showNewPosts' => 'Neue Beiträge',
-    
+    'noPosts' => 'Keine Beiträge vorhanden',    
 );
