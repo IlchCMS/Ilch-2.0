@@ -141,10 +141,10 @@ class Frontend extends Base
                         dismiss: "OK",
                         learnMore: "Weitere Informationen",
                         link: "'.$this->getUrl(array('module' => 'cookieconsent', 'controller' => 'index', 'action' => 'index')).'",
-                        theme: "'.$this->escape($this->getConfigKey('cookie_consent_style')).'-'.$this->escape($this->getConfigKey('cookie_consent_pos')).'"
+                        theme: "'.$this->getStaticUrl('js/cookieconsent/styles/'.$this->escape($this->getConfigKey('cookie_consent_style')).'-'.$this->escape($this->getConfigKey('cookie_consent_pos')).'.css').'"
                     };
                     </script>
-                    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>';
+                    <script type="text/javascript" src="'.$this->getStaticUrl('js/cookieconsent/cookieconsent.js').'"></script>';
         }
 
         return $html;

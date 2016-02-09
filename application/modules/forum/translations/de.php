@@ -24,7 +24,7 @@ return array
     'newTopicTitle' => 'Neues Thema erstellen',
     'text' => 'Text',
     'newPost' => 'Neue Antwort',
-    'editPost' => 'Beitrag Bearbeiten',
+    'editPost' => 'Beitrag bearbeiten',
     'add' => 'Erstellen',
     'statistics' => 'Statistik',
     'whoOnline' => 'Wer ist online',
