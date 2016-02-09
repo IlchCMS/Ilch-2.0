@@ -230,9 +230,9 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic'), $modulesToInstall);
+                    $modulesToInstall = array_merge(array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'), $modulesToInstall);
                 } else {
-                    $modulesToInstall = array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic');
+                    $modulesToInstall = array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent');
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -293,7 +293,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'statistic'))) {
+                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'statistic', 'cookieconsent'))) {
                         continue;
                     }
 
@@ -345,15 +345,16 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * System-Modules
          */
-        $modules['user']['types']       = array();
-        $modules['article']['types']    = array();
-        $modules['page']['types']       = array();
-        $modules['media']['types']      = array();
-        $modules['comment']['types']    = array();
-        $modules['contact']['types']    = array();
-        $modules['imprint']['types']    = array();
-        $modules['privacy']['types']    = array();
-        $modules['statistic']['types']  = array();
+        $modules['user']['types']          = array();
+        $modules['article']['types']       = array();
+        $modules['page']['types']          = array();
+        $modules['media']['types']         = array();
+        $modules['comment']['types']       = array();
+        $modules['contact']['types']       = array();
+        $modules['imprint']['types']       = array();
+        $modules['privacy']['types']       = array();
+        $modules['cookieconsent']['types'] = array();
+        $modules['statistic']['types']     = array();
 
         /*
          * Optional-Modules.

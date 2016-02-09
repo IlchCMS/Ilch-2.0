@@ -68,6 +68,22 @@ class Frontend extends Base
     }
 
     /**
+     * Get key from config.
+     *
+     * @return string
+     */
+    public function getConfigKey($key)
+    {
+        $config = \Ilch\Registry::get('config');
+
+        if (!empty($config) && $key !== '') {
+            return $config->get($key);
+        }
+
+        return '';
+    }
+
+    /**
      * Gets the box with the given key.
      *
      * @param string $moduleKey
@@ -118,9 +134,22 @@ class Frontend extends Base
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
 
+        if ($this->getConfigKey('cookie_consent') != 0) {
+            $html .= '<script type="text/javascript">
+                    window.cookieconsent_options = {
+                        message: "'.$this->escape($this->getConfigKey('cookie_consent_message')).'",
+                        dismiss: "OK",
+                        learnMore: "Weitere Informationen",
+                        link: "'.$this->getUrl(array('module' => 'cookieconsent', 'controller' => 'index', 'action' => 'index')).'",
+                        theme: "'.$this->escape($this->getConfigKey('cookie_consent_style')).'-'.$this->escape($this->getConfigKey('cookie_consent_pos')).'"
+                    };
+                    </script>
+                    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>';
+        }
+
         return $html;
     }
-        
+
     /**
      * Loads a layout file.
      *
