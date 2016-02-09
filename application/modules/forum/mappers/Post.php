@@ -14,9 +14,10 @@ class Post extends \Ilch\Mapper
     public function getPostsByTopicId($id)
     {
         $sql = 'SELECT *
-                           FROM `[prefix]_forum_topics`
-                           WHERE id = '.$id;
+                FROM `[prefix]_forum_topics`
+                WHERE id = '.$id;
         $fileRow = $this->db()->queryRow($sql);
+
         $entryModel = new TopicModel();
         $entryModel->setId($fileRow['id']);
         $entryModel->setTopicTitle($fileRow['topic_title']);
@@ -25,6 +26,20 @@ class Post extends \Ilch\Mapper
         $entryModel->setCreatorName($fileRow['creator_name']);
         $entryModel->setDateCreated($fileRow['date_created']);
 
+        return $entryModel;
+    }
+
+    public function getPostById($id)
+    {
+        $sql = 'SELECT *
+                FROM `[prefix]_forum_posts`
+                WHERE id = '.$id;
+        $fileRow = $this->db()->queryRow($sql);
+
+        $entryModel = new PostModel();
+        $entryModel->setId($fileRow['id']);
+        $entryModel->setTopicId($fileRow['topic_id']);
+        $entryModel->setText($fileRow['text']);
 
         return $entryModel;
     }
@@ -33,7 +48,10 @@ class Post extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('forum_posts')
-                ->values(array('topic_id' => $model->getTopicId()))
+                ->values(array(
+                    'topic_id' => $model->getTopicId(),
+                    'text' => $model->getText()
+                ))
                 ->where(array('id' => $model->getId()))
                 ->execute();
         } else {
@@ -62,15 +80,16 @@ class Post extends \Ilch\Mapper
     public function getPostByTopicId($topicId, $pagination = null)
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                           FROM `[prefix]_forum_posts`
-                           WHERE topic_id = '.$topicId.'
-                           LIMIT '.implode(',',$pagination->getLimit());
+                FROM `[prefix]_forum_posts`
+                WHERE topic_id = '.$topicId.'
+                LIMIT '.implode(',',$pagination->getLimit());
 
         $fileArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
         $postEntry = array();
         $userMapper = new UserMapper();
+
         foreach ($fileArray as $entries) {
             $entryModel = new PostModel();
             $entryModel->setId($entries['id']);

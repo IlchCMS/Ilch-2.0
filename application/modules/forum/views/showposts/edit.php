@@ -1,6 +1,10 @@
+<?php
+$post = $this->get('post');
+?>
+
 <link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
 
-<h3 class="blue-header col-lg-12"><?=$this->getTrans('newPost') ?></h3>
+<h3 class="blue-header col-lg-12"><?=$this->getTrans('editPost') ?></h3>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row">
@@ -11,15 +15,16 @@
                               class="form-control ckeditor"
                               toolbar="ilch_bbcode"
                               name="text">
+                              <?=nl2br($this->getHtmlFromBBCode($post->getText())) ?>
                     </textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-12">
                     <input type="submit"
-                           name="saveNewPost"
+                           name="editPost"
                            class="btn"
-                           value="<?php echo $this->getTrans('add'); ?>" />
+                           value="<?=$this->getTrans('edit'); ?>" />
                 </div>
             </div>
         </div>

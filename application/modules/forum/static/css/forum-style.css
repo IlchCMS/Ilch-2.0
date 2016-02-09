@@ -493,7 +493,7 @@ dd.lastpost span, ul.topiclist dd.info span, dd.redirect span, dd.moderation spa
     min-height: 35px;
     overflow: hidden;
 }
-#forum .topic-actions form{
+#forum .topic-actions form {
     display: inline-block;
 }
 #forum .buttons {
@@ -508,11 +508,15 @@ dd.lastpost span, ul.topiclist dd.info span, dd.redirect span, dd.moderation spa
     margin-top: 0px;
     float: right;
 }
-#forum .edit {
-    
+#forum .delete, .edit {
+    float: right; 
 }
-#forum .edit p {
-    float: right;
+#forum .delete .btn-xs .btn-label {
+    padding: 2px 4px;
+    left: -6px;
+}
+#forum .edit {
+    padding-right: 5px;
 }
 #forum .edit .btn-xs .btn-label {
     padding: 2px 4px;
@@ -671,9 +675,7 @@ dd.lastpost span, ul.topiclist dd.info span, dd.redirect span, dd.moderation spa
         overflow: hidden;
     }
 }
-#forum .btn {
-    border-radius: 0px;
-}
+
 #forum .btn-label {
     position: relative;
     left: -12px;
@@ -685,7 +687,4 @@ dd.lastpost span, ul.topiclist dd.info span, dd.redirect span, dd.moderation spa
 #forum .btn-labeled {
     padding-top: 0;
     padding-bottom: 0;
-}
-#forum .btn { 
-    margin-bottom:10px; 
 }

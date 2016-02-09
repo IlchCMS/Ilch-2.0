@@ -7,6 +7,7 @@
 namespace Modules\Forum\Controllers;
 
 use Modules\Forum\Mappers\Post as PostMapper;
+use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 
@@ -15,10 +16,12 @@ class Newpost extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $forumMapper = new ForumMapper();
+        $topicMapper = new TopicMapper();
 
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
+        $post = $topicMapper->getPostById($topicId);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
         
@@ -26,6 +29,7 @@ class Newpost extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
                 ->add($cat->getTitle(), array('controller' => 'showcat','action' => 'index', 'id' => $cat->getId()))
                 ->add($forum->getTitle(), array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()))
+                ->add($post->getTopicTitle(), array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId))
                 ->add($this->getTranslator()->trans('newPost'), array('controller' => 'newpost','action' => 'index', 'topicid' => $topicId));
 
         if ($this->getRequest()->getPost('saveNewPost')) {

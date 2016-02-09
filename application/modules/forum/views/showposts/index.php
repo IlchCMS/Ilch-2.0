@@ -39,14 +39,27 @@ if ($this->getUser()) {
         <?php foreach ($posts as $post): ?>
             <?php $date = new \Ilch\Date($post->getDateCreated()) ?>
             <div id="p3" class="post bg1">
-                <div class="edit">
+                <div class="delete">
                     <?php if ($this->getUser()): ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
-                            <p class="edit-post">
+                            <p class="delete-post">
                                 <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'))) ?>" class="btn btn-xs btn-labeled bgblue">
                                     <span class="btn-label">
                                         <i class="fa fa-trash"></i>
                                     </span><?=$this->getTrans('delete') ?>
+                                </a>
+                            </p>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="edit">
+                    <?php if ($this->getUser()): ?>
+                        <?php if ($this->getUser()->isAdmin()): ?>
+                            <p class="edit-post">
+                                <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'))) ?>" class="btn btn-xs btn-labeled bgblue">
+                                    <span class="btn-label">
+                                        <i class="fa fa-pencil"></i>
+                                    </span><?=$this->getTrans('edit') ?>
                                 </a>
                             </p>
                         <?php endif; ?>

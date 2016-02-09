@@ -35,9 +35,9 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index','action' => 'index'))
-                ->add($cat->getTitle(), array('controller' => 'showcat','action' => 'index', 'id' => $cat->getId()))
-                ->add($forum->getTitle(), array('controller' => 'showtopics','action' => 'index', 'forumid' => $forumId->getId()))
+                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
+                ->add($cat->getTitle(), array('controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()))
+                ->add($forum->getTitle(), array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId->getId()))
                 ->add($post->getTopicTitle(), array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId));
 
         $topicModel->setId($topicId);
@@ -93,12 +93,49 @@ class Showposts extends \Ilch\Controller\Frontend
                 $postMapper->deleteById($postId);
                 if ($countPosts === '1') {
                     $topicMapper->deleteById($topicId);
-                    $this->redirect(array('controller' => 'showtopics','action' => 'index','forumid' => $forumId ));
+                    $this->redirect(array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId));
                 }
-                $this->redirect(array('controller' => 'showposts','action' => 'index','topicid' => $topicId, 'forumid' => $forumId ));
+
+                $this->redirect(array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId));
             }
         }
+
         $this->addMessage('noAccess', 'danger');
-        $this->redirect(array('controller' => 'showposts','action' => 'index','topicid' => $topicId, 'forumid' => $forumId ));
+        $this->redirect(array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'forumid' => $forumId));
+    }
+
+    public function editAction()
+    {
+        $postMapper = new PostMapper();
+        $forumMapper = new ForumMapper();
+        $topicMapper = new TopicMapper();
+
+        $postId = (int)$this->getRequest()->getParam('id');
+        $topicId = (int)$this->getRequest()->getParam('topicid');
+        $forum = $forumMapper->getForumByTopicId($topicId);
+        $cat = $forumMapper->getCatByParentId($forum->getParentId());
+        $post = $topicMapper->getPostById($topicId);
+
+        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
+        
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
+                ->add($cat->getTitle(), array('controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()))
+                ->add($forum->getTitle(), array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()))
+                ->add($post->getTopicTitle(), array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId))
+                ->add($this->getTranslator()->trans('editPost'), array('controller' => 'newpost','action' => 'index', 'topicid' => $topicId));
+
+        if ($this->getRequest()->getPost('editPost')) {
+            $postMapper = new PostMapper;
+            $postModel = new ForumPostModel;
+            $postModel->setId($postId);
+            $postModel->setTopicId($topicId);
+            $postModel->setText($this->getRequest()->getPost('text'));
+            $postMapper->save($postModel);
+
+            $this->redirect(array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId));
+        }
+
+        $this->getView()->set('post', $postMapper->getPostById($postId));
     }
 }
