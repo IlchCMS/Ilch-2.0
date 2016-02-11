@@ -17,15 +17,22 @@ class Article extends \Ilch\Mapper
      * Get articles.
      *
      * @param string $locale
+     * @param integer $page
      * @return ArticleModel[]|array
      */
-    public function getArticles($locale = '')
+    public function getArticles($locale = '', $page)
     {
+        
+        $pageSelect = $this->db()->select()->fields('value')->from('config')->where(['key =' => 'article_p_page']);
+        $pageSelectItems = $pageSelect->execute();
+        $pageArray = $pageSelectItems->fetchRows();
+
         $select = $this->db()->select();
         $result = $select->fields(['p.id', 'p.cat_id', 'p.date_created'])
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source'])
             ->where(['pc.locale' => $this->db()->escape($locale)])
+            ->limit([($page * $pageArray[0]['value']), $pageArray[0]['value']])
             ->group(['p.id'])
             ->order(['date_created' => 'DESC']);
 
@@ -52,6 +59,30 @@ class Article extends \Ilch\Mapper
             $articleModel->setDateCreated($articleRow['date_created']);
             $articleModel->setArticleImage($articleRow['article_img']);
             $articleModel->setArticleImageSource($articleRow['article_img_source']);
+            $articles[] = $articleModel;
+        }
+
+        return $articles;
+    }
+
+    /**
+     * Get articles.
+     *
+     * @param string $locale
+     * @param integer $page
+     * @return ArticleModel[]|array
+     */
+    public function getArticlesPages($locale = '')
+    {
+        
+        $articleArray = $this->db()->select('count(*)')
+            ->from('articles')
+            ->execute()
+            ->fetchRows();
+
+        foreach ($articleArray as $articleRow) {
+            $articleModel = new ArticleModel();
+            $articleModel->setPageCount($articleRow['count(*)']);
             $articles[] = $articleModel;
         }
 

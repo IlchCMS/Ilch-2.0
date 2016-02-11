@@ -35,4 +35,5 @@ return array
     'monthArchives' => 'Month Archives',
     'commentUser' => 'User',
     'commentDateTime' => 'Date/Time',
+    'articlePerPage' => 'Article per page',
 );

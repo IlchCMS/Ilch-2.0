@@ -1,7 +1,9 @@
 <?php
 $articles = $this->get('articles');
+$pages = $this->get('pageCount');
 $categoryMapper = new \Modules\Article\Mappers\Category();
 $commentMapper = new \Modules\Comment\Mappers\Comment();
+$config = \Ilch\Registry::get('config');
 ?>
 
 <?php if ($articles != ''): ?>
@@ -57,6 +59,29 @@ $commentMapper = new \Modules\Comment\Mappers\Comment();
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
+    <div class="col-lg-12 col-md-12 col-xs-12">
+    <center>
+    <ul class="pagination pagination-lg">
+        <?php if ($this->getRequest()->getParam('page') == 0): ?>
+            <li><a class="btn disabled" href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'page' => $this->getRequest()->getParam('page'))) ?>">&laquo;</a></li>
+        <?php else: ?>
+            <li><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'page' => $this->getRequest()->getParam('page') - 1)) ?>">&laquo;</a></li>
+        <?php endif; ?>
+        <?php for ($i = 0; $i <= floor($pages[0]->getPageCount() /  $config->get('article_p_page')); $i++): ?>
+            <?php if ($this->getRequest()->getParam('page') == $i): ?>
+                <li class="active"><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'page' => $i)) ?>"><?php echo $i+1; ?></a></li>
+            <?php else: ?>
+                <li><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'page' => $i)) ?>"><?php echo $i+1; ?></a></li>
+            <?php endif; ?>
+        <?php endfor; ?>
+        <?php if ($this->getRequest()->getParam('page') == floor($pages[0]->getPageCount() /  $config->get('article_p_page'))): ?>
+            <li><a class="btn disabled" href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'page' => $this->getRequest()->getParam('page'))) ?>">&raquo;</a></li>
+        <?php else: ?>
+            <li><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'page' => $this->getRequest()->getParam('page') + 1)) ?>">&raquo;</a></li>
+        <?php endif; ?>   
+    </ul>
+    </center>
+    </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

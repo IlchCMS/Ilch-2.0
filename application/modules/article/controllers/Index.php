@@ -33,7 +33,8 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'));
 
-        $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
+        $this->getView()->set('articles', $articleMapper->getArticles($this->locale, $this->getRequest()->getParam('page')));
+        $this->getView()->set('pageCount', $articleMapper->getArticlesPages($this->locale));
     }
 
     public function showAction()

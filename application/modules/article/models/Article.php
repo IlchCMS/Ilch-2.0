@@ -103,6 +103,13 @@ class Article extends \Ilch\Model
     protected $articleImageSource;
 
     /**
+     * The articleImageSource of the image.
+     *
+     * @var string
+     */
+    protected $pageCount;
+
+    /**
      * Gets the id of the article.
      *
      * @return int
@@ -360,5 +367,25 @@ class Article extends \Ilch\Model
     public function getArticleImageSource()
     {
         return $this->articleImageSource;
+    }
+
+    /**
+     * Sets the pageCount of the image.
+     *
+     * @param string $pageCount
+     */
+    public function setPageCount($pageCount)
+    {
+        $this->pageCount = $pageCount;
+    }
+
+    /**
+     * Gets the pageCount.
+     *
+     * @return string
+     */
+    public function getPageCount()
+    {
+        return $this->pageCount;
     }
 }
