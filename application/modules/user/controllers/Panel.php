@@ -113,7 +113,7 @@ class Panel extends BaseController
                 if ($file_size <= $avatarSize AND $width == $avatarWidth AND $height == $avatarHeight) {
                     $avatar = $path.$this->getUser()->getId().'.'.$endung;
 
-                    if ($profil->getAvatar() != '') {
+                    if ($this->getUser()->getAvatar() != '') {
                         $settingMapper = new SettingMapper();
                         $settingMapper->delAvatarById($this->getUser()->getId());
                     }
