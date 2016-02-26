@@ -25,6 +25,7 @@ define('DEFAULT_LAYOUT', 'index');
 /*
  * Path could not be under root.
  */
+define('ROOT_PATH', __DIR__);
 define('APPLICATION_PATH', __DIR__.'/application');
 define('CONFIG_PATH', APPLICATION_PATH);
 

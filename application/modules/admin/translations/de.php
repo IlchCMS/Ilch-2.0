@@ -151,4 +151,17 @@ return array
     'shortcutSettings' => 'Öffnet die Seiten Einstellungen',
     'shortcutKeybord' => 'Öffnet die Tastaturkürzel',
     'shortcutOfficialSite' => 'Öffnet die offizielle Homepage',
+
+    'menuUpdate' => 'Update',
+    'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
+    'versionNow' => 'Aktuelle Version:',
+    'readReleas' => 'Lese Aktuelle Releas Version...',
+    'foundNewVersions' => 'Neue Version gefunden',
+    'noReleas' => 'Konnte keine neue Releas Version finden.',
+    'doSave' => 'Update herunterladen und speichern?',
+    'isSave' => 'Update bereits heruntergeladen.',
+    'save' => 'Update erfolgreich heruntergeladen.',
+    'doSaveNow' => 'Jetzt herunterladen',
+    'updateReady' => 'Update bereit zum Installieren.',
+    'installNow' => 'Jetzt Installieren?',
 );

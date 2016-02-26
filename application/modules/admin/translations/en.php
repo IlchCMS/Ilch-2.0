@@ -151,4 +151,17 @@ return array
     'shortcutSettings' => 'Opens the Site Settings',
     'shortcutKeybord' => 'Opens the Keyboard Shortcuts',
     'shortcutOfficialSite' => 'Opens the official Site',
+
+    'menuUpdate' => 'Update',
+    'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
+    'versionNow' => 'Current version:',
+    'readReleas' => 'Read current releas version...',
+    'foundNewVersions' => 'New Version found',
+    'noReleas' => 'Could not find new releas version.',
+    'doSave' => 'Update download and save?',
+    'isSave' => 'Update already downloaded.',
+    'save' => 'Update successful downloaded.',
+    'doSaveNow' => 'Download now',
+    'updateReady' => 'Update ready to install.',
+    'installNow' => 'Install now?',
 );

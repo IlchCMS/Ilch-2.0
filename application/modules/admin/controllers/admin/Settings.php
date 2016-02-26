@@ -33,6 +33,13 @@ class Settings extends \Ilch\Controller\Admin
                 'icon' => 'fa fa-download',
                 'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'backup'))
             ),
+            array
+            (
+                'name' => 'menuUpdate',
+                'active' => false,
+                'icon' => 'fa fa-refresh',
+                'url' => $this->getLayout()->getUrl(array('controller' => 'update', 'action' => 'index'))
+            ),
         );
 
         if ($this->getRequest()->getActionName() == 'backup') {
