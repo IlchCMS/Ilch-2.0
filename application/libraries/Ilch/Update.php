@@ -201,21 +201,20 @@ class Update
                 $content[] = 'New file: '.$thisFileName.'...........';
                 $contents = zip_entry_read($aF, zip_entry_filesize($aF));
                 $contents = str_replace("\r\n", "\n", $contents);
-                $updateThis = '';
+                $updateThis = fopen(ROOT_PATH.'/'.$thisFileName, 'w');
+                fwrite($updateThis, $contents);
+                fclose($updateThis);
+                unset($contents);
 
                 //If we need to run commands, then do it.
-                if ($thisFileName == 'config.php') {
-                    //include 'application/Modules/user/config/config.php';
-                    //$configClass = '\\Modules\\user\\Config\\config';
-                    //$config = new $configClass($this->getTranslator());
-                    //$config->getUpdate();
-                    $content[] = 'EXECUTED';
-                } else {
-                    $updateThis = fopen(ROOT_PATH.'/'.$thisFileName, 'w');
-                    fwrite($updateThis, $contents);
-                    fclose($updateThis);
-                    unset($contents);
-                }
+                if ($thisFileName == $thisFileDir.'/config.php') {
+                    include $thisFileName;
+
+                    $configClass = str_replace("/", "\\",str_replace('application', '',    str_replace('.php', '', $thisFileName)));
+                    $config = new $configClass();
+
+                    $content[] = $config->getUpdate();
+                } 
             }
         }
         curl_close($this->getUpdateUrl());
