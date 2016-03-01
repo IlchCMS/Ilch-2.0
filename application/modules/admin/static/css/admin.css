@@ -642,6 +642,15 @@ legend {
     transition: left 0.15s ease-out;
 }
 
+#update .list-files{
+    height: 200px;
+    overflow-x: scroll;
+    border: 1px solid #CCC !important;
+    border-radius: 0px;
+    padding: 5px;
+    background-color: beige;
+}
+
 @media (max-width:991px) {
     #main {
         width: 100%!important;

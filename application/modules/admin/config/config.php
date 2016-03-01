@@ -95,6 +95,6 @@ class Config extends \Ilch\Config\Install
     }
     public function getUpdate()
     {
-
+        return 'Update function executed';
     }
 }

@@ -210,7 +210,7 @@ class Update
                 if ($thisFileName == $thisFileDir.'/config.php') {
                     include $thisFileName;
 
-                    $configClass = str_replace("/", "\\",str_replace('application', '',    str_replace('.php', '', $thisFileName)));
+                    $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
                     $config = new $configClass();
 
                     $content[] = $config->getUpdate();

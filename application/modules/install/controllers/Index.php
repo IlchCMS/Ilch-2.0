@@ -107,6 +107,10 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableConfig'] = true;
         }
 
+        if (!is_writable(APPLICATION_PATH.'/../updates/')) {
+            $errors['writableUpdates'] = true;
+        }
+
         if (!is_writable(APPLICATION_PATH.'/../.htaccess')) {
             $errors['writableHtaccess'] = true;
         }

@@ -6,6 +6,7 @@ $doSave = $this->getRequest()->getParam('dosave');
 ?>
 
 <?php if ($getVersions != ''): ?>
+    <div id="update">
     <p><?=$this->getTrans('versionNow') ?><?=$this->get('version') ?></p>
     <p><?=$this->getTrans('readReleas') ?></p>
     <?php if ($this->get('foundNewVersions')): ?>
@@ -39,22 +40,14 @@ $doSave = $this->getRequest()->getParam('dosave');
             <p>UPDATE COMPLIED</p>
         <?php endif; ?>
     <?php endif; ?>
+    </div>
 <?php else: ?>
     <p><?=$this->getTrans('noReleas') ?></p>
 <?php endif; ?>
 
-    <style>
-        .list-files{
-            height: 200px;
-            overflow-x: hidden;
-            border: 1px solid #CCC !important;
-            border-radius: 0px;
-            padding: 5px;
-        }
-    </style>
-    <script>
-        $(document).ready(function(){
-           var objDiv = document.getElementById("list-files");
-            objDiv.scrollTop = objDiv.scrollHeight;
-        });
-    </script>
+<script>
+    $(document).ready(function(){
+       var objDiv = document.getElementById("list-files");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    });
+</script>
