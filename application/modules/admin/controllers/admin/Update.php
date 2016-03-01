@@ -75,9 +75,9 @@ class Update extends \Ilch\Controller\Admin
 
             if ($update->newVersionFound() == true) {
                 $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
-                $aV = $update->getNewVersion();
+                $newVersion = $update->getNewVersion();
                 $this->getView()->set('foundNewVersions', true);
-                $this->getView()->set('aV', $aV);
+                $this->getView()->set('newVersion', $newVersion);
 
                 if ($doSave == true) {
                     $update->save();

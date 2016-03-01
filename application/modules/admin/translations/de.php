@@ -164,4 +164,5 @@ return array
     'doSaveNow' => 'Jetzt herunterladen',
     'updateReady' => 'Update bereit zum Installieren.',
     'installNow' => 'Jetzt Installieren?',
+    'updateComplied' => 'Erfolgreich Installiert',
 );

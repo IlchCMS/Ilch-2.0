@@ -166,8 +166,8 @@ class Update
     {
         if (!$this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip') {
             $newUpdate = file_get_contents($this->getDownloadUrl());
-                if (!is_dir(ROOT_PATH.'/updates/')) mkdir (ROOT_PATH.'/updates/');
-                $dlHandler = fopen(ROOT_PATH.'/updates/Master-'.$this->getNewVersion().'.zip', 'w');
+                if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
+                $dlHandler = fopen($this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip', 'w');
                 if (!fwrite($dlHandler, $newUpdate)) {
 
                 }
@@ -180,7 +180,7 @@ class Update
     */
     public function update()
     {
-        $zipHandle = zip_open(ROOT_PATH.'/updates/Master-'.$this->getNewVersion().'.zip');
+        $zipHandle = zip_open($this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip');
         $content = array();
         while ($aF = zip_read($zipHandle)) {
 

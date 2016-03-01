@@ -3,6 +3,7 @@
 $getVersions = $this->get('versions');
 $doUpdate = $this->getRequest()->getParam('doupdate');
 $doSave = $this->getRequest()->getParam('dosave');
+$newVersion = $this->get('newVersion');
 ?>
 
 <?php if ($getVersions != ''): ?>
@@ -10,9 +11,9 @@ $doSave = $this->getRequest()->getParam('dosave');
     <p><?=$this->getTrans('versionNow') ?><?=$this->get('version') ?></p>
     <p><?=$this->getTrans('readReleas') ?></p>
     <?php if ($this->get('foundNewVersions')): ?>
-        <p><?=$this->getTrans('foundNewVersions') ?>:<?=$this->get('aV') ?></p>
+        <p><?=$this->getTrans('foundNewVersions') ?>:<?=$newVersion ?></p>
         <?php if(!$doUpdate): ?>
-            <?php if (is_file(ROOT_PATH.'/updates/Master-'.$this->get('aV').'.zip')): ?>
+            <?php if (is_file(ROOT_PATH.'/updates/Master-'.$newVersion.'.zip')): ?>
                 <?php if(!$doSave): ?>
                     <p><?=$this->getTrans('isSave') ?></p>
                 <?php else: ?>
@@ -32,12 +33,12 @@ $doSave = $this->getRequest()->getParam('dosave');
             <?php endif; ?>
         <?php endif; ?>
         <?php if($doUpdate): ?>
-                <div class="list-files" id="list-files">
-            <?php foreach ($this->get('content') as $list): ?>
-                <p><?=$list ?></p>
-            <?php endforeach; ?>
+            <div class="list-files" id="list-files">
+                <?php foreach ($this->get('content') as $list): ?>
+                    <p><?=$list ?></p>
+                <?php endforeach; ?>
             </div>
-            <p>UPDATE COMPLIED</p>
+            <p><?=$this->getTrans('updateComplied') ?></p>
         <?php endif; ?>
     <?php endif; ?>
     </div>

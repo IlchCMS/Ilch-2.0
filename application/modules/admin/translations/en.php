@@ -164,4 +164,5 @@ return array
     'doSaveNow' => 'Download now',
     'updateReady' => 'Update ready to install.',
     'installNow' => 'Install now?',
+    'updateComplied' => 'Successful installed',
 );
