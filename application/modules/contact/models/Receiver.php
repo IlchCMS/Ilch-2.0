@@ -6,11 +6,6 @@
 
 namespace Modules\Contact\Models;
 
-/**
- * The receiver model class.
- *
- * @package ilch
- */
 class Receiver extends \Ilch\Model
 {
     /**

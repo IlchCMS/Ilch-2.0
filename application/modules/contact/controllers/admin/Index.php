@@ -15,7 +15,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $this->getLayout()->addMenu
         (
-            'menuReceiver',
+            'menuContact',
             array
             (
                 array
@@ -34,17 +34,17 @@ class Index extends \Ilch\Controller\Admin
             (
                 'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
+                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
             )
         );
     }
 
     public function indexAction()
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'));
-
         $receiverMapper = new ReceiverMapper();
+
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuContact'), array('action' => 'index'));
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_receivers')) {
             foreach($this->getRequest()->getPost('check_receivers') as $receiveId) {
@@ -52,8 +52,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $receivers = $receiverMapper->getReceivers();
-        $this->getView()->set('receivers', $receivers);
+        $this->getView()->set('receivers', $receiverMapper->getReceivers());
     }
 
     public function deleteAction()
@@ -72,28 +71,36 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuContact'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('edit'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
 
             $this->getView()->set('receiver', $receiverMapper->getReceiverById($this->getRequest()->getParam('id')));
-        }  else {
+        } else {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuReceiver'), array('action' => 'index'))
+                ->add($this->getTranslator()->trans('menuContact'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
         }
 
         if ($this->getRequest()->isPost()) {
-            $model = new ReceiverModel();
+            $name = $this->getRequest()->getPost('name');
+            $email = $this->getRequest()->getPost('email');
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
+            if (empty($name)) {
+                $this->addMessage('missingName', 'danger');
+            } elseif (empty($email)) {
+                $this->addMessage('missingEmail', 'danger');
+            } else {
+                $model = new ReceiverModel();
+
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                $model->setName($name);
+                $model->setEmail($email);
+                $receiverMapper->save($model);
+
+                $this->redirect(array('action' => 'index'));
             }
-
-            $model->setName($this->getRequest()->getPost('name'));
-            $model->setEmail($this->getRequest()->getPost('email'));
-
-            $receiverMapper->save($model);
-            $this->redirect(array('action' => 'index'));
         }
     }
 }
