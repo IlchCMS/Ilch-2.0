@@ -37,6 +37,10 @@ class Forum extends \Ilch\Mapper
             $itemModel->setReadAccess($itemRow['read_access']);
             $itemModel->setReplayAccess($itemRow['replay_access']);
             $itemModel->setCreateAccess($itemRow['create_access']);
+            $itemModel->setSubItems($this->getForumItemsByParent('1',$itemRow['id']));
+            $itemModel->setTopics($this->getCountTopicsById($itemRow['id']));
+            $itemModel->setLastPost($this->getLastPostByTopicId($itemRow['id']));
+            $itemModel->setPosts($this->getCountPostsById($itemRow['id']));
             $items[] = $itemModel;
         }
 

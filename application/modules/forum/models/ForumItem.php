@@ -84,6 +84,34 @@ class ForumItem extends \Ilch\Model
     protected $createAccess;
 
     /**
+     * ParentId of the item.
+     *
+     * @var integer
+     */
+    protected $subItems;
+
+    /**
+     * ParentId of the item.
+     *
+     * @var integer
+     */
+    protected $topics;
+
+    /**
+     * ParentId of the item.
+     *
+     * @var integer
+     */
+    protected $lastPost;
+
+    /**
+     * ParentId of the item.
+     *
+     * @var integer
+     */
+    protected $posts;
+
+    /**
      * Gets the id.
      *
      * @return integer
@@ -281,5 +309,85 @@ class ForumItem extends \Ilch\Model
     public function setCreateAccess($createAccess)
     {
         $this->createAccess = (string) $createAccess;
+    }
+
+    /**
+     * Gets the sub items.
+     *
+     * @return
+     */
+    public function getSubItems()
+    {
+        return $this->subItems;
+    }
+
+    /**
+     * Sets the sub items.
+     *
+     * @param
+     */
+    public function setSubItems($subItems)
+    {
+        $this->subItems = $subItems;
+    }
+
+    /**
+     * Gets the topics.
+     *
+     * @return
+     */
+    public function getTopics()
+    {
+        return $this->topics;
+    }
+
+    /**
+     * Sets the topics.
+     *
+     * @param
+     */
+    public function setTopics($topics)
+    {
+        $this->topics = $topics;
+    }
+
+    /**
+     * Gets the last post.
+     *
+     * @return
+     */
+    public function getLastPost()
+    {
+        return $this->lastPost;
+    }
+
+    /**
+     * Sets the last post.
+     *
+     * @param
+     */
+    public function setLastPost($lastPost)
+    {
+        $this->lastPost = $lastPost;
+    }
+
+    /**
+     * Gets the posts.
+     *
+     * @return integer
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * Sets the posts.
+     *
+     * @param
+     */
+    public function setPosts($posts)
+    {
+        $this->posts = $posts;
     }
 }

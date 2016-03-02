@@ -49,7 +49,6 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()->set('groupIdsArray', $groupIdsArray);
         $this->getView()->set('forumItems', $forumItems);
-        $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('usersOnline', count($usersOnline));
         $this->getView()->set('guestOnline', $allOnlineUsers - count($usersOnline));
         $this->getView()->set('forumStatics', $staticsMapper->getForumStatistics());

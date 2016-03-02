@@ -1,18 +1,18 @@
 <link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
 <?php
-$forumMapper = $this->get('forumMapper');
 $forumItems = $this->get('forumItems');
 $readAccess = $this->get('groupIdsArray');
 $usersOnline = $this->get('usersOnline');
 $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
 $ins = $usersOnline + $guestOnline;
-function rec($item, $forumMapper, $obj, $readAccess, $i)
+function rec($item, $obj, $readAccess, $i)
 {
-    $subItems = $forumMapper->getForumItemsByParent('1', $item->getId());
-    $topics = $forumMapper->getCountTopicsById($item->getId());
-    $lastPost = $forumMapper->getLastPostByTopicId($item->getId());
-    $posts = $forumMapper->getCountPostsById($item->getId());
+    //dumpVar($item->getSubItems());
+    $subItems = $item->getSubItems();
+    $topics = $item->getTopics();
+    $lastPost = $item->getLastPost();
+    $posts = $item->getPosts();
     $adminAccess = null;
     if($obj->getUser()){
         $adminAccess = $obj->getUser()->isAdmin();
@@ -83,7 +83,7 @@ function rec($item, $forumMapper, $obj, $readAccess, $i)
     if (!empty($subItems) && $i == 0){
         $i++;
         foreach ($subItems as $subItem) {
-            rec($subItem, $forumMapper, $obj, $readAccess, $i);
+            rec($subItem, $obj, $readAccess, $i);
             
         }
     }
@@ -105,7 +105,7 @@ function rec($item, $forumMapper, $obj, $readAccess, $i)
     <?php if (!empty($forumItems)): ?>
         <?php foreach ($forumItems as $item): ?>
             <div class="forabg">
-                <?php rec($item, $forumMapper, $this, $readAccess, $i = null) ?>
+                <?php rec($item, $this, $readAccess, $i = null) ?>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
