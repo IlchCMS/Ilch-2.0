@@ -18,8 +18,6 @@ class Update
 
     protected $zipSavePath;
 
-    protected $zipFile;
-
     protected $downloadUrl;
 
     protected $content;
@@ -100,14 +98,6 @@ class Update
     /**
     * @return
     */
-    public function setNewVersion($version)
-    {
-        return $this->newVersion = $version;
-    }
-
-    /**
-    * @return
-    */
     public function getNewVersion()
     {
         return $this->newVersion;
@@ -132,6 +122,14 @@ class Update
     /**
     * @return
     */
+    public function setNewVersion($version)
+    {
+        return $this->newVersion = $version;
+    }
+
+    /**
+    * @return
+    */
     public function setVersionNow($versionNow)
     {
         return $this->versionNow = $versionNow;
@@ -145,7 +143,6 @@ class Update
         foreach ($this->getVersionsList() as $vL) {
             if (preg_replace('/\s+/', '', $vL) > $this->getVersionNow()){
                 $this->setNewVersion(trim(preg_replace('/\s\s+/','', $vL)));
-                $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                 return true;
             }
             return false;
@@ -167,10 +164,10 @@ class Update
     */
     public function save()
     {
-        if (!$this->zipFile) {
+        if (!$this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip') {
             $newUpdate = file_get_contents($this->getDownloadUrl());
                 if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
-                $dlHandler = fopen($this->zipFile, 'w');
+                $dlHandler = fopen($this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip', 'w');
                 if (!fwrite($dlHandler, $newUpdate)) {
 
                 }
@@ -183,29 +180,45 @@ class Update
     */
     public function update()
     {
-        require_once APPLICATION_PATH.'/libraries/PclZip/PclZip.php';
+        $zipHandle = zip_open($this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip');
+        $content = array();
+        while ($aF = zip_read($zipHandle)) {
 
-        $archive = new \PclZip\PclZip();
-        $archive->PclZip($this->zipFile);
-        $archive->extract(PCLZIP_OPT_PATH, ROOT_PATH);
-        $listContent = $archive->listContent();
-        foreach ($listContent as $content) {
-            $fileName = $content['filename'];
-            $fileDir = dirname($fileName);
+            $thisFileName = zip_entry_name($aF);
+            $thisFileDir = dirname($thisFileName);
 
-            if (is_file($fileName)) {
-                $contents[] = 'New file: '.$fileName.'...........';
+            //Continue if its not a file
+            if (substr($thisFileName,-1,1) == '/') continue;
+
+            //Make the directory if we need to...
+            if (!is_dir (ROOT_PATH.'/'.$thisFileDir)) {
+                mkdir (ROOT_PATH.'/'.$thisFileDir, 0777, true );
+                $content[] = 'Created new Directory: '.$thisFileDir;
             }
-            //If we need to run commands, then do it.
-            if ($fileName == $fileDir.'/config.php') {
-                include $fileName;
 
-                $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $fileName)));
-                $config = new $configClass();
-                $contents[] = $config->getUpdate();
+            //Overwrite the file
+            if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
+                $content[] = 'New file: '.$thisFileName.'...........';
+                $contents = zip_entry_read($aF, zip_entry_filesize($aF));
+                $contents = str_replace("\r\n", "\n", $contents);
+                $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'w');
+                @fwrite($updateThis, $contents);
+                @fclose($updateThis);
+                unset($contents);
+
+                //If we need to run commands, then do it.
+                if ($thisFileName == $thisFileDir.'/config.php') {
+                    include $thisFileName;
+
+                    $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
+                    $config = new $configClass();
+
+                    $content[] = $config->getUpdate();
+                } 
             }
         }
-        $this->setContent($contents);
+        curl_close($this->getUpdateUrl());
+        $this->setContent($content);
         return true;
     }
 }
