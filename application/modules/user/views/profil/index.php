@@ -45,13 +45,13 @@ foreach ($profil->getGroups() as $group) {
                     <a href="<?=$userMapper->getHomepage($this->escape($profil->getHomepage())) ?>" target="_blank" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>
                 <?php endif; ?>
                 <?php if ($profil->getFacebook() != ''): ?>
-                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getFacebook())) ?>" target="_blank" class="fa fa-facebook" title="<?=$this->getTrans('profileFacebook') ?>"></a>
+                    <a href="https://www.facebook.com/<?=$this->escape($profil->getFacebook()) ?>" target="_blank" class="fa fa-facebook" title="<?=$this->getTrans('profileFacebook') ?>"></a>
                 <?php endif; ?>
                 <?php if ($profil->getTwitter() != ''): ?>
-                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getTwitter())) ?>" target="_blank" class="fa fa-twitter" title="<?=$this->getTrans('profileTwitter') ?>"></a>
+                    <a href="https://twitter.com/<?=$this->escape($profil->getTwitter()) ?>" target="_blank" class="fa fa-twitter" title="<?=$this->getTrans('profileTwitter') ?>"></a>
                 <?php endif; ?>
                 <?php if ($profil->getGoogle() != ''): ?>
-                    <a href="<?=$userMapper->getHomepage($this->escape($profil->getGoogle())) ?>" target="_blank" class="fa fa-google-plus" title="<?=$this->getTrans('profileGoogle') ?>"></a>
+                    <a href="https://plus.google.com/<?=$this->escape($profil->getGoogle()) ?>" target="_blank" class="fa fa-google-plus" title="<?=$this->getTrans('profileGoogle') ?>"></a>
                 <?php endif; ?>
             </div>
         </div>        

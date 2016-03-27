@@ -1,9 +1,4 @@
-<?php 
-$code = $this->getRequest()->getParam('code');
-$confirm = $this->get('confirmed'); 
-?>
-
-<?php if (empty($code) || empty($confirm)): ?>
+<?php if (empty($this->getRequest()->getParam('code')) || empty($this->get('confirmed'))): ?>
     <legend><?=$this->getTrans('unlockUserAcc'); ?></legend>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
         <?=$this->getTokenField() ?>
@@ -29,10 +24,10 @@ $confirm = $this->get('confirmed');
     </form>
 <?php else: ?>
     <div class="row">
-        <div class="col-lg-1 fa-4x check">
+        <div class="col-lg-2 fa-4x check">
             <i class="fa fa-check-circle text-success" title=""></i>
         </div>
-        <div class="col-lg-11">
+        <div class="col-lg-10">
             Ihr Benutzerkonto wurde erfolgreich freigeschaltet.<br />
             Sie können sich jetzt mit Ihren Benutzerdaten anmelden.
         </div>

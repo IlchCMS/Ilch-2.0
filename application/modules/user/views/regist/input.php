@@ -1,97 +1,108 @@
+<?php
+$errors = $this->get('errors');
+?>
+
 <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+
+<form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <?php $errors = $this->get('errors'); ?>
-    <div class="form-group <?php if (!empty($errors['name'])) { echo 'has-error'; }; ?>">
-        <label for="name" class="control-label col-lg-2">
-            <?=$this->getTrans('name') ?>:
-        </label>
-        <div class="col-lg-8">
-            <input type="text"
-                   name="name"
-                   class="form-control"
-                   id="name" />
-            <?php if (!empty($errors['name'])): ?>
-                <span class="help-inline"><?=$this->getTrans($errors['name']) ?></span>
-            <?php endif; ?>
+    <div class="regist panel panel-default">
+        <div class="panel-heading">
+            <?=$this->getTrans('logindata') ?>
         </div>
-    </div>
-    <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
-        <label for="password" class="control-label col-lg-2">
-            <?=$this->getTrans('password') ?>:
-        </label>
-        <div class="col-lg-8">
-            <input type="password"
-                   class="form-control"
-                   name="password"
-                   id="password" />
-            <?php if (!empty($errors['password'])): ?>
-                <span class="help-inline"><?=$this->getTrans($errors['password']) ?></span>
-            <?php endif; ?>
+        <div class="panel-body">
+            <div class="form-group <?php if (!empty($errors['name'])) { echo 'has-error'; }; ?>">
+                <label for="name" class="control-label col-lg-2">
+                    <?=$this->getTrans('name') ?>:
+                </label>
+                <div class="col-lg-8">
+                    <input type="text"
+                           name="name"
+                           class="form-control"
+                           id="name" />
+                    <?php if (!empty($errors['name'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['name']) ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
+                <label for="password" class="control-label col-lg-2">
+                    <?=$this->getTrans('password') ?>:
+                </label>
+                <div class="col-lg-8">
+                    <input type="password"
+                           class="form-control"
+                           name="password"
+                           id="password" />
+                    <?php if (!empty($errors['password'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['password']) ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="form-group <?php if (!empty($errors['password2'])) { echo 'has-error'; }; ?>">
+                <label for="password2" class="control-label col-lg-2">
+                    <?=$this->getTrans('password2') ?>:
+                </label>
+                <div class="col-lg-8">
+                    <input type="password"
+                           class="form-control"
+                           name="password2"
+                           id="password2" />
+                    <?php if (!empty($errors['password2'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['password2']) ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
+                <label for="email" class="control-label col-lg-2">
+                    <?=$this->getTrans('emailAdress') ?>:
+                </label>
+                <div class="col-lg-8">
+                    <input type="text"
+                           name="email"
+                           class="form-control"
+                           id="email" />
+                    <?php if (!empty($errors['email'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['email']) ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="form-group <?php if (!empty($errors['captcha'])) { echo 'has-error'; }; ?>">
+                <label class="col-lg-2 control-label">
+                    <?=$this->getTrans('captcha') ?>:
+                </label>
+                <div class="col-lg-8">
+                    <?=$this->getCaptchaField() ?>
+                </div>
+            </div>
+            <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
+                <div class="col-lg-offset-2 col-lg-8 input-group captcha">
+                    <input type="text"
+                          id="captcha-form"
+                          class="form-control"
+                          autocomplete="off"
+                          name="captcha"
+                          placeholder="<?=$this->getTrans('captcha') ?>" />
+                    <span class="input-group-addon">
+                        <a href="javascript:void(0)" onclick="
+                            document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
+                            document.getElementById('captcha-form').focus();"
+                            id="change-image">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </span>
+                </div>
+                <div class="col-lg-offset-2 col-lg-10">
+                    <?php if (!empty($errors['captcha'])): ?>
+                        <span class="help-inline"><?=$this->getTrans($errors['captcha']) ?></span>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="form-group <?php if (!empty($errors['password2'])) { echo 'has-error'; }; ?>">
-        <label for="password2" class="control-label col-lg-2">
-            <?=$this->getTrans('password2') ?>:
-        </label>
-        <div class="col-lg-8">
-            <input type="password"
-                   class="form-control"
-                   name="password2"
-                   id="password2" />
-            <?php if (!empty($errors['password2'])): ?>
-                <span class="help-inline"><?=$this->getTrans($errors['password2']) ?></span>
-            <?php endif; ?>
-        </div>
-    </div>
-    <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
-        <label for="email" class="control-label col-lg-2">
-            <?=$this->getTrans('emailAdress') ?>:
-        </label>
-        <div class="col-lg-8">
-            <input type="text"
-                   name="email"
-                   class="form-control"
-                   id="email" />
-            <?php if (!empty($errors['email'])): ?>
-                <span class="help-inline"><?=$this->getTrans($errors['email']) ?></span>
-            <?php endif; ?>
-        </div>
-    </div>
-    <div class="form-group <?php if (!empty($errors['captcha'])) { echo 'has-error'; }; ?>">
-        <label class="col-lg-2 control-label">
-            <?=$this->getTrans('captcha') ?>:
-        </label>
-        <div class="col-lg-8">
-            <?=$this->getCaptchaField() ?>
-        </div>
-    </div>
-    <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
-        <div class="col-lg-offset-2 col-lg-8 input-group captcha">
-            <input type="text"
-                  id="captcha-form"
-                  class="form-control"
-                  autocomplete="off"
-                  name="captcha"
-                  placeholder="<?=$this->getTrans('captcha') ?>" />
-            <span class="input-group-addon">
-                <a href="javascript:void(0)" onclick="
-                    document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
-                    document.getElementById('captcha-form').focus();"
-                    id="change-image">
-                    <i class="fa fa-refresh"></i>
-                </a>
-            </span>
-        </div>
-        <div class="col-lg-offset-2 col-lg-10">
-            <?php if (!empty($errors['captcha'])): ?>
-                <span class="help-inline"><?=$this->getTrans($errors['captcha']) ?></span>
-            <?php endif; ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-8">
-            <?=$this->getSaveBar('registButton', 'Regist') ?>
+        <div class="panel-footer clearfix">
+            <div class="pull-right">
+                <?=$this->getSaveBar('registButton', 'Regist') ?>
+            </div>
         </div>
     </div>
 </form>
