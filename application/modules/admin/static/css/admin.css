@@ -356,6 +356,7 @@ aside {
     padding: 0;
     padding-bottom: 52px;
     min-height: 590px;
+    overflow: hidden;
 }
 #ribbon {
     min-height: 40px;
