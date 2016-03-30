@@ -97,7 +97,12 @@ header nav ul > li > ul > li > a {
     border-style: solid;
     border-color: #32333B;
 }
-
+.panel-body {
+    overflow: hidden;
+}
+video {
+    max-width: 100%;
+}
 .panel-gaming > .panel-heading {
     color: #4295C9;
     background-color: #32333B;
