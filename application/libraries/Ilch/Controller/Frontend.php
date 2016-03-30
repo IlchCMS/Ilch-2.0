@@ -19,9 +19,10 @@ class Frontend extends Base
             $layoutKey = DEFAULT_LAYOUT;
         }
 
-        $layoutFile = 'index';
+        $layoutFile = '';
 
         if(!empty($layoutKey)) {
+            
             if (is_file(APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php')) {
                 require_once APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php';
             }
@@ -38,20 +39,24 @@ class Frontend extends Base
                         if(empty($url['module'])) {
                             $url['module'] = '';
                         }
+                       
                         if($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and $url['action'] == $this->getRequest()->getActionName()) {
                             $layoutFile = $layoutKeyConfig;
-                            break 2;
+                            break;
                         } elseif ($url['module'] == $this->getRequest()->getModuleName() and $url['controller'] == $this->getRequest()->getControllerName() and empty ($url['action'])){
                             $layoutFile = $layoutKeyConfig;
-                            break 2;
+                            break;
                         } elseif ($url['module'] == $this->getRequest()->getModuleName() and empty ($url['controller']) and empty ($url['action'])){
                             $layoutFile = $layoutKeyConfig;
-                            break 2;
+                            break;
                         }
+                        
                     }
                 }
             }
-
+            if (empty($layoutFile)) {
+                $layoutFile = 'index';
+            }
             $this->getLayout()->setFile('layouts/'.$layoutKey.'/'.$layoutFile, $layoutKey);
         }
     }
