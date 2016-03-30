@@ -60,15 +60,15 @@ class Update extends \Ilch\Controller\Admin
         $version = $this->getConfig()->get('version');
         $this->getView()->set('version', $version);
 
-        $update = new \Ilch\Update();
-        $update->setUpdateUrl($this->getConfig()->get('master_update_url'));
+        $update = new \Ilch\Transfer();
+        $update->setTransferUrl($this->getConfig()->get('master_update_url'));
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
         $update->setZipSavePath(ROOT_PATH.'/updates/');
 
         if (($update->getVersions()) == false) {
-            $this->addMessage(curl_error($update->getUrl()), 'danger');
+            $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
             $this->getView()->set('versions', '');
         } else {
             $this->getView()->set('versions', $update->getVersions() );

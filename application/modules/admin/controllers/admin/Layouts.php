@@ -10,20 +10,36 @@ class Layouts extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $this->getLayout()->removeSidebar();
-        $this->getLayout()->addMenu
+        $items = array
         (
-            'Layouts',
             array
-            (
-                array
                 (
-                    'name' => 'list',
-                    'active' => true,
+                    'name' => 'layouts',
+                    'active' => false,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(array('controller' => 'layouts', 'action' => 'index'))
                 ),
-            )
+                array
+                (
+                    'name' => 'search',
+                    'active' => false,
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->getUrl(array('controller' => 'layouts', 'action' => 'search'))
+                ),
+        );
+
+        if ($this->getRequest()->getActionName() == 'index') {
+            $items[0]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() == 'search') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuSettings',
+            $items
         );
     }
 
@@ -70,5 +86,19 @@ class Layouts extends \Ilch\Controller\Admin
         }
 
         $this->redirect(array('action' => 'index'));
+    }
+
+    public function searchAction()
+    {
+        if ($this->getRequest()->isPost('layout')) {
+            $transfer = new \Ilch\Transfer();
+            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+            $transfer->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
+            $transfer->setCurlOpt(CURLOPT_FAILONERROR, true);
+            $transfer->setZipSavePath(ROOT_PATH.'/updates');
+            $transfer->save();
+            $transfer->install();
+            $this->addMessage('Success');
+        }
     }
 }
