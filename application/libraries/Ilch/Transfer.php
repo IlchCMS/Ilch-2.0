@@ -224,7 +224,7 @@ class Transfer
     }
 
     /**
-     * @return true/fasle
+     * @return true
      */
     public function save()
     {
@@ -236,7 +236,6 @@ class Transfer
 
                 }
             fclose($dlHandler);
-            return treu;
         }
         return false;
     }
