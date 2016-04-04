@@ -1,6 +1,6 @@
 <?php
 
-$json = file_get_contents('http://wcc-karneval.de/test.php');
+$json = file_get_contents('http://ilch2.de/downloads/layouts/list.php');
 $datas = json_decode($json);
 foreach ($datas as $data) : ?>
 
