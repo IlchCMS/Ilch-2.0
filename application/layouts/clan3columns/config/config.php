@@ -1,5 +1,6 @@
 <?php
 $config['name'] = 'Ilch-Clan';
+$config['version'] = '1.0';
 $config['author'] = 'Ilch.de';
 $config['link'] = 'http://ilch.de';
 $config['desc'] = '2 Spalten Clan Layout';
