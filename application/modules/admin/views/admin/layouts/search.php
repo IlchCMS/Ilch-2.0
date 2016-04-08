@@ -1,15 +1,4 @@
 <?php
-function url_get_contents ($Url) {
-    if (!function_exists('curl_init')){
-        die('CURL is not installed!');
-    }
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $Url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $output = curl_exec($ch);
-    curl_close($ch);
-    return $output;
-}
 $json = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
 $datas = json_decode($json);
 foreach ($datas as $data) : ?>

@@ -229,7 +229,7 @@ class Transfer
     public function save()
     {
         if (!file_exists($this->zipFile)) {
-            $newUpdate = file_get_contents($this->getDownloadUrl());
+            $newUpdate = url_get_contents($this->getDownloadUrl());
                 if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
                 $dlHandler = fopen($this->zipFile, 'w');
                 if (!fwrite($dlHandler, $newUpdate)) {
