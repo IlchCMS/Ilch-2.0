@@ -169,8 +169,13 @@ function is_in_array($needle, $haystack)
     return false;
 }
 
-function url_get_contents ($url) {
-    if (!function_exists('curl_init')){
+/**
+ * cUrl function, gets a url result
+ * @param $url
+ * @return mixed
+ */
+function url_get_contents($url) {
+    if (!function_exists('curl_init')) {
         die('CURL is not installed!');
     }
     $ch = curl_init();
