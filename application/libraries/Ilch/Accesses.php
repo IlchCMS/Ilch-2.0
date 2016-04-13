@@ -78,7 +78,7 @@ class Accesses
             return true;
         }
 
-        if ($entrie[$this->request->getModuleName()] == '1' || is_in_array($this->getGroupIds(), array('1')) == 'true') {
+        if ($entrie[$this->request->getModuleName()] == '1' || $entrie[$this->request->getModuleName()] == '2' || is_in_array($this->getGroupIds(), array('1')) == 'true') {
             return true;
         }
     }
