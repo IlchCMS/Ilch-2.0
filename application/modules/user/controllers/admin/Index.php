@@ -93,7 +93,7 @@ class Index extends BaseController
             $user->setDateCreated($date);
 
             $userId = $userMapper->save($user);
-
+            $this->addMessage('success');
             if (!empty($userId) && empty($userData['id'])) {
                 $this->addMessage('newUserMsg');
             }

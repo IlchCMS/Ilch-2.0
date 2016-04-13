@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `[prefix]_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=2;
 
 INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
-(1, "Administrator"),(2, "User");
+(1, "Administrator"),(2, "User"),(3, "Guest");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

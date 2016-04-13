@@ -53,6 +53,7 @@ class Page
         $this->router = new Router($this->request);
         $this->plugin = new Plugin();
         $this->view = new View($this->request, $this->translator, $this->router);
+        $this->accesses = new Accesses($this->request);
 
         $this->fileConfig = new Config\File();
         $this->router->execute();
@@ -150,9 +151,25 @@ class Page
 
             $viewOutput = $this->view->loadScript($viewPath);
         }
+        $this->fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+
+        if (($this->fileConfig->get('dbUser')) !== null) {
+            $accesses = $this->accesses->hasAccess();
+        } else {
+            $accesses = true;
+        }
 
         if (!empty($viewOutput)) {
-            $controller->getLayout()->setContent($viewOutput);
+            if (!$this->request->isAdmin()) {
+                if ($accesses) {
+                    $controller->getLayout()->setContent($viewOutput);
+                } else {
+                    $this->translator->load(APPLICATION_PATH.'/modules/user/translations/');
+                    $controller->getLayout()->setContent($this->translator->trans('noAccessPage'));
+                }
+            } else {
+                $controller->getLayout()->setContent($viewOutput);
+            }
         }
 
         if ($this->request->isAjax()) {

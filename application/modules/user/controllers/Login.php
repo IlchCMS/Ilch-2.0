@@ -131,7 +131,6 @@ class Login extends \Ilch\Controller\Frontend
 
                 if (!empty($user)) {
                     $confirmedCode = md5(uniqid(rand()));
-                    $user->setConfirmed(0);
                     $user->setConfirmedCode($confirmedCode);
                     $userMapper->save($user);
 
@@ -141,7 +140,12 @@ class Login extends \Ilch\Controller\Frontend
                     $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                     $date = new \Ilch\Date();
 
-                    if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
+                    $layout = '';
+                    if (!empty($_SESSION['layout'])) {
+                        $layout = $_SESSION['layout'];
+                    }
+
+                    if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php')) {
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/passwordchange.php');
                     } else {
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');

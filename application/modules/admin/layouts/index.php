@@ -125,6 +125,7 @@
                                             <i class="fa fa-list-ol"></i> <?=$this->getTrans('overview') ?>
                                         </a>
                                         <div class="divider"></div>
+                                    <?php endif; ?>
                                         <li>
                                             <div class="list-group list-group-horizontal">
                                                 <?=$systemModuleHtml ?>
@@ -134,7 +135,7 @@
                                                 <?=$modulesHtml ?>
                                             </div>
                                         </li>
-                                    <?php endif; ?>
+
                                 </ul>
                             </li>
                         <?php endif; ?>

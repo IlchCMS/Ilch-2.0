@@ -47,10 +47,6 @@ class Access extends BaseController
             $groupId = (int)$postData['groupId'];
             $_SESSION['user']['accessGroup'] = $groupId;
         }
-        elseif(isset($_SESSION['user']['accessGroup']))
-        {
-            $groupId = (int)$_SESSION['user']['accessGroup'];
-        }
         else
         {
             $groupId = 0;

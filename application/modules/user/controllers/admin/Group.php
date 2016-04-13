@@ -124,6 +124,10 @@ class Group extends BaseController
              */
             if ($groupId == 1) {
                 $this->addMessage('delAdminGroup', 'warning');
+            } elseif ($groupId == 2) {
+                $this->addMessage('delUserGroup', 'warning');
+            } elseif ($groupId == 3) {
+                $this->addMessage('delGuestGroup', 'warning');
             } else {
                 if ($groupMapper->delete($groupId)) {
                     $this->addMessage('delGroupMsg');
