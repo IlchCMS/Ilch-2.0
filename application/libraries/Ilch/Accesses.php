@@ -82,4 +82,14 @@ class Accesses
             return true;
         }
     }
+
+    public function getErrorPage($text = '') {
+        $html = '<div class="centering text-center error-container">
+                    <div class="text-center">
+                        <h2 class="without-margin"><span class="text-warning"><big>403</big></span> Access denied.</h2>
+                        <h4 class="text-warning">'.$text.'</h4>
+                    </div>
+                 </div>';
+        return $html;
+    }
 }

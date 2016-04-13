@@ -165,7 +165,8 @@ class Page
                     $controller->getLayout()->setContent($viewOutput);
                 } else {
                     $this->translator->load(APPLICATION_PATH.'/modules/user/translations/');
-                    $controller->getLayout()->setContent($this->translator->trans('noAccessPage'));
+
+                    $controller->getLayout()->setContent($this->accesses->getErrorPage($this->translator->trans('noAccessPage')));
                 }
             } else {
                 $controller->getLayout()->setContent($viewOutput);
