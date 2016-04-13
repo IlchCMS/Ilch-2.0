@@ -34,7 +34,7 @@
                             </div>
                             <p><?=$this->escape($layout->getDesc()) ?></p>
                             <p>
-                                <a title="<?php if ($this->get('defaultLayout') == $layout->getKey()) { echo $this->getTrans('isDefault'); } else { echo $this->getTrans('setDefault'); } ?>"
+                                <a class="nounderline" title="<?php if ($this->get('defaultLayout') == $layout->getKey()) { echo $this->getTrans('isDefault'); } else { echo $this->getTrans('setDefault'); } ?>"
                                    href="<?=$this->getUrl(array('action' => 'default', 'key' => $layout->getKey())) ?>">
                                     <?php if ($this->get('defaultLayout') == $layout->getKey()): ?>
                                         <i class="fa fa-check-square-o fa-2x text-success"></i>

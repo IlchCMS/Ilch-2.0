@@ -21,6 +21,9 @@ body {
 body.modal-open {
     overflow: hidden!important;
 }
+.nounderline, .nounderline:hover{
+    text-decoration: none
+}
 header .rightbar .opens {
     width: 330px;
 }
