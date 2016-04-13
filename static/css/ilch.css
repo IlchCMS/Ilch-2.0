@@ -21,3 +21,7 @@
     padding-left: 15px !important;
     padding-right: 15px !important;
 }
+img {
+    max-width: 100%;
+    height: auto;
+}
