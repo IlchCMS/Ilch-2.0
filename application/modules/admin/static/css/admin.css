@@ -170,6 +170,7 @@ aside > nav > ul > li.active {
     bottom: 0px; 
     width: 220px; 
     height: auto;
+    z-index: -1;
     -webkit-backface-visibility: hidden; 
     -webkit-transform: translate(0px, 0) translateZ(0px);
 }
