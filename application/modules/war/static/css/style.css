@@ -41,3 +41,9 @@
 .war_drawn {
     color: #006FFF;
 }
+.no_margin {
+    margin: 0px !important;
+}
+.center-text img {
+    min-width: 100%;
+}

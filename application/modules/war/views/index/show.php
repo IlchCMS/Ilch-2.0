@@ -8,7 +8,7 @@ $enemy = $this->get('enemy');
 
 <legend><?=$this->getTrans('warPlay') ?></legend>
 <div class="row">
-    <div class="center-text">
+    <div class="center-text row no_margin">
         <div class="col-md-5">
             <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>">
             <h4><span><?=$group->getGroupName() ?></span></h4>
