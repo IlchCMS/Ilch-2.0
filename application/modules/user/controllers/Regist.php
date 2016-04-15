@@ -145,6 +145,7 @@ class Regist extends \Ilch\Controller\Frontend
                             ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
                             ->setMessage($message)
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
+                    $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
                     $mail->send();
                 }
 
