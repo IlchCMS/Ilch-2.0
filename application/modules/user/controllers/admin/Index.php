@@ -89,6 +89,10 @@ class Index extends BaseController
                 }
             }
 
+            if ($userData['confirm'] == 'on') {
+                $user->setConfirmed(1);
+            }
+
             $date = new \Ilch\Date();
             $user->setDateCreated($date);
 

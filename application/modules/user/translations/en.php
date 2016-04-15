@@ -26,6 +26,7 @@ return array
     'userDateCreated' => 'Registration Date',
     'userDateConfirmed' => 'Confirmed',
     'userDateLastActivity' => 'Last Visit Date',
+    'userConfirmNow' => 'User confirm manually?',
     'noUsersExist' => 'No users exist.',
     'filter' => 'Tablefilters',
     'search' => 'Search',

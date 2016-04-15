@@ -26,6 +26,7 @@ return array
     'userDateCreated' => 'Registrierungsdatum',
     'userDateConfirmed' => 'Bestätigt',
     'userDateLastActivity' => 'Letzter Besuch',
+    'userConfirmNow' => 'Benutzer manuell Bestätigen?',
     'noUsersExist' => 'Keine Benutzer vorhanden.',
     'filter' => 'Tabellenfilter',
     'search' => 'Suchen',
