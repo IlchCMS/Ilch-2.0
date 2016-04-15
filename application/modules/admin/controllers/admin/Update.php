@@ -67,28 +67,27 @@ class Update extends \Ilch\Controller\Admin
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
         $update->setZipSavePath(ROOT_PATH.'/updates/');
 
-        if (($update->getVersions()) == false) {
+        if ($update->getVersions() == '') {
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
-            $this->getView()->set('versions', '');
-        } else {
-            $this->getView()->set('versions', $update->getVersions() );
+        }
 
-            if ($update->newVersionFound() == true) {
-                $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
-                $newVersion = $update->getNewVersion();
-                $this->getView()->set('foundNewVersions', true);
-                $this->getView()->set('newVersion', $newVersion);
+        $this->getView()->set('versions', $update->getVersions() );
 
-                if ($doSave == true) {
-                    $update->save();
-                }
-                if ($doUpdate == true) {
-                    $update->update();
-                    $this->getView()->set('content', $update->getContent());
-                }
-            } else {
-                $this->getView()->set('versions', '');
+        if ($update->newVersionFound() == true) {
+            $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
+            $newVersion = $update->getNewVersion();
+            $this->getView()->set('foundNewVersions', true);
+            $this->getView()->set('newVersion', $newVersion);
+
+            if ($doSave == true) {
+                $update->save();
             }
+            if ($doUpdate == true) {
+                $update->update();
+                $this->getView()->set('content', $update->getContent());
+            }
+        } else {
+            $this->getView()->set('versions', '');
         }
     }
 }

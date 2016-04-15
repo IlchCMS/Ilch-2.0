@@ -11,7 +11,7 @@ $newVersion = $this->get('newVersion');
     <p><?=$this->getTrans('versionNow') ?><?=$this->get('version') ?></p>
     <p><?=$this->getTrans('readReleas') ?></p>
     <?php if ($this->get('foundNewVersions')): ?>
-        <p><?=$this->getTrans('foundNewVersions') ?>:<?=$newVersion ?></p>
+        <p><?=$this->getTrans('foundNewVersions') ?><?=$newVersion ?></p>
         <?php if(!$doUpdate): ?>
             <?php if (is_file(ROOT_PATH.'/updates/Master-'.$newVersion.'.zip')): ?>
                 <?php if(!$doSave): ?>
