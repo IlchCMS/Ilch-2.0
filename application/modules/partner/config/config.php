@@ -59,6 +59,6 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
         
                 INSERT INTO `[prefix]_partners` (`id`, `name`, `banner`, `link`, `setfree`) VALUES
-                (1, "ilch", "http://ilch.de/include/images/linkus/88x31.png", "http://ilch.de", "1");';
+                (1, "ilch", "http://www.ilch.de/include/images/linkus/88x31.png", "http://ilch.de", "1");';
     }
 }
