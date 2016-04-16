@@ -278,15 +278,15 @@ class User extends \Ilch\Mapper
         }
 
         if (!empty($dateCreated)) {
-            $fields['date_created'] = $user->getDateCreated()->toDb();
+            $fields['date_created'] = $user->getDateCreated();
         }
 
         if (!empty($dateConfirmed)) {
-            $fields['date_confirmed'] = $user->getDateConfirmed()->toDb();
+            $fields['date_confirmed'] = $user->getDateConfirmed();
         }
 
         if (!empty($dateLastActivity)) {
-            $fields['date_last_activity'] = $user->getDateLastActivity()->toDb();
+            $fields['date_last_activity'] = $user->getDateLastActivity();
         }
 
         if ($confirmed !== null) {

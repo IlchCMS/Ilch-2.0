@@ -26,7 +26,6 @@ return array
     'userDateCreated' => 'Registration Date',
     'userDateConfirmed' => 'Confirmed',
     'userDateLastActivity' => 'Last Visit Date',
-    'userConfirmNow' => 'User confirm manually?',
     'noUsersExist' => 'No users exist.',
     'filter' => 'Tablefilters',
     'search' => 'Search',
@@ -121,6 +120,7 @@ return array
     'avatarSuccessDelete' => 'Avatar successfully deleted',
     'rulesForRegist' => 'Rules for Registration',
     'mailForRegist' => 'Text for confirm E-Mail',
+    'mailForManuallyConfirm' => 'Text for manually confirm E-Mail',
     'mailForNewPassword' => 'Text for new Password E-Mail',
     'acceptUserRegis' => 'Allow User Registration?',
     'automaticEmail' => 'Automatic E-Mail',
@@ -242,4 +242,7 @@ return array
     'drag' => 'drag and drop files here',
 
     'saveButton' => 'Save',
+
+    'users' => 'Users',
+    'setfree' => 'Set free',
 );

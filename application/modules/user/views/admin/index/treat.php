@@ -71,48 +71,30 @@ if ($user->getId()) {
                 $dateLastActivity = $this->getTrans('neverLoggedIn');
             }
         ?>
-        <div class="form-group">
-            <label class="col-lg-3 control-label">
-                <?=$this->getTrans('userDateCreated') ?>
-            </label>
-            <div class="col-lg-9">
-                <p class="form-control-static"><?=$this->escape($user->getDateCreated()) ?></p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-lg-3 control-label">
-                <?=$this->getTrans('userDateConfirmed') ?>
-            </label>
-            <div class="col-lg-9">
-                <p class="form-control-static">
-                    <?php if ($user->getConfirmed() != 1): ?>
-                        <?=$this->escape($dateConfirmed) ?>
-                    <?php else: ?>
-                        <?=$this->getTrans('userDateConfirmed') ?>
-                    <?php endif; ?>
-                </p>
-            </div>
-        </div>
-        <?php if ($user->getConfirmed() != 1): ?>
-        <div class="form-group">
-            <label class="col-lg-3 control-label">
-                <?=$this->getTrans('userConfirmNow') ?>
-            </label>
-            <div class="checkbox col-lg-9">
-                <label>
-                    <input name="user[confirm]" type="checkbox"/>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">
+                    <?=$this->getTrans('userDateCreated') ?>
                 </label>
+                <div class="col-lg-9">
+                    <p class="form-control-static"><?=$this->escape($user->getDateCreated()) ?></p>
+                </div>
             </div>
-        </div>
-        <?php endif; ?>
-        <div class="form-group">
-            <label class="col-lg-3 control-label">
-                <?=$this->getTrans('userDateLastActivity') ?>
-            </label>
-            <div class="col-lg-9">
-                <p class="form-control-static"><?=$this->escape($dateLastActivity) ?></p>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">
+                    <?=$this->getTrans('userDateConfirmed') ?>
+                </label>
+                <div class="col-lg-9">
+                    <p class="form-control-static"><?=$this->escape($dateConfirmed) ?></p>
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">
+                    <?=$this->getTrans('userDateLastActivity') ?>
+                </label>
+                <div class="col-lg-9">
+                    <p class="form-control-static"><?=$this->escape($dateLastActivity) ?></p>
+                </div>
+            </div>
         <?php endif; ?>
         <div class="form-group">
             <label for="usergallery_allowed" class="col-lg-3 control-label">

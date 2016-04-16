@@ -99,7 +99,7 @@ class View extends Design\Base
      */
     public function getEditIcon($url)
     {
-        $html = '<a href="'.$this->getUrl($url).'">
+        $html = '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'">
                     <span class="fa fa-edit text-success"></span>
                  </a>';
 
@@ -114,7 +114,7 @@ class View extends Design\Base
      */
     public function getDeleteIcon($url)
     {
-        $html = '<a class="delete_button" href="'.$this->getUrl($url, null, true).'">
+        $html = '<a class="delete_button" href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'">
                     <span class="fa fa-trash-o text-danger"></span>
                  </a>';
 
