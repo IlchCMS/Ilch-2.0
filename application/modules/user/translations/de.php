@@ -243,7 +243,6 @@ return array
 
     'saveButton' => 'Speichern',
 
-    'entrys' => 'Benutzer',
-    'newRequest' => 'Anfragen',
+    'users' => 'Benutzer',
     'setfree' => 'Freischalten',
 );

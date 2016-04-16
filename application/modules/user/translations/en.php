@@ -243,7 +243,6 @@ return array
 
     'saveButton' => 'Save',
 
-    'entrys' => 'Users',
-    'newRequest' => 'Request',
+    'users' => 'Users',
     'setfree' => 'Set free',
 );

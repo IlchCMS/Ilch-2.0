@@ -3,13 +3,13 @@
     <ul class="nav nav-tabs">
         <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
             <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index')) ?>">
-                <?=$this->getTrans('entrys') ?>
+                <?=$this->getTrans('users') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0): ?>
             <li <?php if($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'showsetfree' => 1)) ?>">
-                    <?=$this->getTrans('newRequest'); ?> <span class="badge"><?=$this->get('badge') ?></span>
+                    <?=$this->getTrans('setfree'); ?> <span class="badge"><?=$this->get('badge') ?></span>
                 </a>
             </li>
         <?php endif; ?>
