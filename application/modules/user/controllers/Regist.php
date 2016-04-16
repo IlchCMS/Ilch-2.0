@@ -33,7 +33,7 @@ class Regist extends \Ilch\Controller\Frontend
         } else {
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'));
         
-            $this->getView();   
+            $this->getView();
         }
     }
     
@@ -99,11 +99,11 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setName($name);
                     $model->setPassword((new PasswordService())->hash($password));
                     $model->setEmail($email);
-                    $model->setDateCreated($currentDate);
+                    $model->setDateCreated($currentDate->format("Y-m-d H:i:s", true));
                     $model->addGroup($userGroup);
 
                 if ($this->getConfig()->get('regist_confirm') == 0){
-                    $model->setDateConfirmed($currentDate);
+                    $model->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
                 } else {
                     $confirmedCode = md5(uniqid(rand()));
                     $model->setConfirmed(0);
@@ -140,7 +140,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
-                    $mail->setTo($email,$name)
+                    $mail->setTo($email, $name)
                             ->setSubject($this->getTranslator()->trans('automaticEmail'))
                             ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
                             ->setMessage($message)
@@ -182,7 +182,7 @@ class Regist extends \Ilch\Controller\Frontend
                 $errors['confirmedCode'] = 'fieldEmpty';
             }
             
-            if (empty($errors)) {                
+            if (empty($errors)) {
                 $this->redirect(array('controller' => 'regist', 'action' => 'confirm', 'code' => $confirmedCode));
             }
             
@@ -203,12 +203,12 @@ class Regist extends \Ilch\Controller\Frontend
 
                     $confirmed = '1';
                     $this->getView()->set('confirmed', $confirmed);
-                } else {   
+                } else {
                     $confirmed = null;
                     $this->getView()->set('confirmed', $confirmed);
                     
                     $_SESSION['messages'][] = array('text' => 'Aktivierungscode Falsch', 'type' => 'warning');
-                }                
+                }
             } else {
                 $this->getView();
             }

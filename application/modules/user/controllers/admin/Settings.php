@@ -26,6 +26,7 @@ class Settings extends BaseController
             $this->getConfig()->set('usergallery_filetypes', $this->getRequest()->getPost('usergallery_filetypes'));
             $this->getConfig()->set('regist_rules', $this->getRequest()->getPost('regist_rules'));
             $this->getConfig()->set('regist_confirm_mail', $this->getRequest()->getPost('regist_confirm_mail'));
+            $this->getConfig()->set('manually_confirm_mail', $this->getRequest()->getPost('manually_confirm_mail'));
             $this->getConfig()->set('password_change_mail', $this->getRequest()->getPost('password_change_mail'));
             $this->addMessage('saveSuccess');
         }
@@ -40,6 +41,7 @@ class Settings extends BaseController
         $this->getView()->set('usergallery_filetypes', $this->getConfig()->get('usergallery_filetypes'));
         $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
         $this->getView()->set('regist_confirm_mail', $this->getConfig()->get('regist_confirm_mail'));
+        $this->getView()->set('manually_confirm_mail', $this->getConfig()->get('manually_confirm_mail'));
         $this->getView()->set('password_change_mail', $this->getConfig()->get('password_change_mail'));
     }
 }

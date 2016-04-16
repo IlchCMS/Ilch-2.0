@@ -70,7 +70,26 @@
             </div>
         </div>
     </div>
-    <div id="confirmMail" class="form-group">
+    <div class="form-group">
+        <label for="regist_confirm_mail" class="col-lg-2 control-label">
+            <?=$this->getTrans('mailForManuallyConfirm') ?>:
+            <br /><br />
+            <div class="small">
+                <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
+                <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
+                <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?>
+            </div>
+        </label>
+        <div class="col-lg-10">
+            <textarea class="form-control ckeditor"
+                      name="manually_confirm_mail"
+                      cols="60"
+                      id="ck_3"
+                      toolbar="ilch_html"
+                      rows="5"><?=$this->get('manually_confirm_mail') ?></textarea>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="password_change_mail" class="col-lg-2 control-label">
             <?=$this->getTrans('mailForNewPassword') ?>:
             <br /><br />
@@ -85,7 +104,7 @@
             <textarea class="form-control ckeditor"
                       name="password_change_mail"
                       cols="60"
-                      id="ck_3"
+                      id="ck_4"
                       toolbar="ilch_html"
                       rows="5"><?=$this->get('password_change_mail') ?></textarea>
         </div>

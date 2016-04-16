@@ -52,6 +52,13 @@ class Config extends \Ilch\Config\Install
                               <p>&nbsp;</p>
                               <p>Mit freundlichen Gr&uuml;&szlig;en</p>
                               <p>Administrator</p>');
+        $databaseConfig->set('manually_confirm_mail', '<p>Hallo <b>{name}</b>,</p>
+                              <p>&nbsp;</p>
+                              <p>Willkommen auf <i>{sitetitle}</i>.</p>
+                              <p>hiermit wurde dein Account freigeschaltet.</p>
+                              <p>&nbsp;</p>
+                              <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                              <p>Administrator</p>');
         $databaseConfig->set('password_change_mail', '<p>Hallo <b>{name}</b>,</p>
                               <p>&nbsp;</p>
                               <p>um Ihr Passwort auf <i>{sitetitle}</i> zu ändern klicken Sie Bitte auf folgenden Link.</p>

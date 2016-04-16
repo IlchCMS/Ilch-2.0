@@ -38,27 +38,85 @@ class Index extends BaseController
      */
     public function indexAction()
     {
+        $userMapper = new UserMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'));
 
-        $userMapper = new UserMapper();
-
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
-            foreach($this->getRequest()->getPost('check_users') as $userId) {
+            foreach ($this->getRequest()->getPost('check_users') as $userId) {
                 $deleteUser = $userMapper->getUserById($userId);
 
                 if ($deleteUser->getId() != Registry::get('user')->getId()) {
-                    if($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() == 1) {} else {
+                    if ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() == 1) {} else {
                         $userMapper->delete($deleteUser->getId());
                     }
                 }
             }
         }
 
-        $userList = $userMapper->getUserList();
-        $this->getView()->set('userList', $userList);
+        if ($this->getRequest()->getParam('showsetfree')) {
+            $entries = $userMapper->getUserList(array('confirmed' => 0));
+        } else {
+            $entries = $userMapper->getUserList(array('confirmed' => 1));
+        }
+
+        $this->getView()->set('userList', $entries);
         $this->getView()->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'));
         $this->getView()->set('errorMsg', $this->getRequest()->getParam('errorMsg'));
+        $this->getView()->set('badge', count($userMapper->getUserList(array('confirmed' => 0))));
+    }
+
+    /**
+     * Confirm user manually
+     */
+    public function setfreeAction()
+    {
+        $userMapper = new UserMapper();
+
+        $date = new \Ilch\Date();
+
+        $model = new UserModel();
+        $model->setId($this->getRequest()->getParam('id'));
+        $model->setDateConfirmed($date->format("Y-m-d H:i:s", true));
+        $model->setConfirmed(1);
+        $userMapper->save($model);
+        
+        $layout = '';
+
+        if (isset($_SESSION['layout'])) {
+            $layout = $_SESSION['layout'];
+        }
+
+        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php')) {
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php');
+        } else {
+            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/manuallyconfirm.php');
+        }
+
+        $user = $userMapper->getUserById($this->getRequest()->getParam('id'));
+
+        $messageReplace = array(
+                '{content}' => $this->getConfig()->get('manually_confirm_mail'),
+                '{sitetitle}' => $this->getConfig()->get('page_title'),
+                '{date}' => $date->format("l, d. F Y", true),
+                '{name}' => $user->getName(),
+                '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+        );
+        $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
+        $mail = new \Ilch\Mail();
+        $mail->setTo($user->getEmail(), $user->getName())
+                ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                ->setFrom($this->getTranslator()->trans('automaticEmail'), $this->getConfig()->get('page_title'))
+                ->setMessage($message)
+                ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
+        $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
+        $mail->send();
+
+        $this->addMessage('freeSuccess');
+
+        $this->redirect(array('action' => 'index', 'showsetfree' => 1));
     }
 
     /**
@@ -66,11 +124,12 @@ class Index extends BaseController
      */
     public function treatAction()
     {
+        $userMapper = new UserMapper();
+        $groupMapper = new GroupMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('editUser'), array('action' => 'treat'));
-
-        $userMapper = new UserMapper();
 
         if ($this->getRequest()->isPost()) {
             $userData = $this->getRequest()->getPost('user');
@@ -89,10 +148,6 @@ class Index extends BaseController
                 }
             }
 
-            if ($userData['confirm'] == 'on') {
-                $user->setConfirmed(1);
-            }
-
             $date = new \Ilch\Date();
             $user->setDateCreated($date);
 
@@ -109,12 +164,9 @@ class Index extends BaseController
 
         if ($userMapper->userWithIdExists($userId)) {
             $user = $userMapper->getUserById($userId);
-        }
-        else {
+        } else {
             $user = new UserModel();
         }
-
-        $groupMapper = new GroupMapper();
 
         $this->getView()->set('user', $user);
         $this->getView()->set('groupList', $groupMapper->getGroupList());
