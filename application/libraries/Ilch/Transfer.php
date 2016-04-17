@@ -24,6 +24,8 @@ class Transfer
 
     protected $downloadUrl;
 
+    protected $downloadSignatureUrl;
+
     protected $content;
 
     /**
@@ -120,6 +122,28 @@ class Transfer
     public function getDownloadUrl()
     {
         return $this->downloadUrl;
+    }
+
+    /**
+     * USE IT AFTER newVersionFound()
+     * 
+     * Sets the DownloadSignatureUrl.
+     * @var $url
+     */
+    public function setDownloadSignatureUrl($url)
+    {
+        return $this->downloadSignatureUrl = $url;
+    }
+
+    /**
+     * USE IT AFTER newVersionFound()
+     * 
+     * Gets the DownloadSignatureUrl.
+     * @return string
+     */
+    public function getDownloadSignatureUrl()
+    {
+        return $this->downloadSignatureUrl;
     }
 
     /**
@@ -235,20 +259,31 @@ class Transfer
             // Certificate is missing or expired.
             return false;
         }
+
         if (!file_exists($this->zipFile)) {
             $newUpdate = url_get_contents($this->getDownloadUrl());
             if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
             $dlHandler = fopen($this->zipFile, 'w');
             $fwriteSuccessfull = fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
-            if (!$fwriteSuccessfull) {
 
+            if (!$fwriteSuccessfull) {
+                // Download of update failed.
+                return false;
+            }
+
+            $newUpdate = url_get_contents($this->getDownloadSignatureUrl());
+            $dlHandler = fopen($this->zipFile.'-signature.sig', 'w');
+            $fwriteSuccessfull = fwrite($dlHandler, $newUpdate);
+            fclose($dlHandler);
+
+            if (!$fwriteSuccessfull) {
+                // Download of signature-file failed.
             } else {
                 $signature = file_get_contents($this->zipFile.'-signature.sig');
-
                 $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
-                $isValid = $this->verifyFile($pubKeyfile, $this->zipFile, $signature);
-                if(!$isValid) {
+
+                if(!$this->verifyFile($pubKeyfile, $this->zipFile, $signature)) {
                     // Validation failed. Drop the potentially bad files.
                     unlink($this->zipFile);
                     unlink($this->zipFile.'-signature.sig');
