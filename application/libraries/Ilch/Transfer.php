@@ -231,14 +231,69 @@ class Transfer
      */
     public function save()
     {
+        if(!$this->validateCert(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+            // Certificate is missing or expired.
+            return false;
+        }
         if (!file_exists($this->zipFile)) {
             $newUpdate = url_get_contents($this->getDownloadUrl());
-                if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
-                $dlHandler = fopen($this->zipFile, 'w');
-                if (!fwrite($dlHandler, $newUpdate)) {
-
-                }
+            if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
+            $dlHandler = fopen($this->zipFile, 'w');
+            $fwriteSuccessfull = fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
+            if (!$fwriteSuccessfull) {
+
+            } else {
+                $signature = file_get_contents($this->zipFile.'-signature.sig');
+
+                $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
+                $isValid = $this->verifyFile($pubKeyfile, $this->zipFile, $signature);
+                if(!$isValid) {
+                    // Validation failed. Drop the potentially bad files.
+                    unlink($this->zipFile);
+                    unlink($this->zipFile.'-signature.sig');
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param string $pubKeyfile
+     * @param string $file
+     * @param string $signature
+     * @return true
+     */
+    private function verifyFile($pubKeyfile, $file, $signature)
+    {
+        $digest = hash_file('sha512', $file);
+
+        $pubkey = openssl_pkey_get_public(file_get_contents($pubKeyfile));
+        openssl_public_decrypt($signature, $decrypted_digest, $pubkey);
+
+        if($digest == $decrypted_digest) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param string $certificate
+     * @return true
+     */
+    private function validateCert($certificate)
+    {
+        if (!is_file(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+            return false;
+        }
+
+        $public_key = file_get_contents($certificate);
+
+        $certinfo = openssl_x509_parse($public_key);
+        $validTo = $certinfo['validTo_time_t'];
+
+        if ($validTo >= time()) {
+            return true;
         }
         return false;
     }
