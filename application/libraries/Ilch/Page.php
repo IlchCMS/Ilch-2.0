@@ -54,6 +54,7 @@ class Page
         $this->plugin = new Plugin();
         $this->view = new View($this->request, $this->translator, $this->router);
         $this->accesses = new Accesses($this->request);
+        //$this->errorPage = new Error($this->request);
 
         $this->fileConfig = new Config\File();
         $this->router->execute();
@@ -154,7 +155,7 @@ class Page
         $this->fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
 
         if (($this->fileConfig->get('dbUser')) !== null) {
-            $accesses = $this->accesses->hasAccess();
+            $accesses = $this->accesses->hasAccess('Module');
         } else {
             $accesses = true;
         }

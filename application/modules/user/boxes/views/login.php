@@ -1,11 +1,11 @@
-<?php if($this->getUser() !== null): ?>
+<?php if ($this->getUser() !== null): ?>
     <?=$this->getTrans('hello') ?> <b><?=$this->escape($this->getUser()->getName()) ?></b>,
     <br />
     <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'index')) ?>">
         <?=$this->getTrans('panel') ?>
     </a>
     <br />
-    <?php if($this->getUser()->isAdmin()): ?>
+    <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()): ?>
         <a target="_blank" href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')) ?>">
             <?=$this->getTrans('adminarea') ?>
         </a>
