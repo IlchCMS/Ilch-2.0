@@ -547,6 +547,7 @@ legend {
 }
 #ilch_dropdown .full {
     width: 110%;
+    min-width: 480px;
     left: auto !important;
     right: auto !important;
 }
