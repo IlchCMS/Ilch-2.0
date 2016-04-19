@@ -232,9 +232,8 @@ class Transfer
                 $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                 return true;
             }
-            return false;
         }
-        
+        return false;
     }
 
     /**
