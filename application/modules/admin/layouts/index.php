@@ -191,6 +191,7 @@
                                         <?=$this->getTrans('documentationFAQ') ?>
                                     </a>
                                 </li>
+                                <?php if($this->getUser()->isAdmin()): ?>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>">
@@ -198,6 +199,7 @@
                                         <?=$this->getTrans('menuInfos') ?>
                                     </a>
                                 </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
                         <?php if($this->getUser()->getFirstName() != ''): ?>
