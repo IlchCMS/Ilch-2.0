@@ -277,17 +277,13 @@ class Transfer
             $fwriteSuccessfull = fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
 
-            if (!$fwriteSuccessfull) {
-                // Download of signature-file failed.
-            } else {
-                $signature = file_get_contents($this->zipFile.'-signature.sig');
-                $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
+            $signature = file_get_contents($this->zipFile.'-signature.sig');
+            $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
 
-                if(!$this->verifyFile($pubKeyfile, $this->zipFile, $signature)) {
-                    // Validation failed. Drop the potentially bad files.
-                    unlink($this->zipFile);
-                    unlink($this->zipFile.'-signature.sig');
-                }
+            if(!$this->verifyFile($pubKeyfile, $this->zipFile, $signature)) {
+                // Validation failed. Drop the potentially bad files.
+                unlink($this->zipFile);
+                unlink($this->zipFile.'-signature.sig');
             }
         }
         return false;
