@@ -86,6 +86,7 @@ class Update extends \Ilch\Controller\Admin
             if ($doUpdate == true) {
                 $update->update();
                 $this->getView()->set('content', $update->getContent());
+                $this->getConfig()->set('version', $newVersion);
             }
         } else {
             $this->getView()->set('versions', '');
