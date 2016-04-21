@@ -156,7 +156,7 @@ return array
     'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
     'versionNow' => 'Current version: ',
     'readReleas' => 'Read current release version...',
-    'foundNewVersions' => 'New Version found: ',
+    'foundNewVersions' => 'New version found: ',
     'noReleas' => 'Could not find new release version.',
     'doSave' => 'Update download?',
     'isSave' => 'Update already downloaded.',
