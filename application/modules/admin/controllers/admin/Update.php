@@ -81,7 +81,20 @@ class Update extends \Ilch\Controller\Admin
             $this->getView()->set('newVersion', $newVersion);
 
             if ($doSave == true) {
+                if(!$update->validateCert(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+                    // Certificate is missing or expired.
+                    $this->getView()->set('certMissingOrExpired', true);
+                    return false;
+                }
                 $update->save();
+                $signature = file_get_contents($update->getZipFile().'-signature.sig');
+                $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
+                if(!$update->verifyFile($pubKeyfile, $update->getZipFile(), $signature)) {
+                    // Validation failed. Drop the potentially bad files.
+                    unlink($update->getZipFile());
+                    unlink($update->getZipFile().'-signature.sig');
+                    $this->getView()->set('verificationFailed', true);
+                }
             }
             if ($doUpdate == true) {
                 $update->update();

@@ -165,4 +165,6 @@ return array
     'updateReady' => 'Update bereit zum Installieren.',
     'installNow' => 'Jetzt installieren?',
     'updateComplied' => 'Erfolgreich installiert',
+    'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
+    'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
 );

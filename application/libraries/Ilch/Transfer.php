@@ -254,11 +254,6 @@ class Transfer
      */
     public function save()
     {
-        if(!$this->validateCert(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
-            // Certificate is missing or expired.
-            return false;
-        }
-
         if (!file_exists($this->zipFile)) {
             $newUpdate = url_get_contents($this->getDownloadUrl());
             if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
@@ -275,15 +270,7 @@ class Transfer
             $dlHandler = fopen($this->zipFile.'-signature.sig', 'w');
             $fwriteSuccessfull = fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
-
-            $signature = file_get_contents($this->zipFile.'-signature.sig');
-            $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
-
-            if(!$this->verifyFile($pubKeyfile, $this->zipFile, $signature)) {
-                // Validation failed. Drop the potentially bad files.
-                unlink($this->zipFile);
-                unlink($this->zipFile.'-signature.sig');
-            }
+            return true;
         }
         return false;
     }
@@ -294,7 +281,7 @@ class Transfer
      * @param string $signature
      * @return true
      */
-    private function verifyFile($pubKeyfile, $file, $signature)
+    public function verifyFile($pubKeyfile, $file, $signature)
     {
         $digest = hash_file('sha512', $file);
 
@@ -311,7 +298,7 @@ class Transfer
      * @param string $certificate
      * @return true
      */
-    private function validateCert($certificate)
+    public function validateCert($certificate)
     {
         if (!is_file(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
             return false;
