@@ -250,7 +250,7 @@ class Transfer
     }
 
     /**
-     * @return true
+     * @return false
      */
     public function save()
     {
@@ -258,19 +258,13 @@ class Transfer
             $newUpdate = url_get_contents($this->getDownloadUrl());
             if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
             $dlHandler = fopen($this->zipFile, 'w');
-            $fwriteSuccessfull = fwrite($dlHandler, $newUpdate);
+            fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
-
-            if (!$fwriteSuccessfull) {
-                // Download of update failed.
-                return false;
-            }
 
             $newUpdate = url_get_contents($this->getDownloadSignatureUrl());
             $dlHandler = fopen($this->zipFile.'-signature.sig', 'w');
-            $fwriteSuccessfull = fwrite($dlHandler, $newUpdate);
+            fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
-            return true;
         }
         return false;
     }
