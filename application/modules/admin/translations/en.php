@@ -158,7 +158,7 @@ return array
     'readReleas' => 'Read current release version...',
     'foundNewVersions' => 'New version found: ',
     'noReleas' => 'Could not find new release version.',
-    'doSave' => 'Update download?',
+    'doSave' => 'Download update?',
     'isSave' => 'Update already downloaded.',
     'save' => 'Update successfully downloaded.',
     'doSaveNow' => 'Download now',
