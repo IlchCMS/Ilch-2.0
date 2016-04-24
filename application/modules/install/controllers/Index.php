@@ -127,6 +127,21 @@ class Index extends \Ilch\Controller\Frontend
              $errors['writableAvatar'] = true;
         }
 
+        if (!is_writable(APPLICATION_PATH.'/../certificate/')) {
+             $errors['writableCertificate'] = true;
+        }
+
+        if (file_exists(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+             $public_key = file_get_contents(APPLICATION_PATH.'/../certificate/Certificate.crt');
+             $certinfo = openssl_x509_parse($public_key);
+             $validTo = $certinfo['validTo_time_t'];
+             if ($validTo < time()) {
+                  $errors['expiredCert'] = true;
+             }
+        } else {
+             $errors['missingCert'] = true;
+        }
+
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(array('action' => 'database'));
         }

@@ -75,16 +75,31 @@ class Update extends \Ilch\Controller\Admin
 
         if ($update->newVersionFound() == true) {
             $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
+            $update->setDownloadSignatureUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
 
             if ($doSave == true) {
+                if(!$update->validateCert(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+                    // Certificate is missing or expired.
+                    $this->getView()->set('certMissingOrExpired', true);
+                    return false;
+                }
                 $update->save();
+                $signature = file_get_contents($update->getZipFile().'-signature.sig');
+                $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
+                if(!$update->verifyFile($pubKeyfile, $update->getZipFile(), $signature)) {
+                    // Verification failed. Drop the potentially bad files.
+                    unlink($update->getZipFile());
+                    unlink($update->getZipFile().'-signature.sig');
+                    $this->getView()->set('verificationFailed', true);
+                }
             }
             if ($doUpdate == true) {
                 $update->update();
                 $this->getView()->set('content', $update->getContent());
+                //$this->getConfig()->set('version', $newVersion);
             }
         } else {
             $this->getView()->set('versions', '');

@@ -24,6 +24,8 @@ class Transfer
 
     protected $downloadUrl;
 
+    protected $downloadSignatureUrl;
+
     protected $content;
 
     /**
@@ -123,6 +125,28 @@ class Transfer
     }
 
     /**
+     * USE IT AFTER newVersionFound()
+     * 
+     * Sets the DownloadSignatureUrl.
+     * @var $url
+     */
+    public function setDownloadSignatureUrl($url)
+    {
+        return $this->downloadSignatureUrl = $url;
+    }
+
+    /**
+     * USE IT AFTER newVersionFound()
+     * 
+     * Gets the DownloadSignatureUrl.
+     * @return string
+     */
+    public function getDownloadSignatureUrl()
+    {
+        return $this->downloadSignatureUrl;
+    }
+
+    /**
      * Gets the Version.
      * @return string
      */
@@ -208,9 +232,8 @@ class Transfer
                 $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                 return true;
             }
-            return false;
         }
-        
+        return false;
     }
 
     /**
@@ -227,18 +250,61 @@ class Transfer
     }
 
     /**
-     * @return true
+     * @return false
      */
     public function save()
     {
         if (!file_exists($this->zipFile)) {
             $newUpdate = url_get_contents($this->getDownloadUrl());
-                if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
-                $dlHandler = fopen($this->zipFile, 'w');
-                if (!fwrite($dlHandler, $newUpdate)) {
-
-                }
+            if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
+            $dlHandler = fopen($this->zipFile, 'w');
+            fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
+
+            $newUpdate = url_get_contents($this->getDownloadSignatureUrl());
+            $dlHandler = fopen($this->zipFile.'-signature.sig', 'w');
+            fwrite($dlHandler, $newUpdate);
+            fclose($dlHandler);
+        }
+        return false;
+    }
+
+    /**
+     * @param string $pubKeyfile
+     * @param string $file
+     * @param string $signature
+     * @return true
+     */
+    public function verifyFile($pubKeyfile, $file, $signature)
+    {
+        $digest = hash_file('sha512', $file);
+
+        $pubkey = openssl_pkey_get_public(file_get_contents($pubKeyfile));
+        openssl_public_decrypt($signature, $decrypted_digest, $pubkey);
+
+        if($digest == $decrypted_digest) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param string $certificate
+     * @return true
+     */
+    public function validateCert($certificate)
+    {
+        if (!is_file(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+            return false;
+        }
+
+        $public_key = file_get_contents($certificate);
+
+        $certinfo = openssl_x509_parse($public_key);
+        $validTo = $certinfo['validTo_time_t'];
+
+        if ($validTo >= time()) {
+            return true;
         }
         return false;
     }

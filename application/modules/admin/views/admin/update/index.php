@@ -4,6 +4,8 @@ $getVersions = $this->get('versions');
 $doUpdate = $this->getRequest()->getParam('doupdate');
 $doSave = $this->getRequest()->getParam('dosave');
 $newVersion = $this->get('newVersion');
+$certMissingOrExpired = $this->get('certMissingOrExpired');
+$verificationFailed = $this->get('verificationFailed');
 ?>
 
 <?php if ($getVersions != ''): ?>
@@ -25,6 +27,12 @@ $newVersion = $this->get('newVersion');
                     </a>
                 </p>
             <?php else: ?>
+                <?php if($certMissingOrExpired): ?>
+                    <p><?=$this->getTrans('certMissingOrExpired') ?>
+                <?php endif; ?>
+                <?php if($verificationFailed): ?>
+                    <p><?=$this->getTrans('verificationFailed') ?>
+                <?php endif; ?>
                 <p><?=$this->getTrans('doSave') ?>
                     <a class="btn btn-primary btn-xs"
                        href="<?=$this->getUrl(array('action' => 'index', 'dosave' => 'true')) ?>"><?=$this->getTrans('doSaveNow') ?>
