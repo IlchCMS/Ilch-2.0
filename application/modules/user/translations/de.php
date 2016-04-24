@@ -183,7 +183,7 @@ return array
     'menuPassword' => 'Passwort',
     'menuAvatar' => 'Avatar',
     'successAvatar' => 'Avatar erfolgreich geändert',
-    'failedFiletypes' => 'Avatar enthält kein erlaubtes Dateiformat.',
+    'failedFiletypes' => 'Avatar hat kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Avatar hat unerlaubte Breite, Höhe oder ist zu groß.',
     'settingsAvatar' => 'Avatar',
     'settingsProfile' => 'Profil',
