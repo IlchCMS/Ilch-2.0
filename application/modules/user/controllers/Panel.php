@@ -110,7 +110,7 @@ class Panel extends BaseController
                 $width = $size[0];
                 $height = $size[1];
 
-                if ($file_size <= $avatarSize AND $width == $avatarWidth AND $height == $avatarHeight) {
+                if ($file_size <= $avatarSize AND $width <= $avatarWidth AND $height <= $avatarHeight) {
                     $avatar = $path.$this->getUser()->getId().'.'.$endung;
 
                     if ($this->getUser()->getAvatar() != '') {
