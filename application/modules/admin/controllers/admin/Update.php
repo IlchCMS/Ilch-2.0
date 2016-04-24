@@ -90,7 +90,7 @@ class Update extends \Ilch\Controller\Admin
                 $signature = file_get_contents($update->getZipFile().'-signature.sig');
                 $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
                 if(!$update->verifyFile($pubKeyfile, $update->getZipFile(), $signature)) {
-                    // Validation failed. Drop the potentially bad files.
+                    // Verification failed. Drop the potentially bad files.
                     unlink($update->getZipFile());
                     unlink($update->getZipFile().'-signature.sig');
                     $this->getView()->set('verificationFailed', true);
@@ -99,7 +99,7 @@ class Update extends \Ilch\Controller\Admin
             if ($doUpdate == true) {
                 $update->update();
                 $this->getView()->set('content', $update->getContent());
-                $this->getConfig()->set('version', $newVersion);
+                //$this->getConfig()->set('version', $newVersion);
             }
         } else {
             $this->getView()->set('versions', '');
