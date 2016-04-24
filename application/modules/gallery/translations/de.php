@@ -22,7 +22,7 @@ return array
     'cat' => 'Kategorie',
     'noCat' => 'Keine Kategorie vorhanden',
     'menuActionGalleryInsertImage' => 'Bilder auswählen',
-    'menuActionGalleryEdit' => 'Galerie Bearbeiten',
+    'menuActionGalleryEdit' => 'Galerie bearbeiten',
     'generally' => 'Allgemein',
     'selectcat' => 'Kategorie auswählen',
     'galleryedit' => 'Galerie bearbeiten',
