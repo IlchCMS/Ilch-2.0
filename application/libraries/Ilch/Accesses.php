@@ -8,8 +8,14 @@ namespace Ilch;
 
 class Accesses
 {
+    /**
+     * @var
+     */
     private $groupIds;
 
+    /**
+     * @var Request
+     */
     private $request;
 
     /**
@@ -20,11 +26,17 @@ class Accesses
         $this->request = $request;
     }
 
+    /**
+     * @return mixed
+     */
     public function getGroupIds()
     {
         return $this->groupIds;
     }
 
+    /**
+     * @param $id
+     */
     public function setGroupIds($id)
     {
         $this->groupIds = $id;
@@ -32,9 +44,12 @@ class Accesses
 
     /**
      * @todo expansion and more functions
+     * @param $getAccessTo string Module, Admin
+     * @return array $groupAccessList
      */
-    public function hasAccess()
+    public function hasAccess($getAccessTo = '')
     {
+
         $userId = '';
         $user = '';
         $groupAccessList = '';
@@ -62,11 +77,21 @@ class Accesses
         }
 
         $this->setGroupIds($groupIds);
-        return $this->getAccessModule($groupAccessList);
+
+        if ($getAccessTo == 'Module') {
+            $getAccessTo = $this->getAccessModule($groupAccessList);
+        } elseif ($getAccessTo == 'Admin') {
+            $getAccessTo = $this->getAccessAdmin($groupAccessList);
+        }
+        return $getAccessTo;
     }
 
+    /**
+     * @param $array
+     * @return bool
+     */
     public function getAccessModule($array) {
-        
+
         foreach ($array as $kay => $value) {
             $entries[] = $value['entries'];
             foreach ($entries as $value) {
@@ -83,6 +108,28 @@ class Accesses
         }
     }
 
+    /**
+     * @param $array
+     * @return bool
+     */
+    public function getAccessAdmin($array) {
+
+        foreach ($array as $kay => $value) {
+            $entries[] = $value['entries'];
+            foreach ($entries as $value) {
+                $entrie = $value['module'];
+            }
+        }
+
+        if (in_array('2', $entrie)) {
+            return true;
+        }
+    }
+
+    /**
+     * @param string $text
+     * @return string
+     */
     public function getErrorPage($text = '') {
         $html = '<div class="centering text-center error-container">
                     <div class="text-center">
