@@ -61,7 +61,7 @@ return array
     'menuAccess' => 'Grouprights',
     'lookAccess' => 'visible',
     'noAccess' => 'not visible',
-    'noAccessPage' => 'You have not rights to access this page.',
+    'noAccessPage' => 'You have not the needed rights to access this page.',
     'modifyAccess' => 'changeable',
     'module' => 'Module',
     'page' => 'Page',
