@@ -8,8 +8,6 @@ namespace Modules\Admin\Controllers\Admin;
 
 class Update extends \Ilch\Controller\Admin
 {
-    protected $lastUpdateCheck;
-
     public function init()
     {
         $items = array
