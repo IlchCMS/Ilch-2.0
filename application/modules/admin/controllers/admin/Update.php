@@ -8,6 +8,8 @@ namespace Modules\Admin\Controllers\Admin;
 
 class Update extends \Ilch\Controller\Admin
 {
+    protected $lastUpdateCheck;
+
     public function init()
     {
         $items = array
@@ -67,11 +69,12 @@ class Update extends \Ilch\Controller\Admin
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
         $update->setZipSavePath(ROOT_PATH.'/updates/');
 
-        if ($update->getVersions() == '') {
+        $result = $update->getVersions();
+        if ($result == '') {
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
         }
 
-        $this->getView()->set('versions', $update->getVersions() );
+        $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
             $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
