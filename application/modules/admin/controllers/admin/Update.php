@@ -37,7 +37,7 @@ class Update extends \Ilch\Controller\Admin
             (
                 'name' => 'menuUpdate',
                 'active' => true,
-                'icon' => 'fa fa-download',
+                'icon' => 'fa fa-refresh',
                 'url' => $this->getLayout()->getUrl(array('controller' => 'update', 'action' => 'index'))
             ),
         );
