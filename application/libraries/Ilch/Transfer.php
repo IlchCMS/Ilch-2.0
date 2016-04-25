@@ -152,10 +152,11 @@ class Transfer
      */
     public function getVersions()
     {
-        if (curl_exec($this->transferUrl) == false) {
+        $result = curl_exec($this->transferUrl);
+        if ($result == false) {
             return;
         }
-        return curl_exec($this->transferUrl);
+        return $result;
     }
 
     /**

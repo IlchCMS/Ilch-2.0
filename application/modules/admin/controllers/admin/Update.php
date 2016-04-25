@@ -37,7 +37,7 @@ class Update extends \Ilch\Controller\Admin
             (
                 'name' => 'menuUpdate',
                 'active' => true,
-                'icon' => 'fa fa-download',
+                'icon' => 'fa fa-refresh',
                 'url' => $this->getLayout()->getUrl(array('controller' => 'update', 'action' => 'index'))
             ),
         );
@@ -67,11 +67,12 @@ class Update extends \Ilch\Controller\Admin
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
         $update->setZipSavePath(ROOT_PATH.'/updates/');
 
-        if ($update->getVersions() == '') {
+        $result = $update->getVersions();
+        if ($result == '') {
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
         }
 
-        $this->getView()->set('versions', $update->getVersions() );
+        $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
             $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
@@ -100,6 +101,9 @@ class Update extends \Ilch\Controller\Admin
                 $update->update();
                 $this->getView()->set('content', $update->getContent());
                 //$this->getConfig()->set('version', $newVersion);
+                // Cleanup after the update was installed.
+                unlink($update->getZipFile());
+                unlink($update->getZipFile().'-signature.sig');
             }
         } else {
             $this->getView()->set('versions', '');
