@@ -103,6 +103,9 @@ class Update extends \Ilch\Controller\Admin
                 $update->update();
                 $this->getView()->set('content', $update->getContent());
                 //$this->getConfig()->set('version', $newVersion);
+                // Cleanup after the update was installed.
+                unlink($update->getZipFile());
+                unlink($update->getZipFile().'-signature.sig');
             }
         } else {
             $this->getView()->set('versions', '');
