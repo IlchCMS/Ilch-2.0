@@ -27,7 +27,7 @@ class Index extends \Ilch\Controller\Frontend
         $usersOnline = $visitMapper->getVisitsOnlineUser();
 
         $userId = null;
-        $groupIds = array(0);
+        $groupIds = array(3);
 
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();

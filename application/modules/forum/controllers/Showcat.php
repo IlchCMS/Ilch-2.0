@@ -37,7 +37,7 @@ class Showcat extends \Ilch\Controller\Frontend
         $user = $userMapper->getUserById($userId);
 
 
-        $ids = array(0);
+        $ids = array(3);
         if($user){
             $ids = array();
             foreach ($user->getGroups() as $us){
