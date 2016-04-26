@@ -14,6 +14,7 @@ CKEDITOR.editorConfig = function( config ) {
         config.extraPlugins = "ilchmedia,showprotected,justify";
     }
 
+    config.protectedSource.push(/<i[^>]*><\/i>/g);
     config.protectedSource.push(/<\?[\s\S]*?\?>/g);
     config.toolbar = 'ilch_html';
     config.toolbar_ilch_html =
