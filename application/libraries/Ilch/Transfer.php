@@ -22,6 +22,10 @@ class Transfer
 
     protected $zipFileName;
 
+    protected $zipSigFile;
+
+    protected $zipSigFileName;
+
     protected $downloadUrl;
 
     protected $downloadSignatureUrl;
@@ -110,6 +114,8 @@ class Transfer
     {
         $this->zipFileName = basename($url);
         $this->zipFile = $this->zipSavePath.$this->zipFileName;
+        $path_parts = pathinfo($url);
+        $this->setDownloadSignatureUrl($path_parts['dirname'].'/'.$path_parts['filename'].'-signature.sig');
         return $this->downloadUrl = $url;
     }
 
@@ -132,6 +138,8 @@ class Transfer
      */
     public function setDownloadSignatureUrl($url)
     {
+        $this->zipSigFileName = basename($url);
+        $this->zipSigFile = $this->zipSavePath.$this->zipSigFileName;
         return $this->downloadSignatureUrl = $url;
     }
 
@@ -263,7 +271,7 @@ class Transfer
             fclose($dlHandler);
 
             $newUpdate = url_get_contents($this->getDownloadSignatureUrl());
-            $dlHandler = fopen($this->zipFile.'-signature.sig', 'w');
+            $dlHandler = fopen($this->zipSigFile, 'w');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
         }
