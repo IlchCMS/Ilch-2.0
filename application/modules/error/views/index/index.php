@@ -2,7 +2,7 @@
     <div class="row">
         <div class="login_container">
             <div class="form_container">
-                <img class="logo" src="http://demo.imagooo.de/static/img/ilch_logo.png">
+                <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>">
                 <div class="centering text-center error-container">
                     <h2 class="without-margin">
                         <?=$this->getTrans('error') ?>
