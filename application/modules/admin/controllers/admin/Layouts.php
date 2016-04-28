@@ -92,11 +92,28 @@ class Layouts extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isPost('layout')) {
             $transfer = new \Ilch\Transfer();
+            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
             $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-            $transfer->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
-            $transfer->setCurlOpt(CURLOPT_FAILONERROR, true);
-            $transfer->setZipSavePath(ROOT_PATH.'/updates');
+            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+
+            if(!$transfer->validateCert(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+                // Certificate is missing or expired.
+                $this->addMessage('certMissingOrExpired');
+                return;
+            }
+
             $transfer->save();
+            
+            $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
+            $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
+            if(!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
+                // Verification failed. Drop the potentially bad files.
+                unlink($transfer->getZipFile());
+                unlink($transfer->getZipFile().'-signature.sig');
+                $this->addMessage('verificationFailed');
+                return;
+            }
+
             $transfer->install();
             $this->addMessage('Success');
         }
