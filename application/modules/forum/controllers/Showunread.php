@@ -24,7 +24,7 @@ class Showunread extends \Ilch\Controller\Frontend
             
 
             $userId = null;
-            $groupIds = array(0);
+            $groupIds = array(3);
 
             $userId = $this->getUser()->getId();
             $user = $userMapper->getUserById($userId);
