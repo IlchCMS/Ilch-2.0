@@ -159,21 +159,21 @@ $(document).ready (
                         <div class="col-lg-6"><select id="menukey" class="form-control">'+options+'</select></div></div>\n\
                         <div class="form-group"><label for="href" class="col-lg-3 control-label">sehen</label>\n\
                         <div class="col-lg-6"><select id="assignedGroupsRead" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?php echo $this->getTrans('selectAssignedGroups'); ?>" multiple>\n\
-                        <option value="0">Gast</option>\n\
+                        \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="href" class="col-lg-3 control-label">antworten</label>\n\
                         <div class="col-lg-6"><select id="assignedGroupsReplay" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?php echo $this->getTrans('selectAssignedGroups'); ?>" multiple>\n\
-                        <option value="0">Gast</option>\n\
+                        \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="href" class="col-lg-3 control-label">erstellen</label>\n\
                         <div class="col-lg-6"><select id="assignedGroupsCreate" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?php echo $this->getTrans('selectAssignedGroups'); ?>" multiple>\n\
-                        <option value="0">Gast</option>\n\
+                        \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\

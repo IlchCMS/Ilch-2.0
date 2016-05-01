@@ -24,7 +24,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
         $userId = null;
-        $groupIds = array(0);
+        $groupIds = array(3);
 
        if ($this->getRequest()->isPost() && $this->getRequest()->getPost('forumEdit') === 'forumEdit') {
            $forumEdit = true;

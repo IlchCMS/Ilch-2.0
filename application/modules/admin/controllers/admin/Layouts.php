@@ -92,10 +92,11 @@ class Layouts extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isPost('layout')) {
             $transfer = new \Ilch\Transfer();
+            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
             $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
             $transfer->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
             $transfer->setCurlOpt(CURLOPT_FAILONERROR, true);
-            $transfer->setZipSavePath(ROOT_PATH.'/updates');
+            
             $transfer->save();
             $transfer->install();
             $this->addMessage('Success');

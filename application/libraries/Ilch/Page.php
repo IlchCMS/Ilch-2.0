@@ -43,6 +43,8 @@ class Page
      */
     private $fileConfig;
 
+    private $accesses;
+
     /**
      * Initialize all needed objects.
      */
@@ -54,7 +56,6 @@ class Page
         $this->plugin = new Plugin();
         $this->view = new View($this->request, $this->translator, $this->router);
         $this->accesses = new Accesses($this->request);
-        //$this->errorPage = new Error($this->request);
 
         $this->fileConfig = new Config\File();
         $this->router->execute();
@@ -122,7 +123,7 @@ class Page
     public function loadPage()
     {
         $this->translator->load(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/translations');
-        
+
         if($this->request->isAdmin()) {
             $this->translator->load(APPLICATION_PATH.'/modules/admin/translations');
         }
@@ -137,10 +138,10 @@ class Page
             $controllerName = $controllerParts[1];
             $dir = ucfirst($controllerParts[0]).'\\';
         }
-        
+
         $this->plugin->addPluginData('controller', $controller);
         $this->plugin->execute('AfterControllerLoad');
-        
+
         if ($this->request->isAdmin()) {
             $viewOutput = $this->view->loadScript(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/views/admin/'.$dir.$controllerName.'/'.$this->request->getActionName().'.php');
         } else {
@@ -206,23 +207,43 @@ class Page
             $controller = '\\Modules\\'.ucfirst($this->request->getModuleName()).'\\Controllers\\'.$dir.ucfirst($controllerName);
         }
 
-        //TODO: React properly for controllers / modules / actions that don't exist
+        /*
+         * Check if module exists.
+         */
+        if (!is_dir(APPLICATION_PATH.'/modules/'.$this->request->getModuleName())) {
+            $errorModule = $this->request->getModuleName();
 
-        $controller = new $controller($this->layout, $this->view, $this->request, $this->router, $this->translator);
-        $action = $this->request->getActionName().'Action';
-
-        $this->plugin->addPluginData('controller', $controller);
-        $this->plugin->execute('BeforeControllerLoad');
-
-        if (method_exists($controller, 'init')) {
-            $controller->init();
+            $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
+            $url->redirect(array('module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Module', 'errorText' => $errorModule));
         }
 
-        if (method_exists($controller, $action)) {
-            $controller->$action();
+        /*
+         * Check if controller exists.
+         */
+        if (!class_exists($controller)) {
+            $errorController = $this->request->getControllerName();
+
+            $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
+            $url->redirect(array('module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Controller', 'errorText' => $errorController));
         }
 
-        return $controller;
+        if (class_exists($controller)) {
+            $controller = new $controller($this->layout, $this->view, $this->request, $this->router, $this->translator);
+            $action = $this->request->getActionName().'Action';
+
+            $this->plugin->addPluginData('controller', $controller);
+            $this->plugin->execute('BeforeControllerLoad');
+
+            if (method_exists($controller, 'init')) {
+                $controller->init();
+            }
+
+            if (method_exists($controller, $action)) {
+                $controller->$action();
+            }
+
+            return $controller;
+        }
     }
 
     /**
