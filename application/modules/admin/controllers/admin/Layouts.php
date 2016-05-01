@@ -82,6 +82,8 @@ class Layouts extends \Ilch\Controller\Admin
             $this->addMessage('cantDeleteDefaultLayout');
         } else {
             removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
+            $moduleMapper = new \Modules\Admin\Mappers\Module();
+            $moduleMapper->delete($this->getRequest()->getParam('key'));
             $this->addMessage('deleteSuccess');
         }
 
