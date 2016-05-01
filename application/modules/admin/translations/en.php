@@ -167,4 +167,5 @@ return array
     'updateComplied' => 'Successfully installed',
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
+    'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',
 );

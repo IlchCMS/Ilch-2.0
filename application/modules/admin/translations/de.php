@@ -167,4 +167,5 @@ return array
     'updateComplied' => 'Erfolgreich installiert',
     'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
+    'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',
 );

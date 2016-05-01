@@ -82,6 +82,8 @@ class Layouts extends \Ilch\Controller\Admin
             $this->addMessage('cantDeleteDefaultLayout');
         } else {
             removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
+            $moduleMapper = new \Modules\Admin\Mappers\Module();
+            $moduleMapper->delete($this->getRequest()->getParam('key'));
             $this->addMessage('deleteSuccess');
         }
 
@@ -94,10 +96,26 @@ class Layouts extends \Ilch\Controller\Admin
             $transfer = new \Ilch\Transfer();
             $transfer->setZipSavePath(ROOT_PATH.'/updates/');
             $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-            $transfer->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
-            $transfer->setCurlOpt(CURLOPT_FAILONERROR, true);
-            
+            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+
+            if(!$transfer->validateCert(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+                // Certificate is missing or expired.
+                $this->addMessage('certMissingOrExpired');
+                return;
+            }
+
             $transfer->save();
+            
+            $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
+            $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
+            if(!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
+                // Verification failed. Drop the potentially bad files.
+                unlink($transfer->getZipFile());
+                unlink($transfer->getZipFile().'-signature.sig');
+                $this->addMessage('layoutVerificationFailed');
+                return;
+            }
+
             $transfer->install();
             $this->addMessage('Success');
         }
