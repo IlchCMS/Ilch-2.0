@@ -78,6 +78,7 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('amount', $amount);
         $this->getView()->set('amountplus', $amountplus);
         $this->getView()->set('amountminus', $amountminus);
+        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
     }
 
     public function settingsAction()
@@ -88,11 +89,12 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('checkout_contact', $this->getRequest()->getPost('checkout_contact'));
+            $this->getConfig()->set('checkout_currency', $this->getRequest()->getPost('checkout_currency'));
             $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('checkout_contact', $this->getConfig()->get('checkout_contact'));
-
+        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
     }
 
     public function treatPaymentAction()
@@ -131,6 +133,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('checkout', $checkoutMapper->getEntryById($id));
+        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
     }
 
     public function delAction()
