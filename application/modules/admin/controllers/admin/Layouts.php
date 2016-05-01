@@ -110,7 +110,7 @@ class Layouts extends \Ilch\Controller\Admin
                 // Verification failed. Drop the potentially bad files.
                 unlink($transfer->getZipFile());
                 unlink($transfer->getZipFile().'-signature.sig');
-                $this->addMessage('verificationFailed');
+                $this->addMessage('layoutVerificationFailed');
                 return;
             }
 
