@@ -11,7 +11,7 @@ use Modules\Comment\Models\Comment as CommentModel;
 class Comment extends \Ilch\Mapper
 {
     /**
-     * @return CommentModel[]|null
+     * @return CommentModel[]
      */
     public function getCommentsByKey($key)
     {
@@ -21,10 +21,6 @@ class Comment extends \Ilch\Mapper
             ->order(array('id' => 'DESC'))
             ->execute()
             ->fetchRows();
-
-        if (empty($commentsArray)) {
-            return null;
-        }
 
         $comments = array();
 
@@ -68,7 +64,7 @@ class Comment extends \Ilch\Mapper
     }
 
     /**
-     * @return CommentModel[]|null
+     * @return CommentModel[]
      */
     public function getComments()
     {
@@ -77,10 +73,6 @@ class Comment extends \Ilch\Mapper
             ->order(array('id' => 'DESC'))
             ->execute()
             ->fetchRows();
-
-        if (empty($commentsArray)) {
-            return NULL;
-        }
 
         $comments = array();
 
