@@ -12,7 +12,6 @@ return array
     'amount' => 'Betrag',
     'bookings' => 'Buchungen',
     'bankbalance' => 'Kontostand',
-    'currency' => 'Euro',
     'settings' => 'Einstellungen',
     'accountdata' => 'Kontodaten',
     'book' => 'Buchen',
@@ -23,4 +22,5 @@ return array
     'totalpaidout' => 'Insgesamt ausgezahlt',
     'bookedpayments' => 'Gebuchte Zahlungen',
     'treatpayment' => 'Buchung bearbeiten',
+    'currencyOfCheckout' => 'Währung der Kasse',
 );

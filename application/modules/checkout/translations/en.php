@@ -12,7 +12,6 @@ return array
     'amount' => 'amount',
     'bookings' => 'Bookings',
     'bankbalance' => 'Bankbalance',
-    'currency' => 'Dollar',
     'settings' => 'Settings',
     'accountdata' => 'Account data',
     'book' => 'Book',
@@ -23,4 +22,5 @@ return array
     'totalpaidout' => 'Total paid out',
     'bookedpayments' => 'Booked payments',
     'treatpayment' => 'Edit booking',
+    'currencyOfCheckout' => 'Currency of checkout',
 );

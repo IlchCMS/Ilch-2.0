@@ -25,5 +25,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('amountplus', $amountplus);
         $this->getView()->set('amountminus', $amountminus);
         $this->getView()->set('checkout_contact', $this->getConfig()->get('checkout_contact'));
+        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
     }
 }
