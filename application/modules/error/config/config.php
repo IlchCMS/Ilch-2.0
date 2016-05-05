@@ -12,6 +12,7 @@ class Config extends \Ilch\Config\Install
     (
         'key' => 'error',
         'author' => 'Stantin, Thomas',
+        'system_module' => true,
         'icon_small' => 'error.png',
         'languages' => array
         (
