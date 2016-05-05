@@ -6,7 +6,26 @@
                   id="ck_1"
                   toolbar="ilch_html"
                   name="checkout_contact"><?php if ($this->get('checkout_contact') != '') { echo $this->get('checkout_contact') ; } ?>
-        </textarea>
+        </textarea><br>
+        <p><?=$this->getTrans('currencyOfCheckout') ?><br>
+        <select name="checkout_currency">
+        <?php
+            $currency = array(
+                // ISO 4217 code and symbol
+                "EUR (€)",
+                "USD ($)",
+                "GBP (£)",
+            );
+
+            foreach ($currency as &$value) {
+                if ($this->get('checkout_currency') != $value) {
+                    echo '<option>'.$value.'</option>';
+                } else {
+                    echo '<option selected>'.$value.'</option>';
+                }
+            }
+        ?>
+        </select>
     </div>
     <?=$this->getSaveBar('updateButton') ?>
 </form>

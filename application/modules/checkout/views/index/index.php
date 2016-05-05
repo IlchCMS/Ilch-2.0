@@ -5,17 +5,17 @@
 <legend><?=$this->getTrans('bankbalance') ?></legend>
 <div>
     <strong>
-        <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->get('amount'), $this->getTrans('currency') ; } 
-        else { echo $this->getTrans('balancetotal'), ': 0', $this->getTrans('currency') ;}
+        <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$this->get('checkout_currency') ; } 
+        else { echo $this->getTrans('balancetotal'), ': 0 ', $this->get('checkout_currency') ;}
         ?>
     </strong>
     <br>
-    <?php if ($this->get('amountplus') != '') { echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), $this->getTrans('currency') ; }
-    else { echo $this->getTrans('totalpaid'), ': 0', $this->getTrans('currency') ;}
+    <?php if ($this->get('amountplus') != '') { echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$this->get('checkout_currency') ; }
+    else { echo $this->getTrans('totalpaid'), ': 0 ', $this->get('checkout_currency') ;}
     ?>
     <br>
-    <?php if ($this->get('amountminus') != '') { echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), $this->getTrans('currency') ; }
-    else { echo $this->getTrans('totalpaidout'), ': 0', $this->getTrans('currency') ;}
+    <?php if ($this->get('amountminus') != '') { echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$this->get('checkout_currency') ; }
+    else { echo $this->getTrans('totalpaidout'), ': 0 ', $this->get('checkout_currency') ;}
     ?>
 </div>
 <br>
@@ -27,7 +27,7 @@
         <?=$this->escape($checkout->getName()) ?>: 
         <strong>
             <?=$this->escape($checkout->getAmount()) ?> 
-            <?=$this->getTrans('currency') ?>
+            <?=$this->get('checkout_currency') ?>
         </strong> 
         <?=$this->getTrans('for') ?>: 
         <?=$this->escape($checkout->getUsage()) ?>
