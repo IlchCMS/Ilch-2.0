@@ -33,10 +33,6 @@ class Config extends \Ilch\Config\Install
     {
     }
 
-    public function uninstall()
-    {
-    }
-
     public function getInstallSql()
     {
     }
