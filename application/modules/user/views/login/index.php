@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        
+        <label class="col-lg-offset-2 col-lg-8"><input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?></label>
         
         <div class="clearfix">   
             <!--            
@@ -62,14 +62,14 @@
     </form>
     <div class="col-lg-offset-2 col-lg-8">
             <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword')) ?>"><?=$this->getTrans('forgotPassword') ?></a><br />
-            <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'confirm')) ?>">Die Aktivierung Manuell freischalten</a>
+            <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'confirm')) ?>"><?=$this->getTrans('manuallyActivateRegistration') ?></a>
 
     </div>
     <?php if ($this->get('regist_accept') == '1'): ?>
         <br /><br /><br />
         <legend><?=$this->getTrans('menuRegist') ?></legend>
         <p>
-            Die Registrierung ist in wenigen Augenblicken erledigt und ermöglicht ihnen, auf weitere Funktionen zuzugreifen. Die Administration kann registrierten Benutzern auch zusätzliche Berechtigungen zuweisen.
+            <?=$this->getTrans('registDescription') ?>
         </p>
         <p>
             <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')) ?>" class="btn btn-default pull-left">

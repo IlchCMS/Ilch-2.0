@@ -42,6 +42,7 @@
                 </div>
             </div>
         </div>
+        <label><input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?></label>
         <div class="form-group">
              <div class="col-lg-4">
                 <button type="submit" class="btn" name="login">
