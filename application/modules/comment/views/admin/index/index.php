@@ -3,7 +3,7 @@ $locale = $this->get('locale');
 ?>
 
 <legend><?=$this->getTrans('menuComments') ?></legend>
-<?php if ($this->get('comments') != ''): ?>
+<?php if (!empty($this->get('comments'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
