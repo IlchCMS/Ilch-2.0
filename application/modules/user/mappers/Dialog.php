@@ -42,6 +42,8 @@ class Dialog extends \Ilch\Mapper
             $mailModel->setId($mail['id']);
             $mailModel->setCId($mail['c_id']);
             $mailModel->setName($mail['name']);
+            $dialog = $this->getReadLastOneDialog($mail['c_id']);
+            $mailModel->setRead($dialog);
             if (file_exists($mail['avatar'])){
                 $mailModel->setAvatar($mail['avatar']);
             }  else {
@@ -116,6 +118,7 @@ class Dialog extends \Ilch\Mapper
         $dialogModel->setTime($mail['time']);
         $dialogModel->setCrId($mail['cr_id']);
         $dialogModel->setUserOne($mail['user_id_fk']);
+        $dialogModel->setRead($mail['read']);
 
         return $dialogModel;
     }
