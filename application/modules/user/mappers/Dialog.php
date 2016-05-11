@@ -91,6 +91,36 @@ class Dialog extends \Ilch\Mapper
     }
 
     /**
+    * Get the last dialog read or not
+    * @param int $c_id
+    * @return null|dialogModel
+    */
+    public function getReadLastOneDialog($c_id)
+    {
+        $sql = 'SELECT R.cr_id,R.time,R.reply,R.read,R.user_id_fk,U.id,U.name,U.avatar
+                FROM [prefix]_users U, [prefix]_users_dialog_reply R
+                WHERE R.user_id_fk=U.id
+                AND
+                R.c_id_fk='.$c_id.'
+                AND R.read = 0
+                ORDER BY R.cr_id DESC';
+
+        $mail = $this->db()->queryRow($sql);
+
+        if (empty($mail)) {
+            return null;
+        }
+
+        $dialogModel = new DialogModel();
+        $dialogModel->setText($mail['reply']);
+        $dialogModel->setTime($mail['time']);
+        $dialogModel->setCrId($mail['cr_id']);
+        $dialogModel->setUserOne($mail['user_id_fk']);
+
+        return $dialogModel;
+    }
+
+    /**
     * Get the dialog message
     * @param int $c_id the user
     * @return null|\Modules\User\Models\Dialog
@@ -228,6 +258,27 @@ class Dialog extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
+
+        return ;
+    }
+
+    /**
+     * Updates dialog read.
+     *
+     * @param DialogModel $model
+     */
+    public function updateRead(DialogModel $model)
+    {
+        $fields = array
+        (
+            'cr_id' => $model->getCrId(),
+            'read' => $model->getRead(),
+        );
+
+        $this->db()->update('users_dialog_reply')
+                ->values($fields)
+                ->where(array('cr_id' => $model->getCrId()))
+                ->execute();
 
         return ;
     }

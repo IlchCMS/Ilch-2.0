@@ -251,6 +251,14 @@ class Panel extends BaseController
                 $user_two = $user->getUserTwo();
             }
 
+            $dialog = $dialogMapper->getReadLastOneDialog($c_id);
+            if ($dialog and $dialog->getUserOne() != $this->getUser()->getId()) {
+                $model = new DialogModel();
+                $model->setCrId($dialog->getCrId());
+                $model->setRead(1);
+                $dialogMapper->updateRead($model);
+            }
+
             $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
         }
     }
@@ -286,6 +294,15 @@ class Panel extends BaseController
             }
 
             $this->getView()->set('inbox', $DialogMapper->getDialogMessage($c_id));
+
+            $dialog = $DialogMapper->getReadLastOneDialog($c_id);
+            if ($dialog and $dialog->getUserOne() != $this->getUser()->getId()) {
+                $model = new DialogModel();
+                $model->setCrId($dialog->getCrId());
+                $model->setRead(1);
+                $DialogMapper->updateRead($model);
+            }
+
         } else {
             $this->redirect(array('action' => 'dialog'));
         }

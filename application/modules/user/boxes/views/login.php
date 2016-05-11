@@ -5,6 +5,7 @@
         <?=$this->getTrans('panel') ?>
     </a>
     <br />
+    <div id="checknewmessage"></div>
     <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()): ?>
         <a target="_blank" href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')) ?>">
             <?=$this->getTrans('adminarea') ?>
@@ -55,3 +56,14 @@
     <?php endif; ?>
     <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword')) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
+
+<script>
+$(document).ready(function() {
+    window.setInterval(function(){
+        loadMessage();
+        function loadMessage() {
+            $('#checknewmessage').load('<?=$this->getUrl('index.php/user/ajax/checknewmessage'); ?>');
+        };
+    }, 5000);
+});
+</script>
