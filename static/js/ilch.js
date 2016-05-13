@@ -17,6 +17,7 @@ $(document).ready(function(){
             CKEDITOR.replace( id , {
                 disableObjectResizing: false,
                 allowedContent: true,
+                customConfig: '../ckeditor/config_ilch_bbcode.js',
                 toolbar : toolbar
             });
         };
