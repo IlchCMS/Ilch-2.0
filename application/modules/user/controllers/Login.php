@@ -7,6 +7,8 @@
 namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\AuthToken as AuthTokenMapper;
+use Modules\User\Models\AuthToken as AuthTokenModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\User\Service\Login as LoginService;
 
@@ -37,6 +39,26 @@ class Login extends \Ilch\Controller\Frontend
 
                 if ($result->isSuccessful()) {
                     $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
+
+                    // TODO: Only do this when the user checked "remember me".
+                    $authTokenModel = new AuthTokenModel();
+                    $userMapper = new UserMapper();
+
+                    $authTokenModel->setSelector = base64_encode(openssl_random_pseudo_bytes(9));
+                    // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
+                    $authenticator = openssl_random_pseudo_bytes(33);
+                    // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
+                    $authTokenModel->setToken(hash('sha256', $authenticator));
+                    $authTokenModel->setUserid($userMapper->getUserByName(\Ilch\Registry::get('user'))->id)
+                    $authTokenModel->setExpires(date('Y-m-d\TH:i:s', time() + 1209600));
+
+                    // secure = Indicates that the cookie should only be transmitted over a secure HTTPS connection from the client. When set to TRUE, the cookie will only be set if a secure connection exists.
+                    // httponly = When TRUE the cookie will be made accessible only through the HTTP protocol. This means that the cookie won't be accessible by scripting languages, such as JavaScript.
+                    setcookie('remember',$selector.':'.base64_encode($authenticator),time() + 1209600,'/',$_SERVER['SERVER_NAME'],false,false);
+
+                    $authTokenMapper = new AuthTokenMapper();
+
+                    $authTokenMapper->addAuthToken($authTokenModel);
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
                     $redirectUrl = array('module' => 'user', 'controller' => 'login', 'action' => 'index');
