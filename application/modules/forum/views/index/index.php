@@ -113,8 +113,15 @@ function rec($item, $obj, $readAccess, $i)
     <div class="dark-header-content">
         Insgesamt sind <strong><?=$guestOnline+$usersOnline?></strong> Besucher online: <strong><?=$usersOnline ?></strong> registrierte <strong><?=$guestOnline ?></strong> Gäste (basierend auf den aktiven Besuchern der letzten 5 Minuten)<br>
         Der Besucherrekord liegt bei 1767 Besuchern, die am 27.09.2014 online waren.<br> <br>
-        <br><em>Legende: Teammitglied, User</em>
+        <br><em><?=$this->getTrans('legend') ?>:
+            <?php foreach ($this->get('listGroups') as $group) : ?>
+                <?php if ($group->getName() == 'Guest'): ?>
+                <?php else: ?>
+                    <?=$group->getName() ?>,
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </em>
     </div>
     <h3 class="dark-header"><?=$this->getTrans('statistics') ?></h3>
-    <div class="dark-header-content">Total posts <strong><?=$forumStatistics->getCountPosts() ?></strong> • Total topics <strong><?=$forumStatistics->getCountTopics() ?></strong> • Total members <strong><?=$forumStatistics->getCountUsers() ?></strong> • Our newest member <strong></strong></div>
+    <div class="dark-header-content"><?=$this->getTrans('totalPosts') ?> <strong><?=$forumStatistics->getCountPosts() ?></strong> • <?=$this->getTrans('totalTopics') ?> <strong><?=$forumStatistics->getCountTopics() ?></strong> • <?=$this->getTrans('totalMembers') ?> <strong><?=$forumStatistics->getCountUsers() ?></strong> • <?=$this->getTrans('newMember') ?> <strong><?=$this->get('registNewUser')->getName() ?></strong></div>
 </div>

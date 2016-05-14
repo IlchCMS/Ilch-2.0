@@ -10,6 +10,7 @@ use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Forum\Mappers\ForumStatistics as ForumStaticsMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -19,6 +20,7 @@ class Index extends \Ilch\Controller\Frontend
         $forumMapper = new ForumMapper();
         $visitMapper = new StatisticMapper();
         $staticsMapper = new ForumStaticsMapper();
+        $groupMapper = new GroupMapper();
 
         
         $forumItems = $forumMapper->getForumItemsByParent(1, 0);
@@ -52,5 +54,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('usersOnline', count($usersOnline));
         $this->getView()->set('guestOnline', $allOnlineUsers - count($usersOnline));
         $this->getView()->set('forumStatics', $staticsMapper->getForumStatistics());
+        $this->getView()->set('registNewUser', $userMapper->getUserById($visitMapper->getRegistNewUser()));
+        $this->getView()->set('listGroups', $groupMapper->getGroupList());
     }
 }

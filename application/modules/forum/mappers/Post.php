@@ -44,6 +44,20 @@ class Post extends \Ilch\Mapper
         return $entryModel;
     }
 
+    public function getAllPostsByUderId($userId)
+    {
+        $sql = 'SELECT COUNT(id)
+                FROM [prefix]_forum_posts
+                WHERE user_id ='.$userId;
+        $topics = $this->db()->queryCell($sql);
+
+        if (empty($topics)) {
+            return '0';
+        }
+
+        return $topics;
+    }
+
     public function save(PostModel $model)
     {
         if ($model->getId()) {
@@ -95,7 +109,12 @@ class Post extends \Ilch\Mapper
             $entryModel->setId($entries['id']);
             $entryModel->setText($entries['text']);
             $entryModel->setDateCreated($entries['date_created']);
-            $entryModel->setAutor($userMapper->getUserById($entries['user_id']));
+            if ($userMapper->getUserById($entries['user_id'])) {
+                $entryModel->setAutor($userMapper->getUserById($entries['user_id']));
+            } else {
+                $entryModel->setAutor($userMapper->getDummyUser());
+            }
+            $entryModel->setAutorAllPost($this->getAllPostsByUderId($entries['user_id']));
             $postEntry[] = $entryModel;
         }
         

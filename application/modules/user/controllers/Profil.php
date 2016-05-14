@@ -18,12 +18,17 @@ class Profil extends \Ilch\Controller\Frontend
 
         $profil = $profilMapper->getUserById($this->getRequest()->getParam('user'));
 
-        $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index'))
-                ->add($profil->getName(), array('action' => 'index', 'user' => $this->getRequest()->getParam('user')));
+        if ($profil) {
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index'))
+                    ->add($profil->getName(), array('action' => 'index', 'user' => $this->getRequest()->getParam('user')));
 
-        $this->getView()->set('profil', $profil);
-        $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
-        $this->getView()->set('gallery', $galleryMapper->getCountGalleryByUser($this->getRequest()->getParam('user')));
+            $this->getView()->set('profil', $profil);
+            $this->getView()->set('galleryAllowed', $this->getConfig()->get('usergallery_allowed'));
+            $this->getView()->set('gallery', $galleryMapper->getCountGalleryByUser($this->getRequest()->getParam('user')));
+
+        } else {
+            $this->redirect(array('module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'User', 'errorText' => 'notFound'));
+        }
     }
 }

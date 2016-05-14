@@ -437,4 +437,18 @@ class User extends \Ilch\Mapper
             ->where(array('id' => $userId))
             ->execute();
     }
+
+    public function getDummyUser()
+    {
+        $user = new UserModel();
+        $groups = new \Modules\User\Mappers\Group();
+        $user->setId('');
+        $user->setName('No longer exist');
+        $user->setAvatar('static/img/noavatar.jpg');
+        //$user->setGroups(array(3));
+
+        $user->setGroups($groups->getGroupById('3'));
+
+        return $user;
+    }
 }

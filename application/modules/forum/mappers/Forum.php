@@ -120,7 +120,11 @@ class Forum extends \Ilch\Mapper
         $entryModel = new PostModel();
         $userMapper = new UserMapper();
         $entryModel->setId($fileRow['id']);
-        $entryModel->setAutor($userMapper->getUserById($fileRow['user_id']));
+        if ($userMapper->getUserById($fileRow['user_id'])) {
+            $entryModel->setAutor($userMapper->getUserById($fileRow['user_id']));
+        } else {
+            $entryModel->setAutor($userMapper->getDummyUser());
+        }
         $entryModel->setDateCreated($fileRow['date_created']);
         $entryModel->setTopicId($fileRow['topic_id']);
         $entryModel->setRead($fileRow['read']);
