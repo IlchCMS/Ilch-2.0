@@ -29,6 +29,7 @@ class Login extends \Ilch\Controller\Frontend
             $emailName = $this->getRequest()->getPost('login_emailname');
             $password = $this->getRequest()->getPost('login_password');
             $redirectUrl = $this->getRequest()->getPost('login_redirect_url');
+            $rememberMe = $this->getRequest()->getPost('rememberMe');
 
             if (empty($emailName)) {
                 $errors['login_emailname'] = 'fieldEmpty';
@@ -39,26 +40,24 @@ class Login extends \Ilch\Controller\Frontend
 
                 if ($result->isSuccessful()) {
                     $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
+                    if ($rememberMe) {
+                        $authTokenModel = new AuthTokenModel();
+                        $userMapper = new UserMapper();
 
-                    // TODO: Only do this when the user checked "remember me".
-                    $authTokenModel = new AuthTokenModel();
-                    $userMapper = new UserMapper();
+                        $authTokenModel->setSelector = base64_encode(openssl_random_pseudo_bytes(9));
+                        // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
+                        $authenticator = openssl_random_pseudo_bytes(33);
+                        // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
+                        $authTokenModel->setToken(hash('sha256', $authenticator));
+                        $authTokenModel->setUserid(1);
+                        // $authTokenModel->setUserid($userMapper->getUserByName(\Ilch\Registry::get('user'))->id);
+                        $authTokenModel->setExpires(date('Y-m-d\TH:i:s', time() + 1209600));
 
-                    $authTokenModel->setSelector = base64_encode(openssl_random_pseudo_bytes(9));
-                    // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
-                    $authenticator = openssl_random_pseudo_bytes(33);
-                    // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
-                    $authTokenModel->setToken(hash('sha256', $authenticator));
-                    $authTokenModel->setUserid($userMapper->getUserByName(\Ilch\Registry::get('user'))->id)
-                    $authTokenModel->setExpires(date('Y-m-d\TH:i:s', time() + 1209600));
+                        setcookie('remember',$authTokenModel->getSelector().':'.base64_encode($authenticator),time() + 1209600,'/',$_SERVER['SERVER_NAME'],false,false);
 
-                    // secure = Indicates that the cookie should only be transmitted over a secure HTTPS connection from the client. When set to TRUE, the cookie will only be set if a secure connection exists.
-                    // httponly = When TRUE the cookie will be made accessible only through the HTTP protocol. This means that the cookie won't be accessible by scripting languages, such as JavaScript.
-                    setcookie('remember',$selector.':'.base64_encode($authenticator),time() + 1209600,'/',$_SERVER['SERVER_NAME'],false,false);
-
-                    $authTokenMapper = new AuthTokenMapper();
-
-                    $authTokenMapper->addAuthToken($authTokenModel);
+                        $authTokenMapper = new AuthTokenMapper();
+                        $authTokenMapper->addAuthToken($authTokenModel);
+                    }
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
                     $redirectUrl = array('module' => 'user', 'controller' => 'login', 'action' => 'index');

@@ -11,9 +11,9 @@ use Modules\User\Models\AuthToken as AuthTokenModel;
 class AuthToken extends \Ilch\Mapper
 {
     public function getAuthToken($selector) {
-        $select = $this->db->select('*');
+        $select = $this->db()->select('*');
         $result = $select->from('auth_tokens')
-            ->where(['selector' => $selector)
+            ->where(['selector' => $selector])
             ->execute();
 
         if (!empty($userRows)) {
@@ -23,7 +23,7 @@ class AuthToken extends \Ilch\Mapper
     }
 
     public function addAuthToken($authToken) {
-        $insert = $this->db->insert();
+        $insert = $this->db()->insert();
         $userId = $insert->into('auth_tokens')
             ->values(['selector' => $authToken->getSelector(), 'token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])
             ->execute();
