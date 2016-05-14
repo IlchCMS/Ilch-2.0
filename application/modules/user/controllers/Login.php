@@ -44,7 +44,7 @@ class Login extends \Ilch\Controller\Frontend
                         $authTokenModel = new AuthTokenModel();
                         $userMapper = new UserMapper();
 
-                        $authTokenModel->setSelector = base64_encode(openssl_random_pseudo_bytes(9));
+                        $authTokenModel->setSelector(base64_encode(openssl_random_pseudo_bytes(9)));
                         // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
                         $authenticator = openssl_random_pseudo_bytes(33);
                         // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.

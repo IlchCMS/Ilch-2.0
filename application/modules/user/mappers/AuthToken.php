@@ -14,9 +14,10 @@ class AuthToken extends \Ilch\Mapper
         $select = $this->db()->select('*');
         $result = $select->from('auth_tokens')
             ->where(['selector' => $selector])
-            ->execute();
+            ->execute()
+            ->fetchRow();
 
-        if (!empty($userRows)) {
+        if (!empty($result)) {
             return $result;
         }
         return null;
