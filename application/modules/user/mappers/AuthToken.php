@@ -40,6 +40,16 @@ class AuthToken extends \Ilch\Mapper
             ->execute();
     }
 
-    public function updateAuthToken() {
+    /**
+     * Updates the authToken in the database.
+     *
+     * @return int The id of the updated authToken.
+     */
+    public function updateAuthToken($authToken) {
+        $update = $this->db()->update();
+        return $update->table('auth_tokens')
+            ->values(['selector' => $authToken->getSelector(), 'token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])
+            ->where(['userid' => $authToken->getUserid()])
+            ->execute();
     }
 }

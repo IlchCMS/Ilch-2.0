@@ -42,7 +42,6 @@ class Login extends \Ilch\Controller\Frontend
                     $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
                     if ($rememberMe) {
                         $authTokenModel = new AuthTokenModel();
-                        $userMapper = new UserMapper();
 
                         // 9 bytes of random data (base64 encoded to 12 characters) for the selector.
                         // This provides 72 bits of keyspace and therefore 236 bits of collision resistance (birthday attacks)
