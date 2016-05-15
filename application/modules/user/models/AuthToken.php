@@ -67,7 +67,7 @@ class AuthToken extends \Ilch\Model
         return $this;
     }
     
-        /**
+    /**
      * Returns the id of the user.
      *
      * @return int
@@ -90,8 +90,8 @@ class AuthToken extends \Ilch\Model
         return $this;
     }
     
-        /**
-     * Returns the date at which point the token expires.
+    /**
+     * Returns the date at which point of time the token expires.
      *
      * @return string
      */
@@ -101,7 +101,7 @@ class AuthToken extends \Ilch\Model
     }
 
     /**
-     * Sets the date at which point the token expires.
+     * Sets the date at which point of time the token expires.
      *
      * @param string $expires
      * @return AuthToken

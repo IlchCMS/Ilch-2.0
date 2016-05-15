@@ -10,6 +10,11 @@ use Modules\User\Models\AuthToken as AuthTokenModel;
 
 class AuthToken extends \Ilch\Mapper
 {
+    /**
+     * Returns the selector of the user.
+     *
+     * @return array
+     */
     public function getAuthToken($selector) {
         $select = $this->db()->select('*');
         $result = $select->from('auth_tokens')
@@ -23,9 +28,14 @@ class AuthToken extends \Ilch\Mapper
         return null;
     }
 
+    /**
+     * Adds a new authToken to the database.
+     *
+     * @return int The id of the inserted authToken.
+     */
     public function addAuthToken($authToken) {
         $insert = $this->db()->insert();
-        $userId = $insert->into('auth_tokens')
+        return $insert->into('auth_tokens')
             ->values(['selector' => $authToken->getSelector(), 'token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])
             ->execute();
     }

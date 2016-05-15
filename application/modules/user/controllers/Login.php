@@ -44,19 +44,25 @@ class Login extends \Ilch\Controller\Frontend
                         $authTokenModel = new AuthTokenModel();
                         $userMapper = new UserMapper();
 
+                        // 9 bytes of random data (base64 encoded to 12 characters) for the selector.
+                        // This provides 72 bits of keyspace and therefore 236 bits of collision resistance (birthday attacks)
                         $authTokenModel->setSelector(base64_encode(openssl_random_pseudo_bytes(9)));
                         // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
                         $authenticator = openssl_random_pseudo_bytes(33);
                         // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
                         $authTokenModel->setToken(hash('sha256', $authenticator));
-                        $authTokenModel->setUserid(1);
-                        // $authTokenModel->setUserid($userMapper->getUserByName(\Ilch\Registry::get('user'))->id);
-                        $authTokenModel->setExpires(date('Y-m-d\TH:i:s', time() + 1209600));
+                        $authTokenModel->setUserid($result->getUser()->getId());
+                        $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
 
-                        setcookie('remember',$authTokenModel->getSelector().':'.base64_encode($authenticator),time() + 1209600,'/',$_SERVER['SERVER_NAME'],false,false);
+                        setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], false, false);
 
                         $authTokenMapper = new AuthTokenMapper();
                         $authTokenMapper->addAuthToken($authTokenModel);
+                    } else {
+                        if(isset($_COOKIE['remember'])) {
+                            // The user unchecked the remember me-feature. Delete the cookie by setting expire to a time in the past.
+                            setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], false, false);
+                        }
                     }
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');

@@ -47,6 +47,18 @@ try {
     $page = new \Ilch\Page();
     $page->loadCms();
     $page->loadPage();
+    
+    if (empty($_SESSION['user_id']) && !empty($_COOKIE['remember'])) {
+        list($selector, $authenticator) = explode(':', $_COOKIE['remember']);
+
+        $authTokenMapper = new Modules\User\Mappers\AuthToken();
+        $row = $authTokenMapper->getAuthToken($selector);
+        
+        if (hash_equals($row[2], hash('sha256', base64_decode($authenticator)))) {
+            $_SESSION['user_id'] = $row[3];
+            // Regenerate login token
+        }
+    }
 } catch (Exception $ex) {
     print 'An unexpected error occurred: ' . $ex->getMessage();
 }
