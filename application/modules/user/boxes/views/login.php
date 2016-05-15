@@ -62,7 +62,7 @@ $(document).ready(function() {
     window.setInterval(function(){
         loadMessage();
         function loadMessage() {
-            $('#checknewmessage').load('<?=$this->getUrl('index.php/user/ajax/checknewmessage'); ?>');
+            $('#checknewmessage').load('<?=$this->getUrl(array('module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage')); ?>');
         };
     }, 5000);
 });
