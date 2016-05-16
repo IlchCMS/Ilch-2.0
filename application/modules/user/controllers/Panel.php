@@ -195,6 +195,11 @@ class Panel extends BaseController
             }
 
             if (!empty($password) AND !empty($password2) AND $password == $password2) {
+                // Delete all stored authTokens of a user when he changes his password.
+                // This will invalidate all possibly stolen rememberMe-cookies.
+                $authTokenMapper = new \Modules\User\Mappers\AuthToken();
+                $authTokenMapper->deleteAllAuthTokenOfUser($this->getUser()->getId());
+
                 $password = (new PasswordService())->hash($password);
 
                 $model = new UserModel();
