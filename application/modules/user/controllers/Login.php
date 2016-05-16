@@ -57,11 +57,6 @@ class Login extends \Ilch\Controller\Frontend
 
                         $authTokenMapper = new AuthTokenMapper();
                         $authTokenMapper->addAuthToken($authTokenModel);
-                    } else {
-                        if(isset($_COOKIE['remember'])) {
-                            // The user unchecked the remember me-feature. Delete the cookie by setting expire to a time in the past.
-                            setcookie('remember', '', time() - 3600, '/', $_SERVER['SERVER_NAME'], false, false);
-                        }
                     }
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
