@@ -15,6 +15,8 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        
+        // Delete all expired authTokens of the remember-me-feature
+        $authTokenMapper = new \Modules\User\Mappers\AuthToken();
+        $authTokenMapper->deleteExpiredAuthTokens();
     }
 }

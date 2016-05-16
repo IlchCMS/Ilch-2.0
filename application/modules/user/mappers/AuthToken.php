@@ -81,4 +81,16 @@ class AuthToken extends \Ilch\Mapper
             ->where(['userid' => $userid])
             ->execute();
     }
+
+    /**
+     * Delete all expired authTokens in the database.
+     *
+     * @return int The id of the updated authToken.
+     */
+    public function deleteExpiredAuthTokens() {
+        $delete = $this->db()->delete();
+        return $delete->from('auth_tokens')
+            ->where(['expires <' => time()])
+            ->execute();
+    }
 }
