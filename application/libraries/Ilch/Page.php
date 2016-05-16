@@ -154,9 +154,7 @@ class Page
                     // A new token is generated, a new hash for the token is stored over the old record, and a new login cookie is issued to the user.
                     $authTokenModel = new \Modules\User\Models\AuthToken();
 
-                    // 9 bytes of random data (base64 encoded to 12 characters) for the selector.
-                    // This provides 72 bits of keyspace and therefore 236 bits of collision resistance (birthday attacks)
-                    $authTokenModel->setSelector(base64_encode(openssl_random_pseudo_bytes(9)));
+                    $authTokenModel->setSelector($selector);
                     // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
                     $authenticator = openssl_random_pseudo_bytes(33);
                     // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.

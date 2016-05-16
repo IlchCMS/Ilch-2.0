@@ -33,7 +33,6 @@ class AuthToken extends \Ilch\Mapper
      * Adds a new authToken to the database.
      *
      * @param string Modules\User\Models\AuthToken
-     * @return int The id of the inserted authToken.
      */
     public function addAuthToken($authToken) {
         $insert = $this->db()->insert();
@@ -46,13 +45,12 @@ class AuthToken extends \Ilch\Mapper
      * Updates the authToken in the database.
      *
      * @param string Modules\User\Models\AuthToken
-     * @return int The id of the updated authToken.
      */
     public function updateAuthToken($authToken) {
         $update = $this->db()->update();
         return $update->table('auth_tokens')
-            ->values(['selector' => $authToken->getSelector(), 'token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])
-            ->where(['userid' => $authToken->getUserid()])
+            ->values(['token' => $authToken->getToken(), 'userid' => $authToken->getUserid(), 'expires' => $authToken->getExpires()])
+            ->where(['selector' => $authToken->getSelector()])
             ->execute();
     }
 
@@ -60,7 +58,6 @@ class AuthToken extends \Ilch\Mapper
      * Delete the authToken in the database.
      *
      * @param string selector
-     * @return int The id of the deleted authToken.
      */
     public function deleteAuthToken($selector) {
         $delete = $this->db()->delete();
@@ -73,7 +70,6 @@ class AuthToken extends \Ilch\Mapper
      * Delete all authToken of a user in the database.
      *
      * @param int userid
-     * @return int The id of the updated authToken.
      */
     public function deleteAllAuthTokenOfUser($userid) {
         $delete = $this->db()->delete();
@@ -85,12 +81,11 @@ class AuthToken extends \Ilch\Mapper
     /**
      * Delete all expired authTokens in the database.
      *
-     * @return int The id of the updated authToken.
      */
     public function deleteExpiredAuthTokens() {
         $delete = $this->db()->delete();
         return $delete->from('auth_tokens')
-            ->where(['expires <' => time()])
+            ->where(['expires <' => date('Y-m-d\TH:i:s', time())])
             ->execute();
     }
 }
