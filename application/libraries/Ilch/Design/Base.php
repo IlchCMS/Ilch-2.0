@@ -250,6 +250,33 @@ abstract class Base
     {
         require_once APPLICATION_PATH.'/libraries/jbbcode/Parser.php';
 
+        $smilies = array
+            (
+                "~:smiley:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/regular_smile.png" alt="" /> ',
+                "~:sad:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/sad_smile.png" alt="" /> ',
+                "~:wink:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/wink_smile.png" alt="" /> ',
+                "~:laugh:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/teeth_smile.png" alt="" /> ',
+                "~:frown:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/confused_smile.png" alt=""/> ',
+                "~:cheeky:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/tongue_smile.png" alt="" /> ',
+                "~:blush:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/embarrassed_smile.png" alt="" /> ',
+                "~:surprise:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/omg_smile.png" alt="" /> ',
+                "~:indecision:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/whatchutalkingabout_smile.png" alt="" /> ',
+                "~:angry:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/angry_smile.png" alt="" /> ',
+                "~:angel:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/angel_smile.png" alt="" /> ',
+                "~:cool:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/shades_smile.png" alt="" /> ',
+                "~:devil:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/devil_smile.png" alt="" /> ',
+                "~:crying:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/cry_smile.png" alt="" /> ',
+                "~:light:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/lightbulb.png" alt="" /> ',
+                "~:no:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/thumbs_down.png" alt="" /> ',
+                "~:yes:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/thumbs_up.png" alt="" /> ',
+                "~:heart:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/heart.png" alt="" /> ',
+                "~:broken_heart:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/broken_heart.png" alt="" /> ',
+                "~:kiss:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/kiss.png" alt="" /> ',
+                "~:mail:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/envelope.png" alt="" /> '
+            );
+
+        $bbcode = preg_replace( array_keys($smilies), array_values($smilies), $bbcode );
+
         $parser = new \JBBCode\Parser();
         $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
 
@@ -273,7 +300,7 @@ abstract class Base
  
         $builder = new \JBBCode\CodeDefinitionBuilder('u', '<u>{param}</u>');
         $parser->addCodeDefinition($builder->build());
-        
+
         $builder = new \JBBCode\CodeDefinitionBuilder('url', '<a href="{option}">{param}</a>');
         $builder->setUseOption(true)->setOptionValidator(new \JBBCode\validators\UrlValidator());
         $parser->addCodeDefinition($builder->build());

@@ -49,6 +49,11 @@ class Dialog extends \Ilch\Model
     private $name;
 
     /**
+    * READ
+    */
+    private $read;
+
+    /**
     * Set the ID of the message
     * @param int $id
     * @return id
@@ -217,5 +222,24 @@ class Dialog extends \Ilch\Model
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+    * Set the read
+    * @param string $read
+    * @return int
+    */
+    public function setRead($read)
+    {
+        $this->read = $read;
+    }
+
+    /**
+    * Get the read
+    * @return int
+    */
+    public function getRead()
+    {
+        return $this->read;
     }
 }

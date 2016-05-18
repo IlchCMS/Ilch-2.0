@@ -42,6 +42,8 @@ class Dialog extends \Ilch\Mapper
             $mailModel->setId($mail['id']);
             $mailModel->setCId($mail['c_id']);
             $mailModel->setName($mail['name']);
+            $dialog = $this->getReadLastOneDialog($mail['c_id']);
+            $mailModel->setRead($dialog);
             if (file_exists($mail['avatar'])){
                 $mailModel->setAvatar($mail['avatar']);
             }  else {
@@ -88,6 +90,37 @@ class Dialog extends \Ilch\Mapper
         $mailModel->setTime($mail['time']);
 
         return $mailModel;
+    }
+
+    /**
+    * Get the last dialog read or not
+    * @param int $c_id
+    * @return null|dialogModel
+    */
+    public function getReadLastOneDialog($c_id)
+    {
+        $sql = 'SELECT R.cr_id,R.time,R.reply,R.read,R.user_id_fk,U.id,U.name,U.avatar
+                FROM [prefix]_users U, [prefix]_users_dialog_reply R
+                WHERE R.user_id_fk=U.id
+                AND
+                R.c_id_fk='.$c_id.'
+                AND R.read = 0
+                ORDER BY R.cr_id DESC';
+
+        $mail = $this->db()->queryRow($sql);
+
+        if (empty($mail)) {
+            return null;
+        }
+
+        $dialogModel = new DialogModel();
+        $dialogModel->setText($mail['reply']);
+        $dialogModel->setTime($mail['time']);
+        $dialogModel->setCrId($mail['cr_id']);
+        $dialogModel->setUserOne($mail['user_id_fk']);
+        $dialogModel->setRead($mail['read']);
+
+        return $dialogModel;
     }
 
     /**
@@ -228,6 +261,27 @@ class Dialog extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
+
+        return ;
+    }
+
+    /**
+     * Updates dialog read.
+     *
+     * @param DialogModel $model
+     */
+    public function updateRead(DialogModel $model)
+    {
+        $fields = array
+        (
+            'cr_id' => $model->getCrId(),
+            'read' => $model->getRead(),
+        );
+
+        $this->db()->update('users_dialog_reply')
+                ->values($fields)
+                ->where(array('cr_id' => $model->getCrId()))
+                ->execute();
 
         return ;
     }

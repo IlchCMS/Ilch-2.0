@@ -15,7 +15,7 @@ $profil = $this->get('profil');
                 <ul class="dialog">
                 <?php if ($this->get('dialog') == !''): ?>
                 <?php foreach ($this->get('dialog') as $dialog): ?>
-                    <li class="left clearfix">
+                    <li class="left clearfix" <?php if ($dialog->getRead() != null) {echo 'style="background-color: rgba(239, 229, 219, 0.5)"';} ?>>
                         <span class="pull-left">
                             <img class="img-circle avatar" src="<?=$this->getUrl().'/'.$dialog->getAvatar() ?>" alt="User Avatar">
                         </span>

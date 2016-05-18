@@ -92,9 +92,12 @@ if ($this->getUser()) {
                             <?=$post->getAutor()->getName() ?>
                         </a>
                     </dt>
-                    <dd>Site Admin</dd>
+                    <dd><?php foreach ($post->getAutor()->getGroups() as $group) : ?>
+                            <?=$group->getName() ?><br>
+                        <?php endforeach; ?>
+                    </dd>
                     <dd>&nbsp;</dd>
-                    <dd><strong><?=$this->getTrans('posts') ?>:</strong> 16</dd><dd><strong><?=$this->getTrans('joined') ?>:</strong> <?=$post->getAutor()->getDateCreated() ?></dd>
+                    <dd><strong><?=$this->getTrans('posts') ?>:</strong> <?=$post->getAutorAllPost() ?></dd><dd><strong><?=$this->getTrans('joined') ?>:</strong> <?=$post->getAutor()->getDateCreated() ?></dd>
                 </dl>
             </div>
         <?php endforeach; ?>

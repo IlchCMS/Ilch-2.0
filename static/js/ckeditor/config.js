@@ -34,14 +34,4 @@ CKEDITOR.editorConfig = function( config ) {
             { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
             { name: 'insert', items: [ 'ilchmedia', 'ilchps' ] }
         ];
-
-    config.toolbar = 'ilch_bbcode';
-    config.toolbar_ilch_bbcode =
-        [
-            ['Undo', 'Redo' ],
-            ['RemoveFormat'],
-            [ 'Link', 'Unlink', 'Image'],
-            [ 'Bold', 'Italic', 'Underline'],
-            [ 'Maximize']
-        ];
 };

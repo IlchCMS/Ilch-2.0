@@ -14,7 +14,9 @@ return array
     'forumItemAdd' => 'Add',
     'forumOverview' => 'Forum - Overview',
     'topics' => 'Topics',
+    'totalTopics' => 'Total topics',
     'posts' => 'Posts',
+    'totalPosts' => 'Total posts',
     'replies' => 'Replies',
     'views' => 'Views',
     'lastPost' => 'Last Post',
@@ -43,4 +45,7 @@ return array
     'joined' => 'Joined',
     'showNewPosts' => 'New posts',
     'noPosts' => 'No posts available',
+    'totalMembers' => 'Total members',
+    'newMember' => 'Newest member',
+    'legend' => 'Legend',
 );

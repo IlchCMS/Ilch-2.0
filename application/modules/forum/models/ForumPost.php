@@ -106,6 +106,13 @@ class ForumPost extends \Ilch\Model
      */
     protected $autor;
 
+    /**
+     * The imageUrl of the file.
+     *
+     * @var string
+     */
+    protected $autorallpost;
+
    /**
      * Gets the id of the file.
      *
@@ -273,6 +280,16 @@ class ForumPost extends \Ilch\Model
     public function getAutor()
     {
         return $this->autor;
+    }
+
+    /**
+     * Returns the date_created \Ilch\Date of the user.
+     *
+     * @return \Ilch\Date
+     */
+    public function getAutorAllPost()
+    {
+        return $this->autorallpost;
     }
 
     /**
@@ -450,4 +467,18 @@ class ForumPost extends \Ilch\Model
 
         return $this;
     }
+
+    /**
+     * Saves the date_created \Ilch\Date of the user.
+     *
+     * @param \Ilch\Date $dateCreated
+     * @return User
+     */
+    public function setAutorAllPost($autorAllPost)
+    {
+        $this->autorallpost = $autorAllPost;
+
+        return $this;
+    }
+
 }

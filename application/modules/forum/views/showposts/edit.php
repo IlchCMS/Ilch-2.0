@@ -15,7 +15,7 @@ $post = $this->get('post');
                               class="form-control ckeditor"
                               toolbar="ilch_bbcode"
                               name="text">
-                              <?=nl2br($this->getHtmlFromBBCode($post->getText())) ?>
+                              <?=$post->getText() ?>
                     </textarea>
                 </div>
             </div>
