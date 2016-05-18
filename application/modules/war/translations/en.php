@@ -124,4 +124,12 @@ return array
     'warDrawn' => 'Drawn',
     'warStatusFrom' => 'Played at:',
     'new' => 'New',
+    'missingWarTime' => 'No appointment added for the war.',
+    'missingWarServer' => 'No war-server added.',
+    'missingWarXonx' => 'No XonX entered.',
+    'missingWarGame' => 'No game entered.',
+    'missingWarMatchtype' => 'No match-type entered.',
+    'missingWarMapPlayed' => 'No played map entered.',
+    'missingGroupPoints' => 'No points added.',
+    'missingEnemyPoints' => 'No points of the enemy added.',
 );
