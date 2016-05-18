@@ -63,8 +63,8 @@ return array
 
     'manageNextWar' => 'Add Next War',
     'nextWarOverview' => 'Next War Overview',
-    'nextWarEnemy' => 'Enemy add',
-    'nextWarGroup' => 'Group add',
+    'nextWarEnemy' => 'Add enemy',
+    'nextWarGroup' => 'Add group',
     'nextWarTime' => 'Date/Time',
     'nextWarMap' => 'Maps',
     'nextWarServer' => 'Server',
@@ -76,8 +76,8 @@ return array
 
     'manageLastWar' => 'Add Last War',
     'lastWarOverview' => 'Last War Overview',
-    'lastWarEnemy' => 'Enemy add',
-    'lastWarGroup' => 'Group add',
+    'lastWarEnemy' => 'Add enemy',
+    'lastWarGroup' => 'Add group',
     'lastWarTime' => 'Date/Time',
     'lastWarMap' => 'Maps',
     'lastWarServer' => 'Server',
