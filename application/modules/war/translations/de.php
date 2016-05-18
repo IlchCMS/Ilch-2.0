@@ -35,6 +35,10 @@ return array
     'assignedMember' => 'Member auswählen',
     'selectAssignedMember' => 'Member',
     'toGroups' => 'Zur Gruppen Übersicht',
+    'missingGroupName' => 'Es wurde kein Gruppenname eingegeben.',
+    'missingGroupImage' => 'Es wurde kein Bild für die Gruppe ausgewählt.',
+    'missingGroupMember' => 'Es wurden keine Mitglieder ausgewählt.',
+    'missingGroupTag' => 'Es wurde kein Gruppen-Tag eingegeben.',
 
     'manageNewEnemy' => 'Neuen Gegner erstellen',
     'manageEnemy' => 'Gegner verwalten',

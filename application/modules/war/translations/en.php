@@ -35,6 +35,10 @@ return array
     'assignedMember' => 'Add Member',
     'selectAssignedMember' => 'Member',
     'toGroups' => 'To groups overview',
+    'missingGroupName' => 'No group-name was entered.',
+    'missingGroupImage' => 'No group-image was chosen.',
+    'missingGroupMember' => 'No members were chosen for the group.',
+    'missingGroupTag' => 'No group-tag was entered for the group.',
 
     'manageNewEnemy' => 'Create new enemy',
     'manageEnemy' => 'Manage Enemy',
