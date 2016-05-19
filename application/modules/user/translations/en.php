@@ -154,6 +154,7 @@ return array
     'rememberMe' => 'Remember me?',
     'manuallyActivateRegistration' => 'Manually activate registration',
     'registDescription' => 'The registration is done in just a moment and allows you to access more features. The administration can give registered users further rights, too.',
+    'cookieStolen' => 'Someone has possibly stolen your cookie. Please check your systems for malware and change your password.',
 
     'logout' => 'Logout',
     'message' => 'Message',

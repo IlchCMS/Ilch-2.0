@@ -169,6 +169,8 @@ class Page
                 } else {
                     // If the series is present but the token does not match, a theft is assumed.
                     // The user receives a strongly worded warning and all of the user's remembered sessions are deleted.
+                    $cookieStolenMapper = new \Modules\User\Mappers\CookieStolen();
+                    $cookieStolenMapper->addCookieStolen($row['userid']);
                     $authTokenMapper->deleteAllAuthTokenOfUser($row['userid']);
                 }
             }

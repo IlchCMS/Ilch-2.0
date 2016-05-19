@@ -8,6 +8,7 @@ namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\AuthToken as AuthTokenMapper;
+use Modules\User\Mappers\CookieStolen as CookieStolenMapper;
 use Modules\User\Models\AuthToken as AuthTokenModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\User\Service\Login as LoginService;
@@ -39,7 +40,16 @@ class Login extends \Ilch\Controller\Frontend
                 $result  = LoginService::factory()->perform($emailName, $password);
 
                 if ($result->isSuccessful()) {
-                    $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
+                    $cookieStolenMapper = new CookieStolenMapper();
+
+                    if(!$cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
+                        $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
+                    } else {
+                        // The user receives a strongly worded warning that his cookie might be stolen.
+                        $cookieStolenMapper->deleteCookieStolen($result->getUser()->getId());
+                        $this->addMessage($this->getTranslator()->trans('cookieStolen'), 'danger');
+                    }
+
                     if ($rememberMe) {
                         $authTokenModel = new AuthTokenModel();
 

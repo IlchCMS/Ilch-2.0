@@ -237,6 +237,12 @@ CREATE TABLE IF NOT EXISTS `[prefix]_auth_tokens` (
     `expires` datetime,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_cookie_stolen` (
+    `id` integer(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `userid` integer(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SQL;
     }
 }
