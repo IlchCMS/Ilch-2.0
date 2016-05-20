@@ -23,18 +23,6 @@ class BeforeControllerLoad
 
         $userId = null;
 
-        if (isset($_SESSION['user_id'])) {
-            $userId = (int) $_SESSION['user_id'];
-        }
-
-        $request = $pluginData['request'];
-
-        if(!$userId) {
-            if ($request->getModuleName() == 'user' && !in_array($request->getControllerName(), array('index', 'login', 'regist'))) {
-                $pluginData['controller']->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
-            }
-        }
-
         if (empty($_SESSION['user_id']) && !empty($_COOKIE['remember'])) {
             list($selector, $authenticator) = explode(':', $_COOKIE['remember']);
 
@@ -66,6 +54,18 @@ class BeforeControllerLoad
                     $cookieStolenMapper->addCookieStolen($row['userid']);
                     $authTokenMapper->deleteAllAuthTokenOfUser($row['userid']);
                 }
+            }
+        }
+
+        if (isset($_SESSION['user_id'])) {
+            $userId = (int) $_SESSION['user_id'];
+        }
+
+        $request = $pluginData['request'];
+
+        if(!$userId) {
+            if ($request->getModuleName() == 'user' && !in_array($request->getControllerName(), array('index', 'login', 'regist'))) {
+                $pluginData['controller']->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
             }
         }
 
