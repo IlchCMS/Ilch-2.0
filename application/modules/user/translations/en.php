@@ -151,6 +151,10 @@ return array
     'loginSuccessful' => 'You logged in successfully.',
     'loginFailed' => 'You used a incorrect username, e-mail or password. Please verify you inputs and try it again.',
     'userNotActivated' => 'The user account is not activated yet. Please activate your account with the link in the sent e-mail or request a new e-mail with an activation link.',
+    'rememberMe' => 'Remember me?',
+    'manuallyActivateRegistration' => 'Manually activate registration',
+    'registDescription' => 'The registration is done in just a moment and allows you to access more features. The administration can give registered users further rights, too.',
+    'cookieStolen' => 'Someone has possibly stolen your cookie. Please check your systems for malware and change your password.',
 
     'logout' => 'Logout',
     'message' => 'Message',
