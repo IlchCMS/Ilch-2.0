@@ -44,6 +44,7 @@ return array
     'fieldDiffersPassword' => 'passwords are different',
     'fieldEmail' => 'email is not valid',
     'certificate' => 'Certificate',
+    'extension' => 'extension',
     'valid' => 'valid',
     'expired' => 'expired',
     'existing' => 'existing',

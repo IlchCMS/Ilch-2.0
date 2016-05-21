@@ -96,7 +96,7 @@
             </td>
         </tr>
         <tr>
-            <td>PHP Extension OpenSSL</td>
+            <td>PHP-<?=$this->getTrans('extension') ?> OpenSSL</td>
             <td class="text-success"><?=$this->getTrans('existing') ?>
             <td>
                 <?php if (extension_loaded('openssl')): ?>

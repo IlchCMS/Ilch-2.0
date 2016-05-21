@@ -44,6 +44,7 @@ return array
     'fieldDiffersPassword' => 'Passwortfelder müssen gleich sein',
     'fieldEmail' => 'Email ist nicht gültig',
     'certificate' => 'Zertifikat',
+    'extension' => 'Erweiterung',
     'valid' => 'gültig',
     'expired' => 'abgelaufen',
     'existing' => 'vorhanden',
