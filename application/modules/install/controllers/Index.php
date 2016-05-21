@@ -131,13 +131,20 @@ class Index extends \Ilch\Controller\Frontend
              $errors['writableCertificate'] = true;
         }
 
+        if(!extension_loaded('openssl')) {
+            $errors['opensslExtensionMissing'] = true;
+            $errors['expiredCertUnknown'] = true;
+        }
+
         if (file_exists(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
-             $public_key = file_get_contents(APPLICATION_PATH.'/../certificate/Certificate.crt');
-             $certinfo = openssl_x509_parse($public_key);
-             $validTo = $certinfo['validTo_time_t'];
-             if ($validTo < time()) {
-                  $errors['expiredCert'] = true;
-             }
+            if(!array_key_exists('opensslExtensionMissing', $errors)) {
+                 $public_key = file_get_contents(APPLICATION_PATH.'/../certificate/Certificate.crt');
+                 $certinfo = openssl_x509_parse($public_key);
+                 $validTo = $certinfo['validTo_time_t'];
+                 if ($validTo < time()) {
+                     $errors['expiredCert'] = true;
+                 }
+            }
         } else {
              $errors['missingCert'] = true;
         }
