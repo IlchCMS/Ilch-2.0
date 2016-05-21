@@ -8,6 +8,7 @@ namespace Modules\Article\Controllers\Admin;
 
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Article\Models\Category as CategoryModel;
+use Modules\Article\Mappers\Article as ArticleMapper;
 
 class Cats extends \Ilch\Controller\Admin
 {
@@ -109,10 +110,16 @@ class Cats extends \Ilch\Controller\Admin
     public function delCatAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $categoryMapper = new CategoryMapper();
-            $categoryMapper->delete($this->getRequest()->getParam('id'));
+            $articleMapper = new ArticleMapper();
 
-            $this->addMessage('deleteSuccess');
+            if(empty($articleMapper->getArticlesByCats($this->getRequest()->getParam('id')))) {
+                $categoryMapper = new CategoryMapper();
+                $categoryMapper->delete($this->getRequest()->getParam('id'));
+
+                $this->addMessage('deleteSuccess');
+            } else {
+                $this->addMessage('categoryInUse', 'danger');
+            }
 
             $this->redirect(array('action' => 'index'));
         }
