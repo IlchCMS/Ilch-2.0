@@ -7,6 +7,9 @@
 namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\AuthToken as AuthTokenMapper;
+use Modules\User\Mappers\CookieStolen as CookieStolenMapper;
+use Modules\User\Models\AuthToken as AuthTokenModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\User\Service\Login as LoginService;
 
@@ -27,6 +30,7 @@ class Login extends \Ilch\Controller\Frontend
             $emailName = $this->getRequest()->getPost('login_emailname');
             $password = $this->getRequest()->getPost('login_password');
             $redirectUrl = $this->getRequest()->getPost('login_redirect_url');
+            $rememberMe = $this->getRequest()->getPost('rememberMe');
 
             if (empty($emailName)) {
                 $errors['login_emailname'] = 'fieldEmpty';
@@ -36,7 +40,34 @@ class Login extends \Ilch\Controller\Frontend
                 $result  = LoginService::factory()->perform($emailName, $password);
 
                 if ($result->isSuccessful()) {
-                    $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
+                    $cookieStolenMapper = new CookieStolenMapper();
+
+                    if(!$cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
+                        $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
+                    } else {
+                        // The user receives a strongly worded warning that his cookie might be stolen.
+                        $cookieStolenMapper->deleteCookieStolen($result->getUser()->getId());
+                        $this->addMessage($this->getTranslator()->trans('cookieStolen'), 'danger');
+                    }
+
+                    if ($rememberMe) {
+                        $authTokenModel = new AuthTokenModel();
+
+                        // 9 bytes of random data (base64 encoded to 12 characters) for the selector.
+                        // This provides 72 bits of keyspace and therefore 236 bits of collision resistance (birthday attacks)
+                        $authTokenModel->setSelector(base64_encode(openssl_random_pseudo_bytes(9)));
+                        // 33 bytes (264 bits) of randomness for the actual authenticator. This should be unpredictable in all practical scenarios.
+                        $authenticator = openssl_random_pseudo_bytes(33);
+                        // SHA256 hash of the authenticator. This mitigates the risk of user impersonation following information leaks.
+                        $authTokenModel->setToken(hash('sha256', $authenticator));
+                        $authTokenModel->setUserid($result->getUser()->getId());
+                        $authTokenModel->setExpires(date('Y-m-d\TH:i:s', strtotime( '+30 days' )));
+
+                        setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], false, false);
+
+                        $authTokenMapper = new AuthTokenMapper();
+                        $authTokenMapper->addAuthToken($authTokenModel);
+                    }
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
                     $redirectUrl = array('module' => 'user', 'controller' => 'login', 'action' => 'index');

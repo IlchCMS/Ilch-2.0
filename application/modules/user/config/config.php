@@ -228,6 +228,21 @@ CREATE TABLE IF NOT EXISTS `[prefix]_profile_trans` (
     `locale` varchar(255) NOT NULL,
     `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_auth_tokens` (
+    `id` integer(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `selector` char(12),
+    `token` char(64),
+    `userid` integer(11) UNSIGNED NOT NULL,
+    `expires` datetime,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `[prefix]_cookie_stolen` (
+    `id` integer(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `userid` integer(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SQL;
     }
 }
