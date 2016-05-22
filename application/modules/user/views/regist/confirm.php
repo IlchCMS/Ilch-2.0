@@ -1,4 +1,9 @@
-<?php if (empty($this->getRequest()->getParam('code')) || empty($this->get('confirmed'))): ?>
+<?php
+// This is needed to avoid "Can't use method return value in write context". See PHP documentation for further information.
+$code = $this->getRequest()->getParam('code');
+$confirm = $this->get('confirmed');
+
+if (empty($code) || empty($confirm)): ?>
     <legend><?=$this->getTrans('unlockUserAcc'); ?></legend>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
         <?=$this->getTokenField() ?>
