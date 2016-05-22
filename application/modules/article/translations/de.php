@@ -13,7 +13,7 @@ return array
     'permaLink' => 'Permalink',
     'adress' => 'Adresse',
     'noArticles' => 'Keine Artikel vorhanden',
-    'readMore' => 'ganzen Artikel lesen',
+    'readMore' => 'Ganzen Artikel lesen',
     'comments' => 'Kommentare',
     'reply' => 'Antworten',
     'author' => 'Autor',
@@ -35,4 +35,6 @@ return array
     'monthArchives' => 'Monatsarchiv',
     'commentUser' => 'Benutzer',
     'commentDateTime' => 'Datum/Uhrzeit',
+    'missingName' => 'Es wurde kein Name für die Kategorie eingegeben.',
+    'categoryInUse' => 'Diese Kategorie kann nicht gelöscht werden, da sie noch Artikeln zugewiesen ist.',
 );
