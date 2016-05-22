@@ -46,7 +46,7 @@ class BeforeControllerLoad
                     setcookie('remember', $authTokenModel->getSelector().':'.base64_encode($authenticator), strtotime( '+30 days' ), '/', $_SERVER['SERVER_NAME'], false, false);
                     $authTokenMapper->updateAuthToken($authTokenModel);
 
-                    $pluginData['controller']->redirect('/');
+                    $pluginData['controller']->redirect('');
                 } else {
                     // If the series is present but the token does not match, a theft is assumed.
                     // The user receives a strongly worded warning and all of the user's remembered sessions are deleted.
