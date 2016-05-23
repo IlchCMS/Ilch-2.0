@@ -108,7 +108,7 @@
         </tr>
         <tr>
             <td><?=$this->getTrans('certificate') ?></td>
-            <td class="text-success"><?=$this->getTrans('valid') ?></td>
+            <td class="text-success"><?=$this->getTrans('existing') ?></td>
             <td>
                 <?php if (file_exists(APPLICATION_PATH.'/../certificate/Certificate.crt')): ?>
                     <?php if (extension_loaded('openssl')): ?>
