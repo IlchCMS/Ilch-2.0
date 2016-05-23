@@ -17,7 +17,27 @@
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.iframe-transport.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.fileupload.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
+
+<?php
+function return_bytes($val) {
+    $val = trim($val);
+    $last = strtolower($val[strlen($val)-1]);
+    switch($last) {
+        // The 'G' modifier is available since PHP 5.1.0
+        case 'g':
+            $val *= 1024;
+        case 'm':
+            $val *= 1024;
+        case 'k':
+            $val *= 1024;
+    }
+
+    return $val;
+}
+?>
 <script language="javascript">
+    var maxFileSize = <?=return_bytes(ini_get('upload_max_filesize'));?>;
+    var messageFileTooBig = '<?=$this->getTrans('fileTooBig');?>';
    $(document).ready(function(){
 	$("[rel='tooltip']").tooltip();
     });
