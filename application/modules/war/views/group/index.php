@@ -2,19 +2,19 @@
 
 <legend><?=$this->getTrans('menuGroups') ?></legend>
 <?php if ($this->get('groups') != ''): ?>
-    <?=$this->get('pagination')->getHtml($this, array()) ?>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
     <div id="war_index">
         <?php foreach ($this->get('groups') as $group): ?>
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-xs-12 col-md-3 text-center">
-                        <a href="<?=$this->getUrl(array('controller' => 'group', 'action' => 'show', 'id' => $group->getId())) ?>">
+                        <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()]) ?>">
                             <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="thumbnail img-responsive" />
                         </a>
                     </div>
                     <div class="col-xs-12 col-md-9 section-box">
                         <h4>
-                            <a href="<?=$this->getUrl(array('controller' => 'group', 'action' => 'show', 'id' => $group->getId()))?>"><?=$group->getGroupName() ?></a>
+                            <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()])?>"><?=$group->getGroupName() ?></a>
                         </h4>
                         <p>...</p>
                         <hr />
@@ -29,7 +29,7 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <?=$this->get('pagination')->getHtml($this, array()) ?>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
 <?php else: ?>
     <?=$this->getTranslator()->trans('noGroup') ?>
 <?php endif; ?>

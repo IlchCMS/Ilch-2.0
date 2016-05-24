@@ -79,7 +79,7 @@ class Model
      * @param array $options
      * @return string
      */
-    public function getItems($tpl = '', $options = array())
+    public function getItems($tpl = '', $options = [])
     {
         $html = '';
         $locale = '';
@@ -151,14 +151,14 @@ class Model
      * @param array $options
      * @return string
      */
-    protected function recGetItems($item, $locale, $options = array())
+    protected function recGetItems($item, $locale, $options = [])
     {
         $menuMapper = new \Modules\Admin\Mappers\Menu();
         $pageMapper = new \Modules\Page\Mappers\Page();
         $subItems = $menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $html = '';
 
-        if(in_array($item->getType(), array(1,2,3))) {
+        if(in_array($item->getType(), [1,2,3])) {
             $html = '<li>';
         }
 
@@ -168,7 +168,7 @@ class Model
             $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
             $html .= '<a href="'.$this->layout->getUrl($page->getPerma()).'">'.$item->getTitle().'</a>';
         } elseif ($item->getType() == 3) {
-            $html .= '<a href="'.$this->layout->getUrl(array('module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index')).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']).'">'.$item->getTitle().'</a>';
         }
         
         if (!empty($subItems)) {
@@ -185,7 +185,7 @@ class Model
             $html .= '</ul>';
         }
 
-        if(in_array($item->getType(), array(1,2,3))) {
+        if(in_array($item->getType(), [1,2,3])) {
             $html .= '</li>';
         }
 

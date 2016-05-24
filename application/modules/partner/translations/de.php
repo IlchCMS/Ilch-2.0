@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuPartner' => 'Partner',
     'menuPartnerAdd' => 'Partner hinzufügen',
     'name' => 'Name',
@@ -28,4 +28,4 @@ return array
     'slider' => 'Slider',
     'boxSliderSpeed' => 'Geschwindigkeit des Slider in ms',
     'boxSliderHeight' => 'Höhe der Slider Box',
-);
+    ];

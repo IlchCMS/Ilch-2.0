@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index'));
+                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
 
         $upcomingLimit = 5;
         $otherLimit = 5;
@@ -35,14 +35,14 @@ class Index extends \Ilch\Controller\Frontend
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
         if ($this->getRequest()->getParam('id')) {
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
-                    ->add($event->getTitle(), array('controller' => 'show', 'action' => 'event', 'id' => $event->getId()))
-                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat', 'id' => $event->getId()));
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
+                    ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()])
+                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $event->getId()]);
 
             $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
         } else {
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         $imageAllowedFiletypes = $this->getConfig()->get('event_filetypes');
@@ -124,14 +124,14 @@ class Index extends \Ilch\Controller\Frontend
                 if ($this->getRequest()->getPost('image_delete') != '') {
                     $eventMapper->delImageById($this->getRequest()->getParam('id'));
 
-                    $this->redirect(array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+                    $this->redirect(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
                 }
 
                 if ($this->getRequest()->getParam('id')) {
                     $eventId = $this->getRequest()->getParam('id');
-                    $this->redirect(array('controller' => 'show', 'action' => 'event', 'id' => $eventId));
+                    $this->redirect(['controller' => 'show', 'action' => 'event', 'id' => $eventId]);
                 } else {
-                    $this->redirect(array('controller' => 'show', 'action' => 'my'));
+                    $this->redirect(['controller' => 'show', 'action' => 'my']);
                 }
             }
         }
@@ -156,6 +156,6 @@ class Index extends \Ilch\Controller\Frontend
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('controller' => 'index', 'action' => 'index'));
+        $this->redirect(['controller' => 'index', 'action' => 'index']);
     }
 }

@@ -5,9 +5,9 @@
  * @package ilch_phpunit
  */
 
-return array
-(
+return
+    [
     'userGetsWhatHeWants' => 'L\'utilisateur obtient ce qu\'il veut!',
     'welcomeUser' => 'Accueil, %s',
     'welcomeUserExtended' => 'Accueil, %s, votre dernière connexion était de %s',
-);
+    ];

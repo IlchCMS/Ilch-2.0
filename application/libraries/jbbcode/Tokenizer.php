@@ -12,7 +12,7 @@ namespace JBBCode;
 class Tokenizer
 {
 
-    protected $tokens = array();
+    protected $tokens = [];
     protected $i = -1;
 
     /**

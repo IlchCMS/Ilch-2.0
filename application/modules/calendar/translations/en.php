@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuCalendarList' => 'Calender',
     'noCalendar' => 'no Entries available',
     'term' => 'Term',
@@ -19,4 +19,4 @@ return array
     'noDescription' => 'no Description available',
     'at' => 'at',
     'clock' => 'o\'clock',
-);
+    ];

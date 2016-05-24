@@ -23,7 +23,7 @@ $verificationFailed = $this->get('verificationFailed');
                 <?php endif; ?>
                 <p><?=$this->getTrans('updateReady') ?>
                     <a class="btn btn-primary"
-                       href="<?=$this->getUrl(array('action' => 'index', 'doupdate' => 'true')) ?>"><?=$this->getTrans('installNow') ?>
+                       href="<?=$this->getUrl(['action' => 'index', 'doupdate' => 'true']) ?>"><?=$this->getTrans('installNow') ?>
                     </a>
                 </p>
             <?php else: ?>
@@ -35,7 +35,7 @@ $verificationFailed = $this->get('verificationFailed');
                 <?php endif; ?>
                 <p><?=$this->getTrans('doSave') ?>
                     <a class="btn btn-primary btn-xs"
-                       href="<?=$this->getUrl(array('action' => 'index', 'dosave' => 'true')) ?>"><?=$this->getTrans('doSaveNow') ?>
+                       href="<?=$this->getUrl(['action' => 'index', 'dosave' => 'true']) ?>"><?=$this->getTrans('doSaveNow') ?>
                     </a>
                 </p>
             <?php endif; ?>

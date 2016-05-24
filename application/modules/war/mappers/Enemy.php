@@ -17,12 +17,12 @@ class Enemy extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return EnemyModel[]|array
      */
-    public function getEnemy($where = array(), $pagination = null)
+    public function getEnemy($where = [], $pagination = null)
     {
         $select = $this->db()->select('*')
             ->from('war_enemy')
             ->where($where)
-            ->order(array('id' => 'DESC'));
+            ->order(['id' => 'DESC']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -39,7 +39,7 @@ class Enemy extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EnemyModel();
@@ -77,7 +77,7 @@ class Enemy extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($enemyArray as $entries) {
             $entryModel = new EnemyModel();
@@ -104,7 +104,7 @@ class Enemy extends \Ilch\Mapper
     {
         $enemyRow = $this->db()->select('*')
             ->from('war_enemy')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -131,20 +131,20 @@ class Enemy extends \Ilch\Mapper
      */
     public function save(EnemyModel $model)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'name' => $model->getEnemyName(),
             'tag' => $model->getEnemyTag(),
             'image' => $model->getEnemyImage(),
             'homepage' => $model->getEnemyHomepage(),
             'contact_name' => $model->getEnemyContactName(),
             'contact_email' => $model->getEnemyContactEmail(),
-        );
+            ];
 
         if ($model->getId()) {
             $this->db()->update('war_enemy')
                 ->values($fields)
-                ->where(array('id' => $model->getId()))
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('war_enemy')
@@ -156,7 +156,7 @@ class Enemy extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('war_enemy')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

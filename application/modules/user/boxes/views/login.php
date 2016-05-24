@@ -1,22 +1,22 @@
 <?php if ($this->getUser() !== null): ?>
     <?=$this->getTrans('hello') ?> <b><?=$this->escape($this->getUser()->getName()) ?></b>,
     <br />
-    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'panel', 'action' => 'index')) ?>">
+    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'index']) ?>">
         <?=$this->getTrans('panel') ?>
     </a>
     <br />
     <div id="checknewmessage"></div>
     <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()): ?>
-        <a target="_blank" href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'admin', 'action' => 'index')) ?>">
+        <a target="_blank" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'admin', 'action' => 'index']) ?>">
             <?=$this->getTrans('adminarea') ?>
         </a>
         <br />
     <?php endif; ?>
-    <a href="<?=$this->getUrl(array('module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1)) ?>">
+    <a href="<?=$this->getUrl(['module' => 'admin/admin', 'controller' => 'login', 'action' => 'logout', 'from_frontend' => 1]) ?>">
         <?=$this->getTrans('logout') ?>
     </a>
 <?php else: ?>
-    <form action="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'index')) ?>" class="form-horizontal" method="post">
+    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="form-horizontal" method="post">
         <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl')?>" />
         <?=$this->getTokenField();
         $errors = $this->get('errors');
@@ -53,9 +53,9 @@
         </div>
     </form>
     <?php if ($this->get('regist_accept') == '1'): ?>
-        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')); ?>"><?=$this->getTrans('register'); ?></a><br />
+        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']); ?>"><?=$this->getTrans('register'); ?></a><br />
     <?php endif; ?>
-    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword')) ?>"><?=$this->getTrans('forgotPassword') ?></a>
+    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
 
 <script>
@@ -63,7 +63,7 @@ $(document).ready(function() {
     window.setInterval(function(){
         loadMessage();
         function loadMessage() {
-            $('#checknewmessage').load('<?=$this->getUrl(array('module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage')); ?>');
+            $('#checknewmessage').load('<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>');
         };
     }, 5000);
 });

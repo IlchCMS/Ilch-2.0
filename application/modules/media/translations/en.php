@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'media' => 'Media',
     'menuMedia' => 'Media',
     'menuActionAddNew' => 'Upload files',
@@ -40,4 +40,4 @@ return array
     'newCat' => 'Add New Categorie',
     'noCats' => 'No cats available',
     'treatCat' => 'Treat Cat'
-);
+    ];

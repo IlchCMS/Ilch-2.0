@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuJobs' => 'Jobs',
     'menuJob' => 'Job',
     'manageJobs' => 'Jobs verwalten',
@@ -23,4 +23,4 @@ return array
     'jobs' => 'Jobs',
     'apply' => 'Bewerben',
     'applyAs' => 'Bewerbung als',
-);
+    ];

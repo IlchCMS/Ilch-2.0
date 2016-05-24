@@ -674,22 +674,22 @@ class Thumbnail {
 		$this->Thumblocation          = '';
 		$this->Thumbsaveas            = '';
 		$this->Thumbprefix            = '';
-		$this->Clipcorner             = array(0,15,0,1,1,1,0);
-		$this->Ageimage               = array(0,10,80);
-		$this->Cropimage              = array(0,0,20,20,20,20);		
+		$this->Clipcorner             = [0,15,0,1,1,1,0];
+		$this->Ageimage               = [0,10,80];
+		$this->Cropimage              = [0,0,20,20,20,20];		
 		$this->Borderpng              = '';
 		$this->Copyrighttext          = '';
 		$this->Copyrightposition      = '0% 95%';
 		$this->Copyrightfonttype      = '';
 		$this->Copyrightfontsize      = 2;
 		$this->Copyrighttextcolor     = '';
-		$this->Addtext                = array(0,'Text','50% 50%','',2,'#000000');
+		$this->Addtext                = [0,'Text','50% 50%','',2,'#000000'];
 		$this->Rotate                 = 0;
 		$this->Fliphorizontal         = false;
 		$this->Flipvertical           = false;
 		$this->Square                 = false;
 		$this->Applyfilter            = false;		
-		$this->Filter                 = array(0,0,0,0,1,0,0,0,0);
+		$this->Filter                 = [0,0,0,0,1,0,0,0,0];
 		$this->Divisor                = 1;
 		$this->Offset                 = 0;
 		$this->Blur                   = false;		
@@ -698,28 +698,28 @@ class Thumbnail {
 		$this->Emboss                 = false;	
 		$this->Mean                   = false;			
 		$this->Croprotate             = false;	
-		$this->Perspective            = array(0,0,30);
-		$this->Perspectivethumb       = array(0,1,20);
-		$this->Shading                = array(0,70,65,0);
+		$this->Perspective            = [0,0,30];
+		$this->Perspectivethumb       = [0,1,20];
+		$this->Shading                = [0,70,65,0];
 		$this->Shadingcolor           = '#000000';		
-		$this->Mirror                 = array(0,20,100,40,2);
+		$this->Mirror                 = [0,20,100,40,2];
 		$this->Mirrorcolor            = '#FFFFFF';		
 		$this->Negative               = false;
-		$this->Colorreplace           = array(0,'#000000','#FFFFFF',30);
-		$this->Pixelscramble          = array(0,3,1);
+		$this->Colorreplace           = [0,'#000000','#FFFFFF',30];
+		$this->Pixelscramble          = [0,3,1];
 		$this->Greyscale              = false;		
-		$this->Brightness             = array(0,30);
-		$this->Contrast               = array(0,30);
-		$this->Gamma                  = array(0,1.5);
-		$this->Palette                = array(0,6);
-		$this->Colorize               = array(0,100,0,0,0);
-		$this->Pixelate               = array(0,3);
+		$this->Brightness             = [0,30];
+		$this->Contrast               = [0,30];
+		$this->Gamma                  = [0,1.5];
+		$this->Palette                = [0,6];
+		$this->Colorize               = [0,100,0,0,0];
+		$this->Pixelate               = [0,3];
 		$this->Medianfilter           = false;
-		$this->Twirlfx                = array(0,20,0);
-		$this->Ripplefx               = array(0,5,15,5,5);
-		$this->Lakefx                 = array(0,15,80);
-		$this->Waterdropfx            = array(0,1.2,400,40);
-		$this->Maketransparent        = array(0,0,'#FFFFFF',30);
+		$this->Twirlfx                = [0,20,0];
+		$this->Ripplefx               = [0,5,15,5,5];
+		$this->Lakefx                 = [0,15,80];
+		$this->Waterdropfx            = [0,1.2,400,40];
+		$this->Maketransparent        = [0,0,'#FFFFFF',30];
 		$this->Keeptransparency       = false;
 		$this->Thumbfilename          = '';
 		$this->Polaroid               = false;
@@ -728,8 +728,8 @@ class Thumbnail {
 		$this->Polaroidfontsize       = '30';
 		$this->Polaroidtextcolor      = '#000000';
 		$this->Polaroidframecolor     = '#FFFFFF';		
-		$this->Displacementmap        = array(0,'',0,0,0,50,50);
-		$this->Displacementmapthumb   = array(0,'',0,0,0,25,25);		
+		$this->Displacementmap        = [0,'',0,0,0,50,50];
+		$this->Displacementmapthumb   = [0,'',0,0,0,25,25];		
 		
 	}
 
@@ -1095,10 +1095,10 @@ class Thumbnail {
 	
 		$clipsize=floor($this->size[0]*($this->Clipcorner[1]/100));
 		$clip_degrees=90/max($clipsize,1);
-		$points_tl=array(0,0);
-		$points_br=array($this->size[0],$this->size[1]);
-		$points_tr=array($this->size[0],0);
-		$points_bl=array(0,$this->size[1]);
+		$points_tl= [0,0];
+		$points_br= [$this->size[0],$this->size[1]];
+		$points_tr= [$this->size[0],0];
+		$points_bl= [0,$this->size[1]];
 		$bgcolor=imagecolorallocate($this->im,hexdec(substr($this->Backgroundcolor,1,2)),hexdec(substr($this->Backgroundcolor,3,2)),hexdec(substr($this->Backgroundcolor,5,2)));
 		for ($i=0;$i<$clipsize;$i++) {
 			$x=$clipsize*cos(deg2rad($i*$clip_degrees));
@@ -1215,7 +1215,7 @@ class Thumbnail {
 			$cposy=$this->thumby-10;
 		}			
 		if ($this->Copyrighttextcolor=='') {
-			$colors=array();
+			$colors= [];
 			for ($i=$cposx;$i<($cposx+$widthx);$i++) {
 				$indexis=ImageColorAt($this->thumb,$i,$cposy+0.5*$heighty);
 				$rgbarray=ImageColorsForIndex($this->thumb,$indexis);
@@ -1434,9 +1434,9 @@ class Thumbnail {
 	private function filter() {
 		
 		if (function_exists('imageconvolution')) {
-			imageconvolution($this->im,array(array($this->Filter[0],$this->Filter[1],$this->Filter[2]), array($this->Filter[3],$this->Filter[4],$this->Filter[5]),array($this->Filter[6],$this->Filter[7],$this->Filter[8])),$this->Divisor,$this->Offset);	
+			imageconvolution($this->im, [[$this->Filter[0],$this->Filter[1],$this->Filter[2]], [$this->Filter[3],$this->Filter[4],$this->Filter[5]], [$this->Filter[6],$this->Filter[7],$this->Filter[8]]],$this->Divisor,$this->Offset);	
 		} else {
-			$newpixel=array();
+			$newpixel= [];
 			$this->newimage=imagecreatetruecolor($this->size[0],$this->size[1]);
 			for ($y=0;$y<$this->size[1];$y++) {
 				for ($x=0;$x<$this->size[0];$x++) {
@@ -1474,7 +1474,7 @@ class Thumbnail {
 		$this->newimage=imagecreatetruecolor($this->size[0],$this->size[1]);
 		for ($y=0;$y<$this->size[1];$y++) {
 			for ($x=0;$x<$this->size[0];$x++) {
-				$newred=array();$newgreen=array();$newblue=array();
+				$newred= [];$newgreen= [];$newblue= [];
 				$a11=$this->rgbpixel($x-1,$y-1);$a12=$this->rgbpixel($x,$y-1);$a13=$this->rgbpixel($x+1,$y-1);
 				$a21=$this->rgbpixel($x-1,$y);$a22=$this->rgbpixel($x,$y);$a23=$this->rgbpixel($x+1,$y);
 				$a31=$this->rgbpixel($x-1,$y+1);$a32=$this->rgbpixel($x,$y+1);$a33=$this->rgbpixel($x+1,$y+1);
@@ -1507,7 +1507,7 @@ class Thumbnail {
 		if ($y<0) {$y=0;}
 		if ($y>=$this->size[1]) {$y=$this->size[1]-1;}		
 		$pixel=ImageColorAt($this->im,$x,$y);
-		return array('red' => ($pixel >> 16 & 0xFF),'green' => ($pixel >> 8 & 0xFF),'blue' => ($pixel & 0xFF),'alpha' => ($pixel >>24 & 0xFF));
+		return ['red' => ($pixel >> 16 & 0xFF),'green' => ($pixel >> 8 & 0xFF),'blue' => ($pixel & 0xFF),'alpha' => ($pixel >>24 & 0xFF)];
 		
 	}	
 
@@ -1518,7 +1518,7 @@ class Thumbnail {
 	private function blur() {
 
 		$oldfilter=$this->Filter;$olddivisor=$this->Divisor;$oldoffset=$this->Offset;
-		$this->Filter  = array(1,2,1,2,4,2,1,2,1);
+		$this->Filter  = [1,2,1,2,4,2,1,2,1];
 		$this->Divisor = 16;
 		$this->Offset  = 0;
 		$this->filter();
@@ -1535,7 +1535,7 @@ class Thumbnail {
 	private function sharpen() {
 
 		$oldfilter=$this->Filter;$olddivisor=$this->Divisor;$oldoffset=$this->Offset;
-		$this->Filter  = array(-1,-1,-1,-1,16,-1,-1,-1,-1);
+		$this->Filter  = [-1,-1,-1,-1,16,-1,-1,-1,-1];
 		$this->Divisor = 8;
 		$this->Offset  = 0;
 		$this->filter();
@@ -1552,7 +1552,7 @@ class Thumbnail {
 	private function edge() {
 
 		$oldfilter=$this->Filter;$olddivisor=$this->Divisor;$oldoffset=$this->Offset;
-		$this->Filter  = array(-1,-1,-1,-1,8,-1,-1,-1,-1);
+		$this->Filter  = [-1,-1,-1,-1,8,-1,-1,-1,-1];
 		$this->Divisor = 1;
 		$this->Offset  = 127;
 		$this->filter();
@@ -1569,7 +1569,7 @@ class Thumbnail {
 	private function emboss() {
 
 		$oldfilter=$this->Filter;$olddivisor=$this->Divisor;$oldoffset=$this->Offset;
-		$this->Filter  = array(2,0,0,0,-1,0,0,0,-1);
+		$this->Filter  = [2,0,0,0,-1,0,0,0,-1];
 		$this->Divisor = 1;
 		$this->Offset  = 127;
 		$this->filter();
@@ -1586,7 +1586,7 @@ class Thumbnail {
 	private function mean() {
 
 		$oldfilter=$this->Filter;$olddivisor=$this->Divisor;$oldoffset=$this->Offset;
-		$this->Filter  = array(1,1,1,1,1,1,1,1,1);
+		$this->Filter  = [1,1,1,1,1,1,1,1,1];
 		$this->Divisor = 9;
 		$this->Offset  = 0;
 		$this->filter();
@@ -1936,7 +1936,7 @@ class Thumbnail {
 		$red=floor($fracy1*($fracx1*$ff['red']+$fracx*$cf['red'])+$fracy*($fracx1*$fc['red']+$fracx*$cc['red']));
 		$green=floor($fracy1*($fracx1*$ff['green']+$fracx*$cf['green'])+$fracy*($fracx1*$fc['green']+$fracx*$cc['green']));
 		$blue=floor($fracy1*($fracx1*$ff['blue']+$fracx*$cf['blue'])+$fracy*($fracx1*$fc['blue']+$fracx*$cc['blue']));
-		return array('red' => $red,'green' => $green,'blue' => $blue,'alpha' => $cc['alpha']);
+		return ['red' => $red,'green' => $green,'blue' => $blue,'alpha' => $cc['alpha']];
 		
 	}
 
@@ -2076,8 +2076,8 @@ class Thumbnail {
 	 */	
 	public function Create_apng($frames, $outputFilename, $delay) {
         
-		$imageData = array();
-		$IHDR = array();
+		$imageData = [];
+		$IHDR = [];
 		$sequenceNumber = 0;
 		foreach ($frames as $frame) {
 			if (file_exists($frame)) {
@@ -2168,7 +2168,7 @@ class Thumbnail {
 	 */
 	private function create_fcTL($frameNumber, $width, $height, $delay) {
 
-		$fcTL = array();
+		$fcTL = [];
 		$fcTL['sequence_number'] = $frameNumber;
 		$fcTL['width'] = $width;
 		$fcTL['height'] = $height;
@@ -2197,7 +2197,7 @@ class Thumbnail {
 	public function Createcanvas($width, $height, $filetype, $bgcolor, $transparent) {
         
 		$this->im=imagecreatetruecolor($width,$height);
-		$this->size=array($width,$height,$filetype);
+		$this->size= [$width,$height,$filetype];
 		$color=imagecolorallocate($this->im,hexdec(substr($bgcolor,1,2)),hexdec(substr($bgcolor,3,2)),hexdec(substr($bgcolor,5,2)));
 		imagefilledrectangle($this->im,0,0,$width,$height,$color);
 		if ($transparent) {
@@ -2247,15 +2247,15 @@ class Thumbnail {
 		$originalarray=$this->Cropimage;
 		if ($this->size[0]>$this->size[1]) {
 			$cropwidth=floor(($this->size[0]-floor(($this->size[1]/1.05)))/2);
-			$this->Cropimage=array(1,1,$cropwidth,$cropwidth,0,-1*floor(0.16*$this->size[1]));
+			$this->Cropimage= [1,1,$cropwidth,$cropwidth,0,-1*floor(0.16*$this->size[1])];
 			$this->cropimage();
 			$this->Framewidth=floor(0.05*($this->size[1]-2*$cropwidth));
 		} else {
 			$cropheight=floor(($this->size[1]-floor(($this->size[0]/1.05)))/2);
 			$bottom=-1*floor(0.16*$this->size[1]);
-			$this->Cropimage=array(1,1,0,0,$cropheight,$cropheight);
+			$this->Cropimage= [1,1,0,0,$cropheight,$cropheight];
 			$this->cropimage();
-			$this->Cropimage=array(1,1,0,0,0,$bottom);
+			$this->Cropimage= [1,1,0,0,0,$bottom];
 			$this->cropimage();
 			$this->Framewidth=floor(0.05*$this->size[0]);
 		}

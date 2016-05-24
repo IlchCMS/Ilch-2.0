@@ -31,7 +31,7 @@ class Media extends \Ilch\Mapper
             return null;
         }
 
-        $media = array();
+        $media = [];
 
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
@@ -67,7 +67,7 @@ class Media extends \Ilch\Mapper
             return null;
         }
 
-        $media = array();
+        $media = [];
 
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
@@ -97,7 +97,7 @@ class Media extends \Ilch\Mapper
         $sql = 'SELECT SQL_CALC_FOUND_ROWS m.id,m.url,m.url_thumb,m.name,m.datetime,m.ending,m.cat,c.cat_name
                 FROM `[prefix]_media` as m
                 LEFT JOIN [prefix]_media_cats as c ON m.cat = c.id
-                WHERE m.ending IN ("'.implode(',',array(str_replace(' ', '","', $ending))).'")
+                WHERE m.ending IN ("'.implode(',', [str_replace(' ', '","', $ending)]).'")
                 ORDER by m.id DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
@@ -108,7 +108,7 @@ class Media extends \Ilch\Mapper
             return null;
         }
 
-        $media = array();
+        $media = [];
 
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
@@ -147,7 +147,7 @@ class Media extends \Ilch\Mapper
             return null;
         }
 
-        $media = array();
+        $media = [];
 
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
@@ -174,7 +174,7 @@ class Media extends \Ilch\Mapper
     {
         $mediaArray = $this->db()->select('*')
             ->from('media_cats')
-            ->order(array('id' => 'DESC'))
+            ->order(['id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
@@ -182,7 +182,7 @@ class Media extends \Ilch\Mapper
             return null;
         }
 
-        $media = array();
+        $media = [];
 
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
@@ -204,7 +204,7 @@ class Media extends \Ilch\Mapper
     {
         $catRow = $this->db()->select('*')
             ->from('media_cats')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -246,7 +246,7 @@ class Media extends \Ilch\Mapper
     public function save(MediaModel $model)
     {
         $this->db()->insert('media')
-            ->values(array(
+            ->values([
                 'url' => $model->getUrl(),
                 'url_thumb' => $model->getUrlThumb(),
                 'name' => $model->getName(),
@@ -254,7 +254,7 @@ class Media extends \Ilch\Mapper
                 'ending' => $model->getEnding(),
                 'cat' => '0',
                 'cat_name' => 'Allgemein',
-            ))
+            ])
             ->execute();
     }
 
@@ -267,7 +267,7 @@ class Media extends \Ilch\Mapper
     {
         $mediaRow = $this->db()->select('*')
             ->from('media')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
         if (file_exists($mediaRow['url'])) {
@@ -277,7 +277,7 @@ class Media extends \Ilch\Mapper
             unlink($mediaRow['url_thumb']);
         }
         $this->db()->delete('media')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -289,9 +289,9 @@ class Media extends \Ilch\Mapper
     public function saveCat(MediaModel $model)
     {
         $this->db()->insert('media_cats')
-            ->values(array(
+            ->values([
                 'cat_name' => $model->getCatName()
-            ))
+            ])
             ->execute();
     }
 
@@ -303,7 +303,7 @@ class Media extends \Ilch\Mapper
     public function delCatById($id) 
     {
         $this->db()->delete('media_cats')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -315,10 +315,10 @@ class Media extends \Ilch\Mapper
     public function setCat(MediaModel $model) 
     {
         $this->db()->update('media')
-            ->values(array(
+            ->values([
                 'cat' => $model->getCatId()
-            ))
-            ->where(array('id' => $model->getId()))
+            ])
+            ->where(['id' => $model->getId()])
             ->execute();
     }
 
@@ -330,10 +330,10 @@ class Media extends \Ilch\Mapper
     public function treatCat(MediaModel $model) 
     {
         $this->db()->update('media_cats')
-            ->values(array(
+            ->values([
                 'cat_name' => $model->getCatName()
-            ))
-            ->where(array('id' => $model->getCatId()))
+            ])
+            ->where(['id' => $model->getCatId()])
             ->execute();
     }
 }

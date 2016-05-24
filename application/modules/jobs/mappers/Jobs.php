@@ -16,7 +16,7 @@ class Jobs extends \Ilch\Mapper
      * @param array $where
      * @return JobsModel[]|array
      */
-    public function getJobs($where = array())
+    public function getJobs($where = [])
     {
         $jobsArray = $this->db()->select('*')
             ->from('jobs')
@@ -28,7 +28,7 @@ class Jobs extends \Ilch\Mapper
             return null;
         }
 
-        $jobs = array();
+        $jobs = [];
 
         foreach ($jobsArray as $entries) {
             $jobsModel = new JobsModel();
@@ -53,7 +53,7 @@ class Jobs extends \Ilch\Mapper
     {
         $jobsRow = $this->db()->select('*')
             ->from('jobs')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -78,18 +78,18 @@ class Jobs extends \Ilch\Mapper
      */
     public function save(JobsModel $jobs)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'title' => $jobs->getTitle(),
             'text' => $jobs->getText(),
             'email' => $jobs->getEmail(),
             'show' => $jobs->getShow(),
-        );
+            ];
 
         if ($jobs->getId()) {
             $this->db()->update('jobs')
                 ->values($fields)
-                ->where(array('id' => $jobs->getId()))
+                ->where(['id' => $jobs->getId()])
                 ->execute();
         } else {
             $this->db()->insert('jobs')
@@ -107,19 +107,19 @@ class Jobs extends \Ilch\Mapper
     {
         $show = (int) $this->db()->select('show')
                         ->from('jobs')
-                        ->where(array('id' => $id))
+                        ->where(['id' => $id])
                         ->execute()
                         ->fetchCell();
 
         if ($show == 1) {
             $this->db()->update('jobs')
-                ->values(array('show' => 0))
-                ->where(array('id' => $id))
+                ->values(['show' => 0])
+                ->where(['id' => $id])
                 ->execute();
         } else {
             $this->db()->update('jobs')
-                ->values(array('show' => 1))
-                ->where(array('id' => $id))
+                ->values(['show' => 1])
+                ->where(['id' => $id])
                 ->execute();
         }
     }
@@ -132,7 +132,7 @@ class Jobs extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('jobs')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

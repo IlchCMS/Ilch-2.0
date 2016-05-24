@@ -56,7 +56,7 @@ class Pagination
      */
     public function getLimit()
     {
-        return array(($this->page - 1) * $this->rowsPerPage, $this->rowsPerPage);
+        return [($this->page - 1) * $this->rowsPerPage, $this->rowsPerPage];
     }
 
     /**

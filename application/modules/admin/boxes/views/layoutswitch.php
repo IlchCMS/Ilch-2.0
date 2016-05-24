@@ -16,7 +16,7 @@
 $('.layoutInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(array('action' => 'index')); ?>/ilch_layout/'+$(this).val()
+        top.location.href = '<?=$this->getUrl(['action' => 'index']); ?>/ilch_layout/'+$(this).val()
     }
 );
 </script>

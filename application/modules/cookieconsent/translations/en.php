@@ -4,11 +4,11 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuCookieConsent' => 'Cookie Consent',
     'cookieConsentShow' => 'Show',
     'cookieConsentPos' => 'Position',
     'cookieConsentMessage' => 'Notification text',
     'cookieConsentText' => 'Consent Text',
-);
+    ];

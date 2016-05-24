@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuArticle' => 'Article',
     'menuArchives' => 'Archive',
     'title' => 'Title',
@@ -37,4 +37,4 @@ return array
     'commentDateTime' => 'Date/Time',
     'missingName' => 'No name for the category entered.',
     'categoryInUse' => 'This category cannot be deleted as it is still assigned with articles.',
-);
+    ];

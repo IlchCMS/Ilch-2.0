@@ -26,8 +26,8 @@
                     <?php foreach ($this->get('entries') as $entry) : ?>
                         <tr>
                             <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $entry->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
                             <td>
                                 <?php   
                                     $getDate = new \Ilch\Date($entry->getDate());
@@ -45,7 +45,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noHistorys') ?>

@@ -68,12 +68,12 @@ class File extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('downloads_files')
-                ->values(array('file_id' => $model->getFileId(),'cat' => $model->getCat()))
-                ->where(array('id' => $model->getId()))
+                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat()])
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('downloads_files')
-                ->values(array('file_id' => $model->getFileId(),'cat' => $model->getCat()))
+                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat()])
                 ->execute();
         }
     }
@@ -90,7 +90,7 @@ class File extends \Ilch\Mapper
         $fileArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
-        $entry = array();
+        $entry = [];
 
         foreach ($fileArray as $entries) {
             $entryModel = new FileModel();
@@ -110,7 +110,7 @@ class File extends \Ilch\Mapper
     public function deleteById($id)
     {
             return $this->db()->delete('downloads_files')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -123,8 +123,8 @@ class File extends \Ilch\Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('downloads_files')
-                    ->values(array('visits' => $model->getVisits()))
-                    ->where(array('file_id' => $model->getFileId()))
+                    ->values(['visits' => $model->getVisits()])
+                    ->where(['file_id' => $model->getFileId()])
                     ->execute();
         }
     }
@@ -137,8 +137,8 @@ class File extends \Ilch\Mapper
     public function saveFileTreat(FileModel $model)
     {
         $this->db()->update('downloads_files')
-                ->values(array('file_title' => $model->getFileTitle(),'file_image' => $model->getFileImage(),'file_description' => $model->getFileDesc()))
-                ->where(array('id' => $model->getId()))
+                ->values(['file_title' => $model->getFileTitle(),'file_image' => $model->getFileImage(),'file_description' => $model->getFileDesc()])
+                ->where(['id' => $model->getId()])
                 ->execute();
     }
 }

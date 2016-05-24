@@ -22,7 +22,7 @@
                 $email = str_replace(".", "<span class=\"dot-ilch\"></span>", $email);
                 echo $this->getTrans('email').': '.$email.'<br /><br />';
             }
-            echo '<a href="'.$this->getUrl(array('module'=> 'contact')).'" title="">'.$this->getTrans('form').'</a><br /><br />';
+            echo '<a href="'.$this->getUrl(['module'=> 'contact']).'" title="">'.$this->getTrans('form').'</a><br /><br />';
             echo $imprint->getDisclaimer();
         }
     ?>
@@ -55,7 +55,7 @@
                 $email = str_replace(".", "<span class=\"dot-ilch\"></span>", $email);
                 echo $this->getTrans('email').': '.$email.'<br />';
             }
-            echo '<br /><a href="'.$this->getUrl(array('module'=> 'contact')).'" title="">'.$this->getTrans('form').'</a><br />';
+            echo '<br /><a href="'.$this->getUrl(['module'=> 'contact']).'" title="">'.$this->getTrans('form').'</a><br />';
 
             if ($this->escape($imprint->getRegistration()) OR $this->escape($imprint->getCommercialRegister()) OR $this->escape($imprint->getVatId()) OR $this->escape($imprint->getOther()) != '') {
                 if ($this->escape($imprint->getRegistration()) != '') {

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'addButton' => 'Hinzufügen',
     'saveButton' => 'Speichern',
     'updateButton' => 'Aktualisieren',
@@ -168,4 +168,4 @@ return array
     'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
     'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',
-);
+    ];

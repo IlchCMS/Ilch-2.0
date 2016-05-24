@@ -17,12 +17,12 @@ class Comment extends \Ilch\Mapper
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')
-            ->where(array('key' => $key))
-            ->order(array('id' => 'DESC'))
+            ->where(['key' => $key])
+            ->order(['id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
-        $comments = array();
+        $comments = [];
 
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
@@ -42,12 +42,12 @@ class Comment extends \Ilch\Mapper
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')
-            ->where(array('fk_id' => $key))
-            ->order(array('id' => 'DESC'))
+            ->where(['fk_id' => $key])
+            ->order(['id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
-        $comments = array();
+        $comments = [];
 
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
@@ -70,11 +70,11 @@ class Comment extends \Ilch\Mapper
     {
         $commentsArray = $this->db()->select('*')
             ->from('comments')
-            ->order(array('id' => 'DESC'))
+            ->order(['id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
-        $comments = array();
+        $comments = [];
 
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
@@ -114,14 +114,13 @@ class Comment extends \Ilch\Mapper
         $this->db()->insert('comments')
             ->values
             (
-                array
-                (
+                [
                     'key' => $comment->getKey(),
                     'text' => $comment->getText(),
                     'date_created' => $comment->getDateCreated(),
                     'user_id' => $comment->getUserId(),
                     'fk_id' => $comment->getFKId(),
-                )
+                ]
             )
             ->execute();
     }
@@ -132,7 +131,7 @@ class Comment extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('comments')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

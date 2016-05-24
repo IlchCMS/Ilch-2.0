@@ -22,13 +22,13 @@
                             <br /><br />
                             <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
                             <br />
-                            <a href="<?=$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')) ?>">
+                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>">
                                 <?=$this->getTrans('administrate') ?>
                             </a>
                             <?php if(!isset($config->isSystemModule)): ?>
                                 <small>
                                     | 
-                                    <a class="delete_button" href="<?=$this->getUrl(array('action' => 'delete', 'key' => $module->getKey()), null, true) ?>">
+                                    <a class="delete_button" href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>">
                                         <?=$this->getTrans('delete') ?>
                                     </a>
                                 </small>

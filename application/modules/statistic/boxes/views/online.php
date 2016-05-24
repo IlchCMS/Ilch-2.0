@@ -5,7 +5,7 @@
     <ul class="list-unstyled">
         <?php foreach($users as $user): ?>
             <li>
-                <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId())) ?>"><?=$this->escape($user->getName()) ?></a>
+                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a>
             </li>
         <?php endforeach; ?>
     </ul>

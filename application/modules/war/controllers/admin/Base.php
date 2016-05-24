@@ -13,39 +13,35 @@ class Base extends \Ilch\Controller\Admin
      */
     public function init()
     {
-        $active = array();
+        $active = [];
 
-        foreach(array('group', 'index', 'enemy') as $controllerName) {
+        foreach(['group', 'index', 'enemy'] as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 
         $this->getLayout()->addMenu
         (
             'menuWars',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'menuWars',
                     'active' => $active['index'],
                     'icon' => 'fa fa-shield',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'menuEnemy',
                     'active' => $active['enemy'],
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'enemy', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'index'])
+                ],
+                [
                     'name' => 'menuGroups',
                     'active' => $active['group'],
                     'icon' => 'fa fa-group',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'group', 'action' => 'index'))
-                ),
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index'])
+                ],
+            ]
         );
     }
 }

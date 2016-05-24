@@ -16,33 +16,30 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuSite',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'menuSites',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+            ]
         );
 
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewSite',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSites'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index']);
 
         $pageMapper = new PageMapper();
 
@@ -66,19 +63,19 @@ class Index extends \Ilch\Controller\Admin
             $pageMapper = new PageMapper();
             $pageMapper->delete($this->getRequest()->getParam('id'));
         }
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function treatAction()
     {
         if ($this->getRequest()->getParam('id')) {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSite'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('editPage'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+                ->add($this->getTranslator()->trans('menuSite'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('editPage'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
         }  else {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSite'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewSite'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuSite'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuActionNewSite'), ['action' => 'treat']);
         }
 
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
@@ -118,7 +115,7 @@ class Index extends \Ilch\Controller\Admin
 
             $pageMapper->save($model);
 
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
     }
 }

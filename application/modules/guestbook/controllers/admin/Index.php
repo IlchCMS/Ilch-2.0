@@ -15,23 +15,20 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'guestbook',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'Verwalten',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                )
-            )
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ]
+            ]
         );
     }
 
@@ -45,7 +42,7 @@ class Index extends \Ilch\Controller\Admin
                     $guestbookMapper->delete($entryId);
                 }
                 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
 
             if ($this->getRequest()->getPost('action') == 'setfree') {
@@ -56,18 +53,18 @@ class Index extends \Ilch\Controller\Admin
                     $guestbookMapper->save($model);
                 }
 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
 
         if ($this->getRequest()->getParam('showsetfree')) {
-            $entries = $guestbookMapper->getEntries(array('setfree' => 0));
+            $entries = $guestbookMapper->getEntries(['setfree' => 0]);
         } else {
-            $entries = $guestbookMapper->getEntries(array('setfree' => 1));
+            $entries = $guestbookMapper->getEntries(['setfree' => 1]);
         }
 
         $this->getView()->set('entries', $entries);
-        $this->getView()->set('badge', count($guestbookMapper->getEntries(array('setfree' => 0))));
+        $this->getView()->set('badge', count($guestbookMapper->getEntries(['setfree' => 0])));
     }
 
     public function delAction()
@@ -80,9 +77,9 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->getParam('showsetfree')) {
-            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+            $this->redirect(['action' => 'index', 'showsetfree' => 1]);
         } else {
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
     }
 
@@ -95,9 +92,9 @@ class Index extends \Ilch\Controller\Admin
         $guestbookMapper->save($model);
 
         if ($this->getRequest()->getParam('showsetfree')) {
-            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+            $this->redirect(['action' => 'index', 'showsetfree' => 1]);
         } else {
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
     }
 }

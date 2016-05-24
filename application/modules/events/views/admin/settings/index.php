@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <legend><?=$this->getTrans('menuSettings') ?></legend>
     <?=$this->getTokenField() ?>
     <div class="form-group">

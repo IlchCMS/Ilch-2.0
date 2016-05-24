@@ -23,8 +23,8 @@ class Show extends \Ilch\Controller\Frontend
         $commentModel = new CommentModel();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
-                ->add($event->getTitle(), array('controller' => 'show', 'action' => 'event', 'id' => $event->getId()));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+                ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
 
         if ($this->getRequest()->isPost()) {       
             if ($this->getRequest()->getPost('save')) {         
@@ -55,7 +55,7 @@ class Show extends \Ilch\Controller\Frontend
 
                 $this->addMessage('deleteSuccess');
 
-                $this->redirect(array('controller' => 'index', 'action' => 'index'));
+                $this->redirect(['controller' => 'index', 'action' => 'index']);
             }
         }
 
@@ -74,8 +74,8 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('naviEventsUpcoming'), array('action' => 'upcoming'));
+                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
 
         $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcomingALL());
     }
@@ -85,8 +85,8 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('naviEventsPast'), array('action' => 'past'));
+                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('naviEventsPast'), ['action' => 'past']);
 
         $this->getView()->set('eventListPast', $eventMapper->getEventListPast());
     }
@@ -96,8 +96,8 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('naviEventsParticipation'), array('action' => 'participation'));
+                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('naviEventsParticipation'), ['action' => 'participation']);
 
         $this->getView()->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()));
     }
@@ -107,10 +107,10 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('naviEventsMy'), array('action' => 'my'));
+                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('naviEventsMy'), ['action' => 'my']);
 
-        $this->getView()->set('eventListMy', $eventMapper->getEntries(array('user_id' => $this->getUser()->getId())));
+        $this->getView()->set('eventListMy', $eventMapper->getEntries(['user_id' => $this->getUser()->getId()]));
     }
 
     public function delAction()
@@ -123,6 +123,6 @@ class Show extends \Ilch\Controller\Frontend
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'event', 'id' => $this->getRequest()->getParam('eventid')));
+        $this->redirect(['action' => 'event', 'id' => $this->getRequest()->getParam('eventid')]);
     }
 }

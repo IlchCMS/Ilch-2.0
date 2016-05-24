@@ -20,8 +20,8 @@ class Games extends \Ilch\Mapper
     {
         $select = $this->db()->select('*')
             ->from('war_played')
-            ->where(array('war_id' => $id))
-            ->order(array('war_id' => 'DESC'))
+            ->where(['war_id' => $id])
+            ->order(['war_id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Games extends \Ilch\Mapper
             return null;
         }
 
-        $games = array();
+        $games = [];
 
         foreach ($select as $game) {
             $gameModel = new GamesModel();
@@ -51,13 +51,13 @@ class Games extends \Ilch\Mapper
      */
     public function save(GamesModel $model)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'war_id' => $model->getWarId(),
             'map' => $model->getMap(),
             'group_pionts' => $model->getGroupPoints(),
             'enemy_pionts' => $model->getEnemyPoints(),
-        );
+            ];
 
         $this->db()->insert('war_played')
                 ->values($fields)
@@ -73,7 +73,7 @@ class Games extends \Ilch\Mapper
     public function deleteById($id)
     {
             return $this->db()->delete('war_played')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

@@ -11,7 +11,7 @@ namespace JBBCode\visitors;
  */
 class TagCountingVisitor implements \JBBcode\NodeVisitor
 {
-    protected $frequencies = array();
+    protected $frequencies = [];
 
     public function visitDocumentElement(\JBBCode\DocumentElement $documentElement)
     {

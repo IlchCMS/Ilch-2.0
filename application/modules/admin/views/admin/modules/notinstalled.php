@@ -22,12 +22,12 @@
                             <br /><br />
                             <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
                             <br />
-                            <a class="install_button" href="<?=$this->getUrl(array('action' => 'install', 'key' => $module->getKey()), null, true) ?>">
+                            <a class="install_button" href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>">
                                 <?=$this->getTrans('installModule') ?>
                             </a>
                             <small>
                                 | 
-                                <a class="delete_button" href="<?=$this->getUrl(array('action' => 'delete', 'key' => $module->getKey()), null, true) ?>">
+                                <a class="delete_button" href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>">
                                     <?=$this->getTrans('delete') ?>
                                 </a>
                             </small>

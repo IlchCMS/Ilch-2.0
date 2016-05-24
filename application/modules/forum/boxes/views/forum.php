@@ -25,7 +25,7 @@ if ($this->getUser()) {
                     <?php else: ?>
                         <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/forum_read.png') ?>" style="float: left; margin-top: 8px;">
                     <?php endif; ?>
-                    <a href="<?=$this->getUrl(array('module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId())) ?>">
+                    <a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId()]) ?>">
                         <?=$topic->getTopicTitle() ?>
                     </a>
                     <br />

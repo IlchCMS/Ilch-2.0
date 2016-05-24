@@ -8,25 +8,25 @@ namespace Modules\Checkout\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'checkout',
         'author' => 'Stantin, Thomas',
         'icon_small' => 'checkout.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Kasse',
                 'description' => 'Hier kann die Clan-Kasse gepflegt werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Checkout',
                 'description' => 'Here you can manage your clan cash.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

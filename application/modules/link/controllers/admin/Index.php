@@ -18,43 +18,39 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuLinks',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+            ]
         );
 
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewLink',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')])
+            ]
         );
 
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewCategory',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')])
+            ]
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
 
         $linkMapper = new LinkMapper();
         $categoryMapper = new CategoryMapper();
@@ -72,11 +68,11 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->getParam('cat_id')) {
-            $links = $linkMapper->getLinks(array('cat_id' => $this->getRequest()->getParam('cat_id')));
-            $categorys = $categoryMapper->getCategories(array('parent_id' => $this->getRequest()->getParam('cat_id')));
+            $links = $linkMapper->getLinks(['cat_id' => $this->getRequest()->getParam('cat_id')]);
+            $categorys = $categoryMapper->getCategories(['parent_id' => $this->getRequest()->getParam('cat_id')]);
         } else {
-            $links = $linkMapper->getLinks(array('cat_id' => 0));
-            $categorys = $categoryMapper->getCategories(array('parent_id' => 0));
+            $links = $linkMapper->getLinks(['cat_id' => 0]);
+            $categorys = $categoryMapper->getCategories(['parent_id' => 0]);
         }
         
         $this->getView()->set('links', $links);
@@ -101,7 +97,7 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function deleteLinkAction()
@@ -112,14 +108,14 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function treatLinkAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewLink'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuActionNewLink'), ['action' => 'treat']);
 
         $categoryMapper = new CategoryMapper();
         $linkMapper = new LinkMapper();
@@ -152,7 +148,7 @@ class Index extends \Ilch\Controller\Admin
                 $linkMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
     }
@@ -160,8 +156,8 @@ class Index extends \Ilch\Controller\Admin
     public function treatCatAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLinks'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewCategory'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuActionNewCategory'), ['action' => 'treat']);
 
         $categorykMapper = new CategoryMapper();
 
@@ -189,9 +185,9 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('saveSuccess');
 
                 if ($this->getRequest()->getParam('parentId')) {
-                    $this->redirect(array('action' => 'index', 'cat_id' => $this->getRequest()->getParam('parentId')));
+                    $this->redirect(['action' => 'index', 'cat_id' => $this->getRequest()->getParam('parentId')]);
                 } else {
-                    $this->redirect(array('action' => 'index'));
+                    $this->redirect(['action' => 'index']);
                 }
             }   
         }

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuEvents' => 'Events',
     'event' => 'Event',
     'dateTime' => 'Date/Time',
@@ -66,4 +66,4 @@ return array
     'successImage' => 'Image changed successfully',
     'failedFiletypes' => 'Image does not contain Allowed file format.',
     'failedFilesize' => 'Image has unauthorized width, height or is too big.',
-);
+    ];

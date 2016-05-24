@@ -29,8 +29,8 @@ class Cats extends \Ilch\Controller\Frontend
         $categoryMapper = new CategoryMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuCats'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
 
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
@@ -43,9 +43,9 @@ class Cats extends \Ilch\Controller\Frontend
         $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuCats'), array('action' => 'index'))
-                ->add($articlesCats->getName(), array('action' => 'show', 'id' => $articlesCats->getId()));
+                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+                ->add($articlesCats->getName(), ['action' => 'show', 'id' => $articlesCats->getId()]);
 
         $this->getView()->set('articles', $articleMapper->getArticlesByCats($this->getRequest()->getParam('id'), $this->locale));
     }

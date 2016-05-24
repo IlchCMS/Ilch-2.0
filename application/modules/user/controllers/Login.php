@@ -17,9 +17,9 @@ class Login extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLogin'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index']);
 
-        $errors = array();
+        $errors = [];
         $redirectUrl = '';
 
         if ($this->getRequest()->isPost()) {
@@ -70,7 +70,7 @@ class Login extends \Ilch\Controller\Frontend
                     }
                 } else {
                     $this->addMessage($this->getTranslator()->trans($result->getError()), 'warning');
-                    $redirectUrl = array('module' => 'user', 'controller' => 'login', 'action' => 'index');
+                    $redirectUrl = ['module' => 'user', 'controller' => 'login', 'action' => 'index'];
                 }
 
                 $this->redirect($redirectUrl);
@@ -94,8 +94,8 @@ class Login extends \Ilch\Controller\Frontend
     public function newpasswordAction()
     {        
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('newPassword'), array('action' => 'newpassword'));
+                ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('newPassword'), ['action' => 'newpassword']);
 
         if ($this->getRequest()->getPost('saveNewPassword')) {
             $confirmedCode = $this->getRequest()->getParam('code');
@@ -112,16 +112,16 @@ class Login extends \Ilch\Controller\Frontend
 
                     if (empty($password)) {
                         $this->addMessage('passwordEmpty', $type = 'danger');
-                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
                     } elseif (empty($password2)) {
                         $this->addMessage('passwordRetypeEmpty', $type = 'danger');
-                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
                     } elseif (strlen($password) < 6 OR strlen($password) > 30) {
                         $this->addMessage('passwordLength', $type = 'danger');
-                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
                     } elseif ($password != $password2) {
                         $this->addMessage('passwordNotEqual', $type = 'danger');
-                        $this->redirect(array('action' => 'newpassword', 'code' => $confirmedCode));
+                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
                     }
 
                     if (!empty($password) AND !empty($password2) AND $password == $password2) {
@@ -132,7 +132,7 @@ class Login extends \Ilch\Controller\Frontend
                         $userMapper->save($user);
 
                         $this->addMessage('newPasswordSuccess');
-                        $this->redirect(array('action' => 'index'));
+                        $this->redirect(['action' => 'index']);
                     }
                 } else {
                     $this->addMessage('newPasswordFailed', 'danger');                    
@@ -144,8 +144,8 @@ class Login extends \Ilch\Controller\Frontend
     public function forgotpasswordAction()
     {        
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuLogin'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuForgotPassword'), array('action' => 'forgotpassword'));
+                ->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuForgotPassword'), ['action' => 'forgotpassword']);
 
         if ($this->getRequest()->getPost('saveNewPassword')) {
             $name = trim($this->getRequest()->getPost('name'));
@@ -181,14 +181,14 @@ class Login extends \Ilch\Controller\Frontend
                     } else {
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
                     }
-                    $messageReplace = array(
+                    $messageReplace = [
                             '{content}' => $this->getConfig()->get('password_change_mail'),
                             '{sitetitle}' => $sitetitle,
                             '{date}' => $date->format("l, d. F Y", true),
                             '{name}' => $name,
                             '{confirm}' => $confirmCode,
                             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
-                    );
+                    ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();

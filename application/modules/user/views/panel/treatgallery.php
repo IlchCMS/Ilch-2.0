@@ -34,7 +34,7 @@
                     <i class="fa fa-cloud-upload"></i>
                 </a>
             </legend>
-            <?=$this->get('pagination')->getHtml($this, array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id'))) ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
             <?php if ($this->get('image')): ?>
                 <form class="form-horizontal" method="POST" action="">
                     <?=$this->getTokenField() ?>
@@ -62,8 +62,8 @@
                                 <?php foreach ($this->get('image') as $image): ?>
                                     <tr>
                                         <td><input value="<?=$image->getId() ?>" type="checkbox" name="check_gallery[]" /></td>
-                                        <td><?=$this->getEditIcon(array('action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId())) ?></td>
-                                        <td><?=$this->getDeleteIcon(array('action' => 'delgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getImageId())) ?></td>
+                                        <td><?=$this->getEditIcon(['action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?></td>
+                                        <td><?=$this->getDeleteIcon(['action' => 'delgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getImageId()]) ?></td>
                                         <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
                                         <td><?=$image->getImageTitle() ?></td>
                                         <td><?=$image->getImageDesc() ?></td>
@@ -72,7 +72,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <?=$this->getListBar(array('delete' => 'delete')) ?> 
+                    <?=$this->getListBar(['delete' => 'delete']) ?> 
                 </form>
             <?php else: ?>
                 <?=$this->getTrans('noImages') ?>

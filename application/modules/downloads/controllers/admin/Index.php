@@ -15,7 +15,7 @@ class Index extends BaseController
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('downloads'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('downloads'), ['action' => 'index']);
 
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
@@ -41,7 +41,7 @@ class Index extends BaseController
                 }
 
                 if ($items) {
-                    $sortArray = array();
+                    $sortArray = [];
 
                     foreach ($sortItems as $sortItem) {
                         if ($sortItem->item_id !== null) {
@@ -92,7 +92,7 @@ class Index extends BaseController
             }
 
             $this->addMessage('saveSuccess');
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(1, 0);

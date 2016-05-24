@@ -35,7 +35,7 @@ class Dialog extends \Ilch\Mapper
             return null;
         }
 
-        $mails = array();
+        $mails = [];
 
         foreach ($mailArray as $mail) {
             $mailModel = new DialogModel();
@@ -143,7 +143,7 @@ class Dialog extends \Ilch\Mapper
             return null;
         }
 
-        $mails = array();
+        $mails = [];
 
         foreach ($mailArray as $mail) {
             $mailModel = new DialogModel();
@@ -240,15 +240,15 @@ class Dialog extends \Ilch\Mapper
      */
     public function save(DialogModel $model)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'user_id_fk' => $model->getId(),
             'reply' => $model->getText(),
             'time' => $model->getTime(),
             'c_id_fk' => $model->getCId(),
             'user_one' => $model->getUserOne(),
             'user_two' => $model->getUserTwo(),
-        );
+            ];
 
         if(!empty($fields['user_one']) or !empty($fields['user_two'])){
             $this->db()->insert('users_dialog')
@@ -272,15 +272,15 @@ class Dialog extends \Ilch\Mapper
      */
     public function updateRead(DialogModel $model)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'cr_id' => $model->getCrId(),
             'read' => $model->getRead(),
-        );
+            ];
 
         $this->db()->update('users_dialog_reply')
                 ->values($fields)
-                ->where(array('cr_id' => $model->getCrId()))
+                ->where(['cr_id' => $model->getCrId()])
                 ->execute();
 
         return ;

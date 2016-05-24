@@ -16,33 +16,30 @@ class Boxes extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuBox',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'menuBoxes',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'boxes', 'action' => 'index'))
-                ),
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'index'])
+                ],
+            ]
         );
 
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewBox',
                 'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'boxes', 'action' => 'treat'))
-            )
+                'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'treat'])
+            ]
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('boxes'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('boxes'), ['action' => 'index']);
 
         $boxMapper = new BoxMapper();
 
@@ -86,7 +83,7 @@ class Boxes extends \Ilch\Controller\Admin
             $boxMapper->delete($this->getRequest()->getParam('id'));
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function treatAction()
@@ -95,7 +92,7 @@ class Boxes extends \Ilch\Controller\Admin
             $user = \Ilch\Registry::get('user');
 
             if(!$user->hasAccess('box_'.$this->getRequest()->getParam('id'))) {
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
 
@@ -133,7 +130,7 @@ class Boxes extends \Ilch\Controller\Admin
 
             $boxMapper->save($model);
 
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
     }
 }

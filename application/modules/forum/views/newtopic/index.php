@@ -79,7 +79,7 @@ if ($this->getUser()){
     </form>
 <?php else: ?>
     <?php
-    header("location: ".$this->getUrl(array('controller' => 'index', 'action' => 'index', 'access' => 'noaccess')));
+    header("location: ".$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
     exit;
     ?>
 <?php endif; ?>

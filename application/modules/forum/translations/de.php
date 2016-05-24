@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'forum' => 'Forum',
     'title' => 'Name',
     'type' => 'Art',
@@ -48,4 +48,4 @@ return array
     'totalMembers' => 'Mitglieder insgesamt',
     'newMember' => 'Neuestes Mitglied',
     'legend' => 'Legende',
-);
+    ];

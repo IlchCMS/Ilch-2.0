@@ -5,7 +5,7 @@ $confirm = $this->get('confirmed');
 
 if (empty($code) || empty($confirm)): ?>
     <legend><?=$this->getTrans('unlockUserAcc'); ?></legend>
-    <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+    <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
         <?=$this->getTokenField() ?>
         <?php $errors = $this->get('errors'); ?>
         <div class="form-group <?php if (!empty($errors['confirmedCode'])) { echo 'has-error'; }; ?>">

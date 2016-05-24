@@ -20,7 +20,7 @@ class Entrants extends \Ilch\Mapper
     {
         $entryRow = $this->db()->select('*')
                 ->from('training_entrants')
-                ->where(array('train_id' => $trainId, 'user_id' => $userId))
+                ->where(['train_id' => $trainId, 'user_id' => $userId])
                 ->execute()
                 ->fetchAssoc();
 
@@ -46,7 +46,7 @@ class Entrants extends \Ilch\Mapper
     {
         $entryArray = $this->db()->select('*')
                 ->from('training_entrants')
-                ->where(array('train_id' => $trainId))
+                ->where(['train_id' => $trainId])
                 ->execute()
                 ->fetchRows();
 
@@ -54,7 +54,7 @@ class Entrants extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EntrantsModel();
@@ -73,12 +73,12 @@ class Entrants extends \Ilch\Mapper
      */
     public function saveUserOnTrain(EntrantsModel $training)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'train_id' => $training->getTrainId(),
             'user_id' => $training->getUserId(),
             'note' => $training->getNote(),
-        );
+            ];
         
         $this->db()->insert('training_entrants')
             ->values($fields)
@@ -93,7 +93,7 @@ class Entrants extends \Ilch\Mapper
     public function deleteUserFromTrain($trainId, $userId)
     {
         $this->db()->delete('training_entrants')
-                ->where(array('user_id' => $userId, 'train_id' => $trainId))
+                ->where(['user_id' => $userId, 'train_id' => $trainId])
                 ->execute();
     }
 
@@ -105,7 +105,7 @@ class Entrants extends \Ilch\Mapper
     public function deleteAllUser($trainId)
     {
         $this->db()->delete('training_entrants')
-                ->where(array('train_id' => $trainId))
+                ->where(['train_id' => $trainId])
                 ->execute();
     }
 }

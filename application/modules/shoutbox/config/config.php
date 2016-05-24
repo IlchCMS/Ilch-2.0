@@ -8,25 +8,25 @@ namespace Modules\Shoutbox\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'shoutbox',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'shoutbox.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Shoutbox',
                 'description' => 'Hier kann die Shoutbox verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Shoutbox',
                 'description' => 'Here you can manage your shoutbox.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

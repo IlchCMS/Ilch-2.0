@@ -19,7 +19,7 @@ class Index extends \Ilch\Controller\Frontend
         $amountplus = $checkoutMapper->getAmountPlus();
         $amountminus = $checkoutMapper->getAmountMinus();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('checkout'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('checkout'), ['action' => 'index']);
         $this->getView()->set('checkout', $checkout);
         $this->getView()->set('amount', $amount);
         $this->getView()->set('amountplus', $amountplus);

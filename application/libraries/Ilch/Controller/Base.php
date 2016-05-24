@@ -66,7 +66,7 @@ class Base
      * @param string  $route
      * @param boolean $rewrite
      */
-    public function redirect($url = array(), $route = null, $rewrite = false)
+    public function redirect($url = [], $route = null, $rewrite = false)
     {
         if (!is_string($url) || preg_match('~^[a-z]+://.*~', $url) === 0) {
             $url = $this->getLayout()->getUrl($url, $route, $rewrite);
@@ -153,6 +153,6 @@ class Base
      */
     public function addMessage($message, $type = 'success')
     {
-        $_SESSION['messages'][] = array('text' => $message, 'type' => $type);
+        $_SESSION['messages'][] = ['text' => $message, 'type' => $type];
     }
 }

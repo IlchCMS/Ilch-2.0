@@ -15,11 +15,11 @@ class Gallery extends \Ilch\Mapper
      */
     public function getGalleryItemsByParent($userId, $galleryId, $itemId)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('users_gallery_items')
-                ->where(array('user_id' => $userId, 'gallery_id' => $galleryId, 'parent_id' => $itemId))
-                ->order(array('sort' => 'ASC'))
+                ->where(['user_id' => $userId, 'gallery_id' => $galleryId, 'parent_id' => $itemId])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -47,11 +47,11 @@ class Gallery extends \Ilch\Mapper
      */
     public function getGalleryCatItem($type)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('users_gallery_items')
-                ->where(array('type' => $type))
-                ->order(array('sort' => 'ASC'))
+                ->where(['type' => $type])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -78,8 +78,8 @@ class Gallery extends \Ilch\Mapper
     {
         $itemRows = $this->db()->select('*')
                 ->from('users_gallery_items')
-                ->where(array('id' => $id))
-                ->order(array('sort' => 'ASC'))
+                ->where(['id' => $id])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchAssoc();
 
@@ -118,8 +118,8 @@ class Gallery extends \Ilch\Mapper
      */
     public function saveItem(GalleryItem $galleryItem)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'user_id' => $galleryItem->getUserId(),
             'title' => $galleryItem->getTitle(),
             'gallery_id' => $galleryItem->getGalleryId(),
@@ -127,7 +127,7 @@ class Gallery extends \Ilch\Mapper
             'parent_id' => $galleryItem->getParentId(),
             'type' => $galleryItem->getType(),
             'description' => $galleryItem->getDesc(),
-        );
+            ];
 
         foreach ($fields as $key => $value) {
             if ($value === null) {
@@ -137,14 +137,14 @@ class Gallery extends \Ilch\Mapper
 
         $itemId = (int)$this->db()->select('id')
             ->from('users_gallery_items')
-            ->where(array('id' => $galleryItem->getId()))
+            ->where(['id' => $galleryItem->getId()])
             ->execute()
             ->fetchCell();
 
         if ($itemId) {
             $this->db()->update('users_gallery_items')
                 ->values($fields)
-                ->where(array('id' => $itemId))
+                ->where(['id' => $itemId])
                 ->execute();
         } else {
             $itemId = $this->db()->insert('users_gallery_items')
@@ -163,7 +163,7 @@ class Gallery extends \Ilch\Mapper
     public function deleteItem($galleryItem)
     {
         $this->db()->delete('users_gallery_items')
-            ->where(array('id' => $galleryItem->getId()))
+            ->where(['id' => $galleryItem->getId()])
             ->execute();
     }
 
@@ -172,11 +172,11 @@ class Gallery extends \Ilch\Mapper
      */
     public function getGalleryItems($galleryId)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('users_gallery_items')
-                ->where(array('gallery_id' => $galleryId))
-                ->order(array('sort' => 'ASC'))
+                ->where(['gallery_id' => $galleryId])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 

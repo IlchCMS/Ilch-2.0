@@ -24,7 +24,7 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
      *
      * @var array
      */
-    static protected $configData = array();
+    static protected $configData = [];
 
     /**
      * Only instantiate pdo once for test clean-up/fixture load
@@ -102,10 +102,10 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
      */
     final public function getConnection()
     {
-        $dbData = array();
+        $dbData = [];
         $config = $this->getConfig();
 
-        foreach (array('dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $configKey) {
+        foreach (['dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix'] as $configKey) {
             /*
              * Using the data for the db from the config.
              * We check if special config variables for this test execution exist.

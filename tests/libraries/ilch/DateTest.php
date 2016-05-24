@@ -21,9 +21,9 @@ class DateTest extends TestCase
      *
      * @var Array
      */
-    protected $configData = array(
+    protected $configData = [
         'timezone' => 'Europe/Berlin'
-    );
+    ];
 
     /**
      * Tests if the timezone with an empty Registry-Key 'timezone'.

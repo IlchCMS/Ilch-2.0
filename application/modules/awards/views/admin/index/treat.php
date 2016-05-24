@@ -10,7 +10,7 @@ if ($awards != '') {
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <legend>
         <?php if ($this->get('awards') != ''): ?>

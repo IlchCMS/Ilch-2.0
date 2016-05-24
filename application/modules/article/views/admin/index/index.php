@@ -43,8 +43,8 @@ $categoryMapper = new \Modules\Article\Mappers\Category();
                         <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
                         <tr>
                             <td><input value="<?=$article->getId() ?>" type="checkbox" name="check_articles[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $article->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $article->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $article->getId()]) ?></td>
                             <td><a target="_blank" href="<?=$this->getUrl().'/index.php/article/cats/show/id/'.$articlesCats->getId() ?>"><?=$articlesCats->getName() ?></a></td>
                             <td><a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($article->getPerma()) ?>"><?=$article->getTitle() ?></a></td>
                             <?php if ($this->get('multilingual')): ?>
@@ -55,9 +55,9 @@ $categoryMapper = new \Modules\Article\Mappers\Category();
                                         <?php endif; ?>
 
                                         <?php if ($this->get('articleMapper')->getArticleByIdLocale($article->getId(), $key) != null): ?>
-                                            <a href="<?=$this->getUrl(array('action' => 'treat', 'id' => $article->getId(), 'locale' => $key)) ?>"><i class="fa fa-edit"></i></a>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-edit"></i></a>
                                         <?php else: ?>
-                                            <a href="<?=$this->getUrl(array('action' => 'treat', 'id' => $article->getId(), 'locale' => $key)) ?>"><i class="fa fa-plus-circle"></i></a>
+                                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-plus-circle"></i></a>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </td>
@@ -67,7 +67,7 @@ $categoryMapper = new \Modules\Article\Mappers\Category();
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete'))?>
+        <?=$this->getListBar(['delete' => 'delete'])?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>

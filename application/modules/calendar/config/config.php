@@ -8,25 +8,25 @@ namespace Modules\Calendar\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'calendar',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'calendar.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Kalender',
                 'description' => 'Hier kannst du den Kalender verwalten.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Calendar',
                 'description' => 'Here you can manage the Calendar.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

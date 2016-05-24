@@ -16,12 +16,12 @@ class Awards extends \Ilch\Mapper
      * @param array $where
      * @return AwardsModel[]|array
      */
-    public function getAwards($where = array())
+    public function getAwards($where = [])
     {
         $awardsArray = $this->db()->select('*')
             ->from('awards')
             ->where($where)
-            ->order(array('date' => 'DESC'))
+            ->order(['date' => 'DESC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Awards extends \Ilch\Mapper
             return null;
         }
 
-        $awards = array();
+        $awards = [];
 
         foreach ($awardsArray as $entries) {
             $awardsModel = new AwardsModel();
@@ -56,7 +56,7 @@ class Awards extends \Ilch\Mapper
     {
         $awardsRow = $this->db()->select('*')
             ->from('awards')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -83,20 +83,20 @@ class Awards extends \Ilch\Mapper
      */
     public function save(AwardsModel $awards)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'date' => $awards->getDate(),
             'rank' => $awards->getRank(),
             'event' => $awards->getEvent(),
             'url' => $awards->getURL(),
             'ut_id' => $awards->getUTId(),
             'typ' => $awards->getTyp(),
-        );
+            ];
 
         if ($awards->getId()) {
             $this->db()->update('awards')
                 ->values($fields)
-                ->where(array('id' => $awards->getId()))
+                ->where(['id' => $awards->getId()])
                 ->execute();
         } else {
             $this->db()->insert('awards')
@@ -113,7 +113,7 @@ class Awards extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('awards')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

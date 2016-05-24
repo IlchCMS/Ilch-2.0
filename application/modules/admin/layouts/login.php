@@ -33,7 +33,7 @@
                         <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>" />
                         <?php $errors = $this->get('errors'); ?>
                         <?php $emailname = $this->get('emailname'); ?>
-                        <form class="form-signin" method="POST" action="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'login', 'action' => 'index')) ?>">
+                        <form class="form-signin" method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'index']) ?>">
                             <?=$this->getTokenField() ?>
                             <h4><?=$this->getTrans('loginWelcome') ?></h4>
                             <div class="form-group <?php if (!empty($errors)) { echo 'has-error'; }; ?>">

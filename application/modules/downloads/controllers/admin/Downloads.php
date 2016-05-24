@@ -17,12 +17,11 @@ class Downloads extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionDownloadsInsertFile',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => 'javascript:media();'
-            )
+            ]
         );
     }
 
@@ -44,7 +43,7 @@ class Downloads extends BaseController
                     $fileMapper->deleteById($fileId);
                 }
                 $this->addMessage('deleteSuccess');
-                $this->redirect(array('action' => 'treatdownloads','id' => $id));
+                $this->redirect(['action' => 'treatdownloads','id' => $id]);
         }
 
         if ($this->getRequest()->getPost()) {
@@ -92,7 +91,7 @@ class Downloads extends BaseController
             $fileMapper->deleteById($id);
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(array('action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')));
+            $this->redirect(['action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')]);
         }
     }
 }

@@ -42,7 +42,7 @@
 $('#languageInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(array('action' => 'index')) ?>/language/'+$(this).val();
+        top.location.href = '<?=$this->getUrl(['action' => 'index']) ?>/language/'+$(this).val();
     }
 );
 </script>

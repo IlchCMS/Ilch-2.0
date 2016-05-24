@@ -38,11 +38,10 @@ class Router
         $this->config->offsetSet
         (
             '_DEFAULT_',
-            array
-            (
+            [
                 'strategy' => self::DEFAULT_MATCH_STRATEGY,
                 'pattern' => self::DEFAULT_REGEX_PATTERN
-            )
+            ]
         );
     }
 
@@ -147,9 +146,9 @@ class Router
      * @throws \Exception
      * @return array
      */
-    public function matchByRegexp($route, array $params = array())
+    public function matchByRegexp($route, array $params = [])
     {
-        $matches = array();
+        $matches = [];
         $pattern = !array_key_exists('pattern', $params) ? self::DEFAULT_REGEX_PATTERN : $params['pattern'];
 
         $matched = preg_match(
@@ -174,7 +173,7 @@ class Router
      */
     public function matchByQuery($query)
     {
-        $result = array();
+        $result = [];
         $queryParts = explode('/', $query);
         $i = 0;
 
@@ -219,7 +218,7 @@ class Router
     public function convertParamStringIntoArray($string)
     {
         $array = explode('/', $string);
-        $result = array();
+        $result = [];
         $prevKey = null;
 
         foreach ($array as $key => $value) {
@@ -283,23 +282,23 @@ class Router
      * @param array $params
      * @return mixed
      */
-    public function matchStrategy($route, array $params = array())
+    public function matchStrategy($route, array $params = [])
     {
-        $callback = array();
+        $callback = [];
         $strategy = array_key_exists('strategy', $params) ? $params['strategy'] : self::DEFAULT_MATCH_STRATEGY;
 
         /*
          * Select default strategy delivered by router.
          */
         if (is_string($strategy) && strtolower(substr($strategy, 0, 5)) === 'match' && method_exists($this, $strategy)) {
-            $callback = array($this, $strategy);
+            $callback = [$this, $strategy];
         }
 
         if (is_callable($strategy)) {
             $callback = $strategy;
         }
 
-        return call_user_func_array($callback, array($route, $params));
+        return call_user_func_array($callback, [$route, $params]);
     }
 
     /**
@@ -310,7 +309,7 @@ class Router
      */
     public function match($route)
     {
-        $results = array();
+        $results = [];
 
         foreach ($this->config as $routeName => $config) {
             if (!array_key_exists('strategy', $config)) {

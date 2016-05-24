@@ -8,25 +8,25 @@ namespace Modules\Link\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'link',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'link.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Links',
                 'description' => 'Hier können die Links verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Links',
                 'description' => 'Here you can manage your links.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

@@ -35,10 +35,10 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
-                ->add($cat->getTitle(), array('controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()))
-                ->add($forum->getTitle(), array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId->getId()))
-                ->add($post->getTopicTitle(), array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId));
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
+                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId->getId()])
+                ->add($post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
 
         $topicModel->setId($topicId);
         $topicModel->setVisits($post->getVisits() + 1);
@@ -62,9 +62,9 @@ class Showposts extends \Ilch\Controller\Frontend
         }
         $user = $userMapper->getUserById($userId);
 
-        $ids = array(3);
+        $ids = [3];
         if($user){
-            $ids = array();
+            $ids = [];
             foreach ($user->getGroups() as $us){
                 $ids[] = $us->getId();
             }
@@ -93,15 +93,15 @@ class Showposts extends \Ilch\Controller\Frontend
                 $postMapper->deleteById($postId);
                 if ($countPosts === '1') {
                     $topicMapper->deleteById($topicId);
-                    $this->redirect(array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId));
+                    $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId]);
                 }
 
-                $this->redirect(array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId));
+                $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
             }
         }
 
         $this->addMessage('noAccess', 'danger');
-        $this->redirect(array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'forumid' => $forumId));
+        $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId, 'forumid' => $forumId]);
     }
 
     public function editAction()
@@ -119,11 +119,11 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
         
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
-                ->add($cat->getTitle(), array('controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()))
-                ->add($forum->getTitle(), array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()))
-                ->add($post->getTopicTitle(), array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId))
-                ->add($this->getTranslator()->trans('editPost'), array('controller' => 'newpost','action' => 'index', 'topicid' => $topicId));
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
+                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
+                ->add($post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
+                ->add($this->getTranslator()->trans('editPost'), ['controller' => 'newpost','action' => 'index', 'topicid' => $topicId]);
 
         if ($this->getRequest()->getPost('editPost')) {
             $postMapper = new PostMapper;
@@ -133,7 +133,7 @@ class Showposts extends \Ilch\Controller\Frontend
             $postModel->setText($this->getRequest()->getPost('text'));
             $postMapper->save($postModel);
 
-            $this->redirect(array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId));
+            $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
         }
 
         $this->getView()->set('post', $postMapper->getPostById($postId));

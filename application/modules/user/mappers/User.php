@@ -19,10 +19,10 @@ class User extends \Ilch\Mapper
      */
     public function getUserById($id)
     {
-        $where = array
-        (
+        $where =
+            [
             'id' => (int)$id,
-        );
+            ];
 
         $users = $this->getBy($where);
 
@@ -41,10 +41,10 @@ class User extends \Ilch\Mapper
      */
     public function getUserByName($name)
     {
-        $where = array
-        (
+        $where =
+            [
             'name' => (string)$name,
-        );
+            ];
 
         $users = $this->getBy($where);
 
@@ -63,10 +63,10 @@ class User extends \Ilch\Mapper
      */
     public function getUserByEmail($email)
     {
-        $where = array
-        (
+        $where =
+            [
             'email' => (string)$email,
-        );
+            ];
 
         $users = $this->getBy($where);
 
@@ -85,10 +85,10 @@ class User extends \Ilch\Mapper
      */
     public function getUserByConfirmedCode($confirmed)
     {
-        $where = array
-        (
+        $where =
+            [
             'confirmed_code' => (string)$confirmed,
-        );
+            ];
 
         $users = $this->getBy($where);
 
@@ -115,10 +115,10 @@ class User extends \Ilch\Mapper
             ->fetchRows();
 
         if (!empty($userRows)) {
-            $users = array();
+            $users = [];
 
             foreach ($userRows as $userRow) {
-                $groups = array();
+                $groups = [];
                 $sql = 'SELECT g.*
                         FROM `[prefix]_groups` AS g
                         INNER JOIN `[prefix]_users_groups` AS ug ON g.id = ug.group_id
@@ -147,7 +147,7 @@ class User extends \Ilch\Mapper
      * @param  mixed[] $userRow
      * @return UserModel
      */
-    public function loadFromArray($userRow = array())
+    public function loadFromArray($userRow = [])
     {
         $user = new UserModel();
 
@@ -255,7 +255,7 @@ class User extends \Ilch\Mapper
      */
     public function save(UserModel $user)
     {
-        $fields = array();
+        $fields = [];
         $name = $user->getName();
         $password = $user->getPassword();
         $email = $user->getEmail();
@@ -312,7 +312,7 @@ class User extends \Ilch\Mapper
 
         $userId = (int)$this->db()->select('id')
             ->from('users')
-            ->where(array('id' => $user->getId()))
+            ->where(['id' => $user->getId()])
             ->execute()
             ->fetchCell();
 
@@ -322,7 +322,7 @@ class User extends \Ilch\Mapper
              */
             $this->db()->update('users')
                 ->values($fields)
-                ->where(array('id' => $userId))
+                ->where(['id' => $userId])
                 ->execute();
         } else {
 
@@ -336,12 +336,12 @@ class User extends \Ilch\Mapper
 
         if ($user->getGroups()) {
             $this->db()->delete('users_groups')
-                ->where(array('user_id' => $userId))
+                ->where(['user_id' => $userId])
                 ->execute();
 
             foreach ($user->getGroups() as $group) {
                 $this->db()->insert('users_groups')
-                    ->values(array('user_id' => $userId, 'group_id' => $group->getId()))
+                    ->values(['user_id' => $userId, 'group_id' => $group->getId()])
                     ->execute();
             }
         }
@@ -397,7 +397,7 @@ class User extends \Ilch\Mapper
     {
         $userExists = (bool)$this->db()->select('id')
             ->from('users')
-            ->where(array('id' => $userId))
+            ->where(['id' => $userId])
             ->execute()
             ->fetchCell();
 
@@ -418,23 +418,23 @@ class User extends \Ilch\Mapper
         }
 
         $this->db()->delete('users_groups')
-            ->where(array('user_id' => $userId))
+            ->where(['user_id' => $userId])
             ->execute();
 
         $this->db()->delete('users_gallery_imgs')
-            ->where(array('user_id' => $userId))
+            ->where(['user_id' => $userId])
             ->execute();
 
         $this->db()->delete('users_gallery_items')
-            ->where(array('user_id' => $userId))
+            ->where(['user_id' => $userId])
             ->execute();
 
         $this->db()->delete('users_media')
-            ->where(array('user_id' => $userId))
+            ->where(['user_id' => $userId])
             ->execute();
 
         return $this->db()->delete('users')
-            ->where(array('id' => $userId))
+            ->where(['id' => $userId])
             ->execute();
     }
 

@@ -18,7 +18,7 @@ if ($this->getUser()) {
         <div class="topic-actions">
             <?php if($this->getUser()): ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(array('controller' => 'newtopic', 'action' => 'index','id' => $forum->getId())) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-labeled bgblue">
                         <span class="btn-label">
                             <i class="fa fa-plus"></i>
                         </span><?=$this->getTrans('createNewTopic') ?>
@@ -27,14 +27,14 @@ if ($this->getUser()) {
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'index')) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
                         <span class="btn-label">
                             <i class="fa fa-user"></i>
                         </span><?=$this->getTrans('loginTopic') ?>
                     </a>
                 </div>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, array('action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid'))); ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]); ?>
         </div>
         <?php if ($forumEdit): ?>
             <form class="form-horizontal" method="POST" action="">
@@ -69,7 +69,7 @@ if ($this->getUser()) {
                             <?php endif; ?>
                                 background-repeat: no-repeat;">
                             <dt>
-                                <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId())) ?>" class="topictitle">
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="topictitle">
                                     <?=$topic->getTopicTitle() ?>
                                 </a>
                                 <?php if ($topic->getType() == '1'): ?>
@@ -77,7 +77,7 @@ if ($this->getUser()) {
                                 <?php endif; ?>
                                 <br>
                                 <?=$this->getTrans('by') ?>
-                                <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId())) ?>" style="color: #AA0000;" class="username-coloured">
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
                                     <?=$topic->getAuthor()->getName() ?>
                                 </a>
                                 »
@@ -89,10 +89,10 @@ if ($this->getUser()) {
                                 <span>
                                     <img style="width:30px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
                                     <?=$this->getTrans('by') ?>
-                                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId())) ?>">
+                                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>">
                                         <?=$lastPost->getAutor()->getName() ?>
                                     </a>
-                                    <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage())) ?>#<?=$lastPost->getId()?>">
+                                    <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId()?>">
                                         <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
                                     </a>
                                     <br>
@@ -120,7 +120,7 @@ if ($this->getUser()) {
                     <button class="btn btn-labeled bgblue" name="topicChangeStatus"><?=$this->getTrans('topicChangeStatus') ?></button>
                 <?php endif; ?>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, array('action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid'))) ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <?php if ($forumEdit): ?>
             </form>
@@ -128,7 +128,7 @@ if ($this->getUser()) {
     </div>
 <?php else: ?>
     <?php
-    header("location: ".$this->getUrl(array('controller' => 'index', 'action' => 'index', 'access' => 'noaccess')));
+    header("location: ".$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
     exit;
     ?>
 <?php endif; ?>

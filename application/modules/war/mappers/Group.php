@@ -17,12 +17,12 @@ class Group extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return GroupModel[]|array
      */
-    public function getGroups($where = array(), $pagination = null)
+    public function getGroups($where = [], $pagination = null)
     {
         $select = $this->db()->select('*')
             ->from('war_groups')
             ->where($where)
-            ->order(array('id' => 'DESC'));
+            ->order(['id' => 'DESC']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -39,7 +39,7 @@ class Group extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new GroupModel();
@@ -75,7 +75,7 @@ class Group extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($groupArray as $entries) {
             $entryModel = new GroupModel();
@@ -100,7 +100,7 @@ class Group extends \Ilch\Mapper
     {
         $groupRow = $this->db()->select('*')
             ->from('war_groups')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -125,18 +125,18 @@ class Group extends \Ilch\Mapper
      */
     public function save(GroupModel $model)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'name' => $model->getGroupName(),
             'tag' => $model->getGroupTag(),
             'image' => $model->getGroupImage(),
             'member' => $model->getGroupMember(),
-        );
+            ];
 
         if ($model->getId()) {
             $this->db()->update('war_groups')
                 ->values($fields)
-                ->where(array('id' => $model->getId()))
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('war_groups')
@@ -148,7 +148,7 @@ class Group extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('war_groups')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

@@ -30,7 +30,7 @@
                     <?php endforeach; ?>
                 </optgroup>
                 <optgroup label="<?=$this->getTrans('layouts') ?>">
-                    <?php $layouts = array(); ?>
+                    <?php $layouts = []; ?>
                     <?php foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath): ?>
                         <?php include_once $layoutPath.'/config/config.php'; ?>
                         <?php if (empty($config['modulekey'])): ?>

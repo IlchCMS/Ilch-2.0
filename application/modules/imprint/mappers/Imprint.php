@@ -16,20 +16,20 @@ class Imprint extends \Ilch\Mapper
      * @param array $where
      * @return ImprintModel[]|array
      */
-    public function getImprint($where = array())
+    public function getImprint($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('imprint')
             ->where($where)
-            ->order(array('id' => 'DESC'))
+            ->order(['id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return [];
         }
 
-        $imprint = array();
+        $imprint = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new ImprintModel();
@@ -63,7 +63,7 @@ class Imprint extends \Ilch\Mapper
      */
     public function getImprintById($id)
     {
-        $imprint = $this->getImprint(array('id' => $id));
+        $imprint = $this->getImprint(['id' => $id]);
         return reset($imprint);
     }
 
@@ -77,8 +77,7 @@ class Imprint extends \Ilch\Mapper
         $this->db()->update('imprint')
             ->values
             (
-                array
-                (
+                [
                     'paragraph' => $imprint->getParagraph(),
                     'company' => $imprint->getCompany(),
                     'name' => $imprint->getName(),
@@ -93,9 +92,9 @@ class Imprint extends \Ilch\Mapper
                     'vatid' => $imprint->getVatId(),
                     'other' => $imprint->getOther(),
                     'disclaimer' => $imprint->getDisclaimer()
-                )
+                ]
             )
-            ->where(array('id' => $imprint->getId()))
+            ->where(['id' => $imprint->getId()])
             ->execute();
     }
 
@@ -111,12 +110,11 @@ class Imprint extends \Ilch\Mapper
         $this->db()->update('imprint')
             ->values
             (
-                array
-                (
+                [
                     $key => $value,
-                )
+                ]
             )
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

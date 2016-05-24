@@ -1,11 +1,11 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuGroups') ?></legend>
-<h4><a class="btn btn-default" href="<?=$this->getUrl(array('controller' => 'group', 'action' => 'index')) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
+<h4><a class="btn btn-default" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
 
 <legend><?=$this->getTrans('warsOverview') ?></legend>
 <?php if ($this->get('war') != ''): ?>
-    <?=$this->get('pagination')->getHtml($this, array()) ?>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
     <table class="table table-striped table-hover table-responsive">
         <colgroup>
             <col class="col-lg-2">
@@ -67,7 +67,7 @@
                     <td <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?></td>
                     <td>
                         <?php if ($games): ?>
-                            <a href="<?=$this->getUrl(array('action' => 'show', 'id' => $war->getId())) ?>"><?=$this->getTrans('warReportShow') ?></a>
+                            <a href="<?=$this->getUrl(['action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a>
                         <?php else: ?>
                             <?=$this->getTrans('warReportNo') ?>
                         <?php endif; ?>
@@ -76,7 +76,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <?=$this->get('pagination')->getHtml($this, array()) ?>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
 <?php else: ?>
     <?=$this->getTranslator()->trans('noWars') ?>
 <?php endif; ?>

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuGuestbook' => 'Guestbook',
     'guestbook' => 'Guestbook',
     'from' => 'From',
@@ -35,4 +35,4 @@ return array
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha is false',
     'captchaRead' => 'Not readable? Change text!',
-);
+    ];

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuFaqs' => 'F.A.Q.',
     'menuCats' => 'Categories',
     'faqs' => 'FAQs',
@@ -21,4 +21,4 @@ return array
     'missingTitle' => 'Title was not filled',
     'noFaqs' => 'No FAQs available',
     'noCategory' => 'No Category available',
-);
+    ];

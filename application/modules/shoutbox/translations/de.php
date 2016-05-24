@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuShoutbox' => 'Shoutbox',
     'from' => 'Von',
     'date' => 'Datum',
@@ -21,4 +21,4 @@ return array
     'answer' => 'Antworten',
     'message' => 'Nachricht',
     'archive' => 'Archiv',
-);
+    ];

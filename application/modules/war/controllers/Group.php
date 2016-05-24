@@ -14,8 +14,8 @@ class Group extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuWarList'), array('controller' => 'index', 'action' => 'index'))
-            ->add($this->getTranslator()->trans('menuGroupList'), array('action' => 'index'));
+            ->add($this->getTranslator()->trans('menuWarList'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGroupList'), ['action' => 'index']);
 
         $groupMapper = new GroupMapper();
         $pagination = new \Ilch\Pagination();
@@ -37,9 +37,9 @@ class Group extends \Ilch\Controller\Frontend
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuWarList'), array('controller' => 'index', 'action' => 'index'))
-            ->add($this->getTranslator()->trans('menuGroupList'), array('action' => 'index'))
-            ->add($group->getGroupName(), array('action' => 'show', 'id' => $this->getRequest()->getParam('id')));
+            ->add($this->getTranslator()->trans('menuWarList'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuGroupList'), ['action' => 'index'])
+            ->add($group->getGroupName(), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         $this->getView()->set('group', $group);
         $this->getView()->set('war', $warMapper->getWarsByWhere('group ='.$id, $pagination));

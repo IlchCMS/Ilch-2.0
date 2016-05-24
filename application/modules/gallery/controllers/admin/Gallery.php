@@ -17,12 +17,11 @@ class Gallery extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionGalleryInsertImage',
                 'icon' => 'fa fa-plus-circle',
                 'url'  => 'javascript:media();'
-            )
+            ]
         );
     }
 
@@ -40,15 +39,15 @@ class Gallery extends BaseController
         $galleryTitle = $galleryMapper->getGalleryById($id);
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('gallery'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans($galleryTitle->getTitle()), array('action' => 'treatgallery', 'id' => $id));
+                ->add($this->getTranslator()->trans('gallery'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans($galleryTitle->getTitle()), ['action' => 'treatgallery', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
                 foreach($this->getRequest()->getPost('check_gallery') as $imageId) {
                     $imageMapper->deleteById($imageId);
                 }
                 $this->addMessage('deleteSuccess');
-                $this->redirect(array('action' => 'treatgallery','id' => $id));
+                $this->redirect(['action' => 'treatgallery','id' => $id]);
         }
 
         if ($this->getRequest()->getPost()) {
@@ -96,7 +95,7 @@ class Gallery extends BaseController
             $imageMapper->deleteById($id);
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')));
+            $this->redirect(['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')]);
         }
     }
 }

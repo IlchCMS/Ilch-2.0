@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Frontend
         $birthdayMapper = new BirthdayMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuBirthdayList'), array('controller' => 'index'));
+                ->add($this->getTranslator()->trans('menuBirthdayList'), ['controller' => 'index']);
 
         $this->getView()->set('birthdayListNOW', $birthdayMapper->getBirthdayUserList());
         $this->getView()->set('birthdayList', $userMapper->getUserList());

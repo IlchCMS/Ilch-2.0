@@ -31,10 +31,10 @@
                                 <input value="<?=$group->getId()?>" type="checkbox" name="check_groups[]" />
                             </td>
                             <td>
-                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $group->getId())) ?>
+                                <?=$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) ?>
                             </td>
                             <td>
-                                <?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $group->getId())) ?>
+                                <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $group->getId()]) ?>
                             </td>
                             <td><?=$this->escape($group->getName()) ?></td>
                             <td><?=count($assignedUsers) ?></td>
@@ -45,7 +45,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noGroupsExist') ?>

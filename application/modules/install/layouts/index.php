@@ -15,7 +15,7 @@
         <script src="<?=$this->getStaticUrl('js/bootstrap.js') ?>"></script>
     </head>
     <body>
-        <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+        <form autocomplete="off" class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
             <?=$this->getTokenField() ?>
             <div class="container install_container">
                 <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>" />
@@ -53,8 +53,8 @@
                 </div>
             </div>
             <div class="container save_box">
-                <?php if (!in_array($this->getRequest()->getActionName(), array('index', 'finish'))): ?>
-                    <a href="<?=$this->getUrl(array('action' => $lastAction)) ?>" class="btn pull-left">
+                <?php if (!in_array($this->getRequest()->getActionName(), ['index', 'finish'])): ?>
+                    <a href="<?=$this->getUrl(['action' => $lastAction]) ?>" class="btn pull-left">
                         <?=$this->getTrans('backButton') ?>
                     </a>
                 <?php endif; ?>

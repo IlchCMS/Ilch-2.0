@@ -12,7 +12,7 @@ class Index extends \Ilch\Controller\Frontend
 {    
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAwards'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index']);
         $awardsMapper = new AwardsMapper();
 
         $this->getView()->set('awards', $awardsMapper->getAwards());

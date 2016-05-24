@@ -2,13 +2,13 @@
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
-            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index')) ?>">
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                 <?=$this->getTrans('users') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0): ?>
             <li <?php if($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
-                <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'showsetfree' => 1)) ?>">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                     <?=$this->getTrans('setfree'); ?> <span class="badge"><?=$this->get('badge') ?></span>
                 </a>
             </li>
@@ -72,13 +72,13 @@
                         </td>
                         <td>
                             <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
-                                <a href="<?=$this->getUrl(array('action' => 'setfree', 'id' => $user->getId())) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
+                                <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()]) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
                             <?php else: ?>                                
-                                <?=$this->getEditIcon(array('action' => 'treat', 'id' => $user->getId())) ?>
+                                <?=$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]) ?>
                             <?php endif; ?>
                         </td>
                         <td>
-                            <?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $user->getId())) ?>
+                            <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]) ?>
                         </td>
                         <td><?=$this->escape($user->getName()) ?></td>
                         <td><?=$this->escape($user->getEmail()) ?></td>
@@ -95,5 +95,5 @@
             <?php endif; ?>
         </tbody>
     </table>
-    <?=$this->getListBar(array('delete' => 'delete')) ?>
+    <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>

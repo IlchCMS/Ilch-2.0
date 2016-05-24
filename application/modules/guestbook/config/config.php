@@ -8,25 +8,25 @@ namespace Modules\Guestbook\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'guestbook',
         'author' => 'Stantin, Thomas',
         'icon_small' => 'guestbook.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Gästebuch',
                 'description' => 'Hier kann das Gästebuch verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Guestbook',
                 'description' => 'Here you can manage your guestbook entries.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

@@ -1,4 +1,4 @@
-<form action="<?=$this->getUrl(array('module' => 'user', 'controller' => 'access', 'action' => 'save')) ?>"
+<form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'access', 'action' => 'save']) ?>"
       method="POST"
       class="form-horizontal"
       role="form"
@@ -30,11 +30,11 @@
     <?php
     if ($this->get('groupAccessList') != '') {
         $groupAccessList = $this->get('groupAccessList');
-        $accessLevelsTrans = array(
+        $accessLevelsTrans = [
             0 => 'noAccess',
             1 => 'lookAccess',
             2 => 'modifyAccess',
-        );
+        ];
         $activeGroup = $this->get('activeGroup');
         ?>
             <?php
@@ -143,7 +143,7 @@
 <script>
 $('#groupId').on('change', function() {
     if($(this).val() != 0) {
-        $('#groupAccessForm').attr('action', '<?=$this->getUrl(array('module' => 'user', 'controller' => 'access', 'action' => 'index')) ?>');
+        $('#groupAccessForm').attr('action', '<?=$this->getUrl(['module' => 'user', 'controller' => 'access', 'action' => 'index']) ?>');
         $('#groupAccessForm').submit();
     }
 });

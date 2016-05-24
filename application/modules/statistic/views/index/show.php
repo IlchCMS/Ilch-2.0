@@ -168,7 +168,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></strong>
+                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)])?>"><?=$date->format("Y", true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -202,7 +202,7 @@ $browser = $this->getRequest()->getParam('browser');
                                     <?php if ($statisticList->getBrowser() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
-                                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $statisticList->getBrowser()))?>"><?=$statisticList->getBrowser() ?></a>
+                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $statisticList->getBrowser()])?>"><?=$statisticList->getBrowser() ?></a>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -265,7 +265,7 @@ $browser = $this->getRequest()->getParam('browser');
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?php if ($statisticList->getOS() == 'Windows'): ?>
-                                            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'os' => $statisticList->getOS()))?>"><?=$statisticList->getOS() ?></a>
+                                            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'month' => $month, 'os' => $statisticList->getOS()])?>"><?=$statisticList->getOS() ?></a>
                                         <?php else: ?>
                                             <?=$statisticList->getOS() ?>
                                         <?php endif; ?>
@@ -346,7 +346,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$date->format("Y - F", true) ?></a></strong>
+                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)])?>"><?=$date->format("Y - F", true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -367,7 +367,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                             <div class="list-group-item">
-                                <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></strong>
+                                <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)])?>"><?=$date->format("Y", true) ?></a></strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                                 <div class="radio">
                                     <div class="progress" style="margin-bottom: 0px;">
@@ -401,7 +401,7 @@ $browser = $this->getRequest()->getParam('browser');
                                     <?php if ($statisticList->getBrowser() == '0'): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
-                                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'browser' => $statisticList->getBrowser()))?>"><?=$statisticList->getBrowser() ?></a>
+                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'browser' => $statisticList->getBrowser()])?>"><?=$statisticList->getBrowser() ?></a>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -464,7 +464,7 @@ $browser = $this->getRequest()->getParam('browser');
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?php if ($statisticList->getOS() == 'Windows'): ?>
-                                            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $year, 'os' => $statisticList->getOS()))?>"><?=$statisticList->getOS() ?></a>
+                                            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'os' => $statisticList->getOS()])?>"><?=$statisticList->getOS() ?></a>
                                         <?php else: ?>
                                             <?=$statisticList->getOS() ?>
                                         <?php endif; ?>

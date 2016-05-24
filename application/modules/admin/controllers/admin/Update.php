@@ -10,37 +10,33 @@ class Update extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items = array
-        (
-            array
-            (
+        $items =
+            [
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuMaintenance',
                 'active' => false,
                 'icon' => 'fa fa-wrench',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'maintenance'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'maintenance'])
+            ],
+            [
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'backup'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'backup'])
+            ],
+            [
                 'name' => 'menuUpdate',
                 'active' => true,
                 'icon' => 'fa fa-refresh',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'update', 'action' => 'index'))
-            ),
-        );
+                'url' => $this->getLayout()->getUrl(['controller' => 'update', 'action' => 'index'])
+            ],
+            ];
 
         $this->getLayout()->addMenu
         (
@@ -52,8 +48,8 @@ class Update extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-            ->add($this->getTranslator()->trans('systemSettings'), array('controller' => 'settings', 'action' => 'index'))
-            ->add($this->getTranslator()->trans('menuUpdate'), array('action' => 'index'));
+            ->add($this->getTranslator()->trans('systemSettings'), ['controller' => 'settings', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuUpdate'), ['action' => 'index']);
 
         $doUpdate = $this->getRequest()->getParam('doupdate');
         $doSave = $this->getRequest()->getParam('dosave');

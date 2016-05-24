@@ -21,7 +21,7 @@ class Menu extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menu'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menu'), ['action' => 'index']);
 
         $menuId = 1;
 
@@ -53,7 +53,7 @@ class Menu extends \Ilch\Controller\Admin
                 }
 
                 if ($items) {
-                    $sortArray = array();
+                    $sortArray = [];
 
                     foreach ($sortItems as $sortItem) {
                         if ($sortItem->item_id !== null) {
@@ -120,7 +120,7 @@ class Menu extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('delete')) {
                 $id = (int)$this->getRequest()->getParam('menu');
                 $menuMapper->delete($id);
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
 
             $this->addMessage('saveSuccess');
@@ -157,6 +157,6 @@ class Menu extends \Ilch\Controller\Admin
         $menu->setTitle('New');
         $newId = $menuMapper->save($menu);
         $this->addMessage('saveSuccess');
-        $this->redirect(array('action' => 'index', 'menu' => $newId));
+        $this->redirect(['action' => 'index', 'menu' => $newId]);
     }
 }

@@ -20,7 +20,7 @@ class Index extends \Ilch\Controller\Frontend
         $imageMapper = new ImageMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index']);
 
         $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);
 
@@ -42,8 +42,8 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'))
-                ->add($gallery->getTitle(), array('action' => 'show', 'id' => $id));
+                ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
+                ->add($gallery->getTitle(), ['action' => 'show', 'id' => $id]);
         
         $pagination->setPage($this->getRequest()->getParam('page'));
         
@@ -90,9 +90,9 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$this->getTranslator()->trans('image').' - '.$image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$image->getImageDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuGalleryOverview'), array('action' => 'index'))
-                ->add($gallery->getTitle(), array('action' => 'show', 'id' => $galleryId))
-                ->add($image->getImageTitle(), array('action' => 'showimage', 'gallery' => $galleryId, 'id' => $id));
+                ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
+                ->add($gallery->getTitle(), ['action' => 'show', 'id' => $galleryId])
+                ->add($image->getImageTitle(), ['action' => 'showimage', 'gallery' => $galleryId, 'id' => $id]);
 
         $this->getView()->set('image', $imageMapper->getImageById($id));
         $this->getView()->set('comments', $comments);

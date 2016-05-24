@@ -10,7 +10,7 @@ if ($user->getId()) {
 
 <fieldset>
     <legend><?=$fieldsetLegend ?></legend>
-    <form action="<?=$this->getUrl(array('action' => 'treat')) ?>"
+    <form action="<?=$this->getUrl(['action' => 'treat']) ?>"
           method="POST"
           class="form-horizontal"
           id="userForm">

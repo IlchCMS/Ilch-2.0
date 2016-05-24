@@ -28,6 +28,6 @@ class Ajax extends BaseController
         $gameMapper = new GamesMapper();
         $gameMapper->deleteById($mapId);
 
-        $this->redirect(array('action' => 'game', 'id' => $this->getRequest()->getParam('id')));
+        $this->redirect(['action' => 'game', 'id' => $this->getRequest()->getParam('id')]);
     }
 }

@@ -29,13 +29,13 @@ class Index extends \Ilch\Controller\Frontend
         $usersOnline = $visitMapper->getVisitsOnlineUser();
 
         $userId = null;
-        $groupIds = array(3);
+        $groupIds = [3];
 
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
             $user = $userMapper->getUserById($userId);
 
-            $groupIds = array();
+            $groupIds = [];
             foreach ($user->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
             }
@@ -44,7 +44,7 @@ class Index extends \Ilch\Controller\Frontend
         $groupIdsArray = explode(',',implode(',', $groupIds));
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forumOverview'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forumOverview'));

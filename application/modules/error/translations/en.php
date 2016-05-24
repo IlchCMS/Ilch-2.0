@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'notFound' => 'not Found',
     'back' => 'Back to mainpage',
     'error' => 'Error',
-);
+    ];

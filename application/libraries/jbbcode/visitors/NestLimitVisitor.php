@@ -20,7 +20,7 @@ class NestLimitVisitor implements \JBBCode\NodeVisitor
 {
 
     /* A map from tag name to current depth. */
-    protected $depth = array();
+    protected $depth = [];
 
     public function visitDocumentElement(\JBBCode\DocumentElement $documentElement)
     {

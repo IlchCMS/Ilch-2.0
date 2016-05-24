@@ -19,25 +19,23 @@ class Base extends \Ilch\Controller\Admin
      */
     public function init()
     {
-        $active = array();
+        $active = [];
 
-        foreach(array('index') as $controllerName) {
+        foreach(['index'] as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 
         $this->getLayout()->addMenu
         (
             'forum',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'forum',
                     'active' => $active['index'],
                     'icon' => 'fa fa-th',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                )
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ]
+            ]
         );
     }
 }

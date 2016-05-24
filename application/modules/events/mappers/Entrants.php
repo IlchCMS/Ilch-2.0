@@ -20,7 +20,7 @@ class Entrants extends \Ilch\Mapper
     {
         $entryRow = $this->db()->select('*')
                 ->from('events_entrants')
-                ->where(array('event_id' => $eventId, 'user_id' => $userId))
+                ->where(['event_id' => $eventId, 'user_id' => $userId])
                 ->execute()
                 ->fetchAssoc();
 
@@ -46,7 +46,7 @@ class Entrants extends \Ilch\Mapper
     {
         $entryArray = $this->db()->select('*')
                 ->from('events_entrants')
-                ->where(array('event_id' => $eventId))
+                ->where(['event_id' => $eventId])
                 ->limit('17')
                 ->execute()
                 ->fetchRows();
@@ -55,7 +55,7 @@ class Entrants extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EntrantsModel();
@@ -74,16 +74,16 @@ class Entrants extends \Ilch\Mapper
      */
     public function saveUserOnEvent(EntrantsModel $event)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'event_id' => $event->getEventId(),
             'user_id' => $event->getUserId(),
             'status' => $event->getStatus(),
-        );
+            ];
 
         $userId = (int) $this->db()->select('*')
                         ->from('events_entrants')
-                        ->where(array('user_id' => $event->getUserId(), 'event_id' => $event->getEventId()))
+                        ->where(['user_id' => $event->getUserId(), 'event_id' => $event->getEventId()])
                         ->execute()
                         ->fetchCell();
 
@@ -92,8 +92,8 @@ class Entrants extends \Ilch\Mapper
              * User does exist already, update.
              */
             $this->db()->update('events_entrants')
-                    ->values(array('status' => $event->getStatus()))
-                    ->where(array('event_id' => $event->getEventId(), 'user_id' => $event->getUserId()))
+                    ->values(['status' => $event->getStatus()])
+                    ->where(['event_id' => $event->getEventId(), 'user_id' => $event->getUserId()])
                     ->execute();
         } else {
             /*
@@ -113,7 +113,7 @@ class Entrants extends \Ilch\Mapper
     public function deleteUserFromEvent($eventId, $userId)
     {
         $this->db()->delete('events_entrants')
-                ->where(array('user_id' => $userId, 'event_id' => $eventId))
+                ->where(['user_id' => $userId, 'event_id' => $eventId])
                 ->execute();
     }
 }

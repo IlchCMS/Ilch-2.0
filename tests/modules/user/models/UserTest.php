@@ -21,10 +21,10 @@ class UserTest extends TestCase
      *
      * @var Array
      */
-    protected $configData = array
-    (
+    protected $configData =
+        [
         'timezone' => 'Europe/Berlin'
-    );
+        ];
 
     /**
      * Tests if the user id can be set and returned again.
@@ -71,9 +71,9 @@ class UserTest extends TestCase
         $group3->setId(3);
         $group3->setName('Clanleader');
         $user = new User();
-        $user->setGroups(array($group1, $group2, $group3));
+        $user->setGroups([$group1, $group2, $group3]);
         $this->assertEquals(
-            array($group1, $group2, $group3),
+            [$group1, $group2, $group3],
             $user->getGroups(),
             'The user groups wasnt saved or returned correctly.'
         );
@@ -94,10 +94,10 @@ class UserTest extends TestCase
         $group3->setId(3);
         $group3->setName('Clanleader');
         $user = new User();
-        $user->setGroups(array($group1, $group3));
+        $user->setGroups([$group1, $group3]);
         $user->addGroup($group2);
         $this->assertEquals(
-            array($group1, $group3, $group2),
+            [$group1, $group3, $group2],
             $user->getGroups(),
             'The user groups wasnt added or returned correctly.'
         );
@@ -127,7 +127,7 @@ class UserTest extends TestCase
         $this->assertTrue($user->hasGroup(2), 'The user has not the group with id "2".');
         $this->assertFalse($user->hasGroup(4), 'The user has the group with id "4".');
 
-        $user->setGroups(array());
+        $user->setGroups([]);
         $this->assertFalse($user->hasGroup(2), 'The user has the group with id "2".');
     }
 
@@ -143,7 +143,7 @@ class UserTest extends TestCase
         $user->setId(123);
         $user->addGroup($group);
 
-        $dbMock = $this->getMock('Ilch_Database', array('queryCell'));
+        $dbMock = $this->getMock('Ilch_Database', ['queryCell']);
         $dbMock->expects($this->once())
             ->method('queryCell')
             ->with(

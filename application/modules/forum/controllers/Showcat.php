@@ -20,8 +20,8 @@ class Showcat extends \Ilch\Controller\Frontend
         $cat = $forumMapper->getForumById($catId);
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index','action' => 'index'))
-                ->add($cat->getTitle(), array('controller' => 'showcat','action' => 'index', 'id' => $cat->getId()));
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index','action' => 'index'])
+                ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()]);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forumOverview'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forumOverview'));
@@ -37,9 +37,9 @@ class Showcat extends \Ilch\Controller\Frontend
         $user = $userMapper->getUserById($userId);
 
 
-        $ids = array(3);
+        $ids = [3];
         if($user){
-            $ids = array();
+            $ids = [];
             foreach ($user->getGroups() as $us){
                 $ids[] = $us->getId();
             }

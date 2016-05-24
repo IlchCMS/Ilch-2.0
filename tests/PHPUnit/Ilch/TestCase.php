@@ -17,7 +17,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      *
      * @var Array
      */
-    protected $configData = array();
+    protected $configData = [];
 
     /**
      * Filling the config object with individual testcase data.

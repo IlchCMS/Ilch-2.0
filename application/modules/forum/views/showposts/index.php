@@ -17,7 +17,7 @@ if ($this->getUser()) {
             <?php if($this->getUser()): ?>
                 <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
                     <div class="buttons">
-                        <a href="<?=$this->getUrl(array('controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'))) ?>" class="btn btn-labeled bgblue">
+                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
                             <span class="btn-label">
                                 <i class="fa fa-plus"></i>
                             </span><?=$this->getTrans('createNewPost') ?>
@@ -27,14 +27,14 @@ if ($this->getUser()) {
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'index')) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
                         <span class="btn-label">
                             <i class="fa fa-user"></i>
                         </span><?=$this->getTrans('loginPost') ?>
                     </a>
                 </div>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, array('action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid'))); ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>
         </div>
         <?php foreach ($posts as $post): ?>
             <?php $date = new \Ilch\Date($post->getDateCreated()) ?>
@@ -43,7 +43,7 @@ if ($this->getUser()) {
                     <?php if ($this->getUser()): ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <p class="delete-post">
-                                <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'))) ?>" class="btn btn-xs btn-labeled bgblue">
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-xs btn-labeled bgblue">
                                     <span class="btn-label">
                                         <i class="fa fa-trash"></i>
                                     </span><?=$this->getTrans('delete') ?>
@@ -56,7 +56,7 @@ if ($this->getUser()) {
                     <?php if ($this->getUser()): ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <p class="edit-post">
-                                <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'))) ?>" class="btn btn-xs btn-labeled bgblue">
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-xs btn-labeled bgblue">
                                     <span class="btn-label">
                                         <i class="fa fa-pencil"></i>
                                     </span><?=$this->getTrans('edit') ?>
@@ -72,7 +72,7 @@ if ($this->getUser()) {
                         </a>
                         <?=$this->getTrans('by') ?>
                         <strong>
-                            <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId())) ?>" style="color: #AA0000;" class="username-coloured">
+                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
                                 <?=$post->getAutor()->getName() ?>
                             </a>
                         </strong>
@@ -84,11 +84,11 @@ if ($this->getUser()) {
                 </div>
                 <dl class="postprofile" id="profile3">
                     <dt>
-                        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId())) ?>">
+                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>">
                             <img src="<?=$this->getBaseUrl($post->getAutor()->getAvatar()) ?>" alt="User avatar" height="100" width="100">
                         </a>
                         <br>
-                        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId())) ?>" style="color: #AA0000;" class="username-coloured">
+                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
                             <?=$post->getAutor()->getName() ?>
                         </a>
                     </dt>
@@ -105,7 +105,7 @@ if ($this->getUser()) {
             <?php if($this->getUser()): ?>
                 <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
                     <div class="buttons">
-                        <a href="<?=$this->getUrl(array('controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid'))) ?>" class="btn btn-labeled bgblue">
+                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
                             <span class="btn-label">
                                 <i class="fa fa-plus"></i>
                             </span><?=$this->getTrans('createNewPost') ?>
@@ -115,19 +115,19 @@ if ($this->getUser()) {
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'index')) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
                         <span class="btn-label">
                             <i class="fa fa-user"></i>
                         </span><?=$this->getTrans('loginPost') ?>
                     </a>
                 </div>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, array('action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid'))); ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>
         </div>
     </div>
 <?php else: ?>
     <?php
-    header("location: ".$this->getUrl(array('controller' => 'index', 'action' => 'index', 'access' => 'noaccess')));
+    header("location: ".$this->getUrl(['controller' => 'index', 'action' => 'index', 'access' => 'noaccess']));
     exit;
     ?>
 <?php endif; ?>

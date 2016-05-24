@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuAwards' => 'Auszeichnungen',
     'date' => 'Datum',
     'rank' => 'Rang',
@@ -21,4 +21,4 @@ return array
     'noAwards' => 'Keine Auszeichnungen vorhanden',
     'awards' => 'Auszeichnungen',
     'currentlyThereAre' => 'Derzeit gibt es',
-);
+    ];

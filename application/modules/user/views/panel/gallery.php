@@ -33,7 +33,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                     </a>
                 </span>
                 <span class="view" style="float:right; margin-right: 6px;">
-                    <a href="'.$obj->getUrl(array('action' => 'treatgallery', 'id' => $item->getId())).'">
+                    <a href="'.$obj->getUrl(['action' => 'treatgallery', 'id' => $item->getId()]).'">
                         <i class="fa fa-eye"></i>
                     </a>
                 </span>

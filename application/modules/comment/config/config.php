@@ -8,25 +8,25 @@ namespace Modules\Comment\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'comment',
         'icon_small' => 'comment.png',
         'system_module' => true,
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Kommentare',
                 'description' => 'Hier werden alle Kommentare verwaltet.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Comments',
                 'description' => 'Here you can manage all comments.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

@@ -17,33 +17,33 @@ class Index extends \Ilch\Controller\Frontend
          */
         @set_time_limit(0);
 
-        $menu = array
-        (
-            'index' => array
-            (
+        $menu =
+            [
+            'index' =>
+                [
                 'langKey' => 'menuWelcomeAndLanguage'
-            ),
-            'license' => array
-            (
+                ],
+            'license' =>
+                [
                 'langKey' => 'menuLicence'
-            ),
-            'systemcheck' => array
-            (
+                ],
+            'systemcheck' =>
+                [
                 'langKey' => 'menuSystemCheck'
-            ),
-            'database' => array
-            (
+                ],
+            'database' =>
+                [
                 'langKey' => 'menuDatabase'
-            ),
-            'config' => array
-            (
+                ],
+            'config' =>
+                [
                 'langKey' => 'menuConfig'
-            ),
-            'finish' => array
-            (
+                ],
+            'finish' =>
+                [
                 'langKey' => 'menuFinish'
-            ),
-        );
+                ],
+            ];
 
         foreach ($menu as $key => $values) {
             if ($this->getRequest()->getActionName() === $key) {
@@ -64,12 +64,12 @@ class Index extends \Ilch\Controller\Frontend
         if ($local) {
             $this->getTranslator()->setLocale($local);
             $_SESSION['language'] = $local;
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         if ($this->getRequest()->isPost()) {
             $_SESSION['install']['timezone'] = $this->getRequest()->getPost('timezone');
-            $this->redirect(array('action' => 'license'));
+            $this->redirect(['action' => 'license']);
         }
 
         if (!empty($_SESSION['install']['timezone'])) {
@@ -87,7 +87,7 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('licenceAccepted')) {
-                $this->redirect(array('action' => 'systemcheck'));
+                $this->redirect(['action' => 'systemcheck']);
             } else {
                 $this->getView()->set('error', true);
             }
@@ -96,7 +96,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function systemcheckAction()
     {
-        $errors = array();
+        $errors = [];
         $this->getView()->set('phpVersion', phpversion());
 
         if (!version_compare(phpversion(), '5.4.0', '>=')) {
@@ -150,13 +150,13 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
-            $this->redirect(array('action' => 'database'));
+            $this->redirect(['action' => 'database']);
         }
     }
 
     public function databaseAction()
     {
-        $errors = array();
+        $errors = [];
 
         if ($this->getRequest()->isPost()) {
             $_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
@@ -191,13 +191,13 @@ class Index extends \Ilch\Controller\Frontend
             }
 
             if (empty($errors)) {
-                $this->redirect(array('action' => 'config'));
+                $this->redirect(['action' => 'config']);
             }
 
             $this->getView()->set('errors', $errors);
         }
 
-        foreach (array('dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $name) {
+        foreach (['dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix'] as $name) {
             if (!empty($_SESSION['install'][$name])) {
                 $this->getView()->set($name, $_SESSION['install'][$name]);
             }
@@ -206,7 +206,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function configAction()
     {
-        $errors = array();
+        $errors = [];
 
         if ($this->getRequest()->isPost()) {
             $_SESSION['install']['usage'] = $this->getRequest()->getPost('usage');
@@ -256,9 +256,9 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'error'), $modulesToInstall);
+                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'error'], $modulesToInstall);
                 } else {
-                    $modulesToInstall = array('admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'error');
+                    $modulesToInstall = ['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'error'];
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -319,7 +319,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, array('comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'statistic', 'cookieconsent', 'error'))) {
+                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'statistic', 'cookieconsent', 'error'])) {
                         continue;
                     }
 
@@ -349,13 +349,13 @@ class Index extends \Ilch\Controller\Frontend
                 $db->queryMulti($boxes);
 
                 unset($_SESSION['install']);
-                $this->redirect(array('action' => 'finish'));
+                $this->redirect(['action' => 'finish']);
             }
 
             $this->getView()->set('errors', $errors);
         }
 
-        foreach (array('modulesToInstall', 'usage', 'adminName', 'adminPassword', 'adminPassword2', 'adminEmail') as $name) {
+        foreach (['modulesToInstall', 'usage', 'adminName', 'adminPassword', 'adminPassword2', 'adminEmail'] as $name) {
             if (!empty($_SESSION['install'][$name])) {
                 $this->getView()->set($name, $_SESSION['install'][$name]);
             }
@@ -366,47 +366,47 @@ class Index extends \Ilch\Controller\Frontend
     {
         $type = $this->getRequest()->getParam('type');
         $this->getRequest()->setIsAjax(true);
-        $modules = array();
+        $modules = [];
 
         /*
          * System-Modules
          */
-        $modules['user']['types']          = array();
-        $modules['article']['types']       = array();
-        $modules['page']['types']          = array();
-        $modules['media']['types']         = array();
-        $modules['comment']['types']       = array();
-        $modules['contact']['types']       = array();
-        $modules['imprint']['types']       = array();
-        $modules['privacy']['types']       = array();
-        $modules['cookieconsent']['types'] = array();
-        $modules['statistic']['types']     = array();
-        $modules['error']['types']         = array();
+        $modules['user']['types']          = [];
+        $modules['article']['types']       = [];
+        $modules['page']['types']          = [];
+        $modules['media']['types']         = [];
+        $modules['comment']['types']       = [];
+        $modules['contact']['types']       = [];
+        $modules['imprint']['types']       = [];
+        $modules['privacy']['types']       = [];
+        $modules['cookieconsent']['types'] = [];
+        $modules['statistic']['types']     = [];
+        $modules['error']['types']         = [];
 
         /*
          * Optional-Modules.
          */
-        $modules['checkout']['types']   = array('clan');
-        $modules['war']['types']        = array('clan');
-        $modules['history']['types']    = array('clan');
-        $modules['rule']['types']       = array('clan');
-        $modules['training']['types']   = array('clan');
-        $modules['forum']['types']      = array('clan', 'private');
-        $modules['guestbook']['types']  = array('clan', 'private');
-        $modules['link']['types']       = array('clan', 'private');
-        $modules['linkus']['types']     = array('clan', 'private');
-        $modules['partner']['types']    = array('clan', 'private');
-        $modules['shoutbox']['types']   = array('clan', 'private');
-        $modules['gallery']['types']    = array('clan', 'private');
-        $modules['downloads']['types']  = array('clan', 'private');
-        $modules['newsletter']['types'] = array('clan', 'private');
-        $modules['birthday']['types']   = array('clan', 'private');
-        $modules['events']['types']     = array('clan', 'private');
-        $modules['calendar']['types']   = array('clan', 'private');
-        $modules['away']['types']       = array('clan', 'private');
-        $modules['awards']['types']     = array('clan', 'private');
-        $modules['jobs']['types']       = array('clan', 'private');
-        $modules['faq']['types']        = array('clan', 'private');
+        $modules['checkout']['types']   = ['clan'];
+        $modules['war']['types']        = ['clan'];
+        $modules['history']['types']    = ['clan'];
+        $modules['rule']['types']       = ['clan'];
+        $modules['training']['types']   = ['clan'];
+        $modules['forum']['types']      = ['clan', 'private'];
+        $modules['guestbook']['types']  = ['clan', 'private'];
+        $modules['link']['types']       = ['clan', 'private'];
+        $modules['linkus']['types']     = ['clan', 'private'];
+        $modules['partner']['types']    = ['clan', 'private'];
+        $modules['shoutbox']['types']   = ['clan', 'private'];
+        $modules['gallery']['types']    = ['clan', 'private'];
+        $modules['downloads']['types']  = ['clan', 'private'];
+        $modules['newsletter']['types'] = ['clan', 'private'];
+        $modules['birthday']['types']   = ['clan', 'private'];
+        $modules['events']['types']     = ['clan', 'private'];
+        $modules['calendar']['types']   = ['clan', 'private'];
+        $modules['away']['types']       = ['clan', 'private'];
+        $modules['awards']['types']     = ['clan', 'private'];
+        $modules['jobs']['types']       = ['clan', 'private'];
+        $modules['faq']['types']        = ['clan', 'private'];
 
         foreach ($modules as $key => $module) {
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
@@ -419,7 +419,7 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $modulesToInstall = array();
+        $modulesToInstall = [];
 
         if(!empty($_SESSION['install']['modulesToInstall'][$type]))
         {

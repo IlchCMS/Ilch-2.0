@@ -53,7 +53,7 @@ class Accesses
         $userId = '';
         $user = '';
         $groupAccessList = '';
-        $groupIds = array(0);
+        $groupIds = [0];
 
         if (isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
@@ -67,7 +67,7 @@ class Accesses
         if ($userId != '3') {
             $user = $userMapper->getUserById($userId);
 
-            $groupIds = array();
+            $groupIds = [];
             foreach ($user->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
                 $groupAccessList[] = $groupMapper->getGroupAccessList($groups->getId());
@@ -109,7 +109,7 @@ class Accesses
 
         if ($entrie[$this->request->getModuleName()] == '1' ||
             $entrie[$this->request->getModuleName()] == '2' ||
-            is_in_array($this->getGroupIds(), array('1')) == 'true') {
+            is_in_array($this->getGroupIds(), ['1']) == 'true') {
             return true;
         }
     }

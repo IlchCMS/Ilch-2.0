@@ -32,7 +32,7 @@
             <span class="fa fa-cogs"></span> <?=$this->getTrans('filter') ?>
         </button>
     </div>
-    <?=$this->get('pagination')->getHtml($this, array()) ?>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField()?>
         <table class="table table-striped table-hover table-responsive">
@@ -60,8 +60,8 @@
                 <?php foreach ($this->get('war') as $war): ?>
                     <tr>
                         <td><input value="<?=$war->getId() ?>" type="checkbox" name="check_war[]" /></td>
-                        <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $war->getId())) ?></td>
-                        <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $war->getId())) ?></td>
+                        <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
+                        <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
                         <td><?=$war->getWarEnemy() ?></td>
                         <td><?=$war->getWarGroup() ?></td>
                         <td><?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?></td>
@@ -76,8 +76,8 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <?=$this->get('pagination')->getHtml($this, array()) ?>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->get('pagination')->getHtml($this, []) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTranslator()->trans('noWars') ?>

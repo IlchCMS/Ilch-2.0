@@ -13,8 +13,8 @@ $user = $userMapper->getUserById($event->getUserId());
     <?=$this->getTrans('event') ?>
     <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId()): ?>
         <div class="pull-right">
-            <?=$this->getEditIcon(array('controller' => 'index', 'action' => 'treat', 'id' => $event->getId())) ?>
-            <?=$this->getDeleteIcon(array('controller' => 'index', 'action' => 'del', 'id' => $event->getId())) ?>
+            <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
+            <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
         </div>
     <?php endif; ?>
 </legend>
@@ -168,7 +168,7 @@ $user = $userMapper->getUserById($event->getUserId());
                     <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
                         <?php if ($this->getUser()): ?>
                             <?php if ($event->getUserId() == $this->getUser()->getId() OR $commentUser->getId() == $this->getUser()->getId()): ?>
-                                <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id'))) ?></div>
+                                <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
                             <?php endif; ?>
                         <?php endif; ?>
                         <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>

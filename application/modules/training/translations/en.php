@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuTraining' => 'Training',
     'noTraining' => 'no Entry available',
     'title' => 'Title',
@@ -31,4 +31,4 @@ return array
     'gameServerPW' => 'Gameserver Password',
     'note' => 'Note',
     'contactPerson' => 'Contact Person',
-);
+    ];

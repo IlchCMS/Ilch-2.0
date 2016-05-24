@@ -1,5 +1,5 @@
 <legend><?=$this->getTrans('settings') ?></legend>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="html" class="col-lg-2 control-label">

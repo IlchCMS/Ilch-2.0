@@ -4,13 +4,13 @@
         <?=$this->getTokenField() ?>
         <ul class="nav nav-tabs">
             <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
-                <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index')) ?>">
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                     <?=$this->getTrans('entrys') ?>
                 </a>
             </li>
             <?php if ($this->get('badge') > 0): ?>
                 <li <?php if($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
-                    <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'index', 'showsetfree' => 1)) ?>">
+                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                         <?=$this->getTrans('setfree'); ?> <span class="badge"><?=$this->get('badge') ?></span>
                     </a>
                 </li>
@@ -47,23 +47,23 @@
                             <td>
                                 <?php 
                                     if($this->getRequest()->getParam('showsetfree')) {
-                                        $freeArray = array('module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId());
+                                        $freeArray = ['module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId()];
 
                                         if($this->get('badge') > 1) {
-                                            $freeArray = array('action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1);
+                                            $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                                         }
                                         echo '<a href="'.$this->getUrl($freeArray).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
                                     } else {
-                                        echo $this->getEditIcon(array('action' => 'treat', 'id' => $entry->getId()));
+                                        echo $this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]);
                                     } 
                                 ?>
                             </td>
                             <td>
                                 <?php
-                                    $deleteArray = array('action' => 'del', 'id' => $entry->getId());
+                                    $deleteArray = ['action' => 'del', 'id' => $entry->getId()];
 
                                     if($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
-                                        $deleteArray = array('action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1);
+                                        $deleteArray = ['action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1];
                                     }
                                 ?>
                                 <?=$this->getDeleteIcon($deleteArray) ?>
@@ -76,10 +76,10 @@
             </table>
         </div>
         <?php
-        $actions = array('delete' => 'delete');
+        $actions = ['delete' => 'delete'];
 
         if($this->getRequest()->getParam('showsetfree')) {
-            $actions = array('delete' => 'delete', 'setfree' => 'setfree');
+            $actions = ['delete' => 'delete', 'setfree' => 'setfree'];
         }
 
         echo $this->getListBar($actions);

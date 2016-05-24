@@ -214,7 +214,7 @@ class Page
             $errorModule = $this->request->getModuleName();
 
             $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
-            $url->redirect(array('module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Module', 'errorText' => $errorModule));
+            $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Module', 'errorText' => $errorModule]);
         }
 
         /*
@@ -224,7 +224,7 @@ class Page
             $errorController = $this->request->getControllerName();
 
             $url = new \Ilch\Controller\Base($this->layout, $this->view, $this->request, $this->router, $this->translator);
-            $url->redirect(array('module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Controller', 'errorText' => $errorController));
+            $url->redirect(['module' => 'error', 'controller' => 'index', 'action' => 'index', 'error' => 'Controller', 'errorText' => $errorController]);
         }
 
         if (class_exists($controller)) {

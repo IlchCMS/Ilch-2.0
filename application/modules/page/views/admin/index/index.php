@@ -41,8 +41,8 @@
                     <?php foreach ($this->get('pages') as $page) { ?>
                         <tr>
                             <td><input value="<?=$page->getId()?>" type="checkbox" name="check_pages[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $page->getId()))?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $page->getId()))?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $page->getId()])?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $page->getId()])?></td>
                             <td>
                                 <a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($page->getPerma())?>"><?=$page->getTitle()?></a>
                             </td>
@@ -54,9 +54,9 @@
                                     }
 
                                     if ($this->get('pageMapper')->getPageByIdLocale($page->getId(), $key) != null) {
-                                        echo '<a href="'.$this->getUrl(array('action' => 'treat', 'id' => $page->getId(), 'locale' => $key)).'"><i class="fa fa-edit"></i></a>';
+                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-edit"></i></a>';
                                     } else {
-                                        echo '<a href="'.$this->getUrl(array('action' => 'treat', 'id' => $page->getId(), 'locale' => $key)).'"><i class="fa fa-plus-circle"></i></a>';
+                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-plus-circle"></i></a>';
                                     }
                                 }
 
@@ -69,7 +69,7 @@
                 </tbody>
             </table>
         </div>
-        <?php $actions = array('delete' => 'delete') ?>
+        <?php $actions = ['delete' => 'delete'] ?>
         <?=$this->getListBar($actions) ?>
     </form>
 <?php else: ?>

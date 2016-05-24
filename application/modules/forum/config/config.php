@@ -8,25 +8,25 @@ namespace Modules\Forum\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'forum',
         'author' => 'Stantin Thomas',
         'icon_small' => 'forum.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Forum',
                 'description' => 'Hier kann das Forum verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Forum',
                 'description' => 'Here you can manage the forum',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

@@ -22,7 +22,7 @@ $profil = $this->get('profil');
                         <div class="dialog-body clearfix">
                             <div class="header">
                                 <strong>
-                                    <a href="<?=$this->getUrl(array('controller' => 'panel', 'action' => 'dialogview', 'id' => $dialog->getCId())) ?>"><?=$dialog->getName() ?></a>
+                                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialogview', 'id' => $dialog->getCId()]) ?>"><?=$dialog->getName() ?></a>
                                 </strong>
                                 <small class="pull-right">
                                     <span class="glyphicon glyphicon-time"></span> <?=$dialog->getTime() ?>

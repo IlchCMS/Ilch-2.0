@@ -3,7 +3,7 @@
 <form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=$this->getRequest()->getParam('id') ?>">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-pills navbar-fixed-top">
-        <li><a href="<?=$this->getUrl(array('controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id'))) ?>"><?=$this->getTrans('upload') ?></a></li>
+        <li><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>"><?=$this->getTrans('upload') ?></a></li>
         <li><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>"><?=$this->getTrans('media') ?></a></li>
         <li class="pull-right"><button class="btn btn-primary" name="save" type="submit" value="save"><?=$this->getTrans('add') ?></button></li>
     </ul>

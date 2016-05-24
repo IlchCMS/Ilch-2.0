@@ -16,54 +16,48 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuMedia',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'media',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'cats',
                     'active' => false,
                     'icon' => 'fa fa-list',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
+                ],
+                [
                     'name' => 'import',
                     'active' => false,
                     'icon' => 'fa fa-download',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'import', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'import', 'action' => 'index'])
+                ],
+                [
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                )
-            )
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ]
+            ]
         );
 
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionAddNew',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'upload'))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'upload'])
+            ]
         );
     }
 
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('media'), ['action' => 'index']);
 
         $mediaMapper = new MediaMapper();
 
@@ -72,7 +66,7 @@ class Index extends \Ilch\Controller\Admin
                 $mediaMapper->delMediaById($mediaId);
             }
             $this->addMessage('deleteSuccess');
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $pagination = new \Ilch\Pagination();
@@ -80,16 +74,16 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('rows')) {
             $pagination->setRowsPerPage($this->getRequest()->getParam('rows'));
-            $rows = array('rows' => $this->getRequest()->getParam('rows'));
+            $rows = ['rows' => $this->getRequest()->getParam('rows')];
             $this->getView()->set('rows', $rows);
         } else {
-            $rows = array();
+            $rows = [];
             $this->getView()->set('rows', $rows);
         }
 
         if ($this->getRequest()->getPost('search') === 'search') {
             $pagination->setRowsPerPage($this->getRequest()->getPost('rows'));
-            $rows = array('rows' => $this->getRequest()->getPost('rows'));
+            $rows = ['rows' => $this->getRequest()->getPost('rows')];
             $this->getView()->set('rows', $rows);
         }
 
@@ -104,8 +98,8 @@ class Index extends \Ilch\Controller\Admin
     public function uploadAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('mediaUpload'), array('action' => 'upload'));
+                ->add($this->getTranslator()->trans('media'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('mediaUpload'), ['action' => 'upload']);
 
         if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('media_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
@@ -137,6 +131,6 @@ class Index extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
         $mediaMapper->delMediaById($this->getRequest()->getParam('id'));
         $this->addMessage('deleteSuccess');
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

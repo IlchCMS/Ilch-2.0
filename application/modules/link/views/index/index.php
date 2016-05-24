@@ -18,7 +18,7 @@
                         <?php $getDesc = ''; ?>
                     <?php endif; ?>
                     <td>
-                        <a href="<?=$this->getUrl(array('action' => 'index', 'cat_id' => $category->getId())) ?>" title="<?=$this->escape($category->getName()) ?>"><?=$this->escape($category->getName()) ?></a><br />
+                        <a href="<?=$this->getUrl(['action' => 'index', 'cat_id' => $category->getId()]) ?>" title="<?=$this->escape($category->getName()) ?>"><?=$this->escape($category->getName()) ?></a><br />
                         <?=$getDesc ?>
                     </td>
                     <td align="center" style="vertical-align:middle"><?=$category->getLinksCount() ?></td>
@@ -59,7 +59,7 @@
                     }
                     ?>
                     <td>
-                        <a href="<?=$this->getUrl(array('action' => 'redirect', 'link_id' => $link->getId())) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$getBanner ?></a><br />
+                        <a href="<?=$this->getUrl(['action' => 'redirect', 'link_id' => $link->getId()]) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$getBanner ?></a><br />
                         <?=$getDesc ?>
                     </td>
                     <td align="center" style="vertical-align:middle"><?=$this->escape($link->getHits()) ?></td>

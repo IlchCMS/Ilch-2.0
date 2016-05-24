@@ -40,9 +40,9 @@ class Database
         if (isset($this->configData[$key]['value']) && !$alwaysLoad) {
             return $this->configData[$key]['value'];
         } else {
-            $configRow = $this->db->select(array('value', 'key', 'autoload'))
+            $configRow = $this->db->select(['value', 'key', 'autoload'])
                 ->from('config')
-                ->where(array('key' => $key))
+                ->where(['key' => $key])
                 ->execute()
                 ->fetchAssoc();
 
@@ -68,25 +68,25 @@ class Database
     {
         $oldValue = $this->db->select('value')
             ->from('config')
-            ->where(array('key' => $key))
+            ->where(['key' => $key])
             ->execute()
             ->fetchCell();
 
         if ($oldValue !== null) {
             if ($value !== $oldValue) {
                 $this->db->update('config')
-                    ->values(array(
+                    ->values([
                             'value' => $value,
-                            'autoload' => $autoload))
-                    ->where(array('key' => $key))
+                            'autoload' => $autoload])
+                    ->where(['key' => $key])
                     ->execute();
             }
         } else {
                 $this->db->insert('config')
-                    ->values(array(
+                    ->values([
                         'key' => $key,
                         'value' => $value,
-                        'autoload' => $autoload))
+                        'autoload' => $autoload])
                     ->execute();
         }
 
@@ -99,9 +99,9 @@ class Database
      */
     public function loadConfigFromDatabase()
     {
-        $configs = $this->db->select(array('key', 'value'))
+        $configs = $this->db->select(['key', 'value'])
             ->from('config')
-            ->where(array('autoload' => 1))
+            ->where(['autoload' => 1])
             ->execute()
             ->fetchRows();
 

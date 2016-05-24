@@ -12,7 +12,7 @@ class Index extends \Ilch\Controller\Frontend
 {    
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRules'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRules'), ['action' => 'index']);
         $ruleMapper = new RuleMapper();
         
         $rules = $ruleMapper->getEntries();

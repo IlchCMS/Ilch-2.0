@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'addButton' => 'Add',
     'saveButton' => 'Save',
     'updateButton' => 'Update',
@@ -168,4 +168,4 @@ return array
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',
-);
+    ];

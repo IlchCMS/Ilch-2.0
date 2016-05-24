@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Frontend
         $statisticMapper = new StatisticMapper();
         $moduleMapper = new ModuleMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index']);
 
         $date = new \Ilch\Date();
         $this->getView()->set('dateCmsInstalled', $this->getConfig()->get('date_cms_installed'));
@@ -59,50 +59,50 @@ class Index extends \Ilch\Controller\Frontend
             $date = new \Ilch\Date($year.'-'.$month.'-01');
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                    ->add($date->format('F', true), array('action' => 'show', 'year' => $year, 'month' => $month))
-                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
-                    ->add($os, array('action' => 'show', 'year' => $year, 'month' => $month, 'os' => $os));
+                    ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+                    ->add($date->format('F', true), ['action' => 'show', 'year' => $year, 'month' => $month])
+                    ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
+                    ->add($os, ['action' => 'show', 'year' => $year, 'month' => $month, 'os' => $os]);
         }
         if ($year != '' AND $os != '') {
             $date = new \Ilch\Date($year.'-01-01');
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
-                    ->add($os, array('action' => 'show', 'year' => $year, 'os' => $os));
+                    ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+                    ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
+                    ->add($os, ['action' => 'show', 'year' => $year, 'os' => $os]);
         }
         if ($year != '' AND $month != '' AND $browser != '') {
             $date = new \Ilch\Date($year.'-'.$month.'-01');
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                    ->add($date->format('F', true), array('action' => 'show', 'year' => $year, 'month' => $month))
-                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
-                    ->add($browser, array('action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $browser));
+                    ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+                    ->add($date->format('F', true), ['action' => 'show', 'year' => $year, 'month' => $month])
+                    ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
+                    ->add($browser, ['action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $browser]);
         }
         if ($month == '' AND $year != '' AND $browser != '') {
             $date = new \Ilch\Date($year.'-01-01');
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year))
-                    ->add($browser, array('action' => 'show', 'year' => $year, 'browser' => $browser));
+                    ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+                    ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
+                    ->add($browser, ['action' => 'show', 'year' => $year, 'browser' => $browser]);
         }
         if ($year != '' AND $month != '') {
             $date = new \Ilch\Date($year.'-'.$month.'-01');
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                    ->add($date->format('F', true), array('action' => 'show', 'year' => $year, 'month' => $month))
-                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year));
+                    ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+                    ->add($date->format('F', true), ['action' => 'show', 'year' => $year, 'month' => $month])
+                    ->add($date->format('Y', true), ['action' => 'show', 'year' => $year]);
         }
         if ($year != '') {
             $date = new \Ilch\Date($year.'-01-01');
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                    ->add($date->format('Y', true), array('action' => 'show', 'year' => $year));
+                    ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+                    ->add($date->format('Y', true), ['action' => 'show', 'year' => $year]);
         }
 
         if ($month != '' AND $year != '' AND $os != '') {
@@ -144,8 +144,8 @@ class Index extends \Ilch\Controller\Frontend
         $statisticMapper = new StatisticMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuStatistic'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuOnline'), array('action' => 'online'));
+                ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuOnline'), ['action' => 'online']);
 
         $this->getView()->set('userOnlineList', $statisticMapper->getVisitsOnline());
     }

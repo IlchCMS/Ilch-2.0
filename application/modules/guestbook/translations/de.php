@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuGuestbook' => 'Gästebuch',
     'guestbook' => 'Gästebuch',
     'from' => 'Von',
@@ -44,4 +44,4 @@ return array
     'validation.errors.length.tooShortAndOrTooLong' => '%s muss mindestens %s und darf höchstens %s Zeichen lang sein',
     'validation.errors.url.noValidUrl'              => '%s muss eine gültige URL sein.',
     'validation.errors.email.noValidEmail'          => '%s muss eine gültige E-Mail-Adresse sein.',
-);
+    ];

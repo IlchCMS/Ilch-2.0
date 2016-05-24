@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'privacy' => 'Datenschutzerklärung',
     'show' => 'Anzeigen',
     'yes' => 'Ja',
@@ -19,4 +19,4 @@ return array
     'missingText' => 'Text muss ausgefüllt werden',
     'managePrivacy' => 'Datenschutzerklärung verwalten',
     'noPrivacy' => 'Keine Datenschutzerklärung vorhanden',
-);
+    ];

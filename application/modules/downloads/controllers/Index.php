@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction() 
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuDownloadsOverview'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
         $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(1, 0);
@@ -40,8 +40,8 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads').' - '.$downloads->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$downloads->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuDownloadsOverview'), array('action' => 'index'))
-                ->add($downloads->getTitle(), array('action' => 'show', 'id' => $id));
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index'])
+                ->add($downloads->getTitle(), ['action' => 'show', 'id' => $id]);
         
         $pagination->setPage($this->getRequest()->getParam('page'));
         
@@ -83,9 +83,9 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads').' - '.$this->getTranslator()->trans('file').' - '.$file->getFileTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$file->getFileDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuDownloadsOverview'), array('action' => 'index'))
-                ->add($downloads->getTitle(), array('action' => 'show', 'id' => $downloadsId))
-                ->add($file->getFileTitle(), array('action' => 'showfile', 'downloads' => $downloadsId, 'id' => $id));
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index'])
+                ->add($downloads->getTitle(), ['action' => 'show', 'id' => $downloadsId])
+                ->add($file->getFileTitle(), ['action' => 'showfile', 'downloads' => $downloadsId, 'id' => $id]);
 
         $this->getView()->set('file', $fileMapper->getFileById($id));
         $this->getView()->set('comments', $comments);

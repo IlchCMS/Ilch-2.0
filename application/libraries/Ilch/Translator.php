@@ -24,14 +24,14 @@ class Translator
      *
      * @var mixed[]
      */
-    private $translations = array();
+    private $translations = [];
 
     /**
      * Holds the loaded translation directories
      *
      * @var array
      */
-    private $translationDirectories = array();
+    private $translationDirectories = [];
 
     /**
      * The locale in which the texts should be translated.
@@ -124,11 +124,11 @@ class Translator
      */
     public function getLocaleList()
     {
-        return array
-        (
+        return
+            [
             'en_EN' => 'English',
             'de_DE' => 'German'
-        );
+            ];
     }
 
     /**
@@ -162,7 +162,7 @@ class Translator
     {
         $this->locale = $locale;
         if ($reloadTranslations) {
-            $this->translations = array();
+            $this->translations = [];
             foreach ($this->translationDirectories as $translationDirectory) {
                 $this->load($translationDirectory);
             }

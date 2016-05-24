@@ -37,7 +37,7 @@ class Article extends \Ilch\Mapper
             return null;
         }
 
-        $articles = array();
+        $articles = [];
 
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
@@ -78,7 +78,7 @@ class Article extends \Ilch\Mapper
             return null;
         }
 
-        $articles = array();
+        $articles = [];
 
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
@@ -112,7 +112,7 @@ class Article extends \Ilch\Mapper
             return null;
         }
 
-        $articles = array();
+        $articles = [];
 
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
@@ -164,7 +164,7 @@ class Article extends \Ilch\Mapper
             return null;
         }
 
-        $articles = array();
+        $articles = [];
 
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
@@ -203,7 +203,7 @@ class Article extends \Ilch\Mapper
             return null;
         }
 
-        $articles = array();
+        $articles = [];
 
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
@@ -266,7 +266,7 @@ class Article extends \Ilch\Mapper
     {
         $sql = 'SELECT article_id, locale, perma FROM `[prefix]_articles_content`';
         $permas = $this->db()->queryArray($sql);
-        $permaArray = array();
+        $permaArray = [];
 
         if (empty($permas)) {
             return null;
@@ -288,8 +288,8 @@ class Article extends \Ilch\Mapper
     {
         if ($article->getVisits()) {
             $this->db()->update('articles_content')
-                    ->values(array('visits' => $article->getVisits()))
-                    ->where(array('article_id' => $article->getId()))
+                    ->values(['visits' => $article->getVisits()])
+                    ->where(['article_id' => $article->getId()])
                     ->execute();
         }
     }
@@ -304,38 +304,35 @@ class Article extends \Ilch\Mapper
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 $this->db()->update('articles')
-                    ->values(array('cat_id' => $article->getCatId()))
-                    ->where(array('id' => $article->getId()))
+                    ->values(['cat_id' => $article->getCatId()])
+                    ->where(['id' => $article->getId()])
                     ->execute();
 
                 $this->db()->update('articles_content')
                     ->values
                     (
-                        array
-                        (
+                        [
                             'title' => $article->getTitle(),
                             'description' => $article->getDescription(),
                             'content' => $article->getContent(),
                             'perma' => $article->getPerma(),
                             'article_img' => $article->getArticleImage(),
                             'article_img_source' => $article->getArticleImageSource()
-                        )
+                        ]
                     )
                     ->where
                     (
-                        array
-                        (
+                        [
                             'article_id' => $article->getId(), 
                             'locale' => $article->getLocale()
-                        )
+                        ]
                     )
                     ->execute();
             } else {
                 $this->db()->insert('articles_content')
                     ->values
                     (
-                        array
-                        (
+                        [
                             'article_id' => $article->getId(),
                             'author_id' => $article->getAuthorId(),
                             'description' => $article->getDescription(),
@@ -345,7 +342,7 @@ class Article extends \Ilch\Mapper
                             'locale' => $article->getLocale(),
                             'article_img' => $article->getArticleImage(),
                             'article_img_source' => $article->getArticleImageSource()
-                        )
+                        ]
                     )
                     ->execute();
             }
@@ -354,19 +351,17 @@ class Article extends \Ilch\Mapper
             $articleId = $this->db()->insert('articles')
                 ->values
                 (
-                    array
-                    (
+                    [
                         'cat_id' => $article->getCatId(),
                         'date_created' => $date->toDb()
-                    )
+                    ]
                 )
                 ->execute();
 
             $this->db()->insert('articles_content')
                 ->values
                 (
-                    array
-                    (
+                    [
                         'article_id' => $articleId,
                         'author_id' => $article->getAuthorId(),
                         'description' => $article->getDescription(),
@@ -376,7 +371,7 @@ class Article extends \Ilch\Mapper
                         'locale' => $article->getLocale(),
                         'article_img' => $article->getArticleImage(),
                         'article_img_source' => $article->getArticleImageSource()
-                    )
+                    ]
                 )
                 ->execute();
         }
@@ -385,11 +380,11 @@ class Article extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('articles')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
         
         $this->db()->delete('articles_content')
-            ->where(array('article_id' => $id))
+            ->where(['article_id' => $id])
             ->execute();
     }
 }

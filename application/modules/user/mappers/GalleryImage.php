@@ -65,12 +65,12 @@ class GalleryImage extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('users_gallery_imgs')
-                ->values(array('image_id' => $model->getImageId(), 'cat' => $model->getCat()))
-                ->where(array('id' => $model->getId()))
+                ->values(['image_id' => $model->getImageId(), 'cat' => $model->getCat()])
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('users_gallery_imgs')
-                ->values(array('user_id' => $model->getUserId(), 'image_id' => $model->getImageId(), 'cat' => $model->getCat()))
+                ->values(['user_id' => $model->getUserId(), 'image_id' => $model->getImageId(), 'cat' => $model->getCat()])
                 ->execute();
         }
     }
@@ -90,7 +90,7 @@ class GalleryImage extends \Ilch\Mapper
 
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
-        $entry = array();
+        $entry = [];
 
         foreach ($imageArray as $entries) {
             $entryModel = new GalleryImageModel();
@@ -110,7 +110,7 @@ class GalleryImage extends \Ilch\Mapper
     public function deleteById($id)
     {
             return $this->db()->delete('users_gallery_imgs')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -123,8 +123,8 @@ class GalleryImage extends \Ilch\Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('users_gallery_imgs')
-                    ->values(array('visits' => $model->getVisits()))
-                    ->where(array('image_id' => $model->getImageId()))
+                    ->values(['visits' => $model->getVisits()])
+                    ->where(['image_id' => $model->getImageId()])
                     ->execute();
         }
     }
@@ -137,8 +137,8 @@ class GalleryImage extends \Ilch\Mapper
     public function saveImageTreat(GalleryImageModel $model)
     {
         $this->db()->update('users_gallery_imgs')
-                ->values(array('image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()))
-                ->where(array('id' => $model->getId()))
+                ->values(['image_title' => $model->getImageTitle(), 'image_description' => $model->getImageDesc()])
+                ->where(['id' => $model->getId()])
                 ->execute();
     }
 }

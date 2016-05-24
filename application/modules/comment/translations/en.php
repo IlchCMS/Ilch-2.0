@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuComments' => 'Comments',
     'commentDateTime' => 'Date/Time',
     'commentFrom' => 'From',
@@ -23,4 +23,4 @@ return array
     'showAvatar' => 'show Avatar?',
     'showDateTime' => 'show Date/Time?',
     'CommentCommentInfoText' => 'Information of Comment configuration.',
-);
+    ];

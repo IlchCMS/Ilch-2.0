@@ -13,7 +13,7 @@ abstract class Base
      *
      * @var array
      */
-    private $helpers = array();
+    private $helpers = [];
 
     /**
      * Name of the layout that will be used
@@ -63,7 +63,7 @@ abstract class Base
     /**
      * @var array
      */
-    private $data = array();
+    private $data = [];
 
     /**
      * @var boolean
@@ -115,7 +115,7 @@ abstract class Base
      *
      * @param mixed[] $data
      */
-    public function setArray($data = array())
+    public function setArray($data = [])
     {
         $this->data = array_merge($this->data, $data);
     }
@@ -170,7 +170,7 @@ abstract class Base
     public function getTrans($key)
     {
       $args = func_get_args();
-      return call_user_func_array(array($this->getTranslator(), 'trans'), $args);
+      return call_user_func_array([$this->getTranslator(), 'trans'], $args);
     }
 
     /**
@@ -250,8 +250,8 @@ abstract class Base
     {
         require_once APPLICATION_PATH.'/libraries/jbbcode/Parser.php';
 
-        $smilies = array
-            (
+        $smilies =
+            [
                 "~:smiley:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/regular_smile.png" alt="" /> ',
                 "~:sad:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/sad_smile.png" alt="" /> ',
                 "~:wink:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/wink_smile.png" alt="" /> ',
@@ -273,7 +273,7 @@ abstract class Base
                 "~:broken_heart:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/broken_heart.png" alt="" /> ',
                 "~:kiss:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/kiss.png" alt="" /> ',
                 "~:mail:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/envelope.png" alt="" /> '
-            );
+            ];
 
         $bbcode = preg_replace( array_keys($smilies), array_values($smilies), $bbcode );
 
@@ -322,7 +322,7 @@ abstract class Base
      * @param  boolean $secure
      * @return string
      */
-    public function getUrl($url = array(), $route = null, $secure  = false)
+    public function getUrl($url = [], $route = null, $secure  = false)
     {
         $config = \Ilch\Registry::get('config');
 
@@ -338,7 +338,7 @@ abstract class Base
             return BASE_URL.'/index.php/'.$url;
         }
 
-        $urlParts = array();
+        $urlParts = [];
 
         if (!isset($url['module'])) {
             $urlParts[] = $this->getRequest()->getModuleName();
@@ -391,17 +391,17 @@ abstract class Base
      * @param bool $secure
      * @return string
      */
-    public function getCurrentUrl(array $urlParts = array(), $resetParams = true, $secure = false)
+    public function getCurrentUrl(array $urlParts = [], $resetParams = true, $secure = false)
     {
-        $currentUrlParts = array(
+        $currentUrlParts = [
             'module' => $this->request->getModuleName(),
             'controller' => $this->request->getControllerName(),
             'action' => $this->request->getActionName()
-        );
+        ];
 
         $urlParams = array_merge(
             $currentUrlParts,
-            $resetParams ? array() : $this->request->getParams(),
+            $resetParams ? [] : $this->request->getParams(),
             $urlParts
         );
 

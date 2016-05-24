@@ -16,20 +16,20 @@ class Partner extends \Ilch\Mapper
      * @param array $where
      * @return PartnerModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('partners')
             ->where($where)
-            ->order(array('id' => 'DESC'))
+            ->order(['id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return [];
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new PartnerModel();
@@ -52,7 +52,7 @@ class Partner extends \Ilch\Mapper
      * @param array $orderBy
      * @return PartnerModel[]|null
      */
-    public function getPartnersBy($where = array(), $orderBy = array('id' => 'ASC'))
+    public function getPartnersBy($where = [], $orderBy = ['id' => 'ASC'])
     {
         $partnerArray = $this->db()->select('*')
             ->from('partners')
@@ -62,10 +62,10 @@ class Partner extends \Ilch\Mapper
             ->fetchRows();
 
         if (empty($partnerArray)) {
-            return array();
+            return [];
         }
 
-        $partners = array();
+        $partners = [];
 
         foreach ($partnerArray as $partnerRow) {
             $partnerModel = new PartnerModel();
@@ -89,7 +89,7 @@ class Partner extends \Ilch\Mapper
     {
         $partnerRow = $this->db()->select('*')
             ->from('partners')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -113,18 +113,18 @@ class Partner extends \Ilch\Mapper
      */
     public function save(PartnerModel $partner)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'setfree' => $partner->getFree(),
             'name' => $partner->getName(),
             'link' => $partner->getLink(),
             'banner' => $partner->getBanner(),
-        );
+            ];
 
         if ($partner->getId()) {
             $this->db()->update('partners')
                 ->values($fields)
-                ->where(array('id' => $partner->getId()))
+                ->where(['id' => $partner->getId()])
                 ->execute();
         } else {
             $this->db()->insert('partners')
@@ -141,7 +141,7 @@ class Partner extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('partners')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

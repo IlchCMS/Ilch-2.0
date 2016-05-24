@@ -8,25 +8,25 @@ namespace Modules\Faq\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'faq',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'faq.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'F.A.Q.',
                 'description' => 'Hier können die FAQ - Häufig gestellte Fragen verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'F.A.Q.',
                 'description' => 'Here you can manage your FAQ - Frequently Asked Questions.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

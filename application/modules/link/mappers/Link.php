@@ -16,7 +16,7 @@ class Link extends \Ilch\Mapper
      * @param array $where
      * @return LinkModel[]|null
      */
-    public function getLinks($where = array())
+    public function getLinks($where = [])
     {
         $linkArray = $this->db()->select('*')->from('links')->where($where)->execute()->fetchRows();
 
@@ -24,7 +24,7 @@ class Link extends \Ilch\Mapper
             return null;
         }
 
-        $links = array();
+        $links = [];
 
         foreach ($linkArray as $linkRow) {
             $linkModel = new LinkModel();
@@ -50,7 +50,7 @@ class Link extends \Ilch\Mapper
      */
     public function getLinkById($id)
     {
-        $links = $this->getLinks(array('id' => $id));
+        $links = $this->getLinks(['id' => $id]);
         return reset($links);
     }
 
@@ -61,20 +61,20 @@ class Link extends \Ilch\Mapper
      */
     public function save(LinkModel $link)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'name' => $link->getName(),
             'link' => $link->getLink(),
             'banner' => $link->getBanner(),
             'desc' => $link->getDesc(),
             'cat_id' => $link->getCatId(),
             'hits' => $link->getHits()
-        );
+            ];
 
         if ($link->getId()) {
             $this->db()->update('links')
                 ->values($fields)
-                ->where(array('id' => $link->getId()))
+                ->where(['id' => $link->getId()])
                 ->execute();
         } else {
             $this->db()->insert('links')
@@ -91,7 +91,7 @@ class Link extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('links')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

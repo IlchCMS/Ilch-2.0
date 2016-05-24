@@ -92,7 +92,7 @@
                     <?php foreach ($this->get('medias') as $media): ?>
                         <tr>
                             <td><input value="<?=$media->getId() ?>" type="checkbox" name="check_medias[]" /></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $media->getId())) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
                             <td><?=$media->getEnding() ?></td>
                             <td>
                                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
@@ -119,7 +119,7 @@
                                         <?php if ($this->get('catnames') != ''): ?>
                                             <?php foreach ($this->get('catnames') as $name): ?>
                                                 <li>
-                                                    <a href="<?=$this->getUrl(array('controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId())) ?>"><?=$name->getCatName() ?></a>
+                                                    <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'setCat', 'catid' => $name->getId(), 'mediaid' => $media->getId()]) ?>"><?=$name->getCatName() ?></a>
                                                 </li>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
@@ -132,7 +132,7 @@
             </table>
         </div>
         <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noMedias') ?>

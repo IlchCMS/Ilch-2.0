@@ -18,7 +18,7 @@ class Module extends \Ilch\Mapper
      */
     public function getModules()
     {
-        $modules = array();
+        $modules = [];
         $modulesRows = $this->db()->select('*')
             ->from('modules')
             ->execute()
@@ -32,12 +32,12 @@ class Module extends \Ilch\Mapper
             $moduleModel->setIconSmall($moduleRow['icon_small']);
             $contentRows = $this->db()->select('*')
                 ->from('modules_content')
-                ->where(array('key' => $moduleRow['key']))
+                ->where(['key' => $moduleRow['key']])
                 ->execute()
                 ->fetchRows();
 
             foreach ($contentRows as $contentRow) {
-                $moduleModel->addContent($contentRow['locale'], array('name' => $contentRow['name'], 'description' => $contentRow['description']));
+                $moduleModel->addContent($contentRow['locale'], ['name' => $contentRow['name'], 'description' => $contentRow['description']]);
             }
 
             $modules[] = $moduleModel;
@@ -59,7 +59,7 @@ class Module extends \Ilch\Mapper
 
             $modulesDir[] = $moduleModel->getKey();
         }
-        $removeModule = array('admin', 'install', 'sample');
+        $removeModule = ['admin', 'install', 'sample'];
         $modulesDir = array_diff($modulesDir, $removeModule);
 
         foreach ($this->getModules() as $module) {
@@ -109,7 +109,7 @@ class Module extends \Ilch\Mapper
     {
         $modulesRows = $this->db()->select('*')
             ->from('modules_content')
-            ->where(array('key' => $key, 'locale' => $locale))
+            ->where(['key' => $key, 'locale' => $locale])
             ->execute()
             ->fetchAssoc();
 
@@ -131,13 +131,13 @@ class Module extends \Ilch\Mapper
     public function save(ModuleModel $module)
     {
         $moduleId = $this->db()->insert('modules')
-            ->values(array('key' => $module->getKey(), 'system' => $module->getSystemModule(),
-                'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor()))
+            ->values(['key' => $module->getKey(), 'system' => $module->getSystemModule(),
+                'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor()])
             ->execute();
 
         foreach ($module->getContent() as $key => $value) {
             $this->db()->insert('modules_content')
-                ->values(array('key' => $module->getKey(), 'locale' => $key, 'name' => $value['name'], 'description' => $value['description']))
+                ->values(['key' => $module->getKey(), 'locale' => $key, 'name' => $value['name'], 'description' => $value['description']])
                 ->execute();
         }
 
@@ -154,11 +154,11 @@ class Module extends \Ilch\Mapper
         $menuMapper = new MenuMapper();
         $menuMapper->deleteItemsByModuleKey($key);
         $this->db()->delete('modules')
-            ->where(array('key' => $key))
+            ->where(['key' => $key])
             ->execute();
         
         $this->db()->delete('modules_content')
-            ->where(array('key' => $key))
+            ->where(['key' => $key])
             ->execute();
     }
 }

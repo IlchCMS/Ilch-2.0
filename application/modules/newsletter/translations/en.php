@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuNewsletter' => 'Newsletter',
     'subject' => 'Subject',
     'date' => 'Date',
@@ -42,4 +42,4 @@ return array
     'acceptNewsletter' => 'Receive Newsletter?',
     'yes' => 'Yes',
     'no' => 'No',
-);
+    ];

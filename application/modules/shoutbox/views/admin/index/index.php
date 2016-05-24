@@ -24,7 +24,7 @@
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                     <tr>
                         <td><input value="<?=$shoutbox->getId() ?>" type="checkbox" name="check_entries[]" /> </td>
-                        <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $shoutbox->getId())) ?></td>
+                        <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $shoutbox->getId()]) ?></td>
                         <?php if ($shoutbox->getUid() == '0'): ?>
                             <td><?=$this->escape($shoutbox->getName()) ?></td>
                         <?php else: ?>
@@ -36,7 +36,7 @@
                 <?php endforeach; ?>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noEntrys') ?>

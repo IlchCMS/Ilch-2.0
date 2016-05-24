@@ -57,7 +57,7 @@ foreach($comments as $comment)
 ?>
     <div class="comment-heading">
         <span><?=$this->getTrans('from')?>: </span>
-        <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()))?>"><?=$this->escape($user->getName())?></a>
+        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()])?>"><?=$this->escape($user->getName())?></a>
         <span class="pull-right"><?=$this->getTrans('on')?>: <?=$comment->getDateCreated()?></span>
     </div>
     <hr />

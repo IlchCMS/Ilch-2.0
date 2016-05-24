@@ -36,8 +36,8 @@ class Mapper
      */
     public function getMenus()
     {
-        $menus = array();
-        $menuRows = $this->db->select(array('id'))
+        $menus = [];
+        $menuRows = $this->db->select(['id'])
             ->from('menu')
             ->execute()
             ->fetchRows();
@@ -61,9 +61,9 @@ class Mapper
     {
         $menu = new \Ilch\Layout\Helper\Menu\Model($this->layout);
 
-        $menuRow = $this->db->select(array('id', 'title'))
+        $menuRow = $this->db->select(['id', 'title'])
             ->from('menu')
-            ->where(array('id' => $menuId))
+            ->where(['id' => $menuId])
             ->execute()
             ->fetchAssoc();
 

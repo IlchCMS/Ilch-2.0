@@ -36,11 +36,11 @@
         <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery.key.js') ?>"></script>
 	<script type="text/javascript">
-        $.key('alt+a', function() { window.location.href ='<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'index')) ?>'; });
-        $.key('alt+u', function() { window.location.href ='<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>'; });
-        $.key('alt+s', function() { window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')) ?>'; });
-        $.key('alt+h', function() { window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>'; });
-        $.key('alt+k', function() { window.location.href ='<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts')) ?>'; });
+        $.key('alt+a', function() { window.location.href ='<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'index']) ?>'; });
+        $.key('alt+u', function() { window.location.href ='<?=$this->getUrl(['module' => 'user', 'controller' => 'index', 'action' => 'index']) ?>'; });
+        $.key('alt+s', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>'; });
+        $.key('alt+h', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'index']) ?>'; });
+        $.key('alt+k', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts']) ?>'; });
         $.key('alt+i', function() { window.open('http://ilch.de/', '_blank'); });
 	</script>
     </head>
@@ -71,7 +71,7 @@
                     <?php endif; ?>
                     <img title="Version <?=VERSION ?>" class="pull-left logo" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>" />
                     <div class="hidden-md hidden-lg">
-                        <a class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') { echo 'active'; }?> home" href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')) ?>">
+                        <a class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') { echo 'active'; }?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                             <i class="fa fa-home"></i>
                         </a>
                             <button type="button" class="pull-right navbar-toggle" data-toggle="collapse" data-target="#rightbar">
@@ -84,13 +84,13 @@
                 <nav id="rightbar" class="rightbar navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') { echo 'active'; } ?> visible-md visible-lg">
-                            <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'index', 'action' => 'index')) ?>">
+                            <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                                 <i class="fa fa-home"></i>
                             </a>
                         </li>
                         <?php if($this->getUser()->isAdmin()): ?>
                             <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'menu') { echo 'class="active"'; } ?>>
-                                <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'menu', 'action' => 'index')) ?>">
+                                <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'menu', 'action' => 'index']) ?>">
                                     <i class="fa fa-list-ol"></i> <?=$this->getTrans('navigation') ?>
                                 </a>
                             </li>
@@ -103,11 +103,11 @@
                                 <?php $content = $module->getContentForLocale($this->getTranslator()->getLocale()); ?>
 
                                 <?php if ($module->getSystemModule()): ?>
-                                    <?php $systemModuleHtml .= '<a class="list-group-item " href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                    <?php $systemModuleHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
                                                 <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
                                                 .$content['name'].'</a>'; ?>
                                 <?php else: ?>
-                                    <?php $modulesHtml .= '<a class="list-group-item " href="'.$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')).'">
+                                    <?php $modulesHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
                                                 <img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />'
                                                 .$content['name'].'</a>'; ?>
                                 <?php endif; ?>
@@ -121,7 +121,7 @@
                                 </a>
                                 <ul role="menu" class="dropdown-menu full">
                                     <?php if($this->getUser()->isAdmin()): ?>
-                                        <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'modules', 'action' => 'index')) ?>">
+                                        <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'index']) ?>">
                                             <i class="fa fa-list-ol"></i> <?=$this->getTrans('overview') ?>
                                         </a>
                                         <div class="divider"></div>
@@ -141,14 +141,14 @@
                         <?php endif; ?>
                         <?php if($this->getUser()->isAdmin()): ?>
                             <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') { echo 'class="active"'; } ?>>
-                                <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'boxes', 'action' => 'index')) ?>">
+                                <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'boxes', 'action' => 'index']) ?>">
                                     <i class="fa fa-inbox"></i> <?=$this->getTrans('boxes') ?>
                                 </a>
                             </li>
                         <?php endif; ?>
                         <?php if($this->getUser()->isAdmin()): ?>
                             <li <?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'layouts') { echo 'class="active"'; } ?>>
-                                <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'layouts', 'action' => 'index')) ?>">
+                                <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'index']) ?>">
                                     <i class="fa fa-picture-o"></i> <?=$this->getTrans('layouts') ?>
                                 </a>
                             </li>
@@ -157,7 +157,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <?php if($this->getUser()->isAdmin()): ?>
                             <li class="<?php if($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') { echo 'active'; } ?>">
-                                <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'settings', 'action' => 'index')) ?>">
+                                <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>">
                                     <i class="fa fa-cogs"></i>
                                 </a>
                             </li>
@@ -194,7 +194,7 @@
                                 <?php if($this->getUser()->isAdmin()): ?>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'infos', 'action' => 'index')) ?>">
+                                    <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'index']) ?>">
                                         <i class="fa fa-info-circle"></i>
                                         <?=$this->getTrans('menuInfos') ?>
                                     </a>
@@ -215,7 +215,7 @@
                             </a>
                             <ul role="menu" class="dropdown-menu">
                                 <li class="text-center">
-                                    <a href="<?=$this->getUrl(array('module' => 'admin', 'controller' => 'login', 'action' => 'logout')) ?>">
+                                    <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'login', 'action' => 'logout']) ?>">
                                         <i class="fa fa-power-off"></i> <?=$this->getTrans('logout') ?>
                                     </a>
                                 </li>

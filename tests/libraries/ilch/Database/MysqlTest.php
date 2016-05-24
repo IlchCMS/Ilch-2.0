@@ -35,7 +35,7 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
     {
         $result = $this->db->select('id')
             ->from('groups')
-            ->where(array('id' => 2))
+            ->where(['id' => 2])
             ->execute()
             ->fetchCell();
 
@@ -49,7 +49,7 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
     {
         $result = $this->db->select('COUNT(*)')
             ->from('groups')
-            ->where(array('name' => 'Clanleader'))
+            ->where(['name' => 'Clanleader'])
             ->execute()
             ->fetchCell();
 
@@ -62,13 +62,13 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
     public function testUpdateWithEmptyValue()
     {
         $this->db->update('groups')
-            ->values(array('name' => ''))
-            ->where(array('id' => 2))
+            ->values(['name' => ''])
+            ->where(['id' => 2])
             ->execute();
 
         $result = $this->db->select('name')
             ->from('groups')
-            ->where(array('id' => 2))
+            ->where(['id' => 2])
             ->execute()
             ->fetchCell();
 
@@ -80,11 +80,11 @@ class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
      */
     public function testInsertWithEmptyValue()
     {
-        $this->db->insert('groups')->values(array('name' => ''))->execute();
+        $this->db->insert('groups')->values(['name' => ''])->execute();
 
         $result = $this->db->select('COUNT(*)')
             ->from('groups')
-            ->where(array('name' => ''))
+            ->where(['name' => ''])
             ->execute()
             ->fetchCell();
 

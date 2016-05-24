@@ -25,10 +25,10 @@ class Newtopic extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
-                ->add($cat->getTitle(), array('controller' => 'showcat','action' => 'index', 'id' => $cat->getId()))
-                ->add($forum->getTitle(), array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $id))
-                ->add($this->getTranslator()->trans('newTopicTitle'), array('controller' => 'newtopic','action' => 'index', 'id' => $id));
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
+                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $id])
+                ->add($this->getTranslator()->trans('newTopicTitle'), ['controller' => 'newtopic','action' => 'index', 'id' => $id]);
 
         if ($this->getRequest()->getPost('saveNewTopic')) {
             $topicModel = new ForumTopicModel();
@@ -54,7 +54,7 @@ class Newtopic extends \Ilch\Controller\Frontend
             $postModel->setDateCreated($dateTime);
             $postMapper->save($postModel);
 
-            $this->redirect(array('controller' => 'showposts','action' => 'index','topicid' => $lastid));
+            $this->redirect(['controller' => 'showposts','action' => 'index','topicid' => $lastid]);
         }
 
         $userMapper = new UserMapper();
@@ -65,10 +65,10 @@ class Newtopic extends \Ilch\Controller\Frontend
         }
 
         $user = $userMapper->getUserById($userId);
-        $ids = array(0);
+        $ids = [0];
 
         if($user){
-            $ids = array();
+            $ids = [];
             foreach ($user->getGroups() as $us){
                 $ids[] = $us->getId();
             }

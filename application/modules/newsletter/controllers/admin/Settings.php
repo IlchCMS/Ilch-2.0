@@ -16,30 +16,26 @@ class Settings extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuNewsletter', 
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'manage',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'receiver',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ],
+                [
                     'name' => 'add',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-                )
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                ]
+            ]
         );
     }
 
@@ -48,7 +44,7 @@ class Settings extends \Ilch\Controller\Admin
         $newsletterMapper = new NewsletterMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('settings'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
         
         if ($this->getRequest()->isPost()) {    
             $newsletterModel = new NewsletterModel();

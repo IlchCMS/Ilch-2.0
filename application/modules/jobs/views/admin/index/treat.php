@@ -9,7 +9,7 @@ $jobs = $this->get('jobs');
         <?=$this->getTrans('add') ?>
     <?php endif; ?>
 </legend>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">

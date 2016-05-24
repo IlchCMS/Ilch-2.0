@@ -26,7 +26,7 @@ class Infos extends \Ilch\Mapper
             return null;
         }
 
-        $module = array();
+        $module = [];
 
         foreach ($moduleArray as $entries) {
             $moduleModel = new InfosModel();

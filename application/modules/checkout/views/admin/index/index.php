@@ -1,5 +1,5 @@
 <legend><?=$this->getTrans('bookings') ?></legend>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <div class="col-lg-4">
@@ -80,8 +80,8 @@
                         </strong> 
                         <?=$this->getTrans('for') ?>: 
                         <?=$this->escape($checkout->getUsage()) ?>
-                        <?=$this->getEditIcon(array('action' => 'treatPayment', 'id' => $this->escape($checkout->getId()))) ?>
-                        <?=$this->getDeleteIcon(array('action' => 'del', 'id' => $this->escape($checkout->getId()))) ?>
+                        <?=$this->getEditIcon(['action' => 'treatPayment', 'id' => $this->escape($checkout->getId())]) ?>
+                        <?=$this->getDeleteIcon(['action' => 'del', 'id' => $this->escape($checkout->getId())]) ?>
                     </li>
                 <?php endforeach; ?>
             </ul>

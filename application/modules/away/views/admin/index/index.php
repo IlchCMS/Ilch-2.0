@@ -30,14 +30,14 @@
                         <?php $user = $userMapper->getUserById($away->getUserId()) ?>
                         <tr>
                             <td><input value="<?=$away->getId() ?>" type="checkbox" name="check_aways[]" /></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $away->getId())) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?></td>
                             <td>
                                 <?php if ($away->getStatus() == 1): ?>
-                                    <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $away->getId()), null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
                                         <span class="fa fa-check-square-o text-info"></span>
                                     </a>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $away->getId()), null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
                                         <span class="fa fa-square-o text-info"></span>
                                     </a>                                    
                                 <?php endif; ?>
@@ -57,7 +57,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noAway') ?>

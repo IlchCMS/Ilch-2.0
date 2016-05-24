@@ -8,7 +8,7 @@
 
 <legend><?=$this->getTrans('manageEnemy') ?></legend>
 <?php if ($this->get('enemy') != ''): ?>
-    <?=$this->get('pagination')->getHtml($this, array()) ?>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField()?>
         <table class="table table-striped table-hover table-responsive">
@@ -41,10 +41,10 @@
                             <input value="<?=$enemy->getId()?>" type="checkbox" name="check_enemy[]" />
                         </td>
                         <td>
-                            <?=$this->getEditIcon(array('action' => 'treat', 'id' => $enemy->getId())) ?>
+                            <?=$this->getEditIcon(['action' => 'treat', 'id' => $enemy->getId()]) ?>
                         </td>
                         <td>
-                            <?php $deleteArray = array('action' => 'del', 'id' => $enemy->getId()) ?>
+                            <?php $deleteArray = ['action' => 'del', 'id' => $enemy->getId()] ?>
                             <?=$this->getDeleteIcon($deleteArray) ?>
                         </td>
                         <td>
@@ -66,8 +66,8 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <?=$this->get('pagination')->getHtml($this, array()) ?>
-        <?php $actions = array('delete' => 'delete') ?>
+        <?=$this->get('pagination')->getHtml($this, []) ?>
+        <?php $actions = ['delete' => 'delete'] ?>
         <?=$this->getListBar($actions) ?>
     </form>
 <?php else: ?>

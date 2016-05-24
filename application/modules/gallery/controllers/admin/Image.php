@@ -16,12 +16,11 @@ class Image extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuGalleryBack',
                 'icon' => 'fa fa-arrow-left',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'gallery', 'action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'gallery', 'action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')])
+            ]
         );
     }
 
@@ -37,8 +36,8 @@ class Image extends BaseController
         $gallery = (int)$this->getRequest()->getParam('gallery');
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('gallery'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('treatImage'), array('action' => 'treatimage', 'gallery' => $gallery, 'id' => $id));
+                ->add($this->getTranslator()->trans('gallery'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('treatImage'), ['action' => 'treatimage', 'gallery' => $gallery, 'id' => $id]);
 
         if ($this->getRequest()->getPost()) {
             $imageTitle = $this->getRequest()->getPost('imageTitle');

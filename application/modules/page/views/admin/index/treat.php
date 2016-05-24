@@ -109,7 +109,7 @@ $('#pageTitleInput').change (
 $('#pageLanguageInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(array('id' => $pageID)); ?>/locale/'+$(this).val()
+        top.location.href = '<?=$this->getUrl(['id' => $pageID]); ?>/locale/'+$(this).val()
     }
 );
 </script>

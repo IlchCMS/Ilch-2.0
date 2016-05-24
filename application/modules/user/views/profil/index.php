@@ -24,7 +24,7 @@ foreach ($profil->getGroups() as $group) {
             <div class="col-lg-5 col-xs-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
                 <?php if($this->getUser() AND $this->getUser()->getId() != $this->escape($profil->getID())): ?>
-                    <a href="<?=$this->getUrl(array('controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId())) ?>" >Neue Nachricht</a>
+                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" >Neue Nachricht</a>
                  <?php endif; ?>
                 <div class="detail">
                     <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
@@ -36,10 +36,10 @@ foreach ($profil->getGroups() as $group) {
             </div>
             <div class="col-lg-4 hidden-xs concatLinks-lg">
                 <?php if ($this->getUser() AND $profil->getOptMail() == 1 AND $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
-                    <a href="<?=$this->getUrl(array('controller' => 'mail', 'action' => 'index', 'user' => $profil->getId())) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
+                    <a href="<?=$this->getUrl(['controller' => 'mail', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-envelope" title="<?=$this->getTrans('email') ?>"></a>
                 <?php endif; ?>
                 <?php if ($this->get('gallery') != 0 AND $profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
-                    <a href="<?=$this->getUrl(array('controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId())) ?>" class="fa fa-picture-o" title="<?=$this->getTrans('gallery') ?>"></a>
+                    <a href="<?=$this->getUrl(['controller' => 'gallery', 'action' => 'index', 'user' => $profil->getId()]) ?>" class="fa fa-picture-o" title="<?=$this->getTrans('gallery') ?>"></a>
                 <?php endif; ?>
                 <?php if ($profil->getHomepage() != ''): ?>
                     <a href="<?=$userMapper->getHomepage($this->escape($profil->getHomepage())) ?>" target="_blank" class="fa fa-globe" title="<?=$this->getTrans('website') ?>"></a>

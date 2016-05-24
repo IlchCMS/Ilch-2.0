@@ -22,11 +22,11 @@ class GroupTest extends TestCase
      */
     public function testLoadFromArray()
     {
-        $groupRow = array
-        (
+        $groupRow =
+            [
             'id'   => 1,
             'name' => 'Administrator',
-        );
+            ];
 
         $mapper = new GroupMapper();
         $group = $mapper->loadFromArray($groupRow);

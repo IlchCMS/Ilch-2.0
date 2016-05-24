@@ -8,25 +8,25 @@ namespace Modules\Newsletter\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'newsletter',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'newsletter.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Newsletter',
                 'description' => 'Hier kannst du Newsletter verschicken.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Newsletter',
                 'description' => 'Here you can send Newsletter.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

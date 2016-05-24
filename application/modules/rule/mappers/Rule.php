@@ -16,12 +16,12 @@ class Rule extends \Ilch\Mapper
      * @param array $where
      * @return RuleModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('rules')
             ->where($where)
-            ->order(array('paragraph' => 'ASC'))
+            ->order(['paragraph' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Rule extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new RuleModel();
@@ -51,7 +51,7 @@ class Rule extends \Ilch\Mapper
      * @param array $orderBy
      * @return RuleModel[]|null
      */
-    public function getRulesBy($where = array(), $orderBy = array('id' => 'ASC'))
+    public function getRulesBy($where = [], $orderBy = ['id' => 'ASC'])
     {
         $ruleArray = $this->db()->select('*')
             ->from('rules')
@@ -64,7 +64,7 @@ class Rule extends \Ilch\Mapper
             return null;
         }
 
-        $rules = array();
+        $rules = [];
 
         foreach ($ruleArray as $ruleRow) {
             $ruleModel = new RuleModel();
@@ -88,7 +88,7 @@ class Rule extends \Ilch\Mapper
     {
         $ruleRow = $this->db()->select('*')
             ->from('rules')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -112,17 +112,17 @@ class Rule extends \Ilch\Mapper
      */
     public function save(RuleModel $rule)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'paragraph' => $rule->getParagraph(),
             'title' => $rule->getTitle(),
             'text' => $rule->getText(),
-        );
+            ];
 
         if ($rule->getId()) {
             $this->db()->update('rules')
                 ->values($fields)
-                ->where(array('id' => $rule->getId()))
+                ->where(['id' => $rule->getId()])
                 ->execute();
         } else {
             $this->db()->insert('rules')
@@ -139,7 +139,7 @@ class Rule extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('rules')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

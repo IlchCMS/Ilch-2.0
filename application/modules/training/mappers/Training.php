@@ -16,12 +16,12 @@ class Training extends \Ilch\Mapper
      * @param array $where
      * @return TrainingModel[]|array
      */
-    public function getTraining($where = array())
+    public function getTraining($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('training')
             ->where($where)
-            ->order(array('id' => 'ASC'))
+            ->order(['id' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Training extends \Ilch\Mapper
             return null;
         }
 
-        $training = array();
+        $training = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new TrainingModel();
@@ -61,7 +61,7 @@ class Training extends \Ilch\Mapper
      */
     public function getTrainingById($id)
     {
-        $training = $this->getTraining(array('id' => $id));
+        $training = $this->getTraining(['id' => $id]);
         return reset($training);
     }
 
@@ -72,8 +72,8 @@ class Training extends \Ilch\Mapper
      */
     public function save(TrainingModel $training)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'title' => $training->getTitle(),
             'date' => $training->getDate(),
             'time' => $training->getTime(),
@@ -86,12 +86,12 @@ class Training extends \Ilch\Mapper
             'game_server_ip' => $training->getGameServerIP(),
             'game_server_pw' => $training->getGameServerPW(),
             'text' => $training->getText(),
-        );
+            ];
 
         if ($training->getId()) {
             $this->db()->update('training')
                 ->values($fields)
-                ->where(array('id' => $training->getId()))
+                ->where(['id' => $training->getId()])
                 ->execute();
         } else {
             $this->db()->insert('training')
@@ -108,7 +108,7 @@ class Training extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('training')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

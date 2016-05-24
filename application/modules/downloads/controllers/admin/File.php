@@ -16,12 +16,11 @@ class File extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuDownloadsBack',
                 'icon' => 'fa fa-arrow-left',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'downloads', 'action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'downloads', 'action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')])
+            ]
         );
     }
 

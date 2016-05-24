@@ -18,13 +18,13 @@ class Forum extends \Ilch\Box
         $topicMapper = new TopicMapper();
         $userMapper = new UserMapper();
 
-        $groupIds = array(0);
+        $groupIds = [0];
 
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
             $user = $userMapper->getUserById($userId);
 
-            $groupIds = array();
+            $groupIds = [];
             foreach ($user->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
             }

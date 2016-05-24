@@ -8,7 +8,7 @@
 
 <legend><?=$this->getTrans('manageGroups') ?></legend>
 <?php if ($this->get('groups') != ''): ?>
-    <?=$this->get('pagination')->getHtml($this, array()) ?>
+    <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField()?>
         <table class="table table-striped table-hover table-responsive">
@@ -34,8 +34,8 @@
                 <?php foreach ($this->get('groups') as $group): ?>
                     <tr>
                         <td><input value="<?=$group->getId()?>" type="checkbox" name="check_groups[]" /></td>
-                        <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $group->getId())) ?></td>
-                        <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $group->getId())) ?></td>
+                        <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) ?></td>
+                        <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $group->getId()]) ?></td>
                         <td><?=$group->getGroupName() ?></td>
                         <td><?=$group->getGroupTag() ?></td>
                         <td><img class="group-image" src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" /></td>
@@ -43,8 +43,8 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <?=$this->get('pagination')->getHtml($this, array()) ?>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->get('pagination')->getHtml($this, []) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTranslator()->trans('noGroup') ?>

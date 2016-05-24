@@ -24,7 +24,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
 
         $userId = null;
-        $groupIds = array(3);
+        $groupIds = [3];
 
        if ($this->getRequest()->isPost() && $this->getRequest()->getPost('forumEdit') === 'forumEdit') {
            $forumEdit = true;
@@ -35,7 +35,7 @@ class Showtopics extends \Ilch\Controller\Frontend
             $userId = $this->getUser()->getId();
             $user = $userMapper->getUserById($userId);
 
-            $groupIds = array();
+            $groupIds = [];
             foreach ($user->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
             }
@@ -46,9 +46,9 @@ class Showtopics extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
-                ->add($cat->getTitle(), array('controller' => 'showcat','action' => 'index', 'id' => $cat->getId()))
-                ->add($forum->getTitle(), array('action' => 'index', 'forumid' => $forumId));
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
+                ->add($forum->getTitle(), ['action' => 'index', 'forumid' => $forumId]);
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 

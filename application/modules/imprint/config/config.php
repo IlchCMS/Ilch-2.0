@@ -8,25 +8,25 @@ namespace Modules\Imprint\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'imprint',
         'icon_small' => 'imprint.png',
         'system_module' => true,
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Impressum',
                 'description' => 'Hier kann das Impressum verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Imprint',
                 'description' => 'Here you can manage your imprint.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

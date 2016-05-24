@@ -24,9 +24,9 @@ class Gallery extends \Ilch\Controller\Frontend
         $profil = $profilMapper->getUserById($this->getRequest()->getParam('user'));
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index'))
-                ->add($profil->getName(), array('controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
-                ->add($this->getTranslator()->trans('menuGallery'), array('action' => 'index', 'user' => $this->getRequest()->getParam('user')));
+                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
+                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
+                ->add($this->getTranslator()->trans('menuGallery'), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery'));
@@ -49,10 +49,10 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index', 'action' => 'index'))
-                ->add($profil->getName(), array('controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
-                ->add($this->getTranslator()->trans('menuGallery'), array('controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
-                ->add($gallery->getTitle(), array('action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $id));
+                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
+                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
+                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
+                ->add($gallery->getTitle(), ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $id]);
 
         $pagination->setPage($this->getRequest()->getParam('page'));
 
@@ -78,11 +78,11 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle().' - '.$image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index', 'action' => 'index'))
-                ->add($profil->getName(), array('controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
-                ->add($this->getTranslator()->trans('menuGallery'), array('controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
-                ->add($gallery->getTitle(), array('action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $galleryId))
-                ->add($image->getImageTitle(), array('action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'gallery' => $galleryId, 'id' => $id));
+                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
+                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
+                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
+                ->add($gallery->getTitle(), ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $galleryId])
+                ->add($image->getImageTitle(), ['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'gallery' => $galleryId, 'id' => $id]);
 
         if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();

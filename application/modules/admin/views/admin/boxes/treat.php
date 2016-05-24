@@ -62,7 +62,7 @@
 $('#boxLanguageInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(array('id' => $boxID)); ?>/locale/'+$(this).val()
+        top.location.href = '<?=$this->getUrl(['id' => $boxID]); ?>/locale/'+$(this).val()
     }
 );
 </script>

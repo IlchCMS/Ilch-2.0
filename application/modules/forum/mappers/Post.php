@@ -62,21 +62,21 @@ class Post extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('forum_posts')
-                ->values(array(
+                ->values([
                     'topic_id' => $model->getTopicId(),
                     'text' => $model->getText()
-                ))
-                ->where(array('id' => $model->getId()))
+                ])
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('forum_posts')
-                ->values(array(
+                ->values([
                     'text' => $model->getText(),
                     'topic_id' => $model->getTopicId(),
                     'user_id' => $model->getUserId(),
                     'forum_id' => $model->getForumId(),
                     'date_created' => $model->getDateCreated()
-                ))
+                ])
                 ->execute();
         }
     }
@@ -85,8 +85,8 @@ class Post extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('forum_posts')
-                ->values(array('read' => $model->getRead()))
-                ->where(array('id' => $model->getId()))
+                ->values(['read' => $model->getRead()])
+                ->where(['id' => $model->getId()])
                 ->execute();
         }
     }
@@ -101,7 +101,7 @@ class Post extends \Ilch\Mapper
         $fileArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
-        $postEntry = array();
+        $postEntry = [];
         $userMapper = new UserMapper();
 
         foreach ($fileArray as $entries) {
@@ -124,7 +124,7 @@ class Post extends \Ilch\Mapper
     public function deleteById($id)
     {
             return $this->db()->delete('forum_posts')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -132,8 +132,8 @@ class Post extends \Ilch\Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('forum_topics')
-                    ->values(array('visits' => $model->getVisits()))
-                    ->where(array('id' => $model->getFileId()))
+                    ->values(['visits' => $model->getVisits()])
+                    ->where(['id' => $model->getFileId()])
                     ->execute();
         }
     }

@@ -223,7 +223,7 @@ class Mysql
      */
     public function queryArray($sql)
     {
-        $rows = array();
+        $rows = [];
         $result = $this->query($sql);
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -241,7 +241,7 @@ class Mysql
      */
     public function queryList($sql)
     {
-        $list = array();
+        $list = [];
         $result = $this->query($sql);
 
         while ($row = mysqli_fetch_assoc($result)) {

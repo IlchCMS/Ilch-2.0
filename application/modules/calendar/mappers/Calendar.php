@@ -16,7 +16,7 @@ class Calendar extends \Ilch\Mapper
      * @param array $where
      * @return CalendarModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = [])
     {        
         $entryArray = $this->db()->select('*')
                 ->from('calendar')
@@ -28,7 +28,7 @@ class Calendar extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new CalendarModel();
@@ -55,7 +55,7 @@ class Calendar extends \Ilch\Mapper
     {
         $calendarRow = $this->db()->select('*')
                 ->from('calendar')
-                ->where(array('id' => $id))
+                ->where(['id' => $id])
                 ->execute()
                 ->fetchAssoc();
 
@@ -82,20 +82,20 @@ class Calendar extends \Ilch\Mapper
      */
     public function save(CalendarModel $term)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'title' => $term->getTitle(),
             'place' => $term->getPlace(),
             'start' => $term->getStart(),
             'end' => $term->getEnd(),
             'text' => $term->getText(),
             'color' => $term->getColor()
-        );
+            ];
 
         if ($term->getId()) {
             $this->db()->update('calendar')
                 ->values($fields)
-                ->where(array('id' => $term->getId()))
+                ->where(['id' => $term->getId()])
                 ->execute();
         } else {
             $this->db()->insert('calendar')
@@ -117,7 +117,7 @@ class Calendar extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('calendar')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

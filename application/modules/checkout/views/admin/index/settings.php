@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('accountdata') ?></legend>
     <div class="form-group">
@@ -10,12 +10,12 @@
         <p><?=$this->getTrans('currencyOfCheckout') ?><br>
         <select name="checkout_currency">
         <?php
-            $currency = array(
+            $currency = [
                 // ISO 4217 code and symbol
                 "EUR (€)",
                 "USD ($)",
                 "GBP (£)",
-            );
+            ];
 
             foreach ($currency as &$value) {
                 if ($this->get('checkout_currency') != $value) {

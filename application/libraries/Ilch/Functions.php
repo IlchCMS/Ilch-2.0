@@ -94,7 +94,7 @@ function removeDir($dir)
  *
  * @copyright <Taylor Otwell>
  */
-function array_dot($data = array(), $key = null, $default = null)
+function array_dot($data = [], $key = null, $default = null)
 {
     if ($key === null) {
         return $data;
@@ -142,7 +142,7 @@ function array_dot_set(&$array, $key, $value)
         // to hold the next value, allowing us to create the arrays to hold final
         // values at the correct depth. Then we'll keep digging into the array.
         if (! isset($array[$key]) || ! is_array($array[$key])) {
-            $array[$key] = array();
+            $array[$key] = [];
         }
 
         $array =& $array[$key];

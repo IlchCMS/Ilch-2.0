@@ -26,7 +26,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuComments'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuComments'), ['action' => 'index']);
 
         $commentMapper = new CommentMapper();
         $this->getView()->set('comments', $commentMapper->getComments());

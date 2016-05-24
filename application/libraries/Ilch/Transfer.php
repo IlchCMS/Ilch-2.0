@@ -10,7 +10,7 @@ class Transfer
 {
     protected $transferUrl = '';
 
-    protected $curlOpt = array();
+    protected $curlOpt = [];
 
     protected $versionNow;
 
@@ -324,7 +324,7 @@ class Transfer
     public function update()
     {
         $zipHandle = zip_open($this->zipFile);
-        $content = array();
+        $content = [];
         while ($aF = zip_read($zipHandle)) {
 
             $thisFileName = zip_entry_name($aF);
@@ -373,7 +373,7 @@ class Transfer
         $zip = new \ZipArchive();
         $zip->open($this->zipFile);
         $zip->extractTo(ROOT_PATH);
-        $content = array();
+        $content = [];
         for ($i = 0; $i < $zip->numFiles; $i++) {
             $thisFileName = $zip->getNameIndex($i);
             $thisFileDir = dirname($thisFileName);

@@ -16,30 +16,26 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuNewsletter', 
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'receiver',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ],
+                [
                     'name' => 'add',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-                )
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                ]
+            ]
         );
     }
 
@@ -48,7 +44,7 @@ class Index extends \Ilch\Controller\Admin
         $newsletterMapper = new NewsletterMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -73,7 +69,7 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function showAction()
@@ -81,15 +77,15 @@ class Index extends \Ilch\Controller\Admin
         $newsletterMapper = new NewsletterMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('show'), array('action' => 'show'));
+                ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('show'), ['action' => 'show']);
 
         if ($this->getRequest()->isPost('delete')) {
             $newsletterMapper->delete($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
 
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $this->getView()->set('newsletter', $newsletterMapper->getNewsletterById($this->getRequest()->getParam('id')));
@@ -100,8 +96,8 @@ class Index extends \Ilch\Controller\Admin
         $newsletterMapper = new NewsletterMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
 
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new NewsletterModel();
@@ -129,7 +125,7 @@ class Index extends \Ilch\Controller\Admin
 
                 $emails = $newsletterMapper->getMail();
                 foreach ($emails as $email) {
-                    $messageReplace = array(
+                    $messageReplace = [
                             '{subject}' => $this->getRequest()->getPost('subject'),
                             '{content}' => $this->getRequest()->getPost('text'),
                             '{sitetitle}' => $this->getConfig()->get('page_title'),
@@ -137,7 +133,7 @@ class Index extends \Ilch\Controller\Admin
                             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
                             '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
                             '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getEmail()),
-                    );
+                    ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
                     
                     $mail = new \Ilch\Mail();
@@ -152,7 +148,7 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('sendSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
 

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuTraining' => 'Training',
     'noTraining' => 'keine Einträge vorhanden',
     'title' => 'Titel',
@@ -31,4 +31,4 @@ return array
     'gameServerPW' => 'Gameserver Passwort',
     'note' => 'Notiz',
     'contactPerson' => 'Ansprechpartner',
-);
+    ];

@@ -32,7 +32,7 @@ $userMapper = new \Modules\User\Mappers\User()
                         <tr>
                             <td><input value="<?= $entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
                             <td>
-                                <?php $deleteArray = array('action' => 'del', 'id' => $entry->getId()) ?>
+                                <?php $deleteArray = ['action' => 'del', 'id' => $entry->getId()] ?>
                                 <?=$this->getDeleteIcon($deleteArray) ?>
                             </td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
@@ -43,7 +43,7 @@ $userMapper = new \Modules\User\Mappers\User()
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noNewsletter') ?>

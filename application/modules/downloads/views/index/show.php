@@ -11,7 +11,7 @@
     <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-image thumbnail">
-                    <a href="<?=$this->getUrl(array('action' => 'showfile', 'downloads'  => $this->getRequest()->getParam('id'), 'id' => $file->getId())) ; ?>">
+                    <a href="<?=$this->getUrl(['action' => 'showfile', 'downloads'  => $this->getRequest()->getParam('id'), 'id' => $file->getId()]) ; ?>">
                         <img src="<?=$image ?>" class="panel-image-preview" alt="<?=$file->getFileTitle();?>" />
                     </a>
                 </div>
@@ -23,7 +23,7 @@
         </div>
     <?php endforeach; ?>
 </div>
-<?=$this->get('pagination')->getHtml($this, array('action' => 'show', 'id' => $this->getRequest()->getParam('id'))); ?>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]); ?>
 <style>
     @media (max-width: 990px) {
         #gallery > [class*="col-"] {

@@ -43,7 +43,7 @@ if ($this->getUser()) {
                             <?php endif; ?>
                                 background-repeat: no-repeat;">
                             <dt>
-                                <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId())) ?>" class="topictitle">
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="topictitle">
                                     <?=$topic->getTopicTitle() ?>
                                 </a>
                                 <?php if ($topic->getType() == '1'): ?>
@@ -51,7 +51,7 @@ if ($this->getUser()) {
                                 <?php endif; ?>
                                 <br>
                                 <?=$this->getTrans('by') ?>
-                                <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId())) ?>" style="color: #AA0000;" class="username-coloured">
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
                                     <?=$topic->getAuthor()->getName() ?>
                                 </a>
                                 »
@@ -63,10 +63,10 @@ if ($this->getUser()) {
                                 <span>
                                     <img style="width:30px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
                                     <?=$this->getTrans('by') ?>
-                                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId())) ?>">
+                                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>">
                                         <?=$lastPost->getAutor()->getName() ?>
                                     </a>
-                                    <a href="<?=$this->getUrl(array('controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage())) ?>#<?=$lastPost->getId()?>">
+                                    <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId()?>">
                                         <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
                                     </a>
                                     <br>
