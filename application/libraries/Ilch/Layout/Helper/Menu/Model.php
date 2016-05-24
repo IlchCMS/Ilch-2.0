@@ -116,9 +116,10 @@ class Model
                             $this->layout->getTranslator()->load(APPLICATION_PATH.'/modules/'.$moduleKey.'/translations');
                             $boxObj = new $class($this->layout, $view, $this->layout->getRequest(), $this->layout->getRouter(), $this->layout->getTranslator());
                             $boxObj->render();
-                            $viewPath = APPLICATION_PATH.'/'.dirname($this->layout->getFile()).'/override/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
 
-                            if (!file_exists($viewPath)) {
+                            if (file_exists(APPLICATION_PATH.'/'.dirname($this->layout->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php')) {
+                                $viewPath = APPLICATION_PATH.'/'.dirname($this->layout->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
+                            } else {
                                 $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
                             }
 
