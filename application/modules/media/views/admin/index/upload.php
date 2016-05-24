@@ -34,10 +34,25 @@ function return_bytes($val) {
 
     return $val;
 }
+
+function toJavaScriptArray($array) {
+    $arrayString = 'Array(';
+    for($i = 0; $i < count($array); ++$i) {
+        $arrayString = $arrayString . '\'' . $array[$i] . '\'';
+        if($i < count($array)-1) {
+            $arrayString = $arrayString . ',';
+        }
+    }
+
+    $arrayString = $arrayString . ')';
+    return $arrayString;
+}
 ?>
 <script language="javascript">
+    const allowedExtensions = <?=toJavaScriptArray(explode(' ',$this->get('media_ext_img') . $this->get('media_ext_file') . $this->get('media_ext_video')));?>;
     var maxFileSize = <?=return_bytes(ini_get('upload_max_filesize'));?>;
     var messageFileTooBig = '<?=$this->getTrans('fileTooBig');?>';
+    var messageExtensionNotAllowed = '<?=$this->getTrans('extensionNotAllowed');?>';
    $(document).ready(function(){
 	$("[rel='tooltip']").tooltip();
     });

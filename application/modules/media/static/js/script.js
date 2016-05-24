@@ -21,21 +21,26 @@ $(function(){
             var tpl = $('<li class="working"><input type="text" value="0" data-width="48" data-height="48"'+
                 ' data-fgColor="#00AEFF" data-readOnly="1" data-bgColor="#3e4043" /><p></p><b class="suss-none">Finish</b><span class=""></span></li>');
 
-            if(data.files[0].size <= maxFileSize) {
+            var re = /(?:\.([^.]+))?$/;
+            var ext = re.exec(data.files[0].name)[1];
+
+            if(jQuery.inArray(ext,allowedExtensions) == -1) {
+               tpl.find('p').text(messageExtensionNotAllowed);
+            } else if(data.files[0].size <= maxFileSize) {
                 // Append the file name and file size
                 tpl.find('p').text(data.files[0].name)
                              .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
             } else {
                 tpl.find('p').text(messageFileTooBig);
             }
-            
+
             // Add the HTML to the UL element
             data.context = tpl.appendTo(ul);
 
             // Initialize the knob plugin
             tpl.find('input').knob();
 
-            if(data.files[0].size > maxFileSize) {
+            if(data.files[0].size > maxFileSize || jQuery.inArray(ext,allowedExtensions) == -1) {
                 return;
             }
 
