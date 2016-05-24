@@ -49,7 +49,7 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index'))
+                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index', 'action' => 'index'))
                 ->add($profil->getName(), array('controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
                 ->add($this->getTranslator()->trans('menuGallery'), array('controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
                 ->add($gallery->getTitle(), array('action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $id));
@@ -78,7 +78,7 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle().' - '.$image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index'))
+                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index', 'action' => 'index'))
                 ->add($profil->getName(), array('controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
                 ->add($this->getTranslator()->trans('menuGallery'), array('controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
                 ->add($gallery->getTitle(), array('action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $galleryId))
@@ -109,5 +109,3 @@ class Gallery extends \Ilch\Controller\Frontend
         $this->getView()->set('comments', $comments);
     }
 }
-
-
