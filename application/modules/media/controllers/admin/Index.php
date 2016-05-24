@@ -107,6 +107,10 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('media'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('mediaUpload'), array('action' => 'upload'));
 
+        $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
+        $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
+        $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
+
         if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('media_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
         }
