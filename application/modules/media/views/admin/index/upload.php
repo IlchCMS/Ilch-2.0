@@ -51,8 +51,8 @@ function toJavaScriptArray($array) {
 <script language="javascript">
     const allowedExtensions = <?=toJavaScriptArray(explode(' ',$this->get('allowedExtensions')));?>;
     var maxFileSize = <?=return_bytes(ini_get('upload_max_filesize'));?>;
-    var fileTooBig = '<?=$this->getTrans('fileTooBig');?>';
-    var extensionNotAllowed = '<?=$this->getTrans('extensionNotAllowed');?>';
+    var fileTooBig = <?=json_encode($this->getTrans('fileTooBig'));?>;
+    var extensionNotAllowed = <?=json_encode($this->getTrans('extensionNotAllowed'));?>;
    $(document).ready(function(){
 	$("[rel='tooltip']").tooltip();
     });
