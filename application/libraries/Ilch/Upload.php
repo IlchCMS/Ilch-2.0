@@ -47,6 +47,11 @@ class Upload extends \Ilch\Controller\Base
     protected $types;
 
     /**
+     * @var string $allowedExtensions
+     */
+    protected $allowedExtensions;
+
+    /**
      * @var string $path
      */
     protected $path;
@@ -208,6 +213,26 @@ class Upload extends \Ilch\Controller\Base
     }
 
     /**
+     * @param string $allowedExtensions
+     *
+     * @return string allowedExtensions
+     */
+    public function setAllowedExtensions($allowedExtensions)
+    {
+        $this->allowedExtensions = $allowedExtensions;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAllowedExtensions()
+    {
+        return $this->allowedExtensions;
+    }
+
+    /**
      * @param string $path
      *
      * @return string path
@@ -285,6 +310,26 @@ class Upload extends \Ilch\Controller\Base
                 $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
             }
         }
+    }
+
+    public function isAllowedExtension() {
+        return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
+    }
+
+    public function return_bytes($val) {
+        $val = trim($val);
+        $last = strtolower($val[strlen($val)-1]);
+        switch($last) {
+            // The 'G' modifier is available since PHP 5.1.0
+            case 'g':
+                $val *= 1024;
+            case 'm':
+                $val *= 1024;
+            case 'k':
+                $val *= 1024;
+        }
+
+        return $val;
     }
 
     public function save()

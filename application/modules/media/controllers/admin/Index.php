@@ -107,9 +107,8 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('media'), array('action' => 'index'))
                 ->add($this->getTranslator()->trans('mediaUpload'), array('action' => 'upload'));
 
-        $this->getView()->set('media_ext_img', $this->getConfig()->get('media_ext_img'));
-        $this->getView()->set('media_ext_file', $this->getConfig()->get('media_ext_file'));
-        $this->getView()->set('media_ext_video', $this->getConfig()->get('media_ext_video'));
+        $allowedExtensions = $this->getConfig()->get('media_ext_img').' '.$this->getConfig()->get('media_ext_file').' '.$this->getConfig()->get('media_ext_video');
+        $this->getView()->set('allowedExtensions', $allowedExtensions);
 
         if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('media_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
@@ -119,11 +118,16 @@ class Index extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
 
         if ($this->getRequest()->isPost()) {
-
             $upload = new \Ilch\Upload();
             $upload->setFile($_FILES['upl']['name']);
             $upload->setTypes($this->getConfig()->get('media_ext_img'));
             $upload->setPath($this->getConfig()->get('media_uploadpath'));
+            // Early return if extension is not allowed or file is too big. Should normally already be done client-side.
+            // Doing this client-side is especially important for the "file too big"-case as early returning here is already too late.
+            $upload->setAllowedExtensions($allowedExtensions);
+            if(!$upload->isAllowedExtension() || filesize($_FILES['upl']['name']) > $upload->return_bytes(ini_get('upload_max_filesize'))) {
+                return;
+            }
             $upload->upload();
 
             $model = new \Modules\Media\Models\Media();
