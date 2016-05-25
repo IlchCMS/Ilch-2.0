@@ -522,6 +522,9 @@ dd.lastpost span, ul.topiclist dd.info span, dd.redirect span, dd.moderation spa
     padding: 2px 4px;
     left: -6px;
 }
+#forum .pagination > li > a, .pagination > li > span {
+    padding: 2px 5px;
+}
 @media only screen and (min-width: 1199px) {
     
 
