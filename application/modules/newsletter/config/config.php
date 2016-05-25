@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'newsletter',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'newsletter.png',
+        'icon_small' => 'fa-newspaper-o',
         'languages' =>
             [
             'de_DE' =>

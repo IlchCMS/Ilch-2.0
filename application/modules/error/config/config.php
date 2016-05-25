@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
         'key' => 'error',
         'author' => 'Stantin, Thomas',
         'system_module' => true,
-        'icon_small' => 'error.png',
+        'icon_small' => 'fa-exclamation-triangle',
         'languages' =>
             [
             'de_DE' =>

@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'imprint',
-        'icon_small' => 'imprint.png',
+        'icon_small' => 'fa-paragraph',
         'system_module' => true,
         'languages' =>
             [

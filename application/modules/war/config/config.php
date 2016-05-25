@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'war',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'war.png',
+        'icon_small' => 'fa-shield',
         'languages' =>
             [
             'de_DE' =>

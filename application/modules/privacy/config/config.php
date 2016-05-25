@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'privacy',
-        'icon_small' => 'privacy.png',
+        'icon_small' => 'fa-paragraph',
         'system_module' => true,
         'languages' =>
             [

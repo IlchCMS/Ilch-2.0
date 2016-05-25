@@ -13,7 +13,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'user',
-        'icon_small' => 'user.png',
+        'icon_small' => 'fa-user',
         'system_module' => true,
         'languages' =>
             [

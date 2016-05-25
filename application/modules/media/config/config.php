@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'media',
         'system_module' => true,
-        'icon_small' => 'media.png',
+        'icon_small' => 'fa-th',
         'languages' =>
             [
             'de_DE' =>

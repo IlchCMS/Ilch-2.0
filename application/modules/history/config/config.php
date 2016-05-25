@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'history',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'history.png',
+        'icon_small' => 'fa-history',
         'languages' =>
             [
             'de_DE' =>

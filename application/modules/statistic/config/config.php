@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'statistic',
-        'icon_small' => 'statistic.png',
+        'icon_small' => 'fa-pie-chart',
         'system_module' => true,
         'languages' =>
             [

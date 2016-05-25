@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'checkout',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'checkout.png',
+        'icon_small' => 'fa-usd',
         'languages' =>
             [
             'de_DE' =>

@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'downloads',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'download.png',
+        'icon_small' => 'fa-arrow-circle-o-down',
         'languages' =>
             [
             'de_DE' =>

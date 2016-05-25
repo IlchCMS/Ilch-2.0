@@ -13,12 +13,17 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->get('modulesNotInstalled') as $module): ?>
-                    <?php $content = $module->getContentForLocale($this->getTranslator()->getLocale()); ?>
+                <?php foreach ($this->get('modulesNotInstalled') as $module):
+                    $content = $module->getContentForLocale($this->getTranslator()->getLocale());
+                    if (substr($module->getIconSmall(), 0, 3) == 'fa-') {
+                        $smallIcon = '<i class="fa '.$module->getIconSmall().'" style="padding-right: 5px;"></i>';
+                    } else {
+                        $smallIcon = '<img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />';
+                    }
+                ?>
                     <tr>
                         <td>
-                            <img src="<?=$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()) ?>" />
-                            <?=$content['name'] ?>
+                            <?=$smallIcon.$content['name'] ?>
                             <br /><br />
                             <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
                             <br />

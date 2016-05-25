@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'linkus',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'linkus.png',
+        'icon_small' => 'fa-link',
         'languages' =>
             [
             'de_DE' =>

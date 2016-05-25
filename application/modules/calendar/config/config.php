@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'calendar',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'calendar.png',
+        'icon_small' => 'fa-calendar',
         'languages' =>
             [
             'de_DE' =>

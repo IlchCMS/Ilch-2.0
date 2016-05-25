@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'forum',
         'author' => 'Stantin Thomas',
-        'icon_small' => 'forum.png',
+        'icon_small' => 'fa-list',
         'languages' =>
             [
             'de_DE' =>

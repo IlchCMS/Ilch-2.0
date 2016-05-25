@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'guestbook',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'guestbook.png',
+        'icon_small' => 'fa-book',
         'languages' =>
             [
             'de_DE' =>

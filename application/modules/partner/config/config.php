@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'partner',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'partner.png',
+        'icon_small' => 'fa-users',
         'languages' =>
             [
             'de_DE' =>

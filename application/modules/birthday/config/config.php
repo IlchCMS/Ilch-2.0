@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'birthday',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'birthday.png',
+        'icon_small' => 'fa-birthday-cake',
         'languages' =>
             [
             'de_DE' =>

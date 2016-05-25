@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'contact',
-        'icon_small' => 'contact.png',
+        'icon_small' => 'fa-envelope-o',
         'system_module' => true,
         'languages' =>
             [

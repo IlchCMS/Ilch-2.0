@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'rule',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'rule.png',
+        'icon_small' => 'fa-gavel',
         'languages' =>
             [
             'de_DE' =>

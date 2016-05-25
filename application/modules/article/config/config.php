@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'article',
-        'icon_small' => 'article.png',
+        'icon_small' => 'fa-quote-right',
         'system_module' => true,
         'languages' =>
             [

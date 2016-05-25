@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'gallery',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'gallery.png',
+        'icon_small' => 'fa-picture-o',
         'languages' =>
             [
             'de_DE' =>

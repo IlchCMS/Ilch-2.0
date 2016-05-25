@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'training',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'training.png',
+        'icon_small' => 'fa-graduation-cap',
         'languages' =>
             [
             'de_DE' =>

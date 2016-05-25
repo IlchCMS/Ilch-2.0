@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'faq',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'faq.png',
+        'icon_small' => 'fa-question-circle',
         'languages' =>
             [
             'de_DE' =>

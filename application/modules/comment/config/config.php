@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'comment',
-        'icon_small' => 'comment.png',
+        'icon_small' => 'fa-comments-o',
         'system_module' => true,
         'languages' =>
             [

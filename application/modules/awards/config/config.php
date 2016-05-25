@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'awards',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'awards.png',
+        'icon_small' => 'fa-trophy',
         'languages' =>
             [
             'de_DE' =>

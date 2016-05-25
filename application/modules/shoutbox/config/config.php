@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'shoutbox',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'shoutbox.png',
+        'icon_small' => 'fa-bullhorn',
         'languages' =>
             [
             'de_DE' =>

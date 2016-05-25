@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'events',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'events.png',
+        'icon_small' => 'fa-ticket',
         'languages' =>
             [
             'de_DE' =>

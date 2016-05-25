@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'jobs',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'jobs.png',
+        'icon_small' => 'fa-briefcase',
         'languages' =>
             [
             'de_DE' =>

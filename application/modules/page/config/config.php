@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config =
         [
         'key' => 'page',
-        'icon_small' => 'page.png',
+        'icon_small' => 'fa-pencil',
         'system_module' => true,
         'languages' =>
             [

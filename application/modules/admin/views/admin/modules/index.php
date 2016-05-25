@@ -12,23 +12,28 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->get('modules') as $module): ?>
-                <?php $content = $module->getContentForLocale($this->getTranslator()->getLocale()); ?>
-                <?php if($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
+            <?php foreach ($this->get('modules') as $module):
+                $content = $module->getContentForLocale($this->getTranslator()->getLocale());
+                if (substr($module->getIconSmall(), 0, 3) == 'fa-') {
+                    $smallIcon = '<i class="fa '.$module->getIconSmall().'" style="padding-right: 5px;"></i>';
+                } else {
+                    $smallIcon = '<img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />';
+                }
+
+                if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
                     <tr>
                         <td>
-                            <img src="<?=$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()) ?>" />
-                            <?=$content['name'] ?>
+                            <?=$smallIcon.$content['name'] ?>
                             <br /><br />
                             <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
                             <br />
-                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>">
+                            <a href="<?=$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')) ?>">
                                 <?=$this->getTrans('administrate') ?>
                             </a>
                             <?php if(!isset($config->isSystemModule)): ?>
                                 <small>
                                     | 
-                                    <a class="delete_button" href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>">
+                                    <a class="delete_button" href="<?=$this->getUrl(array('action' => 'delete', 'key' => $module->getKey()), null, true) ?>">
                                         <?=$this->getTrans('delete') ?>
                                     </a>
                                 </small>
