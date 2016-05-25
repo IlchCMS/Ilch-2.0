@@ -316,7 +316,7 @@ class Upload extends \Ilch\Controller\Base
         return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
     }
 
-    public function return_bytes($val) {
+    public function returnBytes($val) {
         $val = trim($val);
         $last = strtolower($val[strlen($val)-1]);
         switch($last) {

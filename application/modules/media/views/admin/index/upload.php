@@ -19,21 +19,7 @@
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
 
 <?php
-function return_bytes($val) {
-    $val = trim($val);
-    $last = strtolower($val[strlen($val)-1]);
-    switch($last) {
-        // The 'G' modifier is available since PHP 5.1.0
-        case 'g':
-            $val *= 1024;
-        case 'm':
-            $val *= 1024;
-        case 'k':
-            $val *= 1024;
-    }
-
-    return $val;
-}
+$ilchUpload = new \Ilch\Upload();
 
 function toJavaScriptArray($array) {
     $arrayString = 'Array(';
@@ -50,7 +36,7 @@ function toJavaScriptArray($array) {
 ?>
 <script language="javascript">
     const allowedExtensions = <?=toJavaScriptArray(explode(' ',$this->get('allowedExtensions')));?>;
-    var maxFileSize = <?=return_bytes(ini_get('upload_max_filesize'));?>;
+    var maxFileSize = <?=$ilchUpload->returnBytes(ini_get('upload_max_filesize'));?>;
     var fileTooBig = <?=json_encode($this->getTrans('fileTooBig'));?>;
     var extensionNotAllowed = <?=json_encode($this->getTrans('extensionNotAllowed'));?>;
    $(document).ready(function(){
