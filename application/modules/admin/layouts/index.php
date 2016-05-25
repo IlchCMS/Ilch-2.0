@@ -102,6 +102,7 @@
                         foreach ($this->get('modules') as $module) {
                             if ($user->hasAccess('module_'.$module->getKey())) {
                                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
+                                if (substr($module->getIconSmall(), 0, 3) == 'fa-') {
                                     $smallIcon = '<i class="fa '.$module->getIconSmall().'" style="padding-right: 5px;"></i>';
                                 } else {
                                     $smallIcon = '<img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />';
