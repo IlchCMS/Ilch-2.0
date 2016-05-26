@@ -41,6 +41,8 @@ return
     'video' => 'Video',
     'file' => 'Datei',
     'advancedSearch' => 'Erweiterte Suche',
+    'fileTooBig' => 'Die Datei ist zu groß.',
+    'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
 
     'cats' => 'Kategorien',
     'cat' => 'Kategorie',
