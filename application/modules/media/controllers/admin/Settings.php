@@ -49,9 +49,9 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost('save')) {
-            $this->getConfig()->set('media_ext_img', $this->getRequest()->getPost('allowedImages'));
-            $this->getConfig()->set('media_ext_file', $this->getRequest()->getPost('allowedFiles'));
-            $this->getConfig()->set('media_ext_video', $this->getRequest()->getPost('allowedVideos'));
+            $this->getConfig()->set('media_ext_img', strtolower($this->getRequest()->getPost('allowedImages')));
+            $this->getConfig()->set('media_ext_file', strtolower($this->getRequest()->getPost('allowedFiles')));
+            $this->getConfig()->set('media_ext_video', strtolower($this->getRequest()->getPost('allowedVideos')));
 
             $this->addMessage('success');
         }

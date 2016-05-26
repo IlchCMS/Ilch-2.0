@@ -332,6 +332,19 @@ class Upload extends \Ilch\Controller\Base
         return $val;
     }
 
+    public function toJavaScriptArray($array) {
+        $arrayString = 'Array(';
+        for($i = 0; $i < count($array); ++$i) {
+            $arrayString = $arrayString . '\'' . $array[$i] . '\'';
+            if($i < count($array)-1) {
+                $arrayString = $arrayString . ',';
+            }
+        }
+
+        $arrayString = $arrayString . ')';
+        return $arrayString;
+    }
+
     public function save()
     {
         $hash = uniqid() . $this->getName();

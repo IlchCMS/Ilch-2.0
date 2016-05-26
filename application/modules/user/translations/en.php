@@ -244,6 +244,8 @@ return
     'mediaUpload' => 'Media Upload',
     'add' => 'Add...',
     'drag' => 'drag and drop files here',
+    'fileTooBig' => 'The file is too big.',
+    'extensionNotAllowed' => 'Files with this extension are not allowed.',
 
     'saveButton' => 'Save',
 

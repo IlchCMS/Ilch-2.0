@@ -243,7 +243,9 @@ return
     'media' => 'Medien',
     'mediaUpload' => 'Medien hochladen',
     'add' => 'Hinzufügen...',
-    'drag' => 'Drag & Drop Dateien hier',
+    'drag' => 'Dateien hierhin ziehen und ablegen',
+    'fileTooBig' => 'Die Datei ist zu groß.',
+    'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
 
     'saveButton' => 'Speichern',
 
