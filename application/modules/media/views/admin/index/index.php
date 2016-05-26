@@ -7,7 +7,7 @@
             <form class="form-horizontal" method="POST" action="">
                 <?=$this->getTokenField() ?>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-perpage">Rows per page:</label>
+                    <label class="col-lg-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage')?>:</label>
                     <div class="col-lg-2">
                         <select id="pref-perpage" class="form-control" name="rows">
                             <option value="2">2</option>
@@ -34,33 +34,33 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-orderby">Order by:</label>
+                    <label class="col-lg-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy')?>:</label>
                     <div class="col-lg-2">
                         <select id="pref-orderby" class="form-control" name="order">
-                            <option>Descendent</option>
+                            <option><?=$this->getTrans('descendent')?></option>
                         </select>    
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label" for="pref-orderbytype">Media Type:</label>
+                    <label class="col-lg-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType')?>:</label>
                     <div class="col-lg-2">
                         <select id="pref-orderbytype" class="form-control" name="orderbytype">
-                            <option>All</option>
-                            <option>Image</option>
-                            <option>Video</option>
-                            <option>File</option>
-                        </select>    
+                            <option><?=$this->getTrans('all')?></option>
+                            <option><?=$this->getTrans('image')?></option>
+                            <option><?=$this->getTrans('video')?></option>
+                            <option><?=$this->getTrans('file')?></option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">    
                     <button type="submit" class="btn btn-default filter-col" name="search" value="search">
-                        <span class="fa fa-search"></span> Search
+                        <span class="fa fa-search"></span> <?=$this->getTrans('search')?>
                     </button>  
                 </div>
             </form>
         </div>    
         <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
-            <span class="fa fa-cogs"></span> Advanced Search
+            <span class="fa fa-cogs"></span> <?=$this->getTrans('advancedSearch')?>
         </button>
     </div>
     <?=$this->get('pagination')->getHtml($this, $this->get('rows')) ?>
