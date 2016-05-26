@@ -85,7 +85,7 @@ function rec($item, $menuMapper, $obj) {
             <input type="hidden" id="id" value="" />
             <div class="form-group">
                 <label for="title" class="col-lg-2 control-label">
-                    Itemtitel
+                    <?=$this->getTrans('itemTitle') ?>
                 </label>
                 <div class="col-lg-4">
                     <input type="text" class="form-control" id="title" />
@@ -93,17 +93,17 @@ function rec($item, $menuMapper, $obj) {
             </div>
             <div class="form-group">
                 <label for="type" class="col-lg-2 control-label">
-                    Itemtyp
+                    <?=$this->getTrans('itemType') ?>
                 </label>
                 <div class="col-lg-4">
                     <select id="type" class="form-control">
-                        <option value="0">Menu</option>
+                        <option value="0"><?=$this->getTrans('menu')?></option>
                         <optgroup>
-                            <option value="1">Externe Verlinkung</option>
-                            <option value="2">Seiten Verlinkung</option>
-                            <option value="3">Modul Verlinkung</option>
+                            <option value="1"><?=$this->getTrans('externalLinking')?></option>
+                            <option value="2"><?=$this->getTrans('siteLinking')?></option>
+                            <option value="3"><?=$this->getTrans('moduleLinking')?></option>
                         </optgroup>
-                        <option value="4">Box</option>
+                        <option value="4"><?=$this->getTrans('itemTypeBox')?></option>
                     </select>
                 </div>
             </div>
