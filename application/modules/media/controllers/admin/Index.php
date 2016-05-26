@@ -119,7 +119,7 @@ class Index extends \Ilch\Controller\Admin
             // Early return if extension is not allowed or file is too big. Should normally already be done client-side.
             // Doing this client-side is especially important for the "file too big"-case as early returning here is already too late.
             $upload->setAllowedExtensions($allowedExtensions);
-            if(!$upload->isAllowedExtension() || filesize($_FILES['upl']['name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
+            if(!$upload->isAllowedExtension() || filesize($_FILES['upl']['tmp_name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
                 return;
             }
             $upload->upload();
