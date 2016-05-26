@@ -20,3 +20,29 @@
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.iframe-transport.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.fileupload.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
+
+<?php
+$ilchUpload = new \Ilch\Upload();
+
+function toJavaScriptArray($array) {
+    $arrayString = 'Array(';
+    for($i = 0; $i < count($array); ++$i) {
+        $arrayString = $arrayString . '\'' . $array[$i] . '\'';
+        if($i < count($array)-1) {
+            $arrayString = $arrayString . ',';
+        }
+    }
+
+    $arrayString = $arrayString . ')';
+    return $arrayString;
+}
+?>
+<script language="javascript">
+    const allowedExtensions = <?=toJavaScriptArray(explode(' ',$this->get('allowedExtensions')));?>;
+    var maxFileSize = <?=$ilchUpload->returnBytes(ini_get('upload_max_filesize'));?>;
+    var fileTooBig = <?=json_encode($this->getTrans('fileTooBig'));?>;
+    var extensionNotAllowed = <?=json_encode($this->getTrans('extensionNotAllowed'));?>;
+    $(document).ready(function(){
+        $("[rel='tooltip']").tooltip();
+    });
+</script>

@@ -128,10 +128,14 @@ class Iframe extends \Ilch\Controller\Admin
     public function uploadAction() 
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
+        $allowedExtensions = $this->getConfig()->get('media_ext_img').' '.$this->getConfig()->get('media_ext_file').' '.$this->getConfig()->get('media_ext_video');
+        $this->getView()->set('allowedExtensions', $allowedExtensions);
     }
 
     public function uploadckeditorAction() 
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
+        $allowedExtensions = $this->getConfig()->get('media_ext_img').' '.$this->getConfig()->get('media_ext_file').' '.$this->getConfig()->get('media_ext_video');
+        $this->getView()->set('allowedExtensions', $allowedExtensions);
     }
 }
