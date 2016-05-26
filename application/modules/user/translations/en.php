@@ -249,4 +249,7 @@ return
 
     'users' => 'Users',
     'setfree' => 'Set free',
+
+    'back' => 'Back to mainpage',
+    'alreadyLoggedIn' => 'You are already logged in!',
     ];
