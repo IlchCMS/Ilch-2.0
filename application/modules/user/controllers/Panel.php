@@ -477,6 +477,9 @@ class Panel extends BaseController
                 ->add($this->getTranslator()->trans('media'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('mediaUpload'), ['action' => 'upload']);
 
+        $allowedExtensions = $this->getConfig()->get('media_ext_img');
+        $this->getView()->set('allowedExtensions', $allowedExtensions);
+
         if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
         }
@@ -490,6 +493,12 @@ class Panel extends BaseController
             $upload->setFile($_FILES['upl']['name']);
             $upload->setTypes($this->getConfig()->get('usergallery_filetypes'));
             $upload->setPath($this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId().'/');
+            // Early return if extension is not allowed or file is too big. Should normally already be done client-side.
+            // Doing this client-side is especially important for the "file too big"-case as early returning here is already too late.
+            $upload->setAllowedExtensions($allowedExtensions);
+            if(!$upload->isAllowedExtension() || filesize($_FILES['upl']['name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
+                return;
+            }
             $upload->upload();
 
             $model = new MediaModel();

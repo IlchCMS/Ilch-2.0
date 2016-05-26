@@ -32,6 +32,8 @@ return
     'browse' => 'Browse',
     'allowedMediaInfoText' => 'Hier kannst du die erlaubten Endungen einstellen. <br/> Schreibe die Endungen hinter einander und nur getrennt durch ein Leerzeichen.<br/> Sei dir im klaren das eine Endung wie z.B. "jpeg" nur bei erlaubte Bilder vorkommen darf und nicht bei erlaubte Videos oder erlaubte Files zu suchen hat!',
     'importInfoText' => 'Hier kannst du neue Dateien hinzufügen, die sich im Upload Ordner befinden, jedoch noch nicht in der Datenbank. Dies ist besonders hilfreich bei größeren Dateien, die ganz einfach per FTP in den Upload Ordner geladen werden können.',
+    'fileTooBig' => 'Die Datei ist zu groß.',
+    'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
 
     'cats' => 'Kategorien',
     'cat' => 'Kategorie',
