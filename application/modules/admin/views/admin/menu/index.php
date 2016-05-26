@@ -85,7 +85,7 @@ function rec($item, $menuMapper, $obj) {
             <input type="hidden" id="id" value="" />
             <div class="form-group">
                 <label for="title" class="col-lg-2 control-label">
-                    Itemtitel
+                    <?=$this->getTrans('itemTitle') ?>
                 </label>
                 <div class="col-lg-4">
                     <input type="text" class="form-control" id="title" />
@@ -93,17 +93,17 @@ function rec($item, $menuMapper, $obj) {
             </div>
             <div class="form-group">
                 <label for="type" class="col-lg-2 control-label">
-                    Itemtyp
+                    <?=$this->getTrans('itemType') ?>
                 </label>
                 <div class="col-lg-4">
                     <select id="type" class="form-control">
-                        <option value="0">Menu</option>
+                        <option value="0"><?=$this->getTrans('menu')?></option>
                         <optgroup>
-                            <option value="1">Externe Verlinkung</option>
-                            <option value="2">Seiten Verlinkung</option>
-                            <option value="3">Modul Verlinkung</option>
+                            <option value="1"><?=$this->getTrans('externalLinking')?></option>
+                            <option value="2"><?=$this->getTrans('siteLinking')?></option>
+                            <option value="3"><?=$this->getTrans('moduleLinking')?></option>
                         </optgroup>
-                        <option value="4">Box</option>
+                        <option value="4"><?=$this->getTrans('itemTypeBox')?></option>
                     </select>
                 </div>
             </div>
@@ -203,7 +203,7 @@ $(document).ready
 
         $('#menuForm').on('click', '#menuItemAdd', function () {
             if ($('#title').val() == '') {
-                alert('Es muss ein Titel angegeben werden');
+                alert(<?=json_encode($this->getTrans('missingTitle'))?>);
                 return;
             }
 
@@ -259,7 +259,7 @@ $(document).ready
 
         $('#menuForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
-                    alert('Es muss ein Titel angegeben werden');
+                    alert(<?=json_encode($this->getTrans('missingTitle'))?>);
                     return;
                 }
 
@@ -298,7 +298,7 @@ $(document).ready
             });
 
             if (options == '' && ($(this).val() == '1' || $(this).val() == '2' || $(this).val() == '3')) {
-                alert('Es muss zuerst ein Menü hinzugefügt werden');
+                alert(<?=json_encode($this->getTrans('missingMenu'))?>);
                 $(this).val(0);
                 return;
             }
@@ -313,10 +313,10 @@ $(document).ready
                                 <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
                  $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
-                                <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; }else { echo 'Keine Seite vorhanden'; } ?></div></div>'+menuHtml);
+                                <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
-                                <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; }else { echo 'Keine Module vorhanden'; } ?></div></div>'+menuHtml);
+                                <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
                                 <div class="col-lg-4"><?='<select id="boxkey" class="form-control">';
