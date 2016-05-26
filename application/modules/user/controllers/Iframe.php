@@ -34,8 +34,10 @@ class Iframe extends \Ilch\Controller\Frontend
         $this->getView()->set('usergallery_filetypes', $this->getConfig()->get('usergallery_filetypes'));
     }
 
-    public function uploadAction() 
+    public function uploadAction()
     {
         $this->getLayout()->setFile('modules/admin/layouts/iframe');
+        $allowedExtensions = $this->getConfig()->get('usergallery_filetypes');
+        $this->getView()->set('allowedExtensions', $allowedExtensions);
     }
 }
