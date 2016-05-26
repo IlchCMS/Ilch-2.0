@@ -19,25 +19,23 @@ class Base extends \Ilch\Controller\Admin
      */
     public function init()
     {
-        $active = array();
+        $active = [];
 
-        foreach(array('index', 'downloads', 'file') as $controllerName) {
+        foreach(['index', 'downloads', 'file'] as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 
         $this->getLayout()->addMenu
         (
             'menuDownloads',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'menuDownloads',
                     'active' => $active['index'] or $active['downloads'] or $active['file'],
                     'icon' => 'fa fa-th',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                )
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ]
+            ]
         );
     }
 }

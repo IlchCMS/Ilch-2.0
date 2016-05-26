@@ -16,12 +16,12 @@ class History extends \Ilch\Mapper
      * @param array $where
      * @return HistoryModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('history')
             ->where($where)
-            ->order(array('date' => 'ASC'))
+            ->order(['date' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class History extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new HistoryModel();
@@ -53,7 +53,7 @@ class History extends \Ilch\Mapper
      * @param array $orderBy
      * @return HistoryModel[]|null
      */
-    public function getHistorysBy($where = array(), $orderBy = array('id' => 'ASC'))
+    public function getHistorysBy($where = [], $orderBy = ['id' => 'ASC'])
     {
         $historyArray = $this->db()->select('*')
             ->from('history')
@@ -66,7 +66,7 @@ class History extends \Ilch\Mapper
             return null;
         }
 
-        $historys = array();
+        $historys = [];
 
         foreach ($historyArray as $historyRow) {
             $historyModel = new HistoryModel();
@@ -92,7 +92,7 @@ class History extends \Ilch\Mapper
     {
         $historyRow = $this->db()->select('*')
             ->from('history')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -118,17 +118,17 @@ class History extends \Ilch\Mapper
      */
     public function save(HistoryModel $history)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'date' => $history->getDate(),
             'title' => $history->getTitle(),
             'text' => $history->getText(),
-        );
+            ];
 
         if ($history->getId()) {
             $this->db()->update('history')
                 ->values($fields)
-                ->where(array('id' => $history->getId()))
+                ->where(['id' => $history->getId()])
                 ->execute();
         } else {
             $this->db()->insert('history')
@@ -145,7 +145,7 @@ class History extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('history')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

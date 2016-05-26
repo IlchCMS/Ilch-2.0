@@ -17,12 +17,12 @@ class Events extends \Ilch\Mapper
      * @param array $where
      * @return EventModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
                 ->from('events')
                 ->where($where)
-                ->order(array('start' => 'ASC'))
+                ->order(['start' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -30,7 +30,7 @@ class Events extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new EventModel();
@@ -59,7 +59,7 @@ class Events extends \Ilch\Mapper
     {
         $eventRow = $this->db()->select('*')
                 ->from('events')
-                ->where(array('id' => $id))
+                ->where(['id' => $id])
                 ->execute()
                 ->fetchAssoc();
 
@@ -101,7 +101,7 @@ class Events extends \Ilch\Mapper
             return null;
         }
 
-        $events = array();
+        $events = [];
 
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
@@ -128,7 +128,7 @@ class Events extends \Ilch\Mapper
             return null;
         }
 
-        $events = array();
+        $events = [];
 
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
@@ -146,7 +146,7 @@ class Events extends \Ilch\Mapper
         
         $entryRow = $this->db()->select('*')
                 ->from('events')
-                ->where(array('user_id' => $userId))
+                ->where(['user_id' => $userId])
                 ->execute()
                 ->fetchRows();
 
@@ -154,7 +154,7 @@ class Events extends \Ilch\Mapper
             return null;
         }
         
-        $events = array();
+        $events = [];
         
         foreach ($entryRow as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
@@ -183,7 +183,7 @@ class Events extends \Ilch\Mapper
             return null;
         }
 
-        $events = array();
+        $events = [];
 
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
@@ -212,7 +212,7 @@ class Events extends \Ilch\Mapper
             return null;
         }
 
-        $events = array();
+        $events = [];
 
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
@@ -235,8 +235,8 @@ class Events extends \Ilch\Mapper
      */
     public function save(EventModel $event)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'user_id' => $event->getUserId(),
             'start' => $event->getStart(),
             'end' => $event->getEnd(),
@@ -245,12 +245,12 @@ class Events extends \Ilch\Mapper
             'image' => $event->getImage(),
             'text' => $event->getText(),
             'show' => $event->getShow(),
-        );
+            ];
 
         if ($event->getId()) {
             $this->db()->update('events')
                 ->values($fields)
-                ->where(array('id' => $event->getId()))
+                ->where(['id' => $event->getId()])
                 ->execute();
         } else {
             $this->db()->insert('events')
@@ -268,7 +268,7 @@ class Events extends \Ilch\Mapper
     {
         $imageRow = $this->db()->select('*')
             ->from('events')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -277,15 +277,15 @@ class Events extends \Ilch\Mapper
         }
 
         $this->db()->delete('events')
-                ->where(array('id' => $id))
+                ->where(['id' => $id])
                 ->execute();
 
         $this->db()->delete('events_entrants')
-                ->where(array('event_id' => $id))
+                ->where(['event_id' => $id])
                 ->execute();
 
         $this->db()->delete('comments')
-                ->where(array('key' => 'events/show/event/id/'.$id))
+                ->where(['key' => 'events/show/event/id/'.$id])
                 ->execute();
     }
 
@@ -298,7 +298,7 @@ class Events extends \Ilch\Mapper
     {
         $imageRow = $this->db()->select('*')
             ->from('events')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -307,8 +307,8 @@ class Events extends \Ilch\Mapper
         }
 
         $this->db()->update('events')
-            ->values(array('image' => ''))
-            ->where(array('id' => $id))
+            ->values(['image' => ''])
+            ->where(['id' => $id])
             ->execute();
     }
 }

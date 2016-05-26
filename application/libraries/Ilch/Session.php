@@ -32,12 +32,12 @@ class Session
 
         /* set session handler to the class methods */
         session_set_save_handler(
-            array(&$this, '_open'),
-            array(&$this, '_close'),
-            array(&$this, '_read'),
-            array(&$this, '_write'),
-            array(&$this, '_destroy'),
-            array(&$this, '_gc')
+            [&$this, '_open'],
+            [&$this, '_close'],
+            [&$this, '_read'],
+            [&$this, '_write'],
+            [&$this, '_destroy'],
+            [&$this, '_gc']
         );
 
         /* start a new session */

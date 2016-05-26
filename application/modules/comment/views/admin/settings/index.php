@@ -5,7 +5,7 @@
         <i class="fa fa-info" ></i>
     </a>
 </legend>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="reply" class="col-lg-2 control-label">

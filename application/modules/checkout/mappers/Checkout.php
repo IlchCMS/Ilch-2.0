@@ -16,20 +16,20 @@ class Checkout extends \Ilch\Mapper
      * @param array $where
      * @return CheckoutModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('checkout')
             ->where($where)
-            ->order(array('id' => 'DESC'))
+            ->order(['id' => 'DESC'])
             ->execute()
             ->fetchRows();
 
         if (empty($entryArray)) {
-            return array();
+            return [];
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new CheckoutModel();
@@ -46,7 +46,7 @@ class Checkout extends \Ilch\Mapper
 
     public function getEntryById($id)
     {
-        $entry = $this->getEntries(array('id' => $id));
+        $entry = $this->getEntries(['id' => $id]);
         return $entry;
     }
 
@@ -80,12 +80,12 @@ class Checkout extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('checkout')
-                ->values(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
-                ->where(array('id' => $model->getId()))
+                ->values(['name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()])
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('checkout')
-                ->values(array('name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()))
+                ->values(['name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()])
                 ->execute();
         }
     }
@@ -98,7 +98,7 @@ class Checkout extends \Ilch\Mapper
     public function deleteById($id)
     {
         return $this->db()->delete('checkout')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

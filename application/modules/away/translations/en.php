@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuAway' => 'Away list',
     'menuEntry' => 'Entry',
     'noAway' => 'no Entries available',
@@ -24,4 +24,4 @@ return array
     'missingStart' => 'Start date was not filled',
     'missingEnd' => 'End date was not filled',
     'missingText' => 'Description was not filled',
-);
+    ];

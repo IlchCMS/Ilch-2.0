@@ -18,7 +18,7 @@ class Usermenu extends \Ilch\Mapper
      */
     public function getUserMenu()
     {
-        $usermenu = array();
+        $usermenu = [];
         $usermenuRows = $this->db()->select('*')
                 ->from('user_menu')
                 ->execute()
@@ -46,10 +46,10 @@ class Usermenu extends \Ilch\Mapper
      */
     public function getUserMenuSettingsLinks($locale)
     {
-        $usermenu = array();
+        $usermenu = [];
         $usermenuRows = $this->db()->select('*')
                 ->from('user_menu_settings_links')
-                ->where(array('locale' => $locale))
+                ->where(['locale' => $locale])
                 ->execute()
                 ->fetchRows();
 

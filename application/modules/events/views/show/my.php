@@ -37,8 +37,8 @@ $date = new \Ilch\Date();
                         </div>
                         <div class="adminInfo">
                             <ul>
-                                <li class="edit" style="width:33%;"><?=$this->getEditIcon(array('controller' => 'index', 'action' => 'treat', 'id' => $eventlist->getId())) ?></li>
-                                <li class="del" style="width:33%;"><?=$this->getDeleteIcon(array('controller' => 'index', 'action' => 'del', 'id' => $eventlist->getId())) ?></li>
+                                <li class="edit" style="width:33%;"><?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $eventlist->getId()]) ?></li>
+                                <li class="del" style="width:33%;"><?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $eventlist->getId()]) ?></li>
                             </ul>
                         </div>
                     </li>

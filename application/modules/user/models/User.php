@@ -159,7 +159,7 @@ class User extends \Ilch\Model
      *
      * @var \Modules\User\Models\Group[]
      */
-    protected $groups = array();
+    protected $groups = [];
 
     /**
      * Returns the id of the user.

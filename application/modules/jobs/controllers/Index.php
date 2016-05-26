@@ -15,9 +15,9 @@ class Index extends \Ilch\Controller\Frontend
     {
         $jobsMapper = new JobsMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuJobs'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index']);
 
-        $this->getView()->set('jobs', $jobsMapper->getJobs(array('show' => 1)));
+        $this->getView()->set('jobs', $jobsMapper->getJobs(['show' => 1]));
     }
 
     public function showAction()
@@ -29,8 +29,8 @@ class Index extends \Ilch\Controller\Frontend
 
         $job = $jobsMapper->getJobsById($id);
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuJobs'), array('action' => 'index'))
-                ->add($job->getTitle(), array('action' => 'show', 'id' => $id));
+                ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
+                ->add($job->getTitle(), ['action' => 'show', 'id' => $id]);
 
         if ($this->getRequest()->getPost('saveApply')) {
             $title = trim($this->getRequest()->getPost('title'));
@@ -51,12 +51,12 @@ class Index extends \Ilch\Controller\Frontend
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/jobs/layouts/mail/apply.php');
                 }
 
-                $messageReplace = array(
+                $messageReplace = [
                         '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$title,
                         '{content}' => $text,
                         '{sitetitle}' => $this->getConfig()->get('page_title'),
                         '{date}' => $date->format("l, d. F Y", true),
-                );
+                ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $mail = new \Ilch\Mail();
@@ -70,11 +70,11 @@ class Index extends \Ilch\Controller\Frontend
 
                 $this->addMessage('sendSuccess');
 
-                $this->redirect(array('action' => 'index'));                
+                $this->redirect(['action' => 'index']);                
             }
         }
 
         $this->getView()->set('job', $job);
-        $this->getView()->set('jobs', $jobsMapper->getJobs(array('show' => 1)));
+        $this->getView()->set('jobs', $jobsMapper->getJobs(['show' => 1]));
     }
 }

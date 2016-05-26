@@ -8,26 +8,26 @@ namespace Modules\Error\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'error',
         'author' => 'Stantin, Thomas',
         'system_module' => true,
-        'icon_small' => 'error.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-exclamation-triangle',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Error',
                 'description' => 'Hier kannst du die Fehlerseiten verwalten.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Error',
                 'description' => 'Here you can manage the error-pages.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

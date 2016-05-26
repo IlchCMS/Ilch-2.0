@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuEvents' => 'Veranstaltungen',
     'event' => 'Veranstaltung',
     'dateTime' => 'Datum/Uhrzeit',
@@ -66,4 +66,4 @@ return array
     'successImage' => 'Bild erfolgreich hochgeladen',
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte breite, höhe oder ist zu groß.',
-);
+    ];

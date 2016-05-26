@@ -36,8 +36,8 @@ class BeforeControllerLoad
         $request = $pluginData['request'];
 
         if(!$userId) {
-            if ($request->getModuleName() == 'events' && !in_array($request->getControllerName(), array('index', 'show', 'regist'))) {
-                $pluginData['controller']->redirect(array('module' => 'user', 'controller' => 'login', 'action' => 'index'));
+            if ($request->getModuleName() == 'events' && !in_array($request->getControllerName(), ['index', 'show', 'regist'])) {
+                $pluginData['controller']->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
             }
         }
 
@@ -60,15 +60,15 @@ class BeforeControllerLoad
             /*
              * Not admins have only access to modules.
              */
-            if ($request->getModuleName() == 'admin' && !in_array($request->getControllerName(), array('index', 'login'))) {
-                $pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'index', 'action' => 'index'));
+            if ($request->getModuleName() == 'admin' && !in_array($request->getControllerName(), ['index', 'login'])) {
+                $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
 
             /*
              * Check if user has right for this module.
              */
             if(!$user->hasAccess('module_'.$request->getModuleName()) && $request->getModuleName() !== 'admin') {
-                $pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'index', 'action' => 'index'));
+                $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
         }
     }

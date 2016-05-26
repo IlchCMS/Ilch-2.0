@@ -28,8 +28,8 @@ class Archive extends \Ilch\Controller\Frontend
         $articleMapper = new ArticleMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuArchives'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
 
         $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
     }
@@ -40,9 +40,9 @@ class Archive extends \Ilch\Controller\Frontend
 
         $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuArchives'), array('action' => 'index'))
-                ->add($date->format('F Y', true), array('action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')));
+                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
+                ->add($date->format('F Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
         $date = $this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01';
         $this->getView()->set('articles', $articleMapper->getArticlesByDate($date));

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuRules' => 'Regeln',
     'paragraph' => 'Paragraf',
     'title' => 'Titel',
@@ -14,4 +14,4 @@ return array
     'missingText' => 'Text muss ausgefüllt werden',
     'sendSuccess' => 'Regel erfolgreich eingetragen',
     'noRules' => 'Keine Regeln vorhanden',
-);
+    ];

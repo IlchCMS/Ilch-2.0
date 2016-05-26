@@ -15,23 +15,20 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuShoutbox',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                )
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ]
+            ]
         );
     }
 
@@ -40,7 +37,7 @@ class Index extends \Ilch\Controller\Admin
         $shoutboxMapper = new ShoutboxMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShoutbox'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_entries')) {
             foreach($this->getRequest()->getPost('check_entries') as $entryId) {
@@ -60,6 +57,6 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

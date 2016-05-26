@@ -16,7 +16,7 @@ class Faq extends \Ilch\Mapper
      * @param array $where
      * @return FaqModel[]|null
      */
-    public function getFaqs($where = array())
+    public function getFaqs($where = [])
     {
         $faqArray = $this->db()->select('*')
             ->from('faqs')
@@ -28,7 +28,7 @@ class Faq extends \Ilch\Mapper
             return null;
         }
 
-        $faqs = array();
+        $faqs = [];
 
         foreach ($faqArray as $faqRow) {
             $faqModel = new FaqModel();
@@ -51,7 +51,7 @@ class Faq extends \Ilch\Mapper
      */
     public function getFaqById($id)
     {
-        $faqs = $this->getFaqs(array('id' => $id));
+        $faqs = $this->getFaqs(['id' => $id]);
         return reset($faqs);
     }
 
@@ -65,7 +65,7 @@ class Faq extends \Ilch\Mapper
     {
         $faqArray = $this->db()->select('*')
             ->from('faqs')
-            ->where(array('cat_id' => $catId))
+            ->where(['cat_id' => $catId])
             ->execute()
             ->fetchRows();
 
@@ -73,7 +73,7 @@ class Faq extends \Ilch\Mapper
             return null;
         }
 
-        $faqs = array();
+        $faqs = [];
 
         foreach ($faqArray as $faqRow) {
             $faqModel = new FaqModel();
@@ -95,17 +95,17 @@ class Faq extends \Ilch\Mapper
      */
     public function save(FaqModel $faq)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'cat_id' => $faq->getCatId(),
             'question' => $faq->getQuestion(),
             'answer' => $faq->getAnswer()
-        );
+            ];
 
         if ($faq->getId()) {
             $this->db()->update('faqs')
                 ->values($fields)
-                ->where(array('id' => $faq->getId()))
+                ->where(['id' => $faq->getId()])
                 ->execute();
         } else {
             $this->db()->insert('faqs')
@@ -122,7 +122,7 @@ class Faq extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('faqs')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

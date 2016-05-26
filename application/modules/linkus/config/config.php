@@ -8,25 +8,25 @@ namespace Modules\Linkus\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'linkus',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'linkus.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-link',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Link Us',
                 'description' => 'Hier kann man Link Us verwalten.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Link Us',
                 'description' => 'Here you can manage the Link Us.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'gallery' => 'Gallery',
     'menuGallery' => 'Gallery overview',
     'menuCat' => 'Category',
@@ -40,4 +40,4 @@ return array
     'imageDesc' => 'Description',
     'from' => 'From',
     'on' => 'On',
-);
+    ];

@@ -8,25 +8,25 @@ namespace Modules\Page\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'page',
-        'icon_small' => 'page.png',
+        'icon_small' => 'fa-pencil',
         'system_module' => true,
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Seiten',
                 'description' => 'Hier können neue Seiten erstellt werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Pages',
                 'description' => 'Here you can create pages.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

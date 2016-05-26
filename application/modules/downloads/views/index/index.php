@@ -26,13 +26,13 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                 <div class="lib-panel">
                     <div class="row box-shadow">
                         <div class="col-md-4">
-                            <a href="'.$obj->getUrl(array('controller' => 'index', 'action' => 'show','id' => $item->getId())).'" >
+                            <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
                                 <img class="lib-img-show" src="'.$image.'">
                             </a>
                         </div>
                         <div class="col-md-8">
                             <div class="lib-row lib-header">
-                                <a href="'.$obj->getUrl(array('controller' => 'index', 'action' => 'show','id' => $item->getId())).'" >
+                                <a href="'.$obj->getUrl(['controller' => 'index', 'action' => 'show','id' => $item->getId()]).'" >
                                     '.$item->getTitle().'
                                 </a>
                                 <p class="text-left">'.$obj->getTrans('files').': '. count($fileCount).'</p>

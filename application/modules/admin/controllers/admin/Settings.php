@@ -10,37 +10,33 @@ class Settings extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items = array
-        (
-            array
-            (
+        $items =
+            [
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuMaintenance',
                 'active' => false,
                 'icon' => 'fa fa-wrench',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'maintenance'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'maintenance'])
+            ],
+            [
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'backup'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'backup'])
+            ],
+            [
                 'name' => 'menuUpdate',
                 'active' => false,
                 'icon' => 'fa fa-refresh',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'update', 'action' => 'index'))
-            ),
-        );
+                'url' => $this->getLayout()->getUrl(['controller' => 'update', 'action' => 'index'])
+            ],
+            ];
 
         if ($this->getRequest()->getActionName() == 'backup') {
             $items[2]['active'] = true; 
@@ -63,7 +59,7 @@ class Settings extends \Ilch\Controller\Admin
         $pageMapper = new \Modules\Page\Mappers\Page();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('systemSettings'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('systemSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
@@ -120,7 +116,7 @@ HTACCESS;
     public function maintenanceAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuMaintenance'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuMaintenance'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));

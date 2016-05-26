@@ -45,19 +45,19 @@ class RouterTest extends TestCase
     public function testParamConvertingIntoArray()
     {
         $params = $this->router->convertParamStringIntoArray('param1/value1/param2/value2');
-        $this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
+        $this->assertEquals($params, ['param1' => 'value1', 'param2' => 'value2']);
     }
 
     public function testMatchModuleController()
     {
-        $expectedResult = array
-        (
+        $expectedResult =
+            [
             'page/index',
             'module'     => 'page',
             'page',
             'controller' => 'index',
             'index',
-        );
+            ];
 
         $match = $this->router->matchByRegexp($expectedResult[0]);
         $this->assertTrue(is_array($match), $match, 'Expected match result need to be an array!');
@@ -65,8 +65,8 @@ class RouterTest extends TestCase
 
     public function testMatchModuleControllerAction()
     {
-        $expectedResult = array
-        (
+        $expectedResult =
+            [
             'page/index/show',
             'module'     => 'page',
             'page',
@@ -75,7 +75,7 @@ class RouterTest extends TestCase
             '/show',
             'action'     => 'show',
             'show',
-        );
+            ];
 
         $match = $this->router->matchByRegexp($expectedResult[0]);
         $this->assertTrue(is_array($match), $match, 'Expected route does not match!');
@@ -83,8 +83,8 @@ class RouterTest extends TestCase
 
     public function testMatchModuleControllerActionParams()
     {
-        $expectedResult = array
-        (
+        $expectedResult =
+            [
             'page/index/show/param1/value1/param2/value2',
             'module'     => 'page',
             'page',
@@ -96,12 +96,12 @@ class RouterTest extends TestCase
             '/param1/value1/param2/value2',
             'params'     => 'param1/value1/param2/value2',
             'param1/value1/param2/value2',
-        );
+            ];
 
         $match = $this->router->matchByRegexp($expectedResult[0]);
         $this->assertTrue(is_array($match), $match, 'Expected route does not match!');
         $params = $this->router->convertParamStringIntoArray($match['params']);
-        $this->assertEquals($params, array('param1' => 'value1', 'param2' => 'value2'));
+        $this->assertEquals($params, ['param1' => 'value1', 'param2' => 'value2']);
     }
 
     public function testMatchByQuery()

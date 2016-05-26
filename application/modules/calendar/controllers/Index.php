@@ -19,13 +19,13 @@ class Index extends \Ilch\Controller\Frontend
         $eventsMapper = new EventsMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuCalendar'), array('controller' => 'index'));
+                ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index']);
 
         $this->getView()->set('calendarList', $calendarMapper->getEntries());
         $this->getView()->set('birthdayList', $userMapper->getUserList());
 
         if ($calendarMapper->existsTable('events') == true) {
-            $this->getView()->set('eventList', $eventsMapper->getEntries(array('show' => 1)));
+            $this->getView()->set('eventList', $eventsMapper->getEntries(['show' => 1]));
         }
     }
 
@@ -35,8 +35,8 @@ class Index extends \Ilch\Controller\Frontend
 
         $calendar = $calendarMapper->getCalendarById($this->getRequest()->getParam('id'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuCalendar'), array('controller' => 'index', 'action' => 'index'))
-                ->add($calendar->getTitle(), array('controller' => 'index', 'action' => 'show', 'id' => $calendar->getId()));
+                ->add($this->getTranslator()->trans('menuCalendar'), ['controller' => 'index', 'action' => 'index'])
+                ->add($calendar->getTitle(), ['controller' => 'index', 'action' => 'show', 'id' => $calendar->getId()]);
 
         $this->getView()->set('calendar', $calendarMapper->getCalendarById($this->getRequest()->getParam('id')));
     }

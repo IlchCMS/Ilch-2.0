@@ -8,25 +8,25 @@ namespace Modules\Privacy\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'privacy',
-        'icon_small' => 'privacy.png',
+        'icon_small' => 'fa-paragraph',
         'system_module' => true,
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Datenschutz',
                 'description' => 'Hier können die Datenschutzerklärung verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Privacy Policy',
                 'description' => 'Here you can manage your Privacy Policy.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

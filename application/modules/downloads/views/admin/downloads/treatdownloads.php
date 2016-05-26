@@ -11,8 +11,8 @@ tbody tr td {
 
 <legend><?=$this->getTrans('downloads') ?>: <?=$this->get('downloadsTitle') ?></legend>
 <?php if ($this->get('file') != ''): ?>
-    <?=$this->get('pagination')->getHtml($this, array('action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('id'))) ?>
-    <form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id'))) ?>">
+    <?=$this->get('pagination')->getHtml($this, ['action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('id')]) ?>
+    <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
@@ -44,8 +44,8 @@ tbody tr td {
                         <?php endif; ?>
                         <tr>
                             <td><input value="<?=$file->getId() ?>" type="checkbox" name="check_downloads[]" /></td>
-                            <td><?=$this->getEditIcon(array('controller' => 'file', 'action' => 'treatfile', 'downloads' => $file->getCat(), 'id' => $file->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id'))) ?></td>
+                            <td><?=$this->getEditIcon(['controller' => 'file', 'action' => 'treatfile', 'downloads' => $file->getCat(), 'id' => $file->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id')]) ?></td>
                             <td><img class="file thumbnail img-responsive" src="<?=$image ?>"/>
                             </td>
                             <td><?=$file->getFileTitle() ?></td>
@@ -55,7 +55,7 @@ tbody tr td {
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noFile') ?>

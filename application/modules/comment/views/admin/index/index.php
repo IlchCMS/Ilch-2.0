@@ -40,7 +40,7 @@ $locale = $this->get('locale');
                         <?php $modules = $modulesMapper->getModulesByKey($commentKey, $locale); ?>
                         <tr>
                             <td><input value="<?=$comment->getId() ?>" type="checkbox" name="check_comments[]" /></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $comment->getId())) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $comment->getId()]) ?></td>
                             <td><?=$comment->getId() ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></td>
@@ -52,7 +52,7 @@ $locale = $this->get('locale');
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTranslator()->trans('noComments') ?>

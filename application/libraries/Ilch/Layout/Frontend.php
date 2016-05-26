@@ -101,12 +101,13 @@ class Frontend extends Base
         $this->getTranslator()->load(APPLICATION_PATH.'/modules/'.$moduleKey.'/translations');
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
         $boxObj->render();
-        $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/override/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
 
-        if (!file_exists($viewPath)) {
+        if (file_exists(APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php')) {
+            $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
+        } else {
             $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
         }
-        
+
         $view->setLayoutKey($this->getLayoutKey());
 
         return $view->loadScript($viewPath);
@@ -140,7 +141,7 @@ class Frontend extends Base
                         message: "'.$this->escape($this->getConfigKey('cookie_consent_message')).'",
                         dismiss: "OK",
                         learnMore: "Weitere Informationen",
-                        link: "'.$this->getUrl(array('module' => 'cookieconsent', 'controller' => 'index', 'action' => 'index')).'",
+                        link: "'.$this->getUrl(['module' => 'cookieconsent', 'controller' => 'index', 'action' => 'index']).'",
                         theme: "'.$this->getStaticUrl('js/cookieconsent/styles/'.$this->escape($this->getConfigKey('cookie_consent_style')).'-'.$this->escape($this->getConfigKey('cookie_consent_pos')).'.css').'"
                     };
                     </script>
@@ -156,7 +157,7 @@ class Frontend extends Base
      * @param string $file
      * @param mixed[] $data
      */
-    public function load($file, $data = array())
+    public function load($file, $data = [])
     {
         $request = $this->getRequest();
         $layout = new \Ilch\Layout\Frontend($request,

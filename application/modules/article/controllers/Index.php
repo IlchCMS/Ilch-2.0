@@ -31,7 +31,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $articleMapper = new ArticleMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
         $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
     }
@@ -58,8 +58,8 @@ class Index extends \Ilch\Controller\Frontend
 
         if($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('preview'), array('action' => 'index'));
+                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('preview'), ['action' => 'index']);
 
             $title = $this->getRequest()->getPost('title');
             $catId = $this->getRequest()->getPost('cats');
@@ -84,10 +84,10 @@ class Index extends \Ilch\Controller\Frontend
             $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('menuCats'), array('controller' => 'cats', 'action' => 'index'))
-                    ->add($articlesCats->getName(), array('controller' => 'cats', 'action' => 'show', 'id' => $articlesCats->getId()))
-                    ->add($article->getTitle(), array('action' => 'show', 'id' => $article->getId()));
+                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index'])
+                    ->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $articlesCats->getId()])
+                    ->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
             
             $articleModel->setId($article->getId());
             $articleModel->setVisits($article->getVisits() + 1);

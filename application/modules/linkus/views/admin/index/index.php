@@ -22,8 +22,8 @@
                     <?php foreach ($this->get('linkus') as $linkus): ?>
                         <tr>
                             <td><input value="<?=$linkus->getId() ?>" type="checkbox" name="check_linkus[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $linkus->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $linkus->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $linkus->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $linkus->getId()]) ?></td>
                             <td>
                                 <img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" alt="<?=$this->escape($linkus->getTitle()) ?>" title="<?=$this->escape($linkus->getTitle()) ?>"></a>
                                 <br />
@@ -34,7 +34,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noLinkus') ?>

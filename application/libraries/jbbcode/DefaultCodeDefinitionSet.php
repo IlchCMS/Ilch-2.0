@@ -17,7 +17,7 @@ class DefaultCodeDefinitionSet implements CodeDefinitionSet
 {
 
     /* The default code definitions in this set. */
-    protected $definitions = array();
+    protected $definitions = [];
 
     /**
      * Constructs the default code definitions.

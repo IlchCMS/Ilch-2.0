@@ -27,7 +27,7 @@ class Access extends BaseController
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuAccess'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuAccess'), ['action' => 'index']);
 
         $postData = $this->getRequest()->getPost();
         $groupMapper = new GroupMapper();
@@ -72,12 +72,12 @@ class Access extends BaseController
         $boxMapper = new BoxMapper();
         $boxes = $boxMapper->getBoxList($this->getTranslator()->getLocale());
 
-        $accessTypes = array(
+        $accessTypes = [
             'module' => $modules,
             'page' => $pages,
             'article' => $articles,
             'box' => $boxes,
-        );
+        ];
         $this->getView()->set('accessTypes', $accessTypes);
     }
 
@@ -100,7 +100,7 @@ class Access extends BaseController
                 }
             }
 
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
     }
 }

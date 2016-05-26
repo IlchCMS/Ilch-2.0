@@ -27,7 +27,7 @@ class Login extends \Ilch\Controller\Admin
      */
     public function indexAction()
     {
-        $errors = array();
+        $errors = [];
 
         if ($this->getRequest()->isPost()) {
             if (\Ilch\Registry::get('user')) {
@@ -50,7 +50,7 @@ class Login extends \Ilch\Controller\Admin
                 $result = LoginService::factory()->perform($emailName, $password);
 
                 if ($result->isSuccessful()) {
-                    $this->redirect(array('controller' => 'index', 'action' => 'index'));
+                    $this->redirect(['controller' => 'index', 'action' => 'index']);
                 } else {
                     $errors[] = $result->getError();
                 }
@@ -79,9 +79,9 @@ class Login extends \Ilch\Controller\Admin
         \Ilch\Registry::remove('user');
 
         if ($this->getRequest()->getParam('from_frontend')) {
-            $this->redirect(array());
+            $this->redirect([]);
         } else {
-            $this->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));
+            $this->redirect(['module' => 'admin', 'controller' => 'login', 'action' => 'index']);
         }
     }
 }

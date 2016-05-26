@@ -17,12 +17,12 @@ class Guestbook extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return GuestbookModel[]|array
      */
-    public function getEntries($where = array(), $pagination = null)
+    public function getEntries($where = [], $pagination = null)
     {
         $select = $this->db()->select('*')
             ->from('gbook')
             ->where($where)
-            ->order(array('id' => 'DESC'));
+            ->order(['id' => 'DESC']);
         
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -34,7 +34,7 @@ class Guestbook extends \Ilch\Mapper
         }
 
         $entryArray = $result->fetchRows();
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new GuestbookModel();
@@ -58,20 +58,20 @@ class Guestbook extends \Ilch\Mapper
      */
     public function save(GuestbookModel $model)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'email' => $model->getEmail(),
             'text' => $model->getText(),
             'datetime' => $model->getDatetime(),
             'homepage' => $model->getHomepage(),
             'name' => $model->getName(),
             'setfree' => $model->getFree(),
-        );
+            ];
 
         if ($model->getId()) {
             $this->db()->update('gbook')
                 ->values($fields)
-                ->where(array('id' => $model->getId()))
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('gbook')
@@ -88,7 +88,7 @@ class Guestbook extends \Ilch\Mapper
     public function delete($id)
     {
         return $this->db()->delete('gbook')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

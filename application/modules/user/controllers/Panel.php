@@ -26,14 +26,14 @@ class Panel extends BaseController
     public function indexAction()
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index', 'user' => $this->getUser()->getId()));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index', 'user' => $this->getUser()->getId()]);
     }
 
     public function settingsAction()
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings']);
     }
 
     public function profileAction()
@@ -41,11 +41,11 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
-                ->add($this->getTranslator()->trans('menuEditProfile'), array('controller' => 'panel', 'action' => 'profile'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+                ->add($this->getTranslator()->trans('menuEditProfile'), ['controller' => 'panel', 'action' => 'profile']);
 
-        $errors = array();
+        $errors = [];
         if ($this->getRequest()->isPost()) {
             $email = trim($this->getRequest()->getPost('email'));
             $firstname = trim($this->getRequest()->getPost('first-name'));
@@ -59,10 +59,10 @@ class Panel extends BaseController
 
             if (empty($email)) {
                 $this->addMessage('emailEmpty');
-                $this->redirect(array('action' => 'profile'));
+                $this->redirect(['action' => 'profile']);
             } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $this->addMessage('emailError');
-                $this->redirect(array('action' => 'profile'));
+                $this->redirect(['action' => 'profile']);
             }
 
             if (empty($errors)) {
@@ -79,7 +79,7 @@ class Panel extends BaseController
                 $model->setBirthday($birthday);
                 $profilMapper->save($model);
 
-                $this->redirect(array('action' => 'profile'));
+                $this->redirect(['action' => 'profile']);
             }
         }
     }
@@ -94,9 +94,9 @@ class Panel extends BaseController
         $avatarSize = $this->getConfig()->get('avatar_size');
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
-                ->add($this->getTranslator()->trans('menuAvatar'), array('controller' => 'panel', 'action' => 'avatar'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+                ->add($this->getTranslator()->trans('menuAvatar'), ['controller' => 'panel', 'action' => 'avatar']);
 
         if ($this->getRequest()->isPost() && !empty($_FILES['avatar']['name'])) {
             $path = $this->getConfig()->get('avatar_uploadpath');
@@ -133,13 +133,13 @@ class Panel extends BaseController
                 $this->addMessage('failedFiletypes', 'warning');
             }
 
-            $this->redirect(array('action' => 'avatar'));
+            $this->redirect(['action' => 'avatar']);
         } elseif ($this->getRequest()->isPost() && $this->getRequest()->getPost('avatar_delete') != '') {
             $settingMapper = new SettingMapper();
             $settingMapper->delAvatarById($this->getUser()->getId());
 
             $this->addMessage('avatarSuccessDelete');
-            $this->redirect(array('action' => 'avatar'));
+            $this->redirect(['action' => 'avatar']);
         }
 
         $this->getView()->set('avatar_height', $avatarHeight);
@@ -153,9 +153,9 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
-                ->add($this->getTranslator()->trans('menuSignature'), array('controller' => 'panel', 'action' => 'signature'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+                ->add($this->getTranslator()->trans('menuSignature'), ['controller' => 'panel', 'action' => 'signature']);
 
         if ($this->getRequest()->isPost()) {
             $model = new UserModel();
@@ -163,7 +163,7 @@ class Panel extends BaseController
             $model->setSignature(trim($this->getRequest()->getPost('signature')));
             $profilMapper->save($model);
 
-            $this->redirect(array('action' => 'signature'));
+            $this->redirect(['action' => 'signature']);
         }
     }
 
@@ -172,9 +172,9 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
-                ->add($this->getTranslator()->trans('menuPassword'), array('controller' => 'panel', 'action' => 'password'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+                ->add($this->getTranslator()->trans('menuPassword'), ['controller' => 'panel', 'action' => 'password']);
 
         if ($this->getRequest()->isPost()) {
             $password = trim($this->getRequest()->getPost('password'));
@@ -182,16 +182,16 @@ class Panel extends BaseController
 
             if (empty($password)) {
                 $this->addMessage('passwordEmpty', $type = 'danger');
-                $this->redirect(array('action' => 'password'));
+                $this->redirect(['action' => 'password']);
             } elseif (empty($password2)) {
                 $this->addMessage('passwordRetypeEmpty', $type = 'danger');
-                $this->redirect(array('action' => 'password'));
+                $this->redirect(['action' => 'password']);
             } elseif (strlen($password) < 6 OR strlen($password) > 30) {
                 $this->addMessage('passwordLength', $type = 'danger');
-                $this->redirect(array('action' => 'password'));
+                $this->redirect(['action' => 'password']);
             } elseif ($password != $password2) {
                 $this->addMessage('passwordNotEqual', $type = 'danger');
-                $this->redirect(array('action' => 'password'));
+                $this->redirect(['action' => 'password']);
             }
 
             if (!empty($password) AND !empty($password2) AND $password == $password2) {
@@ -208,7 +208,7 @@ class Panel extends BaseController
                 $profilMapper->save($model);
 
                 $this->addMessage('passwordSuccess');
-                $this->redirect(array('action' => 'password'));
+                $this->redirect(['action' => 'password']);
             }
         }
     }
@@ -218,9 +218,9 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuSettings'), array('controller' => 'panel', 'action' => 'settings'))
-                ->add($this->getTranslator()->trans('menuSetting'), array('controller' => 'panel', 'action' => 'setting'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+                ->add($this->getTranslator()->trans('menuSetting'), ['controller' => 'panel', 'action' => 'setting']);
 
         if ($this->getRequest()->isPost()) {
             $model = new UserModel();
@@ -228,7 +228,7 @@ class Panel extends BaseController
             $model->setOptMail($this->getRequest()->getPost('opt_mail'));
             $profilMapper->save($model);
 
-            $this->redirect(array('action' => 'setting'));
+            $this->redirect(['action' => 'setting']);
         }
     }
 
@@ -237,8 +237,8 @@ class Panel extends BaseController
         $dialogMapper = new DialogMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuDialog'), array('controller' => 'panel', 'action' => 'dialog'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuDialog'), ['controller' => 'panel', 'action' => 'dialog']);
 
         $this->getView()->set('dialog', $dialogMapper->getDialog($this->getUser()->getId()));
     }
@@ -295,7 +295,7 @@ class Panel extends BaseController
                 $model->setText($text);
                 $DialogMapper->save($model);
 
-                $this->redirect(array('action' => 'dialogview','id'=> $c_id));
+                $this->redirect(['action' => 'dialogview','id'=> $c_id]);
             }
 
             $this->getView()->set('inbox', $DialogMapper->getDialogMessage($c_id));
@@ -309,7 +309,7 @@ class Panel extends BaseController
             }
 
         } else {
-            $this->redirect(array('action' => 'dialog'));
+            $this->redirect(['action' => 'dialog']);
         }
     }
 
@@ -331,11 +331,11 @@ class Panel extends BaseController
                 $DialogMapper->save($model);
 
                 $c_id = $DialogMapper->getDialogId($user_one);
-                $this->redirect(array('action' => 'dialogview', 'id' => $c_id->getCId()));
+                $this->redirect(['action' => 'dialogview', 'id' => $c_id->getCId()]);
             }
 
             $c_id = $DialogMapper->getDialogId($user_one);
-            $this->redirect(array('action' => 'dialogview', 'id' => $c_id->getCId()));
+            $this->redirect(['action' => 'dialogview', 'id' => $c_id->getCId()]);
         }
     }
 
@@ -345,8 +345,8 @@ class Panel extends BaseController
         $imageMapper = new GalleryImageMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuGallery'), array('controller' => 'panel', 'action' => 'gallery'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery']);
 
         /*
          * Saves the item tree to database.
@@ -368,7 +368,7 @@ class Panel extends BaseController
             }
 
             if ($items) {
-                $sortArray = array();
+                $sortArray = [];
 
                 foreach ($sortItems as $sortItem) {
                     if ($sortItem->item_id !== null) {
@@ -419,7 +419,7 @@ class Panel extends BaseController
             }
 
             $this->addMessage('saveSuccess');
-            $this->redirect(array('action' => 'gallery'));
+            $this->redirect(['action' => 'gallery']);
         }
 
         $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getUser()->getId(), 1, 0));
@@ -437,9 +437,9 @@ class Panel extends BaseController
         $gallery = $galleryMapper->getGalleryById($id);
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuGallery'), array('controller' => 'panel', 'action' => 'gallery'))
-                ->add($gallery->getTitle(), array('controller' => 'panel', 'action' => 'treatgallery', 'id' => $id));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery'])
+                ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
             foreach($this->getRequest()->getPost('check_gallery') as $imageId) {
@@ -447,7 +447,7 @@ class Panel extends BaseController
             }
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(array('action' => 'treatgallery','id' => $id));
+            $this->redirect(['action' => 'treatgallery','id' => $id]);
         }
 
         if ($this->getRequest()->getPost()) {
@@ -474,8 +474,8 @@ class Panel extends BaseController
         $mediaMapper = new MediaMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('media'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('mediaUpload'), array('action' => 'upload'));
+                ->add($this->getTranslator()->trans('media'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('mediaUpload'), ['action' => 'upload']);
 
         if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
@@ -513,10 +513,10 @@ class Panel extends BaseController
         $gallery = $galleryMapper->getGalleryById($galleryId);
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuGallery'), array('controller' => 'panel', 'action' => 'gallery'))
-                ->add($gallery->getTitle(), array('controller' => 'panel', 'action' => 'treatgallery', 'id' => $galleryId))
-                ->add($this->getTranslator()->trans('treatImage'), array('action' => 'treatgalleryimage', 'gallery' => $galleryId, 'id' => $id));
+                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'panel', 'action' => 'gallery'])
+                ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $galleryId])
+                ->add($this->getTranslator()->trans('treatImage'), ['action' => 'treatgalleryimage', 'gallery' => $galleryId, 'id' => $id]);
 
         if ($this->getRequest()->getPost()) {
             $imageTitle = $this->getRequest()->getPost('imageTitle');
@@ -542,7 +542,7 @@ class Panel extends BaseController
             $mediaMapper->delMediaById($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
-            $this->redirect(array('action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')));
+            $this->redirect(['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')]);
         }
     }
 }

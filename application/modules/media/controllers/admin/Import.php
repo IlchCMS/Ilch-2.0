@@ -16,37 +16,32 @@ class Import extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuMedia',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'media',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'cats',
                     'active' => false,
                     'icon' => 'fa fa-list',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
+                ],
+                [
                     'name' => 'import',
                     'active' => true,
                     'icon' => 'fa fa-download',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'import', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'import', 'action' => 'index'])
+                ],
+                [
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                )
-            )
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ]
+            ]
         );
     }
 
@@ -56,8 +51,8 @@ class Import extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('media'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('import'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('import'), ['action' => 'index']);
 
         $directory = $this->getConfig()->get('media_uploadpath');
         $filetypes = $this->getConfig()->get('media_ext_img');
@@ -80,24 +75,24 @@ class Import extends \Ilch\Controller\Admin
                 $mediaMapper->save($model);
             }
             $this->addMessage('Success');
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $mediaListAll = $mediaMapper->getMediaListAll();
-        $existsMediaArray = array();
+        $existsMediaArray = [];
         if (!empty($mediaListAll)) {
             foreach ($mediaListAll as $existsMedia) {
                 $existsMediaArray[] = $directory.$existsMedia->getName().'.'.$existsMedia->getEnding();
             }
         }
 
-        $newMediaArray = array();
+        $newMediaArray = [];
         foreach ($globMediaArray as $globMedia) {
             $upload = new \Ilch\Upload();
             $upload->setFile($globMedia);
 
-            $existsUrl = $mediaMapper->getByWhere(array('url' => $directory.$upload->getName().'.'.$upload->getEnding()));
-            $existsUrlThumb = $mediaMapper->getByWhere(array('url_thumb' => $directory.$upload->getName().'.'.$upload->getEnding()));
+            $existsUrl = $mediaMapper->getByWhere(['url' => $directory.$upload->getName().'.'.$upload->getEnding()]);
+            $existsUrlThumb = $mediaMapper->getByWhere(['url_thumb' => $directory.$upload->getName().'.'.$upload->getEnding()]);
 
             if (!$existsUrl && !$existsUrlThumb) {
                 $newMediaArray[] = $directory.$upload->getName().'.'.$upload->getEnding();

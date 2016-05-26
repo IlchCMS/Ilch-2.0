@@ -140,8 +140,8 @@ class Upload extends \Ilch\Controller\Base
      */
     public function getName()
     {
-        $search = array("Ä", "Ö", "Ü", "ä", "ö", "ü", "ß", "´", " ");
-        $replace = array("Ae", "Oe", "Ue", "ae", "oe", "ue", "ss", "", "");
+        $search = ["Ä", "Ö", "Ü", "ä", "ö", "ü", "ß", "´", " "];
+        $replace = ["Ae", "Oe", "Ue", "ae", "oe", "ue", "ss", "", ""];
         $this->name = str_replace($search, $replace, pathinfo($this->file, PATHINFO_FILENAME));
 
         return $this->name;
@@ -257,7 +257,7 @@ class Upload extends \Ilch\Controller\Base
         if ($bytes > 0)
         {
             $unit = intval(log($bytes, 1024));
-            $units = array('B', 'KB', 'MB', 'GB');
+            $units = ['B', 'KB', 'MB', 'GB'];
 
             if (array_key_exists($unit, $units) === true)
             {
@@ -281,7 +281,7 @@ class Upload extends \Ilch\Controller\Base
                 $thumb -> Thumblocation = $this->path;
                 $thumb -> Thumbsize = 300;
                 $thumb -> Square = 300;
-                $thumb -> Cropimage = array(3,1,50,50,50,50);
+                $thumb -> Cropimage = [3,1,50,50,50,50];
                 $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
             }
         }
@@ -300,7 +300,7 @@ class Upload extends \Ilch\Controller\Base
             $thumb -> Thumblocation = $this->path;
             $thumb -> Thumbsize = 300;
             $thumb -> Square = 300;
-            $thumb -> Cropimage = array(3,1,50,50,50,50);
+            $thumb -> Cropimage = [3,1,50,50,50,50];
             $thumb -> Createthumb($this->path.$hash.'.'.$this->getEnding(),'file');
         }
     }

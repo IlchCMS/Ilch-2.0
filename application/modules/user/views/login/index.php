@@ -61,8 +61,8 @@
         </div>  
     </form>
     <div class="col-lg-offset-2 col-lg-8">
-            <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword')) ?>"><?=$this->getTrans('forgotPassword') ?></a><br />
-            <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'confirm')) ?>"><?=$this->getTrans('manuallyActivateRegistration') ?></a>
+            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a><br />
+            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'confirm']) ?>"><?=$this->getTrans('manuallyActivateRegistration') ?></a>
 
     </div>
     <?php if ($this->get('regist_accept') == '1'): ?>
@@ -72,7 +72,7 @@
             <?=$this->getTrans('registDescription') ?>
         </p>
         <p>
-            <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'regist', 'action' => 'index')) ?>" class="btn btn-default pull-left">
+            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'index']) ?>" class="btn btn-default pull-left">
                 <?=$this->getTrans('register') ?>
             </a>
         </p>

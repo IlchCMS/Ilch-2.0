@@ -22,15 +22,15 @@
                     <?php foreach ($this->get('cats') as $cat): ?>
                         <tr>
                             <td><input value="<?=$cat->getId() ?>" type="checkbox" name="check_cats[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $cat->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'delcat', 'id' => $cat->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$cat->getName() ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTranslator()->trans('noCats') ?>

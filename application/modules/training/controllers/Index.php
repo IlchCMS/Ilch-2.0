@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $trainingMapper = new TrainingMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
 
         $this->getView()->set('training', $trainingMapper->getTraining());
     }
@@ -28,8 +28,8 @@ class Index extends \Ilch\Controller\Frontend
         $entrantsModel = new EntrantsModel();
 
         $training = $trainingMapper->getTrainingById($this->getRequest()->getParam('id'));
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), array('controller' => 'index', 'action' => 'index'))
-                ->add($training->getTitle(), array('controller' => 'index', 'action' => 'show', 'id' => $training->getId()));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['controller' => 'index', 'action' => 'index'])
+                ->add($training->getTitle(), ['controller' => 'index', 'action' => 'show', 'id' => $training->getId()]);
 
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {

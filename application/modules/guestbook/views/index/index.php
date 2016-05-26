@@ -1,7 +1,7 @@
 <legend>
     <?=$this->getTrans('menuGuestbook') ?>
     <div class="pull-right">
-        <a href="<?=$this->getUrl(array('action' => 'newentry')) ?>"><?=$this->getTrans('entry') ?></a>
+        <a href="<?=$this->getUrl(['action' => 'newentry']) ?>"><?=$this->getTrans('entry') ?></a>
     </div>
 </legend>
 <?php foreach ($this->get('entries') as $entry): ?>
@@ -31,4 +31,4 @@
     </table>
 <?php endforeach; ?>
 
-<?=$this->get('pagination')->getHtml($this, array('action' => 'index')) ?>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>

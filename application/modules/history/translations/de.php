@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuHistorys' => 'Geschichte',
     'date' => 'Datum',
     'title' => 'Titel',
@@ -24,4 +24,4 @@ return array
     'missingText' => 'Text muss ausgefüllt werden',
     'sendSuccess' => 'Geschichte erfolgreich eingetragen',
     'noHistorys' => 'Keine Geschichten vorhanden',
-);
+    ];

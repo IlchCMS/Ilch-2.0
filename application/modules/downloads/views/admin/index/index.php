@@ -33,7 +33,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
                     </a>
                 </span>
                 <span class="view" style="float:right; margin-right: 6px;">
-                    <a href="'.$obj->getUrl(array('controller' => 'downloads', 'action' => 'treatdownloads','id' => $item->getId())).'">
+                    <a href="'.$obj->getUrl(['controller' => 'downloads', 'action' => 'treatdownloads','id' => $item->getId()]).'">
                         <i class="fa fa-eye"></i>
                     </a>
                 </span>
@@ -54,7 +54,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
 }
 ?>
 
-<form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('downloads') ?></legend>
     <div class="col-lg-6">

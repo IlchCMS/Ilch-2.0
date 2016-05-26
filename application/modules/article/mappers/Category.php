@@ -16,12 +16,12 @@ class Category extends \Ilch\Mapper
      * @param array $where
      * @return CategoryModel[]|null
      */
-    public function getCategories($where = array())
+    public function getCategories($where = [])
     {
         $categoryArray = $this->db()->select('*')
             ->from('articles_cats')
             ->where($where)
-            ->order(array('id' => 'ASC'))
+            ->order(['id' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Category extends \Ilch\Mapper
             return null;
         }
 
-        $categorys = array();
+        $categorys = [];
 
         foreach ($categoryArray as $categoryRow) {
             $categoryModel = new CategoryModel();
@@ -49,7 +49,7 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoryById($id)
     {
-        $cats = $this->getCategories(array('id' => $id));
+        $cats = $this->getCategories(['id' => $id]);
         return reset($cats);
     }
 
@@ -60,15 +60,15 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $category)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'name' => $category->getName()
-        );
+            ];
 
         if ($category->getId()) {
             $this->db()->update('articles_cats')
                 ->values($fields)
-                ->where(array('id' => $category->getId()))
+                ->where(['id' => $category->getId()])
                 ->execute();
         } else {
             $this->db()->insert('articles_cats')
@@ -85,7 +85,7 @@ class Category extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('articles_cats')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

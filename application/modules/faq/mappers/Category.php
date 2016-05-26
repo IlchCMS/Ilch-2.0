@@ -16,7 +16,7 @@ class Category extends \Ilch\Mapper
      * @param array $where
      * @return CategoryModel[]|null
      */
-    public function getCategories($where = array())
+    public function getCategories($where = [])
     {
         $categoryArray = $this->db()->select('*')
             ->from('faq_cats')
@@ -28,7 +28,7 @@ class Category extends \Ilch\Mapper
             return null;
         }
 
-        $categorys = array();
+        $categorys = [];
 
         foreach ($categoryArray as $categoryRow) {
             $categoryModel = new CategoryModel();
@@ -49,7 +49,7 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoryById($id)
     {
-        $cats = $this->getCategories(array('id' => $id));
+        $cats = $this->getCategories(['id' => $id]);
         return reset($cats);
     }
 
@@ -57,7 +57,7 @@ class Category extends \Ilch\Mapper
     {
         $categoryRow = $this->db()->select('*')
             ->from('faq_cats')
-            ->order(array('id' => 'ASC'))
+            ->order(['id' => 'ASC'])
             ->limit('1')
             ->execute()
             ->fetchAssoc();
@@ -81,12 +81,12 @@ class Category extends \Ilch\Mapper
     {
         if ($category->getId()) {
             $this->db()->update('faq_cats')
-                ->values(array('title' => $category->getTitle()))
-                ->where(array('id' => $category->getId()))
+                ->values(['title' => $category->getTitle()])
+                ->where(['id' => $category->getId()])
                 ->execute();
         } else {
             $this->db()->insert('faq_cats')
-                ->values(array('title' => $category->getTitle()))
+                ->values(['title' => $category->getTitle()])
                 ->execute();
         }
     }
@@ -99,7 +99,7 @@ class Category extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('faq_cats')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

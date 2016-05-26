@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'downloads' => 'Downloads',
     'download' => 'Download',
     'menuDownloads' => 'Downloads overview',
@@ -42,5 +42,5 @@ return array
     'commentPost' => 'Write comment',
     'from' => 'From',
     'on' => 'On',
-    
-);
+
+    ];

@@ -8,25 +8,25 @@ namespace Modules\Article\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'article',
-        'icon_small' => 'article.png',
+        'icon_small' => 'fa-quote-right',
         'system_module' => true,
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Artikel',
                 'description' => 'Hier kann man die Artikel / News verwalten.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Articles',
                 'description' => 'Here you can magnage the Articles / News.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

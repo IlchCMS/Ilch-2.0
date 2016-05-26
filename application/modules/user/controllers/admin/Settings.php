@@ -13,7 +13,7 @@ class Settings extends BaseController
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSettings'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('regist_accept', $this->getRequest()->getPost('regist_accept'));

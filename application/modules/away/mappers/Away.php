@@ -16,12 +16,12 @@ class Away extends \Ilch\Mapper
      * @param array $where
      * @return AwayModel[]|array
      */
-    public function getAway($where = array())
+    public function getAway($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('away')
             ->where($where)
-            ->order(array('start' => 'ASC'))
+            ->order(['start' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Away extends \Ilch\Mapper
             return null;
         }
 
-        $away = array();
+        $away = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new AwayModel();
@@ -55,7 +55,7 @@ class Away extends \Ilch\Mapper
      */
     public function getAwayById($id)
     {
-        $away = $this->getAway(array('id' => $id));
+        $away = $this->getAway(['id' => $id]);
         return reset($away);
     }
 
@@ -66,19 +66,19 @@ class Away extends \Ilch\Mapper
      */
     public function save(AwayModel $away)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'user_id' => $away->getUserId(),
             'reason' => $away->getReason(),
             'start' => $away->getStart(),
             'end' => $away->getEnd(),
             'text' => $away->getText(),
-        );
+            ];
 
         if ($away->getId()) {
             $this->db()->update('away')
                 ->values($fields)
-                ->where(array('id' => $away->getId()))
+                ->where(['id' => $away->getId()])
                 ->execute();
         } else {
             $this->db()->insert('away')
@@ -96,19 +96,19 @@ class Away extends \Ilch\Mapper
     {
         $show = (int) $this->db()->select('status')
                         ->from('away')
-                        ->where(array('id' => $id))
+                        ->where(['id' => $id])
                         ->execute()
                         ->fetchCell();
 
         if ($show == 1) {
             $this->db()->update('away')
-                ->values(array('status' => 0))
-                ->where(array('id' => $id))
+                ->values(['status' => 0])
+                ->where(['id' => $id])
                 ->execute();
         } else {
             $this->db()->update('away')
-                ->values(array('status' => 1))
-                ->where(array('id' => $id))
+                ->values(['status' => 1])
+                ->where(['id' => $id])
                 ->execute();
         }
     }
@@ -121,7 +121,7 @@ class Away extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('away')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

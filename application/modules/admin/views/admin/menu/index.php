@@ -51,7 +51,7 @@ function rec($item, $menuMapper, $obj) {
 
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/main.css') ?>">
 
-<form class="form-horizontal" id="menuForm" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId())) ?>">
+<form class="form-horizontal" id="menuForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'menu' => $this->get('menu')->getId()]) ?>">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
         <?php $iMenu = 1; ?>
@@ -62,11 +62,11 @@ function rec($item, $menuMapper, $obj) {
                 <?php $active = 'active'; ?>
             <?php endif; ?>
             <li class="<?=$active ?>">
-                <a href="<?=$this->getUrl(array('menu' => $menu->getId())) ?>"><?=$this->getTrans('menu') ?> <?=$iMenu ?></a>
+                <a href="<?=$this->getUrl(['menu' => $menu->getId()]) ?>"><?=$this->getTrans('menu') ?> <?=$iMenu ?></a>
             </li>
             <?php $iMenu++; ?>
         <?php endforeach; ?>
-        <li><a href="<?=$this->getUrl(array('action' => 'add')) ?>">+</a></li>
+        <li><a href="<?=$this->getUrl(['action' => 'add']) ?>">+</a></li>
     </ul>
     <br />
     <legend><?=$this->getTrans('menuChange') ?></legend>
@@ -118,7 +118,7 @@ function rec($item, $menuMapper, $obj) {
 </form>
 
 <?php
-$boxesDir = array();
+$boxesDir = [];
 
 foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
     $moduleKey = basename($moduleKey);

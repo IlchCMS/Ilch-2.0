@@ -17,12 +17,12 @@ class War extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return WarModel[]|array
      */
-    public function getWars($where = array(), $pagination = null)
+    public function getWars($where = [], $pagination = null)
     {
         $select = $this->db()->select('*')
             ->from('war')
             ->where($where)
-            ->order(array('time' => 'ASC'));
+            ->order(['time' => 'ASC']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -34,7 +34,7 @@ class War extends \Ilch\Mapper
         }
 
         $entryArray = $result->fetchRows();
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new WarModel();
@@ -63,12 +63,12 @@ class War extends \Ilch\Mapper
      * @param \Ilch\Pagination|null $pagination
      * @return WarModel[]|array
      */
-    public function getNextWars($where = array(), $pagination = null)
+    public function getNextWars($where = [], $pagination = null)
     {
         $select = $this->db()->select('*')
             ->from('war')
             ->where($where)
-            ->order(array('id' => 'DESC'));
+            ->order(['id' => 'DESC']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -80,7 +80,7 @@ class War extends \Ilch\Mapper
         }
 
         $entryArray = $result->fetchRows();
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new WarModel();
@@ -112,7 +112,7 @@ class War extends \Ilch\Mapper
     {
         $warRow = $this->db()->select('*')
             ->from('war')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -160,7 +160,7 @@ class War extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
@@ -189,8 +189,8 @@ class War extends \Ilch\Mapper
      */
     public function save(WarModel $model)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'enemy' => $model->getWarEnemy(),
             'group' => $model->getWarGroup(),
             'time' => $model->getWarTime(),
@@ -202,12 +202,12 @@ class War extends \Ilch\Mapper
             'matchtype' => $model->getWarMatchtype(),
             'report' => $model->getWarReport(),
             'status' => $model->getWarStatus(),
-        );
+            ];
 
         if ($model->getId()) {
             $this->db()->update('war')
                 ->values($fields)
-                ->where(array('id' => $model->getId()))
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('war')
@@ -219,7 +219,7 @@ class War extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('war')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -240,7 +240,7 @@ class War extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
@@ -280,7 +280,7 @@ class War extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
@@ -318,7 +318,7 @@ class War extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
@@ -353,7 +353,7 @@ class War extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
@@ -375,7 +375,7 @@ class War extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();
@@ -397,7 +397,7 @@ class War extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($warArray as $entries) {
             $entryModel = new WarModel();

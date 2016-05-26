@@ -10,23 +10,21 @@ class Layouts extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items = array
-        (
-            array
-                (
+        $items =
+            [
+            [
                     'name' => 'layouts',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'layouts', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'index'])
+            ],
+                [
                     'name' => 'search',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'layouts', 'action' => 'search'))
-                ),
-        );
+                    'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'search'])
+                ],
+            ];
 
         if ($this->getRequest()->getActionName() == 'index') {
             $items[0]['active'] = true;
@@ -46,9 +44,9 @@ class Layouts extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('layouts'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('layouts'), ['action' => 'index']);
 
-        $layouts = array();
+        $layouts = [];
 
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
             $model = new \Modules\Admin\Models\Layout();
@@ -73,7 +71,7 @@ class Layouts extends \Ilch\Controller\Admin
     public function defaultAction()
     {
         $this->getConfig()->set('default_layout', $this->getRequest()->getParam('key'));
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function deleteAction()
@@ -87,7 +85,7 @@ class Layouts extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function searchAction()

@@ -13,7 +13,7 @@ abstract class Registry
      *
      * @var array
      */
-    private static $registry = array();
+    private static $registry = [];
 
     /**
      * Set key to registry.
@@ -96,7 +96,7 @@ abstract class Registry
      */
     public static function removeAll()
     {
-        self::$registry = array();
+        self::$registry = [];
 
         return;
     }

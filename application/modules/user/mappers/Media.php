@@ -21,7 +21,7 @@ class Media extends \Ilch\Mapper
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
                 FROM `[prefix]_users_media`
-                WHERE user_id = '.$userId.' AND ending IN ("'.implode(',',array(str_replace(' ', '","', $ending))).'")
+                WHERE user_id = '.$userId.' AND ending IN ("'.implode(',', [str_replace(' ', '","', $ending)]).'")
                 ORDER by id DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
@@ -32,7 +32,7 @@ class Media extends \Ilch\Mapper
             return null;
         }
 
-        $media = array();
+        $media = [];
 
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
@@ -68,7 +68,7 @@ class Media extends \Ilch\Mapper
             return null;
         }
 
-        $media = array();
+        $media = [];
 
         foreach ($mediaArray as $medias) {
             $entryModel = new MediaModel();
@@ -92,14 +92,14 @@ class Media extends \Ilch\Mapper
     public function save(MediaModel $model)
     {
         $this->db()->insert('users_media')
-            ->values(array(
+            ->values([
                 'user_id' => $model->getUserId(),
                 'name' => $model->getName(),
                 'url' => $model->getUrl(),
                 'url_thumb' => $model->getUrlThumb(),
                 'ending' => $model->getEnding(),
                 'datetime' => $model->getDatetime(),
-            ))
+            ])
             ->execute();
     }
 
@@ -112,7 +112,7 @@ class Media extends \Ilch\Mapper
     {
         $mediaRow = $this->db()->select('*')
             ->from('users_media')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -125,11 +125,11 @@ class Media extends \Ilch\Mapper
         }
 
         $this->db()->delete('users_media')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
 
         $this->db()->delete('users_gallery_imgs')
-            ->where(array('image_id' => $id))
+            ->where(['image_id' => $id])
             ->execute();
     }
 }

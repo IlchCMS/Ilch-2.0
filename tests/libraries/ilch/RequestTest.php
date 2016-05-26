@@ -27,9 +27,9 @@ class RequestTest extends TestCase
     public function setUp()
     {
         $this->request = new Request();
-        $_REQUEST = array();
-        $_GET = array();
-        $_POST = array();
+        $_REQUEST = [];
+        $_GET = [];
+        $_POST = [];
     }
 
     /**
@@ -38,11 +38,11 @@ class RequestTest extends TestCase
      */
     public function testSetAndGetParams()
     {
-        $params = array(
+        $params = [
             'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
             'id'    => 123,
-        );
+        ];
         $this->request->setParams($params);
         $actualParams = $this->request->getParams();
 
@@ -54,11 +54,11 @@ class RequestTest extends TestCase
      */
     public function testGetSingleParam()
     {
-        $params = array(
+        $params = [
             'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
             'id'    => 123,
-        );
+        ];
         $this->request->setParams($params);
 
         $this->assertEquals(123, $actualParam = $this->request->getParam('id'), 'Param got manipulated unexpectedly.');
@@ -69,12 +69,12 @@ class RequestTest extends TestCase
      */
     public function testGetSingleParamNull()
     {
-        $params = array(
+        $params = [
             'name'      => 'testuser',
             'email'     => 'testuser@testmail.com',
             'id'        => 123,
             'nullParam' => null,
-        );
+        ];
         $this->request->setParams($params);
 
         $this->assertEquals(
@@ -90,12 +90,12 @@ class RequestTest extends TestCase
      */
     public function testSaveParamsWithNullValue()
     {
-        $params = array(
+        $params = [
             'name'      => 'testuser',
             'email'     => 'testuser@testmail.com',
             'id'        => 123,
             'nullParam' => null,
-        );
+        ];
         $this->request->setParams($params);
         $actualParams = $this->request->getParams();
 
@@ -130,11 +130,11 @@ class RequestTest extends TestCase
      */
     public function testSetAndManipulateSourceParams()
     {
-        $params = array(
+        $params = [
             'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
             'id'    => 123,
-        );
+        ];
         $expectedParams = $params;
         $this->request->setParams($params);
         $params['testvar'] = false;
@@ -175,11 +175,11 @@ class RequestTest extends TestCase
      */
     public function testIsPost()
     {
-        $params = array(
+        $params = [
             'name'  => 'testuser',
             'email' => 'testuser@testmail.com',
             'id'    => 123,
-        );
+        ];
         $_POST = $params;
         $_REQUEST = $params;
 

@@ -44,7 +44,7 @@ class BeforeControllerLoad
                         $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
                     }
                 }
-                $_SESSION['messages'][] = array('text' => $translator->trans('siteMaintenanceMode'), 'type' => 'danger');
+                $_SESSION['messages'][] = ['text' => $translator->trans('siteMaintenanceMode'), 'type' => 'danger'];
             }
         }
 
@@ -52,12 +52,12 @@ class BeforeControllerLoad
             /*
              * User is not logged in yet but wants to go to the admincenter, redirect him to the login.
              */
-            $pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'login', 'action' => 'index'));
+            $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'login', 'action' => 'index']);
         } elseif ($request->getModuleName() === 'admin' && $request->getControllerName() === 'login' && $request->getActionName() !== 'logout' && \Ilch\Registry::get('user')) {
             /*
              * User is logged in but wants to go to the login, redirect him to the admincenter.
              */
-            $pluginData['controller']->redirect(array('module' => 'admin', 'controller' => 'index', 'action' => 'index'));
+            $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
         }
     }
 }

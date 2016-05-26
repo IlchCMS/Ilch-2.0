@@ -30,7 +30,7 @@ class Receiver extends \Ilch\Mapper
             return null;
         }
 
-        $receivers = array();
+        $receivers = [];
 
         foreach ($receiverArray as $receiverRow) {
             $receiverModel = new ReceiverModel();
@@ -77,12 +77,12 @@ class Receiver extends \Ilch\Mapper
     {
         if ($receiver->getId()) {
             $this->db()->update('contact_receivers')
-                ->values(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
-                ->where(array('id' => $receiver->getId()))
+                ->values(['name' => $receiver->getName(), 'email' => $receiver->getEmail()])
+                ->where(['id' => $receiver->getId()])
                 ->execute();
         } else {
             $this->db()->insert('contact_receivers')
-                ->values(array('name' => $receiver->getName(), 'email' => $receiver->getEmail()))
+                ->values(['name' => $receiver->getName(), 'email' => $receiver->getEmail()])
                 ->execute();
         }
     }
@@ -95,7 +95,7 @@ class Receiver extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('contact_receivers')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

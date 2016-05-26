@@ -14,6 +14,6 @@ class Jobs extends \Ilch\Box
     {
         $jobsMapper = new JobsMapper();
 
-        $this->getView()->set('jobs', $jobsMapper->getJobs(array('show' => 1)));
+        $this->getView()->set('jobs', $jobsMapper->getJobs(['show' => 1]));
     }
 }

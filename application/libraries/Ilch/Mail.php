@@ -14,7 +14,7 @@ class Mail
     /**
      * @var array $to
      */
-    protected $to = array();
+    protected $to = [];
 
     /**
      * @var string $subject
@@ -29,7 +29,7 @@ class Mail
     /**
      * @var array $headers
      */
-    protected $headers = array();
+    protected $headers = [];
 
     /**
      * @var string $params
@@ -49,8 +49,8 @@ class Mail
      */
     public function reset()
     {
-        $this->to = array();
-        $this->headers = array();
+        $this->to = [];
+        $this->headers = [];
         $this->subject = null;
         $this->message = null;
         $this->params = null;

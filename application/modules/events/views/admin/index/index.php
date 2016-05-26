@@ -28,8 +28,8 @@
                         <?php $user = $userMapper->getUserById($event->getUserId()) ?>
                         <tr>
                             <td><input value="<?=$event->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $event->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $event->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $event->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $event->getId()]) ?></td>
                             <td>
                                 <?=date('d.m.Y H:i', strtotime($event->getStart())) ?>
                                 <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
@@ -43,7 +43,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noEvent') ?>

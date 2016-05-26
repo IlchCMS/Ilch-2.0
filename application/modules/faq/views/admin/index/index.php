@@ -29,8 +29,8 @@ $categoryMapper = new \Modules\Faq\Mappers\Category();
                         <?php $faqsCats = $categoryMapper->getCategoryById($faq->getCatId()); ?>
                         <tr>
                             <td><input value="<?=$faq->getId()?>" type="checkbox" name="check_faqs[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $faq->getId()))?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'delfaq', 'id' => $faq->getId()))?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $faq->getId()])?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delfaq', 'id' => $faq->getId()])?></td>
                             <td><?=$faqsCats->getTitle() ?></td>
                             <td><?=$faq->getQuestion()?></td>
                         </tr>
@@ -38,7 +38,7 @@ $categoryMapper = new \Modules\Faq\Mappers\Category();
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noFaqs') ?>

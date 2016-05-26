@@ -33,7 +33,7 @@ class ElementNode extends Node
      */
     public function __construct()
     {
-        $this->children = array();
+        $this->children = [];
         $this->nestDepth = 0;
     }
 

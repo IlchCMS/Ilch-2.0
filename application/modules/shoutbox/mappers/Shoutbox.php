@@ -19,7 +19,7 @@ class Shoutbox extends \Ilch\Mapper
     {
         $entryArray = $this->db()->select('*')
                 ->from('shoutbox')
-                ->order(array('id' => 'DESC'))
+                ->order(['id' => 'DESC'])
                 ->execute()
                 ->fetchRows();
 
@@ -27,7 +27,7 @@ class Shoutbox extends \Ilch\Mapper
             return null;
         }
 
-        $shoutbox = array();
+        $shoutbox = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new ShoutboxModel();
@@ -51,7 +51,7 @@ class Shoutbox extends \Ilch\Mapper
     {
         $entryArray = $this->db()->select('*')
                 ->from('shoutbox')
-                ->order(array('id' => 'DESC'))
+                ->order(['id' => 'DESC'])
                 ->limit($limit)
                 ->execute()
                 ->fetchRows();
@@ -60,7 +60,7 @@ class Shoutbox extends \Ilch\Mapper
             return null;
         }
 
-        $shoutbox = array();
+        $shoutbox = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new ShoutboxModel();
@@ -83,7 +83,7 @@ class Shoutbox extends \Ilch\Mapper
      */
     public function getShoutboxById($id)
     {
-        $shoutbox = $this->getShoutbox(array('id' => $id));
+        $shoutbox = $this->getShoutbox(['id' => $id]);
         return reset($shoutbox);
     }
 
@@ -97,12 +97,12 @@ class Shoutbox extends \Ilch\Mapper
         $date = new \Ilch\Date();
 
         $this->db()->insert('shoutbox')
-            ->values(array(
+            ->values([
                 'user_id' => $shoutbox->getUid(),
                 'name' => $shoutbox->getName(),
                 'textarea' => $shoutbox->getTextarea(),
                 'time' => $date->toDb(),
-            ))
+            ])
             ->execute();
     }
 
@@ -114,7 +114,7 @@ class Shoutbox extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('shoutbox')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

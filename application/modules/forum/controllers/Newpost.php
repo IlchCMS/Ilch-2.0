@@ -26,11 +26,11 @@ class Newpost extends \Ilch\Controller\Frontend
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
         
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
-                ->add($cat->getTitle(), array('controller' => 'showcat','action' => 'index', 'id' => $cat->getId()))
-                ->add($forum->getTitle(), array('controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()))
-                ->add($post->getTopicTitle(), array('controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId))
-                ->add($this->getTranslator()->trans('newPost'), array('controller' => 'newpost','action' => 'index', 'topicid' => $topicId));
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
+                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
+                ->add($post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
+                ->add($this->getTranslator()->trans('newPost'), ['controller' => 'newpost','action' => 'index', 'topicid' => $topicId]);
 
         if ($this->getRequest()->getPost('saveNewPost')) {
             $postMapper = new PostMapper;
@@ -44,7 +44,7 @@ class Newpost extends \Ilch\Controller\Frontend
             $postMapper->save($postModel);
 
             $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
-            $this->redirect(array('controller' => 'showposts','action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()));
+            $this->redirect(['controller' => 'showposts','action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
         }
     }
 }

@@ -17,40 +17,36 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuArticle',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'menuArticle',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'menuCats',
                     'active' => false,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'cats', 'action' => 'index'))
-                ),
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
+                ],
+            ]
         );
 
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-            )
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
         $articleMapper = new ArticleMapper();
 
@@ -75,7 +71,7 @@ class Index extends \Ilch\Controller\Admin
             $articleMapper->delete($this->getRequest()->getParam('id'));
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function treatAction()
@@ -85,8 +81,8 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             if ($this->getRequest()->getParam('locale') == '') {
                 $locale = '';
@@ -97,8 +93,8 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('article', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), $locale));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
+                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -125,7 +121,7 @@ class Index extends \Ilch\Controller\Admin
 
             $articleMapper->save($model);
 
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $this->getView()->set('cats', $categoryMapper->getCategories());

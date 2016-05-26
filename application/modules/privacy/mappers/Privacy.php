@@ -16,12 +16,12 @@ class Privacy extends \Ilch\Mapper
      * @param array $where
      * @return PrivacyModel[]|array
      */
-    public function getPrivacy($where = array())
+    public function getPrivacy($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('privacy')
             ->where($where)
-            ->order(array('id' => 'ASC'))
+            ->order(['id' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Privacy extends \Ilch\Mapper
             return null;
         }
 
-        $privacy = array();
+        $privacy = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new PrivacyModel();
@@ -54,7 +54,7 @@ class Privacy extends \Ilch\Mapper
      */
     public function getPrivacyById($id)
     {
-        $privacy = $this->getPrivacy(array('id' => $id));
+        $privacy = $this->getPrivacy(['id' => $id]);
         return reset($privacy);
     }
 
@@ -65,19 +65,19 @@ class Privacy extends \Ilch\Mapper
      */
     public function save(PrivacyModel $privacy)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'title' => $privacy->getTitle(),
             'urltitle' => $privacy->getUrlTitle(),
             'url' => $privacy->getUrl(),
             'text' => $privacy->getText(),
             'show' => $privacy->getShow(),
-        );
+            ];
 
         if ($privacy->getId()) {
             $this->db()->update('privacy')
                 ->values($fields)
-                ->where(array('id' => $privacy->getId()))
+                ->where(['id' => $privacy->getId()])
                 ->execute();
         } else {
             $this->db()->insert('privacy')
@@ -95,19 +95,19 @@ class Privacy extends \Ilch\Mapper
     {
         $show = (int) $this->db()->select('show')
                         ->from('privacy')
-                        ->where(array('id' => $id))
+                        ->where(['id' => $id])
                         ->execute()
                         ->fetchCell();
 
         if ($show == 1) {
             $this->db()->update('privacy')
-                ->values(array('show' => 0))
-                ->where(array('id' => $id))
+                ->values(['show' => 0])
+                ->where(['id' => $id])
                 ->execute();
         } else {
             $this->db()->update('privacy')
-                ->values(array('show' => 1))
-                ->where(array('id' => $id))
+                ->values(['show' => 1])
+                ->where(['id' => $id])
                 ->execute();
         }
     }
@@ -120,7 +120,7 @@ class Privacy extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('privacy')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

@@ -8,7 +8,7 @@ $archive = $this->get('archive')
         <?php foreach ($archive as $archiv): ?>
             <?php $date = new \Ilch\Date($archiv->getDateCreated()); ?>
             <li>
-                <a href="<?=$this->getUrl(array('module' => 'article', 'controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true))) ?>">
+                <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>">
                     <?=$date->format("F Y", true) ?>
                 </a>
                 <span class="badge pull-right" style="margin-top: 7px;"><?=$articleMapper->getCountArticlesByMonthYear($archiv->getDateCreated()) ?></span>

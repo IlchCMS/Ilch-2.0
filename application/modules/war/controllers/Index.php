@@ -15,7 +15,7 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuWarList'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index']);
 
         $pagination = new \Ilch\Pagination();
         $warMapper = new WarMapper();
@@ -39,9 +39,9 @@ class Index extends \Ilch\Controller\Frontend
         $enemy = $enemyMapper->getEnemyById($war->getWarEnemy());
 
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuWarList'), array('action' => 'index'))
-            ->add($group->getGroupName(), array('controller' => 'group', 'action' => 'show', 'id' => $group->getId()))
-            ->add($this->getTranslator()->trans('warPlay'), array('action' => 'show', 'id' => $this->getRequest()->getParam('id')));
+            ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
+            ->add($group->getGroupName(), ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()])
+            ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         $this->getView()->set('group', $group);
         $this->getView()->set('enemy', $enemy);

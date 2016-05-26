@@ -17,7 +17,7 @@ class Factory
      */
     public function getInstanceByConfig(\Ilch\Config\File $config)
     {
-        foreach (array('dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix') as $configKey) {
+        foreach (['dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix'] as $configKey) {
             $dbData[$configKey] = $config->get($configKey);
         }
 

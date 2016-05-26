@@ -8,25 +8,25 @@ namespace Modules\Gallery\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'gallery',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'gallery.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-picture-o',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Galerie',
                 'description' => 'Hier kann die Galerie verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Gallery',
                 'description' => 'Here you can manage the gallery',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

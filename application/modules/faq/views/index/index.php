@@ -21,7 +21,7 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <?php foreach ($categories as $category): ?>
-                        <?php $countFaqs = count($faqMapper->getFaqs(array('cat_id' => $category->getId()))); ?>
+                        <?php $countFaqs = count($faqMapper->getFaqs(['cat_id' => $category->getId()])); ?>
                         <?php if ($category->getId() == $this->getRequest()->getParam('catId') OR $category->getId() == $this->get('firstCatId')) {
                             $active = 'class="active"';        
                         } else {

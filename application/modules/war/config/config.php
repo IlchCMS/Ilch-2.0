@@ -8,25 +8,25 @@ namespace Modules\War\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'war',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'war.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-shield',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'War',
                 'description' => 'Hier kannst du die Wars verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'War',
                 'description' => 'Here you can manage the wars.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuHistorys' => 'History',
     'date' => 'Date',
     'title' => 'Title',
@@ -24,4 +24,4 @@ return array
     'missingText' => 'Text was not filled',
     'sendSuccess' => 'History successfull entry',
     'noHistorys' => 'No historys available',
-);
+    ];

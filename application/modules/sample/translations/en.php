@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'xyz' => 'zyx',
-);
+    ];

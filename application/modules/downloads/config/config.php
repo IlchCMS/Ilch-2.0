@@ -8,25 +8,25 @@ namespace Modules\Downloads\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'downloads',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'download.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-arrow-circle-o-down',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Downloads',
                 'description' => 'Hier können die Downloads verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Gallery',
                 'description' => 'Here you can manage the downloads',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('layouts') ?></legend>
         <?php $i = 0; ?>
@@ -35,7 +35,7 @@
                             <p><?=$this->escape($layout->getDesc()) ?></p>
                             <p>
                                 <a class="nounderline" title="<?php if ($this->get('defaultLayout') == $layout->getKey()) { echo $this->getTrans('isDefault'); } else { echo $this->getTrans('setDefault'); } ?>"
-                                   href="<?=$this->getUrl(array('action' => 'default', 'key' => $layout->getKey())) ?>">
+                                   href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()]) ?>">
                                     <?php if ($this->get('defaultLayout') == $layout->getKey()): ?>
                                         <i class="fa fa-check-square-o fa-2x text-success"></i>
                                     <?php else: ?>
@@ -43,13 +43,13 @@
                                     <?php endif; ?>
                                 </a>
                                 <?php if($layout->getModulekey() != ''): ?>
-                                    <a class="fa-2x" href="<?=$this->getUrl(array('module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index')) ?>">
+                                    <a class="fa-2x" href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>">
                                         <i class="fa fa fa-cogs"></i> Settings
                                     </a>
                                 <?php endif; ?>
 
                                 <span class="deleteLayout clickable fa fa-trash-o fa-2x text-danger pull-right"
-                                      data-clickurl="<?=$this->getUrl(array('action' => 'delete', 'key' => $layout->getKey())) ?>"
+                                      data-clickurl="<?=$this->getUrl(['action' => 'delete', 'key' => $layout->getKey()]) ?>"
                                       data-toggle="modal"
                                       data-target="#deleteModal"
                                       data-modaltext="<?=$this->escape($this->getTrans('askIfDeleteLayout', $layout->getKey())) ?>"

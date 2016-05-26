@@ -8,25 +8,25 @@ namespace Modules\Awards\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'awards',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'awards.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-trophy',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Auszeichnungen',
                 'description' => 'Hier können Auszeichnungen für ein Team erstellt werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Awards',
                 'description' => 'Here you can create Awards for Teams.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

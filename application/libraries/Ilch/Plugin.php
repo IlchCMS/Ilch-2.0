@@ -18,7 +18,7 @@ class Plugin
      *
      * @var Array
      */
-    protected $pluginData = array();
+    protected $pluginData = [];
 
     /**
      * Searching for plugins.

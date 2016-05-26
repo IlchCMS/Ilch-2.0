@@ -12,30 +12,27 @@ class Infos extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items = array
-        (
-            array
-            (
+        $items =
+            [
+            [
                 'name' => 'menuPHPInfo',
                 'active' => false,
                 'icon' => 'fa fa-info-circle',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'infos', 'action' => 'index'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuFolderRights',
                 'active' => false,
                 'icon' => 'fa fa-folder-open',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'infos', 'action' => 'folderrights'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'folderrights'])
+            ],
+            [
                 'name' => 'menuKeyboardShortcuts',
                 'active' => false,
                 'icon' => 'fa fa-keyboard-o',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'infos', 'action' => 'shortcuts'))
-            ),
-        );
+                'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'shortcuts'])
+            ],
+            ];
 
         if ($this->getRequest()->getActionName() == 'folderrights') {
             $items[1]['active'] = true; 
@@ -55,8 +52,8 @@ class Infos extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('hmenuInfos'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('hmenuPHPInfo'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('hmenuPHPInfo'), ['action' => 'index']);
 
         ob_start();
         phpinfo();
@@ -87,8 +84,8 @@ class Infos extends \Ilch\Controller\Admin
         $InfosMapper = new InfosMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('hmenuInfos'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('hmenuFolderRights'), array('action' => 'folderrights'));
+                ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('hmenuFolderRights'), ['action' => 'folderrights']);
 
         $this->getView()->set('folderrights', $InfosMapper->getModulesFolderRights());
     }
@@ -96,8 +93,8 @@ class Infos extends \Ilch\Controller\Admin
     public function shortcutsAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('hmenuInfos'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('hmenuKeyboardShortcuts'), array('action' => 'shortcuts'));
+                ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('hmenuKeyboardShortcuts'), ['action' => 'shortcuts']);
 
     }
 }

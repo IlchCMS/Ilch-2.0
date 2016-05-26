@@ -39,7 +39,7 @@ class Parser
     public function __construct()
     {
         $this->reset();
-        $this->bbcodes = array();
+        $this->bbcodes = [];
     }
 
     /**

@@ -10,7 +10,7 @@ class LanguageCodes
 {
     public function statisticLanguage($language, $locale)
     {
-        $languageDEArray = array(
+        $languageDEArray = [
             'aa' => 'Fern',
             'ab' => 'Abchasen',
             'af' => 'Afrikaans',
@@ -155,9 +155,9 @@ class LanguageCodes
             'zu' => 'Zulu',
             'zu' => 'Zulu',
             '' => '',
-        );
+        ];
 
-        $languageENArray = array(
+        $languageENArray = [
             'aa' => 'Afar',
             'ab' => 'Abkhaz',
             'af' => 'Afrikaans',
@@ -300,7 +300,7 @@ class LanguageCodes
             'za' => 'Zhuang',
             'zh' => 'Chinese',
             'zu' => 'Zulu',
-        ); 
+        ]; 
 
         if ($locale == 'de_DE') {
             $language = $languageDEArray[$language];

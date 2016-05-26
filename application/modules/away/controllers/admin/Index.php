@@ -15,23 +15,21 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuAway',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+            ]
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuAway'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
         $awayMapper = new AwayMapper();
 
@@ -57,7 +55,7 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('saveSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function delAction()
@@ -69,6 +67,6 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -43,12 +43,12 @@
                             <input value="<?=$box->getId() ?>" type="checkbox" name="check_boxes[]" />
                         </td>
                         <td>
-                            <a href="<?=$this->getUrl(array('action' => 'treat', 'id' => $box->getId())) ?>">
+                            <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId()]) ?>">
                                 <i class="fa fa-edit"></i>
                             </a>
                         </td>
                         <td>
-                            <?=$this->getDeleteIcon(array('action' => 'delete', 'id' => $box->getId())) ?>
+                            <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $box->getId()]) ?>
                         </td>
                         <td>
                             <?php if ($box->getTitle() !== ''): ?>
@@ -65,9 +65,9 @@
                                     <?php endif; ?>
 
                                     <?php if ($this->get('boxMapper')->getBoxByIdLocale($box->getId(), $key) != null): ?>
-                                        <a href="<?=$this->getUrl(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)) ?>"><i class="fa fa-edit"></i></a>
+                                        <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa fa-edit"></i></a>
                                     <?php else: ?>
-                                        <a href="<?=$this->getUrl(array('action' => 'treat', 'id' => $box->getId(), 'locale' => $key)) ?>"><i class="fa fa-plus-circle"></i></a>
+                                        <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa fa-plus-circle"></i></a>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </td>
@@ -76,7 +76,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <?=$this->getListBar(array('delete' => 'delete'))?>
+        <?=$this->getListBar(['delete' => 'delete'])?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noBoxes') ?>

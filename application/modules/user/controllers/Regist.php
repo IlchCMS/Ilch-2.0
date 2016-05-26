@@ -15,12 +15,12 @@ class Regist extends \Ilch\Controller\Frontend
     {
         if ($this->getConfig()->get('regist_accept') == 1){
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'))
-                    ->add($this->getTranslator()->trans('step1to3'), array('action' => 'index'));
+                    ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('step1to3'), ['action' => 'index']);
 
             if ($this->getRequest()->getPost('saveRegist')) {
                 if ($this->getRequest()->getPost('acceptRule') == 1) {
-                    $this->redirect(array('action' => 'input'));
+                    $this->redirect(['action' => 'input']);
                 } else {
                     $this->getView()->set('error', true);
                     $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
@@ -31,7 +31,7 @@ class Regist extends \Ilch\Controller\Frontend
                 $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
             }
         } else {
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'));
+            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index']);
         
             $this->getView();
         }
@@ -40,11 +40,11 @@ class Regist extends \Ilch\Controller\Frontend
     public function inputAction()
     {    
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('step2to3'), array('action' => 'input'));
+                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
 
         $registMapper = new UserMapper();
-        $errors = array();
+        $errors = [];
 
         if ($this->getRequest()->getPost('saveRegist')) {
             $name = $this->getRequest()->getPost('name');
@@ -129,14 +129,14 @@ class Regist extends \Ilch\Controller\Frontend
                     } else {
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/registconfirm.php');
                     }
-                    $messageReplace = array(
+                    $messageReplace = [
                             '{content}' => $this->getConfig()->get('regist_confirm_mail'),
                             '{sitetitle}' => $sitetitle,
                             '{date}' => $date->format("l, d. F Y", true),
                             '{name}' => $name,
                             '{confirm}' => $confirmCode,
                             '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
-                    );
+                    ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
@@ -149,7 +149,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $mail->send();
                 }
 
-                $this->redirect(array('action' => 'finish'));
+                $this->redirect(['action' => 'finish']);
             }
 
             $this->getView()->set('errors', $errors);
@@ -161,8 +161,8 @@ class Regist extends \Ilch\Controller\Frontend
     public function finishAction()
     {        
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('step3to3'), array('action' => 'finish'));
+                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('step3to3'), ['action' => 'finish']);
         
         $this->getView()->set('regist_confirm', $this->getConfig()->get('regist_confirm'));    
     }
@@ -170,10 +170,10 @@ class Regist extends \Ilch\Controller\Frontend
     public function confirmAction()
     {        
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuRegist'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuConfirm'), array('action' => 'confirm'));
+                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuConfirm'), ['action' => 'confirm']);
         
-        $errors = array();
+        $errors = [];
         
         if ($this->getRequest()->getPost('saveConfirm')) {
             $confirmedCode = $this->getRequest()->getPost('confirmedCode');
@@ -183,7 +183,7 @@ class Regist extends \Ilch\Controller\Frontend
             }
             
             if (empty($errors)) {
-                $this->redirect(array('controller' => 'regist', 'action' => 'confirm', 'code' => $confirmedCode));
+                $this->redirect(['controller' => 'regist', 'action' => 'confirm', 'code' => $confirmedCode]);
             }
             
             $this->getView()->set('errors', $errors);
@@ -207,7 +207,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $confirmed = null;
                     $this->getView()->set('confirmed', $confirmed);
                     
-                    $_SESSION['messages'][] = array('text' => 'Aktivierungscode Falsch', 'type' => 'warning');
+                    $_SESSION['messages'][] = ['text' => 'Aktivierungscode Falsch', 'type' => 'warning'];
                 }
             } else {
                 $this->getView();

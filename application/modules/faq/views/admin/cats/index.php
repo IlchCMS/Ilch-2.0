@@ -26,11 +26,11 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('cats') as $cat): ?>
-                        <?php $countFaqs = count($faqMapper->getFaqs(array('cat_id' => $cat->getId()))); ?>
+                        <?php $countFaqs = count($faqMapper->getFaqs(['cat_id' => $cat->getId()])); ?>
                         <tr>
                             <td><input value="<?=$cat->getId() ?>" type="checkbox" name="check_cats[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $cat->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'delcat', 'id' => $cat->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
                             <td align="center"><?=$countFaqs ?></td>
                             <td><?=$cat->getTitle() ?></td>
                         </tr>
@@ -38,7 +38,7 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noCategory') ?>

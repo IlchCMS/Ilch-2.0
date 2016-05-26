@@ -14,11 +14,11 @@ class Forum extends \Ilch\Mapper
 {
     public function getForumItemsByParent($forumId, $itemId)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('forum_items')
-                ->where(array('forum_id' => $forumId, 'parent_id' => $itemId))
-                ->order(array('sort' => 'ASC'))
+                ->where(['forum_id' => $forumId, 'parent_id' => $itemId])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -51,8 +51,8 @@ class Forum extends \Ilch\Mapper
     {
         $itemRows = $this->db()->select('*')
                 ->from('forum_items')
-                ->where(array('id' => $id))
-                ->order(array('sort' => 'DESC'))
+                ->where(['id' => $id])
+                ->order(['sort' => 'DESC'])
                 ->execute()
                 ->fetchAssoc();
 
@@ -80,7 +80,7 @@ class Forum extends \Ilch\Mapper
         $result = $select->fields(['t.id', 't.topic_id'])
             ->from(['t' => 'forum_topics'])
             ->join(['i' => 'forum_items'], 'i.id = t.topic_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.forum_id', 'i.read_access', 'i.replay_access', 'i.create_access'])
-            ->where(array('t.id' => $topicId));
+            ->where(['t.id' => $topicId]);
 
         $items = $result->execute();
 
@@ -139,8 +139,8 @@ class Forum extends \Ilch\Mapper
     {
         $itemRows = $this->db()->select('*')
                 ->from('forum_items')
-                ->where(array('id' => $id))
-                ->order(array('sort' => 'ASC'))
+                ->where(['id' => $id])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchAssoc();
 
@@ -164,8 +164,8 @@ class Forum extends \Ilch\Mapper
 
     public function saveItem(ForumItem $forumItem)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'title' => $forumItem->getTitle(),
             'forum_id' => $forumItem->getForumId(),
             'sort' => $forumItem->getSort(),
@@ -175,7 +175,7 @@ class Forum extends \Ilch\Mapper
             'read_access' => $forumItem->getReadAccess(),
             'replay_access' => $forumItem->getReplayAccess(),
             'create_access' => $forumItem->getCreateAccess(),
-        );
+            ];
 
         foreach ($fields as $key => $value) {
             if ($value === null) {
@@ -185,14 +185,14 @@ class Forum extends \Ilch\Mapper
 
         $itemId = (int)$this->db()->select('id')
             ->from('forum_items')
-            ->where(array('id' => $forumItem->getId()))
+            ->where(['id' => $forumItem->getId()])
             ->execute()
             ->fetchCell();
 
         if ($itemId) {
             $this->db()->update('forum_items')
                 ->values($fields)
-                ->where(array('id' => $itemId))
+                ->where(['id' => $itemId])
                 ->execute();
         } else {
             $itemId = $this->db()->insert('forum_items')
@@ -206,17 +206,17 @@ class Forum extends \Ilch\Mapper
     public function deleteItem($forumItem)
     {
         $this->db()->delete('forum_items')
-            ->where(array('id' => $forumItem->getId()))
+            ->where(['id' => $forumItem->getId()])
             ->execute();
     }
 
     public function getForumItems($forumId)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('forum_items')
-                ->where(array('forum_id' => $forumId))
-                ->order(array('sort' => 'ASC'))
+                ->where(['forum_id' => $forumId])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -290,7 +290,7 @@ class Forum extends \Ilch\Mapper
     {
         $sql = 'SELECT * FROM `[prefix]_forum_items`';
         $permas = $this->db()->queryArray($sql);
-        $permaArray = array();
+        $permaArray = [];
 
         if (empty($permas)) {
             return null;

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuActionNewUser' => 'Neuen Benutzer hinzufügen',
     'menuActionNewGroup' => 'Neue Gruppe hinzufügen',
 
@@ -249,4 +249,4 @@ return array
 
     'users' => 'Benutzer',
     'setfree' => 'Freischalten',
-);
+    ];

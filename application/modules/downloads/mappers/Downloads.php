@@ -15,11 +15,11 @@ class Downloads extends \Ilch\Mapper
      */
     public function getDownloadsItemsByParent($downloadsId, $itemId)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('downloads_items')
-                ->where(array('downloads_id' => $downloadsId, 'parent_id' => $itemId))
-                ->order(array('sort' => 'ASC'))
+                ->where(['downloads_id' => $downloadsId, 'parent_id' => $itemId])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -46,11 +46,11 @@ class Downloads extends \Ilch\Mapper
      */
     public function getDownloadsCatItem($type)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('downloads_items')
-                ->where(array('type' => $type))
-                ->order(array('sort' => 'ASC'))
+                ->where(['type' => $type])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 
@@ -76,8 +76,8 @@ class Downloads extends \Ilch\Mapper
     {
         $itemRows = $this->db()->select('*')
                 ->from('downloads_items')
-                ->where(array('id' => $id))
-                ->order(array('sort' => 'ASC'))
+                ->where(['id' => $id])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchAssoc();
 
@@ -105,15 +105,15 @@ class Downloads extends \Ilch\Mapper
      */
     public function saveItem(DownloadsItem $downloadsItem)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'title' => $downloadsItem->getTitle(),
             'downloads_id' => $downloadsItem->getDownloadsId(),
             'sort' => $downloadsItem->getSort(),
             'parent_id' => $downloadsItem->getParentId(),
             'type' => $downloadsItem->getType(),
             'description' => $downloadsItem->getDesc(),
-        );
+            ];
 
         foreach ($fields as $key => $value) {
             if ($value === null) {
@@ -123,14 +123,14 @@ class Downloads extends \Ilch\Mapper
 
         $itemId = (int)$this->db()->select('id')
             ->from('downloads_items')
-            ->where(array('id' => $downloadsItem->getId()))
+            ->where(['id' => $downloadsItem->getId()])
             ->execute()
             ->fetchCell();
 
         if ($itemId) {
             $this->db()->update('downloads_items')
                 ->values($fields)
-                ->where(array('id' => $itemId))
+                ->where(['id' => $itemId])
                 ->execute();
         } else {
             $itemId = $this->db()->insert('downloads_items')
@@ -149,7 +149,7 @@ class Downloads extends \Ilch\Mapper
     public function deleteItem($downloadsItem)
     {
         $this->db()->delete('downloads_items')
-            ->where(array('id' => $downloadsItem->getId()))
+            ->where(['id' => $downloadsItem->getId()])
             ->execute();
     }
 
@@ -158,11 +158,11 @@ class Downloads extends \Ilch\Mapper
      */
     public function getDownloadsItems($downloadsId)
     {
-        $items = array();
+        $items = [];
         $itemRows = $this->db()->select('*')
                 ->from('downloads_items')
-                ->where(array('downloads_id' => $downloadsId))
-                ->order(array('sort' => 'ASC'))
+                ->where(['downloads_id' => $downloadsId])
+                ->order(['sort' => 'ASC'])
                 ->execute()
                 ->fetchRows();
 

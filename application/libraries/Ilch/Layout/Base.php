@@ -85,7 +85,7 @@ abstract class Base extends \Ilch\Design\Base
     public function getContent()
     {
         $html = '';
-        $messages = array();
+        $messages = [];
 
         if (!empty($_SESSION['messages'])) {
             $messages = $_SESSION['messages'];

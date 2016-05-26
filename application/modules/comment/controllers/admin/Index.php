@@ -15,23 +15,20 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuComments',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                )
-            )
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ]
+            ]
         );
     }
 
@@ -40,7 +37,7 @@ class Index extends \Ilch\Controller\Admin
         $commentMapper = new CommentMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuComments'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuComments'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_comments')) {
             foreach($this->getRequest()->getPost('check_comments') as $commentId) {
@@ -59,6 +56,6 @@ class Index extends \Ilch\Controller\Admin
             $commentMapper->delete($this->getRequest()->getParam('id'));
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

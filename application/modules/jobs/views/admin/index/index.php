@@ -26,15 +26,15 @@
                     <?php foreach ($this->get('jobs') as $jobs) : ?>
                         <tr>
                             <td><input value="<?=$jobs->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $jobs->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $jobs->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $jobs->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $jobs->getId()]) ?></td>
                             <td>
                                 <?php if ($jobs->getShow() == 1): ?>
-                                    <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $jobs->getId()), null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $jobs->getId()], null, true) ?>">
                                         <span class="fa fa-check-square-o text-info"></span>
                                     </a>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $jobs->getId()), null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $jobs->getId()], null, true) ?>">
                                         <span class="fa fa-square-o text-info"></span>
                                     </a>                                    
                                 <?php endif; ?>
@@ -46,7 +46,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noJobs') ?>

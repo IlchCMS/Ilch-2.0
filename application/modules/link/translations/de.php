@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'link' => 'Link',
     'name' => 'Name',
     'banner' => 'Banner',
@@ -30,4 +30,4 @@ return array
     'noCategory' => 'Keine Kategorie vorhanden',
     'askIfDeleteLink' => 'Sind Sie sicher, dass der Link "%s" entfernt werden soll?',
     'askIfDeleteCat' => 'Sind Sie sicher, dass die Kategorie "%s" entfernt werden soll?',
-);
+    ];

@@ -25,15 +25,15 @@
                     <?php foreach ($this->get('privacys') as $privacy): ?>
                         <tr>
                             <td><input value="<?=$privacy->getId() ?>" type="checkbox" name="check_privacys[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $privacy->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $privacy->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $privacy->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $privacy->getId()]) ?></td>
                             <td>
                                 <?php if ($privacy->getShow() == 1): ?>
-                                    <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $privacy->getId()), null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $privacy->getId()], null, true) ?>">
                                         <span class="fa fa-check-square-o text-info"></span>
                                     </a>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $privacy->getId()), null, true) ?>">
+                                    <a href="<?=$this->getUrl(['action' => 'update', 'id' => $privacy->getId()], null, true) ?>">
                                         <span class="fa fa-square-o text-info"></span>
                                     </a>                                    
                                 <?php endif; ?>
@@ -44,7 +44,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noPrivacy') ?>

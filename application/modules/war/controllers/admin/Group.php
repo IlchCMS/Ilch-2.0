@@ -18,12 +18,11 @@ class Group extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewGroup',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'group', 'action' => 'treat'))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'treat'])
+            ]
         );
     }
 
@@ -33,7 +32,7 @@ class Group extends BaseController
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageGroups'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
             foreach($this->getRequest()->getPost('check_groups') as $groupId) {
@@ -54,14 +53,14 @@ class Group extends BaseController
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageGroups'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('treatGroup'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('treatGroup'), ['action' => 'treat']);
             $groups = $groupMapper->getGroupById($this->getRequest()->getParam('id'));
             $this->getView()->set('groups', $groups);
         } else {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageGroups'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('manageNewGroup'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manageNewGroup'), ['action' => 'treat']);
         }
 
         $userGroupList = $userGroupMapper->getGroupList();
@@ -96,7 +95,7 @@ class Group extends BaseController
 
                 $this->addMessage('saveSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
     }
@@ -111,6 +110,6 @@ class Group extends BaseController
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -38,7 +38,7 @@ class Index extends BaseController
                 }
 
                 if ($items) {
-                    $sortArray = array();
+                    $sortArray = [];
 
                     foreach ($sortItems as $sortItem) {
                         if ($sortItem->item_id !== null) {
@@ -89,7 +89,7 @@ class Index extends BaseController
             }
 
             $this->addMessage('saveSuccess');
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $galleryItems = $galleryMapper->getGalleryItemsByParent(1, 0);

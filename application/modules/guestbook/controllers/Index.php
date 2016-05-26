@@ -14,20 +14,20 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'), ['action' => 'index']);
         $guestbookMapper = new GuestbookMapper();
         $pagination = new \Ilch\Pagination();
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('entries', $guestbookMapper->getEntries(array('setfree' => 1), $pagination));
+        $this->getView()->set('entries', $guestbookMapper->getEntries(['setfree' => 1], $pagination));
         $this->getView()->set('pagination', $pagination);
     }
 
     public function newEntryAction()
     {
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('guestbook'), array('action' => 'index'))
-            ->add($this->getTranslator()->trans('entry'), array('action' => 'newentry'));
+            ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('entry'), ['action' => 'newentry']);
 
         $guestbookMapper = new GuestbookMapper();
         $ilchdate = new IlchDate;
@@ -149,7 +149,7 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                 unset($_SESSION['captcha']);
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
             unset($_SESSION['captcha']);
 

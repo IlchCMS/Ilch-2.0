@@ -162,7 +162,7 @@ $('#language').change
 (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl(array('id' => $articleID)) ?>/locale/'+$(this).val();
+        top.location.href = '<?=$this->getUrl(['id' => $articleID]) ?>/locale/'+$(this).val();
     }
 );
 

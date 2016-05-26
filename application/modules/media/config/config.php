@@ -8,25 +8,25 @@ namespace Modules\Media\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'media',
         'system_module' => true,
-        'icon_small' => 'media.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-th',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Medien',
                 'description' => 'Hier können die Medien verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Media',
                 'description' => 'Here you can manage your media',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

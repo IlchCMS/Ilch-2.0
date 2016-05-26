@@ -23,12 +23,11 @@ class Group extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewGroup',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'group', 'action' => 'treat', 'id' => 0))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'treat', 'id' => 0])
+            ]
         );
     }
 
@@ -38,8 +37,8 @@ class Group extends BaseController
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuGroup'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuGroup'), ['action' => 'index']);
 
         $groupMapper = new GroupMapper();
 
@@ -52,7 +51,7 @@ class Group extends BaseController
         }
         
         $groupList = $groupMapper->getGroupList();
-        $groupUsers = array();
+        $groupUsers = [];
 
         foreach ($groupList as $group) {
             $groupUsers[$group->getId()] = $groupMapper->getUsersForGroup($group->getId());
@@ -70,9 +69,9 @@ class Group extends BaseController
     public function treatAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuGroup'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('editGroup'), array('action' => 'treat', 'id' => $this->getRequest()->getParam('id')));
+                ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuGroup'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('editGroup'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
 
         $groupId = $this->getRequest()->getParam('id');
         $groupMapper = new GroupMapper();
@@ -106,7 +105,7 @@ class Group extends BaseController
                 $this->addMessage('newGroupMsg');
             }
 
-            $this->redirect(array('action' => 'treat', 'id' => $groupId));
+            $this->redirect(['action' => 'treat', 'id' => $groupId]);
         }
     }
 
@@ -135,6 +134,6 @@ class Group extends BaseController
             }
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

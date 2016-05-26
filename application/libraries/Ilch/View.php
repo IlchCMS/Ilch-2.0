@@ -31,7 +31,7 @@ class View extends Design\Base
      * @param string $url
      * @param mixed[] $data
      */
-    public function load($file, $data = array())
+    public function load($file, $data = [])
     {
         $request = $this->getRequest();
         $view = new \Ilch\View($request,
@@ -74,7 +74,7 @@ class View extends Design\Base
      * @param string $name
      * @return string
      */
-    public function getListBar($actions = array(), $name = '')
+    public function getListBar($actions = [], $name = '')
     {
         $html = '<div class="content_savebox">
                     <input class="content_savebox_hidden" name="action" type="hidden" value="" />

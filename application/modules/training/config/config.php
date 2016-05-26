@@ -8,25 +8,25 @@ namespace Modules\Training\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'training',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'training.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-graduation-cap',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Training',
                 'description' => 'Hier kann die Trainingsliste verwaltet werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Training',
                 'description' => 'Here you can manage the Training list.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

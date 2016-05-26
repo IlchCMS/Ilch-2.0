@@ -16,12 +16,12 @@ class Newsletter extends \Ilch\Mapper
      * @param array $where
      * @return NewsletterModel[]|array
      */
-    public function getEntries($where = array())
+    public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
                 ->from('newsletter')
                 ->where($where)
-                ->order(array('date_created' => 'DESC'))
+                ->order(['date_created' => 'DESC'])
                 ->execute()
                 ->fetchRows();
 
@@ -29,7 +29,7 @@ class Newsletter extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new NewsletterModel();
@@ -61,7 +61,7 @@ class Newsletter extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new NewsletterModel();
@@ -92,7 +92,7 @@ class Newsletter extends \Ilch\Mapper
     {
         $newsletterRow = $this->db()->select('*')
                 ->from('newsletter')
-                ->where(array('id' => $id))
+                ->where(['id' => $id])
                 ->execute()
                 ->fetchAssoc();
 
@@ -137,13 +137,12 @@ class Newsletter extends \Ilch\Mapper
         $this->db()->insert('newsletter')
                 ->values
                         (
-                        array
-                            (
+                        [
                             'user_id' => $newsletter->getUserId(),
                             'date_created' => $newsletter->getDateCreated(),
                             'subject' => $newsletter->getSubject(),
                             'text' => $newsletter->getText(),
-                        )
+                        ]
                 )
                 ->execute();
     }
@@ -158,10 +157,9 @@ class Newsletter extends \Ilch\Mapper
         $this->db()->insert('newsletter_mails')
                 ->values
                         (
-                        array
-                            (
+                        [
                             'email' => $newsletter->getEmail()
-                        )
+                        ]
                 )
                 ->execute();
     }
@@ -174,7 +172,7 @@ class Newsletter extends \Ilch\Mapper
     public function deleteEmail($email)
     {
         $this->db()->delete('newsletter_mails')
-                ->where(array('email' => $email))
+                ->where(['email' => $email])
                 ->execute();
     }
 
@@ -186,7 +184,7 @@ class Newsletter extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('newsletter')
-                ->where(array('id' => $id))
+                ->where(['id' => $id])
                 ->execute();
     }
     
@@ -213,7 +211,7 @@ class Newsletter extends \Ilch\Mapper
     {
         $userRow = $this->db()->select('email')
                 ->from('users')
-                ->where(array('id' => $newsletter->getId()))
+                ->where(['id' => $newsletter->getId()])
                 ->execute()
                 ->fetchRows();
         $userMail = $userRow[0]['email'];
@@ -222,11 +220,11 @@ class Newsletter extends \Ilch\Mapper
 
         if ($newsletterMail == '0') {
             $this->db()->insert('newsletter_mails')
-                ->values(array('email' => $userMail))
+                ->values(['email' => $userMail])
                 ->execute();
         } else {
             $this->db()->delete('newsletter_mails')
-                ->where(array('email' => $userMail))
+                ->where(['email' => $userMail])
                 ->execute();
         }
     }

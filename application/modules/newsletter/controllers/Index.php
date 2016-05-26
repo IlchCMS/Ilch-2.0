@@ -15,7 +15,7 @@ class Index extends BaseController
     {
         $newsletterMapper = new NewsletterMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuNewsletter'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('saveNewsletter')) {
             $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
@@ -49,7 +49,7 @@ class Index extends BaseController
         if ($newsletter != '') {
             $this->getView()->set('newsletter', $newsletter);            
         } else {
-            $this->redirect(array('action' => 'index'));            
+            $this->redirect(['action' => 'index']);            
         }
     }
 
@@ -64,7 +64,7 @@ class Index extends BaseController
             $this->addMessage('unsubscribeSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function settingsAction()
@@ -72,9 +72,9 @@ class Index extends BaseController
         $newsletterMapper = new NewsletterMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), array('module' => 'user', 'controller' => 'panel', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('menuSettings'), array('module' => 'user', 'controller' => 'panel', 'action' => 'settings'))
-                ->add($this->getTranslator()->trans('menuNewsletter'), array('controller' => 'index', 'action' => 'settings'));
+                ->add($this->getTranslator()->trans('menuPanel'), ['module' => 'user', 'controller' => 'panel', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['module' => 'user', 'controller' => 'panel', 'action' => 'settings'])
+                ->add($this->getTranslator()->trans('menuNewsletter'), ['controller' => 'index', 'action' => 'settings']);
 
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new \Modules\Newsletter\Models\Newsletter();
@@ -82,7 +82,7 @@ class Index extends BaseController
             $newsletterModel->setNewsletter($this->getRequest()->getPost('opt_newsletter'));
             $newsletterMapper->saveUserEmail($newsletterModel);
 
-            $this->redirect(array('action' => 'settings'));
+            $this->redirect(['action' => 'settings']);
         }
 
         $this->getView()->set('countMail', $newsletterMapper->countEmails($this->getUser()->getEmail()));

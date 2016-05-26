@@ -10,7 +10,7 @@ if ($group->getId()) {
 
 <fieldset>
     <legend><?=$fieldsetLegend ?></legend>
-    <form action="<?=$this->getUrl(array('module' => 'user', 'controller' => 'group', 'action' => 'save')) ?>"
+    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'save']) ?>"
           method="POST"
           class="form-horizontal"
           id="groupForm">

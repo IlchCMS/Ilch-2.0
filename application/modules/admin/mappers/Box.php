@@ -28,10 +28,10 @@ class Box extends \Ilch\Mapper
         $boxArray = $this->db()->queryArray($sql);
 
         if (empty($boxArray)) {
-            return array();
+            return [];
         }
 
-        $boxes = array();
+        $boxes = [];
 
         foreach ($boxArray as $boxRow) {
             $boxModel = new BoxModel();
@@ -81,22 +81,22 @@ class Box extends \Ilch\Mapper
         if ($box->getId()) {
             if ($this->getBoxByIdLocale($box->getId(), $box->getLocale())) {
                 $this->db()->update('boxes_content')
-                    ->values(array('title' => $box->getTitle(), 'content' => $box->getContent()))
-                    ->where(array('box_id' => $box->getId(), 'locale' => $box->getLocale()))
+                    ->values(['title' => $box->getTitle(), 'content' => $box->getContent()])
+                    ->where(['box_id' => $box->getId(), 'locale' => $box->getLocale()])
                     ->execute();
             } else {
                 $this->db()->insert('boxes_content')
-                    ->values(array('box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                    ->values(['box_id' => $box->getId(), 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
                     ->execute();
             }
         } else {
             $date = new \Ilch\Date();
             $boxId = $this->db()->insert('boxes')
-                ->values(array('date_created' => $date->toDb()))
+                ->values(['date_created' => $date->toDb()])
                 ->execute();
 
             $this->db()->insert('boxes_content')
-                ->values(array('box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()))
+                ->values(['box_id' => $boxId, 'title' => $box->getTitle(), 'content' => $box->getContent(), 'locale' => $box->getLocale()])
                 ->execute();
         }
     }
@@ -104,11 +104,11 @@ class Box extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('boxes')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
 
         $this->db()->delete('boxes_content')
-            ->where(array('box_id' => $id))
+            ->where(['box_id' => $id])
             ->execute();
     }
 }

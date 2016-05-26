@@ -25,7 +25,7 @@ class Topic extends \Ilch\Mapper
         $fileArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
-        $entry = array();
+        $entry = [];
 
         foreach ($fileArray as $entries) {
             $entryModel = new TopicModel();
@@ -66,7 +66,7 @@ class Topic extends \Ilch\Mapper
             $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($fileArray as $entries) {
             $entryModel = new TopicModel();
@@ -154,12 +154,12 @@ class Topic extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('forum_topics')
-                ->values(array('topic_id' => $model->getTopicId()))
-                ->where(array('id' => $model->getId()))
+                ->values(['topic_id' => $model->getTopicId()])
+                ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('forum_topics')
-                ->values(array(
+                ->values([
                     'topic_title' => $model->getTopicTitle(),
                     'text' => $model->getText(),
                     'topic_id' => $model->getTopicId(),
@@ -167,7 +167,7 @@ class Topic extends \Ilch\Mapper
                     'creator_id' => $model->getCreatorId(),
                     'type' => $model->getType(),
                     'date_created' => $model->getDateCreated()
-                ))
+                ])
                 ->execute();
                 $this->last_insert_id = $this->db()->getLastInsertId();
         }
@@ -190,7 +190,7 @@ class Topic extends \Ilch\Mapper
         $fileArray = $this->db()->queryArray($sql);
         $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
 
-        $entry = array();
+        $entry = [];
 
         foreach ($fileArray as $entries) {
             $entryModel = new TopicModel();
@@ -207,7 +207,7 @@ class Topic extends \Ilch\Mapper
     public function deleteById($id)
     {
             return $this->db()->delete('forum_topics')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 
@@ -220,8 +220,8 @@ class Topic extends \Ilch\Mapper
     {
         if ($model->getVisits()) {
             $this->db()->update('forum_topics')
-                    ->values(array('visits' => $model->getVisits()))
-                    ->where(array('id' => $model->getId()))
+                    ->values(['visits' => $model->getVisits()])
+                    ->where(['id' => $model->getId()])
                     ->execute();
         }
     }
@@ -234,8 +234,8 @@ class Topic extends \Ilch\Mapper
     public function saveFileTreat(FileModel $model)
     {
         $this->db()->update('downloads_files')
-                ->values(array('file_title' => $model->getFileTitle(),'file_image' => $model->getFileImage(),'file_description' => $model->getFileDesc()))
-                ->where(array('id' => $model->getId()))
+                ->values(['file_title' => $model->getFileTitle(),'file_image' => $model->getFileImage(),'file_description' => $model->getFileDesc()])
+                ->where(['id' => $model->getId()])
                 ->execute();
     }
 }

@@ -24,12 +24,12 @@ class Showunread extends \Ilch\Controller\Frontend
             
 
             $userId = null;
-            $groupIds = array(3);
+            $groupIds = [3];
 
             $userId = $this->getUser()->getId();
             $user = $userMapper->getUserById($userId);
 
-            $groupIds = array();
+            $groupIds = [];
             foreach ($user->getGroups() as $groups) {
                 $groupIds[] = $groups->getId();
             }
@@ -39,8 +39,8 @@ class Showunread extends \Ilch\Controller\Frontend
             $pagination->setPage($this->getRequest()->getParam('page'));
 
             $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), array('controller' => 'index', 'action' => 'index'))
-                ->add($this->getTranslator()->trans('showNewPosts'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('showNewPosts'), ['action' => 'index']);
 
             $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('showNewPosts'));
             $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('showNewPosts'));
@@ -53,7 +53,7 @@ class Showunread extends \Ilch\Controller\Frontend
             $this->getView()->set('pagination', $pagination);
         } else {
             $this->addMessage('noAccessForum', 'warning');
-            $this->redirect(array('module' => 'forum', 'controller' => 'index'));
+            $this->redirect(['module' => 'forum', 'controller' => 'index']);
         }
     }
 }

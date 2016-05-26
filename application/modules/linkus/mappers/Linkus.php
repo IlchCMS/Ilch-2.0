@@ -16,12 +16,12 @@ class Linkus extends \Ilch\Mapper
      * @param array $where
      * @return LinkusModel[]|array
      */
-    public function getLinkus($where = array())
+    public function getLinkus($where = [])
     {
         $entryArray = $this->db()->select('*')
             ->from('linkus')
             ->where($where)
-            ->order(array('id' => 'ASC'))
+            ->order(['id' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -29,7 +29,7 @@ class Linkus extends \Ilch\Mapper
             return null;
         }
 
-        $linkus = array();
+        $linkus = [];
 
         foreach ($entryArray as $entries) {
             $entryModel = new LinkusModel();
@@ -53,7 +53,7 @@ class Linkus extends \Ilch\Mapper
     {
         $linkusRow = $this->db()->select('*')
             ->from('linkus')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -76,16 +76,16 @@ class Linkus extends \Ilch\Mapper
      */
     public function save(LinkusModel $linkus)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'title' => $linkus->getTitle(),
             'banner' => $linkus->getBanner(),
-        );
+            ];
 
         if ($linkus->getId()) {
             $this->db()->update('linkus')
                 ->values($fields)
-                ->where(array('id' => $linkus->getId()))
+                ->where(['id' => $linkus->getId()])
                 ->execute();
         } else {
             $this->db()->insert('linkus')
@@ -102,7 +102,7 @@ class Linkus extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('linkus')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

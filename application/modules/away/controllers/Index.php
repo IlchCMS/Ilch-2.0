@@ -16,7 +16,7 @@ class Index extends \Ilch\Controller\Frontend
         $awayModel = new AwayModel();            
         $awayMapper = new AwayMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAway'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('saveAway')) {
             $reason = trim($this->getRequest()->getPost('reason'));
@@ -56,7 +56,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->addMessage('saveSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function delAction()
@@ -68,7 +68,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }
 

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuWelcomeAndLanguage' => 'Willkommen / Sprache',
     'menuLicence' => 'Lizenz',
     'menuSystemCheck' => 'Systemüberprüfung',
@@ -56,4 +56,4 @@ return array
     'optionalModules' => 'Optionale Module',
     'private' => 'Private Seite',
     'clan' => 'Clan Seite',
-);
+    ];

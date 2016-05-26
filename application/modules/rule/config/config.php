@@ -8,25 +8,25 @@ namespace Modules\Rule\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config = array
-    (
+    public $config =
+        [
         'key' => 'rule',
         'author' => 'Veldscholten, Kevin',
-        'icon_small' => 'rule.png',
-        'languages' => array
-        (
-            'de_DE' => array
-            (
+        'icon_small' => 'fa-gavel',
+        'languages' =>
+            [
+            'de_DE' =>
+                [
                 'name' => 'Regeln',
                 'description' => 'Hier können neue Regeln erstellt werden.',
-            ),
-            'en_EN' => array
-            (
+                ],
+            'en_EN' =>
+                [
                 'name' => 'Rules',
                 'description' => 'Here you can create new rules.',
-            ),
-        )
-    );
+                ],
+            ]
+        ];
 
     public function install()
     {

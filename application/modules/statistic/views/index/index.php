@@ -36,7 +36,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <div class="panel stats panel-default" title="<?=$this->getTrans('totalUsers') ?>: <?=$this->get('registUserCount') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
-                                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>">
+                                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'index', 'action' => 'index']) ?>">
                                         <?=$this->get('registUserCount') ?>
                                     </a>
                                 </h1>
@@ -51,7 +51,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <div class="panel stats panel-default" title="<?=$this->getTrans('lastUser') ?>: <?=$registNewUser->getName() ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
-                                    <a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $registNewUser->getId())) ?>">
+                                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $registNewUser->getId()]) ?>">
                                         <?=$registNewUser->getName() ?>
                                     </a>
                                 </h1>
@@ -66,7 +66,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <div class="panel stats panel-default" title="<?=$this->getTrans('totalArticles') ?>: <?=$this->get('articlesCount') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
-                                    <a href="<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'index')) ?>">
+                                    <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'index']) ?>">
                                         <?=$this->get('articlesCount') ?>
                                     </a>
                                 </h1>
@@ -172,7 +172,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <div class="panel stats panel-default" title="<?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
-                                    <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>">
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)])?>">
                                         <?=$this->get('visitsMonth') ?>
                                     </a>
                                 </h1>
@@ -187,7 +187,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <div class="panel stats panel-default" title="<?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?>" style="cursor: help;">
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
-                                    <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>">
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)])?>">
                                         <?=$this->get('visitsYear') ?>
                                     </a>
                                 </h1>
@@ -283,7 +283,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)))?>"><?=$date->format("Y - F", true) ?></a></strong>
+                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)])?>"><?=$date->format("Y - F", true) ?></a></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -304,7 +304,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsAllTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)))?>"><?=$date->format("Y", true) ?></a></strong>
+                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)])?>"><?=$date->format("Y", true) ?></a></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -339,7 +339,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                                 <?php if ($statisticList->getBrowser() == '0'): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
-                                    <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'browser' => $statisticList->getBrowser()))?>"><?=$statisticList->getBrowser() ?></a>
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'browser' => $statisticList->getBrowser()])?>"><?=$statisticList->getBrowser() ?></a>
                                 <?php endif; ?>
                             </strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
@@ -403,7 +403,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
                                     <?php if ($statisticList->getOS() == 'Windows'): ?>
-                                        <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()))?>"><?=$statisticList->getOS() ?></a>
+                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()])?>"><?=$statisticList->getOS() ?></a>
                                     <?php else: ?>
                                         <?=$statisticList->getOS() ?>
                                     <?php endif; ?>

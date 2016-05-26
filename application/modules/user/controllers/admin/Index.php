@@ -24,12 +24,11 @@ class Index extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewUser',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
         );
     }
 
@@ -41,7 +40,7 @@ class Index extends BaseController
         $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
             foreach ($this->getRequest()->getPost('check_users') as $userId) {
@@ -56,15 +55,15 @@ class Index extends BaseController
         }
 
         if ($this->getRequest()->getParam('showsetfree')) {
-            $entries = $userMapper->getUserList(array('confirmed' => 0));
+            $entries = $userMapper->getUserList(['confirmed' => 0]);
         } else {
-            $entries = $userMapper->getUserList(array('confirmed' => 1));
+            $entries = $userMapper->getUserList(['confirmed' => 1]);
         }
 
         $this->getView()->set('userList', $entries);
         $this->getView()->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'));
         $this->getView()->set('errorMsg', $this->getRequest()->getParam('errorMsg'));
-        $this->getView()->set('badge', count($userMapper->getUserList(array('confirmed' => 0))));
+        $this->getView()->set('badge', count($userMapper->getUserList(['confirmed' => 0])));
     }
 
     /**
@@ -96,13 +95,13 @@ class Index extends BaseController
 
         $user = $userMapper->getUserById($this->getRequest()->getParam('id'));
 
-        $messageReplace = array(
+        $messageReplace = [
                 '{content}' => $this->getConfig()->get('manually_confirm_mail'),
                 '{sitetitle}' => $this->getConfig()->get('page_title'),
                 '{date}' => $date->format("l, d. F Y", true),
                 '{name}' => $user->getName(),
                 '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
-        );
+        ];
         $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
         $mail = new \Ilch\Mail();
@@ -116,7 +115,7 @@ class Index extends BaseController
 
         $this->addMessage('freeSuccess');
 
-        $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+        $this->redirect(['action' => 'index', 'showsetfree' => 1]);
     }
 
     /**
@@ -128,8 +127,8 @@ class Index extends BaseController
         $groupMapper = new GroupMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('editUser'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
 
         if ($this->getRequest()->isPost()) {
             $userData = $this->getRequest()->getPost('user');
@@ -200,7 +199,7 @@ class Index extends BaseController
 
                 if (is_dir(APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId)) {
                     $path = APPLICATION_PATH.'/modules/user/static/upload/gallery/'.$userId;
-                    $files = array_diff(scandir($path), array('.', '..'));
+                    $files = array_diff(scandir($path), ['.', '..']);
 
                     foreach ($files as $file) {
                         unlink(realpath($path).'/'.$file);
@@ -215,6 +214,6 @@ class Index extends BaseController
             }
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

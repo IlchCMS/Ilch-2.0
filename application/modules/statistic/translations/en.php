@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuStatistic' => 'Statistic',
     'menuOnline' => 'Online',
     'menuOnlineStatistic' => 'Online Statistic',
@@ -49,4 +49,4 @@ return array
     'unknown' => 'Unknown',
     'numberVisits' => 'Visitor',
     'noStatistic' => 'No Statistic available',
-);
+    ];

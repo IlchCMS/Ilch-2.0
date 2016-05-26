@@ -16,9 +16,9 @@ class Mail extends \Ilch\Controller\Frontend
         $profil = $profilMapper->getUserById($this->getRequest()->getParam('user'));
         
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), array('controller' => 'index'))
-                ->add($profil->getName(), array('controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')))
-                ->add($this->getTranslator()->trans('menuMail'), array('action' => 'index', 'user' => $this->getRequest()->getParam('user')));
+                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
+                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
+                ->add($this->getTranslator()->trans('menuMail'), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
 
         if ($this->getRequest()->isPost()) {
             $sender = $profilMapper->getUserById($this->getUser()->getId());
@@ -29,10 +29,10 @@ class Mail extends \Ilch\Controller\Frontend
 
             if (empty($subject)) {
                 $this->addMessage('subjectEmpty');
-                $this->redirect(array('action' => 'index', 'user' => $this->getRequest()->getParam('user')));
+                $this->redirect(['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
             } elseif (empty($message)) {
                 $this->addMessage('messageEmpty');
-                $this->redirect(array('action' => 'index', 'user' => $this->getRequest()->getParam('user')));
+                $this->redirect(['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
             } else {
                 $sitetitle = $this->getConfig()->get('page_title');
                 $date = new \Ilch\Date();
@@ -42,11 +42,11 @@ class Mail extends \Ilch\Controller\Frontend
                 } else {
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/usermail.php');
                 }
-                $messageReplace = array(
+                $messageReplace = [
                         '{content}' => $message,
                         '{sitetitle}' => $sitetitle,
                         '{date}' => $date->format("l, d. F Y", true)
-                );
+                ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $mail = new \Ilch\Mail();
@@ -59,7 +59,7 @@ class Mail extends \Ilch\Controller\Frontend
                 $mail->send();
 
                 $this->addMessage('emailSuccess');
-                $this->redirect(array('controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')));
+                $this->redirect(['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
             }
         }
 

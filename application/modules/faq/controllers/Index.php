@@ -20,10 +20,10 @@ class Index extends \Ilch\Controller\Frontend
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
 
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'))
-                    ->add($category->getTitle(), array('action' => 'index', 'catId' => $category->getId()));
+                    ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
+                    ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
 
-            $faqs = $faqMapper->getFaqs(array('cat_id' => $this->getRequest()->getParam('catId')));
+            $faqs = $faqMapper->getFaqs(['cat_id' => $this->getRequest()->getParam('catId')]);
         } else {
             $catId = $categoryMapper->getCategoryMinId();
 
@@ -31,14 +31,14 @@ class Index extends \Ilch\Controller\Frontend
                 $category = $categoryMapper->getCategoryById($catId->getId());
 
                 $this->getLayout()->getHmenu()
-                        ->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'))
-                        ->add($category->getTitle(), array('action' => 'index', 'catId' => $category->getId()));
+                        ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
+                        ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
 
-                $faqs = $faqMapper->getFaqs(array('cat_id' => $catId->getId()));
+                $faqs = $faqMapper->getFaqs(['cat_id' => $catId->getId()]);
 
                 $this->getView()->set('firstCatId', $catId->getId());
             } else {
-                $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'));
+                $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
                 $faqs = $faqMapper->getFaqs();
             }
@@ -57,9 +57,9 @@ class Index extends \Ilch\Controller\Frontend
         $category = $categoryMapper->getCategoryById($faq->getCatId());
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuFaqs'), array('action' => 'index'))
-                ->add($category->getTitle(), array('action' => 'index', 'catId' => $category->getId()))
-                ->add($faq->getQuestion(), array('action' => 'show', 'id' => $faq->getId()));
+                ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
+                ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
+                ->add($faq->getQuestion(), ['action' => 'show', 'id' => $faq->getId()]);
 
         $this->getView()->set('faq', $faqMapper->getFaqById($this->getRequest()->getParam('id')));
     }

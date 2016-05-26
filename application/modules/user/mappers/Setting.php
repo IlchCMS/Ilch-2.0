@@ -43,7 +43,7 @@ class Setting extends \Ilch\Mapper
     {
         $avatarRow = $this->db()->select('*')
             ->from('users')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
 
@@ -52,8 +52,8 @@ class Setting extends \Ilch\Mapper
         }
 
         $this->db()->update('users')
-            ->values(array('avatar' => ''))
-            ->where(array('id' => $id))
+            ->values(['avatar' => ''])
+            ->where(['id' => $id])
             ->execute();
     }
 }

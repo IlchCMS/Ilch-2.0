@@ -11,12 +11,12 @@ class Admin extends Base
     /**
      * @var array
      */
-    private $menus = array();
+    private $menus = [];
 
     /**
      * @var array
      */
-    private $menuActions = array();
+    private $menuActions = [];
 
     /**
      * @var boolean

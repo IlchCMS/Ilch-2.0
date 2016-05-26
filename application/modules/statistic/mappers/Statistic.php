@@ -23,7 +23,7 @@ class Statistic extends \Ilch\Mapper
 
         $rows = $this->db()->queryArray($sql);
 
-        $users = array();
+        $users = [];
 
         foreach ($rows as $row) {
             $users[] = $userMapper->getUserById($row['user_id']);
@@ -48,7 +48,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -86,7 +86,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -118,7 +118,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -149,7 +149,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -180,7 +180,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -209,7 +209,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -253,7 +253,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -286,7 +286,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -330,7 +330,7 @@ class Statistic extends \Ilch\Mapper
             return null;
         }
 
-        $entry = array();
+        $entry = [];
 
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
@@ -473,7 +473,7 @@ class Statistic extends \Ilch\Mapper
         $useragent = $_SERVER['HTTP_USER_AGENT'];
 
         if ($name != null) {
-            $osArray = array(
+            $osArray = [
                 'Windows' => '=Windows NT|Windows Server 2003|Windows XP x64|Windows 98|Windows 95=',
                 'Android' => '=Android=',
                 'Linux' => '=Linux|Ubuntu|X11=',
@@ -482,9 +482,9 @@ class Statistic extends \Ilch\Mapper
                 'iPad' => '=iPad=',
                 'Mac OS' => '=Mac OS X=',
                 'Macintosh' => '=Mac_PowerPC|Macintosh='
-            );
+            ];
         } elseif ($version != null) {
-            $osArray = array(
+            $osArray = [
                 'XP' => '=Windows NT 5.1|Windows XP=',
                 'Vista' => '=Windows NT 6.0|Windows Vista=',
                 '7' => '=Windows NT 6.1|Windows 7=',
@@ -496,7 +496,7 @@ class Statistic extends \Ilch\Mapper
                 'NT' => '=Windows NT 4|WinNT4=',
                 '98' => '=Windows 98=',
                 '95' => '=Windows 95=',
-            );
+            ];
         }
 
         foreach ($osArray as $os => $regex) {
@@ -583,25 +583,25 @@ class Statistic extends \Ilch\Mapper
         $date = new \Ilch\Date();
         $visitId = (int) $this->db()->select('id')
             ->from('visits_online')
-            ->where(array('user_id' => $row['user_id'], 'ip_address' => $row['ip']))
+            ->where(['user_id' => $row['user_id'], 'ip_address' => $row['ip']])
             ->execute()
             ->fetchCell();
 
         if ($visitId) {
             $this->db()->update('visits_online')
-                ->values(array('site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
-                ->where(array('id' => $visitId))
+                ->values(['site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)])
+                ->where(['id' => $visitId])
                 ->execute();
 
             if ($row['user_id']) {
                 $this->db()->update('users')
-                    ->values(array('date_last_activity' => $date->format('Y-m-d H:i:s', true)))
-                    ->where(array('id' => $row['user_id']))
+                    ->values(['date_last_activity' => $date->format('Y-m-d H:i:s', true)])
+                    ->where(['id' => $row['user_id']])
                     ->execute();
             }
         } else {
             $this->db()->insert('visits_online')
-                ->values(array('user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)))
+                ->values(['user_id' => $row['user_id'], 'site' => $row['site'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date_last_activity' => $date->format('Y-m-d H:i:s', true)])
                 ->execute();
         }
 
@@ -613,12 +613,12 @@ class Statistic extends \Ilch\Mapper
 
         if ($uniqueUser) {
             $this->db()->update('visits_stats')
-                ->values(array('os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang']))
-                ->where(array('id' => $uniqueUser))
+                ->values(['os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'lang' => $row['lang']])
+                ->where(['id' => $uniqueUser])
                 ->execute();
         } else {
             $this->db()->insert('visits_stats')
-                ->values(array('referer' => $row['referer'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date' => $date->format('Y-m-d H:i:s', true)))
+                ->values(['referer' => $row['referer'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date' => $date->format('Y-m-d H:i:s', true)])
                 ->execute();
         }
     }

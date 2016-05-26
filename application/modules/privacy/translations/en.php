@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'privacy' => 'Privacy Policy',
     'show' => 'Show',
     'yes' => 'Yes',
@@ -19,4 +19,4 @@ return array
     'missingText' => 'Text was not filled',
     'managePrivacy' => 'Manage Privacy Policy',
     'noPrivacy' => 'No Privacy Policy available',
-);
+    ];

@@ -17,12 +17,11 @@ class Enemy extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewEnemy',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'enemy', 'action' => 'treat'))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'treat'])
+            ]
         );
     }
 
@@ -32,7 +31,7 @@ class Enemy extends BaseController
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageEnemy'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_enemy')) {
             foreach($this->getRequest()->getPost('check_enemy') as $enemyId) {
@@ -52,14 +51,14 @@ class Enemy extends BaseController
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageEnemy'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('treatEnemy'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('treatEnemy'), ['action' => 'treat']);
             $enemy = $enemyMapper->getEnemyById($this->getRequest()->getParam('id'));
             $this->getView()->set('enemy', $enemy);
         } else {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageEnemy'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('manageNewEnemy'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manageNewEnemy'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -99,7 +98,7 @@ class Enemy extends BaseController
 
                 $this->addMessage('saveSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
     }
@@ -114,6 +113,6 @@ class Enemy extends BaseController
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -12,23 +12,21 @@ class Modules extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items = array
-        (
-            array
-            (
+        $items =
+            [
+            [
                 'name' => 'menuInstalled',
                 'active' => false,
                 'icon' => 'fa fa-folder',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'modules', 'action' => 'index'))
-            ),
-            array
-            (
+                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuNotInstalled',
                 'active' => false,
                 'icon' => 'fa fa-folder-open',
-                'url' => $this->getLayout()->getUrl(array('controller' => 'modules', 'action' => 'notinstalled'))
-            ),
-        );
+                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'notinstalled'])
+            ],
+            ];
 
         if ($this->getRequest()->getActionName() == 'notinstalled') {
             $items[1]['active'] = true; 
@@ -48,8 +46,8 @@ class Modules extends \Ilch\Controller\Admin
         $modules = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuModules'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuInstalled'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
 
         $this->getView()->set('modules', $modules->getModules());
     }
@@ -59,8 +57,8 @@ class Modules extends \Ilch\Controller\Admin
         $modules = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuModules'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuNotInstalled'), array('action' => 'notinstalled'));
+                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuNotInstalled'), ['action' => 'notinstalled']);
 
         $this->getView()->set('modulesNotInstalled', $modules->getModulesNotInstalled($this->getTranslator()));
     }
@@ -100,7 +98,7 @@ class Modules extends \Ilch\Controller\Admin
             $this->addMessage('installSuccess');
         }
 
-        $this->redirect(array('action' => 'notinstalled'));
+        $this->redirect(['action' => 'notinstalled']);
     }
 
     public function deleteAction()
@@ -118,6 +116,6 @@ class Modules extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

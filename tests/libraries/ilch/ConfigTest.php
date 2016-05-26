@@ -48,23 +48,22 @@ class ConfigTest extends TestCase
      */
     public function testLoadConfigFromFile()
     {
-        $configArray = array
-        (
+        $configArray =
+            [
             'dbHost'     => 'localhost',
             'dbUser'     => 'root',
             'dbPassword' => ''
-        );
+            ];
 
         $this->config->loadConfigFromFile(__DIR__ . '/_files/config.php');
 
         $this->assertEquals(
             $configArray,
-            array
-            (
+            [
                 'dbHost'     => $this->config->get('dbHost'),
                 'dbUser'     => $this->config->get('dbUser'),
                 'dbPassword' => $this->config->get('dbPassword')
-            ),
+            ],
             'Config array from file differs with defined array.'
         );
     }

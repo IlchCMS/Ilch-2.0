@@ -30,10 +30,10 @@ class Page extends \Ilch\Mapper
         $pageArray = $this->db()->queryArray($sql);
 
         if (empty($pageArray)) {
-            return array();
+            return [];
         }
 
-        $pages = array();
+        $pages = [];
 
         foreach ($pageArray as $pageRow) {
             $pageModel = new PageModel();
@@ -84,7 +84,7 @@ class Page extends \Ilch\Mapper
     {
         $sql = 'SELECT page_id, locale, perma FROM `[prefix]_pages_content`';
         $permas = $this->db()->queryArray($sql);
-        $permaArray = array();
+        $permaArray = [];
 
         if (empty($permas)) {
             return null;
@@ -107,51 +107,49 @@ class Page extends \Ilch\Mapper
         if ($page->getId()) {
             if ($this->getPageByIdLocale($page->getId(), $page->getLocale())) {
                 $this->db()->update('pages_content')
-                    ->values(array(
+                    ->values([
                         'title' => $page->getTitle(),
                         'description' => $page->getDescription(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
-                    ))
-                    ->where(array(
+                    ])
+                    ->where([
                         'page_id' => $page->getId(),
                         'locale' => $page->getLocale(),
-                    ))
+                    ])
                     ->execute();
             } else {
                 $this->db()->insert('pages_content')
                     ->values
                     (
-                        array
-                        (
+                        [
                             'page_id' => $page->getId(),
                             'description' => $page->getDescription(),
                             'title' => $page->getTitle(),
                             'content' => $page->getContent(),
                             'perma' => $page->getPerma(),
                             'locale' => $page->getLocale()
-                        )
+                        ]
                     )
                     ->execute();
             }
         } else {
             $date = new \Ilch\Date();
             $pageId = $this->db()->insert('pages')
-                ->values(array('date_created' => $date->toDb()))
+                ->values(['date_created' => $date->toDb()])
                 ->execute();
 
             $this->db()->insert('pages_content')
                 ->values
                 (
-                    array
-                    (
+                    [
                         'page_id' => $pageId,
                         'description' => $page->getDescription(),
                         'title' => $page->getTitle(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
                         'locale' => $page->getLocale()
-                    )  
+                    ]  
                 )
                 ->execute();
         }
@@ -160,11 +158,11 @@ class Page extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('pages')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
         
         $this->db()->delete('pages_content')
-            ->where(array('page_id' => $id))
+            ->where(['page_id' => $id])
             ->execute();
     }
 }

@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuAway' => 'Abwesenheitsliste',
     'menuEntry' => 'Eintragen',
     'noAway' => 'keine Einträge vorhanden',
@@ -24,4 +24,4 @@ return array
     'missingStart' => 'Start Datum muss ausgefüllt werden',
     'missingEnd' => 'Enddatum muss ausgefüllt werden',
     'missingText' => 'Beschreibung muss ausgefüllt werden',
-);
+    ];

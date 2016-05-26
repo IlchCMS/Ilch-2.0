@@ -21,12 +21,11 @@ class Index extends BaseController
         parent::init();
         $this->getLayout()->addMenuAction
         (
-            array
-            (
+            [
                 'name' => 'menuActionNewWar',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-            )
+                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
         );
     }
 
@@ -36,7 +35,7 @@ class Index extends BaseController
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageWarOverview'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_war')) {
             foreach($this->getRequest()->getPost('check_war') as $warId) {
@@ -67,8 +66,8 @@ class Index extends BaseController
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageWarOverview'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('manageWar'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manageWar'), ['action' => 'treat']);
 
             $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
             $this->getView()->set('war', $war);
@@ -77,8 +76,8 @@ class Index extends BaseController
             $this->getView()->set('warOptMatchtype', $warMapper->getWarOptDistinctMatchtype());
         } else {
             $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('manageWarOverview'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('menuActionNewWar'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuActionNewWar'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -167,7 +166,7 @@ class Index extends BaseController
 
                 $this->addMessage('saveSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
 
@@ -188,6 +187,6 @@ class Index extends BaseController
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 }

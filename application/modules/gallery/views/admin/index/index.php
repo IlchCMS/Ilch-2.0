@@ -33,7 +33,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                     </a>
                 </span>
                 <span class="view" style="float:right; margin-right: 6px;">
-                    <a href="'.$obj->getUrl(array('controller' => 'gallery', 'action' => 'treatgallery','id' => $item->getId())).'">
+                    <a href="'.$obj->getUrl(['controller' => 'gallery', 'action' => 'treatgallery','id' => $item->getId()]).'">
                         <i class="fa fa-eye"></i>
                     </a>
                 </span>
@@ -54,7 +54,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 }
 ?>
 
-<form class="form-horizontal" id="galleryForm" method="POST" action="<?=$this->getUrl(array('action' => $this->getRequest()->getActionName())) ?>">
+<form class="form-horizontal" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('gallery') ?></legend>
     <div class="col-lg-6">

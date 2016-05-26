@@ -31,7 +31,7 @@ class Birthday extends \Ilch\Mapper
             return null;
         }
 
-        $users = array();
+        $users = [];
 
         foreach ($rows as $row) {
             $users[] = $userMapper->getUserById($row['id']);

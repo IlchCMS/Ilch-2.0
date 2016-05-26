@@ -29,8 +29,8 @@
                     <?php $getDate = new \Ilch\Date($awards->getDate()); ?>
                         <tr>
                             <td><input value="<?=$awards->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $awards->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $awards->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $awards->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $awards->getId()]) ?></td>
                             <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($awards->getRank()) ?></td>
                             <?php if ($awards->getTyp() == 2): ?>
@@ -46,7 +46,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noAwards') ?>

@@ -13,9 +13,9 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $userMapper = new UserMapper();
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuUserList'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuUserList'), ['action' => 'index']);
 
-        $this->getView()->set('userList', $userMapper->getUserList(array('confirmed' => 1)));
+        $this->getView()->set('userList', $userMapper->getUserList(['confirmed' => 1]));
     }    
 }
 

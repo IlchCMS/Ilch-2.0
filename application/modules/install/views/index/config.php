@@ -84,10 +84,10 @@ $errors = $this->get('errors');
 <script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
 <script>
 $('#usage').change(function(){
-    $('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig')) ?>/type/'+$('#usage').val());
+    $('#modulesContent').load('<?=$this->getUrl(['action' => 'ajaxconfig']) ?>/type/'+$('#usage').val());
 });
 
-$('#modulesContent').load('<?=$this->getUrl(array('action' => 'ajaxconfig')) ?>/type/'+$('#usage').val());
+$('#modulesContent').load('<?=$this->getUrl(['action' => 'ajaxconfig']) ?>/type/'+$('#usage').val());
 
 $(document).ready(function(){
     $('#adminPassword').pStrength({

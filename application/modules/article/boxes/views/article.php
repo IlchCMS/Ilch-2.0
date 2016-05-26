@@ -6,7 +6,7 @@ $articles = $this->get('articles')
     <ul class="list-unstyled">
         <?php foreach ($articles as $article): ?>
             <li>
-                <a href="<?=$this->getUrl(array('module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId())) ?>">
+                <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>">
                     <?=$article->getTitle() ?>
                 </a>
             </li>

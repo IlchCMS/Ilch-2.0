@@ -16,37 +16,33 @@ class Index extends \Ilch\Controller\Admin
         $this->getLayout()->addMenu
         (
             'menuPartner',
-            array
-            (
-                array
-                (
+            [
+                [
                     'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'index'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                ],
+                [
                     'name' => 'add',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(array('controller' => 'index', 'action' => 'treat'))
-                ),
-                array
-                (
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                ],
+                [
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(array('controller' => 'settings', 'action' => 'index'))
-                )
-            )
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ]
+            ]
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'));
+                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index']);
 
         $partnerMapper = new PartnerMapper();
         
@@ -68,13 +64,13 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->getParam('showsetfree')) {
-            $entries = $partnerMapper->getEntries(array('setfree' => 0));
+            $entries = $partnerMapper->getEntries(['setfree' => 0]);
         } else {
-            $entries = $partnerMapper->getEntries(array('setfree' => 1));
+            $entries = $partnerMapper->getEntries(['setfree' => 1]);
         }
 
         $this->getView()->set('entries', $entries);
-        $this->getView()->set('badge', count($partnerMapper->getEntries(array('setfree' => 0))));
+        $this->getView()->set('badge', count($partnerMapper->getEntries(['setfree' => 0])));
     }
 
     public function delAction()
@@ -86,7 +82,7 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('deleteSuccess');
         }
 
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     public function setfreeAction()
@@ -100,9 +96,9 @@ class Index extends \Ilch\Controller\Admin
         $this->addMessage('freeSuccess');
 
         if ($this->getRequest()->getParam('showsetfree')) {
-            $this->redirect(array('action' => 'index', 'showsetfree' => 1));
+            $this->redirect(['action' => 'index', 'showsetfree' => 1]);
         } else {
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
     }
 
@@ -112,14 +108,14 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('edit'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('partner', $partnerMapper->getPartnerById($this->getRequest()->getParam('id')));
         } else {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuPartner'), array('action' => 'index'))
-                ->add($this->getTranslator()->trans('add'), array('action' => 'treat'));
+                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -148,7 +144,7 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
 
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(['action' => 'index']);
             }
         }
     }

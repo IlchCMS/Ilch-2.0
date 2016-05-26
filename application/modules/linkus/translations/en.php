@@ -4,8 +4,8 @@
  * @package ilch
  */
 
-return array
-(
+return
+    [
     'menuLinkus' => 'Link Us',
     'banner' => 'Banner',
     'title' => 'Title',
@@ -16,4 +16,4 @@ return array
     'showBBBCode' => 'BB-Code show?',
     'missingTitle' => 'Title was not filled',
     'missingBanner' => 'Banner was not filled',
-);
+    ];

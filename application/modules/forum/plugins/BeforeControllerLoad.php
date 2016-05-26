@@ -23,7 +23,7 @@ class BeforeControllerLoad
         if ($request->getModuleName() == 'forum') {
             if ($request->getParam('access')) {
                 $translator = new \Ilch\Translator();
-                $_SESSION['messages'][] = array('text' => $translator->trans('noAccessForum'), 'type' => 'danger');
+                $_SESSION['messages'][] = ['text' => $translator->trans('noAccessForum'), 'type' => 'danger'];
             }
         }
     }

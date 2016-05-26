@@ -12,7 +12,7 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuPartnerAdd'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuPartnerAdd'), ['action' => 'index']);
         $partnerMapper = new PartnerMapper();
 
         if ($this->getRequest()->getPost('savePartner')) {

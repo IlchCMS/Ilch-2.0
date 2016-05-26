@@ -26,8 +26,8 @@
                     <?php foreach ($this->get('calendar') as $calendar): ?>
                         <tr>
                             <td><input value="<?=$calendar->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td><?=$this->getEditIcon(array('action' => 'treat', 'id' => $calendar->getId())) ?></td>
-                            <td><?=$this->getDeleteIcon(array('action' => 'del', 'id' => $calendar->getId())) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $calendar->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $calendar->getId()]) ?></td>
                             <td><?=date('d.m.Y H:i', strtotime($calendar->getStart())) ?></td>
                             <td>
                                 <?php if ($calendar->getEnd() != '0000-00-00 00:00:00'): ?>
@@ -40,7 +40,7 @@
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(array('delete' => 'delete')) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noCalendar') ?>

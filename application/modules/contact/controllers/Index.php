@@ -14,7 +14,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $receiverMapper = new ReceiverMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuContact'), array('action' => 'index'));
+        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuContact'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('saveContact')) {
             $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('contact_receiver'));

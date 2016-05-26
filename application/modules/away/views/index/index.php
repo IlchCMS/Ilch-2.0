@@ -101,11 +101,11 @@ if ($this->getUser()) {
                                     <?php if($userCheck->isAdmin()): ?>
                                         <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
                                             <?php if ($away->getStatus() == 1): ?>
-                                                <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $away->getId()), null, true) ?>">
+                                                <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
                                                     <span class="fa fa-check-square-o text-info"></span>
                                                 </a>
                                             <?php else: ?>
-                                                <a href="<?=$this->getUrl(array('action' => 'update', 'id' => $away->getId()), null, true) ?>">
+                                                <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
                                                     <span class="fa fa-square-o text-info"></span>
                                                 </a>
                                             <?php endif; ?>
@@ -116,7 +116,7 @@ if ($this->getUser()) {
                             <td>
                                 <?php if($this->getUser()): ?>
                                     <?php if ($away->getUserId() == $this->getUser()->getId() OR $userCheck->isAdmin()): ?>
-                                        <?=$this->getDeleteIcon(array('action' => 'del', 'id' => $away->getId())) ?>
+                                        <?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </td>

@@ -16,7 +16,7 @@ class Category extends \Ilch\Mapper
      * @param array $where
      * @return CategoryModel[]|null
      */
-    public function getCategories($where = array())
+    public function getCategories($where = [])
     {
         $sql = 'SELECT lc.*, COUNT(l.id) as count
                 FROM `[prefix]_link_cats` as lc
@@ -34,7 +34,7 @@ class Category extends \Ilch\Mapper
             return null;
         }
 
-        $categorys = array();
+        $categorys = [];
 
         foreach ($categoryArray as $categoryRow) {
             $categoryModel = new CategoryModel();
@@ -57,7 +57,7 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoryById($id)
     {
-        $cats = $this->getCategories(array('id' => $id));
+        $cats = $this->getCategories(['id' => $id]);
         return reset($cats);
     }
 
@@ -65,7 +65,7 @@ class Category extends \Ilch\Mapper
     {
         $categoryRow = $this->db()->select('*')
             ->from('link_cats')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
         
@@ -94,7 +94,7 @@ class Category extends \Ilch\Mapper
      */
     public function getCategoriesForParent($id)
     {
-        $models = $this->getCategoriesForParentRec(array(), $id);
+        $models = $this->getCategoriesForParentRec([], $id);
         return $models;
     }
 
@@ -105,17 +105,17 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $category)
     {
-        $fields = array
-        (
+        $fields =
+            [
             'name' => $category->getName(),
             'desc' => $category->getDesc(),
             'parent_id' => $category->getParentId()
-        );
+            ];
 
         if ($category->getId()) {
             $this->db()->update('link_cats')
                 ->values($fields)
-                ->where(array('id' => $category->getId()))
+                ->where(['id' => $category->getId()])
                 ->execute();
         } else {
             $this->db()->insert('link_cats')
@@ -132,7 +132,7 @@ class Category extends \Ilch\Mapper
     public function delete($id)
     {
         $this->db()->delete('link_cats')
-            ->where(array('id' => $id))
+            ->where(['id' => $id])
             ->execute();
     }
 }

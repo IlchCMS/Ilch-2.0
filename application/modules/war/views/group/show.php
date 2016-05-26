@@ -90,7 +90,7 @@ $group = $this->get('group')
                     <td <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?></td>
                     <td>
                         <?php if ($games): ?>
-                            <a href="<?=$this->getUrl(array('controller' => 'index', 'action' => 'show', 'id' => $war->getId())) ?>"><?=$this->getTrans('warReportShow') ?></a>
+                            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a>
                         <?php else: ?>
                             <?=$this->getTrans('warReportNo') ?>
                         <?php endif; ?>
