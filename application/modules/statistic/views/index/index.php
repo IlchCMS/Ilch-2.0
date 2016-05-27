@@ -5,6 +5,7 @@
 <?php 
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
 $userMapper = new \Modules\User\Mappers\User();
+$modulesMapper = new \Modules\Admin\Mappers\Module();
 $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $date = new \Ilch\Date();
 $dateCmsInstalled = new \Ilch\Date($this->get('dateCmsInstalled'));
@@ -123,15 +124,20 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <?php foreach ($this->get('modules') as $modules): ?>
-                        <?php if(!$modules->getSystemModule()): ?>
-                            <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
-                            <?php $module = $modulesMapper->getModulesByKey($modules->getKey(), $this->getTranslator()->getLocale()); ?>
+                    <?php foreach ($this->get('modules') as $modules):
+                        if (!$modules->getSystemModule()):
+                            $module = $modulesMapper->getModulesByKey($modules->getKey(), $this->getTranslator()->getLocale());
+                            if (substr($modules->getIconSmall(), 0, 3) == 'fa-') {
+                                $smallIcon = '<i class="fa '.$modules->getIconSmall().'"></i>';
+                            } else {
+                                $smallIcon = '<img src="'.$this->getStaticUrl('../application/modules/'.$modules->getKey().'/config/'.$modules->getIconSmall()).'" />';
+                            }
+                            ?>
                             <div class="col-xs-12 col-md-6 col-lg-3">
                                 <div class="box">							
                                     <div class="icon" title="<?=$this->getTrans('author')?>: <?=$modules->getAuthor() ?>" style="cursor: help;">
                                         <div class="image">
-                                            <img src="<?=$this->getStaticUrl('../application/modules/'.$modules->getKey().'/config/'.$modules->getIconSmall()) ?>" />
+                                            <?=$smallIcon ?>
                                         </div>
                                         <div class="info">
                                             <h3 class="title"><strong><?=$module->getName() ?></strong></h3>

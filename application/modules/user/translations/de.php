@@ -249,4 +249,7 @@ return
 
     'users' => 'Benutzer',
     'setfree' => 'Freischalten',
+
+    'back' => 'Zurück zur Startseite',
+    'alreadyLoggedIn' => 'Du bist bereits angemeldet!',
     ];

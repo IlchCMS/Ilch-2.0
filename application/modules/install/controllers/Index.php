@@ -256,9 +256,9 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'error'], $modulesToInstall);
+                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'], $modulesToInstall);
                 } else {
-                    $modulesToInstall = ['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'error'];
+                    $modulesToInstall = ['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent'];
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -381,7 +381,6 @@ class Index extends \Ilch\Controller\Frontend
         $modules['privacy']['types']       = [];
         $modules['cookieconsent']['types'] = [];
         $modules['statistic']['types']     = [];
-        $modules['error']['types']         = [];
 
         /*
          * Optional-Modules.

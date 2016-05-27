@@ -295,8 +295,8 @@ $(document).ready (
 <script>
 <?=$this->getMedia()
         ->addActionButton($this->getUrl('user/panel/treatgallery/id/'.$this->getRequest()->getParam('id')))
-        ->addMediaButton($this->getUrl('user/iframe/multi/type/multi/id/'))
-        ->addUploadController($this->getUrl('user/panel/uploadgallery'))
+        ->addMediaButton($this->getUrl('user/iframe/multi/type/multi/id/'.$this->getRequest()->getParam('id')))
+        ->addUploadController($this->getUrl('user/iframe/upload'))
 ?>
 
 function reload(){

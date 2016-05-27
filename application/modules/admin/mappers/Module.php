@@ -59,7 +59,7 @@ class Module extends \Ilch\Mapper
 
             $modulesDir[] = $moduleModel->getKey();
         }
-        $removeModule = ['admin', 'install', 'sample'];
+        $removeModule = ['admin', 'install', 'sample', 'error'];
         $modulesDir = array_diff($modulesDir, $removeModule);
 
         foreach ($this->getModules() as $module) {

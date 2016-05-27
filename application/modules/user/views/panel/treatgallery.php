@@ -30,7 +30,7 @@
         <div class="col-lg-10">
             <legend>
                 <?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?>
-                <a id="<?=$this->getRequest()->getParam('id') ?>" href="javascript:media()">
+                <a id="<?=$this->getRequest()->getParam('id') ?>" href="javascript:media(<?=$this->getRequest()->getParam('id') ?>)">
                     <i class="fa fa-cloud-upload"></i>
                 </a>
             </legend>
@@ -83,9 +83,9 @@
 
 <script>
 <?=$this->getMedia()
-        ->addActionButton($this->getUrl('user/panel/treatgallery/id/'.$this->getRequest()->getParam('id')))
+        ->addActionButton($this->getUrl('user/panel/treatgallery/id/'))
         ->addMediaButton($this->getUrl('user/iframe/multi/type/multi/id/'))
-        ->addUploadController($this->getUrl('user/panel/uploadgallery'))
+        ->addUploadController($this->getUrl('user/iframe/upload'))
 ?>
 
 function reload(){
