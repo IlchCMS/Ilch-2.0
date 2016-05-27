@@ -29,12 +29,11 @@ class Category extends \Ilch\Mapper
         }
 
         $categorys = [];
-
         foreach ($categoryArray as $categoryRow) {
             $categoryModel = new CategoryModel();
             $categoryModel->setId($categoryRow['id']);
             $categoryModel->setTitle($categoryRow['title']);
-         
+
             $categorys[] = $categoryModel;
         }
 
@@ -44,7 +43,7 @@ class Category extends \Ilch\Mapper
     /**
      * Returns user model found by the id or false if none found.
      *
-     * @param  int $id
+     * @param int $id
      * @return false|CategoryModel
      */
     public function getCategoryById($id)

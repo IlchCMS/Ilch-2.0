@@ -13,35 +13,40 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $this->getLayout()->addMenu
-                (
-                'menuCalendar',
-            [
+        $items = [
             [
                 'name' => 'manage',
-                'active' => true,
+                'active' => false,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
+            [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa fa-plus-circle',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
             ]
-        );
+        ];
 
-        $this->getLayout()->addMenuAction
-                (
-                [
-                    'name' => 'add',
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-                ]
+        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuCalendar',
+            $items
         );
     }
 
     public function indexAction()
     {
+        $calendarMapper = new CalendarMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index']);
-
-        $calendarMapper = new CalendarMapper();
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -51,9 +56,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $calendar = $calendarMapper->getEntries();
-
-        $this->getView()->set('calendar', $calendar);
+        $this->getView()->set('calendar', $calendarMapper->getEntries());
     }
 
     public function treatAction()
@@ -70,7 +73,7 @@ class Index extends \Ilch\Controller\Admin
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);            
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {

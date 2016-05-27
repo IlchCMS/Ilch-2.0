@@ -56,7 +56,6 @@ class Entrants extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new EntrantsModel();
             $entryModel->setUserId($entries['user_id']);

@@ -44,6 +44,5 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('cookieConsentPos', $this->getConfig()->get('cookie_consent_pos'));
         $this->getView()->set('cookieConsentMessage', $this->getConfig()->get('cookie_consent_message'));
         $this->getView()->set('cookieConsentText', $this->getConfig()->get('cookie_consent_text'));
-
     }
 }

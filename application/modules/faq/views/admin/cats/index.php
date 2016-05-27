@@ -22,7 +22,7 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
                         <th></th>
                         <th><?=$this->getTrans('entries') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
-                    </tr>                
+                    </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('cats') as $cat): ?>
@@ -34,7 +34,7 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
                             <td align="center"><?=$countFaqs ?></td>
                             <td><?=$cat->getTitle() ?></td>
                         </tr>
-                    <?php endforeach; ?>                
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

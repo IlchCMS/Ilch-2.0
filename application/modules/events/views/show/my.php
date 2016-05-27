@@ -10,8 +10,8 @@ $date = new \Ilch\Date();
             <?php if ($this->get('eventListMy') != ''): ?>
                 <?php foreach ($this->get('eventListMy') as $eventlist): ?>
                     <?php $date = new \Ilch\Date($eventlist->getStart()); ?>
-                    <li>                        
-                        <time>                            
+                    <li>
+                        <time>
                             <span class="day"><?=$date->format("j", true) ?></span>
                             <span class="month"><?=$date->format("M", true) ?></span>
                         </time>

@@ -2,11 +2,12 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <legend>
-    <?php if ($this->get('training') != ''): ?>
-        <?=$this->getTrans('edit') ?>
-    <?php else: ?>
-        <?=$this->getTrans('add') ?>
-    <?php endif; ?>
+    <?php if ($this->get('training') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
 </legend>
 <form class="form-horizontal" method="POST" action="">
     <div class="form-group">
@@ -77,13 +78,12 @@
         <div class="col-lg-2">
             <select class="form-control" name="contact">
                 <?php foreach ($this->get('users') as $user) {
-                        $selected = '';
-
-                        if ($this->get('training') != '' AND $this->get('training')->getContact() == $user->getId()) {
-                            $selected = 'selected="selected"';
-                        }
-                        echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
+                    $selected = '';
+                    if ($this->get('training') != '' AND $this->get('training')->getContact() == $user->getId()) {
+                        $selected = 'selected="selected"';
                     }
+                    echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
+                }
                 ?>
             </select>
         </div>
@@ -100,15 +100,16 @@
                    <?php if ($this->get('training') != '' AND $this->get('training')->getVoiceServer() == 1) { echo 'checked="checked"';} ?>>
         </div>
     </div>
-    <?php if ($this->get('training') != ''): ?>
-        <?php if ($this->get('training')->getVoiceServer() == 0): ?>
-            <?php $voiceDisplay = 'style="display: none;"'; ?>
-        <?php else: ?>
-            <?php $voiceDisplay = ''; ?>
-        <?php endif; ?>
-    <?php else: ?>
-        <?php $voiceDisplay = 'style="display: none;"'; ?>
-    <?php endif; ?>
+    <?php if ($this->get('training') != '') {
+        if ($this->get('training')->getVoiceServer() == 0) {
+            $voiceDisplay = 'style="display: none;"';
+        } else {
+            $voiceDisplay = '';
+        }
+    } else {
+        $voiceDisplay = 'style="display: none;"';
+    }
+    ?>
     <div id="voiceServerInfo" <?=$voiceDisplay ?>>
         <div class="form-group">
             <label for="voiceServerIP" class="col-lg-2 control-label">
@@ -147,15 +148,16 @@
                    <?php if ($this->get('training') != '' AND $this->get('training')->getGameServer() == 1) { echo 'checked="checked"';} ?>>
         </div>
     </div>
-    <?php if ($this->get('training') != ''): ?>
-        <?php if ($this->get('training')->getGameServer() == 0): ?>
-            <?php $gameDisplay = 'style="display: none;"'; ?>
-        <?php else: ?>
-            <?php $gameDisplay = ''; ?>
-        <?php endif; ?>
-    <?php else: ?>
-        <?php $gameDisplay = 'style="display: none;"'; ?>
-    <?php endif; ?>
+    <?php if ($this->get('training') != '') {
+        if ($this->get('training')->getGameServer() == 0) {
+            $gameDisplay = 'style="display: none;"';
+        } else {
+            $gameDisplay = '';
+        }
+    } else {
+        $gameDisplay = 'style="display: none;"';
+    }
+    ?>
     <div id="gameServerInfo" <?=$gameDisplay ?>>
         <div class="form-group">
             <label for="gameServerIP" class="col-lg-2 control-label">
@@ -194,11 +196,12 @@
                    rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php if ($this->get('training') != ''): ?>
-        <?=$this->getSaveBar('updateButton') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('addButton') ?>
-    <?php endif; ?>
+    <?php if ($this->get('training') != '') {
+        echo $this->getSaveBar('updateButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>

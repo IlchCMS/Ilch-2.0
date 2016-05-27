@@ -12,12 +12,12 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index']);
-
         $privacyMapper = new PrivacyMapper();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index']);
+
         $this->getView()->set('privacy', $privacyMapper->getPrivacy());
         $this->getView()->set('privacyShow', $privacyMapper->getPrivacy(['show' => 1]));
     }
 }
-
-

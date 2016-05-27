@@ -30,14 +30,12 @@ class Linkus extends \Ilch\Mapper
         }
 
         $linkus = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new LinkusModel();
             $entryModel->setId($entries['id']);
             $entryModel->setTitle($entries['title']);
             $entryModel->setBanner($entries['banner']);
             $linkus[] = $entryModel;
-
         }
 
         return $linkus;

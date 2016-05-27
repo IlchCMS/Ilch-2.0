@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('managePrivacy') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('privacys') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
@@ -35,7 +35,7 @@
                                 <?php else: ?>
                                     <a href="<?=$this->getUrl(['action' => 'update', 'id' => $privacy->getId()], null, true) ?>">
                                         <span class="fa fa-square-o text-info"></span>
-                                    </a>                                    
+                                    </a>
                                 <?php endif; ?>
                             </td>
                             <td><?=$privacy->getTitle() ?></td>

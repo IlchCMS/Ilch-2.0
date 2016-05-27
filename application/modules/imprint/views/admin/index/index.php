@@ -1,5 +1,5 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => 1]) ?>">
- <?=$this->getTokenField() ?>
+    <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('manage') ?></legend>
     <?php if($this->get('imprintStyle') == '0'): ?>
         <div class="form-group">

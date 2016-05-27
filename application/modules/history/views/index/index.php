@@ -1,6 +1,7 @@
+<?php $historys = $this->get('historys'); ?>
+
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 
-<?php $historys = $this->get('historys'); ?>
 <legend><?=$this->getTrans('menuHistorys') ?></legend>
 <?php if ($historys != ''): ?>
 	<section id="cd-timeline" class="cd-container">

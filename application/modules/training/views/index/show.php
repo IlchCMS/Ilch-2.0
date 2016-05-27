@@ -1,7 +1,6 @@
 <?php
-    $training = $this->get('training');
-
-    $userMapper = new \Modules\User\Mappers\User();
+$training = $this->get('training');
+$userMapper = new \Modules\User\Mappers\User();
 ?>
 
 <legend><?=$this->getTrans('trainDetails') ?></legend>
@@ -33,7 +32,7 @@
     <div class="form-group">
         <label for="contactPerson" class="col-lg-3">
             <?=$this->getTrans('contactPerson') ?>:
-        </label>        
+        </label>
         <?php $contactUser = $userMapper->getUserById($training->getContact()); ?>
         <div class="col-lg-9"><a href="<?=$this->getUrl('user/profil/index/user/'.$contactUser->getId()) ?>" target="_blank"><?=$this->escape($contactUser->getName()) ?></a></div>
     </div>
@@ -51,7 +50,7 @@
                 <label for="voiceServerPW" class="col-lg-3">
                     <?=$this->getTrans('voiceServerPW') ?>:
                 </label>
-                <div class="col-lg-9">                
+                <div class="col-lg-9">
                     <?php if ($this->getUser() AND $this->get('trainEntrantUser') != ''): ?>
                         <?=$this->escape($training->getVoiceServerPW()) ?>
                     <?php else: ?>
@@ -75,7 +74,7 @@
                 <label for="gameServerPW" class="col-lg-3">
                     <?=$this->getTrans('gameServerPW') ?>:
                 </label>
-                <div class="col-lg-9">                
+                <div class="col-lg-9">
                     <?php if ($this->getUser() AND $this->get('trainEntrantUser') != ''): ?>
                         <?=$this->escape($training->getGameServerPW()) ?>
                     <?php else: ?>
@@ -116,7 +115,7 @@
             <?php endif; ?>
         </div>
     </div>
-    <?php  if ($this->getUser()): ?>
+    <?php if ($this->getUser()): ?>
         <br />
         <legend><?=$this->getTrans('options') ?></legend>
         <form class="form-horizontal" method="POST" action="">

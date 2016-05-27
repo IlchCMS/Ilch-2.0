@@ -17,7 +17,9 @@ $date = new \Ilch\Date();
             <div class="panel-body">
                 <div class="col-lg-12">
                     <div class="col-lg-2 confetti">
-                        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><img class="thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69"></a>
+                        <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
+                            <img class="thumbnail center-block" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?>" width="69" height="69">
+                        </a>
                     </div>
                     <div class="col-lg-10">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><strong><?=$this->escape($birthdaylist->getName()) ?></strong></a><br />
@@ -27,7 +29,7 @@ $date = new \Ilch\Date();
                         <?php endif; ?>
                     </div>
                 </div>
-            </div>        
+            </div>
         <?php endforeach; ?>
     </div>
     <br />
@@ -43,7 +45,7 @@ $date = new \Ilch\Date();
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <?php $month = date('F', mktime(0, 0, 0, +$x, 1, 1));  ?>
+            <?php $month = date('F', mktime(0, 0, 0, +$x, 1, 1)); ?>
             <strong><?=$month ?></strong>
             <span class="pull-right">
                 <strong><?=$monthsUserCount; ?> <?=$this->getTrans('people') ?></strong>
@@ -53,7 +55,11 @@ $date = new \Ilch\Date();
             <?php if ($monthsUserCount != ''): ?>
                 <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
                     <?php if ($this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
-                        <div style="padding: 0 2px 2px 0; float: left;"><a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?> (<?=date("d.m", strtotime($this->escape($birthdaylist->getBirthday()))) ?>)" width="69" height="69"></a></div>
+                        <div style="padding: 0 2px 2px 0; float: left;">
+                            <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>">
+                                <img class="thumbnail" style="margin-bottom: 0px;" src="<?=$this->getStaticUrl() . '../' . $this->escape($birthdaylist->getAvatar()); ?>" title="<?=$this->escape($birthdaylist->getName()) ?> (<?=date("d.m", strtotime($this->escape($birthdaylist->getBirthday()))) ?>)" width="69" height="69">
+                            </a>
+                        </div>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php else: ?>

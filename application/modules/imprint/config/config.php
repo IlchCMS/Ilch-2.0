@@ -87,11 +87,11 @@ class Config extends \Ilch\Config\Install
                   `city` varchar(255) NOT NULL,
                   `phone` varchar(255) NOT NULL,
                   `fax` varchar(255) NOT NULL,
-                  `email` varchar(255) NOT NULL,                  
+                  `email` varchar(255) NOT NULL,
                   `registration` varchar(255) NOT NULL,
                   `commercialregister` varchar(255) NOT NULL,
                   `vatid` varchar(255) NOT NULL,
-                  `other` mediumtext NOT NULL,                  
+                  `other` mediumtext NOT NULL,
                   `disclaimer` mediumtext NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

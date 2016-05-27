@@ -30,7 +30,6 @@ class Training extends \Ilch\Mapper
         }
 
         $training = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new TrainingModel();
             $entryModel->setId($entries['id']);
@@ -47,7 +46,6 @@ class Training extends \Ilch\Mapper
             $entryModel->setGameServerPW($entries['game_server_pw']);
             $entryModel->setText($entries['text']);
             $training[] = $entryModel;
-
         }
 
         return $training;

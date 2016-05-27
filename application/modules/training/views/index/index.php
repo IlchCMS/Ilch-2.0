@@ -1,6 +1,4 @@
-<?php 
-$entrantsMapper = new Modules\Training\Mappers\Entrants();
-?>
+<?php $entrantsMapper = new Modules\Training\Mappers\Entrants(); ?>
 
 <legend><?=$this->getTrans('menuTraining') ?></legend>
 <div class="table-responsive">

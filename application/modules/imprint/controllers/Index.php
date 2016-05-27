@@ -12,13 +12,12 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuImprint'), ['action' => 'index']);
-
         $imprintMapper = new ImprintMapper();
-        $imprint = $imprintMapper->getImprint();
-        $this->getView()->set('imprint', $imprint);
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuImprint'), ['action' => 'index']);
+
+        $this->getView()->set('imprint', $imprintMapper->getImprint());
         $this->getView()->set('imprintStyle', $this->getConfig()->get('imprint_style'));
     }
 }
-
-

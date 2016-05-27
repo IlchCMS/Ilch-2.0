@@ -42,7 +42,7 @@ class Index extends \Ilch\Controller\Frontend
                 $this->addMessage('missingText', 'danger');
             } else {
                 $date = new \Ilch\Date();
-                $job = $jobsMapper->getJobsById($id);            
+                $job = $jobsMapper->getJobsById($id);
                 $user = $userMapper->getUserById($this->getUser()->getId());
 
                 if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/jobs/layouts/mail/apply.php')) {
@@ -70,7 +70,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 $this->addMessage('sendSuccess');
 
-                $this->redirect(['action' => 'index']);                
+                $this->redirect(['action' => 'index']);
             }
         }
 

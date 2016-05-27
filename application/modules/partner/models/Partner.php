@@ -6,7 +6,7 @@
 
 namespace Modules\Partner\Models;
 
-class Entry extends \Ilch\Model
+class Partner extends \Ilch\Model
 {
     /**
      * The id of the partner.

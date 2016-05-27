@@ -185,7 +185,7 @@ function rec($id, $uid, $req, $obj)
                                     <figure class="thumbnail" title="<?=$this->escape($user->getName()) ?>">
                                         <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><img class="img-responsive" src="<?=$this->getUrl().'/'.$user->getAvatar() ?>" alt="<?=$this->escape($user->getName()) ?>"></a>
                                     </figure>
-                                </div>                            
+                                </div>
                                 <div class="col-md-<?=$col - 1 ?> col-sm-<?=$col - 1 ?>">
                             <?php else: ?>
                                 <div class="col-md-<?=$col - 1 ?> col-sm-<?=$col - 1 ?> col-md-offset-1 col-sm-offset-1">

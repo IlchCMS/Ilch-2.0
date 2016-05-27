@@ -6,7 +6,7 @@
 
 namespace Modules\Partner\Mappers;
 
-use Modules\Partner\Models\Entry as PartnerModel;
+use Modules\Partner\Models\Partner as PartnerModel;
 
 class Partner extends \Ilch\Mapper
 {
@@ -30,7 +30,6 @@ class Partner extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new PartnerModel();
             $entryModel->setId($entries['id']);
@@ -39,12 +38,11 @@ class Partner extends \Ilch\Mapper
             $entryModel->setBanner($entries['banner']);
             $entryModel->setFree($entries['setfree']);
             $entry[] = $entryModel;
-
         }
 
         return $entry;
     }
-    
+
     /**
      * Gets partners.
      *
@@ -66,7 +64,6 @@ class Partner extends \Ilch\Mapper
         }
 
         $partners = [];
-
         foreach ($partnerArray as $partnerRow) {
             $partnerModel = new PartnerModel();
             $partnerModel->setId($partnerRow['id']);

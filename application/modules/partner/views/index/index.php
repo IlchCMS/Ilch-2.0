@@ -10,7 +10,7 @@
                    class="form-control"
                    name="name"
                    type="text"
-                   value="<?php if($this->get('name') != ''){ echo $this->escape($this->get('name')); } ?>" />
+                   value="<?php if ($this->get('name') != '') { echo $this->escape($this->get('name')); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -23,7 +23,7 @@
                    name="link"
                    type="text"
                    placeholder="http://"
-                   value="<?php if($this->get('link') != ''){ echo $this->escape($this->get('link')); } ?>" />
+                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -36,7 +36,7 @@
                    name="banner"
                    type="text"
                    placeholder="http://"
-                   value="<?php if($this->get('banner') != ''){ echo $this->escape($this->get('banner')); } ?>" />
+                   value="<?php if ($this->get('banner') != '') { echo $this->escape($this->get('banner')); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -45,7 +45,7 @@
         </label>
         <div class="col-lg-8">
             <?=$this->getCaptchaField() ?>
-        </div>   
+        </div>
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8 input-group captcha">
@@ -57,7 +57,7 @@
                   placeholder="<?=$this->getTrans('captcha') ?>" />
             <span class="input-group-addon">
                 <a href="javascript:void(0)" onclick="
-                    document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();
+                    document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
                     document.getElementById('captcha-form').focus();"
                     id="change-image">
                     <i class="fa fa-refresh"></i>

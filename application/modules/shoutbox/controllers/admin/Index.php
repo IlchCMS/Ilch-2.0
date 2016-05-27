@@ -40,7 +40,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_entries')) {
-            foreach($this->getRequest()->getPost('check_entries') as $entryId) {
+            foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                 $shoutboxMapper->delete($entryId);
             }
         }
@@ -50,7 +50,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $shoutboxMapper = new ShoutboxMapper();
             $shoutboxMapper->delete($this->getRequest()->getParam('id'));
 

@@ -8,7 +8,6 @@ return
     [
     'menuCalendarList' => 'Calender',
     'noCalendar' => 'no Entries available',
-    'term' => 'Term',
     'title' => 'Title',
     'text' => 'Text',
     'color' => 'Term Color',

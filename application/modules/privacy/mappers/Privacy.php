@@ -30,7 +30,6 @@ class Privacy extends \Ilch\Mapper
         }
 
         $privacy = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new PrivacyModel();
             $entryModel->setId($entries['id']);
@@ -40,7 +39,6 @@ class Privacy extends \Ilch\Mapper
             $entryModel->setText($entries['text']);
             $entryModel->setShow($entries['show']);
             $privacy[] = $entryModel;
-
         }
 
         return $privacy;
@@ -55,6 +53,7 @@ class Privacy extends \Ilch\Mapper
     public function getPrivacyById($id)
     {
         $privacy = $this->getPrivacy(['id' => $id]);
+
         return reset($privacy);
     }
 

@@ -23,7 +23,6 @@ class Comment extends \Ilch\Mapper
             ->fetchRows();
 
         $comments = [];
-
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
             $commentModel->setId($commentRow['id']);
@@ -48,7 +47,6 @@ class Comment extends \Ilch\Mapper
             ->fetchRows();
 
         $comments = [];
-
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
             $commentModel->setId($commentRow['id']);
@@ -75,7 +73,6 @@ class Comment extends \Ilch\Mapper
             ->fetchRows();
 
         $comments = [];
-
         foreach ($commentsArray as $commentRow) {
             $commentModel = new CommentModel();
             $commentModel->setId($commentRow['id']);

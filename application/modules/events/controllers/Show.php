@@ -26,8 +26,8 @@ class Show extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
 
-        if ($this->getRequest()->isPost()) {       
-            if ($this->getRequest()->getPost('save')) {         
+        if ($this->getRequest()->isPost()) {
+            if ($this->getRequest()->getPost('save')) {
                 $entrantsModel->setEventId(trim($this->getRequest()->getPost('id')));
                 $entrantsModel->setUserId($this->getUser()->getId());
                 $entrantsModel->setStatus(trim($this->getRequest()->getPost('save')));

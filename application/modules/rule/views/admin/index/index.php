@@ -20,7 +20,7 @@
                         <th>§</th>
                         <th><?=$this->getTrans('title') ?></th>
                         <th><?=$this->getTrans('text');?></th>
-                    </tr>                
+                    </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('entries') as $entry): ?>
@@ -32,7 +32,7 @@
                             <td><?=$this->escape($entry->getTitle()) ?></td>
                             <td><?=$entry->getText() ?></td>
                         </tr>
-                    <?php endforeach; ?>                
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div> 

@@ -31,7 +31,6 @@ class Receiver extends \Ilch\Mapper
         }
 
         $receivers = [];
-
         foreach ($receiverArray as $receiverRow) {
             $receiverModel = new ReceiverModel();
             $receiverModel->setId($receiverRow['id']);

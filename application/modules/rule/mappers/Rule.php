@@ -30,7 +30,6 @@ class Rule extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new RuleModel();
             $entryModel->setId($entries['id']);
@@ -38,12 +37,11 @@ class Rule extends \Ilch\Mapper
             $entryModel->setTitle($entries['title']);
             $entryModel->setText($entries['text']);
             $entry[] = $entryModel;
-
         }
 
         return $entry;
     }
-    
+
     /**
      * Gets rules.
      *
@@ -65,7 +63,6 @@ class Rule extends \Ilch\Mapper
         }
 
         $rules = [];
-
         foreach ($ruleArray as $ruleRow) {
             $ruleModel = new RuleModel();
             $ruleModel->setId($ruleRow['id']);

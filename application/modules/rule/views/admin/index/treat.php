@@ -3,11 +3,12 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <legend>
-        <?php if ($this->get('rule') != ''): ?>
-            <?=$this->getTrans('edit') ?>
-        <?php else: ?>
-            <?=$this->getTrans('add') ?>
-        <?php endif; ?>
+        <?php if ($this->get('rule') != '') {
+            echo $this->getTrans('edit');
+        } else {
+            echo $this->getTrans('add');
+        }
+        ?>
     </legend>
     </legend>
     <div class="form-group">
@@ -55,11 +56,12 @@
                    rows="5"><?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php if ($this->get('rule') != ''): ?>
-        <?=$this->getSaveBar('updateButton') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('addButton') ?>
-    <?php endif; ?>
+    <?php if ($this->get('rule') != '') {
+        echo $this->getSaveBar('updateButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>
 
 <script type="text/javascript">

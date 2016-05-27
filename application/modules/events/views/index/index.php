@@ -53,7 +53,7 @@ $date = new \Ilch\Date();
         </div>
     </div>
 <?php endif; ?>
-    
+
 <?php if ($this->get('getEventListOther') != ''): ?>
     <br />
     <legend><?=$this->getTrans('menuEventOtherList') ?></legend>
@@ -93,7 +93,7 @@ $date = new \Ilch\Date();
         </div>
     </div>
 <?php endif; ?>
-    
+
 <?php if ($this->get('eventListPast') != ''): ?>
     <br />
     <legend><?=$this->getTrans('menuEventPast') ?></legend>

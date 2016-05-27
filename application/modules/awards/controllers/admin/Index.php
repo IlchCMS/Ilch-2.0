@@ -32,17 +32,17 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'add',
                 'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
             ]
         );
     }
 
     public function indexAction()
     {
+        $awardsMapper = new AwardsMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index']);
-
-        $awardsMapper = new AwardsMapper();
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -69,7 +69,7 @@ class Index extends \Ilch\Controller\Admin
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);            
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {

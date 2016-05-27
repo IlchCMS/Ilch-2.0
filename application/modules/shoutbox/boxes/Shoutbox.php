@@ -13,9 +13,7 @@ class Shoutbox extends \Ilch\Box
         $shoutboxMapper = new \Modules\Shoutbox\Mappers\Shoutbox();
         $uniqid = $this->getUniqid();
 
-        if (($this->getRequest()->getPost('form_'.$uniqid) || $this->getRequest()->isAjax())
-            && $this->getRequest()->getPost('bot') === ''
-        ) {
+        if (($this->getRequest()->getPost('form_'.$uniqid) || $this->getRequest()->isAjax()) && $this->getRequest()->getPost('bot') === '') {
             $name = $this->getRequest()->getPost('shoutbox_name');
             $textarea = $this->getRequest()->getPost('shoutbox_textarea');
             $uid = 0;

@@ -31,7 +31,6 @@ class Events extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new EventModel();
             $entryModel->setId($entries['id']);
@@ -102,7 +101,6 @@ class Events extends \Ilch\Mapper
         }
 
         $events = [];
-
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
         }
@@ -129,7 +127,6 @@ class Events extends \Ilch\Mapper
         }
 
         $events = [];
-
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
         }
@@ -143,7 +140,7 @@ class Events extends \Ilch\Mapper
     public function getEventListParticipation($userId)
     {
         $eventMapper = new EventMapper();
-        
+
         $entryRow = $this->db()->select('*')
                 ->from('events')
                 ->where(['user_id' => $userId])
@@ -153,9 +150,8 @@ class Events extends \Ilch\Mapper
         if (empty($entryRow)) {
             return null;
         }
-        
+
         $events = [];
-        
         foreach ($entryRow as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
         }
@@ -184,7 +180,6 @@ class Events extends \Ilch\Mapper
         }
 
         $events = [];
-
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
         }
@@ -207,13 +202,12 @@ class Events extends \Ilch\Mapper
         if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
 
         $rows = $this->db()->queryArray($sql);
-        
+
         if (empty($rows)) {
             return null;
         }
 
         $events = [];
-
         foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
         }

@@ -6,7 +6,7 @@
 
 namespace Modules\History\Models;
 
-class Entry extends \Ilch\Model
+class History extends \Ilch\Model
 {
     /**
      * The id of the history.

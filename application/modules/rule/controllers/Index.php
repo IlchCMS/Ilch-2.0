@@ -9,16 +9,13 @@ namespace Modules\Rule\Controllers;
 use Modules\Rule\Mappers\Rule as RuleMapper;
 
 class Index extends \Ilch\Controller\Frontend
-{    
+{
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRules'), ['action' => 'index']);
         $ruleMapper = new RuleMapper();
-        
-        $rules = $ruleMapper->getEntries();
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index']);
 
-        $this->getView()->set('rules', $rules);
+        $this->getView()->set('rules', $ruleMapper->getEntries());
     }
 }
-
-

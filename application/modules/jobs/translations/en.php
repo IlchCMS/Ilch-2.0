@@ -5,10 +5,9 @@
  */
 
 return
-    [    
+    [
     'menuJobs' => 'Jobs',
     'menuJob' => 'Job',
-    'manageJobs' => 'Manage Jobs',
     'title' => 'Title',
     'email' => 'E-Mail address',
     'text' => 'Text',

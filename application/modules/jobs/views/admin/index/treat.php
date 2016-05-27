@@ -1,13 +1,12 @@
-<?php
-$jobs = $this->get('jobs');
-?>
+<?php $jobs = $this->get('jobs'); ?>
 
 <legend>
-    <?php if ($this->get('jobs') != ''): ?>
-        <?=$this->getTrans('edit') ?>
-    <?php else: ?>
-        <?=$this->getTrans('add') ?>
-    <?php endif; ?>
+    <?php if ($this->get('jobs') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
 </legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
@@ -69,9 +68,10 @@ $jobs = $this->get('jobs');
                    value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } ?>" />
         </div>
     </div>
-    <?php if ($this->get('jobs') != ''): ?>
-        <?=$this->getSaveBar('updateButton') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('addButton') ?>
-    <?php endif; ?>
+    <?php if ($this->get('jobs') != '') {
+        echo $this->getSaveBar('updateButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>

@@ -6,7 +6,7 @@
 
 namespace Modules\History\Mappers;
 
-use Modules\History\Models\Entry as HistoryModel;
+use Modules\History\Models\History as HistoryModel;
 
 class History extends \Ilch\Mapper
 {
@@ -30,7 +30,6 @@ class History extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new HistoryModel();
             $entryModel->setId($entries['id']);
@@ -40,7 +39,6 @@ class History extends \Ilch\Mapper
             $entryModel->setTyp($entries['typ']);
             $entryModel->setText($entries['text']);
             $entry[] = $entryModel;
-
         }
 
         return $entry;
@@ -67,7 +65,6 @@ class History extends \Ilch\Mapper
         }
 
         $historys = [];
-
         foreach ($historyArray as $historyRow) {
             $historyModel = new HistoryModel();
             $historyModel->setId($historyRow['id']);

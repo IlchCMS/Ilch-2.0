@@ -1,4 +1,4 @@
-<legend><?= $this->getTrans('manageJobs') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('jobs') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField()?>
@@ -36,7 +36,7 @@
                                 <?php else: ?>
                                     <a href="<?=$this->getUrl(['action' => 'update', 'id' => $jobs->getId()], null, true) ?>">
                                         <span class="fa fa-square-o text-info"></span>
-                                    </a>                                    
+                                    </a>
                                 <?php endif; ?>
                             </td>
                             <td><?=$this->escape($jobs->getTitle()) ?></td>

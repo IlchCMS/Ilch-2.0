@@ -1,3 +1,5 @@
+<?php $config = \Ilch\Registry::get('config'); ?>
+
 <script type="text/javascript" >
 $(function() {
     var $shoutboxContainer = $('#shoutbox-container'),
@@ -51,8 +53,6 @@ $(function() {
     });
 });
 </script>
-
-<?php $config = \Ilch\Registry::get('config'); ?>
 
 <div id="shoutbox-container">
     <div id="shoutbox-button-container" class="form-horizontal">
@@ -122,7 +122,7 @@ $(function() {
             </div>
         </form>
     </div>
-    
+
     <?php if ($this->get('shoutbox') != ''): ?>
         <table class="table table-bordered table-striped table-responsive">
             <?php foreach ($this->get('shoutbox') as $shoutbox): ?>

@@ -20,15 +20,15 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <?php foreach ($categories as $category): ?>
-                        <?php $countFaqs = count($faqMapper->getFaqs(['cat_id' => $category->getId()])); ?>
-                        <?php if ($category->getId() == $this->getRequest()->getParam('catId') OR $category->getId() == $this->get('firstCatId')) {
-                            $active = 'class="active"';        
+                    <?php foreach ($categories as $category):
+                        $countFaqs = count($faqMapper->getFaqs(['cat_id' => $category->getId()]));
+                        if ($category->getId() == $this->getRequest()->getParam('catId') OR $category->getId() == $this->get('firstCatId')) {
+                            $active = 'class="active"';
                         } else {
-                            $active = '';                        
+                            $active = '';
                         }
-                        ?>
-                        <?php if ($countFaqs > 0): ?>
+
+                        if ($countFaqs > 0): ?>
                             <li <?=$active ?>>
                                 <a href="<?=$this->getUrl('faq/index/index/catId/'.$category->getId()) ?>">
                                     <b><?=$category->getTitle() ?></b>

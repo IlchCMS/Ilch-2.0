@@ -6,12 +6,12 @@
             <?=$this->getTrans('cookieConsentShow') ?>:
         </label>
         <div class="col-lg-2">
-            <div class="flipswitch">  
+            <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" name="cookieConsent" value="1" id="cookie-consent-yes" <?php if ($this->get('cookieConsent') == '1') { echo 'checked="checked"'; } ?> />  
                 <label for="cookie-consent-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
                 <input type="radio" class="flipswitch-input" name="cookieConsent" value="0" id="cookie-consent-no" <?php if ($this->get('cookieConsent') == '0') { echo 'checked="checked"'; } ?> />  
                 <label for="cookie-consent-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
-                <span class="flipswitch-selection"></span>  
+                <span class="flipswitch-selection"></span>
             </div>
         </div>
     </div>
