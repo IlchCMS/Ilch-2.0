@@ -23,7 +23,7 @@ $(function(){
 
             // regular expression to get the file-extension
             var re = /(?:\.([^.]+))?$/;
-            var ext = re.exec(data.files[0].name)[1];
+            var ext = re.exec(data.files[0].name)[1].toLowerCase();
 
             if(jQuery.inArray(ext,allowedExtensions) == -1) {
                 // File-extension is not one of the allowed ones

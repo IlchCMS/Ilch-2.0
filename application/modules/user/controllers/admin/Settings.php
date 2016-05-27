@@ -21,9 +21,9 @@ class Settings extends BaseController
             $this->getConfig()->set('avatar_height', $this->getRequest()->getPost('avatar_height'));
             $this->getConfig()->set('avatar_width', $this->getRequest()->getPost('avatar_width'));
             $this->getConfig()->set('avatar_size', $this->getRequest()->getPost('avatar_size'));
-            $this->getConfig()->set('avatar_filetypes', $this->getRequest()->getPost('avatar_filetypes'));
+            $this->getConfig()->set('avatar_filetypes', strtolower($this->getRequest()->getPost('avatar_filetypes')));
             $this->getConfig()->set('usergallery_allowed', $this->getRequest()->getPost('usergallery_allowed'));
-            $this->getConfig()->set('usergallery_filetypes', $this->getRequest()->getPost('usergallery_filetypes'));
+            $this->getConfig()->set('usergallery_filetypes', strtolower($this->getRequest()->getPost('usergallery_filetypes')));
             $this->getConfig()->set('regist_rules', $this->getRequest()->getPost('regist_rules'));
             $this->getConfig()->set('regist_confirm_mail', $this->getRequest()->getPost('regist_confirm_mail'));
             $this->getConfig()->set('manually_confirm_mail', $this->getRequest()->getPost('manually_confirm_mail'));
