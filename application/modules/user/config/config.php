@@ -154,7 +154,6 @@ CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
 CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `key` varchar(255) NOT NULL,
-    `title` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -165,11 +164,11 @@ CREATE TABLE IF NOT EXISTS `[prefix]_user_menu_settings_links` (
     `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `[prefix]_user_menu` (`id`, `key`, `title`) VALUES
-(1, "user/panel/index", "Panel"),
-(2, "user/panel/dialog", "Dialog"),
-(3, "user/panel/gallery", "Gallerie"),
-(4, "user/panel/settings", "Einstellungen");
+INSERT INTO `[prefix]_user_menu` (`id`, `key`) VALUES
+(1, "user/panel/index"),
+(2, "user/panel/dialog"),
+(3, "user/panel/gallery"),
+(4, "user/panel/settings");
 
 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
     `c_id` int(10) NOT NULL AUTO_INCREMENT,
