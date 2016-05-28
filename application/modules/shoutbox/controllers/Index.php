@@ -14,7 +14,8 @@ class Index extends \Ilch\Controller\Frontend
     {
         $shoutboxMapper = new ShoutboxMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index']);
 
         $this->getView()->set('shoutbox', $shoutboxMapper->getShoutbox());
     }

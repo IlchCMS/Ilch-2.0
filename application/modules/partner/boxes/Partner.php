@@ -6,11 +6,13 @@
 
 namespace Modules\Partner\Boxes;
 
+use Modules\Partner\Mappers\Partner as PartnerMapper;
+
 class Partner extends \Ilch\Box
 {
     public function render()
     {
-        $partnerMapper = new \Modules\Partner\Mappers\Partner();
+        $partnerMapper = new PartnerMapper();
 
         $this->getView()->set('slider', $this->getConfig()->get('partners_slider'));
         $this->getView()->set('sliderSpeed', $this->getConfig()->get('partners_slider_speed'));

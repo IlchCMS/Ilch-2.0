@@ -12,11 +12,13 @@
             </tr>
             <?php foreach ($this->get('categorys') as $category): ?>
                 <tr>
-                    <?php if ($category->getDesc() != ''): ?>
-                        <?php $getDesc = '&raquo; '.$this->escape($category->getDesc()); ?>
-                    <?php else: ?>
-                        <?php $getDesc = ''; ?>
-                    <?php endif; ?>
+                    <?php
+                    if ($category->getDesc() != '') {
+                        $getDesc = '&raquo; '.$this->escape($category->getDesc());
+                    } else {
+                        $getDesc = '';
+                    }
+                    ?>
                     <td>
                         <a href="<?=$this->getUrl(['action' => 'index', 'cat_id' => $category->getId()]) ?>" title="<?=$this->escape($category->getName()) ?>"><?=$this->escape($category->getName()) ?></a><br />
                         <?=$getDesc ?>
@@ -42,19 +44,18 @@
         <?php if ($this->get('links') != ''): ?>
             <?php foreach ($this->get('links') as $link): ?>
                 <tr>
-                    <?php $getBanner = $this->escape($link->getBanner()); ?>
-                    <?php $getDesc = $this->escape($link->getDesc()); ?>
-
-                    <?php 
+                    <?php
+                    $getBanner = $this->escape($link->getBanner());
+                    $getDesc = $this->escape($link->getDesc());
                     if (!empty($getDesc)) {
                         $getDesc = '&raquo; '.$this->escape($link->getDesc());
-                    }else{
+                    } else {
                         $getDesc = '';
                     }
 
                     if (!empty($getBanner)) {
                         $getBanner = '<img src="'.$this->escape($link->getBanner()).'">';
-                    }else{
+                    } else {
                         $getBanner = $this->escape($link->getName());
                     }
                     ?>

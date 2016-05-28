@@ -6,11 +6,14 @@
 
 namespace Modules\Shoutbox\Boxes;
 
+use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
+use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
+
 class Shoutbox extends \Ilch\Box
 {
     public function render()
     {
-        $shoutboxMapper = new \Modules\Shoutbox\Mappers\Shoutbox();
+        $shoutboxMapper = new ShoutboxMapper();
         $uniqid = $this->getUniqid();
 
         if (($this->getRequest()->getPost('form_'.$uniqid) || $this->getRequest()->isAjax()) && $this->getRequest()->getPost('bot') === '') {
@@ -22,7 +25,7 @@ class Shoutbox extends \Ilch\Box
                 $uid = $this->getUser()->getId();
             }
 
-            $shoutboxModel = new \Modules\Shoutbox\Models\Shoutbox();
+            $shoutboxModel = new ShoutboxModel();
             $shoutboxModel->setUid($uid);
             $shoutboxModel->setName($name);
             $shoutboxModel->setTextarea($textarea);

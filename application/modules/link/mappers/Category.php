@@ -35,7 +35,6 @@ class Category extends \Ilch\Mapper
         }
 
         $categorys = [];
-
         foreach ($categoryArray as $categoryRow) {
             $categoryModel = new CategoryModel();
             $categoryModel->setId($categoryRow['id']);
@@ -48,7 +47,7 @@ class Category extends \Ilch\Mapper
 
         return $categorys;
     }
-    
+
     /**
      * Returns user model found by the id or false if none found.
      *
@@ -58,6 +57,7 @@ class Category extends \Ilch\Mapper
     public function getCategoryById($id)
     {
         $cats = $this->getCategories(['id' => $id]);
+
         return reset($cats);
     }
 
@@ -68,7 +68,7 @@ class Category extends \Ilch\Mapper
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
-        
+
         if (empty($categoryRow)) {
             return null;
         }
@@ -76,14 +76,14 @@ class Category extends \Ilch\Mapper
         if (!empty($categoryRow['parent_id'])) {
             $models = $this->getCategoriesForParentRec($models, $categoryRow['parent_id']);
         }
-                        
+
         $categoryModel = new CategoryModel();
         $categoryModel->setId($categoryRow['id']);
         $categoryModel->setParentId($categoryRow['parent_id']);
         $categoryModel->setName($categoryRow['name']);
         $categoryModel->setDesc($categoryRow['desc']);
         $models[] = $categoryModel;
-        
+
         return $models;
     }
     /**
@@ -95,6 +95,7 @@ class Category extends \Ilch\Mapper
     public function getCategoriesForParent($id)
     {
         $models = $this->getCategoriesForParentRec([], $id);
+
         return $models;
     }
 

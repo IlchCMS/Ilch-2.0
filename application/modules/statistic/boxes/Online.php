@@ -6,16 +6,15 @@
 
 namespace Modules\Statistic\Boxes;
 
+use Modules\Statistic\Mappers\Statistic as StatisticMapper;
+
 class Online extends \Ilch\Box
 {
     public function render()
     {
-        $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
-        
-        $allCount = $statisticMapper->getVisitsCountOnline();
-        $users = $statisticMapper->getVisitsOnlineUser();
+        $statisticMapper = new StatisticMapper();
 
-        $this->getView()->set('usersOnline', $users);
-        $this->getView()->set('guestOnline', $allCount - count($users));
+        $this->getView()->set('usersOnline', $statisticMapper->getVisitsOnlineUser());
+        $this->getView()->set('guestOnline', $statisticMapper->getVisitsCountOnline() - count($statisticMapper->getVisitsOnlineUser()));
     }
 }

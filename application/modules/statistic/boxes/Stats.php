@@ -6,12 +6,15 @@
 
 namespace Modules\Statistic\Boxes;
 
+use Modules\Statistic\Mappers\Statistic as StatisticMapper;
+
 class Stats extends \Ilch\Box
 {
     public function render()
     {
         $date = new \Ilch\Date();
-        $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
+        $statisticMapper = new StatisticMapper();
+
         $this->getView()->set('visitsToday', $statisticMapper->getVisitsCount($date->format('Y-m-d', true)));
         $this->getView()->set('visitsOnline', $statisticMapper->getVisitsCountOnline());
         $date->modify('-1 day');

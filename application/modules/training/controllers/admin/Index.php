@@ -45,10 +45,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $trainingMapper = new TrainingMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
-
-        $trainingMapper = new TrainingMapper();
 
         if ($this->getRequest()->getPost('check_training')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -58,9 +58,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $training = $trainingMapper->getTraining();
-
-        $this->getView()->set('training', $training);
+        $this->getView()->set('training', $trainingMapper->getTraining());
     }
 
     public function treatAction() 

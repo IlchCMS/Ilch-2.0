@@ -38,12 +38,12 @@ $userMapper = new \Modules\User\Mappers\User();
     </div>
     <?php if ($training->getVoiceServer() != ''): ?>
         <?php if ($training->getVoiceServerIP() != ''): ?>
-        <div class="form-group">
-            <label for="voiceServerIP" class="col-lg-3">
-                <?=$this->getTrans('voiceServerIP') ?>:
-            </label>
-            <div class="col-lg-9"><?=$this->escape($training->getVoiceServerIP()) ?></div>
-        </div>
+            <div class="form-group">
+                <label for="voiceServerIP" class="col-lg-3">
+                    <?=$this->getTrans('voiceServerIP') ?>:
+                </label>
+                <div class="col-lg-9"><?=$this->escape($training->getVoiceServerIP()) ?></div>
+            </div>
         <?php endif; ?>
         <?php if ($training->getVoiceServerPW() != ''): ?>
             <div class="form-group">
@@ -62,12 +62,12 @@ $userMapper = new \Modules\User\Mappers\User();
     <?php endif; ?>
     <?php if ($training->getGameServer() != ''): ?>
         <?php if ($training->getGameServerIP() != ''): ?>
-        <div class="form-group">
-            <label for="gameServerIP" class="col-lg-3">
-                <?=$this->getTrans('gameServerIP') ?>:
-            </label>
-            <div class="col-lg-9"><?=$this->escape($training->getGameServerIP()) ?></div>
-        </div>
+            <div class="form-group">
+                <label for="gameServerIP" class="col-lg-3">
+                    <?=$this->getTrans('gameServerIP') ?>:
+                </label>
+                <div class="col-lg-9"><?=$this->escape($training->getGameServerIP()) ?></div>
+            </div>
         <?php endif; ?>
         <?php if ($training->getGameServerPW() != ''): ?>
             <div class="form-group">
@@ -93,7 +93,7 @@ $userMapper = new \Modules\User\Mappers\User();
             <?php if ($this->get('trainEntrantsUserCount') != 0): ?>
                 <br />
                 <?php foreach ($this->get('trainEntrantsUser') as $trainEntrantsUser): ?>
-                <?php $entrantsUser = $userMapper->getUserById($trainEntrantsUser->getUserId()); ?>
+                    <?php $entrantsUser = $userMapper->getUserById($trainEntrantsUser->getUserId()); ?>
                     <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><?=$this->escape($entrantsUser->getName()) ?></a> 
                     <?php if ($trainEntrantsUser->getNote() != ''): ?>
                         <i class="fa fa-arrow-right"></i> <?=$trainEntrantsUser->getNote() ?>
@@ -119,7 +119,7 @@ $userMapper = new \Modules\User\Mappers\User();
         <br />
         <legend><?=$this->getTrans('options') ?></legend>
         <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField() ?>
+            <?=$this->getTokenField() ?>
             <?php if ($this->get('trainEntrantUser') != ''): ?>
                 <button type="submit" value="del" name="del" class="btn btn-sm btn-danger">
                     <?=$this->getTrans('decline') ?>
@@ -132,8 +132,8 @@ $userMapper = new \Modules\User\Mappers\User();
                     <div class="col-lg-4">
                         <textarea class="form-control"
                                   style="resize: none;"
-                                  name="train_textarea" 
-                                  cols="10" 
+                                  name="train_textarea"
+                                  cols="10"
                                   rows="1"></textarea>
                     </div>
                     <div class="col-lg-2" style="top: 2px;">

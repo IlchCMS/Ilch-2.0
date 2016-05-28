@@ -16,7 +16,8 @@ class Index extends \Ilch\Controller\Frontend
     {
         $trainingMapper = new TrainingMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
 
         $this->getView()->set('training', $trainingMapper->getTraining());
     }

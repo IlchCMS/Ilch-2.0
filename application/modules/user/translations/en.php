@@ -227,7 +227,7 @@ return
     'cat' => 'Categorie',
     'gallery' => 'Gallery',
     'title' => 'Title',
-    'description' => 'description',
+    'description' => 'Description',
     'type' => 'Type',
     'galleryItemAdd' => 'Append',
     'noImages' => 'No images available',
@@ -244,6 +244,7 @@ return
     'mediaUpload' => 'Media Upload',
     'add' => 'Add...',
     'drag' => 'drag and drop files here',
+    'browse' => 'browse',
     'fileTooBig' => 'The file is too big.',
     'extensionNotAllowed' => 'Files with this extension are not allowed.',
 

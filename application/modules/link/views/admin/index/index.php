@@ -21,13 +21,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('categorys') as $category): ?>
-                        <?php $getDesc = $this->escape($category->getDesc()); ?>
-                        <?php if ($getDesc != ''): ?>
-                            <?php $getDesc = '&raquo; '.$this->escape($category->getDesc()); ?>
-                        <?php else: ?>
-                            <?php $getDesc = ''; ?>
-                        <?php endif; ?>
+                    <?php
+                    foreach ($this->get('categorys') as $category):
+                        $getDesc = $this->escape($category->getDesc());
+                        if ($getDesc != '') {
+                            $getDesc = '&raquo; '.$this->escape($category->getDesc());
+                        } else {
+                            $getDesc = '';
+                        }
+                    ?>
                         <tr>
                             <td><input value="<?=$category->getId()?>" type="checkbox" name="check_cats[]" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treatCat', 'id' => $category->getId()]) ?></td>
@@ -60,20 +62,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('links') as $link): ?>
-                        <?php $getBanner = $this->escape($link->getBanner()); ?>
-                        <?php $getDesc = $this->escape($link->getDesc()); ?>
-                        <?php if (!empty($getDesc)): ?>
-                            <?php $getDesc = '&raquo; '.$this->escape($link->getDesc()); ?>
-                        <?php else: ?>
-                            <?php $getDesc = ''; ?>
-                        <?php endif; ?>
+                    <?php
+                    foreach ($this->get('links') as $link):
+                        $getBanner = $this->escape($link->getBanner());
+                        $getDesc = $this->escape($link->getDesc());
+                        if (!empty($getDesc)) {
+                            $getDesc = '&raquo; '.$this->escape($link->getDesc());
+                        } else {
+                            $getDesc = '';
+                        }
 
-                        <?php if (!empty($getBanner)): ?>
-                            <?php $getBanner = '<img src="'.$getBanner.'">'; ?>
-                        <?php else: ?>
-                            <?php $getBanner = $this->escape($link->getName()); ?>
-                        <?php endif; ?>
+                        if (!empty($getBanner)) {
+                            $getBanner = '<img src="'.$getBanner.'">';
+                        } else {
+                            $getBanner = $this->escape($link->getName());
+                        }
+                    ?>
                         <tr>
                             <td><input value="<?=$link->getId()?>" type="checkbox" name="check_links[]" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treatLink', 'id' => $link->getId()]) ?></td>
