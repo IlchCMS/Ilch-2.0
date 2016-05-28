@@ -19,20 +19,26 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getParam('cat_id')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
             $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
+
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
 
             if (!empty($parentCategories)) {
-                foreach($parentCategories as $parent) {
-                    $this->getLayout()->getHmenu()->add($parent->getName(), ['action' => 'index', 'cat_id' => $parent->getId()]);
+                foreach ($parentCategories as $parent) {
+                    $this->getLayout()->getHmenu()
+                            ->add($parent->getName(), ['action' => 'index', 'cat_id' => $parent->getId()]);
                 }
             }
-            
-            $this->getLayout()->getHmenu()->add($category->getName(), ['action' => 'index', 'cat_id' => $this->getRequest()->getParam('cat_id')]);
-            
+
+            $this->getLayout()->getHmenu()
+                    ->add($category->getName(), ['action' => 'index', 'cat_id' => $this->getRequest()->getParam('cat_id')]);
+
             $links = $linkMapper->getLinks(['cat_id' => $this->getRequest()->getParam('cat_id')]);
             $categorys = $categoryMapper->getCategories(['parent_id' => $this->getRequest()->getParam('cat_id')]);
         } else {
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index']);
+
             $links = $linkMapper->getLinks(['cat_id' => 0]);
             $categorys = $categoryMapper->getCategories(['parent_id' => 0]);
         }
@@ -40,7 +46,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('links', $links);
         $this->getView()->set('categorys', $categorys);
     }
-    
+
     public function redirectAction()
     {
         $linkMapper = new LinkMapper();
@@ -51,5 +57,3 @@ class Index extends \Ilch\Controller\Frontend
         exit;
     }
 }
-
-

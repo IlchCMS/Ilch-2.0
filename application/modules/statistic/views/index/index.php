@@ -1,7 +1,3 @@
-<link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
-
 <?php 
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
 $userMapper = new \Modules\User\Mappers\User();
@@ -11,6 +7,9 @@ $date = new \Ilch\Date();
 $dateCmsInstalled = new \Ilch\Date($this->get('dateCmsInstalled'));
 $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
 ?>
+
+<link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuStatistic') ?></legend>
 <div class="row">
@@ -429,14 +428,15 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
     </div>
 </div>
 
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('.progress .progress-bar').progressbar();
 });
 
-$(document).on('click', '.panel-heading span.clickable', function(e){
+$(document).on('click', '.panel-heading span.clickable', function(e) {
     var $this = $(this);
-    if(!$this.hasClass('panel-collapsed')) {
+    if (!$this.hasClass('panel-collapsed')) {
         $this.closest('.panel').find('.panel-body').slideUp();
         $this.addClass('panel-collapsed');
         $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');

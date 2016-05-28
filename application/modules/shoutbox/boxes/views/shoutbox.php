@@ -99,7 +99,7 @@ $(function() {
                     <textarea name="shoutbox_textarea"
                               class="form-control"
                               style="resize: vertical"
-                              cols="10" 
+                              cols="10"
                               rows="5"
                               maxlength="<?=$config->get('shoutbox_maxtextlength') ?>"
                               placeholder="<?=$this->getTrans('message') ?>"

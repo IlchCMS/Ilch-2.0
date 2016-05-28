@@ -1,14 +1,14 @@
+<legend>
+    <?php
+    if ($this->get('category') != '') {
+        echo $this->getTrans('menuActionEditCategory');
+    } else {
+        echo $this->getTrans('menuActionNewCategory');
+    }
+    ?>
+</legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <legend>
-        <?php
-        if ($this->get('category') != '') {
-            echo $this->getTrans('menuActionEditCategory');
-        } else {
-            echo $this->getTrans('menuActionNewCategory');
-        }
-        ?>
-    </legend>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
@@ -28,8 +28,8 @@
         </label>
         <div class="col-lg-4">
             <textarea class="form-control"
-                      name="desc" 
-                      cols="45" 
+                      name="desc"
+                      cols="45"
                       rows="3"><?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getDesc()); } ?></textarea>
         </div>
     </div>

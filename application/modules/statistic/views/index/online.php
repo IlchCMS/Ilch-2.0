@@ -1,7 +1,9 @@
-<?php if($this->getUser()): ?>
-    <?php $userMapper = new \Modules\User\Mappers\User() ?>
-    <?php $userCheck = $userMapper->getUserById($this->getUser()->getId()) ?>
-<?php endif; ?>
+<?php
+if ($this->getUser()) {
+    $userMapper = new \Modules\User\Mappers\User();
+    $userCheck = $userMapper->getUserById($this->getUser()->getId());
+}
+?>
 
 <legend><?=$this->getTrans('menuOnlineStatistic') ?></legend>
 <div class="table-responsive">
@@ -9,8 +11,8 @@
         <colgroup>
             <col class="col-lg-2">
             <col class="col-lg-2">
-            <?php if($this->getUser()): ?>
-                <?php if($userCheck->isAdmin()): ?>
+            <?php if ($this->getUser()): ?>
+                <?php if ($userCheck->isAdmin()): ?>
                     <col class="col-lg-2">
                     <col class="col-lg-3">
                 <?php endif; ?>
@@ -21,8 +23,8 @@
             <tr>
                 <th><?=$this->getTrans('user') ?></th>
                 <th><?=$this->getTrans('lastHere') ?></th>
-                <?php if($this->getUser()): ?>
-                    <?php if($userCheck->isAdmin()): ?>
+                <?php if ($this->getUser()): ?>
+                    <?php if ($userCheck->isAdmin()): ?>
                         <th><?=$this->getTrans('ipAdress') ?></th>
                         <th><?=$this->getTrans('osBrowser') ?></th>
                     <?php endif; ?>
@@ -35,7 +37,7 @@
                 <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                 <?php $user = $userMapper->getUserById($userOnlineList->getUserId()); ?>
                 <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>
-                <?php if($moduleKey != ''): ?>
+                <?php if ($moduleKey != ''): ?>
                     <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
                     <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
                     <?php $moduleName = $module->getName() ?>
@@ -51,8 +53,8 @@
                         <?php endif; ?>
                     </td>
                     <td><?=$userOnlineList->getDateLastActivity() ?></td>
-                    <?php if($this->getUser()): ?>
-                        <?php if($userCheck->isAdmin()): ?>
+                    <?php if ($this->getUser()): ?>
+                        <?php if ($userCheck->isAdmin()): ?>
                             <td><?=$userOnlineList->getIPAdress() ?></td>
                             <td><?=$userOnlineList->getOS() ?> <?=$userOnlineList->getOSVersion() ?> / <?=$userOnlineList->getBrowser() ?> <?=$userOnlineList->getBrowserVersion() ?></td>
                         <?php endif; ?>

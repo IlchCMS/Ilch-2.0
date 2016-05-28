@@ -1,7 +1,8 @@
 <?php $jobs = $this->get('jobs'); ?>
 
 <legend>
-    <?php if ($this->get('jobs') != '') {
+    <?php
+    if ($this->get('jobs') != '') {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
@@ -68,7 +69,8 @@
                    value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } ?>" />
         </div>
     </div>
-    <?php if ($this->get('jobs') != '') {
+    <?php
+    if ($this->get('jobs') != '') {
         echo $this->getSaveBar('updateButton');
     } else {
         echo $this->getSaveBar('addButton');

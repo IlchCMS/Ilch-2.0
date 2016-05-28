@@ -7,12 +7,13 @@
 namespace Modules\Statistic\Mappers;
 
 use Modules\Statistic\Models\Statistic as StatisticModel;
+use Modules\User\Mappers\User as UserMapper;
 
 class Statistic extends \Ilch\Mapper
 {
     public function getVisitsOnlineUser()
     {
-        $userMapper = new \Modules\User\Mappers\User();
+        $userMapper = new UserMapper();
         $date = new \Ilch\Date();
         $date->modify('-5 minutes');
 
@@ -24,7 +25,6 @@ class Statistic extends \Ilch\Mapper
         $rows = $this->db()->queryArray($sql);
 
         $users = [];
-
         foreach ($rows as $row) {
             $users[] = $userMapper->getUserById($row['user_id']);
         }
@@ -49,7 +49,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setUserId($entries['user_id']);
@@ -87,7 +86,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
@@ -119,7 +117,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
@@ -150,7 +147,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
@@ -181,7 +177,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
@@ -210,7 +205,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
@@ -254,7 +248,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
@@ -287,7 +280,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
@@ -331,7 +323,6 @@ class Statistic extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);

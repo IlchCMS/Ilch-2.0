@@ -28,9 +28,9 @@ class Index extends \Ilch\Controller\Frontend
                 $this->addMessage('invalidCaptcha', 'danger');
             } elseif (empty($name)) {
                 $this->addMessage('missingName', 'danger');
-            } elseif(empty($link)) {
+            } elseif (empty($link)) {
                 $this->addMessage('missingLink', 'danger');
-            } elseif(empty($banner)) {
+            } elseif (empty($banner)) {
                 $this->addMessage('missingBanner', 'danger');
             } else {
                 $partnerModel = new PartnerModel();

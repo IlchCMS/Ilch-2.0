@@ -74,13 +74,13 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the category id.
+     * Sets the category name.
      *
      * @param string $name
      */
-    public function setParentId($cat)
+    public function setName($name)
     {
-        $this->cat_id = (string)$cat;
+        $this->name = (string) $name;
     }
 
     /**
@@ -94,13 +94,13 @@ class Category extends \Ilch\Mapper
     }
 
     /**
-     * Sets the category name.
+     * Sets the category id.
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setParentId($cat)
     {
-        $this->name = (string) $name;
+        $this->cat_id = (string)$cat;
     }
 
     /**

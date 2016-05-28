@@ -7,7 +7,7 @@
 namespace Modules\Partner\Controllers\Admin;
 
 use Modules\Partner\Mappers\Partner as PartnerMapper;
-use Modules\Partner\Models\Entry as PartnerModel;
+use Modules\Partner\Models\Partner as PartnerModel;
 
 class Index extends \Ilch\Controller\Admin
 {

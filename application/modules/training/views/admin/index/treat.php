@@ -2,7 +2,8 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <legend>
-    <?php if ($this->get('training') != '') {
+    <?php
+    if ($this->get('training') != '') {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
@@ -78,7 +79,8 @@
         </label>
         <div class="col-lg-2">
             <select class="form-control" name="contact">
-                <?php foreach ($this->get('users') as $user) {
+                <?php
+                foreach ($this->get('users') as $user) {
                     $selected = '';
                     if ($this->get('training') != '' AND $this->get('training')->getContact() == $user->getId()) {
                         $selected = 'selected="selected"';
@@ -101,7 +103,8 @@
                    <?php if ($this->get('training') != '' AND $this->get('training')->getVoiceServer() == 1) { echo 'checked="checked"';} ?>>
         </div>
     </div>
-    <?php if ($this->get('training') != '') {
+    <?php
+    if ($this->get('training') != '') {
         if ($this->get('training')->getVoiceServer() == 0) {
             $voiceDisplay = 'style="display: none;"';
         } else {
@@ -149,7 +152,8 @@
                    <?php if ($this->get('training') != '' AND $this->get('training')->getGameServer() == 1) { echo 'checked="checked"';} ?>>
         </div>
     </div>
-    <?php if ($this->get('training') != '') {
+    <?php
+    if ($this->get('training') != '') {
         if ($this->get('training')->getGameServer() == 0) {
             $gameDisplay = 'style="display: none;"';
         } else {
@@ -197,7 +201,8 @@
                    rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
         </div>
     </div>
-    <?php if ($this->get('training') != '') {
+    <?php
+    if ($this->get('training') != '') {
         echo $this->getSaveBar('updateButton');
     } else {
         echo $this->getSaveBar('addButton');
