@@ -10,6 +10,7 @@
     ?>
 </legend>
 <form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField(); ?>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
