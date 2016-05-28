@@ -14,59 +14,65 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $this->getLayout()->addMenu
-        (
-            'menuArticle',
+        $items = [
             [
-                [
-                    'name' => 'menuArticle',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'menuCats',
-                    'active' => false,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
-                ],
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-        (
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuCats',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
+            ],
             [
                 'name' => 'add',
+                'active' => false,
                 'icon' => 'fa fa-plus-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
             ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'index') {
+            $items[1]['active'] = true;
+        } elseif ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[2]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuArticle',
+            $items
         );
     }
 
     public function indexAction()
     {
+        $articleMapper = new ArticleMapper();
+        $categoryMapper = new CategoryMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
-        $articleMapper = new ArticleMapper();
-
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_articles')) {
-            foreach($this->getRequest()->getPost('check_articles') as $articleId) {
+            foreach ($this->getRequest()->getPost('check_articles') as $articleId) {
                 $articleMapper->delete($articleId);
             }
         }
 
-        $articles = $articleMapper->getArticleList('');
-
-        $this->getView()->set('articleMapper', $articleMapper);
-        $this->getView()->set('articles', $articles);
+        $this->getView()->set('categoryMapper', $categoryMapper);
+        $this->getView()->set('articles', $articleMapper->getArticleList(''));
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
     }
 
     public function deleteAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $articleMapper = new ArticleMapper();
             $articleMapper->delete($this->getRequest()->getParam('id'));
         }

@@ -31,25 +31,6 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-
-        $articleMapper = new \Modules\Article\Mappers\Article();
-        $catMapper = new \Modules\Article\Mappers\Category();
-
-        /*
-         * @todo change content for different types.
-         */
-
-        $cat = new \Modules\Article\Models\Category();
-        $cat->setName('Allgemein');
-        $catMapper->save($cat);
-
-        $article = new \Modules\Article\Models\Article();
-        $article->setCatId(1);
-        $article->setTitle('Startseite');
-        $article->setAuthorId(1);
-        $article->setContent('Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.');
-        $article->setPerma('startseite.html');
-        $articleMapper->save($article);
     }
 
     public function uninstall()
@@ -85,6 +66,13 @@ class Config extends \Ilch\Config\Install
                   `perma` VARCHAR(255) NOT NULL,
                   `article_img` VARCHAR(255) NOT NULL,
                   `article_img_source` VARCHAR(255) NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`) VALUES ("1", now());
+
+                INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");
+
+                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `content`, `title`, `perma`) VALUES
+                (1, 1, "Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "startseite.html");';
     }
 }

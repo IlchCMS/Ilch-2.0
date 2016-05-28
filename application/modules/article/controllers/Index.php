@@ -7,10 +7,11 @@
 namespace Modules\Article\Controllers;
 
 use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\Article\Models\Article as ArticleModel;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
-use Modules\Article\Models\Article as ArticleModel;
 use Modules\Comment\Models\Comment as CommentModel;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -39,6 +40,8 @@ class Index extends \Ilch\Controller\Frontend
     public function showAction()
     {
         $commentMapper = new CommentMapper();
+        $userMapper = new UserMapper();
+        $config = \Ilch\Registry::get('config');
 
         if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();
@@ -56,7 +59,7 @@ class Index extends \Ilch\Controller\Frontend
             $commentMapper->save($commentModel);
         }
 
-        if($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
+        if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('preview'), ['action' => 'index']);
@@ -95,6 +98,12 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getLayout()->set('metaTitle', $article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());
+
+
+            $this->getView()->set('categoryMapper', $categoryMapper);
+            $this->getView()->set('commentMapper', $commentMapper);
+            $this->getView()->set('userMapper', $userMapper);
+            $this->getView()->set('config', $config);
             $this->getView()->set('article', $article);
             $this->getView()->set('comments', $comments);
         }

@@ -1,12 +1,21 @@
+<?php
+$articleID = '';
+if ($this->get('article') != '') {
+    $articleID = $this->get('article')->getId();
+}
+?>
+
+<legend>
+    <?php
+    if ($this->get('article') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
-    <legend>
-        <?php if ($this->get('article') != ''): ?>
-            <?=$this->getTrans('edit') ?>
-       <?php else: ?>
-            <?=$this->getTrans('add') ?>
-        <?php endif; ?>
-    </legend>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
@@ -43,36 +52,31 @@
                       name="content"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
         </div>
     </div>
-    <?php
-        if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
-    ?>
-    <div class="form-group">
-        <label for="language" class="col-lg-2 control-label">
-            <?=$this->getTrans('language') ?>:
-        </label>
-        <div class="col-lg-8">
-            <select class="form-control" name="language" id="language">
-                <?php
-                foreach ($this->get('languages') as $key => $value) {
-                    $selected = '';
+    <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
+        <div class="form-group">
+            <label for="language" class="col-lg-2 control-label">
+                <?=$this->getTrans('language') ?>:
+            </label>
+            <div class="col-lg-8">
+                <select class="form-control" name="language" id="language">
+                    <?php
+                    foreach ($this->get('languages') as $key => $value) {
+                        $selected = '';
+                        if ($key == $this->get('contentLanguage')) {
+                            continue;
+                        }
 
-                    if ($key == $this->get('contentLanguage')) {
-                        continue;
+                        if ($this->getRequest()->getParam('locale') == $key) {
+                            $selected = 'selected="selected"';
+                        }
+
+                        echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
                     }
-
-                    if ($this->getRequest()->getParam('locale') == $key) {
-                        $selected = 'selected="selected"';
-                    }
-
-                    echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
-                }
-                ?>
-            </select>
+                    ?>
+                </select>
+            </div>
         </div>
-    </div>
-    <?php
-    }
-    ?>
+    <?php endif; ?>
     <legend>SEO</legend>
     <div class="form-group">
         <label for="description" class="col-lg-2 control-label">
@@ -131,23 +135,17 @@
             <a id="preview" class="btn btn-default"><?=$this->getTrans('show') ?></a>
         </div>
     </div>
-    <?php if ($this->get('article') != ''): ?>
-        <?=$this->getSaveBar('edit') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('add') ?>
-    <?php endif; ?>
+    <?php
+    if ($this->get('article') != '') {
+        echo $this->getSaveBar('edit');
+    } else {
+        echo $this->getSaveBar('add');
+    }
+    ?>
 </form>
 
 <script>
-<?php
-$articleID = '';
-
-if ($this->get('article') != '') {
-    $articleID = $this->get('article')->getId();
-}
-?>
-$('#title').change
-(
+$('#title').change(
     function () {
         $('#permaLink').val
         (
@@ -158,8 +156,7 @@ $('#title').change
     }
 );
 
-$('#language').change
-(
+$('#language').change(
     this,
     function () {
         top.location.href = '<?=$this->getUrl(['id' => $articleID]) ?>/locale/'+$(this).val();
@@ -171,8 +168,7 @@ $('#language').change
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 
-$('#preview').click
-(
+$('#preview').click(
     function(e) 
     {
         e.preventDefault();

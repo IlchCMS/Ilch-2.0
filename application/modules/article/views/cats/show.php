@@ -1,17 +1,19 @@
 <?php
 $articles = $this->get('articles');
-$categoryMapper = new \Modules\Article\Mappers\Category();
-$commentMapper = new \Modules\Comment\Mappers\Comment();
+$categoryMapper = $this->get('categoryMapper');
+$commentMapper = $this->get('commentMapper');
+$userMapper = $this->get('userMapper');
 $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 ?>
 
 <legend><?=$this->getTrans('catArchives') ?>: <i><?=$articlesCats->getName() ?></i></legend>
-<?php if ($articles != ''): ?>
-    <?php foreach($articles as $article): ?>
-        <?php $date = new \Ilch\Date($article->getDateCreated()); ?>
-        <?php $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId()); ?>
-        <?php $image = $article->getArticleImage(); ?>
-        <?php $imageSource = $article->getArticleImageSource(); ?>
+<?php if ($articles != ''):
+    foreach ($articles as $article):
+        $date = new \Ilch\Date($article->getDateCreated());
+        $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
+        $image = $article->getArticleImage();
+        $imageSource = $article->getArticleImageSource();
+?>
 
         <div class="col-lg-12 hidden-xs" style="padding-left: 0px;">
             <div class="col-lg-8" style="padding-left: 0px;">
@@ -44,7 +46,6 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
         <hr />
         <div>
             <?php if ($article->getAuthorId() != ''): ?>
-                <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                 <?php $user = $userMapper->getUserById($article->getAuthorId()); ?>
                 <?php if ($user != ''): ?>
                     <i class="fa fa-user" title="<?=$this->getTrans('author') ?>"></i> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a>&nbsp;&nbsp;
