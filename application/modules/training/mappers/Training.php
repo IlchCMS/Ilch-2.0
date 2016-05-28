@@ -60,6 +60,7 @@ class Training extends \Ilch\Mapper
     public function getTrainingById($id)
     {
         $training = $this->getTraining(['id' => $id]);
+
         return reset($training);
     }
 

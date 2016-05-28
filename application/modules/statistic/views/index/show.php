@@ -1,7 +1,3 @@
-<link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
-
 <?php
 $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
 $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
@@ -10,6 +6,9 @@ $year = $this->getRequest()->getParam('year');
 $os = $this->getRequest()->getParam('os');
 $browser = $this->getRequest()->getParam('browser');
 ?>
+
+<link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
 
 <?php if ($this->get('statisticOSVersionList') != '' AND $os != ''): ?>
     <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - Windows</i></legend>
@@ -485,14 +484,15 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 <?php endif; ?>
 
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('.progress .progress-bar').progressbar();
 });
 
-$(document).on('click', '.panel-heading span.clickable', function(e){
+$(document).on('click', '.panel-heading span.clickable', function(e) {
     var $this = $(this);
-    if(!$this.hasClass('panel-collapsed')) {
+    if (!$this.hasClass('panel-collapsed')) {
         $this.closest('.panel').find('.panel-body').slideUp();
         $this.addClass('panel-collapsed');
         $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');

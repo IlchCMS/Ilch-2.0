@@ -1,5 +1,3 @@
-<?php $config = \Ilch\Registry::get('config'); ?>
-
 <script type="text/javascript" >
 $(function() {
     var $shoutboxContainer = $('#shoutbox-container'),
@@ -54,6 +52,8 @@ $(function() {
 });
 </script>
 
+<?php $config = \Ilch\Registry::get('config'); ?>
+
 <div id="shoutbox-container">
     <div id="shoutbox-button-container" class="form-horizontal">
         <div class="form-group">
@@ -99,7 +99,7 @@ $(function() {
                     <textarea name="shoutbox_textarea"
                               class="form-control"
                               style="resize: vertical"
-                              cols="10" 
+                              cols="10"
                               rows="5"
                               maxlength="<?=$config->get('shoutbox_maxtextlength') ?>"
                               placeholder="<?=$this->getTrans('message') ?>"

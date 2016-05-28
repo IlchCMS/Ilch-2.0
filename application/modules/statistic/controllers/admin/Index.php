@@ -26,6 +26,5 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-
     }
 }

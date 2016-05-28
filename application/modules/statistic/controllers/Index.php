@@ -15,10 +15,11 @@ class Index extends \Ilch\Controller\Frontend
     {
         $statisticMapper = new StatisticMapper();
         $moduleMapper = new ModuleMapper();
-
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index']);
-
         $date = new \Ilch\Date();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index']);
+
         $this->getView()->set('dateCmsInstalled', $this->getConfig()->get('date_cms_installed'));
         $this->getView()->set('registUserCount', $statisticMapper->getRegistUserCount());
         $this->getView()->set('registNewUser', $statisticMapper->getRegistNewUser());

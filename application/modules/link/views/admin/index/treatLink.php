@@ -1,6 +1,4 @@
-<form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField() ?>
-    <legend>
+<legend>
     <?php
     if ($this->get('link') != '') {
         echo $this->getTrans('menuActionEditLink');
@@ -8,7 +6,9 @@
         echo $this->getTrans('menuActionNewLink');
     }
     ?>
-    </legend>
+</legend>
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
@@ -70,7 +70,6 @@
                 if ($this->get('cats') != '') {
                     foreach ($this->get('cats') as $model) {
                         $selected = '';
-
                         if ($this->get('link') != '' && $this->get('link')->getCatId() == $model->getId()) {
                             $selected = 'selected="selected"';
                         }

@@ -29,6 +29,4 @@ return
     'menuActionEditCategory' => 'Edit Category',
     'noLinks' => 'No Links',
     'noCategory' => 'No Category',
-    'askIfDeleteLink' => 'Are you sure you want delete the Link "%s"?',
-    'askIfDeleteCat' => 'Are you sure you want delete the Category "%s"?',
     ];

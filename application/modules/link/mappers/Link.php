@@ -25,7 +25,6 @@ class Link extends \Ilch\Mapper
         }
 
         $links = [];
-
         foreach ($linkArray as $linkRow) {
             $linkModel = new LinkModel();
             $linkModel->setId($linkRow['id']);
@@ -35,7 +34,7 @@ class Link extends \Ilch\Mapper
             $linkModel->setLink($linkRow['link']);
             $linkModel->setBanner($linkRow['banner']);
             $linkModel->setHits($linkRow['hits']);
-         
+
             $links[] = $linkModel;
         }
 
@@ -51,6 +50,7 @@ class Link extends \Ilch\Mapper
     public function getLinkById($id)
     {
         $links = $this->getLinks(['id' => $id]);
+
         return reset($links);
     }
 

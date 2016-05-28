@@ -15,7 +15,8 @@ class Index extends \Ilch\Controller\Frontend
     {
         $jobsMapper = new JobsMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index']);
 
         $this->getView()->set('jobs', $jobsMapper->getJobs(['show' => 1]));
     }

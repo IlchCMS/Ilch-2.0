@@ -1,6 +1,4 @@
-<?php 
-$date = new \Ilch\Date();
-?>
+<?php $date = new \Ilch\Date(); ?>
 
 <a href="<?=$this->getUrl('statistic/index/online') ?>"><?=$this->getTrans('statOnline') ?>: <?=$this->get('visitsOnline') ?></a><br />
 <?=$this->getTrans('statToday') ?>: <?=$this->get('visitsToday') ?><br />

@@ -46,25 +46,25 @@
                             <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
                             <td>
                                 <?php 
-                                    if ($this->getRequest()->getParam('showsetfree')) {
-                                        $freeArray = ['module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId()];
+                                if ($this->getRequest()->getParam('showsetfree')) {
+                                    $freeArray = ['module' => 'partner', 'controller' => 'index', 'action' => 'setfree', 'id' => $entry->getId()];
 
-                                        if ($this->get('badge') > 1) {
-                                            $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
-                                        }
-                                        echo '<a href="'.$this->getUrl($freeArray).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
-                                    } else {
-                                        echo $this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]);
-                                    } 
+                                    if ($this->get('badge') > 1) {
+                                        $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
+                                    }
+                                    echo '<a href="'.$this->getUrl($freeArray).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
+                                } else {
+                                    echo $this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]);
+                                } 
                                 ?>
                             </td>
                             <td>
                                 <?php
-                                    $deleteArray = ['action' => 'del', 'id' => $entry->getId()];
+                                $deleteArray = ['action' => 'del', 'id' => $entry->getId()];
 
-                                    if ($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
-                                        $deleteArray = ['action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1];
-                                    }
+                                if ($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
+                                    $deleteArray = ['action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1];
+                                }
                                 ?>
                                 <?=$this->getDeleteIcon($deleteArray) ?>
                             </td>

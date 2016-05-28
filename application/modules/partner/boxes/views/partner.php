@@ -9,15 +9,15 @@
 <?php if ($this->get('slider') == 0): ?>
     <?php foreach ($this->get('partners') as $partner): ?>
         <div class="img-responsive" style="margin-bottom: 10px;">
-            <?php $userMapper = new Modules\User\Mappers\User(); ?>
-            <?php $link = $userMapper->getHomepage($partner->getLink()); ?>
-
-            <?php if (substr($partner->getBanner(), 0, 11) == 'application'): ?>
-                <?php $banner = $this->getBaseUrl($partner->getBanner()); ?>
-            <?php else: ?>
-                <?php $banner = $partner->getBanner(); ?>
-            <?php endif; ?>
-
+            <?php
+            $userMapper = new Modules\User\Mappers\User();
+            $link = $userMapper->getHomepage($partner->getLink());
+            if (substr($partner->getBanner(), 0, 11) == 'application') {
+                $banner = $this->getBaseUrl($partner->getBanner());
+            } else {
+                $banner = $partner->getBanner();
+            }
+            ?>
             <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
                 <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
             </a>
@@ -27,16 +27,16 @@
 <?php else: ?>
     <div class="partnersslider">
         <ul class="bxslider">
-            <?php foreach ($this->get('partners') as $partner): ?>
-                <?php $userMapper = new Modules\User\Mappers\User(); ?>
-                <?php $link = $userMapper->getHomepage($partner->getLink()); ?>
-
-                <?php if (substr($partner->getBanner(), 0, 11) == 'application'): ?>
-                    <?php $banner = $this->getBaseUrl($partner->getBanner()); ?>
-                <?php else: ?>
-                    <?php $banner = $partner->getBanner(); ?>
-                <?php endif; ?>
-
+            <?php
+            foreach ($this->get('partners') as $partner):
+                $userMapper = new Modules\User\Mappers\User();
+                $link = $userMapper->getHomepage($partner->getLink());
+                if (substr($partner->getBanner(), 0, 11) == 'application') {
+                    $banner = $this->getBaseUrl($partner->getBanner());
+                } else {
+                    $banner = $partner->getBanner();
+                }
+                ?>
                 <li>
                     <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
                         <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
