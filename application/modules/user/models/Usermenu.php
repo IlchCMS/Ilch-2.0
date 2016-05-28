@@ -23,20 +23,6 @@ class Usermenu extends \Ilch\Model
     protected $key;
 
     /**
-     * Title of the menu.
-     *
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * Text of the menu.
-     *
-     * @var string
-     */
-    protected $text;
-
-    /**
      * Sets the menu id.
      *
      * @param integer $id
