@@ -9,7 +9,7 @@ return
     'menuRules' => 'Regeln',
     'paragraph' => 'Paragraf',
     'title' => 'Titel',
-    'text' => 'Text',    
+    'text' => 'Text',
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',
     'sendSuccess' => 'Regel erfolgreich eingetragen',

@@ -27,7 +27,7 @@ class Index extends \Ilch\Controller\Admin
                     'name' => 'settings',
                     'active' => false,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
                 ]
             ]
         );
@@ -35,17 +35,17 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $imprintMapper = new ImprintMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuImprint'), ['action' => 'index']);
 
-        $imprintMapper = new ImprintMapper();
-
         $this->getView()->set('imprint', $imprintMapper->getImprintById(1));
         $this->getView()->set('imprintStyle', $this->getConfig()->get('imprint_style'));
-              
+
         if ($this->getRequest()->isPost()) {
             $model = new ImprintModel();
-            $model->setId(1);            
+            $model->setId(1);
             $model->setParagraph($this->getRequest()->getPost('paragraph'));
             $model->setCompany($this->getRequest()->getPost('company'));
             $model->setName($this->getRequest()->getPost('name'));

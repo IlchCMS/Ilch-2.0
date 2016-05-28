@@ -1,6 +1,4 @@
-<?php
-$faq = $this->get('faq');
-?>
+<?php $faq = $this->get('faq'); ?>
 
 <legend><?=$faq->getQuestion() ?></legend>
 <?=$faq->getAnswer() ?>

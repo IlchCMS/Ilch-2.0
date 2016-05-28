@@ -31,7 +31,7 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
-        
+
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('shoutbox_limit', '5');
         $databaseConfig->set('shoutbox_maxwordlength', '10');

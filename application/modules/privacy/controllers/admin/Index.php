@@ -13,39 +13,44 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa fa-plus-circle',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'menuPrivacy',
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-                (
-                [
-                    'name' => 'add',
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-                ]
+            $items
         );
     }
 
     public function indexAction()
     {
+        $privacyMapper = new PrivacyMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index']);
 
-        $privacyMapper = new PrivacyMapper();
-
         if ($this->getRequest()->getPost('check_privacys')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_privacys') as $privacyId) {
+                foreach ($this->getRequest()->getPost('check_privacys') as $privacyId) {
                     $privacyMapper->delete($privacyId);
                 }
             }
@@ -66,10 +71,10 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('privacy', $privacyMapper->getPrivacyById($this->getRequest()->getParam('id')));
-        }  else {
+        } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);            
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -82,9 +87,9 @@ class Index extends \Ilch\Controller\Admin
             $title = trim($this->getRequest()->getPost('title'));
             $text = trim($this->getRequest()->getPost('text'));
 
-            if(empty($title)) {
+            if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
-            } elseif(empty($text)) {
+            } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
                 $model->setTitle($title);
@@ -93,9 +98,9 @@ class Index extends \Ilch\Controller\Admin
                 $model->setText($text);
                 $model->setShow($this->getRequest()->getPost('show'));
                 $privacyMapper->save($model);
-                
+
                 $this->addMessage('saveSuccess');
-                
+
                 $this->redirect(['action' => 'index']);
             }
         }

@@ -6,7 +6,7 @@
 
 namespace Modules\Rule\Models;
 
-class Entry extends \Ilch\Model
+class Rule extends \Ilch\Model
 {
     /**
      * The id of the rule.

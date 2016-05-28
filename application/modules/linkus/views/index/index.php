@@ -23,7 +23,7 @@ $config = \Ilch\Registry::get('config');
                                   rows="4"><a href="<?=$this->getUrl() ?>" target="_blank"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" border="0"></a></textarea>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if ($config->get('linkus_bbcode') == 1): ?>
                     <div class="col-lg-6 text-center">
                         <?=$this->getTrans('bbcodeForForum') ?>

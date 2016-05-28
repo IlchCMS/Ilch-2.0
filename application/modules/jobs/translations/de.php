@@ -8,7 +8,6 @@ return
     [
     'menuJobs' => 'Jobs',
     'menuJob' => 'Job',
-    'manageJobs' => 'Jobs verwalten',
     'title' => 'Titel',
     'email' => 'E-Mail Adresse',
     'text' => 'Text',

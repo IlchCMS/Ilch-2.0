@@ -30,7 +30,6 @@ class Awards extends \Ilch\Mapper
         }
 
         $awards = [];
-
         foreach ($awardsArray as $entries) {
             $awardsModel = new AwardsModel();
             $awardsModel->setId($entries['id']);

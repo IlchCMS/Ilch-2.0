@@ -6,6 +6,8 @@
 
 namespace Modules\Birthday\Mappers;
 
+use Modules\User\Mappers\User as UserMapper;
+
 class Birthday extends \Ilch\Mapper
 {
     /**
@@ -13,14 +15,14 @@ class Birthday extends \Ilch\Mapper
      */
     public function getBirthdayUserList($limit = null)
     {
-        $userMapper = new \Modules\User\Mappers\User();
+        $userMapper = new UserMapper();
 
         if ($limit != '') {
             $sql = 'SELECT *
                     FROM `[prefix]_users`
                     WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())
                     LIMIT '.$limit;
-        }  else {
+        } else {
             $sql = 'SELECT *
                     FROM `[prefix]_users`
                     WHERE DAY(birthday) = DAY(CURDATE()) AND MONTH(birthday) = MONTH(CURDATE())';
@@ -32,7 +34,6 @@ class Birthday extends \Ilch\Mapper
         }
 
         $users = [];
-
         foreach ($rows as $row) {
             $users[] = $userMapper->getUserById($row['id']);
         }

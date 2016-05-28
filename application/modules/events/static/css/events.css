@@ -85,7 +85,7 @@ nav {
     color: rgb(30, 30, 30);
     text-decoration: none;
 } 
-.event-list > li > .adminInfo > ul > li {    
+.event-list > li > .adminInfo > ul > li {
     padding: 0px;
 }
 .event-list > li > .adminInfo > ul > li > a {
@@ -116,7 +116,7 @@ nav {
         padding: 0px;
     }
     .event-list > li > time,
-    .event-list > li > img  {
+    .event-list > li > img {
         display: inline-block;
     }
     .event-list > li > time,

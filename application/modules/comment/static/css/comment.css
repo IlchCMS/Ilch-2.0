@@ -45,41 +45,41 @@
  * look like a ticket
  */
 .comment-list .panel .panel-bodylist {
-  position: relative;
-  padding: 15px;
-  background: #f2f2f2;
-  border: 2px solid white;
-  -webkit-transition: all 0.25s ease-in-out;
-  -o-transition: all 0.25s ease-in-out;
-  -moz-transition: all 0.25s ease-in-out;
-  transition: all 0.25s ease-in-out;
+    position: relative;
+    padding: 15px;
+    background: #f2f2f2;
+    border: 2px solid white;
+    -webkit-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
 }
 .comment-list .panel .panel-bodylist:hover {
-  background: white;
-  border-color: #e6e6e6;
+    background: white;
+    border-color: #e6e6e6;
 }
 .comment-list .panel .panel-bodylist:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-width: 0 25px 25px 0;
-  border-style: solid;
-  border-color: white white #cccccc #cccccc;
-  background: #cccccc;
-  display: block;
-  width: 0;
-  -webkit-transition: all 0.25s ease-in-out;
-  -o-transition: all 0.25s ease-in-out;
-  -moz-transition: all 0.25s ease-in-out;
-  transition: all 0.25s ease-in-out;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-width: 0 25px 25px 0;
+    border-style: solid;
+    border-color: white white #cccccc #cccccc;
+    background: #cccccc;
+    display: block;
+    width: 0;
+    -webkit-transition: all 0.25s ease-in-out;
+    -o-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
 }
 .comment-list .panel .panel-bodylist:hover:before {
-  border-width: 0;
+    border-width: 0;
 }
 .comment-list .panel .panel-bodylist span {
-  float: right;
-  font-size: 13px;
+    float: right;
+    font-size: 13px;
 }
 
 /**

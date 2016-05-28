@@ -29,7 +29,6 @@ class Jobs extends \Ilch\Mapper
         }
 
         $jobs = [];
-
         foreach ($jobsArray as $entries) {
             $jobsModel = new JobsModel();
             $jobsModel->setId($entries['id']);

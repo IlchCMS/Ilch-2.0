@@ -28,7 +28,6 @@ class Shoutbox extends \Ilch\Mapper
         }
 
         $shoutbox = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new ShoutboxModel();
             $entryModel->setId($entries['id']);
@@ -61,7 +60,6 @@ class Shoutbox extends \Ilch\Mapper
         }
 
         $shoutbox = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new ShoutboxModel();
             $entryModel->setId($entries['id']);
@@ -84,6 +82,7 @@ class Shoutbox extends \Ilch\Mapper
     public function getShoutboxById($id)
     {
         $shoutbox = $this->getShoutbox(['id' => $id]);
+
         return reset($shoutbox);
     }
 

@@ -7,32 +7,37 @@
 namespace Modules\History\Controllers\Admin;
 
 use Modules\History\Mappers\History as HistoryMapper;
-use Modules\History\Models\Entry as HistoryModel;
+use Modules\History\Models\History as HistoryModel;
 
 class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa fa-plus-circle',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'menuHistorys',
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-        (
-            [
-                'name' => 'add',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-            ]
+            $items
         );
     }
 
@@ -42,7 +47,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index']);
 
         $historyMapper = new HistoryMapper();
-        
+
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
                 foreach($this->getRequest()->getPost('check_entries') as $historyId) {
@@ -50,7 +55,7 @@ class Index extends \Ilch\Controller\Admin
                 }
             }
         }
-        
+
         $entries = $historyMapper->getEntries();
 
         $this->getView()->set('entries', $entries);
@@ -76,12 +81,12 @@ class Index extends \Ilch\Controller\Admin
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-            
+
             $this->getView()->set('history', $historyMapper->getHistoryById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);            
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -90,11 +95,11 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
             }
-            
+
             $date = new \Ilch\Date(trim($this->getRequest()->getPost('date')));
             $title = trim($this->getRequest()->getPost('title'));
             $text = trim($this->getRequest()->getPost('text'));
-            
+
             if (empty($date)) {
                 $this->addMessage('missingDate', 'danger');
             } elseif(empty($title)) {
@@ -106,9 +111,9 @@ class Index extends \Ilch\Controller\Admin
                 $model->setTitle($this->getRequest()->getPost('title'));
                 $model->setText($this->getRequest()->getPost('text'));
                 $historyMapper->save($model);
-                
+
                 $this->addMessage('saveSuccess');
-                
+
                 $this->redirect(['action' => 'index']);
             }
         }

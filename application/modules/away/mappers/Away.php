@@ -30,7 +30,6 @@ class Away extends \Ilch\Mapper
         }
 
         $away = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new AwayModel();
             $entryModel->setId($entries['id']);
@@ -56,6 +55,7 @@ class Away extends \Ilch\Mapper
     public function getAwayById($id)
     {
         $away = $this->getAway(['id' => $id]);
+
         return reset($away);
     }
 

@@ -63,7 +63,7 @@ class Index extends \Ilch\Controller\Frontend
             $show = trim($this->getRequest()->getPost('calendarShow'));
             
             if ($this->getRequest()->getPost('end') != '') {
-                $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));                
+                $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
             }
 
             if (!empty($_FILES['image']['name'])) {

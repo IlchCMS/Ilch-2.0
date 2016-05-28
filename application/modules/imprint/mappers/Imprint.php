@@ -30,7 +30,6 @@ class Imprint extends \Ilch\Mapper
         }
 
         $imprint = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new ImprintModel();
             $entryModel->setId($entries['id']);
@@ -49,7 +48,6 @@ class Imprint extends \Ilch\Mapper
             $entryModel->setOther($entries['other']);
             $entryModel->setDisclaimer($entries['disclaimer']);
             $imprint[] = $entryModel;
-
         }
 
         return $imprint;
@@ -64,6 +62,7 @@ class Imprint extends \Ilch\Mapper
     public function getImprintById($id)
     {
         $imprint = $this->getImprint(['id' => $id]);
+
         return reset($imprint);
     }
 

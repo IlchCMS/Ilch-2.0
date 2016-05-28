@@ -1,14 +1,14 @@
+<?php
+$job = $this->get('job');
+$jobs = $this->get('jobs');
+?>
+
 <style>
 .briefcase {
     padding: 8px 8px 0 8px;
     border: 1px solid #e5e5e5;
 }
 </style>
-
-<?php
-$job = $this->get('job');
-$jobs = $this->get('jobs');
-?>
 
 <legend><?=$this->getTrans('menuJob') ?></legend>
 <?php if ($job != ''): ?>
@@ -30,7 +30,7 @@ $jobs = $this->get('jobs');
         <div class="form-group">
             <label for="title" class="col-lg-3 control-label">
                 <div class="text-left">
-                    <?=$this->getTrans('applyAs') ?>:                
+                    <?=$this->getTrans('applyAs') ?>:
                 </div>
             </label>
             <div class="col-lg-3">

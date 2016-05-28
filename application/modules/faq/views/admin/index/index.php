@@ -1,6 +1,4 @@
-<?php
-$categoryMapper = new \Modules\Faq\Mappers\Category();
-?>
+<?php $categoryMapper = new \Modules\Faq\Mappers\Category(); ?>
 
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('faqs') != ''): ?>
@@ -34,7 +32,7 @@ $categoryMapper = new \Modules\Faq\Mappers\Category();
                             <td><?=$faqsCats->getTitle() ?></td>
                             <td><?=$faq->getQuestion()?></td>
                         </tr>
-                    <?php endforeach; ?>                    
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

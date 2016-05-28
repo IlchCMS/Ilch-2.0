@@ -1,9 +1,10 @@
 <legend>
-    <?php if ($this->get('link') != ''): ?>
-        <?=$this->getTrans('edit') ?>
-    <?php else: ?>
-        <?=$this->getTrans('add') ?>
-    <?php endif; ?>
+    <?php if ($this->get('link') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
 </legend>
 <?php if ($this->get('cats') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
@@ -14,18 +15,17 @@
             </label>
             <div class="col-lg-2">
                 <select class="form-control" name="catId">
-                    <?php
-                        foreach ($this->get('cats') as $model) {
-                            $selected = '';
+                    <?php foreach ($this->get('cats') as $model) {
+                        $selected = '';
 
-                            if ($this->get('faq') != '' && $this->get('faq')->getCatId() == $model->getId()) {
-                                $selected = 'selected="selected"';
-                            }elseif ($this->getRequest()->getParam('catId') != '' && $this->getRequest()->getParam('catId') == $model->getId()) {
-                                $selected = 'selected="selected"';
-                            }
-
-                            echo '<option '.$selected.' value="'.$model->getId().'">'.$this->escape($model->getTitle()).'</option>';
+                        if ($this->get('faq') != '' && $this->get('faq')->getCatId() == $model->getId()) {
+                            $selected = 'selected="selected"';
+                        } elseif ($this->getRequest()->getParam('catId') != '' && $this->getRequest()->getParam('catId') == $model->getId()) {
+                            $selected = 'selected="selected"';
                         }
+
+                        echo '<option '.$selected.' value="'.$model->getId().'">'.$this->escape($model->getTitle()).'</option>';
+                    }
                     ?>
                 </select>
             </div>
@@ -55,11 +55,12 @@
                           rows="3"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } ?></textarea>
             </div>
         </div>
-        <?php if ($this->get('faq') != ''): ?>
-            <?=$this->getSaveBar('updateButton') ?>
-        <?php else: ?>
-            <?=$this->getSaveBar('addButton') ?>
-        <?php endif; ?>
+        <?php if ($this->get('faq') != '') {
+            echo $this->getSaveBar('updateButton');
+        } else {
+            echo $this->getSaveBar('addButton');
+        }
+        ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noCategory') ?>

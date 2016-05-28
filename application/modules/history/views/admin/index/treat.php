@@ -14,11 +14,12 @@ if ($history != '') {
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <legend>
-        <?php if ($this->get('history') != ''): ?>
-            <?=$this->getTrans('edit') ?>
-        <?php else: ?>
-            <?=$this->getTrans('add') ?>
-        <?php endif; ?>
+        <?php if ($this->get('history') != '') {
+            echo $this->getTrans('edit');
+        } else {
+            echo $this->getTrans('add');
+        }
+        ?>
     </legend>
     <div class="form-group">
         <label for="date" class="col-lg-2 control-label">
@@ -89,11 +90,12 @@ if ($history != '') {
             </span>
         </div>
     </div>
-    <?php if ($this->get('history') != ''): ?>
-        <?=$this->getSaveBar('updateButton') ?>
-    <?php else: ?>
-        <?=$this->getSaveBar('addButton') ?>
-    <?php endif; ?>
+    <?php if ($this->get('history') != '') {
+        echo $this->getSaveBar('updateButton');
+    } else {
+        echo $this->getSaveBar('addButton');
+    }
+    ?>
 </form>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>

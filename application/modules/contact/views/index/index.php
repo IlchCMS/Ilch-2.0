@@ -59,7 +59,7 @@
             </label>
             <div class="col-lg-8">
                 <?=$this->getCaptchaField() ?>
-            </div>   
+            </div>
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8 input-group captcha">

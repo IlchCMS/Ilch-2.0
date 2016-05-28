@@ -28,10 +28,10 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $awayMapper = new AwayMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
-
-        $awayMapper = new AwayMapper();
 
         if ($this->getRequest()->getPost('check_aways')) {
             if ($this->getRequest()->getPost('action') == 'delete') {

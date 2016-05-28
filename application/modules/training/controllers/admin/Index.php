@@ -15,26 +15,31 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa fa-plus-circle',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'menuTraining',
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-                (
-                [
-                    'name' => 'add',
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-                ]
+            $items
         );
     }
 
@@ -47,7 +52,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('check_training')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_training') as $trainingId) {
+                foreach ($this->getRequest()->getPost('check_training') as $trainingId) {
                     $trainingMapper->delete($trainingId);
                 }
             }
@@ -69,10 +74,10 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('training', $trainingMapper->getTrainingById($this->getRequest()->getParam('id')));
-        }  else {
+        } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);            
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -84,7 +89,7 @@ class Index extends \Ilch\Controller\Admin
 
             $title = trim($this->getRequest()->getPost('title'));
 
-            if(empty($title)) {
+            if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
             } else {
                 $model->setTitle($title);

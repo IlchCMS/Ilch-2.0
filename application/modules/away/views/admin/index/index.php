@@ -39,7 +39,7 @@
                                 <?php else: ?>
                                     <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
                                         <span class="fa fa-square-o text-info"></span>
-                                    </a>                                    
+                                    </a>
                                 <?php endif; ?>
                             </td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
@@ -48,7 +48,7 @@
                             <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
                                 <td style="color: #008000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>
                             <?php else: ?>
-                                <td style="color: #ff0000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>             
+                                <td style="color: #ff0000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>
                             <?php endif; ?>
                             <td><?=$away->getReason() ?></td>
                             <td><?=$away->getText() ?></td>

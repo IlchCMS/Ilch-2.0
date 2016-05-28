@@ -13,39 +13,44 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa fa-plus-circle',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'menuJobs',
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-        (
-            [
-                'name' => 'add',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-            ]
+            $items
         );
     }
 
     public function indexAction()
     {
+        $jobsMapper = new JobsMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index']);
 
-        $jobsMapper = new JobsMapper();
-
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_entries') as $jobsId) {
+                foreach ($this->getRequest()->getPost('check_entries') as $jobsId) {
                     $jobsMapper->delete($jobsId);
                 }
             }
@@ -64,10 +69,10 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('jobs', $jobsMapper->getJobsById($this->getRequest()->getParam('id')));
-        }  else {
+        } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);        
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -83,9 +88,9 @@ class Index extends \Ilch\Controller\Admin
 
             if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
-            } elseif(empty($text)) {
+            } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
-            } elseif(empty($email)) {
+            } elseif (empty($email)) {
                 $this->addMessage('missingEmail', 'danger');
             } else {
                 $model->setTitle($title);
@@ -93,9 +98,9 @@ class Index extends \Ilch\Controller\Admin
                 $model->setEmail($email);
                 $model->setShow($this->getRequest()->getPost('show'));
                 $jobsMapper->save($model);
-                
+
                 $this->addMessage('saveSuccess');
-                
+
                 $this->redirect(['action' => 'index']);
             }
         }
@@ -115,7 +120,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $jobsMapper = new JobsMapper();
             $jobsMapper->delete($this->getRequest()->getParam('id'));
 

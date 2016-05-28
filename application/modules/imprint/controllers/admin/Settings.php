@@ -24,12 +24,12 @@ class Settings extends \Ilch\Controller\Admin
                     'name' => 'settings',
                     'active' => true,
                     'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
                 ]
             ]
         );
     }
-    
+
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()

@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div id="contentHeight" class="<?php if($this->get('slider') != '1') { echo 'hidden'; } ?>">
+    <div id="contentHeight" class="<?php if ($this->get('slider') != '1') { echo 'hidden'; } ?>">
         <div class="form-group">
             <label for="boxHeight" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderHeight') ?>:

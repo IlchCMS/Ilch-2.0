@@ -17,7 +17,7 @@ class Calendar extends \Ilch\Mapper
      * @return CalendarModel[]|array
      */
     public function getEntries($where = [])
-    {        
+    {
         $entryArray = $this->db()->select('*')
                 ->from('calendar')
                 ->where($where)
@@ -29,7 +29,6 @@ class Calendar extends \Ilch\Mapper
         }
 
         $entry = [];
-
         foreach ($entryArray as $entries) {
             $entryModel = new CalendarModel();
             $entryModel->setId($entries['id']);

@@ -1,7 +1,5 @@
 <link href="<?=$this->getBaseUrl('application/modules/partner/static/css/partners.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.css') ?>" rel="stylesheet">
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.js') ?>"></script>
-
 <style>
 .partnersslider .bx-viewport {
     height: <?=$this->get('boxHeight') ?>px !important;
@@ -49,6 +47,7 @@
     </div>
 <?php endif; ?>
 
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.js') ?>"></script>
 <script>
 $('.bxslider').bxSlider({
     mode: 'vertical',

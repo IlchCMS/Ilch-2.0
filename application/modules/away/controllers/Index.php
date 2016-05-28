@@ -13,7 +13,7 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {        
-        $awayModel = new AwayModel();            
+        $awayModel = new AwayModel();
         $awayMapper = new AwayMapper();
 
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
@@ -71,5 +71,3 @@ class Index extends \Ilch\Controller\Frontend
         $this->redirect(['action' => 'index']);
     }
 }
-
-
