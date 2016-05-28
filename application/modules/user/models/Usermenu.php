@@ -75,44 +75,4 @@ class Usermenu extends \Ilch\Model
     {
         return $this->key;
     }
-
-    /**
-     * Sets the menu title.
-     *
-     * @param string $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = (string)$title;
-    }
-
-    /**
-     * Gets the menu title.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Sets the menu text.
-     *
-     * @param string $text
-     */
-    public function setText($text)
-    {
-        $this->text = (string)$text;
-    }
-
-    /**
-     * Gets the menu text.
-     *
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
 }
