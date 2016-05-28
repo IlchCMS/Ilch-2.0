@@ -2,7 +2,7 @@
     <?=$this->getTrans('hello') ?> <b><?=$this->escape($this->getUser()->getName()) ?></b>,
     <br />
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'index']) ?>">
-        <?=$this->getTrans('panel') ?>
+        <?=$this->getTrans('userPanel') ?>
     </a>
     <br />
     <div id="checknewmessage"></div>
