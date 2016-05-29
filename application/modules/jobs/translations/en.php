@@ -17,9 +17,9 @@ return
     'missingTitle' => 'Title was not filled',
     'missingText' => 'Text was not filled',
     'missingEmail' => 'E-Mail was not filled',
-    'sendSuccess' => 'Apply successfull send',
-    'noJobs' => 'No Jobs available',
+    'sendSuccess' => 'Application successfully send',
+    'noJobs' => 'No jobs available',
     'jobs' => 'Jobs',
     'apply' => 'Apply',
-    'applyAs' => 'Application as',
+    'applyAs' => 'Apply as',
     ];

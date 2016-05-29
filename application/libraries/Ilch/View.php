@@ -79,8 +79,8 @@ class View extends Design\Base
         $html = '<div class="content_savebox">
                     <input class="content_savebox_hidden" name="action" type="hidden" value="" />
                         <div class="btn-group dropup">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                markierte... <span class="caret"></span>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'.
+                                $this->getTrans('selected').' <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu listChooser" role="menu">';
                                 foreach($actions as $key => $name) {

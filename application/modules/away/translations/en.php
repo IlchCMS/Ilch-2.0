@@ -8,7 +8,7 @@ return
     [
     'menuAway' => 'Away list',
     'menuEntry' => 'Entry',
-    'noAway' => 'no Entries available',
+    'noAway' => 'No entries available',
     'from' => 'From',
     'when' => 'Start- / End date',
     'reason' => 'Reason',

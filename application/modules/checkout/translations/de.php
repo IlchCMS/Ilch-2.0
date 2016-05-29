@@ -7,6 +7,7 @@
 return
     [
     'checkout' => 'Kasse',
+    'manage' => 'Verwalten',
     'name' => 'Name',
     'usage' => 'Verwendung',
     'amount' => 'Betrag',

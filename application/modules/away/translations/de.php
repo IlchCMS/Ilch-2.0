@@ -8,7 +8,7 @@ return
     [
     'menuAway' => 'Abwesenheitsliste',
     'menuEntry' => 'Eintragen',
-    'noAway' => 'keine Einträge vorhanden',
+    'noAway' => 'Keine Einträge vorhanden',
     'from' => 'Von',
     'when' => 'Start- / Enddatum',
     'reason' => 'Grund',

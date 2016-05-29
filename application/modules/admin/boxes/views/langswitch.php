@@ -15,7 +15,7 @@
 $('.languageInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->getUrl($this->getRouter()->getQuery()); ?>/language/'+$(this).val()
+        top.location.href = '<?=$this->getCurrentUrl(); ?>/language/'+$(this).val()
     }
 );
 </script>

@@ -57,7 +57,7 @@ $settingMapper = new \Modules\User\Mappers\Setting();
             <div class="input-group col-lg-7">
                 <span class="input-group-btn">
                     <span class="btn btn-primary btn-file">
-                        Browse&hellip; <input type="file" name="image" accept="image/*">
+                        <?=$this->getTrans('browse') ?>&hellip; <input type="file" name="image" accept="image/*">
                     </span>
                 </span>
                 <input type="text" 
