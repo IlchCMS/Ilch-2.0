@@ -20,11 +20,9 @@ class Index extends \Ilch\Controller\Admin
         $authTokenMapper->deleteExpiredAuthTokens();
 
         // Check if Ilch is up to date
-        $version = $this->getConfig()->get('version');
-
         $update = new \Ilch\Transfer();
         $update->setTransferUrl($this->getConfig()->get('master_update_url'));
-        $update->setVersionNow($version);
+        $update->setVersionNow($this->getConfig()->get('version'));
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
 
