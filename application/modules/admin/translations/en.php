@@ -105,6 +105,7 @@ return
     'menuMaintenance' => 'Maintenance',
     'menuBackup' => 'Backup',
     'boxTitle' => 'Boxentitle',
+    'noTitleBox' => 'Box has no title',
     'addBox' => 'Add new box ',
     'editBox' => 'Edit box',
     'deleteBox' => 'Delete box',
@@ -179,4 +180,8 @@ return
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',
+
+    'enableSelectedEntries' => 'Enable the selected entries?',
+    'deleteSelectedEntries' => 'Delete the selected entries?',
+    'deleteEntry' => 'Delete the selected entry?',
     ];

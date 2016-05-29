@@ -105,6 +105,7 @@ return
     'menuMaintenance' => 'Wartungsarbeiten',
     'menuBackup' => 'Backup',
     'boxTitle' => 'Boxentitel',
+    'noTitleBox' => 'Box hat keinen Titel',
     'addBox' => 'Neue Box hinzufügen',
     'editBox' => 'Box editieren',
     'deleteBox' => 'Box entfernen',
@@ -179,4 +180,8 @@ return
     'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
     'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',
+
+    'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',
+    'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
+    'deleteEntry' => 'Soll der Eintrag wirklich gelöscht werden?',
     ];
