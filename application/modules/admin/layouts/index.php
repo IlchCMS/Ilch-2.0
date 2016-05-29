@@ -21,6 +21,13 @@
         <link href="<?=$this->getStaticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
 
+        <script>
+            // Set a bunch of variables to later display translated messages
+            var enableSelectedEntries = <?=json_encode($this->getTrans('enableSelectedEntries'))?>;
+            var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries'))?>;
+            var deleteEntry = <?=json_encode($this->getTrans('deleteEntry'))?>;
+        </script>
+
         <!-- SCRIPTS -->
         <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.js') ?>"></script>
