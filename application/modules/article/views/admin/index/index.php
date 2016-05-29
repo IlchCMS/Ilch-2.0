@@ -1,8 +1,6 @@
-<?php
-$categoryMapper = new \Modules\Article\Mappers\Category();
-?>
+<?php $categoryMapper = $this->get('categoryMapper'); ?>
 
-<legend><?=$this->getTrans('menuArticle') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('articles') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
@@ -20,21 +18,21 @@ $categoryMapper = new \Modules\Article\Mappers\Category();
                 </colgroup>
                 <thead>
                     <tr>
-                        <th><?=$this->getCheckAllCheckbox('check_articles')?></th>
+                        <th><?=$this->getCheckAllCheckbox('check_articles') ?></th>
                         <th></th>
                         <th></th>
                         <th><?=$this->getTrans('cats') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
                         <?php if ($this->get('multilingual')): ?>
-                                <th class="text-right">
-                                    <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
-                                        <?php if ($key == $this->get('contentLanguage')): ?>
-                                            <?php continue; ?>
-                                        <?php endif; ?>
+                            <th class="text-right">
+                                <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
+                                    <?php if ($key == $this->get('contentLanguage')): ?>
+                                        <?php continue; ?>
+                                    <?php endif; ?>
 
-                                        <img src="<?=$this->getStaticUrl('img/'.$key.'.png') ?>">
-                                    <?php endforeach; ?>
-                                </th>
+                                    <img src="<?=$this->getStaticUrl('img/'.$key.'.png') ?>">
+                                <?php endforeach; ?>
+                            </th>
                         <?php endif; ?>
                     </tr>
                 </thead>
@@ -67,7 +65,7 @@ $categoryMapper = new \Modules\Article\Mappers\Category();
                 </tbody>
             </table>
         </div>
-        <?=$this->getListBar(['delete' => 'delete'])?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>

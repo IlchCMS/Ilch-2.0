@@ -1,6 +1,6 @@
 <?php
-$articleMapper = new \Modules\Article\Mappers\Article();
-$archive = $this->get('archive')
+$articleMapper = $this->get('articleMapper');
+$archive = $this->get('archive');
 ?>
 
 <?php if (!empty($archive)): ?>

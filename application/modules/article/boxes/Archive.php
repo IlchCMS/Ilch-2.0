@@ -14,6 +14,7 @@ class Archive extends \Ilch\Box
     {
         $articleMapper = new ArticleMapper();
 
+        $this->getView()->set('articleMapper', $articleMapper);
         $this->getView()->set('archive', $articleMapper->getArticleDateList(10));
     }
 }

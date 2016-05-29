@@ -2,15 +2,15 @@
 $articles = $this->get('articles');
 $categoryMapper = new \Modules\Article\Mappers\Category();
 $commentMapper = new \Modules\Comment\Mappers\Comment();
-?>
 
-<?php if ($articles != ''): ?>
-    <?php foreach($articles as $article): ?>
-        <?php $date = new \Ilch\Date($article->getDateCreated()); ?>
-        <?php $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId()); ?>
-        <?php $image = $article->getArticleImage(); ?>
-        <?php $imageSource = $article->getArticleImageSource(); ?>
-        <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
+if ($articles != ''):
+    foreach ($articles as $article):
+        $date = new \Ilch\Date($article->getDateCreated());
+        $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
+        $image = $article->getArticleImage();
+        $imageSource = $article->getArticleImageSource();
+        $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
+        ?>
 
         <div class="col-lg-12 hidden-xs" style="padding-left: 0px;">
             <div class="col-lg-8" style="padding-left: 0px;">

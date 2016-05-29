@@ -14,32 +14,39 @@ class Cats extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $this->getLayout()->addMenu
-        (
-            'menuArticle',
+        $items = [
             [
-                [
-                    'name' => 'menuArticle',
-                    'active' => false,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'menuCats',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
-                ],
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-        (
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuCats',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
+            ],
             [
                 'name' => 'add',
+                'active' => false,
                 'icon' => 'fa fa-plus-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
             ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'index') {
+            $items[1]['active'] = true;
+        } elseif ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[2]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuArticle',
+            $items
         );
     }
 
@@ -64,7 +71,7 @@ class Cats extends \Ilch\Controller\Admin
     }
 
     public function treatAction() 
-    {        
+    {
         $categoryMapper = new CategoryMapper();
 
         if ($this->getRequest()->getParam('id')) {
@@ -72,7 +79,7 @@ class Cats extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
-        
+
             $this->getView()->set('cat', $categoryMapper->getCategoryById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
@@ -87,17 +94,16 @@ class Cats extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
             }
-            
+
             $name = trim($this->getRequest()->getPost('name'));
-            
             if (empty($name)) {
                 $this->addMessage('missingName', 'danger');
             } else {
                 $model->setName($name);
                 $categoryMapper->save($model);
-                
+
                 $this->addMessage('saveSuccess');
-                
+
                 $this->redirect(['action' => 'index']);
             }
         }
@@ -108,7 +114,7 @@ class Cats extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $articleMapper = new ArticleMapper();
 
-            if(empty($articleMapper->getArticlesByCats($this->getRequest()->getParam('id')))) {
+            if (empty($articleMapper->getArticlesByCats($this->getRequest()->getParam('id')))) {
                 $categoryMapper = new CategoryMapper();
                 $categoryMapper->delete($this->getRequest()->getParam('id'));
 

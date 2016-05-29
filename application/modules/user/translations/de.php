@@ -158,7 +158,7 @@ return
 
     'logout' => 'Logout',
     'message' => 'Nachricht',
-    'userPanel' => 'UserPanel',
+    'userPanel' => 'User Panel',
     'hello' => 'Hallo',
     'adminarea' => 'Adminbereich',
 
@@ -175,7 +175,7 @@ return
     'passwordSuccess' => 'Passwort erfolgreich geändert',
     'passwordLength' => 'Passwort ist zu kurz oder zu lang',
 
-    'panel' => 'User Panel',
+    'panel' => 'Panel',
     'welcome' => 'Willkommen',
     'dialog' => 'Nachrichten',
     'noDialog' => 'Keine Nachrichten vorhanden.',

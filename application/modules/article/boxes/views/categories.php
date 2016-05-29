@@ -1,5 +1,5 @@
 <?php
-$articleMapper = new \Modules\Article\Mappers\Article();
+$articleMapper = $this->get('articleMapper');
 $cats = $this->get('cats');
 ?>
 
