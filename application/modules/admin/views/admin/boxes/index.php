@@ -54,7 +54,7 @@
                             <?php if ($box->getTitle() !== ''): ?>
                                 <?=$box->getTitle() ?>
                             <?php else: ?>
-                                Kein Datensatz für Sprache vorhanden
+                                <?=$this->getTrans('noTitleBox')?>
                             <?php endif; ?>
                         </td>
                         <?php if ($this->get('multilingual')): ?>
