@@ -11,7 +11,7 @@ return
     'paragraph' => 'Paragraph',
     'company' => 'Company / Club',
     'address' => 'Address',
-    'addressadd' => 'addition Address',
+    'addressadd' => 'Address addition',
     'city' => 'City',
     'phone' => 'Phone',
     'fax' => 'Fax',

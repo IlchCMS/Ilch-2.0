@@ -9,6 +9,7 @@ return
     'addButton' => 'Hinzufügen',
     'saveButton' => 'Speichern',
     'updateButton' => 'Aktualisieren',
+    'selected' => 'markierte...',
     'saveSuccess' => 'Erfolgreich gespeichert',
     'deleteSuccess' => 'Erfolgreich gelöscht',
     'freeSuccess' => 'Erfolgreich freigeschaltet',

@@ -9,6 +9,7 @@ return
     'addButton' => 'Add',
     'saveButton' => 'Save',
     'updateButton' => 'Update',
+    'selected' => 'selected...',
     'saveSuccess' => 'Saved successful',
     'deleteSuccess' => 'Deleted successful',
     'freeSuccess' => 'Successful activated',

@@ -21,7 +21,7 @@ return
     'missingText' => 'Text muss ausgefüllt werden',
     'missingDate' => 'Datum muss ausgefüllt werden',
     'missingPlace' => 'Ort muss ausgefüllt werden',
-    'calendarShow' => 'Event im Kalender Anzeigen?',
+    'calendarShow' => 'Event im Kalender anzeigen?',
 
     'menuEventUpcoming' => 'Bevorstehende Veranstaltungen',
     'menuEventAll' => 'Alle Veranstaltungen',
@@ -37,7 +37,7 @@ return
     'decline' => 'Absagen',
     'clock' => 'Uhr',
     'by' => 'Gastgeber',
-    'writeToEvent' => 'schreib etwas zur Veranstaltung',
+    'writeToEvent' => 'Schreibe etwas zur Veranstaltung',
     'guest' => 'Gäste',
     'submit' => 'Erstellen',
     'addButton' => 'Erstellen',
@@ -65,5 +65,6 @@ return
     'imageAllowedFileExtensions' => 'Erlaubte Dateiendungen',
     'successImage' => 'Bild erfolgreich hochgeladen',
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
-    'failedFilesize' => 'Bild hat unerlaubte breite, höhe oder ist zu groß.',
+    'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
+    'browse' => 'Durchsuchen',
     ];

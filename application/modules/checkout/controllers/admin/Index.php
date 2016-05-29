@@ -18,7 +18,7 @@ class Index extends \Ilch\Controller\Admin
             'checkout',
             [
                 [
-                    'name' => 'Verwalten',
+                    'name' => 'manage',
                     'active' => true,
                     'icon' => 'fa fa-th-list',
                     'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])

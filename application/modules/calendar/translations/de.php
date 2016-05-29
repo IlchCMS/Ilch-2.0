@@ -7,7 +7,7 @@
 return
     [
     'menuCalendar' => 'Kalender',
-    'noCalendar' => 'keine Einträge vorhanden',
+    'noCalendar' => 'Keine Einträge vorhanden',
     'title' => 'Titel',
     'text' => 'Text',
     'color' => 'Termin Farbe',
@@ -15,7 +15,7 @@ return
     'start' => 'Beginnt',
     'end' => 'Endet',
     'description' => 'Beschreibung',
-    'noDescription' => 'keine Beschreibung vorhanden',
+    'noDescription' => 'Keine Beschreibung vorhanden',
     'at' => 'um',
     'clock' => 'Uhr',
     ];
