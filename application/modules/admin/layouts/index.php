@@ -22,7 +22,7 @@
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
 
         <script>
-            // Set a bunch of variables to later display translated messages
+            // Set a bunch of variables to later display translated messages. Used in ../application/modules/admin/static/js/functions.js
             var enableSelectedEntries = <?=json_encode($this->getTrans('enableSelectedEntries'))?>;
             var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries'))?>;
             var deleteEntry = <?=json_encode($this->getTrans('deleteEntry'))?>;
