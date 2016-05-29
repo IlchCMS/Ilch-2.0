@@ -67,6 +67,7 @@ return
     'backendFunctions' => 'Backend - Funktionen',
     'navbarFixed' => 'Navbar fixieren',
     'search' => 'Suche',
+    'go' => 'Los',
     'welcomeBack' => 'Willkommen zurück %s',
     'welcomeBackDescripton' => 'Um zu Ihrem gewünschten Ziel zu kommen, benutzen Sie entweder die Navigation oben oder die umfangreiche Suche auf der linken oberen Seite',
     'validateRequired' => 'Dieses Feld ist ein Pflichtfeld.',

@@ -233,9 +233,9 @@
                             <i id="search-header" class="fa fa-search search-btn"></i>
                             <div id="search-div" class="search-close">
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="Search" type="text">
+                                    <input class="form-control" placeholder="<?=$this->getTrans('search')?>" type="text">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Go</button>
+                                        <button class="btn btn-default" type="button"><?=$this->getTrans('go')?></button>
                                     </span>
                                 </div>
                             </div>
