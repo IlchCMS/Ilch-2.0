@@ -6,8 +6,8 @@
 
 return
     [
-    'menuCalendarList' => 'Calender',
-    'noCalendar' => 'no Entries available',
+    'menuCalendar' => 'Calendar',
+    'noCalendar' => 'No entries available',
     'title' => 'Title',
     'text' => 'Text',
     'color' => 'Term Color',
@@ -15,7 +15,7 @@ return
     'start' => 'Start',
     'end' => 'End',
     'description' => 'Description',
-    'noDescription' => 'no Description available',
+    'noDescription' => 'No description available',
     'at' => 'at',
     'clock' => 'o\'clock',
     ];

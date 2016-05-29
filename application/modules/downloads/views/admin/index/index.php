@@ -160,12 +160,12 @@ $(document).ready (
             });
 
             if (options == '' && ($(this).val() == '1')) {
-                alert('Es muss zuerst ein Menü hinzugefügt werden');
+                alert(<?=json_encode($this->getTrans('missingCat'))?>);
                 $(this).val(0);
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label">Menü</label>\n\
+            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat')?></label>\n\
                         <div class="col-lg-6"><select id="menukey" class="form-control">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
@@ -177,7 +177,7 @@ $(document).ready (
 
         $('#downloadsForm').on('click', '#menuItemAdd', function () {
                     if ($('#title').val() == '') {
-                        alert('Es muss ein Titel angegeben werden');
+                        alert(<?=json_encode($this->getTrans('missingTitle'))?>);
                         return;
                     }
 
@@ -219,8 +219,8 @@ $(document).ready (
         );
 
         $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
-                               <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">');
+           $('.actions').html('<input type="button" id="menuItemEdit" value="<?=$this->getTrans('edit')?>" class="btn">\n\
+                               <input type="button" id="menuItemEditCancel" value="<?=$this->getTrans('cancel')?>" class="btn">');
            $('#title').val($(this).parent().find('.hidden_title').val());
            $('#desc').val($(this).parent().find('.hidden_desc').val());
            $('#type').val($(this).parent().find('.hidden_type').val());
@@ -230,7 +230,7 @@ $(document).ready (
 
         $('#downloadsForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
-                    alert('Es muss ein Titel angegeben werden');
+                    alert(<?=json_encode($this->getTrans('missingTitle'))?>);
                     return;
                 }
 

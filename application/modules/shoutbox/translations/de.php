@@ -19,5 +19,4 @@ return
     'settings' => 'Einstellungen',
     'answer' => 'Antworten',
     'message' => 'Nachricht',
-    'archive' => 'Archiv',
     ];
