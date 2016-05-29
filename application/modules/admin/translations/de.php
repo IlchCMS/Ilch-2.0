@@ -68,6 +68,7 @@ return
     'backendFunctions' => 'Backend - Funktionen',
     'navbarFixed' => 'Navbar fixieren',
     'search' => 'Suche',
+    'go' => 'Los',
     'welcomeBack' => 'Willkommen zurück %s',
     'welcomeBackDescripton' => 'Um zu Ihrem gewünschten Ziel zu kommen, benutzen Sie entweder die Navigation oben oder die umfangreiche Suche auf der linken oberen Seite',
     'validateRequired' => 'Dieses Feld ist ein Pflichtfeld.',
@@ -105,6 +106,7 @@ return
     'menuMaintenance' => 'Wartungsarbeiten',
     'menuBackup' => 'Backup',
     'boxTitle' => 'Boxentitel',
+    'noTitleBox' => 'Box hat keinen Titel',
     'addBox' => 'Neue Box hinzufügen',
     'editBox' => 'Box editieren',
     'deleteBox' => 'Box entfernen',
@@ -179,4 +181,8 @@ return
     'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
     'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',
+
+    'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',
+    'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
+    'deleteEntry' => 'Soll der Eintrag wirklich gelöscht werden?',
     ];

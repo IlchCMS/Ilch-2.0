@@ -21,6 +21,13 @@
         <link href="<?=$this->getStaticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
 
+        <script>
+            // Set a bunch of variables to later display translated messages. Used in ../application/modules/admin/static/js/functions.js
+            var enableSelectedEntries = <?=json_encode($this->getTrans('enableSelectedEntries'))?>;
+            var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries'))?>;
+            var deleteEntry = <?=json_encode($this->getTrans('deleteEntry'))?>;
+        </script>
+
         <!-- SCRIPTS -->
         <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.js') ?>"></script>
@@ -233,9 +240,9 @@
                             <i id="search-header" class="fa fa-search search-btn"></i>
                             <div id="search-div" class="search-close">
                                 <div class="input-group">
-                                    <input class="form-control" placeholder="Search" type="text">
+                                    <input class="form-control" placeholder="<?=$this->getTrans('search')?>" type="text">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">Go</button>
+                                        <button class="btn btn-default" type="button"><?=$this->getTrans('go')?></button>
                                     </span>
                                 </div>
                             </div>
