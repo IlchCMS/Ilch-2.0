@@ -111,8 +111,14 @@ class Infos extends \Ilch\Controller\Admin
         $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
         $pubkey = openssl_pkey_get_public(file_get_contents(ROOT_PATH.'/certificate/Certificate.crt'));
         $public_key_arr = openssl_pkey_get_details($pubkey);
+        $key_type = '';
+        $key_type = $public_key_arr['type']==OPENSSL_KEYTYPE_RSA ? 'RSA' : $key_type;
+        $key_type = $public_key_arr['type']==OPENSSL_KEYTYPE_DSA ? 'DSA' : $key_type;
+        $key_type = $public_key_arr['type']==OPENSSL_KEYTYPE_DH ?  'DH'  : $key_type;
 
-        $this->getView()->set('certificateKeysize', isset($public_key_arr['bits'])? $public_key_arr['bits'] : 0);
+        $this->getView()->set('certificateDigest', openssl_digest($public_key, 'SHA256'));
+        $this->getView()->set('certificateKeySize', isset($public_key_arr['bits'])? $public_key_arr['bits'] : 0);
+        $this->getView()->set('certificateKeyType', $key_type);
         $this->getView()->set('certificate', openssl_x509_parse($public_key));
     }
 

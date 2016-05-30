@@ -33,13 +33,29 @@
                 </td>
             </tr>
             <tr>
-                <td><?=$this->getTrans('certificateKeysize') ?></td>
+                <td><?=$this->getTrans('certificateKeyType') ?></td>
                 <td>
-                    <?php if ($this->get('certificateKeysize') >= 2048): ?>
-                        <span class="text-success"><?=$this->get('certificateKeysize').$this->getTrans('bit') ?></span>
+                    <?php if ($this->get('certificateKeyType') == 'RSA'): ?>
+                        <span class="text-success"><?=$this->get('certificateKeyType') ?></span>
                     <?php else: ?>
-                        <span class="text-danger"><?=$this->get('certificateKeysize').$this->getTrans('bit') ?></span>
+                        <span class="text-danger"><?=$this->get('certificateKeyType') ?></span>
                     <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <td><?=$this->getTrans('certificateKeySize') ?></td>
+                <td>
+                    <?php if ($this->get('certificateKeyType') == 'RSA' && $this->get('certificateKeySize') >= 2048): ?>
+                        <span class="text-success"><?=$this->get('certificateKeySize').$this->getTrans('bit') ?></span>
+                    <?php else: ?>
+                        <span class="text-danger"><?=$this->get('certificateKeySize').$this->getTrans('bit') ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <td><?=$this->getTrans('certificateDigest') ?></td>
+                <td>
+                    <?=$this->get('certificateDigest') ?>
                 </td>
             </tr>
             <tr>

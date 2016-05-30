@@ -159,8 +159,10 @@ return
     'value' => 'Value',
     'certificateValidFrom' => 'Valid from',
     'certificateValidTo' => 'Valid to',
-    'certificateKeysize' => 'Keysize',
+    'certificateKeyType' => 'Type',
+    'certificateKeySize' => 'Key size',
     'bit' => ' bit',
+    'certificateDigest' => 'Fingerprint (SHA-256)',
     'certificateCountry' => 'Country',
     'certificateCommonName' => 'Common Name',
 
