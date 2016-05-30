@@ -6,6 +6,8 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Ilch\Transfer as IlchTransfer;
+
 class Update extends \Ilch\Controller\Admin
 {
     public function init()
@@ -56,7 +58,7 @@ class Update extends \Ilch\Controller\Admin
         $version = $this->getConfig()->get('version');
         $this->getView()->set('version', $version);
 
-        $update = new \Ilch\Transfer();
+        $update = new IlchTransfer();
         $update->setTransferUrl($this->getConfig()->get('master_update_url'));
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
