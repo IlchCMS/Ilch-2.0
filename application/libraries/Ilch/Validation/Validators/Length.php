@@ -21,17 +21,17 @@ class Length extends Base
 
         $val = $data->getValue();
 
-        if($min !== null && $max !== null) {
+        if ($min !== null && $max !== null) {
             // Min and max value specified
             $result = strlen($val) >= $min && strlen($val) <= $max;
             $errorKey = 'validation.errors.length.tooShortAndOrTooLong';
             $errorParams = [[$min, false], [$max, false]];
-        } elseif($min !== null && $max === null) {
+        } elseif ($min !== null && $max === null) {
             // Only a min value specified
             $result = strlen($val) >= $min;
             $errorKey = 'validation.errors.length.tooShort';
             $errorParams = [[$min, false]];
-        } elseif($min === null && $max !== null) {
+        } elseif ($min === null && $max !== null) {
             // Only a max value specified
             $result = strlen($val) <= $max;
             $errorKey = 'validation.errors.length.tooLong';
@@ -40,7 +40,7 @@ class Length extends Base
             throw new \RuntimeException("No 'min' and/or 'max' value(s) defined.");
         }
 
-        if($data->getParam('customErrorAlias') !== null) {
+        if ($data->getParam('customErrorAlias') !== null) {
             $errorKey = $data->getParam('customErrorAlias');
         }
 

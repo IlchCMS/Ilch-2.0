@@ -38,7 +38,7 @@ class Index extends BaseController
                 ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_war')) {
-            foreach($this->getRequest()->getPost('check_war') as $warId) {
+            foreach ($this->getRequest()->getPost('check_war') as $warId) {
                 $warMapper->delete($warId);
             }
         }
@@ -90,9 +90,9 @@ class Index extends BaseController
                 $errorMaps = array_keys($groupPoints, true);
                 if (empty($errorMaps)) {
                     $this->addMessage('missingWarMapPlayed', 'danger');
-                } elseif(empty($groupPoints)) {
+                } elseif (empty($groupPoints)) {
                     $this->addMessage('missingGroupPoints', 'danger');
-                } elseif(empty($enemyPoints)) {
+                } elseif (empty($enemyPoints)) {
                     $this->addMessage('missingEnemyPoints', 'danger');
                 } else {
                     for ($i = 0; $i < count($maps); $i++) {
@@ -138,17 +138,17 @@ class Index extends BaseController
 
             if (empty($enemyName)) {
                 $this->addMessage('missingEnemyName', 'danger');
-            } elseif(empty($groupName)) {
+            } elseif (empty($groupName)) {
                 $this->addMessage('missingGroupName', 'danger');
-            } elseif(empty($warTime)) {
+            } elseif (empty($warTime)) {
                 $this->addMessage('missingWarTime', 'danger');
-            } elseif(empty($warServer)) {
+            } elseif (empty($warServer)) {
                 $this->addMessage('missingWarServer', 'danger');
-            } elseif(empty($warXonx)) {
+            } elseif (empty($warXonx)) {
                 $this->addMessage('missingWarXonx', 'danger');
-            } elseif(empty($warGame)) {
+            } elseif (empty($warGame)) {
                 $this->addMessage('missingWarGame', 'danger');
-            } elseif(empty($warMatchtype)) {
+            } elseif (empty($warMatchtype)) {
                 $this->addMessage('missingWarMatchtype', 'danger');
             } else {
                 $warModel->setWarEnemy($enemyName);
@@ -179,7 +179,7 @@ class Index extends BaseController
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $id = (int)$this->getRequest()->getParam('id');
             $warMapper = new WarMapper();
             $warMapper->delete($id);

@@ -18,7 +18,7 @@ class Login extends \Ilch\Box
             $redirectUrl = $this->getRouter()->getQuery();
         }
 
-        if($this->getUser()){
+        if ($this->getUser()) {
             $access = new Accesses($this->getRequest());
             $this->getView()->set('userAccesses', $access->hasAccess('Admin'));
         }

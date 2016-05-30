@@ -236,7 +236,7 @@ class Transfer
     public function newVersionFound()
     {
         foreach ($this->getVersionsList() as $vL) {
-            if (preg_replace('/\s+/', '', $vL) > $this->getVersionNow()){
+            if (preg_replace('/\s+/', '', $vL) > $this->getVersionNow()) {
                 $this->setNewVersion(trim(preg_replace('/\s\s+/','', $vL)));
                 $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                 return true;
@@ -291,7 +291,7 @@ class Transfer
         $pubkey = openssl_pkey_get_public(file_get_contents($pubKeyfile));
         openssl_public_decrypt($signature, $decrypted_digest, $pubkey);
 
-        if($digest == $decrypted_digest) {
+        if ($digest == $decrypted_digest) {
             return true;
         }
         return false;

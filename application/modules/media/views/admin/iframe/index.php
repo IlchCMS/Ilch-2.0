@@ -57,7 +57,7 @@
 
 <?php if ($this->getRequest()->getParam('type') === 'image'): ?>
     <script>
-    $(".image").click(function(){
+    $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-basic','src', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
@@ -67,7 +67,7 @@
     
 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
     <script>
-    $(".image").click(function(){
+    $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-adv','file', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         dialog.setValueOf('tab-adv','alt', $(this).data('alt'));
@@ -78,7 +78,7 @@
     
 <?php if ($this->getRequest()->getParam('type') === 'media'): ?>
     <script>
-    $(".image").click(function(){
+    $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-mov','video', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
@@ -88,7 +88,7 @@
     
 <?php if ($this->getRequest()->getParam('type') === 'single'): ?>
     <script>
-    $(".image").click(function(){
+    $(".image").click(function() {
         window.top.$('#selectedImage<?=$this->getRequest()->getParam('input')?>').val($(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
     });
@@ -104,8 +104,7 @@ $(document).ready(function()
         $.post("<?=$this->getUrl('admin/media/ajax/index/type/single/lastid/') ?>"+ID,
             function(data)
             {
-                if (data !== "") 
-                {
+                if (data !== "") {
                     $(".media_loader:last").after(data);
                 }
             }
@@ -114,8 +113,7 @@ $(document).ready(function()
 
     $(window).scroll(function()
     {
-        if ($(window).scrollTop() === $(document).height() - $(window).height())
-        {
+        if ($(window).scrollTop() === $(document).height() - $(window).height()) {
             media_loader();
         }
     }); 

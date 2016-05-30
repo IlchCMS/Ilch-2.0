@@ -13,7 +13,7 @@ class Regist extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        if ($this->getConfig()->get('regist_accept') == 1){
+        if ($this->getConfig()->get('regist_accept') == 1) {
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('step1to3'), ['action' => 'index']);
@@ -102,7 +102,7 @@ class Regist extends \Ilch\Controller\Frontend
                     $model->setDateCreated($currentDate->format("Y-m-d H:i:s", true));
                     $model->addGroup($userGroup);
 
-                if ($this->getConfig()->get('regist_confirm') == 0){
+                if ($this->getConfig()->get('regist_confirm') == 0) {
                     $model->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
                 } else {
                     $confirmedCode = md5(uniqid(rand()));
@@ -194,7 +194,7 @@ class Regist extends \Ilch\Controller\Frontend
             $user = $userMapper->getUserByConfirmedCode($confirmed);
             
             if (!empty($confirmed)) {
-                if(!empty($user)) {
+                if (!empty($user)) {
                     $currentDate = new \Ilch\Date();
                     $user->setDateConfirmed($currentDate);
                     $user->setConfirmed(1);

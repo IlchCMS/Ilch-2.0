@@ -152,7 +152,7 @@ class ElementNode extends Node
      */
     public function getAsHTML()
     {
-        if($this->codeDefinition) {
+        if ($this->codeDefinition) {
             return $this->codeDefinition->asHtml($this);
         } else {
             return "";

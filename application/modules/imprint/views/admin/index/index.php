@@ -1,7 +1,7 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => 1]) ?>">
     <?=$this->getTokenField() ?>
     <legend><?=$this->getTrans('manage') ?></legend>
-    <?php if($this->get('imprintStyle') == '0'): ?>
+    <?php if ($this->get('imprintStyle') == '0'): ?>
         <div class="form-group">
             <label for="rank" class="col-lg-2 control-label">
                 <?=$this->getTrans('paragraph') ?>:

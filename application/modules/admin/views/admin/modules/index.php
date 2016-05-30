@@ -30,7 +30,7 @@
                             <a href="<?=$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')) ?>">
                                 <?=$this->getTrans('administrate') ?>
                             </a>
-                            <?php if(!isset($config->isSystemModule)): ?>
+                            <?php if (!isset($config->isSystemModule)): ?>
                                 <small>
                                     | 
                                     <a class="delete_button" href="<?=$this->getUrl(array('action' => 'delete', 'key' => $module->getKey()), null, true) ?>">

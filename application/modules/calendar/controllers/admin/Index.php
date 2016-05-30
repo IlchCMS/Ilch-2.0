@@ -90,7 +90,7 @@ class Index extends \Ilch\Controller\Admin
             
             if (empty($start)) {
                 $this->addMessage('missingDate', 'danger');
-            } elseif(empty($title)) {
+            } elseif (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
             } else {
                 $calendarModel->setTitle($title);

@@ -9,7 +9,7 @@ $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRe
 <legend><?=$this->getTrans('monthArchives') ?>: <i><?=$date->format('F Y', true) ?></i></legend>
 <?php if ($articles != ''): ?>
     <?php
-    foreach($articles as $article):
+    foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());
         $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
         $image = $article->getArticleImage();

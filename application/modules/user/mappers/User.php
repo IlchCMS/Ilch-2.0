@@ -196,7 +196,7 @@ class User extends \Ilch\Mapper
         }
 
         if (isset($userRow['avatar'])) {
-            if (file_exists($userRow['avatar'])){
+            if (file_exists($userRow['avatar'])) {
                 $user->setAvatar($userRow['avatar']);
             }  else {
                 $user->setAvatar('static/img/noavatar.jpg');

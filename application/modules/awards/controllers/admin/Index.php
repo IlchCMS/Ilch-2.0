@@ -46,7 +46,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_entries') as $awardsId) {
+                foreach ($this->getRequest()->getPost('check_entries') as $awardsId) {
                     $awardsMapper->delete($awardsId);
                 }
             }
@@ -86,11 +86,11 @@ class Index extends \Ilch\Controller\Admin
             
             if (empty($date)) {
                 $this->addMessage('missingDate', 'danger');
-            } elseif(empty($rank)) {
+            } elseif (empty($rank)) {
                 $this->addMessage('missingRank', 'danger');
-            } elseif(empty($typ)) {
+            } elseif (empty($typ)) {
                 $this->addMessage('missingTyp', 'danger');
-            } elseif(empty($utId)) {
+            } elseif (empty($utId)) {
                 $this->addMessage('missingUTId', 'danger');
             } else {
                 $model->setDate($date);
@@ -112,7 +112,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $awardsMapper = new AwardsMapper();
             $awardsMapper->delete($this->getRequest()->getParam('id'));
 

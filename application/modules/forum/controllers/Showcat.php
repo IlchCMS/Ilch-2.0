@@ -38,9 +38,9 @@ class Showcat extends \Ilch\Controller\Frontend
 
 
         $ids = [3];
-        if($user){
+        if ($user) {
             $ids = [];
-            foreach ($user->getGroups() as $us){
+            foreach ($user->getGroups() as $us) {
                 $ids[] = $us->getId();
             }
         }

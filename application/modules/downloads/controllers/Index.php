@@ -11,16 +11,19 @@ use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Comment\Models\Comment as CommentModel;
 use Modules\Downloads\Models\File as FileModel;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction() 
     {
-        $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
         $downloadsMapper = new DownloadsMapper();
         $fileMapper = new FileMapper();
+
         $downloadsItems = $downloadsMapper->getDownloadsItemsByParent(1, 0);
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index']);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads'));
@@ -34,6 +37,7 @@ class Index extends \Ilch\Controller\Frontend
         $fileMapper = new FileMapper();
         $pagination = new \Ilch\Pagination();
         $downloadsMapper = new DownloadsMapper();
+
         $id = $this->getRequest()->getParam('id');
         $downloads = $downloadsMapper->getDownloadsById($id);
 
@@ -54,6 +58,7 @@ class Index extends \Ilch\Controller\Frontend
         $commentMapper = new CommentMapper;
         $fileMapper = new FileMapper();
         $downloadsMapper = new DownloadsMapper();
+        $userMapper = new UserMapper();
 
         $id = $this->getRequest()->getParam('id');
         $downloadsId = $this->getRequest()->getParam('downloads');
@@ -74,10 +79,8 @@ class Index extends \Ilch\Controller\Frontend
         $file = $fileMapper->getFileById($id);
 
         $model = new FileModel();
-
         $model->setFileId($file->getFileId());
         $model->setVisits($file->getVisits() + 1);
-
         $fileMapper->saveVisits($model);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads').' - '.$this->getTranslator()->trans('file').' - '.$file->getFileTitle());
@@ -87,6 +90,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($downloads->getTitle(), ['action' => 'show', 'id' => $downloadsId])
                 ->add($file->getFileTitle(), ['action' => 'showfile', 'downloads' => $downloadsId, 'id' => $id]);
 
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('file', $fileMapper->getFileById($id));
         $this->getView()->set('comments', $comments);
     }

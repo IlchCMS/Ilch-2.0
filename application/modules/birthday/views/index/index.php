@@ -24,7 +24,7 @@ $date = new \Ilch\Date();
                     <div class="col-lg-10">
                         <a href="<?=$this->getUrl('user/profil/index/user/' . $birthdaylist->getId()) ?>"><strong><?=$this->escape($birthdaylist->getName()) ?></strong></a><br />
                         <?=$this->getTrans('will') ?> <?=floor(($date->format('Ymd') - str_replace("-", "", $this->escape($birthdaylist->getBirthday()))) / 10000) ?> <?=$this->getTrans('yearsOld') ?><br />
-                        <?php if($this->getUser() AND $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>
+                        <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($birthdaylist->getID())): ?>
                             <a href="<?=$this->getUrl('user/panel/dialognew/id/' . $birthdaylist->getId()) ?>"><?=$this->getTrans('writeCongratulations') ?></a>
                         <?php endif; ?>
                     </div>

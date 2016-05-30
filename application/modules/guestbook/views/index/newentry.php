@@ -1,10 +1,10 @@
 <legend><?=$this->getTrans('menuGuestbook') ?></legend>
 <?php // Fehlerausgabe der Validation ?>
-<?php if($this->get('errors') !== null): ?>
+<?php if ($this->get('errors') !== null): ?>
     <div class="alert alert-danger" role="alert">
         <strong> Es sind folgende Fehler aufgetreten:</strong>
         <ul>
-            <?php foreach($this->get('errors') as $error): ?>
+            <?php foreach ($this->get('errors') as $error): ?>
                 <li><?= $error; ?></li>
             <?php endforeach; ?>
         </ul>
@@ -76,11 +76,10 @@
         </div>
     </div>
     <?php
-        $message = $this->get('message');
-        if(!empty($message))
-        {
-            echo $message;
-        }
+    $message = $this->get('message');
+    if (!empty($message)) {
+        echo $message;
+    }
     ?>
     <div class="form-group<?=in_array('captcha', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">

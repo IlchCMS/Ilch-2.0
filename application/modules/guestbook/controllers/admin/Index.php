@@ -38,7 +38,7 @@ class Index extends \Ilch\Controller\Admin
         
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_entries') as $entryId) {
+                foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                     $guestbookMapper->delete($entryId);
                 }
                 
@@ -46,7 +46,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             if ($this->getRequest()->getPost('action') == 'setfree') {
-                foreach($this->getRequest()->getPost('check_entries') as $entryId) {
+                foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                     $model = new \Modules\Guestbook\Models\Entry();
                     $model->setId($entryId);
                     $model->setFree(1);
@@ -71,7 +71,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $guestbookMapper = new GuestbookMapper();
         
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $guestbookMapper->delete($this->getRequest()->getParam('id'));
             $this->addMessage('deleteSuccess');
         }

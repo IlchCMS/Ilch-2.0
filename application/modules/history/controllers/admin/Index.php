@@ -50,7 +50,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_entries') as $historyId) {
+                foreach ($this->getRequest()->getPost('check_entries') as $historyId) {
                     $historyMapper->delete($historyId);
                 }
             }
@@ -63,7 +63,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $historyMapper = new HistoryMapper();
             $historyMapper->delete($this->getRequest()->getParam('id'));
 
@@ -102,9 +102,9 @@ class Index extends \Ilch\Controller\Admin
 
             if (empty($date)) {
                 $this->addMessage('missingDate', 'danger');
-            } elseif(empty($title)) {
+            } elseif (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
-            } elseif(empty($text)) {
+            } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
                 $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));

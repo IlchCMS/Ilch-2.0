@@ -18,7 +18,7 @@ class Base extends \Ilch\Controller\Admin
     {
         $active = [];
 
-        foreach(['group', 'index', 'access', 'settings'] as $controllerName) {
+        foreach (['group', 'index', 'access', 'settings'] as $controllerName) {
             $active[$controllerName] = (boolean)($this->getRequest()->getControllerName() == $controllerName);
         }
 

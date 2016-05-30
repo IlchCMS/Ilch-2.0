@@ -26,10 +26,10 @@ class Error
         $this->setKey($key);
         $this->setField($field);
 
-        foreach($params as $param) {
+        foreach ($params as $param) {
             $parameter = [];
 
-            if(is_array($param)) {
+            if (is_array($param)) {
                 $parameter['value'] = $param[0];
                 $parameter['translate'] = $param[1];
             } else {

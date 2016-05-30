@@ -84,10 +84,10 @@ function rec($id, $uid, $req, $obj)
 <link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuComments') ?></legend>
-<?php if(!empty($comments)): ?>
+<?php if (!empty($comments)): ?>
     <section class="comment-list">
-        <?php foreach($comments as $comment): ?>
-            <?php if($this->getRequest()->getParam('id') == $comment->getId()): ?>
+        <?php foreach ($comments as $comment): ?>
+            <?php if ($this->getRequest()->getParam('id') == $comment->getId()): ?>
                 <?php $fk_comments = $commentMapper->getCommentsByFKId($comment->getId()); ?>
                 <?php $date = new \Ilch\Date($comment->getDateCreated()); ?>
                 <?php $userMapper = new \Modules\User\Mappers\User(); ?>
@@ -126,7 +126,7 @@ function rec($id, $uid, $req, $obj)
     <?php $nowDate = new \Ilch\Date(); ?>
     <div class="row">
         <div class="col-md-12">
-            <?php if($this->getUser() AND $config->get('comment_reply') == 1): ?>
+            <?php if ($this->getUser() AND $config->get('comment_reply') == 1): ?>
                 <form action="" class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
                     <section class="comment-list">
@@ -173,8 +173,8 @@ function rec($id, $uid, $req, $obj)
             <?php endif; ?>
 
             <section class="comment-list">
-                <?php foreach($comments as $comment): ?>
-                    <?php if($this->getRequest()->getParam('id') == $comment->getFKId()): ?>
+                <?php foreach ($comments as $comment): ?>
+                    <?php if ($this->getRequest()->getParam('id') == $comment->getFKId()): ?>
                         <?php $date = new \Ilch\Date($comment->getDateCreated()); ?>
                         <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                         <?php $user = $userMapper->getUserById($comment->getUserId()); ?>

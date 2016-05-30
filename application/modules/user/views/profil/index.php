@@ -1,5 +1,5 @@
 <?php 
-$userMapper = new Modules\User\Mappers\User();
+$userMapper = $this->get('userMapper'); 
 $profil = $this->get('profil'); 
 $birthday = new \Ilch\Date($profil->getBirthday());
 
@@ -23,13 +23,13 @@ foreach ($profil->getGroups() as $group) {
             </div>
             <div class="col-lg-5 col-xs-12">
                 <h3><?=$this->escape($profil->getName()) ?></h3>
-                <?php if($this->getUser() AND $this->getUser()->getId() != $this->escape($profil->getID())): ?>
+                <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($profil->getID())): ?>
                     <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialognew', 'id' => $profil->getId()]) ?>" >Neue Nachricht</a>
                  <?php endif; ?>
                 <div class="detail">
                     <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($profil->getDateCreated()) ?><br />
                     <?php $dateLastActivity = $profil->getDateLastActivity(); ?>
-                    <?php if($dateLastActivity->getTimestamp() != 0): ?>
+                    <?php if ($dateLastActivity->getTimestamp() != 0): ?>
                         <i class="fa fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($profil->getDateLastActivity()) ?>
                     <?php endif; ?>
                 </div>

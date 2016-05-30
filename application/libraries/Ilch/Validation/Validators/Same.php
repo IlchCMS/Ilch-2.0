@@ -25,7 +25,7 @@ class Same extends Base
     {
         $data = $this->data;
 
-        if((bool) $data->getParam('strict') === true) {
+        if ((bool) $data->getParam('strict') === true) {
             $result = $data->getValue() === $data->getParam('as');
         } else {
             $result = $data->getValue() == $data->getParam('as');

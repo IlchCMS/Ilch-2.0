@@ -44,7 +44,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuContact'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_receivers')) {
-            foreach($this->getRequest()->getPost('check_receivers') as $receiveId) {
+            foreach ($this->getRequest()->getPost('check_receivers') as $receiveId) {
                 $receiverMapper->delete($receiveId);
             }
         }
@@ -54,7 +54,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $receiverMapper = new ReceiverMapper();
             $receiverMapper->delete($this->getRequest()->getParam('id'));
         }

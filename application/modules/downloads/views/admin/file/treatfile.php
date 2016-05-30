@@ -1,12 +1,15 @@
+<?php
+$file = $this->get('file');
+$image = '';
+if ($file->getFileImage() != '') {
+    $image = $this->getBaseUrl($file->getFileImage());
+} else {
+    $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png');
+}
+?>
+
 <legend><?=$this->getTrans('treatFile') ?></legend>
-<?php if ($this->get('file') != ''): ?>
-    <?php $file = $this->get('file') ?>
-    <?php $image = '' ?>
-    <?php if($file->getFileImage() != ''): ?>
-        <?php $image = $this->getBaseUrl($file->getFileImage()) ?>
-    <?php else: ?>
-        <?php $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>
-    <?php endif; ?>
+<?php if ($file != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <div id="gallery">
             <div class="row">

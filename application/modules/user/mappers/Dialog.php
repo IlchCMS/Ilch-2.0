@@ -44,13 +44,13 @@ class Dialog extends \Ilch\Mapper
             $mailModel->setName($mail['name']);
             $dialog = $this->getReadLastOneDialog($mail['c_id']);
             $mailModel->setRead($dialog);
-            if (file_exists($mail['avatar'])){
+            if (file_exists($mail['avatar'])) {
                 $mailModel->setAvatar($mail['avatar']);
             }  else {
                 $mailModel->setAvatar('static/img/noavatar.jpg');
             }
             $last = $this->getLastOneDialog($mail['c_id']);
-            if ($last != null){
+            if ($last != null) {
                 $mailModel->setText($last->getText());
                 $mailModel->setTime($last->getTime());
             } else {
@@ -152,7 +152,7 @@ class Dialog extends \Ilch\Mapper
             $mailModel->setName($mail['name']);
             $mailModel->setText($mail['reply']);
             $mailModel->setTime($mail['time']);
-            if (file_exists($mail['avatar'])){
+            if (file_exists($mail['avatar'])) {
                 $mailModel->setAvatar($mail['avatar']);
             }  else {
                 $mailModel->setAvatar('static/img/noavatar.jpg');
@@ -250,12 +250,11 @@ class Dialog extends \Ilch\Mapper
             'user_two' => $model->getUserTwo(),
             ];
 
-        if(!empty($fields['user_one']) or !empty($fields['user_two'])){
+        if (!empty($fields['user_one']) or !empty($fields['user_two'])) {
             $this->db()->insert('users_dialog')
                 ->values($fields)
                 ->execute();
             return ;
-
         }  else {
             $this->db()->insert('users_dialog_reply')
                 ->values($fields)

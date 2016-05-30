@@ -2,9 +2,8 @@
 $forum = $this->get('forum');
 $readAccess = $this->get('readAccess');
 
-
 $adminAccess = null;
-if ($this->getUser()){
+if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
 }
 ?>

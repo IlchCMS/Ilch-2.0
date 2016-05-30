@@ -1,7 +1,10 @@
+<?php $ilchUpload = new \Ilch\Upload(); ?>
+
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('mediaUpload') ?> <a title='<?='post_max_size = '.ini_get('post_max_size') ?><br/><?='max_execution_time = '.ini_get('max_execution_time') ?>' rel='tooltip' data-html='true' data-placement='bottom'><i class="fa fa-info-circle"></i></a></legend>
 <form id="upload" method="post" action="<?=$this->getUrl('admin/media/index/upload') ?>" enctype="multipart/form-data">
-<?=$this->getTokenField() ?>
+    <?=$this->getTokenField() ?>
     <div id="drop">
         <p><?=$this->getTrans('drag') ?></p>
         <i class="fa fa-cloud-upload"></i>
@@ -18,15 +21,12 @@
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.fileupload.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
 
-<?php
-$ilchUpload = new \Ilch\Upload();
-?>
 <script language="javascript">
-    const allowedExtensions = <?=json_encode(explode(' ',$this->get('allowedExtensions')));?>;
-    var maxFileSize = <?=$ilchUpload->returnBytes(ini_get('upload_max_filesize'));?>;
-    var fileTooBig = <?=json_encode($this->getTrans('fileTooBig'));?>;
-    var extensionNotAllowed = <?=json_encode($this->getTrans('extensionNotAllowed'));?>;
-   $(document).ready(function(){
-	$("[rel='tooltip']").tooltip();
-    });
+const allowedExtensions = <?=json_encode(explode(' ',$this->get('allowedExtensions')));?>;
+var maxFileSize = <?=$ilchUpload->returnBytes(ini_get('upload_max_filesize'));?>;
+var fileTooBig = <?=json_encode($this->getTrans('fileTooBig'));?>;
+var extensionNotAllowed = <?=json_encode($this->getTrans('extensionNotAllowed'));?>;
+$(document).ready(function() {
+    $("[rel='tooltip']").tooltip();
+});
 </script>

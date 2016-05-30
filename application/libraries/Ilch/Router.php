@@ -328,7 +328,7 @@ class Router
      */
     public function updateRequest($result)
     {
-        if (array_key_exists('admin', $result) && strlen($result['admin']) > 0){
+        if (array_key_exists('admin', $result) && strlen($result['admin']) > 0) {
             $this->request->setIsAdmin(true);
         }
 
@@ -347,7 +347,7 @@ class Router
         if (array_key_exists('params', $result)) {
             $params = $this->convertParamStringIntoArray($result['params']);
 
-            foreach($params as $key => $value) {
+            foreach ($params as $key => $value) {
                 $this->request->setParam($key,$value);
             }
         }

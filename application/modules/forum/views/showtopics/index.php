@@ -16,7 +16,7 @@ if ($this->getUser()) {
     <div id="forum">
         <h3><?=$forum->getTitle() ?></h3>
         <div class="topic-actions">
-            <?php if($this->getUser()): ?>
+            <?php if ($this->getUser()): ?>
                 <div class="buttons">
                     <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-labeled bgblue">
                         <span class="btn-label">
@@ -108,7 +108,7 @@ if ($this->getUser()) {
             </ul>
         </div>
         <div class="topic-actions">
-            <?php if($adminAccess): ?>
+            <?php if ($adminAccess): ?>
                 <?php if (!$forumEdit): ?>
                     <form action="" method="post">
                         <?php echo $this->getTokenField(); ?>

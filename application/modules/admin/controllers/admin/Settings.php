@@ -90,7 +90,7 @@ class Settings extends \Ilch\Controller\Admin
 </IfModule>
 HTACCESS;
                 file_put_contents(ROOT_PATH.'/.htaccess', sprintf($htaccess, REWRITE_BASE));
-            } elseif(file_exists(ROOT_PATH.'/.htaccess')) {
+            } elseif (file_exists(ROOT_PATH.'/.htaccess')) {
                 file_put_contents(ROOT_PATH.'/.htaccess', '');
             }
 

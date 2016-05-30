@@ -8,6 +8,7 @@ namespace Modules\Events\Controllers;
 
 use Modules\Events\Mappers\Events as EventMapper;
 use Modules\Events\Models\Events as EventModel;
+use Modules\User\Mappers\Setting as SettingMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -32,6 +33,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $eventMapper = new EventMapper();
         $eventModel = new EventModel();
+        $settingMapper = new SettingMapper();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
         if ($this->getRequest()->getParam('id')) {
@@ -100,14 +102,14 @@ class Index extends \Ilch\Controller\Frontend
 
             if (empty($start)) {
                 $this->addMessage('missingDate', 'danger');
-            } elseif(empty($title)) {
+            } elseif (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
-            } elseif(empty($place)) {
+            } elseif (empty($place)) {
                 $this->addMessage('missingPlace', 'danger');
-            } elseif(empty($text)) {
+            } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
-                if(!empty($_FILES['image']['name'])) {
+                if (!empty($_FILES['image']['name'])) {
                     $eventModel->setImage($image);
                 }
                 $eventModel->setUserId($this->getUser()->getId());
@@ -140,6 +142,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('calendarShow', 1);
         }
 
+        $this->getView()->set('settingMapper', $settingMapper);
         $this->getView()->set('image_height', $imageHeight);
         $this->getView()->set('image_width', $imageWidth);
         $this->getView()->set('image_size', $imageSize);

@@ -299,8 +299,8 @@ class Upload extends \Ilch\Controller\Base
         $this->setUrl($this->path.$hash.'.'.$this->getEnding());
         $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
 
-        if(move_uploaded_file($_FILES['upl']['tmp_name'], $this->path.$hash.'.'.$this->getEnding())){
-            if(in_array($this->getEnding() , explode(' ', $this->types))){
+        if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path.$hash.'.'.$this->getEnding())) {
+            if (in_array($this->getEnding() , explode(' ', $this->types))) {
                 $thumb = new \Thumb\Thumbnail();
                 $thumb -> Thumbprefix = 'thumb_';
                 $thumb -> Thumblocation = $this->path;
@@ -339,7 +339,7 @@ class Upload extends \Ilch\Controller\Base
         $this->setUrlThumb($this->path.'thumb_'.$hash.'.'.$this->getEnding());
 
         rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
-        if(in_array($this->getEnding() , explode(' ', $this->types))){
+        if (in_array($this->getEnding() , explode(' ', $this->types))) {
             $thumb = new \Thumb\Thumbnail();
             $thumb -> Thumbprefix = 'thumb_';
             $thumb -> Thumblocation = $this->path;

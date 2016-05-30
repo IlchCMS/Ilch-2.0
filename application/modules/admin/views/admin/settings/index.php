@@ -43,7 +43,7 @@
                             <?php $selected = 'selected="selected"'; ?>
                         <?php endif; ?>
 
-                        <?php if(!empty($module)): ?>
+                        <?php if (!empty($module)): ?>
                             <option <?=$selected ?> value="layouts_<?=$module ?>"><?=$module ?></option>
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    <div id="contentLanguage" class="form-group <?php if($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
+    <div id="contentLanguage" class="form-group <?php if ($this->get('multilingualAcp') != '1') { echo 'hidden'; } ?>">
         <label for="languageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('contentLanguage') ?>:
         </label>

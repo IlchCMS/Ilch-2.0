@@ -35,7 +35,7 @@ class Group extends BaseController
                 ->add($this->getTranslator()->trans('manageGroups'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
-            foreach($this->getRequest()->getPost('check_groups') as $groupId) {
+            foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
                 $groupMapper->delete($groupId);
             }
         }
@@ -80,11 +80,11 @@ class Group extends BaseController
 
             if (empty($groupName)) {
                 $this->addMessage('missingGroupName', 'danger');
-            } elseif(empty($groupImage)) {
+            } elseif (empty($groupImage)) {
                 $this->addMessage('missingGroupImage', 'danger');
-            } elseif(empty($groupMember)) {
+            } elseif (empty($groupMember)) {
                 $this->addMessage('missingGroupMember', 'danger');
-            } elseif(empty($groupTag)) {
+            } elseif (empty($groupTag)) {
                 $this->addMessage('missingGroupTag', 'danger');
             } else {
                 $groupModel->setGroupMember($groupMember);
@@ -102,7 +102,7 @@ class Group extends BaseController
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $id = (int)$this->getRequest()->getParam('id');
             $groupMapper = new GroupMapper();
             $groupMapper->delete($id);

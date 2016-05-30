@@ -268,7 +268,7 @@ function rec($id, $uid, $req, $obj)
                         </div>
                     </article>
 
-                    <?php if($this->getUser()): ?>
+                    <?php if ($this->getUser()): ?>
                         <div class="replyHidden" id="reply_<?=$comment->getId() ?>">
                             <form action="" class="form-horizontal" method="POST">
                                 <?=$this->getTokenField() ?>

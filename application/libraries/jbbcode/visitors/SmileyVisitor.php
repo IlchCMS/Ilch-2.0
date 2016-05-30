@@ -14,7 +14,7 @@ class SmileyVisitor implements \JBBCode\NodeVisitor
 
     function visitDocumentElement(\JBBCode\DocumentElement $documentElement)
     {
-        foreach($documentElement->getChildren() as $child) {
+        foreach ($documentElement->getChildren() as $child) {
             $child->accept($this);
         }
     }

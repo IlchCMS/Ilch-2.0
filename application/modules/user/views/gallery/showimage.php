@@ -58,7 +58,7 @@ function rec($id, $uid, $req, $obj)
         echo '      </div>';
         echo '  </article>';
 
-        if($obj->getUser()) {
+        if ($obj->getUser()) {
             echo '  <div class="replyHidden" id="reply_'.$fk_comment->getId().'">';
             echo '      <form action="" class="form-horizontal" method="POST">';
                             echo $obj->getTokenField();
@@ -154,7 +154,7 @@ function rec($id, $uid, $req, $obj)
 <div class="row">
     <div class="col-md-12">
         <legend class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=$commentsCount ?>)</legend>
-        <?php if($this->getUser()): ?>
+        <?php if ($this->getUser()): ?>
             <div class="reply">
                 <form action="" class="form-horizontal" method="POST">
                     <?=$this->getTokenField() ?>
@@ -230,7 +230,7 @@ function rec($id, $uid, $req, $obj)
                     </div>
                 </article>
 
-                <?php if($this->getUser()): ?>
+                <?php if ($this->getUser()): ?>
                     <div class="replyHidden" id="reply_<?=$comment->getId() ?>">
                         <form action="" class="form-horizontal" method="POST">
                             <?=$this->getTokenField() ?>
@@ -287,7 +287,6 @@ function slideReply(thechosenone) {
             $(this).slideDown(400);
         } else {
             $(this).slideUp(200);
-
             $('.reply').slideUp(200);
         }
     });

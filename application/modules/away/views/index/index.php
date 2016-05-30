@@ -97,8 +97,8 @@ if ($this->getUser()) {
                                 <td style="color: #008000;"><?=$this->getTrans('approved') ?></td>
                             <?php endif; ?>
                             <td>
-                                <?php if($this->getUser()): ?>
-                                    <?php if($userCheck->isAdmin()): ?>
+                                <?php if ($this->getUser()): ?>
+                                    <?php if ($userCheck->isAdmin()): ?>
                                         <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
                                             <?php if ($away->getStatus() == 1): ?>
                                                 <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
@@ -114,7 +114,7 @@ if ($this->getUser()) {
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <?php if($this->getUser()): ?>
+                                <?php if ($this->getUser()): ?>
                                     <?php if ($away->getUserId() == $this->getUser()->getId() OR $userCheck->isAdmin()): ?>
                                         <?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?>
                                     <?php endif; ?>
@@ -135,7 +135,7 @@ if ($this->getUser()) {
     </table>
 </div>
 
-<?php if($this->getUser()): ?>
+<?php if ($this->getUser()): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <legend><?=$this->getTrans('menuEntry'); ?></legend>

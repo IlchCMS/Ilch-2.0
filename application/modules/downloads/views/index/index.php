@@ -9,15 +9,15 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
     $subItems = $downloadsMapper->getDownloadsItemsByParent('1', $item->getId());
     $fileCount = $fileMapper->getCountFileById($item->getId());
     
-    if ($item->getType() === 0){
+    if ($item->getType() === 0) {
         echo '<div class="page-header">
               <h4>'.$obj->getTrans('cat').': '.$item->getTitle().'  <small>'.$item->getDesc().'</small>
               </h4><hr>';
     }
-    if ($item->getType() != 0){
+    if ($item->getType() != 0) {
         $lastFile = $fileMapper->getLastFileByDownloadsId($item->getId()) ;
         $image = '';
-        if($lastFile->getFileImage() != '') {
+        if ($lastFile->getFileImage() != '') {
             $image = $obj->getBaseUrl($lastFile->getFileImage()) ;
         } else {
             $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png') ;

@@ -233,12 +233,13 @@
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
-    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js')?>" charset="UTF-8"></script>
+    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(function()
+{
     $(".form_datetime").datetimepicker({
         format: "dd.mm.yyyy hh:ii",
         autoclose: true,
@@ -258,7 +259,7 @@ $(document).ready(function() {
 
     function diasableXonx()
     {
-        if(document.getElementById('warXonx').value==='neu'){
+        if (document.getElementById('warXonx').value==='neu') {
             document.getElementById("warXonxNew").style.display="block";
             document.getElementById("warXonx").style.margin="0 0 5px";
         } else {
@@ -269,7 +270,7 @@ $(document).ready(function() {
 
     function diasableGame()
     {
-        if(document.getElementById('warGame').value==='neu'){
+        if (document.getElementById('warGame').value==='neu') {
             document.getElementById("warGameNew").style.display="block";
             document.getElementById("warGame").style.margin="0 0 5px";
         } else {
@@ -280,7 +281,7 @@ $(document).ready(function() {
 
     function diasableMatchtype()
     {
-        if(document.getElementById('warMatchtype').value==='neu'){
+        if (document.getElementById('warMatchtype').value==='neu') {
             document.getElementById("warMatchtypeNew").style.display="block";
             document.getElementById("warMatchtype").style.margin="0 0 5px";
         } else {
@@ -289,7 +290,8 @@ $(document).ready(function() {
         }
     };
 
-    function loadGames() {
+    function loadGames()
+    {
         $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/game/id/'.$this->getRequest()->getParam('id').''); ?>');
     };
 });

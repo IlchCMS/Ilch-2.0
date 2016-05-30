@@ -1,3 +1,18 @@
+<style>
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.container-fluid > [class*="col-"] {
+    padding:0;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+</style>
+
 <?php if ($this->get('medias') != ''): ?>
     <?php if ( $this->getRequest()->getParam('type') === 'image' || $this->getRequest()->getParam('type') === 'multi'): ?>
         <?php foreach ($this->get('medias') as $media): ?>
@@ -39,7 +54,7 @@
 
     <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
         <?php foreach ($this->get('medias') as $media): ?>
-            <?php if(in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
+            <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_file')))): ?>
                <div id="<?=$media->getId() ?>" class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
                     <img class="image thumbnail img-responsive"
                          data-url="<?=$media->getUrl() ?>"
@@ -67,55 +82,38 @@
 <?php endif; ?>
 
 <?php if ($this->getRequest()->getParam('type') === 'multi'): ?>
-<script>
-    $(".btn").click(function(){
+    <script>
+    $(".btn").click(function() {
         window.top.$('#MediaModal').modal('hide');
         window.top.reload();
-        
     });
 
-    $( document ).live( "click", "img.image", function() {
+    $(document).live("click", "img.image", function() {
         $(this).closest('div').find('input[type="checkbox"]').click();
         elem = $(this).closest('div').find('img');
-        if(elem.hasClass('chacked')){
+        if (elem.hasClass('chacked')) {
             $(this).closest('div').find('img').removeClass("chacked");
-        }else{
+        } else {
             $(this).closest('div').find('img').addClass("chacked");
         };
     });
-</script>
+    </script>
 <?php endif; ?>
 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
-<script>
-    $(".btn").click(function(){
+    <script>
+    $(".btn").click(function() {
         window.top.$('#MediaModal').modal('hide');
         window.top.reload();
-        
     });
 
-    $( document ).live( "click", "img.image", function() {
+    $(document).live("click", "img.image", function() {
         $(this).closest('div').find('input[type="checkbox"]').click();
         elem = $(this).closest('div').find('img');
-        if(elem.hasClass('chacked')){
+        if (elem.hasClass('chacked')) {
             $(this).closest('div').find('img').removeClass("chacked");
-        }else{
+        } else {
             $(this).closest('div').find('img').addClass("chacked");
         };
     });
-</script>
+    </script>
 <?php endif; ?>
-
-<style>
-    .container-fluid {
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
-    }
-    .container-fluid > [class*="col-"] {
-        padding:0;
-    }
-    *, *:before, *:after {
-        box-sizing: border-box;
-    }
-</style>
