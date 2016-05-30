@@ -67,9 +67,9 @@ class Newtopic extends \Ilch\Controller\Frontend
         $user = $userMapper->getUserById($userId);
         $ids = [0];
 
-        if($user){
+        if ($user) {
             $ids = [];
-            foreach ($user->getGroups() as $us){
+            foreach ($user->getGroups() as $us) {
                 $ids[] = $us->getId();
             }
         }

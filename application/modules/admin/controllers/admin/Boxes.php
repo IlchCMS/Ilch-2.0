@@ -44,7 +44,7 @@ class Boxes extends \Ilch\Controller\Admin
         $boxMapper = new BoxMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_boxes')) {
-            foreach($this->getRequest()->getPost('check_boxes') as $boxId) {
+            foreach ($this->getRequest()->getPost('check_boxes') as $boxId) {
                 $boxMapper->delete($boxId);
             }
         }
@@ -56,8 +56,8 @@ class Boxes extends \Ilch\Controller\Admin
          */
         $user = \Ilch\Registry::get('user');
 
-        foreach($boxes as $key => $box) {
-            if(!$user->hasAccess('box_'.$box->getId())) {
+        foreach ($boxes as $key => $box) {
+            if (!$user->hasAccess('box_'.$box->getId())) {
                 unset($boxes[$key]);
             }
         }
@@ -77,7 +77,7 @@ class Boxes extends \Ilch\Controller\Admin
     {
         $user = \Ilch\Registry::get('user');
 
-        if($user->hasAccess('box_'.$this->getRequest()->getParam('id'))
+        if ($user->hasAccess('box_'.$this->getRequest()->getParam('id'))
                 && $this->getRequest()->isSecure()) {
             $boxMapper = new BoxMapper();
             $boxMapper->delete($this->getRequest()->getParam('id'));
@@ -88,10 +88,10 @@ class Boxes extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
-        if($this->getRequest()->getParam('id') !== null) {
+        if ($this->getRequest()->getParam('id') !== null) {
             $user = \Ilch\Registry::get('user');
 
-            if(!$user->hasAccess('box_'.$this->getRequest()->getParam('id'))) {
+            if (!$user->hasAccess('box_'.$this->getRequest()->getParam('id'))) {
                 $this->redirect(['action' => 'index']);
             }
         }

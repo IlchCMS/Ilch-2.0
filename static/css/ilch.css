@@ -6,13 +6,13 @@
     width: 100%;
 }
 
-#gallery {
+#gallery, #downloads {
     float: none;
     width: 100%;
     display:inline-block;
 }
 
-#gallery img{
+#gallery, #downloads img{
     width: 100%;
     height: auto;
 }
@@ -21,6 +21,7 @@
     padding-left: 15px !important;
     padding-right: 15px !important;
 }
+
 img {
     max-width: 100%;
     height: auto;

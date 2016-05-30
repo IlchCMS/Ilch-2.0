@@ -38,7 +38,7 @@ $date = new \Ilch\Date();
             <div class="maintranceHead"><?=$translator->trans('maintenanceMode') ?></div>
             <div class="countdownHead"><?=$translator->trans('maintenanceTime') ?></div>
             <div class="countdown">
-                <?php if(strtotime($config->get('maintenance_date')) > strtotime($date->format('Y-m-d H:i:00', true))): ?>
+                <?php if (strtotime($config->get('maintenance_date')) > strtotime($date->format('Y-m-d H:i:00', true))): ?>
                     <span id="countdown"></span>
                 <?php else: ?>
                     <div class="countDays">

@@ -58,7 +58,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_faqs')) {
-            foreach($this->getRequest()->getPost('check_faqs') as $faqId) {
+            foreach ($this->getRequest()->getPost('check_faqs') as $faqId) {
                 $faqMapper->delete($faqId);
             }
         }
@@ -95,7 +95,7 @@ class Index extends \Ilch\Controller\Admin
 
             if (empty($question)) {
                 $this->addMessage('missingQuestion', 'danger');
-            } elseif(empty($answer)) {
+            } elseif (empty($answer)) {
                 $this->addMessage('missingAnswer', 'danger');
             } else {
                 $model->setQuestion($question);
@@ -114,7 +114,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function delFaqAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $faqMapper = new FaqMapper();
             $faqMapper->delete($this->getRequest()->getParam('id'));
 

@@ -1,4 +1,18 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
+<style>
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.container-fluid > [class*="col-"] {
+    padding:0;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+</style>
 
 <form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=$this->getRequest()->getParam('id') ?>">
     <?=$this->getTokenField() ?>
@@ -38,23 +52,8 @@
     <?php endif; ?>
 </form>
 
-<style>
-.container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-.container-fluid > [class*="col-"] {
-    padding:0;
-}
-*, *:before, *:after {
-    box-sizing: border-box;
-}
-</style>
-
 <script type="text/javascript">
-$(".btn").click(function(){
+$(".btn").click(function() {
     window.top.$('#MediaModal').modal('hide');
     window.top.reload();
 });
@@ -62,7 +61,7 @@ $(".btn").click(function(){
 $(document).on("click", "img.image", function() {
     $(this).closest('div').find('input[type="checkbox"]').click();
     elem = $(this).closest('div').find('img');
-    if (elem.hasClass('chacked')){
+    if (elem.hasClass('chacked')) {
         $(this).closest('div').find('img').removeClass("chacked");
     } else {
         $(this).closest('div').find('img').addClass("chacked");

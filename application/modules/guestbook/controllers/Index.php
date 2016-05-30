@@ -75,7 +75,7 @@ class Index extends \Ilch\Controller\Frontend
                     Validation::addValidator('same2', '\my\namespace\Validators\Same');
                     Als Vergleich können die bestehenden Validators genommen werden.
             */
-            Validation::addValidator('same2', function($data){
+            Validation::addValidator('same2', function($data) {
                 $validation = $data->getValue() == array_dot($data->getInput(), $data->getParam('as'));
                 return [
                     'result' => $validation,

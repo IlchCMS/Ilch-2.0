@@ -96,7 +96,7 @@ class Comment extends \Ilch\Mapper
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_comments`
-                WHERE `key` LIKE "'.$key.'%" ';
+                WHERE `key` LIKE "'.$key.'%"';
 
         $article = $this->db()->queryCell($sql);
 

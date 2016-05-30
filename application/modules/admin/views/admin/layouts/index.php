@@ -22,7 +22,7 @@
                                 </span>
                                 <span class="pull-right">
                                     <p style="margin-top: 4px;">
-                                        <?php if($layout->getLink() != ''): ?>
+                                        <?php if ($layout->getLink() != ''): ?>
                                         <a href="<?=$layout->getLink() ?>" alt="<?=$this->escape($layout->getAuthor()) ?>" title="<?=$this->escape($layout->getAuthor()) ?>" target="_blank">
                                                 <i><?=$this->escape($layout->getAuthor()) ?></i>
                                             </a>
@@ -42,7 +42,7 @@
                                         <i class="fa fa-square-o fa-2x"></i>
                                     <?php endif; ?>
                                 </a>
-                                <?php if($layout->getModulekey() != ''): ?>
+                                <?php if ($layout->getModulekey() != ''): ?>
                                     <a class="fa-2x" href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>">
                                         <i class="fa fa fa-cogs"></i> Settings
                                     </a>

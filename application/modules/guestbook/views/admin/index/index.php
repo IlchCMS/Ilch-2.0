@@ -2,13 +2,13 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
+        <li <?php if (!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                 <?=$this->getTrans('entrys') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0) : ?>
-            <li <?php if($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
+            <li <?php if ($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                     <?=$this->getTrans('setfree') ?><span class="badge"><?=$this->get('badge') ?></span>
                 </a>
@@ -21,7 +21,7 @@
             <colgroup>
                 <col class="icon_width" />
                 <?php
-                    if($this->getRequest()->getParam('showsetfree')) {
+                    if ($this->getRequest()->getParam('showsetfree')) {
                         echo '<col class="icon_width" />';
                     }
                 ?>
@@ -34,7 +34,7 @@
                 <tr>
                     <th><?=$this->getCheckAllCheckbox('check_entries')?></th>
                     <?php
-                        if($this->getRequest()->getParam('showsetfree')) {
+                        if ($this->getRequest()->getParam('showsetfree')) {
                             echo '<th></th>';
                         }
                     ?>
@@ -49,11 +49,11 @@
                     <tr>
                         <td><input value="<?=$entry->getId()?>" type="checkbox" name="check_entries[]" /></td>
                         <?php
-                            if($this->getRequest()->getParam('showsetfree')) {
+                            if ($this->getRequest()->getParam('showsetfree')) {
                                 echo '<td>';
                                 $freeArray = ['action' => 'setfree', 'id' => $entry->getId()];
 
-                                if($this->get('badge') > 1) {
+                                if ($this->get('badge') > 1) {
                                     $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                                 }
 
@@ -63,7 +63,7 @@
 
                             $deleteArray = ['action' => 'del', 'id' => $entry->getId()];
 
-                            if($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
+                            if ($this->getRequest()->getParam('showsetfree') && $this->get('badge') > 1) {
                                 $deleteArray = ['action' => 'del', 'id' => $entry->getId(), 'showsetfree' => 1];
                             }
                         ?>
@@ -87,7 +87,7 @@
     <?php
     $actions = ['delete' => 'delete'];
 
-    if($this->getRequest()->getParam('showsetfree')) {
+    if ($this->getRequest()->getParam('showsetfree')) {
         $actions = ['delete' => 'delete', 'setfree' => 'setfree'];
     }
 

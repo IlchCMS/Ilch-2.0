@@ -49,41 +49,41 @@
 <?php endif; ?>
 
 <?php if ($this->getRequest()->getParam('type') === 'imageckeditor'): ?>
-<script>
-    $(".image").click(function(){
+    <script>
+    $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-basic','src', '<?=$this->getBaseUrl()?>'+$(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
     });
-</script>
+    </script>
 <?php endif; ?>
 
 <?php if ($this->getRequest()->getParam('type') === 'file' || $this->getRequest()->getParam('type') === 'fileckeditor'): ?>
-<script>
-    $(".image").click(function(){
+    <script>
+    $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-adv','file', '<?=$this->getBaseUrl()?>'+$(this).data('url'));
         dialog.setValueOf('tab-adv','alt', $(this).data('alt'));
         window.top.$('#MediaModal').modal('hide');
     });
-</script>
+    </script>
 <?php endif; ?>
 
 <?php if ($this->getRequest()->getParam('type') === 'media' || $this->getRequest()->getParam('type') === 'videockeditor'): ?>
-<script>
-    $(".image").click(function(){
+    <script>
+    $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-mov','video', '<?=$this->getBaseUrl()?>'+$(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
     });
-</script>
+    </script>
 <?php endif; ?>
 
 <?php if ($this->getRequest()->getParam('type') === 'single'): ?>
-<script>
-    $(".image").click(function(){
+    <script>
+    $(".image").click(function() {
         window.top.$('#selectedImage').val($(this).data('url'));
         window.top.$('#MediaModal').modal('hide');
     });
-</script>
+    </script>
 <?php endif; ?>

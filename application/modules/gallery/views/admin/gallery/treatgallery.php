@@ -50,7 +50,7 @@
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 
-function reload(){
+function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
 };
 </script>

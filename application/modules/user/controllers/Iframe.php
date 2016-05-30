@@ -43,7 +43,6 @@ class Iframe extends \Ilch\Controller\Frontend
         $ilchdate = new IlchDate;
         $mediaMapper = new MediaMapper();
 
-
         $allowedExtensions = $this->getConfig()->get('media_ext_img');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
@@ -63,7 +62,7 @@ class Iframe extends \Ilch\Controller\Frontend
             // Early return if extension is not allowed or file is too big. Should normally already be done client-side.
             // Doing this client-side is especially important for the "file too big"-case as early returning here is already too late.
             $upload->setAllowedExtensions($allowedExtensions);
-            if(!$upload->isAllowedExtension() || filesize($_FILES['upl']['tmp_name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
+            if (!$upload->isAllowedExtension() || filesize($_FILES['upl']['tmp_name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
                 return;
             }
             $upload->upload();
@@ -77,6 +76,5 @@ class Iframe extends \Ilch\Controller\Frontend
             $model->setDatetime($ilchdate->toDb());
             $mediaMapper->save($model);
         }
-
     }
 }

@@ -44,7 +44,7 @@ class Index extends \Ilch\Controller\Admin
         $pageMapper = new PageMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_pages')) {
-            foreach($this->getRequest()->getPost('check_pages') as $pageId) {
+            foreach ($this->getRequest()->getPost('check_pages') as $pageId) {
                 $pageMapper->delete($pageId);
             }
         }
@@ -59,7 +59,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $pageMapper = new PageMapper();
             $pageMapper->delete($this->getRequest()->getParam('id'));
         }

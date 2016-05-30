@@ -1,8 +1,7 @@
-$(function(){
-
+$(function() {
     var ul = $('#upload ul');
 
-    $('#drop a').click(function(){
+    $('#drop a').click(function() {
         // Simulate a click on the file input button
         // to show the file browser dialog
         $(this).parent().find('input').click();
@@ -28,7 +27,7 @@ $(function(){
             if(jQuery.inArray(ext,allowedExtensions) == -1) {
                 // File-extension is not one of the allowed ones
                 tpl.find('p').text(extensionNotAllowed);
-            } else if(data.files[0].size <= maxFileSize) {
+            } else if (data.files[0].size <= maxFileSize) {
                 // Append the file name and file size
                 tpl.find('p').text(data.files[0].name)
                              .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
@@ -42,18 +41,18 @@ $(function(){
             // Initialize the knob plugin
             tpl.find('input').knob();
 
-            if(data.files[0].size > maxFileSize || jQuery.inArray(ext,allowedExtensions) == -1) {
+            if (data.files[0].size > maxFileSize || jQuery.inArray(ext,allowedExtensions) == -1) {
                 return;
             }
 
             // Listen for clicks on the cancel icon
-            tpl.find('span').click(function(){
+            tpl.find('span').click(function() {
 
-                if(tpl.hasClass('working')){
+                if (tpl.hasClass('working')) {
                     jqXHR.abort();
                 }
 
-                tpl.fadeOut(function(){
+                tpl.fadeOut(function() {
                     tpl.remove();
                 });
 
@@ -63,7 +62,7 @@ $(function(){
             var jqXHR = data.submit();
         },
 
-        progress: function(e, data){
+        progress: function(e, data) {
 
             // Calculate the completion percentage of the upload
             var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -72,31 +71,29 @@ $(function(){
             // so that the jQuery knob plugin knows to update the dial
             data.context.find('input').val(progress).change();
             data.context.find('span').addClass('fa fa-spinner');
-            if(progress == 100){
+            if (progress == 100) {
                 data.context.removeClass('working');
                 
             }
         },
 
-        fail:function(e, data){
+        fail:function(e, data) {
             // Something has gone wrong!
             data.context.addClass('error');
             data.context.find('span').removeClass('fa fa-spinner');
             data.context.find('span').addClass('fa fa-bolt');
         },
         
-        done:function(e, data){
+        done:function(e, data) {
             // Something has gone wrong!
             data.context.addClass('finish');
             data.context.find('span').removeClass('fa fa-spinner');
             data.context.find('span').addClass('fa fa-check');
             data.context.find('b').removeClass('suss-none');
             data.context.find('b').addClass('suss');
-            
         }
 
     });
-
 
     // Prevent the default action when a file is dropped on the window
     $(document).on('drop dragover', function (e) {
@@ -119,5 +116,4 @@ $(function(){
 
         return (bytes / 1000).toFixed(2) + ' KB';
     }
-
 });

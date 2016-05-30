@@ -1,6 +1,4 @@
-<?php 
-$settingMapper = new \Modules\User\Mappers\Setting();
-?>
+<?php $settingMapper = $this->get('settingMapper'); ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 <style>
@@ -22,15 +20,17 @@ $settingMapper = new \Modules\User\Mappers\Setting();
 </style>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
+<legend>
+    <?php
+    if ($this->get('event') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
     <?=$this->getTokenField() ?>
-    <legend>
-        <?php if ($this->get('event') != ''): ?>
-            <?=$this->getTrans('edit') ?>
-        <?php else: ?>
-            <?=$this->getTrans('add') ?>
-        <?php endif; ?>
-    </legend>
     <div class="form-group">
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:
@@ -150,17 +150,19 @@ $settingMapper = new \Modules\User\Mappers\Setting();
         </div>
     <?php endif; ?>
     <div style="float: right;">
-        <?php if ($this->get('event') != ''): ?>
-            <?=$this->getSaveBar('edit') ?>
-        <?php else: ?>
-            <?=$this->getSaveBar('add') ?>
-        <?php endif; ?>
+        <?php
+        if ($this->get('event') != '') {
+            echo $this->getSaveBar('edit');
+        } else {
+            echo $this->getSaveBar('add');
+        }
+        ?>
     </div>
 </form>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
-    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js')?>" charset="UTF-8"></script>
+    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -183,15 +185,15 @@ $(document).on('change', '.btn-file :file', function() {
     input.trigger('fileselect', [numFiles, label]);
 });
 
-$(document).ready( function() {
+$(document).ready(function() {
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
         var input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
 
-        if( input.length ) {
+        if (input.length) {
             input.val(log);
         } else {
-            if( log ) alert(log);
+            if (log) alert(log);
         }
     });
 });

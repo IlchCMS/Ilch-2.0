@@ -1,9 +1,9 @@
 <?php if ($this->get('war') != ''): 
     foreach ($this->get('war') as $war):        
-        $warMapper = new \Modules\War\Mappers\War();
+        $warMapper = $this->get('warMapper');
         $warTime = $war->getWarTime();    
         $gameImg = $this->getBaseUrl('application/modules/war/static/img/'.$war->getWarGame().'.png');
-        if($warMapper->url_check($gameImg)){
+        if ($warMapper->url_check($gameImg)) {
             $gameImg = '<img src="'.$this->getBaseUrl('application/modules/war/static/img/'.$war->getWarGame().'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
         } else {
             $gameImg = '<i class="fa fa-question-circle text-muted"></i>';        

@@ -51,11 +51,11 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $partnerMapper = new PartnerMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index']);
 
-        $partnerMapper = new PartnerMapper();
-        
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
                 foreach ($this->getRequest()->getPost('check_entries') as $partnerId) {
@@ -98,6 +98,7 @@ class Index extends \Ilch\Controller\Admin
     public function setfreeAction()
     {
         $partnerMapper = new PartnerMapper();
+
         $model = new PartnerModel();
         $model->setId($this->getRequest()->getParam('id'));
         $model->setFree(1);
@@ -117,15 +118,15 @@ class Index extends \Ilch\Controller\Admin
         $partnerMapper = new PartnerMapper();
 
         if ($this->getRequest()->getParam('id')) {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('partner', $partnerMapper->getPartnerById($this->getRequest()->getParam('id')));
         } else {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuPartner'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -141,9 +142,9 @@ class Index extends \Ilch\Controller\Admin
 
             if (empty($name)) {
                 $this->addMessage('missingName', 'danger');
-            } elseif(empty($link)) {
+            } elseif (empty($link)) {
                 $this->addMessage('missingLink', 'danger');
-            } elseif(empty($banner)) {
+            } elseif (empty($banner)) {
                 $this->addMessage('missingBanner', 'danger');
             } else {
                 $model->setFree(1);

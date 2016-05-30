@@ -29,7 +29,7 @@ class BeforeControllerLoad
             $authTokenMapper = new \Modules\User\Mappers\AuthToken();
             $row = $authTokenMapper->getAuthToken($selector);
 
-            if(!empty($row) && strtotime($row['expires']) >= time()) {
+            if (!empty($row) && strtotime($row['expires']) >= time()) {
                 if (ilch_function_hash_equals($row['token'], hash('sha256', base64_decode($authenticator)))) {
                     $_SESSION['user_id'] = $row['userid'];
                     // A new token is generated, a new hash for the token is stored over the old record, and a new login cookie is issued to the user.
@@ -63,7 +63,7 @@ class BeforeControllerLoad
 
         $request = $pluginData['request'];
 
-        if(!$userId) {
+        if (!$userId) {
             if ($request->getModuleName() == 'user' && !in_array($request->getControllerName(), ['index', 'login', 'regist'])) {
                 $pluginData['controller']->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
             }
@@ -72,19 +72,19 @@ class BeforeControllerLoad
         $userMapper = new UserMapper();
         $user = $userMapper->getUserById($userId);
 
-        if(!is_object($user)) {
+        if (!is_object($user)) {
             // Happens rarely, for example if a user id is saved in the session before reinstalling and the cms got just installed.
             return;
         }
 
-        if($user->isAdmin()) {
+        if ($user->isAdmin()) {
             /*
              * Administrator group should have sight on everything, return here.
              */
             return;
         }
 
-        if($request->isAdmin() && !$user->isAdmin()) {
+        if ($request->isAdmin() && !$user->isAdmin()) {
             /*
              * Not admins have only access to modules.
              */
@@ -95,7 +95,7 @@ class BeforeControllerLoad
             /*
              * Check if user has right for this module.
              */
-            if(!$user->hasAccess('module_'.$request->getModuleName()) && $request->getModuleName() !== 'admin') {
+            if (!$user->hasAccess('module_'.$request->getModuleName()) && $request->getModuleName() !== 'admin') {
                 $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
             }
         }

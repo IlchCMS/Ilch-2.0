@@ -26,11 +26,11 @@ class Index extends \Ilch\Controller\Frontend
 
             if (empty($reason)) {
                 $this->addMessage('missingReason', 'danger');
-            } elseif(empty($start)) {
+            } elseif (empty($start)) {
                 $this->addMessage('missingStart', 'danger');
-            } elseif(empty($end)) {
+            } elseif (empty($end)) {
                 $this->addMessage('missingEnd', 'danger');
-            } elseif(empty($text)) {
+            } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
                 $awayModel->setUserId($this->getUser()->getId());

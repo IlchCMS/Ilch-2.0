@@ -76,7 +76,7 @@ class Menu extends \Ilch\Controller\Admin
                         $menuItem->setHref($item['href']);
                         $menuItem->setTitle($item['title']);
 
-                        if((int)$item['boxkey'] > 0) {
+                        if ((int)$item['boxkey'] > 0) {
                             $menuItem->setBoxId($item['boxkey']);
                         } else {
                             $menuItem->setBoxKey($item['boxkey']);

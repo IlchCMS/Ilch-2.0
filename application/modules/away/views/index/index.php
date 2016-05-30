@@ -30,6 +30,10 @@ if ($this->getUser()) {
 .shortdate {
     font-size: 0.75em; 
 }
+.date {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
 </style>
 
 <legend><?=$this->getTrans('menuAway') ?></legend>
@@ -97,8 +101,8 @@ if ($this->getUser()) {
                                 <td style="color: #008000;"><?=$this->getTrans('approved') ?></td>
                             <?php endif; ?>
                             <td>
-                                <?php if($this->getUser()): ?>
-                                    <?php if($userCheck->isAdmin()): ?>
+                                <?php if ($this->getUser()): ?>
+                                    <?php if ($userCheck->isAdmin()): ?>
                                         <?php if ($away->getStart() >= date('Y-m-d') OR $away->getEnd() >= date('Y-m-d')): ?>
                                             <?php if ($away->getStatus() == 1): ?>
                                                 <a href="<?=$this->getUrl(['action' => 'update', 'id' => $away->getId()], null, true) ?>">
@@ -114,7 +118,7 @@ if ($this->getUser()) {
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <?php if($this->getUser()): ?>
+                                <?php if ($this->getUser()): ?>
                                     <?php if ($away->getUserId() == $this->getUser()->getId() OR $userCheck->isAdmin()): ?>
                                         <?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?>
                                     <?php endif; ?>
@@ -135,7 +139,7 @@ if ($this->getUser()) {
     </table>
 </div>
 
-<?php if($this->getUser()): ?>
+<?php if ($this->getUser()): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <legend><?=$this->getTrans('menuEntry'); ?></legend>
@@ -195,9 +199,9 @@ if ($this->getUser()) {
     </form>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
-    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js')?>" charset="UTF-8"></script>
+    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script type="text/javascript">
 $(document).ready(function() {

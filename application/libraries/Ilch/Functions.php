@@ -27,10 +27,10 @@ function debug_backtrace_html()
 {
     $r = '';
 
-    foreach(debug_backtrace() as $t) {
+    foreach (debug_backtrace() as $t) {
         $r .= "\t".'@ ';
 
-        if(isset($t['file'])) {
+        if (isset($t['file'])) {
             $r .= basename($t['file']) . ':' . $t['line'];
         } else {
             $r .= '<PHP inner-code>';
@@ -38,13 +38,13 @@ function debug_backtrace_html()
 
         $r .= ' -- ';
 
-        if(isset($t['class'])) {
+        if (isset($t['class'])) {
             $r .= $t['class'] . $t['type'];
         }
 
         $r .= $t['function'];
 
-        if(isset($t['args']) && sizeof($t['args']) > 0) {
+        if (isset($t['args']) && sizeof($t['args']) > 0) {
           $r .= '(...)';
         } else {
             $r .= '()';
@@ -141,7 +141,7 @@ function array_dot_set(&$array, $key, $value)
         // If the key doesn't exist at this depth, we will just create an empty array
         // to hold the next value, allowing us to create the arrays to hold final
         // values at the correct depth. Then we'll keep digging into the array.
-        if (! isset($array[$key]) || ! is_array($array[$key])) {
+        if (!isset($array[$key]) || ! is_array($array[$key])) {
             $array[$key] = [];
         }
 
@@ -188,16 +188,12 @@ function url_get_contents($url) {
 
 function ilch_function_hash_equals($str1, $str2)
 {
-    if(strlen($str1) != strlen($str2))
-    {
+    if (strlen($str1) != strlen($str2)) {
         return false;
-    }
-    else
-    {
+    } else {
         $res = $str1 ^ $str2;
         $ret = 0;
-        for($i = strlen($res) - 1; $i >= 0; $i--)
-        {
+        for ($i = strlen($res) - 1; $i >= 0; $i--) {
             $ret |= ord($res[$i]);
         }
         return !$ret;

@@ -83,13 +83,13 @@ $errors = $this->get('errors');
 
 <script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
 <script>
-$('#usage').change(function(){
+$('#usage').change(function() {
     $('#modulesContent').load('<?=$this->getUrl(['action' => 'ajaxconfig']) ?>/type/'+$('#usage').val());
 });
 
 $('#modulesContent').load('<?=$this->getUrl(['action' => 'ajaxconfig']) ?>/type/'+$('#usage').val());
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('#adminPassword').pStrength({
         'bind': 'keyup change', // When bind event is raised, password will be recalculated;
         'changeBackground': true, // If true, the background of the element will be changed according with the strength of the password;

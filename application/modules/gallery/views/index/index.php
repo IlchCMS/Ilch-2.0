@@ -8,13 +8,13 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     $subItems = $galleryMapper->getGalleryItemsByParent('1', $item->getId());
     $imageCount = $imageMapper->getCountImageById($item->getId());
 
-    if ($item->getType() === 0){
+    if ($item->getType() === 0) {
         echo '<div class="page-header">
               <h4>'.$obj->getTrans('cat').': '.$item->getTitle().' <small>'.$item->getDesc().'</small>
               </h4><hr>';
     }
 
-    if ($item->getType() != 0){
+    if ($item->getType() != 0) {
         $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
 
         if ($lastImage->getImageThumb() != '') {

@@ -1,4 +1,4 @@
-<?php if($this->getUser() == null): ?>
+<?php if ($this->getUser() == null): ?>
     <legend><?=$this->getTrans('menuLogin') ?></legend>
     <form class="form-horizontal" action="" method="post">
         <?=$this->getTokenField() ?>

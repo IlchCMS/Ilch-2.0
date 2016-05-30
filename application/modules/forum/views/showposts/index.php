@@ -14,7 +14,7 @@ if ($this->getUser()) {
     <div id="forum">
         <h3><?=$topicpost->getTopicTitle() ?></h3>
         <div class="topic-actions">
-            <?php if($this->getUser()): ?>
+            <?php if ($this->getUser()): ?>
                 <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
                     <div class="buttons">
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
@@ -102,7 +102,7 @@ if ($this->getUser()) {
             </div>
         <?php endforeach; ?>
         <div class="topic-actions">
-            <?php if($this->getUser()): ?>
+            <?php if ($this->getUser()): ?>
                 <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
                     <div class="buttons">
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
@@ -133,11 +133,12 @@ if ($this->getUser()) {
 <?php endif; ?>
 
 <script>
-$(document).ready(function(){
-	$('a[href^="#"]').on('click',function (e) {
-	    e.preventDefault();
+$(document).ready(function() {
+    $('a[href^="#"]').on('click',function (e) {
+        e.preventDefault();
 
-	    var target = this.hash;
-	    var $target = $(target);
-        });
+        var target = this.hash;
+        var $target = $(target);
+    });
+});
 </script>

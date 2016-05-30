@@ -14,7 +14,7 @@ class Ajax extends \Ilch\Controller\Frontend
     {
         $this->getLayout()->setFile('modules/admin/layouts/ajax');
 
-        if($this->getUser()){
+        if ($this->getUser()) {
             $unread = '';
             $dialogCheck = new DialogMapper();
             $dialogs = $dialogCheck->getDialog($this->getUser()->getId());
@@ -22,10 +22,11 @@ class Ajax extends \Ilch\Controller\Frontend
             if (!empty($dialogs)) {
                 foreach ($dialogs as $dialog) {
                     $dialogsUnread = $dialogCheck->getReadLastOneDialog($dialog->getCId());
-                    if($dialogsUnread and $dialogsUnread->getUserOne() != $this->getUser()->getId()) {
+                    if ($dialogsUnread and $dialogsUnread->getUserOne() != $this->getUser()->getId()) {
                         $unread .= true;
                     }
                 }
+
                 $this->getView()->set('dialogUnread', $unread);
             }
         }

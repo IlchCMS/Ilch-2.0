@@ -59,9 +59,9 @@ class Validation
     {
         $availableValidators = self::getValidators();
 
-        foreach($this->rules as $field => $rules) {
+        foreach ($this->rules as $field => $rules) {
             // Iterating over the rules
-            foreach(explode("|", $rules) as $rule) {
+            foreach (explode("|", $rules) as $rule) {
                 // Iterating over the rules of that field
                 if (strpos($rule, ",") === false) {
                     $vRule = $rule;
@@ -73,7 +73,7 @@ class Validation
 
                     $vParams = [];
 
-                    foreach($params as $param) {
+                    foreach ($params as $param) {
                         if (strpos($rule, ":") === false) {
                             $vParams[] = trim($param);
                         } else {
@@ -129,15 +129,15 @@ class Validation
      */
     public function getErrors(\Ilch\Translator $translator)
     {
-        if(empty($this->errors))
+        if (empty($this->errors))
             return null;
 
         $errorMessages = [];
         $validationErrors = [];
 
-        foreach($this->errors as $errors) {
-            if(!$this->breakChain) {
-                foreach($errors as $error) {
+        foreach ($this->errors as $errors) {
+            if (!$this->breakChain) {
+                foreach ($errors as $error) {
                     $validationErrors[] = $error;
                 }
             } else {
@@ -145,12 +145,12 @@ class Validation
             }
         }
 
-        foreach($validationErrors as $error) {
+        foreach ($validationErrors as $error) {
 
             $params = [];
 
-            foreach($error->getParams() as $param) {
-                if($param['translate'] === true) {
+            foreach ($error->getParams() as $param) {
+                if ($param['translate'] === true) {
                     $params[] = $translator->trans($param['value']);
                 } else {
                     $params[] = $param['value'];

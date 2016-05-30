@@ -5,7 +5,7 @@ CKEDITOR.plugins.add( 'ilchps', {
     init: function ( editor ) {
         editor.addCommand('ps',
         {
-            exec: function(editor){
+            exec: function(editor) {
                 var previewstop = '[PREVIEWSTOP]';
                 editor.insertHtml(previewstop);
             }

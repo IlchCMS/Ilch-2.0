@@ -69,33 +69,33 @@
 </div>
 
 <script>
-    document.getElementById('button-duplicater').onclick = duplicate;
-    document.getElementById('button-remover').onclick = remove;
+document.getElementById('button-duplicater').onclick = duplicate;
+document.getElementById('button-remover').onclick = remove;
 
-    var i = 0;
-    var original = document.getElementById('duplicater');
+var i = 0;
+var original = document.getElementById('duplicater');
 
-    function duplicate()
-    {
-        var clone = original.cloneNode(true); // "deep" clone
-        clone.id = "duplicetor" + ++i; // there can only be one element with an ID
-        var dup = original.parentNode.appendChild(clone);
-        $("#duplicater").after(dup);
-    }
+function duplicate()
+{
+    var clone = original.cloneNode(true); // "deep" clone
+    clone.id = "duplicetor" + ++i; // there can only be one element with an ID
+    var dup = original.parentNode.appendChild(clone);
+    $("#duplicater").after(dup);
+}
 
-    function remove()
-    {
-        var node = document.getElementById('dup');
-        if (node.hasChildNodes()){
-            if (node.childNodes.length > '2'){
-             node.removeChild(node.lastChild);
-            }
+function remove()
+{
+    var node = document.getElementById('dup');
+    if (node.hasChildNodes()) {
+        if (node.childNodes.length > '2') {
+         node.removeChild(node.lastChild);
         }
     }
+}
 
-    function del(event)
-    {
-        var mapid = event.currentTarget.id;
-        $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/del/id/'.$this->getRequest()->getParam('id').'/mapid/') ?>'+mapid);
-    }
+function del(event)
+{
+    var mapid = event.currentTarget.id;
+    $('#games').load('<?=$this->getUrl('index.php/admin/war/ajax/del/id/'.$this->getRequest()->getParam('id').'/mapid/') ?>'+mapid);
+}
 </script>
