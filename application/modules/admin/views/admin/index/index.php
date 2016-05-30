@@ -1,5 +1,3 @@
-<script src="<?=ILCH_SERVER.'/versions/latest.txt' ?>"></script>
-
 <?php if($this->getUser()->getFirstName() != ''): ?>
     <?php $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName(); ?>
 <?php else: ?>
@@ -11,13 +9,11 @@
 <br /><br /><br />
 <h3>
     <?=$this->getTrans('system') ?>
-    <script>
-    if (version == '<?=VERSION ?>') {
-        document.write('<span class="label label-success"><?=$this->getTrans('upToDate') ?></span>');
-    } else {
-        document.write('<span class="label label-danger"><?=$this->getTrans('notUpToDate') ?></span>');
-    }
-    </script>
+    <?php if ($this->get('foundNewVersions')) : ?>
+        <span class="label label-danger"><?=$this->getTrans('notUpToDate') ?></span>
+    <?php else: ?>
+        <span class="label label-success"><?=$this->getTrans('upToDate') ?></span>
+    <?php endif; ?>
 </h3>
 <br />
 <table class="table">
@@ -27,16 +23,16 @@
     </tr>
     <tr>
         <td><?=$this->getTrans('serverVersion') ?></td>
-        <td><script>document.write(version);</script></td>
+        <td><?=$this->get('newVersion') ?></td>
     </tr>
+    <?php if ($this->get('foundNewVersions')) : ?>
     <tr>
         <td></td>
         <td>
-            <script>
-            if (version > '<?=VERSION ?>') {
-                document.write('<a href="aktuallisieren"><?=$this->getTrans('updateNow') ?></a>');
-            }
-            </script>
+            <!-- TODO: Remove this message when the update function is going live. -->
+            Update function is not yet running in current stage of development.<br />
+            <a href="<?=$this->getUrl(['controller' => 'update', 'action' => 'index'])?>"><?=$this->getTrans('updateNow') ?></a>
         </td>
     </tr>
+    <?php endif; ?>
 </table>

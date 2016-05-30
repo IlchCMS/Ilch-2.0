@@ -70,7 +70,7 @@ return
     'search' => 'Search',
     'go' => 'Go',
     'welcomeBack' => 'Welcome back %s',
-    'welcomeBackDescripton' => 'To find your target, please choose on the top menu or on the search on the left top corner',
+    'welcomeBackDescripton' => 'To find your target, please choose on the top menu or on the search on the top right corner',
     'validateRequired' => 'This field is required.',
     'validateEmail' => 'Please enter a valid email address.',
     'ack' => 'Confirm',
