@@ -22,7 +22,7 @@
             <td>"/updates"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
-                <?php if (is_writable(APPLICATION_PATH.'/../updates/')): ?>
+                <?php if (is_writable(ROOT_PATH.'/updates/')): ?>
                     <span class="text-success"><?=$this->getTrans('writable') ?></span>
                 <?php else: ?>
                     <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -33,7 +33,7 @@
             <td>"/.htaccess"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
-                <?php if (is_writable(APPLICATION_PATH.'/../.htaccess')): ?>
+                <?php if (is_writable(ROOT_PATH.'/.htaccess')): ?>
                     <span class="text-success"><?=$this->getTrans('writable') ?></span>
                 <?php else: ?>
                     <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -88,7 +88,7 @@
             <td>"/certificate"</td>
             <td class="text-success"><?=$this->getTrans('writable') ?></td>
             <td>
-                <?php if (is_writable(APPLICATION_PATH.'/../certificate/')): ?>
+                <?php if (is_writable(ROOT_PATH.'/certificate/')): ?>
                     <span class="text-success"><?=$this->getTrans('writable') ?></span>
                 <?php else: ?>
                     <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -110,9 +110,9 @@
             <td><?=$this->getTrans('certificate') ?></td>
             <td class="text-success"><?=$this->getTrans('existing') ?></td>
             <td>
-                <?php if (file_exists(APPLICATION_PATH.'/../certificate/Certificate.crt')): ?>
+                <?php if (file_exists(ROOT_PATH.'/certificate/Certificate.crt')): ?>
                     <?php if (extension_loaded('openssl')): ?>
-                        <?php $public_key = file_get_contents(APPLICATION_PATH.'/../certificate/Certificate.crt');
+                        <?php $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
                         $certinfo = openssl_x509_parse($public_key);
                         $validTo = $certinfo['validTo_time_t'];
                         if ($validTo < time()): ?>

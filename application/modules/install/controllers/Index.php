@@ -83,7 +83,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function licenseAction()
     {
-        $this->getView()->set('licenceText', file_get_contents(APPLICATION_PATH.'/../licence.txt'));
+        $this->getView()->set('licenceText', file_get_contents(ROOT_PATH.'/licence.txt'));
 
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('licenceAccepted')) {
@@ -107,11 +107,11 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableConfig'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/../updates/')) {
+        if (!is_writable(ROOT_PATH.'/updates/')) {
             $errors['writableUpdates'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/../.htaccess')) {
+        if (!is_writable(ROOT_PATH.'/.htaccess')) {
             $errors['writableHtaccess'] = true;
         }
 
@@ -127,7 +127,7 @@ class Index extends \Ilch\Controller\Frontend
              $errors['writableAvatar'] = true;
         }
 
-        if (!is_writable(APPLICATION_PATH.'/../certificate/')) {
+        if (!is_writable(ROOT_PATH.'/certificate/')) {
              $errors['writableCertificate'] = true;
         }
 
@@ -136,9 +136,9 @@ class Index extends \Ilch\Controller\Frontend
             $errors['expiredCertUnknown'] = true;
         }
 
-        if (file_exists(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+        if (file_exists(ROOT_PATH.'/certificate/Certificate.crt')) {
             if(!array_key_exists('opensslExtensionMissing', $errors)) {
-                 $public_key = file_get_contents(APPLICATION_PATH.'/../certificate/Certificate.crt');
+                 $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
                  $certinfo = openssl_x509_parse($public_key);
                  $validTo = $certinfo['validTo_time_t'];
                  if ($validTo < time()) {

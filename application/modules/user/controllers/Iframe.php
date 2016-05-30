@@ -47,13 +47,13 @@ class Iframe extends \Ilch\Controller\Frontend
         $allowedExtensions = $this->getConfig()->get('media_ext_img');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
-        if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath'))) {
+        if (!is_writable(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
         }
 
         if ($this->getRequest()->isPost()) {
-            if (!is_dir(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId())) {
-                mkdir(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId(), 0777);
+            if (!is_dir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId())) {
+                mkdir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId(), 0777);
             }
 
             $upload = new \Ilch\Upload();
