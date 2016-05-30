@@ -39,7 +39,7 @@
 <div id="gallery">
     <?php
     foreach ($this->get('file') as $file):
-    $comments = $commentMapper->getCommentsByKey('downloads/index/showfile/downloads/'.$this->getRequest()->getParam('id').'/id/'.$file->getId());
+    $commentsCount = $commentMapper->getCountComments('downloads/index/showfile/downloads/'.$this->getRequest()->getParam('id').'/id/'.$file->getId());
     $image = '';
     if ($file->getFileImage() != '') {
         $image = $this->getBaseUrl($file->getFileImage());
@@ -55,7 +55,7 @@
                     </a>
                 </div>
                 <div class="panel-footer text-center">
-                    <i class="fa fa-comment-o"></i> <?=count($comments) ?>
+                    <i class="fa fa-comment-o"></i> <?=$commentsCount ?>
                     <i class="fa fa-eye"> <?=$file->getVisits() ?></i>
                 </div>
             </div>

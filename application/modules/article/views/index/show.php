@@ -104,7 +104,7 @@ function rec($id, $uid, $req, $obj)
                                             <p>
                                                 <textarea class="form-control"
                                                           accesskey=""
-                                                          name="article_comment_text"
+                                                          name="comment_text"
                                                           style="resize: vertical"
                                                           required></textarea>
                                             </p>
@@ -220,7 +220,7 @@ function rec($id, $uid, $req, $obj)
                                                 <p>
                                                     <textarea class="form-control"
                                                               accesskey=""
-                                                              name="article_comment_text"
+                                                              name="comment_text"
                                                               style="resize: vertical"
                                                               required></textarea>
                                                 </p>
@@ -296,7 +296,7 @@ function rec($id, $uid, $req, $obj)
                                                     <p>
                                                         <textarea class="form-control"
                                                                   accesskey=""
-                                                                  name="article_comment_text"
+                                                                  name="comment_text"
                                                                   style="resize: vertical"
                                                                   required></textarea>
                                                     </p>

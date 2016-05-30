@@ -45,7 +45,6 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();
-
             $commentModel = new CommentModel();
             if ($this->getRequest()->getPost('fkId')) {                
                 $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id').'/id_c/'.$this->getRequest()->getPost('fkId'));
@@ -53,7 +52,7 @@ class Index extends \Ilch\Controller\Frontend
             } else {
                 $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id'));                
             }
-            $commentModel->setText($this->getRequest()->getPost('article_comment_text'));
+            $commentModel->setText($this->getRequest()->getPost('comment_text'));
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
@@ -84,28 +83,25 @@ class Index extends \Ilch\Controller\Frontend
 
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
-            $comments = $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
 
+            $this->getLayout()->set('metaTitle', $article->getTitle());
+            $this->getLayout()->set('metaDescription', $article->getDescription());
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index'])
                     ->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $articlesCats->getId()])
                     ->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
-            
+
             $articleModel->setId($article->getId());
             $articleModel->setVisits($article->getVisits() + 1);
             $articleMapper->saveVisits($articleModel);
-
-            $this->getLayout()->set('metaTitle', $article->getTitle());
-            $this->getLayout()->set('metaDescription', $article->getDescription());
-
 
             $this->getView()->set('categoryMapper', $categoryMapper);
             $this->getView()->set('commentMapper', $commentMapper);
             $this->getView()->set('userMapper', $userMapper);
             $this->getView()->set('config', $config);
             $this->getView()->set('article', $article);
-            $this->getView()->set('comments', $comments);
+            $this->getView()->set('comments', $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id')));
         }
     }
 }

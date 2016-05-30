@@ -30,6 +30,10 @@ if ($this->getUser()) {
 .shortdate {
     font-size: 0.75em; 
 }
+.date {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
 </style>
 
 <legend><?=$this->getTrans('menuAway') ?></legend>
@@ -195,9 +199,9 @@ if ($this->getUser()) {
     </form>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js')?>" charset="UTF-8"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
-    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js')?>" charset="UTF-8"></script>
+    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <script type="text/javascript">
 $(document).ready(function() {

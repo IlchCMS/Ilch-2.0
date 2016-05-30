@@ -8,9 +8,9 @@ namespace Modules\Downloads\Controllers;
 
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
 use Modules\Downloads\Mappers\File as FileMapper;
+use Modules\Downloads\Models\File as FileModel;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Comment\Models\Comment as CommentModel;
-use Modules\Downloads\Models\File as FileModel;
 use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
@@ -55,33 +55,17 @@ class Index extends \Ilch\Controller\Frontend
 
     public function showFileAction() 
     {
-        $commentMapper = new CommentMapper;
-        $fileMapper = new FileMapper();
         $downloadsMapper = new DownloadsMapper();
+        $fileMapper = new FileMapper();
+        $commentMapper = new CommentMapper;
         $userMapper = new UserMapper();
+        $config = \Ilch\Registry::get('config');
 
         $id = $this->getRequest()->getParam('id');
         $downloadsId = $this->getRequest()->getParam('downloads');
-
-        if ($this->getRequest()->getPost('downloads_comment_text')) {
-            $commentModel = new CommentModel();
-            $commentModel->setKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
-            $commentModel->setText($this->getRequest()->getPost('downloads_comment_text'));
-
-            $date = new \Ilch\Date();
-            $commentModel->setDateCreated($date);
-            $commentModel->setUserId($this->getUser()->getId());
-            $commentMapper->save($commentModel);
-        }
-
         $downloads = $downloadsMapper->getDownloadsById($downloadsId);
-        $comments = $commentMapper->getCommentsByKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
         $file = $fileMapper->getFileById($id);
-
-        $model = new FileModel();
-        $model->setFileId($file->getFileId());
-        $model->setVisits($file->getVisits() + 1);
-        $fileMapper->saveVisits($model);
+        $comments = $commentMapper->getCommentsByKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('downloads').' - '.$this->getTranslator()->trans('file').' - '.$file->getFileTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$file->getFileDesc());
@@ -90,7 +74,29 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($downloads->getTitle(), ['action' => 'show', 'id' => $downloadsId])
                 ->add($file->getFileTitle(), ['action' => 'showfile', 'downloads' => $downloadsId, 'id' => $id]);
 
+        $model = new FileModel();
+        $model->setFileId($file->getFileId());
+        $model->setVisits($file->getVisits() + 1);
+        $fileMapper->saveVisits($model);
+
+        if ($this->getRequest()->getPost('saveComment')) {
+            $date = new \Ilch\Date();
+            $commentModel = new CommentModel();
+            if ($this->getRequest()->getPost('fkId')) {
+                $commentModel->setKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
+                $commentModel->setFKId($this->getRequest()->getPost('fkId'));
+            } else {
+                $commentModel->setKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
+            }
+            $commentModel->setText($this->getRequest()->getPost('comment_text'));
+            $commentModel->setDateCreated($date);
+            $commentModel->setUserId($this->getUser()->getId());
+            $commentMapper->save($commentModel);
+        }
+
+        $this->getView()->set('commentMapper', $commentMapper);
         $this->getView()->set('userMapper', $userMapper);
+        $this->getView()->set('config', $config);
         $this->getView()->set('file', $fileMapper->getFileById($id));
         $this->getView()->set('comments', $comments);
     }
