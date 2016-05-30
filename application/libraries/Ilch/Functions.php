@@ -199,3 +199,23 @@ function ilch_function_hash_equals($str1, $str2)
         return !$ret;
     }
 }
+
+function var_export_short_syntax($var, $indent="") {
+    switch (gettype($var)) {
+        case "string":
+            return '"' . addcslashes($var, "\\\$\"\r\n\t\v\f") . '"';
+        case "array":
+            $indexed = array_keys($var) === range(0, count($var) - 1);
+            $r = [];
+            foreach ($var as $key => $value) {
+                $r[] = "$indent    "
+                    . ($indexed ? "" : var_export_short_syntax($key) . " => ")
+                    . var_export_short_syntax($value, "$indent    ");
+            }
+            return "[\n" . implode(",\n", $r) . "\n" . $indent . "]";
+        case "boolean":
+            return $var ? "TRUE" : "FALSE";
+        default:
+            return var_export($var, TRUE);
+    }
+}
