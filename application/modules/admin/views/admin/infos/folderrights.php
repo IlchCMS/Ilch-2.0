@@ -37,7 +37,7 @@
                 </td>
             </tr>
             <tr>
-                <td>"/updates"</td>
+                <td>"/updates/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
                     <?php if (is_writable(ROOT_PATH.'/updates/')): ?>
@@ -48,7 +48,7 @@
                 </td>
             </tr>
             <tr>
-                <td>"/certificate"</td>
+                <td>"/certificate/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
                     <?php if (is_writable(ROOT_PATH.'/certificate/')): ?>

@@ -27,6 +27,12 @@ class Infos extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'folderrights'])
             ],
             [
+                'name' => 'menuCertificate',
+                'active' => false,
+                'icon' => 'fa fa-key',
+                'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'certificate'])
+            ],
+            [
                 'name' => 'menuKeyboardShortcuts',
                 'active' => false,
                 'icon' => 'fa fa-keyboard-o',
@@ -36,8 +42,10 @@ class Infos extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getActionName() == 'folderrights') {
             $items[1]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'certificate') {
+            $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'shortcuts') {
-            $items[2]['active'] = true; 
+            $items[3]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -88,6 +96,24 @@ class Infos extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('hmenuFolderRights'), ['action' => 'folderrights']);
 
         $this->getView()->set('folderrights', $InfosMapper->getModulesFolderRights());
+    }
+
+    public function certificateAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('hmenuCertificate'), ['action' => 'certificate']);
+
+        if (!is_file(ROOT_PATH.'/certificate/Certificate.crt')) {
+            return;
+        }
+
+        $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
+        $pubkey = openssl_pkey_get_public(file_get_contents(ROOT_PATH.'/certificate/Certificate.crt'));
+        $public_key_arr = openssl_pkey_get_details($pubkey);
+
+        $this->getView()->set('certificateKeysize', isset($public_key_arr['bits'])? $public_key_arr['bits'] : 0);
+        $this->getView()->set('certificate', openssl_x509_parse($public_key));
     }
 
     public function shortcutsAction()
