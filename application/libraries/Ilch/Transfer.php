@@ -303,7 +303,7 @@ class Transfer
      */
     public function validateCert($certificate)
     {
-        if (!is_file(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+        if (!is_file(ROOT_PATH.'/certificate/Certificate.crt')) {
             return false;
         }
 
