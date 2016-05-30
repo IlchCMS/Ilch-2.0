@@ -30,7 +30,7 @@ return
     'title' => 'Title',
     'type' => 'Type',
     'downloadsItemAdd' => 'Append',
-    'menuGalleryOverview' => 'Downloads Overview',
+    'menuDownloadsOverview' => 'Downloads Overview',
     'comments' => 'Comments',
     'submit' => 'Save',
     'file' => 'File',

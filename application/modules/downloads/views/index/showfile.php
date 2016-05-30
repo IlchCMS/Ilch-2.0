@@ -11,7 +11,7 @@ if ($file->getFileImage() != '') {
 ?>
 
 <style>
-hr{
+hr {
     margin-top: 0px !important;
 }
 </style>
@@ -53,7 +53,7 @@ hr{
     </form>
 <?php endif; ?>
 <div class="comments-gallery">
-    <h4><?=$this->getTrans('comments')?><?='('.count($comments).')'?></h4>
+    <h4><?=$this->getTrans('comments')?><?='('.count($comments).')' ?></h4>
     <?php foreach ($comments as $comment): ?>
         <?php $user = $userMapper->getUserById($comment->getUserId()); ?>
         <div class="comment-heading">
