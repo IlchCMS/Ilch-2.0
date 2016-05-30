@@ -89,9 +89,9 @@ class Settings extends \Ilch\Controller\Admin
     RewriteRule . %1$s/index.php [L]
 </IfModule>
 HTACCESS;
-                file_put_contents(APPLICATION_PATH.'/../.htaccess', sprintf($htaccess, REWRITE_BASE));
-            } elseif(file_exists(APPLICATION_PATH.'/../.htaccess')) {
-                file_put_contents(APPLICATION_PATH.'/../.htaccess', '');
+                file_put_contents(ROOT_PATH.'/.htaccess', sprintf($htaccess, REWRITE_BASE));
+            } elseif(file_exists(ROOT_PATH.'/.htaccess')) {
+                file_put_contents(ROOT_PATH.'/.htaccess', '');
             }
 
             $this->addMessage('saveSuccess');

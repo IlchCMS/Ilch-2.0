@@ -83,7 +83,7 @@ class Index extends \Ilch\Controller\Frontend
 
     public function licenseAction()
     {
-        $this->getView()->set('licenceText', file_get_contents(APPLICATION_PATH.'/../licence.txt'));
+        $this->getView()->set('licenceText', file_get_contents(ROOT_PATH.'/licence.txt'));
 
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('licenceAccepted')) {

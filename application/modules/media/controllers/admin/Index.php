@@ -104,7 +104,7 @@ class Index extends \Ilch\Controller\Admin
         $allowedExtensions = $this->getConfig()->get('media_ext_img').' '.$this->getConfig()->get('media_ext_file').' '.$this->getConfig()->get('media_ext_video');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
-        if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('media_uploadpath'))) {
+        if (!is_writable(ROOT_PATH.'/'.$this->getConfig()->get('media_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
         }
 
