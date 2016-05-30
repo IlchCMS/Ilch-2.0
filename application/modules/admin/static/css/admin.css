@@ -251,6 +251,7 @@ hr {
 }
 .clickable {
     cursor: pointer;
+    margin-top: -20px !important;
 }
 .cke_button__ilchmedia_label, .cke_button__ilchps_label {
     display: inline !important;

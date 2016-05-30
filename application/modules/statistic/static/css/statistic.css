@@ -47,8 +47,9 @@
     transition: width 4s ease-in-out !important;
 }
 
-.clickable{
+.clickable {
     cursor: pointer;
+    margin-top: -20px !important;
 }
 
 .panel-heading span {
