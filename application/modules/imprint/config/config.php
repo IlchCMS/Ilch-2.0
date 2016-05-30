@@ -99,4 +99,9 @@ class Config extends \Ilch\Config\Install
                 INSERT INTO `[prefix]_imprint` (`paragraph`, `name`, `address`, `city`) VALUES
                 ("Angaben gemäß § 5 TMG:", "Max Mustermann", "Musterstraße 111", "12345 Musterhausen");';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

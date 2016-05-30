@@ -62,4 +62,9 @@ class Config extends \Ilch\Config\Install
                 ("newsletter/index/settings", "de_DE", "Hier kannst du deine Newsletter Einstellungen bearbeiten.", "Newsletter"),
                 ("newsletter/index/settings", "en_EN", "Here you can manage your Newsletter settings.", "Newsletter");';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

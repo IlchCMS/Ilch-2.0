@@ -55,4 +55,9 @@ class Config extends \Ilch\Config\Install
                 ("Datenschutzerklärung für die Nutzung von Piwik", "", "http://www.e-recht24.de/muster-datenschutzerklaerung.html", "<p>Diese Webseite nutzt den Open-Source-Webanalysedienst Piwik. Piwik verwendet sog. \"Cookies\", Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglicht.</p><p>Auf dieser Webseite  werden die IP-Adressen anonymisiert, so dass kein Rückschluss auf eine Person möglich ist. Die von Piwik erfassten Daten werden nicht und niemals auf andere Server übertragen oder an Dritte weitergegeben, sondern in anonymisierter Form dazu verwendet, unser Angebot zu verbessern. Sie können die Installation der Cookies durch eine entsprechende Einstellung Ihrer Browser Software unterbinden; Sofern Ihr Browser die \"Do-Not-Track\"-Technik unterstützt und Sie diese aktiviert haben, wird ihr Besuch automatisch ignoriert.</p><p>Durch die Nutzung dieser Website erklären Sie sich mit der Verarbeitung der über Sie erhobenen Daten durch Piwik in der zuvor beschriebenen Art und Weise und zu dem zuvor benannten Zweck einverstanden.</p><p>Weitere Informationen zu Piwik finden Sie unter <a href=\"http://piwik.org\" target=\"_blank\">http://piwik.org</a></p>", 0),
                 ("Auskunft, Löschung, Sperrung", "", "http://www.e-recht24.de/muster-datenschutzerklaerung.html", "<p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit über die im Impressum angegeben Adresse des Webseitenbetreibers an uns wenden.</p>", 0);';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }
