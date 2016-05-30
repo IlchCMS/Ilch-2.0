@@ -73,8 +73,8 @@ class Update extends \Ilch\Controller\Admin
         $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
-            $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
-            $update->setDownloadSignatureUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip-signature.sig');
+            $update->setDownloadUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip');
+            $update->setDownloadSignatureUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
