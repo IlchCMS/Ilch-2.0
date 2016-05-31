@@ -27,6 +27,12 @@ class Infos extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'folderrights'])
             ],
             [
+                'name' => 'menuCertificate',
+                'active' => false,
+                'icon' => 'fa fa-key',
+                'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'certificate'])
+            ],
+            [
                 'name' => 'menuKeyboardShortcuts',
                 'active' => false,
                 'icon' => 'fa fa-keyboard-o',
@@ -36,8 +42,10 @@ class Infos extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getActionName() == 'folderrights') {
             $items[1]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'certificate') {
+            $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'shortcuts') {
-            $items[2]['active'] = true; 
+            $items[3]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -88,6 +96,34 @@ class Infos extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('hmenuFolderRights'), ['action' => 'folderrights']);
 
         $this->getView()->set('folderrights', $InfosMapper->getModulesFolderRights());
+    }
+
+    public function certificateAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('hmenuCertificate'), ['action' => 'certificate']);
+
+        if (!is_file(ROOT_PATH.'/certificate/Certificate.crt')) {
+            return;
+        }
+
+        $certificate = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
+        $pubkey = openssl_pkey_get_public($certificate);
+        $publicKeyArray = openssl_pkey_get_details($pubkey);
+        $keyType = '';
+        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_RSA ? 'RSA' : $keyType;
+        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_DSA ? 'DSA' : $keyType;
+        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_DH ?  'DH'  : $keyType;
+
+        $this->getView()->set('certificate', openssl_x509_parse($certificate));
+        // Strip off begin- and end certificate-lines and base64-decode the rest before calling openssl_digest
+        // to get the same fingerprint as displayed in e.g. Microsoft Windows.
+        $certificate = str_replace('-----BEGIN CERTIFICATE-----', '', $certificate);
+        $certificate = str_replace('-----END CERTIFICATE-----', '', $certificate);
+        $this->getView()->set('certificateDigest', openssl_digest(base64_decode($certificate), 'SHA1'));
+        $this->getView()->set('certificateKeySize', isset($publicKeyArray['bits'])? $publicKeyArray['bits'] : 0);
+        $this->getView()->set('certificateKeyType', $keyType);
     }
 
     public function shortcutsAction()
