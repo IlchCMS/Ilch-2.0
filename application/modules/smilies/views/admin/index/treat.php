@@ -31,6 +31,7 @@
     <?=$this->getSaveBar('updateButton') ?>
 </form>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 <?=$this->getMedia()
         ->addMediaButton($this->getUrl('admin/smilies/iframe/smilies/'))

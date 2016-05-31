@@ -42,7 +42,7 @@
     <?php endif; ?>
 </form>
 
-<?=$this->getModalLabel('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 // Example for multiple input filds
 <?=$this->getMedia()

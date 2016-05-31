@@ -64,7 +64,7 @@
     ?>
 </form>
 
-<?=$this->getModalLabel('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script type="text/javascript">
 $(function() {
     $('.spinner .btn:first-of-type').on('click', function() {

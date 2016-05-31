@@ -26,4 +26,4 @@
     </div>
 </form>
 
-<?=$this->getModalLabel('smiliesModal', $this->getTrans('smilies'), '<iframe frameborder="0"></iframe>'); ?>
+<?=$this->getDialog('smiliesModal', $this->getTrans('smilies'), '<iframe frameborder="0"></iframe>'); ?>

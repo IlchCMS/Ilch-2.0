@@ -65,6 +65,7 @@
     </div>
 </form>
 
+<?=$this->getDialog('deleteModal', $this->getTrans('delete'), $this->getTrans('needAcknowledgement'), 1); ?>
 <script>
 $('.deleteLayout').on('click', function(event) {
     $('#modalButton').data('clickurl', $(this).data('clickurl'));

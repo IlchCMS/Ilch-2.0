@@ -480,11 +480,11 @@ abstract class Base
     }
 
     /**
-     * Gets the Modal Label.
+     * Gets the dialog.
      *
      * @return string
      */
-    public function getModalLabel($id, $name, $content)
+    public function getDialog($id, $name, $content, $submit = null)
     {
         $html = '<div class="modal fade" id="'.$id.'">
             <div class="modal-dialog">
@@ -500,12 +500,24 @@ abstract class Base
                     <div class="modal-body">
                         '.$content.'
                     </div>
-                    <div class="modal-footer">
-                        <button type="button"
+                    <div class="modal-footer">';
+                        if ($submit != null) {
+                            $html .= '<button type="button"
+                                 class="btn btn-primary"
+                                 id="modalButton">'.$this->getTrans('ack').'
+                            </button>
+                            <button type="button"
+                                    class="btn btn-default"
+                                    data-dismiss="modal">'.$this->getTrans('cancel').'
+                            </button>';
+                        } else {
+                            $html .= '<button type="button"
                                 class="btn btn-primary"
-                                data-dismiss="modal">'.$this->getTrans('close').'
-                        </button>
-                    </div>
+                                data-dismiss="modal">
+                            '.$this->getTrans('close').'
+                            </button>';
+                        }
+                    $html .= '</div>
                 </div>
             </div>
         </div>';

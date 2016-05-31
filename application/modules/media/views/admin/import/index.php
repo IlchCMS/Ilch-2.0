@@ -58,4 +58,4 @@
     <?=$this->getTrans('noMedias') ?>
 <?php endif; ?>
 
-<?=$this->getModalLabel('infoModal', $this->getTrans('info'), $this->getTrans('importInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('importInfoText')); ?>
