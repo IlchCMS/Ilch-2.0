@@ -68,7 +68,7 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<?=$this->getModalLabel('infoModal', $this->getTrans('info'), $this->getTrans('CommentCommentInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('CommentCommentInfoText')); ?>
 <script type="text/javascript">
 $(function() {
     $('.spinner .btn:first-of-type').on('click', function() {

@@ -38,4 +38,4 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<?=$this->getModalLabel('infoModal', $this->getTrans('info'), $this->getTrans('allowedMediaInfoText')); ?>
+<?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('allowedMediaInfoText')); ?>

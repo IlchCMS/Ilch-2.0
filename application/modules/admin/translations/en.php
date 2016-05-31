@@ -138,6 +138,7 @@ return
     'modulesInstalled' => 'Installed Modules',
     'modulesNotInstalled' => 'Not installed Modules',
     'noNotInstalledModules' => 'no Entries available',
+    'media' => 'Media',
 
     'menuInfos' => 'Information',
     'menuPHPInfo' => 'PHP Info',

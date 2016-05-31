@@ -73,4 +73,4 @@
     </table>
 </div>
 
-<?=$this->getModalLabel("infoModal", $this->getTrans('info'), $this->getTrans('certificateInfoText')); ?>
+<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('certificateInfoText')); ?>
