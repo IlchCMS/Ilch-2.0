@@ -64,4 +64,9 @@ class Config extends \Ilch\Config\Install
                   `note` VARCHAR(100) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

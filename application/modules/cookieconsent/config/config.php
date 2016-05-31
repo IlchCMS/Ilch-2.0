@@ -59,4 +59,9 @@ class Config extends \Ilch\Config\Install
             <li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" target="_blank">Windows Internet Explorer</a></li>
             </ul>');
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

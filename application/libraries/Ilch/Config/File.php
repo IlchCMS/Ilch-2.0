@@ -67,7 +67,7 @@ class File
     {
         $fileString = '<?php';
         $fileString .= "\n";
-        $fileString .= '$config = '.var_export($this->configData, true).';';
+        $fileString .= '$config = '.var_export_short_syntax($this->configData).';';
         $fileString .= "\n";
         $fileString .= '?>';
         file_put_contents($fileName, $fileString);

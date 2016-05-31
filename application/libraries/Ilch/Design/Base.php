@@ -325,8 +325,8 @@ abstract class Base
     public function getUrl($url = [], $route = null, $secure  = false)
     {
         $config = \Ilch\Registry::get('config');
-
-        if($config !== null && $this->modRewrite === null) {
+ 
+        if ($config !== null && $this->modRewrite === null) {
             $this->modRewrite = (bool)$config->get('mod_rewrite');
         }
 

@@ -54,11 +54,11 @@ class Layouts extends \Ilch\Controller\Admin
             include_once $layoutPath.'/config/config.php';
             $model->setName($config['name']);
             $model->setAuthor($config['author']);
-            if(!empty($config['link'])) {
+            if (!empty($config['link'])) {
                 $model->setLink($config['link']);
             }
             $model->setDesc($config['desc']);
-            if(!empty($config['modulekey'])) {
+            if (!empty($config['modulekey'])) {
                 $model->setModulekey($config['modulekey']);
             }
             $layouts[] = $model;
@@ -96,7 +96,7 @@ class Layouts extends \Ilch\Controller\Admin
             $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
             $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
 
-            if(!$transfer->validateCert(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                 // Certificate is missing or expired.
                 $this->addMessage('certMissingOrExpired');
                 return;
@@ -105,8 +105,8 @@ class Layouts extends \Ilch\Controller\Admin
             $transfer->save();
             
             $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
-            $pubKeyfile = APPLICATION_PATH.'/../certificate/Certificate.crt';
-            if(!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
+            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
+            if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
                 // Verification failed. Drop the potentially bad files.
                 unlink($transfer->getZipFile());
                 unlink($transfer->getZipFile().'-signature.sig');

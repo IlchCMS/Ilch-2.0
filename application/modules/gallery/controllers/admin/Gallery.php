@@ -35,6 +35,7 @@ class Gallery extends BaseController
         $imageMapper = new ImageMapper();
         $pagination = new \Ilch\Pagination();
         $galleryMapper = new GalleryMapper();
+
         $id = $this->getRequest()->getParam('id');
         $galleryTitle = $galleryMapper->getGalleryById($id);
 
@@ -43,7 +44,7 @@ class Gallery extends BaseController
                 ->add($this->getTranslator()->trans($galleryTitle->getTitle()), ['action' => 'treatgallery', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_gallery') as $imageId) {
+                foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
                     $imageMapper->deleteById($imageId);
                 }
                 $this->addMessage('deleteSuccess');
@@ -51,7 +52,7 @@ class Gallery extends BaseController
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach($this->getRequest()->getPost('check_image') as $imageId ) {
+            foreach ($this->getRequest()->getPost('check_image') as $imageId ) {
                 $catId = $this->getRequest()->getParam('id');
                 $model = new \Modules\Gallery\Models\Image();
                 $model->setImageId($imageId);
@@ -69,6 +70,7 @@ class Gallery extends BaseController
     public function treatImageAction() 
     {
         $imageMapper = new ImageMapper();
+
         $id = $this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
@@ -88,10 +90,10 @@ class Gallery extends BaseController
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $imageMapper = new ImageMapper();
-            $id = $this->getRequest()->getParam('id');
 
+            $id = $this->getRequest()->getParam('id');
             $imageMapper->deleteById($id);
 
             $this->addMessage('deleteSuccess');

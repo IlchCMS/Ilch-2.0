@@ -18,7 +18,8 @@
 <?php else: ?>
     <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="form-horizontal" method="post">
         <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl')?>" />
-        <?=$this->getTokenField();
+        <?php
+        echo $this->getTokenField();
         $errors = $this->get('errors');
         ?>
         <div class="form-group">
@@ -60,7 +61,7 @@
 
 <script>
 $(document).ready(function() {
-    window.setInterval(function(){
+    window.setInterval(function() {
         loadMessage();
         function loadMessage() {
             $('#checknewmessage').load('<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>');

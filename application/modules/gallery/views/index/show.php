@@ -55,5 +55,4 @@
         </div>
     <?php endforeach; ?>
 </div>
-
 <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>

@@ -40,7 +40,7 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuComments'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_comments')) {
-            foreach($this->getRequest()->getPost('check_comments') as $commentId) {
+            foreach ($this->getRequest()->getPost('check_comments') as $commentId) {
                 $commentMapper->delete($commentId);
             }
         }
@@ -51,7 +51,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $commentMapper = new CommentMapper();
             $commentMapper->delete($this->getRequest()->getParam('id'));
         }

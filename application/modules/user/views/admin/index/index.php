@@ -1,13 +1,13 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
-        <li <?php if(!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
+        <li <?php if (!$this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
             <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>">
                 <?=$this->getTrans('users') ?>
             </a>
         </li>
         <?php if ($this->get('badge') > 0): ?>
-            <li <?php if($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
+            <li <?php if ($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                     <?=$this->getTrans('setfree'); ?> <span class="badge"><?=$this->get('badge') ?></span>
                 </a>
@@ -37,12 +37,12 @@
             </tr>
         </thead>
         <tbody>
-            <?php if ($this->get('userList') != ''): ?>
-                <?php
-                foreach ($this->get('userList') as $user) {
+            <?php
+            if ($this->get('userList') != ''):
+                foreach ($this->get('userList') as $user):
                     $groups = '';
 
-                    foreach($user->getGroups() as $group) {
+                    foreach ($user->getGroups() as $group) {
                         if ($groups != '') {
                             $groups .= ', ';
                         }
@@ -85,9 +85,7 @@
                         <td><?=$this->escape($user->getDateCreated()) ?></td>
                         <td><?=$this->escape($groups) ?></td>
                     </tr>
-                    <?php
-                }
-                ?>
+                <?php endforeach; ?>
             <?php else: ?>
                 <tr>
                     <td colspan="7"><?=$this->getTrans('noUsersExist') ?></td>

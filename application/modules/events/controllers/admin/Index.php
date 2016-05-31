@@ -103,11 +103,11 @@ class Index extends \Ilch\Controller\Admin
 
             if (empty($start)) {
                 $this->addMessage('missingDate', 'danger');
-            } elseif(empty($title)) {
+            } elseif (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
-            } elseif(empty($place)) {
+            } elseif (empty($place)) {
                 $this->addMessage('missingPlace', 'danger');
-            } elseif(empty($text)) {
+            } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
                 $eventModel->setUserId($this->getUser()->getId());

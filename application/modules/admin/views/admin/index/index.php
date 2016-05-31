@@ -1,8 +1,10 @@
-<?php if($this->getUser()->getFirstName() != ''): ?>
-    <?php $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName(); ?>
-<?php else: ?>
-    <?php $name = $this->getUser()->getName(); ?>
-<?php endif; ?>
+<?php
+if ($this->getUser()->getFirstName() != '') {
+    $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName();
+} else {
+    $name = $this->getUser()->getName();
+}
+?>
 
 <h3><?=$this->getTrans('welcomeBack', $name) ?> !</h3>
 <?=$this->getTrans('welcomeBackDescripton') ?>

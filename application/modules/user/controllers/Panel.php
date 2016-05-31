@@ -87,6 +87,7 @@ class Panel extends BaseController
     public function avatarAction()
     {
         $profilMapper = new UserMapper();
+        $settingMapper = new SettingMapper();
 
         $avatarAllowedFiletypes = $this->getConfig()->get('avatar_filetypes');
         $avatarHeight = $this->getConfig()->get('avatar_height');
@@ -142,6 +143,7 @@ class Panel extends BaseController
             $this->redirect(['action' => 'avatar']);
         }
 
+        $this->getView()->set('settingMapper', $settingMapper);
         $this->getView()->set('avatar_height', $avatarHeight);
         $this->getView()->set('avatar_width', $avatarWidth);
         $this->getView()->set('avatar_size', $avatarSize);
@@ -442,7 +444,7 @@ class Panel extends BaseController
                 ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
-            foreach($this->getRequest()->getPost('check_gallery') as $imageId) {
+            foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
                 $imageMapper->deleteById($imageId);
             }
 
@@ -451,7 +453,7 @@ class Panel extends BaseController
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach($this->getRequest()->getPost('check_image') as $imageId ) {
+            foreach ($this->getRequest()->getPost('check_image') as $imageId ) {
                 $catId = $this->getRequest()->getParam('id');
 
                 $model = new GalleryImageModel();
@@ -480,13 +482,13 @@ class Panel extends BaseController
         $allowedExtensions = $this->getConfig()->get('media_ext_img');
         $this->getView()->set('allowedExtensions', $allowedExtensions);
 
-        if (!is_writable(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath'))) {
+        if (!is_writable(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath'))) {
             $this->addMessage('writableMedia', 'danger');
         }
 
         if ($this->getRequest()->isPost()) {
-            if (!is_dir(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId())) {
-                mkdir(APPLICATION_PATH.'/../'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId(), 0777);
+            if (!is_dir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId())) {
+                mkdir(ROOT_PATH.'/'.$this->getConfig()->get('usergallery_uploadpath').$this->getUser()->getId(), 0777);
             }
 
             $upload = new \Ilch\Upload();
@@ -496,7 +498,7 @@ class Panel extends BaseController
             // Early return if extension is not allowed or file is too big. Should normally already be done client-side.
             // Doing this client-side is especially important for the "file too big"-case as early returning here is already too late.
             $upload->setAllowedExtensions($allowedExtensions);
-            if(!$upload->isAllowedExtension() || filesize($_FILES['upl']['name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
+            if (!$upload->isAllowedExtension() || filesize($_FILES['upl']['name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
                 return;
             }
             $upload->upload();
@@ -547,7 +549,7 @@ class Panel extends BaseController
     {
         $mediaMapper = new MediaMapper();
 
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $mediaMapper->delMediaById($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');

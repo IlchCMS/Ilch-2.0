@@ -1,4 +1,18 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
+<style>
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.container-fluid > [class*="col-"] {
+    padding:0;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+</style>
 
 <form class="form-horizontal" method="POST" action="<?=$_SESSION['media-url-action-button'] ?><?=$this->getRequest()->getParam('id') ?>">
     <?=$this->getTokenField() ?>
@@ -82,57 +96,42 @@
 </form>
 
 <?php if ($this->getRequest()->getParam('type') === 'multi'): ?>
-<script>
-    $(".btn").click(function(){
+    <script>
+    $(".btn").click(function() {
         window.top.$('#MediaModal').modal('hide');
         window.top.reload();
     });
 
-    $( document ).on( "click", "img.image", function() {
+    $(document).on("click", "img.image", function() {
         $(this).closest('div').find('input[type="checkbox"]').click();
         elem = $(this).closest('div').find('img');
-        if(elem.hasClass('chacked')){
+        if (elem.hasClass('chacked')) {
             $(this).closest('div').find('img').removeClass("chacked");
-        }else{
+        } else {
             $(this).closest('div').find('img').addClass("chacked");
         };
     });
-</script>
+    </script>
 <?php endif; ?>
 
 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
-<script>
-    $(".btn").click(function(){
+    <script>
+    $(".btn").click(function() {
         window.top.$('#MediaModal').modal('hide');
         window.top.reload();
     });
 
-    $( document ).on( "click", "img.image", function() {
+    $(document).on("click", "img.image", function() {
         $(this).closest('div').find('input[type="checkbox"]').click();
         elem = $(this).closest('div').find('img');
-        if(elem.hasClass('chacked')){
+        if (elem.hasClass('chacked')) {
             $(this).closest('div').find('img').removeClass("chacked");
-        }else{
+        } else {
             $(this).closest('div').find('img').addClass("chacked");
         };
     });
-</script>
+    </script>
 <?php endif; ?>
-
-<style>
-.container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-}
-.container-fluid > [class*="col-"] {
-    padding:0;
-}
-*, *:before, *:after {
-    box-sizing: border-box;
-}
-</style>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -141,8 +140,7 @@ $(document).ready(function() {
         $.post("<?=$this->getUrl('admin/media/ajax/multi/type/') ?><?=$this->getRequest()->getParam('type') ?>/lastid/"+ID,
             function(data)
             {
-                if (data !== "")
-                {
+                if (data !== "") {
                     $(".media_loader:last").after(data);
                 }
             }
@@ -150,8 +148,7 @@ $(document).ready(function() {
     };
 
     $(window).scroll(function() {
-        if ($(window).scrollTop() === $(document).height() - $(window).height())
-        {
+        if ($(window).scrollTop() === $(document).height() - $(window).height()) {
             media_loader();
         }
     });

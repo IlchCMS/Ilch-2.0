@@ -28,7 +28,7 @@ class CookieStolen extends \Ilch\Mapper
      * @param int userid
      */
     public function addCookieStolen($userid) {
-        if($this->containsCookieStolen($userid)) {
+        if ($this->containsCookieStolen($userid)) {
             return;
         }
         $insert = $this->db()->insert();

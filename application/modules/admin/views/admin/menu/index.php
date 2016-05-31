@@ -58,7 +58,7 @@ function rec($item, $menuMapper, $obj) {
         <?php foreach ($this->get('menus') as $menu): ?>
             <?php $active = ''; ?>
 
-            <?php if($menu->getId() == $this->get('menu')->getId()): ?>
+            <?php if ($menu->getId() == $this->get('menu')->getId()): ?>
                 <?php $active = 'active'; ?>
             <?php endif; ?>
             <li class="<?=$active ?>">
@@ -124,7 +124,7 @@ foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
     $moduleKey = basename($moduleKey);
     $boxesGlob = glob(APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/*');
 
-    if(!empty($boxesGlob)) {
+    if (!empty($boxesGlob)) {
         foreach ($boxesGlob as $box) {
             if (is_dir($box)) {
                 continue;
@@ -175,7 +175,7 @@ $(document).ready
             isTree: true,
             expandOnHover: 700,
             startCollapsed: false,
-            stop: function(event, ui){
+            stop: function(event, ui) {
                 val = ui.item.find('input.hidden_type').val();
 
                 if ((val == 4 || val == 0)) {
@@ -221,11 +221,11 @@ $(document).ready
                 if (!isNaN(id)) {
                     append = '#sortable #list_'+id+' ol';
 
-                    if($(append).length == 0) {
+                    if ($(append).length == 0) {
                         $('<ol></ol>').appendTo('#sortable #list_'+id);
                     }
                 } else {
-                    if($(append).length == 0) {
+                    if ($(append).length == 0) {
                         $('<ol></ol>').appendTo('#sortable #'+id);
                     }
                     append = '#sortable #'+id+' ol';
@@ -291,7 +291,7 @@ $(document).ready
         $('#menuForm').on('change', '#type', function() {
             var options = '';
 
-            $('#sortable').find('li').each(function(){
+            $('#sortable').find('li').each(function() {
                 if ($(this).find('input.hidden_type:first').val() == 0) {
                     options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
                 }
@@ -308,19 +308,19 @@ $(document).ready
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
-            } else if($(this).val() == '1') {
+            } else if ($(this).val() == '1') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Adresse</label>\n\
                                 <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
                  $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
-                                <div class="col-lg-4"><?php if(!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach($pages as $page){ echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
+                                <div class="col-lg-4"><?php if (!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
-                                <div class="col-lg-4"><?php if(!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach($modules as $module){ $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
+                                <div class="col-lg-4"><?php if (!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach ($modules as $module) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
                                 <div class="col-lg-4"><?='<select id="boxkey" class="form-control">';
-                foreach ($boxesDir as $moDir => $modulBoxes) { foreach($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach($boxes as $box){ echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
+                foreach ($boxesDir as $moDir => $modulBoxes) { foreach ($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach ($boxes as $box) { echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
             }
         });
 

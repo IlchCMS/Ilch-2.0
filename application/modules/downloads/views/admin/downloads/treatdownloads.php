@@ -37,7 +37,7 @@ tbody tr td {
                 <tbody>
                     <?php foreach ($this->get('file') as $file): ?>
                         <?php $image = '' ?>
-                        <?php if($file->getFileImage() != ''): ?>
+                        <?php if ($file->getFileImage() != ''): ?>
                             <?php $image = $this->getBaseUrl($file->getFileImage()) ?>
                         <?php else: ?>
                             <?php $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>
@@ -68,7 +68,7 @@ tbody tr td {
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 
-function reload(){
+function reload( ){
     setTimeout(function(){window.location.reload(1);}, 1000);
 };
 </script>

@@ -12,7 +12,7 @@
                 <select id="receiver"
                         class="form-control"
                         name="contact_receiver">
-                        <?php foreach($receivers as $receiver):?>
+                        <?php foreach ($receivers as $receiver):?>
                             <option value="<?=$receiver->getId() ?>"><?=$this->escape($receiver->getName()) ?></option>
                         <?php endforeach; ?>
                 </select>

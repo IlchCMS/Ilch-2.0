@@ -1,11 +1,11 @@
 <link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
+
 <h3><?=$this->getTrans('forumOverview') ?></h3>
 <?php
 $forumMapper = $this->get('forumMapper');
 $forumItems = $this->get('forumItems');
 $cat = $this->get('cat');
 $readAccess = $this->get('readAccess');
-
 
 function rec($item, $forumMapper, $obj, $readAccess)
 {
@@ -14,7 +14,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
     $lastPost = $forumMapper->getLastPostByTopicId($item->getId());
     $posts = $forumMapper->getCountPostsById($item->getId());
     $adminAccess = null;
-    if($obj->getUser()){
+    if ($obj->getUser()) {
         $adminAccess = $obj->getUser()->isAdmin();
     }
 ?>
@@ -53,7 +53,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                         <dd class="topics"><?=$topics; ?> <dfn><?=$obj->getTrans('topics') ?></dfn></dd>
                         <dd class="posts"><?=$posts; ?> <dfn><?=$obj->getTrans('posts') ?></dfn></dd>
                         <dd class="lastpost">
-                            <?php if($lastPost): ?>
+                            <?php if ($lastPost): ?>
                                 <span>
                                     <img style="width:30px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>"> <?=$obj->getTrans('by') ?>
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>"><?=$lastPost->getAutor()->getName() ?></a>
@@ -81,12 +81,12 @@ function rec($item, $forumMapper, $obj, $readAccess)
 
     <?php
     $adminAccess = null;
-    if($this->getUser()){
+    if ($this->getUser()) {
         $adminAccess = $this->getUser()->isAdmin();
     }
     $subItemsFalse = false;
         foreach ($forumItems as $subItem) {
-            if (is_in_array($readAccess, explode(',', $subItem->getReadAccess())) || $adminAccess == true){
+            if (is_in_array($readAccess, explode(',', $subItem->getReadAccess())) || $adminAccess == true) {
                 $subItemsFalse = true;
             }
         }

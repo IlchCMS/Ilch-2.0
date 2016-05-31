@@ -34,7 +34,7 @@ class Enemy extends BaseController
                 ->add($this->getTranslator()->trans('manageEnemy'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_enemy')) {
-            foreach($this->getRequest()->getPost('check_enemy') as $enemyId) {
+            foreach ($this->getRequest()->getPost('check_enemy') as $enemyId) {
                 $enemyMapper->delete($enemyId);
             }
         }
@@ -77,15 +77,15 @@ class Enemy extends BaseController
 
             if (empty($enemyName)) {
                 $this->addMessage('missingEnemyName', 'danger');
-            } elseif(empty($enemyTag)) {
+            } elseif (empty($enemyTag)) {
                 $this->addMessage('missingEnemyTag', 'danger');
-            } elseif(empty($enemyImage)) {
+            } elseif (empty($enemyImage)) {
                 $this->addMessage('missingEnemyImage', 'danger');
-            } elseif(empty($enemyHomepage)) {
+            } elseif (empty($enemyHomepage)) {
                 $this->addMessage('missingEnemyHomepage', 'danger');
-            } elseif(empty($enemyContactName)) {
+            } elseif (empty($enemyContactName)) {
                 $this->addMessage('missingContactName', 'danger');
-            } elseif(empty($enemyContactEmail)) {
+            } elseif (empty($enemyContactEmail)) {
                 $this->addMessage('missingContactEmail', 'danger');
             } else {
                 $enemyModel->setEnemyName($enemyName);
@@ -105,7 +105,7 @@ class Enemy extends BaseController
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $id = (int)$this->getRequest()->getParam('id');
             $enemyMapper = new EnemyMapper();
             $enemyMapper->delete($id);

@@ -76,4 +76,9 @@ class Config extends \Ilch\Config\Install
                 INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES
                 ("events", "static/upload/image");';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

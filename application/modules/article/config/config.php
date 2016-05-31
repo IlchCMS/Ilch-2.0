@@ -75,4 +75,9 @@ class Config extends \Ilch\Config\Install
                 INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `content`, `title`, `perma`) VALUES
                 (1, 1, "Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "startseite.html");';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

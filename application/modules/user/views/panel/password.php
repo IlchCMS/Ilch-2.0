@@ -50,7 +50,7 @@
 
 <script src="<?=$this->getStaticUrl('../application/modules/user/static/js/pStrength.jquery.js'); ?>"></script>
 <script>
-$(document).ready(function(){
+$(document).ready(function() {
     $('#password').pStrength({
         'bind': 'keyup change', // When bind event is raised, password will be recalculated;
         'changeBackground': true, // If true, the background of the element will be changed according with the strength of the password;

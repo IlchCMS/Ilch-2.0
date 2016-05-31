@@ -39,7 +39,7 @@ class Downloads extends BaseController
         $downloadsTitle = $downloadsMapper->getDownloadsById($id);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach($this->getRequest()->getPost('check_downloads') as $fileId) {
+                foreach ($this->getRequest()->getPost('check_downloads') as $fileId) {
                     $fileMapper->deleteById($fileId);
                 }
                 $this->addMessage('deleteSuccess');
@@ -47,7 +47,7 @@ class Downloads extends BaseController
         }
 
         if ($this->getRequest()->getPost()) {
-            foreach($this->getRequest()->getPost('check_image') as $fileId ) {
+            foreach ($this->getRequest()->getPost('check_image') as $fileId ) {
                 $catId = $this->getRequest()->getParam('id');
                 $model = new \Modules\Downloads\Models\File();
                 $model->setFileId($fileId);
@@ -84,7 +84,7 @@ class Downloads extends BaseController
 
     public function delAction()
     {
-        if($this->getRequest()->isSecure()) {
+        if ($this->getRequest()->isSecure()) {
             $fileMapper = new FileMapper();
             $id = $this->getRequest()->getParam('id');
 

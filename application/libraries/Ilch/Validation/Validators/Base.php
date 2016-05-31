@@ -24,7 +24,7 @@ class Base
 
     protected function getErrorKey(\Ilch\Validation\Data $data)
     {
-        if($data->getParam('customErrorAlias') !== null) {
+        if ($data->getParam('customErrorAlias') !== null) {
             return $data->getParam('customErrorAlias');
         }
 

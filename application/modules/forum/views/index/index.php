@@ -6,6 +6,7 @@ $usersOnline = $this->get('usersOnline');
 $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
 $ins = $usersOnline + $guestOnline;
+
 function rec($item, $obj, $readAccess, $i)
 {
     //dumpVar($item->getSubItems());
@@ -14,14 +15,14 @@ function rec($item, $obj, $readAccess, $i)
     $lastPost = $item->getLastPost();
     $posts = $item->getPosts();
     $adminAccess = null;
-    if($obj->getUser()){
+    if ($obj->getUser()) {
         $adminAccess = $obj->getUser()->isAdmin();
     }
     $subItemsFalse = false;
-    if ($item->getType() === 0){
+    if ($item->getType() === 0) {
         if (!empty($subItems)) {
             foreach ($subItems as $subItem) {
-                if (is_in_array($readAccess, explode(',', $subItem->getReadAccess())) || $adminAccess == true){
+                if (is_in_array($readAccess, explode(',', $subItem->getReadAccess())) || $adminAccess == true) {
                      $subItemsFalse = true;
                 }
             }
@@ -63,7 +64,7 @@ function rec($item, $obj, $readAccess, $i)
                         <dd class="topics"><?=$topics; ?> <dfn><?=$obj->getTrans('topics') ?></dfn></dd>
                         <dd class="posts"><?=$posts; ?> <dfn><?=$obj->getTrans('posts') ?></dfn></dd>
                         <dd class="lastpost">
-                            <?php if($lastPost): ?>
+                            <?php if ($lastPost): ?>
                                 <span>
                                     <img style="width:30px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>"> <?=$obj->getTrans('by') ?>
                                     <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>"><?=$lastPost->getAutor()->getName() ?></a>
@@ -80,7 +81,7 @@ function rec($item, $obj, $readAccess, $i)
         <?php endif; ?>
     <?php endif; ?>
     <?php
-    if (!empty($subItems) && $i == 0){
+    if (!empty($subItems) && $i == 0) {
         $i++;
         foreach ($subItems as $subItem) {
             rec($subItem, $obj, $readAccess, $i);
@@ -92,7 +93,7 @@ function rec($item, $obj, $readAccess, $i)
 <div id="forum" class="col-lg-12">
     <h3><?=$this->getTrans('forumOverview') ?></h3>
     <div class="topic-actions">
-        <?php if($this->getUser()): ?>
+        <?php if ($this->getUser()): ?>
             <div class="buttons">
                 <a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
                     <span class="btn-label">

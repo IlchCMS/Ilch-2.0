@@ -54,7 +54,7 @@ class Showposts extends \Ilch\Controller\Frontend
             $lastPost = $topicMapper->getLastPostByTopicId($topicId);
 
             $lastRead = $lastPost->getRead();
-            if(in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
+            if (in_array($this->getUser()->getId(), explode(',',$lastRead)) == false) {
                 $postModel->setId($lastPost->getId());
                 $postModel->setRead($lastPost->getRead().','.$this->getUser()->getId());
                 $postMapper->saveRead($postModel);
@@ -63,9 +63,9 @@ class Showposts extends \Ilch\Controller\Frontend
         $user = $userMapper->getUserById($userId);
 
         $ids = [3];
-        if($user){
+        if ($user) {
             $ids = [];
-            foreach ($user->getGroups() as $us){
+            foreach ($user->getGroups() as $us) {
                 $ids[] = $us->getId();
             }
         }

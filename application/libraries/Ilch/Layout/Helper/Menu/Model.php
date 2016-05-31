@@ -158,7 +158,7 @@ class Model
         $subItems = $menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $html = '';
 
-        if(in_array($item->getType(), [1,2,3])) {
+        if (in_array($item->getType(), [1,2,3])) {
             $html = '<li>';
         }
 
@@ -185,7 +185,7 @@ class Model
             $html .= '</ul>';
         }
 
-        if(in_array($item->getType(), [1,2,3])) {
+        if (in_array($item->getType(), [1,2,3])) {
             $html .= '</li>';
         }
 

@@ -183,8 +183,7 @@ class Group extends \Ilch\Mapper
      */
     public function delete($groupId)
     {
-        if(is_a($groupId, '\Modules\User\Models\Group'))
-        {
+        if (is_a($groupId, '\Modules\User\Models\Group')) {
             $groupId = $groupId->getId();
         }
 
@@ -224,21 +223,21 @@ class Group extends \Ilch\Mapper
             'box',
         ];
 
-        foreach($accessDbList as $accessDbListEntry) {
-            if(empty($accessList['group_name'])) {
+        foreach ($accessDbList as $accessDbListEntry) {
+            if (empty($accessList['group_name'])) {
                 /*
                  * Only on first entry.
                  */
                 $accessList['group_name'] = $accessDbListEntry['group_name'];
             }
 
-            foreach($accessTypes as $accessType) {
-                if(!empty($accessDbListEntry[$accessType.'_id'])) {
+            foreach ($accessTypes as $accessType) {
+                if (!empty($accessDbListEntry[$accessType.'_id'])) {
                     $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_id']] = $accessDbListEntry['access_level'];
                     break;
                 }
                 
-                if(!empty($accessDbListEntry[$accessType.'_key'])) {
+                if (!empty($accessDbListEntry[$accessType.'_key'])) {
                     $accessList['entries'][$accessType][$accessDbListEntry[$accessType.'_key']] = $accessDbListEntry['access_level'];
                     break;
                 }
@@ -276,7 +275,7 @@ class Group extends \Ilch\Mapper
             ->execute()
             ->fetchCell();
 
-        if($entryExists) {
+        if ($entryExists) {
             $this->db()->update('groups_access')
                 ->values($fields)
                 ->where($rec)

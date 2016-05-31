@@ -35,6 +35,7 @@ class Transfer
     /**
      * Sets the TransferUrl.
      * @var string $url
+     * @return resource
      */
     public function setTransferUrl($url)
     {
@@ -53,6 +54,7 @@ class Transfer
     /**
      * Sets the ZipFile.
      * @var string $path
+     * @return string
      */
     public function setZipFile($path)
     {
@@ -71,6 +73,7 @@ class Transfer
     /**
      * Sets the ZipFileName.
      * @var string $name
+     * @return string
      */
     public function setZipFileName($name)
     {
@@ -89,6 +92,7 @@ class Transfer
     /**
      * Sets the ZipFilePath.
      * @var string $path
+     * @return string
      */
     public function setZipSavePath($path)
     {
@@ -106,9 +110,10 @@ class Transfer
 
     /**
      * USE IT AFTER newVersionFound()
-     * 
+     *
      * Sets the DownloadUrl.
      * @var $url
+     * @return mixed
      */
     public function setDownloadUrl($url)
     {
@@ -132,9 +137,10 @@ class Transfer
 
     /**
      * USE IT AFTER newVersionFound()
-     * 
+     *
      * Sets the DownloadSignatureUrl.
      * @var $url
+     * @return mixed
      */
     public function setDownloadSignatureUrl($url)
     {
@@ -197,6 +203,7 @@ class Transfer
     /**
      * Sets the Content.
      * @var string $content
+     * @return string
      */
     public function setContent($content)
     {
@@ -215,6 +222,7 @@ class Transfer
     /**
      * Sets the NewVersion.
      * @var string $version
+     * @return string
      */
     public function setNewVersion($version)
     {
@@ -224,6 +232,7 @@ class Transfer
     /**
      * Sets the VersionNow.
      * @var string $versionNow
+     * @return string
      */
     public function setVersionNow($versionNow)
     {
@@ -236,7 +245,7 @@ class Transfer
     public function newVersionFound()
     {
         foreach ($this->getVersionsList() as $vL) {
-            if (preg_replace('/\s+/', '', $vL) > $this->getVersionNow()){
+            if (preg_replace('/\s+/', '', $vL) > $this->getVersionNow()) {
                 $this->setNewVersion(trim(preg_replace('/\s\s+/','', $vL)));
                 $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                 return true;
@@ -291,7 +300,7 @@ class Transfer
         $pubkey = openssl_pkey_get_public(file_get_contents($pubKeyfile));
         openssl_public_decrypt($signature, $decrypted_digest, $pubkey);
 
-        if($digest == $decrypted_digest) {
+        if ($digest == $decrypted_digest) {
             return true;
         }
         return false;
@@ -303,7 +312,7 @@ class Transfer
      */
     public function validateCert($certificate)
     {
-        if (!is_file(APPLICATION_PATH.'/../certificate/Certificate.crt')) {
+        if (!is_file(ROOT_PATH.'/certificate/Certificate.crt')) {
             return false;
         }
 

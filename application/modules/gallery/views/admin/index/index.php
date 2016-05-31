@@ -153,7 +153,7 @@ $(document).ready (
         $('#galleryForm').on('change', '#type', function() {
             var options = '';
 
-            $('#sortable').find('li').each(function(){
+            $('#sortable').find('li').each(function() {
                 if ($(this).find('input.hidden_type:first').val() == 0) {
                     options += '<option value="'+$(this).find('input.hidden_id:first').val()+'">'+$(this).find('input.hidden_title:first').val()+'</option>';
                 }
@@ -170,7 +170,7 @@ $(document).ready (
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
-            } else if($(this).val() == '1') {
+            } else if ($(this).val() == '1') {
                 $('.dyn').html(menuHtml);
             }
         });
@@ -195,11 +195,11 @@ $(document).ready (
                 if (!isNaN(id)) {
                     append = '#sortable #list_'+id+' ol';
 
-                    if($(append).length == 0) {
+                    if ($(append).length == 0) {
                         $('<ol></ol>').appendTo('#sortable #list_'+id);
                     }
                 } else {
-                    if($(append).length == 0) {
+                    if ($(append).length == 0) {
                         $('<ol></ol>').appendTo('#sortable #'+id);
                     }
                     append = '#sortable #'+id+' ol';
@@ -256,7 +256,7 @@ $(document).ready (
         ->addUploadController($this->getUrl('admin/media/index/upload'))
 ?>
 
-function reload(){
+function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
 };
 </script>

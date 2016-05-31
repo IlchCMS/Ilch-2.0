@@ -42,7 +42,7 @@ class Login extends \Ilch\Controller\Frontend
                 if ($result->isSuccessful()) {
                     $cookieStolenMapper = new CookieStolenMapper();
 
-                    if(!$cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
+                    if (!$cookieStolenMapper->containsCookieStolen($result->getUser()->getId())) {
                         $this->addMessage($this->getTranslator()->trans('loginSuccessful'), 'success');
                     } else {
                         // The user receives a strongly worded warning that his cookie might be stolen.
@@ -106,7 +106,7 @@ class Login extends \Ilch\Controller\Frontend
                 $userMapper = new UserMapper();
                 $user = $userMapper->getUserByConfirmedCode($confirmedCode);
 
-                if(!empty($user)) {
+                if (!empty($user)) {
                     $password = trim($this->getRequest()->getPost('password'));
                     $password2 = trim($this->getRequest()->getPost('password2'));
 

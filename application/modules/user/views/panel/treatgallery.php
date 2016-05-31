@@ -88,7 +88,7 @@
         ->addUploadController($this->getUrl('user/iframe/upload'))
 ?>
 
-function reload(){
+function reload() {
     setTimeout(function(){window.location.reload(1);}, 1000);
 };
 </script>

@@ -88,7 +88,7 @@ class CodeDefinitionBuilder
      */
     public function setNestLimit($limit)
     {
-        if(!is_int($limit) || ($limit <= 0 && -1 != $limit)) {
+        if (!is_int($limit) || ($limit <= 0 && -1 != $limit)) {
             throw new InvalidArgumentException("A nest limit must be a positive integer " .
                                                "or -1.");
         }

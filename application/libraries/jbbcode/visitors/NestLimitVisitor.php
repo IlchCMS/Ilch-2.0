@@ -24,7 +24,7 @@ class NestLimitVisitor implements \JBBCode\NodeVisitor
 
     public function visitDocumentElement(\JBBCode\DocumentElement $documentElement)
     {
-        foreach($documentElement->getChildren() as $child) {
+        foreach ($documentElement->getChildren() as $child) {
             $child->accept($this);
         }
     }

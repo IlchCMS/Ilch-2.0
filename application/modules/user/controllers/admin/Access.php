@@ -35,8 +35,8 @@ class Access extends BaseController
         $this->getView()->set('activeGroupId', 0);
         $this->getView()->set('activeGroup', null);
 
-        foreach($groups as $key => $group) {
-            if($group->getId() == 1) {
+        foreach ($groups as $key => $group) {
+            if ($group->getId() == 1) {
                 unset($groups[$key]);
             }
         }
@@ -46,9 +46,7 @@ class Access extends BaseController
         if (isset($postData['groupId'])) {
             $groupId = (int)$postData['groupId'];
             $_SESSION['user']['accessGroup'] = $groupId;
-        }
-        else
-        {
+        } else {
             $groupId = 0;
         }
 
@@ -89,12 +87,12 @@ class Access extends BaseController
         $postData = $this->getRequest()->getPost();
 
         if (isset($postData['groupAccess'], $postData['groupId'])) {
-            if((int)$postData['groupId'] !== 1) {
+            if ((int)$postData['groupId'] !== 1) {
                 $groupAccessData = $postData['groupAccess'];
                 $groupMapper = new GroupMapper();
 
-                foreach($groupAccessData as $type => $groupsAccessTypeData) {
-                    foreach($groupsAccessTypeData as $value => $accessLevel) {
+                foreach ($groupAccessData as $type => $groupsAccessTypeData) {
+                    foreach ($groupsAccessTypeData as $value => $accessLevel) {
                         $groupMapper->saveAccessData($_SESSION['user']['accessGroup'], $value, $accessLevel, $type);
                     }
                 }

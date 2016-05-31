@@ -16,11 +16,11 @@
             <td>
                 <?php if ($entry->getHomepage() != ''): ?>
                     <a target="_blank" href="<?=$this->escape($entry->getHomepage()) ?>">
-                        <span class="glyphicon glyphicon-home"></span>
+                        <i class="fa fa-home"></i>
                     </a>
                 <?php endif; ?>
                 <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
-                    <span class="glyphicon glyphicon-envelope"></span>
+                    <i class="fa fa-envelope"></i>
                 </a>
             </td>
             <td><?=$this->getTrans('date') ?>: <?=$this->escape($entry->getDatetime()) ?></td>

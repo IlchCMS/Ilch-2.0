@@ -49,9 +49,9 @@ class Index extends \Ilch\Controller\Admin
 
             if (empty($name)) {
                 $this->addMessage('missingName', 'danger');
-            } elseif(empty($usage)) {
+            } elseif (empty($usage)) {
                 $this->addMessage('missingUsage', 'danger');
-            } elseif(empty($amount)) {
+            } elseif (empty($amount)) {
                 $this->addMessage('missingAmount', 'danger');
             } else {
                 $model = new \Modules\Checkout\Models\Entry();
@@ -112,9 +112,9 @@ class Index extends \Ilch\Controller\Admin
 
             if (empty($name)) {
                 $this->addMessage('missingName', 'danger');
-            } elseif(empty($usage)) {
+            } elseif (empty($usage)) {
                 $this->addMessage('missingUsage', 'danger');
-            } elseif(empty($amount)) {
+            } elseif (empty($amount)) {
                 $this->addMessage('missingAmount', 'danger');
             } else {
                 $model = new \Modules\Checkout\Models\Entry();

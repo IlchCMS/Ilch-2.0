@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
     function remove() {
         $('body').removeClass('hidden-menu');
     };
@@ -11,7 +11,7 @@ $(document).ready(function(){
 
     if (menu !== null) {
         menu.onclick = function() {
-            if($('body').hasClass('hidden-menu')){
+            if ($('body').hasClass('hidden-menu')) {
                 remove();
             }else {
                 add();
@@ -30,7 +30,7 @@ $(document).ready(function(){
     var element = document.getElementById('search-header');
     if (typeof(element) !== 'undefined' && element !== null) {
         document.getElementById('search-header').onclick = function() {
-            if($('#search-div').hasClass('opens')){
+            if ($('#search-div').hasClass('opens')) {
                 removeSearch();
             }else {
                 addSearch();
@@ -95,7 +95,7 @@ $(document).ready
             (
                 function()
                 {
-                    if($(window).scrollTop() > headerTop){
+                    if ($(window).scrollTop() > headerTop) {
                         $('#left-panel').css('padding', '0px');
                     } else {
                         $('#left-panel').css('padding', '40px 0 0');

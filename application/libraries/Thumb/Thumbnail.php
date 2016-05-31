@@ -739,9 +739,9 @@ class Thumbnail {
 	 */	
 	public function __destruct() {
 	
-		if(is_resource($this->im)) imagedestroy($this->im);
-		if(is_resource($this->thumb)) imagedestroy($this->thumb);
-		if(is_resource($this->newimage)) imagedestroy($this->newimage);
+		if (is_resource($this->im)) imagedestroy($this->im);
+		if (is_resource($this->thumb)) imagedestroy($this->thumb);
+		if (is_resource($this->newimage)) imagedestroy($this->newimage);
 	
 	}
 
@@ -773,7 +773,7 @@ class Thumbnail {
 	 */	
 	private function thumbmaker() {
 
-		if($this->loadimage()) {
+		if ($this->loadimage()) {
 			// Modifications to the original sized image			
 			if ($this->Cropimage[0]>0) {$this->cropimage();}
 			if ($this->Addtext[0]>0) {$this->addtext();}
@@ -1131,7 +1131,7 @@ class Thumbnail {
 	private function ageimage() {
 	
 		imagetruecolortopalette($this->im,1,256);
-		for ($c=0;$c<256;$c++) {    
+		for ($c=0;$c<256;$c++) {
 			$col=imagecolorsforindex($this->im,$c);
 			$new_col=floor($col['red']*0.2125+$col['green']*0.7154+$col['blue']*0.0721);
 			$noise=rand(-$this->Ageimage[1],$this->Ageimage[1]);

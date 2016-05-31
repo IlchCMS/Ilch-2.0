@@ -195,7 +195,7 @@ class Mysql
         $sql = "SHOW TABLES LIKE '$table'";
         $result = $this->query($sql);
 
-        if(mysqli_num_rows($result) > 0){
+        if (mysqli_num_rows($result) > 0) {
             return true;
         }
 

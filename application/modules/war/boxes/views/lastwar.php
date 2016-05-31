@@ -1,30 +1,31 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
+
 <?php if ($this->get('war') != ''):
     foreach ($this->get('war') as $war):    
-        $gameMapper = new \Modules\War\Mappers\Games();
-        $warMapper = new \Modules\War\Mappers\War();
+        $gameMapper = $this->get('gameMapper');
+        $warMapper = $this->get('warMapper');
         $games = $gameMapper->getGamesByWarId($war->getId());
-        if ($games != ''){
+        if ($games != '') {
             $enemyPoints = '';
             $groupPoints = 0;
             $class = '';
-            foreach ($games as $game){
+            foreach ($games as $game) {
                 $groupPoints += $game->getGroupPoints();
                 $enemyPoints += $game->getEnemyPoints();
             }
-            if ($groupPoints > $enemyPoints){
+            if ($groupPoints > $enemyPoints) {
                 $class = 'class="war_win small"';
             }
-            if ($groupPoints < $enemyPoints){
+            if ($groupPoints < $enemyPoints) {
                 $class = 'class="war_lost small"';
             }
-            if ($groupPoints == $enemyPoints){
+            if ($groupPoints == $enemyPoints) {
                 $class = 'class="war_drawn small"';
             }
         }
 
         $gameImg = $this->getBaseUrl('application/modules/war/static/img/'.$war->getWarGame().'.png');
-        if($warMapper->url_check($gameImg)){
+        if ($warMapper->url_check($gameImg)) {
             $gameImg = '<img src="'.$this->getBaseUrl('application/modules/war/static/img/'.$war->getWarGame().'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
         } else {
             $gameImg = '<i class="fa fa-question-circle text-muted"></i>';        

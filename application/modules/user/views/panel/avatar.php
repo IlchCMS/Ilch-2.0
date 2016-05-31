@@ -1,6 +1,6 @@
 <?php 
 $profil = $this->get('profil');
-$settingMapper = new \Modules\User\Mappers\Setting();
+$settingMapper = $this->get('settingMapper');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
@@ -64,16 +64,14 @@ $(document).on('change', '.btn-file :file', function() {
 
 $(document).ready( function() {
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-
         var input = $(this).parents('.input-group').find(':text'),
             log = numFiles > 1 ? numFiles + ' files selected' : label;
 
-        if( input.length ) {
+        if (input.length) {
             input.val(log);
         } else {
-            if( log ) alert(log);
+            if (log) alert(log);
         }
-
     });
 });
 </script>

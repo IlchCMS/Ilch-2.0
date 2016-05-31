@@ -1,10 +1,8 @@
-<?php
-$profil = $this->get('profil'); 
-?>
+<?php $profil = $this->get('profil'); ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<?php if(!empty($profil)): ?>
+<?php if (!empty($profil)): ?>
     <div id="panel">
         <div class="row">
             <div class="col-lg-2">
@@ -14,7 +12,7 @@ $profil = $this->get('profil');
                 <legend>Willkommen <?=$this->escape($profil->getName()) ?></legend>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <span class="glyphicon glyphicon-comment"></span> Dialog
+                        <i class="fa fa-comment"></i> Dialog
                     </div>
                     <div class="shout_box">
                         <div class="message_box" id="niceScroll">
@@ -43,12 +41,11 @@ $profil = $this->get('profil');
 <script src="<?=$this->getStaticUrl('../application/modules/user/static/js/jquery.nicescroll.js') ?>"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
     var token = document.body.querySelector('[name="ilch_token"]').value;
     var id = <?=$this->getRequest()->getParam('id') ?>;
 
     load_data = {'fetch':1, 'ilch_token':token};
-    window.setInterval(function(){
+    window.setInterval(function() {
         $.post('<?=$this->getUrl('user/panel/dialogviewmessage/id/');?>'+id, load_data,
         function(data) {
             $('.message_box').html(data);
@@ -56,7 +53,6 @@ $(document).ready(function() {
     }, 1000);
 
     document.getElementById("myBtn").onclick = function () {
-
         var token = document.body.querySelector('[name="ilch_token"]').value;
         var editorText = CKEDITOR.instances.ck_1.getData();
         var imessage = editorText;
@@ -65,7 +61,6 @@ $(document).ready(function() {
 
         $.post('<?=$this->getUrl('user/panel/dialogview/id/');?>'+id, post_data,
         function() {
-
             CKEDITOR.instances.ck_1.setData("");
             var scrolltoh = $('.message_box')[0].scrollHeight;
             $('.message_box').scrollTop(scrolltoh);
@@ -73,14 +68,12 @@ $(document).ready(function() {
         }).fail(function(err) {
 
             alert(err.statusText);
-
         });
-
     };
 
     var varCounter = 0;
-    var varName = function(){
-        if(varCounter <= 1) {
+    var varName = function() {
+        if (varCounter <= 1) {
             varCounter++;
             var scrolltoh = $('.message_box')[0].scrollHeight;
             $('.message_box').scrollTop(scrolltoh);

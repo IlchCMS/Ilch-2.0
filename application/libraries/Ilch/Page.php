@@ -124,7 +124,7 @@ class Page
     {
         $this->translator->load(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/translations');
 
-        if($this->request->isAdmin()) {
+        if ($this->request->isAdmin()) {
             $this->translator->load(APPLICATION_PATH.'/modules/admin/translations');
         }
 
