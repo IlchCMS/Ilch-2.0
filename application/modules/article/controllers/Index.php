@@ -39,6 +39,8 @@ class Index extends \Ilch\Controller\Frontend
 
     public function showAction()
     {
+        $articleMapper = new ArticleMapper();
+        $categoryMapper = new CategoryMapper();
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
         $config = \Ilch\Registry::get('config');
@@ -75,12 +77,10 @@ class Index extends \Ilch\Controller\Frontend
             $articleModel->setArticleImage($image);
             $articleModel->setVisits(0);
 
+            $this->getView()->set('categoryMapper', $categoryMapper);
+            $this->getView()->set('commentMapper', $commentMapper);
             $this->getView()->set('article', $articleModel);
         } else {
-            $articleMapper = new ArticleMapper();
-            $articleModel = new ArticleModel();
-            $categoryMapper = new CategoryMapper();
-
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 
@@ -92,6 +92,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $articlesCats->getId()])
                     ->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
 
+            $articleModel = new ArticleModel();
             $articleModel->setId($article->getId());
             $articleModel->setVisits($article->getVisits() + 1);
             $articleMapper->saveVisits($articleModel);
