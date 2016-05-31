@@ -4,13 +4,17 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
+    if (typeof ilchSmileysPlugin !== "undefined") {
+        CKEDITOR.plugins.addExternal( 'ilchsmileys', ilchSmileysPlugin);
+        config.extraPlugins = "ilchsmileys";
+    }
     config.toolbar = 'ilch_bbcode';
     config.toolbar_ilch_bbcode =
         [
-            ['Undo', 'Redo' ],
+            ['Undo', 'Redo'],
             ['RemoveFormat'],
-            [ 'Link', 'Unlink', 'Image', 'Smiley'],
-            [ 'Bold', 'Italic', 'Underline'],
-            [ 'Maximize']
+            ['Link', 'Unlink', 'Image', 'ilchsmileys'],
+            ['Bold', 'Italic', 'Underline'],
+            ['Maximize']
         ];
 };

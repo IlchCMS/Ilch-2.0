@@ -51,6 +51,7 @@
             </div>
         </div>
 
+        <?=$this->getFooter() ?>
         <script type='text/javascript'>
         $(document).ready(function() {
              $('.carousel').carousel({

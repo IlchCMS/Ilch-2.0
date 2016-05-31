@@ -312,7 +312,7 @@ function rec($id, $uid, $req, $obj)
                             </form>
                         </div>
                     <?php endif; ?>
-                    <?php rec($comment->getId(), $comment->getUserId(), 1, $this) ?>
+                    <?php rec($comment->getId(), $comment->getUserId(), 1, $this); ?>
                 </section>
             <?php endforeach; ?>
         </div>

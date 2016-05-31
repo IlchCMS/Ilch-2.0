@@ -87,6 +87,7 @@
     ?>
 </form>
 
+<?=$this->getModalLabel('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 <?php
 $pageID = '';

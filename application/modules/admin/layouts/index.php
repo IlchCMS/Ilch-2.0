@@ -296,49 +296,6 @@
             <div id="ribbon"><?=$this->getAdminHmenu() ?></div>
             <!-- CONTENT -->
             <div id="content">
-                <div class="modal fade" id="deleteModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button"
-                                        class="close"
-                                        data-dismiss="modal"
-                                        aria-hidden="true">&times;</button>
-                                <h4 class="modal-title"><?=$this->getTrans('needAcknowledgement') ?></h4>
-                            </div>
-                            <div class="modal-body"><p id="modalText"></p></div>
-                            <div class="modal-footer">
-                                <button type="button"
-                                        class="btn btn-primary"
-                                        id="modalButton"><?=$this->getTrans('ack') ?></button>
-                                <button type="button"
-                                        class="btn btn-primary"
-                                        data-dismiss="modal"><?=$this->getTrans('cancel') ?></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="MediaModal" tabindex="-1" role="dialog" aria-labelledby="MediaModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" 
-                                        class="close" 
-                                        data-dismiss="modal" 
-                                        aria-hidden="true">&times;
-                                </button>
-                                <h4 class="modal-title" id="MediaModalLabel">Media</h4>
-                            </div>
-                            <div class="modal-body"><iframe frameborder="0"></iframe></div>
-                            <div class="modal-footer">
-                                <button type="button" 
-                                        class="btn btn-default" 
-                                        data-dismiss="modal">Close
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <?=$this->getContent() ?>
             </div>
             <!-- CONTENT END -->
@@ -346,12 +303,13 @@
         <!-- MAIN END -->
 
         <script>
-            var iframeUrlImageCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/imageckeditor/') ?>";
-            var iframeUrlVideoCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/videockeditor/') ?>";
-            var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/') ?>";
-            var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor/') ?>";
-
-            var ilchMediaPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchmedia/') ?>";
+        var iframeUrlImageCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/imageckeditor/') ?>";
+        var iframeUrlVideoCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/videockeditor/') ?>";
+        var iframeUrlFileCkeditor = "<?=$this->getUrl('admin/media/iframe/indexckeditor/type/fileckeditor/') ?>";
+        var iframeMediaUploadCkeditor = "<?=$this->getUrl('admin/media/iframe/uploadckeditor/') ?>";
+        var ilchMediaPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/ilchmedia/') ?>";
+        var ilchSmileysPlugin = "<?=$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/') ?>";
+        var ilchSmileysPluginUrl = "<?=$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']) ?>";
         </script>
     </body>
 </html>

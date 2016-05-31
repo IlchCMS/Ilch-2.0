@@ -1,6 +1,4 @@
-<?php
-$post = $this->get('post');
-?>
+<?php $post = $this->get('post'); ?>
 
 <link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
 
@@ -30,3 +28,5 @@ $post = $this->get('post');
         </div>
     </div>
 </form>
+
+<?=$this->getModalLabel('smiliesModal', $this->getTrans('smilies'), '<iframe frameborder="0"></iframe>'); ?>

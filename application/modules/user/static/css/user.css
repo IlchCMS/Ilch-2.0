@@ -423,29 +423,29 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     margin: -1px;*/
 }
 
-#MediaModal {
+#mediaModal {
     z-index: 100000 !important;
     visibility: visible;
     overflow: hidden;
 }
-#MediaModal .modal-dialog {
+#mediaModal .modal-dialog {
     width: 100%;
     height: 100%;
     padding: 0;
     margin: auto !important;
 }
-#MediaModal .modal-content {
+#mediaModal .modal-content {
     height: 96%;
     border-radius: 0;
     margin: 1%;
     overflow: hidden;
 }
-#MediaModal .modal-body {
+#mediaModal .modal-body {
     height: 100%;
     border-radius: 0;
     padding: 0px 0px 57px !important;
 }
-#MediaModal .modal-footer {
+#mediaModal .modal-footer {
     display: none;
 }
 

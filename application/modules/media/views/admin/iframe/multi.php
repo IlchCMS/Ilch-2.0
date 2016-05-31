@@ -98,7 +98,7 @@
 <?php if ($this->getRequest()->getParam('type') === 'multi'): ?>
     <script>
     $(".btn").click(function() {
-        window.top.$('#MediaModal').modal('hide');
+        window.top.$('#mediaModal').modal('hide');
         window.top.reload();
     });
 
@@ -117,7 +117,7 @@
 <?php if ($this->getRequest()->getParam('type') === 'file'): ?>
     <script>
     $(".btn").click(function() {
-        window.top.$('#MediaModal').modal('hide');
+        window.top.$('#mediaModal').modal('hide');
         window.top.reload();
     });
 

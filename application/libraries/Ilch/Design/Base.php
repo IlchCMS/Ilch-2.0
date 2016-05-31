@@ -250,33 +250,6 @@ abstract class Base
     {
         require_once APPLICATION_PATH.'/libraries/jbbcode/Parser.php';
 
-        $smilies =
-            [
-                "~:smiley:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/regular_smile.png" alt="" /> ',
-                "~:sad:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/sad_smile.png" alt="" /> ',
-                "~:wink:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/wink_smile.png" alt="" /> ',
-                "~:laugh:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/teeth_smile.png" alt="" /> ',
-                "~:frown:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/confused_smile.png" alt=""/> ',
-                "~:cheeky:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/tongue_smile.png" alt="" /> ',
-                "~:blush:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/embarrassed_smile.png" alt="" /> ',
-                "~:surprise:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/omg_smile.png" alt="" /> ',
-                "~:indecision:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/whatchutalkingabout_smile.png" alt="" /> ',
-                "~:angry:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/angry_smile.png" alt="" /> ',
-                "~:angel:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/angel_smile.png" alt="" /> ',
-                "~:cool:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/shades_smile.png" alt="" /> ',
-                "~:devil:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/devil_smile.png" alt="" /> ',
-                "~:crying:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/cry_smile.png" alt="" /> ',
-                "~:light:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/lightbulb.png" alt="" /> ',
-                "~:no:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/thumbs_down.png" alt="" /> ',
-                "~:yes:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/thumbs_up.png" alt="" /> ',
-                "~:heart:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/heart.png" alt="" /> ',
-                "~:broken_heart:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/broken_heart.png" alt="" /> ',
-                "~:kiss:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/kiss.png" alt="" /> ',
-                "~:mail:~" => ' <img src="'.$this->getBaseUrl().'static/js/ckeditor/plugins/smiley/images/envelope.png" alt="" /> '
-            ];
-
-        $bbcode = preg_replace( array_keys($smilies), array_values($smilies), $bbcode );
-
         $parser = new \JBBCode\Parser();
         $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
 
@@ -504,5 +477,39 @@ abstract class Base
     public function setLayoutKey($layoutKey)
     {
         $this->layoutKey = $layoutKey;
+    }
+
+    /**
+     * Gets the Modal Label.
+     *
+     * @return string
+     */
+    public function getModalLabel($id, $name, $content)
+    {
+        $html = '<div class="modal fade" id="'.$id.'">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title" id="modalLabel">'.$name.'</h4>
+                    </div>
+                    <div class="modal-body">
+                        '.$content.'
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-dismiss="modal">'.$this->getTrans('close').'
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>';
+
+        return $html;
     }
 }

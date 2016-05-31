@@ -1,25 +1,3 @@
-<div class="modal fade" id="MediaModal" tabindex="-1" role="dialog" aria-labelledby="MediaModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" 
-                        class="close" 
-                        data-dismiss="modal" 
-                        aria-hidden="true">&times;
-                </button>
-                <h4 class="modal-title" id="MediaModalLabel">Media</h4>
-            </div>
-            <div class="modal-body"><iframe frameborder="0"></iframe></div>
-            <div class="modal-footer">
-                <button type="button" 
-                        class="btn btn-default" 
-                        data-dismiss="modal">Close
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div id="panel">
@@ -81,6 +59,7 @@
     </div>
 </div>
 
+<?=$this->getModalLabel('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 <?=$this->getMedia()
         ->addActionButton($this->getUrl('user/panel/treatgallery/id/'))

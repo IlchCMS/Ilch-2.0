@@ -103,12 +103,12 @@ class GetMedia
         $_SESSION['media-url-media-button'] = $this->mediaButton;
         $_SESSION['media-url-action-button'] = $this->actionButton;
         $_SESSION['media-url-upload-controller'] = $this->uploadController;
-        $html = "function media".$this->inputId."(id){ $('#MediaModal').modal('show');
+        $html = "function media".$this->inputId."(id){ $('#mediaModal').modal('show');
         var src = '".$_SESSION['media-url-media-button']."'+id;
         var height = '100%';
         var width = '100%';
 
-        $('#MediaModal iframe').attr({'src': src,
+        $('#mediaModal iframe').attr({'src': src,
             'height': height,
             'width': width});
         };";

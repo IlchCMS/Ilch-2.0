@@ -1,6 +1,7 @@
-<legend><?=$this->getTrans('certificate') ?>
+<legend>
+    <?=$this->getTrans('certificate') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
-        <i class="fa fa-info" ></i>
+        <i class="fa fa-info"></i>
     </a>
 </legend>
 <div class="table-responsive">
@@ -58,43 +59,18 @@
             </tr>
             <tr>
                 <td><?=$this->getTrans('certificateDigest') ?></td>
-                <td>
-                    <?=$this->get('certificateDigest') ?>
-                </td>
+                <td><?=$this->get('certificateDigest') ?></td>
             </tr>
             <tr>
                 <td><?=$this->getTrans('certificateCountry') ?></td>
-                <td>
-                    <?=$this->get('certificate')['subject']['C'] ?>
-                </td>
+                <td><?=$this->get('certificate')['subject']['C'] ?></td>
             </tr>
             <tr>
                 <td><?=$this->getTrans('certificateCommonName') ?></td>
-                <td>
-                    <?=$this->get('certificate')['subject']['CN'] ?>
-                </td>
+                <td><?=$this->get('certificate')['subject']['CN'] ?></td>
             </tr>
         </tbody>
     </table>
 </div>
-<div class="modal fade" id="infoModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><?=$this->getTrans('info') ?></h4>
-            </div>
-            <div class="modal-body">
-                <p id="modalText"><?=$this->getTrans('certificateInfoText') ?></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal"><?=$this->getTrans('close') ?></button>
-            </div>
-        </div>
-    </div>
-</div>
+
+<?=$this->getModalLabel("infoModal", $this->getTrans('info'), $this->getTrans('certificateInfoText')); ?>

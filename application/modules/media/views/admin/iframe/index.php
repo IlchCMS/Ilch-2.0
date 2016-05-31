@@ -60,7 +60,7 @@
     $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-basic','src', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
-        window.top.$('#MediaModal').modal('hide');
+        window.top.$('#mediaModal').modal('hide');
     });
     </script>
 <?php endif; ?>
@@ -71,7 +71,7 @@
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-adv','file', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         dialog.setValueOf('tab-adv','alt', $(this).data('alt'));
-        window.top.$('#MediaModal').modal('hide');
+        window.top.$('#mediaModal').modal('hide');
     });
     </script>
 <?php endif; ?>
@@ -81,7 +81,7 @@
     $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
         dialog.setValueOf('tab-mov','video', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
-        window.top.$('#MediaModal').modal('hide');
+        window.top.$('#mediaModal').modal('hide');
     });
     </script>
 <?php endif; ?>
@@ -90,7 +90,7 @@
     <script>
     $(".image").click(function() {
         window.top.$('#selectedImage<?=$this->getRequest()->getParam('input')?>').val($(this).data('url'));
-        window.top.$('#MediaModal').modal('hide');
+        window.top.$('#mediaModal').modal('hide');
     });
     </script>
 <?php endif; ?>
