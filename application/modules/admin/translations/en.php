@@ -155,14 +155,17 @@ return
     'writable' => 'writable',
     'notWritable' => 'not writable',
     'certificate' => 'Certificate',
+    'certificateInfoText' => 'The type of the certificate should be RSA, the key size at least 2048-bit and it should be valid.
+                              The fingerprint can be helpful to determine if you have the correct certificate.',
     'property' => 'Property',
     'value' => 'Value',
+    'certificateDateFormat' => 'Y-m-d H:i:s',
     'certificateValidFrom' => 'Valid from',
     'certificateValidTo' => 'Valid to',
     'certificateKeyType' => 'Type',
     'certificateKeySize' => 'Key size',
     'bit' => ' bit',
-    'certificateDigest' => 'Fingerprint (SHA-256)',
+    'certificateDigest' => 'Fingerprint (SHA-1)',
     'certificateCountry' => 'Country',
     'certificateCommonName' => 'Common Name',
 

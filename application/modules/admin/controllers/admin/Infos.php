@@ -108,18 +108,22 @@ class Infos extends \Ilch\Controller\Admin
             return;
         }
 
-        $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
-        $pubkey = openssl_pkey_get_public(file_get_contents(ROOT_PATH.'/certificate/Certificate.crt'));
-        $public_key_arr = openssl_pkey_get_details($pubkey);
-        $key_type = '';
-        $key_type = $public_key_arr['type']==OPENSSL_KEYTYPE_RSA ? 'RSA' : $key_type;
-        $key_type = $public_key_arr['type']==OPENSSL_KEYTYPE_DSA ? 'DSA' : $key_type;
-        $key_type = $public_key_arr['type']==OPENSSL_KEYTYPE_DH ?  'DH'  : $key_type;
+        $certificate = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
+        $pubkey = openssl_pkey_get_public($certificate);
+        $publicKeyArray = openssl_pkey_get_details($pubkey);
+        $keyType = '';
+        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_RSA ? 'RSA' : $keyType;
+        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_DSA ? 'DSA' : $keyType;
+        $keyType = $publicKeyArray['type']==OPENSSL_KEYTYPE_DH ?  'DH'  : $keyType;
 
-        $this->getView()->set('certificateDigest', openssl_digest($public_key, 'SHA256'));
-        $this->getView()->set('certificateKeySize', isset($public_key_arr['bits'])? $public_key_arr['bits'] : 0);
-        $this->getView()->set('certificateKeyType', $key_type);
-        $this->getView()->set('certificate', openssl_x509_parse($public_key));
+        $this->getView()->set('certificate', openssl_x509_parse($certificate));
+        // Strip off begin- and end certificate-lines and base64-decode the rest before calling openssl_digest
+        // to get the same fingerprint as displayed in e.g. Microsoft Windows.
+        $certificate = str_replace('-----BEGIN CERTIFICATE-----', '', $certificate);
+        $certificate = str_replace('-----END CERTIFICATE-----', '', $certificate);
+        $this->getView()->set('certificateDigest', openssl_digest(base64_decode($certificate), 'SHA1'));
+        $this->getView()->set('certificateKeySize', isset($publicKeyArray['bits'])? $publicKeyArray['bits'] : 0);
+        $this->getView()->set('certificateKeyType', $keyType);
     }
 
     public function shortcutsAction()

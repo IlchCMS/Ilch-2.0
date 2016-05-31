@@ -155,14 +155,17 @@ return
     'writable' => 'Beschreibbar',
     'notWritable' => 'nicht beschreibbar',
     'certificate' => 'Zertifikat',
+    'certificateInfoText' => 'Der Typ des Zertifikats sollte RSA, die Schlüssellänge mindestens 2048 Bit und das Zertifikat gültig sein.
+                              Der Fingerabdruck des Zertifikats kann helfen herauszufinden ob man das richtige Zertifikat hat.',
     'property' => 'Eigenschaft',
     'value' => 'Wert',
+    'certificateDateFormat' => 'd.m.Y H:i:s',
     'certificateValidFrom' => 'Gültig ab',
     'certificateValidTo' => 'Gültig bis',
     'certificateKeyType' => 'Typ',
     'certificateKeySize' => 'Schlüssellänge',
     'bit' => ' Bit',
-    'certificateDigest' => 'Fingerabdruck (SHA-256)',
+    'certificateDigest' => 'Fingerabdruck (SHA-1)',
     'certificateCountry' => 'Land',
     'certificateCommonName' => 'Gemeinsamer Name',
 
