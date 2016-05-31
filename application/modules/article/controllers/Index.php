@@ -68,7 +68,9 @@ class Index extends \Ilch\Controller\Frontend
             $content = $this->getRequest()->getPost('content');
             $image = $this->getRequest()->getPost('image');
 
+            $categoryMapper = new CategoryMapper();
             $articleModel = new ArticleModel();
+
             $articleModel->setTitle($title);
             $articleModel->setCatId($catId);
             $articleModel->setContent($content);
@@ -76,6 +78,8 @@ class Index extends \Ilch\Controller\Frontend
             $articleModel->setVisits(0);
 
             $this->getView()->set('article', $articleModel);
+            $this->getView()->set('categoryMapper', $categoryMapper);
+            $this->getView()->set('commentMapper', $commentMapper);
         } else {
             $articleMapper = new ArticleMapper();
             $articleModel = new ArticleModel();
