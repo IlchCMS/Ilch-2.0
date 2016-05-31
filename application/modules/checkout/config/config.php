@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
         [
         'key' => 'checkout',
         'author' => 'Stantin, Thomas',
-        'icon_small' => 'fa-usd',
+        'icon_small' => 'fa-credit-card',
         'languages' =>
             [
             'de_DE' =>
@@ -52,5 +52,10 @@ class Config extends \Ilch\Config\Install
                 `amount` float NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
+    }
+
+    public function getUpdate()
+    {
+
     }
 }

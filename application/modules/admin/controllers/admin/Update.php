@@ -6,6 +6,8 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Ilch\Transfer as IlchTransfer;
+
 class Update extends \Ilch\Controller\Admin
 {
     public function init()
@@ -56,7 +58,7 @@ class Update extends \Ilch\Controller\Admin
         $version = $this->getConfig()->get('version');
         $this->getView()->set('version', $version);
 
-        $update = new \Ilch\Transfer();
+        $update = new IlchTransfer();
         $update->setTransferUrl($this->getConfig()->get('master_update_url'));
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
@@ -71,8 +73,8 @@ class Update extends \Ilch\Controller\Admin
         $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
-            $update->setDownloadUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip');
-            $update->setDownloadSignatureUrl('http://www.ilch2.de/ftp/Master-'.$update->getNewVersion().'.zip-signature.sig');
+            $update->setDownloadUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip');
+            $update->setDownloadSignatureUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);

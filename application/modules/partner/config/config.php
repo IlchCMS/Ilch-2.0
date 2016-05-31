@@ -61,4 +61,9 @@ class Config extends \Ilch\Config\Install
                 INSERT INTO `[prefix]_partners` (`id`, `name`, `banner`, `link`, `setfree`) VALUES
                 (1, "ilch", "http://www.ilch.de/include/images/linkus/88x31.png", "http://ilch.de", "1");';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

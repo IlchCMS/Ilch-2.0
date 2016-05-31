@@ -9,3 +9,5 @@ application/modules/events/static/upload/image
 /.vagrant
 /Vagrantfile
 /tests/config.php
+web.config
+robots.txt

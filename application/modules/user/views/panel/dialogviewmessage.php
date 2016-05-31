@@ -13,7 +13,7 @@
                         <div class="header">
                             <strong class="primary-font"><?=$key->getName() ?></strong>
                             <small class="pull-right text-muted">
-                                <span class="glyphicon glyphicon-time"></span><?=$key->getTime() ?>
+                                <i class="fa fa-clock-o"></i> <?=$key->getTime() ?>
                             </small>
                         </div>
                         <p><?=nl2br($this->getHtmlFromBBCode($key->getText())) ?></p>

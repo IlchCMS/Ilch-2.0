@@ -51,4 +51,9 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1';
     }
+
+    public function getUpdate()
+    {
+
+    }
 }

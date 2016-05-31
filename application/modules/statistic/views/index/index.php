@@ -17,7 +17,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h4 class="panel-title"><?=$this->getTrans('siteStatistic') ?></h4>
-                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -158,7 +158,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h4 class="panel-title"><?=$this->getTrans('visitsStatistic') ?></h4>
-                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -329,7 +329,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h4 class="panel-title"><?=$this->getTrans('browserStatistic') ?></h4>
-                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
             </div>
             <div class="panel-footer">
                 <?=$this->getTrans('browser') ?>
@@ -392,7 +392,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h4 class="panel-title"><?=$this->getTrans('osStatistic') ?></h4>
-                <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                <span class="pull-right clickable"><i class="fa fa-chevron-up"></i></span>
             </div>
             <div class="panel-footer">
                 <?=$this->getTrans('os') ?>
@@ -439,11 +439,11 @@ $(document).on('click', '.panel-heading span.clickable', function(e) {
     if (!$this.hasClass('panel-collapsed')) {
         $this.closest('.panel').find('.panel-body').slideUp();
         $this.addClass('panel-collapsed');
-        $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+        $this.find('i').removeClass('fa-chevron-up').addClass('fa-chevron-down');
     } else {
         $this.closest('.panel').find('.panel-body').slideDown();
         $this.removeClass('panel-collapsed');
-        $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+        $this.find('i').removeClass('fa-chevron-down').addClass('fa-chevron-up');
     }
 })
 </script>

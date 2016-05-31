@@ -16,6 +16,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('version', VERSION, 1);
         $databaseConfig->set('master_update_url', 'http://ilch2.de/ftp/current-release-versions.php');
+        $databaseConfig->set('master_download_url', 'http://www.ilch2.de/ftp/Master-');
         $databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
         $databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
@@ -93,6 +94,7 @@ class Config extends \Ilch\Config\Install
                   `title` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
+
     public function getUpdate()
     {
         return 'Update function executed';

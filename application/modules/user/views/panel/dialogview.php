@@ -12,7 +12,7 @@
                 <legend>Willkommen <?=$this->escape($profil->getName()) ?></legend>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <span class="glyphicon glyphicon-comment"></span> Dialog
+                        <i class="fa fa-comment"></i> Dialog
                     </div>
                     <div class="shout_box">
                         <div class="message_box" id="niceScroll">

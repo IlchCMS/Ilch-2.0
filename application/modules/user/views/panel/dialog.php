@@ -1,6 +1,4 @@
-<?php
-$profil = $this->get('profil');
-?>
+<?php $profil = $this->get('profil'); ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
@@ -25,7 +23,7 @@ $profil = $this->get('profil');
                                     <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialogview', 'id' => $dialog->getCId()]) ?>"><?=$dialog->getName() ?></a>
                                 </strong>
                                 <small class="pull-right">
-                                    <span class="glyphicon glyphicon-time"></span> <?=$dialog->getTime() ?>
+                                    <i class="fa fa-clock-o"></i> <?=$dialog->getTime() ?>
                                 </small>
                             </div>
                             <p>
