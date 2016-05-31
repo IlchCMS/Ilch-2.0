@@ -48,4 +48,6 @@ return
     'totalMembers' => 'Mitglieder insgesamt',
     'newMember' => 'Neuestes Mitglied',
     'legend' => 'Legende',
+    'smilies' => 'Smilies',
+    'close' => 'Schließen',
     ];

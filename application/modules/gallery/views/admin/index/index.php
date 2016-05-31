@@ -106,6 +106,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     <?=$this->getSaveBar('saveButton') ?>
 </form>
 
+<?=$this->getModalLabel('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 function resetBox() {
     $(':input','.changeBox')

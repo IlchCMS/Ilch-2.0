@@ -152,6 +152,21 @@ class Frontend extends Base
     }
 
     /**
+     * Gets the footer.
+     *
+     * @return string
+     */
+    public function getFooter()
+    {
+        $html = '<script>
+        var ilchSmileysPlugin = "'.$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/').'";
+        var ilchSmileysPluginUrl = "'.$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']).'";
+        </script>';
+
+        return $html;
+    }
+
+    /**
      * Loads a layout file.
      *
      * @param string $file

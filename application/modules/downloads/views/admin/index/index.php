@@ -106,6 +106,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
     <?=$this->getSaveBar('saveButton') ?>
 </form>
 
+<?=$this->getModalLabel('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 function resetBox() {
     $(':input','.changeBox')

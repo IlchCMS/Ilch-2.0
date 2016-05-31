@@ -1,7 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/comment.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('settings') ?>
-    <a class="badge" data-toggle="modal" data-target="#infoComment">
+    <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info" ></i>
     </a>
 </legend>
@@ -67,28 +67,8 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
-<div class="modal fade" id="infoComment">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-hidden="true">&times;</button>
-                <h4 class="modal-title"><?=$this->getTrans('info') ?></h4>
-            </div>
-            <div class="modal-body">
-                <p id="modalText"><?=$this->getTrans('CommentCommentInfoText') ?></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal"><?=$this->getTrans('close') ?></button>
-            </div>
-        </div>
-    </div>
-</div>
 
+<?=$this->getModalLabel('infoModal', $this->getTrans('info'), $this->getTrans('CommentCommentInfoText')); ?>
 <script type="text/javascript">
 $(function() {
     $('.spinner .btn:first-of-type').on('click', function() {

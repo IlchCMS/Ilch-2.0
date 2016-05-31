@@ -53,6 +53,7 @@
     <?php endif; ?>
 </form>
 
+<?=$this->getModalLabel('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 <?php $boxID = ''; ?>
 <?php if ($this->get('box') != ''): ?>

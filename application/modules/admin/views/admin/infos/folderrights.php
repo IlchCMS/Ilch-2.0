@@ -26,10 +26,10 @@
                 </td>
             </tr>
             <tr>
-                <td>"/application/"</td>
+                <td>"/certificate/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(CONFIG_PATH)): ?>
+                    <?php if (is_writable(ROOT_PATH.'/certificate/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -48,10 +48,10 @@
                 </td>
             </tr>
             <tr>
-                <td>"/certificate/"</td>
+                <td>"/application/"</td>
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
-                    <?php if (is_writable(ROOT_PATH.'/certificate/')): ?>
+                    <?php if (is_writable(CONFIG_PATH)): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
@@ -63,6 +63,17 @@
                 <td class="text-success"><?=$this->getTrans('writable') ?></td>
                 <td>
                     <?php if (is_writable(APPLICATION_PATH.'/modules/media/static/upload/')): ?>
+                        <span class="text-success"><?=$this->getTrans('writable') ?></span>
+                    <?php else: ?>
+                        <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>"/application/modules/smilies/static/img/"</td>
+                <td class="text-success"><?=$this->getTrans('writable') ?></td>
+                <td>
+                    <?php if (is_writable(APPLICATION_PATH.'/modules/smilies/static/img/')): ?>
                         <span class="text-success"><?=$this->getTrans('writable') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('notWritable') ?></span>

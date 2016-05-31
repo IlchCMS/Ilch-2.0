@@ -40,4 +40,5 @@ return
     'reply' => 'Reply',
     'commentUser' => 'User',
     'commentDateTime' => 'Date/Time',
+    'media' => 'Media',
     ];

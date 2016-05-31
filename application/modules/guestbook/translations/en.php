@@ -35,4 +35,6 @@ return
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha is false',
     'captchaRead' => 'Not readable? Change text!',
+    'smilies' => 'Smilies',
+    'close' => 'Close',
     ];

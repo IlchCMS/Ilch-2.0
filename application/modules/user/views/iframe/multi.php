@@ -54,7 +54,7 @@
 
 <script type="text/javascript">
 $(".btn").click(function() {
-    window.top.$('#MediaModal').modal('hide');
+    window.top.$('#mediaModal').modal('hide');
     window.top.reload();
 });
 

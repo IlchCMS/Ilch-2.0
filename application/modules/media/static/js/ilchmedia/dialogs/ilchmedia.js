@@ -41,13 +41,13 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         labelStyle: 'font-weight: bold',
                         id: 'urlbutton',
                         onClick: function() {
-                            $('#MediaModal').modal('show');
+                            $('#mediaModal').modal('show');
 
                             var src = iframeUrlImageCkeditor;
                             var height = '100%';
                             var width = '100%';
 
-                            $("#MediaModal iframe").attr({'src': src,
+                            $("#mediaModal iframe").attr({'src': src,
                                 'height': height,
                                 'width': width});
                         }
@@ -76,13 +76,13 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         labelStyle: 'font-weight: bold',
                         id: 'urlbutton',
                         onClick: function() {
-                            $('#MediaModal').modal('show');
+                            $('#mediaModal').modal('show');
 
                             var src = iframeUrlFileCkeditor;
                             var height = '100%';
                             var width = '100%';
 
-                            $("#MediaModal iframe").attr({'src': src,
+                            $("#mediaModal iframe").attr({'src': src,
                                 'height': height,
                                 'width': width});
                         }
@@ -126,13 +126,13 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         labelStyle: 'font-weight: bold',
                         id: 'urlbutton',
                         onClick: function() {
-                            $('#MediaModal').modal('show');
+                            $('#mediaModal').modal('show');
 
                             var src = iframeUrlVideoCkeditor;
                             var height = '100%';
                             var width = '100%';
 
-                            $("#MediaModal iframe").attr({'src': src,
+                            $("#mediaModal iframe").attr({'src': src,
                                 'height': height,
                                 'width': width});
                         }
@@ -148,13 +148,13 @@ CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
                         labelStyle: 'font-weight: bold',
                         id: 'uploadbutton',
                         onClick: function() {
-                            $('#MediaModal').modal('show');
+                            $('#mediaModal').modal('show');
 
                             var src = iframeMediaUploadCkeditor;
                             var height = '100%';
                             var width = '100%';
 
-                            $("#MediaModal iframe").attr({'src': src,
+                            $("#mediaModal iframe").attr({'src': src,
                                 'height': height,
                                 'width': width});
                         }

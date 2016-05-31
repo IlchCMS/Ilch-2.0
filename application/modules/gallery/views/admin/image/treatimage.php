@@ -1,6 +1,4 @@
-<?php 
-$image = $this->get('image');
-?>
+<?php $image = $this->get('image'); ?>
 
 <legend><?=$this->getTrans('treatImage') ?></legend>
 <form class="form-horizontal" method="POST" action="">

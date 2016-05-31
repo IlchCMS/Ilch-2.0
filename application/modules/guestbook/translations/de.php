@@ -35,6 +35,8 @@ return
     'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha ist fehlerhaft',
     'captchaRead' => 'Nicht lesbar? Text ändern!',
+    'smilies' => 'Smilies',
+    'close' => 'Schließen',
 
     'validation.errors.required.fieldIsRequired'    => '%s muss ausgefüllt werden.',
     'validation.errors.same.fieldsDontMatch'        => '%s muss mit %s übereinstimmen.',
