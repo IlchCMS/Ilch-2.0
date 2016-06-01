@@ -15,10 +15,10 @@
                            name="login_emailname"
                            id="login_emailname"
                            type="text" />
-                    <?php if (!empty($errors['login_emailname'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['login_emailname']) ?></span>
-                    <?php endif; ?>
                 </div>
+                <?php if (!empty($errors['login_emailname'])): ?>
+                    <span class="help-inline"><?=$this->getTrans($errors['login_emailname']) ?></span>
+                <?php endif; ?>
             </div>
         </div>
         <div class="form-group <?php if (!empty($errors['login_password'])) { echo 'has-error'; }; ?>">
@@ -32,10 +32,10 @@
                            name="login_password"
                            id="login_password"
                            type="password" />
-                    <?php if (!empty($errors['login_password'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['login_password']) ?></span>
-                    <?php endif; ?>
                 </div>
+                <?php if (!empty($errors['login_password'])): ?>
+                    <span class="help-inline"><?=$this->getTrans($errors['login_password']) ?></span>
+                <?php endif; ?>
             </div>
         </div>
         <label class="col-lg-offset-2 col-lg-8"><input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?></label>
