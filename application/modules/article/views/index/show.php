@@ -148,7 +148,20 @@ function rec($id, $uid, $req, $obj)
 .replyHidden {
     display: none;
 }
+.article_preview {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    cursor: not-allowed;
+}
 </style>
+
+<?php if ($preview): ?>
+    <div class="article_preview"></div>
+<?php endif; ?>
 
 <div class="col-lg-12 hidden-xs" style="padding-left: 0px;">
     <div class="col-lg-8" style="padding-left: 0px;">
