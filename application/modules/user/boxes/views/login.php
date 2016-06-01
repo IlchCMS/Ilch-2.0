@@ -8,7 +8,7 @@
     <div id="checknewmessage"></div>
     <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()): ?>
         <a target="_blank" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'admin', 'action' => 'index']) ?>">
-            <?=$this->getTrans('adminarea') ?>
+            <?=$this->getTrans('admincenter') ?>
         </a>
         <br />
     <?php endif; ?>
