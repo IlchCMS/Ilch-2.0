@@ -44,7 +44,7 @@
                                 </a>
                                 <?php if ($layout->getModulekey() != ''): ?>
                                     <a class="fa-2x" href="<?=$this->getUrl(['module' => $layout->getModulekey(),'controller' => 'index', 'action' => 'index']) ?>">
-                                        <i class="fa fa fa-cogs"></i> Settings
+                                        <i class="fa fa fa-cogs"></i> <?=$this->getTrans('settings') ?>
                                     </a>
                                 <?php endif; ?>
 
