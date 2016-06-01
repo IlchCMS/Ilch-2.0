@@ -98,7 +98,7 @@ class Layouts extends \Ilch\Controller\Admin
 
             if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                 // Certificate is missing or expired.
-                $this->addMessage('certMissingOrExpired');
+                $this->addMessage('certMissingOrExpired', 'danger');
                 return;
             }
 
@@ -110,7 +110,7 @@ class Layouts extends \Ilch\Controller\Admin
                 // Verification failed. Drop the potentially bad files.
                 unlink($transfer->getZipFile());
                 unlink($transfer->getZipFile().'-signature.sig');
-                $this->addMessage('layoutVerificationFailed');
+                $this->addMessage('layoutVerificationFailed', 'danger');
                 return;
             }
 
