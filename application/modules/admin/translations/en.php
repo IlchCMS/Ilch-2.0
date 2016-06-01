@@ -169,6 +169,7 @@ return
     'certificateDigest' => 'Fingerprint (SHA-1)',
     'certificateCountry' => 'Country',
     'certificateCommonName' => 'Common Name',
+    'certificateMissing' => 'Certificate missing. It is impossible to install updates without a certificate.',
 
     'menuKeyboardShortcuts' => 'Keyboard Shortcuts',
     'hmenuKeyboardShortcuts' => 'Keyboard Shortcuts',
