@@ -169,6 +169,7 @@ return
     'certificateDigest' => 'Fingerabdruck (SHA-1)',
     'certificateCountry' => 'Land',
     'certificateCommonName' => 'Gemeinsamer Name',
+    'certificateMissing' => 'Zertifikat fehlt. Ohne Zertifikat können keine Updates installiert werden.',
 
     'menuKeyboardShortcuts' => 'Tastaturkürzel',
     'hmenuKeyboardShortcuts' => 'Tastaturkürzel',

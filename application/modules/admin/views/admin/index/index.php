@@ -25,7 +25,13 @@ if ($this->getUser()->getFirstName() != '') {
     </tr>
     <tr>
         <td><?=$this->getTrans('serverVersion') ?></td>
-        <td><?=$this->get('newVersion') ?></td>
+        <td>
+            <?php if ($this->get('newVersion')) : ?>
+                <?=$this->get('newVersion') ?>
+            <?php else: ?>
+                <?=VERSION ?>
+            <?php endif; ?>
+        </td>
     </tr>
     <?php if ($this->get('foundNewVersions')) : ?>
     <tr>
