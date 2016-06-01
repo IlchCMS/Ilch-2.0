@@ -105,6 +105,7 @@ class Infos extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('hmenuCertificate'), ['action' => 'certificate']);
 
         if (!is_file(ROOT_PATH.'/certificate/Certificate.crt')) {
+            $this->getView()->set('certificateMissing', true);
             return;
         }
 
