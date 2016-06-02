@@ -116,10 +116,9 @@ class Index extends \Ilch\Controller\Admin
             $upload->setFile($_FILES['upl']['name']);
             $upload->setTypes($this->getConfig()->get('media_ext_img'));
             $upload->setPath($this->getConfig()->get('media_uploadpath'));
-            // Early return if extension is not allowed or file is too big. Should normally already be done client-side.
-            // Doing this client-side is especially important for the "file too big"-case as early returning here is already too late.
+            // Early return if extension is not allowed. Should normally already be done client-side.
             $upload->setAllowedExtensions($allowedExtensions);
-            if (!$upload->isAllowedExtension() || filesize($_FILES['upl']['tmp_name']) > $upload->returnBytes(ini_get('upload_max_filesize'))) {
+            if (!file_exists($_FILES['upl']['tmp_name']) || !$upload->isAllowedExtension()) {
                 return;
             }
             $upload->upload();
