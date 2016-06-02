@@ -31,10 +31,21 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $articleMapper = new ArticleMapper();
+        $categoryMapper = new CategoryMapper();
+        $commentMapper = new CommentMapper();
+        $userMapper = new UserMapper();
+        $pagination = new \Ilch\Pagination();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
-        $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
+        $this->getView()->set('categoryMapper', $categoryMapper);
+        $this->getView()->set('commentMapper', $commentMapper);
+        $this->getView()->set('userMapper', $userMapper);
+        $this->getView()->set('articles', $articleMapper->getArticles($this->locale, $pagination));
+        $this->getView()->set('pagination', $pagination);
     }
 
     public function showAction()

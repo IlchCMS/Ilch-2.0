@@ -13,8 +13,7 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
         $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
         $image = $article->getArticleImage();
         $imageSource = $article->getArticleImageSource();
-?>
-
+        ?>
         <div class="col-lg-12 hidden-xs" style="padding-left: 0px;">
             <div class="col-lg-8" style="padding-left: 0px;">
                 <h4><a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId()]) ?>"><?=$articlesCats->getName() ?></a></h4>
@@ -59,6 +58,9 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
+    <div class="pull-right">
+        <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+    </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

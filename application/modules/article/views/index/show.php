@@ -1,8 +1,8 @@
 <?php
 $comments = $this->get('comments');
 $article = $this->get('article');
-$commentMapper = $this->get('commentMapper');
 $categoryMapper = $this->get('categoryMapper');
+$commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
 $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());

@@ -32,15 +32,19 @@ class Archive extends \Ilch\Controller\Frontend
         $categoryMapper = new CategoryMapper();
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
+        $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
 
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
         $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('commentMapper', $commentMapper);
         $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('articles', $articleMapper->getArticles($this->locale));
+        $this->getView()->set('articles', $articleMapper->getArticles($this->locale, $pagination));
+        $this->getView()->set('pagination', $pagination);
     }
 
     public function showAction()

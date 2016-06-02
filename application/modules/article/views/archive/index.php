@@ -14,7 +14,6 @@ $userMapper = $this->get('userMapper');
             $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
         ?>
-
             <li class="list-group-item">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$article->getTitle() ?></a> - 
                 <?php if ($article->getAuthorId() != ''): ?>
@@ -31,6 +30,9 @@ $userMapper = $this->get('userMapper');
             </li>
         <?php endforeach; ?>
     </ul>
+    <div class="pull-right">
+        <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+    </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>
