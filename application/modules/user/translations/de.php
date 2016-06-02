@@ -160,7 +160,7 @@ return
     'message' => 'Nachricht',
     'userPanel' => 'User Panel',
     'hello' => 'Hallo',
-    'adminarea' => 'Adminbereich',
+    'admincenter' => 'Admincenter',
 
     'register' => 'Registrieren',
     'menuLoginWith' => 'Login mit',
