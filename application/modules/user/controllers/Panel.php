@@ -105,11 +105,11 @@ class Panel extends BaseController
             $file_tmpe = $_FILES['avatar']['tmp_name'];
             $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
             $file_size = $_FILES['avatar']['size'];
+            $imageInfo = getimagesize($file_tmpe);
 
-            if (in_array($endung, explode(' ', $avatarAllowedFiletypes))) {
-                $size = getimagesize($file_tmpe);
-                $width = $size[0];
-                $height = $size[1];
+            if (in_array($endung, explode(' ', $avatarAllowedFiletypes)) && strpos($imageInfo['mime'], 'image/') === 0) {
+                $width = $imageInfo[0];
+                $height = $imageInfo[1];
 
                 if ($file_size <= $avatarSize AND $width <= $avatarWidth AND $height <= $avatarHeight) {
                     $avatar = $path.$this->getUser()->getId().'.'.$endung;
