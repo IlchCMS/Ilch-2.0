@@ -8,37 +8,41 @@ namespace Modules\Article\Mappers;
 
 use Modules\Article\Models\Article as ArticleModel;
 
-/**
- * The article mapper class.
- */
 class Article extends \Ilch\Mapper
 {
     /**
      * Get articles.
      *
      * @param string $locale
+     * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticles($locale = '')
+    public function getArticles($locale = '', $pagination = null)
     {
-        $select = $this->db()->select();
-        $result = $select->fields(['p.id', 'p.cat_id', 'p.date_created'])
-            ->from(['p' => 'articles'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source'])
-            ->where(['pc.locale' => $this->db()->escape($locale)])
-            ->group(['p.id'])
-            ->order(['date_created' => 'DESC']);
+        $select = $this->db()->select()
+                ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+                ->from(['p' => 'articles'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source'])
+                ->where(['pc.locale' => $this->db()->escape($locale)])
+                ->group(['p.id'])
+                ->order(['date_created' => 'DESC']);
 
-        $items = $result->execute();
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
 
-        $articleArray = $items->fetchRows();
+        $articleArray = $result->fetchRows();
 
         if (empty($articleArray)) {
             return null;
         }
 
         $articles = [];
-
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
@@ -59,27 +63,38 @@ class Article extends \Ilch\Mapper
     }
 
     /**
-     * Get articles.
+     * Get articles by cat id.
      *
+     * @param integer $catId
      * @param string $locale
+     * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByCats($catId, $locale = '')
+    public function getArticlesByCats($catId, $locale = '', $pagination = null)
     {
-        $sql = 'SELECT pc.*, p.*
-                FROM `[prefix]_articles` as p
-                LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
-                AND pc.locale = "'.$this->db()->escape($locale).'"
-                WHERE p.cat_id = "'.$catId.'"
-                GROUP BY p.id DESC';
-        $articleArray = $this->db()->queryArray($sql);
+        $select = $this->db()->select()
+                ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+                ->from(['p' => 'articles'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source'])
+                ->where(['p.cat_id' => $catId, 'pc.locale' => $this->db()->escape($locale)])
+                ->group(['p.id'])
+                ->order(['id' => 'DESC']);
+
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+        $articleArray = $result->fetchRows();
 
         if (empty($articleArray)) {
             return null;
         }
 
         $articles = [];
-
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
@@ -99,6 +114,13 @@ class Article extends \Ilch\Mapper
         return $articles;
     }
 
+    /**
+     * Get articles by date.
+     *
+     * @param integer $date
+     * @param \Ilch\Pagination|null $pagination
+     * @return ArticleModel[]|array
+     */
     public function getArticlesByDate($date)
     {
         $sql = 'SELECT pc.*, p.*
@@ -113,7 +135,6 @@ class Article extends \Ilch\Mapper
         }
 
         $articles = [];
-
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
@@ -133,11 +154,16 @@ class Article extends \Ilch\Mapper
         return $articles;
     }
 
+    /**
+     * Get articles count by month and year
+     *
+     * @param integer $date
+     */
     public function getCountArticlesByMonthYear($date = null)
     {
         $sql = 'SELECT COUNT(*)
                 FROM `[prefix]_articles`';
-        
+
         if ($date != null) {
             $sql .= ' WHERE YEAR(date_created) = YEAR("'.$date.'") AND MONTH(date_created) = MONTH("'.$date.'")';
         }
@@ -153,7 +179,7 @@ class Article extends \Ilch\Mapper
                 FROM `[prefix]_articles`
                 GROUP BY YEAR(date_created), MONTH(date_created)
                 ORDER BY `date_created` DESC';
-        
+
         if ($limit !== null) {
            $sql .= ' LIMIT '.(int)$limit;
         }
@@ -165,7 +191,6 @@ class Article extends \Ilch\Mapper
         }
 
         $articles = [];
-
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
@@ -185,26 +210,26 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleList($locale = '', $limit = null)
     {
-        $sql = 'SELECT `a`.`id`, `a`.`cat_id`, `ac`.`author_id`, `ac`.`visits`, `ac`.`title`, `ac`.`perma`, `ac`.`article_img`,`ac`.`article_img_source`,`m`.`url_thumb`,`m`.`url`
-                FROM `[prefix]_articles` as `a`
-                LEFT JOIN `[prefix]_articles_content` as `ac` ON `a`.`id` = `ac`.`article_id`
-                AND `ac`.`locale` = "'.$this->db()->escape($locale).'"
-                LEFT JOIN `[prefix]_media` `m` ON `ac`.`article_img` = `m`.`url`
-                GROUP BY `a`.`id`
-                ORDER BY `a`.`date_created` DESC';
-        
-        if ($limit !== null) {
-           $sql .= ' LIMIT '.(int)$limit;
-        }
+        $select = $this->db()->select()
+                ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+                ->from(['p' => 'articles'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source'])
+                ->join(['m' => 'media'], 'pc.article_img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
+                ->where(['pc.locale' => $this->db()->escape($locale)])
+                ->group(['p.id'])
+                ->order(['date_created' => 'DESC']);
 
-        $articleArray = $this->db()->queryArray($sql);
+        if ($limit !== null) {
+            $select->limit($limit);
+        }
+        $result = $select->execute();
+        $articleArray = $result->fetchRows();
 
         if (empty($articleArray)) {
             return null;
         }
 
         $articles = [];
-
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
             $articleModel->setId($articleRow['id']);
@@ -231,10 +256,14 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleByIdLocale($id, $locale = '')
     {
-            $sql = 'SELECT * FROM [prefix]_articles as p
-                    INNER JOIN [prefix]_articles_content as pc ON p.id = pc.article_id
-                    WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
-        $articleRow = $this->db()->queryRow($sql);
+        $select = $this->db()->select()
+                ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+                ->from(['p' => 'articles'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source'])
+                ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)]);
+
+        $result = $select->execute();
+        $articleRow = $result->fetchRow();
 
         if (empty($articleRow)) {
             return null;
@@ -266,12 +295,12 @@ class Article extends \Ilch\Mapper
     {
         $sql = 'SELECT article_id, locale, perma FROM `[prefix]_articles_content`';
         $permas = $this->db()->queryArray($sql);
-        $permaArray = [];
 
         if (empty($permas)) {
             return null;
         }
 
+        $permaArray = [];
         foreach ($permas as $perma) {
             $permaArray[$perma['perma']] = $perma;
         }
@@ -295,7 +324,7 @@ class Article extends \Ilch\Mapper
     }
 
     /**
-     * Inserts or updates a article model in the database.
+     * Inserts or updates a article.
      *
      * @param ArticleModel $article
      */

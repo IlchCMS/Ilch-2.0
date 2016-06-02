@@ -45,6 +45,7 @@ class Cats extends \Ilch\Controller\Frontend
         $categoryMapper = new CategoryMapper();
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
+        $pagination = new \Ilch\Pagination();
 
         $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 
@@ -53,9 +54,12 @@ class Cats extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                 ->add($articlesCats->getName(), ['action' => 'show', 'id' => $articlesCats->getId()]);
 
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
         $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('commentMapper', $commentMapper);
         $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('articles', $articleMapper->getArticlesByCats($this->getRequest()->getParam('id'), $this->locale));
+        $this->getView()->set('articles', $articleMapper->getArticlesByCats($this->getRequest()->getParam('id'), $this->locale, $pagination));
+        $this->getView()->set('pagination', $pagination);
     }
 }

@@ -1,7 +1,8 @@
 <?php
 $articles = $this->get('articles');
-$categoryMapper = new \Modules\Article\Mappers\Category();
-$commentMapper = new \Modules\Comment\Mappers\Comment();
+$categoryMapper = $this->get('categoryMapper');
+$commentMapper = $this->get('commentMapper');
+$userMapper = $this->get('userMapper');
 
 if ($articles != ''):
     foreach ($articles as $article):
@@ -11,7 +12,6 @@ if ($articles != ''):
         $imageSource = $article->getArticleImageSource();
         $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
         ?>
-
         <div class="col-lg-12 hidden-xs" style="padding-left: 0px;">
             <div class="col-lg-8" style="padding-left: 0px;">
                 <h4><a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId()]) ?>"><?=$articlesCats->getName() ?></a></h4>
@@ -43,7 +43,6 @@ if ($articles != ''):
         <hr />
         <div>
             <?php if ($article->getAuthorId() != ''): ?>
-                <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                 <?php $user = $userMapper->getUserById($article->getAuthorId()); ?>
                 <?php if ($user != ''): ?>
                     <i class="fa fa-user" title="<?=$this->getTrans('author') ?>"></i> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a>&nbsp;&nbsp;
@@ -57,6 +56,9 @@ if ($articles != ''):
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
+    <div class="pull-right">
+        <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
+    </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

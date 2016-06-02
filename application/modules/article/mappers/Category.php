@@ -50,6 +50,7 @@ class Category extends \Ilch\Mapper
     public function getCategoryById($id)
     {
         $cats = $this->getCategories(['id' => $id]);
+
         return reset($cats);
     }
 
@@ -60,10 +61,7 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $category)
     {
-        $fields =
-            [
-            'name' => $category->getName()
-            ];
+        $fields = ['name' => $category->getName()];
 
         if ($category->getId()) {
             $this->db()->update('articles_cats')
