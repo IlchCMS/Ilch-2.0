@@ -13,10 +13,11 @@ class Post extends \Ilch\Mapper
 {
     public function getPostsByTopicId($id)
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_forum_topics`
-                WHERE id = '.$id;
-        $fileRow = $this->db()->queryRow($sql);
+        $fileRow = $this->db()->select('*')
+            ->from('forum_topics')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
 
         $entryModel = new TopicModel();
         $entryModel->setId($fileRow['id']);
@@ -31,10 +32,11 @@ class Post extends \Ilch\Mapper
 
     public function getPostById($id)
     {
-        $sql = 'SELECT *
-                FROM `[prefix]_forum_posts`
-                WHERE id = '.$id;
-        $fileRow = $this->db()->queryRow($sql);
+        $fileRow = $this->db()->select('*')
+            ->from('forum_posts')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
 
         $entryModel = new PostModel();
         $entryModel->setId($fileRow['id']);
@@ -46,10 +48,12 @@ class Post extends \Ilch\Mapper
 
     public function getAllPostsByUderId($userId)
     {
-        $sql = 'SELECT COUNT(id)
-                FROM [prefix]_forum_posts
-                WHERE user_id ='.$userId;
-        $topics = $this->db()->queryCell($sql);
+        $this->db()->select('id')
+            ->from('forum_posts')
+            ->where(['user_id' => $userId])
+            ->execute()
+            ->fetchRows();
+        $topics = $this->db()->getAffectedRows();
 
         if (empty($topics)) {
             return '0';
@@ -93,19 +97,25 @@ class Post extends \Ilch\Mapper
 
     public function getPostByTopicId($topicId, $pagination = null)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS *
-                FROM `[prefix]_forum_posts`
-                WHERE topic_id = '.$topicId.'
-                LIMIT '.implode(',',$pagination->getLimit());
+        $select = $this->db()->select('*')
+            ->from('forum_posts')
+            ->where(['topic_id' => $topicId]);
 
-        $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
 
+        $fileArray = $result->fetchRows();
         $postEntry = [];
-        $userMapper = new UserMapper();
 
         foreach ($fileArray as $entries) {
             $entryModel = new PostModel();
+            $userMapper = new UserMapper();
             $entryModel->setId($entries['id']);
             $entryModel->setText($entries['text']);
             $entryModel->setDateCreated($entries['date_created']);
@@ -117,7 +127,7 @@ class Post extends \Ilch\Mapper
             $entryModel->setAutorAllPost($this->getAllPostsByUderId($entries['user_id']));
             $postEntry[] = $entryModel;
         }
-        
+
         return $postEntry;
     }
 
