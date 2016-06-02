@@ -97,7 +97,11 @@
                             <td>
                                 <?php if (in_array($media->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>
                                     <a href="<?=$this->getBaseUrl($media->getUrl()) ?>" title="<?=$media->getName() ?>">
-                                        <img class="img-preview" src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>" alt="<?=$media->getName() ?>">
+                                        <?php if (file_exists($media->getUrlThumb())): ?>
+                                            <img class="img-preview" src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>" alt="<?=$media->getName() ?>">
+                                        <?php else: ?>
+                                            <img class="img-preview" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" alt="<?=$media->getName() ?>">
+                                        <?php endif; ?>
                                     </a>
                                 <?php else: ?>
                                     <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
