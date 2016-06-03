@@ -42,7 +42,11 @@
                                         <td><input value="<?=$image->getId() ?>" type="checkbox" name="check_gallery[]" /></td>
                                         <td><?=$this->getEditIcon(['action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?></td>
                                         <td><?=$this->getDeleteIcon(['action' => 'delgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getImageId()]) ?></td>
-                                        <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
+                                        <?php if (file_exists($image->getImageThumb())): ?>
+                                            <td><img class="image thumbnail img-responsive" src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>"/></td>
+                                        <?php else: ?>
+                                            <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"/></td>
+                                        <?php endif; ?>
                                         <td><?=$image->getImageTitle() ?></td>
                                         <td><?=$image->getImageDesc() ?></td>
                                     </tr>
