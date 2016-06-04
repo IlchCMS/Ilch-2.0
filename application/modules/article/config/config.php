@@ -58,17 +58,17 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_content` (
                   `article_id` INT(11) NOT NULL,
                   `author_id` INT(11) NOT NULL,
-                  `visits` INT(11) NOT NULL,
+                  `visits` INT(11) NOT NULL DEFAULT 0,
                   `content` MEDIUMTEXT NOT NULL,
-                  `description` MEDIUMTEXT NOT NULL,
-                  `locale` VARCHAR(255) NOT NULL,
+                  `description` MEDIUMTEXT NULL DEFAULT NULL,
+                  `locale` VARCHAR(255) NULL DEFAULT NULL,
                   `title` VARCHAR(255) NOT NULL,
-                  `perma` VARCHAR(255) NOT NULL,
-                  `article_img` VARCHAR(255) NOT NULL,
-                  `article_img_source` VARCHAR(255) NOT NULL
+                  `perma` VARCHAR(255) NULL DEFAULT NULL,
+                  `article_img` VARCHAR(255) NULL DEFAULT NULL,
+                  `article_img_source` VARCHAR(255) NULL DEFAULT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-                INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`) VALUES ("1", now());
+                INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`) VALUES (1, now());
 
                 INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");
 

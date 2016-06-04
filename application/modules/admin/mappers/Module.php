@@ -127,11 +127,12 @@ class Module extends \Ilch\Mapper
      * Inserts a module model in the database.
      *
      * @param ModuleModel $module
+     * @return int
      */
     public function save(ModuleModel $module)
     {
         $moduleId = $this->db()->insert('modules')
-            ->values(['key' => $module->getKey(), 'system' => $module->getSystemModule(),
+            ->values(['key' => $module->getKey(), 'system' => (int) $module->getSystemModule(),
                 'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor()])
             ->execute();
 
@@ -141,7 +142,7 @@ class Module extends \Ilch\Mapper
                 ->execute();
         }
 
-        return $moduleId;
+        return (int) $moduleId;
     }
 
     /**

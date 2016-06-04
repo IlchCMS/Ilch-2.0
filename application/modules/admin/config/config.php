@@ -42,8 +42,8 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
                   `key` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `system` INT(11) NOT NULL,
-                  `author` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `system` TINYINT(1) NOT NULL DEFAULT 0,
+                  `author` VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
                   `icon_small` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
                   UNIQUE KEY `key` (`key`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -69,15 +69,15 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_menu_items` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `menu_id` INT(11) NOT NULL,
-                  `sort` INT(11) NOT NULL,
+                  `sort` INT(11) NOT NULL DEFAULT 0,
                   `parent_id` INT(11) NOT NULL,
-                  `page_id` INT(11) NOT NULL,
-                  `box_id` INT(11) NOT NULL,
-                  `box_key` VARCHAR(255) NOT NULL,
+                  `page_id` INT(11) NOT NULL DEFAULT 0,
+                  `box_id` INT(11) NOT NULL DEFAULT 0,
+                  `box_key` VARCHAR(255) NULL DEFAULT NULL,
                   `type` INT(11) NOT NULL,
                   `title` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `href` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `module_key` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `href` VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+                  `module_key` VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
                 

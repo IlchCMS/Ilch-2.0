@@ -100,13 +100,11 @@ class Mysql
      */
     public function query($sql)
     {
-        $mysqliResult = mysqli_query($this->conn, $this->getSqlWithPrefix($sql));
+        $sql = $this->getSqlWithPrefix($sql);
+        $mysqliResult = mysqli_query($this->conn, $sql);
 
         if (!$mysqliResult) {
-            echo '<pre><h4 class="text-danger">MySQL Error:</h4>'
-                . $this->conn->errno . ': ' . $this->conn->error
-                . '<h5>Query</h5>' . $this->getSqlWithPrefix($sql)
-                . '<h5>Debug backtrace</h5>' . debug_backtrace_html() . '</pre>';
+            $this->handleError($sql);
         }
 
         return $mysqliResult;
@@ -401,9 +399,9 @@ class Mysql
     {
         $result = false;
         $sql = $this->getSqlWithPrefix($sql);
-
+        $subNo = 1;
         /*
-         * Executing the multiple queries.
+         * Executing multiple queries.
          */
         if ($this->conn->multi_query($sql)) {
             while ($this->conn->more_results()) {
@@ -414,11 +412,16 @@ class Mysql
                 $this->conn->next_result();
 
                 $result = $this->conn->store_result();
+                $subNo++;
 
                 if ($result) {
                     $result->free();
+                } elseif ($this->conn->errno !== 0) {
+                    $this->handleError($sql, $subNo);
                 }
             }
+        } else {
+            $this->handleError($sql, $subNo);
         }
 
         return $result;
@@ -438,5 +441,20 @@ class Mysql
             $tableName = array_values($table);
             $this->drop(reset($tableName));
         }
+    }
+
+    /**
+     * @param string $sql
+     * @param int|null $subQuery
+     */
+    private function handleError($sql, $subQuery = null)
+    {
+        echo '<pre><h4 class="text-danger">MySQL Error:</h4>',
+            $this->conn->errno . ': ' . $this->conn->error,
+            $subQuery === null ? '' : '<h5>Fehler in Query-Nr.:</h5> ', $subQuery,
+            '<h5>Gesamte-Query</h5>', $sql,
+            '<h5>Debug backtrace</h5>', debug_backtrace_html(), '</pre>';
+        //flush to make error visible (a redirect could suppress it)
+        flush();
     }
 }
