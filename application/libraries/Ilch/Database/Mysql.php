@@ -8,6 +8,12 @@ namespace Ilch\Database;
 
 class Mysql
 {
+    const IGNORE_ERRORS = 0;
+    const THROW_EXCEPTIONS = 1;
+    const OUTPUT_ERRORS = 2;
+    
+    public static $errorHandling = self::THROW_EXCEPTIONS;
+    
     /**
      * @var string|null
      */
@@ -446,15 +452,28 @@ class Mysql
     /**
      * @param string $sql
      * @param int|null $subQuery
+     * @return void
+     * @throws Exception
      */
     private function handleError($sql, $subQuery = null)
     {
-        echo '<pre><h4 class="text-danger">MySQL Error:</h4>',
-            $this->conn->errno . ': ' . $this->conn->error,
-            $subQuery === null ? '' : '<h5>Fehler in Query-Nr.:</h5> ', $subQuery,
-            '<h5>Gesamte-Query</h5>', $sql,
-            '<h5>Debug backtrace</h5>', debug_backtrace_html(), '</pre>';
-        //flush to make error visible (a redirect could suppress it)
-        flush();
+        switch (self::$errorHandling) {
+            default:
+            case self::OUTPUT_ERRORS:
+                echo '<pre><h4 class="text-danger">MySQL Error:</h4>',
+                    $this->conn->errno . ': ' . $this->conn->error,
+                '<h5>Query', ($subQuery === null ? '' : ' (Error in SubQuery ' . $subQuery . ')'), '</h5>', $sql,
+                '<h5>Debug backtrace</h5>', debug_backtrace_html(2), '</pre>';
+                //flush to make error visible (a redirect could suppress it)
+                flush();
+                break;
+            case self::THROW_EXCEPTIONS:
+                $subQueryString = $subQuery !== null ? sprintf("[SubQuery %d]", $subQuery) : '';
+                $errorMessage = sprintf("MySQL Error: %s\nin Query%s: %s", $this->conn->error, $subQueryString, $sql);
+                throw new Exception($errorMessage, $this->conn->errno);
+                break;
+            case self::IGNORE_ERRORS:
+                break;
+        }
     }
 }

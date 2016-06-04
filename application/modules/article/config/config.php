@@ -8,25 +8,21 @@ namespace Modules\Article\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'article',
         'icon_small' => 'fa-quote-right',
         'system_module' => true,
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Artikel',
                 'description' => 'Hier kann man die Artikel / News verwalten.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Articles',
-                'description' => 'Here you can magnage the Articles / News.',
-                ],
-            ]
-        ];
+                'description' => 'Here you can manage the Articles / News.',
+            ],
+        ]
+    ];
 
     public function install()
     {
@@ -61,7 +57,7 @@ class Config extends \Ilch\Config\Install
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   `content` MEDIUMTEXT NOT NULL,
                   `description` MEDIUMTEXT NULL DEFAULT NULL,
-                  `locale` VARCHAR(255) NULL DEFAULT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `perma` VARCHAR(255) NULL DEFAULT NULL,
                   `article_img` VARCHAR(255) NULL DEFAULT NULL,
@@ -72,8 +68,8 @@ class Config extends \Ilch\Config\Install
 
                 INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");
 
-                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `content`, `title`, `perma`) VALUES
-                (1, 1, "Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "startseite.html");';
+                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `content`, `title`, `perma`, `locale`) VALUES
+                (1, 1, "Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "startseite.html", "");';
     }
 
     public function getUpdate()

@@ -48,5 +48,5 @@ try {
     $page->loadCms();
     $page->loadPage();
 } catch (Exception $ex) {
-    print 'An unexpected error occurred: ' . $ex->getMessage();
+    print 'An unexpected error occurred: <pre>' . $ex->getMessage() . '</pre>';
 }
