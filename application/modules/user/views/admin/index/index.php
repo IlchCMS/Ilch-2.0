@@ -56,7 +56,7 @@
 
                     $dateConfirmed = $user->getDateConfirmed();
 
-                    if ($dateConfirmed->getTimestamp() == 0) {
+                    if ($dateConfirmed == '') {
                         $dateConfirmed = $this->getTrans('notConfirmedYet');
                     }
 

@@ -12,7 +12,7 @@
                 <div class="userInfo">
                     <i class="fa fa-sign-in" title="<?=$this->getTrans('regist') ?>"></i> <?=$this->escape($userlist->getDateCreated()) ?><br />
                     <?php $dateLastActivity = $userlist->getDateLastActivity(); ?>
-                    <?php if ($dateLastActivity->getTimestamp() != 0): ?>
+                    <?php if ($dateLastActivity != ''): ?>
                         <i class="fa fa-eye" title="<?=$this->getTrans('dateLastVisited') ?>"></i> <?=$this->escape($dateLastActivity) ?>
                     <?php endif; ?>
                 </div>
