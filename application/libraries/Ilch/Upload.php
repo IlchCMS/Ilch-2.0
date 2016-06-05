@@ -302,6 +302,9 @@ class Upload extends \Ilch\Controller\Base
         if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path.$hash.'.'.$this->getEnding())) {
             if (in_array($this->getEnding() , explode(' ', $this->types))) {
                 $imageInfo = getimagesize($this->path.$hash.'.'.$this->getEnding());
+                if (empty($imageInfo['channels'])) {
+                    $imageInfo['channels'] = 0;
+                }
                 $requiredMemory = ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 2.5);
                 if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $requiredMemory) {
                     return;
