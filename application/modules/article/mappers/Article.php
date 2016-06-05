@@ -259,11 +259,11 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
                 ->fields(['p.id', 'p.cat_id', 'p.date_created'])
                 ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.locale', 'pc.article_img', 'pc.article_img_source'])
                 ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)]);
 
         $result = $select->execute();
-        $articleRow = $result->fetchRow();
+        $articleRow = $result->fetchAssoc();
 
         if (empty($articleRow)) {
             return null;

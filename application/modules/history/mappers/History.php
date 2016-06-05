@@ -35,8 +35,8 @@ class History extends \Ilch\Mapper
             $entryModel->setId($entries['id']);
             $entryModel->setDate($entries['date']);
             $entryModel->setTitle($entries['title']);
+            $entryModel->setType($entries['type']);
             $entryModel->setColor($entries['color']);
-            $entryModel->setTyp($entries['typ']);
             $entryModel->setText($entries['text']);
             $entry[] = $entryModel;
         }
@@ -70,8 +70,8 @@ class History extends \Ilch\Mapper
             $historyModel->setId($historyRow['id']);
             $historyModel->setDate($historyRow['date']);
             $historyModel->setTitle($historyRow['title']);
+            $historyModel->setType($historyRow['type']);
             $historyModel->setColor($historyRow['color']);
-            $historyModel->setTyp($historyRow['typ']);
             $historyModel->setText($historyRow['text']);
             $historys[] = $historyModel;
         }
@@ -101,8 +101,8 @@ class History extends \Ilch\Mapper
         $historyModel->setId($historyRow['id']);
         $historyModel->setDate($historyRow['date']);
         $historyModel->setTitle($historyRow['title']);
+        $historyModel->setType($historyRow['type']);
         $historyModel->setColor($historyRow['color']);
-        $historyModel->setTyp($historyRow['typ']);
         $historyModel->setText($historyRow['text']);
 
         return $historyModel;
@@ -119,6 +119,8 @@ class History extends \Ilch\Mapper
             [
             'date' => $history->getDate(),
             'title' => $history->getTitle(),
+            'type' => $history->getType(),
+            'color' => $history->getColor(),
             'text' => $history->getText(),
             ];
 

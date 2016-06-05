@@ -31,7 +31,11 @@
                             <div id="<?=$media->getId() ?>"  class="col-lg-2 col-md-2 col-sm-3 col-xs-4 co thumb media_loader">
                                 <img class="image thumbnail img-responsive"
                                      data-url="<?=$media->getUrl() ?>"
-                                     src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
+                                     <?php if (file_exists($media->getUrlThumb())): ?>
+                                        src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
+                                     <?php else: ?>
+                                        src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"
+                                     <?php endif; ?>
                                      alt="<?=$media->getName() ?>">
                                 <input type="checkbox"
                                        id="<?=$media->getId() ?> test"

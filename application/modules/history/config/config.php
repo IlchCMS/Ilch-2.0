@@ -44,8 +44,8 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `date` DATE NOT NULL,
                   `title` VARCHAR(100) NOT NULL,
+                  `type` VARCHAR(100) NOT NULL,
                   `color` VARCHAR(10) NOT NULL,
-                  `typ` VARCHAR(100) NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';

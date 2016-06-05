@@ -14,7 +14,8 @@ class Index extends \Ilch\Controller\Frontend
     {
         $historyMapper = new HistoryMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index']);
 
         $this->getView()->set('historys', $historyMapper->getEntries());
     }

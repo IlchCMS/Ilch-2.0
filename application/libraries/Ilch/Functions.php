@@ -21,17 +21,21 @@ function dumpVar()
 /**
  * Improves "debug_backtrace" function for html dump.
  *
+ * @param int $skipEntries
  * @return string
  */
-function debug_backtrace_html()
+function debug_backtrace_html($skipEntries = 1)
 {
     $r = '';
 
-    foreach (debug_backtrace() as $t) {
+    foreach (debug_backtrace() as $key => $t) {
+        if ($key < $skipEntries) {
+            continue;
+        }
         $r .= "\t".'@ ';
 
         if (isset($t['file'])) {
-            $r .= basename($t['file']) . ':' . $t['line'];
+            $r .= relativePath($t['file']) . ':' . $t['line'];
         } else {
             $r .= '<PHP inner-code>';
         }
@@ -45,7 +49,7 @@ function debug_backtrace_html()
         $r .= $t['function'];
 
         if (isset($t['args']) && sizeof($t['args']) > 0) {
-          $r .= '(...)';
+            $r .= '(...)';
         } else {
             $r .= '()';
         }
@@ -54,6 +58,20 @@ function debug_backtrace_html()
     }
 
     return $r;
+}
+
+/**
+ * Return the relative path
+ * @param string $absolutePath
+ * @param string $relativeToPath
+ * @return string
+ */
+function relativePath($absolutePath, $relativeToPath = ROOT_PATH)
+{
+    if (strpos($absolutePath, $relativeToPath) === 0) {
+        return substr($absolutePath, strlen($relativeToPath) + 1);
+    }
+    return $absolutePath;
 }
 
 /**
@@ -69,7 +87,7 @@ function removeDir($dir)
         foreach ($dircontent as $c) {
             if ($c != '.' && $c != '..' && is_dir($dir.'/'.$c)) {
                 removeDir($dir.'/'.$c);
-            } else if ($c != '.' && $c != '..') {
+            } elseif ($c != '.' && $c != '..') {
                 unlink($dir.'/'.$c);
             }
         }
@@ -91,6 +109,7 @@ function removeDir($dir)
  * @param array     $data       The array
  * @param string    $key        The key to look for
  * @param mixed     $default    A default value if $key is not found
+ * @return mixed
  *
  * @copyright <Taylor Otwell>
  */
@@ -171,10 +190,11 @@ function is_in_array($needle, $haystack)
 
 /**
  * cUrl function, gets a url result
- * @param $url
- * @return mixed
+ * @param string $url
+ * @return string
  */
-function url_get_contents($url) {
+function url_get_contents($url)
+{
     if (!function_exists('curl_init')) {
         die('CURL is not installed!');
     }
@@ -200,7 +220,13 @@ function ilch_function_hash_equals($str1, $str2)
     }
 }
 
-function var_export_short_syntax($var, $indent="") {
+/**
+ * @param mixed $var
+ * @param string $indent
+ * @return string
+ */
+function var_export_short_syntax($var, $indent = '')
+{
     switch (gettype($var)) {
         case "string":
             return '"' . addcslashes($var, "\\\$\"\r\n\t\v\f") . '"';
@@ -216,6 +242,6 @@ function var_export_short_syntax($var, $indent="") {
         case "boolean":
             return $var ? "TRUE" : "FALSE";
         default:
-            return var_export($var, TRUE);
+            return var_export($var, true);
     }
 }

@@ -11,10 +11,10 @@ if ($history != '') {
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
+<form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <legend>
-        <?php if ($this->get('history') != '') {
+        <?php if ($history != '') {
             echo $this->getTrans('edit');
         } else {
             echo $this->getTrans('add');
@@ -29,7 +29,7 @@ if ($history != '') {
             <input class="form-control"
                    type="text"
                    name="date"
-                   value="<?php if ($this->get('history') != '') { echo $date; } ?>"
+                   value="<?php if ($history != '') { echo $date; } ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -45,7 +45,7 @@ if ($history != '') {
                    type="text"
                    name="title"
                    id="title"
-                   value="<?php if ($this->get('history') != '') { echo $this->escape($this->get('history')->getTitle()); } ?>" />
+                   value="<?php if ($history != '') { echo $this->escape($history->getTitle()); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -57,22 +57,22 @@ if ($history != '') {
                    name="text" 
                    id="ck_1"
                    toolbar="ilch_html"
-                   rows="5"><?php if ($this->get('history') != '') { echo $this->escape($this->get('history')->getText()); } ?></textarea>
+                   rows="5"><?php if ($history != '') { echo $this->escape($history->getText()); } ?></textarea>
         </div>
     </div>
     <div class="form-group">
-        <label for="typ" class="col-lg-2 control-label">
+        <label for="type" class="col-lg-2 control-label">
             <?=$this->getTrans('symbol') ?>:
         </label>
         <div class="col-lg-2">
-            <select class="form-control fontawesome-select" name="typ" id="typ">
-                <option value="" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
-                <option value="globe" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'globe') { echo 'selected="selected"'; } ?>>&#xf0ac; <?=$this->getTrans('globeSelect') ?></option>
-                <option value="idea" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'idea') { echo 'selected="selected"'; } ?>>&#xf0eb; <?=$this->getTrans('ideaSelect') ?></option>
-                <option value="cap" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'cap') { echo 'selected="selected"'; } ?>>&#xf19d; <?=$this->getTrans('capSelect') ?></option>
-                <option value="picture" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'picture') { echo 'selected="selected"'; } ?>>&#xf030; <?=$this->getTrans('pictureSelect') ?></option>
-                <option value="video" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'video') { echo 'selected="selected"'; } ?>>&#xf03d; <?=$this->getTrans('videoSelect') ?></option>
-                <option value="location" <?php if ($this->get('history') != '' AND $this->get('history')->getTyp() == 'location') { echo 'selected="selected"'; } ?>>&#xf041; <?=$this->getTrans('locationSelect') ?></option>
+            <select class="form-control fontawesome-select" name="type" id="type">
+                <option value="" <?php if ($history != '' AND $history->getTyp() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
+                <option value="globe" <?php if ($history != '' AND $history->getType() == 'globe') { echo 'selected="selected"'; } ?>>&#xf0ac; <?=$this->getTrans('globeSelect') ?></option>
+                <option value="idea" <?php if ($history != '' AND $history->getType() == 'idea') { echo 'selected="selected"'; } ?>>&#xf0eb; <?=$this->getTrans('ideaSelect') ?></option>
+                <option value="cap" <?php if ($history != '' AND $history->getType() == 'cap') { echo 'selected="selected"'; } ?>>&#xf19d; <?=$this->getTrans('capSelect') ?></option>
+                <option value="picture" <?php if ($history != '' AND $history->getType() == 'picture') { echo 'selected="selected"'; } ?>>&#xf030; <?=$this->getTrans('pictureSelect') ?></option>
+                <option value="video" <?php if ($history != '' AND $history->getType() == 'video') { echo 'selected="selected"'; } ?>>&#xf03d; <?=$this->getTrans('videoSelect') ?></option>
+                <option value="location" <?php if ($history != '' AND $history->getType() == 'location') { echo 'selected="selected"'; } ?>>&#xf041; <?=$this->getTrans('locationSelect') ?></option>
             </select>
         </div>
     </div>
@@ -84,13 +84,13 @@ if ($history != '') {
             <input class="form-control color {hash:true}"
                    name="color"
                    id="color"
-                   value="<?php if ($this->get('history') != '') { echo $this->get('history')->getColor(); } else { echo '#75ce66'; } ?>">
+                   value="<?php if ($history != '') { echo $history->getColor(); } else { echo '#75ce66'; } ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>
             </span>
         </div>
     </div>
-    <?php if ($this->get('history') != '') {
+    <?php if ($history != '') {
         echo $this->getSaveBar('updateButton');
     } else {
         echo $this->getSaveBar('addButton');

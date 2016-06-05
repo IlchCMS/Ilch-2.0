@@ -69,7 +69,7 @@ class File
         $fileString .= "\n";
         $fileString .= '$config = '.var_export_short_syntax($this->configData).';';
         $fileString .= "\n";
-        $fileString .= '?>';
+        $fileString .= '';
         file_put_contents($fileName, $fileString);
     }
 }
