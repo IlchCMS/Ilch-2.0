@@ -98,6 +98,8 @@ class Index extends \Ilch\Controller\Admin
 
             $date = new \Ilch\Date(trim($this->getRequest()->getPost('date')));
             $title = trim($this->getRequest()->getPost('title'));
+            $type = trim($this->getRequest()->getPost('type'));
+            $color = trim($this->getRequest()->getPost('color'));
             $text = trim($this->getRequest()->getPost('text'));
 
             if (empty($date)) {
@@ -107,9 +109,11 @@ class Index extends \Ilch\Controller\Admin
             } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
-                $model->setDate(new \Ilch\Date(trim($this->getRequest()->getPost('date'))));
-                $model->setTitle($this->getRequest()->getPost('title'));
-                $model->setText($this->getRequest()->getPost('text'));
+                $model->setDate($date);
+                $model->setTitle($title);
+                $model->setType($type);
+                $model->setColor($color);
+                $model->setText($text);
                 $historyMapper->save($model);
 
                 $this->addMessage('saveSuccess');

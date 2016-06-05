@@ -30,18 +30,18 @@ class History extends \Ilch\Model
     protected $title;
 
     /**
+     * The type of the history.
+     *
+     * @var string
+     */
+    protected $type;
+
+    /**
      * The color of the history.
      *
      * @var string
      */
     protected $color;
-
-    /**
-     * The typ of the history.
-     *
-     * @var string
-     */
-    protected $typ;
 
     /**
      * The text of the history.
@@ -120,6 +120,29 @@ class History extends \Ilch\Model
     }
 
     /**
+     * Gets the type of the history.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Sets the type of the history.
+     *
+     * @param string $type
+     * @return this
+     */
+    public function setType($type)
+    {
+        $this->type = (string)$type;
+
+        return $this;
+    }
+
+    /**
      * Gets the color of the history.
      *
      * @return string
@@ -138,29 +161,6 @@ class History extends \Ilch\Model
     public function setColor($color)
     {
         $this->color = (string)$color;
-
-        return $this;
-    }
-
-    /**
-     * Gets the typ of the history.
-     *
-     * @return string
-     */
-    public function getTyp()
-    {
-        return $this->typ;
-    }
-
-    /**
-     * Sets the typ of the history.
-     *
-     * @param string $typ
-     * @return this
-     */
-    public function setTyp($typ)
-    {
-        $this->typ = (string)$typ;
 
         return $this;
     }

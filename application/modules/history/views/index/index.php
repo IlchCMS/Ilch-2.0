@@ -4,14 +4,14 @@
 
 <legend><?=$this->getTrans('menuHistorys') ?></legend>
 <?php if ($historys != ''): ?>
-	<section id="cd-timeline" class="cd-container">
-        <?php foreach ($this->get('historys') as $history): ?>
+    <section id="cd-timeline" class="cd-container">
+        <?php foreach ($historys as $history): ?>
             <div class="cd-timeline-block">
                 <div class="cd-timeline-img" style="background: <?=$history->getColor() ?>;">
                     <?php 
-                        if ($history->getTyp() != '') {
-                            echo '<img src="'.$this->getModuleUrl('static/img/'.$history->getTyp().'.png').'" alt="">';
-                        }
+                    if ($history->getType() != '') {
+                        echo '<img src="'.$this->getModuleUrl('static/img/'.$history->getType().'.png').'" alt="">';
+                    }
                     ?>
                 </div>
 
@@ -23,7 +23,7 @@
                 </div>
             </div>
         <?php endforeach; ?>
-	</section>
+    </section>
 <?php else: ?>
     <?=$this->getTrans('noHistorys') ?>
 <?php endif; ?>
