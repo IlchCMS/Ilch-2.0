@@ -249,6 +249,7 @@ return
     'browse' => 'browse',
     'fileTooBig' => 'The file is too big.',
     'extensionNotAllowed' => 'Files with this extension are not allowed.',
+    'selected' => 'selected...',
 
     'saveButton' => 'Save',
 
