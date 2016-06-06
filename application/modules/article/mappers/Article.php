@@ -115,20 +115,28 @@ class Article extends \Ilch\Mapper
     }
 
     /**
-     * Get articles by date.
+     * Get articles of the month of the given date
      *
-     * @param integer $date
-     * @param \Ilch\Pagination|null $pagination
+     * @param \DateTime $date
      * @return ArticleModel[]|array
      */
-    public function getArticlesByDate($date)
+    public function getArticlesByDate(\DateTime $date)
     {
-        $sql = 'SELECT pc.*, p.*
-                FROM `[prefix]_articles` as p
-                LEFT JOIN `[prefix]_articles_content` as pc ON p.id = pc.article_id
-                WHERE YEAR(p.date_created) = YEAR("'.$date.'") AND MONTH(p.date_created) = MONTH("'.$date.'")
-                GROUP BY p.id DESC';
-        $articleArray = $this->db()->queryArray($sql);
+        $db = $this->db();
+
+        $dateTo = clone $date;
+        $dateTo->modify('first day of next month');
+
+        $dateFrom = $date->format($db::FORMAT_DATETIME);
+        $dateTo = $dateTo->format($db::FORMAT_DATETIME);
+
+        $select = $this->db()->select('p.*')
+            ->from(['p' => 'articles'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.*'])
+            ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo])
+            ->group(['p.id' => 'DESC']);
+
+        $articleArray = $this->db()->queryArray($select->generateSql());
 
         if (empty($articleArray)) {
             return null;
@@ -158,6 +166,7 @@ class Article extends \Ilch\Mapper
      * Get articles count by month and year
      *
      * @param integer $date
+     * @return int
      */
     public function getCountArticlesByMonthYear($date = null)
     {
@@ -173,6 +182,10 @@ class Article extends \Ilch\Mapper
         return $article;
     }
 
+    /**
+     * @param int|null $limit
+     * @return ArticleModel[]
+     */
     public function getArticleDateList($limit = null)
     {
         $sql = 'SELECT *
@@ -181,13 +194,13 @@ class Article extends \Ilch\Mapper
                 ORDER BY `date_created` DESC';
 
         if ($limit !== null) {
-           $sql .= ' LIMIT '.(int)$limit;
+            $sql .= ' LIMIT '.(int)$limit;
         }
 
         $articleArray = $this->db()->queryArray($sql);
 
         if (empty($articleArray)) {
-            return null;
+            return [];
         }
 
         $articles = [];
@@ -406,14 +419,22 @@ class Article extends \Ilch\Mapper
         }
     }
 
+    /**
+     * Delete an article (with all language contents)
+     * 
+     * @param int $id
+     * @return int
+     */
     public function delete($id)
     {
-        $this->db()->delete('articles')
+        $deleted = $this->db()->delete('articles')
             ->where(['id' => $id])
             ->execute();
         
         $this->db()->delete('articles_content')
             ->where(['article_id' => $id])
             ->execute();
+        
+        return $deleted;
     }
 }

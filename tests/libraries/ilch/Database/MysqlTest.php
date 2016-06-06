@@ -17,7 +17,7 @@ use Ilch\Database\Mysql as MySQL;
 class MysqlTest extends \PHPUnit\Ilch\DatabaseTestCase
 {
     /**
-     * Returns the initial dataset for the db.
+     * Returns the8 initial dataset for the db.
      *
      * @return \PHPUnit_Extensions_Database_DataSet_YamlDataSet
      */

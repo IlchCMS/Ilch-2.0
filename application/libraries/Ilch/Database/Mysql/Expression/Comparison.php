@@ -1,13 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 01.05.14
- * Time: 15:45
+ * @copyright Ilch 2.0
+ * @package ilch
  */
 
 namespace Ilch\Database\Mysql\Expression;
-
 
 class Comparison implements CompositePart
 {

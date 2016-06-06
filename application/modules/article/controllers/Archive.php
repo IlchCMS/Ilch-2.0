@@ -13,6 +13,9 @@ use Modules\User\Mappers\User as UserMapper;
 
 class Archive extends \Ilch\Controller\Frontend
 {
+    /** @var string */
+    private $locale;
+    
     public function init()
     {
         $locale = '';
@@ -54,13 +57,11 @@ class Archive extends \Ilch\Controller\Frontend
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
 
-        $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
+        $date = new \Ilch\Date($this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
                 ->add($date->format('F Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
-
-        $date = $this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01';
 
         $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('commentMapper', $commentMapper);
