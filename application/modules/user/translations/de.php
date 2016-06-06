@@ -249,6 +249,7 @@ return
     'browse' => 'durchsuchen',
     'fileTooBig' => 'Die Datei ist zu groß.',
     'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
+    'selected' => 'markierte...',
 
     'saveButton' => 'Speichern',
 
