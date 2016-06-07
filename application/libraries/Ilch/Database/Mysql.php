@@ -11,7 +11,10 @@ class Mysql
     const IGNORE_ERRORS = 0;
     const THROW_EXCEPTIONS = 1;
     const OUTPUT_ERRORS = 2;
-    
+
+    const FORMAT_DATETIME = 'Y-m-d H:i:s';
+    const FORMAT_DATE = 'Y-m-d';
+
     public static $errorHandling = self::THROW_EXCEPTIONS;
     
     /**

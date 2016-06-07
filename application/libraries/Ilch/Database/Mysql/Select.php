@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 02.05.14
- * Time: 08:35
+ * @copyright Ilch 2.0
+ * @package ilch
  */
 
 namespace Ilch\Database\Mysql;
@@ -232,7 +230,7 @@ class Select extends QueryBuilder
     /**
      * Add GROUP BY to the query (builder)
      *
-     * @param array $fields
+     * @param array $fields ['field' => 'DESC|ASC', 'field2']
      * @param boolean $replace
      *
      * @return \Ilch\Database\Mysql\Select
@@ -273,6 +271,7 @@ class Select extends QueryBuilder
      *
      * @return string
      * @throws \RuntimeException if sql could not be generated
+     * @throws \InvalidArgumentException if invalid parts were configured
      */
     public function generateSql()
     {
@@ -310,19 +309,16 @@ class Select extends QueryBuilder
         $sql .= implode(' ', $joinSql);
 
         $sql .= $this->generateWhereSql();
-
-        // add GROUP BY to sql
-        if (!empty($this->groupByFields)) {
-            $sql .= ' GROUP BY ' . $this->getFieldsSql($this->groupByFields);
-        }
+        $sql .= $this->generateGroupBySql();
 
         // add ORDER BY to sql
         if (!empty($this->order)) {
-            $sql .= ' ORDER BY';
-
+            $sql .= ' ORDER BY ';
+            $fields = [];
             foreach ($this->order as $column => $direction) {
-                $sql .= ' `'. $column.'` '.$direction;
+                $fields[] = $this->db->quote($column) . ' ' . $direction;
             }
+            $sql .= implode(',', $fields);
         }
 
         // add LIMIT to sql
@@ -424,5 +420,31 @@ class Select extends QueryBuilder
         }
 
         return $fields;
+    }
+
+    /**
+     * @return string
+     * @throws \InvalidArgumentException
+     */
+    protected function generateGroupBySql()
+    {
+        $sql = '';
+        // add GROUP BY to sql
+        if (!empty($this->groupByFields)) {
+            $sql .= ' GROUP BY ';
+            $fields = [];
+            foreach ($this->groupByFields as $key => $value) {
+                if (is_int($key)) {
+                    $fields[] = $this->db->quote($value);
+                } else {
+                    if (!in_array($value, ['ASC', 'DESC'])) {
+                        throw new \InvalidArgumentException('Invalid GROUP BY option: ' . $value);
+                    }
+                    $fields[] = $this->db->quote($key) . ' ' . $value;
+                }
+            }
+            $sql .= implode(',', $fields);
+        }
+        return $sql;
     }
 }

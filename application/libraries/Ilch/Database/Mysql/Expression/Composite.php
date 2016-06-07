@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 01.05.14
- * Time: 15:50
+ * @copyright Ilch 2.0
+ * @package ilch
  */
 
 namespace Ilch\Database\Mysql\Expression;

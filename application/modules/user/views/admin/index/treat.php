@@ -61,13 +61,13 @@ if ($user->getId()) {
         if ($user->getId()):
             $dateConfirmed = $user->getDateConfirmed();
 
-            if ($dateConfirmed->getTimestamp() == 0) {
+            if ($dateConfirmed == '') {
                 $dateConfirmed = $this->getTrans('notConfirmedYet');
             }
 
             $dateLastActivity = $user->getDateLastActivity();
 
-            if ($dateLastActivity->getTimestamp() == 0) {
+            if ($dateLastActivity == '') {
                 $dateLastActivity = $this->getTrans('neverLoggedIn');
             }
         ?>

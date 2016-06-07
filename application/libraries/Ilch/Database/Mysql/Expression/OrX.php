@@ -1,13 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: sebastian
- * Date: 01.05.14
- * Time: 16:11
+ * @copyright Ilch 2.0
+ * @package ilch
  */
 
 namespace Ilch\Database\Mysql\Expression;
-
 
 class OrX extends Composite
 {

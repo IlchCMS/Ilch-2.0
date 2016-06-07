@@ -243,7 +243,7 @@ class SelectTest extends \PHPUnit_Framework_TestCase
      */
     public function dpOperators()
     {
-        return [['='], ['<='], ['=>'], ['<'], ['>'], ['!='], ['<>']];
+        return [['='], ['<='], ['>='], ['<'], ['>'], ['!='], ['<>']];
     }
 
     /**
@@ -301,15 +301,37 @@ class SelectTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testGenerateSqlForOrderBy()
+    /**
+     * @dataProvider dpForTestGenerateSqlForOrderBy
+     *
+     * @param array $order
+     * @param string $expectedSqlPart
+     */
+    public function testGenerateSqlForOrderBy(array $order, $expectedSqlPart)
     {
         $this->out->from('Test')
-            ->order(['field1' => 'ASC']);
+            ->order($order);
 
-        $expected = 'SELECT * FROM `[prefix]_Test`'
-            . ' ORDER BY `field1` ASC';
+        $expected = 'SELECT * FROM `[prefix]_Test` ' . $expectedSqlPart;
 
         $this->assertEquals($expected, $this->out->generateSql());
+    }
+
+    /**
+     * @return array
+     */
+    public function dpForTestGenerateSqlForOrderBy()
+    {
+        return [
+            'field without table' => [
+                'order' => ['field1' => 'ASC'],
+                'expectedSqlPart' => 'ORDER BY `field1` ASC'
+            ],
+            'fields with table' => [
+                'order' => ['table1.id' => 'DESC', 'table2.sort' => 'ASC'],
+                'expectedSqlPart' => 'ORDER BY `table1`.`id` DESC,`table2`.`sort` ASC'
+            ]
+        ];
     }
 
     /**
@@ -424,6 +446,10 @@ class SelectTest extends \PHPUnit_Framework_TestCase
                 'groupByFields' => ['field1', 'table.field2'],
                 'expectedSqlPart' => '`field1`,`table`.`field2`'
             ],
+            'one field with direction' => [
+                'groupByFields' => ['table.field' => 'DESC'],
+                'expectedSqlPart' => '`table`.`field` DESC'
+            ]
         ];
     }
 

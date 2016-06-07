@@ -293,6 +293,23 @@ class Upload extends \Ilch\Controller\Base
         return $bytes;
     }
 
+    /**
+     * Take an educated guess on how big the image is going to be in memory.
+     * @param string $imageFilePath
+     * @return int required memory in bytes
+     */
+    private function guessRequiredMemory($imageFilePath) {
+        $imageInfo = getimagesize($imageFilePath);
+        if (empty($imageInfo['channels'])) {
+            $imageInfo['channels'] = 4;
+        }
+        // (width * height * bits / 8) * channels * tweak-factor
+        // channels will be 3 for RGB pictures and 4 for CMYK pictures
+        // bits is the number of bits for each color.
+        // The tweak-factor might be overly careful and could therefore be lowered if necessary.
+        return ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 2.5);
+    }
+
     public function upload()
     {
         $hash = uniqid() . $this->getName();
@@ -301,12 +318,8 @@ class Upload extends \Ilch\Controller\Base
 
         if (move_uploaded_file($_FILES['upl']['tmp_name'], $this->path.$hash.'.'.$this->getEnding())) {
             if (in_array($this->getEnding() , explode(' ', $this->types))) {
-                $imageInfo = getimagesize($this->path.$hash.'.'.$this->getEnding());
-                if (empty($imageInfo['channels'])) {
-                    $imageInfo['channels'] = 0;
-                }
-                $requiredMemory = ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 2.5);
-                if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $requiredMemory) {
+                // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to create a thumbnail.
+                if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $this->guessRequiredMemory($this->path.$hash.'.'.$this->getEnding())) {
                     return;
                 }
                 $thumb = new \Thumb\Thumbnail();
@@ -349,13 +362,7 @@ class Upload extends \Ilch\Controller\Base
         rename($this->path.$this->getName().'.'.$this->getEnding(), $this->path.$hash.'.'.$this->getEnding());
         if (in_array($this->getEnding() , explode(' ', $this->types))) {
             // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to create a thumbnail.
-            $imageInfo = getimagesize($this->path.$hash.'.'.$this->getEnding());
-            // (width * height * bits / 8) * channels * tweak-factor
-            // channels will be 3 for RGB pictures and 4 for CMYK pictures
-            // bits is the number of bits for each color.
-            // The tweak-factor might be overly careful and could therefore be lowered if necessary.
-            $requiredMemory = ($imageInfo[0] * $imageInfo[1] * ($imageInfo['bits'] / 8) * $imageInfo['channels'] * 2.5);
-            if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $requiredMemory) {
+            if (($this->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $this->guessRequiredMemory($this->path.$hash.'.'.$this->getEnding())) {
                 return;
             }
             $thumb = new \Thumb\Thumbnail();
