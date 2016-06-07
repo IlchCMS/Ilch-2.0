@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Away',
-                'description' => 'Here you can manage the Awaylist.',
+                'description' => 'Here you can manage the awaylist.',
                 ],
             ]
         ];

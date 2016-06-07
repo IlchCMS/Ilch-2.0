@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Downloads',
-                'description' => 'Here you can manage the downloads',
+                'description' => 'Here you can manage the downloads.',
                 ],
             ]
         ];

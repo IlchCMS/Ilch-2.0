@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Gallery',
-                'description' => 'Here you can manage the gallery',
+                'description' => 'Here you can manage the gallery.',
                 ],
             ]
         ];

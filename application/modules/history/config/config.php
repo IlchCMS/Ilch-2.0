@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'History',
-                'description' => 'Here you can create history from your Site.',
+                'description' => 'Here you can create a history for your site.',
                 ],
             ]
         ];

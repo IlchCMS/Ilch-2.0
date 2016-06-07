@@ -18,12 +18,12 @@ class Config extends \Ilch\Config\Install
             'de_DE' =>
                 [
                 'name' => 'Geburtstag',
-                'description' => 'Hier kannst du die Geburtstags Box verwalten.',
+                'description' => 'Hier kannst du die Geburtstags-Box verwalten.',
                 ],
             'en_EN' =>
                 [
                 'name' => 'Birthday',
-                'description' => 'Here you can change Birthday box.',
+                'description' => 'Here you can manage the birthday-box.',
                 ],
             ]
         ];

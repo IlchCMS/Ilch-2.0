@@ -18,7 +18,7 @@ class Config extends \Ilch\Config\Install
             'de_DE' =>
                 [
                 'name' => 'War',
-                'description' => 'Hier kannst du die Wars verwaltet werden.',
+                'description' => 'Hier können die Wars verwaltet werden.',
                 ],
             'en_EN' =>
                 [
