@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Newsletter',
-                'description' => 'Here you can send Newsletter.',
+                'description' => 'Here you can send a newsletter.',
                 ],
             ]
         ];

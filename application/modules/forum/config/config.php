@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Forum',
-                'description' => 'Here you can manage the forum',
+                'description' => 'Here you can manage the forum.',
                 ],
             ]
         ];

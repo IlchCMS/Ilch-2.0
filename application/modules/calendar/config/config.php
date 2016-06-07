@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Calendar',
-                'description' => 'Here you can manage the Calendar.',
+                'description' => 'Here you can manage the calendar.',
                 ],
             ]
         ];

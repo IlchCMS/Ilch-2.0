@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Events',
-                'description' => 'Here you can add and change Events.',
+                'description' => 'Here you can add and change events.',
                 ],
             ]
         ];

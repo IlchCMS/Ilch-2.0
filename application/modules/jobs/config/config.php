@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Jobs',
-                'description' => 'Here you can create Jobs.',
+                'description' => 'Here you can create jobs.',
                 ],
             ]
         ];

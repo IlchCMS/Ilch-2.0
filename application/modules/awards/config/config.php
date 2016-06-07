@@ -18,12 +18,12 @@ class Config extends \Ilch\Config\Install
             'de_DE' =>
                 [
                 'name' => 'Auszeichnungen',
-                'description' => 'Hier können Auszeichnungen für ein Team erstellt werden.',
+                'description' => 'Hier können Auszeichnungen an Benutzer oder Teams verliehen werden.',
                 ],
             'en_EN' =>
                 [
                 'name' => 'Awards',
-                'description' => 'Here you can create Awards for Teams.',
+                'description' => 'Here you can award users or teams an award.',
                 ],
             ]
         ];
