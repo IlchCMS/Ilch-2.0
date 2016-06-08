@@ -137,7 +137,7 @@ return
     'installModule' => 'Install',
     'modulesInstalled' => 'Installed Modules',
     'modulesNotInstalled' => 'Not installed Modules',
-    'noNotInstalledModules' => 'no Entries available',
+    'noNotInstalledModules' => 'No entries available',
     'media' => 'Media',
 
     'menuInfos' => 'Information',
