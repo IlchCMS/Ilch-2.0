@@ -250,6 +250,7 @@ return
     'fileTooBig' => 'The file is too big.',
     'extensionNotAllowed' => 'Files with this extension are not allowed.',
     'selected' => 'selected...',
+    'deleteSelectedEntries' => 'Delete the selected entries?',
 
     'saveButton' => 'Save',
 

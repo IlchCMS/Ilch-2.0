@@ -46,7 +46,11 @@
                 <div class="panel panel-default">
                     <div class="panel-image thumbnail">
                         <a href="<?=$this->getUrl(['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'gallery'  => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?>">
+                        <?php if (file_exists($image->getImageThumb())): ?>
                             <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
+                        <?php else: ?>
+                            <img src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
+                        <?php endif; ?>
                         </a>
                     </div>
                     <div class="panel-footer text-center">
