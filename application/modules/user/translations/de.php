@@ -250,6 +250,7 @@ return
     'fileTooBig' => 'Die Datei ist zu groß.',
     'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
     'selected' => 'markierte...',
+    'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
 
     'saveButton' => 'Speichern',
 
