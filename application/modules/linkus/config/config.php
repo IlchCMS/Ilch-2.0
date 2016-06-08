@@ -23,7 +23,7 @@ class Config extends \Ilch\Config\Install
             'en_EN' =>
                 [
                 'name' => 'Link Us',
-                'description' => 'Here you can manage the Link Us.',
+                'description' => 'Here you can manage the link us.',
                 ],
             ]
         ];
