@@ -42,4 +42,9 @@ return
     'acceptNewsletter' => 'Newsletter erhalten?',
     'yes' => 'Ja',
     'no' => 'Nein',
+
+    'panel' => 'Panel',
+    'dialog' => 'Nachrichten',
+    'gallery' => 'Galerie',
+    'settingsSettings' => 'Einstellungen',
     ];

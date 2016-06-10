@@ -42,4 +42,9 @@ return
     'acceptNewsletter' => 'Receive newsletter?',
     'yes' => 'Yes',
     'no' => 'No',
+
+    'panel' => 'Panel',
+    'dialog' => 'Messages',
+    'gallery' => 'Gallery',
+    'settingsSettings' => 'Settings',
     ];
