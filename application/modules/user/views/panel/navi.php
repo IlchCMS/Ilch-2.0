@@ -16,8 +16,6 @@ function getTransKey($usermenuId) {
 
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
-
 <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
 <ul class="nav">
     <?php foreach ($this->get('usermenu') as $usermenu): ?>
