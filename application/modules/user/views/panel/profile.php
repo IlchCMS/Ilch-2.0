@@ -3,6 +3,7 @@ $profil = $this->get('profil');
 $birthday = new \Ilch\Date($profil->getBirthday());
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <div id="panel">
