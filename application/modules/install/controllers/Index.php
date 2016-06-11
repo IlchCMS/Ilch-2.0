@@ -103,7 +103,7 @@ class Index extends \Ilch\Controller\Frontend
             $errors['version'] = true;
         }
 
-        if (!is_writable(CONFIG_PATH)) {
+        if (!is_writable(APPLICATION_PATH)) {
             $errors['writableConfig'] = true;
         }
 
