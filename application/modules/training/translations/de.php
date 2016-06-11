@@ -7,7 +7,7 @@
 return
     [
     'menuTraining' => 'Training',
-    'noTraining' => 'keine Einträge vorhanden',
+    'noTraining' => 'Keine Einträge vorhanden',
     'title' => 'Titel',
     'text' => 'Text',
     'dateTime' => 'Datum/Uhrzeit',
@@ -16,7 +16,7 @@ return
     'clock' => 'Uhr',
     'at' => 'um',
     'otherInfo' => 'Weitere Informationen',
-    'noOtherInfo'=> 'keine weiteren Information vorhanden',
+    'noOtherInfo'=> 'Keine weiteren Information vorhanden',
     'entrant' => 'Teilnehmer',
     'trainDetails' => 'Training Details',
     'options' => 'Optionen',
