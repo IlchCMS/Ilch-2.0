@@ -215,6 +215,8 @@ return
     'profileSignature' => 'Signatur',
     'profilePassword' => 'Passwort',
     'profileSubmit' => 'Absenden',
+    'smilies' => 'Smilies',
+    'close' => 'Schließen',
 
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail an',

@@ -1,6 +1,4 @@
-<?php
-$profil = $this->get('profil');
-?>
+<?php $profil = $this->get('profil'); ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
@@ -18,7 +16,9 @@ $profil = $this->get('profil');
                         <textarea class="form-control ckeditor"
                                   id="ck_1"
                                   toolbar="ilch_bbcode"
-                                  name="signature"><?=$this->escape($profil->getSignature()) ?></textarea>
+                                  name="signature">
+                            <?=$this->escape($profil->getSignature()) ?>
+                        </textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,3 +33,5 @@ $profil = $this->get('profil');
         </div>
     </div>
 </div>
+
+<?=$this->getDialog('smiliesModal', $this->getTrans('smilies'), '<iframe frameborder="0"></iframe>'); ?>

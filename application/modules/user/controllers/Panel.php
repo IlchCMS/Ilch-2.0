@@ -165,6 +165,7 @@ class Panel extends BaseController
             $model->setSignature(trim($this->getRequest()->getPost('signature')));
             $profilMapper->save($model);
 
+            $this->addMessage('saveSuccess');
             $this->redirect(['action' => 'signature']);
         }
     }
