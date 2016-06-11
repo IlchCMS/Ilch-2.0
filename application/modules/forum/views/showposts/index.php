@@ -67,14 +67,10 @@ if ($this->getUser()) {
                 </div>
                 <div class="postbody">
                     <p class="author">
-                        <a id="<?=$post->getId() ?>" href="#<?=$post->getId() ?>">
-                            <img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11">
-                        </a>
+                        <a id="<?=$post->getId() ?>" href="#<?=$post->getId() ?>"><img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11"></a>
                         <?=$this->getTrans('by') ?>
                         <strong>
-                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
-                                <?=$post->getAutor()->getName() ?>
-                            </a>
+                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured"><?=$post->getAutor()->getName() ?></a>
                         </strong>
                         »
                         <?=$date->format("d.m.Y H:i:s", true)?>
@@ -84,9 +80,7 @@ if ($this->getUser()) {
                 </div>
                 <dl class="postprofile" id="profile3">
                     <dt>
-                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>">
-                            <img src="<?=$this->getBaseUrl($post->getAutor()->getAvatar()) ?>" alt="User avatar" height="100" width="100">
-                        </a>
+                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>"><img src="<?=$this->getBaseUrl($post->getAutor()->getAvatar()) ?>" alt="User avatar" height="100" width="100"></a>
                         <br>
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
                             <?=$post->getAutor()->getName() ?>
