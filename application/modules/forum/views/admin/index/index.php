@@ -155,24 +155,24 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label">Menü</label>\n\
+            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
                         <div class="col-lg-6"><select id="menukey" class="form-control">'+options+'</select></div></div>\n\
-                        <div class="form-group"><label for="href" class="col-lg-3 control-label">sehen</label>\n\
-                        <div class="col-lg-6"><select id="assignedGroupsRead" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?php echo $this->getTrans('selectAssignedGroups'); ?>" multiple>\n\
+                        <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('see') ?></label>\n\
+                        <div class="col-lg-6"><select id="assignedGroupsRead" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
-                        <div class="form-group"><label for="href" class="col-lg-3 control-label">antworten</label>\n\
-                        <div class="col-lg-6"><select id="assignedGroupsReplay" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?php echo $this->getTrans('selectAssignedGroups'); ?>" multiple>\n\
+                        <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
+                        <div class="col-lg-6"><select id="assignedGroupsReplay" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
-                        <div class="form-group"><label for="href" class="col-lg-3 control-label">erstellen</label>\n\
-                        <div class="col-lg-6"><select id="assignedGroupsCreate" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?php echo $this->getTrans('selectAssignedGroups'); ?>" multiple>\n\
+                        <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
+                        <div class="col-lg-6"><select id="assignedGroupsCreate" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
@@ -194,7 +194,7 @@ $(document).ready (
 
             $('#downloadsForm').on('click', '#menuItemAdd', function () {
                     if ($('#title').val() == '') {
-                        alert('Es muss ein Titel angegeben werden');
+                        alert(<?=json_encode($this->getTrans('missingTitle'))?>);
                         return;
                     }
 
@@ -240,8 +240,8 @@ $(document).ready (
 
         $('.sortable').on('click', '.item_edit', function() {
 
-            $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
-                               <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">');
+            $('.actions').html('<input type="button" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>" class="btn">\n\
+                               <input type="button" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>" class="btn">');
             $('#title').val($(this).parent().find('.hidden_title').val());
             $('#desc').val($(this).parent().find('.hidden_desc').val());
             $('#type').val($(this).parent().find('.hidden_type').val());
@@ -270,7 +270,7 @@ $(document).ready (
 
         $('#downloadsForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
-                    alert('Es muss ein Titel angegeben werden');
+                    alert(<?=json_encode($this->getTrans('missingTitle'))?>);
                     return;
                 }
 
