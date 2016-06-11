@@ -1,6 +1,6 @@
 <?php
 $newsletter = $this->get('newsletter');
-$userMapper = new \Modules\User\Mappers\User();
+$userMapper = $this->get('userMapper');
 $user = $userMapper->getUserById($newsletter->getUserId());
 $date = new \Ilch\Date($newsletter->getDateCreated());
 ?>

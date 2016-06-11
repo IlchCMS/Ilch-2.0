@@ -13,7 +13,6 @@ function getTransKey($usermenuId) {
         return 'settingsSettings';
     }
 }
-
 ?>
 
 <img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">

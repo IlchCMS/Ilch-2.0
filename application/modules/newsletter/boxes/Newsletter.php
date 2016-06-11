@@ -7,6 +7,7 @@
 namespace Modules\Newsletter\Boxes;
 
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
+use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 
 class Newsletter extends \Ilch\Box
 {
@@ -17,7 +18,7 @@ class Newsletter extends \Ilch\Box
         if ($this->getRequest()->getPost('saveNewsletterBox')) {
             $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
             if ($countEmails == 0) {
-                $newsletterModel = new \Modules\Newsletter\Models\Newsletter();
+                $newsletterModel = new NewsletterModel();
                 $newsletterModel->setEmail($this->getRequest()->getPost('email'));
                 $newsletterMapper->saveEmail($newsletterModel);
             } else {

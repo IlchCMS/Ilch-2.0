@@ -1,6 +1,4 @@
-<?php
-$userMapper = new \Modules\User\Mappers\User()
-?>
+<?php $userMapper = $this->get('userMapper'); ?>
 
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('entries') != ''): ?>

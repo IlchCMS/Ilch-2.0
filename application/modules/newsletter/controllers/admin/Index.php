@@ -8,40 +8,52 @@ namespace Modules\Newsletter\Controllers\Admin;
 
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'receiver',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ],
+            [
+                'name' => 'add',
+                'active' => false,
+                'icon' => 'fa fa-plus-circle',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+            ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'settings') {
+            $items[1]['active'] = true;
+        } elseif ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[2]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
-            'menuNewsletter', 
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'receiver',
-                    'active' => false,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'add',
-                    'active' => false,
-                    'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-                ]
-            ]
+            'menuNewsletter',
+            $items
         );
     }
 
     public function indexAction()
     {
         $newsletterMapper = new NewsletterMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index']);
@@ -56,6 +68,7 @@ class Index extends \Ilch\Controller\Admin
 
         $entries = $newsletterMapper->getEntries();
 
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('entries', $entries);
     }
 
@@ -75,6 +88,7 @@ class Index extends \Ilch\Controller\Admin
     public function showAction()
     {        
         $newsletterMapper = new NewsletterMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
@@ -88,6 +102,7 @@ class Index extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('newsletter', $newsletterMapper->getNewsletterById($this->getRequest()->getParam('id')));
     }
 

@@ -1,6 +1,4 @@
-<?php
-$countMail = $this->get('countMail');
-?>
+<?php $countMail = $this->get('countMail'); ?>
 
 <link href="<?=$this->getModuleUrl('../user/static/css/user.css') ?>" rel="stylesheet">
 
@@ -13,7 +11,6 @@ $countMail = $this->get('countMail');
             <legend><?=$this->getTrans('menuSettings') ?></legend>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-     
                 <div class="form-group">
                     <label for="opt_newsletter" class="col-lg-3 control-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
@@ -31,8 +28,8 @@ $countMail = $this->get('countMail');
 
                 <div class="form-group">
                     <div class="col-lg-offset-3 col-lg-12">
-                        <input type="submit" 
-                               name="saveEntry" 
+                        <input type="submit"
+                               name="saveEntry"
                                class="btn"
                                value="<?=$this->getTrans('submit') ?>" />
                     </div>

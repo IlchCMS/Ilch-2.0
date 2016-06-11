@@ -4,13 +4,12 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuNewsletter' => 'Newsletter',
     'subject' => 'Subject',
     'date' => 'Date',
     'text' => 'Text',
-    'from' => 'from',
+    'from' => 'From',
     'noNewsletter' => 'No newsletter available.',
     'missingSubject' => 'Subject was not filled',
     'missingText' => 'Text was not filled',
@@ -47,4 +46,4 @@ return
     'dialog' => 'Messages',
     'gallery' => 'Gallery',
     'settingsSettings' => 'Settings',
-    ];
+];
