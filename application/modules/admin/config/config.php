@@ -34,25 +34,25 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_config` (
-                  `key` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `value` TEXT COLLATE utf8_unicode_ci NOT NULL,
+                  `key` VARCHAR(255) NOT NULL,
+                  `value` TEXT NOT NULL,
                   `autoload` TINYINT(1) NOT NULL,
                   UNIQUE KEY `key` (`key`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
-                  `key` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `key` VARCHAR(255) NOT NULL,
                   `system` TINYINT(1) NOT NULL DEFAULT 0,
-                  `author` VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-                  `icon_small` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
+                  `author` VARCHAR(255) NULL DEFAULT NULL,
+                  `icon_small` VARCHAR(255) NOT NULL,
                   UNIQUE KEY `key` (`key`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules_content` (
-                  `key` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `locale` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `description` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `name` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL
+                  `key` VARCHAR(255) NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `description` VARCHAR(255) NOT NULL,
+                  `name` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules_folderrights` (
@@ -75,9 +75,9 @@ class Config extends \Ilch\Config\Install
                   `box_id` INT(11) NOT NULL DEFAULT 0,
                   `box_key` VARCHAR(255) NULL DEFAULT NULL,
                   `type` INT(11) NOT NULL,
-                  `title` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `href` VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-                  `module_key` VARCHAR(255) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `href` VARCHAR(255) NULL DEFAULT NULL,
+                  `module_key` VARCHAR(255) NULL DEFAULT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
                 
@@ -89,9 +89,9 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_boxes_content` (
                   `box_id` INT(11) NOT NULL,
-                  `content` MEDIUMTEXT COLLATE utf8_unicode_ci NOT NULL,
-                  `locale` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `title` VARCHAR(255) COLLATE utf8_unicode_ci NOT NULL
+                  `content` MEDIUMTEXT NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 

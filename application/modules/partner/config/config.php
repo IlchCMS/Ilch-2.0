@@ -8,25 +8,21 @@ namespace Modules\Partner\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'partner',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'fa-users',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Partner',
                 'description' => 'Hier können neue Partner erstellt werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Partner',
                 'description' => 'Here you can create new partners.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

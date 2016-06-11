@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuGuestbook' => 'Guestbook',
     'guestbook' => 'Guestbook',
     'from' => 'From',
@@ -37,4 +36,4 @@ return
     'captchaRead' => 'Not readable? Change text!',
     'smilies' => 'Smilies',
     'close' => 'Close',
-    ];
+];

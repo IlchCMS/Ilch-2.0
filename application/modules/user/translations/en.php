@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuActionNewUser' => 'Create new user',
     'menuActionNewGroup' => 'Create new group',
 
@@ -261,4 +260,4 @@ return
 
     'back' => 'Back to mainpage',
     'alreadyLoggedIn' => 'You are already logged in!',
-    ];
+];

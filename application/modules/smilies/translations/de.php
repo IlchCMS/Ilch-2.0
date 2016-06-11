@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuSmilies' => 'Smilies',
     'manageSmilies' => 'Smilies verwalten',
     'name' => 'Name',
@@ -20,4 +19,4 @@ return
     'allowedFileExtensions' => 'Erlaubte Dateiendungen',
     'missingName' => 'Name muss ausgefüllt werden',
     'missingUrl' => 'Smilie muss ausgewählt werden',
-    ];
+];

@@ -8,25 +8,21 @@ namespace Modules\Page\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'page',
         'icon_small' => 'fa-pencil',
         'system_module' => true,
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Seiten',
                 'description' => 'Hier können neue Seiten erstellt werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Pages',
                 'description' => 'Here you can create pages.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {
@@ -49,11 +45,11 @@ class Config extends \Ilch\Config\Install
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_pages_content` (
                   `page_id` int(11) NOT NULL,
-                  `content` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-                  `description` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-                  `locale` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                  `perma` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+                  `content` mediumtext NOT NULL,
+                  `description` mediumtext NOT NULL,
+                  `locale` varchar(255) NOT NULL,
+                  `title` varchar(255) NOT NULL,
+                  `perma` varchar(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 

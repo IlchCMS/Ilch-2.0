@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [    
+return [    
     'menuAwards' => 'Awards',
     'date' => 'Date',
     'rank' => 'Rank',
@@ -21,4 +20,4 @@ return
     'noAwards' => 'No Awards available',
     'awards' => 'Awards',
     'currentlyThereAre' => 'Currently, there are',
-    ];
+];

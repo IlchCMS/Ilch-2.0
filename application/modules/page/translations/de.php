@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuSite' => 'Seite',
     'menuSites' => 'Seiten',
     'menuActionNewSite' => 'Neue Seite erstellen',
@@ -21,4 +20,4 @@ return
     'noPages' => 'Keine Seiten vorhanden',
     'treat' => 'Bearbeiten',
     'askIfDeletePage' => 'Sind Sie sicher dass die Seite "%s" entfernt werden soll?',
-    ];
+];

@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuWelcomeAndLanguage' => 'Welcome',
     'menuLicence' => 'License',
     'menuSystemCheck' => 'Systemcheck',
@@ -56,4 +55,4 @@ return
     'optionalModules' => 'optionally modules',
     'private' => 'private site',
     'clan' => 'clan site',
-    ];
+];

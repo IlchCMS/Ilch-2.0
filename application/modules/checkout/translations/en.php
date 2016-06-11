@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'checkout' => 'Checkout',
     'manage' => 'Manage',
     'name' => 'Name',
@@ -24,4 +23,4 @@ return
     'bookedpayments' => 'Booked payments',
     'treatpayment' => 'Edit booking',
     'currencyOfCheckout' => 'Currency of checkout',
-    ];
+];

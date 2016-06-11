@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuContact' => 'Kontakt',
     'receiver' => 'Empfänger',
     'name' => 'Name',
@@ -22,4 +21,4 @@ return
     'invalidCaptcha' => 'Captcha ist fehlerhaft',
     'captchaRead' => 'Nicht lesbar? Text ändern!',
     'addButton' => 'Senden',
-    ];
+];

@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'checkout' => 'Kasse',
     'manage' => 'Verwalten',
     'name' => 'Name',
@@ -24,4 +23,4 @@ return
     'bookedpayments' => 'Gebuchte Zahlungen',
     'treatpayment' => 'Buchung bearbeiten',
     'currencyOfCheckout' => 'Währung der Kasse',
-    ];
+];

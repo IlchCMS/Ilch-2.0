@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuJobs' => 'Jobs',
     'menuJob' => 'Job',
     'title' => 'Title',
@@ -22,4 +21,4 @@ return
     'jobs' => 'Jobs',
     'apply' => 'Apply',
     'applyAs' => 'Apply as',
-    ];
+];

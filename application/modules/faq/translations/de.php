@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuFaqs' => 'F.A.Q.',
     'menuCats' => 'Kategorien',
     'faqs' => 'FAQs',
@@ -21,4 +20,4 @@ return
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'noFaqs' => 'Keine FAQs vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
-    ];
+];

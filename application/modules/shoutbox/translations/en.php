@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuShoutbox' => 'Shoutbox',
     'from' => 'From',
     'date' => 'Date',
@@ -19,4 +18,4 @@ return
     'settings' => 'Settings',
     'answer' => 'Answer',
     'message' => 'Message',
-    ];
+];

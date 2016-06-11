@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuRules' => 'Rules',
     'paragraph' => 'Paragraph',
     'title' => 'Title',
@@ -14,4 +13,4 @@ return
     'missingText' => 'Text was not filled',
     'sendSuccess' => 'Rule successfull entry',
     'noRules' => 'No rules available',
-    ];
+];

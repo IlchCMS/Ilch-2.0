@@ -4,9 +4,8 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'notFound' => 'not Found',
     'back' => 'Back to mainpage',
     'error' => 'Error',
-    ];
+];

@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuStatistic' => 'Statistic',
     'menuOnline' => 'Online',
     'menuOnlineStatistic' => 'Online Statistic',
@@ -49,4 +48,4 @@ return
     'unknown' => 'Unknown',
     'numberVisits' => 'Visitor',
     'noStatistic' => 'No Statistic available',
-    ];
+];

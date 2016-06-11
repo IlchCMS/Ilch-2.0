@@ -8,25 +8,21 @@ namespace Modules\Contact\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'contact',
         'icon_small' => 'fa-envelope-o',
         'system_module' => true,
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Kontakt',
                 'description' => 'Hier können die Kontakte gepflegt werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Contact',
                 'description' => 'Here you can manage your contacts.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuTraining' => 'Training',
     'noTraining' => 'No entry available',
     'title' => 'Title',
@@ -31,4 +30,4 @@ return
     'gameServerPW' => 'Gameserver password',
     'note' => 'Note',
     'contactPerson' => 'Contact person',
-    ];
+];

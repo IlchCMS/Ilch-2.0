@@ -10,25 +10,21 @@ use Modules\User\Service\Password as PasswordService;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'user',
         'icon_small' => 'fa-user',
         'system_module' => true,
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Benutzer',
                 'description' => 'Hier können neue Benutzer erstellt werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'User',
                 'description' => 'Here you can create the users.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

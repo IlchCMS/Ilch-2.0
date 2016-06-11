@@ -8,25 +8,21 @@ namespace Modules\Guestbook\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'guestbook',
         'author' => 'Stantin, Thomas',
         'icon_small' => 'fa-book',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Gästebuch',
                 'description' => 'Hier kann das Gästebuch verwaltet werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Guestbook',
                 'description' => 'Here you can manage your guestbook entries.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {
@@ -43,17 +39,16 @@ class Config extends \Ilch\Config\Install
     
     public function getInstallSql()
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_gbook`
-                (
-                   `id` int(11) NOT NULL AUTO_INCREMENT,
-                   `email` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                   `text` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                   `datetime` datetime NOT NULL,
-                   `homepage` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                   `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-                   `setfree` int(11) NOT NULL DEFAULT 0,
-                   PRIMARY KEY (`id`)
-               ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;';
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_gbook` (
+                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `email` varchar(32) NOT NULL,
+                  `text` mediumtext NOT NULL,
+                  `datetime` datetime NOT NULL,
+                  `homepage` varchar(32) NOT NULL,
+                  `name` varchar(256) NOT NULL,
+                  `setfree` int(11) NOT NULL DEFAULT 0,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate()

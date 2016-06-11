@@ -8,25 +8,21 @@ namespace Modules\Jobs\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'jobs',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'fa-briefcase',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Jobs',
                 'description' => 'Hier können Jobs erstellt werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Jobs',
                 'description' => 'Here you can create jobs.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuBirthday' => 'Geburtstag',
     'settings' => 'Einstellungen',
     'menuBirthdayList' => 'Geburtstagsliste',
@@ -19,4 +18,4 @@ return
     'yearsOld' => 'Jahre alt',
     'people' => 'Personen',
     'birthdayToday' => 'Geburtstage von heute',
-    ];
+];

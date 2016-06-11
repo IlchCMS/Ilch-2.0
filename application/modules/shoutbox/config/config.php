@@ -8,25 +8,21 @@ namespace Modules\Shoutbox\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'shoutbox',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'fa-bullhorn',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Shoutbox',
                 'description' => 'Hier kann die Shoutbox verwaltet werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Shoutbox',
                 'description' => 'Here you can manage your shoutbox.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {
@@ -51,7 +47,7 @@ class Config extends \Ilch\Config\Install
                   `id` int(11) NOT NULL AUTO_INCREMENT,
                   `user_id` int(11) NOT NULL,
                   `name` varchar(100) NOT NULL,
-                  `textarea` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+                  `textarea` mediumtext NOT NULL,
                   `time` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';

@@ -8,25 +8,21 @@ namespace Modules\Checkout\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'checkout',
         'author' => 'Stantin, Thomas',
         'icon_small' => 'fa-credit-card',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Kasse',
                 'description' => 'Hier kann die Clan-Kasse gepflegt werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Checkout',
                 'description' => 'Here you can manage your clan cash.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {
@@ -45,13 +41,13 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkout` (
-                `id` int(14) NOT NULL AUTO_INCREMENT,
-                `date_created` datetime NOT NULL,
-                `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                `usage` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-                `amount` float NOT NULL DEFAULT 0,
-                PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
+                  `id` int(14) NOT NULL AUTO_INCREMENT,
+                  `date_created` datetime NOT NULL,
+                  `name` varchar(255) NOT NULL,
+                  `usage` varchar(255) NOT NULL,
+                  `amount` float NOT NULL DEFAULT 0,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate()

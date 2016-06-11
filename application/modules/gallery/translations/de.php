@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'gallery' => 'Galerie',
     'menuGallery' => 'Galerie',
     'menuCat' => 'Kategorie',
@@ -41,4 +40,4 @@ return
     'commentUser' => 'Benutzer',
     'commentDateTime' => 'Datum/Uhrzeit',
     'media' => 'Medien',
-    ];
+];

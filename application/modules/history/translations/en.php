@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuHistorys' => 'History',
     'date' => 'Date',
     'title' => 'Title',
@@ -24,4 +23,4 @@ return
     'missingText' => 'Text was not filled',
     'sendSuccess' => 'History successfully entered',
     'noHistorys' => 'No histories available',
-    ];
+];

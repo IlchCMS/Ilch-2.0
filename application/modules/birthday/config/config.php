@@ -8,25 +8,21 @@ namespace Modules\Birthday\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'birthday',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'fa-birthday-cake',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Geburtstag',
                 'description' => 'Hier kannst du die Geburtstags-Box verwalten.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Birthday',
                 'description' => 'Here you can manage the birthday-box.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

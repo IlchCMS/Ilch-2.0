@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'link' => 'Link',
     'name' => 'Name',
     'banner' => 'Banner',
@@ -29,4 +28,4 @@ return
     'menuActionEditCategory' => 'Kategorie editieren',
     'noLinks' => 'Keine Links vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
-    ];
+];

@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuLinkus' => 'Link Us',
     'banner' => 'Banner',
     'title' => 'Title',
@@ -16,4 +15,4 @@ return
     'showBBBCode' => 'Show BB-Code?',
     'missingTitle' => 'Title was not filled',
     'missingBanner' => 'Banner was not filled',
-    ];
+];

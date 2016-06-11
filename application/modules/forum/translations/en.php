@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'forum' => 'Forum',
     'title' => 'Name',
     'type' => 'Type',
@@ -61,4 +60,4 @@ return
     'edit' => 'Edit',
     'cancel' => 'Cancel',
     'missingTitle' => 'It is required to add a title.',
-    ];
+];

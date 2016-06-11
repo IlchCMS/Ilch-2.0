@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'imprint' => 'Impressum',
     'name' => 'Name',
     'paragraph' => 'Paragraf',
@@ -29,4 +28,4 @@ return
     'registration' => 'Registergericht',
     'commercialRegister' => 'Handelsregisternummer',
     'vatId' => 'Umsatzsteuer-ID-Nummer',
-    ];
+];

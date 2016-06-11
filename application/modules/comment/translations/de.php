@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuComments' => 'Kommentare',
     'commentDateTime' => 'Datum/Uhrzeit',
     'commentFrom' => 'Von',
@@ -23,4 +22,4 @@ return
     'showAvatar' => 'Avatar anzeigen?',
     'showDateTime' => 'Datum/Uhrzeit anzeigen?',
     'CommentCommentInfoText' => 'Information zur Konfiguration der Kommentare.',
-    ];
+];

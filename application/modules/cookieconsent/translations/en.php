@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuCookieConsent' => 'Cookie Consent',
     'cookieConsentShow' => 'Show',
     'cookieConsentStyle' => 'Style',
@@ -17,4 +16,4 @@ return
     'cookieConsentPosBottom' => 'Bottom',
     'cookieConsentMessage' => 'Notification text',
     'cookieConsentText' => 'Consent Text',
-    ];
+];

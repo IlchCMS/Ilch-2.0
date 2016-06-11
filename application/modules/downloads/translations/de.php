@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'downloads' => 'Downloads',
     'download' => 'Download',
     'menuDownloads' => 'Downloads',
@@ -43,4 +42,4 @@ return
     'commentDateTime' => 'Datum/Uhrzeit',
     'missingTitle' => 'Es muss ein Titel angegeben werden.',
     'missingCat' => 'Es muss zuerst eine Kategorie hinzugefügt werden.',
-    ];
+];

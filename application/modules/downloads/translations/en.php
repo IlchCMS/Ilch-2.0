@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'downloads' => 'Downloads',
     'download' => 'Download',
     'menuDownloads' => 'Downloads',
@@ -43,4 +42,4 @@ return
     'commentDateTime' => 'Date/Time',
     'missingTitle' => 'It is required to add a title.',
     'missingCat' => 'It is required to first add a category.',
-    ];
+];

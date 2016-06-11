@@ -8,25 +8,21 @@ namespace Modules\Smilies\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'smilies',
         'icon_small' => 'fa-smile-o',
         'system_module' => true,
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Smilies',
                 'description' => 'Hier kann man die Smilies verwalten.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Smilies',
                 'description' => 'Here you can magnage the Smilies.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {
@@ -68,5 +64,10 @@ class Config extends \Ilch\Config\Install
                 ("broken_heart", "application/modules/smilies/static/img/broken_heart.png", "application/modules/smilies/static/img/thumb_broken_heart.png", "png"),
                 ("kiss", "application/modules/smilies/static/img/kiss.png", "application/modules/smilies/static/img/thumb_kiss.png", "png"),
                 ("mail", "application/modules/smilies/static/img/envelope.png", "application/modules/smilies/static/img/thumb_envelope.png", "png");';
+    }
+
+    public function getUpdate()
+    {
+
     }
 }

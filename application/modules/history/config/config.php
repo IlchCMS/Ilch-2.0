@@ -8,25 +8,21 @@ namespace Modules\History\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'history',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'fa-history',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Geschichte',
                 'description' => 'Hier kann die Geschichte der Seite erstellt werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'History',
                 'description' => 'Here you can create a history for your site.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

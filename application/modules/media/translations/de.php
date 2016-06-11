@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'media' => 'Medien',
     'menuMedia' => 'Medien',
     'menuActionAddNew' => 'Datei(en) hochladen',
@@ -51,4 +50,4 @@ return
     'newCat' => 'Neue Kategorie anlegen',
     'noCats' => 'Keine Kategorien vorhanden',
     'treatCat' => 'Kategorie bearbeiten'
-    ];
+];

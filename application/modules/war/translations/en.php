@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuWars' => 'Wars',
     'menuWarList' => 'Group/War overview',
     'menuGroupList' => 'Group overview',
@@ -135,4 +134,4 @@ return
     'missingWarMapPlayed' => 'No played map entered.',
     'missingGroupPoints' => 'No points added.',
     'missingEnemyPoints' => 'No points of the enemy added.',
-    ];
+];

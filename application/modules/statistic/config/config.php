@@ -8,25 +8,21 @@ namespace Modules\Statistic\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'statistic',
         'icon_small' => 'fa-pie-chart',
         'system_module' => true,
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Statistik',
                 'description' => 'Hier könnt ihr die Seiten Statistik einsehen.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Statistic',
                 'description' => 'Here you can show the Site statistic.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

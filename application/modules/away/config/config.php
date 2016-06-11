@@ -8,25 +8,21 @@ namespace Modules\Away\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'away',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'fa-calendar-times-o',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Abwesenheit',
                 'description' => 'Hier kann die Abwesenheitsliste verwaltet werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Away',
                 'description' => 'Here you can manage the awaylist.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

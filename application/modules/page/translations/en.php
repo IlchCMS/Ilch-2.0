@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'menuSite' => 'Site',
     'menuSites' => 'Sites',
     'menuActionNewSite' => 'Create new site',
@@ -21,4 +20,4 @@ return
     'noPages' => 'No pages',
     'treat' => 'Treat',
     'askIfDeletePage' => 'Are you sure to delete page "%s"?',
-    ];
+];

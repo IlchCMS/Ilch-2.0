@@ -8,25 +8,21 @@ namespace Modules\Events\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'events',
         'author' => 'Veldscholten, Kevin',
         'icon_small' => 'fa-ticket',
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Veranstaltungen',
                 'description' => 'Hier kannst du Veranstaltungen erstellen und bearbeiten.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Events',
                 'description' => 'Here you can add and change events.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {

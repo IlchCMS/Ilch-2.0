@@ -8,25 +8,21 @@ namespace Modules\Cookieconsent\Config;
 
 class Config extends \Ilch\Config\Install
 {
-    public $config =
-        [
+    public $config = [
         'key' => 'cookieconsent',
         'icon_small' => 'fa-paragraph',
         'system_module' => true,
-        'languages' =>
-            [
-            'de_DE' =>
-                [
+        'languages' => [
+            'de_DE' => [
                 'name' => 'Cookie-Richtlinien',
                 'description' => 'Hier können die Cookie-Richtlinien verwaltet werden.',
-                ],
-            'en_EN' =>
-                [
+            ],
+            'en_EN' => [
                 'name' => 'Cookie Consent',
                 'description' => 'Here you can manage the cookie consent.',
-                ],
-            ]
-        ];
+            ],
+        ]
+    ];
 
     public function install()
     {
