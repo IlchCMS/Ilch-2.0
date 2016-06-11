@@ -33,7 +33,7 @@ return
     'loginTopic' => 'Login to create',
     'loginPost' => 'Login to replies',
     'createNewTopic' => 'Create new topic',
-    'createNewPost' => 'Replies',
+    'createNewPost' => 'Reply',
     'delete' => 'Delete',
     'edit' => 'Edit',
     'noAccessForum' => 'No access!',
