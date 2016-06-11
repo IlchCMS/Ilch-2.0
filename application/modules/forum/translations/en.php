@@ -50,4 +50,12 @@ return
     'legend' => 'Legend',
     'smilies' => 'Smilies',
     'close' => 'Close',
+    'menuSelection' => 'Menu',
+    'see' => 'see',
+    'answer' => 'answer',
+    'create' => 'create',
+    'selectAssignedGroups' => 'Please assign a group.',
+    'edit' => 'Edit',
+    'cancel' => 'Cancel',
+    'missingTitle' => 'It is required to add a title.',
     ];
