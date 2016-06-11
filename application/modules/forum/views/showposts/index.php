@@ -38,7 +38,7 @@ if ($this->getUser()) {
         </div>
         <?php foreach ($posts as $post): ?>
             <?php $date = new \Ilch\Date($post->getDateCreated()) ?>
-            <div id="p3" class="post bg1">
+            <div id="<?=$post->getId() ?>" class="post bg1">
                 <div class="delete">
                     <?php if ($this->getUser()): ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
@@ -67,7 +67,7 @@ if ($this->getUser()) {
                 </div>
                 <div class="postbody">
                     <p class="author">
-                        <a id="<?=$post->getId() ?>" href="#<?=$post->getId() ?>"><img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11"></a>
+                        <a href="#<?=$post->getId() ?>"><img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11"></a>
                         <?=$this->getTrans('by') ?>
                         <strong>
                             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured"><?=$post->getAutor()->getName() ?></a>
@@ -76,9 +76,9 @@ if ($this->getUser()) {
                         <?=$date->format("d.m.Y H:i:s", true)?>
                     </p>
                     <div class="content"><?=nl2br($this->getHtmlFromBBCode($post->getText())) ?></div>
-                    <div id="sig3" class="signature"><?=$post->getAutor()->getSignature() ?></div>
+                    <div class="signature"><?=nl2br($this->getHtmlFromBBCode($post->getAutor()->getSignature())) ?></div>
                 </div>
-                <dl class="postprofile" id="profile3">
+                <dl class="postprofile">
                     <dt>
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>"><img src="<?=$this->getBaseUrl($post->getAutor()->getAvatar()) ?>" alt="User avatar" height="100" width="100"></a>
                         <br>

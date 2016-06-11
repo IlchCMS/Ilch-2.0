@@ -13,7 +13,7 @@
                               class="form-control ckeditor"
                               toolbar="ilch_bbcode"
                               name="text">
-                              <?=$post->getText() ?>
+                        <?=$post->getText() ?>
                     </textarea>
                 </div>
             </div>
