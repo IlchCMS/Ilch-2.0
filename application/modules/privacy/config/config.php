@@ -32,12 +32,12 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_privacy` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `title` varchar(255) NOT NULL,
-                  `urltitle` varchar(255) NOT NULL,
-                  `url` varchar(255) NOT NULL,
-                  `text` mediumtext NOT NULL,
-                  `show` int(11) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `title` VARCHAR(255) NOT NULL,
+                  `urltitle` VARCHAR(255) NOT NULL,
+                  `url` VARCHAR(255) NOT NULL,
+                  `text` MEDIUMTEXT NOT NULL,
+                  `show` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 

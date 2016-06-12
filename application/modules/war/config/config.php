@@ -40,48 +40,48 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_war_groups` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `name` varchar(32) NOT NULL,
-                  `tag` varchar(20) NOT NULL,
-                  `image` varchar(256) NOT NULL,
-                  `member` int(11) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(32) NOT NULL,
+                  `tag` VARCHAR(20) NOT NULL,
+                  `image` VARCHAR(256) NOT NULL,
+                  `member` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_war_enemy` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `name` varchar(150) NOT NULL,
-                  `tag` varchar(20) NOT NULL,
-                  `homepage` varchar(150) NOT NULL,
-                  `image` varchar(256) NOT NULL,
-                  `land` varchar(50) NOT NULL,
-                  `contact_name` varchar(50) NOT NULL,
-                  `contact_email` varchar(150) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(150) NOT NULL,
+                  `tag` VARCHAR(20) NOT NULL,
+                  `homepage` VARCHAR(150) NOT NULL,
+                  `image` VARCHAR(256) NOT NULL,
+                  `land` VARCHAR(50) NOT NULL,
+                  `contact_name` VARCHAR(50) NOT NULL,
+                  `contact_email` VARCHAR(150) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_war` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `enemy` int(11) NOT NULL,
-                  `group` int(11) NOT NULL,
-                  `time` datetime NOT NULL,
-                  `maps` varchar(256) NOT NULL,
-                  `server` varchar(256) NOT NULL,
-                  `password` varchar(256) NOT NULL,
-                  `xonx` varchar(50) NOT NULL,
-                  `game` varchar(256) NOT NULL,
-                  `matchtype` varchar(256) NOT NULL,
-                  `report` text NOT NULL,
-                  `status` tinyint(1) NOT NULL DEFAULT 0,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `enemy` INT(11) NOT NULL,
+                  `group` INT(11) NOT NULL,
+                  `time` DATETIME NOT NULL,
+                  `maps` VARCHAR(256) NOT NULL,
+                  `server` VARCHAR(256) NOT NULL,
+                  `password` VARCHAR(256) NOT NULL,
+                  `xonx` VARCHAR(50) NOT NULL,
+                  `game` VARCHAR(256) NOT NULL,
+                  `matchtype` VARCHAR(256) NOT NULL,
+                  `report` TEXT NOT NULL,
+                  `status` TINYINT(1) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_war_played` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `war_id` int(11) DEFAULT NULL,
-                  `map` varchar(256) NOT NULL DEFAULT "",
-                  `group_pionts` mediumint(9) DEFAULT NULL,
-                  `enemy_pionts` mediumint(9) DEFAULT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `war_id` INT(11) DEFAULT NULL,
+                  `map` VARCHAR(256) NOT NULL DEFAULT "",
+                  `group_pionts` MEDIUMINT(9) DEFAULT NULL,
+                  `enemy_pionts` MEDIUMINT(9) DEFAULT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

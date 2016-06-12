@@ -74,24 +74,24 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_imprint` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `paragraph` varchar(100) NULL DEFAULT NULL,
-                  `company` varchar(100) NULL DEFAULT NULL,
-                  `name` varchar(100) NULL DEFAULT NULL,
-                  `address` varchar(255) NULL DEFAULT NULL,
-                  `addressadd` varchar(255) NULL DEFAULT NULL,
-                  `city` varchar(255) NULL DEFAULT NULL,
-                  `phone` varchar(255) NULL DEFAULT NULL,
-                  `fax` varchar(255) NULL DEFAULT NULL,
-                  `email` varchar(255) NULL DEFAULT NULL,
-                  `registration` varchar(255) NULL DEFAULT NULL,
-                  `commercialregister` varchar(255) NULL DEFAULT NULL,
-                  `vatid` varchar(255) NULL DEFAULT NULL,
-                  `other` mediumtext NULL DEFAULT NULL,
-                  `disclaimer` mediumtext NULL DEFAULT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `paragraph` VARCHAR(100) NULL DEFAULT NULL,
+                  `company` VARCHAR(100) NULL DEFAULT NULL,
+                  `name` VARCHAR(100) NULL DEFAULT NULL,
+                  `address` VARCHAR(255) NULL DEFAULT NULL,
+                  `addressadd` VARCHAR(255) NULL DEFAULT NULL,
+                  `city` VARCHAR(255) NULL DEFAULT NULL,
+                  `phone` VARCHAR(255) NULL DEFAULT NULL,
+                  `fax` VARCHAR(255) NULL DEFAULT NULL,
+                  `email` VARCHAR(255) NULL DEFAULT NULL,
+                  `registration` VARCHAR(255) NULL DEFAULT NULL,
+                  `commercialregister` VARCHAR(255) NULL DEFAULT NULL,
+                  `vatid` VARCHAR(255) NULL DEFAULT NULL,
+                  `other` MEDIUMTEXT NULL DEFAULT NULL,
+                  `disclaimer` MEDIUMTEXT NULL DEFAULT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-        
+
                 INSERT INTO `[prefix]_imprint` (`paragraph`, `name`, `address`, `city`) VALUES
                 ("Angaben gemäß § 5 TMG:", "Max Mustermann", "Musterstraße 111", "12345 Musterhausen");';
     }

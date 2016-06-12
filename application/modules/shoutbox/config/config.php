@@ -44,10 +44,10 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_shoutbox` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `user_id` int(11) NOT NULL,
-                  `name` varchar(100) NOT NULL,
-                  `textarea` mediumtext NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `user_id` INT(11) NOT NULL,
+                  `name` VARCHAR(100) NOT NULL,
+                  `textarea` MEDIUMTEXT NOT NULL,
                   `time` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';

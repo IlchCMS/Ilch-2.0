@@ -45,7 +45,7 @@ class Config extends \Ilch\Config\Install
                   `user_id` INT(11) NOT NULL,
                   `fk_id` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate()

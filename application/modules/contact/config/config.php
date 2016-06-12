@@ -27,20 +27,21 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
         $receiverMapper = new \Modules\Contact\Mappers\Receiver();
-        $model = new \Modules\Contact\Models\Receiver();
+        $receiverModel = new \Modules\Contact\Models\Receiver();
         $userMapper = new \Modules\User\Mappers\User();
         $user = $userMapper->getUserById(1);
-        $model->setName('Webmaster')->setEmail($user->getEmail());
-        $receiverMapper->save($model);
+        $receiverModel->setName('Webmaster')->setEmail($user->getEmail());
+        $receiverMapper->save($receiverModel);
     }
 
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_contact_receivers` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `email` varchar(255) NOT NULL,
-                  `name` varchar(255) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `email` VARCHAR(255) NOT NULL,
+                  `name` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

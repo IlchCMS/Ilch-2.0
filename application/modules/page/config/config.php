@@ -38,18 +38,18 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_pages` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `date_created` datetime NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `date_created` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_pages_content` (
-                  `page_id` int(11) NOT NULL,
-                  `content` mediumtext NOT NULL,
-                  `description` mediumtext NOT NULL,
-                  `locale` varchar(255) NOT NULL,
-                  `title` varchar(255) NOT NULL,
-                  `perma` varchar(255) NOT NULL
+                  `page_id` INT(11) NOT NULL,
+                  `content` MEDIUMTEXT NOT NULL,
+                  `description` MEDIUMTEXT NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `perma` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 

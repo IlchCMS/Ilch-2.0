@@ -37,9 +37,9 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_calendar` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `title` varchar(100) NOT NULL,
-                  `place` varchar(100) DEFAULT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `title` VARCHAR(100) NOT NULL,
+                  `place` VARCHAR(100) DEFAULT NULL,
                   `start` DATETIME NOT NULL,
                   `end` DATETIME DEFAULT NULL,
                   `text` MEDIUMTEXT DEFAULT NULL,

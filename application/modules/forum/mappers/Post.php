@@ -46,7 +46,7 @@ class Post extends \Ilch\Mapper
         return $entryModel;
     }
 
-    public function getAllPostsByUderId($userId)
+    public function getAllPostsByUserId($userId)
     {
         $this->db()->select('id')
             ->from('forum_posts')

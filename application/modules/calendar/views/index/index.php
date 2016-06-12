@@ -26,6 +26,7 @@ $(function() {
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
+    var language = navigator.language || navigator.userLanguage;
 
     $('#calendar').fullCalendar({
         header: {
@@ -34,7 +35,7 @@ $(function() {
             right: 'agendaDay,agendaWeek,month'
         },
         defaultView: 'month',
-        lang: 'de',
+        lang: language,
         firstDay: '1',
         eventColor: '#32333B',
         eventLimit: true,
