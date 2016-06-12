@@ -6,7 +6,6 @@
 
 return [
     'menuSmilies' => 'Smilies',
-    'manageSmilies' => 'Manage Smilies',
     'name' => 'Name',
     'image' => 'Image',
     'noSmilies' => 'No Smilies available',

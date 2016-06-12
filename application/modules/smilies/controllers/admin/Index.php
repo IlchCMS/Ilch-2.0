@@ -54,7 +54,8 @@ class Index extends \Ilch\Controller\Admin
         $smiliesMapper = new SmiliesMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSmilies'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuSmilies'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {

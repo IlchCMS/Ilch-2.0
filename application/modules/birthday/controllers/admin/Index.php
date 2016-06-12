@@ -10,23 +10,26 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'settings',
+                'active' => true,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ]
+        ];
+
         $this->getLayout()->addMenu
         (
-            'menuBirthday', 
-            [
-                [
-                    'name' => 'settings',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ]
-            ]
+            'menuBirthday',
+            $items
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuBirthday'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {

@@ -12,23 +12,25 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => true,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'settings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
         $this->getLayout()->addMenu
         (
             'menuShoutbox',
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'settings',
-                    'active' => false,
-                    'icon' => 'fa fa-cogs',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
-                ]
-            ]
+            $items
         );
     }
 
@@ -37,7 +39,8 @@ class Index extends \Ilch\Controller\Admin
         $shoutboxMapper = new ShoutboxMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_entries')) {
             foreach ($this->getRequest()->getPost('check_entries') as $entryId) {

@@ -37,6 +37,7 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
+
     }
 
     public function getUpdate()

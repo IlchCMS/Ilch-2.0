@@ -1,4 +1,4 @@
-<legend><?= $this->getTrans('manageSmilies') ?></legend>
+<legend><?= $this->getTrans('manage') ?></legend>
 <?php if ($this->get('smilies') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField()?>

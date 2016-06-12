@@ -30,11 +30,10 @@ class Page extends \Ilch\Mapper
         $pageArray = $this->db()->queryArray($sql);
 
         if (empty($pageArray)) {
-            return [];
+            return null;
         }
 
         $pages = [];
-
         foreach ($pageArray as $pageRow) {
             $pageModel = new PageModel();
             $pageModel->setId($pageRow['id']);

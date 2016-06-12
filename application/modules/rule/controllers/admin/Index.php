@@ -46,7 +46,8 @@ class Index extends \Ilch\Controller\Admin
         $ruleMapper = new RuleMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {

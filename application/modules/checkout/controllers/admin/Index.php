@@ -13,30 +13,39 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'accountdata',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'settings'])
+            ]
+        ];
+
+        if ($this->getRequest()->getActionName() == 'settings') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'checkout',
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'accountdata',
-                    'active' => false,
-                    'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'settings'])
-                ]
-            ]
+            $items
         );
     }
 
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('checkout'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         $ilchdate = new IlchDate;
         $checkoutMapper = new CheckoutMapper();

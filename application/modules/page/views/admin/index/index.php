@@ -1,5 +1,4 @@
-<legend><?= $this->getTrans('menuSites') ?></legend>
-<?php if ($this->get('pages') != ''): ?>
+<legend><?= $this->getTrans('manage') ?></legend>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -21,57 +20,57 @@
                         <th></th>
                         <th></th>
                         <th><?=$this->getTrans('pageTitle') ?></th>
-                        <?php if ($this->get('multilingual')) {
+                        <?php
+                        if ($this->get('multilingual')) {
                             echo '<th class="text-right">';
 
                             foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
                                 if ($key == $this->get('contentLanguage')) {
                                     continue;
                                 }
-
                                 echo '<img src="'.$this->getStaticUrl('img/'.$key.'.png').'"> ';
                             }
-
                             echo '</th>';
                         }
                         ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('pages') as $page) { ?>
-                        <tr>
-                            <td><input value="<?=$page->getId()?>" type="checkbox" name="check_pages[]" /></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $page->getId()])?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $page->getId()])?></td>
-                            <td>
-                                <a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($page->getPerma())?>"><?=$page->getTitle()?></a>
-                            </td>
-                        <?php if ($this->get('multilingual')) {
-                            echo '<td class="text-right">';
-                                foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
-                                    if ($key == $this->get('contentLanguage')) {
-                                        continue;
-                                    }
+                    <?php if ($this->get('pages') != ''): ?>
+                        <?php foreach ($this->get('pages') as $page): ?>
+                            <tr>
+                                <td><input value="<?=$page->getId()?>" type="checkbox" name="check_pages[]" /></td>
+                                <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $page->getId()]) ?></td>
+                                <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $page->getId()]) ?></td>
+                                <td>
+                                    <a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($page->getPerma()) ?>"><?=$page->getTitle() ?></a>
+                                </td>
+                                <?php
+                                if ($this->get('multilingual')) {
+                                    echo '<td class="text-right">';
+                                    foreach ($this->getTranslator()->getLocaleList() as $key => $value) {
+                                        if ($key == $this->get('contentLanguage')) {
+                                            continue;
+                                        }
 
-                                    if ($this->get('pageMapper')->getPageByIdLocale($page->getId(), $key) != null) {
-                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-edit"></i></a>';
-                                    } else {
-                                        echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-plus-circle"></i></a>';
+                                        if ($this->get('pageMapper')->getPageByIdLocale($page->getId(), $key) != null) {
+                                            echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-edit"></i></a>';
+                                        } else {
+                                            echo '<a href="'.$this->getUrl(['action' => 'treat', 'id' => $page->getId(), 'locale' => $key]).'"><i class="fa fa-plus-circle"></i></a>';
+                                        }
                                     }
+                                    echo '</td>';
                                 }
-
-                            echo '</td>';
-                        }
-
-                        echo '</tr>';
-                    }
-                    ?>
+                                ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="<?php if ($this->get('multilingual')) { echo 5; } else { echo 4; } ?>"><?=$this->getTrans('noPages') ?></td>
+                        </tr>
+                    <?php endif; ?>
                 </tbody>
             </table>
         </div>
-        <?php $actions = ['delete' => 'delete'] ?>
-        <?=$this->getListBar($actions) ?>
+        <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>
-<?php else: ?>
-    <?=$this->getTrans('noPages') ?>
-<?php endif; ?>

@@ -28,7 +28,7 @@ class Index extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getActionName() == 'treat') {
             $items[1]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -46,7 +46,8 @@ class Index extends \Ilch\Controller\Admin
         $calendarMapper = new CalendarMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuCalendar'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {

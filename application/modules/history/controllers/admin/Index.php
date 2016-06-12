@@ -44,7 +44,8 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         $historyMapper = new HistoryMapper();
 

@@ -56,7 +56,8 @@ class Cats extends \Ilch\Controller\Admin
         
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete') {
             foreach ($this->getRequest()->getPost('check_cats') as $catId) {

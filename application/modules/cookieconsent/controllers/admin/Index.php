@@ -10,17 +10,19 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'settings',
+                'active' => true,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ]
+        ];
+
         $this->getLayout()->addMenu
         (
             'menuCookieConsent',
-            [
-                [
-                    'name' => 'settings',
-                    'active' => true,
-                    'icon' => 'fa fa-cogs',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ]
-            ]
+            $items
         );
     }
 

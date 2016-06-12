@@ -1,3 +1,5 @@
+<?php $ilchUpload = new \Ilch\Upload(); ?>
+
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('upload') ?></legend>
@@ -19,7 +21,6 @@
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/jquery.fileupload.js') ?>"></script>
 <script src="<?=$this->getBaseUrl('application/modules/media/static/js/script.js') ?>"></script>
 
-<?php $ilchUpload = new \Ilch\Upload(); ?>
 
 <script language="javascript">
 const allowedExtensions = <?=json_encode(explode(' ', $this->get('allowedExtensions'))); ?>;

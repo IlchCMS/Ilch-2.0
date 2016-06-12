@@ -56,7 +56,8 @@ class Index extends \Ilch\Controller\Admin
         $categoryMapper = new CategoryMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_articles')) {
             foreach ($this->getRequest()->getPost('check_articles') as $articleId) {

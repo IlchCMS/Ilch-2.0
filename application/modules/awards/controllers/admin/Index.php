@@ -14,26 +14,31 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $this->getLayout()->addMenu
-        (
-            'menuAwards',
+        $items = [
             [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-        (
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
             [
                 'name' => 'add',
+                'active' => false,
                 'icon' => 'fa fa-plus-circle',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
             ]
+        ];
+
+        if ($this->getRequest()->getActionName() == 'treat') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuAwards',
+            $items
         );
     }
 
@@ -42,7 +47,8 @@ class Index extends \Ilch\Controller\Admin
         $awardsMapper = new AwardsMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {

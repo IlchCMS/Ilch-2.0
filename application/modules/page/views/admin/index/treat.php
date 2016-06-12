@@ -1,14 +1,14 @@
-<form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField() ?>
-    <legend>
+<legend>
     <?php
     if ($this->get('page') != '') {
-        echo $this->getTrans('editPage');
+        echo $this->getTrans('edit');
     } else {
-        echo $this->getTrans('addPage');
+        echo $this->getTrans('add');
     }
     ?>
-    </legend>
+</legend>
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="pageTitleInput" class="col-lg-2 control-label">
             <?=$this->getTrans('pageTitle') ?>:
@@ -26,44 +26,44 @@
             <textarea class="form-control ckeditor" id="ck_1" toolbar="ilch_html" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
         </div>
     </div>
-    <?php
-    if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != '') {
-    ?>
-    <div class="form-group">
-        <label for="pageLanguageInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('pageLanguage') ?>:
-        </label>
-        <div class="col-lg-8">
-            <select class="form-control" name="pageLanguage" id="pageLanguageInput">
-                <?php
-                foreach ($this->get('languages') as $key => $value) {
-                    $selected = '';
+    <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
+        <div class="form-group">
+            <label for="pageLanguageInput" class="col-lg-2 control-label">
+                <?=$this->getTrans('pageLanguage') ?>:
+            </label>
+            <div class="col-lg-8">
+                <select class="form-control" name="pageLanguage" id="pageLanguageInput">
+                    <?php
+                    foreach ($this->get('languages') as $key => $value) {
+                        $selected = '';
 
-                    if ($key == $this->get('contentLanguage')) {
-                        continue;
+                        if ($key == $this->get('contentLanguage')) {
+                            continue;
+                        }
+
+                        if ($this->getRequest()->getParam('locale') == $key) {
+                            $selected = 'selected="selected"';
+                        }
+
+                        echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
                     }
-
-                    if ($this->getRequest()->getParam('locale') == $key) {
-                        $selected = 'selected="selected"';
-                    }
-
-                    echo '<option '.$selected.' value="'.$key.'">'.$this->escape($value).'</option>';
-                }
-                ?>
-            </select>
+                    ?>
+                </select>
+            </div>
         </div>
-    </div>
-    <?php
-    }
-    ?>
+    <?php endif; ?>
+
     <legend>SEO</legend>
     <div class="form-group">
         <label for="descriptionInput" class="col-lg-2 control-label">
             <?=$this->getTrans('description') ?>:
         </label>
         <div class="col-lg-8">
-            <textarea class="form-control" id="descriptionInput" name="description"><?php if ($this->get('page') != '')
-                { echo $this->escape($this->get('page')->getDescription()); } ?></textarea>
+            <textarea class="form-control"
+                      id="descriptionInput"
+                      name="description">
+                <?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } ?>
+            </textarea>
         </div>
     </div>
     <div class="form-group">
@@ -71,8 +71,8 @@
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-8">
-            <?=$this->getUrl() ?>/index.php/<input
-                   type="text"
+            <?=$this->getUrl() ?>/index.php/
+            <input type="text"
                    name="pagePerma"
                    id="pagePerma"
                    value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } ?>" />

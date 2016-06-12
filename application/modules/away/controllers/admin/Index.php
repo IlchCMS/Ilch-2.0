@@ -12,17 +12,19 @@ class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => true,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ]
+        ];
+
         $this->getLayout()->addMenu
         (
             'menuAway',
-            [
-                [
-                    'name' => 'manage',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-            ]
+            $items
         );
     }
 
@@ -31,7 +33,8 @@ class Index extends \Ilch\Controller\Admin
         $awayMapper = new AwayMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_aways')) {
             if ($this->getRequest()->getPost('action') == 'delete') {

@@ -7,6 +7,7 @@
 namespace Modules\Guestbook\Controllers;
 
 use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
+use Modules\Guestbook\Models\Entry as GuestbookModel;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
 
@@ -14,9 +15,12 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('guestbook'), ['action' => 'index']);
         $guestbookMapper = new GuestbookMapper();
         $pagination = new \Ilch\Pagination();
+
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index']);
+
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('entries', $guestbookMapper->getEntries(['setfree' => 1], $pagination));
@@ -25,12 +29,12 @@ class Index extends \Ilch\Controller\Frontend
 
     public function newEntryAction()
     {
+        $guestbookMapper = new GuestbookMapper();
+        $ilchdate = new IlchDate;
+
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('entry'), ['action' => 'newentry']);
-
-        $guestbookMapper = new GuestbookMapper();
-        $ilchdate = new IlchDate;
 
         $post = [
             'name'      => '',
@@ -135,7 +139,7 @@ class Index extends \Ilch\Controller\Frontend
                 Fehler gefunden wurden, ist die Methode isValid nötig.
             */
             if ($validation->isValid()) {
-                $model = new \Modules\Guestbook\Models\Entry();
+                $model = new GuestbookModel();
                 $model->setName($post['name']);
                 $model->setEmail($post['email']);
                 $model->setText($post['text']);

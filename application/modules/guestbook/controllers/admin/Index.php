@@ -7,34 +7,41 @@
 namespace Modules\Guestbook\Controllers\Admin;
 
 use Modules\Guestbook\Mappers\Guestbook as GuestbookMapper;
+use Modules\Guestbook\Models\Entry as GuestbookModel;
 
 class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => true,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'settings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
         $this->getLayout()->addMenu
         (
             'guestbook',
-            [
-                [
-                    'name' => 'Verwalten',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'settings',
-                    'active' => false,
-                    'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
-                ]
-            ]
+            $items
         );
     }
 
     public function indexAction()
     {
         $guestbookMapper = new GuestbookMapper();
+
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
         
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -86,7 +93,7 @@ class Index extends \Ilch\Controller\Admin
     public function setfreeAction()
     {
         $guestbookMapper = new GuestbookMapper();
-        $model = new \Modules\Guestbook\Models\Entry();
+        $model = new GuestbookModel();
         $model->setId($this->getRequest()->getParam('id'));
         $model->setFree(1);
         $guestbookMapper->save($model);

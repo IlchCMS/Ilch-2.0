@@ -1,8 +1,6 @@
-<?php
-$locale = $this->get('locale');
-?>
+<?php $locale = $this->get('locale'); ?>
 
-<legend><?=$this->getTrans('menuComments') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <?php if (!empty($this->get('comments'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

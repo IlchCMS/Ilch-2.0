@@ -54,7 +54,8 @@ class Index extends \Ilch\Controller\Admin
         $linkusMapper = new LinkusMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_linkus')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
