@@ -121,11 +121,11 @@ $(document).ready (
             tabSize: 25,
             tolerance: 'pointer',
             toleranceElement: '> div',
-            maxLevels: 4,
+            maxLevels: 2,
             isTree: true,
             expandOnHover: 700,
             startCollapsed: false,
-            protectRoot:false,
+            protectRoot:true,
         });
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
