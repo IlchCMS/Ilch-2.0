@@ -38,23 +38,23 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_gallery_imgs` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `image_id` varchar(150) NOT NULL,
-                  `image_title` varchar(255) NOT NULL,
-                  `image_description` varchar(255) NOT NULL,
-                  `cat` mediumint(9) NOT NULL DEFAULT 0,
-                  `visits` int(11) NOT NULL DEFAULT 0,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `image_id` VARCHAR(150) NOT NULL,
+                  `image_title` VARCHAR(255) NOT NULL,
+                  `image_description` VARCHAR(255) NOT NULL,
+                  `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
+                  `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
                 
                 CREATE TABLE IF NOT EXISTS `[prefix]_gallery_items` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `gallery_id` int(11) NOT NULL,
-                  `sort` int(11) NOT NULL,
-                  `parent_id` int(11) NOT NULL,
-                  `type` int(11) NOT NULL,
-                  `title` varchar(255) NOT NULL,
-                  `description` varchar(255) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `gallery_id` INT(11) NOT NULL,
+                  `sort` INT(11) NOT NULL,
+                  `parent_id` INT(11) NOT NULL,
+                  `type` INT(11) NOT NULL,
+                  `title` VARCHAR(255) NOT NULL,
+                  `description` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

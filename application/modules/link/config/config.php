@@ -38,21 +38,21 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_links` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `cat_id` int(11) NULL DEFAULT 0,
-                  `pos` int(11) NOT NULL DEFAULT 0,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `cat_id` INT(11) NULL DEFAULT 0,
+                  `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
                   `desc` VARCHAR(255) NOT NULL,
                   `banner` VARCHAR(255) NOT NULL,
                   `link` VARCHAR(255) NOT NULL,
-                  `hits` int(11) NOT NULL DEFAULT 0,
+                  `hits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_link_cats` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `parent_id` int(11) NULL DEFAULT 0,
-                  `pos` int(11) NOT NULL DEFAULT 0,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `parent_id` INT(11) NULL DEFAULT 0,
+                  `pos` INT(11) NOT NULL DEFAULT 0,
                   `name` VARCHAR(100) NOT NULL,
                   `desc` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)

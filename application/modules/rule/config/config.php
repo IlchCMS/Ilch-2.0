@@ -37,9 +37,9 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_rules` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `paragraph` int(11) NOT NULL DEFAULT 0,
-                  `title` varchar(100) NOT NULL,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `paragraph` INT(11) NOT NULL DEFAULT 0,
+                  `title` VARCHAR(100) NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';

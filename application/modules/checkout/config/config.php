@@ -27,6 +27,7 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('checkout_contact', '<p>Kontoinhaber: Max Mustermann</p><p>Bankname: Muster Sparkasse</p><p>Kontonummer: 123</p><p>Bankleitzahl: 123</p><p>BIC: 123</p><p>IBAN: 123</p><p>Verwendungszweck: Spende f&uuml;r ilch.de ;-)</p>');
         $databaseConfig->set('checkout_currency', 'EUR (€)');
@@ -41,11 +42,11 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkout` (
-                  `id` int(14) NOT NULL AUTO_INCREMENT,
-                  `date_created` datetime NOT NULL,
-                  `name` varchar(255) NOT NULL,
-                  `usage` varchar(255) NOT NULL,
-                  `amount` float NOT NULL DEFAULT 0,
+                  `id` INT(14) NOT NULL AUTO_INCREMENT,
+                  `date_created` DATETIME NOT NULL,
+                  `name` VARCHAR(255) NOT NULL,
+                  `usage` VARCHAR(255) NOT NULL,
+                  `amount` FLOAT NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

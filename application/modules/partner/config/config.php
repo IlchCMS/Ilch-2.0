@@ -45,12 +45,12 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_partners` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
-                  `pos` int(11) NOT NULL DEFAULT 0,
-                  `name` varchar(100) NOT NULL,
-                  `banner` varchar(255) NOT NULL,
-                  `link` varchar(255) NOT NULL,
-                  `setfree` int(11) NOT NULL DEFAULT 0,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `pos` INT(11) NOT NULL DEFAULT 0,
+                  `name` VARCHAR(100) NOT NULL,
+                  `banner` VARCHAR(255) NOT NULL,
+                  `link` VARCHAR(255) NOT NULL,
+                  `setfree` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
         

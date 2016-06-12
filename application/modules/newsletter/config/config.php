@@ -39,16 +39,16 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_newsletter` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL,
                   `date_created` DATETIME NOT NULL,
-                  `subject` varchar(100) NOT NULL,
+                  `subject` VARCHAR(100) NOT NULL,
                   `text` LONGTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_newsletter_mails` (
-                  `id` int(11) NOT NULL AUTO_INCREMENT,
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `email` VARCHAR(100) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
