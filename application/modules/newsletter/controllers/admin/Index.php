@@ -25,7 +25,7 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'receiver',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'receiver', 'action' => 'index'])
             ],
             [
                 'name' => 'add',
@@ -56,7 +56,8 @@ class Index extends \Ilch\Controller\Admin
         $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -109,6 +110,7 @@ class Index extends \Ilch\Controller\Admin
     public function treatAction()
     {
         $newsletterMapper = new NewsletterMapper();
+        $date = new \Ilch\Date();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
@@ -125,11 +127,10 @@ class Index extends \Ilch\Controller\Admin
             } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
             } else {
-                $date = new \Ilch\Date();
                 $newsletterModel->setDateCreated($date);
                 $newsletterModel->setUserId($this->getUser()->getId());
-                $newsletterModel->setSubject($this->getRequest()->getPost('subject'));
-                $newsletterModel->setText($this->getRequest()->getPost('text'));
+                $newsletterModel->setSubject($subject);
+                $newsletterModel->setText($text);
                 $newsletterMapper->save($newsletterModel);
 
                 if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/mail/newsletter.php')) {
@@ -141,19 +142,19 @@ class Index extends \Ilch\Controller\Admin
                 $emails = $newsletterMapper->getMail();
                 foreach ($emails as $email) {
                     $messageReplace = [
-                            '{subject}' => $this->getRequest()->getPost('subject'),
-                            '{content}' => $this->getRequest()->getPost('text'),
-                            '{sitetitle}' => $this->getConfig()->get('page_title'),
-                            '{date}' => $date->format("l, d. F Y", true),
-                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
-                            '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
-                            '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getEmail()),
+                        '{subject}' => $subject,
+                        '{content}' => $text,
+                        '{sitetitle}' => $this->getConfig()->get('page_title'),
+                        '{date}' => $date->format("l, d. F Y", true),
+                        '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
+                        '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
+                        '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getEmail()),
                     ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
-                    
+
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email->getEmail(), '')
-                            ->setSubject($this->getRequest()->getPost('subject'))
+                            ->setSubject($subject)
                             ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
                             ->setMessage($message)
                             ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
@@ -167,7 +168,6 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $emails = $newsletterMapper->getMail();
-        $this->getView()->set('emails', $emails);
+        $this->getView()->set('emails', $newsletterMapper->getMail());
     }
 }

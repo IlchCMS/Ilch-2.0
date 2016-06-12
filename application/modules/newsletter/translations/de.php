@@ -32,7 +32,7 @@ return [
     'userGroups' => 'Benutzergruppen',
     'groupName' => 'Gruppenname',
     'groupAssignedUsers' => 'Anzahl "Zugeordnete Benutzer"',
-    'receiver' => 'Empf&auml;nger',
+    'receiver' => 'Empfänger',
 
     'menuPanel' => 'User Panel',
     'menuSettings' => 'Einstellungen',

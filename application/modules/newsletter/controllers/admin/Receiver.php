@@ -9,7 +9,7 @@ namespace Modules\Newsletter\Controllers\Admin;
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 
-class Settings extends \Ilch\Controller\Admin
+class Receiver extends \Ilch\Controller\Admin
 {
     public function init()
     {
@@ -24,7 +24,7 @@ class Settings extends \Ilch\Controller\Admin
                 'name' => 'receiver',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'receiver', 'action' => 'index'])
             ],
             [
                 'name' => 'add',
@@ -34,7 +34,7 @@ class Settings extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'settings') {
+        if ($this->getRequest()->getControllerName() == 'receiver') {
             $items[1]['active'] = true;
         } elseif ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
             $items[2]['active'] = true;
@@ -54,7 +54,8 @@ class Settings extends \Ilch\Controller\Admin
         $newsletterMapper = new NewsletterMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('receiver'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new NewsletterModel();
