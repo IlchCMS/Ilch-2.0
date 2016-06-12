@@ -12,3 +12,4 @@ application/modules/events/static/upload/image
 /tests/config.php
 web.config
 robots.txt
+.user.ini
