@@ -124,7 +124,7 @@ class Post extends \Ilch\Mapper
             } else {
                 $entryModel->setAutor($userMapper->getDummyUser());
             }
-            $entryModel->setAutorAllPost($this->getAllPostsByUderId($entries['user_id']));
+            $entryModel->setAutorAllPost($this->getAllPostsByUserId($entries['user_id']));
             $postEntry[] = $entryModel;
         }
 
