@@ -37,7 +37,7 @@ if ($this->getUser()) {
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]); ?>
         </div>
         <?php if ($forumEdit): ?>
-            <form class="form-horizontal" method="POST" action="">
+            <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'delete','forumid' => $forum->getId()]) ?>">
                 <?php echo $this->getTokenField(); ?>
         <?php endif; ?>
         <div class="forabg">
@@ -100,7 +100,7 @@ if ($this->getUser()) {
                                 </span>
                             </dd>
                             <?php if ($forumEdit): ?>
-                                <dd><input value="<?=$topic->getId() ?>" type="checkbox" name="check_comments[]" /></dd>
+                                <dd><input value="<?=$topic->getId() ?>" type="checkbox" name="check_topics[]" /></dd>
                             <?php endif; ?>
                         </dl>
                     </li>
@@ -115,7 +115,7 @@ if ($this->getUser()) {
                         <button name="forumEdit" value="forumEdit" class="btn btn-default"><?=$this->getTrans('forumEdit') ?></button>
                     </form>
                 <?php else: ?>
-                    <button class="btn btn-labeled bgblue" name="topicDelete"><?=$this->getTrans('topicDelete') ?></button>
+                    <button class="btn btn-labeled bgblue" name="topicDelete" value="topicDelete"><?=$this->getTrans('topicDelete') ?></button>
                     <button class="btn btn-labeled bgblue" name="topicMove"><?=$this->getTrans('topicMove') ?></button>
                     <button class="btn btn-labeled bgblue" name="topicChangeStatus"><?=$this->getTrans('topicChangeStatus') ?></button>
                 <?php endif; ?>

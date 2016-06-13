@@ -148,7 +148,7 @@ class Topic extends \Ilch\Mapper
     /**
      * Inserts or updates File entry.
      *
-     * @param FileModel $model
+     * @param TopicModel $model
      */
     public function save(TopicModel $model)
     {
@@ -214,7 +214,7 @@ class Topic extends \Ilch\Mapper
     /**
      * Updates visits.
      *
-     * @param FileModel $model
+     * @param TopicModel $model
      */
     public function saveVisits(TopicModel $model)
     {
@@ -224,18 +224,5 @@ class Topic extends \Ilch\Mapper
                     ->where(['id' => $model->getId()])
                     ->execute();
         }
-    }
-
-    /**
-     * Updates File meta.
-     *
-     * @param ImageModel $model
-     */
-    public function saveFileTreat(FileModel $model)
-    {
-        $this->db()->update('downloads_files')
-                ->values(['file_title' => $model->getFileTitle(),'file_image' => $model->getFileImage(),'file_description' => $model->getFileDesc()])
-                ->where(['id' => $model->getId()])
-                ->execute();
     }
 }
