@@ -8,6 +8,7 @@ namespace Modules\Forum\Controllers;
 
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
+use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\User\Mappers\User as UserMapper;
 
 class Showtopics extends \Ilch\Controller\Frontend
@@ -63,8 +64,13 @@ class Showtopics extends \Ilch\Controller\Frontend
     public function deleteAction()
     {
         $topicMapper = new TopicMapper();
+        $postMapper = new PostMapper();
         if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') == 'topicDelete') {
             foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
+                $posts = $postMapper->getPostByTopicId($topicId);
+                foreach ($posts as $post){
+                    $postMapper->deleteById($post->getId());
+                }
                 $topicMapper->deleteById($topicId);
             }
         }

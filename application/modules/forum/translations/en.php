@@ -39,7 +39,6 @@ return [
     'noAccessDelete' => 'No access to delete',
     'forumEdit' => 'Edit forum',
     'topicDelete' => 'Delete topic',
-    'deleteSuccess' => 'Delete success',
     'topicMove' => 'Move topic',
     'topicChangeStatus' => 'Change status',
     'forumTypeFixed' => 'Fixed topic',

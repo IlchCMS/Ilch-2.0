@@ -39,7 +39,6 @@ return [
     'noAccessDelete' => 'Keine Berechtigung zum Löschen',
     'forumEdit' => 'Forum bearbeiten',
     'topicDelete' => 'Thema löschen',
-    'deleteSuccess' => 'Erfolgreich gelöscht',
     'topicMove' => 'Thema verschieben',
     'topicChangeStatus' => 'Status ändern',
     'forumTypeFixed' => 'Thema fixieren',
