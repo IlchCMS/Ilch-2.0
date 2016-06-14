@@ -10,6 +10,7 @@ use Modules\Forum\Models\ForumTopic as TopicModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\Forum\Mappers\Forum as ForumMapper;
+use Modules\Forum\Mappers\Post as PostMapper;
 
 class Topic extends \Ilch\Mapper
 {
@@ -206,9 +207,14 @@ class Topic extends \Ilch\Mapper
 
     public function deleteById($id)
     {
-            return $this->db()->delete('forum_topics')
-            ->where(['id' => $id])
-            ->execute();
+        $postMapper = new PostMapper();
+        $posts = $postMapper->getPostByTopicId($id);
+        foreach ($posts as $post){
+            $postMapper->deleteById($post->getId());
+        }
+        $this->db()->delete('forum_topics')
+        ->where(['id' => $id])
+        ->execute();
     }
 
     /**
