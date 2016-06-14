@@ -116,7 +116,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
         $post = $topicMapper->getPostById($topicId);
 
-        if ($this->getUser() && $this->getUser()->getName() == $post->getAuthor() || $this->getUser()->isAdmin()) {
+        if ($this->getUser() && ($this->getUser()->getName() == $post->getAuthor() || $this->getUser()->isAdmin())) {
             $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum') . ' - ' . $forum->getTitle());
 
             $this->getLayout()->getHmenu()
@@ -136,8 +136,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
                 $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
             }
-
-            $this->getView()->set('post', $postMapper->getPostById($postId));
         }
+        $this->getView()->set('post', $postMapper->getPostById($postId));
     }
 }
