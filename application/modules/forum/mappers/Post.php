@@ -38,12 +38,20 @@ class Post extends \Ilch\Mapper
             ->execute()
             ->fetchAssoc();
 
-        $entryModel = new PostModel();
-        $entryModel->setId($fileRow['id']);
-        $entryModel->setTopicId($fileRow['topic_id']);
-        $entryModel->setText($fileRow['text']);
+        $postModel = new PostModel();
+        $userMapper = new UserMapper();
+        $postModel->setId($fileRow['id']);
+        $postModel->setText($fileRow['text']);
+        $postModel->setDateCreated($fileRow['date_created']);
+        if ($userMapper->getUserById($fileRow['user_id'])) {
+            $postModel->setAutor($userMapper->getUserById($fileRow['user_id']));
+        } else {
+            $postModel->setAutor($userMapper->getDummyUser());
+        }
+        $postModel->setAutorAllPost($this->getAllPostsByUserId($fileRow['user_id']));
 
-        return $entryModel;
+
+        return $postModel;
     }
 
     public function getAllPostsByUserId($userId)

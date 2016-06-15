@@ -54,7 +54,7 @@ if ($this->getUser()) {
                 </div>
                 <div class="edit">
                     <?php if ($this->getUser()): ?>
-                        <?php if ($this->getUser()->isAdmin()): ?>
+                        <?php if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin()): ?>
                             <p class="edit-post">
                                 <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-xs btn-labeled bgblue">
                                     <span class="btn-label">

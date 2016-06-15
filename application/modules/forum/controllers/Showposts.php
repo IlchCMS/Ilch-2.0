@@ -114,30 +114,39 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
-        $post = $topicMapper->getPostById($topicId);
+        $topic = $topicMapper->getPostById($topicId);
+        $post = $postMapper->getPostById($postId);
 
-        if ($this->getUser() && $this->getUser()->getName() == $post->getAuthor() || $this->getUser()->isAdmin()) {
-            $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum') . ' - ' . $forum->getTitle());
+        if ($this->getUser()) {
+            if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin()) {
+                $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum') . ' - ' . $forum->getTitle());
 
-            $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
-                ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
-                ->add($post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
-                ->add($this->getTranslator()->trans('editPost'), ['controller' => 'newpost', 'action' => 'index', 'topicid' => $topicId]);
+                $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                    ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
+                    ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
+                    ->add($topic->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
+                    ->add($this->getTranslator()->trans('editPost'), ['controller' => 'newpost', 'action' => 'index', 'topicid' => $topicId]);
 
-            if ($this->getRequest()->getPost('editPost')) {
-                $postMapper = new PostMapper;
-                $postModel = new ForumPostModel;
-                $postModel->setId($postId);
-                $postModel->setTopicId($topicId);
-                $postModel->setText($this->getRequest()->getPost('text'));
-                $postMapper->save($postModel);
+                if ($this->getRequest()->getPost('editPost')) {
+                    $postMapper = new PostMapper;
+                    $postModel = new ForumPostModel;
+                    $postModel->setId($postId);
+                    $postModel->setTopicId($topicId);
+                    $postModel->setText($this->getRequest()->getPost('text'));
+                    $postMapper->save($postModel);
 
-                $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                    $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                }
+
+                $this->getView()->set('post', $postMapper->getPostById($postId));
+            } else {
+                $this->addMessage('noAccessForum', 'danger');
+                $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
             }
-
-            $this->getView()->set('post', $postMapper->getPostById($postId));
+        } else {
+            $this->addMessage('noAccessForum', 'danger');
+            $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
         }
     }
 }
