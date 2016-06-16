@@ -87,3 +87,4 @@ $(document).ready(function() {
     $("#niceScroll").niceScroll({cursorcolor:"#ccc"});
 });
 </script>
+<?=$this->getDialog('smiliesModal', $this->getTrans('smilies'), '<iframe frameborder="0"></iframe>'); ?>
