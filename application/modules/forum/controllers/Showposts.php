@@ -129,14 +129,18 @@ class Showposts extends \Ilch\Controller\Frontend
                     ->add($this->getTranslator()->trans('editPost'), ['controller' => 'newpost', 'action' => 'index', 'topicid' => $topicId]);
 
                 if ($this->getRequest()->getPost('editPost')) {
-                    $postMapper = new PostMapper;
-                    $postModel = new ForumPostModel;
-                    $postModel->setId($postId);
-                    $postModel->setTopicId($topicId);
-                    $postModel->setText($this->getRequest()->getPost('text'));
-                    $postMapper->save($postModel);
+                    if (empty($this->getRequest()->getPost('text'))) {
+                        $this->addMessage('missingText', 'danger');
+                    } else {
+                        $postMapper = new PostMapper;
+                        $postModel = new ForumPostModel;
+                        $postModel->setId($postId);
+                        $postModel->setTopicId($topicId);
+                        $postModel->setText($this->getRequest()->getPost('text'));
+                        $postMapper->save($postModel);
 
-                    $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                        $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                    }
                 }
 
                 $this->getView()->set('post', $postMapper->getPostById($postId));

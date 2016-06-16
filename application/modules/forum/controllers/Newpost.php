@@ -33,18 +33,22 @@ class Newpost extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('newPost'), ['controller' => 'newpost','action' => 'index', 'topicid' => $topicId]);
 
         if ($this->getRequest()->getPost('saveNewPost')) {
-            $postMapper = new PostMapper;
-            $postModel = new ForumPostModel;
-            $dateTime = new \Ilch\Date();
-            $postModel->setTopicId($topicId);
-            $postModel->setUserId($this->getUser()->getId());
-            $postModel->setText($this->getRequest()->getPost('text'));
-            $postModel->setForumId($forum->getId());
-            $postModel->setDateCreated($dateTime);
-            $postMapper->save($postModel);
+            if (empty($this->getRequest()->getPost('text'))) {
+                $this->addMessage('missingText', 'danger');
+            } else {
+                $postMapper = new PostMapper;
+                $postModel = new ForumPostModel;
+                $dateTime = new \Ilch\Date();
+                $postModel->setTopicId($topicId);
+                $postModel->setUserId($this->getUser()->getId());
+                $postModel->setText($this->getRequest()->getPost('text'));
+                $postModel->setForumId($forum->getId());
+                $postModel->setDateCreated($dateTime);
+                $postMapper->save($postModel);
 
-            $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
-            $this->redirect(['controller' => 'showposts','action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
+                $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
+                $this->redirect(['controller' => 'showposts','action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
+            }
         }
     }
 }

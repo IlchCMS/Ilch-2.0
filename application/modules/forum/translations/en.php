@@ -26,6 +26,8 @@ return [
     'text' => 'Text',
     'newPost' => 'New post',
     'editPost' => 'Edit post',
+    'missingText' => 'Text was not filled',
+    'missingTopicTitle' => 'Topic title was not filled',
     'add' => 'Create',
     'statistics' => 'Statistics',
     'whoOnline' => 'Who is online?',

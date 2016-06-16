@@ -26,6 +26,8 @@ return [
     'text' => 'Text',
     'newPost' => 'Neue Antwort',
     'editPost' => 'Beitrag bearbeiten',
+    'missingText' => 'Text muss ausgefüllt werden',
+    'missingTopicTitle' => 'Themen Name muss ausgefüllt werden',
     'add' => 'Erstellen',
     'statistics' => 'Statistik',
     'whoOnline' => 'Wer ist online',
