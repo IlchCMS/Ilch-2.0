@@ -45,20 +45,30 @@ function rec($item, $obj, $readAccess, $i)
 }
 ?>
 <div id="forum" class="col-lg-12">
+    <legend><?=$this->getTrans('topicMoveTo') ?></legend>
     <?php if (!empty($forumItems)): ?>
         <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => 'edittopic']) ?>">
             <?php echo $this->getTokenField(); ?>
-            <select class="form-control" name="edit">
-                <?php foreach ($forumItems as $item): ?>
-                    <?php rec($item, $this, $readAccess, $i = null) ?>
-                <?php endforeach; ?>
-            </select>
-            <?php foreach ($edittopicitems as $editid): ?>
-                <input type="hidden" name="topicids[]" value="<?=$editid ?>">
-            <?php endforeach; ?>
-            <button value="edittopic" type="submit" name="edittopic" class="btn">
-                <?=$this->getTrans('edit') ?>
-            </button>
+            <div class="form-group">
+                <label for="selectForum" class="col-lg-2 control-label">
+                    <?=$this->getTrans('selectForum') ?>:
+                </label>
+                <div class="col-lg-8">
+                    <select class="form-control" name="edit">
+                        <?php foreach ($forumItems as $item): ?>
+                            <?php rec($item, $this, $readAccess, $i = null) ?>
+                        <?php endforeach; ?>
+                    </select>
+                    <?php foreach ($edittopicitems as $editid): ?>
+                        <input type="hidden" name="topicids[]" value="<?=$editid ?>">
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="col-lg-offset-2 col-lg-10">
+                <button value="edittopic" type="submit" name="edittopic" class="btn btn-labeled bgblue">
+                    <?=$this->getTrans('move') ?>
+                </button>
+            </div>
         </form>
     <?php endif; ?>
 </div>
