@@ -7,6 +7,7 @@ $forum = $this->get('forum');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
+    $userAccess =  $this->get('userAccess');
 }
 ?>
 
@@ -54,7 +55,7 @@ if ($this->getUser()) {
                 </div>
                 <div class="edit">
                     <?php if ($this->getUser()): ?>
-                        <?php if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin()): ?>
+                        <?php if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $userAccess->hasAccess('forum')): ?>
                             <p class="edit-post">
                                 <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-xs btn-labeled bgblue">
                                     <span class="btn-label">

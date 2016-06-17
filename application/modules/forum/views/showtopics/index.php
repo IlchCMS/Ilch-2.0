@@ -9,6 +9,7 @@ $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
+    $userAccess =  $this->get('userAccess');
 }
 ?>
 
@@ -37,7 +38,7 @@ if ($this->getUser()) {
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]); ?>
         </div>
         <?php if ($forumEdit): ?>
-            <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'delete','forumid' => $forum->getId()]) ?>">
+            <form class="form-horizontal" name="editForm" method="POST" action="">
                 <?php echo $this->getTokenField(); ?>
         <?php endif; ?>
         <div class="forabg">
@@ -108,16 +109,26 @@ if ($this->getUser()) {
             </ul>
         </div>
         <div class="topic-actions">
-            <?php if ($adminAccess): ?>
+            <?php if ($adminAccess || $userAccess->hasAccess('forum')): ?>
                 <?php if (!$forumEdit): ?>
                     <form action="" method="post">
                         <?php echo $this->getTokenField(); ?>
                         <button name="forumEdit" value="forumEdit" class="btn btn-default"><?=$this->getTrans('forumEdit') ?></button>
                     </form>
                 <?php else: ?>
-                    <button class="btn btn-labeled bgblue" name="topicDelete" value="topicDelete"><?=$this->getTrans('topicDelete') ?></button>
-                    <button class="btn btn-labeled bgblue" name="topicMove"><?=$this->getTrans('topicMove') ?></button>
+                    <button class="btn btn-labeled bgblue" name="topicDelete" value="topicDelete" OnClick="SetAction1()"><?=$this->getTrans('topicDelete') ?></button>
+                    <button class="btn btn-labeled bgblue" name="topicMove" value="topicMove" OnClick="SetAction2()"><?=$this->getTrans('topicMove') ?></button>
                     <button class="btn btn-labeled bgblue" name="topicChangeStatus"><?=$this->getTrans('topicChangeStatus') ?></button>
+
+                    <script type="text/javascript">
+                        function SetAction1() {
+                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'delete','forumid' => $forum->getId()]) ?>";
+                        }
+
+                        function SetAction2() {
+                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'edittopic', 'action' => 'index','forumid' => $forum->getId()]) ?>";
+                        }
+                    </script>
                 <?php endif; ?>
             <?php endif; ?>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>

@@ -155,7 +155,7 @@ class Topic extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('forum_topics')
-                ->values(['topic_id' => $model->getTopicId()])
+                ->values(['topic_id' => $model->getTopicId(), 'forum_id' => $model->getForumId()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {

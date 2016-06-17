@@ -12,6 +12,7 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Accesses as Accesses;
 
 class Showposts extends \Ilch\Controller\Frontend
 {
@@ -76,6 +77,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $this->getView()->set('forum', $forum);
         $this->getView()->set('readAccess', $readAccess);
         $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('userAccess', new Accesses($this->getRequest()));
     }
 
     public function deleteAction()
@@ -118,7 +120,8 @@ class Showposts extends \Ilch\Controller\Frontend
         $post = $postMapper->getPostById($postId);
 
         if ($this->getUser()) {
-            if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin()) {
+            $userAccess = new Accesses($this->getRequest());
+            if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $userAccess->hasAccess('forum')) {
                 $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum') . ' - ' . $forum->getTitle());
 
                 $this->getLayout()->getHmenu()

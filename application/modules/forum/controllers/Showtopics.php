@@ -9,6 +9,7 @@ namespace Modules\Forum\Controllers;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Accesses as Accesses;
 
 class Showtopics extends \Ilch\Controller\Frontend
 {
@@ -58,6 +59,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         $this->getView()->set('topics', $topicMapper->getTopicsByForumId($forumId, $pagination));
         $this->getView()->set('groupIdsArray', $groupIdsArray);
         $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('userAccess', new Accesses($this->getRequest()));
     }
 
     public function deleteAction()
