@@ -26,10 +26,18 @@ class Modules extends \Ilch\Controller\Admin
                 'icon' => 'fa fa-folder-open',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'notinstalled'])
             ],
+            [
+                'name' => 'menuOnlineCatalog',
+                'active' => false,
+                'icon' => 'fa fa-folder-open',
+                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'onlinecatalog'])
+            ],
             ];
 
         if ($this->getRequest()->getActionName() == 'notinstalled') {
             $items[1]['active'] = true; 
+        } else if ($this->getRequest()->getActionName() == 'onlinecatalog') {
+            $items[2]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -61,6 +69,41 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuNotInstalled'), ['action' => 'notinstalled']);
 
         $this->getView()->set('modulesNotInstalled', $modules->getModulesNotInstalled($this->getTranslator()));
+    }
+
+    public function onlinecatalogAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuOnlineCatalog'), ['action' => 'onlinecatalog']);
+
+        if ($this->getRequest()->isPost('layout')) {
+            $transfer = new \Ilch\Transfer();
+            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
+            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+
+            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                // Certificate is missing or expired.
+                $this->addMessage('certMissingOrExpired', 'danger');
+                return;
+            }
+
+            $transfer->save();
+            
+            $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
+            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
+            if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
+                // Verification failed. Drop the potentially bad files.
+                unlink($transfer->getZipFile());
+                unlink($transfer->getZipFile().'-signature.sig');
+                $this->addMessage('moduleVerificationFailed', 'danger');
+                return;
+            }
+
+            $transfer->install();
+            $this->addMessage('Success');
+        }
     }
 
     public function installAction()

@@ -30,6 +30,7 @@ return
     'menuModules' => 'Modules',
     'menuInstalled' => 'Installed',
     'menuNotInstalled' => 'Not installed',
+    'menuOnlineCatalog' => 'Online catalog',
     'loginWelcome' => 'Please sign in',
     'emailname' => 'Username or E-Mail',
     'password' => 'Password',
@@ -199,6 +200,7 @@ return
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',
+    'moduleVerificationFailed' => 'Modul war beschädigt oder manipuliert. Modul verworfen.',
 
     'enableSelectedEntries' => 'Enable the selected entries?',
     'deleteSelectedEntries' => 'Delete the selected entries?',
