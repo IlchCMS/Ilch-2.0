@@ -205,4 +205,7 @@ return
     'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
     'deleteEntry' => 'Soll der Eintrag wirklich gelöscht werden?',
+
+    'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht vom Server geholt werden.',
+    'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht vom Server geholt werden.',
     ];

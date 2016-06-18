@@ -1,6 +1,12 @@
 <?php
 $json = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $datas = json_decode($json);
+
+if (empty($datas)) {
+    echo $this->getTrans('noModulesAvailable');
+    return;
+}
+
 foreach ($datas as $data) : ?>
 
     <div class="row">
