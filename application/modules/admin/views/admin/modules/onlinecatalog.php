@@ -7,7 +7,7 @@ foreach ($datas as $data) : ?>
         <div class="col-sm-4">
             <div class="product-template" itemscope="" itemtype="http://schema.org/Product">
                 <figure>
-                <img class="img-responsive" src="<?=$data->thumb?>" alt="Corlate  - Free Responsive Business HTML Template" itempro="image" width="100%">
+                <img class="img-responsive" src="<?=$data->thumb?>" alt="<?=$data->name?>" itempro="image" width="100%">
                 </figure>
                 <form method="POST" action="">
                     <?=$this->getTokenField() ?>
