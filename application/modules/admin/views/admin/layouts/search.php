@@ -1,6 +1,12 @@
 <?php
 $json = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
 $datas = json_decode($json);
+
+if (empty($datas)) {
+    echo $this->getTrans('noLayoutsAvailable');
+    return;
+}
+
 foreach ($datas as $data) : ?>
 
     <div class="row">
