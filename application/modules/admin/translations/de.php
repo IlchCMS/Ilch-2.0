@@ -138,7 +138,7 @@ return
     'installModule' => 'Installieren',
     'modulesInstalled' => 'Installierte Module',
     'modulesNotInstalled' => 'Nicht installierte Module',
-    'noNotInstalledModules' => 'keine Einträge vorhanden',
+    'noNotInstalledModules' => 'Keine Einträge vorhanden',
     'media' => 'Medien',
 
     'menuInfos' => 'Informationen',
@@ -206,6 +206,6 @@ return
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
     'deleteEntry' => 'Soll der Eintrag wirklich gelöscht werden?',
 
-    'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht vom Server geholt werden.',
-    'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht vom Server geholt werden.',
+    'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht abgefragt werden.',
+    'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht abgefragt werden.',
     ];
