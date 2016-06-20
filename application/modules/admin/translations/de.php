@@ -30,6 +30,7 @@ return
     'menuModules' => 'Module',
     'menuInstalled' => 'Installierte',
     'menuNotInstalled' => 'Nicht installierte',
+    'menuSearchModules' => 'Suche',
     'loginWelcome' => 'Bitte loggen Sie sich ein',
     'emailname' => 'Benutzername oder E-Mail',
     'password' => 'Passwort',
@@ -137,7 +138,7 @@ return
     'installModule' => 'Installieren',
     'modulesInstalled' => 'Installierte Module',
     'modulesNotInstalled' => 'Nicht installierte Module',
-    'noNotInstalledModules' => 'keine Einträge vorhanden',
+    'noNotInstalledModules' => 'Keine Einträge vorhanden',
     'media' => 'Medien',
 
     'menuInfos' => 'Informationen',
@@ -199,8 +200,12 @@ return
     'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
     'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',
+    'moduleVerificationFailed' => 'Modul war beschädigt oder manipuliert. Modul verworfen.',
 
     'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
     'deleteEntry' => 'Soll der Eintrag wirklich gelöscht werden?',
+
+    'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht abgefragt werden.',
+    'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht abgefragt werden.',
     ];

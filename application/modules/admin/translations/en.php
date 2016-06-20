@@ -30,6 +30,7 @@ return
     'menuModules' => 'Modules',
     'menuInstalled' => 'Installed',
     'menuNotInstalled' => 'Not installed',
+    'menuSearchModules' => 'Search',
     'loginWelcome' => 'Please sign in',
     'emailname' => 'Username or E-Mail',
     'password' => 'Password',
@@ -199,8 +200,12 @@ return
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',
+    'moduleVerificationFailed' => 'Modul war beschädigt oder manipuliert. Modul verworfen.',
 
     'enableSelectedEntries' => 'Enable the selected entries?',
     'deleteSelectedEntries' => 'Delete the selected entries?',
     'deleteEntry' => 'Delete the selected entry?',
+
+    'noLayoutsAvailable' => 'Either there are no layouts available or the list of layouts could not be fetched from the server.',
+    'noModulesAvailable' => 'Either there are no modules available or the list of modules could not be fetched from the server.',
     ];
