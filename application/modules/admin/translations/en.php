@@ -30,7 +30,7 @@ return
     'menuModules' => 'Modules',
     'menuInstalled' => 'Installed',
     'menuNotInstalled' => 'Not installed',
-    'menuOnlineCatalog' => 'Online catalog',
+    'menuSearchModules' => 'Search',
     'loginWelcome' => 'Please sign in',
     'emailname' => 'Username or E-Mail',
     'password' => 'Password',

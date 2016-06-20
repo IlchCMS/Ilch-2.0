@@ -27,16 +27,16 @@ class Modules extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'notinstalled'])
             ],
             [
-                'name' => 'menuOnlineCatalog',
+                'name' => 'menuSearchModules',
                 'active' => false,
                 'icon' => 'fa fa-folder-open',
-                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'onlinecatalog'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'searchmodules'])
             ],
             ];
 
         if ($this->getRequest()->getActionName() == 'notinstalled') {
             $items[1]['active'] = true; 
-        } else if ($this->getRequest()->getActionName() == 'onlinecatalog') {
+        } else if ($this->getRequest()->getActionName() == 'searchmodules') {
             $items[2]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
@@ -71,11 +71,11 @@ class Modules extends \Ilch\Controller\Admin
         $this->getView()->set('modulesNotInstalled', $modules->getModulesNotInstalled($this->getTranslator()));
     }
 
-    public function onlinecatalogAction()
+    public function searchmodulesAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuOnlineCatalog'), ['action' => 'onlinecatalog']);
+                ->add($this->getTranslator()->trans('menuSearchModules'), ['action' => 'searchmodules']);
 
         if ($this->getRequest()->isPost('layout')) {
             $transfer = new \Ilch\Transfer();
