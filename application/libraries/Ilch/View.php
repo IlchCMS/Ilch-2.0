@@ -99,9 +99,7 @@ class View extends Design\Base
      */
     public function getEditIcon($url)
     {
-        $html = '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'">
-                    <span class="fa fa-edit text-success"></span>
-                 </a>';
+        $html = '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'"><span class="fa fa-edit text-success"></span></a>';
 
         return $html;
     }
