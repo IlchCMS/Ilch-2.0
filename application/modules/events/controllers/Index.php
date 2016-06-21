@@ -63,7 +63,8 @@ class Index extends \Ilch\Controller\Frontend
             $place = trim($this->getRequest()->getPost('place'));
             $text = trim($this->getRequest()->getPost('text'));
             $show = trim($this->getRequest()->getPost('calendarShow'));
-            
+            $imageError = false;
+
             if ($this->getRequest()->getPost('end') != '') {
                 $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
             }
@@ -80,7 +81,7 @@ class Index extends \Ilch\Controller\Frontend
                     $width = $size[0];
                     $height = $size[1];
 
-                    if ($file_size <= $imageSize AND $width == $imageWidth AND $height == $imageHeight) {
+                    if ($file_size <= $imageSize AND $width <= $imageWidth AND $height <= $imageHeight) {
                         $image = $path.time().'.'.$endung;
 
                         if ($this->getRequest()->getParam('id') AND $event->getImage() != '') {
@@ -88,15 +89,14 @@ class Index extends \Ilch\Controller\Frontend
                         }
 
                         $eventModel->setImage($image);
-
-                        if (move_uploaded_file($file_tmpe, $image)) {
-                            $this->addMessage('successImage');
-                        }
+                        move_uploaded_file($file_tmpe, $image)
                     } else {
                         $this->addMessage('failedFilesize', 'warning');
+                        $imageError = true;
                     }
                 } else {
                     $this->addMessage('failedFiletypes', 'warning');
+                    $imageError = true;
                 }
             }
 
@@ -108,6 +108,7 @@ class Index extends \Ilch\Controller\Frontend
                 $this->addMessage('missingPlace', 'danger');
             } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
+            } elseif ($imageError) {
             } else {
                 if (!empty($_FILES['image']['name'])) {
                     $eventModel->setImage($image);
