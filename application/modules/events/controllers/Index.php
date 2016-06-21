@@ -89,7 +89,7 @@ class Index extends \Ilch\Controller\Frontend
                         }
 
                         $eventModel->setImage($image);
-                        move_uploaded_file($file_tmpe, $image)
+                        move_uploaded_file($file_tmpe, $image);
                     } else {
                         $this->addMessage('failedFilesize', 'warning');
                         $imageError = true;
