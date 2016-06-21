@@ -326,7 +326,7 @@ class Panel extends BaseController
 
         if ($user_one != $user_two) {
             $c_exist = $DialogMapper->getDialogCheck($user_one, $user_two);
-            if ($c_exist == 0) {
+            if ($c_exist == null) {
                 $model = new DialogModel();
                 $model->setUserOne($user_one);
                 $model->setUserTwo($user_two);
@@ -337,8 +337,7 @@ class Panel extends BaseController
                 $this->redirect(['action' => 'dialogview', 'id' => $c_id->getCId()]);
             }
 
-            $c_id = $DialogMapper->getDialogId($user_one);
-            $this->redirect(['action' => 'dialogview', 'id' => $c_id->getCId()]);
+            $this->redirect(['action' => 'dialogview', 'id' => $c_exist->getCId()]);
         }
     }
 

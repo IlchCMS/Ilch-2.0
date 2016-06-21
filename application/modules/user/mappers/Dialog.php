@@ -206,7 +206,12 @@ class Dialog extends \Ilch\Mapper
             return null;
         }
 
-        return $row;
+        $dialogModel = new DialogModel();
+        $dialogModel->setUserOne($row['user_one']);
+        $dialogModel->setUserTwo($row['user_two']);
+        $dialogModel->setCId($row['c_id']);
+
+        return $dialogModel;
     }
 
      /**
