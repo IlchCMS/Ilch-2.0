@@ -372,9 +372,14 @@ abstract class Base
             'action' => $this->request->getActionName()
         ];
 
+        $params = $this->request->getParams();
+        if (empty($params)) {
+            $resetParams = true;
+        }
+
         $urlParams = array_merge(
             $currentUrlParts,
-            $resetParams ? [] : $this->request->getParams(),
+            $resetParams ? [] : $params,
             $urlParts
         );
 
