@@ -15,7 +15,8 @@
 $('.languageInput').change (
     this,
     function () {
-        top.location.href = '<?=$this->getCurrentUrl([], false); ?>/language/'+$(this).val()
+        top.location.href = '<?=$this->getCurrentUrl(['language' => '__LANG_PLACEHOLDER__'], false); ?>'
+                .replace('__LANG_PLACEHOLDER__', $(this).val());
     }
 );
 </script>
