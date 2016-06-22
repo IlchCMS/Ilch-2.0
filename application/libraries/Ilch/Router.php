@@ -35,12 +35,11 @@ class Router
     {
         $this->request = $request;
         $this->config = new \ArrayObject();
-        $this->config->offsetSet
-        (
+        $this->config->offsetSet(
             '_DEFAULT_',
             [
                 'strategy' => self::DEFAULT_MATCH_STRATEGY,
-                'pattern' => self::DEFAULT_REGEX_PATTERN
+                'pattern'  => self::DEFAULT_REGEX_PATTERN
             ]
         );
     }
@@ -91,7 +90,7 @@ class Router
     /**
      * Adds new route to router.
      *
-     * @param $routeName
+     * @param string $routeName
      * @param array $value
      * @return boolean
      */
@@ -108,7 +107,7 @@ class Router
     /**
      * Removes route from router.
      *
-     * @param $routeName
+     * @param string $routeName
      */
     public function removeConfigItem($routeName)
     {
@@ -130,7 +129,12 @@ class Router
      */
     protected function fillQuery()
     {
-        $query = substr(urldecode($_SERVER['REQUEST_URI']), strlen(REWRITE_BASE));
+        $length = null;
+        if (!empty($_SERVER['QUERY_STRING'])) {
+            $length = -1 * (strlen($_SERVER['QUERY_STRING']) + 1);
+        }
+
+        $query = substr(urldecode($_SERVER['REQUEST_URI']), strlen(REWRITE_BASE), $length);
         $query = str_replace('index.php/', '', $query);
         $query = trim(str_replace('index.php', '', $query), '/');
 
@@ -151,7 +155,7 @@ class Router
         $matches = [];
         $pattern = !array_key_exists('pattern', $params) ? self::DEFAULT_REGEX_PATTERN : $params['pattern'];
 
-        $matched = preg_match(
+        preg_match(
             '#^' . $pattern . '$#i',
             $route,
             $matches
@@ -203,7 +207,7 @@ class Router
         }
 
         if (!empty($queryParts)) {
-            $result['params'] = implode('/',$queryParts);
+            $result['params'] = implode('/', $queryParts);
         }
 
         return $result;
@@ -290,7 +294,9 @@ class Router
         /*
          * Select default strategy delivered by router.
          */
-        if (is_string($strategy) && strtolower(substr($strategy, 0, 5)) === 'match' && method_exists($this, $strategy)) {
+        if (is_string($strategy)
+            && strtolower(substr($strategy, 0, 5)) === 'match' && method_exists($this, $strategy)
+        ) {
             $callback = [$this, $strategy];
         }
 
@@ -348,8 +354,10 @@ class Router
             $params = $this->convertParamStringIntoArray($result['params']);
 
             foreach ($params as $key => $value) {
-                $this->request->setParam($key,$value);
+                $this->request->setParam($key, $value);
             }
+        } else {
+            $this->request->setParams([]);
         }
     }
 
