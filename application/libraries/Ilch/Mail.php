@@ -97,7 +97,7 @@ class Mail
     /**
      * @param string $message
      *
-     * @return message
+     * @return $this
      */
     public function setMessage($message)
     {
@@ -117,7 +117,7 @@ class Mail
      * @param string $email
      * @param string $name
      *
-     * @return From
+     * @return $this
      */
     public function setFrom($email, $name)
     {
@@ -130,7 +130,7 @@ class Mail
      * @param string $email
      * @param string $name
      *
-     * @return MailHeader
+     * @return $this
      */
     public function addMailHeader($header, $email = null, $name = null)
     {
@@ -143,7 +143,7 @@ class Mail
      * @param string $header
      * @param mixed  $value
      *
-     * @return GeneralHeader
+     * @return $this
      */
     public function addGeneralHeader($header, $value)
     {

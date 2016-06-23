@@ -186,12 +186,12 @@ class Index extends \Ilch\Controller\Frontend
                     $this->getRequest()->getPost('dbPassword'),
                     $port
                 );
+
+                if (!$db->setDatabase($this->getRequest()->getPost('dbName'))) {
+                    $errors['dbDatabase'] = 'dbDatabaseError';
+                }
             } catch (\RuntimeException $ex) {
                 $errors['dbConnection'] = 'dbConnectionError';
-            }
-
-            if (!$db->setDatabase($this->getRequest()->getPost('dbName'))) {
-                $errors['dbDatabase'] = 'dbDatabaseError';
             }
 
             if (empty($errors)) {

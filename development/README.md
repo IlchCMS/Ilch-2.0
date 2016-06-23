@@ -7,7 +7,7 @@ so dass alle Entwickler mit dem gleichen System arbeiten und sich um deren Einri
 2. Download und Installieren von [VirtualBox](https://www.virtualbox.org/wiki/Downloads), wobei auch das Extension Pack installiert werden sollte
 3. Kopiere die Datei development/vagrant/Vagrantfile aus dem development Ordner ins Hauptverzeichnis des Projektes
 4. Ändere die Datei Vagrantfile entsprechend deinen Wünschen, sie sollte aber auch ohne Änderungen funktionieren
-5. Starte eine Konsole (unter Windows möglichst PowerShell verwenden)
+5. Starte eine Konsole (unter Windows möglichst PowerShell, GitBash oder CygWin verwenden)
 6. In das Hauptverzeichnis des Projektes per Shell wechseln
 7. Die VM mit __vargrant up__ initialisieren (Dies dauert beim ersten mal eine ganze Weile, da einiges heruntergeladen werden muss)
 8. VM kann im Browser über http://localhost:8080 aufgerufen werden, soweit du keinen anderen Port konfiguriert hast
@@ -27,6 +27,10 @@ Das Passwort für den root User ist root. Es werden 2 Datenbanken angelegt: ilch
 Die Vagrant Box wird so konfiguriert, dass eine Verbindung von außen also beispielsweise mit HeidiSQL möglich ist.
 Der Port zur Verbindung ist dann 13306, funktioniert aber wohl erst nach einem *vagrant reload*
 
+## Mails (Mailhog)
+Um auch das Versenden von E-Mails einfach testen zu können wurde MailHog in die VM integriert.
+Versendete E-Mails können unter http://localhost:8025 betrachtet werden.
+
 ## Debugging mit xdebug
 Xdebug ist auf der VM mit installiert und für remote debugging konfiguriert, es sollte also in der IDE konfiguriert werden können.
 
@@ -39,19 +43,33 @@ was etwas mehr Komfort bieten sollte. Bei der Verwendung von putty sind die Para
 * user: vagrant
 * password: vagrant
 * alternativ zum Verwendung von Benutzer und Passwort kann auch ein Privatekey verwendet werden,
-  wo sich dieser befindet kann mit___vagrant ssh-config__ geprüft werden und mit Hilfe von PuttyGen zu einem Putty Key umgewandelt werden
+  wo sich dieser befindet kann mit __vagrant ssh-config__ geprüft werden und mit Hilfe von PuttyGen zu einem Putty Key umgewandelt werden
 
 Nachdem man sich eingeloggt hat, sollte man sich im Verzeichnis /vagrant befinden, was zum Root des Ilch-2.0 Verzeichnises
 gelinkt ist.
 Falls man seine VM noch umkonfigurieren will, sind dazu ggf. root Rechte notwendig, dazu kann sudo verwendet werden.
 
 ### PHP CodeSniffer (phpcs)
+Der CodeSniffer kann verwendet werden, um Verstöße gegen den CodingStandard zu suchen.
+
 Da das Scannen aller Dateien sehr lange dauern kann, empfielt es sich auch der Übersichtlichkeit halber, nur einzelne Dateien zu scannen.
-phpcs auf der VM verwendet dabei als Standard automatisch PSR2.
+phpcs auf der VM verwendet (durch die phpcs.xml) dabei als Standard automatisch PSR2. 
 
 Beispiel:
 ```
 phpcs ./application/libraries/Ilch/Date.php
+```
+
+### PHP Code Beautifier and Fixer (phpcbf)
+Der Code Beautifier and Fixer kann verwendet werden, um Verstöße gegen den CodingStandard zu suchen und automatisch zu beheben.
+
+Da ohne Angabe eines Pfades alle Dateien gescannt und u.U. geändert werden,
+sollte dieser Befehl mit Bedacht und am besten nur eingesetzt werden, wenn man einen sauberen git working tree hat.
+So können Änderungen leicht "reverted" werden.
+
+Beispiel:
+```
+phpcbf ./application/libraries/Ilch/Date.php
 ```
 
 ### PHP-CS-Fixer (php-cs-fixer)
@@ -72,8 +90,8 @@ Der Befehl phpunit sollte verfügbar und xdebug konfiguriert sein.
 
 ### Hinweis zur Nutzung der Tools unter Windows
 Wenn man phpcs oder phpunit auch in seiner IDE unter Windows einbinden will, werden auch die .bat Dateien benötigt.
-Leider ist es bei composer noch nicht möglich die bat-Dateien unter Linux zu erstellen.
-Wer also die .bat benötigt, muss den composer install Befehl unter Windows ausführen, während kein vendor Verzeichnis existiert.
+Mit einer aktueller Composer Version ist die Erstellung der .bat Dateien nun auch aus der VM heraus möglich und wird gemacht.
+Die Tools können also auch unter Windows verwendet werden, wenn die Installation in der VM stattgefunden hat.
 
 # Nutzung der Tools ohne Vagrant
 Die Nutzung der Tools ist auch ohne Vagrant und VM nutzbar. Dazu kann auch einfach Composer verwendet werden,

@@ -13,8 +13,7 @@ fi
 
 cd ~/bin
 ln -s /vagrant/development/vagrant/scripts/phpcs.sh phpcs
+ln -s /vagrant/development/vagrant/scripts/phpcbf.sh phpcbf
 ln -s /vagrant/development/vagrant/scripts/phpunit.sh phpunit
 ln -s /vagrant/development/vagrant/scripts/php-cs-fixer.sh php-cs-fixer
 ln -s /vagrant/development/vagrant/scripts/phpcsfix.sh phpcsfix
-
-

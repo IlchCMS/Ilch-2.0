@@ -65,7 +65,7 @@ class Index extends \Ilch\Controller\Frontend
                         ->setSubject($this->getTranslator()->trans('applyAs').' '.$title)
                         ->setFrom($user->getEmail(), $user->getName())
                         ->setMessage($message)
-                        ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
+                        ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
                 $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
                 $mail->send();
 

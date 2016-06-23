@@ -109,7 +109,7 @@ class Index extends BaseController
                 ->setSubject($this->getTranslator()->trans('automaticEmail'))
                 ->setFrom($this->getTranslator()->trans('automaticEmail'), $this->getConfig()->get('page_title'))
                 ->setMessage($message)
-                ->addGeneralHeader('Content-type', 'text/html; charset="utf-8"');
+                ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
         $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
         $mail->send();
 

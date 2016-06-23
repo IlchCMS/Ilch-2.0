@@ -6,13 +6,13 @@
     <file>admin</file>
     <file>index.php</file>
 
-    <exclude-pattern>./application/libraries/Captcha</exclude-pattern>
+    <exclude-pattern>./modules/layouts/</exclude-pattern>
+    <exclude-pattern>./modules/**/views/*.php</exclude-pattern>
 
-    <!--<exclude-pattern>*.js</exclude-pattern>-->
-    <!--<exclude-pattern>*.css</exclude-pattern>-->
     <exclude-pattern>./application/libraries/Captcha</exclude-pattern>
     <exclude-pattern>./application/libraries/jbbcode</exclude-pattern>
     <exclude-pattern>./application/libraries/Thumb</exclude-pattern>
+    <exclude-pattern>./application/libraries/password-compat</exclude-pattern>
 
     <arg name="extensions" value="php" />
     <arg name="report" value="summary"/>
