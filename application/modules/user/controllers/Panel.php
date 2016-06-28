@@ -21,6 +21,10 @@ use Modules\User\Mappers\Media as MediaMapper;
 use Modules\User\Models\Media as MediaModel;
 use Ilch\Date as IlchDate;
 
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
+use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
+use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
+
 class Panel extends BaseController
 {
     public function indexAction()
@@ -45,6 +49,14 @@ class Panel extends BaseController
                 ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
                 ->add($this->getTranslator()->trans('menuEditProfile'), ['controller' => 'panel', 'action' => 'profile']);
 
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $profileFieldsMapper = new ProfileFieldsMapper();
+
+        $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getUser()->getId());
+        $profileFields = $profileFieldsMapper->getProfileFields();
+        $this->getView()->set('profileFieldsContent', $profileFieldsContent);
+        $this->getView()->set('profileFields', $profileFields);
+        
         $errors = [];
         if ($this->getRequest()->isPost()) {
             $email = trim($this->getRequest()->getPost('email'));
@@ -78,6 +90,14 @@ class Panel extends BaseController
                 $model->setCity($city);
                 $model->setBirthday($birthday);
                 $profilMapper->save($model);
+
+                foreach ($profileFields as $profileField) {
+                    $profileFieldsContent = new ProfileFieldContentModel();
+                    $profileFieldsContent->setFieldId($profileField->getId());
+                    $profileFieldsContent->setUserId($this->getUser()->getId());
+                    $profileFieldsContent->setValue(trim($this->getRequest()->getPost($profileField->getName())));
+                    $profileFieldsContentMapper->save($profileFieldsContent);
+                }
 
                 $this->redirect(['action' => 'profile']);
             }

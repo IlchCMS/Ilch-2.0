@@ -260,4 +260,11 @@ return [
 
     'back' => 'Zurück zur Startseite',
     'alreadyLoggedIn' => 'Du bist bereits angemeldet!',
+
+    'menuProfileFields' => 'Profil-Felder',
+    'profileFieldName' => 'Name',
+    'editProfileField' => 'Profil-Feld editieren',
+    'addProfileField' => 'Profil-Feld hinzufügen',
+    'newProfileFieldMsg' => 'Neues Profil-Feld erfolgreich hinzugefügt',
+    'menuActionNewProfileField' => 'Neues Profil-Feld hinzufügen',
 ];

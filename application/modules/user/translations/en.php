@@ -260,4 +260,11 @@ return [
 
     'back' => 'Back to mainpage',
     'alreadyLoggedIn' => 'You are already logged in!',
+
+    'menuProfileFields' => 'Profilefields',
+    'profileFieldName' => 'Name',
+    'editProfileField' => 'Edit profile-field',
+    'addProfileField' => 'Create profile-field',
+    'newProfileFieldMsg' => 'New profile-field successfully added',
+    'menuActionNewProfileField' => 'Create new profile-field',
 ];

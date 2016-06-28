@@ -1,5 +1,7 @@
 <?php
 $profil = $this->get('profil');
+$profileFields = $this->get('profileFields');
+$profileFieldsContent = $this->get('profileFieldsContent');
 $birthday = new \Ilch\Date($profil->getBirthday());
 ?>
 
@@ -126,6 +128,32 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         </span>
                     </div>
                 </div>
+                <?php 
+                $x = 0;
+                $length = count($profileFieldsContent);
+                foreach ($profileFields as $profileField) :
+                    if ($x >= $length) {
+                        $value = '';
+                    } else {
+                        $value = $this->escape($profileFieldsContent[$x]->getValue());
+                    }
+                ?>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">
+                        <?=$this->escape($profileField->getName()) ?>
+                    </label>
+                    <div class="col-lg-8">
+                       <input type="text"
+                              class="form-control"
+                              name="<?=$this->escape($profileField->getName()) ?>"
+                              placeholder="<?=$value ?>"
+                              value="<?=$value ?>" />
+                    </div>
+                </div>
+                <?php
+                $x++;
+                endforeach;
+                ?>
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"

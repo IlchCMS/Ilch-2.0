@@ -2,6 +2,8 @@
 $userMapper = $this->get('userMapper'); 
 $profil = $this->get('profil'); 
 $birthday = new \Ilch\Date($profil->getBirthday());
+$profileFields = $this->get('profileFields');
+$profileFieldsContent = $this->get('profileFieldsContent');
 
 $groups = '';
 foreach ($profil->getGroups() as $group) {
@@ -61,7 +63,7 @@ foreach ($profil->getGroups() as $group) {
         <legend><?=$this->getTrans('profileDetails') ?></legend>
         <div class="row">
             <div class="col-lg-2 detail bold">
-                <?=$this->getTrans('profileFirstName') ?>:
+                <?=$this->getTrans('profileFirstName') ?>
             </div>
             <div class="col-lg-10 detail">
                 <?=$this->escape($profil->getFirstName()) ?>
@@ -69,7 +71,7 @@ foreach ($profil->getGroups() as $group) {
         </div>
          <div class="row">
             <div class="col-lg-2 detail bold">
-                <?=$this->getTrans('profileLastName') ?>:
+                <?=$this->getTrans('profileLastName') ?>
             </div>
             <div class="col-lg-10 detail">
                 <?=$this->escape($profil->getLastName()) ?>
@@ -77,7 +79,7 @@ foreach ($profil->getGroups() as $group) {
         </div>
         <div class="row">
             <div class="col-lg-2 detail bold">
-                <?=$this->getTrans('profileCity') ?>:
+                <?=$this->getTrans('profileCity') ?>
             </div>
             <div class="col-lg-10 detail">
                 <?=$this->escape($profil->getCity()) ?>
@@ -85,7 +87,7 @@ foreach ($profil->getGroups() as $group) {
         </div>
         <div class="row">
             <div class="col-lg-2 detail bold">
-                <?=$this->getTrans('profileBirthday') ?>:
+                <?=$this->getTrans('profileBirthday') ?>
             </div>
             <div class="col-lg-10 detail">
                 <?php if ($profil->getBirthday() != '0000-00-00') { echo $birthday->format('d-m-Y', true); } ?>
@@ -101,6 +103,20 @@ foreach ($profil->getGroups() as $group) {
                 </div>
             </div>
         <?php endif; ?>
+        
+        <?php $x = 0; 
+        foreach ($profileFieldsContent as $profileFieldContent) : ?>
+            <div class="row">
+                <div class="col-lg-2 detail bold">
+                    <?=$this->escape($profileFields[$x]->getName()) ?>
+                </div>
+                <div class="col-lg-10 detail">
+                    <?=$this->escape($profileFieldContent->getValue()) ?>
+                </div>
+            </div>
+        <?php $x++; ?>
+        <?php endforeach; ?>
+        
         <div class="clearfix"></div>
         <br />
         <legend><?=$this->getTrans('others') ?></legend>
