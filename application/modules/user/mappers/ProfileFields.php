@@ -10,6 +10,11 @@ use Modules\User\Models\ProfileField as ProfileFieldModel;
 
 class ProfileFields extends \Ilch\Mapper
 {
+    /**
+     * Returns all profile-fields.
+     *
+     * @return array()|\Modules\User\Models\ProfileField
+     */
     public function getProfileFields()
     {
         $profileFieldRows = $this->db()->select('*')
@@ -27,6 +32,12 @@ class ProfileFields extends \Ilch\Mapper
         return $profileFields;
     }
 
+    /**
+     * Returns a ProfileField model found by the id.
+     *
+     * @param  int $id
+     * @return null|\Modules\User\Models\ProfileField
+     */
     public function getProfileFieldById($id)
     {
         $profileFieldRow = $this->db()->select('*')
@@ -42,6 +53,13 @@ class ProfileFields extends \Ilch\Mapper
         return null;
     }
 
+    /**
+     * Inserts or updates a ProfileField model in the database.
+     *
+     * @param UserModel $user
+     *
+     * @return int The id of the updated or inserted profile-field.
+     */
     public function save(ProfileFieldModel $profileField)
     {
         $fields = [];
@@ -52,13 +70,13 @@ class ProfileFields extends \Ilch\Mapper
             $fields['type'] = $profileField->getType();
         }
 
-        $profileFieldId = (int) $this->db()->select('id')
+        $id = (int) $this->db()->select('id')
             ->from('profile_fields')
             ->where(['id' => $profileField->getId()])
             ->execute()
             ->fetchCell();
 
-        if ($profileFieldId) {
+        if ($id) {
             /*
              * ProfileField does exist already, update.
              */
@@ -78,13 +96,27 @@ class ProfileFields extends \Ilch\Mapper
         return $id;
     }
 
+    /**
+     * Deletes a given profile-field with the given id.
+     *
+     * @param  int $id
+     *
+     * @return boolean True if success, otherwise false.
+     */
     public function deleteProfileField($id)
     {
-        $this->db()->delete('profile_fields')
+        return $this->db()->delete('profile_fields')
             ->where(['id' => $id])
             ->execute();
     }
 
+    /**
+     * Returns whether a profile-field exists.
+     *
+     * @param  int $id
+     *
+     * @return boolean True if a profile-field with this id exists, false otherwise.
+     */
     public function profileFieldWithIdExists($id)
     {
         return (boolean) $this->db()->select('COUNT(*)', 'profile_fields', ['id' => (int)$id])
@@ -92,6 +124,12 @@ class ProfileFields extends \Ilch\Mapper
             ->fetchCell();
     }
 
+    /**
+     * Returns a profile-field created using an array with data.
+     *
+     * @param  mixed[] $profileFieldRow
+     * @return ProfileFieldModel
+     */
     public function loadFromArray($profileFieldRow = [])
     {
         $profileField = new ProfileFieldModel();

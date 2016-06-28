@@ -10,6 +10,12 @@ use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 
 class ProfileFieldsContent extends \Ilch\Mapper
 {
+    /**
+     * Returns a ProfileFieldContent model found by the userid.
+     *
+     * @param  int $userId
+     * @return array()|\Modules\User\Models\ProfileFieldContent
+     */
     public function getProfileFieldContentByUserId($userId)
     {
         $profileFieldContentRows = $this->db()->select('*')
@@ -28,6 +34,12 @@ class ProfileFieldsContent extends \Ilch\Mapper
         return $profileFieldsContent;
     }
 
+    /**
+     * Returns a ProfileFieldContentModel created using an array with data.
+     *
+     * @param  mixed[] $profileFieldRow
+     * @return ProfileFieldContentModel
+     */
     public function loadFromArray($profileFieldRow = [])
     {
         $profileFieldContent = new ProfileFieldContentModel();
@@ -47,6 +59,11 @@ class ProfileFieldsContent extends \Ilch\Mapper
         return $profileFieldContent;
     }
 
+    /**
+     * Inserts or updates a ProfileFieldContent model in the database.
+     *
+     * @param ProfileFieldContentModel $profileFieldContent
+     */
     public function save(ProfileFieldContentModel $profileFieldContent)
     {
         $fields = [];
