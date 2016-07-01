@@ -60,6 +60,32 @@ class ProfileFieldsContent extends \Ilch\Mapper
     }
 
     /**
+     * Deletes the profile-content for a user with the given id.
+     *
+     * @param  int $userId
+     *
+     * @return boolean True if success, otherwise false.
+     */
+    public function deleteProfileFieldContentByUserId($userId) {
+        return $this->db()->delete('profile_content')
+            ->where(['user_id' => $userId])
+            ->execute();
+    }
+
+    /**
+     * Deletes the profile-content with a given field-id.
+     *
+     * @param  int $fieldId
+     *
+     * @return boolean True if success, otherwise false.
+     */
+    public function deleteProfileFieldContentByFieldId($fieldId) {
+        return $this->db()->delete('profile_content')
+            ->where(['field_id' => $fieldId])
+            ->execute();
+    }
+
+    /**
      * Inserts or updates a ProfileFieldContent model in the database.
      *
      * @param ProfileFieldContentModel $profileFieldContent

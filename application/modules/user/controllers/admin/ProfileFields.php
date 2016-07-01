@@ -8,6 +8,7 @@ namespace Modules\User\Controllers\Admin;
 
 use Modules\User\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Models\ProfileField as ProfileFieldModel;
 
 class ProfileFields extends BaseController
@@ -76,10 +77,13 @@ class ProfileFields extends BaseController
     public function deleteAction()
     {
         $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+
         $id = $this->getRequest()->getParam('id');
 
         if($id && $this->getRequest()->isSecure()) {
             $profileFieldsMapper->deleteProfileField($id);
+            $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
         }
 
         $this->redirect(['action' => 'index']);

@@ -13,6 +13,7 @@ use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use Modules\User\Service\Password as PasswordService;
 use \Ilch\Registry as Registry;
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 
 /**
  * Handles action for the main admin configuration page.
@@ -177,6 +178,8 @@ class Index extends BaseController
     public function deleteAction()
     {
         $userMapper = new UserMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+
         $userId = $this->getRequest()->getParam('id');
 
         if ($userId && $this->getRequest()->isSecure()) {
@@ -208,6 +211,7 @@ class Index extends BaseController
                     rmdir($path);
                 }
 
+                $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
                 if ($userMapper->delete($userId)) {                    
                     $this->addMessage('delUserMsg');
                 }
