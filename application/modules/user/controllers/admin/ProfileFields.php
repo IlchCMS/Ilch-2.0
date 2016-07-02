@@ -34,6 +34,15 @@ class ProfileFields extends BaseController
         $profileFieldsMapper = new ProfileFieldsMapper();
 
         $this->getView()->set('profileFields', $profileFieldsMapper->getProfileFields());
+        
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
+            $positions = explode(',', $postData['hiddenMenu']);
+            for($x = 0; $x < count($positions); $x++) {
+                $profileFieldsMapper->updatePositionById($positions[$x], $x);
+            }
+            $this->addMessage('success');
+        }
     }
 
     public function treatAction()

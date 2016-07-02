@@ -19,6 +19,7 @@ class ProfileFields extends \Ilch\Mapper
     {
         $profileFieldRows = $this->db()->select('*')
             ->from('profile_fields')
+            ->order(['position' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -51,6 +52,19 @@ class ProfileFields extends \Ilch\Mapper
             return reset($profileFields);
         }
         return null;
+    }
+
+    /**
+     * Updates the position of a profile-field in the database.
+     *
+     * @param int $id, int $position
+     *
+     */
+    public function updatePositionById($id, $position) {
+        $this->db()->update('profile_fields')
+            ->values(['position' => $position])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     /**
@@ -144,6 +158,10 @@ class ProfileFields extends \Ilch\Mapper
 
         if (isset($profileFieldRow['type'])) {
             $profileField->setType($profileFieldRow['type']);
+        }
+
+        if (isset($profileFieldRow['position'])) {
+            $profileField->setPosition($profileFieldRow['position']);
         }
 
         return $profileField;

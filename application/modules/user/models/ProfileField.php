@@ -30,6 +30,13 @@ class ProfileField extends \Ilch\Model
     protected $type;
 
     /**
+     * The position of the profile-field.
+     *
+     * @var int
+     */
+    protected $position;
+
+    /**
      * Returns the id of the profile-field.
      *
      * @return int
@@ -94,6 +101,29 @@ class ProfileField extends \Ilch\Model
     public function setType($type)
     {
         $this->type = (int)$type;
+
+        return $this;
+    }
+
+    /**
+     * Returns the position of the profile-field.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Sets the position.
+     *
+     * @param int $position
+     * @return ProfileField
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int)$position;
 
         return $this;
     }
