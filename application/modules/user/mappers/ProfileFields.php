@@ -82,7 +82,7 @@ class ProfileFields extends \Ilch\Mapper
              */
             $this->db()->update('profile_fields')
                 ->values($fields)
-                ->where(['id' => $profileFieldId])
+                ->where(['id' => $id])
                 ->execute();
         } else {
             /*
