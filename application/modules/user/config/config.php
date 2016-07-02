@@ -138,6 +138,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(255) NOT NULL,
                   `type` INT(11) NOT NULL,
+                  `position` INT(11) UNSIGNED NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
