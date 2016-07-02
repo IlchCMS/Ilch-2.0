@@ -33,7 +33,7 @@ if ($profileField->getId()) {
             </div>
             <div class="col-lg-9">
                 <?php if (!$profileField->getId()) : ?>
-                <input value="1" type="checkbox" name="profileField[type]" /> Kategorie
+                <input value="1" type="checkbox" name="profileField[type]" /> <?=$this->getTrans('cat') ?>
                 <?php endif; ?>
             </div>
         </div>
