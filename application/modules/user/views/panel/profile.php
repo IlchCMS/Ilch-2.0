@@ -128,14 +128,18 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         </span>
                     </div>
                 </div>
-                <?php 
-                $x = 0;
-                $length = count($profileFieldsContent);
+                <?php
                 foreach ($profileFields as $profileField) :
-                    if ($x >= $length) {
-                        $value = '';
-                    } else {
-                        $value = $this->escape($profileFieldsContent[$x]->getValue());
+                    if($profileField->getType()) {
+                        continue;
+                    }
+
+                    $value = '';
+                    foreach($profileFieldsContent as $profileFieldContent) {
+                        if($profileField->getId() == $profileFieldContent->getFieldId()) {
+                            $value = $this->escape($profileFieldContent->getValue());
+                            break;
+                        }
                     }
                 ?>
                 <div class="form-group">
@@ -150,10 +154,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                               value="<?=$value ?>" />
                     </div>
                 </div>
-                <?php
-                $x++;
-                endforeach;
-                ?>
+                <?php endforeach; ?>
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"

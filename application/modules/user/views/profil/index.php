@@ -93,6 +93,28 @@ foreach ($profil->getGroups() as $group) {
                 <?php if ($profil->getBirthday() != '0000-00-00') { echo $birthday->format('d-m-Y', true); } ?>
             </div>
         </div>
+        <?php
+        foreach ($profileFields as $profileField) :
+            if($profileField->getType() == 0) :
+                foreach ($profileFieldsContent as $profileFieldContent) :
+                    if($profileField->getId() == $profileFieldContent->getFieldId()) : ?>
+                        <div class="row">
+                            <div class="col-lg-2 detail bold">
+                                <?=$this->escape($profileField->getName()) ?>
+                            </div>
+                            <div class="col-lg-10 detail">
+                                <?=$this->escape($profileFieldContent->getValue()) ?>
+                            </div>
+                        </div>
+                <?php   break;
+                    endif;
+                endforeach;
+            else : ?>
+                <div class="clearfix"></div>
+                <br />
+                <legend><?=$this->escape($profileField->getName()) ?></legend>
+            <?php endif;
+        endforeach; ?>
         <?php if ($profil->getSignature() != ''): ?>
             <div class="clearfix"></div>
             <br />
@@ -103,20 +125,6 @@ foreach ($profil->getGroups() as $group) {
                 </div>
             </div>
         <?php endif; ?>
-        
-        <?php $x = 0; 
-        foreach ($profileFieldsContent as $profileFieldContent) : ?>
-            <div class="row">
-                <div class="col-lg-2 detail bold">
-                    <?=$this->escape($profileFields[$x]->getName()) ?>
-                </div>
-                <div class="col-lg-10 detail">
-                    <?=$this->escape($profileFieldContent->getValue()) ?>
-                </div>
-            </div>
-        <?php $x++; ?>
-        <?php endforeach; ?>
-        
         <div class="clearfix"></div>
         <br />
         <legend><?=$this->getTrans('others') ?></legend>
