@@ -82,6 +82,12 @@ class ProfileFields extends BaseController
             $profileFieldData = $postData['profileField'];
 
             $profileFieldsMapper = new ProfileFieldsMapper();
+
+            if (empty($profileFieldData['type'])) {
+                // if 'type' is empty the checkbox for type category was unchecked.
+                $profileFieldData['type'] = 0;
+            }
+
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 
