@@ -82,6 +82,7 @@ class ProfileFields extends \Ilch\Mapper
         if (!empty($name)) {
             $fields['name'] = $profileField->getName();
             $fields['type'] = $profileField->getType();
+            $fields['position'] = $profileField->getPosition();
         }
 
         $id = (int) $this->db()->select('id')
@@ -136,6 +137,20 @@ class ProfileFields extends \Ilch\Mapper
         return (boolean) $this->db()->select('COUNT(*)', 'profile_fields', ['id' => (int)$id])
             ->execute()
             ->fetchCell();
+    }
+
+    /**
+     * Returns the count of profile-fields.
+     *
+     *
+     * @return int The count of profile-fields.
+     */
+    public function getCountOfProfileFields()
+    {
+        return $this->db()->select('*')
+            ->from('profile_fields')
+            ->execute()
+            ->getNumRows();
     }
 
     /**

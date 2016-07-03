@@ -1,4 +1,5 @@
 <?php
+$countOfProfileFields = $this->get('countOfProfileFields');
 $profileField = $this->get('profileField');
 
 if ($profileField->getId()) {
@@ -34,6 +35,9 @@ if ($profileField->getId()) {
             <div class="col-lg-9">
                 <?php if (!$profileField->getId()) : ?>
                 <input value="1" type="checkbox" name="profileField[type]" /> <?=$this->getTrans('cat') ?>
+                <input name="profileField[position]"
+                       type="hidden"
+                       value="<?=$countOfProfileFields ?>" />
                 <?php endif; ?>
             </div>
         </div>

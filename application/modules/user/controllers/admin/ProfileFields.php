@@ -70,6 +70,7 @@ class ProfileFields extends BaseController
             $profileField = new ProfileFieldModel();
         }
 
+        $this->getView()->set('countOfProfileFields', $profileFieldsMapper->getCountOfProfileFields());
         $this->getView()->set('profileField', $profileField);
     }
 
