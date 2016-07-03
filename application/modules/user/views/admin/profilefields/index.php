@@ -1,3 +1,10 @@
+<legend>
+    <?=$this->getTrans('menuProfileFields') ?>
+    <a class="badge" data-toggle="modal" data-target="#infoModal">
+        <i class="fa fa-info"></i>
+    </a>
+</legend>
+
 <form class="form-horizontal" id="downloadsForm" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <table class="table table-hover table-striped">
@@ -57,6 +64,8 @@
         </div>
     </div>
 </form>
+
+<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('profileFieldInfoText')); ?>
 
 <script>
 $(function() {
