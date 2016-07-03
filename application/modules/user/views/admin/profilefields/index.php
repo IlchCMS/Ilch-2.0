@@ -1,4 +1,4 @@
-<form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]); ?>">
+<form class="form-horizontal" id="downloadsForm" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <table class="table table-hover table-striped">
         <colgroup>
@@ -41,7 +41,21 @@
         </tbody>
     </table>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton')?>
+
+    <div class="content_savebox">
+        <button value="save" type="submit" name="save" class="btn">
+            <?=$this->getTrans('saveButton') ?>
+        </button>
+        <input class="content_savebox_hidden" name="action" type="hidden" value="" />
+        <div class="btn-group dropup">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <?=$this->getTrans('selected') ?> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu listChooser" role="menu">
+                <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+            </ul>
+        </div>
+    </div>
 </form>
 
 <script>
