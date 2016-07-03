@@ -32,9 +32,17 @@ class ProfileFields extends BaseController
                 ->add($this->getTranslator()->trans('menuProfileFields'), ['action' => 'index']);
 
         $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsContentMapper = new ProfileFieldsContentMapper();
 
         $this->getView()->set('profileFields', $profileFieldsMapper->getProfileFields());
-        
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
+            foreach ($this->getRequest()->getPost('check_users') as $id) {
+                $profileFieldsMapper->deleteProfileField($id);
+                $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
+            }
+        }
+
         if ($this->getRequest()->isPost()) {
             $postData = $this->getRequest()->getPost();
             $positions = explode(',', $postData['hiddenMenu']);
@@ -42,6 +50,7 @@ class ProfileFields extends BaseController
                 $profileFieldsMapper->updatePositionById($positions[$x], $x);
             }
             $this->addMessage('success');
+            $this->redirect(['action' => 'index']);
         }
     }
 
@@ -61,6 +70,7 @@ class ProfileFields extends BaseController
             $profileField = new ProfileFieldModel();
         }
 
+        $this->getView()->set('countOfProfileFields', $profileFieldsMapper->getCountOfProfileFields());
         $this->getView()->set('profileField', $profileField);
     }
 
@@ -72,6 +82,12 @@ class ProfileFields extends BaseController
             $profileFieldData = $postData['profileField'];
 
             $profileFieldsMapper = new ProfileFieldsMapper();
+
+            if (empty($profileFieldData['type'])) {
+                // if 'type' is empty the checkbox for type category was unchecked.
+                $profileFieldData['type'] = 0;
+            }
+
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 

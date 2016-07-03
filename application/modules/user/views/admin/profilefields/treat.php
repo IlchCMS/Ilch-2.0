@@ -1,4 +1,5 @@
 <?php
+$countOfProfileFields = $this->get('countOfProfileFields');
 $profileField = $this->get('profileField');
 
 if ($profileField->getId()) {
@@ -32,9 +33,16 @@ if ($profileField->getId()) {
                        value="<?=$this->escape($profileField->getName()) ?>" />
             </div>
             <div class="col-lg-9">
-                <?php if (!$profileField->getId()) : ?>
+                <label>
+            <?php if (!$profileField->getType()) : ?>
                 <input value="1" type="checkbox" name="profileField[type]" /> <?=$this->getTrans('cat') ?>
-                <?php endif; ?>
+            <?php else : ?>
+                <input value="1" type="checkbox" name="profileField[type]" checked="checked" /> <?=$this->getTrans('cat') ?>
+            <?php endif; ?>
+                </label>
+                <input name="profileField[position]"
+                       type="hidden"
+                       value="<?=($profileField->getId()) ? $profileField->getPosition() : $countOfProfileFields ?>" />
             </div>
         </div>
         <?=$this->getSaveBar() ?>

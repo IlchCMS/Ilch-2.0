@@ -267,4 +267,5 @@ return [
     'addProfileField' => 'Profil-Feld hinzufügen',
     'newProfileFieldMsg' => 'Neues Profil-Feld erfolgreich hinzugefügt',
     'menuActionNewProfileField' => 'Neues Profil-Feld hinzufügen',
+    'profileFieldInfoText' => 'Erstelle Profil-Felder oder Kategorien können durch ziehen und ablegen sortiert werden.',
 ];
