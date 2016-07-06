@@ -24,6 +24,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('start_page', 'module_article');
         $databaseConfig->set('page_title', 'ilch - Content Manage System');
         $databaseConfig->set('standardMail', $_SESSION['install']['adminEmail']);
+        $databaseConfig->set('defaultPaginationObjects', 20);
         $databaseConfig->set('admin_layout_top_nav', '');
         $databaseConfig->set('maintenance_mode', '0');
         $databaseConfig->set('maintenance_status', '0');

@@ -23,6 +23,13 @@ class Pagination
      */
     protected $rows;
 
+    public function __construct($rowsPerPage = 20)
+    {
+        if(!empty($rowsPerPage)) {
+            $this->setRowsPerPage($rowsPerPage);
+        }
+    }
+
     /**
      * @param integer $page
      */

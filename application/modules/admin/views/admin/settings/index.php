@@ -129,6 +129,19 @@
                    value="<?=$this->escape($this->get('standardMail')) ?>" />
         </div>
     </div>
+    <div class="form-group">
+        <label for="defaultPaginationObjectsInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('defaultPaginationObjects') ?>:
+        </label>
+        <div class="col-lg-8">
+            <input class="form-control"
+                   id="defaultPaginationObjectsInput"
+                   name="defaultPaginationObjects"
+                   type="number"
+                   min="1"
+                   value="<?=$this->escape($this->get('defaultPaginationObjects')) ?>" />
+        </div>
+    </div>
 
     <legend><?=$this->getTrans('seo') ?></legend>
     <div class="form-group">

@@ -71,6 +71,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
             $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
             $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
+            $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
             if ($this->getRequest()->getPost('navbarFixed') === '1') {
                 $this->getConfig()->set('admin_layout_top_nav', 'navbar-fixed-top');
             }
@@ -111,6 +112,7 @@ HTACCESS;
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('navbarFixed', $this->getConfig()->get('admin_layout_top_nav'));
+        $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
     }
 
     public function maintenanceAction()
