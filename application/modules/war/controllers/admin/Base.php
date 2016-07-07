@@ -41,6 +41,12 @@ class Base extends \Ilch\Controller\Admin
                     'icon' => 'fa fa-group',
                     'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index'])
                 ],
+                [
+                    'name' => 'menuSettings',
+                    'active' => false,
+                    'icon' => 'fa fa-th-list',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+                ],
             ]
         );
     }

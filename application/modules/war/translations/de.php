@@ -134,4 +134,5 @@ return [
     'missingWarMapPlayed' => 'Es wurde nicht angegeben welche Map gespielt wurde.',
     'missingGroupPoints' => 'Es wurde nicht angegeben wie viele Punkte erzielt wurden.',
     'missingEnemyPoints' => 'Es wurde nicht angegeben wie viele Punkte der Gegner erzielt hat.',
+    'warsPerPage' => 'Wars pro Seite',
 ];
