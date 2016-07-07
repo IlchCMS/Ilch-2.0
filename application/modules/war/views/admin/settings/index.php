@@ -3,7 +3,7 @@
     <legend><?=$this->getTrans('settings') ?></legend>
     <div class="form-group">
         <label for="warsPerPageInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('warsPerPagePerPage') ?>:
+            <?=$this->getTrans('warsPerPage') ?>:
         </label>
         <div class="col-lg-8">
             <input class="form-control"
