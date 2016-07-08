@@ -65,4 +65,6 @@ return [
     'edit' => 'Edit',
     'cancel' => 'Cancel',
     'missingTitle' => 'It is required to add a title.',
+    'threadsPerPage' => 'Threads per page',
+    'postsPerPage' => 'Posts per page',
 ];

@@ -65,4 +65,6 @@ return [
     'edit' => 'Editieren',
     'cancel' => 'Abbrechen',
     'missingTitle' => 'Es muss ein Titel angegeben werden.',
+    'threadsPerPage' => 'Themen pro Seite',
+    'postsPerPage' => 'Beiträge pro Seite',
 ];
