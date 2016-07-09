@@ -36,4 +36,5 @@ return [
     'captchaRead' => 'Not readable? Change text!',
     'smilies' => 'Smilies',
     'close' => 'Close',
+    'entriesPerPage' => 'Einträge pro Seite',
 ];

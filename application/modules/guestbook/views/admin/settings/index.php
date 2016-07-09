@@ -14,6 +14,19 @@
                 <span class="flipswitch-selection"></span>  
             </div>  
         </div>
-    </div> 
+    </div>
+    <div class="form-group">
+        <label for="entriesPerPageInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('entriesPerPage') ?>:
+        </label>
+        <div class="col-lg-2">
+            <input class="form-control"
+                   id="entriesPerPageInput"
+                   name="entriesPerPage"
+                   type="number"
+                   min="1"
+                   value="<?=$this->escape($this->get('entriesPerPage')) ?>" />
+        </div>
+    </div>    
     <?=$this->getSaveBar()?>
 </form>
