@@ -5,7 +5,7 @@
         <label for="downloadsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('downloadsPerPage') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-2">
             <input class="form-control"
                    id="downloadsPerPageInput"
                    name="downloadsPerPage"

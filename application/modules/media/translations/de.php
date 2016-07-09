@@ -49,7 +49,7 @@ return [
     'menuActionAddNewCat' => 'Neue Kategorie',
     'newCat' => 'Neue Kategorie anlegen',
     'noCats' => 'Keine Kategorien vorhanden',
-    'treatCat' => 'Kategorie bearbeiten'
+    'treatCat' => 'Kategorie bearbeiten',
 
     'picturesPerPage' => 'Bilder pro Seite',
 ];

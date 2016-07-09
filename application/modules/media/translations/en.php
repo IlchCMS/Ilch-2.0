@@ -49,7 +49,7 @@ return[
     'menuActionAddNewCat' => 'New category',
     'newCat' => 'Add new category',
     'noCats' => 'No categories available',
-    'treatCat' => 'Treat category'
+    'treatCat' => 'Treat category',
 
     'picturesPerPage' => 'Pictures per page',
 ];

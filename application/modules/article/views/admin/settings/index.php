@@ -5,7 +5,7 @@
         <label for="articlesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('articlePerPage') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-2">
             <input class="form-control"
                    id="articlesPerPageInput"
                    name="articlesPerPage"

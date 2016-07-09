@@ -5,7 +5,7 @@
         <label for="threadsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('threadsPerPage') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-2">
             <input class="form-control"
                    id="threadsPerPageInput"
                    name="threadsPerPage"
@@ -18,7 +18,7 @@
         <label for="postsPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('postsPerPage') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-2">
             <input class="form-control"
                    id="postsPerPageInput"
                    name="postsPerPage"
