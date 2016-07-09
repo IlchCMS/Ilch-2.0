@@ -13,5 +13,18 @@
                    value="<?=$this->get('smiley_filetypes') ?>" />
         </div>
     </div>
+    <div class="form-group">
+        <label for="smiliesPerPageInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('smiliesPerPage') ?>:
+        </label>
+        <div class="col-lg-2">
+            <input class="form-control"
+                   id="smiliesPerPageInput"
+                   name="smiliesPerPage"
+                   type="number"
+                   min="1"
+                   value="<?=$this->escape($this->get('smiliesPerPage')) ?>" />
+        </div>
+    </div>
     <?=$this->getSaveBar(); ?>
 </form>

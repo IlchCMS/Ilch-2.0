@@ -18,4 +18,5 @@ return [
     'allowedFileExtensions' => 'Erlaubte Dateiendungen',
     'missingName' => 'Name muss ausgefüllt werden',
     'missingUrl' => 'Smilie muss ausgewählt werden',
+    'smiliesPerPage' => 'Smilies pro Seite',
 ];
