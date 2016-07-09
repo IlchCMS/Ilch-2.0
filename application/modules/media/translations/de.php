@@ -50,4 +50,6 @@ return [
     'newCat' => 'Neue Kategorie anlegen',
     'noCats' => 'Keine Kategorien vorhanden',
     'treatCat' => 'Kategorie bearbeiten'
+
+    'picturesPerPage' => 'Bilder pro Seite',
 ];

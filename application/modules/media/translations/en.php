@@ -50,4 +50,6 @@ return[
     'newCat' => 'Add new category',
     'noCats' => 'No categories available',
     'treatCat' => 'Treat category'
+
+    'picturesPerPage' => 'Pictures per page',
 ];
