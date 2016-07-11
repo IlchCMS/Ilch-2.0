@@ -46,7 +46,8 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index'])
                 ->add($downloads->getTitle(), ['action' => 'show', 'id' => $id]);
-        
+
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('downloads_downloadsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         
         $this->getView()->set('file', $fileMapper->getFileByDownloadsId($id, $pagination));

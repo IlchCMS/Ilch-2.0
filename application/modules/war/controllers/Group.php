@@ -20,6 +20,7 @@ class Group extends \Ilch\Controller\Frontend
         $groupMapper = new GroupMapper();
         $pagination = new \Ilch\Pagination();
 
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('war_warsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('groups', $groupMapper->getGroupList($pagination));
@@ -34,6 +35,7 @@ class Group extends \Ilch\Controller\Frontend
 
         $id = $this->getRequest()->getParam('id');
         $group = $groupMapper->getGroupById($id);
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('war_warsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getLayout()->getHmenu()

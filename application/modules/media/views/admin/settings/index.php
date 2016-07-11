@@ -36,16 +36,16 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="picturesPerPageInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('picturesPerPage') ?>:
+        <label for="mediaPerPageInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('mediaPerPage') ?>:
         </label>
         <div class="col-lg-2">
             <input class="form-control"
-                   id="picturesPerPageInput"
-                   name="picturesPerPage"
+                   id="mediaPerPageInput"
+                   name="mediaPerPage"
                    type="number"
                    min="1"
-                   value="<?=$this->escape($this->get('picturesPerPage')) ?>" />
+                   value="<?=$this->escape($this->get('mediaPerPage')) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

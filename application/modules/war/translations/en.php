@@ -135,4 +135,6 @@ return [
     'missingGroupPoints' => 'No points added.',
     'missingEnemyPoints' => 'No points of the enemy added.',
     'warsPerPage' => 'Wars per page',
+    'enemiesPerPage' => 'Enemies per page',
+    'groupsPerPage' => 'Groups per page',
 ];

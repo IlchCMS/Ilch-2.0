@@ -43,6 +43,7 @@ class Index extends BaseController
             }
         }
 
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('war_warsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         if ($this->getRequest()->getPost('filter') == 'filter' and $this->getRequest()->getPost('filterLastNext') !='0') {

@@ -40,6 +40,7 @@ class Group extends BaseController
             }
         }
 
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('war_groupsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_groupsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('groups', $groupMapper->getGroupList($pagination));

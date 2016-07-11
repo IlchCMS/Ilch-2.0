@@ -135,4 +135,6 @@ return [
     'missingGroupPoints' => 'Es wurde nicht angegeben wie viele Punkte erzielt wurden.',
     'missingEnemyPoints' => 'Es wurde nicht angegeben wie viele Punkte der Gegner erzielt hat.',
     'warsPerPage' => 'Wars pro Seite',
+    'enemiesPerPage' => 'Gegner pro Seite',
+    'groupsPerPage' => 'Gruppen pro Seite',
 ];

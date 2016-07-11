@@ -56,6 +56,7 @@ class Downloads extends BaseController
             }
         }
 
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('downloads_downloadsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('downloads_downloadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $this->getView()->set('file', $fileMapper->getFileByDownloadsId($id, $pagination));
         $this->getView()->set('pagination', $pagination);

@@ -51,5 +51,5 @@ return[
     'noCats' => 'No categories available',
     'treatCat' => 'Treat category',
 
-    'picturesPerPage' => 'Pictures per page',
+    'mediaPerPage' => 'Media per page',
 ];

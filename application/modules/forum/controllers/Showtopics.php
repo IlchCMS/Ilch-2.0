@@ -51,6 +51,7 @@ class Showtopics extends \Ilch\Controller\Frontend
                 ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
                 ->add($forum->getTitle(), ['action' => 'index', 'forumid' => $forumId]);
 
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('forum_threadsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_threadsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('forum', $forum);

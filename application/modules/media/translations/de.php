@@ -51,5 +51,5 @@ return [
     'noCats' => 'Keine Kategorien vorhanden',
     'treatCat' => 'Kategorie bearbeiten',
 
-    'picturesPerPage' => 'Bilder pro Seite',
+    'mediaPerPage' => 'Dateien pro Seite',
 ];
