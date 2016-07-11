@@ -268,4 +268,6 @@ return [
     'newProfileFieldMsg' => 'New profile-field successfully added',
     'menuActionNewProfileField' => 'Create new profile-field',
     'profileFieldInfoText' => 'Created profile-fields and categories can be sorted by drag and drop.',
+
+    'picturesPerPage' => 'Pictures per page',
 ];

@@ -36,4 +36,5 @@ return [
     'commentDateTime' => 'Date/Time',
     'missingName' => 'No name for the category entered.',
     'categoryInUse' => 'This category cannot be deleted as it is still assigned with articles.',
+    'articlePerPage' => 'Article per page',
 ];

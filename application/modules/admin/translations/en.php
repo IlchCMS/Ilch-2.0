@@ -44,6 +44,7 @@ return
     'noUserEmailGiven' => 'No username/email was provided.',
     'contentLanguage' => 'Contentlanguage',
     'standardMail' => 'Standard E-Mail sender',
+    'defaultPaginationObjects' => 'default count of objects per page',
     'timezone' => 'timezone',
     'home' => 'Start',
     'navigation' => 'Navigation',

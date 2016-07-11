@@ -54,8 +54,10 @@ class Settings extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('smiley_filetypes', $this->getRequest()->getPost('smiley_filetypes'));
+            $this->getConfig()->set('smilies_smiliesPerPage', $this->getRequest()->getPost('smiliesPerPage'));
         }
 
         $this->getView()->set('smiley_filetypes', $this->getConfig()->get('smiley_filetypes'));
+        $this->getView()->set('smiliesPerPage', $this->getConfig()->get('smilies_smiliesPerPage'));
     }
 }

@@ -18,4 +18,5 @@ return [
     'allowedFileExtensions' => 'Allowed file extensions',
     'missingName' => 'Name was not filled',
     'missingUrl' => 'Smiley must be selected',
+    'smiliesPerPage' => 'Smilies per page',
 ];

@@ -49,5 +49,7 @@ return [
     'menuActionAddNewCat' => 'Neue Kategorie',
     'newCat' => 'Neue Kategorie anlegen',
     'noCats' => 'Keine Kategorien vorhanden',
-    'treatCat' => 'Kategorie bearbeiten'
+    'treatCat' => 'Kategorie bearbeiten',
+
+    'mediaPerPage' => 'Dateien pro Seite',
 ];

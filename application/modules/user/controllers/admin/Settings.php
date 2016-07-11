@@ -28,6 +28,7 @@ class Settings extends BaseController
             $this->getConfig()->set('regist_confirm_mail', $this->getRequest()->getPost('regist_confirm_mail'));
             $this->getConfig()->set('manually_confirm_mail', $this->getRequest()->getPost('manually_confirm_mail'));
             $this->getConfig()->set('password_change_mail', $this->getRequest()->getPost('password_change_mail'));
+            $this->getConfig()->set('user_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
             $this->addMessage('saveSuccess');
         }
 
@@ -43,5 +44,6 @@ class Settings extends BaseController
         $this->getView()->set('regist_confirm_mail', $this->getConfig()->get('regist_confirm_mail'));
         $this->getView()->set('manually_confirm_mail', $this->getConfig()->get('manually_confirm_mail'));
         $this->getView()->set('password_change_mail', $this->getConfig()->get('password_change_mail'));
+        $this->getView()->set('picturesPerPage', $this->getConfig()->get('user_picturesPerPage'));
     }
 }

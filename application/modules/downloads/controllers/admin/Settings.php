@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Modules\Guestbook\Controllers\Admin;
+namespace Modules\Downloads\Controllers\Admin;
 
 class Settings extends \Ilch\Controller\Admin
 {
@@ -12,39 +12,43 @@ class Settings extends \Ilch\Controller\Admin
     {
         $items = [
             [
-                'name' => 'manage',
+                'name' => 'menuDownloads',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
-                'name' => 'settings',
-                'active' => true,
-                'icon' => 'fa fa-cogs',
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
 
+        if ($this->getRequest()->getControllerName() == 'settings' AND $this->getRequest()->getActionName() == 'index') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
-            'guestbook',
+            'menuDownloads',
             $items
         );
     }
-    
-    public function indexAction() 
+
+    public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('downloads'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
-            $this->getConfig()->set('gbook_entriesPerPage', $this->getRequest()->getPost('entriesPerPage'));
+            $this->getConfig()->set('downloads_downloadsPerPage', $this->getRequest()->getPost('downloadsPerPage'));
             $this->addMessage('saveSuccess');
         }
 
-        $this->getView()->set('setfree', $this->getConfig()->get('gbook_autosetfree'));
-        $this->getView()->set('entriesPerPage', $this->getConfig()->get('gbook_entriesPerPage'));
+        $this->getView()->set('downloadsPerPage', $this->getConfig()->get('downloads_downloadsPerPage'));
     }
 }

@@ -36,6 +36,7 @@ return [
     'captchaRead' => 'Nicht lesbar? Text ändern!',
     'smilies' => 'Smilies',
     'close' => 'Schließen',
+    'entriesPerPage' => 'Einträge pro Seite',
 
     'validation.errors.required.fieldIsRequired'    => '%s muss ausgefüllt werden.',
     'validation.errors.same.fieldsDontMatch'        => '%s muss mit %s übereinstimmen.',

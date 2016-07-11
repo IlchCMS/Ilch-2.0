@@ -5,36 +5,49 @@
 </legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-        <div class="form-group">
-            <label for="allowedImagesInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('allowedImages') ?>:
-            </label>
-            <div class="col-lg-8">
-                <textarea class="form-control"
-                          id="allowedImagesInput"
-                          name="allowedImages"><?=$this->escape($this->get('media_ext_img')) ?></textarea>
-            </div>
+    <div class="form-group">
+        <label for="allowedImagesInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('allowedImages') ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control"
+                      id="allowedImagesInput"
+                      name="allowedImages"><?=$this->escape($this->get('media_ext_img')) ?></textarea>
         </div>
-        <div class="form-group">
-            <label for="allowedVideosInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('allowedVideos') ?>:
-            </label>
-            <div class="col-lg-8">
-                <textarea class="form-control"
-                          id="allowedVideosInput"
-                          name="allowedVideos"><?=$this->escape($this->get('media_ext_video')) ?></textarea>
-            </div>
+    </div>
+    <div class="form-group">
+        <label for="allowedVideosInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('allowedVideos') ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control"
+                      id="allowedVideosInput"
+                      name="allowedVideos"><?=$this->escape($this->get('media_ext_video')) ?></textarea>
         </div>
-        <div class="form-group">
-            <label for="allowedFilesInput" class="col-lg-2 control-label">
-                <?=$this->getTrans('allowedFiles') ?>:
-            </label>
-            <div class="col-lg-8">
-                <textarea class="form-control"
-                          id="allowedFilesInput"
-                          name="allowedFiles"><?=$this->escape($this->get('media_ext_file')) ?></textarea>
-            </div>
+    </div>
+    <div class="form-group">
+        <label for="allowedFilesInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('allowedFiles') ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control"
+                      id="allowedFilesInput"
+                      name="allowedFiles"><?=$this->escape($this->get('media_ext_file')) ?></textarea>
         </div>
+    </div>
+    <div class="form-group">
+        <label for="mediaPerPageInput" class="col-lg-2 control-label">
+            <?=$this->getTrans('mediaPerPage') ?>:
+        </label>
+        <div class="col-lg-2">
+            <input class="form-control"
+                   id="mediaPerPageInput"
+                   name="mediaPerPage"
+                   type="number"
+                   min="1"
+                   value="<?=$this->escape($this->get('mediaPerPage')) ?>" />
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

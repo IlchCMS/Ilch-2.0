@@ -36,4 +36,5 @@ return [
     'commentDateTime' => 'Datum/Uhrzeit',
     'missingName' => 'Es wurde kein Name für die Kategorie eingegeben.',
     'categoryInUse' => 'Diese Kategorie kann nicht gelöscht werden, da sie noch Artikeln zugewiesen ist.',
+    'articlePerPage' => 'Artikel pro Seite',
 ];

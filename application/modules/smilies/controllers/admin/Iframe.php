@@ -16,6 +16,7 @@ class Iframe extends \Ilch\Controller\Admin
         $smiliesMapper = new SmiliesMapper();
         $pagination = new \Ilch\Pagination();
 
+        $pagination->setRowsPerPage(empty($this->getConfig()->get('smilies_smiliesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('smilies_smiliesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $lastId = $this->getRequest()->getParam('lastid');
         $type = $this->getConfig()->get('smiley_filetypes');

@@ -12,6 +12,36 @@ use Modules\Downloads\Mappers\File as FileMapper;
 
 class Index extends BaseController
 {
+    public function init()
+    {
+        $items = [
+            [
+                'name' => 'menuDownloads',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'settings' AND $this->getRequest()->getActionName() == 'index') {
+            $items[1]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuDownloads',
+            $items
+        );
+    }
+
     public function indexAction() 
     {
         $this->getLayout()->getAdminHmenu()

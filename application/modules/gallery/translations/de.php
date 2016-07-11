@@ -40,4 +40,5 @@ return [
     'commentUser' => 'Benutzer',
     'commentDateTime' => 'Datum/Uhrzeit',
     'media' => 'Medien',
+    'picturesPerPage' => 'Bilder pro Seite',
 ];
