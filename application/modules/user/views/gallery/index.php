@@ -17,7 +17,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
     if ($item->getType() != 0) {
         $lastImage = $imageMapper->getLastImageByGalleryId($item->getId());
 
-        if ($lastImage->getImageThumb() != '') {
+        if (file_exists($lastImage->getImageThumb())) {
             $image = $obj->getBaseUrl($lastImage->getImageThumb());
         } else {
             $image = $obj->getBaseUrl('application/modules/media/static/img/nomedia.png');
