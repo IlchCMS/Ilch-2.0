@@ -16,6 +16,6 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuRules'), ['action' => 'index']);
 
-        $this->getView()->set('rules', $ruleMapper->getEntries());
+        $this->getView()->set('rules', $ruleMapper->getRules());
     }
 }

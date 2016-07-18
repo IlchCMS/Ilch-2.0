@@ -1,5 +1,5 @@
 <legend><?=$this->getTrans('manage') ?></legend>
-<?php if ($this->get('entries') != ''): ?>
+<?php if ($this->get('rules') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="table-responsive">
@@ -23,14 +23,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->get('entries') as $entry): ?>
+                    <?php foreach ($this->get('rules') as $rule): ?>
                         <tr>
-                            <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]) ?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
-                            <td><?=$this->escape($entry->getParagraph()) ?></td>
-                            <td><?=$this->escape($entry->getTitle()) ?></td>
-                            <td><?=$entry->getText() ?></td>
+                            <td><input value="<?=$rule->getId() ?>" type="checkbox" name="check_entries[]" /></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $rule->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $rule->getId()]) ?></td>
+                            <td><?=$this->escape($rule->getParagraph()) ?></td>
+                            <td><?=$this->escape($rule->getTitle()) ?></td>
+                            <td><?=$rule->getText() ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
