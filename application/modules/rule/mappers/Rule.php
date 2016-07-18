@@ -6,7 +6,7 @@
 
 namespace Modules\Rule\Mappers;
 
-use Modules\Rule\Models\Entry as RuleModel;
+use Modules\Rule\Models\Rule as RuleModel;
 
 class Rule extends \Ilch\Mapper
 {
@@ -16,30 +16,30 @@ class Rule extends \Ilch\Mapper
      * @param array $where
      * @return RuleModel[]|array
      */
-    public function getEntries($where = [])
+    public function getRules($where = [])
     {
-        $entryArray = $this->db()->select('*')
+        $rulesArray = $this->db()->select('*')
             ->from('rules')
             ->where($where)
             ->order(['paragraph' => 'ASC'])
             ->execute()
             ->fetchRows();
 
-        if (empty($entryArray)) {
+        if (empty($rulesArray)) {
             return null;
         }
 
-        $entry = [];
-        foreach ($entryArray as $entries) {
-            $entryModel = new RuleModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setParagraph($entries['paragraph']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setText($entries['text']);
-            $entry[] = $entryModel;
+        $rules = [];
+        foreach ($rulesArray as $rule) {
+            $ruleModel = new RuleModel();
+            $ruleModel->setId($rule['id']);
+            $ruleModel->setParagraph($rule['paragraph']);
+            $ruleModel->setTitle($rule['title']);
+            $ruleModel->setText($rule['text']);
+            $rules[] = $ruleModel;
         }
 
-        return $entry;
+        return $rules;
     }
 
     /**

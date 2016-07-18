@@ -57,9 +57,9 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $entries = $ruleMapper->getEntries();
+        $rules = $ruleMapper->getRules();
 
-        $this->getView()->set('entries', $entries);
+        $this->getView()->set('rules', $rules);
     }
 
     public function treatAction() 
