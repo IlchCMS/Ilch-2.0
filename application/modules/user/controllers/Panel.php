@@ -131,7 +131,7 @@ class Panel extends BaseController
                 $width = $imageInfo[0];
                 $height = $imageInfo[1];
 
-                if ($file_size <= $avatarSize AND $width <= $avatarWidth AND $height <= $avatarHeight) {
+                if ($file_size <= $avatarSize) {
                     $avatar = $path.$this->getUser()->getId().'.'.$endung;
 
                     if ($this->getUser()->getAvatar() != '') {
@@ -139,14 +139,30 @@ class Panel extends BaseController
                         $settingMapper->delAvatarById($this->getUser()->getId());
                     }
 
+                    if (move_uploaded_file($file_tmpe, $avatar)) {
+                        if ($width > $avatarWidth OR $height > $avatarHeight) {
+                            $upload = new \Ilch\Upload();
+
+                            // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
+                            if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($avatar)) {
+                                unlink($avatar);
+                                $this->addMessage('failedFilesize', 'warning');
+                            } else {
+                                $thumb = new \Thumb\Thumbnail();
+                                $thumb -> Thumbsize = ($avatarWidth <= $avatarHeight) ? $avatarWidth : $avatarHeight;
+                                $thumb -> Square = true;
+                                $thumb -> Thumblocation = $path;
+                                $thumb -> Cropimage = [3,1,50,50,50,50];
+                                $thumb -> Createthumb($avatar, 'file');
+                                $this->addMessage('successAvatar');
+                            }
+                        }
+                    }
+
                     $model = new UserModel();
                     $model->setId($this->getUser()->getId());
                     $model->setAvatar($avatar);
                     $profilMapper->save($model);
-
-                    if (move_uploaded_file($file_tmpe, $avatar)) {
-                        $this->addMessage('successAvatar');
-                    }
                 } else {
                     $this->addMessage('failedFilesize', 'warning');
                 }
