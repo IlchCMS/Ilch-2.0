@@ -81,7 +81,7 @@ class Index extends \Ilch\Controller\Frontend
                     $width = $size[0];
                     $height = $size[1];
 
-                    if ($file_size <= $imageSize AND $width <= $imageWidth AND $height <= $imageHeight) {
+                    if ($file_size <= $imageSize) {
                         $image = $path.time().'.'.$endung;
 
                         if ($this->getRequest()->getParam('id') AND $event->getImage() != '') {
@@ -89,7 +89,26 @@ class Index extends \Ilch\Controller\Frontend
                         }
 
                         $eventModel->setImage($image);
-                        move_uploaded_file($file_tmpe, $image);
+
+                        if (move_uploaded_file($file_tmpe, $image)) {
+                            if ($width > $imageWidth OR $height > $imageHeight) {
+                                $upload = new \Ilch\Upload();
+
+                                // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
+                                if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($image)) {
+                                    unlink($image);
+                                    $imageError = true;
+                                    $this->addMessage('failedFilesize', 'warning');
+                                } else {
+                                    $thumb = new \Thumb\Thumbnail();
+                                    $thumb -> Thumbsize = ($imageWidth <= $imageHeight) ? $imageWidth : $imageHeight;
+                                    $thumb -> Square = true;
+                                    $thumb -> Thumblocation = $path;
+                                    $thumb -> Cropimage = [3,1,50,50,50,50];
+                                    $thumb -> Createthumb($image, 'file');
+                                }
+                            }
+                        }
                     } else {
                         $this->addMessage('failedFilesize', 'warning');
                         $imageError = true;
