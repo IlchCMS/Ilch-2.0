@@ -109,7 +109,7 @@ if ($this->getUser()) {
             </ul>
         </div>
         <div class="topic-actions">
-            <?php if ($adminAccess || $userAccess->hasAccess('forum')): ?>
+            <?php if ($adminAccess || (!empty($userAccess) AND $userAccess->hasAccess('forum'))): ?>
                 <?php if (!$forumEdit): ?>
                     <form action="" method="post">
                         <?php echo $this->getTokenField(); ?>
