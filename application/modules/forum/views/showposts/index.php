@@ -44,7 +44,7 @@ if ($this->getUser()) {
                     <?php if ($this->getUser()): ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <p class="delete-post">
-                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-xs btn-labeled bgblue">
+                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()]) ?>" class="btn btn-xs btn-labeled bgblue">
                                     <span class="btn-label">
                                         <i class="fa fa-trash"></i>
                                     </span><?=$this->getTrans('delete') ?>
