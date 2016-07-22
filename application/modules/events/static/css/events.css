@@ -234,9 +234,7 @@ nav {
     margin-bottom: 0px;
 }
 .eventBoxHead {
-    border-top: 1px solid #dddddd;
-    border-left: 1px solid #dddddd;
-    border-right: 1px solid #dddddd;
+    border: 1px solid #dddddd;
     padding: 10px;
 }
 .eventBoxBottom {
@@ -247,6 +245,7 @@ nav {
     padding: 10px;
 }
 .eventBoxContent {
+    margin-top: -1px;
     border: 1px solid #dddddd;
     padding: 10px;
 }
@@ -254,6 +253,16 @@ nav {
     border: 1px solid #dddddd;
     margin-left: 0px !important;
     margin-right: 0px !important;
+}
+@media (max-width: 768px) {
+    .eventCommentSubmit {
+        margin-top: 15px;
+    }
+}
+@media (max-width: 992px) {
+    .eventCommentSubmit {
+        margin-top: 15px;
+    }
 }
 .eventTextarea {
     height: 30px;
@@ -316,4 +325,21 @@ nav {
 input[readonly] {
     background-color: white !important;
     cursor: text !important;
+}
+
+
+.input-group > .input-group-addon:not(:last-child):not(:nth-last-child(2)) {
+    border-right-width: 0;
+}
+.input-group > :not(.input-group-addon):not(.input-group-btn) + .input-group-addon {
+    border-left-width: 0;
+}
+.input-group > .input-group-btn:not(:first-child) > .btn,
+.input-group > .input-group-btn:not(:first-child) > .btn-group > .btn {
+    margin-left: -1px;
+    margin-right: -1px;
+}
+.input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn,
+.input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn-group > .btn {
+    border-radius: 0;
 }

@@ -130,7 +130,7 @@ $user = $userMapper->getUserById($event->getUserId());
             <strong><?=$this->getTrans('description') ?></strong>
         </div>
         <div class="eventBoxContent">
-            <?=$event->getText() ?>
+            <?=nl2br($this->getHtmlFromBBCode($event->getText())) ?>
         </div>
     </div>
 

@@ -1,23 +1,7 @@
 <?php $settingMapper = $this->get('settingMapper'); ?>
 
+<link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-<style>
-.input-group > .input-group-addon:not(:last-child):not(:nth-last-child(2)) {
-    border-right-width: 0;
-}
-.input-group > :not(.input-group-addon):not(.input-group-btn) + .input-group-addon {
-    border-left-width: 0;
-}
-.input-group > .input-group-btn:not(:first-child) > .btn,
-.input-group > .input-group-btn:not(:first-child) > .btn-group > .btn {
-    margin-left: -1px;
-    margin-right: -1px;
-}
-.input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn,
-.input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn-group > .btn {
-    border-radius: 0;
-}
-</style>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 <legend>
@@ -135,7 +119,7 @@
             <textarea class="form-control ckeditor"
                       name="text"
                       id="ck_1"
-                      toolbar="ilch_html"
+                      toolbar="ilch_bbcode"
                       rows="5"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
         </div>
     </div>

@@ -8,12 +8,6 @@ namespace Modules\Events\Plugins;
 
 use Modules\User\Mappers\User as UserMapper;
 
-/**
- * Does user operations before the controller loads.
- *
- * @copyright Ilch 2.0
- * @package ilch
- */
 class BeforeControllerLoad
 {
     /**
@@ -36,7 +30,7 @@ class BeforeControllerLoad
         $request = $pluginData['request'];
 
         if (!$userId) {
-            if ($request->getModuleName() == 'events' && !in_array($request->getControllerName(), ['index', 'show', 'regist'])) {
+            if ($request->getModuleName() == 'events' && !in_array($request->getActionName(), ['index', 'event', 'upcoming', 'past'])) {
                 $pluginData['controller']->redirect(['module' => 'user', 'controller' => 'login', 'action' => 'index']);
             }
         }

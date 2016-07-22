@@ -18,26 +18,12 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
-                'name' => 'add',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-            ],
-            [
                 'name' => 'settings',
-                'active' => false,
+                'active' => true,
                 'icon' => 'fa fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
-
-        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
-            $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'settings') {
-            $items[2]['active'] = true;
-        } else {
-            $items[0]['active'] = true;
-        }
 
         $this->getLayout()->addMenu
         (
