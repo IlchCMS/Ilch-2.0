@@ -69,7 +69,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `forum_id` INT(11) NOT NULL,
                   `sort` INT(11) NOT NULL DEFAULT 0,
-                  `parent_id` INT(11) NOT NULL,
+                  `parent_id` INT(11) NOT NULL DEFAULT 0,
                   `type` INT(11) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,

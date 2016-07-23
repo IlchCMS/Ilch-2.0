@@ -69,4 +69,6 @@ return [
     'browse' => 'Durchsuchen',
     'showMap' => 'Karte anzeigen',
     'hideMap' => 'Karte verbergen',
+    'smilies' => 'Smilies',
+    'close' => 'Schließen',
 ];

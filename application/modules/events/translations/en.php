@@ -69,4 +69,6 @@ return [
     'browse' => 'Browse',
     'showMap' => 'Show Map',
     'hideMap' => 'Hide Map',
+    'smilies' => 'Smilies',
+    'close' => 'Close',
 ];
