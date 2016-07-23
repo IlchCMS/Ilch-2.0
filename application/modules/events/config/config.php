@@ -58,7 +58,7 @@ class Config extends \Ilch\Config\Install
                   `start` DATETIME NOT NULL,
                   `end` DATETIME NOT NULL,
                   `title` VARCHAR(100) NOT NULL,
-                  `place` VARCHAR(100) NOT NULL,
+                  `place` VARCHAR(150) NOT NULL,
                   `lat_long` VARCHAR(100) NULL DEFAULT NULL,
                   `image` VARCHAR(255) NULL DEFAULT NULL,
                   `text` LONGTEXT NOT NULL,

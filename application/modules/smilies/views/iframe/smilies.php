@@ -1,6 +1,7 @@
 <?php if ($this->get('smilies') != ''): ?>
     <?php foreach ($this->get('smilies') as $smilies): ?>
-        <img class="image" src="<?=$this->getBaseUrl($this->escape($smilies->getUrl())) ?>"
+        <img class="image"
+             src="<?=$this->getBaseUrl($this->escape($smilies->getUrl())) ?>"
              title="<?=$this->escape($smilies->getName()) ?>"
              data-url="<?=$smilies->getUrl() ?>"
              alt="<?=$smilies->getName() ?>"

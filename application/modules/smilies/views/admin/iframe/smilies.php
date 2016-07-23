@@ -18,31 +18,25 @@
 <?php endif; ?>
 
 <script type="text/javascript">
-$(".image").click(function(){
+$(".image").click(function() {
     window.top.$('#selectedImage<?=$this->getRequest()->getParam('input')?>').val($(this).data('url'));
     window.top.$('#mediaModal').modal('hide');
 });
 
-$(document).ready(function()
-{
-    function media_loader() 
-    {
+$(document).ready(function() {
+    function media_loader() {
         var ID=$(".media_loader:last").attr("id");
         $.post("<?=$this->getUrl('admin/media/ajax/index/type/single/lastid/') ?>"+ID,
-            function(data)
-            {
-                if (data !== "") 
-                {
+            function(data) {
+                if (data !== "") {
                     $(".media_loader:last").after(data);
                 }
             }
         );
     };  
 
-    $(window).scroll(function()
-    {
-        if ($(window).scrollTop() === $(document).height() - $(window).height())
-        {
+    $(window).scroll(function() {
+        if ($(window).scrollTop() === $(document).height() - $(window).height()) {
             media_loader();
         }
     }); 

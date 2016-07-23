@@ -16,13 +16,12 @@ class Iframe extends \Ilch\Controller\Admin
         $smiliesMapper = new SmiliesMapper();
         $pagination = new \Ilch\Pagination();
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('smilies_smiliesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('smilies_smiliesPerPage'));
+        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $lastId = $this->getRequest()->getParam('lastid');
         $type = $this->getConfig()->get('smiley_filetypes');
 
         if (empty($lastId)) {
-            $pagination->setRowsPerPage('40');
             $this->getView()->set('smilies', $smiliesMapper->getSmiliesListByEnding($type, $pagination));
         } else {
             $this->getView()->set('smilies', $smiliesMapper->getSmiliesListScroll($lastId));

@@ -41,7 +41,7 @@ $user = $userMapper->getUserById($event->getUserId());
             <div class="naviButtons">
                 <?php if ($this->getUser() AND $event->getStart() > new \Ilch\Date()): ?>
                     <form class="form-horizontal" method="POST" action="">
-                    <?=$this->getTokenField() ?>
+                        <?=$this->getTokenField() ?>
                         <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
                         <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
                             <?php if ($eventEntrants != ''): ?>
@@ -94,14 +94,17 @@ $user = $userMapper->getUserById($event->getUserId());
             <div class="eventPlaceMarker">
                 <i class="fa fa-map-marker"></i>
             </div>
-            <?=$place[0] ?>
-            <?php if (!empty($place[1])): ?>
-                <br /><span class="eventAddress text-muted"><?=$place[1] ?></span>
-            <?php endif; ?>
+            <?php
+            if ($this->get('event_google_api_key') != '' && $event->getLatLong() != '') {
+                echo '<a id="showMap">'.$place[0].'</a>';
+            } else {
+               echo $place[0];
+            }
+            if (!empty($place[1])) {
+                echo '<br /><span class="eventAddress text-muted">'.$place[1].'</span>';
+            }
+            ?>
             <?php if ($this->get('event_google_api_key') != '' && $event->getLatLong() != ''): ?>
-                <div id="showMap" class="pull-right">
-                    <?=$this->getTrans('showMap') ?>
-                </div>
                 <div id="googleMap" style="display: none">
                     <div id="map-canvas"></div>
                 </div>
@@ -155,7 +158,7 @@ $user = $userMapper->getUserById($event->getUserId());
             <?php if ($this->getUser() AND ($eventEntrants != '' AND $eventEntrants->getUserId() == $this->getUser()->getId() OR $event->getUserId() == $this->getUser()->getId())): ?>
                 <div class="form-group eventCommentSubmit">
                     <form action="" class="form-horizontal" method="POST">
-                    <?=$this->getTokenField() ?>
+                        <?=$this->getTokenField() ?>
                         <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
                         <div style="margin-bottom: 10px; margin-top: 10px;">
                             <div class="col-lg-12">
@@ -228,14 +231,6 @@ $('textarea').on('keyup', function() {
         };
 
         $("#showMap").click(function() {
-            var $this = $(this);
-            $this.toggleClass('#showMap');
-            if ($this.hasClass('#showMap')) {
-                $this.text('<?=$this->getTrans('hideMap') ?>');
-            } else {
-                $this.text('<?=$this->getTrans('showMap') ?>');
-            }
-
             $("#googleMap").slideToggle("slow");
             var map = new google.maps.Map(mapCanvas, mapOptions);
 

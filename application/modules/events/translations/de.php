@@ -67,8 +67,6 @@ return [
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'browse' => 'Durchsuchen',
-    'showMap' => 'Karte anzeigen',
-    'hideMap' => 'Karte verbergen',
     'smilies' => 'Smilies',
     'close' => 'Schließen',
 ];
