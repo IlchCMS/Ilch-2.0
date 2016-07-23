@@ -1,5 +1,6 @@
 <?php
 $date = new \Ilch\Date();
+$entrantsMapper = $this->get('entrantsMapper');
 ?>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
@@ -17,11 +18,16 @@ $date = new \Ilch\Date();
                         </time>
                         <div class="info">
                             <h2 class="title"><a href="<?=$this->getUrl('events/show/event/id/' . $eventlist->getId()) ?>"><?=$this->escape($eventlist->getTitle()) ?></a></h2>
-                            <p class="desc"><?=$this->escape($eventlist->getPlace()) ?></p>
-                            <?php $entrantsMappers = new Modules\Events\Mappers\Entrants(); ?>
+                            <p class="desc">
+                                <?php $place = explode(', ', $this->escape($eventlist->getPlace()), 2); ?>
+                                <?=$place[0] ?>
+                                <?php if (!empty($place[1])): ?>
+                                    <br /><span class="text-muted"><?=$place[1] ?></span>
+                                <?php endif; ?>
+                            </p>
                             <?php $agree = 1; $maybe = 0; ?>
-                            <?php if ($entrantsMappers->getEventEntrantsById($eventlist->getId()) != ''): ?>
-                                <?php foreach ($entrantsMappers->getEventEntrantsById($eventlist->getId()) as $eventEntrantsUser): ?>
+                            <?php if ($entrantsMapper->getEventEntrantsById($eventlist->getId()) != ''): ?>
+                                <?php foreach ($entrantsMapper->getEventEntrantsById($eventlist->getId()) as $eventEntrantsUser): ?>
                                     <?php if ($eventEntrantsUser->getStatus() == 1): ?>
                                         <?php $agree++; ?>
                                     <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
@@ -30,7 +36,7 @@ $date = new \Ilch\Date();
                                 <?php endforeach; ?>
                             <?php endif; ?>
                             <ul>
-                                <li style="width:33%;"><strong><?=$this->getTrans('guest') ?></strong></li>
+                                <li style="width:33%;"><?=$this->getTrans('guest') ?></li>
                                 <li style="width:33%;"><?=$agree ?> <i class="fa fa-check"></i></li>
                                 <li style="width:33%;"><?=$maybe ?> <i class="fa fa-question"></i></li>
                             </ul>

@@ -1,6 +1,5 @@
 <?php $settingMapper = $this->get('settingMapper'); ?>
 
-<link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
@@ -20,23 +19,27 @@
             <?=$this->getTrans('image') ?>:
         </label>
         <div class="col-lg-10">
-            <?php if ($this->get('event') != ''): ?>
+            <?php if ($this->get('event') != '' AND $this->escape($this->get('event')->getImage()) != ''): ?>
                 <div class="col-lg-7 col-sm-7 col-7">
-                    <?php if ($this->escape($this->get('event')->getImage()) != ''): ?>
+                    <div class="row">
                         <img src="<?=$this->getBaseUrl().$this->escape($this->get('event')->getImage()) ?>" title="<?=$this->escape($this->get('event')->getTitle()) ?>">
-                    <?php endif; ?>
+                    </div>
                 </div>
             <?php endif; ?>
             <div class="col-lg-7">
-                <?php if ($this->get('event') != '' AND $this->get('event')->getImage() != ''): ?>
-                    <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
-                        <input type="checkbox" name="image_delete" id="image_delete"> <?=$this->getTrans('deleteImage') ?>
-                    </label>
-                <?php endif; ?>
+                <div class="row">
+                    <?php if ($this->get('event') != '' AND $this->get('event')->getImage() != ''): ?>
+                        <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
+                            <input type="checkbox" name="image_delete" id="image_delete"> <?=$this->getTrans('deleteImage') ?>
+                        </label>
+                    <?php endif; ?>
 
-                <p><?=$this->getTrans('imageSize') ?>: <?=$this->get('image_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('image_height') ?> Pixel <?=$this->getTrans('height') ?>.</p>
-                <p><?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('image_size')) ?>.</p>
-                <p><?=$this->getTrans('imageAllowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('image_filetypes')) ?></p>
+                    <p>
+                        <?=$this->getTrans('imageSize') ?>: <?=$this->get('image_width') ?> Pixel <?=$this->getTrans('width') ?>, <?=$this->get('image_height') ?> Pixel <?=$this->getTrans('height') ?>.<br />
+                        <?=$this->getTrans('maxFilesize') ?>: <?=$settingMapper->getNicebytes($this->get('image_size')) ?>.<br />
+                        <?=$this->getTrans('imageAllowedFileExtensions') ?>: <?=str_replace(' ', ', ', $this->get('image_filetypes')) ?>
+                    </p>
+                </div>
             </div>
             <div class="input-group col-lg-7">
                 <span class="input-group-btn">
@@ -144,9 +147,13 @@
     </div>
 </form>
 
+<?=$this->getDialog("smiliesModal", $this->getTrans('smilies'), "<iframe frameborder='0'></iframe>"); ?>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
     <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php endif; ?>
+<?php if ($this->get('event_google_api_key') != ''): ?>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_api_key') ?>&sensor=false&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -181,4 +188,46 @@ $(document).ready(function() {
         }
     });
 });
+
+// Google Maps Place
+<?php if ($this->get('event_google_api_key') != ''): ?>
+    var pac_input = document.getElementById('place');
+
+    (function pacSelectFirst(input){
+        // store the original event binding function
+        var _addEventListener = (input.addEventListener) ? input.addEventListener : input.attachEvent;
+
+        function addEventListenerWrapper(type, listener) {
+        // Simulate a 'down arrow' keypress on hitting 'return' when no pac suggestion is selected,
+        // and then trigger the original listener.
+
+        if (type == "keydown") {
+          var orig_listener = listener;
+          listener = function (event) {
+            var suggestion_selected = $(".pac-item-selected").length > 0;
+            if (event.which == 13 && !suggestion_selected) {
+              var simulated_downarrow = $.Event("keydown", {keyCode:40, which:40})
+              orig_listener.apply(input, [simulated_downarrow]);
+            }
+
+            orig_listener.apply(input, [event]);
+          };
+        }
+
+        // add the modified listener
+        _addEventListener.apply(input, [type, listener]);
+      }
+
+      if (input.addEventListener)
+        input.addEventListener = addEventListenerWrapper;
+      else if (input.attachEvent)
+        input.attachEvent = addEventListenerWrapper;
+
+    })(pac_input);
+
+
+    $(function(){
+      var autocomplete = new google.maps.places.Autocomplete(pac_input);
+    });
+<?php endif; ?>
 </script>

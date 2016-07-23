@@ -62,8 +62,11 @@ return [
     'imageSize' => 'Bildgröße',
     'maxFilesize' => 'Maximale Dateigröße',
     'imageAllowedFileExtensions' => 'Erlaubte Dateiendungen',
+    'googleAPIKey' => 'Google Maps API-Schlüssel',
     'successImage' => 'Bild erfolgreich hochgeladen',
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'browse' => 'Durchsuchen',
+    'showMap' => 'Karte anzeigen',
+    'hideMap' => 'Karte verbergen',
 ];

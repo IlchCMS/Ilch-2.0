@@ -67,49 +67,58 @@ class Show extends \Ilch\Controller\Frontend
         $this->getView()->set('eventEntrantsUser', $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id')));
         $this->getView()->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'))));
         $this->getView()->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')));
+        $this->getView()->set('event_google_api_key', $this->getConfig()->get('event_google_api_key'));
     }
 
     public function upcomingAction()
     {
         $eventMapper = new EventMapper();
+        $entrantsMapper = new EntrantsMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
 
+        $this->getView()->set('entrantsMapper', $entrantsMapper);
         $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcomingALL());
     }
 
     public function pastAction()
     {
         $eventMapper = new EventMapper();
+        $entrantsMapper = new EntrantsMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsPast'), ['action' => 'past']);
 
+        $this->getView()->set('entrantsMapper', $entrantsMapper);
         $this->getView()->set('eventListPast', $eventMapper->getEventListPast());
     }
 
     public function participationAction()
     {
         $eventMapper = new EventMapper();
+        $entrantsMapper = new EntrantsMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsParticipation'), ['action' => 'participation']);
 
+        $this->getView()->set('entrantsMapper', $entrantsMapper);
         $this->getView()->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()));
     }
 
     public function myAction()
     {
         $eventMapper = new EventMapper();
+        $entrantsMapper = new EntrantsMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsMy'), ['action' => 'my']);
 
+        $this->getView()->set('entrantsMapper', $entrantsMapper);
         $this->getView()->set('eventListMy', $eventMapper->getEntries(['user_id' => $this->getUser()->getId()]));
     }
 

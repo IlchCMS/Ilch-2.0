@@ -51,6 +51,13 @@ class Events extends \Ilch\Model
     protected $place;
 
     /**
+     * The lat and long of the event.
+     *
+     * @var string
+     */
+    protected $latLong;
+
+    /**
      * The image of the event.
      *
      * @var string
@@ -205,6 +212,29 @@ class Events extends \Ilch\Model
     public function setPlace($place)
     {
         $this->place = (string)$place;
+
+        return $this;
+    }
+
+    /**
+     * Gets the lat and long from the place.
+     *
+     * @return string
+     */
+    public function getLatLong()
+    {
+        return $this->latLong;
+    }
+
+    /**
+     * Sets the lat and long of the place.
+     *
+     * @param string $latLong
+     * @return this
+     */
+    public function setLatLong($latLong)
+    {
+        $this->latLong = (string)$latLong;
 
         return $this;
     }

@@ -49,5 +49,17 @@
                    value="<?=$this->get('event_filetypes') ?>" />
         </div>
     </div>
+    <div class="form-group">
+        <label for="event_google_api_key" class="col-lg-2 control-label">
+            <?=$this->getTrans('googleAPIKey') ?>:
+        </label>
+        <div class="col-lg-3">
+            <input name="event_google_api_key"
+                   type="text"
+                   id="event_google_api_key"
+                   class="form-control required"
+                   value="<?=$this->get('event_google_api_key') ?>" />
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>

@@ -39,6 +39,7 @@ class Events extends \Ilch\Mapper
             $entryModel->setEnd($entries['end']);
             $entryModel->setTitle($entries['title']);
             $entryModel->setPlace($entries['place']);
+            $entryModel->setLatLong($entries['lat_long']);
             $entryModel->setImage($entries['image']);
             $entryModel->setText($entries['text']);
             $entryModel->setShow($entries['show']);
@@ -73,6 +74,7 @@ class Events extends \Ilch\Mapper
         $eventModel->setEnd($eventRow['end']);
         $eventModel->setTitle($eventRow['title']);
         $eventModel->setPlace($eventRow['place']);
+        $eventModel->setLatLong($eventRow['lat_long']);
         $eventModel->setImage($eventRow['image']);
         $eventModel->setText($eventRow['text']);
         $eventModel->setShow($eventRow['show']);
@@ -223,6 +225,23 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * Get latitude and longitude for Google Maps by address
+     *
+     * @param string $address
+     */
+    public function getLatLongFromAddress($address) 
+    {
+        $prepAddr = str_replace(' ','+',$address);
+        $geocode=file_get_contents('https://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+        $output= json_decode($geocode);
+        $latitude = $output->results[0]->geometry->location->lat;
+        $longitude = $output->results[0]->geometry->location->lng;
+        $latlongitude = $latitude.','.$longitude;
+
+        return $latlongitude;
+    }
+
+    /**
      * Inserts or updates event model.
      *
      * @param EventModel $event
@@ -236,6 +255,7 @@ class Events extends \Ilch\Mapper
             'end' => $event->getEnd(),
             'title' => $event->getTitle(),
             'place' => $event->getPlace(),
+            'lat_long' => $event->getLatLong(),
             'image' => $event->getImage(),
             'text' => $event->getText(),
             'show' => $event->getShow(),

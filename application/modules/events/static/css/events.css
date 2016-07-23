@@ -284,6 +284,21 @@ nav {
     padding: 5px;
     height: 41px;
 }
+.eventAddress {
+    margin-left: 15px;
+}
+.eventPlaceMarker {
+    float: left;
+    padding-right: 7px;
+}
+#showMap {
+    cursor: pointer;
+}
+#map-canvas {
+    height: 250px;
+    margin-top: 5px;
+    margin-left: 15px;
+}
 
 
 .commentEventText {
@@ -342,4 +357,9 @@ input[readonly] {
 .input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn,
 .input-group > .input-group-btn:not(:first-child):not(:last-child) > .btn-group > .btn {
     border-radius: 0;
+}
+
+/* Google Maps Place */
+.pac-item:hover {
+    cursor: pointer;
 }

@@ -4,6 +4,7 @@ $eventEntrants = $this->get('eventEntrants');
 
 $start = new \Ilch\Date($event->getStart());
 $end = new \Ilch\Date($event->getEnd());
+$latLong = explode(',', $event->getLatLong());
 $userMapper = new \Modules\User\Mappers\User();
 $user = $userMapper->getUserById($event->getUserId());
 ?>
@@ -40,7 +41,7 @@ $user = $userMapper->getUserById($event->getUserId());
             <div class="naviButtons">
                 <?php if ($this->getUser() AND $event->getStart() > new \Ilch\Date()): ?>
                     <form class="form-horizontal" method="POST" action="">
-                    <?=$this->getTokenField() ?>     
+                    <?=$this->getTokenField() ?>
                         <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
                         <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
                             <?php if ($eventEntrants != ''): ?>
@@ -89,7 +90,22 @@ $user = $userMapper->getUserById($event->getUserId());
             <i class="fa fa-clock-o"></i> <?=$start->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
         </div>
         <div class="eventBoxBottom">
-            <i class="fa fa-map-marker"></i> <?=$event->getPlace() ?>
+            <?php $place = explode(', ', $event->getPlace(), 2); ?>
+            <div class="eventPlaceMarker">
+                <i class="fa fa-map-marker"></i>
+            </div>
+            <?=$place[0] ?>
+            <?php if (!empty($place[1])): ?>
+                <br /><span class="eventAddress text-muted"><?=$place[1] ?></span>
+            <?php endif; ?>
+            <?php if ($this->get('event_google_api_key') != '' && $event->getLatLong() != ''): ?>
+                <div id="showMap" class="pull-right">
+                    <?=$this->getTrans('showMap') ?>
+                </div>
+                <div id="googleMap" style="display: none">
+                    <div id="map-canvas"></div>
+                </div>
+            <?php endif; ?>
         </div>
         <br />
         <div class="eventBoxHead">
@@ -148,7 +164,7 @@ $user = $userMapper->getUserById($event->getUserId());
                                           placeholder="<?=$this->getTrans('writeToEvent') ?>"
                                           required></textarea>
                             </div>
-                        </div>                        
+                        </div>
                         <div class="col-lg-12 eventSubmit">
                             <button type="submit" name="saveEntry" class="pull-right btn btn-sm">
                                 <?=$this->getTrans('write') ?>
@@ -175,7 +191,7 @@ $user = $userMapper->getUserById($event->getUserId());
                         <div class="userEventInfo">
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
                             <span class="small"><?=$commentDate->format("Y.m.d H:i", true) ?></span>
-                        </div>                         
+                        </div>
                         <div class="commentEventText"><?=nl2br($eventComments->getText()) ?></div>
                     </div>
                     <br />
@@ -185,10 +201,53 @@ $user = $userMapper->getUserById($event->getUserId());
     </div>
 </div>
 
+<?php if ($this->get('event_google_api_key') != ''): ?>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_api_key') ?>&sensor=false&callback=initMap"></script>
+<?php endif; ?>
+
 <script type="text/javascript">
 // Textarea AutoResize
 $('textarea').on('keyup', function() {
     $(this).css('height', 'auto');
     $(this).height(this.scrollHeight);
 });
+
+// Google Maps
+<?php if ($this->get('event_google_api_key') != '' && $event->getLatLong() != ''): ?>
+    $(document).ready(function() {
+        var mapCanvas = document.getElementById('map-canvas');
+        var latLng = {lat: <?=$latLong[0] ?>, lng: <?=$latLong[1] ?>};
+        var mapOptions = {
+            zoom: 17,
+            center: latLng,
+            disableDefaultUI: true,
+            disableDoubleClickZoom: true,
+            scrollwheel: false,
+            draggable: false,
+            clickableIcons: false
+        };
+
+        $("#showMap").click(function() {
+            var $this = $(this);
+            $this.toggleClass('#showMap');
+            if ($this.hasClass('#showMap')) {
+                $this.text('<?=$this->getTrans('hideMap') ?>');
+            } else {
+                $this.text('<?=$this->getTrans('showMap') ?>');
+            }
+
+            $("#googleMap").slideToggle("slow");
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+
+            setTimeout(function() {
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    draggable: false,
+                    animation: google.maps.Animation.DROP
+                });
+            }, 600);
+        });
+    });
+<?php endif; ?>
 </script>

@@ -8,6 +8,7 @@ namespace Modules\Events\Controllers;
 
 use Modules\Events\Mappers\Events as EventMapper;
 use Modules\Events\Models\Events as EventModel;
+use Modules\Events\Mappers\Entrants as EntrantsMapper;
 use Modules\User\Mappers\Setting as SettingMapper;
 
 class Index extends \Ilch\Controller\Frontend
@@ -15,6 +16,7 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $eventMapper = new EventMapper();
+        $entrantsMapper = new EntrantsMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
@@ -23,6 +25,7 @@ class Index extends \Ilch\Controller\Frontend
         $otherLimit = 5;
         $pastLimit = 5;
 
+        $this->getView()->set('entrantsMapper', $entrantsMapper);
         $this->getView()->set('eventList', $eventMapper->getEntries());
         $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit));
         $this->getView()->set('getEventListOther', $eventMapper->getEventListOther($otherLimit));
@@ -132,6 +135,10 @@ class Index extends \Ilch\Controller\Frontend
                 if (!empty($_FILES['image']['name'])) {
                     $eventModel->setImage($image);
                 }
+                if ($this->getConfig()->get('event_google_api_key') != '') {
+                    $eventModel->setLatLong($eventMapper->getLatLongFromAddress($place));
+                }
+
                 $eventModel->setUserId($this->getUser()->getId());
                 $eventModel->setTitle($title);
                 $eventModel->setStart($start);
@@ -167,6 +174,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('image_width', $imageWidth);
         $this->getView()->set('image_size', $imageSize);
         $this->getView()->set('image_filetypes', $imageAllowedFiletypes);
+        $this->getView()->set('event_google_api_key', $this->getConfig()->get('event_google_api_key'));
     }
 
     public function delAction()
