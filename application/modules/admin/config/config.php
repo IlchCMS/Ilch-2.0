@@ -71,7 +71,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `menu_id` INT(11) NOT NULL,
                   `sort` INT(11) NOT NULL DEFAULT 0,
-                  `parent_id` INT(11) NOT NULL,
+                  `parent_id` INT(11) NOT NULL DEFAULT 0,
                   `page_id` INT(11) NOT NULL DEFAULT 0,
                   `box_id` INT(11) NOT NULL DEFAULT 0,
                   `box_key` VARCHAR(255) NULL DEFAULT NULL,
