@@ -20,9 +20,6 @@ class Password
      */
     public function __construct($algorithm = null)
     {
-        if (version_compare(PHP_VERSION, '5.5.0', '<')) {
-            require_once APPLICATION_PATH . '/libraries/password_compat/password.php';
-        }
         if (null === $algorithm) {
             $algorithm = PASSWORD_DEFAULT;
         }

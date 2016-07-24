@@ -36,10 +36,9 @@ define('REWRITE_BASE', $rewriteBaseParts);
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
 define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
-
-require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
+//register autoloaders
+require ROOT_PATH . '/vendor/autoload.php';
 $loader = new \Ilch\Loader();
-$loader->registNamespace('Thumb');
 
 \Ilch\Registry::set('startTime', microtime(true));
 

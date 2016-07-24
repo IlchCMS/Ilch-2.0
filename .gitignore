@@ -11,3 +11,5 @@ application/modules/smilies/static/img
 web.config
 robots.txt
 .user.ini
+
+/vendor/

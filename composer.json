@@ -1,0 +1,21 @@
+{
+    "name": "ilchcms/ilch-2.0",
+    "description": "CMS for Clans and Communities",
+    "type": "project",
+    "license": "GPLv2",
+    "minimum-stability": "stable",
+    "config": {
+        "platform": {
+            "php": "5.5"
+        }
+    },
+    "require": {
+        "php": ">=5.5",
+        "jbbcode/jbbcode": "^1.3"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-0": { "": "application/libraries/" },
+        "files": ["application/libraries/Ilch/Functions.php"]
+    }
+}
