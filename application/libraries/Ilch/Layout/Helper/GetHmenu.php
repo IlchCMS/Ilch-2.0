@@ -6,6 +6,9 @@
 
 namespace Ilch\Layout\Helper;
 
+use Ilch\Layout\Base as Layout;
+use Ilch\Layout\Helper\Hmenu\Model;
+
 class GetHmenu
 {
     /**
@@ -16,16 +19,16 @@ class GetHmenu
     /**
      * Injects the layout.
      *
-     * @param Ilch\Layout $layout
+     * @param Layout $layout
      */
-    public function __construct($layout)
+    public function __construct(Layout $layout)
     {
-        $this->model = new \Ilch\Layout\Helper\Hmenu\Model($layout);
+        $this->model = new Model($layout);
     }
 
     /**
      * Gets the hmenu
-     * @return \Ilch\Layout\Helper\Hmenu\Model
+     * @return Model
      */
     public function getHmenu()
     {

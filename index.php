@@ -21,6 +21,7 @@ define('ILCH_SERVER', 'http://www.ilch.de/ilch2');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 define('DEFAULT_LAYOUT', 'index');
+define('DEBUG_MODE', true);
 
 /*
  * Path could not be under root.
@@ -39,6 +40,10 @@ define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 //register autoloaders
 require ROOT_PATH . '/vendor/autoload.php';
 $loader = new \Ilch\Loader();
+
+if (DEBUG_MODE) {
+    \Ilch\DebugBar::init();
+}
 
 \Ilch\Registry::set('startTime', microtime(true));
 

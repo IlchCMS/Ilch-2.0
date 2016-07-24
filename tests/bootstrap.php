@@ -26,19 +26,5 @@ if (file_exists($vendorAutoloadFile)) {
  * Initializing the autoloading for the application classes and for custom
  * PHPUnit Classes.
  */
-require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
-
+require_once __DIR__ . '/../vendor/autoload.php';
 $loader = new \Ilch\Loader();
-spl_autoload_register (
-    function ($class) {
-        /*
-         * Simply replacing all underscores with slashes, routing on from the current
-         * dir and appending the ".php" suffix to get the filepath.
-         */
-        $filePath = __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
-
-        if (is_file($filePath)) {
-            require_once $filePath;
-        }
-    }
-);

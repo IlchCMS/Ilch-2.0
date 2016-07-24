@@ -9,6 +9,18 @@
  */
 function dumpVar()
 {
+    if (\Ilch\DebugBar::isInitialized()) {
+        $debugBar = \Ilch\DebugBar::getInstance();
+        $backtrace = debug_backtrace(0, 1);
+        $fileAndLine = $backtrace[0]['file'] . ':' . $backtrace[0]['line'];
+        foreach (func_get_args() as $arg) {
+            $message = $debugBar['messages']->getDataFormatter()->formatVar($arg) . ' dumped on ' . $fileAndLine;
+            $debugBar['messages']->addMessage($message, 'debug');
+        }
+
+        return;
+    }
+
     echo '<pre>';
 
     foreach (func_get_args() as $arg) {
