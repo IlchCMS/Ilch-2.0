@@ -69,6 +69,9 @@ return [
     'smilies' => 'Smilies',
     'close' => 'Close',
 
+    'menuGoogleMaps' => 'Google Maps',
     'googleMapsAPIKey' => 'Google Maps API-Key',
     'createGoogleMapsAPIKey' => 'Create Google Maps API-Key',
+    'googleMapsZoom' => 'Map Zoom',
+    'googleMapsMapTyp' => 'Map Typ',
 ];

@@ -228,12 +228,13 @@ class Events extends \Ilch\Mapper
      * Get latitude and longitude for Google Maps by address
      *
      * @param string $address
+     * @param string $googleMapsKey
      */
-    public function getLatLongFromAddress($address) 
+    public function getLatLongFromAddress($address, $googleMapsKey) 
     {
-        $prepAddr = str_replace(' ','+',$address);
-        $geocode=file_get_contents('https://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-        $output= json_decode($geocode);
+        $prepAddr = str_replace(' ', '+', $address);
+        $geocode = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$prepAddr.'&key='.$googleMapsKey);
+        $output = json_decode($geocode);
         $latitude = $output->results[0]->geometry->location->lat;
         $longitude = $output->results[0]->geometry->location->lng;
         $latlongitude = $latitude.','.$longitude;

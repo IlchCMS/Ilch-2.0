@@ -106,7 +106,7 @@ $user = $userMapper->getUserById($event->getUserId());
             ?>
             <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
                 <div id="googleMap" style="display: none">
-                    <div id="map-canvas"></div>
+                    <div id="map-canvas" data-toggle="modal" data-target="#showBigGoogleMapsModal"></div>
                 </div>
             <?php endif; ?>
         </div>
@@ -204,8 +204,9 @@ $user = $userMapper->getUserById($event->getUserId());
     </div>
 </div>
 
+<?=$this->getDialog('showBigGoogleMapsModal', $event->getPlace(), '<div id="big-map-canvas"></div>') ?>
 <?php if ($this->get('event_google_maps_api_key') != ''): ?>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&sensor=false&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>" async defer></script>
 <?php endif; ?>
 
 <script type="text/javascript">
@@ -221,8 +222,9 @@ $('textarea').on('keyup', function() {
         var mapCanvas = document.getElementById('map-canvas');
         var latLng = {lat: <?=$latLong[0] ?>, lng: <?=$latLong[1] ?>};
         var mapOptions = {
-            zoom: 17,
+            zoom: 15,
             center: latLng,
+            mapTypeId: google.maps.MapTypeId.<?=$this->get('event_google_maps_map_typ') ?>,
             disableDefaultUI: true,
             disableDoubleClickZoom: true,
             scrollwheel: false,
@@ -239,10 +241,34 @@ $('textarea').on('keyup', function() {
                     position: latLng,
                     map: map,
                     draggable: false,
+                    title: '<?=$event->getTitle() ?>',
                     animation: google.maps.Animation.DROP
                 });
             }, 600);
         });
+
+        $('#showBigGoogleMapsModal').on('shown.bs.modal', function () {
+            bigMap();
+        });
+
+        function bigMap() {
+            var mapCanvas = document.getElementById('big-map-canvas');
+            var mapOptions = {
+                zoom: <?=$this->get('event_google_maps_zoom') ?>,
+                center: latLng,
+                mapTypeId: google.maps.MapTypeId.<?=$this->get('event_google_maps_map_typ') ?>,
+                streetViewControl: false
+            };
+
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: map,
+                title: '<?=$event->getTitle() ?>',
+                animation: google.maps.Animation.DROP
+            });
+        }
     });
 <?php endif; ?>
 </script>

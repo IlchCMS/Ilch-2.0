@@ -153,7 +153,7 @@
     <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
 <?php if ($this->get('event_google_maps_api_key') != ''): ?>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&sensor=false&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -206,7 +206,7 @@ $(document).ready(function() {
           listener = function (event) {
             var suggestion_selected = $(".pac-item-selected").length > 0;
             if (event.which == 13 && !suggestion_selected) {
-              var simulated_downarrow = $.Event("keydown", {keyCode:40, which:40})
+              var simulated_downarrow = $.Event("keydown", {keyCode:40, which:40});
               orig_listener.apply(input, [simulated_downarrow]);
             }
 
@@ -224,7 +224,6 @@ $(document).ready(function() {
         input.attachEvent = addEventListenerWrapper;
 
     })(pac_input);
-
 
     $(function(){
       var autocomplete = new google.maps.places.Autocomplete(pac_input);
