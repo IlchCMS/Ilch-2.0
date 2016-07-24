@@ -50,16 +50,21 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="event_google_api_key" class="col-lg-2 control-label">
-            <?=$this->getTrans('googleAPIKey') ?>:
+        <label for="event_google_maps_api_key" class="col-lg-2 control-label">
+            <?=$this->getTrans('googleMapsAPIKey') ?>:
+            <a class="badge" data-toggle="modal" data-target="#googleMapsAPIInfoModal">
+                <i class="fa fa-info" ></i>
+            </a>
         </label>
         <div class="col-lg-3">
-            <input name="event_google_api_key"
+            <input name="event_google_maps_api_key"
                    type="text"
-                   id="event_google_api_key"
+                   id="event_google_maps_api_key"
                    class="form-control required"
-                   value="<?=$this->get('event_google_api_key') ?>" />
+                   value="<?=$this->get('event_google_maps_api_key') ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
+<?=$this->getDialog('googleMapsAPIInfoModal', $this->getTrans('createGoogleMapsAPIKey'), $this->getTrans('googleMapsAPIKeyInfoText')); ?>

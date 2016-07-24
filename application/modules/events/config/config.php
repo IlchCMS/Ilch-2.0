@@ -34,7 +34,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('event_width', '450');
         $databaseConfig->set('event_size', '102400');
         $databaseConfig->set('event_filetypes', 'jpg jpeg png gif');
-        $databaseConfig->set('event_google_api_key', '');
+        $databaseConfig->set('event_google_maps_api_key', '');
     }
 
     public function uninstall()
@@ -46,7 +46,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_width'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_size'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_filetypes'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_api_key'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_api_key'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events'");
     }
 

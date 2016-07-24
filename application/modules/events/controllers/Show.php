@@ -67,7 +67,7 @@ class Show extends \Ilch\Controller\Frontend
         $this->getView()->set('eventEntrantsUser', $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id')));
         $this->getView()->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'))));
         $this->getView()->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')));
-        $this->getView()->set('event_google_api_key', $this->getConfig()->get('event_google_api_key'));
+        $this->getView()->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
     }
 
     public function upcomingAction()

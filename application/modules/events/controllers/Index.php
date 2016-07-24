@@ -135,7 +135,7 @@ class Index extends \Ilch\Controller\Frontend
                 if (!empty($_FILES['image']['name'])) {
                     $eventModel->setImage($image);
                 }
-                if ($this->getConfig()->get('event_google_api_key') != '') {
+                if ($this->getConfig()->get('event_google_maps_api_key') != '') {
                     $eventModel->setLatLong($eventMapper->getLatLongFromAddress($place));
                 }
 
@@ -174,7 +174,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('image_width', $imageWidth);
         $this->getView()->set('image_size', $imageSize);
         $this->getView()->set('image_filetypes', $imageAllowedFiletypes);
-        $this->getView()->set('event_google_api_key', $this->getConfig()->get('event_google_api_key'));
+        $this->getView()->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
     }
 
     public function delAction()

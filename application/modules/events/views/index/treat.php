@@ -152,8 +152,8 @@
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
     <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
 <?php endif; ?>
-<?php if ($this->get('event_google_api_key') != ''): ?>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_api_key') ?>&sensor=false&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
+<?php if ($this->get('event_google_maps_api_key') != ''): ?>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&sensor=false&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -190,7 +190,7 @@ $(document).ready(function() {
 });
 
 // Google Maps Place
-<?php if ($this->get('event_google_api_key') != ''): ?>
+<?php if ($this->get('event_google_maps_api_key') != ''): ?>
     var pac_input = document.getElementById('place');
 
     (function pacSelectFirst(input){

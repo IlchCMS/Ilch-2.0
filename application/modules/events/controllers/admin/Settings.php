@@ -43,7 +43,7 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('event_width', $this->getRequest()->getPost('event_width'));
             $this->getConfig()->set('event_size', $this->getRequest()->getPost('event_size'));
             $this->getConfig()->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'));
-            $this->getConfig()->set('event_google_api_key', $this->getRequest()->getPost('event_google_api_key'));
+            $this->getConfig()->set('event_google_maps_api_key', $this->getRequest()->getPost('event_google_maps_api_key'));
             $this->addMessage('saveSuccess');
         }
 
@@ -51,6 +51,6 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('event_width', $this->getConfig()->get('event_width'));
         $this->getView()->set('event_size', $this->getConfig()->get('event_size'));
         $this->getView()->set('event_filetypes', $this->getConfig()->get('event_filetypes'));
-        $this->getView()->set('event_google_api_key', $this->getConfig()->get('event_google_api_key'));
+        $this->getView()->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
     }
 }

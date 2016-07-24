@@ -62,11 +62,14 @@ return [
     'imageSize' => 'Bildgröße',
     'maxFilesize' => 'Maximale Dateigröße',
     'imageAllowedFileExtensions' => 'Erlaubte Dateiendungen',
-    'googleAPIKey' => 'Google Maps API-Schlüssel',
     'successImage' => 'Bild erfolgreich hochgeladen',
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'browse' => 'Durchsuchen',
     'smilies' => 'Smilies',
     'close' => 'Schließen',
+
+    'googleMapsAPIKey' => 'Google Maps API-Schlüssel',
+    'createGoogleMapsAPIKey' => 'Google Maps API-Schlüssel erstellen',
+    'googleMapsAPIKeyInfoText' => 'Um Google Maps für die Orts Auswahl sowie die Kartenanzeige des Ortes zu verwenden, benötigen Sie einen Google Maps API-Schlüssel.<br /><br /><b>Google Maps API-Schlüssel erstellen</b><br /><ol><li>Besuchen Sie die <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&keyType=CLIENT_SIDE&reusekey=true"><u>Google Webseite</u></a> und melden Sie sich mit Ihrem Google-Konto an.</li><li>Erstellen Sie ein Projekt oder wählen eins aus.</li><li>Klicken Sie auf Erstellen um anschließend den API-Schlüssel zu erstellen.</li></ol>',
 ];

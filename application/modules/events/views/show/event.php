@@ -95,7 +95,7 @@ $user = $userMapper->getUserById($event->getUserId());
                 <i class="fa fa-map-marker"></i>
             </div>
             <?php
-            if ($this->get('event_google_api_key') != '' && $event->getLatLong() != '') {
+            if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != '') {
                 echo '<a id="showMap">'.$place[0].'</a>';
             } else {
                echo $place[0];
@@ -104,7 +104,7 @@ $user = $userMapper->getUserById($event->getUserId());
                 echo '<br /><span class="eventAddress text-muted">'.$place[1].'</span>';
             }
             ?>
-            <?php if ($this->get('event_google_api_key') != '' && $event->getLatLong() != ''): ?>
+            <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
                 <div id="googleMap" style="display: none">
                     <div id="map-canvas"></div>
                 </div>
@@ -204,8 +204,8 @@ $user = $userMapper->getUserById($event->getUserId());
     </div>
 </div>
 
-<?php if ($this->get('event_google_api_key') != ''): ?>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_api_key') ?>&sensor=false&callback=initMap"></script>
+<?php if ($this->get('event_google_maps_api_key') != ''): ?>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&sensor=false&callback=initMap"></script>
 <?php endif; ?>
 
 <script type="text/javascript">
@@ -216,7 +216,7 @@ $('textarea').on('keyup', function() {
 });
 
 // Google Maps
-<?php if ($this->get('event_google_api_key') != '' && $event->getLatLong() != ''): ?>
+<?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
     $(document).ready(function() {
         var mapCanvas = document.getElementById('map-canvas');
         var latLng = {lat: <?=$latLong[0] ?>, lng: <?=$latLong[1] ?>};
