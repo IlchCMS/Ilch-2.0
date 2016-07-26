@@ -48,10 +48,8 @@ class Module extends \Ilch\Mapper
 
     /**
      * Gets all not installed modules.
-     *
-     * @param string $locale
      */
-    public function getModulesNotInstalled($locale)
+    public function getModulesNotInstalled()
     {
         foreach (glob(APPLICATION_PATH.'/modules/*') as $modulePath) {
             $moduleModel = new ModuleModel();
@@ -78,7 +76,7 @@ class Module extends \Ilch\Mapper
         foreach ($modulesNotInstalled as $module) {
             $moduleModel = new ModuleModel();
             $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\config';
-            $config = new $configClass($locale);
+            $config = new $configClass();
 
             $moduleModel->setKey($config->config['key']);
             $moduleModel->setIconSmall($config->config['icon_small']);
@@ -157,7 +155,7 @@ class Module extends \Ilch\Mapper
         $this->db()->delete('modules')
             ->where(['key' => $key])
             ->execute();
-        
+
         $this->db()->delete('modules_content')
             ->where(['key' => $key])
             ->execute();

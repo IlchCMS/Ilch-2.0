@@ -68,7 +68,7 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuNotInstalled'), ['action' => 'notinstalled']);
 
-        $this->getView()->set('modulesNotInstalled', $modules->getModulesNotInstalled($this->getTranslator()));
+        $this->getView()->set('modulesNotInstalled', $modules->getModulesNotInstalled());
     }
 
     public function searchmodulesAction()
@@ -144,7 +144,7 @@ class Modules extends \Ilch\Controller\Admin
         $this->redirect(['action' => 'notinstalled']);
     }
 
-    public function deleteAction()
+    public function uninstallAction()
     {
         $modules = new ModuleMapper();
         $key = $this->getRequest()->getParam('key');
@@ -154,11 +154,23 @@ class Modules extends \Ilch\Controller\Admin
             $config = new $configClass($this->getTranslator());
             $config->uninstall();
             $modules->delete($key);
-            removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
 
             $this->addMessage('deleteSuccess');
         }
 
         $this->redirect(['action' => 'index']);
+    }
+
+    public function deleteAction()
+    {
+        $modules = new ModuleMapper();
+
+        if ($this->getRequest()->isSecure()) {
+            removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'notinstalled']);
     }
 }

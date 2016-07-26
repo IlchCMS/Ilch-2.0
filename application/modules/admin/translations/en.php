@@ -12,6 +12,7 @@ return
     'selected' => 'selected...',
     'saveSuccess' => 'Saved successful',
     'deleteSuccess' => 'Deleted successful',
+    'uninstallSuccess' => 'Successfully uninstalled',
     'freeSuccess' => 'Successful activated',
     'installSuccess' => 'Successfully installed',
     'treat' => 'Edit',
@@ -141,6 +142,7 @@ return
     'modulesNotInstalled' => 'Not installed Modules',
     'noNotInstalledModules' => 'No entries available',
     'media' => 'Media',
+    'uninstall' => 'Uninstall',
 
     'menuInfos' => 'Information',
     'menuPHPInfo' => 'PHP Info',
