@@ -249,8 +249,7 @@ class Events extends \Ilch\Mapper
      */
     public function save(EventModel $event)
     {
-        $fields =
-            [
+        $fields = [
             'user_id' => $event->getUserId(),
             'start' => $event->getStart(),
             'end' => $event->getEnd(),
@@ -260,7 +259,7 @@ class Events extends \Ilch\Mapper
             'image' => $event->getImage(),
             'text' => $event->getText(),
             'show' => $event->getShow(),
-            ];
+        ];
 
         if ($event->getId()) {
             $this->db()->update('events')

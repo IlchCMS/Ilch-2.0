@@ -356,6 +356,19 @@ input[readonly] {
 .pac-item:hover {
     cursor: pointer;
 }
+.poi-info-window {
+    margin-top: 3px;
+}
+.poi-info-window .title {
+    overflow: hidden;
+    font-weight: 500;
+    font-size: 14px;
+}
+.poi-info-window .address {
+    margin-top: 2px;
+    color: #000;
+}
+
 
 #showMap {
     cursor: pointer;

@@ -225,7 +225,7 @@ $(document).ready(function() {
 
     })(pac_input);
 
-    $(function(){
+    $(function() {
       var autocomplete = new google.maps.places.Autocomplete(pac_input);
     });
 <?php endif; ?>

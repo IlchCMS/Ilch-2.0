@@ -74,4 +74,5 @@ return [
     'createGoogleMapsAPIKey' => 'Create Google Maps API-Key',
     'googleMapsZoom' => 'Map Zoom',
     'googleMapsMapTyp' => 'Map Typ',
+    'googleMapsPlanRoute' => 'Plan route',
 ];

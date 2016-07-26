@@ -268,6 +268,21 @@ $('textarea').on('keyup', function() {
                 title: '<?=$event->getTitle() ?>',
                 animation: google.maps.Animation.DROP
             });
+
+            <?php $infoPlace = str_replace(', ', '<br />', $event->getPlace()); ?>
+            <?php $infoRoutePlace = str_replace(' ', '+', $event->getPlace()); ?>
+            var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$event->getTitle() ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
+            var infowindow = new google.maps.InfoWindow({
+                content: infoWindowContent
+            });
+
+            setTimeout(function() {
+                infowindow.open(map,marker);
+            }, 700);
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map,marker);
+            });
         }
     });
 <?php endif; ?>
