@@ -10,6 +10,7 @@ use Modules\User\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Models\ProfileField as ProfileFieldModel;
+use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 
 class ProfileFields extends BaseController
 {
@@ -33,13 +34,16 @@ class ProfileFields extends BaseController
 
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $this->getView()->set('profileFields', $profileFieldsMapper->getProfileFields());
+        $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale()));
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_users')) {
             foreach ($this->getRequest()->getPost('check_users') as $id) {
                 $profileFieldsMapper->deleteProfileField($id);
                 $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
+                $profileFieldsTranslationMapper->deleteProfileFieldTranslationsByFieldId($id);
             }
         }
 
@@ -63,6 +67,7 @@ class ProfileFields extends BaseController
 
         $profileFieldId = $this->getRequest()->getParam('id');
         $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         if ($profileFieldsMapper->profileFieldWithIdExists($profileFieldId)) {
             $profileField = $profileFieldsMapper->getProfileFieldById($profileFieldId);
@@ -72,6 +77,8 @@ class ProfileFields extends BaseController
 
         $this->getView()->set('countOfProfileFields', $profileFieldsMapper->getCountOfProfileFields());
         $this->getView()->set('profileField', $profileField);
+        $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslationMapper->getProfileFieldTranslationByFieldId($profileFieldId));
+        $this->getView()->set('localeList', $this->getTranslator()->getLocaleList());
     }
 
     public function saveAction()
@@ -91,6 +98,26 @@ class ProfileFields extends BaseController
             $profileField = $profileFieldsMapper->loadFromArray($profileFieldData);
             $profileFieldId = $profileFieldsMapper->save($profileField);
 
+            for ($i = 0; $i < count($postData); $i++) {
+                if (isset($postData['profileFieldTrans'.$i])) {
+                    $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
+
+                    $profileFieldTransData = $postData['profileFieldTrans'.$i];
+
+                    if (empty($profileFieldTransData['field_id'])) {
+                        $profileFieldTransData['field_id'] = $profileFieldId;
+                    }
+
+                    $profileFieldTrans = $profileFieldsTranslationMapper->loadFromArray($profileFieldTransData);
+
+                    if (!empty($profileFieldTrans->getName())) {
+                        $profileFieldsTranslationMapper->save($profileFieldTrans);
+                    } else {
+                        $profileFieldsTranslationMapper->deleteProfileFieldTranslation($profileFieldTransData['locale'], $profileFieldTransData['field_id']);
+                    }
+                }
+            }
+
             if (!empty($profileFieldId) && empty($profileFieldData['id'])) {
                 $this->addMessage('newProfileFieldMsg');
             }
@@ -103,12 +130,14 @@ class ProfileFields extends BaseController
     {
         $profileFieldsMapper = new ProfileFieldsMapper();
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $id = $this->getRequest()->getParam('id');
 
         if($id && $this->getRequest()->isSecure()) {
             $profileFieldsMapper->deleteProfileField($id);
             $profileFieldsContentMapper->deleteProfileFieldContentByFieldId($id);
+            $profileFieldsTranslationMapper->deleteProfileFieldTranslationsByFieldId($id);
         }
 
         $this->redirect(['action' => 'index']);

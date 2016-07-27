@@ -267,7 +267,8 @@ return [
     'addProfileField' => 'Profil-Feld hinzufügen',
     'newProfileFieldMsg' => 'Neues Profil-Feld erfolgreich hinzugefügt',
     'menuActionNewProfileField' => 'Neues Profil-Feld hinzufügen',
-    'profileFieldInfoText' => 'Erstelle Profil-Felder oder Kategorien können durch ziehen und ablegen sortiert werden.',
+    'profileFieldInfoText' => 'Erstellte Profil-Felder oder Kategorien können durch ziehen und ablegen sortiert werden.',
+    'profileFieldTransInfoText' => 'Übersetzungen können mit der Plus-Schaltfläche hinzugefügt und mit der Minus-Schaltfläche oder durch das Löschen des Textes gelöscht werden.',
 
     'picturesPerPage' => 'Bilder pro Seite',
 ];

@@ -2,6 +2,7 @@
 $profil = $this->get('profil');
 $profileFields = $this->get('profileFields');
 $profileFieldsContent = $this->get('profileFieldsContent');
+$profileFieldsTranslation = $this->get('profileFieldsTranslation');
 $birthday = new \Ilch\Date($profil->getBirthday());
 ?>
 
@@ -134,6 +135,14 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         continue;
                     }
 
+                    $profileFieldName = $profileField->getName();
+                    foreach ($profileFieldsTranslation as $profileFieldTranslation) {
+                        if($profileField->getId() == $profileFieldTranslation->getFieldId()) {
+                            $profileFieldName = $profileFieldTranslation->getName();
+                            break;
+                        }
+                    }
+
                     $value = '';
                     foreach($profileFieldsContent as $profileFieldContent) {
                         if($profileField->getId() == $profileFieldContent->getFieldId()) {
@@ -144,7 +153,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 ?>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">
-                        <?=$this->escape($profileField->getName()) ?>
+                        <?=$this->escape($profileFieldName) ?>
                     </label>
                     <div class="col-lg-8">
                        <input type="text"

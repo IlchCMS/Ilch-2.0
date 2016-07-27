@@ -24,6 +24,7 @@ use Ilch\Date as IlchDate;
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
+use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
 
 class Panel extends BaseController
 {
@@ -51,12 +52,15 @@ class Panel extends BaseController
 
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
         $profileFieldsMapper = new ProfileFieldsMapper();
+        $profileFieldsTranslationMapper = new ProfileFieldsTranslationMapper();
 
         $profileFieldsContent = $profileFieldsContentMapper->getProfileFieldContentByUserId($this->getUser()->getId());
         $profileFields = $profileFieldsMapper->getProfileFields();
+        $profileFieldsTranslation = $profileFieldsTranslationMapper->getProfileFieldTranslationByLocale($this->getTranslator()->getLocale());
         $this->getView()->set('profileFieldsContent', $profileFieldsContent);
         $this->getView()->set('profileFields', $profileFields);
-        
+        $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
+
         $errors = [];
         if ($this->getRequest()->isPost()) {
             $email = trim($this->getRequest()->getPost('email'));
