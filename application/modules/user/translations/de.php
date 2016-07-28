@@ -269,6 +269,7 @@ return [
     'menuActionNewProfileField' => 'Neues Profil-Feld hinzufügen',
     'profileFieldInfoText' => 'Erstellte Profil-Felder oder Kategorien können durch ziehen und ablegen sortiert werden.',
     'profileFieldTransInfoText' => 'Übersetzungen können mit der Plus-Schaltfläche hinzugefügt und mit der Minus-Schaltfläche oder durch das Löschen des Textes gelöscht werden.',
+    'translationAlreadyExisting' => 'Es kann nur eine Übersetzung pro Sprache angelegt werden.',
 
     'picturesPerPage' => 'Bilder pro Seite',
 ];

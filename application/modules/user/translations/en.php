@@ -269,6 +269,7 @@ return [
     'menuActionNewProfileField' => 'Create new profile-field',
     'profileFieldInfoText' => 'Created profile-fields and categories can be sorted by drag and drop.',
     'profileFieldTransInfoText' => 'Translations can be added with the plus-button and deleted with the minus-button or by deleting the text.',
+    'translationAlreadyExisting' => 'There can only be one translation per language.',
 
     'picturesPerPage' => 'Pictures per page',
 ];

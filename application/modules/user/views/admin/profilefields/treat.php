@@ -11,6 +11,14 @@ if ($profileField->getId()) {
 }
 ?>
 
+<script>
+var indexList = [];
+
+function addIndex(index) {
+    indexList.push(index);
+}
+</script>
+
 <fieldset>
     <legend>
         <?=$fieldsetLegend ?>
@@ -77,6 +85,7 @@ if ($profileField->getId()) {
                        placeholder="<?=$this->getTrans('profileFieldName') ?>"
                        value="<?=$this->escape($profileFieldTranslation->getName()) ?>" />
             </div>
+            <script>addIndex(<?=$i ?>)</script>
         </div>
         <?php $i++;
         endforeach; ?>
@@ -97,13 +106,18 @@ var index = <?=$i ?>;
 $('#profileFieldForm').validate();
 
 function addTranslations() {
+    if (isDuplicate()) {
+        return;
+    }
+
     var html =  '<div class="form-group" id="profileFieldTrans'+index+'">'+
                     '<input name="profileFieldTrans'+index+'[field_id]"'+
                         'type="hidden"'+
                         'value="<?=$profileField->getId() ?>" />'+
                     '<div class="col-lg-3">'+
                         '<button type="button" class="btn" onclick="deleteTranslation('+index+')">-</button>'+
-                        '<select name="profileFieldTrans'+index+'[locale]">'+
+                        '<select name="profileFieldTrans'+index+'[locale]" onchange="isDuplicate()">'+
+                            '<option value=""></option>'+
                         <?php
                         foreach ($localeList as $locale) :?>
                             '<option value="<?=key($localeList) ?>"><?=$locale ?></option>'+
@@ -122,7 +136,34 @@ function addTranslations() {
                 '</div>';
     var d1 = document.getElementById('addTranslations');
     d1.insertAdjacentHTML('beforeend', html);
+    addIndex(index);
     index++;
+}
+
+function isDuplicate() {
+    var allElements;
+    var select_id;
+
+    // indexList is undefined after deleting the last element with array.splice().
+    if (indexList == undefined) {
+        indexList = [];
+    }
+
+    for(x = 0; x < indexList.length; x++) {
+        allElements = document.getElementsByName('profileFieldTrans'+indexList[x]+'[locale]')[0];
+        for(y = x+1; y < indexList.length; y++) {
+            select_id = document.getElementsByName('profileFieldTrans'+indexList[y]+'[locale]')[0];
+            if(select_id.options[select_id.selectedIndex].value != "" && select_id.options[select_id.selectedIndex].value == allElements.value) {
+                alert('<?=$this->getTrans('translationAlreadyExisting') ?>');
+                deleteTranslation(indexList[y]);
+                // Delete the locale so this one gets discarded.
+                document.getElementsByName('profileFieldTrans'+indexList[y]+'[locale]')[0].value = '';
+                indexList.splice(y,1);
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function deleteTranslation(a) {
