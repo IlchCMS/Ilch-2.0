@@ -1,6 +1,6 @@
+<legend><?=$this->getTrans('systemSettings') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <legend><?=$this->getTrans('systemSettings') ?></legend>
     <div class="form-group">
         <label for="startPage" class="col-lg-2 control-label">
             <?=$this->getTrans('startPage') ?>:

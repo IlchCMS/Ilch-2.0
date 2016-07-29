@@ -152,6 +152,20 @@ class Frontend extends Base
     }
 
     /**
+     * Gets the coustom css.
+     *
+     * @return string
+     */
+    public function getCoustomCSS()
+    {
+        if ($this->getConfigKey('coustom_css') != '') {
+            $html = '<style>'.$this->getConfigKey('coustom_css').'</style>';
+
+            return $html;
+        }
+    }
+
+    /**
      * Gets the footer.
      *
      * @return string
@@ -159,8 +173,8 @@ class Frontend extends Base
     public function getFooter()
     {
         $html = '<script>
-        var ilchSmileysPlugin = "'.$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/').'";
-        var ilchSmileysPluginUrl = "'.$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']).'";
+            var ilchSmileysPlugin = "'.$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/').'";
+            var ilchSmileysPluginUrl = "'.$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']).'";
         </script>';
 
         return $html;

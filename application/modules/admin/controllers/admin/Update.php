@@ -27,6 +27,12 @@ class Update extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'maintenance'])
             ],
             [
+                'name' => 'menuCoustomCSS',
+                'active' => false,
+                'icon' => 'fa fa-file-code-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'coustomcss'])
+            ],
+            [
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',

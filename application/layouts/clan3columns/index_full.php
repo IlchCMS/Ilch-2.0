@@ -5,6 +5,7 @@
         <?=$this->getHeader() ?>
         <link href="<?=$this->getStaticUrl('css/bootstrap.css') ?>" rel="stylesheet">
         <link href="<?=$this->getLayoutUrl('style.css') ?>" rel="stylesheet">
+        <?=$this->getCoustomCSS() ?>
         <link rel="icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>" type="image/x-icon" />
         <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap.js') ?>"></script> 
     </head>

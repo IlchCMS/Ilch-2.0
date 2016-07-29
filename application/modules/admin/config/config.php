@@ -25,11 +25,12 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('page_title', 'ilch - Content Manage System');
         $databaseConfig->set('standardMail', $_SESSION['install']['adminEmail']);
         $databaseConfig->set('defaultPaginationObjects', 20);
-        $databaseConfig->set('admin_layout_top_nav', '');
+        $databaseConfig->set('admin_layout_top_nav', 'navbar-fixed-top');
         $databaseConfig->set('maintenance_mode', '0');
         $databaseConfig->set('maintenance_status', '0');
         $databaseConfig->set('maintenance_date', $date->format('Y-m-d H:i:s'));
         $databaseConfig->set('maintenance_text', '<p>Die Seite befindet sich im Wartungsmodus</p>');
+        $databaseConfig->set('coustom_css', '');
     }
 
     public function getInstallSql()

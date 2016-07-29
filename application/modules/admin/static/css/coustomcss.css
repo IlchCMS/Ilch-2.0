@@ -1,0 +1,59 @@
+.CodeMirror {
+    border: 1px solid #e5e5e5;
+    height: auto !important;
+}
+.CodeMirror pre.CodeMirror-placeholder {
+}
+.CodeMirror-linenumber {
+    margin-top: 1px;
+    color: #B71E00 !important;
+}
+div.CodeMirror span.CodeMirror-matchingbracket {
+    color: #B71E00 !important;
+    text-decoration: underline;
+}
+.CodeMirror .cm-palette-hint {
+    display: inline-block;
+    box-sizing: border-box;
+    margin-top: -2px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 50%;
+    vertical-align: middle;
+    width: 10px;
+    height: 10px;
+    box-shadow: 0 0 2px;
+}
+.CodeMirror-foldgutter {
+    width: 15px !important;
+}
+.CodeMirror-gutter-elt {
+    width: 14px !important;
+    text-align: center;
+}
+.CodeMirror-guttermarker-subtle {
+    height: 15px;
+    margin-top: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.CodeMirror-guttermarker-subtle:hover {
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+.CodeMirror-foldgutter-open:after {
+    margin-top: -3px;
+    display: block;
+    content: "-" !important;
+}
+.CodeMirror-foldgutter-folded:after {
+    margin-top: -3px;
+    display: block;
+    content: "+" !important;
+}
+.CodeMirror-foldmarker {
+    color: #fff !important;
+    text-shadow: #B71E00 1px 1px 2px, #B71E00 -1px -1px 2px, #B71E00 1px -1px 2px, #B71E00 -1px 1px 2px !important;
+}

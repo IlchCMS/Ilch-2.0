@@ -1,9 +1,9 @@
 <link href="<?=$this->getModuleUrl('static/css/maintenance.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
+<legend><?=$this->getTrans('menuMaintenance') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <legend><?=$this->getTrans('menuMaintenance') ?></legend>
     <div class="form-group">
         <label for="maintenanceMode" class="col-lg-2 control-label">
             <?=$this->getTrans('maintenanceMode') ?>:
