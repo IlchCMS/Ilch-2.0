@@ -17,33 +17,15 @@ class Index extends \Ilch\Controller\Frontend
          */
         @set_time_limit(0);
 
-        $menu =
-            [
-            'index' =>
-                [
-                'langKey' => 'menuWelcomeAndLanguage'
-                ],
-            'license' =>
-                [
-                'langKey' => 'menuLicence'
-                ],
-            'systemcheck' =>
-                [
-                'langKey' => 'menuSystemCheck'
-                ],
-            'database' =>
-                [
-                'langKey' => 'menuDatabase'
-                ],
-            'config' =>
-                [
-                'langKey' => 'menuConfig'
-                ],
-            'finish' =>
-                [
-                'langKey' => 'menuFinish'
-                ],
-            ];
+        $menu = [
+            'index' => ['langKey' => 'menuWelcome'],
+            'license' => ['langKey' => 'menuLicense'],
+            'systemcheck' => ['langKey' => 'menuSystemCheck'],
+            'connect' => ['langKey' => 'menuConnect'],
+            'database' => ['langKey' => 'menuDatabase'],
+            'config' => ['langKey' => 'menuConfig'],
+            'finish' => ['langKey' => 'menuFinish'],
+        ];
 
         foreach ($menu as $key => $values) {
             if ($this->getRequest()->getActionName() === $key) {
@@ -83,14 +65,30 @@ class Index extends \Ilch\Controller\Frontend
 
     public function licenseAction()
     {
-        $this->getView()->set('licenceText', file_get_contents(ROOT_PATH.'/licence.txt'));
+        $licenseFile = ROOT_PATH.'/license.html';
+        if (file_exists($licenseFile)) {
+            $license = file_get_contents($licenseFile);
+            if (preg_match('~<body[^>]*>(.*?)</body>~si', $license, $licenseContent)){ 
+                $licenseContent = $licenseContent[1];
+            }
+
+            $this->getView()->set('licenseText', $licenseContent);
+        } else {
+            $this->getView()->set('licenseMissing', 'licenseMissing');
+        }
 
         if ($this->getRequest()->isPost()) {
-            if ($this->getRequest()->getPost('licenceAccepted')) {
-                $this->redirect(['action' => 'systemcheck']);
-            } else {
+            $_SESSION['install']['licenseAccepted'] = $this->getRequest()->getPost('licenseAccepted');
+
+            if (empty($_SESSION['install']['licenseAccepted'])) {
                 $this->getView()->set('error', true);
+            } else {
+                $this->redirect(['action' => 'systemcheck']);
             }
+        }
+
+        if (!empty($_SESSION['install']['licenseAccepted'])) {
+            $this->getView()->set('licenseAccepted', $_SESSION['install']['licenseAccepted']);
         }
     }
 
@@ -154,21 +152,22 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
-            $this->redirect(['action' => 'database']);
+            $this->redirect(['action' => 'connect']);
         }
     }
 
-    public function databaseAction()
+    public function connectAction()
     {
         $errors = [];
-
         if ($this->getRequest()->isPost()) {
             $_SESSION['install']['dbEngine'] = $this->getRequest()->getPost('dbEngine');
             $_SESSION['install']['dbHost'] = $this->getRequest()->getPost('dbHost');
             $_SESSION['install']['dbUser'] = $this->getRequest()->getPost('dbUser');
             $_SESSION['install']['dbPassword'] = $this->getRequest()->getPost('dbPassword');
-            $_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
-            $_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
+
+            if (empty($_SESSION['install']['dbUser'])) {
+                $errors['dbUser'] = 'fieldEmpty';
+            }
 
             $ilch = new \Ilch\Database\Factory();
             $db = $ilch->getInstanceByEngine($this->getRequest()->getPost('dbEngine'));
@@ -186,12 +185,43 @@ class Index extends \Ilch\Controller\Frontend
                     $this->getRequest()->getPost('dbPassword'),
                     $port
                 );
-
-                if (!$db->setDatabase($this->getRequest()->getPost('dbName'))) {
-                    $errors['dbDatabase'] = 'dbDatabaseError';
-                }
             } catch (\RuntimeException $ex) {
                 $errors['dbConnection'] = 'dbConnectionError';
+            }
+
+            if (empty($errors)) {
+                $this->redirect(['action' => 'database']);
+            }
+
+            $this->getView()->set('errors', $errors);
+        }
+
+        foreach (['dbHost', 'dbUser', 'dbPassword'] as $name) {
+            if (!empty($_SESSION['install'][$name])) {
+                $this->getView()->set($name, $_SESSION['install'][$name]);
+            }
+        }
+    }
+
+    public function databaseAction()
+    {
+        $con = mysqli_connect($_SESSION['install']['dbHost'], $_SESSION['install']['dbUser'], $_SESSION['install']['dbPassword']);
+        $result = mysqli_query($con, 'SHOW DATABASES');
+
+        $dbList = [];
+        while ($row = mysqli_fetch_row($result)) {
+            if (($row[0] != 'information_schema') && ($row[0] != 'performance_schema') && ($row[0] != 'mysql')) {
+                $dbList[] = $row[0];
+            }
+        }
+
+        $errors = [];
+        if ($this->getRequest()->isPost()) {
+            $_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
+            $_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
+
+            if (empty($_SESSION['install']['dbName'])) {
+                $errors['dbDatabase'] = 'dbDatabaseError';
             }
 
             if (empty($errors)) {
@@ -201,17 +231,18 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('errors', $errors);
         }
 
-        foreach (['dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix'] as $name) {
+        foreach (['dbName', 'dbPrefix'] as $name) {
             if (!empty($_SESSION['install'][$name])) {
                 $this->getView()->set($name, $_SESSION['install'][$name]);
             }
         }
+
+        $this->getView()->set('database', $dbList);
     }
 
     public function configAction()
     {
         $errors = [];
-
         if ($this->getRequest()->isPost()) {
             $_SESSION['install']['usage'] = $this->getRequest()->getPost('usage');
             $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']] = $this->getRequest()->getPost('modulesToInstall');
@@ -226,6 +257,10 @@ class Index extends \Ilch\Controller\Frontend
 
             if (empty($_SESSION['install']['adminPassword'])) {
                 $errors['adminPassword'] = 'fieldEmpty';
+            }
+
+            if (empty($_SESSION['install']['adminPassword2'])) {
+                $errors['adminPassword2'] = 'fieldEmpty';
             }
 
             if ($_SESSION['install']['adminPassword'] !== $_SESSION['install']['adminPassword2']) {
@@ -385,7 +420,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['privacy']['types']       = [];
         $modules['cookieconsent']['types'] = [];
         $modules['statistic']['types']     = [];
-        $modules['smilies']['types']     = [];
+        $modules['smilies']['types']       = [];
 
         /*
          * Optional-Modules.
@@ -424,7 +459,6 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $modulesToInstall = [];
-
         if (!empty($_SESSION['install']['modulesToInstall'][$type]))
         {
             $modulesToInstall = $_SESSION['install']['modulesToInstall'][$type];

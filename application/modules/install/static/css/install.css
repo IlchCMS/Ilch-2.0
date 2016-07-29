@@ -1,53 +1,152 @@
 body {
-    padding-top: 65px;
-    padding-bottom: 40px;
     background-color: #EEE;
+    padding-top: 65px;
 }
 
 .container {
-    padding: 60px;
-    background-color: white;
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 2px;
+}
+@media (min-width: 1200px) {
+    .container {
+        margin-left: 0;
+    }
+
+    li:first-child {
+        margin-left: 12px;
+    }
+}
+@media (min-width: 1400px) {
+    .container {
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.input-group[class*="col-"] {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .install_container {
-    border: 1px solid #BBB;
-    width: 900px;
-    min-height: 500px;
-    border-bottom: none;
-}
-
-.save_box {
-    background-color: #ECECFB;
-    padding: 20px;
     position: relative;
+    padding: 40px 20px;
+    background-color: white;
     border: 1px solid #BBB;
-    width: 900px;
-    border-radius: 0px 0px 0px 0px;
+    border-bottom: none;
+    min-height: 455px;
 }
 
 .logo {
-    margin-top: -180px;
-    margin-left: -141px;
-    position: relative;
+    position: absolute;
+    top: -77px;
+    left: -63px;
     width: 220px;
+    height: 116px;
+    background-image: url("../../../../../static/img/ilch_logo.png");
 }
 
-.logo_text {
-    margin-top: -180px;
-    margin-left: -141px;
+.installVersion {
+    position: absolute;
+    top: -33px;
+    left: 150px;
+    font-size: 30px;
+    color: #B71E00;
+    font-weight: bold;
+}
+
+.custom, label, li {
+    cursor: pointer;
+}
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+h3 {
+    margin-top: 50px;
+}
+
+.save_box {
+    position: absolute;
+    bottom: -60px;
+    background-color: #ECECFB;
+    border: 1px solid #BBB;
+    padding: 10px;
+    left: -1px;
+    right: -1px;
+    margin-bottom: 4px;
+}
+
+
+/* Install steps */
+.step-item {
+    margin-bottom: 25px;
+    margin-left: 40px;
     position: relative;
-    width: 220px;
+}
+.step-item:before {
+    background: #fff;
+    border-radius: 2px;
+    bottom: -30px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    content: "";
+    height: 100%;
+    left: -30px;
+    position: absolute;
+    width: 3px;
+}
+.step-item:after {
+    background: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    content: "";
+    height: 15px;
+    left: -36px;
+    position: absolute;
+    top: 10px;
+    width: 15px;
+}
+.step-item:last-child:before {
+    content: none;
+}
+.step-item .step-content {
+    padding-top: 8px;
+    margin-left: -7px;
+}
+.active:after {
+    background: #B71E00;
+}
+.done:after {
+    background: #5cb85c;
 }
 
-.btn {
-    background-image: none;
-    border: 1px solid silver;
-    border-color: silver;
-    -webkit-border-radius: 0px;
-       -moz-border-radius: 0px;
-            border-radius: 0px;
+.verticalLine {
+    border-right: 1px solid #ddd;
+}
+.table {
+    margin-bottom: 0;
 }
 
-label {
-    font-weight: normal;
+
+/* License content */
+div.license {
+    width: 100%;
+    height: 350px;
+    overflow-y: scroll;
+    overflow-x : hidden;
+}
+div.license h3 {
+    display: block;
+    font-size: 19px;
+    margin-top: 25px;
+    font-weight: bold;
+}
+div.license h4 {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
 }

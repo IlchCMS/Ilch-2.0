@@ -1,30 +1,27 @@
-<?php
-$errors = $this->get('errors');
-?>
+<?php $errors = $this->get('errors'); ?>
 
 <div class="form-group">
-    <label for="usage" class="control-label col-lg-2">
+    <label for="usage" class="control-label col-lg-3">
         <?=$this->getTrans('usage') ?>:
     </label>
-    <div class="col-lg-8">
+    <div class="col-lg-9 input-group">
         <select name="usage" id="usage" class="form-control">
             <option value="private"><?=$this->getTrans('private') ?></option>
-            <option <?php if ($this->get('usage') == 'clan') { echo 'selected="selected"'; } ?> value="clan"><?=$this->getTrans('clan') ?></option>
+            <option value="clan" <?php if ($this->get('usage') == 'clan') { echo 'selected="selected"'; } ?>><?=$this->getTrans('clan') ?></option>
         </select>
-        <a href="#" data-toggle="collapse" data-target="#modules">
-            <?=$this->getTrans('custom')?> &dArr;
-        </a>
+        <div class="input-group-addon custom" data-toggle="collapse" data-target="#modules" title="<?=$this->getTrans('custom') ?>"><i class="fa fa-info-circle"></i> <?=$this->getTrans('custom') ?></div>
     </div>
 </div>
+
 <div class="form-group collapse" id="modules">
-    <div id="modulesContent" class="col-lg-12"></div>
+    <div id="modulesContent" class="col-lg-offset-1 col-lg-11"></div>
 </div>
-<hr />
+
 <div class="form-group <?php if (!empty($errors['adminName'])) { echo 'has-error'; }; ?>">
-    <label for="adminName" class="control-label col-lg-2">
+    <label for="adminName" class="control-label col-lg-3">
         <?=$this->getTrans('adminName') ?>:
     </label>
-    <div class="col-lg-8">
+    <div class="col-lg-9">
         <input value="<?php if ($this->get('adminName') != '') { echo $this->escape($this->get('adminName')); } ?>"
                type="text"
                name="adminName"
@@ -36,10 +33,10 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword'])) { echo 'has-error'; }; ?>">
-    <label for="adminPassword" class="control-label col-lg-2">
+    <label for="adminPassword" class="control-label col-lg-3">
         <?=$this->getTrans('adminPassword') ?>:
     </label>
-    <div class="col-lg-8">
+    <div class="col-lg-9">
         <input value="<?php if ($this->get('adminPassword') != '') { echo $this->escape($this->get('adminPassword')); } ?>"
                type="password"
                class="form-control"
@@ -51,10 +48,10 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminPassword2'])) { echo 'has-error'; }; ?>">
-    <label for="adminPassword2" class="control-label col-lg-2">
+    <label for="adminPassword2" class="control-label col-lg-3">
         <?=$this->getTrans('adminPassword2') ?>:
     </label>
-    <div class="col-lg-8">
+    <div class="col-lg-9">
         <input value="<?php if ($this->get('adminPassword2') != '') { echo $this->escape($this->get('adminPassword2')); } ?>"
                type="password"
                class="form-control"
@@ -66,10 +63,10 @@ $errors = $this->get('errors');
     </div>
 </div>
 <div class="form-group <?php if (!empty($errors['adminEmail'])) { echo 'has-error'; }; ?>">
-    <label for="adminEmail" class="control-label col-lg-2">
+    <label for="adminEmail" class="control-label col-lg-3">
         <?=$this->getTrans('adminEmail') ?>:
     </label>
-    <div class="col-lg-8">
+    <div class="col-lg-9">
         <input value="<?php if ($this->get('adminEmail') != '') { echo $this->escape($this->get('adminEmail')); } ?>"
                type="text"
                name="adminEmail"

@@ -1,10 +1,8 @@
-<h2><?=$this->getTrans('welcomeToInstall', (string)VERSION) ?></h2>
-<br />
 <div class="form-group">
-    <label for="languageInput" class="col-lg-2 control-label">
+    <label for="languageInput" class="col-lg-3 control-label">
         <?=$this->getTrans('chooseLanguage') ?>:
     </label>
-    <div class="col-lg-3">
+    <div class="col-lg-4">
         <select name="language" id="languageInput" class="form-control">
             <?php foreach ($this->get('languages') as $key => $value): ?>
                 <?php $selected = ''; ?>
@@ -19,10 +17,10 @@
     </div>
 </div>
 <div class="form-group">
-    <label for="timezone" class="col-lg-2 control-label">
+    <label for="timezone" class="col-lg-3 control-label">
         <?=$this->getTrans('timezone') ?>:
     </label>
-    <div class="col-lg-3">
+    <div class="col-lg-4">
         <select id="timezone" name="timezone" class="form-control">
             <?php $timezones = $this->get('timezones'); ?>
 
