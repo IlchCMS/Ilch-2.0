@@ -23,4 +23,8 @@ return [
     'bookedpayments' => 'Booked payments',
     'treatpayment' => 'Edit booking',
     'currencyOfCheckout' => 'Currency of checkout',
+    'missingName' => 'It is required to enter a name.',
+    'missingUsage' => 'It is required to enter a purpose.',
+    'missingAmount' => 'It is required to enter an amount.',
+    'invalidAmount' => 'The entered amount is invalid.',
 ];

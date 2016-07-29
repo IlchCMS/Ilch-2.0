@@ -23,4 +23,8 @@ return [
     'bookedpayments' => 'Gebuchte Zahlungen',
     'treatpayment' => 'Buchung bearbeiten',
     'currencyOfCheckout' => 'Währung der Kasse',
+    'missingName' => 'Es muss ein Name eingegeben werden.',
+    'missingUsage' => 'Es muss ein Verwendungszweck eingegeben werden.',
+    'missingAmount' => 'Es muss ein Betrag eingegeben werden.',
+    'invalidAmount' => 'Die Eingabe für den Betrag ist ungültig.',
 ];

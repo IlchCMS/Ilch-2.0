@@ -62,6 +62,8 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('missingUsage', 'danger');
             } elseif (empty($amount)) {
                 $this->addMessage('missingAmount', 'danger');
+            } elseif (!is_numeric($amount)) {
+                $this->addMessage('invalidAmount', 'danger');
             } else {
                 $model = new \Modules\Checkout\Models\Entry();
                 $model->setName($name);
@@ -125,6 +127,8 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('missingUsage', 'danger');
             } elseif (empty($amount)) {
                 $this->addMessage('missingAmount', 'danger');
+            } elseif (!is_numeric($amount)) {
+                $this->addMessage('invalidAmount', 'danger');
             } else {
                 $model = new \Modules\Checkout\Models\Entry();
                 $model->setId($id);
