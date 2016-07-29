@@ -130,13 +130,14 @@ class Article extends \Ilch\Mapper
         $dateFrom = $date->format($db::FORMAT_DATETIME);
         $dateTo = $dateTo->format($db::FORMAT_DATETIME);
 
-        $select = $this->db()->select('p.*')
+        $select = $this->db()->select()
             ->from(['p' => 'articles'])
-            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.*'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', [])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo])
             ->group(['p.id' => 'DESC']);
 
-        $articleArray = $this->db()->queryArray($select->generateSql());
+        $result = $select->execute();
+        $articleArray = $result->fetchRows();
 
         if (empty($articleArray)) {
             return null;
