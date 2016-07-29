@@ -25,6 +25,7 @@
         <tbody id="sortable">
             <?php
             $profileFields = $this->get('profileFields');
+            $profileFieldsTranslation = $this->get('profileFieldsTranslation');
 
             foreach ($profileFields as $profileField) :
             ?>
@@ -38,10 +39,26 @@
                 <td>
                     <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?>
                 </td>
-                <?php if(!$profileField->getType()) : ?>
-                    <td><?=$this->escape($profileField->getName()) ?></td>
-                <?php else : ?>
-                    <td><b><?=$this->escape($profileField->getName()) ?></b></td>
+                <?php
+                $found = false;
+
+                foreach ($profileFieldsTranslation as $profileFieldTrans) {
+                    if ($profileField->getId() == $profileFieldTrans->getFieldId()) {
+                        $profileFieldName = $profileFieldTrans->getName();
+                        $found = true;
+                        break;
+                    }
+                } 
+
+                if (!$found) {
+                    $profileFieldName = $profileField->getName();
+                }
+                ?>
+
+                <?php if (!$profileField->getType()) : ?>
+                    <td><?=$this->escape($profileFieldName) ?></td>
+                <?php else: ?>
+                    <td><b><?=$this->escape($profileFieldName) ?></b></td>
                 <?php endif; ?>
             </tr>
             <?php endforeach; ?>
