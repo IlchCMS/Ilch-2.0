@@ -87,13 +87,16 @@ class Index extends \Ilch\Controller\Admin
 
             $title = trim($this->getRequest()->getPost('title'));
             $text = trim($this->getRequest()->getPost('text'));
+            $paragraph = $this->getRequest()->getPost('paragraph');
 
             if (empty($title)) {
                 $this->addMessage('missingTitle', 'danger');
             } elseif (empty($text)) {
                 $this->addMessage('missingText', 'danger');
+            } elseif (!is_numeric($paragraph) OR $paragraph < 1 OR strpos($paragraph, '.' ) !== false) {
+                $this->addMessage('invalidParagraph', 'danger');
             } else {
-                $model->setParagraph($this->getRequest()->getPost('paragraph'));
+                $model->setParagraph($paragraph);
                 $model->setTitle($title);
                 $model->setText($text);
                 $ruleMapper->save($model);

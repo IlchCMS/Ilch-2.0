@@ -11,6 +11,6 @@ return [
     'text' => 'Text',
     'missingTitle' => 'Title was not filled',
     'missingText' => 'Text was not filled',
-    'sendSuccess' => 'Rule successfull entry',
     'noRules' => 'No rules available',
+    'invalidParagraph' => 'The entered paragraph is invalid.',
 ];

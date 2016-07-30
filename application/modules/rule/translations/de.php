@@ -11,6 +11,6 @@ return [
     'text' => 'Text',
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingText' => 'Text muss ausgefüllt werden',
-    'sendSuccess' => 'Regel erfolgreich eingetragen',
     'noRules' => 'Keine Regeln vorhanden',
+    'invalidParagraph' => 'Der eingegebene Paragraf ist ungültig.',
 ];
