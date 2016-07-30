@@ -10,7 +10,6 @@
         }
         ?>
     </legend>
-    </legend>
     <div class="form-group">
         <label for="paragraph" class="col-lg-2 control-label">
             <?=$this->getTrans('paragraph') ?>:

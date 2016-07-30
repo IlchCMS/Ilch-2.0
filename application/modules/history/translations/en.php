@@ -21,6 +21,5 @@ return [
     'missingDate' => 'Date was not filled',
     'missingTitle' => 'Title was not filled',
     'missingText' => 'Text was not filled',
-    'sendSuccess' => 'History successfully entered',
     'noHistorys' => 'No histories available',
 ];
