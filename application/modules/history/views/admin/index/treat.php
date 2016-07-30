@@ -66,7 +66,7 @@ if ($history != '') {
         </label>
         <div class="col-lg-2">
             <select class="form-control fontawesome-select" name="type" id="type">
-                <option value="" <?php if ($history != '' AND $history->getTyp() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
+                <option value="" <?php if ($history != '' AND $history->getType() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
                 <option value="globe" <?php if ($history != '' AND $history->getType() == 'globe') { echo 'selected="selected"'; } ?>>&#xf0ac; <?=$this->getTrans('globeSelect') ?></option>
                 <option value="idea" <?php if ($history != '' AND $history->getType() == 'idea') { echo 'selected="selected"'; } ?>>&#xf0eb; <?=$this->getTrans('ideaSelect') ?></option>
                 <option value="cap" <?php if ($history != '' AND $history->getType() == 'cap') { echo 'selected="selected"'; } ?>>&#xf19d; <?=$this->getTrans('capSelect') ?></option>
