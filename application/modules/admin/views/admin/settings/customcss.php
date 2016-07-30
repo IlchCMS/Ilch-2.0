@@ -1,15 +1,15 @@
-<link href="<?=$this->getModuleUrl('static/css/coustomcss.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/customcss.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('static/js/codemirror/codemirror.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('static/js/codemirror/addon/fold/foldgutter.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('static/js/codemirror/addon/display/fullscreen.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('static/js/codemirror/addon/hint/show-hint.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuCoustomCSS') ?></legend>
+<legend><?=$this->getTrans('menuCustomCSS') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <div class="col-lg-6">
-            <textarea class="form-control" rows="20" id="coustomCSS" name="coustomCSS" placeholder="Code goes here..."><?=$this->escape($this->get('coustomCSS')) ?></textarea>
+            <textarea class="form-control" rows="20" id="customCSS" name="customCSS" placeholder="Code goes here..."><?=$this->escape($this->get('customCSS')) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar() ?>
@@ -33,7 +33,7 @@
 <script type="text/javascript" src="<?=$this->getModuleUrl('static/js/codemirror/addon/fold/brace-fold.js') ?>"></script>
 <script type="text/javascript" src="<?=$this->getModuleUrl('static/js/codemirror/addon/fold/comment-fold.js') ?>"></script>
 <script type="text/javascript">
-var editor = CodeMirror.fromTextArea(document.getElementById("coustomCSS"), {
+var editor = CodeMirror.fromTextArea(document.getElementById("customCSS"), {
     lineNumbers: true,
     autoCloseBrackets: true,
     styleActiveLine: true,

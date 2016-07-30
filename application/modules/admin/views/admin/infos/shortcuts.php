@@ -40,7 +40,7 @@
     </table>
 </div>
 
-<legend><?=$this->getTrans('keyboardShortcutsCoustumCSS') ?></legend>
+<legend><?=$this->getTrans('keyboardShortcutsCustumCSS') ?></legend>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
@@ -56,31 +56,31 @@
         <tbody>
             <tr>
                 <td><span class="key-shortcut">F11</span></td>
-                <td><?=$this->getTrans('shortcutCoustumCSSFullscreen') ?></td>
+                <td><?=$this->getTrans('shortcutCustumCSSFullscreen') ?></td>
             </tr>
             <tr>
                 <td><span class="key-shortcut"><?=$this->getTrans('keyTab') ?></span></td>
-                <td><?=$this->getTrans('shortcutCoustumCSSLineRight') ?></td>
+                <td><?=$this->getTrans('shortcutCustumCSSLineRight') ?></td>
             </tr>
             <tr>
                 <td><span class="key-shortcut"><?=$this->getTrans('keyShift') ?></span> + <span class="key-shortcut"><?=$this->getTrans('keyTab') ?></span></td>
-                <td><?=$this->getTrans('shortcutCoustumCSSLineLeft') ?></td>
+                <td><?=$this->getTrans('shortcutCustumCSSLineLeft') ?></td>
             </tr>
             <tr>
                 <td><span class="key-shortcut"><?=$this->getTrans('keyCtrl') ?></span> + <span class="key-shortcut"><?=$this->getTrans('keyShift') ?></span> + <span class="key-shortcut">&uarr;</span> / <span class="key-shortcut">&darr;</span></td>
-                <td><?=$this->getTrans('shortcutCoustumCSSMoveUpOrDown') ?></td>
+                <td><?=$this->getTrans('shortcutCustumCSSMoveUpOrDown') ?></td>
             </tr>
             <tr>
                 <td><span class="key-shortcut"><?=$this->getTrans('keyCtrl') ?></span> + <i class="fa fa-mouse-pointer"></i></td>
-                <td><?=$this->getTrans('shortcutCoustumCSSMultiEdit') ?></td>
+                <td><?=$this->getTrans('shortcutCustumCSSMultiEdit') ?></td>
             </tr>
             <tr>
                 <td><span class="key-shortcut"><?=$this->getTrans('keyCtrl') ?></span> + <span class="key-shortcut"><?=$this->getTrans('keyAlt') ?></span> + <span class="key-shortcut">C</span></td>
-                <td><?=$this->getTrans('shortcutCoustumCSStoggleComment') ?></td>
+                <td><?=$this->getTrans('shortcutCustumCSStoggleComment') ?></td>
             </tr>
             <tr>
                 <td><span class="key-shortcut"><?=$this->getTrans('keyCtrl') ?></span> + <span class="key-shortcut"><?=$this->getTrans('keySpace') ?></span></td>
-                <td><?=$this->getTrans('shortcutCoustumCSSAutocomplete') ?></td>
+                <td><?=$this->getTrans('shortcutCustumCSSAutocomplete') ?></td>
             </tr>
         </tbody>
     </table>

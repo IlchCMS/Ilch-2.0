@@ -30,7 +30,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('maintenance_status', '0');
         $databaseConfig->set('maintenance_date', $date->format('Y-m-d H:i:s'));
         $databaseConfig->set('maintenance_text', '<p>Die Seite befindet sich im Wartungsmodus</p>');
-        $databaseConfig->set('coustom_css', '');
+        $databaseConfig->set('custom_css', '');
     }
 
     public function getInstallSql()

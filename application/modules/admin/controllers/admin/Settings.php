@@ -25,10 +25,10 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'maintenance'])
             ],
             [
-                'name' => 'menuCoustomCSS',
+                'name' => 'menuCustomCSS',
                 'active' => false,
                 'icon' => 'fa fa-file-code-o',
-                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'coustomcss'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'customcss'])
             ],
             [
                 'name' => 'menuBackup',
@@ -46,7 +46,7 @@ class Settings extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getActionName() == 'backup') {
             $items[3]['active'] = true;  
-        } elseif ($this->getRequest()->getActionName() == 'coustomcss') {
+        } elseif ($this->getRequest()->getActionName() == 'customcss') {
             $items[2]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'maintenance') {
             $items[1]['active'] = true; 
@@ -143,18 +143,18 @@ HTACCESS;
         $this->getView()->set('maintenanceText', $this->getConfig()->get('maintenance_text'));
     }
 
-    public function coustomcssAction()
+    public function customcssAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuCoustomCSS'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuCustomCSS'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('coustom_css', strip_tags($this->getRequest()->getPost('coustomCSS')));
+            $this->getConfig()->set('custom_css', strip_tags($this->getRequest()->getPost('customCSS')));
 
             $this->addMessage('saveSuccess');
         }
 
-        $this->getView()->set('coustomCSS', $this->getConfig()->get('coustom_css'));
+        $this->getView()->set('customCSS', $this->getConfig()->get('custom_css'));
     }
 
     public function backupAction()

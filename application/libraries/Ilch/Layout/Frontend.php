@@ -152,14 +152,14 @@ class Frontend extends Base
     }
 
     /**
-     * Gets the coustom css.
+     * Gets the custom css.
      *
      * @return string
      */
-    public function getCoustomCSS()
+    public function getCustomCSS()
     {
-        if ($this->getConfigKey('coustom_css') != '') {
-            $html = '<style>'.$this->getConfigKey('coustom_css').'</style>';
+        if ($this->getConfigKey('custom_css') != '') {
+            $html = '<style>'.$this->getConfigKey('custom_css').'</style>';
 
             return $html;
         }
