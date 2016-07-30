@@ -131,10 +131,6 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 </div>
                 <?php
                 foreach ($profileFields as $profileField) :
-                    if($profileField->getType()) {
-                        continue;
-                    }
-
                     $profileFieldName = $profileField->getName();
                     foreach ($profileFieldsTranslation as $profileFieldTranslation) {
                         if($profileField->getId() == $profileFieldTranslation->getFieldId()) {
@@ -142,28 +138,31 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                             break;
                         }
                     }
-
-                    $value = '';
-                    foreach($profileFieldsContent as $profileFieldContent) {
-                        if($profileField->getId() == $profileFieldContent->getFieldId()) {
-                            $value = $this->escape($profileFieldContent->getValue());
-                            break;
-                        }
-                    }
-                ?>
-                <div class="form-group">
-                    <label class="col-lg-2 control-label">
-                        <?=$this->escape($profileFieldName) ?>
-                    </label>
-                    <div class="col-lg-8">
-                       <input type="text"
-                              class="form-control"
-                              name="<?=$this->escape($profileField->getName()) ?>"
-                              placeholder="<?=$value ?>"
-                              value="<?=$value ?>" />
-                    </div>
-                </div>
-                <?php endforeach; ?>
+                    
+                    if(!$profileField->getType()) :
+                        $value = '';
+                        foreach($profileFieldsContent as $profileFieldContent) {
+                            if($profileField->getId() == $profileFieldContent->getFieldId()) {
+                                $value = $this->escape($profileFieldContent->getValue());
+                                break;
+                            }
+                        } ?>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">
+                                <?=$this->escape($profileFieldName) ?>
+                            </label>
+                            <div class="col-lg-8">
+                               <input type="text"
+                                      class="form-control"
+                                      name="<?=$this->escape($profileField->getName()) ?>"
+                                      placeholder="<?=$value ?>"
+                                      value="<?=$value ?>" />
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <legend><?=$this->escape($profileFieldName) ?></legend>
+                    <?php endif;
+                endforeach; ?>
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"
