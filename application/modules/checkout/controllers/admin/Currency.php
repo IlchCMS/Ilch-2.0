@@ -63,8 +63,16 @@ class Currency extends \Ilch\Controller\Admin
 
         $currencyMapper = new CurrencyMapper();
 
-        if ($this->getRequest()->isPost()) {
-
+        if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
+            if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_currencies')) {
+                foreach ($this->getRequest()->getPost('check_currencies') as $id) {
+                    if($currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('checkout_currency')) {
+                        $this->addMessage('currencyInUse', 'danger');
+                        continue;
+                    }
+                    $currencyMapper->deleteCurrencyById($id);
+                }
+            }
         }
 
         $this->getView()->set('currencies', $currencyMapper->getCurrencies());
@@ -80,7 +88,7 @@ class Currency extends \Ilch\Controller\Admin
 
         $id = $this->getRequest()->getParam('id');
 
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             $id = $this->getRequest()->getPost('id');
             $name = $this->getRequest()->getPost('name');
 
@@ -99,6 +107,7 @@ class Currency extends \Ilch\Controller\Admin
         }
 
         $currency = $currencyMapper->getCurrencyById($id);
+
         if (count($currency) > 0) {
             $currency = $currency[0];
         } else {
@@ -110,14 +119,14 @@ class Currency extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        if ($this->getRequest()) {
+        if ($this->getRequest() && $this->getRequest()->isSecure()) {
             $currencyMapper = new CurrencyMapper();
 
             $id = $this->getRequest()->getParam('id');
+
             if($currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('checkout_currency')) {
                 $this->addMessage('currencyInUse', 'danger');
                 $this->redirect(['action' => 'index']);
-                return;
             }
 
             $currencyMapper->deleteCurrencyById($id);
