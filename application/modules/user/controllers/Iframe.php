@@ -18,7 +18,7 @@ class Iframe extends \Ilch\Controller\Frontend
         $mediaMapper = new MediaMapper();
         $pagination = new \Ilch\Pagination();
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('user_picturesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('user_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $lastId = $this->getRequest()->getParam('lastid');
 

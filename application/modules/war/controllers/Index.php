@@ -20,7 +20,7 @@ class Index extends \Ilch\Controller\Frontend
         $pagination = new \Ilch\Pagination();
         $warMapper = new WarMapper();
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('war_warsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('war', $warMapper->getWarList($pagination));

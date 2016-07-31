@@ -33,7 +33,7 @@ class Showunread extends \Ilch\Controller\Frontend
 
             $groupIdsArray = explode(',',implode(',', $groupIds));
 
-            $pagination->setRowsPerPage(empty($this->getConfig()->get('forum_postsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
+            $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
             $pagination->setPage($this->getRequest()->getParam('page'));
 
             $this->getLayout()->getHmenu()

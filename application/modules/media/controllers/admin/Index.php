@@ -70,7 +70,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $pagination = new \Ilch\Pagination();
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('media_mediaPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('media_mediaPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         if ($this->getRequest()->getParam('rows')) {

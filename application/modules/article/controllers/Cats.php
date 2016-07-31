@@ -54,7 +54,7 @@ class Cats extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
                 ->add($articlesCats->getName(), ['action' => 'show', 'id' => $articlesCats->getId()]);
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('article_articlesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('categoryMapper', $categoryMapper);

@@ -38,7 +38,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $id = $this->getRequest()->getParam('id');
         $gallery = $galleryMapper->getGalleryById($id);
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('gallery_picturesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('gallery_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle());

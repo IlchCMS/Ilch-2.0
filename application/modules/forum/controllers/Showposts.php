@@ -24,7 +24,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $topicModel = new ForumTopicModel;
         $pagination = new \Ilch\Pagination();
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('forum_postsPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('forum_postsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('forum_postsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $topicId = (int)$this->getRequest()->getParam('topicid');
