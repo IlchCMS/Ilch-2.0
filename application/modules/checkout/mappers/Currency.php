@@ -21,7 +21,7 @@ class Currency extends \Ilch\Mapper
         $currenciesArray = $this->db()->select('*')
             ->from('checkout_currencies')
             ->where($where)
-            ->order(['currency' => 'ASC'])
+            ->order(['name' => 'ASC'])
             ->execute()
             ->fetchRows();
 

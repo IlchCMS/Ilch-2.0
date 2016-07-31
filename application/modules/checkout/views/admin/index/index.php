@@ -1,3 +1,7 @@
+<?php
+$currency = $this->escape($this->get('currency'));
+?>
+
 <legend><?=$this->getTrans('bookings') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
@@ -53,17 +57,17 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <strong>
-                    <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$this->get('checkout_currency') ; } 
-                    else { echo $this->getTrans('balancetotal'), ': 0 ', $this->get('checkout_currency') ;}
+                    <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$currency ; } 
+                    else { echo $this->getTrans('balancetotal'), ': 0 ', $currency ;}
                     ?>
                 </strong>
                 <br>
-                <?php if ($this->get('amountplus') != '') { echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$this->get('checkout_currency') ; }
-                else { echo $this->getTrans('totalpaid'), ': 0 ', $this->get('checkout_currency') ;}
+                <?php if ($this->get('amountplus') != '') { echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$currency ; }
+                else { echo $this->getTrans('totalpaid'), ': 0 ', $currency ;}
                 ?>
                 <br>
-                <?php if ($this->get('amountminus') != '') { echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$this->get('checkout_currency') ; }
-                else { echo $this->getTrans('totalpaidout'), ': 0 ', $this->get('checkout_currency') ;}
+                <?php if ($this->get('amountminus') != '') { echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$currency ; }
+                else { echo $this->getTrans('totalpaidout'), ': 0 ', $currency ;}
                 ?>
             </div>
         </div>
@@ -76,7 +80,7 @@
                         <?=$this->escape($checkout->getName()) ?>: 
                         <strong>
                             <?=$this->escape($checkout->getAmount()) ?>
-                            <?=$this->get('checkout_currency') ?>
+                            <?=$currency ?>
                         </strong> 
                         <?=$this->getTrans('for') ?>: 
                         <?=$this->escape($checkout->getUsage()) ?>

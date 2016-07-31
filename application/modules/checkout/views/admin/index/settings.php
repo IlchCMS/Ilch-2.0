@@ -10,20 +10,13 @@
         <p><?=$this->getTrans('currencyOfCheckout') ?><br>
         <select name="checkout_currency">
         <?php
-            $currency = [
-                // ISO 4217 code and symbol
-                "EUR (€)",
-                "USD ($)",
-                "GBP (£)",
-            ];
-
-            foreach ($currency as &$value) {
-                if ($this->get('checkout_currency') != $value) {
-                    echo '<option>'.$value.'</option>';
-                } else {
-                    echo '<option selected>'.$value.'</option>';
-                }
+        foreach ($this->get('currencies') as $currency) {
+            if ($this->get('checkout_currency') != $currency->getId()) {
+                echo '<option value="'.$currency->getId().'">'.$this->escape($currency->getName()).'</option>';
+            } else {
+                echo '<option value="'.$currency->getId().'" selected>'.$this->escape($currency->getName()).'</option>';
             }
+        }
         ?>
         </select>
     </div>

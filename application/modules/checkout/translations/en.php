@@ -27,4 +27,10 @@ return [
     'missingUsage' => 'It is required to enter a purpose.',
     'missingAmount' => 'It is required to enter an amount.',
     'invalidAmount' => 'The entered amount is invalid.',
+    'currencies' => 'Currencies',
+    'currency' => 'Currency',
+    'noCurrenciesExist' => 'No currencies exists.',
+    'addCurrency' => 'Add currency',
+    'treatCurrency' => 'Edit currency',
+    'currencyInUse' => 'This currency is currently in use and therefore can not be deleted.',
 ];
