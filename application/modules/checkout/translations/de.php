@@ -33,4 +33,5 @@ return [
     'addCurrency' => 'Währung hinzufügen',
     'treatCurrency' => 'Währung bearbeiten',
     'currencyInUse' => 'Diese Währung wird zurzeit verwendet und kann daher nicht gelöscht werden.',
+    'alreadyExisting' => 'Es existiert bereits eine Währung mit diesem Namen.',
 ];

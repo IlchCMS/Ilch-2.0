@@ -41,10 +41,29 @@ class Currency extends \Ilch\Mapper
         return $currencies;
     }
 
+    /**
+     * Gets the currencies by id.
+     *
+     * @param int $id
+     * @return CurrencyModel[]|array
+     */
     public function getCurrencyById($id)
     {
         $currency = $this->getCurrencies(['id' => $id]);
         return $currency;
+    }
+
+    /**
+     * Checks if a currency with a specific name exists.
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function currencyWithNameExists($name)
+    {
+        return (boolean) $this->db()->select('COUNT(*)', 'checkout_currencies', ['name' => $name])
+            ->execute()
+            ->fetchCell();
     }
 
     /**

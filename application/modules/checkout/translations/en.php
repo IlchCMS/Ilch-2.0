@@ -33,4 +33,5 @@ return [
     'addCurrency' => 'Add currency',
     'treatCurrency' => 'Edit currency',
     'currencyInUse' => 'This currency is currently in use and therefore can not be deleted.',
+    'alreadyExisting' => 'A currency with this name already exists.',
 ];

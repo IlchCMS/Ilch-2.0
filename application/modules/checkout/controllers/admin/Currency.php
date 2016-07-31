@@ -90,10 +90,12 @@ class Currency extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             $id = $this->getRequest()->getPost('id');
-            $name = $this->getRequest()->getPost('name');
+            $name = trim($this->getRequest()->getPost('name'));
 
             if (empty($name)) {
                 $this->addMessage('missingName', 'danger');
+            } elseif ($currencyMapper->currencyWithNameExists($name)) {
+                $this->addMessage('alreadyExisting', 'danger');
             } else {
                 $currencyModel = new CurrencyModel();
 
