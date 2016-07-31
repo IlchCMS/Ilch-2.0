@@ -27,4 +27,11 @@ return [
     'missingUsage' => 'Es muss ein Verwendungszweck eingegeben werden.',
     'missingAmount' => 'Es muss ein Betrag eingegeben werden.',
     'invalidAmount' => 'Die Eingabe für den Betrag ist ungültig.',
+    'currencies' => 'Währungen',
+    'currency' => 'Währung',
+    'noCurrenciesExist' => 'Keine Währungen vorhanden.',
+    'addCurrency' => 'Währung hinzufügen',
+    'treatCurrency' => 'Währung bearbeiten',
+    'currencyInUse' => 'Diese Währung wird zurzeit verwendet und kann daher nicht gelöscht werden.',
+    'alreadyExisting' => 'Es existiert bereits eine Währung mit diesem Namen.',
 ];
