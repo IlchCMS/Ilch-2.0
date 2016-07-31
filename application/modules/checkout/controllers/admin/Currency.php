@@ -59,7 +59,7 @@ class Currency extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('currency'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('currencies'), ['action' => 'index']);
 
         $currencyMapper = new CurrencyMapper();
 
@@ -74,7 +74,7 @@ class Currency extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('currency'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('currencies'), ['action' => 'index']);
 
         $currencyMapper = new CurrencyMapper();
 
