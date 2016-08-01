@@ -28,6 +28,8 @@ class Index extends \Ilch\Controller\Frontend
                 $this->addMessage('missingName', 'danger');
             } elseif (empty($contactEmail)) {
                 $this->addMessage('missingEmail', 'danger');
+            } elseif (!filter_var($contactEmail, FILTER_VALIDATE_EMAIL)) {
+                $this->addMessage('invalidEmail', 'danger');
             } elseif (empty($message)) {
                 $this->addMessage('missingText', 'danger');
             } elseif (empty($_SESSION['captcha']) || $captcha != $_SESSION['captcha']) {
