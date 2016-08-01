@@ -61,7 +61,7 @@ class Gallery extends BaseController
             }
         }
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('gallery_picturesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('gallery_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);

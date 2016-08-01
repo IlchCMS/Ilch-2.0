@@ -504,7 +504,7 @@ class Panel extends BaseController
             }
         }
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('user_picturesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('user_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));
         $this->getView()->set('pagination', $pagination);

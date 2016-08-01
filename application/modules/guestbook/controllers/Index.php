@@ -21,7 +21,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index']);
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('gbook_entriesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gbook_entriesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('gbook_entriesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gbook_entriesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('entries', $guestbookMapper->getEntries(['setfree' => 1], $pagination));

@@ -54,7 +54,7 @@ class Gallery extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
                 ->add($gallery->getTitle(), ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $id]);
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('user_picturesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('user_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('user_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('image', $imageMapper->getImageByGalleryId($id, $pagination));

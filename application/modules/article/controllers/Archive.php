@@ -41,7 +41,7 @@ class Archive extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('article_articlesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('categoryMapper', $categoryMapper);

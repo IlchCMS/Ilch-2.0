@@ -39,7 +39,7 @@ class Enemy extends BaseController
             }
         }
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('war_enemiesPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_enemiesPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('war_enemiesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_enemiesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('enemy', $enemyMapper->getEnemyList($pagination));

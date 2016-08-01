@@ -16,7 +16,7 @@ class Iframe extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
         $pagination = new \Ilch\Pagination();
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('media_mediaPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('media_mediaPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
         $lastId = $this->getRequest()->getParam('lastid');
 
@@ -50,7 +50,7 @@ class Iframe extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
         $pagination = new \Ilch\Pagination();
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('media_mediaPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('media_mediaPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $lastId = $this->getRequest()->getParam('lastid');
@@ -119,7 +119,7 @@ class Iframe extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
         $pagination = new \Ilch\Pagination();
 
-        $pagination->setRowsPerPage(empty($this->getConfig()->get('media_mediaPerPage')) ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
+        $pagination->setRowsPerPage(!$this->getConfig()->get('media_mediaPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('media_mediaPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('pagination', $pagination);
