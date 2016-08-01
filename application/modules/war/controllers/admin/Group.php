@@ -6,23 +6,57 @@
 
 namespace Modules\War\Controllers\Admin;
 
-use Modules\War\Controllers\Admin\Base as BaseController;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Models\Group as GroupModel;
 use Modules\User\Mappers\Group as UserGroupMapper;
 
-class Group extends BaseController
+class Group extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        parent::init();
-        $this->getLayout()->addMenuAction
-        (
+        $items = [
             [
-                'name' => 'menuActionNewGroup',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'treat'])
+                'name' => 'menuWars',
+                'active' => false,
+                'icon' => 'fa fa-shield',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuEnemy',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'enemy', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuGroups',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index']),
+                [
+                    'name' => 'menuActionNewGroup',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'treat'])
+                ]
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
+        ];
+
+        if ($this->getRequest()->getActionName() == 'treat') {
+            $items[2][0]['active'] = true;
+        } else {
+            $items[2]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuWars',
+            $items
         );
     }
 

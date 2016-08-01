@@ -20,26 +20,26 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'manage',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-            ],
-            [
-                'name' => 'menuActionNewLink',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')])
-            ],
-            [
-                'name' => 'menuActionNewCategory',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')])
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'menuActionNewLink',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatLink', 'catId' => $this->getRequest()->getParam('cat_id')])
+                ],
+                [
+                    'name' => 'menuActionNewCategory',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treatCat', 'parentId' => $this->getRequest()->getParam('cat_id')])
+                ]
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treatLink') {
-            $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treatCat') {
-            $items[2]['active'] = true;
+        if ($this->getRequest()->getActionName() == 'treatLink') {
+            $items[0][0]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() == 'treatCat') {
+            $items[0][1]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }

@@ -140,30 +140,27 @@
                                         </a>
                                         <div class="divider"></div>
                                     <?php endif; ?>
-                                        <li>
-                                            <div class="list-group list-group-horizontal">
-                                                <?=$systemModuleHtml ?>
-                                            </div>
-                                            <div class="divider"></div>
-                                            <div class="list-group list-group-horizontal">
-                                                <?=$modulesHtml ?>
-                                            </div>
-                                        </li>
-
+                                    <li>
+                                        <div class="list-group list-group-horizontal">
+                                            <?=$systemModuleHtml ?>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="list-group list-group-horizontal">
+                                            <?=$modulesHtml ?>
+                                        </div>
+                                    </li>
                                 </ul>
                             </li>
                         <?php endif; ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'boxes', 'action' => 'index']) ?>">
-                                    <i class="fa fa-inbox"></i> <?=$this->getTrans('boxes') ?>
+                                    <i class="fa fa-inbox"></i> <?=$this->getTrans('menuBoxes') ?>
                                 </a>
                             </li>
-                        <?php endif; ?>
-                        <?php if ($this->getUser()->isAdmin()): ?>
                             <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'layouts') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'index']) ?>">
-                                    <i class="fa fa-picture-o"></i> <?=$this->getTrans('layouts') ?>
+                                    <i class="fa fa-picture-o"></i> <?=$this->getTrans('menuLayouts') ?>
                                 </a>
                             </li>
                         <?php endif; ?>
@@ -172,18 +169,18 @@
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <li class="<?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') { echo 'active'; } ?>">
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>">
-                                    <i class="fa fa-cogs"></i>
+                                    <i class="fa fa-cogs"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuSettings') ?></span>
                                 </a>
                             </li>
                         <?php endif; ?>
                         <li>
                             <a title="<?=$this->getTrans('openFrontend') ?>" target="_blank" href="<?=$this->getUrl() ?>">
-                                <i class="fa fa-share"></i>
+                                <i class="fa fa-share"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuFrontend') ?></span>
                             </a>
                         </li>
-                        <li class="dropdown">
+                        <li class="dropdown <?php if ($this->getRequest()->getModuleName() == 'admin' &&  $this->getRequest()->getControllerName() == 'infos') { echo 'active'; } ?>">
                             <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                                <i class="fa fa-question-circle"></i> <b class="caret"></b>
+                                <i class="fa fa-question-circle"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuInfos') ?></span> <b class="caret"></b>
                             </a>
                             <ul role="menu" class="dropdown-menu">
                                 <li>
@@ -262,32 +259,39 @@
             <aside id="left-panel">
                 <nav>
                     <ul>
-                        <?php foreach ($this->getMenus() as $key => $items): ?>
-                            <li class="heading"><i class="fa fa-puzzle-piece"></i> <?=$this->getTrans($key) ?></li>
-                            <?php foreach ($items as $key): ?>
-                                <?php $class = ''; ?>
-                                <?php if ($key['active']): ?>
-                                    <?php $class = ' class="active"'; ?>
-                                <?php endif; ?>
-
-                                <li<?=$class ?>>
-                                    <a href="<?=$key['url'] ?>"><i class="<?=$key['icon'] ?>"></i> <?=$this->getTrans($key['name']) ?></a>
-                                </li>
-                            <?php endforeach; ?>
-                        <?php endforeach; ?>
-
-                        <?php $actions = $this->getMenuAction(); ?>
-                        <?php if (!empty($actions)): ?>
-                            <li class="divider"></li>
-                            <?php foreach ($actions as $action): ?>
-                                <li>
-                                    <a href="<?=$action['url'] ?>"><i class="<?=$action['icon'] ?>"></i> <?=$this->getTrans($action['name']) ?></a>
-                                </li>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
+                        <?php
+                        foreach ($this->getMenus() as $vals => $items) {
+                            echo '<li class="heading">
+                                <i class="fa fa-puzzle-piece"></i> '.$this->getTrans($vals).'
+                            </li>';
+                            foreach ($items as $key => $value) {
+                                $class = '';
+                                if ($value['active']) {
+                                    $class = ' class="active"';
+                                }
+                                echo '<li'.$class.'>';
+                                echo '<a href'
+                                . '="'.$value['url'].'"><i class="'.$value['icon'].'"></i> '.$this->getTrans($value['name']).'</a>';
+                                echo '<ul>';
+                                foreach ($value as $keys => $values) {
+                                    if (is_array($values)) {
+                                        $class = '';
+                                        if ($values['active']) {
+                                            $class = ' class="active"';
+                                        }
+                                        echo '<li'.$class.'>';
+                                        echo '<a href="'.$values['url'].'"><i class="'.$values['icon'].'"></i> &nbsp;'.$this->getTrans($values['name']).'</a>';
+                                        echo '</li>';
+                                    }
+                                }
+                                echo '</li>';
+                                echo '</ul>';
+                            }
+                        }
+                        ?>
                     </ul>
                 </nav>
-                <img class="watermark" src="<?=$this->getStaticUrl('img/ilch_logo.png') ?>" />
+                <div class="watermark"></div>
             </aside>
             <!-- LEFT PANEL END -->
         <?php endif; ?>

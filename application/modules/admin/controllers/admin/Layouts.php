@@ -10,21 +10,20 @@ class Layouts extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items =
+        $items = [
             [
-            [
-                    'name' => 'layouts',
-                    'active' => false,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'index'])
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'index'])
             ],
-                [
-                    'name' => 'search',
-                    'active' => false,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'search'])
-                ],
-            ];
+            [
+                'name' => 'search',
+                'active' => false,
+                'icon' => 'fa fa-search',
+                'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'search'])
+            ],
+        ];
 
         if ($this->getRequest()->getActionName() == 'index') {
             $items[0]['active'] = true;
@@ -36,7 +35,7 @@ class Layouts extends \Ilch\Controller\Admin
 
         $this->getLayout()->addMenu
         (
-            'menuSettings',
+            'menuLayouts',
             $items
         );
     }
@@ -44,10 +43,9 @@ class Layouts extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('layouts'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
 
         $layouts = [];
-
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
             $model = new \Modules\Admin\Models\Layout();
             $model->setKey(basename($layoutPath));
@@ -74,22 +72,12 @@ class Layouts extends \Ilch\Controller\Admin
         $this->redirect(['action' => 'index']);
     }
 
-    public function deleteAction()
-    {
-        if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {
-            $this->addMessage('cantDeleteDefaultLayout');
-        } else {
-            removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
-            $moduleMapper = new \Modules\Admin\Mappers\Module();
-            $moduleMapper->delete($this->getRequest()->getParam('key'));
-            $this->addMessage('deleteSuccess');
-        }
-
-        $this->redirect(['action' => 'index']);
-    }
-
     public function searchAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('search'), ['action' => 'search']);
+
         if ($this->getRequest()->isPost('layout')) {
             $transfer = new \Ilch\Transfer();
             $transfer->setZipSavePath(ROOT_PATH.'/updates/');
@@ -117,5 +105,19 @@ class Layouts extends \Ilch\Controller\Admin
             $transfer->install();
             $this->addMessage('Success');
         }
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {
+            $this->addMessage('cantDeleteDefaultLayout');
+        } else {
+            removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
+            $moduleMapper = new \Modules\Admin\Mappers\Module();
+            $moduleMapper->delete($this->getRequest()->getParam('key'));
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 }

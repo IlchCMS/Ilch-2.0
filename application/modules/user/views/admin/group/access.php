@@ -1,4 +1,5 @@
-<form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'access', 'action' => 'save']) ?>"
+<legend><?=$this->getTrans('menuAccess') ?></legend>
+<form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'saveAccess']) ?>"
       method="POST"
       class="form-horizontal"
       role="form"
@@ -16,8 +17,8 @@
                 </option>
                 <?php foreach ($this->get('groups') as $group): ?>
                     <option value="<?=$group->getId() ?>"
-                            <?=((int)$this->get('activeGroupId') == $group->getId()) ? 'selected="selected"' : '' ?>>
-                            <?=$this->escape($group->getName()) ?>
+                        <?=((int)$this->get('activeGroupId') == $group->getId()) ? 'selected="selected"' : '' ?>>
+                        <?=$this->escape($group->getName()) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -127,7 +128,7 @@
 <script>
 $('#groupId').on('change', function() {
     if ($(this).val() != 0) {
-        $('#groupAccessForm').attr('action', '<?=$this->getUrl(['module' => 'user', 'controller' => 'access', 'action' => 'index']) ?>');
+        $('#groupAccessForm').attr('action', '<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'access']) ?>');
         $('#groupAccessForm').submit();
     }
 });

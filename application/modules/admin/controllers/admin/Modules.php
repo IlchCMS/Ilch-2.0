@@ -12,8 +12,7 @@ class Modules extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items =
-            [
+        $items = [
             [
                 'name' => 'menuInstalled',
                 'active' => false,
@@ -29,10 +28,10 @@ class Modules extends \Ilch\Controller\Admin
             [
                 'name' => 'menuSearchModules',
                 'active' => false,
-                'icon' => 'fa fa-folder-open',
+                'icon' => 'fa fa-search',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'searchmodules'])
             ],
-            ];
+        ];
 
         if ($this->getRequest()->getActionName() == 'notinstalled') {
             $items[1]['active'] = true; 

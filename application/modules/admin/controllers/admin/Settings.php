@@ -6,12 +6,13 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Ilch\Transfer as IlchTransfer;
+
 class Settings extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items =
-            [
+        $items = [
             [
                 'name' => 'menuSettings',
                 'active' => false,
@@ -40,16 +41,18 @@ class Settings extends \Ilch\Controller\Admin
                 'name' => 'menuUpdate',
                 'active' => false,
                 'icon' => 'fa fa-refresh',
-                'url' => $this->getLayout()->getUrl(['controller' => 'update', 'action' => 'index'])
-            ],
-            ];
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'update'])
+            ]
+        ];
 
-        if ($this->getRequest()->getActionName() == 'backup') {
-            $items[3]['active'] = true;  
+        if ($this->getRequest()->getActionName() == 'maintenance') {
+            $items[1]['active'] = true;  
         } elseif ($this->getRequest()->getActionName() == 'customcss') {
             $items[2]['active'] = true; 
-        } elseif ($this->getRequest()->getActionName() == 'maintenance') {
-            $items[1]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'backup') {
+            $items[3]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'update') {
+            $items[4]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -67,7 +70,7 @@ class Settings extends \Ilch\Controller\Admin
         $pageMapper = new \Modules\Page\Mappers\Page();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('systemSettings'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
@@ -126,7 +129,8 @@ HTACCESS;
     public function maintenanceAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuMaintenance'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuMaintenance'), ['action' => 'maintenance']);
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('maintenance_mode', $this->getRequest()->getPost('maintenanceMode'));
@@ -146,7 +150,8 @@ HTACCESS;
     public function customcssAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuCustomCSS'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCustomCSS'), ['action' => 'customcss']);
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('custom_css', strip_tags($this->getRequest()->getPost('customCSS')));
@@ -157,8 +162,72 @@ HTACCESS;
         $this->getView()->set('customCSS', $this->getConfig()->get('custom_css'));
     }
 
+    public function updateAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuUpdate'), ['action' => 'update']);
+
+        $doUpdate = $this->getRequest()->getParam('doupdate');
+        $doSave = $this->getRequest()->getParam('dosave');
+        $version = $this->getConfig()->get('version');
+        $this->getView()->set('version', $version);
+
+        $update = new IlchTransfer();
+        $update->setTransferUrl($this->getConfig()->get('master_update_url'));
+        $update->setVersionNow($version);
+        $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
+        $update->setCurlOpt(CURLOPT_FAILONERROR, true);
+        $update->setZipSavePath(ROOT_PATH.'/updates/');
+
+        $result = $update->getVersions();
+        if ($result == '') {
+            $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
+        }
+
+        $this->getView()->set('versions', $result);
+
+        if ($update->newVersionFound() == true) {
+            $update->setDownloadUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip');
+            $update->setDownloadSignatureUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip-signature.sig');
+            $newVersion = $update->getNewVersion();
+            $this->getView()->set('foundNewVersions', true);
+            $this->getView()->set('newVersion', $newVersion);
+
+            if ($doSave == true) {
+                if (!$update->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                    // Certificate is missing or expired.
+                    $this->getView()->set('certMissingOrExpired', true);
+                    return false;
+                }
+                $update->save();
+                $signature = file_get_contents($update->getZipFile().'-signature.sig');
+                $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
+                if (!$update->verifyFile($pubKeyfile, $update->getZipFile(), $signature)) {
+                    // Verification failed. Drop the potentially bad files.
+                    unlink($update->getZipFile());
+                    unlink($update->getZipFile().'-signature.sig');
+                    $this->getView()->set('verificationFailed', true);
+                }
+            }
+            if ($doUpdate == true) {
+                $update->update();
+                $this->getView()->set('content', $update->getContent());
+                //$this->getConfig()->set('version', $newVersion);
+                // Cleanup after the update was installed.
+                unlink($update->getZipFile());
+                unlink($update->getZipFile().'-signature.sig');
+            }
+        } else {
+            $this->getView()->set('versions', '');
+        }
+    }
+
     public function backupAction()
     {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuBackup'), ['action' => 'backup']);
         
     }
 }

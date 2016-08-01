@@ -5,8 +5,8 @@
  */
 
 return [
-    'menuActionNewUser' => 'Create new user',
-    'menuActionNewGroup' => 'Create new group',
+    'menuActionNewUser' => 'Create user',
+    'menuActionNewGroup' => 'Create group',
 
     'menuUser' => 'User',
     'menuGroup' => 'Groups',
@@ -266,7 +266,7 @@ return [
     'editProfileField' => 'Edit profile-field',
     'addProfileField' => 'Create profile-field',
     'newProfileFieldMsg' => 'New profile-field successfully added',
-    'menuActionNewProfileField' => 'Create new profile-field',
+    'menuActionNewProfileField' => 'Create profile-field',
     'profileFieldInfoText' => 'Created profile-fields and categories can be sorted by drag and drop.',
     'profileFieldTransInfoText' => 'Translations can be added with the plus-button and deleted with the minus-button or by deleting the text.',
     'translationAlreadyExisting' => 'There can only be one translation per language.',

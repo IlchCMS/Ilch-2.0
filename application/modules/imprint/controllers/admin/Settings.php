@@ -20,7 +20,7 @@ class Settings extends \Ilch\Controller\Admin
             [
                 'name' => 'settings',
                 'active' => true,
-                'icon' => 'fa fa-plus-circle',
+                'icon' => 'fa fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

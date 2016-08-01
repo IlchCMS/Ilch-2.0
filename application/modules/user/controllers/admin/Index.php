@@ -6,7 +6,6 @@
 
 namespace Modules\User\Controllers\Admin;
 
-use Modules\User\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\User as UserModel;
@@ -18,18 +17,53 @@ use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 /**
  * Handles action for the main admin configuration page.
  */
-class Index extends BaseController
+class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        parent::init();
-        $this->getLayout()->addMenuAction
-        (
+        $items = [
             [
-                'name' => 'menuActionNewUser',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'menuActionNewUser',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                ]
+            ],
+            [
+                'name' => 'menuGroup',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'group', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuProfileFields',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url'  => $this->getLayout()->getUrl(['controller' => 'profilefields', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
+        ];
+
+        if ($this->getRequest()->getActionName() == 'treat') {
+            $items[0][0]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuUser',
+            $items
         );
     }
 

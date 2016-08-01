@@ -7,11 +7,34 @@
 namespace Modules\Gallery\Controllers\Admin;
 
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
-use Modules\Gallery\Controllers\Admin\Base as BaseController;
 use Modules\Gallery\Mappers\Image as ImageMapper;
 
-class Index extends BaseController
+class Index extends \Ilch\Controller\Admin
 {
+    public function init()
+    {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => true,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
+        $this->getLayout()->addMenu
+        (
+            'menuGallery',
+            $items
+        );
+    }
+
     public function indexAction() 
     {
         $galleryMapper = new GalleryMapper();

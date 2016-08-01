@@ -23,7 +23,7 @@ class Index extends \Ilch\Controller\Admin
             [
                 'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-plus-circle',
+                'icon' => 'fa fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];

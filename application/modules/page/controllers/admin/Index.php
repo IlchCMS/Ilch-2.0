@@ -18,18 +18,18 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'manage',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-            ],
-            [
-                'name' => 'add',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                ]
             ]
         ];
 
         if ($this->getRequest()->getActionName() == 'treat') {
-            $items[1]['active'] = true;
+            $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
@@ -43,11 +43,11 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $pageMapper = new PageMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
-
-        $pageMapper = new PageMapper();
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_pages')) {
             foreach ($this->getRequest()->getPost('check_pages') as $pageId) {
@@ -77,20 +77,13 @@ class Index extends \Ilch\Controller\Admin
 
     public function treatAction()
     {
+        $pageMapper = new PageMapper();
+
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
-        } else {
-            $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
-        }
 
-        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
-        $pageMapper = new PageMapper();
-
-        if ($this->getRequest()->getParam('id')) {
             if ($this->getRequest()->getParam('locale') == '') {
                 $locale = '';
             } else {
@@ -98,10 +91,11 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $this->getView()->set('page', $pageMapper->getPageByIdLocale($this->getRequest()->getParam('id'), $locale));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
-        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
 
         if ($this->getRequest()->isPost()) {
             $model = new PageModel();
@@ -126,5 +120,9 @@ class Index extends \Ilch\Controller\Admin
 
             $this->redirect(['action' => 'index']);
         }
+
+        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
+        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
+        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
     }
 }

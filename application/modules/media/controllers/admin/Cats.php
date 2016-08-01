@@ -12,44 +12,49 @@ class Cats extends \Ilch\Controller\Admin
 {
     public function init()
     {
+        $items = [
+            [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+            ],
+            [
+                'name' => 'cats',
+                'active' => false,
+                'icon' => 'fa fa-list',
+                'url'  => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url'  => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'new'])
+                ]
+            ],
+            [
+                'name' => 'import',
+                'active' => false,
+                'icon' => 'fa fa-download',
+                'url'  => $this->getLayout()->getUrl(['controller' => 'import', 'action' => 'index'])
+            ],
+            [
+                'name' => 'settings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
+            ]
+        ];
+
+        if ($this->getRequest()->getControllerName() == 'cats' AND ($this->getRequest()->getActionName() == 'new' OR $this->getRequest()->getActionName() == 'treat')) {
+            $items[1][0]['active'] = true;
+        } else {
+            $items[1]['active'] = true;
+        }
+
         $this->getLayout()->addMenu
         (
             'menuMedia',
-            [
-                [
-                    'name' => 'media',
-                    'active' => false,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'cats',
-                    'active' => true,
-                    'icon' => 'fa fa-list',
-                    'url'  => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'import',
-                    'active' => false,
-                    'icon' => 'fa fa-download',
-                    'url'  => $this->getLayout()->getUrl(['controller' => 'import', 'action' => 'index'])
-                ],
-                [
-                    'name' => 'settings',
-                    'active' => false,
-                    'icon' => 'fa fa-cogs',
-                    'url'  => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
-                ]
-            ]
-        );
-
-        $this->getLayout()->addMenuAction
-        (
-            [
-                'name' => 'menuActionAddNewCat',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'new'])
-            ]
+            $items
         );
     }
 
@@ -74,12 +79,12 @@ class Cats extends \Ilch\Controller\Admin
 
     public function newAction() 
     {
+        $mediaMapper = new MediaMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('cats'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('catNew'), ['action' => 'new']);
-
-        $mediaMapper = new MediaMapper();
+                ->add($this->getTranslator()->trans('add'), ['action' => 'new']);
 
         if ($this->getRequest()->getPost('save')) {
             foreach ($this->getRequest()->getPost('title_option') as $catTitle) {
@@ -89,7 +94,7 @@ class Cats extends \Ilch\Controller\Admin
                     $mediaMapper->saveCat($model);
                 }
             }
-            $this->addMessage('Success');
+            $this->addMessage('saveSuccess');
             $this->redirect(['action' => 'index']);
         }
     }
@@ -125,13 +130,18 @@ class Cats extends \Ilch\Controller\Admin
         $mediaMapper = new MediaMapper();
         $catId = (int)$this->getRequest()->getParam('id');
 
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('media'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('cats'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $catId]);
+
         if ($this->getRequest()->getPost('save') && $this->getRequest()->getPost('title_treat')) {
             $model = new \Modules\Media\Models\Media();
             $model->setCatId($catId);
             $model->setCatName($this->getRequest()->getPost('title_treat'));
             $mediaMapper->treatCat($model);
 
-            $this->addMessage('Success');
+            $this->addMessage('saveSuccess');
             $this->redirect(['action' => 'index']);
         }
 

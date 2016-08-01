@@ -13,35 +13,40 @@ class Boxes extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $this->getLayout()->addMenu
-        (
-            'menuBox',
+        $items = [
             [
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'index']),
                 [
-                    'name' => 'menuBoxes',
-                    'active' => true,
-                    'icon' => 'fa fa-th-list',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'index'])
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'treat'])
                 ],
             ]
-        );
+        ];
 
-        $this->getLayout()->addMenuAction
+        if ($this->getRequest()->getActionName() == 'treat') {
+            $items[0][0]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
         (
-            [
-                'name' => 'menuActionNewBox',
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'treat'])
-            ]
+            'menuBoxes',
+            $items
         );
     }
 
     public function indexAction()
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('boxes'), ['action' => 'index']);
-
         $boxMapper = new BoxMapper();
+
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_boxes')) {
             foreach ($this->getRequest()->getPost('check_boxes') as $boxId) {
@@ -68,38 +73,21 @@ class Boxes extends \Ilch\Controller\Admin
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
     }
 
-    /**
-     * Deleting a box.
-     *
-     * If the user has no rights to do so, just redirect to index.
-     */
-    public function deleteAction()
-    {
-        $user = \Ilch\Registry::get('user');
-
-        if ($user->hasAccess('box_'.$this->getRequest()->getParam('id'))
-                && $this->getRequest()->isSecure()) {
-            $boxMapper = new BoxMapper();
-            $boxMapper->delete($this->getRequest()->getParam('id'));
-        }
-
-        $this->redirect(['action' => 'index']);
-    }
-
     public function treatAction()
     {
-        if ($this->getRequest()->getParam('id') !== null) {
+        $boxMapper = new BoxMapper();
+
+        if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+
             $user = \Ilch\Registry::get('user');
 
             if (!$user->hasAccess('box_'.$this->getRequest()->getParam('id'))) {
                 $this->redirect(['action' => 'index']);
             }
-        }
 
-        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
-        $boxMapper = new BoxMapper();
-
-        if ($this->getRequest()->getParam('id')) {
             if ($this->getRequest()->getParam('locale') == '') {
                 $locale = '';
             } else {
@@ -107,10 +95,11 @@ class Boxes extends \Ilch\Controller\Admin
             }
 
             $this->getView()->set('box', $boxMapper->getBoxByIdLocale($this->getRequest()->getParam('id'), $locale));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
-
-        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
-        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
 
         if ($this->getRequest()->isPost()) {
             $model = new BoxModel();
@@ -132,5 +121,26 @@ class Boxes extends \Ilch\Controller\Admin
 
             $this->redirect(['action' => 'index']);
         }
+
+        $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
+        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
+        $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+    }
+
+    /**
+     * Deleting a box.
+     *
+     * If the user has no rights to do so, just redirect to index.
+     */
+    public function deleteAction()
+    {
+        $user = \Ilch\Registry::get('user');
+
+        if ($user->hasAccess('box_'.$this->getRequest()->getParam('id')) && $this->getRequest()->isSecure()) {
+            $boxMapper = new BoxMapper();
+            $boxMapper->delete($this->getRequest()->getParam('id'));
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 }

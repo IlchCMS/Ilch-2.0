@@ -22,22 +22,20 @@ class Index extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
-                'name' => 'accountdata',
-                'active' => false,
-                'icon' => 'fa fa-cogs',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'settings'])
-            ],
-            [
                 'name' => 'currencies',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
+            ],
+            [
+                'name' => 'settings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'settings'])
             ]
         ];
 
         if ($this->getRequest()->getActionName() == 'settings') {
-            $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'currency') {
             $items[2]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -52,13 +50,13 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
-
         $ilchdate = new IlchDate;
         $checkoutMapper = new CheckoutMapper();
         $currencyMapper = new CurrencyMapper();
+
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             $name = $this->getRequest()->getPost('name');
@@ -86,28 +84,24 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $checkout = $checkoutMapper->getEntries();
-        $amount = $checkoutMapper->getAmount();
-        $amountplus = $checkoutMapper->getAmountPlus();
-        $amountminus = $checkoutMapper->getAmountMinus();
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkout_currency'))[0];
 
-        $this->getView()->set('checkout', $checkout);
+        $this->getView()->set('checkout', $checkoutMapper->getEntries());
         $this->getView()->set('checkoutdate', $ilchdate->toDb());
-        $this->getView()->set('amount', $amount);
-        $this->getView()->set('amountplus', $amountplus);
-        $this->getView()->set('amountminus', $amountminus);
+        $this->getView()->set('amount', $checkoutMapper->getAmount());
+        $this->getView()->set('amountplus', $checkoutMapper->getAmountPlus());
+        $this->getView()->set('amountminus', $checkoutMapper->getAmountMinus());
         $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
         $this->getView()->set('currency', $currency->getName());
     }
 
     public function settingsAction()
     {
+        $currencyMapper = new CurrencyMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'settings']);
-
-        $currencyMapper = new CurrencyMapper();
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('checkout_contact', $this->getRequest()->getPost('checkout_contact'));

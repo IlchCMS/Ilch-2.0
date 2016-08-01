@@ -5,8 +5,8 @@
  */
 
 return [
-    'menuActionNewUser' => 'Neuen Benutzer hinzufügen',
-    'menuActionNewGroup' => 'Neue Gruppe hinzufügen',
+    'menuActionNewUser' => 'Benutzer hinzufügen',
+    'menuActionNewGroup' => 'Gruppe hinzufügen',
 
     'menuUser' => 'Benutzer',
     'menuGroup' => 'Gruppen',
@@ -266,7 +266,7 @@ return [
     'editProfileField' => 'Profil-Feld editieren',
     'addProfileField' => 'Profil-Feld hinzufügen',
     'newProfileFieldMsg' => 'Neues Profil-Feld erfolgreich hinzugefügt',
-    'menuActionNewProfileField' => 'Neues Profil-Feld hinzufügen',
+    'menuActionNewProfileField' => 'Profil-Feld hinzufügen',
     'profileFieldInfoText' => 'Erstellte Profil-Felder oder Kategorien können durch ziehen und ablegen sortiert werden.',
     'profileFieldTransInfoText' => 'Übersetzungen können mit der Plus-Schaltfläche hinzugefügt und mit der Minus-Schaltfläche oder durch das Löschen des Textes gelöscht werden.',
     'translationAlreadyExisting' => 'Es kann nur eine Übersetzung pro Sprache angelegt werden.',

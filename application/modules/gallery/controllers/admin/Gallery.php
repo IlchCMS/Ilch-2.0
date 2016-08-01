@@ -8,20 +8,36 @@ namespace Modules\Gallery\Controllers\Admin;
 
 use Modules\Gallery\Mappers\Image as ImageMapper;
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
-use Modules\Gallery\Controllers\Admin\Base as BaseController;
 
-class Gallery extends BaseController
+class Gallery extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        parent::init();
-        $this->getLayout()->addMenuAction
-        (
+        $items = [
             [
-                'name' => 'menuActionGalleryInsertImage',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => 'javascript:media();'
+                'name' => 'manage',
+                'active' => true,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'menuActionGalleryInsertImage',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => 'javascript:media();'
+                ]
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
+        ];
+
+        $this->getLayout()->addMenu
+        (
+            'menuGallery',
+            $items
         );
     }
 

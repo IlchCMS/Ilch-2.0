@@ -25,13 +25,13 @@ class Cats extends \Ilch\Controller\Admin
                 'name' => 'menuCats',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
-            ],
-            [
-                'name' => 'add',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
+                ]
             ],
             [
                 'name' => 'menuSettings',
@@ -44,9 +44,7 @@ class Cats extends \Ilch\Controller\Admin
         if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'index') {
             $items[1]['active'] = true;
         } elseif ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'treat') {
-            $items[2]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'settings' AND $this->getRequest()->getActionName() == 'index') {
-            $items[3]['active'] = true;
+            $items[1][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
@@ -123,7 +121,7 @@ class Cats extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $articleMapper = new ArticleMapper();
 
-            if (empty($articleMapper->getArticlesByCats($this->getRequest()->getParam('id')))) {
+            if ($articleMapper->getArticlesByCats($this->getRequest()->getParam('id')) == '') {
                 $categoryMapper = new CategoryMapper();
                 $categoryMapper->delete($this->getRequest()->getParam('id'));
 

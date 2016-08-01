@@ -19,7 +19,13 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'manage',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                ]
             ],
             [
                 'name' => 'menuCats',
@@ -28,25 +34,15 @@ class Index extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
             ],
             [
-                'name' => 'add',
+                'name' => 'settings',
                 'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
-            ],
-            [
-                'name' => 'menuSettings',
-                'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'index') {
-            $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
-            $items[2]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'settings' AND $this->getRequest()->getActionName() == 'index') {
-            $items[3]['active'] = true;
+        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
+            $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
@@ -77,16 +73,6 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('articles', $articleMapper->getArticleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
-    }
-
-    public function deleteAction()
-    {
-        if ($this->getRequest()->isSecure()) {
-            $articleMapper = new ArticleMapper();
-            $articleMapper->delete($this->getRequest()->getParam('id'));
-        }
-
-        $this->redirect(['action' => 'index']);
     }
 
     public function treatAction()
@@ -143,5 +129,15 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $articleMapper = new ArticleMapper();
+            $articleMapper->delete($this->getRequest()->getParam('id'));
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 }

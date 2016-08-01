@@ -18,18 +18,18 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'manage',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
-            ],
-            [
-                'name' => 'add',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                ]
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
-            $items[1]['active'] = true;
+        if ($this->getRequest()->getActionName() == 'treat') {
+            $items[0][0]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
@@ -43,11 +43,11 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $historyMapper = new HistoryMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuHistorys'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
-
-        $historyMapper = new HistoryMapper();
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -57,21 +57,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $entries = $historyMapper->getEntries();
-
-        $this->getView()->set('entries', $entries);
-    }
-
-    public function delAction()
-    {
-        if ($this->getRequest()->isSecure()) {
-            $historyMapper = new HistoryMapper();
-            $historyMapper->delete($this->getRequest()->getParam('id'));
-
-            $this->addMessage('deleteSuccess');
-        }
-
-        $this->redirect(['action' => 'index']);
+        $this->getView()->set('entries', $historyMapper->getEntries());
     }
 
     public function treatAction()
@@ -122,5 +108,17 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
         }
+    }
+
+    public function delAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $historyMapper = new HistoryMapper();
+            $historyMapper->delete($this->getRequest()->getParam('id'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 }

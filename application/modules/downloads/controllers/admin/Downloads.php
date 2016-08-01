@@ -8,20 +8,36 @@ namespace Modules\Downloads\Controllers\Admin;
 
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
-use Modules\Downloads\Controllers\Admin\Base as BaseController;
 
-class Downloads extends BaseController
+class Downloads extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        parent::init();
-        $this->getLayout()->addMenuAction
-        (
+        $items = [
             [
-                'name' => 'menuActionDownloadsInsertFile',
-                'icon' => 'fa fa-plus-circle',
-                'url'  => 'javascript:media();'
+                'name' => 'manage',
+                'active' => true,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'menuActionDownloadsInsertFile',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url'  => 'javascript:media();'
+                ]
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
+        ];
+
+        $this->getLayout()->addMenu
+        (
+            'menuDownloads',
+            $items
         );
     }
 
@@ -37,6 +53,10 @@ class Downloads extends BaseController
         $downloadsMapper = new DownloadsMapper();
         $id = $this->getRequest()->getParam('id');
         $downloadsTitle = $downloadsMapper->getDownloadsById($id);
+
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('downloads'), ['controller' => 'index', 'action' => 'index'])
+                ->add($this->getTranslator()->trans($downloadsTitle->getTitle()), ['action' => 'treatdownloads', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
                 foreach ($this->getRequest()->getPost('check_downloads') as $fileId) {

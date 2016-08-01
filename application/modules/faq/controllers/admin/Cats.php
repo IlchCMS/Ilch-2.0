@@ -25,22 +25,20 @@ class Cats extends \Ilch\Controller\Admin
                 'name' => 'menuCats',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index'])
-            ],
-            [
-                'name' => 'add',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'index']),
+                [
+                    'name' => 'add',
+                    'active' => false,
+                    'icon' => 'fa fa-plus-circle',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'cats', 'action' => 'treat'])
+                ]
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() != 'treat') {
-            $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'treat') {
-            $items[2]['active'] = true;
+        if ($this->getRequest()->getActionName() == 'treat') {
+            $items[1][0]['active'] = true;
         } else {
-            $items[0]['active'] = true;
+            $items[1]['active'] = true;
         }
 
         $this->getLayout()->addMenu

@@ -7,20 +7,42 @@
 namespace Modules\Downloads\Controllers\Admin;
 
 use Modules\Downloads\Mappers\File as FileMapper;
-use Modules\Downloads\Controllers\Admin\Base as BaseController;
 
-class File extends BaseController
+class File extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        parent::init();
-        $this->getLayout()->addMenuAction
-        (
+        $items = [
             [
-                'name' => 'menuDownloadsBack',
-                'icon' => 'fa fa-arrow-left',
-                'url'  => $this->getLayout()->getUrl(['controller' => 'downloads', 'action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')])
+                'name' => 'manage',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                [
+                    'name' => 'menuDownloadsBack',
+                    'active' => false,
+                    'icon' => 'fa fa-arrow-left',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'downloads', 'action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('downloads')])
+                ]
+            ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
+        ];
+
+        if ($this->getRequest()->getActionName() == 'treatdownloads') {
+            $items[0][0]['active'] = true;
+        } else {
+            $items[0]['active'] = true;
+        }
+
+        $this->getLayout()->addMenu
+        (
+            'menuDownloads',
+            $items
         );
     }
 

@@ -7,33 +7,26 @@
 namespace Modules\Downloads\Controllers\Admin;
 
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
-use Modules\Downloads\Controllers\Admin\Base as BaseController;
 use Modules\Downloads\Mappers\File as FileMapper;
 
-class Index extends BaseController
+class Index extends \Ilch\Controller\Admin
 {
     public function init()
     {
         $items = [
             [
-                'name' => 'menuDownloads',
-                'active' => false,
+                'name' => 'manage',
+                'active' => true,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
                 'name' => 'menuSettings',
                 'active' => false,
-                'icon' => 'fa fa-th-list',
+                'icon' => 'fa fa-cogs',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
-
-        if ($this->getRequest()->getControllerName() == 'settings' AND $this->getRequest()->getActionName() == 'index') {
-            $items[1]['active'] = true;
-        } else {
-            $items[0]['active'] = true;
-        }
 
         $this->getLayout()->addMenu
         (

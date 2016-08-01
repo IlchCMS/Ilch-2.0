@@ -22,25 +22,11 @@ class Receiver extends \Ilch\Controller\Admin
             ],
             [
                 'name' => 'receiver',
-                'active' => false,
+                'active' => true,
                 'icon' => 'fa fa-th-list',
                 'url' => $this->getLayout()->getUrl(['controller' => 'receiver', 'action' => 'index'])
-            ],
-            [
-                'name' => 'add',
-                'active' => false,
-                'icon' => 'fa fa-plus-circle',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
             ]
         ];
-
-        if ($this->getRequest()->getControllerName() == 'receiver') {
-            $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'index' AND $this->getRequest()->getActionName() == 'treat') {
-            $items[2]['active'] = true;
-        } else {
-            $items[0]['active'] = true;
-        }
 
         $this->getLayout()->addMenu
         (
