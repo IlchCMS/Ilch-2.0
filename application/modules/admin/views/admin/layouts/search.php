@@ -1,3 +1,4 @@
+<legend><?=$this->getTrans('search') ?></legend>
 <?php
 $json = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
 $datas = json_decode($json);
@@ -7,13 +8,12 @@ if (empty($datas)) {
     return;
 }
 
-foreach ($datas as $data) : ?>
-
+foreach ($datas as $data): ?>
     <div class="row">
         <div class="col-sm-4">
             <div class="product-template" itemscope="" itemtype="http://schema.org/Product">
                 <figure>
-                <img class="img-responsive" src="<?=$data->thumb?>" alt="Corlate  - Free Responsive Business HTML Template" itempro="image" width="100%">
+                    <img class="img-responsive" src="<?=$data->thumb?>" alt="<?=$data->name?>" itempro="image" width="100%">
                 </figure>
                 <form method="POST" action="">
                     <?=$this->getTokenField() ?>
@@ -22,5 +22,4 @@ foreach ($datas as $data) : ?>
             </div>
         </div>
     </div>
-
 <?php endforeach; ?>

@@ -1,6 +1,6 @@
+<legend><?=$this->getTrans('manage') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <legend><?=$this->getTrans('layouts') ?></legend>
         <?php $i = 0; ?>
             <?php foreach ($this->get('layouts') as $layout): ?>
                 <?php if ($i !== 0 && $i % 3 == 0): ?>

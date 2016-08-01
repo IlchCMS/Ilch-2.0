@@ -121,7 +121,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_groups_access` (
                   `group_id` INT(11) NOT NULL,
                   `page_id` INT(11) DEFAULT 0,
-                  `module_key` VARCHAR(255) NOT NULL,
+                  `module_key` VARCHAR(255) DEFAULT 0,
                   `article_id` INT(11) DEFAULT 0,
                   `box_id` INT(11) DEFAULT 0,
                   `access_level` INT(11) DEFAULT 0,

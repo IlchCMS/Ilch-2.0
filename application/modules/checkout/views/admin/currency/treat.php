@@ -1,14 +1,15 @@
-<?php
-    $currency = $this->get('currency');
-?>
+<?php $currency = $this->get('currency'); ?>
 
+<legend>
+    <?php if ($this->getRequest()->getParam("id") == 0) {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <?php if ($this->getRequest()->getParam("id") == 0) : ?>
-        <legend><?=$this->getTrans('addCurrency') ?></legend>
-    <?php else: ?>
-        <legend><?=$this->getTrans('treatCurrency') ?></legend>
-    <?php endif; ?>
     <div class="form-group">
         <div class="col-lg-4">
             <input class="form-control"
@@ -25,7 +26,7 @@
                    type="text"
                    name="id"
                    id="id"
-                   value="<?=$this->escape($currency->getId())?>" />
+                   value="<?=$this->escape($currency->getId()) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

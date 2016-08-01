@@ -124,11 +124,10 @@ class Translator
      */
     public function getLocaleList()
     {
-        return
-            [
+        return [
             'en_EN' => 'English',
             'de_DE' => 'German'
-            ];
+        ];
     }
 
     /**

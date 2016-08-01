@@ -1,6 +1,4 @@
-<?php
-$currencies = $this->get('currencies');
-?>
+<?php $currencies = $this->get('currencies'); ?>
 
 <legend><?=$this->getTrans('currencies') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">

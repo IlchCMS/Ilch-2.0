@@ -11,16 +11,16 @@ if ($history != '') {
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
+<legend>
+    <?php if ($history != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <legend>
-        <?php if ($history != '') {
-            echo $this->getTrans('edit');
-        } else {
-            echo $this->getTrans('add');
-        }
-        ?>
-    </legend>
     <div class="form-group">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:

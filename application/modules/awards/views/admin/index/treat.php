@@ -10,15 +10,16 @@ if ($awards != '') {
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
+<legend>
+    <?php if ($awards != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <legend>
-        <?php if ($this->get('awards') != ''): ?>
-            <?=$this->getTrans('edit') ?>
-        <?php else: ?>
-            <?=$this->getTrans('add') ?>
-        <?php endif; ?>
-    </legend>
     <div class="form-group">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:

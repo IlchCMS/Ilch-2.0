@@ -50,8 +50,8 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_gallery_items` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `gallery_id` INT(11) NOT NULL,
-                  `sort` INT(11) NOT NULL,
-                  `parent_id` INT(11) NOT NULL,
+                  `sort` INT(11) NULL DEFAULT 0,
+                  `parent_id` INT(11) NULL DEFAULT 0,
                   `type` INT(11) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,

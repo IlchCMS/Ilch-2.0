@@ -11,9 +11,6 @@ use Modules\User\Mappers\User as UserMapper;
 
 /**
  * Handles the init for the user module.
- *
- * @copyright Ilch 2.0
- * @package ilch
  */
 class Base extends \Ilch\Controller\Frontend
 {
