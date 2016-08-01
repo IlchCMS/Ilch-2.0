@@ -21,4 +21,5 @@ return [
     'invalidCaptcha' => 'Captcha is false',
     'captchaRead' => 'Not readable? Change text!',
     'addButton' => 'Send',
+    'invalidEmail' => 'The e-mail address is invalid.',
 ];

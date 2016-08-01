@@ -92,6 +92,8 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('missingName', 'danger');
             } elseif (empty($email)) {
                 $this->addMessage('missingEmail', 'danger');
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->addMessage('invalidEmail', 'danger');
             } else {
                 $model = new ReceiverModel();
 
