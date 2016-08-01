@@ -99,7 +99,7 @@ class Gallery extends \Ilch\Controller\Admin
             $model->setImageDesc($imageDesc);
             $imageMapper->saveImageTreat($model);
 
-            $this->addMessage('Success');
+            $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('image', $imageMapper->getImageById($id));

@@ -40,8 +40,8 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_gallery_imgs` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `image_id` VARCHAR(150) NOT NULL,
-                  `image_title` VARCHAR(255) NOT NULL,
-                  `image_description` VARCHAR(255) NOT NULL,
+                  `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
@@ -49,7 +49,7 @@ class Config extends \Ilch\Config\Install
                 
                 CREATE TABLE IF NOT EXISTS `[prefix]_gallery_items` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `gallery_id` INT(11) NOT NULL,
+                  `gallery_id` INT(11) NOT NULL DEFAULT 0,
                   `sort` INT(11) NULL DEFAULT 0,
                   `parent_id` INT(11) NULL DEFAULT 0,
                   `type` INT(11) NOT NULL,
