@@ -4,35 +4,15 @@
     padding-right: 15px !important;
 }
 
-.container {
-    width: 700px;
-}
 .install_container {
-    margin-top: 85px;
-    min-height: 0px;
-    margin-bottom: -20px;
-}
-.adminLogin {
-    text-align: right;
-}
-.save_box {
-    padding: 10px;
-}
-.maintranceHead {
-    position: relative;
-    margin-top: -94px;
-    right: -5%;
-    float: right;
-    font-size: 32px;
-    color: #BBB;
+    padding: 40px 40px;
+    min-height: 250px;
 }
 
 .countdownHead {
     text-align: center;
     font-weight: bold;
     font-size: 18px;
-    margin-top: -40px;
-    padding: 5px;
 }
 .countdown {
     position: relative;

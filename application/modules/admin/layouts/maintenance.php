@@ -3,6 +3,7 @@ $config = \Ilch\Registry::get('config');
 $translator = new \Ilch\Translator();
 $translator->load(APPLICATION_PATH.'/modules/admin/translations/');
 $maintenanceTime = $config->get('maintenance_date');
+$version = $config->get('version');
 $date = new \Ilch\Date();
 ?>
 
@@ -33,77 +34,81 @@ $date = new \Ilch\Date();
         <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.js') ?>"></script>
     </head>
     <body>
-        <div class="container install_container">
-            <img class="logo" src="<?=$this->getStaticUrl('img/ilch_logo.png'); ?>" />
-            <div class="maintranceHead"><?=$translator->trans('maintenanceMode') ?></div>
-            <div class="countdownHead"><?=$translator->trans('maintenanceTime') ?></div>
-            <div class="countdown">
-                <?php if (strtotime($config->get('maintenance_date')) > strtotime($date->format('Y-m-d H:i:00', true))): ?>
-                    <span id="countdown"></span>
-                <?php else: ?>
-                    <div class="countDays">
-                        <span class="position">
-                            <span style="top: 0px; opacity: 1;">00</span>
-                        </span>
-                        <span class="boxName">
-                            <span><?=$translator->trans('maintenanceDays') ?></span>
-                        </span>
+
+        <div class="container">
+            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 install_container">
+                <div class="logo" title="<?=$translator->trans('ilchCMSVersion', $version) ?>"></div>
+                <div class="installVersion"><?=$translator->trans('maintenanceMode') ?></div>
+                <div class="hidden-xs">
+                    <div class="countdownHead"><?=$translator->trans('maintenanceTime') ?></div>
+                    <div class="countdown">
+                        <?php if (strtotime($config->get('maintenance_date')) > strtotime($date->format('Y-m-d H:i:00', true))): ?>
+                            <span id="countdown"></span>
+                        <?php else: ?>
+                            <div class="countDays">
+                                <span class="position">
+                                    <span style="top: 0px; opacity: 1;">00</span>
+                                </span>
+                                <span class="boxName">
+                                    <span><?=$translator->trans('maintenanceDays') ?></span>
+                                </span>
+                            </div>
+
+                            <span class="points">:</span>
+
+                            <div class="countHours">
+                                <span class="position">
+                                    <span style="top: 0px; opacity: 1;">00</span>
+                                </span>
+                                <span class="boxName">
+                                    <span><?=$translator->trans('maintenanceHours') ?></span>
+                                </span>
+                            </div>
+
+                            <span class="points">:</span>
+
+                            <div class="countMinutes">
+                                <span class="position">
+                                    <span style="top: 0px; opacity: 1;">00</span>
+                                </span>
+                                <span class="boxName">
+                                    <span><?=$translator->trans('maintenanceMinutes') ?></span>
+                                </span>
+                            </div>
+
+                            <span class="points">:</span>
+
+                            <div class="countSeconds">
+                                <span class="position">
+                                    <span style="top: 0px; opacity: 1;">00</span>
+                                </span>
+                                <span class="boxName">
+                                    <span><?=$translator->trans('maintenanceSeconds') ?></span>
+                                </span>
+                            </div>
+                        <?php endif; ?>
                     </div>
-
-                    <span class="points">:</span>
-
-                    <div class="countHours">
-                        <span class="position">
-                            <span style="top: 0px; opacity: 1;">00</span>
-                        </span>
-                        <span class="boxName">
-                            <span><?=$translator->trans('maintenanceHours') ?></span>
-                        </span>
+                </div>
+                <b><?=$translator->trans('maintenanceStatus') ?></b>
+                <div class="progress progress-striped">
+                    <div class="progress-bar progress-bar-success active"
+                        role="progressbar"
+                        aria-valuenow="<?=$config->get('maintenance_status'); ?>"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        style="width: <?=$config->get('maintenance_status'); ?>%;">
                     </div>
+                </div>
+                <div class="install_content">
+                    <?=$config->get('maintenance_text'); ?>
+                </div>
 
-                    <span class="points">:</span>
-
-                    <div class="countMinutes">
-                        <span class="position">
-                            <span style="top: 0px; opacity: 1;">00</span>
-                        </span>
-                        <span class="boxName">
-                            <span><?=$translator->trans('maintenanceMinutes') ?></span>
-                        </span>
-                    </div>
-
-                    <span class="points">:</span>
-
-                    <div class="countSeconds">
-                        <span class="position">
-                            <span style="top: 0px; opacity: 1;">00</span>
-                        </span>
-                        <span class="boxName">
-                            <span><?=$translator->trans('maintenanceSeconds') ?></span>
-                        </span>
-                    </div>
-                <?php endif; ?>
-            </div>
-            <b><?=$translator->trans('maintenanceStatus') ?></b>
-            <div class="progress progress-striped">
-                <div class="progress-bar progress-bar-success active"
-                    role="progressbar"
-                    aria-valuenow="<?=$config->get('maintenance_status'); ?>"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    style="width: <?=$config->get('maintenance_status'); ?>%;">
+                <div class="save_box">
+                    <a href="<?=$this->getUrl('admin/admin/login/index/') ?>" class="btn btn-primary pull-right">
+                        Admin Login
+                    </a>
                 </div>
             </div>
-            <div class="install_content">
-                <?=$config->get('maintenance_text'); ?>
-            </div>
-        </div>
-        <div class="container save_box">
-            <form action="<?=$this->getUrl('admin/admin/login/index/'); ?>">
-                <button type="submit" class="btn pull-right">
-                    Admin Login
-                </button>
-            </form>
         </div>
     </body>
 </html>
