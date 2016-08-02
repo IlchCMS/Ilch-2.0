@@ -24,7 +24,7 @@ class Boxes extends \Ilch\Controller\Admin
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
                     'url' => $this->getLayout()->getUrl(['controller' => 'boxes', 'action' => 'treat'])
-                ],
+                ]
             ]
         ];
 

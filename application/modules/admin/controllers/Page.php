@@ -4,11 +4,11 @@
  * @package ilch
  */
 
-namespace Modules\Page\Controllers;
+namespace Modules\Admin\Controllers;
 
-use Modules\Page\Mappers\Page as PageMapper;
+use Modules\Admin\Mappers\Page as PageMapper;
 
-class Index extends \Ilch\Controller\Frontend
+class Page extends \Ilch\Controller\Frontend
 {
     public function showAction()
     {
@@ -22,7 +22,9 @@ class Index extends \Ilch\Controller\Frontend
         } else {
             $this->getLayout()->set('metaTitle', $page->getTitle());
             $this->getLayout()->set('metaDescription', $page->getDescription());
-            $this->getLayout()->getHmenu()->add($page->getTitle(), $page->getPerma());
+            $this->getLayout()->getHmenu()
+                    ->add($page->getTitle(), $page->getPerma());
+
             $this->getView()->set('content', $page->getContent());
         }
     }

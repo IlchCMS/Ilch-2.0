@@ -4,14 +4,12 @@
  * @package ilch
  */
 
-namespace Modules\Page\Mappers;
+namespace Modules\Admin\Mappers;
 
-use Modules\Page\Models\Page as PageModel;
+use Modules\Admin\Models\Page as PageModel;
 
 /**
  * The page mapper class.
- *
- * @package ilch
  */
 class Page extends \Ilch\Mapper
 {

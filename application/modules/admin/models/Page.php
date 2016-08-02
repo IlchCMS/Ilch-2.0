@@ -4,12 +4,10 @@
  * @package ilch
  */
 
-namespace Modules\Page\Models;
+namespace Modules\Admin\Models;
 
 /**
  * The page model class.
- *
- * @package ilch
  */
 class Page extends \Ilch\Model
 {

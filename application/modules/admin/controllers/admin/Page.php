@@ -4,12 +4,12 @@
  * @package ilch
  */
 
-namespace Modules\Page\Controllers\Admin;
+namespace Modules\Admin\Controllers\Admin;
 
-use Modules\Page\Mappers\Page as PageMapper;
-use Modules\Page\Models\Page as PageModel;
+use Modules\Admin\Mappers\Page as PageMapper;
+use Modules\Admin\Models\Page as PageModel;
 
-class Index extends \Ilch\Controller\Admin
+class Page extends \Ilch\Controller\Admin
 {
     public function init()
     {
@@ -18,12 +18,12 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'manage',
                 'active' => false,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index']),
+                'url' => $this->getLayout()->getUrl(['controller' => 'page', 'action' => 'index']),
                 [
                     'name' => 'add',
                     'active' => false,
                     'icon' => 'fa fa-plus-circle',
-                    'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'treat'])
+                    'url' => $this->getLayout()->getUrl(['controller' => 'page', 'action' => 'treat'])
                 ]
             ]
         ];
@@ -46,8 +46,7 @@ class Index extends \Ilch\Controller\Admin
         $pageMapper = new PageMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuSites'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_pages')) {
             foreach ($this->getRequest()->getPost('check_pages') as $pageId) {
@@ -55,24 +54,10 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $pages = $pageMapper->getPageList('');
-
         $this->getView()->set('pageMapper', $pageMapper);
-        $this->getView()->set('pages', $pages);
+        $this->getView()->set('pages', $pageMapper->getPageList(''));
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
-    }
-
-    public function deleteAction()
-    {
-        if ($this->getRequest()->isSecure()) {
-            $pageMapper = new PageMapper();
-            $pageMapper->delete($this->getRequest()->getParam('id'));
-
-            $this->addMessage('deleteSuccess');
-        }
-
-        $this->redirect(['action' => 'index']);
     }
 
     public function treatAction()
@@ -124,5 +109,17 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $pageMapper = new PageMapper();
+            $pageMapper->delete($this->getRequest()->getParam('id'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -61,9 +61,7 @@
         <div class="col-lg-8">
             <textarea class="form-control"
                       id="descriptionInput"
-                      name="description">
-                <?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } ?>
-            </textarea>
+                      name="description"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } ?></textarea>
         </div>
     </div>
     <div class="form-group">

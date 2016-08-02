@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Modules\Page\Plugins;
+namespace Modules\Admin\Plugins;
 
-use Modules\Page\Mappers\Page as PageMapper;
+use Modules\Admin\Mappers\Page as PageMapper;
 
 class AfterDatabaseLoad
 {
@@ -20,8 +20,8 @@ class AfterDatabaseLoad
         $url = $router->getQuery();
 
         if (isset($permas[$url])) {
-            $request->setModuleName('page');
-            $request->setControllerName('index');
+            $request->setModuleName('admin');
+            $request->setControllerName('page');
             $request->setActionName('show');
             $request->setParam('id', $permas[$url]['page_id']);
             $request->setParam('locale', $permas[$url]['locale']);

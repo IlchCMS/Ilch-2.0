@@ -154,7 +154,7 @@ class Model
     protected function recGetItems($item, $locale, $options = [])
     {
         $menuMapper = new \Modules\Admin\Mappers\Menu();
-        $pageMapper = new \Modules\Page\Mappers\Page();
+        $pageMapper = new \Modules\Admin\Mappers\Page();
         $subItems = $menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $html = '';
 

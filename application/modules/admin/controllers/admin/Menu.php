@@ -7,7 +7,7 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Menu as MenuMapper;
-use Modules\Page\Mappers\Page as PageMapper;
+use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
 

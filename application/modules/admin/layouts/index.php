@@ -153,6 +153,11 @@
                             </li>
                         <?php endif; ?>
                         <?php if ($this->getUser()->isAdmin()): ?>
+                            <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'page') { echo 'class="active"'; } ?>>
+                                <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'page', 'action' => 'index']) ?>">
+                                    <i class="fa fa-file-text-o"></i> <?=$this->getTrans('menuSites') ?>
+                                </a>
+                            </li>
                             <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'boxes', 'action' => 'index']) ?>">
                                     <i class="fa fa-inbox"></i> <?=$this->getTrans('menuBoxes') ?>

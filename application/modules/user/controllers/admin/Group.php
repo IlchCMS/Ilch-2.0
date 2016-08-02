@@ -10,7 +10,7 @@ use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\Group as GroupModel;
 use Modules\Admin\Mappers\Module as ModuleMapper;
 use Modules\Admin\Mappers\Box as BoxMapper;
-use Modules\Page\Mappers\Page as PageMapper;
+use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Article\Mappers\Article as ArticleMapper;
 
 /**

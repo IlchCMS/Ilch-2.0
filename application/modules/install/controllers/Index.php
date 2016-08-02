@@ -295,9 +295,9 @@ class Index extends \Ilch\Controller\Frontend
 
                 $modulesToInstall = $_SESSION['install']['modulesToInstall'][$_SESSION['install']['usage']];
                 if (!empty($modulesToInstall)) {
-                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'smilies'], $modulesToInstall);
+                    $modulesToInstall = array_merge(['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'smilies'], $modulesToInstall);
                 } else {
-                    $modulesToInstall = ['admin', 'article', 'user', 'page', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'smilies'];
+                    $modulesToInstall = ['admin', 'article', 'user', 'media', 'comment', 'imprint', 'contact', 'privacy', 'statistic', 'cookieconsent', 'smilies'];
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
@@ -358,7 +358,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'page', 'newsletter', 'statistic', 'cookieconsent', 'error', 'smilies'])) {
+                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'smilies'])) {
                         continue;
                     }
 
@@ -412,7 +412,6 @@ class Index extends \Ilch\Controller\Frontend
          */
         $modules['user']['types']          = [];
         $modules['article']['types']       = [];
-        $modules['page']['types']          = [];
         $modules['media']['types']         = [];
         $modules['comment']['types']       = [];
         $modules['contact']['types']       = [];
