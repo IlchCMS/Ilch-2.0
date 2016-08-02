@@ -3,7 +3,6 @@ $config = \Ilch\Registry::get('config');
 $translator = new \Ilch\Translator();
 $translator->load(APPLICATION_PATH.'/modules/admin/translations/');
 $maintenanceTime = $config->get('maintenance_date');
-$version = $config->get('version');
 $date = new \Ilch\Date();
 ?>
 
@@ -23,7 +22,6 @@ $date = new \Ilch\Date();
         <link href="<?=$this->getStaticUrl('css/bootstrap.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/font-awesome.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
-        <link href="<?=$this->getBaseUrl('application/modules/install/static/css/install.css') ?>" rel="stylesheet">
         <link href="<?=$this->getBaseUrl('application/modules/admin/static/css/maintenance.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.css') ?>" rel="stylesheet">
 
@@ -34,11 +32,10 @@ $date = new \Ilch\Date();
         <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.js') ?>"></script>
     </head>
     <body>
-
         <div class="container">
-            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 install_container">
-                <div class="logo" title="<?=$translator->trans('ilchCMSVersion', $version) ?>"></div>
-                <div class="installVersion"><?=$translator->trans('maintenanceMode') ?></div>
+            <div class="col-lg-offset-2 col-lg-8 col-md-12 col-sm-12 maintenance_container">
+                <div class="logo" title="<?=$translator->trans('ilchCMSVersion', $config->get('version')) ?>"></div>
+                <div class="maintenance_head"><?=$translator->trans('maintenanceMode') ?></div>
                 <div class="hidden-xs">
                     <div class="countdownHead"><?=$translator->trans('maintenanceTime') ?></div>
                     <div class="countdown">

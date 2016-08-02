@@ -1,4 +1,3 @@
-<link href="<?=$this->getModuleUrl('static/css/maintenance.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuMaintenance') ?></legend>
