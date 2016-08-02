@@ -65,10 +65,10 @@ $group = $this->get('group')
                     <?php
                     $gameMapper = new \Modules\War\Mappers\Games();
                     $games = $gameMapper->getGamesByWarId($war->getId());
+                    $class = '';
+                    $enemyPoints = '';
+                    $groupPoints = '';
                     if ($games != '') {
-                        $enemyPoints = '';
-                        $groupPoints = 0;
-                        $class = '';
                         foreach ($games as $game) {
                             $groupPoints += $game->getGroupPoints();
                             $enemyPoints += $game->getEnemyPoints();

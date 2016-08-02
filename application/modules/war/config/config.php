@@ -54,7 +54,6 @@ class Config extends \Ilch\Config\Install
                   `tag` VARCHAR(20) NOT NULL,
                   `homepage` VARCHAR(150) NOT NULL,
                   `image` VARCHAR(256) NOT NULL,
-                  `land` VARCHAR(50) NOT NULL,
                   `contact_name` VARCHAR(50) NOT NULL,
                   `contact_email` VARCHAR(150) NOT NULL,
                   PRIMARY KEY (`id`)

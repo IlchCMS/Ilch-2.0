@@ -84,7 +84,7 @@ class Enemy extends \Ilch\Mapper
             $entryModel->setId($entries['id']);
             $entryModel->setEnemyName($entries['name']);
             $entryModel->setEnemyTag($entries['tag']);
-            $entryModel->setEnemyImage($entries['url_thumb']);
+            $entryModel->setEnemyImage($entries['image']);
             $entryModel->setEnemyHomepage($entries['homepage']);
             $entryModel->setEnemyContactName($entries['contact_name']);
             $entryModel->setEnemyContactEmail($entries['contact_email']);

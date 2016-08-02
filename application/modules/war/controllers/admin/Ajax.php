@@ -9,7 +9,7 @@ namespace Modules\War\Controllers\Admin;
 use Modules\War\Controllers\Admin\Base as BaseController;
 use Modules\War\Mappers\Games as GamesMapper;
 
-class Ajax extends BaseController
+class Ajax extends \Ilch\Controller\Admin
 {
     public function gameAction()
     {

@@ -48,7 +48,7 @@ return [
     'enemyHomepage' => 'Enemy Homepage',
     'enemyImage' => 'Enemy Logo',
     'enemysImage' => 'Logo',
-    'enemyImageInfo' => 'http://... or select',
+    'enemyImageInfo' => 'Select',
     'enemyContactName' => 'Enemy Contact Name',
     'enemyContactEmail' => 'Enemy Contact Email',
     'enemysContactName' => 'Contact Name',

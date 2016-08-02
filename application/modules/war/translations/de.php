@@ -48,7 +48,7 @@ return [
     'enemyHomepage' => 'Gegner Homepage',
     'enemyImage' => 'Gegner Logo',
     'enemysImage' => 'Logo',
-    'enemyImageInfo' => 'http://... oder auswählen',
+    'enemyImageInfo' => 'Auswählen',
     'enemyContactName' => 'Gegner Kontakt Name',
     'enemyContactEmail' => 'Gegner Kontakt Email',
     'enemysContactName' => 'Kontakt Name',
