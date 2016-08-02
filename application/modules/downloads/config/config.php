@@ -40,9 +40,9 @@ class Config extends \Ilch\Config\Install
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_downloads_files` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `file_id` VARCHAR(150) NOT NULL,
-                  `file_title` VARCHAR(255) NOT NULL,
-                  `file_description` VARCHAR(255) NOT NULL,
-                  `file_image` VARCHAR(255) NOT NULL,
+                  `file_title` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `file_description` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `file_image` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)

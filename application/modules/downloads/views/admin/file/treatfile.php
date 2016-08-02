@@ -70,6 +70,7 @@ if ($file->getFileImage() != '') {
     <?=$this->getTrans('noFile') ?>
 <?php endif; ?>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 <?=$this->getMedia()
         ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))

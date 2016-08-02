@@ -68,7 +68,7 @@ class File extends \Ilch\Controller\Admin
             $model->setFileDesc($fileDesc);
             $fileMapper->saveFileTreat($model);
 
-            $this->addMessage('Success');
+            $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('file', $fileMapper->getFileById($id));
