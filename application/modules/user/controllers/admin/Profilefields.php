@@ -144,7 +144,7 @@ class ProfileFields extends \Ilch\Controller\Admin
 
                     $profileFieldTrans = $profileFieldsTranslationMapper->loadFromArray($profileFieldTransData);
 
-                    if (!empty($profileFieldTrans->getName())) {
+                    if ($profileFieldTrans->getName() != '') {
                         $profileFieldsTranslationMapper->save($profileFieldTrans);
                     } else {
                         $profileFieldsTranslationMapper->deleteProfileFieldTranslation($profileFieldTransData['locale'], $profileFieldTransData['field_id']);
