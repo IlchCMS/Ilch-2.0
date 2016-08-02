@@ -36,6 +36,7 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'index'])
             ]
         ];
+
         $this->getLayout()->addMenu
         (
             'menuWars',
