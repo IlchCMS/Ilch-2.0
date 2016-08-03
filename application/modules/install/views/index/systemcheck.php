@@ -31,6 +31,17 @@
                 </td>
             </tr>
             <tr>
+                <td>PHP-<?=$this->getTrans('extension') ?> cURL</td>
+                <td class="text-success"><?=$this->getTrans('existing') ?>
+                <td>
+                    <?php if (extension_loaded('curl')): ?>
+                        <span class="text-success"><?=$this->getTrans('valid') ?></span>
+                    <?php else: ?>
+                        <span class="text-danger"><?=$this->getTrans('missing') ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
                 <td><?=$this->getTrans('certificate') ?></td>
                 <td class="text-success"><?=$this->getTrans('existing') ?></td>
                 <td>

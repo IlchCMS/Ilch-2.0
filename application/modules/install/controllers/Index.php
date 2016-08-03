@@ -95,8 +95,6 @@ class Index extends \Ilch\Controller\Frontend
     public function systemcheckAction()
     {
         $errors = [];
-        $this->getView()->set('phpVersion', phpversion());
-
         if (!version_compare(phpversion(), '5.4.0', '>=')) {
             $errors['version'] = true;
         }
@@ -138,6 +136,10 @@ class Index extends \Ilch\Controller\Frontend
             $errors['expiredCertUnknown'] = true;
         }
 
+        if (!extension_loaded('curl')) {
+            $errors['cURLExtensionMissing'] = true;
+        }
+
         if (file_exists(ROOT_PATH.'/certificate/Certificate.crt')) {
             if (!array_key_exists('opensslExtensionMissing', $errors)) {
                  $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
@@ -154,6 +156,8 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(['action' => 'connect']);
         }
+
+        $this->getView()->set('phpVersion', phpversion());
     }
 
     public function connectAction()
