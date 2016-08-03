@@ -6,43 +6,55 @@
 
 namespace Modules\Install\Controllers;
 
+use Ilch\Config\File as File;
+
 class Index extends \Ilch\Controller\Frontend
 {
     public function init()
     {
-        $this->getLayout()->setFile('modules/install/layouts/index');
+        $fileConfig = new File();
+        $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
+        if ($fileConfig->get('dbUser') !== null AND $this->getRequest()->getActionName() !== 'finish') {
+            /*
+             * Cms is installed
+             */
+            $this->redirect();
+        } else {
+            /*
+             * Cms not installed yet.
+             */
+            $this->getLayout()->setFile('modules/install/layouts/index');
 
-        /*
-         * Dont set a time limit for installer.
-         */
-        @set_time_limit(0);
+            /*
+             * Dont set a time limit for installer.
+             */
+            @set_time_limit(0);
 
-        $menu = [
-            'index' => ['langKey' => 'menuWelcome'],
-            'license' => ['langKey' => 'menuLicense'],
-            'systemcheck' => ['langKey' => 'menuSystemCheck'],
-            'connect' => ['langKey' => 'menuConnect'],
-            'database' => ['langKey' => 'menuDatabase'],
-            'config' => ['langKey' => 'menuConfig'],
-            'finish' => ['langKey' => 'menuFinish'],
-        ];
+            $menu = [
+                'index' => ['langKey' => 'menuWelcome'],
+                'license' => ['langKey' => 'menuLicense'],
+                'systemcheck' => ['langKey' => 'menuSystemCheck'],
+                'connect' => ['langKey' => 'menuConnect'],
+                'database' => ['langKey' => 'menuDatabase'],
+                'config' => ['langKey' => 'menuConfig'],
+                'finish' => ['langKey' => 'menuFinish'],
+            ];
 
-        foreach ($menu as $key => $values) {
-            if ($this->getRequest()->getActionName() === $key) {
-                break;
+            foreach ($menu as $key => $values) {
+                if ($this->getRequest()->getActionName() === $key) {
+                    break;
+                }
+
+                $menu[$key]['done'] = true;
             }
 
-            $menu[$key]['done'] = true;
+            $this->getLayout()->set('menu', $menu);
         }
-
-        $this->getLayout()->set('menu', $menu);
     }
 
     public function indexAction()
     {
-        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $local = $this->getRequest()->getParam('language');
-
         if ($local) {
             $this->getTranslator()->setLocale($local);
             $_SESSION['language'] = $local;
@@ -60,6 +72,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('timezone', SERVER_TIMEZONE);
         }
 
+        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('timezones', \DateTimeZone::listIdentifiers());
     }
 
