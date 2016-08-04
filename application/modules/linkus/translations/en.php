@@ -15,4 +15,5 @@ return [
     'showBBBCode' => 'Show BB-Code?',
     'missingTitle' => 'Title was not filled',
     'missingBanner' => 'Banner was not filled',
+    'noneEnabled' => 'At least one option must be enabled.',
 ];
