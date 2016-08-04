@@ -30,7 +30,8 @@
                        type="text"
                        name="banner"
                        id="selectedImage_1"
-                       value="<?php if ($linkus != '') { echo $this->escape($linkus->getBanner()); } ?>" />
+                       value="<?php if ($linkus != '') { echo $this->escape($linkus->getBanner()); } ?>" 
+                       readonly />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
