@@ -20,7 +20,8 @@ $config = \Ilch\Registry::get('config');
                         <textarea class="form-control"
                                   name="text"
                                   style="resize: vertical"
-                                  rows="4"><a href="<?=$this->getUrl() ?>" target="_blank"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" border="0"></a></textarea>
+                                  rows="4"
+                                  readonly><a href="<?=$this->getUrl() ?>" target="_blank"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" border="0"></a></textarea>
                     </div>
                 <?php endif; ?>
 
@@ -30,7 +31,8 @@ $config = \Ilch\Registry::get('config');
                         <textarea class="form-control"
                                   name="text"
                                   style="resize: vertical"
-                                  rows="4">[url=<?=$this->getUrl() ?>][img]<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>[/img][/url]</textarea>
+                                  rows="4"
+                                  readonly>[url=<?=$this->getUrl() ?>][img]<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>[/img][/url]</textarea>
                     </div>
                 <?php endif; ?>
             </div>
