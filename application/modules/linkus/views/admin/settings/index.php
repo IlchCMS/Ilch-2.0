@@ -31,3 +31,12 @@
     </div>
     <?=$this->getSaveBar() ?>
 </form>
+
+<script>
+$('form').submit(function( event ) {
+    if (!$('#html-yes').is(':checked') && !$('#bbcode-yes').is(':checked')) {
+        event.preventDefault();
+        alert('<?=$this->getTrans('noneEnabled') ?>');
+    }  
+});
+</script>

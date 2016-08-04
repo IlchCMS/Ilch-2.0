@@ -15,4 +15,5 @@ return [
     'showBBBCode' => 'BB-Code anzeigen?',
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'missingBanner' => 'Banner muss ausgewählt werden',
+    'noneEnabled' => 'Es muss mindestens eine Option aktiviert sein.',
 ];
