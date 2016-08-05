@@ -194,6 +194,20 @@
             </div>
         </div>
     </div>
+    <div id="hmenuFixed" class="form-group <?php if (empty($this->get('navbarFixed'))) { echo 'hidden'; } ?>">
+        <label for="hmenuFixed" class="col-lg-2 control-label">
+            <?=$this->getTrans('hmenuFixed') ?>:
+        </label>
+        <div class="col-lg-8">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" name="hmenuFixed" value="1" id="hmenuFixed-on" <?php if ($this->get('hmenuFixed') == 'hmenu-fixed') { echo 'checked="checked"'; } ?> />
+                <label for="hmenuFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
+                <input type="radio" class="flipswitch-input" name="hmenuFixed" value="0" id="hmenuFixed-off" <?php if ($this->get('hmenuFixed') == '') { echo 'checked="checked"'; } ?> />
+                <label for="hmenuFixed-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 
@@ -203,6 +217,13 @@ $('[name="multilingualAcp"]').click(function () {
         $('#contentLanguage').removeClass('hidden');
     } else {
         $('#contentLanguage').addClass('hidden');
+    }
+});
+$('[name="navbarFixed"]').click(function () {
+    if ($(this).val() == "1") {
+        $('#hmenuFixed').removeClass('hidden');
+    } else {
+        $('#hmenuFixed').addClass('hidden');
     }
 });
 </script>

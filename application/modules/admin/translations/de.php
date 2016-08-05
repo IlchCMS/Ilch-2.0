@@ -70,6 +70,7 @@ return
     'seo' => 'SEO',
     'backendFunctions' => 'Backend - Funktionen',
     'navbarFixed' => 'Navbar fixieren',
+    'hmenuFixed' => 'HMenu fixieren',
     'search' => 'Suche',
     'go' => 'Los',
     'welcomeBack' => 'Willkommen zurück %s',

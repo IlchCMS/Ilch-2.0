@@ -26,6 +26,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('standardMail', $_SESSION['install']['adminEmail']);
         $databaseConfig->set('defaultPaginationObjects', 20);
         $databaseConfig->set('admin_layout_top_nav', 'navbar-fixed-top');
+        $databaseConfig->set('admin_layout_hmenu', 'hmenu-fixed');
         $databaseConfig->set('maintenance_mode', '0');
         $databaseConfig->set('maintenance_status', '0');
         $databaseConfig->set('maintenance_date', $date->format('Y-m-d H:i:s'));

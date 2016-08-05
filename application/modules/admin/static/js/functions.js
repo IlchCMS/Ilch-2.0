@@ -82,26 +82,24 @@ $(document).ready
     }
 );
 
-$(document).ready
-(
-    function() 
-    {
+$(document).ready (function() {
+    if (!$('#left-panel').hasClass('hmenu-fixed')) { 
         var element = document.getElementById('header');
         if (typeof(element) !== 'undefined' && element !== null) {
             $(window).scrollTop(0);
             var headerTop = $('#header').offset().top;
 
-            $(window).scroll
-            (
-                function()
-                {
+            $(window).scroll (
+                function() {
                     if ($(window).scrollTop() > headerTop) {
                         $('#left-panel').css('padding', '0px');
                     } else {
-                        $('#left-panel').css('padding', '40px 0 0');
+                        $('#left-panel').css('padding', '40px 0 0 0');
                     }
                 }
             );
         }
-    }
-);
+    } else {
+        $('#left-panel').css('padding', '40px 0 0 0');
+    };
+});

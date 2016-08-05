@@ -261,7 +261,7 @@
         <?php if ($this->hasSidebar()): ?>
             <?php $contentFullClass = ''; ?>
             <!-- LEFT PANEL -->
-            <aside id="left-panel">
+            <aside id="left-panel" <?php if ($config->get('admin_layout_hmenu') != '') { echo 'class="'.$config->get('admin_layout_hmenu').'"'; } ?>>
                 <nav>
                     <ul>
                         <?php
@@ -301,7 +301,7 @@
             <!-- LEFT PANEL END -->
         <?php endif; ?>
         <!-- MAIN -->
-        <div id="main" role="main" class="<?=$contentFullClass ?>">
+        <div id="main" role="main" class="<?=$contentFullClass ?><?php if ($config->get('admin_layout_hmenu') != '') { echo ' ribbon-fixed'; } ?>">
             <div id="ribbon"><?=$this->getAdminHmenu() ?></div>
             <!-- CONTENT -->
             <div id="content">

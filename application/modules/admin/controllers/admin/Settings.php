@@ -85,9 +85,15 @@ class Settings extends \Ilch\Controller\Admin
             $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
             if ($this->getRequest()->getPost('navbarFixed') === '1') {
                 $this->getConfig()->set('admin_layout_top_nav', 'navbar-fixed-top');
-            }
-            if ($this->getRequest()->getPost('navbarFixed') === '0') {
+                
+                if ($this->getRequest()->getPost('hmenuFixed') === '1') {
+                    $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
+                } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
+                    $this->getConfig()->set('admin_layout_hmenu', '');
+                }
+            } elseif ($this->getRequest()->getPost('navbarFixed') === '0') {
                 $this->getConfig()->set('admin_layout_top_nav', '');
+                $this->getConfig()->set('admin_layout_hmenu', '');
             }
 
             if ((int)$this->getRequest()->getPost('modRewrite')) {
@@ -123,6 +129,7 @@ HTACCESS;
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('navbarFixed', $this->getConfig()->get('admin_layout_top_nav'));
+        $this->getView()->set('hmenuFixed', $this->getConfig()->get('admin_layout_hmenu'));
         $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
     }
 

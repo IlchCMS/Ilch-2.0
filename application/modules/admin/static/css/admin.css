@@ -182,11 +182,11 @@ aside > nav > ul > li > ul > li.active > a:hover {
 .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse, .navbar-fixed-bottom .navbar-collapse {
     padding-right: 0px;
     padding-left: 0px;
-    border-bottom: 1px solid silver !important;
 }
 .navbar {
     border-radius: 0 !important;
     min-height: 30px !important;
+    border-bottom: 1px solid silver !important;
 }
 #rightbar ul li.active > a:before {
     color: #000;
@@ -221,6 +221,9 @@ aside > nav > ul > li > ul > li.active > a:hover {
     margin: 4px;
     padding-left: 7px;
     padding-right: 7px;
+}
+.navbar  .leftbar .navbar-toggle {
+    margin-right: 14px;
 }
 #toggleLeftMenu i {
     padding: 8px;
@@ -386,8 +389,6 @@ aside {
     width: 220px;
 }
 .dropdown-menu .divider {
-    height: 1px;
-    overflow: hidden;
     background-color: #ccc;
 }
 #main {
@@ -414,6 +415,14 @@ aside {
     width: 100%;
     margin: 0px !important;
     box-sizing: border-box;
+}
+.ribbon-fixed > #ribbon {
+    position: fixed !important;
+    top: 40px;
+    z-index: 900;
+}
+.ribbon-fixed > #content {
+    top: 39px;
 }
 #ribbon .breadcrumb {
     display: inline-block;
@@ -592,7 +601,6 @@ legend {
 }
 #ilch_dropdown .full {
     width: 100%;
-    min-width: 500px;
     left: auto !important;
     right: auto !important;
 }
