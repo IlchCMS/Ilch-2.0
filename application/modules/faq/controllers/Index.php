@@ -54,6 +54,11 @@ class Index extends \Ilch\Controller\Frontend
         $faqMapper = new FaqMapper();
         
         $faq = $faqMapper->getFaqById($this->getRequest()->getParam('id'));
+
+        if (!$faq) {
+            $this->redirect(['action' => 'index']);
+        }
+
         $category = $categoryMapper->getCategoryById($faq->getCatId());
 
         $this->getLayout()->getHmenu()
