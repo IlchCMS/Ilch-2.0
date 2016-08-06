@@ -18,7 +18,7 @@ return [
     'installButton' => 'Installieren',
     'ilchInstall' => 'Ilch CMS %s Installation',
     'ilchInstallVersion' => 'CMS %s',
-    'welcomeToInstall' => 'Willkommen zur Ilch CMS %s installation',
+    'welcomeToInstall' => 'Willkommen zur Ilch CMS %s Installation',
     'chooseLanguage' => 'Sprache',
     'licenseMissing' => 'Es wurde keine Lizenz gefunden<br /><small>Bitte lade die license.html mit hoch</small>',
     'acceptLicense' => 'Nutzungslizenz gelesen und akzeptiert',
