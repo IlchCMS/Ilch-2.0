@@ -16,7 +16,7 @@ return [
     'nextButton' => 'Weiter',
     'checkReload' => 'Seite neu laden',
     'installButton' => 'Installieren',
-    'ilchInstall' => 'Ilch CMS %s installation',
+    'ilchInstall' => 'Ilch CMS %s Installation',
     'ilchInstallVersion' => 'CMS %s',
     'welcomeToInstall' => 'Willkommen zur Ilch CMS %s installation',
     'chooseLanguage' => 'Sprache',
