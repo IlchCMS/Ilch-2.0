@@ -30,7 +30,7 @@ class BeforeControllerLoad
             $row = $authTokenMapper->getAuthToken($selector);
 
             if (!empty($row) && strtotime($row['expires']) >= time()) {
-                if (ilch_function_hash_equals($row['token'], hash('sha256', base64_decode($authenticator)))) {
+                if (hash_equals($row['token'], hash('sha256', base64_decode($authenticator)))) {
                     $_SESSION['user_id'] = $row['userid'];
                     // A new token is generated, a new hash for the token is stored over the old record, and a new login cookie is issued to the user.
                     $authTokenModel = new \Modules\User\Models\AuthToken();
