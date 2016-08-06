@@ -32,7 +32,7 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
                             <td align="center"><?=$countFaqs ?></td>
-                            <td><?=$cat->getTitle() ?></td>
+                            <td><?=$this->escape($cat->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

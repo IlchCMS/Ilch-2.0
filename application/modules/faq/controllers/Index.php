@@ -61,6 +61,6 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
                 ->add($faq->getQuestion(), ['action' => 'show', 'id' => $faq->getId()]);
 
-        $this->getView()->set('faq', $faqMapper->getFaqById($this->getRequest()->getParam('id')));
+        $this->getView()->set('faq', $faq);
     }
 }

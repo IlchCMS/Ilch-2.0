@@ -29,8 +29,8 @@
                             <td><input value="<?=$faq->getId()?>" type="checkbox" name="check_faqs[]" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $faq->getId()])?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delfaq', 'id' => $faq->getId()])?></td>
-                            <td><?=$faqsCats->getTitle() ?></td>
-                            <td><?=$faq->getQuestion()?></td>
+                            <td><?=$this->escape($faqsCats->getTitle()) ?></td>
+                            <td><?=$this->escape($faq->getQuestion()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
