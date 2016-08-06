@@ -27,4 +27,6 @@ return [
     'slider' => 'Slider',
     'boxSliderSpeed' => 'Speed of the slider in ms',
     'boxSliderHeight' => 'Height of Slider Box',
+    'invalidBoxHeight' => 'The height of the slider box is invalid.',
+    'invalidSliderSpeed' => 'The speed of the slider box is invalid.',
 ];
