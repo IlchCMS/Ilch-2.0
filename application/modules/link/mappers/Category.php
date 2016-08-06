@@ -106,12 +106,11 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $category)
     {
-        $fields =
-            [
+        $fields = [
             'name' => $category->getName(),
             'desc' => $category->getDesc(),
             'parent_id' => $category->getParentId()
-            ];
+        ];
 
         if ($category->getId()) {
             $this->db()->update('link_cats')

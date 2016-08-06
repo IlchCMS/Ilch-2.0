@@ -119,13 +119,11 @@ class Cats extends \Ilch\Controller\Admin
                 $categoryMapper->delete($this->getRequest()->getParam('id'));
 
                 $this->addMessage('deleteSuccess');
-
-                $this->redirect(['action' => 'index']);
             }
         } else {
             $this->addMessage('deleteFailed', 'danger'); 
-
-            $this->redirect(['action' => 'index']);
         }
+
+        $this->redirect(['action' => 'index']);
     }
 }
