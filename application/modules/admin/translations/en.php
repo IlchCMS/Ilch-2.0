@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'addButton' => 'Add',
     'saveButton' => 'Save',
     'updateButton' => 'Update',
@@ -229,4 +228,4 @@ return
 
     'noLayoutsAvailable' => 'Either there are no layouts available or the list of layouts could not be fetched from the server.',
     'noModulesAvailable' => 'Either there are no modules available or the list of modules could not be fetched from the server.',
-    ];
+];
