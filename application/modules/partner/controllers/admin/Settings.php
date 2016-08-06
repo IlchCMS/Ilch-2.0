@@ -39,10 +39,20 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('partners_slider', $this->getRequest()->getPost('slider'));
-            $this->getConfig()->set('partners_box_height', $this->getRequest()->getPost('boxHeight'));
-            $this->getConfig()->set('partners_slider_speed', $this->getRequest()->getPost('sliderSpeed'));
-            $this->addMessage('saveSuccess');
+            $boxHeight = $this->getRequest()->getPost('boxHeight');
+            $sliderSpeed = $this->getRequest()->getPost('sliderSpeed');
+            
+            if (!is_numeric($boxHeight) or $boxHeight <= 0) {
+                $this->addMessage('invalidBoxHeight', 'danger');
+            } elseif (!is_numeric($sliderSpeed) or $sliderSpeed <= 0) {
+                $this->addMessage('invalidSliderSpeed', 'danger');
+            } else {
+                $this->getConfig()->set('partners_slider', $this->getRequest()->getPost('slider'));
+                $this->getConfig()->set('partners_box_height', $boxHeight);
+                $this->getConfig()->set('partners_slider_speed', $sliderSpeed);
+                $this->addMessage('saveSuccess');
+            }
+
         }
 
         $this->getView()->set('slider', $this->getConfig()->get('partners_slider'));
