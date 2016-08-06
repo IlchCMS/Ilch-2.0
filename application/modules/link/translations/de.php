@@ -28,4 +28,5 @@ return [
     'menuActionEditCategory' => 'Kategorie editieren',
     'noLinks' => 'Keine Links vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
+    'httpOrMedia' => 'http:// oder Medien',
 ];

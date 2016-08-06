@@ -29,4 +29,5 @@ return
     'menuActionEditCategory' => 'Edit category',
     'noLinks' => 'No links',
     'noCategory' => 'No category',
+    'httpOrMedia' => 'http:// or Media',
     ];

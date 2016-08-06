@@ -45,23 +45,25 @@
             <?php foreach ($this->get('links') as $link): ?>
                 <tr>
                     <?php
-                    $getBanner = $this->escape($link->getBanner());
-                    $getDesc = $this->escape($link->getDesc());
-                    if (!empty($getDesc)) {
-                        $getDesc = '&raquo; '.$this->escape($link->getDesc());
+                    $banner = $this->escape($link->getBanner());
+                    $desc = $this->escape($link->getDesc());
+                    if (!empty($desc)) {
+                        $desc = '&raquo; '.$this->escape($link->getDesc());
                     } else {
-                        $getDesc = '';
+                        $desc = '';
                     }
 
-                    if (!empty($getBanner)) {
-                        $getBanner = '<img src="'.$this->escape($link->getBanner()).'">';
+                    if (substr($banner, 0, 11) == 'application') {
+                        $banner = '<img src="'.$this->getBaseUrl($banner).'">';
+                    } elseif (!empty($banner)) {
+                        $banner = '<img src="'.$this->escape($banner).'">';
                     } else {
-                        $getBanner = $this->escape($link->getName());
+                        $banner = $link->getName();
                     }
                     ?>
                     <td>
-                        <a href="<?=$this->getUrl(['action' => 'redirect', 'link_id' => $link->getId()]) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$getBanner ?></a><br />
-                        <?=$getDesc ?>
+                        <a href="<?=$this->getUrl(['action' => 'redirect', 'link_id' => $link->getId()]) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$banner ?></a><br />
+                        <?=$desc ?>
                     </td>
                     <td align="center" style="vertical-align:middle"><?=$this->escape($link->getHits()) ?></td>
                 </tr>
