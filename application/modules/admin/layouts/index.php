@@ -76,8 +76,8 @@
                             </a>
                         </div>
                     <?php endif; ?>
-                    <img title="Version <?=VERSION ?>" class="pull-left logo" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>" />
-                    <div class="hidden-md hidden-lg">
+                    <img title="Version <?=VERSION ?>" class="pull-left logo hidden-sm" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>" />
+                    <div class="hidden-md hidden-lg hidden-sm">
                         <a class="<?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') { echo 'active'; }?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                             <i class="fa fa-home"></i>
                         </a>
@@ -98,7 +98,7 @@
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'menu') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'menu', 'action' => 'index']) ?>">
-                                    <i class="fa fa-list-ol"></i> <?=$this->getTrans('navigation') ?>
+                                    <i class="fa fa-list-ol hidden-sm hidden-md"></i> <?=$this->getTrans('navigation') ?>
                                 </a>
                             </li>
                         <?php endif; ?>
@@ -130,7 +130,7 @@
                         <?php if (!empty($modulesHtml) || !empty($systemModuleHtml)): ?>
                             <li id="ilch_dropdown" class="dropdown <?php if ($this->getRequest()->getModuleName() !== 'admin') { echo 'active'; } ?>">
                                 <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                                    <i class="fa fa-puzzle-piece"></i> <?=$this->getTrans('modules') ?>
+                                    <i class="fa fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
                                     <b class="caret"></b>
                                 </a>
                                 <ul role="menu" class="dropdown-menu full">
@@ -155,17 +155,17 @@
                         <?php if ($this->getUser()->isAdmin()): ?>
                             <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'page') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'page', 'action' => 'index']) ?>">
-                                    <i class="fa fa-file-text-o"></i> <?=$this->getTrans('menuSites') ?>
+                                    <i class="fa fa-file-text-o hidden-sm hidden-md"></i> <?=$this->getTrans('menuSites') ?>
                                 </a>
                             </li>
                             <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'boxes') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'boxes', 'action' => 'index']) ?>">
-                                    <i class="fa fa-inbox"></i> <?=$this->getTrans('menuBoxes') ?>
+                                    <i class="fa fa-inbox hidden-sm hidden-md"></i> <?=$this->getTrans('menuBoxes') ?>
                                 </a>
                             </li>
                             <li <?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'layouts') { echo 'class="active"'; } ?>>
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'index']) ?>">
-                                    <i class="fa fa-picture-o"></i> <?=$this->getTrans('menuLayouts') ?>
+                                    <i class="fa fa-picture-o hidden-sm hidden-md"></i> <?=$this->getTrans('menuLayouts') ?>
                                 </a>
                             </li>
                         <?php endif; ?>
@@ -226,7 +226,7 @@
                         <?php endif; ?>
                         <li class="dropdown dropdown-user">
                             <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                                <i class="fa fa-user"></i> <?=$name ?>
+                                <i class="fa fa-user hidden-sm hidden-md"></i> <?=$name ?>
                                 <b class="caret"></b>
                             </a>
                             <ul role="menu" class="dropdown-menu">
