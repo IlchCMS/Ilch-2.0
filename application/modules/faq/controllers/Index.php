@@ -19,6 +19,10 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getParam('catId')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
 
+            if (!$category) {
+                $this->redirect(['action' => 'index']);
+            }
+
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
                     ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
