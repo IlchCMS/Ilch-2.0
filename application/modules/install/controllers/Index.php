@@ -159,7 +159,7 @@ class Index extends \Ilch\Controller\Frontend
                  $certinfo = openssl_x509_parse($public_key);
                  $validTo = $certinfo['validTo_time_t'];
                  if ($validTo < time()) {
-                     $errors['expiredCert'] = true;
+                    $errors['expiredCert'] = true;
                  }
             }
         } else {
@@ -168,6 +168,8 @@ class Index extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->isPost() && empty($errors)) {
             $this->redirect(['action' => 'connect']);
+        } else {
+            $this->getView()->set('errors', $errors);
         }
 
         $this->getView()->set('phpVersion', phpversion());
