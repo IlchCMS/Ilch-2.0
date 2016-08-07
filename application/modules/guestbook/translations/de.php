@@ -37,6 +37,7 @@ return [
     'smilies' => 'Smilies',
     'close' => 'Schließen',
     'entriesPerPage' => 'Einträge pro Seite',
+    'errorsOccured' => 'Es sind folgende Fehler aufgetreten',
 
     'validation.errors.required.fieldIsRequired'    => '%s muss ausgefüllt werden.',
     'validation.errors.same.fieldsDontMatch'        => '%s muss mit %s übereinstimmen.',

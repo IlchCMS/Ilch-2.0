@@ -37,6 +37,7 @@ return [
     'smilies' => 'Smilies',
     'close' => 'Close',
     'entriesPerPage' => 'Einträge pro Seite',
+    'errorsOccured' => 'The following errors occured',
 
     'validation.errors.required.fieldIsRequired'    => '%s was not filled out.',
     'validation.errors.same.fieldsDontMatch'        => '%s must be equal %s.',

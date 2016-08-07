@@ -10,7 +10,7 @@
 
 <?php if ($this->get('errors') !== null): ?>
     <div class="alert alert-danger" role="alert">
-        <strong> Es sind folgende Fehler aufgetreten:</strong>
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
         <ul>
             <?php foreach ($this->get('errors') as $error): ?>
                 <li><?= $error; ?></li>
