@@ -19,6 +19,10 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getParam('catId')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('catId'));
 
+            if (!$category) {
+                $this->redirect(['action' => 'index']);
+            }
+
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuFaqs'), ['action' => 'index'])
                     ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()]);
@@ -54,6 +58,11 @@ class Index extends \Ilch\Controller\Frontend
         $faqMapper = new FaqMapper();
         
         $faq = $faqMapper->getFaqById($this->getRequest()->getParam('id'));
+
+        if (!$faq) {
+            $this->redirect(['action' => 'index']);
+        }
+
         $category = $categoryMapper->getCategoryById($faq->getCatId());
 
         $this->getLayout()->getHmenu()
@@ -61,6 +70,6 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($category->getTitle(), ['action' => 'index', 'catId' => $category->getId()])
                 ->add($faq->getQuestion(), ['action' => 'show', 'id' => $faq->getId()]);
 
-        $this->getView()->set('faq', $faqMapper->getFaqById($this->getRequest()->getParam('id')));
+        $this->getView()->set('faq', $faq);
     }
 }

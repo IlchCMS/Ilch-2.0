@@ -31,7 +31,7 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
                         if ($countFaqs > 0): ?>
                             <li <?=$active ?>>
                                 <a href="<?=$this->getUrl('faq/index/index/catId/'.$category->getId()) ?>">
-                                    <b><?=$category->getTitle() ?></b>
+                                    <b><?=$this->escape($category->getTitle()) ?></b>
                                     <span class="badge"><?=$countFaqs ?></span>
                                 </a>
                             </li>
@@ -43,7 +43,7 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
     </nav>
     <ul class="list-group">
         <?php foreach ($faqs as $faq): ?>
-            <li class="list-group-item"><a href="<?=$this->getUrl('faq/index/show/id/'.$faq->getId()) ?>"><b><?=$faq->getQuestion() ?></b></a></li>
+            <li class="list-group-item"><a href="<?=$this->getUrl('faq/index/show/id/'.$faq->getId()) ?>"><b><?=$this->escape($faq->getQuestion()) ?></b></a></li>
         <?php endforeach; ?>
     </ul>
 <?php else: ?>
