@@ -6,6 +6,8 @@
 
 namespace Ilch;
 
+use Ilch\Registry;
+
 use Ilch\Validation\Data;
 use Ilch\Validation\Error;
 
@@ -125,12 +127,17 @@ class Validation
     /**
      * Generating all the error messages
      * @param   Object \Ilch\Translator $translator The translator instance
-     * @returns Array  An array with translated error messages
+     * @return Array  An array with translated error messages
      */
-    public function getErrors(\Ilch\Translator $translator)
+    public function getErrors($translator = null)
     {
-        if (empty($this->errors))
+        if ($translator === null) {
+            $translator = Registry::get('translator');
+        }
+
+        if (empty($this->errors)) {
             return null;
+        }
 
         $errorMessages = [];
         $validationErrors = [];
@@ -187,7 +194,7 @@ class Validation
 
     /**
      * Returns the validation result
-     * @returns Boolean
+     * @return Boolean
      */
     public function isValid()
     {
@@ -198,7 +205,7 @@ class Validation
     /**
      * Checks if the specified field has a validation error
      * @param   String  $field Field name
-     * @returns Boolean
+     * @return Boolean
      */
     public function hasError($field)
     {
@@ -207,7 +214,7 @@ class Validation
 
     /**
      * Returns an array with all field names which have validation errors
-     * @returns Array
+     * @return Array
      */
     public function getFieldsWithError()
     {
@@ -235,7 +242,7 @@ class Validation
 
     /**
      * Gets all validators (added and builtIn combined)
-     * @returns Array All Validators known at this time during runtime
+     * @return Array All Validators known at this time during runtime
      */
     public static function getValidators()
     {

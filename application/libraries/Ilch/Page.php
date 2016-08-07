@@ -122,12 +122,15 @@ class Page
      */
     public function loadPage()
     {
+        $this->translator->load(APPLICATION_PATH.'/libraries/Ilch/Translations');
         $this->translator->load(APPLICATION_PATH.'/modules/'.$this->request->getModuleName().'/translations');
 
         if ($this->request->isAdmin()) {
             $this->translator->load(APPLICATION_PATH.'/modules/admin/translations');
         }
 
+        Registry::set('translator', $this->translator);
+        
         $controller = $this->loadController();
         $controllerName = $this->request->getControllerName();
         $findSub = strpos($controllerName, '_');

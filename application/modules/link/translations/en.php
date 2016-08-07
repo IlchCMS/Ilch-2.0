@@ -29,7 +29,4 @@ return [
     'httpOrMedia' => 'http:// or Media',
     'deleteFailed' => 'There are still entries in the category',
     'errorsOccured' => 'The following errors occured',
-
-    'validation.errors.required.fieldIsRequired'    => '%s was not filled out.',
-    'validation.errors.url.noValidUrl'              => '%s must be a valid URL.',
 ];

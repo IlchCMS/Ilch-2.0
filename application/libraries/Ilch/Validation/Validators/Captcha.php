@@ -12,10 +12,15 @@ namespace Ilch\Validation\Validators;
 class Captcha extends Base
 {
     protected $errorKey = 'validation.errors.captcha.wrongCaptcha';
+    protected $sessionKey = 'captcha';
 
     public function run()
     {
-        $result = $this->data->getValue() == $_SESSION['captcha'];
+        $result = false;
+        
+        if (isset($_SESSION[$this->sessionKey])) {
+            $result = $this->data->getValue() == $_SESSION[$this->sessionKey];
+        }
 
         return [
             'result' => $result,
