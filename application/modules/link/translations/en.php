@@ -15,8 +15,6 @@ return [
     'optionNoCategory' => 'No category',
     'description' => 'Description',
     'missingName' => 'Name was not filled',
-    'missingLink' => 'Link was not filled',
-    'missingBanner' => 'Banner was not filled',
     'menuLink' => 'Link',
     'menuLinks' => 'Links',
     'manageLink' => 'Manage links',
@@ -30,4 +28,7 @@ return [
     'noCategory' => 'No category',
     'httpOrMedia' => 'http:// or Media',
     'deleteFailed' => 'There are still entries in the category',
+
+    'validation.errors.required.fieldIsRequired'    => '%s was not filled out.',
+    'validation.errors.url.noValidUrl'              => '%s must be a valid URL.',
 ];

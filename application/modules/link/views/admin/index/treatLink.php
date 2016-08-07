@@ -7,6 +7,18 @@
     }
     ?>
 </legend>
+
+<?php if ($this->get('errors') !== null): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> Es sind folgende Fehler aufgetreten:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
