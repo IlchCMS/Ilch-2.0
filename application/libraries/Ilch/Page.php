@@ -129,6 +129,8 @@ class Page
             $this->translator->load(APPLICATION_PATH.'/modules/admin/translations');
         }
 
+        Registry::set('translator', $this->translator);
+        
         $controller = $this->loadController();
         $controllerName = $this->request->getControllerName();
         $findSub = strpos($controllerName, '_');
