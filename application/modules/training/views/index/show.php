@@ -121,7 +121,7 @@ $userMapper = new \Modules\User\Mappers\User();
         <form class="form-horizontal" method="POST" action="">
             <?=$this->getTokenField() ?>
             <?php if ($this->get('trainEntrantUser') != ''): ?>
-                <button type="submit" value="del" name="del" class="btn btn-sm btn-danger">
+                <button type="submit" class="btn btn-sm btn-danger" name="del" value="del">
                     <?=$this->getTrans('decline') ?>
                 </button>
             <?php else: ?>
@@ -137,7 +137,7 @@ $userMapper = new \Modules\User\Mappers\User();
                                   rows="1"></textarea>
                     </div>
                     <div class="col-lg-2" style="top: 2px;">
-                        <button type="submit" value="save" name="save" class="btn btn-sm btn-success">
+                        <button type="submit" class="btn btn-sm btn-success" name="save" value="save">
                             <?=$this->getTrans('join') ?>
                         </button>
                     </div>

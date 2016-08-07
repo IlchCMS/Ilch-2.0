@@ -11,10 +11,10 @@
             <div class="col-lg-8">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                    <input class="form-control"
-                           name="login_emailname"
+                    <input type="text"
+                           class="form-control"
                            id="login_emailname"
-                           type="text" />
+                           name="login_emailname" />
                 </div>
                 <?php if (!empty($errors['login_emailname'])): ?>
                     <span class="help-inline"><?=$this->getTrans($errors['login_emailname']) ?></span>
@@ -28,34 +28,26 @@
             <div class="col-lg-8">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
-                    <input class="form-control"
-                           name="login_password"
+                    <input type="password"
+                           class="form-control"
                            id="login_password"
-                           type="password" />
+                           name="login_password" />
                 </div>
                 <?php if (!empty($errors['login_password'])): ?>
                     <span class="help-inline"><?=$this->getTrans($errors['login_password']) ?></span>
                 <?php endif; ?>
             </div>
         </div>
-        <label class="col-lg-offset-2 col-lg-8"><input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?></label>
-        
+        <label class="col-lg-offset-2 col-lg-8">
+            <input type="checkbox"
+                   name="rememberMe"
+                   value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
+        </label>
         <div class="clearfix">   
-            <!--            
-            <div class="col-lg-offset-2 col-lg-8 pull-left">
-                <label class="checkbox-inline">
-                    <input type="checkbox" 
-                           name="regist_confirm"
-                           id="regist_confirm_yes" 
-                           value="1" />
-                           <label for="regist_confirm">Mich bei jedem Besuch automatisch anmelden</label>
-                </label>
-            </div>
-            -->
             <div class="col-lg-10" align="right">
                 <input type="submit" 
-                       name="login" 
                        class="btn" 
+                       name="login" 
                        value="<?=$this->getTrans('login') ?>" />
             </div>
         </div>  

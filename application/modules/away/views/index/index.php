@@ -149,10 +149,10 @@ if ($this->getUser()) {
                 <?=$this->getTrans('reason') ?>:
             </label>
             <div class="col-lg-6">
-                <input class="form-control"
-                       type="text"
-                       name="reason"
+                <input type="text"
+                       class="form-control"
                        id="reason"
+                       name="reason"
                        value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getTitle()); } ?>" />
             </div>
         </div>
@@ -161,22 +161,22 @@ if ($this->getUser()) {
                 <?=$this->getTrans('when') ?>:
             </label>
             <div class="col-lg-3 input-group date form_datetime pull-left">
-                <input class="form-control"
-                       size="16"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        id="start"
                        name="start"
+                       size="16"
                        readonly>
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
             </div>
             <div class="col-lg-3 input-group date form_datetime">
-                <input class="form-control"
-                       size="16"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        id="end"
                        name="end"
+                       size="16"
                        readonly>
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>

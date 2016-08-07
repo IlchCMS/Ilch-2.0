@@ -37,7 +37,7 @@
                         <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
                         <?php $modules = $modulesMapper->getModulesByKey($commentKey, $locale); ?>
                         <tr>
-                            <td><input value="<?=$comment->getId() ?>" type="checkbox" name="check_comments[]" /></td>
+                            <td><input type="checkbox" name="check_comments[]" value="<?=$comment->getId() ?>" /></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $comment->getId()]) ?></td>
                             <td><?=$comment->getId() ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>

@@ -5,7 +5,7 @@
         <?=$this->getTrans('dbEngine') ?>:
     </label>
     <div class="col-lg-9">
-        <select name="dbEngine" class="form-control" id="dbEngine">
+        <select class="form-control" id="dbEngine" name="dbEngine">
             <option value="Mysql">Mysql</option>
         </select>
     </div>
@@ -15,11 +15,11 @@
         <?=$this->getTrans('dbHost') ?>:
     </label>
     <div class="col-lg-9 input-group">
-        <input value="<?php if ($this->get('dbHost') != '') { echo $this->escape($this->get('dbHost')); } else { echo 'localhost'; } ?>"
-               type="text"
+        <input type="text"
                class="form-control"
+               id="dbHost"
                name="dbHost"
-               id="dbHost" />
+               value="<?php if ($this->get('dbHost') != '') { echo $this->escape($this->get('dbHost')); } else { echo 'localhost'; } ?>" />
         <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbHostInfo') ?>"><i class="fa fa-info-circle"></i></div>
     </div>
     <?php if (!empty($errors['dbConnection'])): ?>
@@ -31,11 +31,11 @@
         <?=$this->getTrans('dbUser') ?>:
     </label>
     <div class="col-lg-9 input-group">
-        <input value="<?php if ($this->get('dbUser') != '') { echo $this->escape($this->get('dbUser')); } ?>"
-               type="text"
+        <input type="text"
                class="form-control"
+               id="dbUser"
                name="dbUser"
-               id="dbUser" />
+               value="<?php if ($this->get('dbUser') != '') { echo $this->escape($this->get('dbUser')); } ?>" />
         <div class="input-group-addon" rel="tooltip" title="<?=$this->getTrans('dbUserInfo') ?>"><i class="fa fa-info-circle"></i></div>
     </div>
     <?php if (!empty($errors['dbUser'])): ?>
@@ -47,11 +47,11 @@
         <?=$this->getTrans('dbPassword') ?>:
     </label>
     <div class="col-lg-9">
-        <input value="<?php if ($this->get('dbPassword') != '') { echo $this->escape($this->get('dbPassword')); } ?>"
-               type="password"
+        <input type="password"
                class="form-control"
+               id="dbPassword"
                name="dbPassword"
-               id="dbPassword" />
+               value="<?php if ($this->get('dbPassword') != '') { echo $this->escape($this->get('dbPassword')); } ?>" />
     </div>
 </div>
 

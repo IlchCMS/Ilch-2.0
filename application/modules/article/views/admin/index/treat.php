@@ -21,10 +21,10 @@ if ($this->get('article') != '') {
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="title"
+            <input type="text"
+                   class="form-control"
                    id="title"
+                   name="title"
                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getTitle()); } ?>" />
         </div>
     </div>
@@ -33,7 +33,7 @@ if ($this->get('article') != '') {
             <?=$this->getTrans('cats') ?>:
         </label>
         <div class="col-lg-4">
-            <select class="form-control" name="cats" id="cats">
+            <select class="form-control" id="cats" name="cats">
                 <?php foreach ($this->get('cats') as $cats): ?>
                     <?php $selected = ''; ?>
                     <?php if ($this->get('article') != '' and $this->get('article')->getCatId() == $cats->getId()): ?>
@@ -48,8 +48,8 @@ if ($this->get('article') != '') {
         <div class="col-lg-offset-2 col-lg-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
-                      toolbar="ilch_html"
-                      name="content"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
+                      name="content"
+                      toolbar="ilch_html"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
@@ -58,7 +58,7 @@ if ($this->get('article') != '') {
                 <?=$this->getTrans('language') ?>:
             </label>
             <div class="col-lg-8">
-                <select class="form-control" name="language" id="language">
+                <select class="form-control" id="language" name="language">
                     <?php
                     foreach ($this->get('languages') as $key => $value) {
                         $selected = '';
@@ -95,8 +95,8 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <?=$this->getUrl() ?>/index.php/
             <input type="text"
-                   name="permaLink"
                    id="permaLink"
+                   name="permaLink"
                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } ?>" />
         </div>
     </div>
@@ -107,10 +107,10 @@ if ($this->get('article') != '') {
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <input class="form-control"
-                       type="text"
-                       name="image"
+                <input type="text"
+                       class="form-control"
                        id="selectedImage"
+                       name="image"
                        value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>
@@ -121,10 +121,10 @@ if ($this->get('article') != '') {
             <?=$this->getTrans('imageSource') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                    type="text"
-                    name="imageSource"
-                    value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImageSource()); } ?>" />
+            <input type="text"
+                   class="form-control"
+                   name="imageSource"
+                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImageSource()); } ?>" />
         </div>
     </div>
     <div class="form-group">

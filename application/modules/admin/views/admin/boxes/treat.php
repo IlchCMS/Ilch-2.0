@@ -12,15 +12,18 @@
             <?=$this->getTrans('boxTitle') ?>:
         </label>
         <div class="col-lg-2">
-            <input class="form-control"
-                   type="text"
-                   name="boxTitle"
+            <input type="text"
+                   class="form-control"
                    id="boxTitleInput"
+                   name="boxTitle"
                    value="<?php if ($this->get('box') != '') { echo $this->escape($this->get('box')->getTitle()); } ?>" />
         </div>
     </div>
     <div class="form-group">
-        <textarea class="form-control ckeditor" id="ck_1" name="boxContent" toolbar="ilch_html"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
+        <textarea class="form-control ckeditor"
+                  id="ck_1"
+                  name="boxContent"
+                  toolbar="ilch_html"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
         <div class="form-group">
@@ -28,7 +31,7 @@
                 <?=$this->getTrans('boxLanguage') ?>:
             </label>
             <div class="col-lg-2">
-                <select class="form-control" name="boxLanguage" id="boxLanguageInput">
+                <select class="form-control" id="boxLanguageInput" name="boxLanguage">
                     <?php foreach ($this->get('languages') as $key => $value): ?>
                         <?php $selected = ''; ?>
 

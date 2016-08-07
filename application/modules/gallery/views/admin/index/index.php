@@ -15,10 +15,10 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
     echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
-                    <input type="hidden" name="items['.$item->getId().'][id]" class="hidden_id" value="'.$item->getId().'" />
-                    <input type="hidden" name="items['.$item->getId().'][title]" class="hidden_title" value="'.$item->getTitle().'" />
-                    <input type="hidden" name="items['.$item->getId().'][desc]" class="hidden_desc" value="'.$item->getDesc().'" />
-                    <input type="hidden" name="items['.$item->getId().'][type]" class="hidden_type" value="'.$item->getType().'" />
+                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
+                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
+                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
+                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
                     <span></span>
                 </span>
                 <span class="title">'.$item->getTitle().'</span>
@@ -83,7 +83,11 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                 <?=$this->getTrans('description') ?>
             </label>
             <div class="col-lg-6">
-                <textarea class="form-control" rows="3" cols="45" type="text" id="desc" name="desc"></textarea>
+                <textarea class="form-control"
+                          id="desc"
+                          name="desc"
+                          rows="3"
+                          cols="45"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -91,7 +95,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                 <?=$this->getTrans('type') ?>
             </label>
             <div class="col-lg-6">
-                <select id="type" class="form-control">
+                <select class="form-control" id="type">
                     <option value="0"><?=$this->getTrans('cat') ?></option>
                     <option value="1"><?=$this->getTrans('gallery') ?></option>
                 </select>
@@ -99,7 +103,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
         </div>
         <div class="dyn"></div>
         <div class="col-lg-offset-3 actions">
-            <input type="button" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>" class="btn">
+            <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
@@ -167,7 +171,7 @@ $(document).ready (
             }
 
             menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label">Menü</label>\n\
-                        <div class="col-lg-6"><select id="menukey" class="form-control">'+options+'</select></div></div>';
+                        <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
@@ -209,10 +213,10 @@ $(document).ready (
             }
 
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][desc]" class="hidden_desc" value="'+$('#desc').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
+                    +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
+                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
+                    +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
+                    +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
                     +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
@@ -220,8 +224,8 @@ $(document).ready (
         );
 
         $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
-                               <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">');
+           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="Editieren">\n\
+                               <input type="button" class="btn" id="menuItemEditCancel" value="Abbrechen">');
            $('#title').val($(this).parent().find('.hidden_title').val());
            $('#desc').val($(this).parent().find('.hidden_desc').val());
            $('#type').val($(this).parent().find('.hidden_type').val());
@@ -244,7 +248,7 @@ $(document).ready (
         );
 
         $('#galleryForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
+            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');
             resetBox();
         });
     }

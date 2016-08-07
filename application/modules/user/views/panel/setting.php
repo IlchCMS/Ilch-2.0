@@ -1,6 +1,4 @@
-<?php
-$profil = $this->get('profil');
-?>
+<?php $profil = $this->get('profil'); ?>
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
@@ -20,9 +18,9 @@ $profil = $this->get('profil');
                     </label>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" name="opt_mail" value="1" id="opt_mail_yes" <?php if ($profil->getOptMail() == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="opt_mail" value="1" <?php if ($profil->getOptMail() == '1') { echo 'checked="checked"'; } ?> />
                             <label for="opt_mail_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" name="opt_mail" value="0" id="opt_mail_no" <?php if ($profil->getOptMail() == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="opt_mail" value="0" <?php if ($profil->getOptMail() == '0') { echo 'checked="checked"'; } ?> />
                             <label for="opt_mail_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>
@@ -32,8 +30,8 @@ $profil = $this->get('profil');
                 <div class="form-group">
                     <div class="col-lg-offset-3 col-lg-12">
                         <input type="submit" 
-                               name="saveEntry" 
                                class="btn"
+                               name="saveEntry" 
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>

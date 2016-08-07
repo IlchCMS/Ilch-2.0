@@ -5,7 +5,7 @@
         <?=$this->getTrans('usage') ?>:
     </label>
     <div class="col-lg-9 input-group">
-        <select name="usage" id="usage" class="form-control">
+        <select class="form-control" id="usage" name="usage">
             <option value="private"><?=$this->getTrans('private') ?></option>
             <option value="clan" <?php if ($this->get('usage') == 'clan') { echo 'selected="selected"'; } ?>><?=$this->getTrans('clan') ?></option>
         </select>
@@ -22,11 +22,11 @@
         <?=$this->getTrans('adminName') ?>:
     </label>
     <div class="col-lg-9">
-        <input value="<?php if ($this->get('adminName') != '') { echo $this->escape($this->get('adminName')); } ?>"
-               type="text"
-               name="adminName"
+        <input type="text"
                class="form-control"
-               id="adminName" />
+               id="adminName"
+               name="adminName"
+               value="<?php if ($this->get('adminName') != '') { echo $this->escape($this->get('adminName')); } ?>" />
         <?php if (!empty($errors['adminName'])): ?>
             <span class="help-inline"><?=$this->getTrans($errors['adminName']) ?></span>
         <?php endif; ?>
@@ -37,11 +37,11 @@
         <?=$this->getTrans('adminPassword') ?>:
     </label>
     <div class="col-lg-9">
-        <input value="<?php if ($this->get('adminPassword') != '') { echo $this->escape($this->get('adminPassword')); } ?>"
-               type="password"
+        <input type="password"
                class="form-control"
+               id="adminPassword"
                name="adminPassword"
-               id="adminPassword" />
+               value="<?php if ($this->get('adminPassword') != '') { echo $this->escape($this->get('adminPassword')); } ?>" />
         <?php if (!empty($errors['adminPassword'])): ?>
             <span class="help-inline"><?=$this->getTrans($errors['adminPassword']) ?></span>
         <?php endif; ?>
@@ -52,11 +52,11 @@
         <?=$this->getTrans('adminPassword2') ?>:
     </label>
     <div class="col-lg-9">
-        <input value="<?php if ($this->get('adminPassword2') != '') { echo $this->escape($this->get('adminPassword2')); } ?>"
-               type="password"
+        <input type="password"
                class="form-control"
+               id="adminPassword2"
                name="adminPassword2"
-               id="adminPassword2" />
+               value="<?php if ($this->get('adminPassword2') != '') { echo $this->escape($this->get('adminPassword2')); } ?>" />
         <?php if (!empty($errors['adminPassword2'])): ?>
             <span class="help-inline"><?=$this->getTrans($errors['adminPassword2']) ?></span>
         <?php endif; ?>
@@ -67,11 +67,11 @@
         <?=$this->getTrans('adminEmail') ?>:
     </label>
     <div class="col-lg-9">
-        <input value="<?php if ($this->get('adminEmail') != '') { echo $this->escape($this->get('adminEmail')); } ?>"
-               type="text"
-               name="adminEmail"
+        <input type="text"
                class="form-control"
-               id="adminEmail" />
+               id="adminEmail"
+               name="adminEmail"
+               value="<?php if ($this->get('adminEmail') != '') { echo $this->escape($this->get('adminEmail')); } ?>" />
         <?php if (!empty($errors['adminEmail'])): ?>
             <span class="help-inline"><?=$this->getTrans($errors['adminEmail']) ?></span>
         <?php endif; ?>

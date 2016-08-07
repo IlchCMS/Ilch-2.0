@@ -39,7 +39,7 @@
                     <?php if ($this->get('pages') != ''): ?>
                         <?php foreach ($this->get('pages') as $page): ?>
                             <tr>
-                                <td><input value="<?=$page->getId()?>" type="checkbox" name="check_pages[]" /></td>
+                                <td><input type="checkbox" name="check_pages[]" value="<?=$page->getId()?>" /></td>
                                 <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $page->getId()]) ?></td>
                                 <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $page->getId()]) ?></td>
                                 <td>

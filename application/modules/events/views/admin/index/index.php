@@ -25,7 +25,7 @@
                         <?php $userMapper = new \Modules\User\Mappers\User() ?>
                         <?php $user = $userMapper->getUserById($event->getUserId()) ?>
                         <tr>
-                            <td><input value="<?=$event->getId() ?>" type="checkbox" name="check_entries[]" /></td>
+                            <td><input type="checkbox" name="check_entries[]" value="<?=$event->getId() ?>" /></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $event->getId()]) ?></td>
                             <td>
                                 <?=date('d.m.Y H:i', strtotime($event->getStart())) ?>

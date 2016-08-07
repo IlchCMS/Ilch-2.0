@@ -29,7 +29,7 @@
                         <?php $userMapper = new \Modules\User\Mappers\User() ?>
                         <?php $user = $userMapper->getUserById($away->getUserId()) ?>
                         <tr>
-                            <td><input value="<?=$away->getId() ?>" type="checkbox" name="check_aways[]" /></td>
+                            <td><input type="checkbox" name="check_aways[]" value="<?=$away->getId() ?>" /></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?></td>
                             <td>
                                 <?php if ($away->getStatus() == 1): ?>

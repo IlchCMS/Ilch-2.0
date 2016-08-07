@@ -21,10 +21,10 @@ if ($this->getUser()) {
                         <?=$this->getTrans('topicTitle') ?>:
                     </label>
                     <div class="col-lg-8">
-                        <input class="form-control"
-                               type="text"
-                               name="topicTitle"
+                        <input type="text"
+                               class="form-control"
                                id="topicTitleInput"
+                               name="topicTitle"
                                value="" />
                     </div>
                 </div>
@@ -33,11 +33,10 @@ if ($this->getUser()) {
                         <?=$this->getTrans('text') ?>*
                     </label>
                     <div class="col-lg-8">
-                        <textarea id="ck_1"
-                                  class="form-control ckeditor"
-                                  toolbar="ilch_bbcode"
-                                  name="text">
-                        </textarea>
+                        <textarea class="form-control ckeditor"
+                                  id="ck_1"
+                                  name="text"
+                                  toolbar="ilch_bbcode"></textarea>
                     </div>
                 </div>
                 <?php if ($this->getUser()->isAdmin()): ?>
@@ -50,8 +49,7 @@ if ($this->getUser()) {
                                 <label>
                                     <input type="radio"
                                            name="type"
-                                           value="1"
-                                            /> <?=$this->getTrans('yes') ?>
+                                           value="1" /> <?=$this->getTrans('yes') ?>
                                 </label>
                             </div>
                             <div class="radio">
@@ -68,8 +66,8 @@ if ($this->getUser()) {
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"
-                               name="saveNewTopic"
                                class="btn"
+                               name="saveNewTopic"
                                value="<?=$this->getTrans('add') ?>" />
                     </div>
                 </div>

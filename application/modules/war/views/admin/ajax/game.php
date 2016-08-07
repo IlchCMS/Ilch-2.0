@@ -3,7 +3,8 @@
         <?php if ($this->get('games') != ''): ?>
             <?php foreach ($this->get('games') as $game): ?>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label" for="textinput"><?=$this->getTrans('warMapName') ?>
+                    <label class="col-lg-2 control-label" for="textinput">
+                        <?=$this->getTrans('warMapName') ?>
                         <?php if ($game->getId() != ''): ?>
                             <a id="<?=$game->getId() ?>"
                                 class="btn btn-danger btn-sm"
@@ -14,16 +15,30 @@
                         <?php endif; ?>
                     </label>
                     <div class="col-lg-4">
-                        <input type="text" name="warMapPlayed[]" placeholder="<?=$this->getTrans('warMapName') ?>" class="form-control" value="<?=$game->getMap() ?>">
+                        <input type="text"
+                               class="form-control"
+                               name="warMapPlayed[]"
+                               placeholder="<?=$this->getTrans('warMapName') ?>"
+                               value="<?=$game->getMap() ?>">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label" for="textinput"><?=$this->getTrans('warResult') ?></label>
+                    <label class="col-lg-2 control-label" for="textinput">
+                        <?=$this->getTrans('warResult') ?>
+                    </label>
                     <div class="col-lg-2">
-                        <input type="text" name="warErgebnisGroup[]" placeholder="<?=$this->getTrans('warResultWe') ?>" class="form-control" value="<?=$game->getGroupPoints() ?>">
+                        <input type="text"
+                               class="form-control"
+                               name="warErgebnisGroup[]"
+                               placeholder="<?=$this->getTrans('warResultWe') ?>"
+                               value="<?=$game->getGroupPoints() ?>">
                     </div>
                     <div class="col-lg-2">
-                        <input type="text"name="warErgebnisEnemy[]" placeholder="<?=$this->getTrans('warResultEnemy') ?>" class="form-control" value="<?=$game->getEnemyPoints() ?>">
+                        <input type="text"
+                               class="form-control"
+                               name="warErgebnisEnemy[]"
+                               placeholder="<?=$this->getTrans('warResultEnemy') ?>"
+                               value="<?=$game->getEnemyPoints() ?>">
                     </div>
                 </div>
                 <div class="form-group">
@@ -35,18 +50,31 @@
             <?php endforeach; ?>
         <?php else: ?>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="textinput"><?=$this->getTrans('warMapName') ?></label>
+                <label class="col-lg-2 control-label" for="textinput">
+                    <?=$this->getTrans('warMapName') ?>
+                </label>
                 <div class="col-lg-4">
-                    <input type="text" name="warMapPlayed[]" placeholder="<?=$this->getTrans('warMapName') ?>" class="form-control">
+                    <input type="text"
+                           class="form-control"
+                           name="warMapPlayed[]"
+                           placeholder="<?=$this->getTrans('warMapName') ?>">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-lg-2 control-label" for="textinput"><?=$this->getTrans('warResult') ?></label>
+                <label class="col-lg-2 control-label" for="textinput">
+                    <?=$this->getTrans('warResult') ?>
+                </label>
                 <div class="col-lg-2">
-                    <input type="text" name="warErgebnisGroup[]" placeholder="<?=$this->getTrans('warResultWe') ?>" class="form-control">
+                    <input type="text"
+                           class="form-control"
+                           name="warErgebnisGroup[]"
+                           placeholder="<?=$this->getTrans('warResultWe') ?>">
                 </div>
                 <div class="col-lg-2">
-                    <input type="text"name="warErgebnisEnemy[]" placeholder="<?=$this->getTrans('warResultEnemy') ?>" class="form-control">
+                    <input type="text"
+                           class="form-control"
+                           name="warErgebnisEnemy[]"
+                           placeholder="<?=$this->getTrans('warResultEnemy') ?>">
                 </div>
             </div>
             <div class="form-group">

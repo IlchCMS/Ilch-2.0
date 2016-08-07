@@ -8,8 +8,8 @@
         <div class="col-lg-8">
             <input type="password"
                    class="form-control"
-                   name="password"
                    id="password"
+                   name="password"
                    value=""
                    required />
             <?=$this->getTrans('profilePasswordInfo'); ?>

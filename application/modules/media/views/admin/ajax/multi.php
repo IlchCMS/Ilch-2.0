@@ -23,15 +23,15 @@
                          src="<?=$this->getBaseUrl($media->getUrlThumb()) ?>"
                          alt="<?=$media->getName() ?>">
                     <input type="checkbox"
-                           id="<?=$media->getId() ?> test"
                            class="regular-checkbox big-checkbox"
+                           id="<?=$media->getId() ?> test"
                            name="check_image[]"
                            value="<?=$media->getId() ?>" />
                     <label for="<?=$media->getId() ?> test"></label>
                 </div>
                 <input type="text"
-                       name="check_url[]"
                        class="hidden"
+                       name="check_url[]"
                        value="<?=$media->getUrl() ?>" />
             <?php endif; ?>
         <?php endforeach; ?>
@@ -64,15 +64,15 @@
                         <small class="text-info"><?=substr($media->getName(), 0, 20) ?></small>
                     </div>
                     <input type="checkbox"
-                           id="<?=$media->getId() ?> test"
                            class="regular-checkbox big-checkbox"
+                           id="<?=$media->getId() ?> test"
                            name="check_image[]"
                            value="<?=$media->getId() ?>" />
                     <label for="<?=$media->getId() ?> test"></label>
                 </div>
                 <input type="text"
-                       name="check_url[]"
                        class="hidden"
+                       name="check_url[]"
                        value="<?=$media->getUrl() ?>" />
             <?php endif; ?>
         <?php endforeach; ?>

@@ -20,7 +20,7 @@ $settingMapper = $this->get('settingMapper');
                         
                         <?php if ($profil->getAvatar() != 'static/img/noavatar.jpg'): ?>
                             <label for="avatar_delete" style="margin-left: 10px; margin-top: 10px;">
-                                <input type="checkbox" name="avatar_delete" id="avatar_delete"> <?=$this->getTrans('avatarDelete') ?>
+                                <input type="checkbox" id="avatar_delete" name="avatar_delete"> <?=$this->getTrans('avatarDelete') ?>
                             </label>
                         <?php endif; ?>
                     </div>
@@ -44,8 +44,8 @@ $settingMapper = $this->get('settingMapper');
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-12">
                         <input type="submit" 
-                               name="saveEntry" 
                                class="btn"
+                               name="saveEntry" 
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>

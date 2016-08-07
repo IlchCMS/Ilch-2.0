@@ -1,25 +1,12 @@
-<link href="<?=$this->getModuleUrl('static/fullcalendar/fullcalendar.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/fullcalendar/fullcalendar.print.css') ?>" rel="stylesheet" media='print'>
-
-<style>
-#calendar {
-    width: 100%;
-    margin: 0 auto;
-}
-.fc-basic-view .fc-body .fc-row { min-height: 60px; }
-@media (min-width: 1200px) {
-    .fc-basic-view .fc-body .fc-row { height: 112px; }
-}
-.fc-today { background-color:#4295C9 !important; }
-.fc-sat { color:gray; }
-.fc-sun { color:red; }
-</style>
+<link href="<?=$this->getModuleUrl('static/css/calendar.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.print.css') ?>" rel="stylesheet" media='print'>
 
 <div id='calendar'></div>
 
-<script src="<?=$this->getModuleUrl('static/fullcalendar/lib/moment.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/fullcalendar/fullcalendar.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/fullcalendar/lang-all.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar/lib/moment.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.min.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar/lang-all.js') ?>"></script>
 <script>
 $(function() {
     var date = new Date();

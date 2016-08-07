@@ -17,8 +17,8 @@
             <?=$this->getTrans('groupName') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="groupName"
                    value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupName(); } ?>" />
         </div>
@@ -28,8 +28,8 @@
             <?=$this->getTrans('groupTag') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="groupTag"
                    value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupTag(); } ?>" />
         </div>
@@ -40,10 +40,10 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <input class="form-control"
-                       type="text"
-                       name="groupImage"
+                <input type="text"
+                       class="form-control"
                        id="selectedImage_1"
+                       name="groupImage"
                        placeholder="<?=$this->getTrans('groupImage') ?>"
                        value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupImage(); } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
@@ -55,7 +55,7 @@
                 <?=$this->getTrans('assignedMember') ?>
         </label>
         <div class="col-lg-8">
-            <select class="form-control" name="userGroup" id="warGroup">
+            <select class="form-control" id="warGroup" name="userGroup">
                 <optgroup label="<?=$this->getTrans('groupsName') ?>">
                     <?php foreach ($this->get('userGroupList') as $groupList): ?>
                         <?php $selected = ''; ?>

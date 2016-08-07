@@ -52,12 +52,12 @@ class View extends Design\Base
     public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
     {
         $html = '<div class="content_savebox">
-                    <button value="save" type="submit" name="save'.$nameKey.'" class="btn">
+                    <button type="submit" class="btn" name="save'.$nameKey.'" value="save">
                         '.$this->getTrans($saveKey).'
                     </button>';
 
         if (!empty($deleteKey)) {
-            $html .= '<button value="delete" type="submit" name="delete" class="delete_button pull-right btn">
+            $html .= '<button type="submit" class="delete_button pull-right btn" name="delete" value="delete">
                         '.$this->getTrans($deleteKey).'
                       </button>';
         }
@@ -77,7 +77,7 @@ class View extends Design\Base
     public function getListBar($actions = [], $name = '')
     {
         $html = '<div class="content_savebox">
-                    <input class="content_savebox_hidden" name="action" type="hidden" value="" />
+                    <input type="hidden" class="content_savebox_hidden" name="action" value="" />
                         <div class="btn-group dropup">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">'.
                                 $this->getTrans('selected').' <span class="caret"></span>

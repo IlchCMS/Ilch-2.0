@@ -17,7 +17,7 @@
         <div class="col-lg-4">
 
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="show" value="1" id="show-on" 
+                <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" 
                     <?php if ($this->get('privacy') != ''): ?>
                         <?php if ($this->get('privacy')->getShow() == 1): ?>
                             checked="checked"
@@ -26,7 +26,7 @@
                         checked="checked"
                     <?php endif; ?> />
                 <label for="show-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" name="show" value="0" id="show-off" 
+                <input type="radio" class="flipswitch-input" id="show-off" name="show" value="0" 
                     <?php if ($this->get('privacy') != '' AND $this->get('privacy')->getShow() == 0): ?>
                         checked="checked"
                     <?php endif; ?> />
@@ -40,10 +40,10 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control" 
-                   type="text" 
-                   name="title" 
-                   id="title" 
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   name="title"
                    value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getTitle()); } ?>" />
         </div>
     </div>
@@ -52,10 +52,10 @@
             <?=$this->getTrans('urlTitle') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control" 
-                   type="text" 
-                   name="urltitle" 
-                   id="urltitle" 
+            <input type="text"
+                   class="form-control"
+                   id="urltitle"
+                   name="urltitle"
                    value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getUrlTitle()); } ?>" />
         </div>
     </div>
@@ -64,10 +64,10 @@
             <?=$this->getTrans('url') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control" 
-                   type="text" 
-                   name="url" 
-                   id="url" 
+            <input type="text"
+                   class="form-control"
+                   id="url"
+                   name="url"
                    placeholder="http://" 
                    value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getUrl()); } ?>" />
         </div>
@@ -78,10 +78,10 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                   name="text" 
-                   id="ck_1"
-                   toolbar="ilch_html"
-                   rows="5"><?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getText()); } ?></textarea>
+                      id="ck_1"
+                      name="text"
+                      toolbar="ilch_html"
+                      rows="5"><?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getText()); } ?></textarea>
         </div>
     </div>
     <?php if ($this->get('privacy') != '') {

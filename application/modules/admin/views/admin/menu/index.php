@@ -25,13 +25,13 @@ function rec($item, $menuMapper, $obj) {
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
     echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
-                    <input type="hidden" name="items['.$item->getId().'][id]" class="hidden_id" value="'.$item->getId().'" />
-                    <input type="hidden" name="items['.$item->getId().'][title]" class="hidden_title" value="'.$item->getTitle().'" />
-                    <input type="hidden" name="items['.$item->getId().'][href]" class="hidden_href" value="'.$item->getHref().'" />
-                    <input type="hidden" name="items['.$item->getId().'][type]" class="hidden_type" value="'.$item->getType().'" />
-                    <input type="hidden" name="items['.$item->getId().'][siteid]" class="hidden_siteid" value="'.$item->getSiteId().'" />
-                    <input type="hidden" name="items['.$item->getId().'][boxkey]" class="hidden_boxkey" value="'.$boxKey.'" />
-                    <input type="hidden" name="items['.$item->getId().'][modulekey]" class="hidden_modulekey" value="'.$item->getModuleKey().'" />
+                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
+                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
+                    <input type="hidden" class="hidden_href" name="items['.$item->getId().'][href]" value="'.$item->getHref().'" />
+                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
+                    <input type="hidden" class="hidden_siteid" name="items['.$item->getId().'][siteid]" value="'.$item->getSiteId().'" />
+                    <input type="hidden" class="hidden_boxkey" name="items['.$item->getId().'][boxkey]" value="'.$boxKey.'" />
+                    <input type="hidden" class="hidden_modulekey" name="items['.$item->getId().'][modulekey]" value="'.$item->getModuleKey().'" />
                     <span></span>
                 </span><span class="title">'.$item->getTitle().'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
 
@@ -96,7 +96,7 @@ function rec($item, $menuMapper, $obj) {
                     <?=$this->getTrans('itemType') ?>
                 </label>
                 <div class="col-lg-4">
-                    <select id="type" class="form-control">
+                    <select class="form-control" id="type">
                         <option value="0"><?=$this->getTrans('menu')?></option>
                         <optgroup>
                             <option value="1"><?=$this->getTrans('externalLinking')?></option>
@@ -109,7 +109,7 @@ function rec($item, $menuMapper, $obj) {
             </div>
             <div class="dyn"></div>
             <div class="actions">
-                <input type="button" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>" class="btn">
+                <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
             </div>
         </div>
     </div>
@@ -243,14 +243,14 @@ $(document).ready
             }
 
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][href]" class="hidden_href" value="'+$('#href').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][siteid]" class="hidden_siteid" value="'+$('#siteid').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][boxkey]" class="hidden_boxkey" value="'+$('#boxkey').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][modulekey]" class="hidden_modulekey" value="'+modulKey+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][menukey]" class="hidden_menukey" value="'+$('#menukey').val()+'" />'
+                    +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
+                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
+                    +'<input type="hidden" class="hidden_href" name="items[tmp_'+itemId+'][href]" value="'+$('#href').val()+'" />'
+                    +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
+                    +'<input type="hidden" class="hidden_siteid" name="items[tmp_'+itemId+'][siteid]" value="'+$('#siteid').val()+'" />'
+                    +'<input type="hidden" class="hidden_boxkey" name="items[tmp_'+itemId+'][boxkey]" value="'+$('#boxkey').val()+'" />'
+                    +'<input type="hidden" class="hidden_modulekey" name="items[tmp_'+itemId+'][modulekey]" value="'+modulKey+'" />'
+                    +'<input type="hidden" class="hidden_menukey" name="items[tmp_'+itemId+'][menukey]" value="'+$('#menukey').val()+'" />'
                     +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
@@ -304,7 +304,7 @@ $(document).ready
             }
 
             menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label">Menü</label>\n\
-                        <div class="col-lg-4"><select id="menukey" class="form-control">'+options+'</select></div></div>';
+                        <div class="col-lg-4"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
@@ -313,25 +313,25 @@ $(document).ready
                                 <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
                  $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
-                                <div class="col-lg-4"><?php if (!empty($pages)) { echo '<select id="siteid" class="form-control">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
+                                <div class="col-lg-4"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
-                                <div class="col-lg-4"><?php if (!empty($modules)) { echo '<select id="modulekey" class="form-control">'; foreach ($modules as $module) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
+                                <div class="col-lg-4"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
-                                <div class="col-lg-4"><?='<select id="boxkey" class="form-control">';
+                                <div class="col-lg-4"><?='<select class="form-control" id="boxkey">';
                 foreach ($boxesDir as $moDir => $modulBoxes) { foreach ($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach ($boxes as $box) { echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
             }
         });
 
         $('#menuForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
+            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');
             resetBox();
         });
 
         $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" id="menuItemEdit" value="Editieren" class="btn">\n\
-                               <input type="button" id="menuItemEditCancel" value="Abbrechen" class="btn">');
+           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="Editieren">\n\
+                               <input type="button" class="btn" id="menuItemEditCancel" value="Abbrechen">');
            $('#title').val($(this).parent().find('.hidden_title').val());
            $('#type').val($(this).parent().find('.hidden_type').val());
            $('#id').val($(this).closest('li').attr('id'));

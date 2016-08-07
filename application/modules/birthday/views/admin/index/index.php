@@ -8,8 +8,8 @@
             <?=$this->getTrans('numberOfBirthsdayShow') ?>:
         </label>
         <div class="col-lg-1">
-            <input class="form-control"
-                   type="number"
+            <input type="number"
+                   class="form-control"
                    id="entrySettings"
                    name="entrySettings"
                    min="1"

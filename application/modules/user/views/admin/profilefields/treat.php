@@ -26,37 +26,33 @@ function addIndex(index) {
             <i class="fa fa-info"></i>
         </a>
     </legend>
-    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'profilefields', 'action' => 'save']) ?>"
-          method="POST"
-          class="form-horizontal"
-          id="profileFieldForm">
+    <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'profilefields', 'action' => 'save']) ?>" method="POST" class="form-horizontal" id="profileFieldForm">
         <?=$this->getTokenField() ?>
-        <input name="profileField[id]"
-               type="hidden"
+        <input type="hidden"
+               name="profileField[id]"
                value="<?=$profileField->getId() ?>" />
         <div class="form-group">
-            <label for="profileFieldName"
-                   class="col-lg-3 control-label">
+            <label for="profileFieldName" class="col-lg-3 control-label">
                 <?=$this->getTrans('profileFieldName') ?>
             </label>
             <div class="col-lg-9">
-                <input name="profileField[name]"
-                       type="text"
-                       id="profileFieldName"
+                <input type="text"
                        class="form-control required"
+                       id="profileFieldName"
+                       name="profileField[name]"
                        placeholder="<?=$this->getTrans('profileFieldName') ?>"
                        value="<?=$this->escape($profileField->getName()) ?>" />
             </div>
             <div class="col-lg-9">
                 <label>
-            <?php if (!$profileField->getType()) : ?>
-                <input value="1" type="checkbox" name="profileField[type]" /> <?=$this->getTrans('cat') ?>
-            <?php else : ?>
-                <input value="1" type="checkbox" name="profileField[type]" checked="checked" /> <?=$this->getTrans('cat') ?>
-            <?php endif; ?>
+                    <?php if (!$profileField->getType()) : ?>
+                        <input type="checkbox" name="profileField[type]" value="1" /> <?=$this->getTrans('cat') ?>
+                    <?php else : ?>
+                        <input type="checkbox" name="profileField[type]" value="1" checked="checked" /> <?=$this->getTrans('cat') ?>
+                    <?php endif; ?>
                 </label>
-                <input name="profileField[position]"
-                       type="hidden"
+                <input type="hidden"
+                       name="profileField[position]"
                        value="<?=($profileField->getId()) ? $profileField->getPosition() : $countOfProfileFields ?>" />
             </div>
         </div>
@@ -71,17 +67,17 @@ function addIndex(index) {
                     <?=(isset($localeList[$profileFieldTranslation->getLocale()])) ? $localeList[$profileFieldTranslation->getLocale()] : $profileFieldTranslation->getLocale() ?>
                 </label>
             </div>
-            <input name="profileFieldTrans<?=$i?>[field_id]"
-                   type="hidden"
+            <input type="hidden"
+                   name="profileFieldTrans<?=$i?>[field_id]"
                    value="<?=$profileField->getId() ?>" />
-            <input name="profileFieldTrans<?=$i?>[locale]"
-                   type="hidden"
+            <input type="hidden"
+                   name="profileFieldTrans<?=$i?>[locale]"
                    value="<?=$profileFieldTranslation->getLocale() ?>" />
             <div class="col-lg-9">
-                <input name="profileFieldTrans<?=$i?>[name]"
-                       type="text"
-                       id="profileFieldName"
+                <input type="text"
                        class="form-control"
+                       id="profileFieldName"
+                       name="profileFieldTrans<?=$i?>[name]"
                        placeholder="<?=$this->getTrans('profileFieldName') ?>"
                        value="<?=$this->escape($profileFieldTranslation->getName()) ?>" />
             </div>
@@ -111,8 +107,8 @@ function addTranslations() {
     }
 
     var html =  '<div class="form-group" id="profileFieldTrans'+index+'">'+
-                    '<input name="profileFieldTrans'+index+'[field_id]"'+
-                        'type="hidden"'+
+                    '<input type="hidden"'+
+                        'name="profileFieldTrans'+index+'[field_id]"'+
                         'value="<?=$profileField->getId() ?>" />'+
                     '<div class="col-lg-3">'+
                         '<button type="button" class="btn" onclick="deleteTranslation('+index+')">-</button>'+
@@ -126,10 +122,10 @@ function addTranslations() {
                         '</select>'+
                     '</div>'+
                     '<div class="col-lg-9">'+
-                        '<input name="profileFieldTrans'+index+'[name]"'+
-                               'type="text"'+
-                               'id="profileFieldName"'+
+                        '<input type="text"'+
                                'class="form-control"'+
+                               'id="profileFieldName"'+
+                               'name="profileFieldTrans'+index+'[name]"'+
                                'placeholder="<?=$this->getTrans('profileFieldName') ?>"'+
                                'value="" />'+
                     '</div>'+

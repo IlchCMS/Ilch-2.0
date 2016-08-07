@@ -17,7 +17,7 @@ foreach ($datas as $data): ?>
                 </figure>
                 <form method="POST" action="">
                     <?=$this->getTokenField() ?>
-                    <button type = "submit" class = "btn btn-default" name="url" value="<?=$data->downloadLink?>">Install <?=$data->name?>?</button>
+                    <button type="submit" class="btn btn-default" name="url" value="<?=$data->downloadLink?>">Install <?=$data->name?>?</button>
                 </form>
             </div>
         </div>

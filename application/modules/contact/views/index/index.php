@@ -9,12 +9,10 @@
                 <?=$this->getTrans('receiver') ?>:
             </label>
             <div class="col-lg-8">
-                <select id="receiver"
-                        class="form-control"
-                        name="contact_receiver">
-                        <?php foreach ($receivers as $receiver):?>
-                            <option value="<?=$receiver->getId() ?>"><?=$this->escape($receiver->getName()) ?></option>
-                        <?php endforeach; ?>
+                <select class="form-control" id="receiver" name="contact_receiver">
+                    <?php foreach ($receivers as $receiver):?>
+                        <option value="<?=$receiver->getId() ?>"><?=$this->escape($receiver->getName()) ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -23,10 +21,10 @@
                 <?=$this->getTrans('name') ?>:
             </label>
             <div class="col-lg-8">
-                <input id="name"
+                <input type="text"
                        class="form-control"
+                       id="name"
                        name="contact_name"
-                       type="text"
                        value="" />
             </div>
         </div>
@@ -35,10 +33,10 @@
                 <?=$this->getTrans('email') ?>:
             </label>
             <div class="col-lg-8">
-                <input id="email"
+                <input type="text"
                        class="form-control"
+                       id="email"
                        name="contact_email"
-                       type="text"
                        value="" />
             </div>
         </div>
@@ -47,10 +45,10 @@
                 <?=$this->getTrans('message') ?>:
             </label>
             <div class="col-lg-8">
-                <textarea id="message" 
-                          class="form-control"
-                          rows="5"
-                          name="contact_message"></textarea>
+                <textarea class="form-control"
+                          id="message"
+                          name="contact_message"
+                          rows="5"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -64,11 +62,11 @@
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8 input-group captcha">
                 <input type="text"
-                      id="captcha-form"
-                      class="form-control"
-                      autocomplete="off"
-                      name="captcha"
-                      placeholder="<?=$this->getTrans('captcha') ?>" />
+                       class="form-control"
+                       id="captcha-form"
+                       name="captcha"
+                       autocomplete="off"
+                       placeholder="<?=$this->getTrans('captcha') ?>" />
                 <span class="input-group-addon">
                     <a href="javascript:void(0)" onclick="
                         document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();

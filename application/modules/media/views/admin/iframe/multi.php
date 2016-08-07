@@ -19,7 +19,7 @@
     <ul class="nav nav-pills navbar-fixed-top">
         <li><a href="<?=$this->getUrl(['controller' => 'iframe', 'action' => 'upload', 'id' => $this->getRequest()->getParam('id')]) ?>"><?=$this->getTrans('upload') ?></a></li>
         <li><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>"><?=$this->getTrans('media') ?></a></li>
-        <li class="pull-right"><button class="btn btn-primary" name="save" type="submit" value="save"><?=$this->getTrans('add') ?></button></li>
+        <li class="pull-right"><button type="submit" class="btn btn-primary" name="save" value="save"><?=$this->getTrans('add') ?></button></li>
     </ul>
 
     <?php if ($this->get('medias') != ''): ?>
@@ -38,15 +38,15 @@
                                      <?php endif; ?>
                                      alt="<?=$media->getName() ?>">
                                 <input type="checkbox"
-                                       id="<?=$media->getId() ?> test"
                                        class="regular-checkbox big-checkbox"
+                                       id="<?=$media->getId() ?> test"
                                        name="check_image[]"
                                        value="<?=$media->getId() ?>" />
                                 <label for="<?=$media->getId() ?> test"></label>
                             </div>
                             <input type="text"
-                                   name="check_url[]"
                                    class="hidden"
+                                   name="check_url[]"
                                    value="<?=$media->getUrl() ?>" />
                         <?php endif; ?>
                     <?php endforeach; ?>
@@ -79,15 +79,15 @@
                                     <small class="text-info"><?=substr($media->getName(), 0, 20) ?></small>
                                 </div>
                                 <input type="checkbox"
-                                       id="<?=$media->getId() ?> test"
                                        class="regular-checkbox big-checkbox"
+                                       id="<?=$media->getId() ?> test"
                                        name="check_image[]"
                                        value="<?=$media->getId() ?>" />
                                 <label for="<?=$media->getId() ?> test"></label>
                             </div>
                             <input type="text"
-                                   name="check_url[]"
                                    class="hidden"
+                                   name="check_url[]"
                                    value="<?=$media->getUrl() ?>" />
                         <?php endif; ?>
                     <?php endforeach; ?>

@@ -8,7 +8,7 @@
             <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
         </div>
         <div class="col-lg-10">
-            <legend><?=$this->getTrans('menuSettings') ?></legend>
+            <legend><?=$this->getTrans('settings') ?></legend>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="form-group">
@@ -17,9 +17,9 @@
                     </label>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="1" id="newsletter_yes" <?php if ($countMail == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="newsletter_yes" name="opt_newsletter" value="1" <?php if ($countMail == '1') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" name="opt_newsletter" value="0" id="newsletter_no" <?php if ($countMail == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="newsletter_no" name="opt_newsletter" value="0" <?php if ($countMail == '0') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>

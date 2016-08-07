@@ -6,10 +6,10 @@
             <?=$this->getTrans('allowedFileExtensions') ?>:
         </label>
         <div class="col-lg-2">
-            <input name="smiley_filetypes" 
-                   type="text" 
-                   id="smiley_filetypes" 
-                   class="form-control required" 
+            <input type="text"
+                   class="form-control required"
+                   id="smiley_filetypes"
+                   name="smiley_filetypes"
                    value="<?=$this->get('smiley_filetypes') ?>" />
         </div>
     </div>

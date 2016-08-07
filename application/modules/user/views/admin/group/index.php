@@ -28,7 +28,7 @@
                         ?>
                         <tr>
                             <td>
-                                <input value="<?=$group->getId()?>" type="checkbox" name="check_groups[]" />
+                                <input type="checkbox" name="check_groups[]" value="<?=$group->getId()?>" />
                             </td>
                             <td>
                                 <?=$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) ?>

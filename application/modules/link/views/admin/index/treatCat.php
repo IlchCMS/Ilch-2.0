@@ -14,10 +14,10 @@
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="name"
+            <input type="text"
+                   class="form-control"
                    id="name"
+                   name="name"
                    placeholder="Name"
                    value="<?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getName()); } ?>" />
         </div>

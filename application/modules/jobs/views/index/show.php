@@ -46,10 +46,10 @@ $jobs = $this->get('jobs');
         <div class="form-group">
             <div class="col-lg-12">
                 <textarea class="form-control ckeditor"
-                       name="text"
-                       id="ck_1"
-                       toolbar="ilch_html"
-                       rows="5"></textarea>
+                          id="ck_1"
+                          name="text"
+                          toolbar="ilch_html"
+                          rows="5"></textarea>
             </div>
         </div>
         <div class="col-lg-12" align="right">

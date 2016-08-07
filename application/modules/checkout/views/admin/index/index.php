@@ -7,40 +7,40 @@ $currency = $this->escape($this->get('currency'));
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="name"
+            <input type="text"
+                   class="form-control"
                    id="name"
+                   name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
                    value="" />
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="datetime"
+            <input type="text"
+                   class="form-control"
                    id="datetime"
+                   name="datetime"
                    placeholder="<?=$this->getTrans('datetime') ?>"
                    value="<?php if ($this->get('checkoutdate') != '') { echo $this->get('checkoutdate'); } ?>" />
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="usage"
+            <input type="text"
+                   class="form-control"
                    id="usage"
+                   name="usage"
                    placeholder="<?=$this->getTrans('usage') ?>"
                    value="" />
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="amount"
+            <input type="text"
+                   class="form-control"
                    id="amount"
+                   name="amount"
                    placeholder="<?=$this->getTrans('amount') ?>"
                    data-content="<?=$this->getTrans('amountinfo') ?>" 
                    rel="popover" 

@@ -21,7 +21,7 @@
                 <tbody>
                     <?php foreach ($this->get('cats') as $cat): ?>
                         <tr>
-                            <td><input value="<?=$cat->getId() ?>" type="checkbox" name="check_cats[]" /></td>
+                            <td><input type="checkbox" name="check_cats[]" value="<?=$cat->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$cat->getName() ?></td>

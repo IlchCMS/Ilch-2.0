@@ -12,10 +12,10 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-3">
-            <input class="form-control"
-                   type="text"
-                   name="title"
+            <input type="text"
+                   class="form-control"
                    id="title"
+                   name="title"
                    value="<?php if ($this->get('cat') != '') { echo $this->escape($this->get('cat')->getTitle()); } ?>" />
         </div>
     </div>

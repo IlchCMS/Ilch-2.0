@@ -101,7 +101,7 @@ if ($this->getUser()) {
                                 </span>
                             </dd>
                             <?php if ($forumEdit): ?>
-                                <dd><input value="<?=$topic->getId() ?>" type="checkbox" name="check_topics[]" /></dd>
+                                <dd><input type="checkbox" name="check_topics[]" value="<?=$topic->getId() ?>" /></dd>
                             <?php endif; ?>
                         </dl>
                     </li>
@@ -113,7 +113,7 @@ if ($this->getUser()) {
                 <?php if (!$forumEdit): ?>
                     <form action="" method="post">
                         <?php echo $this->getTokenField(); ?>
-                        <button name="forumEdit" value="forumEdit" class="btn btn-default"><?=$this->getTrans('forumEdit') ?></button>
+                        <button class="btn btn-default" name="forumEdit" value="forumEdit"><?=$this->getTrans('forumEdit') ?></button>
                     </form>
                 <?php else: ?>
                     <button class="btn btn-labeled bgblue" name="topicDelete" value="topicDelete" OnClick="SetAction1()"><?=$this->getTrans('topicDelete') ?></button>

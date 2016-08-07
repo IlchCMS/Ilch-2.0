@@ -12,7 +12,7 @@
             </div>
             <div class="panel-footer clearfix">
                 <div class="pull-left checkbox inline <?php if ($this->get('error') != '') { echo 'text-danger'; } ?>">
-                    <input type="checkbox" name="acceptRule" id="acceptRule" value="1" style="margin-left: 0px;"> <label for="acceptRule"><?=$this->getTrans('acceptRule') ?></label>
+                    <input type="checkbox" style="margin-left: 0px;" id="acceptRule" name="acceptRule"value="1"> <label for="acceptRule"><?=$this->getTrans('acceptRule') ?></label>
                 </div>
                 <div class="pull-right">
                     <?=$this->getSaveBar('nextButton', 'Regist') ?>

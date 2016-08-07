@@ -9,19 +9,17 @@
         <div class="col-md-12">
             <div class="form-group">
                 <div class="col-lg-12">
-                    <textarea id="ck_1"
-                              class="form-control ckeditor"
-                              toolbar="ilch_bbcode"
-                              name="text">
-                        <?=$post->getText() ?>
-                    </textarea>
+                    <textarea class="form-control ckeditor"
+                              id="ck_1"
+                              name="text"
+                              toolbar="ilch_bbcode"><?=$post->getText() ?></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-12">
                     <input type="submit"
-                           name="editPost"
                            class="btn"
+                           name="editPost"
                            value="<?=$this->getTrans('edit'); ?>" />
                 </div>
             </div>

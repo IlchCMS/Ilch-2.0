@@ -25,7 +25,7 @@
                 <tbody>
                     <?php foreach ($this->get('jobs') as $jobs) : ?>
                         <tr>
-                            <td><input value="<?=$jobs->getId() ?>" type="checkbox" name="check_entries[]" /></td>
+                            <td><input type="checkbox" name="check_entries[]" value="<?=$jobs->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $jobs->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $jobs->getId()]) ?></td>
                             <td>

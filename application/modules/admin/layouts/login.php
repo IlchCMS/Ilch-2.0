@@ -40,8 +40,8 @@
                                 <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
                                     <input type="text"
-                                           name="emailname"
                                            class="form-control"
+                                           name="emailname"
                                            placeholder="<?=$this->getTrans('emailname') ?>"
                                            value="<?=$this->escape($emailname) ?>">
                                 </div>
@@ -50,8 +50,8 @@
                                 <div class="input-group">
                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
                                     <input type="password"
-                                           name="password"
                                            class="form-control"
+                                           name="password"
                                            placeholder="<?=$this->getTrans('password') ?>">
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button class="btn" type="submit"><?=$this->getTrans('signIn') ?></button>
+                            <button type="submit" class="btn"><?=$this->getTrans('signIn') ?></button>
                             <br />
                             <?php if (!empty($errors)): ?>
                                 <?php foreach ($errors as $transKey): ?>

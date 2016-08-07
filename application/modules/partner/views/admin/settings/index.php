@@ -9,9 +9,9 @@
         </label>
         <div class="col-lg-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="slider" value="1" id="slider-on" <?php if ($this->get('slider') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="slider-on" name="slider" value="1" <?php if ($this->get('slider') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="slider-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" name="slider" value="0" id="slider-off" <?php if ($this->get('slider') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="slider-off" name="slider" value="0" <?php if ($this->get('slider') != '1') { echo 'checked="checked"'; } ?> />
                 <label for="slider-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -23,8 +23,8 @@
                 <?=$this->getTrans('boxSliderHeight') ?>:
             </label>
             <div class="col-lg-1">
-                <input class="form-control"
-                       type="number"
+                <input type="number"
+                       class="form-control"
                        name="boxHeight"
                        min="0"
                        value="<?=$this->get('boxHeight') ?>">
@@ -36,8 +36,8 @@
                 <?=$this->getTrans('boxSliderSpeed') ?>:
             </label>
             <div class="col-lg-1">
-                <input class="form-control"
-                       type="number"
+                <input type="number"
+                       class="form-control"
                        name="sliderSpeed"
                        min="0"
                        value="<?=$this->get('sliderSpeed') ?>">

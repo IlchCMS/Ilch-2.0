@@ -9,7 +9,11 @@
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <div class="col-lg-6">
-            <textarea class="form-control" rows="20" id="customCSS" name="customCSS" placeholder="Code goes here..."><?=$this->escape($this->get('customCSS')) ?></textarea>
+            <textarea class="form-control"
+                      id="customCSS"
+                      name="customCSS"
+                      rows="20"
+                      placeholder="Code goes here..."><?=$this->escape($this->get('customCSS')) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar() ?>

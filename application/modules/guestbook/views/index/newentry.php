@@ -66,10 +66,10 @@
             <?=$this->getTrans('message') ?>*
         </label>
         <div class="col-lg-8">
-            <textarea id="ck_1"
-                      class="form-control ckeditor"
-                      toolbar="ilch_bbcode"
+            <textarea class="form-control ckeditor"
+                      id="ck_1"
                       name="text"
+                      toolbar="ilch_bbcode"
                       required>
                 <?=$this->get('post')['text'] ?>
             </textarea>

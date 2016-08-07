@@ -65,7 +65,7 @@ function rec($item, $obj, $readAccess, $i)
                 </div>
             </div>
             <div class="col-lg-offset-2 col-lg-10">
-                <button value="edittopic" type="submit" name="edittopic" class="btn btn-labeled bgblue">
+                <button type="submit" class="btn btn-labeled bgblue" name="edittopic" value="edittopic">
                     <?=$this->getTrans('move') ?>
                 </button>
             </div>

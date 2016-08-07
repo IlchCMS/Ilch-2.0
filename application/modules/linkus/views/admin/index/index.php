@@ -21,7 +21,7 @@
                 <tbody>
                     <?php foreach ($this->get('linkus') as $linkus): ?>
                         <tr>
-                            <td><input value="<?=$linkus->getId() ?>" type="checkbox" name="check_linkus[]" /></td>
+                            <td><input type="checkbox" name="check_linkus[]" value="<?=$linkus->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $linkus->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $linkus->getId()]) ?></td>
                             <td>

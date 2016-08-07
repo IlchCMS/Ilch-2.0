@@ -69,7 +69,7 @@
                         ?>
                         <tr>
                             <td>
-                                <input value="<?=$user->getId()?>" type="checkbox" name="check_users[]" />
+                                <input type="checkbox" name="check_users[]" value="<?=$user->getId()?>" />
                             </td>
                             <td>
                                 <?php  if ($this->getRequest()->getParam('showsetfree')): ?>

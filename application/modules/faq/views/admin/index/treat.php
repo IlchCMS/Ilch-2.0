@@ -35,10 +35,10 @@
                 <?=$this->getTrans('question') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="question"
+                <input type="text"
+                       class="form-control"
                        id="question"
+                       name="question"
                        value="<?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getQuestion()); } ?>" />
             </div>
         </div>
@@ -48,11 +48,11 @@
             </label>
             <div class="col-lg-10">
                 <textarea class="form-control ckeditor"
+                          id="ck_1"
                           name="answer"
                           cols="45"
-                          id="ck_1"
-                          toolbar="ilch_html"
-                          rows="3"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } ?></textarea>
+                          rows="3"
+                          toolbar="ilch_html"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } ?></textarea>
             </div>
         </div>
         <?php if ($this->get('faq') != '') {

@@ -16,10 +16,10 @@
                         <?=$this->getTrans('imageTitle') ?>:
                     </label>
                     <div class="col-lg-8">
-                        <input class="form-control"
-                               type="text"
-                               name="imageTitle"
+                        <input type="text"
+                               class="form-control"
                                id="imageTitleInput"
+                               name="imageTitle"
                                value="<?=$image->getImageTitle() ?>" />
                     </div>
                 </div>

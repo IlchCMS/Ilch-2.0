@@ -23,7 +23,7 @@
                     <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
                     <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
                     <tr>
-                        <td><input value="<?=$shoutbox->getId() ?>" type="checkbox" name="check_entries[]" /> </td>
+                        <td><input type="checkbox" name="check_entries[]" value="<?=$shoutbox->getId() ?>" /> </td>
                         <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $shoutbox->getId()]) ?></td>
                         <?php if ($shoutbox->getUid() == '0'): ?>
                             <td><?=$this->escape($shoutbox->getName()) ?></td>

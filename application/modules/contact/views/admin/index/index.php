@@ -23,7 +23,7 @@
                 <tbody>
                     <?php foreach ($this->get('receivers') as $receiver): ?>
                         <tr>
-                            <td><input value="<?=$receiver->getId()?>" type="checkbox" name="check_receivers[]" /></td>
+                            <td><input type="checkbox" name="check_receivers[]" value="<?=$receiver->getId()?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $receiver->getId()])?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $receiver->getId()])?></td>
                             <td><?=$this->escape($receiver->getName()) ?></td>

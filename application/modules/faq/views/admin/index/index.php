@@ -26,7 +26,7 @@
                     <?php foreach ($this->get('faqs') as $faq): ?>
                         <?php $faqsCats = $categoryMapper->getCategoryById($faq->getCatId()); ?>
                         <tr>
-                            <td><input value="<?=$faq->getId()?>" type="checkbox" name="check_faqs[]" /></td>
+                            <td><input type="checkbox" name="check_faqs[]" value="<?=$faq->getId()?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $faq->getId()])?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delfaq', 'id' => $faq->getId()])?></td>
                             <td><?=$this->escape($faqsCats->getTitle()) ?></td>

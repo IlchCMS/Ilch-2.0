@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('menuSettings') ?></legend>
+<legend><?=$this->getTrans('settings') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
@@ -7,9 +7,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="regist_accept" value="1" id="regist-accept-yes" <?php if ($this->get('regist_accept') == '1') { echo 'checked="checked"'; } ?> />  
+                <input type="radio" class="flipswitch-input" id="regist-accept-yes" name="regist_accept" value="1" <?php if ($this->get('regist_accept') == '1') { echo 'checked="checked"'; } ?> />  
                 <label for="regist-accept-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" name="regist_accept" value="0" id="regist-accept-no" <?php if ($this->get('regist_accept') != '1') { echo 'checked="checked"'; } ?> />  
+                <input type="radio" class="flipswitch-input" id="regist-accept-no" name="regist_accept" value="0" <?php if ($this->get('regist_accept') != '1') { echo 'checked="checked"'; } ?> />  
                 <label for="regist-accept-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -22,9 +22,9 @@
             </label>
             <div class="col-lg-4">
                 <div class="flipswitch">
-                    <input type="radio" class="flipswitch-input" name="regist_confirm" value="1" id="regist-confirm-yes" <?php if ($this->get('regist_confirm') == '1') { echo 'checked="checked"'; } ?> />  
+                    <input type="radio" class="flipswitch-input" id="regist-confirm-yes" name="regist_confirm" value="1" <?php if ($this->get('regist_confirm') == '1') { echo 'checked="checked"'; } ?> />  
                     <label for="regist-confirm-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                    <input type="radio" class="flipswitch-input" name="regist_confirm" value="0" id="regist-confirm-no" <?php if ($this->get('regist_confirm') != '1') { echo 'checked="checked"'; } ?> />  
+                    <input type="radio" class="flipswitch-input" id="regist-confirm-no" name="regist_confirm" value="0" <?php if ($this->get('regist_confirm') != '1') { echo 'checked="checked"'; } ?> />  
                     <label for="regist-confirm-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                     <span class="flipswitch-selection"></span>
                 </div>
@@ -38,10 +38,10 @@
             </label>
             <div class="col-lg-10">
                 <textarea class="form-control ckeditor"
-                          name="regist_rules"
-                          cols="60"
                           id="ck_1"
+                          name="regist_rules"
                           toolbar="ilch_html"
+                          cols="60"
                           rows="5"><?=$this->get('regist_rules') ?></textarea>
             </div>
         </div>
@@ -61,10 +61,10 @@
                 </label>
                 <div class="col-lg-10">
                     <textarea class="form-control ckeditor"
-                              name="regist_confirm_mail"
-                              cols="60"
                               id="ck_2"
+                              name="regist_confirm_mail"
                               toolbar="ilch_html"
+                              cols="60"
                               rows="5"><?=$this->get('regist_confirm_mail') ?></textarea>
                 </div>
             </div>
@@ -82,10 +82,10 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                      name="manually_confirm_mail"
-                      cols="60"
                       id="ck_3"
+                      name="manually_confirm_mail"
                       toolbar="ilch_html"
+                      cols="60"
                       rows="5"><?=$this->get('manually_confirm_mail') ?></textarea>
         </div>
     </div>
@@ -102,9 +102,9 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
+                      id="ck_4"
                       name="password_change_mail"
                       cols="60"
-                      id="ck_4"
                       toolbar="ilch_html"
                       rows="5"><?=$this->get('password_change_mail') ?></textarea>
         </div>
@@ -116,10 +116,10 @@
             <?=$this->getTrans('avatarHeight') ?>
         </label>
         <div class="col-lg-2">
-            <input name="avatar_height" 
-                   type="text" 
-                   id="avatar_height" 
-                   class="form-control required" 
+            <input type="text"
+                   class="form-control required"
+                   id="avatar_height"
+                   name="avatar_height"
                    value="<?=$this->get('avatar_height') ?>" />
         </div>
     </div>
@@ -128,10 +128,10 @@
             <?=$this->getTrans('avatarWidth') ?>
         </label>
         <div class="col-lg-2">
-            <input name="avatar_width" 
-                   type="text" 
-                   id="avatar_width" 
-                   class="form-control required" 
+            <input type="text"
+                   class="form-control required"
+                   id="avatar_width"
+                   name="avatar_width"
                    value="<?=$this->get('avatar_width') ?>" />
         </div>
     </div>
@@ -140,10 +140,10 @@
             <?=$this->getTrans('avatarSizeBytes') ?>
         </label>
         <div class="col-lg-2">
-            <input name="avatar_size" 
-                   type="text" 
-                   id="avatar_size" 
-                   class="form-control required" 
+            <input type="text"
+                   class="form-control required"
+                   id="avatar_size"
+                   name="avatar_size"
                    value="<?=$this->get('avatar_size') ?>" />
         </div>
     </div>
@@ -152,10 +152,10 @@
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
         <div class="col-lg-2">
-            <input name="avatar_filetypes" 
-                   type="text" 
-                   id="avatar_filetypes" 
-                   class="form-control required" 
+            <input type="text"
+                   class="form-control required"
+                   id="avatar_filetypes"
+                   name="avatar_filetypes"
                    value="<?=$this->get('avatar_filetypes') ?>" />
         </div>
     </div>
@@ -167,9 +167,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="usergallery_allowed" value="1" id="usergallery-allowed-yes" <?php if ($this->get('usergallery_allowed') == '1') { echo 'checked="checked"'; } ?> />  
+                <input type="radio" class="flipswitch-input" id="usergallery-allowed-yes" name="usergallery_allowed" value="1" <?php if ($this->get('usergallery_allowed') == '1') { echo 'checked="checked"'; } ?> />  
                 <label for="usergallery-allowed-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" name="usergallery_allowed" value="0" id="usergallery-allowed-no" <?php if ($this->get('usergallery_allowed') != '1') { echo 'checked="checked"'; } ?> />  
+                <input type="radio" class="flipswitch-input" id="usergallery-allowed-no" name="usergallery_allowed" value="0" <?php if ($this->get('usergallery_allowed') != '1') { echo 'checked="checked"'; } ?> />  
                 <label for="usergallery-allowed-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -180,10 +180,10 @@
             <?=$this->getTrans('allowedFileExtensions') ?>
         </label>
         <div class="col-lg-2">
-            <input name="usergallery_filetypes" 
-                   type="text" 
-                   id="usergallery_filetypes" 
-                   class="form-control required" 
+            <input type="text"
+                   class="form-control required"
+                   id="usergallery_filetypes"
+                   name="usergallery_filetypes"
                    value="<?=$this->get('usergallery_filetypes') ?>" />
         </div>
     </div>
@@ -191,11 +191,11 @@
         <label for="picturesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('picturesPerPage') ?>:
         </label>
-        <div class="col-lg-2">
-            <input class="form-control"
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
                    id="picturesPerPageInput"
                    name="picturesPerPage"
-                   type="number"
                    min="1"
                    value="<?=$this->escape($this->get('picturesPerPage')) ?>" />
         </div>

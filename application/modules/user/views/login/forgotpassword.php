@@ -6,11 +6,11 @@
             <?=$this->getTrans('nameEmail') ?>:
         </label>
         <div class="col-lg-8">
-            <input value=""
-                   type="text"
-                   name="name"
+            <input type="text"
                    class="form-control"
-                   id="name" />
+                   id="name"
+                   name="name"
+                   value="" />
         </div>
     </div>
     <div class="col-lg-10" align="right">

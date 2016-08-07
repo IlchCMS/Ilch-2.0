@@ -25,8 +25,8 @@ if ($awards != '') {
             <?=$this->getTrans('date') ?>:
         </label>
         <div class="col-lg-2 input-group date form_datetime">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="date"
                    value="<?php if ($this->get('awards') != '') { echo $date; } ?>"
                    readonly>
@@ -40,8 +40,8 @@ if ($awards != '') {
             <?=$this->getTrans('rank') ?>:
         </label>
         <div class="col-lg-1">
-            <input class="form-control"
-                   type="number"
+            <input type="number"
+                   class="form-control"
                    id="rank"
                    name="rank"
                    min="1"
@@ -61,7 +61,7 @@ if ($awards != '') {
                    <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'checked="checked"';} ?>>
         </div>
         <div class="col-lg-2">
-            <select class="form-control" name="utId" id="user" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 2) { echo 'disabled';} ?>>
+            <select class="form-control" id="user" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 2) { echo 'disabled';} ?>>
                 <?php foreach ($this->get('users') as $user) {
                         $selected = '';
 
@@ -87,8 +87,8 @@ if ($awards != '') {
                    <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2) { echo 'checked="checked"';} ?>>
         </div>
         <div class="col-lg-2">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="team"
                    name="utId"
                    <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>
@@ -101,8 +101,8 @@ if ($awards != '') {
             <?=$this->getTrans('event') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="event"
                    value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getEvent()); } ?>" />
         </div>
@@ -112,8 +112,8 @@ if ($awards != '') {
             <?=$this->getTrans('page') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="url"
                    placeholder="http://"
                    value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getURL()); } ?>" />

@@ -59,7 +59,7 @@ $(function() {
         <div class="form-group">
             <div class="col-lg-12">
                 <div class="pull-left">
-                    <button id="shoutbox-slide-down" class="btn"><?=$this->getTrans('answer') ?></button>
+                    <button class="btn" id="shoutbox-slide-down"><?=$this->getTrans('answer') ?></button>
                 </div>
                 <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
                     <div class="pull-right">
@@ -79,16 +79,16 @@ $(function() {
                 </label>
                 <div class="col-lg-8">
                     <input type="text"
-                           name="bot"
                            class="form-control"
+                           name="bot"
                            placeholder="Bot" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-lg-12">
                     <input type="text"
-                           name="shoutbox_name"
                            class="form-control"
+                           name="shoutbox_name"
                            placeholder="Name"
                            value="<?php if ($this->getUser() !== null) { echo $this->escape($this->getUser()->getName()); } ?>"
                            required />
@@ -96,9 +96,9 @@ $(function() {
             </div>
             <div class="form-group">
                 <div class="col-lg-12">
-                    <textarea name="shoutbox_textarea"
-                              class="form-control"
+                    <textarea class="form-control"
                               style="resize: vertical"
+                              name="shoutbox_textarea"
                               cols="10"
                               rows="5"
                               maxlength="<?=$config->get('shoutbox_maxtextlength') ?>"
@@ -109,7 +109,7 @@ $(function() {
             <div class="form-group">
                 <div class="col-lg-12">
                     <div class="pull-left">
-                        <button type="submit" name="form_<?=$this->get('uniqid') ?>" class="btn">
+                        <button type="submit" class="btn" name="form_<?=$this->get('uniqid') ?>">
                             <?=$this->getTrans('answer') ?>
                         </button>
                     </div>

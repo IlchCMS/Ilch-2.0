@@ -8,8 +8,8 @@
             <?=$this->getTrans('imageHeight') ?>:
         </label>
         <div class="col-lg-2">
-            <input class="form-control required"
-                   type="text"
+            <input type="text"
+                   class="form-control required"
                    id="event_height"
                    name="event_height"
                    value="<?=$this->get('event_height') ?>" />
@@ -20,8 +20,8 @@
             <?=$this->getTrans('imageWidth') ?>:
         </label>
         <div class="col-lg-2">
-            <input class="form-control required"
-                   type="text"
+            <input type="text"
+                   class="form-control required"
                    id="event_width"
                    name="event_width"
                    value="<?=$this->get('event_width') ?>" />
@@ -32,8 +32,8 @@
             <?=$this->getTrans('imageSizeBytes') ?>:
         </label>
         <div class="col-lg-2">
-            <input class="form-control required"
-                   type="text"
+            <input type="text"
+                   class="form-control required"
                    id="event_size"
                    name="event_size"
                    value="<?=$this->get('event_size') ?>" />
@@ -44,8 +44,8 @@
             <?=$this->getTrans('imageAllowedFileExtensions') ?>:
         </label>
         <div class="col-lg-2">
-            <input class="form-control required"
-                   type="text"
+            <input type="text"
+                   class="form-control required"
                    id="event_filetypes"
                    name="event_filetypes"
                    value="<?=$this->get('event_filetypes') ?>" />
@@ -61,8 +61,8 @@
             </a>
         </label>
         <div class="col-lg-3">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="event_google_maps_api_key"
                    name="event_google_maps_api_key"
                    value="<?=$this->get('event_google_maps_api_key') ?>" />
@@ -86,8 +86,8 @@
             <?=$this->getTrans('googleMapsZoom') ?>:
         </label>
         <div class="col-lg-1">
-            <input class="form-control"
-                   type="number"
+            <input type="number"
+                   class="form-control"
                    id="event_google_maps_zoom"
                    name="event_google_maps_zoom"
                    min="1"

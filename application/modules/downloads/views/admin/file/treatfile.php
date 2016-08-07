@@ -26,10 +26,10 @@ if ($file->getFileImage() != '') {
                             <?=$this->getTrans('fileTitle') ?>:
                         </label>
                         <div class="col-lg-8">
-                            <input class="form-control"
-                                   type="text"
-                                   name="fileTitle"
+                            <input type="text"
+                                   class="form-control"
                                    id="fileTitleInput"
+                                   name="fileTitle"
                                    value="<?=$file->getFileTitle() ?>" />
                         </div>
                     </div>
@@ -40,10 +40,10 @@ if ($file->getFileImage() != '') {
                         </label>
                         <div class="col-lg-8">
                             <div class="input-group">
-                                <input class="form-control"
-                                       type="text"
-                                       name="fileImage"
+                                <input type="text"
+                                       class="form-control"
                                        id="selectedImage"
+                                       name="fileImage"
                                        placeholder="<?=$this->getTrans('fileImageInfo'); ?>"
                                        value="<?=$file->getFileImage() ?>" />
                                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
@@ -57,8 +57,8 @@ if ($file->getFileImage() != '') {
                         <div class="col-lg-8">
                             <textarea class="form-control"
                                       id="fileDescInput"
-                                      rows="8"
-                                      name="fileDesc"><?=$file->getFileDesc() ?></textarea>
+                                      name="fileDesc"
+                                      rows="8"><?=$file->getFileDesc() ?></textarea>
                         </div>
                     </div>
                 </div>

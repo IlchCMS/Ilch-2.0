@@ -15,7 +15,7 @@
                 <?=$this->getTrans('warEnemy') ?>:
             </label>
             <div class="col-lg-4">
-                <select class="form-control" name="warEnemy" id="warEnemy">
+                <select class="form-control" id="warEnemy" name="warEnemy">
                     <optgroup label="<?=$this->getTrans('enemysName') ?>">
                         <?php foreach ($this->get('enemy') as $enemy): ?>
                             <?php $selected = ''; ?>
@@ -33,7 +33,7 @@
                 <?=$this->getTrans('warGroup') ?>:
             </label>
             <div class="col-lg-4">
-                <select class="form-control" name="warGroup" id="warGroup">
+                <select class="form-control" id="warGroup" name="warGroup">
                     <optgroup label="<?=$this->getTrans('groupsName') ?>">
                         <?php foreach ($this->get('group') as $group): ?>
                             <?php $selected = ''; ?>
@@ -51,10 +51,10 @@
                 <?=$this->getTrans('warTime') ?>:
             </label>
             <div class="input-group date form_datetime col-lg-4">
-                <input class="form-control"
-                       size="16"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="warTime"
+                       size="16"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarTime(); } ?>"
                        readonly>
                 <span class="input-group-addon">
@@ -67,8 +67,8 @@
                 <?=$this->getTrans('warMap') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="warMap"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarMaps(); } ?>" />
             </div>
@@ -78,8 +78,8 @@
                 <?=$this->getTrans('warServer') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="warServer"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarServer(); } ?>" />
             </div>
@@ -89,8 +89,8 @@
                 <?=$this->getTrans('warPassword') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="warPassword"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarPassword(); } ?>" />
             </div>
@@ -100,7 +100,7 @@
                 <?=$this->getTrans('warXonx') ?>:
             </label>
             <div class="col-lg-2">
-                <select onchange="diasableXonx()" class="form-control" name="warXonx" id="warXonx">
+                <select class="form-control" id="warXonx" name="warXonx" onchange="diasableXonx()">
                     <optgroup label="<?=$this->getTrans('warXonx') ?>">
                         <option value="neu"><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptXonx') != ''): ?>
@@ -116,8 +116,8 @@
                 </select>
             </div>
             <div class="col-lg-2">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        style=""
                        id="warXonxNew"
                        name="warXonxNew"
@@ -129,7 +129,7 @@
                 <?=$this->getTrans('warGame'); ?>:
             </label>
             <div class="col-lg-2">
-                <select onchange="diasableGame()" class="form-control" name="warGame" id="warGame">
+                <select class="form-control" id="warGame" name="warGame" onchange="diasableGame()">
                     <optgroup label="<?=$this->getTrans('warGame') ?>">
                         <option value="neu"><?=$this->getTrans('warNew') ?></option>
                         <?php if ($this->get('warOptGame') != ''): ?>
@@ -145,8 +145,8 @@
                 </select>
             </div>
             <div class="col-lg-2">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        style=""
                        id="warGameNew"
                        name="warGameNew"
@@ -158,7 +158,7 @@
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
             <div class="col-lg-2">
-                <select onchange="diasableMatchtype()" class="form-control" name="warMatchtype" id="warMatchtype">
+                <select class="form-control" id="warMatchtype" name="warMatchtype" onchange="diasableMatchtype()">
                     <optgroup label="<?=$this->getTrans('warMatchtype') ?>">
                         <option value="neu"><?=$this->getTrans('new') ?></option>
                         <?php if ($this->get('warOptMatchtype') != ''): ?>
@@ -174,8 +174,8 @@
                 </select>
             </div>
             <div class="col-lg-2">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        style=""
                        id="warMatchtypeNew"
                        name="warMatchtypeNew"
@@ -199,7 +199,10 @@
         <legend><?=$this->getTrans('warReport') ?></legend>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8">
-                <textarea class="form-control ckeditor" id="ck_1" toolbar="ilch_html" name="warReport"><?php if ($this->get('war') != '') { echo $this->get('war')->getWarReport(); } ?></textarea>
+                <textarea class="form-control ckeditor"
+                          id="ck_1"
+                          name="warReport"
+                          toolbar="ilch_html"><?php if ($this->get('war') != '') { echo $this->get('war')->getWarReport(); } ?></textarea>
             </div>
         </div>
         <legend><?=$this->getTrans('warStatus') ?></legend>
@@ -208,7 +211,7 @@
                 <?=$this->getTrans('warStatus') ?>:
             </label>
             <div class="col-lg-4">
-                <select class="form-control" name="warStatus" id="warStatus">
+                <select class="form-control" id="warStatus" name="warStatus">
                     <optgroup label="<?=$this->getTrans('warStatus') ?>">
                         <option <?php if ($this->get('war') != '' && $this->get('war')->getWarStatus() == '1'): ?>
                                     <?='selected="selected"'; ?>

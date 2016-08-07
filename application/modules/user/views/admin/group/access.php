@@ -8,9 +8,7 @@
     <div class="form-group">
         <label for="groupId" class="control-label col-sm-2"><?=$this->getTrans('group') ?></label>
         <div class="col-sm-10">
-            <select name="groupId"
-                    id="groupId"
-                    class="form-control">
+            <select class="form-control" id="groupId" name="groupId">
                 <option value="0"
                         <?=((int)$this->get('activeGroupId') == null) ? 'selected="selected"' : '' ?>>
                         <?=$this->getTrans('chooseAGroup') ?>

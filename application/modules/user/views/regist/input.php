@@ -17,9 +17,9 @@ $errors = $this->get('errors');
                 </label>
                 <div class="col-lg-8">
                     <input type="text"
-                           name="name"
                            class="form-control"
-                           id="name" />
+                           id="name"
+                           name="name" />
                     <?php if (!empty($errors['name'])): ?>
                         <span class="help-inline"><?=$this->getTrans($errors['name']) ?></span>
                     <?php endif; ?>
@@ -32,8 +32,8 @@ $errors = $this->get('errors');
                 <div class="col-lg-8">
                     <input type="password"
                            class="form-control"
-                           name="password"
-                           id="password" />
+                           id="password"
+                           name="password" />
                     <?php if (!empty($errors['password'])): ?>
                         <span class="help-inline"><?=$this->getTrans($errors['password']) ?></span>
                     <?php endif; ?>
@@ -46,8 +46,8 @@ $errors = $this->get('errors');
                 <div class="col-lg-8">
                     <input type="password"
                            class="form-control"
-                           name="password2"
-                           id="password2" />
+                           id="password2"
+                           name="password2" />
                     <?php if (!empty($errors['password2'])): ?>
                         <span class="help-inline"><?=$this->getTrans($errors['password2']) ?></span>
                     <?php endif; ?>
@@ -59,9 +59,9 @@ $errors = $this->get('errors');
                 </label>
                 <div class="col-lg-8">
                     <input type="text"
-                           name="email"
                            class="form-control"
-                           id="email" />
+                           id="email"
+                           name="email" />
                     <?php if (!empty($errors['email'])): ?>
                         <span class="help-inline"><?=$this->getTrans($errors['email']) ?></span>
                     <?php endif; ?>
@@ -78,11 +78,11 @@ $errors = $this->get('errors');
             <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
                 <div class="col-lg-offset-2 col-lg-8 input-group captcha">
                     <input type="text"
-                          id="captcha-form"
-                          class="form-control"
-                          autocomplete="off"
-                          name="captcha"
-                          placeholder="<?=$this->getTrans('captcha') ?>" />
+                           class="form-control"
+                           id="captcha-form"
+                           name="captcha"
+                           autocomplete="off"
+                           placeholder="<?=$this->getTrans('captcha') ?>" />
                     <span class="input-group-addon">
                         <a href="javascript:void(0)" onclick="
                             document.getElementById('captcha').src='<?=$this->getUrl()?>/application/libraries/Captcha/Captcha.php?'+Math.random();

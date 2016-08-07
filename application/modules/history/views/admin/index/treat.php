@@ -26,8 +26,8 @@ if ($history != '') {
             <?=$this->getTrans('date') ?>:
         </label>
         <div class="col-lg-2 input-group date date form_datetime">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="date"
                    value="<?php if ($history != '') { echo $date; } ?>"
                    readonly>
@@ -41,10 +41,10 @@ if ($history != '') {
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="title"
+            <input type="text"
+                   class="form-control"
                    id="title"
+                   name="title"
                    value="<?php if ($history != '') { echo $this->escape($history->getTitle()); } ?>" />
         </div>
     </div>
@@ -54,10 +54,10 @@ if ($history != '') {
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                   name="text" 
-                   id="ck_1"
-                   toolbar="ilch_html"
-                   rows="5"><?php if ($history != '') { echo $this->escape($history->getText()); } ?></textarea>
+                      id="ck_1"
+                      name="text"
+                      toolbar="ilch_html"
+                      rows="5"><?php if ($history != '') { echo $this->escape($history->getText()); } ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -65,7 +65,7 @@ if ($history != '') {
             <?=$this->getTrans('symbol') ?>:
         </label>
         <div class="col-lg-2">
-            <select class="form-control fontawesome-select" name="type" id="type">
+            <select class="form-control fontawesome-select" id="type" name="type">
                 <option value="" <?php if ($history != '' AND $history->getType() == '') { echo 'selected="selected"'; } ?>><?=$this->getTrans('noSelect') ?></option>
                 <option value="globe" <?php if ($history != '' AND $history->getType() == 'globe') { echo 'selected="selected"'; } ?>>&#xf0ac; <?=$this->getTrans('globeSelect') ?></option>
                 <option value="idea" <?php if ($history != '' AND $history->getType() == 'idea') { echo 'selected="selected"'; } ?>>&#xf0eb; <?=$this->getTrans('ideaSelect') ?></option>
@@ -82,8 +82,8 @@ if ($history != '') {
         </label>
         <div class="col-lg-2 input-group date">
             <input class="form-control color {hash:true}"
-                   name="color"
                    id="color"
+                   name="color"
                    value="<?php if ($history != '') { echo $history->getColor(); } else { echo '#75ce66'; } ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('75ce66')"></span>

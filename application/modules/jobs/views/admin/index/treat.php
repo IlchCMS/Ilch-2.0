@@ -17,7 +17,7 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="show" value="1" id="jobs-yes"
+                <input type="radio" class="flipswitch-input" id="jobs-yes" name="show" value="1"
                     <?php if ($this->get('jobs') != ''): ?>
                         <?php if ($this->get('jobs')->getShow() == 1): ?>
                             checked="checked"
@@ -26,7 +26,7 @@
                         checked="checked"
                     <?php endif; ?> />
                 <label for="jobs-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" name="show" value="0" id="jobs-no"
+                <input type="radio" class="flipswitch-input" id="jobs-no" name="show" value="0"
                     <?php if ($this->get('jobs') != '' AND $this->get('jobs')->getShow() == 0): ?>
                         checked="checked"
                     <?php endif; ?> />
@@ -40,8 +40,8 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="title"
                    value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getTitle()); } ?>" />
         </div>
@@ -52,10 +52,10 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                   name="text"
-                   id="ck_1"
-                   toolbar="ilch_html"
-                   rows="5"><?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getText()); } ?></textarea>
+                      id="ck_1"
+                      name="text"
+                      toolbar="ilch_html"
+                      rows="5"><?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getText()); } ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -63,8 +63,8 @@
             <?=$this->getTrans('email') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="email"
                    value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } ?>" />
         </div>

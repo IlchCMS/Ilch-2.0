@@ -25,10 +25,10 @@ $image = $this->get('image');
                                 <?=$this->getTrans('title') ?>:
                             </label>
                             <div class="col-lg-8">
-                                <input class="form-control"
-                                       type="text"
-                                       name="imageTitle"
+                                <input type="text"
+                                       class="form-control"
                                        id="imageTitleInput"
+                                       name="imageTitle"
                                        value="<?=$image->getImageTitle() ?>" />
                             </div>
                         </div>
@@ -39,8 +39,8 @@ $image = $this->get('image');
                             <div class="col-lg-8">
                                 <textarea class="form-control"
                                           id="imageDescInput"
-                                          rows="8"
-                                          name="imageDesc"><?=$image->getImageDesc() ?></textarea>
+                                          name="imageDesc"
+                                          rows="8"><?=$image->getImageDesc() ?></textarea>
                             </div>
                         </div>
                     </div>

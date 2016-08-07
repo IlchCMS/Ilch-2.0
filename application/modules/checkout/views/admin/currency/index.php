@@ -23,7 +23,7 @@
             <?php foreach ($currencies as $currency) : ?>
             <tr>
                 <td>
-                    <input value="<?=$currency->getId()?>" type="checkbox" name="check_currencies[]" />
+                    <input type="checkbox" name="check_currencies[]" value="<?=$currency->getId()?>" />
                 </td>
                 <td>
                     <?=$this->getEditIcon(['action' => 'treat', 'id' => $currency->getId()]) ?>

@@ -43,7 +43,7 @@
                             <?php $banner = $entry->getBanner(); ?>
                         <?php endif; ?>
                         <tr>
-                            <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
+                            <td><input type="checkbox" name="check_entries[]" value="<?=$entry->getId() ?>" /></td>
                             <td>
                                 <?php 
                                 if ($this->getRequest()->getParam('showsetfree')) {

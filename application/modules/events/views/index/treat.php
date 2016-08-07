@@ -30,7 +30,7 @@
                 <div class="row">
                     <?php if ($this->get('event') != '' AND $this->get('event')->getImage() != ''): ?>
                         <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
-                            <input type="checkbox" name="image_delete" id="image_delete"> <?=$this->getTrans('deleteImage') ?>
+                            <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('deleteImage') ?>
                         </label>
                     <?php endif; ?>
 
@@ -58,11 +58,11 @@
             <?=$this->getTrans('startTime') ?>:
         </label>
         <div class="col-lg-4 input-group date form_datetime">
-            <input class="form-control"
-                   size="16"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="start"
                    name="start"
+                   size="16"
                    value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } ?>"
                    readonly>
             <span class="input-group-addon">
@@ -75,11 +75,11 @@
             <?=$this->getTrans('endTime') ?>:
         </label>
         <div class="col-lg-4 input-group date form_datetime">
-            <input class="form-control"
-                   size="16"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="end"
                    name="end"
+                   size="16"
                    value="<?php if ($this->get('event') != '' AND $this->get('event')->getEnd() != '0000-00-00 00:00:00') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } ?>"
                    readonly>
             <span class="input-group-addon">
@@ -95,10 +95,10 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-6">
-            <input class="form-control"
-                   type="text"
-                   name="title"
+            <input type="text"
+                   class="form-control"
                    id="title"
+                   name="title"
                    value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getTitle()); } ?>" />
         </div>
     </div>
@@ -107,10 +107,10 @@
             <?=$this->getTrans('place') ?>:
         </label>
         <div class="col-lg-6">
-            <input class="form-control"
-                   type="text"
-                   name="place"
+            <input type="text"
+                   class="form-control"
                    id="place"
+                   name="place"
                    value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getPlace()); } ?>" />
         </div>
     </div>
@@ -120,8 +120,8 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                      name="text"
                       id="ck_1"
+                      name="text"
                       toolbar="ilch_bbcode"
                       rows="5"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
         </div>
@@ -129,7 +129,11 @@
     <?php if ($this->get('calendarShow') == 1): ?>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
-                <input value="1" type="checkbox" name="calendarShow" id="calendarShow" <?php if ($this->get('event') != '' AND $this->get('event')->getShow() == 1) { echo 'checked'; } ?> />
+                <input type="checkbox"
+                       id="calendarShow"
+                       name="calendarShow"
+                       value="1"
+                       <?php if ($this->get('event') != '' AND $this->get('event')->getShow() == 1) { echo 'checked'; } ?> />
                 <label for="calendarShow">
                     <?=$this->getTrans('calendarShow') ?>
                 </label>

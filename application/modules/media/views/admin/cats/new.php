@@ -19,7 +19,7 @@ div.input-group-option{
     <?=$this->getTokenField() ?>
     <div class="form-group form-group-options">
         <div class="input-group input-group-option col-lg-6 col-md-6 col-xs-12">
-            <input type="text" name="title_option[]" class="form-control" placeholder="<?=$this->getTrans('catTitle') ?>">
+            <input type="text" class="form-control" name="title_option[]" placeholder="<?=$this->getTrans('catTitle') ?>">
             <span class="input-group-addon input-group-addon-remove">
                 <span class="fa fa-times"></span>
             </span>

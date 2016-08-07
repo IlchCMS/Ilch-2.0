@@ -16,8 +16,8 @@
                     <div class="col-lg-8">
                         <input type="password"
                                class="form-control"
-                               name="password"
                                id="password"
+                               name="password"
                                value=""
                                required />
                         <?=$this->getTrans('profilePasswordInfo'); ?>
@@ -38,8 +38,8 @@
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"
-                               name="saveEntry"
                                class="btn"
+                               name="saveEntry"
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>

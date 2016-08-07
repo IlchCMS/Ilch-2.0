@@ -13,13 +13,13 @@ function rec($item, $forumMapper, $obj)
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
     echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
-                    <input type="hidden" name="items['.$item->getId().'][id]" class="hidden_id" value="'.$item->getId().'" />
-                    <input type="hidden" name="items['.$item->getId().'][title]" class="hidden_title" value="'.$item->getTitle().'" />
-                    <input type="hidden" name="items['.$item->getId().'][desc]" class="hidden_desc" value="'.$item->getDesc().'" />
-                    <input type="hidden" name="items['.$item->getId().'][type]" class="hidden_type" value="'.$item->getType().'" />
-                    <input type="hidden" name="items['.$item->getId().'][readAccess]" class="hidden_read_access" value="'.$item->getReadAccess().'" />
-                    <input type="hidden" name="items['.$item->getId().'][replayAccess]" class="hidden_replay_access" value="'.$item->getReplayAccess().'" />
-                    <input type="hidden" name="items['.$item->getId().'][createAccess]" class="hidden_create_access" value="'.$item->getCreateAccess().'" />
+                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
+                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
+                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
+                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
+                    <input type="hidden" class="hidden_read_access" name="items['.$item->getId().'][readAccess]" value="'.$item->getReadAccess().'" />
+                    <input type="hidden" class="hidden_replay_access" name="items['.$item->getId().'][replayAccess]" value="'.$item->getReplayAccess().'" />
+                    <input type="hidden" class="hidden_create_access" name="items['.$item->getId().'][createAccess]" value="'.$item->getCreateAccess().'" />
                     <span></span>
                 </span>
                 <span class="title">'.$item->getTitle().'</span>
@@ -73,7 +73,11 @@ function rec($item, $forumMapper, $obj)
                 <?=$this->getTrans('description'); ?>
             </label>
             <div class="col-lg-6">
-                <textarea class="form-control" rows="3" cols="45" type="text" id="desc" name="desc"></textarea>
+                <textarea class="form-control"
+                          id="desc"
+                          name="desc"
+                          rows="3"
+                          cols="45"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -81,7 +85,7 @@ function rec($item, $forumMapper, $obj)
                 <?=$this->getTrans('type'); ?>
             </label>
             <div class="col-lg-6">
-                <select id="type" class="form-control">
+                <select class="form-control" id="type">
                     <option value="0"><?=$this->getTrans('cat'); ?></option>
                     <option value="1"><?=$this->getTrans('forum'); ?></option>
                 </select>
@@ -89,7 +93,7 @@ function rec($item, $forumMapper, $obj)
         </div>
         <div class="dyn"></div>
         <div class="col-lg-offset-3 actions">
-            <input type="button" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd'); ?>" class="btn">
+            <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd'); ?>">
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
@@ -156,23 +160,23 @@ $(document).ready (
             }
 
             menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
-                        <div class="col-lg-6"><select id="menukey" class="form-control">'+options+'</select></div></div>\n\
+                        <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>\n\
                         <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('see') ?></label>\n\
-                        <div class="col-lg-6"><select id="assignedGroupsRead" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+                        <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
-                        <div class="col-lg-6"><select id="assignedGroupsReplay" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+                        <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsReplay" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
                         <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
-                        <div class="col-lg-6"><select id="assignedGroupsCreate" class="chosen-select form-control"  name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
+                        <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
@@ -225,13 +229,13 @@ $(document).ready (
             }
 
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][id]" class="hidden_id" value="tmp_'+itemId+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][title]" class="hidden_title" value="'+$('#title').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][desc]" class="hidden_desc" value="'+$('#desc').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][type]" class="hidden_type" value="'+$('#type').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][readAccess]" class="hidden_read_access" value="'+$('#assignedGroupsRead').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][replayAccess]" class="hidden_replay_access" value="'+$('#assignedGroupsReplay').val()+'" />'
-                    +'<input type="hidden" name="items[tmp_'+itemId+'][createAccess]" class="hidden_create_access" value="'+$('#assignedGroupsCreate').val()+'" />'
+                    +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
+                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
+                    +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
+                    +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
+                    +'<input type="hidden" class="hidden_read_access" name="items[tmp_'+itemId+'][readAccess]" value="'+$('#assignedGroupsRead').val()+'" />'
+                    +'<input type="hidden" class="hidden_replay_access" name="items[tmp_'+itemId+'][replayAccess]" value="'+$('#assignedGroupsReplay').val()+'" />'
+                    +'<input type="hidden" class="hidden_create_access" name="items[tmp_'+itemId+'][createAccess]" value="'+$('#assignedGroupsCreate').val()+'" />'
                     +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
@@ -240,8 +244,8 @@ $(document).ready (
 
         $('.sortable').on('click', '.item_edit', function() {
 
-            $('.actions').html('<input type="button" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>" class="btn">\n\
-                               <input type="button" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>" class="btn">');
+            $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
+                               <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
             $('#title').val($(this).parent().find('.hidden_title').val());
             $('#desc').val($(this).parent().find('.hidden_desc').val());
             $('#type').val($(this).parent().find('.hidden_type').val());
@@ -286,7 +290,7 @@ $(document).ready (
         );
 
         $('#downloadsForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" id="menuItemAdd" value="Menuitem hinzufügen" class="btn">');
+            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');
             resetBox();
         });
     }

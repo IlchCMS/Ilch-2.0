@@ -7,10 +7,10 @@
                 <?=$this->getTrans('subject') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="subject"
-                       id="subject" />
+                <input type="text"
+                       class="form-control"
+                       id="subject"
+                       name="subject" />
             </div>
         </div>
         <div class="form-group">
@@ -19,8 +19,8 @@
             </label>
             <div class="col-lg-10">
                 <textarea class="form-control ckeditor"
-                          name="text"
                           id="ck_1"
+                          name="text"
                           toolbar="ilch_html"
                           rows="5"></textarea>
             </div>

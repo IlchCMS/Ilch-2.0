@@ -26,7 +26,7 @@
                     <?php foreach ($this->get('entries') as $entry): ?>
                         <?php $getDate = new \Ilch\Date($entry->getDate()); ?>
                         <tr>
-                            <td><input value="<?=$entry->getId() ?>" type="checkbox" name="check_entries[]" /></td>
+                            <td><input type="checkbox" name="check_entries[]" value="<?=$entry->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $entry->getId()]) ?></td>
                             <td><?=$getDate->format('d.m.Y', true); ?></td>

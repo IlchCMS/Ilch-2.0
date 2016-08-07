@@ -24,7 +24,7 @@
                 <tbody>
                     <?php foreach ($this->get('privacys') as $privacy): ?>
                         <tr>
-                            <td><input value="<?=$privacy->getId() ?>" type="checkbox" name="check_privacys[]" /></td>
+                            <td><input type="checkbox" name="check_privacys[]" value="<?=$privacy->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $privacy->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $privacy->getId()]) ?></td>
                             <td>

@@ -14,10 +14,10 @@
             <?=$this->getTrans('start') ?>:
         </label>
         <div class="col-lg-2 input-group date form_datetime">
-            <input class="form-control"
-                   type="text"
-                   name="start"
+            <input type="text"
+                   class="form-control"
                    id="start"
+                   name="start"
                    value="<?php if ($this->get('calendar') != '') { echo date('d.m.Y H:i', strtotime($this->get('calendar')->getStart())); } ?>"
                    readonly>
             <span class="input-group-addon">
@@ -30,10 +30,10 @@
             <?=$this->getTrans('end') ?>:
         </label>
         <div class="col-lg-2 input-group date form_datetime">
-            <input class="form-control"
-                   type="text"
-                   name="end"
+            <input type="text"
+                   class="form-control"
                    id="end"
+                   name="end"
                    value="<?php if ($this->get('calendar') != '') { echo date('d.m.Y H:i', strtotime($this->get('calendar')->getEnd())); } ?>"
                    readonly>
             <span class="input-group-addon">
@@ -46,10 +46,10 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="title"
+            <input type="text"
+                   class="form-control"
                    id="title"
+                   name="title"
                    value="<?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getTitle()); } ?>" />
         </div>
     </div>
@@ -58,10 +58,10 @@
             <?=$this->getTrans('place') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="place"
+            <input type="text"
+                   class="form-control"
                    id="place"
+                   name="place"
                    value="<?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getPlace()); } ?>" />
         </div>
     </div>
@@ -71,8 +71,8 @@
         </label>
         <div class="col-lg-2 input-group date">
             <input class="form-control color {hash:true}"
-                   name="color"
                    id="color"
+                   name="color"
                    value="<?php if ($this->get('calendar') != '') { echo $this->get('calendar')->getColor(); } else { echo '#32333B'; } ?>">
             <span class="input-group-addon">
                 <span class="fa fa-undo" onclick="document.getElementById('color').color.fromString('32333B')"></span>
@@ -85,8 +85,8 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                      name="text"
                       id="ck_1"
+                      name="text"
                       toolbar="ilch_html"
                       rows="5"><?php if ($this->get('calendar') != '') { echo $this->escape($this->get('calendar')->getText()); } ?></textarea>
         </div>

@@ -3,7 +3,7 @@
         <?=$this->getTrans('chooseLanguage') ?>:
     </label>
     <div class="col-lg-4">
-        <select name="language" id="languageInput" class="form-control">
+        <select class="form-control" id="languageInput" name="language">
             <?php foreach ($this->get('languages') as $key => $value): ?>
                 <?php $selected = ''; ?>
 
@@ -21,7 +21,7 @@
         <?=$this->getTrans('timezone') ?>:
     </label>
     <div class="col-lg-4">
-        <select id="timezone" name="timezone" class="form-control">
+        <select class="form-control" id="timezone" name="timezone">
             <?php $timezones = $this->get('timezones'); ?>
 
             <?php for ($i = 0; $i < count($timezones); $i++): ?>

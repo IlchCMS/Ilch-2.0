@@ -15,17 +15,15 @@
                     <div class="col-lg-12">
                         <textarea class="form-control ckeditor"
                                   id="ck_1"
-                                  toolbar="ilch_bbcode"
-                                  name="signature">
-                            <?=$this->escape($profil->getSignature()) ?>
-                        </textarea>
+                                  name="signature"
+                                  toolbar="ilch_bbcode"><?=$this->escape($profil->getSignature()) ?></textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-lg-8">
                         <input type="submit"
-                               name="saveEntry"
                                class="btn"
+                               name="saveEntry"
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>

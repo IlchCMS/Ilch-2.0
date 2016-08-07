@@ -1,16 +1,16 @@
+<legend><?=$this->getTrans('manage') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => 1]) ?>">
     <?=$this->getTokenField() ?>
-    <legend><?=$this->getTrans('manage') ?></legend>
     <?php if ($this->get('imprintStyle') == '0'): ?>
         <div class="form-group">
             <label for="rank" class="col-lg-2 control-label">
                 <?=$this->getTrans('paragraph') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="paragraph"
+                <input type="text"
+                       class="form-control"
                        id="paragraph"
+                       name="paragraph"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getParagraph()); } ?>" />
             </div>
         </div>
@@ -19,10 +19,10 @@
                 <?=$this->getTrans('name') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="name"
+                <input type="text"
+                       class="form-control"
                        id="name"
+                       name="name"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getName()); } ?>" />
             </div>
         </div>
@@ -31,10 +31,10 @@
                 <?=$this->getTrans('address') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="address"
+                <input type="text"
+                       class="form-control"
                        id="address"
+                       name="address"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getAddress()); } ?>" />
             </div>
         </div>
@@ -43,10 +43,10 @@
                 <?=$this->getTrans('addressadd') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="addressadd"
+                <input type="text"
+                       class="form-control"
                        id="addressadd"
+                       name="addressadd"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getAddressAdd()); } ?>" />
             </div>
         </div>
@@ -56,10 +56,10 @@
                 <?=$this->getTrans('city') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="city"
+                <input type="text"
+                       class="form-control"
                        id="city"
+                       name="city"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getCity()); } ?>" />
             </div>
         </div>
@@ -69,10 +69,10 @@
                 <?=$this->getTrans('phone') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="phone"
+                <input type="text"
+                       class="form-control"
                        id="phone"
+                       name="phone"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getPhone()); } ?>" />
             </div>
         </div>
@@ -81,10 +81,10 @@
                 <?=$this->getTrans('fax') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="fax"
+                <input type="text"
+                       class="form-control"
                        id="fax"
+                       name="fax"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getFax()); } ?>" />
             </div>
         </div>
@@ -93,10 +93,10 @@
                 <?=$this->getTrans('email') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="email"
+                <input type="text"
+                       class="form-control"
                        id="email"
+                       name="email"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getEmail()); } ?>" />
             </div>
         </div>
@@ -108,8 +108,8 @@
             <div class="col-lg-12">
                 <textarea class="form-control ckeditor"
                           id="ck_1"
-                          toolbar="ilch_html"
                           name="disclaimer" 
+                          toolbar="ilch_html"
                           cols="60"
                           rows="5"><?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getDisclaimer()); } ?></textarea>
             </div>
@@ -120,10 +120,10 @@
                 <?=$this->getTrans('paragraph') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="paragraph"
+                <input type="text"
+                       class="form-control"
                        id="paragraph"
+                       name="paragraph"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getParagraph()); } ?>" />
             </div>
         </div>
@@ -132,10 +132,10 @@
                 <?=$this->getTrans('company') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="company"
+                <input type="text"
+                       class="form-control"
                        id="company"
+                       name="company"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getCompany()); } ?>" />
             </div>
         </div>
@@ -144,10 +144,10 @@
                 <?=$this->getTrans('name') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="name"
+                <input type="text"
+                       class="form-control"
                        id="name"
+                       name="name"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getName()); } ?>" />
             </div>
         </div>
@@ -156,10 +156,10 @@
                 <?=$this->getTrans('address') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="address"
+                <input type="text"
+                       class="form-control"
                        id="address"
+                       name="address"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getAddress()); } ?>" />
             </div>
         </div>
@@ -168,10 +168,10 @@
                 <?=$this->getTrans('addressadd') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="addressadd"
+                <input type="text"
+                       class="form-control"
                        id="addressadd"
+                       name="addressadd"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getAddressAdd()); } ?>" />
             </div>
         </div>
@@ -181,10 +181,10 @@
                 <?=$this->getTrans('city') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="city"
+                <input type="text"
+                       class="form-control"
                        id="city"
+                       name="city"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getCity()); } ?>" />
             </div>
         </div>
@@ -194,10 +194,10 @@
                 <?=$this->getTrans('phone') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="phone"
+                <input type="text"
+                       class="form-control"
                        id="phone"
+                       name="phone"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getPhone()); } ?>" />
             </div>
         </div>
@@ -206,10 +206,10 @@
                 <?=$this->getTrans('fax') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="fax"
+                <input type="text"
+                       class="form-control"
                        id="fax"
+                       name="fax"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getFax()); } ?>" />
             </div>
         </div>
@@ -218,10 +218,10 @@
                 <?=$this->getTrans('email') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="email"
+                <input type="text"
+                       class="form-control"
                        id="email"
+                       name="email"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getEmail()); } ?>" />
             </div>
         </div>
@@ -231,10 +231,10 @@
                 <?=$this->getTrans('registration') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="registration"
+                <input type="text"
+                       class="form-control"
                        id="registration"
+                       name="registration"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getRegistration()); } ?>" />
             </div>
         </div>
@@ -243,10 +243,10 @@
                 <?=$this->getTrans('commercialRegister') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="commercialregister"
+                <input type="text"
+                       class="form-control"
                        id="commercialregister"
+                       name="commercialregister"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getCommercialRegister()); } ?>" />
             </div>
         </div>
@@ -255,10 +255,10 @@
                 <?=$this->getTrans('vatId') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
-                       name="vatid"
+                <input type="text"
+                       class="form-control"
                        id="vatid"
+                       name="vatid"
                        value="<?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getVatId()); } ?>" />
             </div>
         </div>
@@ -269,11 +269,11 @@
             </label>
             <div class="col-lg-12">
                <textarea class="form-control ckeditor"
-                          id="ck_2"
-                          toolbar="ilch_html"
-                          name="other" 
-                          cols="60" 
-                          rows="5"><?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getOther()); } ?></textarea>
+                         id="ck_2"
+                         name="other" 
+                         toolbar="ilch_html"
+                         cols="60" 
+                         rows="5"><?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getOther()); } ?></textarea>
             </div>
         </div>
         <br />
@@ -284,8 +284,8 @@
             <div class="col-lg-12">
                 <textarea class="form-control ckeditor"
                           id="ck_3"
-                          toolbar="ilch_html"
                           name="disclaimer" 
+                          toolbar="ilch_html"
                           cols="60" 
                           rows="5"><?php if ($this->get('imprint') != '') { echo $this->escape($this->get('imprint')->getDisclaimer()); } ?></textarea>
             </div>

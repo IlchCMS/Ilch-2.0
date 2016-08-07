@@ -5,7 +5,7 @@
         <?=$this->getTrans('dbName') ?>:
     </label>
     <div class="col-lg-9">
-        <select class="form-control" name="dbName" id="dbName">
+        <select class="form-control" id="dbName" name="dbName">
             <option value=""><?=$this->getTrans('selectDatabase') ?></option>
             <?php foreach ($this->get('database') as $value): ?>
                 <?php $selected = ''; ?>
@@ -26,10 +26,10 @@
         <?=$this->getTrans('dbPrefix') ?>:
     </label>
     <div class="col-lg-9">
-        <input value="<?php if ($this->get('dbPrefix') != '') { echo $this->escape($this->get('dbPrefix')); } else { echo 'ilch_'; } ?>"
-               type="text"
+        <input type="text"
                class="form-control"
+               id="dbPrefix"
                name="dbPrefix"
-               id="dbPrefix" />
+               value="<?php if ($this->get('dbPrefix') != '') { echo $this->escape($this->get('dbPrefix')); } else { echo 'ilch_'; } ?>" />
     </div>
 </div>

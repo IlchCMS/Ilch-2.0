@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label" for="pref-perpage"><?=$this->getTrans('showOnly') ?></label>
                     <div class="col-lg-2">
-                        <select id="pref-perpage" class="form-control" name="filterLastNext">
+                        <select class="form-control" id="pref-perpage" name="filterLastNext">
                             <option value="0"><?=$this->getTrans('all') ?></option>
                             <option value="1"><?=$this->getTrans('warStatusOpen') ?></option>
                             <option value="2"><?=$this->getTrans('warStatusClose') ?></option>
@@ -59,7 +59,7 @@
             <tbody>
                 <?php foreach ($this->get('war') as $war): ?>
                     <tr>
-                        <td><input value="<?=$war->getId() ?>" type="checkbox" name="check_war[]" /></td>
+                        <td><input type="checkbox" name="check_war[]" value="<?=$war->getId() ?>" /></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
                         <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
                         <td><?=$war->getWarEnemy() ?></td>

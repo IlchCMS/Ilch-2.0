@@ -12,20 +12,20 @@
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="name"
+            <input type="text"
+                   class="form-control"
                    id="name"
+                   name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
                    value="<?=$this->escape($currency->getName()) ?>" />
         </div>
     </div>
     <div class="form-group hidden">
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="id"
+            <input type="text"
+                   class="form-control"
                    id="id"
+                   name="id"
                    value="<?=$this->escape($currency->getId()) ?>" />
         </div>
     </div>

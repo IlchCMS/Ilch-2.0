@@ -9,9 +9,9 @@
         </label>
         <div class="col-lg-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="maintenanceMode" value="1" id="maintenanceMode-on" <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="maintenanceMode-on" name="maintenanceMode" value="1" <?php if ($this->get('maintenanceMode') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="maintenanceMode-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" name="maintenanceMode" value="0" id="maintenanceMode-off" <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="maintenanceMode-off" name="maintenanceMode" value="0" <?php if ($this->get('maintenanceMode') != '1') { echo 'checked="checked"'; } ?> />
                 <label for="maintenanceMode-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -22,8 +22,8 @@
             <?=$this->getTrans('maintenanceEndDateTime') ?>:
         </label>
         <div class="col-lg-2 input-group date form_datetime">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="maintenanceDateTime"
                    value="<?=date('d.m.Y H:i', strtotime($this->get('maintenanceDate'))) ?>"
                    readonly>
@@ -49,8 +49,8 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                      name="maintenanceText"
                       id="ck_1"
+                      name="maintenanceText"
                       toolbar="ilch_html"
                       rows="5"><?=$this->escape($this->get('maintenanceText')) ?></textarea>
         </div>

@@ -13,11 +13,11 @@ if (empty($code) || empty($confirm)): ?>
                 <?=$this->getTrans('confirmCode') ?>:
             </label>
             <div class="col-lg-8">
-                <input value=""
-                       type="text"
-                       name="confirmedCode"
+                <input type="text"
                        class="form-control"
-                       id="confirmedCode" />
+                       name="confirmedCode"
+                       id="confirmedCode"
+                       value="" />
                 <?php if (!empty($errors['confirmedCode'])): ?>
                     <span class="help-inline"><?=$this->getTrans($errors['confirmedCode']) ?></span>
                 <?php endif; ?>

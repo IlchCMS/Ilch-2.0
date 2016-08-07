@@ -4,10 +4,10 @@
         <div class="col-lg-12">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>
-                <input class="form-control"
+                <input type="text"
+                       class="form-control"
                        id="email"
                        name="email"
-                       type="text"
                        placeholder="<?=$this->getTrans('email') ?>" />
             </div>
         </div>

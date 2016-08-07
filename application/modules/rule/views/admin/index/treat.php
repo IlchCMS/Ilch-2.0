@@ -13,8 +13,8 @@
             <?=$this->getTrans('paragraph') ?>:
         </label>
         <div class="col-lg-1">
-            <input class="form-control"
-                   type="number"
+            <input type="number"
+                   class="form-control"
                    id="paragraph"
                    name="paragraph"
                    min="1"
@@ -26,8 +26,8 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="title"
                    name="title"
                    value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getTitle()); } ?>" />
@@ -39,10 +39,10 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                   id="ck_1"
-                   name="text" 
-                   toolbar="ilch_html"
-                   rows="5"><?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getText()); } ?></textarea>
+                      id="ck_1"
+                      name="text"
+                      toolbar="ilch_html"
+                      rows="5"><?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getText()); } ?></textarea>
         </div>
     </div>
     <?php if ($this->get('rule') != '') {

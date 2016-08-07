@@ -20,12 +20,10 @@
                         <div class="user_info">
                         <?=$this->getTokenField() ?>
                             <div class="input-group col-lg-12">
-                                <textarea name="ilch_bbcode"
-                                        id="ck_1"
-                                        type="text"
-                                        class="form-control ckeditor"
-                                        toolbar="ilch_bbcode">
-                                </textarea>
+                                <textarea class="form-control ckeditor"
+                                          id="ck_1"
+                                          name="ilch_bbcode"
+                                          toolbar="ilch_bbcode"></textarea>
                             </div>
                             <div>
                                 <button class="btn btn-default pull-right" id="myBtn">Absenden</button>

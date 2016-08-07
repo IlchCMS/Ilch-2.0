@@ -7,9 +7,9 @@
         </label>
         <div class="col-lg-2">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="cookieConsent" value="1" id="cookie-consent-yes" <?php if ($this->get('cookieConsent') == '1') { echo 'checked="checked"'; } ?> />  
+                <input type="radio" class="flipswitch-input" id="cookie-consent-yes" name="cookieConsent" value="1" <?php if ($this->get('cookieConsent') == '1') { echo 'checked="checked"'; } ?> />  
                 <label for="cookie-consent-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
-                <input type="radio" class="flipswitch-input" name="cookieConsent" value="0" id="cookie-consent-no" <?php if ($this->get('cookieConsent') == '0') { echo 'checked="checked"'; } ?> />  
+                <input type="radio" class="flipswitch-input" id="cookie-consent-no" name="cookieConsent" value="0" <?php if ($this->get('cookieConsent') == '0') { echo 'checked="checked"'; } ?> />  
                 <label for="cookie-consent-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
                 <span class="flipswitch-selection"></span>
             </div>
@@ -43,9 +43,9 @@
             <?=$this->getTrans('cookieConsentMessage') ?>:
         </label>
         <div class="col-lg-6">
-            <input class="form-control"
+            <input type="text"
+                   class="form-control"
                    name="cookieConsentMessage"
-                   type="text"
                    value="<?=$this->escape($this->get('cookieConsentMessage')) ?>" />
         </div>
     </div>
@@ -55,8 +55,8 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                      name="cookieConsentText"
                       id="ck_1"
+                      name="cookieConsentText"
                       toolbar="ilch_html"
                       rows="5"><?=$this->escape($this->get('cookieConsentText')) ?></textarea>
         </div>

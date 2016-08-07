@@ -6,10 +6,10 @@
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-8">
-            <input id="name"
+            <input type="text"
                    class="form-control"
+                   id="name"
                    name="name"
-                   type="text"
                    value="<?php if ($this->get('name') != '') { echo $this->escape($this->get('name')); } ?>" />
         </div>
     </div>
@@ -18,10 +18,10 @@
             <?=$this->getTrans('link') ?>:
         </label>
         <div class="col-lg-8">
-            <input id="link"
+            <input type="text"
                    class="form-control"
+                   id="link"
                    name="link"
-                   type="text"
                    placeholder="http://"
                    value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')); } ?>" />
         </div>
@@ -31,10 +31,10 @@
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-8">
-            <input id="banner"
+            <input type="text"
                    class="form-control"
+                   id="banner"
                    name="banner"
-                   type="text"
                    placeholder="http://"
                    value="<?php if ($this->get('banner') != '') { echo $this->escape($this->get('banner')); } ?>" />
         </div>
@@ -50,11 +50,11 @@
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8 input-group captcha">
             <input type="text"
-                  id="captcha-form"
-                  class="form-control"
-                  autocomplete="off"
-                  name="captcha"
-                  placeholder="<?=$this->getTrans('captcha') ?>" />
+                   class="form-control"
+                   id="captcha-form"
+                   name="captcha"
+                   autocomplete="off"
+                   placeholder="<?=$this->getTrans('captcha') ?>" />
             <span class="input-group-addon">
                 <a href="javascript:void(0)" onclick="
                     document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();

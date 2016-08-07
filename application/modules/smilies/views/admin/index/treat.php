@@ -6,10 +6,10 @@
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="name"
+            <input type="text"
+                   class="form-control"
                    id="name"
+                   name="name"
                    value="<?=$this->escape($this->get('smilie')->getName()) ?>" />
         </div>
     </div>
@@ -19,10 +19,10 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <input class="form-control"
-                       type="text"
-                       name="url"
+                <input type="text"
+                       class="form-control"
                        id="selectedImage"
+                       name="url"
                        value="<?=$this->escape($this->get('smilie')->getUrl()) ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>

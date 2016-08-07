@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label" for="pref-perpage"><?=$this->getTrans('rowsPerPage')?>:</label>
                     <div class="col-lg-2">
-                        <select id="pref-perpage" class="form-control" name="rows">
+                        <select class="form-control" id="pref-perpage" name="rows">
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label" for="pref-orderby"><?=$this->getTrans('orderBy')?>:</label>
                     <div class="col-lg-2">
-                        <select id="pref-orderby" class="form-control" name="order">
+                        <select class="form-control" id="pref-orderby" name="order">
                             <option><?=$this->getTrans('descendent')?></option>
                         </select>    
                     </div>
@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label class="col-lg-2 control-label" for="pref-orderbytype"><?=$this->getTrans('mediaType')?>:</label>
                     <div class="col-lg-2">
-                        <select id="pref-orderbytype" class="form-control" name="orderbytype">
+                        <select class="form-control" id="pref-orderbytype" name="orderbytype">
                             <option><?=$this->getTrans('all')?></option>
                             <option><?=$this->getTrans('image')?></option>
                             <option><?=$this->getTrans('video')?></option>
@@ -91,7 +91,7 @@
                 <tbody>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <tr>
-                            <td><input value="<?=$media->getId() ?>" type="checkbox" name="check_medias[]" /></td>
+                            <td><input type="checkbox" name="check_medias[]" value="<?=$media->getId() ?>" /></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
                             <td><?=$media->getEnding() ?></td>
                             <td>
@@ -114,9 +114,9 @@
                             <td><?=$media->getDatetime() ?></td>
                             <td>
                                 <div class="btn-group dropdown">
-                                    <button class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown"
-                                            type="button"><?=$media->getCatName() ?>
+                                    <button type="button"
+                                            class="btn btn-default dropdown-toggle"
+                                            data-toggle="dropdown"><?=$media->getCatName() ?>
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu listChooser" role="menu">

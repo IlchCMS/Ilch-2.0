@@ -58,7 +58,7 @@
                         <?php endif; ?>
 
                         <?php if ($this->getRequest()->getActionName() != 'finish'): ?>
-                            <button type="submit" name="save" class="btn btn-primary pull-right">
+                            <button type="submit" class="btn btn-primary pull-right" name="save">
                                 <?php $buttonTrans = 'nextButton'; ?>
 
                                 <?php if ($this->getRequest()->getActionName() == 'config'): ?>

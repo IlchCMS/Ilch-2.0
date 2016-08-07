@@ -40,7 +40,7 @@
                 <?php foreach ($this->get('boxes') as $box): ?>
                     <tr>
                         <td>
-                            <input value="<?=$box->getId() ?>" type="checkbox" name="check_boxes[]" />
+                            <input type="checkbox" name="check_boxes[]" value="<?=$box->getId() ?>" />
                         </td>
                         <td>
                             <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId()]) ?>">

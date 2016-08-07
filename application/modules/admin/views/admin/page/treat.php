@@ -14,16 +14,18 @@
             <?=$this->getTrans('pageTitle') ?>:
         </label>
         <div class="col-lg-8">
-            <input class="form-control"
-                   type="text"
-                   name="pageTitle"
+            <input type="text"
+                   class="form-control"
                    id="pageTitleInput"
+                   name="pageTitle"
                    value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getTitle()); } ?>" />
         </div>
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <textarea class="form-control ckeditor" id="ck_1" toolbar="ilch_html" name="pageContent"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
+            <textarea class="form-control ckeditor"
+                      id="ck_1" name="pageContent"
+                      toolbar="ilch_html"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
@@ -32,7 +34,7 @@
                 <?=$this->getTrans('pageLanguage') ?>:
             </label>
             <div class="col-lg-8">
-                <select class="form-control" name="pageLanguage" id="pageLanguageInput">
+                <select class="form-control" id="pageLanguageInput" name="pageLanguage">
                     <?php
                     foreach ($this->get('languages') as $key => $value) {
                         $selected = '';
@@ -71,8 +73,8 @@
         <div class="col-lg-8">
             <?=$this->getUrl() ?>/index.php/
             <input type="text"
-                   name="pagePerma"
                    id="pagePerma"
+                   name="pagePerma"
                    value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } ?>" />
         </div>
     </div>

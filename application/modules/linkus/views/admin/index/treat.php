@@ -14,9 +14,9 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control" 
-                   type="text" 
-                   name="title" 
+            <input type="text"
+                   class="form-control"
+                   name="title"
                    value="<?php if ($linkus != '') { echo $this->escape($linkus->getTitle()); } ?>" />
         </div>
     </div>
@@ -26,10 +26,10 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <input class="form-control"
-                       type="text"
-                       name="banner"
+                <input type="text"
+                       class="form-control"
                        id="selectedImage_1"
+                       name="banner"
                        value="<?php if ($linkus != '') { echo $this->escape($linkus->getBanner()); } ?>" 
                        readonly />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>

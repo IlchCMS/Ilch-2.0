@@ -46,31 +46,31 @@ $user = $userMapper->getUserById($event->getUserId());
                         <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
                             <?php if ($eventEntrants != ''): ?>
                                 <?php if ($eventEntrants->getUserId() != $this->getUser()->getId()): ?>
-                                    <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
+                                    <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
                                         <?=$this->getTrans('join') ?>
                                     </button>
-                                    <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
+                                    <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
                                         <?=$this->getTrans('maybe') ?>
                                     </button>
                                 <?php else: ?>
                                     <?php if ($eventEntrants->getStatus() == 1): ?>
-                                        <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
+                                        <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
                                             <?=$this->getTrans('maybe') ?>
                                         </button>
                                     <?php else: ?>
-                                        <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
+                                        <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
                                             <?=$this->getTrans('agree') ?>
                                         </button>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                <button type="submit" value="deleteUser" name="deleteUser" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-sm btn-danger" name="deleteUser" value="deleteUser">
                                     <?=$this->getTrans('decline') ?>
                                 </button>
                             <?php else: ?>
-                                <button type="submit" value="1" name="save" class="btn btn-sm btn-success">
+                                <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
                                     <?=$this->getTrans('join') ?>
                                 </button>
-                                <button type="submit" value="2" name="save" class="btn btn-sm btn-warning">
+                                <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
                                     <?=$this->getTrans('maybe') ?>
                                 </button>
                             <?php endif; ?>
@@ -169,7 +169,7 @@ $user = $userMapper->getUserById($event->getUserId());
                             </div>
                         </div>
                         <div class="col-lg-12 eventSubmit">
-                            <button type="submit" name="saveEntry" class="pull-right btn btn-sm">
+                            <button type="submit" class="pull-right btn btn-sm" name="saveEntry">
                                 <?=$this->getTrans('write') ?>
                             </button>
                         </div>

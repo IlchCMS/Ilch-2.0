@@ -6,8 +6,8 @@
             <?=$this->getTrans('enemyName') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="enemyName"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyName(); } ?>" />
         </div>
@@ -17,8 +17,8 @@
             <?=$this->getTrans('enemyTag') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="enemyTag"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyTag(); } ?>" />
         </div>
@@ -28,8 +28,8 @@
             <?=$this->getTrans('enemyHomepage') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="enemyHomepage"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyHomepage(); } ?>" />
         </div>
@@ -41,10 +41,10 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <input class="form-control"
-                       type="text"
-                       name="enemyImage"
+                <input type="text"
+                       class="form-control"
                        id="selectedImage"
+                       name="enemyImage"
                        placeholder="<?=$this->getTrans('enemyImageInfo') ?>"
                        value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyImage(); } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
@@ -56,8 +56,8 @@
             <?=$this->getTrans('enemyContactName') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="enemyContactName"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyContactName(); } ?>" />
         </div>
@@ -67,8 +67,8 @@
             <?=$this->getTrans('enemyContactEmail') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    name="enemyContactEmail"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyContactEmail(); } ?>" />
         </div>

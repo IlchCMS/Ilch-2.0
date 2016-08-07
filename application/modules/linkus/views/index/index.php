@@ -18,8 +18,8 @@ $config = \Ilch\Registry::get('config');
                     <div class="col-lg-6 text-center">
                         <?=$this->getTrans('htmlForWebsite') ?>
                         <textarea class="form-control"
-                                  name="text"
                                   style="resize: vertical"
+                                  name="text"
                                   rows="4"
                                   readonly><a href="<?=$this->getUrl() ?>" target="_blank"><img src="<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>" border="0"></a></textarea>
                     </div>
@@ -29,8 +29,8 @@ $config = \Ilch\Registry::get('config');
                     <div class="col-lg-6 text-center">
                         <?=$this->getTrans('bbcodeForForum') ?>
                         <textarea class="form-control"
-                                  name="text"
                                   style="resize: vertical"
+                                  name="text"
                                   rows="4"
                                   readonly>[url=<?=$this->getUrl() ?>][img]<?=$this->getBaseUrl($this->escape($linkus->getBanner())) ?>[/img][/url]</textarea>
                     </div>

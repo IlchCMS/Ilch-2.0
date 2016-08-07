@@ -98,9 +98,9 @@ function rec($id, $uid, $req, $obj)
                                         <div class="comment-post">
                                             <p>
                                                 <textarea class="form-control"
-                                                          accesskey=""
-                                                          name="comment_text"
                                                           style="resize: vertical"
+                                                          name="comment_text"
+                                                          accesskey=""
                                                           required></textarea>
                                             </p>
                                         </div>
@@ -191,9 +191,9 @@ function rec($id, $uid, $req, $obj)
                                         <div class="comment-post">
                                             <p>
                                                 <textarea class="form-control"
-                                                          accesskey=""
-                                                          name="comment_text"
                                                           style="resize: vertical"
+                                                          name="comment_text"
+                                                          accesskey=""
                                                           required></textarea>
                                             </p>
                                         </div>
@@ -268,9 +268,9 @@ function rec($id, $uid, $req, $obj)
                                             <div class="comment-post">
                                                 <p>
                                                     <textarea class="form-control"
-                                                              accesskey=""
-                                                              name="comment_text"
                                                               style="resize: vertical"
+                                                              name="comment_text"
+                                                              accesskey=""
                                                               required></textarea>
                                                 </p>
                                             </div>

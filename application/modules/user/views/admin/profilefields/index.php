@@ -31,7 +31,7 @@
             ?>
             <tr id="<?=$profileField->getId() ?>">
                 <td>
-                    <input value="<?=$profileField->getId()?>" type="checkbox" name="check_users[]" />
+                    <input type="checkbox" name="check_users[]" value="<?=$profileField->getId()?>" />
                 </td>
                 <td>
                     <?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?>
@@ -67,10 +67,10 @@
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
 
     <div class="content_savebox">
-        <button value="save" type="submit" name="save" class="btn">
+        <button type="submit" class="btn" name="save" value="save">
             <?=$this->getTrans('saveButton') ?>
         </button>
-        <input class="content_savebox_hidden" name="action" type="hidden" value="" />
+        <input type="hidden" class="content_savebox_hidden" name="action" value="" />
         <div class="btn-group dropup">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <?=$this->getTrans('selected') ?> <span class="caret"></span>

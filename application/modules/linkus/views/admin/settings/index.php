@@ -7,9 +7,9 @@
         </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="html" value="1" id="html-yes" <?php if ($this->get('linkus_html') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="html-yes" name="html" value="1" <?php if ($this->get('linkus_html') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="html-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" name="html" value="0" id="html-no" <?php if ($this->get('linkus_html') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="html-no" name="html" value="0" <?php if ($this->get('linkus_html') != '1') { echo 'checked="checked"'; } ?> />
                 <label for="html-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
@@ -21,9 +21,9 @@
             </label>
         <div class="col-lg-4">
             <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" name="bbcode" value="1" id="bbcode-yes" <?php if ($this->get('linkus_bbcode') == '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="bbcode-yes" name="bbcode" value="1" <?php if ($this->get('linkus_bbcode') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="bbcode-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" name="bbcode" value="0" id="bbcode-no" <?php if ($this->get('linkus_bbcode') != '1') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" id="bbcode-no" name="bbcode" value="0" <?php if ($this->get('linkus_bbcode') != '1') { echo 'checked="checked"'; } ?> />
                 <label for="bbcode-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>

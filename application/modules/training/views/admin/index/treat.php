@@ -17,8 +17,8 @@
             <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="title"
                    name="title"
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTitle()); } ?>" />
@@ -29,8 +29,8 @@
             <?=$this->getTrans('dateTime') ?>:
         </label>
         <div class="col-lg-2 input-group date form_datetime">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="date"
                    name="date"
                    value="<?php if ($this->get('training') != '') { echo date('d.m.Y H:i', strtotime($this->get('training')->getDate())); } ?>"
@@ -45,8 +45,8 @@
             <?=$this->getTrans('time') ?>:
         </label>
         <div class="col-lg-1">
-            <input class="form-control"
-                   type="number"
+            <input type="number"
+                   class="form-control"
                    id="time"
                    name="time"
                    min="0"
@@ -58,8 +58,8 @@
             <?=$this->getTrans('place') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
+            <input type="text"
+                   class="form-control"
                    id="place"
                    name="place"
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getPlace()); } ?>" />
@@ -112,8 +112,8 @@
                 <?=$this->getTrans('voiceServerIP') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="voiceServerIP"
                        placeholder="IP:Port"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerIP()); } ?>" />
@@ -124,8 +124,8 @@
                 <?=$this->getTrans('voiceServerPW') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="voiceServerPW"
                        placeholder="********"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerPW()); } ?>" />
@@ -161,8 +161,8 @@
                 <?=$this->getTrans('gameServerIP') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="gameServerIP"
                        placeholder="IP:Port"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerIP()); } ?>" />
@@ -173,8 +173,8 @@
                 <?=$this->getTrans('gameServerPW') ?>:
             </label>
             <div class="col-lg-4">
-                <input class="form-control"
-                       type="text"
+                <input type="text"
+                       class="form-control"
                        name="gameServerPW"
                        placeholder="********"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerPW()); } ?>" />
@@ -187,10 +187,10 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                   id="ck_1"
-                   name="text"
-                   toolbar="ilch_html"
-                   rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
+                      id="ck_1"
+                      name="text"
+                      toolbar="ilch_html"
+                      rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
         </div>
     </div>
     <?php

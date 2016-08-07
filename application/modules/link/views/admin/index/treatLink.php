@@ -26,10 +26,10 @@
             <?=$this->getTrans('name') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="name"
+            <input type="text"
+                   class="form-control"
                    id="name"
+                   name="name"
                    placeholder="Name"
                    value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getName()); } ?>" />
         </div>
@@ -39,10 +39,10 @@
             <?=$this->getTrans('link') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="link"
+            <input type="text"
+                   class="form-control"
                    id="link"
+                   name="link"
                    placeholder="http://"
                    value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getLink()); } ?>" />
         </div>
@@ -53,10 +53,10 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <input class="form-control"
-                       type="text"
-                       name="banner"
+                <input type="text"
+                       class="form-control"
                        id="selectedImage_1"
+                       name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
                        value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>

@@ -26,9 +26,9 @@
             <div class="col-lg-12">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                    <input name="login_emailname"
+                    <input type="text"
                            class="form-control"
-                           type="text"
+                           name="login_emailname"
                            placeholder="<?=$this->getTrans('nameEmail') ?>" />
                 </div>
             </div>
@@ -37,14 +37,18 @@
             <div class="col-lg-12">
                 <div class="input-group">
                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
-                    <input name="login_password"
+                    <input type="password"
                            class="form-control"
-                           type="password"
+                           name="login_password"
                            placeholder="<?=$this->getTrans('password') ?>" />
                 </div>
             </div>
         </div>
-        <label><input type="checkbox" name="rememberMe" value="rememberMe"> <?=$this->getTrans('rememberMe') ?></label>
+        <label>
+            <input type="checkbox"
+                   name="rememberMe"
+                   value="rememberMe"> <?=$this->getTrans('rememberMe') ?>
+        </label>
         <div class="form-group">
              <div class="col-lg-4">
                 <button type="submit" class="btn" name="login">

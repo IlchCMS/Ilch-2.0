@@ -120,8 +120,8 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         <?=$this->getTrans('profileBirthday'); ?>
                     </label>
                     <div class="col-lg-2 input-group date form_datetime">
-                        <input class="form-control"
-                               type="text"
+                        <input type="text"
+                               class="form-control"
                                name="birthday"
                                value="<?php if ($profil->getBirthday() == '0000-00-00') { echo date('d.m.Y'); } else { echo $birthday->format('d.m.Y', true); } ?>">
                         <span class="input-group-addon">
@@ -166,8 +166,8 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"
-                               name="saveEntry"
                                class="btn"
+                               name="saveEntry"
                                value="<?=$this->getTrans('profileSubmit') ?>" />
                     </div>
                 </div>
