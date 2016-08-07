@@ -45,8 +45,7 @@ class Index extends \Ilch\Controller\Admin
             $items[0]['active'] = true;
         }
 
-        $this->getLayout()->addMenu
-        (
+        $this->getLayout()->addMenu(
             'menuLinks',
             $items
         );
@@ -191,7 +190,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            $this->getView()->set('errors', $validation->getErrors());
             $errorFields = $validation->getFieldsWithError();
             $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         }

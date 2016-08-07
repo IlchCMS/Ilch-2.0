@@ -26,10 +26,4 @@ return [
     'smilies' => 'Smilies',
     'close' => 'Close',
     'entriesPerPage' => 'Einträge pro Seite',
-
-    'errorsOccured' => 'The following errors occured',
-    'validation.errors.required.fieldIsRequired'    => '%s was not filled out.',
-    'validation.errors.captcha.wrongCaptcha'        => '%s is the wrong character combination.',
-    'validation.errors.url.noValidUrl'              => '%s must be a valid URL.',
-    'validation.errors.email.noValidEmail'          => '%s must be a valid email address.',
 ];

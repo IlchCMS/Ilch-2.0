@@ -80,7 +80,7 @@ class Index extends \Ilch\Controller\Frontend
                     Validation::addValidator('same2', '\my\namespace\Validators\Same');
                     Als Vergleich können die bestehenden Validators genommen werden.
             */
-            Validation::addValidator('same2', function($data) {
+            Validation::addValidator('same2', function ($data) {
                 $validation = $data->getValue() == array_dot($data->getInput(), $data->getParam('as'));
                 return [
                     'result' => $validation,
@@ -149,7 +149,7 @@ class Index extends \Ilch\Controller\Frontend
                 $model->setFree($this->getConfig()->get('gbook_autosetfree'));
                 $guestbookMapper->save($model);
 
-                if ($this->getConfig()->get('gbook_autosetfree') == 0 ) {
+                if ($this->getConfig()->get('gbook_autosetfree') == 0) {
                     $this->addMessage('check', 'success');
                 }
 
@@ -166,7 +166,8 @@ class Index extends \Ilch\Controller\Frontend
                 Zurückgegeben wird einfach nur ein Array mit Fehler-Strings
                 Ansonsten siehe newEntry.php
             */
-            $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            // $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            $this->getView()->set('errors', $validation->getErrors());
 
             /*
                 $validation->getFieldsWithError() gibt ein Array mit allen Feldern, die Fehler beinhalten, zurück.
