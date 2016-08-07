@@ -64,14 +64,13 @@ class Privacy extends \Ilch\Mapper
      */
     public function save(PrivacyModel $privacy)
     {
-        $fields =
-            [
+        $fields = [
             'title' => $privacy->getTitle(),
             'urltitle' => $privacy->getUrlTitle(),
             'url' => $privacy->getUrl(),
             'text' => $privacy->getText(),
-            'show' => $privacy->getShow(),
-            ];
+            'show' => $privacy->getShow()
+        ];
 
         if ($privacy->getId()) {
             $this->db()->update('privacy')

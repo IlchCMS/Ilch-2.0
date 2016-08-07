@@ -21,7 +21,7 @@
 
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -31,10 +31,10 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getName()); } ?>" />
+                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getName()); } else { echo $this->get('post')['name']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('link', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="link" class="col-lg-2 control-label">
             <?=$this->getTrans('link') ?>:
         </label>
@@ -44,7 +44,7 @@
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getLink()); } ?>" />
+                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getLink()); } else { echo $this->get('post')['link']; } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -58,7 +58,7 @@
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } ?>" />
+                       value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } else { echo $this->get('post')['banner']; } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
@@ -71,7 +71,7 @@
             <textarea class="form-control"
                       name="desc" 
                       cols="45" 
-                      rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } ?></textarea>
+                      rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } else { echo $this->get('post')['desc']; } ?></textarea>
         </div>
     </div>
     <div class="form-group">

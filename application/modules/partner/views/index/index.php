@@ -1,7 +1,19 @@
 <legend><?=$this->getTrans('menuPartnerAdd') ?></legend>
+
+<?php if ($this->get('errors') !== null): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?=$error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <form method="POST" class="form-horizontal" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -10,10 +22,11 @@
                    class="form-control"
                    id="name"
                    name="name"
-                   value="<?php if ($this->get('name') != '') { echo $this->escape($this->get('name')); } ?>" />
+                   placeholder="Name"
+                   value="<?php if ($this->get('name') != '') { echo $this->escape($this->get('name')); } else { echo $this->get('post')['name']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('link', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="link" class="col-lg-2 control-label">
             <?=$this->getTrans('link') ?>:
         </label>
@@ -23,10 +36,10 @@
                    id="link"
                    name="link"
                    placeholder="http://"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')); } ?>" />
+                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')); } else { echo $this->get('post')['link']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('banner', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="banner" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
@@ -36,10 +49,10 @@
                    id="banner"
                    name="banner"
                    placeholder="http://"
-                   value="<?php if ($this->get('banner') != '') { echo $this->escape($this->get('banner')); } ?>" />
+                   value="<?php if ($this->get('banner') != '') { echo $this->escape($this->get('banner')); } else { echo $this->get('post')['banner']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('captcha', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('captcha') ?>:
         </label>
@@ -47,7 +60,7 @@
             <?=$this->getCaptchaField() ?>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('captcha', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <div class="col-lg-offset-2 col-lg-8 input-group captcha">
             <input type="text"
                    class="form-control"
@@ -65,7 +78,9 @@
             </span>
         </div>
     </div>
-    <div class="col-lg-10" align="right">
-        <?=$this->getSaveBar('addButton', 'Partner') ?>
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-8">
+            <?=$this->getSaveBar('addButton', 'Partner') ?>
+        </div>
     </div>
 </form>

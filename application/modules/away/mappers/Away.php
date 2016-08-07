@@ -66,14 +66,13 @@ class Away extends \Ilch\Mapper
      */
     public function save(AwayModel $away)
     {
-        $fields =
-            [
+        $fields = [
             'user_id' => $away->getUserId(),
             'reason' => $away->getReason(),
             'start' => $away->getStart(),
             'end' => $away->getEnd(),
-            'text' => $away->getText(),
-            ];
+            'text' => $away->getText()
+        ];
 
         if ($away->getId()) {
             $this->db()->update('away')

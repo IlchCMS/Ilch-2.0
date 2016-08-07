@@ -34,23 +34,23 @@ class Index extends \Ilch\Controller\Frontend
         $ilchdate = new IlchDate;
 
         $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
-            ->add($this->getTranslator()->trans('entry'), ['action' => 'newentry']);
+                ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('entry'), ['action' => 'newentry']);
 
         $post = [
             'name'      => '',
             'email'     => '',
-            'text'      => '',
-            'homepage'  => ''
+            'homepage'  => '',
+            'text'      => ''
         ];
 
-        if ($this->getRequest()->isPost() and ($this->getRequest()->getPost('bot') === '')) {
+        if ($this->getRequest()->getPost('saveGuestbook') and ($this->getRequest()->getPost('bot') === '')) {
             $post = [
                 'name'      => $this->getRequest()->getPost('name'),
                 'email'     => trim($this->getRequest()->getPost('email')),
-                'text'      => trim($this->getRequest()->getPost('text')),
                 'homepage'  => trim($this->getRequest()->getPost('homepage')),
-                'captcha'   => trim($this->getRequest()->getPost('captcha')),
+                'text'      => trim($this->getRequest()->getPost('text')),
+                'captcha'   => trim($this->getRequest()->getPost('captcha'))
             ];
 
             /*
@@ -103,7 +103,7 @@ class Index extends \Ilch\Controller\Frontend
                 'homepage', bei der Übersetzung wurde jedoch der Schlüssel 'page' gewählt.
             */
             Validation::setCustomFieldAliases([
-                'homepage'  => 'page',
+                'homepage' => 'page',
             ]);
 
             /*
@@ -128,11 +128,11 @@ class Index extends \Ilch\Controller\Frontend
                 allerdings immer vom genutzten Validator abhängig.
             */
             $validation = Validation::create($post, [
-                'captcha'   => 'captcha',
                 'name'      => 'required',
                 'email'     => 'required|email',
-                'text'      => 'required',
                 'homepage'  => 'url',
+                'text'      => 'required',
+                'captcha'   => 'captcha'
             ]);
 
             /*

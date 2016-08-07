@@ -82,15 +82,14 @@ class Awards extends \Ilch\Mapper
      */
     public function save(AwardsModel $awards)
     {
-        $fields =
-            [
+        $fields = [
             'date' => $awards->getDate(),
             'rank' => $awards->getRank(),
             'event' => $awards->getEvent(),
             'url' => $awards->getURL(),
             'ut_id' => $awards->getUTId(),
-            'typ' => $awards->getTyp(),
-            ];
+            'typ' => $awards->getTyp()
+        ];
 
         if ($awards->getId()) {
             $this->db()->update('awards')

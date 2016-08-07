@@ -74,11 +74,10 @@ class Linkus extends \Ilch\Mapper
      */
     public function save(LinkusModel $linkus)
     {
-        $fields =
-            [
+        $fields = [
             'title' => $linkus->getTitle(),
-            'banner' => $linkus->getBanner(),
-            ];
+            'banner' => $linkus->getBanner()
+        ];
 
         if ($linkus->getId()) {
             $this->db()->update('linkus')

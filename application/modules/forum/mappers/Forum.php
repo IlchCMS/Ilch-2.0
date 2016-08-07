@@ -164,8 +164,7 @@ class Forum extends \Ilch\Mapper
 
     public function saveItem(ForumItem $forumItem)
     {
-        $fields =
-            [
+        $fields = [
             'title' => $forumItem->getTitle(),
             'forum_id' => $forumItem->getForumId(),
             'sort' => $forumItem->getSort(),
@@ -174,8 +173,8 @@ class Forum extends \Ilch\Mapper
             'description' => $forumItem->getDesc(),
             'read_access' => $forumItem->getReadAccess(),
             'replay_access' => $forumItem->getReplayAccess(),
-            'create_access' => $forumItem->getCreateAccess(),
-            ];
+            'create_access' => $forumItem->getCreateAccess()
+        ];
 
         foreach ($fields as $key => $value) {
             if ($value === null) {

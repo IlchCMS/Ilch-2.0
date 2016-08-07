@@ -150,8 +150,7 @@ class Menu extends \Ilch\Mapper
      */
     public function saveItem(MenuItem $menuItem)
     {
-        $fields =
-            [
+        $fields = [
             'href' => $menuItem->getHref(),
             'title' => $menuItem->getTitle(),
             'menu_id' => $menuItem->getMenuId(),
@@ -161,8 +160,8 @@ class Menu extends \Ilch\Mapper
             'box_id' => $menuItem->getBoxId(),
             'box_key' => $menuItem->getBoxKey(),
             'type' => $menuItem->getType(),
-            'module_key' => $menuItem->getModuleKey(),
-            ];
+            'module_key' => $menuItem->getModuleKey()
+        ];
 
         foreach ($fields as $key => $value) {
             if ($value === null) {

@@ -132,18 +132,23 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuActionEditLink'), ['action' => 'treat']);
+                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+    
+            $this->getView()->set('link', $linkMapper->getLinkById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuActionNewLink'), ['action' => 'treat']);
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+
+        $post = [
+            'name' => '',
+            'link' => '',
+            'banner' => '',
+            'desc' => ''
+        ];
 
         $this->getView()->set('cats', $categoryMapper->getCategories());
-
-        if ($this->getRequest()->getParam('id')) {
-            $this->getView()->set('link', $linkMapper->getLinkById($this->getRequest()->getParam('id')));
-        }
 
         if ($this->getRequest()->isPost()) {
             $model = new LinkModel();
@@ -161,15 +166,16 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $post = [
-                'name'  => $this->getRequest()->getPost('name'),
-                'link'  => trim($this->getRequest()->getPost('link')),
-                'banner'  => $banner,
+                'name' => $this->getRequest()->getPost('name'),
+                'link' => trim($this->getRequest()->getPost('link')),
+                'banner' => $banner,
+                'desc' => $this->getRequest()->getPost('desc')
             ];
 
             $validation = Validation::create($post, [
-                'name'  => 'required',
-                'link'  => 'required|url',
-                'banner'  => 'url',
+                'name' => 'required',
+                'link' => 'required|url',
+                'banner' => 'url'
             ]);
 
             if ($validation->isValid()) {
@@ -183,25 +189,37 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            } 
+            }
 
             $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
             $errorFields = $validation->getFieldsWithError();
             $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function treatCatAction()
     {
         $categorykMapper = new CategoryMapper();
 
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuActionNewCategory'), ['action' => 'treat']);
-
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+    
             $this->getView()->set('category', $categorykMapper->getCategoryById($this->getRequest()->getParam('id')));
+        } else {
+            $this->getLayout()->getAdminHmenu()
+                    ->add($this->getTranslator()->trans('menuLinks'), ['action' => 'index'])
+                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
+
+        $post = [
+            'name' => '',
+            'desc' => ''
+        ];
 
         if ($this->getRequest()->isPost()) {
             $model = new CategoryModel();
@@ -210,10 +228,16 @@ class Index extends \Ilch\Controller\Admin
                 $model->setId($this->getRequest()->getParam('id'));
             }
 
-            $name = $this->getRequest()->getPost('name');
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } else {
+            $post = [
+                'name' => $this->getRequest()->getPost('name'),
+                'desc' => $this->getRequest()->getPost('desc')
+            ];
+
+            $validation = Validation::create($post, [
+                'name' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
                 $model->setName($this->getRequest()->getPost('name'));
                 $model->setDesc($this->getRequest()->getPost('desc'));
                 if (!empty($this->getRequest()->getParam('parentId'))) {
@@ -222,13 +246,19 @@ class Index extends \Ilch\Controller\Admin
                 $categorykMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 if ($this->getRequest()->getParam('parentId')) {
                     $this->redirect(['action' => 'index', 'cat_id' => $this->getRequest()->getParam('parentId')]);
                 } else {
                     $this->redirect(['action' => 'index']);
                 }
             }
+
+            $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            $errorFields = $validation->getFieldsWithError();
+            $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }

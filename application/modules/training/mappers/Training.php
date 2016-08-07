@@ -71,8 +71,7 @@ class Training extends \Ilch\Mapper
      */
     public function save(TrainingModel $training)
     {
-        $fields =
-            [
+        $fields = [
             'title' => $training->getTitle(),
             'date' => $training->getDate(),
             'time' => $training->getTime(),
@@ -84,8 +83,8 @@ class Training extends \Ilch\Mapper
             'game_server' => $training->getGameServer(),
             'game_server_ip' => $training->getGameServerIP(),
             'game_server_pw' => $training->getGameServerPW(),
-            'text' => $training->getText(),
-            ];
+            'text' => $training->getText()
+        ];
 
         if ($training->getId()) {
             $this->db()->update('training')

@@ -77,13 +77,12 @@ class Jobs extends \Ilch\Mapper
      */
     public function save(JobsModel $jobs)
     {
-        $fields =
-            [
+        $fields = [
             'title' => $jobs->getTitle(),
             'text' => $jobs->getText(),
             'email' => $jobs->getEmail(),
-            'show' => $jobs->getShow(),
-            ];
+            'show' => $jobs->getShow()
+        ];
 
         if ($jobs->getId()) {
             $this->db()->update('jobs')

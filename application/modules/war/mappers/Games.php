@@ -51,13 +51,12 @@ class Games extends \Ilch\Mapper
      */
     public function save(GamesModel $model)
     {
-        $fields =
-            [
+        $fields = [
             'war_id' => $model->getWarId(),
             'map' => $model->getMap(),
             'group_pionts' => $model->getGroupPoints(),
-            'enemy_pionts' => $model->getEnemyPoints(),
-            ];
+            'enemy_pionts' => $model->getEnemyPoints()
+        ];
 
         $this->db()->insert('war_played')
                 ->values($fields)

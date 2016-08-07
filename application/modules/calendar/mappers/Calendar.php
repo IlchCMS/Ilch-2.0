@@ -81,15 +81,14 @@ class Calendar extends \Ilch\Mapper
      */
     public function save(CalendarModel $term)
     {
-        $fields =
-            [
+        $fields = [
             'title' => $term->getTitle(),
             'place' => $term->getPlace(),
             'start' => $term->getStart(),
             'end' => $term->getEnd(),
             'text' => $term->getText(),
             'color' => $term->getColor()
-            ];
+        ];
 
         if ($term->getId()) {
             $this->db()->update('calendar')

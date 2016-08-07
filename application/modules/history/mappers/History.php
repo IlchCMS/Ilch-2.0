@@ -115,14 +115,13 @@ class History extends \Ilch\Mapper
      */
     public function save(HistoryModel $history)
     {
-        $fields =
-            [
+        $fields = [
             'date' => $history->getDate(),
             'title' => $history->getTitle(),
             'type' => $history->getType(),
             'color' => $history->getColor(),
-            'text' => $history->getText(),
-            ];
+            'text' => $history->getText()
+        ];
 
         if ($history->getId()) {
             $this->db()->update('history')

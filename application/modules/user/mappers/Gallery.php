@@ -118,16 +118,15 @@ class Gallery extends \Ilch\Mapper
      */
     public function saveItem(GalleryItem $galleryItem)
     {
-        $fields =
-            [
+        $fields = [
             'user_id' => $galleryItem->getUserId(),
             'title' => $galleryItem->getTitle(),
             'gallery_id' => $galleryItem->getGalleryId(),
             'sort' => $galleryItem->getSort(),
             'parent_id' => $galleryItem->getParentId(),
             'type' => $galleryItem->getType(),
-            'description' => $galleryItem->getDesc(),
-            ];
+            'description' => $galleryItem->getDesc()
+        ];
 
         foreach ($fields as $key => $value) {
             if ($value === null) {

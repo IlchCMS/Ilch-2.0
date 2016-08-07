@@ -105,15 +105,14 @@ class Downloads extends \Ilch\Mapper
      */
     public function saveItem(DownloadsItem $downloadsItem)
     {
-        $fields =
-            [
+        $fields = [
             'title' => $downloadsItem->getTitle(),
             'downloads_id' => $downloadsItem->getDownloadsId(),
             'sort' => $downloadsItem->getSort(),
             'parent_id' => $downloadsItem->getParentId(),
             'type' => $downloadsItem->getType(),
-            'description' => $downloadsItem->getDesc(),
-            ];
+            'description' => $downloadsItem->getDesc()
+        ];
 
         foreach ($fields as $key => $value) {
             if ($value === null) {

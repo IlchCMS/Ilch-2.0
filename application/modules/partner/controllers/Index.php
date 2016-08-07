@@ -8,6 +8,7 @@ namespace Modules\Partner\Controllers;
 
 use Modules\Partner\Mappers\Partner as PartnerMapper;
 use Modules\Partner\Models\Partner as PartnerModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -18,30 +19,44 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPartnerAdd'), ['action' => 'index']);
 
+        $post = [
+            'name' => '',
+            'link' => '',
+            'banner' => ''
+        ];
+
         if ($this->getRequest()->getPost('savePartner')) {
-            $name = $this->getRequest()->getPost('name');
-            $link = trim($this->getRequest()->getPost('link'));
-            $banner = trim($this->getRequest()->getPost('banner'));
-            $captcha = trim(strtolower($this->getRequest()->getPost('captcha')));
+            $post = [
+                'name' => $this->getRequest()->getPost('name'),
+                'link' => trim($this->getRequest()->getPost('link')),
+                'banner' => trim($this->getRequest()->getPost('banner')),
+                'captcha' => trim($this->getRequest()->getPost('captcha'))
+            ];
 
-            if (empty($_SESSION['captcha']) || $captcha != $_SESSION['captcha']) {
-                $this->addMessage('invalidCaptcha', 'danger');
-            } elseif (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif (empty($link)) {
-                $this->addMessage('missingLink', 'danger');
-            } elseif (empty($banner)) {
-                $this->addMessage('missingBanner', 'danger');
-            } else {
-                $partnerModel = new PartnerModel();
-                $partnerModel->setName($name);
-                $partnerModel->setLink($link);
-                $partnerModel->setBanner($banner);
-                $partnerModel->setFree(0);
-                $partnerMapper->save($partnerModel);
+            $validation = Validation::create($post, [
+                'name' => 'required',
+                'link' => 'required|url',
+                'banner' => 'required|url',
+                'captcha' => 'captcha'
+            ]);
 
-                $this->addMessage('sendSuccess');
+            if ($validation->isValid()) {
+                $model = new PartnerModel();
+                $model->setName($this->getRequest()->getPost('name'));
+                $model->setLink($this->getRequest()->getPost('link'));
+                $model->setBanner($this->getRequest()->getPost('banner'));
+                $model->setFree(0);
+                $partnerMapper->save($model);
+
+                $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }

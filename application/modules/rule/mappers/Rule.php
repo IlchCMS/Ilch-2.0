@@ -109,12 +109,11 @@ class Rule extends \Ilch\Mapper
      */
     public function save(RuleModel $rule)
     {
-        $fields =
-            [
+        $fields = [
             'paragraph' => $rule->getParagraph(),
             'title' => $rule->getTitle(),
-            'text' => $rule->getText(),
-            ];
+            'text' => $rule->getText()
+        ];
 
         if ($rule->getId()) {
             $this->db()->update('rules')

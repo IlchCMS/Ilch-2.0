@@ -61,7 +61,9 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $category)
     {
-        $fields = ['name' => $category->getName()];
+        $fields = [
+            'name' => $category->getName()
+        ];
 
         if ($category->getId()) {
             $this->db()->update('articles_cats')

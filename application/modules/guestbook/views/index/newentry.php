@@ -1,5 +1,6 @@
 <legend><?=$this->getTrans('menuGuestbook') ?></legend>
-<?php // Fehlerausgabe der Validation ?>
+
+<!-- Fehlerausgabe der Validation -->
 <?php if ($this->get('errors') !== null): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
@@ -10,7 +11,7 @@
         </ul>
     </div>
 <?php endif; ?>
-<?php // Ende Fehlerausgabe der Validation ?>
+<!-- Ende Fehlerausgabe der Validation -->
 
 <form action="" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
@@ -109,10 +110,7 @@
     </div>
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-8">
-            <input type="submit"
-                   name="saveEntry"
-                   class="btn"
-                   value="<?=$this->getTrans('submit') ?>" />
+            <?=$this->getSaveBar('addButton', 'Guestbook') ?>
         </div>
     </div>
 </form>

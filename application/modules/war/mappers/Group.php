@@ -125,13 +125,12 @@ class Group extends \Ilch\Mapper
      */
     public function save(GroupModel $model)
     {
-        $fields =
-            [
+        $fields = [
             'name' => $model->getGroupName(),
             'tag' => $model->getGroupTag(),
             'image' => $model->getGroupImage(),
-            'member' => $model->getGroupMember(),
-            ];
+            'member' => $model->getGroupMember()
+        ];
 
         if ($model->getId()) {
             $this->db()->update('war_groups')

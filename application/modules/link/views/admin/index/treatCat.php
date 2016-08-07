@@ -7,9 +7,21 @@
     }
     ?>
 </legend>
+
+<?php if ($this->get('errors') !== null): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -19,7 +31,7 @@
                    id="name"
                    name="name"
                    placeholder="Name"
-                   value="<?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getName()); } ?>" />
+                   value="<?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getName()); } else { echo $this->get('post')['name']; } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -30,7 +42,7 @@
             <textarea class="form-control"
                       name="desc"
                       cols="45"
-                      rows="3"><?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getDesc()); } ?></textarea>
+                      rows="3"><?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getDesc()); } else { echo $this->get('post')['desc']; } ?></textarea>
         </div>
     </div>
     <?php

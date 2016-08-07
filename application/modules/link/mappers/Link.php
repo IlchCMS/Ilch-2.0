@@ -61,15 +61,14 @@ class Link extends \Ilch\Mapper
      */
     public function save(LinkModel $link)
     {
-        $fields =
-            [
+        $fields = [
             'name' => $link->getName(),
             'link' => $link->getLink(),
             'banner' => $link->getBanner(),
             'desc' => $link->getDesc(),
             'cat_id' => $link->getCatId(),
             'hits' => $link->getHits()
-            ];
+        ];
 
         if ($link->getId()) {
             $this->db()->update('links')

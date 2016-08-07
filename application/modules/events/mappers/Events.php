@@ -258,7 +258,7 @@ class Events extends \Ilch\Mapper
             'lat_long' => $event->getLatLong(),
             'image' => $event->getImage(),
             'text' => $event->getText(),
-            'show' => $event->getShow(),
+            'show' => $event->getShow()
         ];
 
         if ($event->getId()) {

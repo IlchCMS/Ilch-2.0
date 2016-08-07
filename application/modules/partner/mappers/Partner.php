@@ -110,13 +110,12 @@ class Partner extends \Ilch\Mapper
      */
     public function save(PartnerModel $partner)
     {
-        $fields =
-            [
-            'setfree' => $partner->getFree(),
+        $fields = [
             'name' => $partner->getName(),
             'link' => $partner->getLink(),
             'banner' => $partner->getBanner(),
-            ];
+            'setfree' => $partner->getFree()
+        ];
 
         if ($partner->getId()) {
             $this->db()->update('partners')

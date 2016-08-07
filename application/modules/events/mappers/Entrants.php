@@ -73,12 +73,11 @@ class Entrants extends \Ilch\Mapper
      */
     public function saveUserOnEvent(EntrantsModel $event)
     {
-        $fields =
-            [
+        $fields = [
             'event_id' => $event->getEventId(),
             'user_id' => $event->getUserId(),
-            'status' => $event->getStatus(),
-            ];
+            'status' => $event->getStatus()
+        ];
 
         $userId = (int) $this->db()->select('*')
                         ->from('events_entrants')

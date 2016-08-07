@@ -131,15 +131,14 @@ class Enemy extends \Ilch\Mapper
      */
     public function save(EnemyModel $model)
     {
-        $fields =
-            [
+        $fields = [
             'name' => $model->getEnemyName(),
             'tag' => $model->getEnemyTag(),
             'image' => $model->getEnemyImage(),
             'homepage' => $model->getEnemyHomepage(),
             'contact_name' => $model->getEnemyContactName(),
-            'contact_email' => $model->getEnemyContactEmail(),
-            ];
+            'contact_email' => $model->getEnemyContactEmail()
+        ];
 
         if ($model->getId()) {
             $this->db()->update('war_enemy')

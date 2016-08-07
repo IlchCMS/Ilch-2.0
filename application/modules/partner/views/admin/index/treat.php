@@ -1,15 +1,27 @@
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
+<legend>
+    <?php
+    if ($this->get('partner') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
+
+<?php if ($this->get('errors') !== null): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?=$error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <legend>
-        <?php
-        if ($this->get('partner') != '') {
-            echo $this->getTrans('edit');
-        } else {
-            echo $this->getTrans('add');
-        }
-        ?>
-    </legend>
-    <div class="form-group">
+    <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -17,10 +29,11 @@
             <input type="text"
                    class="form-control"
                    name="name"
-                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } ?>" />
+                   placeholder="Name"
+                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } else { echo $this->get('post')['name']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('link', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="link" class="col-lg-2 control-label">
             <?=$this->getTrans('link') ?>:
         </label>
@@ -29,21 +42,21 @@
                    class="form-control"
                    name="link"
                    placeholder="http://"
-                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } ?>" />
+                   value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } else { echo $this->get('post')['link']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('banner', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="banner" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-            <input type="text"
-                   class="form-control"
+                <input type="text"
+                       class="form-control"
                        id="selectedImage_1"
                        name="banner"
                        placeholder="<?=$this->getTrans('httpOrMedia') ?>"
-                       value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } ?>" />
+                       value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getBanner()); } else { echo $this->get('post')['banner']; } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>

@@ -58,15 +58,14 @@ class Guestbook extends \Ilch\Mapper
      */
     public function save(GuestbookModel $model)
     {
-        $fields =
-            [
+        $fields = [
             'email' => $model->getEmail(),
             'text' => $model->getText(),
             'datetime' => $model->getDatetime(),
             'homepage' => $model->getHomepage(),
             'name' => $model->getName(),
-            'setfree' => $model->getFree(),
-            ];
+            'setfree' => $model->getFree()
+        ];
 
         if ($model->getId()) {
             $this->db()->update('gbook')

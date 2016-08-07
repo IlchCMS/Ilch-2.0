@@ -245,15 +245,14 @@ class Dialog extends \Ilch\Mapper
      */
     public function save(DialogModel $model)
     {
-        $fields =
-            [
+        $fields = [
             'user_id_fk' => $model->getId(),
             'reply' => $model->getText(),
             'time' => $model->getTime(),
             'c_id_fk' => $model->getCId(),
             'user_one' => $model->getUserOne(),
-            'user_two' => $model->getUserTwo(),
-            ];
+            'user_two' => $model->getUserTwo()
+        ];
 
         if (!empty($fields['user_one']) or !empty($fields['user_two'])) {
             $this->db()->insert('users_dialog')

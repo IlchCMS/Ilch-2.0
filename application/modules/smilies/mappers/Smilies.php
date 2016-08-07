@@ -81,7 +81,7 @@ class Smilies extends \Ilch\Mapper
             'name' => $smilies->getName(),
             'url' => $smilies->getUrl(),
             'url_thumb' => $row['url_thumb'],
-            'ending' => $row['endung'],
+            'ending' => $row['endung']
         ];
 
         if ($smilies->getId()) {

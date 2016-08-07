@@ -189,8 +189,7 @@ class War extends \Ilch\Mapper
      */
     public function save(WarModel $model)
     {
-        $fields =
-            [
+        $fields = [
             'enemy' => $model->getWarEnemy(),
             'group' => $model->getWarGroup(),
             'time' => $model->getWarTime(),
@@ -201,8 +200,8 @@ class War extends \Ilch\Mapper
             'game' => $model->getWarGame(),
             'matchtype' => $model->getWarMatchtype(),
             'report' => $model->getWarReport(),
-            'status' => $model->getWarStatus(),
-            ];
+            'status' => $model->getWarStatus()
+        ];
 
         if ($model->getId()) {
             $this->db()->update('war')

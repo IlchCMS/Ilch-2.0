@@ -72,12 +72,11 @@ class Entrants extends \Ilch\Mapper
      */
     public function saveUserOnTrain(EntrantsModel $training)
     {
-        $fields =
-            [
+        $fields = [
             'train_id' => $training->getTrainId(),
             'user_id' => $training->getUserId(),
-            'note' => $training->getNote(),
-            ];
+            'note' => $training->getNote()
+        ];
         
         $this->db()->insert('training_entrants')
             ->values($fields)
