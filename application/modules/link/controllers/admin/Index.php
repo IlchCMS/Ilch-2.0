@@ -252,7 +252,7 @@ class Index extends \Ilch\Controller\Admin
                 }
             }
 
-            $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            $this->getView()->set('errors', $validation->getErrors());
             $errorFields = $validation->getFieldsWithError();
             $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         }

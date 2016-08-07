@@ -166,7 +166,7 @@ class Index extends \Ilch\Controller\Frontend
                 Zurückgegeben wird einfach nur ein Array mit Fehler-Strings
                 Ansonsten siehe newEntry.php
             */
-            // $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            // $this->getView()->set('errors', $validation->getErrors());
             $this->getView()->set('errors', $validation->getErrors());
 
             /*

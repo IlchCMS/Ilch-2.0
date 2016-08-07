@@ -228,14 +228,4 @@ return [
 
     'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht abgefragt werden.',
     'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht abgefragt werden.',
-
-    'errorsOccured' => 'Es sind folgende Fehler aufgetreten',
-    'validation.errors.required.fieldIsRequired'    => '%s muss ausgefüllt werden.',
-    'validation.errors.same.fieldsDontMatch'        => '%s muss mit %s übereinstimmen.',
-    'validation.errors.captcha.wrongCaptcha'        => '%s entspricht nicht der gezeigten Zeichenkombination',
-    'validation.errors.length.tooShort'             => '%s muss mindestens %s Zeichen lang sein.',
-    'validation.errors.length.tooLong'              => '%s darf höchstens %s Zeichen lang sein.',
-    'validation.errors.length.tooShortAndOrTooLong' => '%s muss mindestens %s und darf höchstens %s Zeichen lang sein',
-    'validation.errors.url.noValidUrl'              => '%s muss eine gültige URL sein.',
-    'validation.errors.email.noValidEmail'          => '%s muss eine gültige E-Mail-Adresse sein.',
 ];
