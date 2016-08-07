@@ -192,7 +192,6 @@ class Index extends \Ilch\Controller\Admin
 
             $this->getView()->set('errors', $validation->getErrors());
             $errorFields = $validation->getFieldsWithError();
-            $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         }
 
         $this->getView()->set('post', $post);
@@ -254,7 +253,6 @@ class Index extends \Ilch\Controller\Admin
 
             $this->getView()->set('errors', $validation->getErrors());
             $errorFields = $validation->getFieldsWithError();
-            $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         }
 
         $this->getView()->set('post', $post);

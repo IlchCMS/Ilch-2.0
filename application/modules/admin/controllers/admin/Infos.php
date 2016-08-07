@@ -12,8 +12,7 @@ class Infos extends \Ilch\Controller\Admin
 {
     public function init()
     {
-        $items =
-            [
+        $items = [
             [
                 'name' => 'menuPHPInfo',
                 'active' => false,
@@ -37,8 +36,8 @@ class Infos extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa fa-keyboard-o',
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'shortcuts'])
-            ],
-            ];
+            ]
+        ];
 
         if ($this->getRequest()->getActionName() == 'folderrights') {
             $items[1]['active'] = true; 
