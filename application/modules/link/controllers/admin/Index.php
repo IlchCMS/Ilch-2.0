@@ -10,6 +10,7 @@ use Modules\Link\Mappers\Link as LinkMapper;
 use Modules\Link\Models\Link as LinkModel;
 use Modules\Link\Mappers\Category as CategoryMapper;
 use Modules\Link\Models\Category as CategoryModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -150,17 +151,31 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getParam('id')) {
                 $model->setId($this->getRequest()->getParam('id'));
             }
-            
-            $name = $this->getRequest()->getPost('name');
-            $link = trim($this->getRequest()->getPost('link'));
-            
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif (empty($link)) {
-                $this->addMessage('missingLink', 'danger');
-            } else {
+
+            // Add BASE_URL if banner starts with application to get a complete URL for validation
+            $banner = trim($this->getRequest()->getPost('banner'));
+            if (!empty($banner)) {
+                if (substr($banner, 0, 11) == 'application') {
+                    $banner = BASE_URL.'/'.$banner;
+                }
+            }
+
+            $post = [
+                'name'  => $this->getRequest()->getPost('name'),
+                'link'  => trim($this->getRequest()->getPost('link')),
+                'banner'  => $banner,
+            ];
+
+            $validation = Validation::create($post, [
+                'name'  => 'required',
+                'link'  => 'required|url',
+                'banner'  => 'url',
+            ]);
+
+            if ($validation->isValid()) {
                 $model->setName($this->getRequest()->getPost('name'));
                 $model->setLink($this->getRequest()->getPost('link'));
+                // Used on purpose instead of $banner to save some bytes in the database
                 $model->setBanner($this->getRequest()->getPost('banner'));
                 $model->setDesc($this->getRequest()->getPost('desc'));
                 $model->setCatId($this->getRequest()->getPost('catId'));
@@ -168,7 +183,11 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
-            }
+            } 
+
+            $this->getView()->set('errors', $validation->getErrors($this->getTranslator()));
+            $errorFields = $validation->getFieldsWithError();
+            $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         }
     }
 

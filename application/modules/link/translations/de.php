@@ -15,8 +15,6 @@ return [
     'optionNoCategory' => 'Keine Kategorie',
     'description' => 'Beschreibung',
     'missingName' => 'Name muss ausgefüllt werden',
-    'missingLink' => 'Link muss ausgefüllt werden',
-    'missingBanner' => 'Banner muss ausgefüllt werden',
     'menuLink' => 'Link',
     'menuLinks' => 'Links',
     'manageLink' => 'Links verwalten',
@@ -30,4 +28,8 @@ return [
     'noCategory' => 'Keine Kategorie vorhanden',
     'httpOrMedia' => 'http:// oder Medien',
     'deleteFailed' => 'Es befinden sich noch Einträge in der Kategorie',
+    'errorsOccured' => 'Es sind folgende Fehler aufgetreten',
+
+    'validation.errors.required.fieldIsRequired'    => '%s muss ausgefüllt werden.',
+    'validation.errors.url.noValidUrl'              => '%s muss eine gültige URL sein.',
 ];
