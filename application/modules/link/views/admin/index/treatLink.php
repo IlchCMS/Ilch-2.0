@@ -40,12 +40,15 @@
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control"
-                   type="text"
-                   name="banner"
-                   id="banner"
-                   placeholder="http://"
-                   value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } ?>" />
+            <div class="input-group">
+                <input class="form-control"
+                       type="text"
+                       name="banner"
+                       id="selectedImage_1"
+                       placeholder="<?=$this->getTrans('httpOrMedia') ?>"
+                       value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getBanner()); } ?>" />
+                <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
+            </div>
         </div>
     </div>
     <div class="form-group">
@@ -89,3 +92,12 @@
     }
     ?>
 </form>
+
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
+<script>
+<?=$this->getMedia()
+        ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/input/_1/'))
+        ->addInputId('_1')
+        ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
+</script>

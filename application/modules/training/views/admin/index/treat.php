@@ -19,8 +19,8 @@
         <div class="col-lg-4">
             <input class="form-control"
                    type="text"
-                   name="title"
                    id="title"
+                   name="title"
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTitle()); } ?>" />
         </div>
     </div>
@@ -31,8 +31,8 @@
         <div class="col-lg-2 input-group date form_datetime">
             <input class="form-control"
                    type="text"
-                   name="date"
                    id="date"
+                   name="date"
                    value="<?php if ($this->get('training') != '') { echo date('d.m.Y H:i', strtotime($this->get('training')->getDate())); } ?>"
                    readonly>
             <span class="input-group-addon">
@@ -44,21 +44,13 @@
         <label for="time" class="col-lg-2 control-label">
             <?=$this->getTrans('time') ?>:
         </label>
-        <div class="col-lg-2 input-group">
-            <div class="container">
-                <div class="input-group spinner">
-                    <input class="form-control"
-                           type="text"
-                           id="time"
-                           name="time"
-                           min="0"
-                           value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTime()); } else { echo '30'; } ?>">
-                    <div class="input-group-btn-vertical">
-                        <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
-                        <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-1">
+            <input class="form-control"
+                   type="number"
+                   id="time"
+                   name="time"
+                   min="0"
+                   value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getTime()); } else { echo '30'; } ?>">
         </div>
     </div>
     <div class="form-group">
@@ -68,8 +60,8 @@
         <div class="col-lg-4">
             <input class="form-control"
                    type="text"
-                   name="place"
                    id="place"
+                   name="place"
                    value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getPlace()); } ?>" />
         </div>
     </div>
@@ -195,8 +187,8 @@
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"
-                   name="text"
                    id="ck_1"
+                   name="text"
                    toolbar="ilch_html"
                    rows="5"><?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getText()); } ?></textarea>
         </div>
@@ -226,27 +218,6 @@ $(document).ready(function() {
         todayHighlight: true
     });
 });
-
-$(function() {
-    $('.spinner .btn:first-of-type').on('click', function() {
-        var btn = $(this);
-        var input = btn.closest('.spinner').find('input');
-        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
-            input.val(parseInt(input.val(), 10) + 1);
-        } else {
-            btn.next("disabled", true);
-        }
-    });
-    $('.spinner .btn:last-of-type').on('click', function() {
-        var btn = $(this);
-        var input = btn.closest('.spinner').find('input');
-        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
-            input.val(parseInt(input.val(), 10) - 1);
-        } else {
-            btn.prev("disabled", true);
-        }
-    });
-})
 
 function showMe (it, box) { 
     var vis = (box.checked) ? "block" : "none"; 

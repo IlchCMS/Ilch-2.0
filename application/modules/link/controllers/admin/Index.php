@@ -96,10 +96,17 @@ class Index extends \Ilch\Controller\Admin
 
     public function deleteCatAction()
     {
-        if ($this->getRequest()->isSecure()) {
-            $categorykMapper = new CategoryMapper();
-            $categorykMapper->delete($this->getRequest()->getParam('id'));
-            $this->addMessage('deleteSuccess');
+        $linkMapper = new LinkMapper();
+        $countLinks = count($linkMapper->getLinks(['cat_id' => $this->getRequest()->getParam('id')]));
+
+        if ($countLinks == 0) {
+            if ($this->getRequest()->isSecure()) {
+                $categorykMapper = new CategoryMapper();
+                $categorykMapper->delete($this->getRequest()->getParam('id'));
+                $this->addMessage('deleteSuccess');
+            }
+        } else {
+            $this->addMessage('deleteFailed', 'danger');
         }
 
         $this->redirect(['action' => 'index']);
@@ -190,7 +197,9 @@ class Index extends \Ilch\Controller\Admin
             } else {
                 $model->setName($this->getRequest()->getPost('name'));
                 $model->setDesc($this->getRequest()->getPost('desc'));
-                $model->setParentID($this->getRequest()->getParam('parentId'));
+                if (!empty($this->getRequest()->getParam('parentId'))) {
+                    $model->setParentID($this->getRequest()->getParam('parentId'));
+                }
                 $categorykMapper->save($model);
 
                 $this->addMessage('saveSuccess');

@@ -39,21 +39,13 @@ if ($awards != '') {
         <label for="rank" class="col-lg-2 control-label">
             <?=$this->getTrans('rank') ?>:
         </label>
-        <div class="col-lg-2 input-group">
-            <div class="container">
-                <div class="input-group spinner">
-                    <input class="form-control"
-                           type="text"
-                           id="rank"
-                           name="rank"
-                           min="1"
-                           value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getRank()); } else { echo '1'; } ?>">
-                    <div class="input-group-btn-vertical">
-                        <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
-                        <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-1">
+            <input class="form-control"
+                   type="number"
+                   id="rank"
+                   name="rank"
+                   min="1"
+                   value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getRank()); } else { echo '1'; } ?>">
         </div>
     </div>
     <div class="form-group">
@@ -62,8 +54,8 @@ if ($awards != '') {
         </label>
         <div class="col-lg-1 userTeam">
             <input type="radio"
-                   name="typ"
                    id="typ_user"
+                   name="typ"
                    value="1"
                    onchange="toggleStatus()"
                    <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'checked="checked"';} ?>>
@@ -88,8 +80,8 @@ if ($awards != '') {
         </label>
         <div class="col-lg-1 userTeam">
             <input type="radio"
-                   name="typ"
                    id="typ_team"
+                   name="typ"
                    value="2"
                    onchange="toggleStatus()"
                    <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2) { echo 'checked="checked"';} ?>>
@@ -97,8 +89,8 @@ if ($awards != '') {
         <div class="col-lg-2">
             <input class="form-control"
                    type="text"
-                   name="utId"
                    id="team"
+                   name="utId"
                    <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>
                    <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>
                    value="<?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() != 1) { echo $this->escape($this->get('awards')->getUTId()); } ?>" />
@@ -148,27 +140,6 @@ $(document).ready(function() {
         todayHighlight: true
     });
 });
-
-$(function() {
-    $('.spinner .btn:first-of-type').on('click', function() {
-        var btn = $(this);
-        var input = btn.closest('.spinner').find('input');
-        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
-            input.val(parseInt(input.val(), 10) + 1);
-        } else {
-            btn.next("disabled", true);
-        }
-    });
-    $('.spinner .btn:last-of-type').on('click', function() {
-        var btn = $(this);
-        var input = btn.closest('.spinner').find('input');
-        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
-            input.val(parseInt(input.val(), 10) - 1);
-        } else {
-            btn.prev("disabled", true);
-        }
-    });
-})
 
 window.onload = function() {
     document.getElementById('typ_user').onchange = disablefield;

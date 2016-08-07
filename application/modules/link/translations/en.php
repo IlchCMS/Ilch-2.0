@@ -4,8 +4,7 @@
  * @package ilch
  */
 
-return
-    [
+return [
     'link' => 'Link',
     'name' => 'Name',
     'banner' => 'Banner',
@@ -29,4 +28,6 @@ return
     'menuActionEditCategory' => 'Edit category',
     'noLinks' => 'No links',
     'noCategory' => 'No category',
-    ];
+    'httpOrMedia' => 'http:// or Media',
+    'deleteFailed' => 'There are still entries in the category',
+];

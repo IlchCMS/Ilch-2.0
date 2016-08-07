@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-return[
+return [
     'media' => 'Media',
     'menuMedia' => 'Media',
     'menuActionAddNew' => 'Upload files',

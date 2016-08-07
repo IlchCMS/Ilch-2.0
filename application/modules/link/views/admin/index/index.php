@@ -64,25 +64,27 @@
                 <tbody>
                     <?php
                     foreach ($this->get('links') as $link):
-                        $getBanner = $this->escape($link->getBanner());
-                        $getDesc = $this->escape($link->getDesc());
-                        if (!empty($getDesc)) {
-                            $getDesc = '&raquo; '.$this->escape($link->getDesc());
+                        $banner = $this->escape($link->getBanner());
+                        $desc = $this->escape($link->getDesc());
+                        if (!empty($desc)) {
+                            $desc = '&raquo; '.$this->escape($link->getDesc());
                         } else {
-                            $getDesc = '';
+                            $desc = '';
                         }
 
-                        if (!empty($getBanner)) {
-                            $getBanner = '<img src="'.$getBanner.'">';
+                        if (substr($banner, 0, 11) == 'application') {
+                            $banner = '<img src="'.$this->getBaseUrl($banner).'">';
+                        } elseif (!empty($banner)) {
+                            $banner = '<img src="'.$this->escape($banner).'">';
                         } else {
-                            $getBanner = $this->escape($link->getName());
+                            $banner = $link->getName();
                         }
                     ?>
                         <tr>
                             <td><input value="<?=$link->getId()?>" type="checkbox" name="check_links[]" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treatLink', 'id' => $link->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deleteLink', 'id' => $link->getId()]) ?></td>
-                            <td><a href="<?=$this->escape($link->getLink()) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$getBanner ?></a><br /><?=$getDesc ?></td>
+                            <td><a href="<?=$this->escape($link->getLink()) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$banner ?></a><br /><?=$desc ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -71,7 +71,7 @@
                 <div class="navbar-header leftbar">
                     <?php if ($this->hasSidebar()): ?>
                         <div id="hide-menu" class="btn-header pull-left">
-                            <a href="javascript:void(0)" id="toggleLeftMenu" title="Collapse Menu">
+                            <a id="toggleLeftMenu" title="Collapse Menu" data-toggle="collapse" data-target="#left-panel">
                                 <i class="fa fa-outdent"></i>
                             </a>
                         </div>
@@ -218,7 +218,7 @@
                                 <?php endif; ?>
                             </ul>
                         </li>
-                        <?php if ($this->getUser()->getFirstName() != ''): ?>
+                        <?php if (!empty($this->getUser()->getFirstName())): ?>
                             <?php $name = $this->getUser()->getFirstName().' '.$this->getUser()->getLastName(); ?>
                             <?php $nameInfo = $this->getUser()->getFirstName().'<br />'.$this->getUser()->getLastName(); ?>
                         <?php else: ?>
@@ -261,7 +261,7 @@
         <?php if ($this->hasSidebar()): ?>
             <?php $contentFullClass = ''; ?>
             <!-- LEFT PANEL -->
-            <aside id="left-panel" <?php if ($config->get('admin_layout_hmenu') != '') { echo 'class="'.$config->get('admin_layout_hmenu').'"'; } ?>>
+            <aside id="left-panel" class="navbar-collapse collapse">
                 <nav>
                     <ul>
                         <?php
@@ -301,7 +301,7 @@
             <!-- LEFT PANEL END -->
         <?php endif; ?>
         <!-- MAIN -->
-        <div id="main" role="main" class="<?=$contentFullClass ?><?php if ($config->get('admin_layout_hmenu') != '') { echo ' ribbon-fixed'; } ?>">
+        <div id="main" role="main" class="<?=$contentFullClass ?><?php if (!empty($config->get('admin_layout_hmenu'))) { echo ' ribbon-fixed'; } ?>">
             <div id="ribbon"><?=$this->getAdminHmenu() ?></div>
             <!-- CONTENT -->
             <div id="content">

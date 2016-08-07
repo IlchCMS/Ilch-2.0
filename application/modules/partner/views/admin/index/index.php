@@ -52,7 +52,7 @@
                                     if ($this->get('badge') > 1) {
                                         $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                                     }
-                                    echo '<a href="'.$this->getUrl($freeArray).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
+                                    echo '<a href="'.$this->getUrl($freeArray, null, true).'" title="'.$this->getTrans('setfree').'"><i class="fa fa-check-square-o text-success"></i></a>';
                                 } else {
                                     echo $this->getEditIcon(['action' => 'treat', 'id' => $entry->getId()]);
                                 } 

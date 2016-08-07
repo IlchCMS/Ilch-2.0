@@ -95,14 +95,16 @@ class Index extends \Ilch\Controller\Admin
 
     public function setfreeAction()
     {
-        $partnerMapper = new PartnerMapper();
+        if ($this->getRequest()->isSecure()) {
+            $partnerMapper = new PartnerMapper();
 
-        $model = new PartnerModel();
-        $model->setId($this->getRequest()->getParam('id'));
-        $model->setFree(1);
-        $partnerMapper->save($model);
+            $model = new PartnerModel();
+            $model->setId($this->getRequest()->getParam('id'));
+            $model->setFree(1);
+            $partnerMapper->save($model);
 
-        $this->addMessage('freeSuccess');
+            $this->addMessage('freeSuccess');
+        }
 
         if ($this->getRequest()->getParam('showsetfree')) {
             $this->redirect(['action' => 'index', 'showsetfree' => 1]);

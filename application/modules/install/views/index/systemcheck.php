@@ -2,7 +2,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th></th>
+                <th><?php if (!empty($this->get('errors'))) { echo '<a href="" title="'.$this->getTrans('checkReload').'"><i class="fa fa-refresh"></i></a>'; } ?></th>
                 <th><?=$this->getTrans('required') ?></th>
                 <th><?=$this->getTrans('available') ?></th>
             </tr>
@@ -10,8 +10,8 @@
         <tbody>
             <tr>
                 <td><?=$this->getTrans('phpVersion') ?></td>
-                <td class="text-success">>= 5.4.0</td>
-                <td class="<?php if (version_compare(phpversion(), '5.4.0', '>=')): ?>
+                <td class="text-success">>= 5.6.0</td>
+                <td class="<?php if (version_compare(phpversion(), '5.6.0', '>=')): ?>
                                 text-success
                             <?php else: ?>
                                 text-danger

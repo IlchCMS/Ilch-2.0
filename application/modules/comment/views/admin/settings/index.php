@@ -25,16 +25,8 @@
         <label for="interleaving" class="col-lg-2 control-label">
             <?=$this->getTrans('interleaving') ?>:
         </label>
-        <div class="col-lg-2">
-            <div class="container">
-                <div class="input-group spinner">
-                    <input type="text" class="form-control" id="interleaving" name="interleaving" min="0" value="<?=$this->get('comment_interleaving') ?>">
-                    <div class="input-group-btn-vertical">
-                        <span class="btn btn-default"><i class="fa fa-caret-up"></i></span>
-                        <span class="btn btn-default"><i class="fa fa-caret-down"></i></span>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-1">
+            <input class="form-control" type="number" id="interleaving" name="interleaving" min="0" value="<?=$this->get('comment_interleaving') ?>">
         </div>
     </div>
     <div class="form-group">
@@ -69,25 +61,3 @@
 </form>
 
 <?=$this->getDialog('infoModal', $this->getTrans('info'), $this->getTrans('CommentCommentInfoText')); ?>
-<script type="text/javascript">
-$(function() {
-    $('.spinner .btn:first-of-type').on('click', function() {
-        var btn = $(this);
-        var input = btn.closest('.spinner').find('input');
-        if (input.attr('max') == undefined || parseInt(input.val()) < parseInt(input.attr('max'))) {
-            input.val(parseInt(input.val(), 10) + 1);
-        } else {
-            btn.next("disabled", true);
-        }
-    });
-    $('.spinner .btn:last-of-type').on('click', function() {
-        var btn = $(this);
-        var input = btn.closest('.spinner').find('input');
-        if (input.attr('min') == undefined || parseInt(input.val()) > parseInt(input.attr('min'))) {
-            input.val(parseInt(input.val(), 10) - 1);
-        } else {
-            btn.prev("disabled", true);
-        }
-    });
-})
-</script>

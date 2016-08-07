@@ -14,6 +14,7 @@ return [
     'menuFinish' => 'Installieren',
     'backButton' => 'Zurück',
     'nextButton' => 'Weiter',
+    'checkReload' => 'Seite neu Laden',
     'installButton' => 'Installieren',
     'ilchInstall' => 'Ilch CMS %s installation',
     'ilchInstallVersion' => 'CMS %s',

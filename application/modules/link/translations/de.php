@@ -28,4 +28,6 @@ return [
     'menuActionEditCategory' => 'Kategorie editieren',
     'noLinks' => 'Keine Links vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',
+    'httpOrMedia' => 'http:// oder Medien',
+    'deleteFailed' => 'Es befinden sich noch Einträge in der Kategorie',
 ];

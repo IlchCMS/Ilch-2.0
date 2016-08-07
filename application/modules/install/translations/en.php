@@ -14,6 +14,7 @@ return [
     'menuFinish' => 'Install',
     'backButton' => 'Back',
     'nextButton' => 'Next',
+    'checkReload' => 'Refresh page',
     'installButton' => 'Install',
     'ilchInstall' => 'Ilch CMS %s installation',
     'ilchInstallVersion' => 'CMS %s',
