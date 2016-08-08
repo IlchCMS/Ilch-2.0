@@ -57,7 +57,7 @@
                                     $freeArray = ['action' => 'setfree', 'id' => $entry->getId(), 'showsetfree' => 1];
                                 }
 
-                               echo '<a href="'.$this->getUrl($freeArray).'"><span class="fa fa-check-square-o text-success"></span></a>';
+                               echo '<a href="'.$this->getUrl($freeArray, null, true).'"><span class="fa fa-check-square-o text-success"></span></a>';
                                echo '</td>';
                             }
 
@@ -76,7 +76,7 @@
                             <?=$this->escape($entry->getDateTime()) ?>
                         </td>
                         <td>
-                            <?=$entry->getText() ?>
+                            <?=$this->escape($entry->getText()) ?>
                         </td>
                     </tr>
                 </tbody>
