@@ -76,9 +76,9 @@ class Index extends \Ilch\Controller\Admin
 
     public function delAction()
     {
-        $guestbookMapper = new GuestbookMapper();
-        
         if ($this->getRequest()->isSecure()) {
+            $guestbookMapper = new GuestbookMapper();
+
             $guestbookMapper->delete($this->getRequest()->getParam('id'));
             $this->addMessage('deleteSuccess');
         }
@@ -92,11 +92,13 @@ class Index extends \Ilch\Controller\Admin
 
     public function setfreeAction()
     {
-        $guestbookMapper = new GuestbookMapper();
-        $model = new GuestbookModel();
-        $model->setId($this->getRequest()->getParam('id'));
-        $model->setFree(1);
-        $guestbookMapper->save($model);
+        if ($this->getRequest()->isSecure()) {
+            $guestbookMapper = new GuestbookMapper();
+            $model = new GuestbookModel();
+            $model->setId($this->getRequest()->getParam('id'));
+            $model->setFree(1);
+            $guestbookMapper->save($model);
+        }
 
         if ($this->getRequest()->getParam('showsetfree')) {
             $this->redirect(['action' => 'index', 'showsetfree' => 1]);
