@@ -181,19 +181,23 @@ class Model
         } elseif ($item->isModuleLink()) {
             $html .= '<a href="'.$this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']).'">'.$item->getTitle().'</a>';
         }
-        
+
         if (!empty($subItems)) {
             if ($item->isMenu()) {
                 $html .= '<ul class="' . array_dot($options, 'menus.ul-class-root') . '">';
             } else {
-                $html .= '<ul class="' . array_dot($options, 'menus.ul-class-child') . '">';
+                if (array_dot($options, 'menus.allow-nesting') === true) {
+                    $html .= '<ul class="' . array_dot($options, 'menus.ul-class-child') . '">';
+                }
             }
 
             foreach ($subItems as $subItem) {
                 $html .= $this->recGetItems($subItem, $locale, $options, $item->getType());
             }
 
-            $html .= '</ul>';
+            if ((! $item->isMenu() && array_dot($options, 'menus.allow-nesting') === true) || $item->isMenu()) {
+                $html .= '</ul>';
+            }
         }
 
         if (in_array($item->getType(), [1,2,3])) {
