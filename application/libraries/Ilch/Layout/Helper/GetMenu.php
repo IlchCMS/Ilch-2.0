@@ -35,6 +35,7 @@ class GetMenu
                 'ul-class-child' => 'list-unstyled ilch_menu_ul',
                 'li-class-root' => '',
                 'li-class-child' => '',
+                'allow-nesting' => true,
             ],
             'boxes' => [
                 'render' => true,
@@ -51,7 +52,7 @@ class GetMenu
         }
 
         if (isset($args[2])) {
-            $options = array_merge($options, $args[2]);
+            $options = array_replace_recursive($options, $args[2]);
         }
 
         return $menu->getItems($template, $options);
