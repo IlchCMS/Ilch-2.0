@@ -166,7 +166,7 @@ class Model
 
         if ($item->isLink()) {
 
-            if ($parentType === 0) {
+            if ($parentType === 0 || array_dot($options, 'menus.allow-nesting') === false) {
                 $html = '<li class="' . array_dot($options, 'menus.li-class-root') . '">';
             } else {
                 $html = '<li class="' . array_dot($options, 'menus.li-class-child') . '">';
