@@ -28,21 +28,33 @@ class GetMenu
     public function getMenu($args)
     {
         $menuId = $args[0];
+        $template = '';
+        $options = [
+            'menus' => [
+                'ul-class-root' => 'list-unstyled ilch_menu_ul',
+                'ul-class-child' => 'list-unstyled ilch_menu_ul',
+                'li-class-root' => '',
+                'li-class-child' => '',
+            ],
+            'boxes' => [
+                'render' => true,
+            ],
+        ];
 
         $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->layout);
         $menuMapper = new \Modules\Admin\Mappers\Menu();
 
         $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
 
-        if (isset($args[1]) && isset($args[2])) {
-            return $menu->getItems($args[1], $args[2]);
-        }
-
         if (isset($args[1])) {
-            return $menu->getItems($args[1]);
+            $template = $args[1];
         }
 
-        return $menu->getItems();
+        if (isset($args[2])) {
+            $options = array_merge($options, $args[2]);
+        }
+
+        return $menu->getItems($template, $options);
     }
 }
 

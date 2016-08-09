@@ -307,4 +307,64 @@ class MenuItem extends \Ilch\Model
     {
         $this->href = (string) $href;
     }
+
+    /**
+     * Checks if the item is any link
+     *
+     * @return boolean
+     */
+    public function isLink()
+    {
+        return in_array($this->getType(), [1,2,3]);
+    }
+
+    /**
+     * Checks if the item is a module link
+     *
+     * @return boolean
+     */
+    public function isModuleLink()
+    {
+        return $this->getType() === 3;
+    }
+
+    /**
+     * Checks if the item is an external link
+     *
+     * @return boolean
+     */
+    public function isExternalLink()
+    {
+        return $this->getType() === 1;
+    }
+
+    /**
+     * Checks if the item is a page link
+     *
+     * @return boolean
+     */
+    public function isPageLink()
+    {
+        return $this->getType() === 2;
+    }
+
+    /**
+     * Checks if the item is a box
+     *
+     * @return boolean
+     */
+    public function isBox()
+    {
+        return $this->getType() === 4;
+    }
+
+    /**
+     * Checks if the item is a menu
+     *
+     * @return boolean
+     */
+    public function isMenu()
+    {
+        return $this->getType() === 0;
+    }
 }

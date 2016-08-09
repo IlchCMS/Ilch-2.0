@@ -14,7 +14,7 @@ class Model
      * @var integer
      */
     protected $id;
-    
+
     /**
      * Title of the menu.
      *
@@ -98,12 +98,18 @@ class Model
 
         if (!empty($items)) {
             foreach ($items as $item) {
-                if ($item->getType() == 0 || $item->getType() == 4) {
+
+                // Do not render boxes if boxes.render is set to false
+                if ($item->isBox() && array_dot($options, 'boxes.render') === false) {
+                    continue;
+                }
+
+                if ($item->isMenu() || $item->isBox()) {
                     $html = str_replace('%c', $htmlMenuItems, $html);
                     $htmlMenuItems = '';
                     $html .= str_replace('%s', $item->getTitle(), $tpl);
 
-                    if ($item->getType() == 4) {
+                    if ($item->isBox()) {
                         if ($item->getBoxId()) {
                             $box = $boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
                         } else {
@@ -151,35 +157,40 @@ class Model
      * @param array $options
      * @return string
      */
-    protected function recGetItems($item, $locale, $options = [])
+    protected function recGetItems($item, $locale, $options = [], $parentType = null)
     {
         $menuMapper = new \Modules\Admin\Mappers\Menu();
         $pageMapper = new \Modules\Admin\Mappers\Page();
         $subItems = $menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $html = '';
 
-        if (in_array($item->getType(), [1,2,3])) {
-            $html = '<li>';
+        if ($item->isLink()) {
+
+            if ($parentType === 0) {
+                $html = '<li class="' . array_dot($options, 'menus.li-class-root') . '">';
+            } else {
+                $html = '<li class="' . array_dot($options, 'menus.li-class-child') . '">';
+            }
         }
 
-        if ($item->getType() == 1) {
+        if ($item->isExternalLink()) {
             $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
-        } elseif ($item->getType() == 2) {
+        } elseif ($item->isPageLink()) {
             $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
             $html .= '<a href="'.$this->layout->getUrl($page->getPerma()).'">'.$item->getTitle().'</a>';
-        } elseif ($item->getType() == 3) {
+        } elseif ($item->isModuleLink()) {
             $html .= '<a href="'.$this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']).'">'.$item->getTitle().'</a>';
         }
         
         if (!empty($subItems)) {
-            if (isset($options['class_ul'])) {
-                $html .= '<ul class="'.$options['class_ul'].'">';
+            if ($item->isMenu()) {
+                $html .= '<ul class="' . array_dot($options, 'menus.ul-class-root') . '">';
             } else {
-                $html .= '<ul class="list-unstyled ilch_menu_ul">';
+                $html .= '<ul class="' . array_dot($options, 'menus.ul-class-child') . '">';
             }
 
             foreach ($subItems as $subItem) {
-                $html .= $this->recGetItems($subItem, $locale, $options);
+                $html .= $this->recGetItems($subItem, $locale, $options, $item->getType());
             }
 
             $html .= '</ul>';
