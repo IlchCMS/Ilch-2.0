@@ -1,0 +1,48 @@
+.panel-ilch {
+    border-color: #C9C9C9;
+}
+.panel-ilch > .panel-heading {
+    color: #000;
+    border-color: #C9C9C9;
+    background-color: #C9C9C9;
+}
+
+#layouts .panel-heading a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+#layouts .panel-body img {
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+#layouts .panel-body a {
+    cursor: pointer;
+}
+
+#layouts .divider {
+    height: 1px;
+    margin: 11px -15px;
+    background-color: #ccc;
+}
+
+#layouts .unchecked {
+    width: 18px;
+}
+
+
+/* Show */
+#layout .rating-container {
+    font-size: 15px;
+}
+#layout .rating-container .rating, #layout  .thumbnail span {
+    cursor: pointer;
+}
+
+@media (max-width:768px) {
+    #layout .btn {
+        margin-bottom: 15px;
+    }
+}

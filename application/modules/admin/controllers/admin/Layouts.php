@@ -6,6 +6,10 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Modules\Admin\Mappers\Module as ModuleMapper;
+use Modules\Admin\Models\Layout as LayoutModel;
+use Ilch\Transfer as Transfer;
+
 class Layouts extends \Ilch\Controller\Admin
 {
     public function init()
@@ -27,7 +31,7 @@ class Layouts extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getActionName() == 'index') {
             $items[0]['active'] = true;
-        } elseif ($this->getRequest()->getActionName() == 'search') {
+        } elseif ($this->getRequest()->getActionName() == 'search' OR $this->getRequest()->getActionName() == 'show') {
             $items[1]['active'] = true;
         } else {
             $items[0]['active'] = true;
@@ -47,7 +51,7 @@ class Layouts extends \Ilch\Controller\Admin
 
         $layouts = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
-            $model = new \Modules\Admin\Models\Layout();
+            $model = new LayoutModel();
             $model->setKey(basename($layoutPath));
             include_once $layoutPath.'/config/config.php';
             $model->setName($config['name']);
@@ -79,7 +83,7 @@ class Layouts extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('search'), ['action' => 'search']);
 
         if ($this->getRequest()->isPost('layout')) {
-            $transfer = new \Ilch\Transfer();
+            $transfer = new Transfer();
             $transfer->setZipSavePath(ROOT_PATH.'/updates/');
             $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
             $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
@@ -91,7 +95,7 @@ class Layouts extends \Ilch\Controller\Admin
             }
 
             $transfer->save();
-            
+
             $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
             $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
             if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
@@ -103,18 +107,49 @@ class Layouts extends \Ilch\Controller\Admin
             }
 
             $transfer->install();
-            $this->addMessage('Success');
+            $this->addMessage('downSuccess');
         }
+
+        foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
+            $layoutsDir[] = basename($layoutPath);
+        }
+
+        $this->getView()->set('layouts', $layoutsDir);
+    }
+
+    public function showAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('search'), ['action' => 'search'])
+                ->add($this->getTranslator()->trans('menuLayout').' '.$this->getTranslator()->trans('info'), ['action' => 'show']);
+
+        foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
+            $layoutsDir[] = basename($layoutPath);
+        }
+
+        $this->getView()->set('layouts', $layoutsDir);
     }
 
     public function deleteAction()
     {
         if ($this->getConfig()->get('default_layout') == $this->getRequest()->getParam('key')) {
-            $this->addMessage('cantDeleteDefaultLayout');
+            $this->addMessage('cantDeleteDefaultLayout', 'info');
         } else {
             removeDir(APPLICATION_PATH.'/layouts/'.$this->getRequest()->getParam('key'));
-            $moduleMapper = new \Modules\Admin\Mappers\Module();
-            $moduleMapper->delete($this->getRequest()->getParam('key'));
+            unlink(ROOT_PATH.'/updates/'.$this->getRequest()->getParam('key').'.zip-signature.sig');
+
+            if (is_dir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'))) {
+                $modules = new ModuleMapper();
+
+                $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\config';
+                $config = new $configClass();
+                $config->uninstall();
+                $modules->delete($this->getRequest()->getParam('key'));
+
+                removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+            }
+
             $this->addMessage('deleteSuccess');
         }
 
