@@ -90,7 +90,7 @@ class Frontend extends Base
      * @param string $boxKey
      * @return string
      */
-    public function getBox($moduleKey, $boxKey = '')
+    public function getBox($moduleKey, $boxKey = '', $customView = null)
     {
         if (empty($boxKey)) {
             $boxKey = $moduleKey;
@@ -102,10 +102,14 @@ class Frontend extends Base
         $boxObj = new $class($this, $view, $this->getRequest(), $this->getRouter(), $this->getTranslator());
         $boxObj->render();
 
-        if (file_exists(APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php')) {
-            $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
+        if (! is_null($customView)) {
+            $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$customView.'.php';
         } else {
-            $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
+            if (file_exists(APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php')) {
+                $viewPath = APPLICATION_PATH.'/'.dirname($this->getFile()).'/views/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
+            } else {
+                $viewPath = APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/views/'.$boxKey.'.php';
+            }
         }
 
         $view->setLayoutKey($this->getLayoutKey());
