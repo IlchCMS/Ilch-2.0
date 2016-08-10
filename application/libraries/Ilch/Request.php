@@ -238,11 +238,17 @@ class Request
      */
     public function isSecure()
     {
+        $returnValue = false;
+
         if (isset($_SESSION['token'][$this->getPost('ilch_token')])
                || isset($_SESSION['token'][$this->getParam('ilch_token')])) {
-            return true;
+            $returnValue = true;
         }
 
-        return false;
+        // Delete the used tokens.
+        unset($_SESSION['token'][$this->getPost('ilch_token')]);
+        unset($_SESSION['token'][$this->getParam('ilch_token')]);
+
+        return $returnValue;
     }
 }
