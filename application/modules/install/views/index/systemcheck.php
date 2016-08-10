@@ -24,7 +24,7 @@
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
                     <?php if (extension_loaded('openssl')): ?>
-                        <span class="text-success"><?=$this->getTrans('valid') ?></span>
+                        <span class="text-success"><?=$this->getTrans('existing') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('missing') ?></span>
                     <?php endif; ?>
@@ -35,7 +35,7 @@
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
                     <?php if (extension_loaded('curl')): ?>
-                        <span class="text-success"><?=$this->getTrans('valid') ?></span>
+                        <span class="text-success"><?=$this->getTrans('existing') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('missing') ?></span>
                     <?php endif; ?>
@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <td><?=$this->getTrans('certificate') ?></td>
-                <td class="text-success"><?=$this->getTrans('existing') ?></td>
+                <td class="text-success"><?=$this->getTrans('valid') ?></td>
                 <td>
                     <?php if (file_exists(ROOT_PATH.'/certificate/Certificate.crt')): ?>
                         <?php if (extension_loaded('openssl')): ?>
