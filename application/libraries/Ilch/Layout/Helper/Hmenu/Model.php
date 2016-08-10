@@ -48,16 +48,27 @@ class Model
             return '';
         }
 
-        $html = '<a href="'.$this->layout->getUrl().'">Start</a>';
+        // TODO: This generated output should be easily customizable
+        $begin = '<ol class="breadcrumb">';
+
+        $html = '<li>';
+        $html .= '<a href="'.$this->layout->getUrl().'">Start</a>';
+        $html .= '';
 
         foreach ($this->data as $key => $value) {
             if (empty($value)) {
+                $html .= '<li class="active">';
                 $html .= $this->layout->escape($key);
+                $html .= '</li>';
             } else {
-                $html .= ' &rArr; <a href="'.$this->layout->getUrl($value).'">'.$this->layout->escape($key).'</a>';
+                $html .= '<li>';
+                $html .= '<a href="'.$this->layout->getUrl($value).'">'.$this->layout->escape($key).'</a>';
+                $html .= '</li>';
             }
         }
 
-        return $html;
+        $end = '</ol>';
+
+        return $begin.$html.$end;
     }
 }
