@@ -26,6 +26,13 @@ class Layout extends \Ilch\Model
     protected $name;
 
     /**
+     * Version of the layout.
+     *
+     * @var string
+     */
+    protected $version;
+
+    /**
      * Author of the layout.
      *
      * @var string
@@ -86,11 +93,31 @@ class Layout extends \Ilch\Model
     /**
      * Sets the name.
      *
-     * @param string $key
+     * @param string $name
      */
     public function setName($name)
     {
         $this->name = (string)$name;
+    }
+
+    /**
+     * Gets the version.
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Sets the version.
+     *
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = (string)$version;
     }
 
     /**

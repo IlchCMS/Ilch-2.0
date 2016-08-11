@@ -55,6 +55,7 @@ class Layouts extends \Ilch\Controller\Admin
             $model->setKey(basename($layoutPath));
             include_once $layoutPath.'/config/config.php';
             $model->setName($config['name']);
+            $model->setVersion($config['version']);
             $model->setAuthor($config['author']);
             if (!empty($config['link'])) {
                 $model->setLink($config['link']);

@@ -23,7 +23,11 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" title="<?=$this->escape($layout->getName()) ?>" />
+                    <span data-toggle="modal"
+                          data-target="#infoModal<?=$layout->getKey() ?>"
+                          title="<?=$this->getTrans('info') ?>">
+                        <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" title="<?=$this->escape($layout->getName()) ?>" />
+                    </span>
                 </div>
                 <div class="panel-footer">
                     <div class="clearfix">
@@ -45,6 +49,12 @@
                         <?php endif; ?>
                         </div>
                         <div class="pull-right">
+                            <span class="btn btn-default"
+                                  data-toggle="modal"
+                                  data-target="#infoModal<?=$layout->getKey() ?>"
+                                  title="<?=$this->getTrans('info') ?>">
+                                <i class="fa fa-info fa-lg text-info"></i>
+                            </span>
                             <?php if ($this->get('defaultLayout') != $layout->getKey()): ?>
                                 <span class="btn btn-default deleteLayout"
                                       data-clickurl="<?=$this->getUrl(['action' => 'delete', 'key' => $layout->getKey()]) ?>"
@@ -60,6 +70,25 @@
                 </div>
             </div>
         </div>
+
+        <?php
+        if ($layout->getLink() != '') {
+            $screen = '<a href="'.$layout->getLink().'" alt="'.$this->escape($layout->getAuthor()).'" title="'.$this->escape($layout->getAuthor()).'" target="_blank">
+                       <img src="'.$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png').'" alt="'.$this->escape($layout->getName()).'" title="'.$this->escape($layout->getName()).'" />
+                       </a>';
+            $author = '<a href="'.$layout->getLink().'" alt="'.$this->escape($layout->getAuthor()).'" title="'.$this->escape($layout->getAuthor()).'" target="_blank">'.$this->escape($layout->getAuthor()).'</a>';
+        } else {
+            $screen = '<img src="'.$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png').'" alt="'.$this->escape($layout->getName()).'" title="'.$this->escape($layout->getName()).'" />';
+            $author = $this->escape($layout->getAuthor());
+        }
+        
+        $layoutInfo = '<center>'.$screen.'</center><br />
+                       <b>'.$this->getTrans('name').':</b> '.$this->escape($layout->getName()).'<br />
+                       <b>'.$this->getTrans('version').':</b> '.$this->escape($layout->getVersion()).'<br />
+                       <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
+                       <b>'.$this->getTrans('desc').':</b><br />'.$this->escape($layout->getDesc());
+        ?>
+        <?=$this->getDialog('infoModal'.$layout->getKey(), $this->getTrans('menuLayout').' '.$this->getTrans('info'), $layoutInfo); ?>
     <?php endforeach; ?>
 </form>
 
