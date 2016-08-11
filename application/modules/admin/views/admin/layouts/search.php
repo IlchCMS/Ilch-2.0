@@ -1,4 +1,4 @@
-<link href="<?=$this->getModuleUrl('static/css/layouts.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('search') ?></legend>
 <?php
@@ -19,10 +19,8 @@ foreach ($datas as $data): ?>
                         <b><?=$this->escape($data->name) ?></b>
                     </div>
                     <div class="pull-right">
-                        <?php if (!empty($data->link)): ?>
-                            <a href="<?=$data->link ?>" alt="<?=$this->escape($data->author) ?>" title="<?=$this->escape($data->author) ?>" target="_blank">
-                                <i><?=$this->escape($data->author) ?></i>
-                            </a>
+                        <?php if ($data->link != ''): ?>
+                            <a href="<?=$data->link ?>" alt="<?=$this->escape($data->author) ?>" title="<?=$this->escape($data->author) ?>" target="_blank"><i><?=$this->escape($data->author) ?></i></a>
                         <?php else: ?>
                             <i><?=$this->escape($data->author) ?></i>
                         <?php endif; ?>
@@ -41,7 +39,7 @@ foreach ($datas as $data): ?>
                         $filename = basename($data->downloadLink);
                         $filename = strstr($filename,'.',true);
                         if (in_array($filename, $this->get('layouts'))): ?>
-                            <span class="btn btn-default disabled" title="<?=$this->getTrans('layoutAvailable') ?>">
+                            <span class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check fa-lg text-success"></i>
                             </span>
                         <?php else: ?>

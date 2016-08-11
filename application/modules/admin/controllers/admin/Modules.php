@@ -26,16 +26,16 @@ class Modules extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'notinstalled'])
             ],
             [
-                'name' => 'menuSearchModules',
+                'name' => 'menuSearch',
                 'active' => false,
                 'icon' => 'fa fa-search',
-                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'searchmodules'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'search'])
             ],
         ];
 
         if ($this->getRequest()->getActionName() == 'notinstalled') {
             $items[1]['active'] = true; 
-        } else if ($this->getRequest()->getActionName() == 'searchmodules') {
+        } elseif ($this->getRequest()->getActionName() == 'search' OR $this->getRequest()->getActionName() == 'show') {
             $items[2]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
@@ -70,13 +70,13 @@ class Modules extends \Ilch\Controller\Admin
         $this->getView()->set('modulesNotInstalled', $modules->getModulesNotInstalled());
     }
 
-    public function searchmodulesAction()
+    public function searchAction()
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSearchModules'), ['action' => 'searchmodules']);
+                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
 
-        if ($this->getRequest()->isPost('layout')) {
+        if ($this->getRequest()->isSecure()) {
             $transfer = new \Ilch\Transfer();
             $transfer->setZipSavePath(ROOT_PATH.'/updates/');
             $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
@@ -89,7 +89,7 @@ class Modules extends \Ilch\Controller\Admin
             }
 
             $transfer->save();
-            
+
             $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
             $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
             if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
@@ -101,8 +101,28 @@ class Modules extends \Ilch\Controller\Admin
             }
 
             $transfer->install();
-            $this->addMessage('Success');
+            $this->addMessage('downSuccess');
         }
+
+        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+            $modulesDir[] = basename($modulesPath);
+        }
+
+        $this->getView()->set('modules', $modulesDir);
+    }
+
+    public function showAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
+                ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show']);
+
+        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+            $modulesDir[] = basename($modulesPath);
+        }
+
+        $this->getView()->set('modules', $modulesDir);
     }
 
     public function installAction()

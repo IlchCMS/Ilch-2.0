@@ -1,4 +1,4 @@
-<link href="<?=$this->getModuleUrl('static/css/layouts.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('manage') ?></legend>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">

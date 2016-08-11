@@ -24,19 +24,18 @@
                     <tr>
                         <td>
                             <?=$smallIcon.$content['name'] ?>
-                            <br /><br />
-                            <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
                             <br />
-                            <a href="<?=$this->getUrl(array('module' => $module->getKey(), 'controller' => 'index', 'action' => 'index')) ?>"><?=$this->getTrans('administrate') ?></a>
+                            <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
+                            <br /><br />
+                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('administrate') ?></a>
                             <?php if (!isset($config->isSystemModule)): ?>
-                                <small>| <a class="delete_button" href="<?=$this->getUrl(array('action' => 'uninstall', 'key' => $module->getKey()), null, true) ?>"><?=$this->getTrans('uninstall') ?></a></small>
+                                <small>
+                                    | 
+                                    <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>"><?=$this->getTrans('uninstall') ?></a>
+                                </small>
                             <?php endif; ?>
                         </td>
-                        <td>
-                            <?php if (!empty($content['description'])): ?>
-                                <?=$content['description'] ?>
-                            <?php endif; ?>
-                        </td>
+                        <td><?=$content['description'] ?></td>
                     </tr>
                 <?php endif; ?>
             <?php endforeach; ?>

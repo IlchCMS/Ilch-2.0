@@ -22,7 +22,7 @@ class Layouts extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'index'])
             ],
             [
-                'name' => 'search',
+                'name' => 'menuSearch',
                 'active' => false,
                 'icon' => 'fa fa-search',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'search'])
@@ -81,9 +81,9 @@ class Layouts extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('search'), ['action' => 'search']);
+                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
 
-        if ($this->getRequest()->isPost('layout')) {
+        if ($this->getRequest()->isSecure()) {
             $transfer = new Transfer();
             $transfer->setZipSavePath(ROOT_PATH.'/updates/');
             $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
@@ -122,7 +122,7 @@ class Layouts extends \Ilch\Controller\Admin
     {
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('search'), ['action' => 'search'])
+                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
                 ->add($this->getTranslator()->trans('menuLayout').' '.$this->getTranslator()->trans('info'), ['action' => 'show']);
 
         foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {

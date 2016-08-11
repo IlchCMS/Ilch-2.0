@@ -32,17 +32,21 @@
     width: 18px;
 }
 
+#modules form {
+    display: initial;
+}
 
 /* Show */
+#module .rating-container,
 #layout .rating-container {
     font-size: 15px;
 }
-#layout .rating-container .rating, #layout  .thumbnail span {
-    cursor: pointer;
+#layout .thumbnail {
+    text-align: center;
 }
-
-@media (max-width:768px) {
-    #layout .btn {
-        margin-bottom: 15px;
-    }
+#module .rating-container .rating,
+#layout .rating-container .rating,
+#layout .thumbnail span {
+    cursor: help;
+    text-align: center;
 }

@@ -24,15 +24,15 @@
                     <tr>
                         <td>
                             <?=$smallIcon.$content['name'] ?>
-                            <br /><br />
-                            <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
                             <br />
-                            <a class="install_button" href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>">
+                            <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
+                            <br /><br />
+                            <a href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>">
                                 <?=$this->getTrans('installModule') ?>
                             </a>
                             <small>
                                 | 
-                                <a class="delete_button" href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>">
+                                <a href="<?=$this->getUrl(['action' => 'delete', 'key' => $module->getKey()], null, true) ?>">
                                     <?=$this->getTrans('delete') ?>
                                 </a>
                             </small>

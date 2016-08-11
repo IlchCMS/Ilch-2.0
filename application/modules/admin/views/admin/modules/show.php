@@ -1,28 +1,19 @@
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/star-rating/css/star-rating.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuLayout').' '.$this->getTrans('info') ?></legend>
+<legend><?=$this->getTrans('menuModules').' '.$this->getTrans('info') ?></legend>
 <?php
-$json = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
+$json = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $datas = json_decode($json);
 
 if (empty($datas)) {
-    echo $this->getTrans('noLayoutsAvailable');
+    echo $this->getTrans('noModulesAvailable');
     return;
 }
 
 foreach ($datas as $data): ?>
     <?php if ($data->id == $this->getRequest()->getParam('id')): ?>
-        <div id="layout">
-            <div class="col-lg-2">
-                <div class="col-lg-12">
-                    <div class="thumbnail">
-                        <span data-toggle="modal" data-target="#infoModal">
-                            <img src="<?=$data->thumb ?>" alt="<?=$this->escape($data->name) ?>" title="<?=$this->escape($data->name) ?>" />
-                        </span>
-                    </div>
-                </div>
-            </div>
+        <div id="module">
             <div class="col-lg-6 col-sm-12">
                 <div class="row">
                     <div class="col-lg-2 col-sm-3 col-xs-6">
@@ -90,12 +81,12 @@ foreach ($datas as $data): ?>
             <?php
             $filename = basename($data->downloadLink);
             $filename = strstr($filename,'.',true);
-            if (in_array($filename, $this->get('layouts'))): ?>
+            if (in_array($filename, $this->get('modules'))): ?>
                 <button class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa fa-check fa-lg text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
-                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search']) ?>">
+                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search']) ?>">
                     <?=$this->getTokenField() ?>
                     <button type="submit" class="btn" name="url" value="<?=$data->downloadLink ?>">
                         <i class="fa fa-download fa-lg"></i> <?=$this->getTrans('download') ?>
@@ -103,8 +94,6 @@ foreach ($datas as $data): ?>
                 </form>
             <?php endif; ?>
         </div>
-
-        <?=$this->getDialog('infoModal', $this->escape($data->name), '<center><img src="'.$data->thumb.'" alt="'.$this->escape($data->name).'" /></center>'); ?>
     <?php endif; ?>
 <?php endforeach; ?>
 
