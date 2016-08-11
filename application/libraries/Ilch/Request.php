@@ -246,8 +246,11 @@ class Request
         }
 
         // Delete the used tokens.
-        unset($_SESSION['token'][$this->getPost('ilch_token')]);
-        unset($_SESSION['token'][$this->getParam('ilch_token')]);
+        // Just delete the token used in a GET-Request to avoid "no valid secure token given, add function getTokenField() to formular".
+        // unset($_SESSION['token'][$this->getPost('ilch_token')]);
+        if (!$this->isPost()) {
+            unset($_SESSION['token'][$this->getParam('ilch_token')]);
+        }
 
         return $returnValue;
     }
