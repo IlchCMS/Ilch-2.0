@@ -122,6 +122,24 @@ class Module extends \Ilch\Mapper
     }
 
     /**
+     * Gets an array of keys of the installed modules
+     *
+     */
+    public function getKeysInstalledModules()
+    {
+        $modulesRows = $this->db()->select('key')
+            ->from('modules')
+            ->execute()
+            ->fetchList();
+
+        if (empty($modulesRows)) {
+            return [];
+        }
+
+        return $modulesRows;
+    }
+
+    /**
      * Inserts a module model in the database.
      *
      * @param ModuleModel $module
