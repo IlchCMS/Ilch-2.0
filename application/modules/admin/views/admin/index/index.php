@@ -20,7 +20,7 @@ if ($this->getUser()->getFirstName() != '') {
 <br />
 <table class="table">
     <tr>
-        <td class="col-lg-1"><?=$this->getTrans('installedVersion') ?></td>
+        <td class="col-lg-2"><?=$this->getTrans('installedVersion') ?></td>
         <td><?=VERSION ?></td>
     </tr>
     <tr>
@@ -44,3 +44,21 @@ if ($this->getUser()->getFirstName() != '') {
     </tr>
     <?php endif; ?>
 </table>
+<?php if ($this->get('guestbookEntries') or $this->get('newVersion')) : ?>
+<table class="table">
+    <th><?=$this->getTrans('awaitingUnlocking') ?></th>
+    <th></th>
+    <?php if ($this->get('guestbookEntries')) : ?>
+        <tr>
+            <td class="col-lg-2"><a href="<?=$this->getUrl(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'index')) ?>"><?=$this->get('moduleLocales')['guestbook']->getName() ?></a></td>
+            <td><?=count($this->get('guestbookEntries')) ?></td>
+        </tr>
+    <?php endif; ?>
+    <?php if ($this->get('partnerEntries')) : ?>
+        <tr>
+            <td class="col-lg-2"><a href="<?=$this->getUrl(array('module' => 'partner', 'controller' => 'index', 'action' => 'index')) ?>"><?=$this->get('moduleLocales')['partner']->getName() ?></a></td>
+            <td><?=count($this->get('partnerEntries')) ?></td>
+        </tr>
+    <?php endif; ?>
+</table>
+<?php endif; ?>

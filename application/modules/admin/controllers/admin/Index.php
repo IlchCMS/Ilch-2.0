@@ -35,5 +35,27 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
         }
+
+        $modulesMapper = new \Modules\Admin\Mappers\Module();
+        $modules = $modulesMapper->getKeysInstalledModules();
+        $moduleLocales = [];
+
+        if (in_array('guestbook', $modules)) {
+            // Check if there are guestbook entries, which need to be unlocked
+            $guestbookMapper = new \Modules\Guestbook\Mappers\Guestbook();
+            $moduleLocales['guestbook'] = $modulesMapper->getModulesByKey('guestbook', $this->getTranslator()->getLocale());
+
+            $this->getView()->set('guestbookEntries', $guestbookMapper->getEntries(['setfree' => 0]));
+        }
+
+        if (in_array('partner', $modules)) {
+            // Check if there are partner entries, which need to be unlocked
+            $partnerMapper = new \Modules\Partner\Mappers\Partner();
+            $moduleLocales['partner'] = $modulesMapper->getModulesByKey('partner', $this->getTranslator()->getLocale());
+
+            $this->getView()->set('partnerEntries', $partnerMapper->getEntries(['setfree' => 0]));
+        }
+
+        $this->getView()->set('moduleLocales', $moduleLocales);
     }
 }
