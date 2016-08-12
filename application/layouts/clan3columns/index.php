@@ -28,7 +28,6 @@
                 </div>
                 <div class="col-lg-8">
                     <?=$this->getHmenu() ?>
-                    <br /><br />
                     <div class="panel panel-default" id="headings">
                         <div class="panel-body">
                             <?=$this->getContent() ?>
