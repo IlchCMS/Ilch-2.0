@@ -9,7 +9,6 @@ namespace Ilch;
 use Ilch\Registry;
 
 use Ilch\Validation\Data;
-use Ilch\Validation\Error;
 use Ilch\Validation\ErrorBag;
 
 /**
