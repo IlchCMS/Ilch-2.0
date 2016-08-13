@@ -3,16 +3,16 @@
 
 <legend><?=$this->getTrans('menuModules').' '.$this->getTrans('info') ?></legend>
 <?php
-$json = url_get_contents('http://ilch2.de/downloads/modules/list.php');
-$datas = json_decode($json);
+$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
+$modules = json_decode($modulesList);
 
-if (empty($datas)) {
+if (empty($modules)) {
     echo $this->getTrans('noModulesAvailable');
     return;
 }
 
-foreach ($datas as $data): ?>
-    <?php if ($data->id == $this->getRequest()->getParam('id')): ?>
+foreach ($modules as $module): ?>
+    <?php if ($module->id == $this->getRequest()->getParam('id')): ?>
         <div id="module">
             <div class="col-lg-6 col-sm-12">
                 <div class="row">
@@ -20,46 +20,46 @@ foreach ($datas as $data): ?>
                         <b><?=$this->getTrans('name') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$this->escape($data->name) ?>
+                        <?=$this->escape($module->name) ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('version') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$data->version ?>
+                        <?=$module->version ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('author') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?php if ($data->link != ''): ?>
-                            <a href="<?=$data->link ?>" alt="<?=$this->escape($data->author) ?>" title="<?=$this->escape($data->author) ?>" target="_blank">
-                                <i><?=$this->escape($data->author) ?></i>
+                        <?php if ($module->link != ''): ?>
+                            <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank">
+                                <i><?=$this->escape($module->author) ?></i>
                             </a>
                         <?php else: ?>
-                            <i><?=$this->escape($data->author) ?></i>
+                            <i><?=$this->escape($module->author) ?></i>
                         <?php endif; ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('hits') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$data->hits ?>
+                        <?=$module->hits ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('downloads') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$data->downs ?>
+                        <?=$module->downs ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('rating') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <span title="<?=$data->rating ?> <?php if ($data->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
+                        <span title="<?=$module->rating ?> <?php if ($module->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
                             <input type="number"
                                    class="rating"
-                                   value="<?=$data->rating ?>"
+                                   value="<?=$module->rating ?>"
                                    data-size="xs"
                                    data-readonly="true"
                                    data-show-clear="false"
@@ -72,14 +72,14 @@ foreach ($datas as $data): ?>
                     <b><?=$this->getTrans('desc') ?>:</b>
                 </div>
                 <div class="col-lg-12">
-                    <?=$this->escape($data->desc) ?>
+                    <?=$this->escape($module->desc) ?>
                 </div>
             </div>
         </div>
 
         <div class="content_savebox">
             <?php
-            $filename = basename($data->downloadLink);
+            $filename = basename($module->downloadLink);
             $filename = strstr($filename,'.',true);
             if (in_array($filename, $this->get('modules'))): ?>
                 <button class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
@@ -88,7 +88,7 @@ foreach ($datas as $data): ?>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search']) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn" name="url" value="<?=$data->downloadLink ?>">
+                    <button type="submit" class="btn" name="url" value="<?=$module->downloadLink ?>">
                         <i class="fa fa-download fa-lg"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>

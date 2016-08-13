@@ -3,22 +3,22 @@
 
 <legend><?=$this->getTrans('menuLayout').' '.$this->getTrans('info') ?></legend>
 <?php
-$json = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
-$datas = json_decode($json);
+$layoutsList = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
+$layouts = json_decode($layoutsList);
 
-if (empty($datas)) {
+if (empty($layouts)) {
     echo $this->getTrans('noLayoutsAvailable');
     return;
 }
 
-foreach ($datas as $data): ?>
-    <?php if ($data->id == $this->getRequest()->getParam('id')): ?>
+foreach ($layouts as $layout): ?>
+    <?php if ($layout->id == $this->getRequest()->getParam('id')): ?>
         <div id="layout">
             <div class="col-lg-2">
                 <div class="col-lg-12">
                     <div class="thumbnail">
                         <span data-toggle="modal" data-target="#infoModal">
-                            <img src="<?=$data->thumb ?>" alt="<?=$this->escape($data->name) ?>" title="<?=$this->escape($data->name) ?>" />
+                            <img src="<?=$layout->thumb ?>" alt="<?=$this->escape($layout->name) ?>" title="<?=$this->escape($layout->name) ?>" />
                         </span>
                     </div>
                 </div>
@@ -29,46 +29,46 @@ foreach ($datas as $data): ?>
                         <b><?=$this->getTrans('name') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$this->escape($data->name) ?>
+                        <?=$this->escape($layout->name) ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('version') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$data->version ?>
+                        <?=$layout->version ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('author') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?php if ($data->link != ''): ?>
-                            <a href="<?=$data->link ?>" alt="<?=$this->escape($data->author) ?>" title="<?=$this->escape($data->author) ?>" target="_blank">
-                                <i><?=$this->escape($data->author) ?></i>
+                        <?php if ($layout->link != ''): ?>
+                            <a href="<?=$layout->link ?>" alt="<?=$this->escape($layout->author) ?>" title="<?=$this->escape($layout->author) ?>" target="_blank">
+                                <i><?=$this->escape($layout->author) ?></i>
                             </a>
                         <?php else: ?>
-                            <i><?=$this->escape($data->author) ?></i>
+                            <i><?=$this->escape($layout->author) ?></i>
                         <?php endif; ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('hits') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$data->hits ?>
+                        <?=$layout->hits ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('downloads') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <?=$data->downs ?>
+                        <?=$layout->downs ?>
                     </div>
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('rating') ?>:</b>
                     </div>
                     <div class="col-lg-10 col-sm-9 col-xs-6">
-                        <span title="<?=$data->rating ?> <?php if ($data->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
+                        <span title="<?=$layout->rating ?> <?php if ($layout->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
                             <input type="number"
                                    class="rating"
-                                   value="<?=$data->rating ?>"
+                                   value="<?=$layout->rating ?>"
                                    data-size="xs"
                                    data-readonly="true"
                                    data-show-clear="false"
@@ -81,14 +81,14 @@ foreach ($datas as $data): ?>
                     <b><?=$this->getTrans('desc') ?>:</b>
                 </div>
                 <div class="col-lg-12">
-                    <?=$this->escape($data->desc) ?>
+                    <?=$this->escape($layout->desc) ?>
                 </div>
             </div>
         </div>
 
         <div class="content_savebox">
             <?php
-            $filename = basename($data->downloadLink);
+            $filename = basename($layout->downloadLink);
             $filename = strstr($filename,'.',true);
             if (in_array($filename, $this->get('layouts'))): ?>
                 <button class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
@@ -97,14 +97,14 @@ foreach ($datas as $data): ?>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search']) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn" name="url" value="<?=$data->downloadLink ?>">
+                    <button type="submit" class="btn" name="url" value="<?=$layout->downloadLink ?>">
                         <i class="fa fa-download fa-lg"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>
             <?php endif; ?>
         </div>
 
-        <?=$this->getDialog('infoModal', $this->escape($data->name), '<center><img src="'.$data->thumb.'" alt="'.$this->escape($data->name).'" /></center>'); ?>
+        <?=$this->getDialog('infoModal', $this->escape($layout->name), '<center><img src="'.$layout->thumb.'" alt="'.$this->escape($layout->name).'" /></center>'); ?>
     <?php endif; ?>
 <?php endforeach; ?>
 
