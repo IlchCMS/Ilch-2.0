@@ -175,7 +175,7 @@ class Index extends \Ilch\Controller\Admin
             }
             unset($_SESSION['captcha']);
 
-            $this->getView()->set('errors', $validation->getErrors());
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
             $errorFields = $validation->getFieldsWithError();
         }
 

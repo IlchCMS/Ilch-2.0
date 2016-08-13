@@ -52,7 +52,7 @@ class Index extends \Ilch\Controller\Frontend
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrors());
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
             $errorFields = $validation->getFieldsWithError();
         }
 

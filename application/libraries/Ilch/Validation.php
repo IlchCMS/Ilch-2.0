@@ -9,7 +9,7 @@ namespace Ilch;
 use Ilch\Registry;
 
 use Ilch\Validation\Data;
-use Ilch\Validation\Error;
+use Ilch\Validation\ErrorBag;
 
 /**
  * Validation class
@@ -34,6 +34,10 @@ class Validation
     protected $breakChain;
 
     protected $errors;
+
+    protected $errorBag;
+    protected $translator;
+
     protected $fields_with_error = [];
     protected $passes = true;
 
@@ -48,6 +52,8 @@ class Validation
         $this->input = $input;
         $this->rules = $rules;
         $this->breakChain = $breakChain;
+        $this->errorBag = new ErrorBag();
+        $this->translator = Registry::get('translator');
 
         if ($autoRun) {
             $this->run();
@@ -90,15 +96,33 @@ class Validation
                     $validation = $this->validate($vRule, $vData);
 
                     if ($validation['result'] === false) {
-                        $this->fields_with_error[] = $field;
                         $this->passes = false;
 
-                        if ($this->breakChain) {
-                            $this->errors[$field] = new Error($field, $validation['error_key'], (isset($validation['error_params']) ? $validation['error_params'] : []));
-                            break;
+                        $args = [
+                            $validation['error_key'],
+                            $this->getTranslator()->trans($field),
+                        ];
+
+                        if (isset($validation['error_params'])) {
+                            foreach ($validation['error_params'] as $param) {
+                                if (is_array($param)) {
+                                    if ($param[1] === true) {
+                                        array_push($args, $this->getTranslator()->trans($param[0]));
+                                    } else {
+                                        array_push($args, $param[0]);
+                                    }
+                                } else {
+                                    array_push($args, $param);
+                                }
+                            }
                         }
 
-                        $this->errors[$field][] = new Error($field, $validation['error_key'], (isset($validation['error_params']) ? $validation['error_params'] : []));
+                        $errorMessage = call_user_func_array([$this->getTranslator(), 'trans'], $args);
+                        $this->getErrorBag()->addError($field, $errorMessage);
+
+                        if ($this->breakChain) {
+                            break;
+                        }
                     }
                 } else {
                     throw new \InvalidArgumentException('The validator "'.$vRule.'" has not been registered.');
@@ -131,52 +155,7 @@ class Validation
      */
     public function getErrors($translator = null)
     {
-        if ($translator === null) {
-            $translator = Registry::get('translator');
-        }
-
-        if (empty($this->errors)) {
-            return null;
-        }
-
-        $errorMessages = [];
-        $validationErrors = [];
-
-        foreach ($this->errors as $errors) {
-            if (!$this->breakChain) {
-                foreach ($errors as $error) {
-                    $validationErrors[] = $error;
-                }
-            } else {
-                $validationErrors[] = $errors;
-            }
-        }
-
-        foreach ($validationErrors as $error) {
-
-            $params = [];
-
-            foreach ($error->getParams() as $param) {
-                if ($param['translate'] === true) {
-                    $params[] = $translator->trans($param['value']);
-                } else {
-                    $params[] = $param['value'];
-                }
-            }
-
-            $field = isset(self::$customFieldAliases[$error->getField()]) ? self::$customFieldAliases[$error->getField()] : $error->getField();
-
-            $args = [
-                $error->getKey(),
-                $translator->trans($field),
-            ];
-
-            $args = array_merge($args, $params);
-
-            $errorMessages[] = call_user_func_array([$translator, 'trans'], $args);
-        }
-
-        return $errorMessages;
+        return $this->getErrorBag()->getErrors();
     }
 
     /**
@@ -218,7 +197,7 @@ class Validation
      */
     public function getFieldsWithError()
     {
-        return $this->fields_with_error;
+        return $this->getErrorBag()->getErrorFields();
     }
 
     /**
@@ -252,5 +231,15 @@ class Validation
     public static function setCustomFieldAliases($aliases)
     {
         self::$customFieldAliases = $aliases;
+    }
+
+    public function getErrorBag()
+    {
+        return $this->errorBag;
+    }
+
+    public function getTranslator()
+    {
+        return $this->translator;
     }
 }

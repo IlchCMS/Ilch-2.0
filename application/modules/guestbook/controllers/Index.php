@@ -167,7 +167,7 @@ class Index extends \Ilch\Controller\Frontend
                 Ansonsten siehe newEntry.php
             */
             // $this->getView()->set('errors', $validation->getErrors());
-            $this->getView()->set('errors', $validation->getErrors());
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
 
             /*
                 $validation->getFieldsWithError() gibt ein Array mit allen Feldern, die Fehler beinhalten, zurück.
