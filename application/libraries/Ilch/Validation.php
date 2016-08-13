@@ -52,7 +52,7 @@ class Validation
         $this->input = $input;
         $this->rules = $rules;
         $this->breakChain = $breakChain;
-        $this->errorBag = new Errorbag();
+        $this->errorBag = new ErrorBag();
         $this->translator = Registry::get('translator');
 
         if ($autoRun) {
