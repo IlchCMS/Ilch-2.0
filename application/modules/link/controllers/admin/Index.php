@@ -190,7 +190,7 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrors());
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
             $errorFields = $validation->getFieldsWithError();
         }
 
@@ -251,7 +251,7 @@ class Index extends \Ilch\Controller\Admin
                 }
             }
 
-            $this->getView()->set('errors', $validation->getErrors());
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
             $errorFields = $validation->getFieldsWithError();
         }
 
