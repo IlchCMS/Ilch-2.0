@@ -26,9 +26,9 @@ class Same extends Base
         $data = $this->data;
 
         if ((bool) $data->getParam('strict') === true) {
-            $result = $data->getValue() === $data->getParam('as');
+            $result = $data->getValue() === $data->getInput()[$data->getParam('as')];
         } else {
-            $result = $data->getValue() == $data->getParam('as');
+            $result = $data->getValue() == $data->getInput()[$data->getParam('as')];
         }
 
         $as = isset($this->fieldAliases[$data->getParam('as')]) ? $this->fieldAliases[$data->getParam('as')] : $data->getParam('as');
