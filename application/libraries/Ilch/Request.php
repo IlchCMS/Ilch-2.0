@@ -238,11 +238,20 @@ class Request
      */
     public function isSecure()
     {
+        $returnValue = false;
+
         if (isset($_SESSION['token'][$this->getPost('ilch_token')])
                || isset($_SESSION['token'][$this->getParam('ilch_token')])) {
-            return true;
+            $returnValue = true;
         }
 
-        return false;
+        // Delete the used tokens.
+        // Just delete the token used in a GET-Request to avoid "no valid secure token given, add function getTokenField() to formular".
+        // unset($_SESSION['token'][$this->getPost('ilch_token')]);
+        if (!$this->isPost()) {
+            unset($_SESSION['token'][$this->getParam('ilch_token')]);
+        }
+
+        return $returnValue;
     }
 }

@@ -339,9 +339,7 @@ abstract class Base
         }
 
         if ($secure) {
-            $token = uniqid();
-            $_SESSION['token'][$token] = $token;
-            $urlParts[] = 'ilch_token/'.$token;
+            $urlParts[] = 'ilch_token/'.$this->generateToken();
         }
 
         $s = '';
@@ -393,10 +391,19 @@ abstract class Base
      */
     public function getTokenField()
     {
-        $token = md5(uniqid());
+        return '<input type="hidden" name="ilch_token" value="'.$this->generateToken().'" />'."\n";
+    }
+
+    /**
+     * Generates a token and stores it in user-session
+     *
+     * @return string
+     */
+    public function generateToken() {
+        $token = bin2hex(openssl_random_pseudo_bytes(32));
         $_SESSION['token'][$token] = $token;
 
-        return '<input type="hidden" name="ilch_token" value="'.$token.'" />'."\n";
+        return $token;
     }
 
     /**
