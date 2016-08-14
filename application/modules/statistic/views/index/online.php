@@ -1,6 +1,8 @@
 <?php
+$modulesMapper = new \Modules\Admin\Mappers\Module();
+$userMapper = new \Modules\User\Mappers\User();
+
 if ($this->getUser()) {
-    $userMapper = new \Modules\User\Mappers\User();
     $userCheck = $userMapper->getUserById($this->getUser()->getId());
 }
 ?>
@@ -17,7 +19,7 @@ if ($this->getUser()) {
                     <col class="col-lg-3">
                 <?php endif; ?>
             <?php endif; ?>
-            <col />
+            <col>
         </colgroup>
         <thead>
             <tr>
@@ -34,11 +36,9 @@ if ($this->getUser()) {
         </thead>
         <tbody>
             <?php foreach ($this->get('userOnlineList') as $userOnlineList): ?>
-                <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                 <?php $user = $userMapper->getUserById($userOnlineList->getUserId()); ?>
                 <?php $moduleKey = implode('/',array_slice(explode('/',$userOnlineList->getSite()),1,1)); ?>
                 <?php if ($moduleKey != ''): ?>
-                    <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
                     <?php $module = $modulesMapper->getModulesByKey($moduleKey, $this->getTranslator()->getLocale()); ?>
                     <?php $moduleName = $module->getName() ?>
                 <?php else: ?>

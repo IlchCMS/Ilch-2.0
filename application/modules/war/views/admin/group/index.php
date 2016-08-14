@@ -10,7 +10,7 @@
 <?php if ($this->get('groups') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField()?>
+        <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <colgroup>
@@ -19,7 +19,7 @@
                     <col class="icon_width">
                     <col class="col-lg-2">
                     <col class="col-lg-1">
-                    <col />
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
@@ -34,7 +34,7 @@
                 <tbody>
                     <?php foreach ($this->get('groups') as $group): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_groups[]" value="<?=$group->getId()?>" /></td>
+                            <td><input type="checkbox" name="check_groups[]" value="<?=$group->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $group->getId()]) ?></td>
                             <td><?=$group->getGroupName() ?></td>

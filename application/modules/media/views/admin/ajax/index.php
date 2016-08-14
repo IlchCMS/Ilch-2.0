@@ -52,7 +52,7 @@
     <script>
     $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('tab-basic','src', '<?=$this->getBaseUrl()?>'+$(this).data('url'));
+        dialog.setValueOf('tab-basic','src', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         window.top.$('#mediaModal').modal('hide');
     });
     </script>
@@ -62,7 +62,7 @@
     <script>
     $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('tab-adv','file', '<?=$this->getBaseUrl()?>'+$(this).data('url'));
+        dialog.setValueOf('tab-adv','file', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         dialog.setValueOf('tab-adv','alt', $(this).data('alt'));
         window.top.$('#mediaModal').modal('hide');
     });
@@ -73,7 +73,7 @@
     <script>
     $(".image").click(function() {
         var dialog = window.top.CKEDITOR.dialog.getCurrent();
-        dialog.setValueOf('tab-mov','video', '<?=$this->getBaseUrl()?>'+$(this).data('url'));
+        dialog.setValueOf('tab-mov','video', '<?=$this->getBaseUrl() ?>'+$(this).data('url'));
         window.top.$('#mediaModal').modal('hide');
     });
     </script>

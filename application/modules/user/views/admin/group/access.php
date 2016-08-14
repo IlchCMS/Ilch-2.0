@@ -40,7 +40,7 @@
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <colgroup>
-                        <col class="col-lg-9">
+                        <col>
                         <col class="col-lg-1">
                         <col class="col-lg-1">
                         <col class="col-lg-1">
@@ -119,7 +119,7 @@
                 </table>
             </div>
         <?php endforeach; ?>
-        <?=$this->getSaveBar()?>
+        <?=$this->getSaveBar() ?>
     <?php endif; ?>
 </form>
 

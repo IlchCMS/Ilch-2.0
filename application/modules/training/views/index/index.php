@@ -1,11 +1,11 @@
-<?php $entrantsMapper = new Modules\Training\Mappers\Entrants(); ?>
+<?php $entrantsMapper = $this->get('entrantsMapper'); ?>
 
 <legend><?=$this->getTrans('menuTraining') ?></legend>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
             <col class="col-lg-3">
-            <col class="col-lg-5">
+            <col>
             <col class="col-lg-3">
             <col class="col-lg-1">
         </colgroup>

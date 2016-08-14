@@ -72,6 +72,6 @@
 <?php else: ?>
     <div class="center-block"><p><h4 class="text-center"><?=$this->getTrans('alreadyLoggedIn') ?></h4></p></div>
     <div class="row text-center">
-        <a class="btn btn-default" href="<?=$this->getUrl()?>"><?=$this->getTrans('back') ?></a>
+        <a class="btn btn-default" href="<?=$this->getUrl() ?>"><?=$this->getTrans('back') ?></a>
     </div>
 <?php endif; ?>

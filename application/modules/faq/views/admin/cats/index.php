@@ -1,6 +1,4 @@
-<?php
-$faqMapper = new Modules\Faq\Mappers\Faq();
-?>
+<?php $faqMapper = $this->get('faqMapper'); ?>
 
 <legend><?=$this->getTrans('menuCats') ?></legend>
 <?php if ($this->get('cats') != ''): ?>
@@ -9,11 +7,11 @@ $faqMapper = new Modules\Faq\Mappers\Faq();
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>

@@ -3,8 +3,8 @@
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="col-lg-2" />
-                <col class="col-lg-10" />
+                <col class="col-lg-2">
+                <col>
             </colgroup>
             <thead>
                 <tr>
@@ -25,7 +25,7 @@
                         <td>
                             <?=$smallIcon.$content['name'] ?>
                             <br />
-                            <small><?=$this->getTrans('author')?>: <?=$module->getAuthor() ?></small>
+                            <small><?=$this->getTrans('author') ?>: <?=$module->getAuthor() ?></small>
                             <br /><br />
                             <a href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>">
                                 <?=$this->getTrans('installModule') ?>

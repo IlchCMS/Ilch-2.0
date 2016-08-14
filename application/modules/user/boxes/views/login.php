@@ -17,7 +17,7 @@
     </a>
 <?php else: ?>
     <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="form-horizontal" method="post">
-        <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl')?>" />
+        <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl') ?>" />
         <?php
         echo $this->getTokenField();
         $errors = $this->get('errors');

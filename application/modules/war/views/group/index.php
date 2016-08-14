@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-xs-12 col-md-9 section-box">
                         <h4>
-                            <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()])?>"><?=$group->getGroupName() ?></a>
+                            <a href="<?=$this->getUrl(['controller' => 'group', 'action' => 'show', 'id' => $group->getId()]) ?>"><?=$group->getGroupName() ?></a>
                         </h4>
                         <p>...</p>
                         <hr />

@@ -9,7 +9,7 @@
         <colgroup>
             <col class="col-lg-3">
             <col class="col-lg-2">
-            <col />
+            <col>
         </colgroup>
         <tr>
             <td><?=$this->getTrans('from'); ?>: <?=$this->escape($entry->getName()) ?></td>

@@ -223,7 +223,7 @@
                 </select>
             </div>
         </div>
-        <?=$this->getSaveBar()?>
+        <?=$this->getSaveBar() ?>
     </form>
 <?php else: ?>
     <?=$this->getTranslator()->trans('firstGroupEnemy') ?>

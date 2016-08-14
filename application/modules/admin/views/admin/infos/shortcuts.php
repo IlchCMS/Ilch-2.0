@@ -3,7 +3,7 @@
     <table class="table table-hover table-striped">
         <colgroup>
             <col class="col-lg-2">
-            <col />
+            <col>
         </colgroup>
         <thead>
             <tr>

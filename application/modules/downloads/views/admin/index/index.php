@@ -165,12 +165,12 @@ $(document).ready (
             });
 
             if (options == '' && ($(this).val() == '1')) {
-                alert(<?=json_encode($this->getTrans('missingCat'))?>);
+                alert(<?=json_encode($this->getTrans('missingCat')) ?>);
                 $(this).val(0);
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat')?></label>\n\
+            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('cat') ?></label>\n\
                         <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
@@ -182,7 +182,7 @@ $(document).ready (
 
         $('#downloadsForm').on('click', '#menuItemAdd', function () {
                     if ($('#title').val() == '') {
-                        alert(<?=json_encode($this->getTrans('missingTitle'))?>);
+                        alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                         return;
                     }
 
@@ -224,8 +224,8 @@ $(document).ready (
         );
 
         $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit')?>">\n\
-                               <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel')?>">');
+           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
+                               <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
            $('#title').val($(this).parent().find('.hidden_title').val());
            $('#desc').val($(this).parent().find('.hidden_desc').val());
            $('#type').val($(this).parent().find('.hidden_type').val());
@@ -235,7 +235,7 @@ $(document).ready (
 
         $('#downloadsForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
-                    alert(<?=json_encode($this->getTrans('missingTitle'))?>);
+                    alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                     return;
                 }
 

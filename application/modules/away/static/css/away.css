@@ -1,0 +1,26 @@
+.agenda {
+    width: 140px;
+}
+.agenda-arrow {
+    float:left;
+    width: 45px;
+    text-align: center;
+    font-weight: bold;
+    line-height: 36px;
+    color: #000;
+}
+.dayofmonth {
+    width: 40px;
+    font-size: 36px;
+    line-height: 36px;
+    float: left;
+    text-align: right;
+    margin-right: 10px; 
+}
+.shortdate {
+    font-size: 0.75em; 
+}
+.date {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}

@@ -28,5 +28,5 @@
                    value="<?=$this->escape($this->get('entriesPerPage')) ?>" />
         </div>
     </div>    
-    <?=$this->getSaveBar()?>
+    <?=$this->getSaveBar() ?>
 </form>

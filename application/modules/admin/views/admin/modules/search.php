@@ -14,8 +14,8 @@ if (empty($modules)) {
 <div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2" />
-            <col class="col-lg-10" />
+            <col class="col-lg-2">
+            <col>
         </colgroup>
         <thead>
             <tr>
@@ -30,7 +30,7 @@ if (empty($modules)) {
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $module->id]); ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($module->name) ?></a>
                         <br />
                         <small>
-                            <?=$this->getTrans('author')?>: 
+                            <?=$this->getTrans('author') ?>: 
                             <?php if ($module->link != ''): ?>
                                 <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank"><i><?=$this->escape($module->author) ?></i></a>
                             <?php else: ?>

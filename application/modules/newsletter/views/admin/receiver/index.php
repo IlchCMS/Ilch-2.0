@@ -2,8 +2,8 @@
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-2" />
-            <col />
+            <col class="col-lg-2">
+            <col>
         </colgroup>
         <thead>
             <tr>

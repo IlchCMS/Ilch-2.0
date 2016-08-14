@@ -3,7 +3,7 @@
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="col-lg-11">
+                <col>
                 <col class="col-lg-1">
             </colgroup>
             <tr>
@@ -34,7 +34,7 @@
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-11">
+            <col>
             <col class="col-lg-1">
         </colgroup>
         <tr>

@@ -5,10 +5,10 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="col" />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>

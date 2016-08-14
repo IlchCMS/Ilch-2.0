@@ -8,6 +8,7 @@ namespace Modules\Statistic\Controllers;
 
 use Modules\Statistic\Mappers\Statistic as StatisticMapper;
 use Modules\Admin\Mappers\Module as ModuleMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -143,11 +144,15 @@ class Index extends \Ilch\Controller\Frontend
     public function onlineAction()
     {
         $statisticMapper = new StatisticMapper();
+        $moduleMapper = new ModuleMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuOnline'), ['action' => 'online']);
 
+        $this->getView()->set('modulesMapper', $modulesMapper);
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('userOnlineList', $statisticMapper->getVisitsOnline());
     }
 }

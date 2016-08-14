@@ -7,13 +7,13 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
                     <col class="col-lg-2">
-                    <col />
+                    <col>
                     <?php if ($this->get('multilingual')): ?>
-                        <col />
+                        <col class="col-lg-1">
                     <?php endif; ?>
                 </colgroup>
                 <thead>

@@ -19,12 +19,12 @@
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
                             <colgroup>
-                                <col class="icon_width" />
-                                <col class="icon_width" />
-                                <col class="icon_width" />
-                                <col class="col-lg-2" />
-                                <col class="col-lg-4" />
-                                <col />
+                                <col class="icon_width">
+                                <col class="icon_width">
+                                <col class="icon_width">
+                                <col class="col-lg-2">
+                                <col class="col-lg-4">
+                                <col>
                             </colgroup>
                             <thead>
                                 <tr>
@@ -66,7 +66,7 @@
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
 // Set a variable to later display a translated message. Used in ../application/modules/admin/static/js/functions.js
-var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries'))?>;
+var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries')) ?>;
 
 <?=$this->getMedia()
         ->addActionButton($this->getUrl('user/panel/treatgallery/id/'))

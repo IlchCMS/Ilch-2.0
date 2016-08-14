@@ -74,7 +74,7 @@ if ($this->getUser()) {
                             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured"><?=$post->getAutor()->getName() ?></a>
                         </strong>
                         »
-                        <?=$date->format("d.m.Y H:i:s", true)?>
+                        <?=$date->format("d.m.Y H:i:s", true) ?>
                     </p>
                     <div class="content"><?=nl2br($this->getHtmlFromBBCode($post->getText())) ?></div>
                     <div class="signature"><?=nl2br($this->getHtmlFromBBCode($post->getAutor()->getSignature())) ?></div>

@@ -7,14 +7,14 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="col-lg-2" />
-                    <col class="col-lg-1" />
-                    <col class="col-lg-1" />
-                    <col class="col-lg-1" />				
-                    <col />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="col-lg-2">
+                    <col class="col-lg-1">
+                    <col class="col-lg-1">
+                    <col class="col-lg-1">				
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>

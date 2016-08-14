@@ -2,7 +2,7 @@
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col />
+            <col>
             <col class="col-lg-2">
             <col class="col-lg-2">
         </colgroup>

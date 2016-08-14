@@ -1,7 +1,7 @@
 <?php
 $categories = $this->get('categorys');
 $faqs = $this->get('faqs');
-$faqMapper = new Modules\Faq\Mappers\Faq();
+$faqMapper = $this->get('faqMapper');
 ?>
 
 <legend><?=$this->getTrans('faqFrequentlyAskedQuestions') ?></legend>

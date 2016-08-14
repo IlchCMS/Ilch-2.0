@@ -9,8 +9,7 @@
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="col-lg-12">
-                    <col />
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>

@@ -9,7 +9,7 @@
                     <col class="icon_width">
                     <col class="col-lg-2">
                     <col class="col-lg-2">
-                    <col />
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>

@@ -291,7 +291,7 @@
             </div>
         </div>
     <?php endif; ?>
-    <?=$this->getSaveBar('updateButton')?>
+    <?=$this->getSaveBar('updateButton') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>

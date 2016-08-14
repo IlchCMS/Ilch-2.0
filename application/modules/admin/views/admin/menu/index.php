@@ -97,13 +97,13 @@ function rec($item, $menuMapper, $obj) {
                 </label>
                 <div class="col-lg-4">
                     <select class="form-control" id="type">
-                        <option value="0"><?=$this->getTrans('menu')?></option>
+                        <option value="0"><?=$this->getTrans('menu') ?></option>
                         <optgroup>
-                            <option value="1"><?=$this->getTrans('externalLinking')?></option>
-                            <option value="2"><?=$this->getTrans('siteLinking')?></option>
-                            <option value="3"><?=$this->getTrans('moduleLinking')?></option>
+                            <option value="1"><?=$this->getTrans('externalLinking') ?></option>
+                            <option value="2"><?=$this->getTrans('siteLinking') ?></option>
+                            <option value="3"><?=$this->getTrans('moduleLinking') ?></option>
                         </optgroup>
-                        <option value="4"><?=$this->getTrans('itemTypeBox')?></option>
+                        <option value="4"><?=$this->getTrans('itemTypeBox') ?></option>
                     </select>
                 </div>
             </div>
@@ -203,7 +203,7 @@ $(document).ready
 
         $('#menuForm').on('click', '#menuItemAdd', function () {
             if ($('#title').val() == '') {
-                alert(<?=json_encode($this->getTrans('missingTitle'))?>);
+                alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                 return;
             }
 
@@ -259,7 +259,7 @@ $(document).ready
 
         $('#menuForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
-                    alert(<?=json_encode($this->getTrans('missingTitle'))?>);
+                    alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                     return;
                 }
 
@@ -298,7 +298,7 @@ $(document).ready
             });
 
             if (options == '' && ($(this).val() == '1' || $(this).val() == '2' || $(this).val() == '3')) {
-                alert(<?=json_encode($this->getTrans('missingMenu'))?>);
+                alert(<?=json_encode($this->getTrans('missingMenu')) ?>);
                 $(this).val(0);
                 return;
             }

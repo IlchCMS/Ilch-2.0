@@ -20,7 +20,7 @@ $ilchNews = json_decode($ilchNewsList);
                 <table class="table table-hover table-striped">
                     <colgroup>
                         <col class="col-lg-2">
-                        <col />
+                        <col>
                     </colgroup>
                     <thead>
                         <th><?=$this->getTrans('modules') ?></th>
@@ -90,7 +90,7 @@ $ilchNews = json_decode($ilchNewsList);
                             <td>
                                 <!-- TODO: Remove this message when the update function is going live. -->
                                 Update function is not yet running in current stage of development.<br />
-                                <a href="<?=$this->getUrl(['controller' => 'update', 'action' => 'index'])?>"><?=$this->getTrans('updateNow') ?></a>
+                                <a href="<?=$this->getUrl(['controller' => 'update', 'action' => 'index']) ?>"><?=$this->getTrans('updateNow') ?></a>
                             </td>
                         </tr>
                     <?php endif; ?>
@@ -103,7 +103,7 @@ $ilchNews = json_decode($ilchNewsList);
                 <table class="table table-hover table-striped">
                     <colgroup>
                         <col class="col-lg-2">
-                        <col />
+                        <col>
                     </colgroup>
                     <thead>
                         <th><?=$this->getTrans('date') ?></th>

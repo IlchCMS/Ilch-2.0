@@ -51,6 +51,7 @@ class Cats extends \Ilch\Controller\Admin
     public function indexAction() 
     {
         $categoryMapper = new CategoryMapper();
+        $faqMapper = new FaqMapper();
         
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuFaqs'), ['controller' => 'index', 'action' => 'index'])
@@ -65,6 +66,7 @@ class Cats extends \Ilch\Controller\Admin
             $this->redirect(['action' => 'index']);
         }
 
+        $this->getView()->set('faqMapper', $faqMapper);
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 

@@ -19,7 +19,7 @@
 
 <script type="text/javascript">
 $(".image").click(function() {
-    window.top.$('#selectedImage<?=$this->getRequest()->getParam('input')?>').val($(this).data('url'));
+    window.top.$('#selectedImage<?=$this->getRequest()->getParam('input') ?>').val($(this).data('url'));
     window.top.$('#mediaModal').modal('hide');
 });
 

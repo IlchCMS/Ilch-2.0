@@ -97,7 +97,7 @@ function rec($item, $forumMapper, $obj)
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-    <?=$this->getSaveBar('saveButton')?>
+    <?=$this->getSaveBar('saveButton') ?>
 </form>
 
 <script>
@@ -198,7 +198,7 @@ $(document).ready (
 
             $('#downloadsForm').on('click', '#menuItemAdd', function () {
                     if ($('#title').val() == '') {
-                        alert(<?=json_encode($this->getTrans('missingTitle'))?>);
+                        alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                         return;
                     }
 
@@ -274,7 +274,7 @@ $(document).ready (
 
         $('#downloadsForm').on('click', '#menuItemEdit', function () {
                 if ($('#title').val() == '') {
-                    alert(<?=json_encode($this->getTrans('missingTitle'))?>);
+                    alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                     return;
                 }
 

@@ -5,11 +5,11 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="col-lg-2" />
-                    <col />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="col-lg-2">
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
@@ -23,9 +23,9 @@
                 <tbody>
                     <?php foreach ($this->get('receivers') as $receiver): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_receivers[]" value="<?=$receiver->getId()?>" /></td>
-                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $receiver->getId()])?></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $receiver->getId()])?></td>
+                            <td><input type="checkbox" name="check_receivers[]" value="<?=$receiver->getId() ?>" /></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $receiver->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $receiver->getId()]) ?></td>
                             <td><?=$this->escape($receiver->getName()) ?></td>
                             <td><?=$this->escape($receiver->getEmail()) ?></td>
                         </tr>

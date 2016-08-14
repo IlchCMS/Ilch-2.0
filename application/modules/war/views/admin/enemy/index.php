@@ -10,7 +10,7 @@
 <?php if ($this->get('enemy') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField()?>
+        <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <colgroup>
@@ -21,7 +21,7 @@
                     <col class="col-lg-1">
                     <col class="col-lg-2">
                     <col class="col-lg-2">
-                    <col />
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
@@ -39,7 +39,7 @@
                     <?php foreach ($this->get('enemy') as $enemy): ?>
                         <tr>
                             <td>
-                                <input type="checkbox" name="check_enemy[]" value="<?=$enemy->getId()?>" />
+                                <input type="checkbox" name="check_enemy[]" value="<?=$enemy->getId() ?>" />
                             </td>
                             <td>
                                 <?=$this->getEditIcon(['action' => 'treat', 'id' => $enemy->getId()]) ?>

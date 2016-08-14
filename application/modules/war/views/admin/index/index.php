@@ -34,48 +34,51 @@
     </div>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField()?>
-        <table class="table table-striped table-hover table-responsive">
-            <colgroup>
-                <col class="icon_width">
-                <col class="icon_width">
-                <col class="icon_width">
-                <col class="col-lg-2">
-                <col class="col-lg-2">
-                <col class="col-lg-4">
-                <col />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_war') ?></th>
-                    <th></th>
-                    <th></th>
-                    <th><?=$this->getTrans('enemyName') ?></th>
-                    <th><?=$this->getTrans('groupName') ?></th>
-                    <th><?=$this->getTrans('nextWarTime') ?></th>
-                    <th><?=$this->getTrans('warStatus') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($this->get('war') as $war): ?>
+        <?=$this->getTokenField() ?>
+        <div class="table-responsive">
+            
+            <table class="table table-striped table-hover">
+                <colgroup>
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="col-lg-2">
+                    <col class="col-lg-2">
+                    <col class="col-lg-4">
+                    <col>
+                </colgroup>
+                <thead>
                     <tr>
-                        <td><input type="checkbox" name="check_war[]" value="<?=$war->getId() ?>" /></td>
-                        <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
-                        <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
-                        <td><?=$war->getWarEnemy() ?></td>
-                        <td><?=$war->getWarGroup() ?></td>
-                        <td><?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?></td>
-                        <td>
-                            <?php if ($war->getWarStatus() == '1'): ?>
-                                <?=$this->getTrans('warStatusOpen') ?>
-                            <?php elseif ($war->getWarStatus() == '2'): ?>
-                                <?=$this->getTrans('warStatusClose') ?>
-                            <?php endif; ?>
-                        </td>
+                        <th><?=$this->getCheckAllCheckbox('check_war') ?></th>
+                        <th></th>
+                        <th></th>
+                        <th><?=$this->getTrans('enemyName') ?></th>
+                        <th><?=$this->getTrans('groupName') ?></th>
+                        <th><?=$this->getTrans('nextWarTime') ?></th>
+                        <th><?=$this->getTrans('warStatus') ?></th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->get('war') as $war): ?>
+                        <tr>
+                            <td><input type="checkbox" name="check_war[]" value="<?=$war->getId() ?>" /></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
+                            <td><?=$war->getWarEnemy() ?></td>
+                            <td><?=$war->getWarGroup() ?></td>
+                            <td><?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?></td>
+                            <td>
+                                <?php if ($war->getWarStatus() == '1'): ?>
+                                    <?=$this->getTrans('warStatusOpen') ?>
+                                <?php elseif ($war->getWarStatus() == '2'): ?>
+                                    <?=$this->getTrans('warStatusClose') ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
         <?=$this->get('pagination')->getHtml($this, []) ?>
         <?=$this->getListBar(['delete' => 'delete']) ?>
     </form>

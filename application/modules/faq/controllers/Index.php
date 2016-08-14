@@ -48,6 +48,7 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
+        $this->getView()->set('faqMapper', $faqMapper);
         $this->getView()->set('faqs', $faqs);
         $this->getView()->set('categorys', $categoryMapper->getCategories());
     }

@@ -11,7 +11,7 @@
                     <col class="col-lg-1">
                     <col class="col-lg-2">
                     <col class="col-lg-2">
-                    <col />
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>

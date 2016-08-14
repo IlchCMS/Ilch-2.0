@@ -15,10 +15,12 @@ class Index extends \Ilch\Controller\Frontend
     public function indexAction()
     {
         $trainingMapper = new TrainingMapper();
+        $entrantsMapper = new EntrantsMapper();
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuTraining'), ['action' => 'index']);
 
+        $this->getView()->set('entrantsMapper', $entrantsMapper);
         $this->getView()->set('training', $trainingMapper->getTraining());
     }
 

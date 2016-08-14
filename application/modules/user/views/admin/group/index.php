@@ -4,11 +4,11 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" >
-                    <col class="icon_width" >
-                    <col class="icon_width" >
-                    <col class="col-lg-2" />
-                    <col />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="col-lg-2">
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
@@ -28,7 +28,7 @@
                         ?>
                         <tr>
                             <td>
-                                <input type="checkbox" name="check_groups[]" value="<?=$group->getId()?>" />
+                                <input type="checkbox" name="check_groups[]" value="<?=$group->getId() ?>" />
                             </td>
                             <td>
                                 <?=$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) ?>

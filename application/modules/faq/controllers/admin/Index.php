@@ -50,6 +50,7 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        $categoryMapper = new CategoryMapper();
         $faqMapper = new FaqMapper();
 
         $this->getLayout()->getAdminHmenu()
@@ -61,6 +62,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('faqs', $faqMapper->getFaqs());
     }
 

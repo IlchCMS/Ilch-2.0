@@ -5,42 +5,14 @@ if ($this->getUser()) {
 }
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/away.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
-
-<style>
-.agenda {
-    width: 140px;
-}
-.agenda-arrow {
-    float:left;
-    width: 45px;
-    text-align: center;
-    font-weight: bold;
-    line-height: 36px;
-    color: #000;
-}
-.dayofmonth {
-    width: 40px;
-    font-size: 36px;
-    line-height: 36px;
-    float: left;
-    text-align: right;
-    margin-right: 10px; 
-}
-.shortdate {
-    font-size: 0.75em; 
-}
-.date {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-</style>
 
 <legend><?=$this->getTrans('menuAway') ?></legend>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="col-lg-6">
+            <col>
             <col class="col-lg-5">
             <col class="col-lg-1">
         </colgroup>

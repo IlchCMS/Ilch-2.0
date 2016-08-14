@@ -1,7 +1,7 @@
 <legend><?= $this->getTrans('manage') ?></legend>
 <?php if ($this->get('smilies') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField()?>
+        <?=$this->getTokenField() ?>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -9,7 +9,7 @@
                     <col class="icon_width">
                     <col class="icon_width">
                     <col class="col-lg-2">
-                    <col />
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>

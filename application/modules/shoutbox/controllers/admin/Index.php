@@ -7,6 +7,7 @@
 namespace Modules\Shoutbox\Controllers\Admin;
 
 use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -37,6 +38,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $shoutboxMapper = new ShoutboxMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuShoutbox'), ['action' => 'index'])
@@ -48,6 +50,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('shoutbox', $shoutboxMapper->getShoutbox());
     }
 

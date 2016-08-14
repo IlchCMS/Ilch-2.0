@@ -5,10 +5,10 @@
     <?=$this->getTokenField() ?>
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="icon_width" />
             <col class="icon_width">
-            <col class="icon_width" />
-            <col class="col-lg-12" />
+            <col class="icon_width">
+            <col class="icon_width">
+            <col>
         </colgroup>
         <thead>
             <tr>
@@ -23,7 +23,7 @@
             <?php foreach ($currencies as $currency) : ?>
             <tr>
                 <td>
-                    <input type="checkbox" name="check_currencies[]" value="<?=$currency->getId()?>" />
+                    <input type="checkbox" name="check_currencies[]" value="<?=$currency->getId() ?>" />
                 </td>
                 <td>
                     <?=$this->getEditIcon(['action' => 'treat', 'id' => $currency->getId()]) ?>

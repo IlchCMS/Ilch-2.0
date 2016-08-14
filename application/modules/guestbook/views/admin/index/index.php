@@ -7,7 +7,7 @@
                 <?=$this->getTrans('entrys') ?>
             </a>
         </li>
-        <?php if ($this->get('badge') > 0) : ?>
+        <?php if ($this->get('badge') > 0): ?>
             <li <?php if ($this->getRequest()->getParam('showsetfree')) { echo 'class="active"'; } ?>>
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index', 'showsetfree' => 1]) ?>">
                     <?=$this->getTrans('setfree') ?><span class="badge"><?=$this->get('badge') ?></span>
@@ -19,24 +19,24 @@
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="icon_width" />
+                <col class="icon_width">
                 <?php
                     if ($this->getRequest()->getParam('showsetfree')) {
-                        echo '<col class="icon_width" />';
+                        echo '<col class="icon_width">';
                     }
                 ?>
-                <col class="icon_width" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col />
+                <col class="icon_width">
+                <col class="col-lg-2">
+                <col class="col-lg-2">
+                <col>
             </colgroup>
             <thead>
                 <tr>
-                    <th><?=$this->getCheckAllCheckbox('check_entries')?></th>
+                    <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
                     <?php
-                        if ($this->getRequest()->getParam('showsetfree')) {
-                            echo '<th></th>';
-                        }
+                    if ($this->getRequest()->getParam('showsetfree')) {
+                        echo '<th></th>';
+                    }
                     ?>
                     <th></th>
                     <th><?=$this->getTrans('from') ?></th>
@@ -47,7 +47,7 @@
             <?php foreach ($this->get('entries') as $entry): ?>
                 <tbody>
                     <tr>
-                        <td><input type="checkbox" name="check_entries[]" value="<?=$entry->getId()?>" /></td>
+                        <td><input type="checkbox" name="check_entries[]" value="<?=$entry->getId() ?>" /></td>
                         <?php
                             if ($this->getRequest()->getParam('showsetfree')) {
                                 echo '<td>';
@@ -68,7 +68,7 @@
                             }
                         ?>
                         </td>
-                        <td><?=$this->getDeleteIcon($deleteArray)?></td>
+                        <td><?=$this->getDeleteIcon($deleteArray) ?></td>
                         <td>
                             <?=$this->escape($entry->getName()) ?>
                         </td>

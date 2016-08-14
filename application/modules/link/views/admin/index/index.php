@@ -5,11 +5,11 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
                     <col class="col-lg-2">
-                    <col />
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
@@ -31,7 +31,7 @@
                         }
                     ?>
                         <tr>
-                            <td><input type="checkbox" name="check_cats[]" value="<?=$category->getId()?>" /></td>
+                            <td><input type="checkbox" name="check_cats[]" value="<?=$category->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treatCat', 'id' => $category->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deleteCat', 'id' => $category->getId()]) ?></td>
                             <td><a href="<?=$this->getUrl(['action' => 'index', 'cat_id' => $category->getId()]) ?>" title="<?=$this->escape($category->getName()) ?>"><?=$this->escape($category->getName()) ?></a><br><?=$getDesc ?></td>
@@ -48,10 +48,10 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col class="icon_width" />
-                    <col />
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col class="icon_width">
+                    <col>
                 </colgroup>
                 <thead>
                     <tr>
@@ -81,7 +81,7 @@
                         }
                     ?>
                         <tr>
-                            <td><input type="checkbox" name="check_links[]" value="<?=$link->getId()?>" /></td>
+                            <td><input type="checkbox" name="check_links[]" value="<?=$link->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treatLink', 'id' => $link->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deleteLink', 'id' => $link->getId()]) ?></td>
                             <td><a href="<?=$this->escape($link->getLink()) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$banner ?></a><br /><?=$desc ?></td>

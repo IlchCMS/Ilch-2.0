@@ -1,12 +1,12 @@
+<legend>
+    <?php if ($this->get('cat') != ''): ?>
+        <?=$this->getTrans('edit') ?>
+   <?php else: ?>
+        <?=$this->getTrans('add') ?>
+    <?php endif; ?>
+</legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
-    <legend>
-        <?php if ($this->get('cat') != ''): ?>
-            <?=$this->getTrans('edit') ?>
-       <?php else: ?>
-            <?=$this->getTrans('add') ?>
-        <?php endif; ?>
-    </legend>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:

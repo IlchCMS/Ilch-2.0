@@ -76,6 +76,10 @@ a {
 #hide-menu {
     padding-left: 10px;
 }
+#content .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
 #content .form-horizontal .form-group {
     margin-left: 0px;
     margin-right: 0px;

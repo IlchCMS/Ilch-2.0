@@ -4,10 +4,10 @@
     <?=$this->getTokenField() ?>
     <table class="table table-hover">
         <colgroup>
-            <col class="icon_width" />
-            <col class="icon_width" />
-            <col class="icon_width" />
-            <col class="col" />
+            <col class="icon_width">
+            <col class="icon_width">
+            <col class="icon_width">
+            <col>
         </colgroup>
         <thead>
             <tr>

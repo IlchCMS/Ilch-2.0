@@ -1,3 +1,4 @@
+<legend><?=$this->getTrans('manage') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">
@@ -18,13 +19,13 @@
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="icon_width" />
                 <col class="icon_width">
-                <col class="icon_width" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col class="col-lg-2" />
-                <col />
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="col-lg-2">
+                <col class="col-lg-2">
+                <col class="col-lg-2">
+                <col>
             </colgroup>
             <thead>
                 <tr>
@@ -69,7 +70,7 @@
                         ?>
                         <tr>
                             <td>
-                                <input type="checkbox" name="check_users[]" value="<?=$user->getId()?>" />
+                                <input type="checkbox" name="check_users[]" value="<?=$user->getId() ?>" />
                             </td>
                             <td>
                                 <?php  if ($this->getRequest()->getParam('showsetfree')): ?>

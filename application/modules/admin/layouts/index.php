@@ -23,9 +23,9 @@
 
         <script>
         // Set a bunch of variables to later display translated messages. Used in ../application/modules/admin/static/js/functions.js
-        var enableSelectedEntries = <?=json_encode($this->getTrans('enableSelectedEntries'))?>;
-        var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries'))?>;
-        var deleteEntry = <?=json_encode($this->getTrans('deleteEntry'))?>;
+        var enableSelectedEntries = <?=json_encode($this->getTrans('enableSelectedEntries')) ?>;
+        var deleteSelectedEntries = <?=json_encode($this->getTrans('deleteSelectedEntries')) ?>;
+        var deleteEntry = <?=json_encode($this->getTrans('deleteEntry')) ?>;
         </script>
 
         <!-- SCRIPTS -->
@@ -242,9 +242,9 @@
                             <i id="search-header" class="fa fa-search search-btn"></i>
                             <div id="search-div" class="search-close">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="<?=$this->getTrans('search')?>">
+                                    <input type="text" class="form-control" placeholder="<?=$this->getTrans('search') ?>">
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default"><?=$this->getTrans('go')?></button>
+                                        <button type="button" class="btn btn-default"><?=$this->getTrans('go') ?></button>
                                     </span>
                                 </div>
                             </div>
