@@ -14,4 +14,5 @@ return [
     'validation.errors.length.tooShortAndOrTooLong' => '%s must be at least %s chars long and maximum %s chars long.',
     'validation.errors.url.noValidUrl'              => '%s must be a valid URL.',
     'validation.errors.email.noValidEmail'          => '%s must be a valid email address.',
+    'validation.errors.unique.valueExists'          => '%s `%s` is already in use.',
 ];
