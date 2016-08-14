@@ -19,10 +19,9 @@ class User extends \Ilch\Mapper
      */
     public function getUserById($id)
     {
-        $where =
-            [
+        $where = [
             'id' => (int)$id,
-            ];
+        ];
 
         $users = $this->getBy($where);
 
@@ -41,10 +40,9 @@ class User extends \Ilch\Mapper
      */
     public function getUserByName($name)
     {
-        $where =
-            [
+        $where = [
             'name' => (string)$name,
-            ];
+        ];
 
         $users = $this->getBy($where);
 
@@ -63,10 +61,9 @@ class User extends \Ilch\Mapper
      */
     public function getUserByEmail($email)
     {
-        $where =
-            [
+        $where = [
             'email' => (string)$email,
-            ];
+        ];
 
         $users = $this->getBy($where);
 
@@ -85,10 +82,9 @@ class User extends \Ilch\Mapper
      */
     public function getUserByConfirmedCode($confirmed)
     {
-        $where =
-            [
+        $where = [
             'confirmed_code' => (string)$confirmed,
-            ];
+        ];
 
         $users = $this->getBy($where);
 
@@ -106,10 +102,9 @@ class User extends \Ilch\Mapper
      */
     public function getNotConfirmedUsers()
     {
-        $where =
-            [
+        $where = [
             'confirmed' => 0,
-            ];
+        ];
 
         $users = $this->getBy($where);
 

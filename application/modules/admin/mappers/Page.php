@@ -52,9 +52,9 @@ class Page extends \Ilch\Mapper
      */
     public function getPageByIdLocale($id, $locale = '')
     {
-            $sql = 'SELECT * FROM [prefix]_pages as p
-                    INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
-                    WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
+        $sql = 'SELECT * FROM [prefix]_pages as p
+                INNER JOIN [prefix]_pages_content as pc ON p.id = pc.page_id
+                WHERE p.`id` = "'.(int) $id.'" AND pc.locale = "'.$this->db()->escape($locale).'"';
         $pageRow = $this->db()->queryRow($sql);
 
         if (empty($pageRow)) {
@@ -108,26 +108,23 @@ class Page extends \Ilch\Mapper
                         'title' => $page->getTitle(),
                         'description' => $page->getDescription(),
                         'content' => $page->getContent(),
-                        'perma' => $page->getPerma(),
+                        'perma' => $page->getPerma()
                     ])
                     ->where([
                         'page_id' => $page->getId(),
-                        'locale' => $page->getLocale(),
+                        'locale' => $page->getLocale()
                     ])
                     ->execute();
             } else {
                 $this->db()->insert('pages_content')
-                    ->values
-                    (
-                        [
-                            'page_id' => $page->getId(),
-                            'description' => $page->getDescription(),
-                            'title' => $page->getTitle(),
-                            'content' => $page->getContent(),
-                            'perma' => $page->getPerma(),
-                            'locale' => $page->getLocale()
-                        ]
-                    )
+                    ->values([
+                        'page_id' => $page->getId(),
+                        'description' => $page->getDescription(),
+                        'title' => $page->getTitle(),
+                        'content' => $page->getContent(),
+                        'perma' => $page->getPerma(),
+                        'locale' => $page->getLocale()
+                    ])
                     ->execute();
             }
         } else {
@@ -137,17 +134,14 @@ class Page extends \Ilch\Mapper
                 ->execute();
 
             $this->db()->insert('pages_content')
-                ->values
-                (
-                    [
-                        'page_id' => $pageId,
-                        'description' => $page->getDescription(),
-                        'title' => $page->getTitle(),
-                        'content' => $page->getContent(),
-                        'perma' => $page->getPerma(),
-                        'locale' => $page->getLocale()
-                    ]  
-                )
+                ->values([
+                    'page_id' => $pageId,
+                    'description' => $page->getDescription(),
+                    'title' => $page->getTitle(),
+                    'content' => $page->getContent(),
+                    'perma' => $page->getPerma(),
+                    'locale' => $page->getLocale()
+                ])
                 ->execute();
         }
     }

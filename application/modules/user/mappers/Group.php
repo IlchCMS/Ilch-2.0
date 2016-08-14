@@ -18,10 +18,9 @@ class Group extends \Ilch\Mapper
      */
     public function getGroupById($id)
     {
-        $where =
-            [
+        $where = [
             'id' => (int) $id,
-            ];
+        ];
 
         $groups = $this->getBy($where);
 
@@ -40,10 +39,9 @@ class Group extends \Ilch\Mapper
      */
     public function getGroupByName($name)
     {
-        $where =
-            [
+        $where = [
             'name' => $name,
-            ];
+        ];
 
         $groups = $this->getBy($where);
 

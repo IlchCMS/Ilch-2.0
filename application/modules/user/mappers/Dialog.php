@@ -275,11 +275,10 @@ class Dialog extends \Ilch\Mapper
      */
     public function updateRead(DialogModel $model)
     {
-        $fields =
-            [
+        $fields = [
             'cr_id' => $model->getCrId(),
             'read' => $model->getRead(),
-            ];
+        ];
 
         $this->db()->update('users_dialog_reply')
                 ->values($fields)
