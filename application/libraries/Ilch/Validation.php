@@ -24,6 +24,7 @@ class Validation
         'length'    => '\Ilch\Validation\Validators\Length',        // Parameters: min: int, max: int
         'url'       => '\Ilch\Validation\Validators\Url',           // Parameters: none
         'email'     => '\Ilch\Validation\Validators\Email',         // Parameters: none
+        'unique'    => '\Ilch\Validation\Validators\Unique',        // Parameters: table, column
     ];
 
     protected static $validators = [];
