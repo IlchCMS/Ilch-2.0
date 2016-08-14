@@ -111,6 +111,12 @@ $ilchNews = json_decode($ilchNewsList);
                         <td><?=count($this->get('partnerEntries')) ?></td>
                     </tr>
                 <?php endif; ?>
+                <?php if ($this->get('usersNotConfirmed')) : ?>
+                    <tr>
+                        <td><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>"><?=$this->get('moduleLocales')['user']->getName() ?></a></td>
+                        <td><?=count($this->get('usersNotConfirmed')) ?></td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
