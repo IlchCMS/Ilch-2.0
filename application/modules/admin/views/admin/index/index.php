@@ -41,7 +41,7 @@ $ilchNews = json_decode($ilchNewsList);
                         <?php endif; ?>
                         <?php if ($this->get('usersNotConfirmed')) : ?>
                             <tr>
-                                <td><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index')) ?>"><?=$this->get('moduleLocales')['user']->getName() ?></a></td>
+                                <td><a href="<?=$this->getUrl(array('module' => 'user', 'controller' => 'index', 'action' => 'index', 'showsetfree' => 1)) ?>"><?=$this->get('moduleLocales')['user']->getName() ?></a></td>
                                 <td><?=count($this->get('usersNotConfirmed')) ?></td>
                             </tr>
                         <?php endif; ?>

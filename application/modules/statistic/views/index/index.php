@@ -133,7 +133,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                             }
                             ?>
                             <div class="col-xs-12 col-md-6 col-lg-3">
-                                <div class="box">							
+                                <div class="box">
                                     <div class="icon" title="<?=$this->getTrans('author') ?>: <?=$modules->getAuthor() ?>" style="cursor: help;">
                                         <div class="image">
                                             <?=$smallIcon ?>
