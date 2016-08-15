@@ -40,7 +40,7 @@
                                 <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                                 <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                             <?php endif; ?>
-                            <td><a href="<?=$awards->getURL() ?>" title="<?=$awards->getEvent() ?>" target="_blank"><?=$awards->getEvent() ?></td>
+                            <td><a href="<?=$awards->getURL() ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank"><?=$this->escape($awards->getEvent()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
