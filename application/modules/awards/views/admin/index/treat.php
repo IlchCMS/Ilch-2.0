@@ -141,11 +141,6 @@ $(document).ready(function() {
     });
 });
 
-window.onload = function() {
-    document.getElementById('typ_user').onchange = disablefield;
-    document.getElementById('typ_team').onchange = disablefield;
-}
-
 function toggleStatus() {
     if ($('#typ_user').is(':checked')) {
         $('#user').removeAttr('disabled');

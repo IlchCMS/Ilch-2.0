@@ -179,7 +179,7 @@ class Index extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $model->setName($this->getRequest()->getPost('name'));
-                $model->setLink($this->getRequest()->getPost('link'));
+                $model->setLink($post['link']);
                 // Used on purpose instead of $banner to save some bytes in the database
                 $model->setBanner($this->getRequest()->getPost('banner'));
                 $model->setDesc($this->getRequest()->getPost('desc'));
