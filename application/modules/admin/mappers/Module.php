@@ -19,10 +19,21 @@ class Module extends \Ilch\Mapper
     public function getModules()
     {
         $modules = [];
-        $modulesRows = $this->db()->select('*')
-            ->from('modules')
-            ->execute()
-            ->fetchRows();
+
+        $modulesRows = $this->db()->select()
+                ->fields(['m.key', 'm.system','m.icon_small', 'm.author'])
+                ->from(['m' => 'modules'])
+                ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
+                ->where(['c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
+                ->order(['c.name' => 'ASC'])
+                ->execute()
+                ->fetchRows();
+
+        // dumpVar($modulesRows);
+        // $modulesRows = $this->db()->select('*')
+        //     ->from('modules')
+        //     ->execute()
+        //     ->fetchRows();
 
         foreach ($modulesRows as $moduleRow) {
             $moduleModel = new ModuleModel();
@@ -30,15 +41,7 @@ class Module extends \Ilch\Mapper
             $moduleModel->setAuthor($moduleRow['author']);
             $moduleModel->setSystemModule($moduleRow['system']);
             $moduleModel->setIconSmall($moduleRow['icon_small']);
-            $contentRows = $this->db()->select('*')
-                ->from('modules_content')
-                ->where(['key' => $moduleRow['key']])
-                ->execute()
-                ->fetchRows();
-
-            foreach ($contentRows as $contentRow) {
-                $moduleModel->addContent($contentRow['locale'], ['name' => $contentRow['name'], 'description' => $contentRow['description']]);
-            }
+            $moduleModel->addContent($moduleRow['locale'], ['name' => $moduleRow['name'], 'description' => $moduleRow['description']]);
 
             $modules[] = $moduleModel;
         }
@@ -54,7 +57,6 @@ class Module extends \Ilch\Mapper
         foreach (glob(APPLICATION_PATH.'/modules/*') as $modulePath) {
             $moduleModel = new ModuleModel();
             $moduleModel->setKey(basename($modulePath));
-
             $modulesDir[] = $moduleModel->getKey();
         }
         $removeModule = ['admin', 'install', 'sample', 'error'];
