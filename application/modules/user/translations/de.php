@@ -272,4 +272,33 @@ return [
     'translationAlreadyExisting' => 'Es kann nur eine Übersetzung pro Sprache angelegt werden.',
 
     'picturesPerPage' => 'Bilder pro Seite',
+
+    // Providers
+    'menuAuthProviders' => 'Authentifizierungsanbieter',
+
+    'socialMedia' => 'Social Media',
+    'socialMediaDesc' => 'Hier kannst du dein Konto mit sozialen Netzwerken verknüpfen.',
+
+    'providers.title' => 'Mit sozialen Netzwerken verbinden',
+    'providers.linkedToAccount' => 'Verbunden mit Konto %s am %s',
+    'providers.notLinked' => 'Du hast deine Konten noch nicht verbunden.',
+    'providers.unlink'  => 'Verbindung entfernen',
+    'providers.link'  => 'Verbinden',
+
+    'authProvider' => 'Authentifizierungsanbieter',
+
+    'providerName' => 'Anbieter',
+    'providerModule' => 'Modul',
+
+    'providersNoModuleSelectedOrInstalled' => 'kein Modul ausgewählt oder keines installiert',
+    'deactivateAuthProvider' => 'Authentifizierungsanbieter deaktivieren',
+    'providersModuleHelpText' => 'Modul, welches die Authentifizierung über den gewählten Anbieter ausführt.',
+    
+    'providerNotFound' => 'Der gewählte Authentifizierungsanbieter konnte nicht gefunden werden.',
+    'badRequest' => 'Ungültiger Seitenaufruf, bitte versuche es erneut.',
+    'moduleUpdated' => 'Modul erfolgreich geändert.',
+    'couldntUpdateModule' => 'Modul konnte nicht geändert werden.',
+    'invalidModule' => 'Das gewählte Modul unterstützt den gewählten Authentifizierungsanbieter nicht. Bitte wähle ein anderes.',
+    'providerDeleted' => 'Authentifizierungsanbieter wurde erfolgreich gelöscht.',
+    'providerNotDeleted' => 'Authentifizierungsanbieter konnte nicht gelöscht werden.',
 ];

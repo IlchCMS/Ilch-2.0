@@ -13,6 +13,8 @@ use Modules\User\Models\AuthToken as AuthTokenModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\User\Service\Login as LoginService;
 
+use Modules\User\Mappers\AuthProvider;
+
 class Login extends \Ilch\Controller\Frontend
 {
     public function indexAction()
@@ -84,7 +86,10 @@ class Login extends \Ilch\Controller\Frontend
             unset($_SESSION['redirect']);
         }
 
+        $authProvider = new AuthProvider();
+
         $this->getView()->setArray([
+            'providers' => $authProvider->getProviders(),
             'errors' => $errors,
             'regist_accept' => $this->getConfig()->get('regist_accept'),
             'redirectUrl' => $redirectUrl

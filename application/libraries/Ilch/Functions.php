@@ -231,3 +231,23 @@ function var_export_short_syntax($var, $indent = '')
             return var_export($var, true);
     }
 }
+
+/**
+ * Checks if the current visitor is logged in.
+ *
+ * @return boolean
+ */
+function loggedIn()
+{
+    return !is_null(\Ilch\Registry::get('user'));
+}
+
+/**
+ * Returns the currentUser or null
+ *
+ * @returns User model|null
+ */
+function currentUser()
+{
+    return \Ilch\Registry::get('user');
+}

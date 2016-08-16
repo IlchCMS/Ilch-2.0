@@ -22,7 +22,15 @@
     padding-right: 15px !important;
 }
 
-img {
+span.social-logins > a.btn.btn-link.provider-twitter {
+    color: #1DA1F2;
+}
+
+span.social-logins > a.btn.btn-link.provider-twitter:hover {
+    color: #0c85d0;
+}
+
+/*img {
     max-width: 100%;
     height: auto;
-}
+}*/
