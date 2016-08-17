@@ -153,6 +153,6 @@ class Base
      */
     public function addMessage($message, $type = 'success')
     {
-        $_SESSION['messages'][] = ['text' => $message, 'type' => $type];
+        $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
     }
 }
