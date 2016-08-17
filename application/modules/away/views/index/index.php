@@ -162,6 +162,7 @@ if ($this->getUser()) {
             <div class="col-lg-6">
                 <textarea class="form-control"
                           name="text"
+                          id="text"
                           rows="3"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
             </div>
         </div>

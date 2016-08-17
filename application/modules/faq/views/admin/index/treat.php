@@ -10,11 +10,11 @@
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="form-group">
-            <label for="cats" class="col-lg-2 control-label">
+            <label for="catId" class="col-lg-2 control-label">
                 <?=$this->getTrans('cat'); ?>:
             </label>
             <div class="col-lg-2">
-                <select class="form-control" name="catId">
+                <select class="form-control" id="catId" name="catId">
                     <?php foreach ($this->get('cats') as $model) {
                         $selected = '';
 
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="answer" class="col-lg-2 control-label">
+            <label for="ck_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('answer') ?>:
             </label>
             <div class="col-lg-10">

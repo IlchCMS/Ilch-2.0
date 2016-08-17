@@ -51,10 +51,10 @@ function rec($item, $obj, $readAccess, $i)
             <?php echo $this->getTokenField(); ?>
             <div class="form-group">
                 <label for="selectForum" class="col-lg-2 control-label">
-                    <?=$this->getTrans('selectForum') ?>:
+                    <?=$this->getTrans('selectForum') ?>
                 </label>
                 <div class="col-lg-8">
-                    <select class="form-control" name="edit">
+                    <select class="form-control" id="selectForum" name="edit">
                         <?php foreach ($forumItems as $item): ?>
                             <?php rec($item, $this, $readAccess, $i = null) ?>
                         <?php endforeach; ?>

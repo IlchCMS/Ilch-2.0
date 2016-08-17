@@ -23,7 +23,7 @@ if ($file->getFileImage() != '') {
                     <?=$this->getTokenField() ?>
                     <div class="form-group">
                         <label for="fileTitleInput" class="col-lg-2 control-label">
-                            <?=$this->getTrans('fileTitle') ?>:
+                            <?=$this->getTrans('fileTitle') ?>
                         </label>
                         <div class="col-lg-8">
                             <input type="text"
@@ -34,9 +34,8 @@ if ($file->getFileImage() != '') {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="fileImage"
-                                class="col-lg-2 control-label">
-                            <?=$this->getTrans('fileImage'); ?>:
+                        <label for="selectedImage" class="col-lg-2 control-label">
+                            <?=$this->getTrans('fileImage'); ?>
                         </label>
                         <div class="col-lg-8">
                             <div class="input-group">
@@ -52,7 +51,7 @@ if ($file->getFileImage() != '') {
                     </div>
                     <div class="form-group">
                         <label for="fileDescInput" class="col-lg-2 control-label">
-                            <?=$this->getTrans('fileDesc') ?>:
+                            <?=$this->getTrans('fileDesc') ?>
                         </label>
                         <div class="col-lg-8">
                             <textarea class="form-control"
