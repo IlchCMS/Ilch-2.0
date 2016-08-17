@@ -25,26 +25,28 @@
         </div>
     <?php endforeach; ?>
 <?php else: ?>
-    <div class="partnersslider">
-        <ul class="bxslider">
-            <?php
-            foreach ($this->get('partners') as $partner):
-                $userMapper = new Modules\User\Mappers\User();
-                $link = $userMapper->getHomepage($partner->getLink());
-                if (substr($partner->getBanner(), 0, 11) == 'application') {
-                    $banner = $this->getBaseUrl($partner->getBanner());
-                } else {
-                    $banner = $partner->getBanner();
-                }
-                ?>
-                <li>
-                    <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
-                        <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
-                    </a>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
+    <?php if (!empty($this->get('partners'))) : ?>
+        <div class="partnersslider">
+            <ul class="bxslider">
+                <?php
+                foreach ($this->get('partners') as $partner):
+                    $userMapper = new Modules\User\Mappers\User();
+                    $link = $userMapper->getHomepage($partner->getLink());
+                    if (substr($partner->getBanner(), 0, 11) == 'application') {
+                        $banner = $this->getBaseUrl($partner->getBanner());
+                    } else {
+                        $banner = $partner->getBanner();
+                    }
+                    ?>
+                    <li>
+                        <a href="<?=$link ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>" target="_blank">
+                            <img src="<?=$banner ?>" alt="<?=$partner->getName() ?>" title="<?=$partner->getName() ?>">
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 <?php endif; ?>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.js') ?>"></script>
