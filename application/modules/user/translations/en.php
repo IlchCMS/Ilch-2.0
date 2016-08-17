@@ -272,4 +272,30 @@ return [
     'translationAlreadyExisting' => 'There can only be one translation per language.',
 
     'picturesPerPage' => 'Pictures per page',
+
+    // Providers
+    'menuAuthProviders' => 'Auth providers',
+
+    'providers.title' => 'Connect authentication providers',
+    'providers.linkedToAccount' => 'Connected to account %s on %s',
+    'providers.notLinked' => 'You did not connect your accounts yet.',
+    'providers.unlink'  => 'Remove connection',
+    'providers.link'  => 'Connect',
+
+    'authProvider' => 'Authentication provider',
+
+    'providerName' => 'Provider',
+    'providerModule' => 'Module',
+
+    'providersNoModuleSelectedOrInstalled' => 'No module selected and/or installed',
+    'deactivateAuthProvider' => 'Deactivate authentication provider',
+    'providersModuleHelpText' => 'Module that handles the authentication process for the selected provider',
+    
+    'providerNotFound' => 'Could not find the selected authentication provider.',
+    'badRequest' => 'Bad request, please try again.',
+    'moduleUpdated' => 'Module updated successfully.',
+    'couldntUpdateModule' => 'Could not update module.',
+    'invalidModule' => 'The selected module does not support the selected authentication provider. Please choose a valid module.',
+    'providerDeleted' => 'Authentication provider has been removed',
+    'providerNotDeleted' => 'Could not remove authentication provider',
 ];

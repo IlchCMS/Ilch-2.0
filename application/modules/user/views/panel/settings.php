@@ -52,6 +52,15 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail media">
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'panel', 'action' => 'providers']) ?>"><?=$this->getTrans('socialMedia') ?></a></h4>
+                        <hr>
+                        <p><?=$this->getTrans('socialMediaDesc') ?></p>
+                    </div>
+                </div>
+            </div>
             <?php if ($this->get('usermenusettingslinks') != ''): ?>
                 <?php foreach ($this->get('usermenusettingslinks') as $usermenulinks): ?>
                     <div class="col-sm-6 col-md-4">

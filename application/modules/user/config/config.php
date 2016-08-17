@@ -235,7 +235,37 @@ class Config extends \Ilch\Config\Install
                 (1, "user/panel/index"),
                 (2, "user/panel/dialog"),
                 (3, "user/panel/gallery"),
-                (4, "user/panel/settings");';
+                (4, "user/panel/settings");
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers` (
+                  `key` varchar(45) NOT NULL,
+                  `name` varchar(255) NOT NULL,
+                  `icon` varchar(255) DEFAULT NULL,
+                  `module` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`key`),
+                  UNIQUE KEY `key_UNIQUE` (`key`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers_modules` (
+                  `module` varchar(255) NOT NULL,
+                  `provider` varchar(255) NOT NULL,
+                  `auth_controller` varchar(255) DEFAULT NULL,
+                  `auth_action` varchar(255) DEFAULT NULL,
+                  `unlink_controller` varchar(255) DEFAULT NULL,
+                  `unlink_action` varchar(255) DEFAULT NULL,
+                  PRIMARY KEY (`module`,`provider`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_users_auth_providers` (
+                  `user_id` int(11) NOT NULL,
+                  `provider` varchar(255) NOT NULL,
+                  `identifier` varchar(255) NOT NULL,
+                  `screen_name` varchar(255) DEFAULT NULL,
+                  `oauth_token` varchar(255) DEFAULT NULL,
+                  `oauth_token_secret` varchar(255) DEFAULT NULL,
+                  `created_at` varchar(45) DEFAULT NULL,
+                  PRIMARY KEY (`user_id`,`provider`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 
     public function getUpdate()

@@ -25,6 +25,7 @@ use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
 use Modules\User\Models\ProfileFieldContent as ProfileFieldContentModel;
 use Modules\User\Mappers\ProfileFieldsTranslation as ProfileFieldsTranslationMapper;
+use Modules\User\Mappers\AuthProvider as AuthProvider;
 
 class Panel extends BaseController
 {
@@ -381,7 +382,7 @@ class Panel extends BaseController
         }
     }
 
-    public function galleryAction() 
+    public function galleryAction()
     {
         $galleryMapper = new GalleryMapper();
         $imageMapper = new GalleryImageMapper();
@@ -552,5 +553,13 @@ class Panel extends BaseController
             $this->addMessage('deleteSuccess');
             $this->redirect(['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('gallery')]);
         }
+    }
+
+    public function providersAction()
+    {
+        $authProvider = new AuthProvider();
+        
+        $this->getView()->set('authProvider', $authProvider);
+        $this->getView()->set('providers', $authProvider->getProviders());
     }
 }

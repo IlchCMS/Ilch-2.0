@@ -52,6 +52,12 @@ class Group extends \Ilch\Controller\Admin
                 'url'  => $this->getLayout()->getUrl(['controller' => 'profilefields', 'action' => 'index'])
             ],
             [
+                'name' => 'menuAuthProviders',
+                'active' => false,
+                'icon' => 'fa fa-key',
+                'url'  => $this->getLayout()->getUrl(['controller' => 'providers', 'action' => 'index'])
+            ],
+            [
                 'name' => 'menuSettings',
                 'active' => false,
                 'icon' => 'fa fa-cogs',

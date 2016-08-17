@@ -295,7 +295,7 @@ abstract class Base
      * @param  boolean $secure
      * @return string
      */
-    public function getUrl($url = [], $route = null, $secure  = false)
+    public function getUrl($url = [], $route = null, $secure = false)
     {
         $config = \Ilch\Registry::get('config');
  
