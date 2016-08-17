@@ -15,7 +15,7 @@ $userMapper = $this->get('userMapper');
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
         ?>
             <li class="list-group-item">
-                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$article->getTitle() ?></a> - 
+                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a> - 
                 <?php if ($article->getAuthorId() != ''): ?>
                     <?php $user = $userMapper->getUserById($article->getAuthorId()); ?>
                     <?php if ($user != ''): ?>
