@@ -40,7 +40,7 @@ foreach ($layouts as $layout): ?>
                         $filename = strstr($filename,'.',true);
                         if (in_array($filename, $this->get('layouts'))): ?>
                             <span class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
-                                <i class="fa fa-check fa-lg text-success"></i>
+                                <i class="fa fa-check text-success"></i>
                             </span>
                         <?php else: ?>
                             <form method="POST" action="">
@@ -50,7 +50,7 @@ foreach ($layouts as $layout): ?>
                                         name="url"
                                         value="<?=$layout->downloadLink ?>"
                                         title="<?=$this->getTrans('layoutDownload') ?>">
-                                    <i class="fa fa-download fa-lg"></i>
+                                    <i class="fa fa-download"></i>
                                 </button>
                             </form>
                         <?php endif; ?>
@@ -58,7 +58,7 @@ foreach ($layouts as $layout): ?>
                     <div class="pull-right">
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layout->id]); ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
-                                <i class="fa fa-info fa-lg text-info"></i>
+                                <i class="fa fa-info text-info"></i>
                             </span>
                         </a>
                     </div>

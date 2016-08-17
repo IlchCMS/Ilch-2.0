@@ -10,8 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'away',
-        'author' => 'Veldscholten, Kevin',
+        'version' => '1.0',
         'icon_small' => 'fa-calendar-times-o',
+        'author' => 'Veldscholten, Kevin',
+        'link' => 'http://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Abwesenheit',

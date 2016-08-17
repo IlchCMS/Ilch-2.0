@@ -34,7 +34,7 @@
                         <div class="pull-left">
                                 <?php if ($this->get('defaultLayout') == $layout->getKey()): ?>
                                     <span class="btn btn-default disabled" title="<?=$this->getTrans('isDefault') ?>">
-                                        <i class="fa fa-check fa-lg text-success"></i>
+                                        <i class="fa fa-check text-success"></i>
                                     </span>
                                 <?php else: ?>
                                     <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('setDefault') ?>">
@@ -53,7 +53,7 @@
                                   data-toggle="modal"
                                   data-target="#infoModal<?=$layout->getKey() ?>"
                                   title="<?=$this->getTrans('info') ?>">
-                                <i class="fa fa-info fa-lg text-info"></i>
+                                <i class="fa fa-info text-info"></i>
                             </span>
                             <?php if ($this->get('defaultLayout') != $layout->getKey()): ?>
                                 <span class="btn btn-default deleteLayout"
@@ -62,7 +62,7 @@
                                       data-target="#deleteModal"
                                       data-modaltext="<?=$this->escape($this->getTrans('askIfDeleteLayout', $layout->getKey())) ?>"
                                       title="<?=$this->getTrans('delete') ?>">
-                                    <i class="fa fa-trash-o fa-lg text-danger"></i>
+                                    <i class="fa fa-trash-o text-danger"></i>
                                 </span>
                             <?php endif; ?>
                         </div>

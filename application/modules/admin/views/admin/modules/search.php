@@ -43,7 +43,7 @@ if (empty($modules)) {
                         $filename = strstr($filename,'.',true);
                         if (in_array($filename, $this->get('modules'))): ?>
                             <span class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
-                                <i class="fa fa-check fa-lg text-success"></i>
+                                <i class="fa fa-check text-success"></i>
                             </span>
                             <?php else: ?>
                                 <form method="POST" action="">
@@ -53,14 +53,14 @@ if (empty($modules)) {
                                             name="url"
                                             value="<?=$module->downloadLink ?>"
                                             title="<?=$this->getTrans('moduleDownload') ?>">
-                                        <i class="fa fa-download fa-lg"></i>
+                                        <i class="fa fa-download"></i>
                                     </button>
                                 </form>
                             <?php endif; ?>
 
                             <a href="<?=$this->getUrl(['action' => 'show', 'id' => $module->id]); ?>" title="<?=$this->getTrans('info') ?>">
                                 <span class="btn btn-default">
-                                    <i class="fa fa-info fa-lg text-info"></i>
+                                    <i class="fa fa-info text-info"></i>
                                 </span>
                             </a>
                         </form>

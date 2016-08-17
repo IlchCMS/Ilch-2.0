@@ -41,6 +41,16 @@ class Module extends \Ilch\Model
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $version;
+
+    /**
+     * @var string
+     */
+    protected $link;
+
+    /**
      * Gets the key.
      *
      * @return string
@@ -173,5 +183,45 @@ class Module extends \Ilch\Model
     public function setName($name)
     {
         $this->name = (string)$name;
+    }
+
+    /**
+     * Gets the version.
+     *
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * Sets the version.
+     *
+     * @param string $version
+     */
+    public function setVersion($version)
+    {
+        $this->version = (string)$version;
+    }
+
+    /**
+     * Gets the link.
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * Sets the link.
+     *
+     * @param string $link
+     */
+    public function setLink($link)
+    {
+        $this->link = (string)$link;
     }
 }

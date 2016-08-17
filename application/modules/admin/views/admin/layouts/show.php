@@ -92,13 +92,13 @@ foreach ($layouts as $layout): ?>
             $filename = strstr($filename,'.',true);
             if (in_array($filename, $this->get('layouts'))): ?>
                 <button class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
-                    <i class="fa fa-check fa-lg text-success"></i> <?=$this->getTrans('alreadyExists') ?>
+                    <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search']) ?>">
                     <?=$this->getTokenField() ?>
                     <button type="submit" class="btn" name="url" value="<?=$layout->downloadLink ?>">
-                        <i class="fa fa-download fa-lg"></i> <?=$this->getTrans('download') ?>
+                        <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>
             <?php endif; ?>

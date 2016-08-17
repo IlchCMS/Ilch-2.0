@@ -10,9 +10,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'error',
-        'author' => 'Stantin, Thomas',
-        'system_module' => true,
         'icon_small' => 'fa-exclamation-triangle',
+        'system_module' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Error',

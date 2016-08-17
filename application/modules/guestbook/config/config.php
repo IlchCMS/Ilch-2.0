@@ -10,8 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'guestbook',
-        'author' => 'Stantin, Thomas',
+        'version' => '1.0',
         'icon_small' => 'fa-book',
+        'author' => 'Stantin, Thomas',
+        'link' => 'http://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Gästebuch',

@@ -14,29 +14,52 @@
         <tbody>
             <?php foreach ($this->get('modules') as $module):
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
-                if (substr($module->getIconSmall(), 0, 3) == 'fa-') {
-                    $smallIcon = '<i class="fa '.$module->getIconSmall().'" style="padding-right: 5px;"></i>';
-                } else {
-                    $smallIcon = '<img style="padding-right: 5px;" src="'.$this->getStaticUrl('../application/modules/'.$module->getKey().'/config/'.$module->getIconSmall()).'" />';
-                }
-
                 if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
                     <tr>
                         <td>
-                            <?=$smallIcon.$content['name'] ?>
+                            <?=$content['name'] ?>
                             <br />
-                            <small><?=$this->getTrans('author') ?>: <?=$module->getAuthor() ?></small>
+                            <small>
+                                <?=$this->getTrans('author') ?>:
+                                <?php if ($module->getLink() != ''): ?>
+                                    <a href="<?=$module->getLink() ?>" alt="<?=$this->escape($module->getAuthor()) ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank">
+                                        <i><?=$this->escape($module->getAuthor()) ?></i>
+                                    </a>
+                                <?php else: ?>
+                                    <i><?=$this->escape($module->getAuthor()) ?></i>
+                                <?php endif; ?>
+                            </small>
                             <br /><br />
-                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('administrate') ?></a>
+                            <a href="<?=$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']) ?>" class="btn btn-default" title="<?=$this->getTrans('administrate') ?>">
+                                <i class="fa fa-pencil text-success"></i>
+                            </a>
+                            <span class="btn btn-default"
+                                  data-toggle="modal"
+                                  data-target="#infoModal<?=$module->getKey() ?>"
+                                  title="<?=$this->getTrans('info') ?>">
+                                <i class="fa fa-info text-info"></i>
+                            </span>
                             <?php if (!isset($config->isSystemModule)): ?>
-                                <small>
-                                    | 
-                                    <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>"><?=$this->getTrans('uninstall') ?></a>
-                                </small>
+                                <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('uninstall') ?>">
+                                   <i class="fa fa-trash-o text-warning"></i>
+                                </a>
                             <?php endif; ?>
                         </td>
                         <td><?=$content['description'] ?></td>
                     </tr>
+
+                    <?php
+                    if ($module->getLink() != '') {
+                        $author = '<a href="'.$module->getLink().'" alt="'.$this->escape($module->getAuthor()).'" title="'.$this->escape($module->getAuthor()).'" target="_blank">'.$this->escape($module->getAuthor()).'</a>';
+                    } else {
+                        $author = $this->escape($module->getAuthor());
+                    }
+                    $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$content['name'].'<br />
+                                   <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
+                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
+                                   <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
+                    ?>
+                    <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </tbody>

@@ -10,8 +10,8 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'media',
-        'system_module' => true,
         'icon_small' => 'fa-th',
+        'system_module' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Medien',
@@ -35,12 +35,6 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('media_ext_file', 'zip rar gz tar iso dmg doc docx rtf pdf xls xlsx txt csv html xhtml psd sql log fla xml ade adp mdb accdb ppt pptx odt ots ott odb odg otp otg odf ods odp css ai');
     }
 
-    public function uninstall()
-    {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_media`');
-        $this->db()->queryMulti('DROP TABLE `[prefix]_media_cats`');
-    }
-    
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_media` (

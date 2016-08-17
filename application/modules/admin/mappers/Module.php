@@ -20,7 +20,7 @@ class Module extends \Ilch\Mapper
         $modules = [];
 
         $modulesRows = $this->db()->select()
-            ->fields(['m.key', 'm.system', 'm.icon_small', 'm.author'])
+            ->fields(['m.key', 'm.system', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
             ->from(['m' => 'modules'])
             ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
             ->where(['c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
@@ -31,9 +31,11 @@ class Module extends \Ilch\Mapper
         foreach ($modulesRows as $moduleRow) {
             $moduleModel = new ModuleModel();
             $moduleModel->setKey($moduleRow['key']);
-            $moduleModel->setAuthor($moduleRow['author']);
             $moduleModel->setSystemModule($moduleRow['system']);
+            $moduleModel->setVersion($moduleRow['version']);
+            $moduleModel->setLink($moduleRow['link']);
             $moduleModel->setIconSmall($moduleRow['icon_small']);
+            $moduleModel->setAuthor($moduleRow['author']);
             $moduleModel->addContent($moduleRow['locale'], ['name' => $moduleRow['name'], 'description' => $moduleRow['description']]);
 
             $modules[] = $moduleModel;
@@ -75,11 +77,14 @@ class Module extends \Ilch\Mapper
 
             $moduleModel->setKey($config->config['key']);
             $moduleModel->setIconSmall($config->config['icon_small']);
+            $moduleModel->setVersion($config->config['version']);
 
+            if (isset($config->config['link'])) {
+                $moduleModel->setLink($config->config['link']);
+            }
             if (isset($config->config['author'])) {
                 $moduleModel->setAuthor($config->config['author']);
             }
-
             if (isset($config->config['languages'])) {
                 foreach ($config->config['languages'] as $key => $value) {
                     $moduleModel->addContent($key, $value);
@@ -143,13 +148,24 @@ class Module extends \Ilch\Mapper
     public function save(ModuleModel $module)
     {
         $moduleId = $this->db()->insert('modules')
-            ->values(['key' => $module->getKey(), 'system' => (int) $module->getSystemModule(),
-                'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor(), ])
+            ->values([
+                'key' => $module->getKey(),
+                'system' => (int) $module->getSystemModule(),
+                'icon_small' => $module->getIconSmall(),
+                'version' => $module->getVersion(),
+                'link' => $module->getLink(),
+                'author' => $module->getAuthor()
+            ])
             ->execute();
 
         foreach ($module->getContent() as $key => $value) {
             $this->db()->insert('modules_content')
-                ->values(['key' => $module->getKey(), 'locale' => $key, 'name' => $value['name'], 'description' => $value['description']])
+                ->values([
+                    'key' => $module->getKey(),
+                    'locale' => $key,
+                    'name' => $value['name'],
+                    'description' => $value['description']
+                ])
                 ->execute();
         }
 

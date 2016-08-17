@@ -10,8 +10,10 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'author' => 'Veldscholten, Kevin',
+        'version' => '1.0',
         'icon_small' => 'fa-ticket',
+        'author' => 'Veldscholten, Kevin',
+        'link' => 'http://ilch.de',
         'languages' => [
             'de_DE' => [
                 'name' => 'Veranstaltungen',

@@ -47,6 +47,8 @@ class Config extends \Ilch\Config\Install
                   `key` VARCHAR(255) NOT NULL,
                   `system` TINYINT(1) NOT NULL DEFAULT 0,
                   `author` VARCHAR(255) NULL DEFAULT NULL,
+                  `version` VARCHAR(255) NULL DEFAULT NULL,
+                  `link` VARCHAR(255) NULL DEFAULT NULL,
                   `icon_small` VARCHAR(255) NOT NULL,
                   UNIQUE KEY `key` (`key`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
