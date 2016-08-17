@@ -39,7 +39,7 @@ if ($this->get('article') != '') {
                     <?php if ($this->get('article') != '' and $this->get('article')->getCatId() == $cats->getId()): ?>
                         <?php $selected = 'selected="selected"'; ?>
                     <?php endif; ?>
-                    <option <?=$selected ?> value="<?=$cats->getId() ?>"><?=$cats->getName() ?></option>
+                    <option <?=$selected ?> value="<?=$cats->getId() ?>"><?=$this->escape($cats->getName()) ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

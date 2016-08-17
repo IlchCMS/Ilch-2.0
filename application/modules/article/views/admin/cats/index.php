@@ -24,7 +24,7 @@
                             <td><input type="checkbox" name="check_cats[]" value="<?=$cat->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
-                            <td><?=$cat->getName() ?></td>
+                            <td><?=$this->escape($cat->getName()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -43,8 +43,8 @@
                             <td><input type="checkbox" name="check_articles[]" value="<?=$article->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $article->getId()]) ?></td>
-                            <td><a target="_blank" href="<?=$this->getUrl().'/index.php/article/cats/show/id/'.$articlesCats->getId() ?>"><?=$articlesCats->getName() ?></a></td>
-                            <td><a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($article->getPerma()) ?>"><?=$article->getTitle() ?></a></td>
+                            <td><a target="_blank" href="<?=$this->getUrl().'/index.php/article/cats/show/id/'.$articlesCats->getId() ?>"><?=$this->escape($articlesCats->getName()) ?></a></td>
+                            <td><a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($article->getPerma()) ?>"><?=$this->escape($article->getTitle()) ?></a></td>
                             <?php if ($this->get('multilingual')): ?>
                                 <td class="text-right">
                                     <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
