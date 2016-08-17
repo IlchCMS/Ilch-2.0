@@ -43,12 +43,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="answer" class="col-lg-2 control-label">
+            <label for="ck_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('answer') ?>:
             </label>
             <div class="col-lg-10">
                 <textarea class="form-control ckeditor"
-                          id="answer"
+                          id="ck_1"
                           name="answer"
                           cols="45"
                           rows="3"
