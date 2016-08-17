@@ -37,4 +37,5 @@ return [
     'missingName' => 'No name for the category entered.',
     'categoryInUse' => 'This category cannot be deleted as it is still assigned with articles.',
     'articlePerPage' => 'Article per page',
+    'invalidArticlesPerPage' => 'Article per page is invalid.',
 ];

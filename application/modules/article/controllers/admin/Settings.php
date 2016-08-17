@@ -45,8 +45,12 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
-            $this->addMessage('saveSuccess');
+            if (!is_numeric($this->getRequest()->getPost('articlesPerPage')) or $this->getRequest()->getPost('articlesPerPage') <= 0) {
+                $this->addMessage('invalidArticlesPerPage', 'danger');
+            } else {
+                $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
+                $this->addMessage('saveSuccess');
+            }
         }
 
         $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'));
