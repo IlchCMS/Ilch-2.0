@@ -11,7 +11,7 @@
     </legend>
     <div class="form-group">
         <label for="start" class="col-lg-2 control-label">
-            <?=$this->getTrans('start') ?>:
+            <?=$this->getTrans('start') ?>
         </label>
         <div class="col-lg-2 input-group date form_datetime">
             <input type="text"
@@ -27,7 +27,7 @@
     </div>
     <div class="form-group">
         <label for="end" class="col-lg-2 control-label">
-            <?=$this->getTrans('end') ?>:
+            <?=$this->getTrans('end') ?>
         </label>
         <div class="col-lg-2 input-group date form_datetime">
             <input type="text"
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
-            <?=$this->getTrans('title') ?>:
+            <?=$this->getTrans('title') ?>
         </label>
         <div class="col-lg-4">
             <input type="text"
@@ -55,7 +55,7 @@
     </div>
     <div class="form-group">
         <label for="place" class="col-lg-2 control-label">
-            <?=$this->getTrans('place') ?>:
+            <?=$this->getTrans('place') ?>
         </label>
         <div class="col-lg-4">
             <input type="text"
@@ -67,7 +67,7 @@
     </div>
     <div class="form-group">
         <label for="color" class="col-lg-2 control-label">
-            <?=$this->getTrans('color') ?>:
+            <?=$this->getTrans('color') ?>
         </label>
         <div class="col-lg-2 input-group date">
             <input class="form-control color {hash:true}"
@@ -80,8 +80,8 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="text" class="col-lg-2 control-label">
-            <?=$this->getTrans('text') ?>:
+        <label for="ck_1" class="col-lg-2 control-label">
+            <?=$this->getTrans('text') ?>
         </label>
         <div class="col-lg-10">
             <textarea class="form-control ckeditor"

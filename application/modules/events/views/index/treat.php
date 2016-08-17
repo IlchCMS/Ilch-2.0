@@ -15,9 +15,7 @@
 <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="place" class="col-lg-2 control-label">
-            <?=$this->getTrans('image') ?>:
-        </label>
+        <div class="col-lg-2 control-label"><?=$this->getTrans('image') ?></div>
         <div class="col-lg-10">
             <?php if ($this->get('event') != '' AND $this->escape($this->get('event')->getImage()) != ''): ?>
                 <div class="col-lg-7 col-sm-7 col-7">
@@ -29,7 +27,7 @@
             <div class="col-lg-7">
                 <div class="row">
                     <?php if ($this->get('event') != '' AND $this->get('event')->getImage() != ''): ?>
-                        <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
+                        <label style="margin-left: 10px; margin-top: 10px;">
                             <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('deleteImage') ?>
                         </label>
                     <?php endif; ?>
@@ -115,7 +113,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="text" class="col-lg-2 control-label">
+        <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-10">
