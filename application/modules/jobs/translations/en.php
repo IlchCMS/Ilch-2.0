@@ -21,4 +21,6 @@ return [
     'jobs' => 'Jobs',
     'apply' => 'Apply',
     'applyAs' => 'Apply as',
+    'hide' => 'hide',
+    'show' => 'show',
 ];
