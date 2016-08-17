@@ -19,7 +19,16 @@
                         <td>
                             <?=$content['name'] ?>
                             <br />
-                            <small><?=$this->getTrans('author') ?>: <?=$module->getAuthor() ?></small>
+                            <small>
+                                <?=$this->getTrans('author') ?>:
+                                <?php if ($module->getLink() != ''): ?>
+                                    <a href="<?=$module->getLink() ?>" alt="<?=$this->escape($module->getAuthor()) ?>" title="<?=$this->escape($module->getAuthor()) ?>" target="_blank">
+                                        <i><?=$this->escape($module->getAuthor()) ?></i>
+                                    </a>
+                                <?php else: ?>
+                                    <i><?=$this->escape($module->getAuthor()) ?></i>
+                                <?php endif; ?>
+                            </small>
                             <br /><br />
                             <a href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('installModule') ?>">
                                 <i class="fa fa-save"></i>
