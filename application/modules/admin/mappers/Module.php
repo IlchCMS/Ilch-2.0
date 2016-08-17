@@ -1,7 +1,6 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Modules\Admin\Mappers;
@@ -21,19 +20,13 @@ class Module extends \Ilch\Mapper
         $modules = [];
 
         $modulesRows = $this->db()->select()
-                ->fields(['m.key', 'm.system','m.icon_small', 'm.author'])
-                ->from(['m' => 'modules'])
-                ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
-                ->where(['c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
-                ->order(['c.name' => 'ASC'])
-                ->execute()
-                ->fetchRows();
-
-        // dumpVar($modulesRows);
-        // $modulesRows = $this->db()->select('*')
-        //     ->from('modules')
-        //     ->execute()
-        //     ->fetchRows();
+            ->fields(['m.key', 'm.system', 'm.icon_small', 'm.author'])
+            ->from(['m' => 'modules'])
+            ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
+            ->where(['c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
+            ->order(['c.name' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         foreach ($modulesRows as $moduleRow) {
             $moduleModel = new ModuleModel();
@@ -72,7 +65,7 @@ class Module extends \Ilch\Mapper
         $modulesNotInstalled = array_diff($modulesDir, $modulesDB);
 
         if (empty($modulesNotInstalled)) {
-            return null;
+            return;
         }
 
         foreach ($modulesNotInstalled as $module) {
@@ -114,7 +107,7 @@ class Module extends \Ilch\Mapper
             ->fetchAssoc();
 
         if (empty($modulesRows)) {
-            return null;
+            return;
         }
 
         $modulesModel = new ModuleModel();
@@ -124,8 +117,7 @@ class Module extends \Ilch\Mapper
     }
 
     /**
-     * Gets an array of keys of the installed modules
-     *
+     * Gets an array of keys of the installed modules.
      */
     public function getKeysInstalledModules()
     {
@@ -145,13 +137,14 @@ class Module extends \Ilch\Mapper
      * Inserts a module model in the database.
      *
      * @param ModuleModel $module
+     *
      * @return int
      */
     public function save(ModuleModel $module)
     {
         $moduleId = $this->db()->insert('modules')
             ->values(['key' => $module->getKey(), 'system' => (int) $module->getSystemModule(),
-                'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor()])
+                'icon_small' => $module->getIconSmall(), 'author' => $module->getAuthor(), ])
             ->execute();
 
         foreach ($module->getContent() as $key => $value) {
@@ -165,7 +158,7 @@ class Module extends \Ilch\Mapper
 
     /**
      * Deletes a given module with the given key.
-     * 
+     *
      * @param string $key
      */
     public function delete($key)
