@@ -30,7 +30,7 @@ $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRe
             <figure>
                 <img class="article_image" src="<?=$this->getBaseUrl($image) ?>">
                 <?php if (!empty($imageSource)): ?>
-                    <figcaption class="article_image_source"><?=$this->getTrans('imageSource') ?>: <?=$imageSource ?></figcaption>
+                    <figcaption class="article_image_source"><?=$this->getTrans('imageSource') ?>: <?=$this->escape($imageSource) ?></figcaption>
                 <?php endif; ?>
             </figure>
         <?php endif; ?>

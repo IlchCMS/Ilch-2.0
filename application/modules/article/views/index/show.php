@@ -176,7 +176,7 @@ function rec($id, $uid, $req, $obj)
     <figure>
         <img class="article_image" src="<?=$this->getBaseUrl($image) ?>" />
         <?php if (!empty($imageSource)): ?>
-            <figcaption class="article_image_source"><?=$this->getTrans('articleImageSource') ?>: <?=$imageSource ?></figcaption>
+            <figcaption class="article_image_source"><?=$this->getTrans('articleImageSource') ?>: <?=$this->escape($imageSource) ?></figcaption>
             <br />
         <?php endif; ?>
     <figure>
