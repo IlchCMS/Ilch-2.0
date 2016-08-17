@@ -60,7 +60,7 @@ class Index extends \Ilch\Controller\Admin
         $userMapper = new \Modules\User\Mappers\User();
         $moduleLocales['user'] = $modulesMapper->getModulesByKey('user', $this->getTranslator()->getLocale());
 
-        $this->getView()->set('usersNotConfirmed', $userMapper->getNotConfirmedUsers());
+        $this->getView()->set('usersNotConfirmed', $userMapper->getUserList(['confirmed' => 0]));
 
         $this->getView()->set('moduleLocales', $moduleLocales);
     }

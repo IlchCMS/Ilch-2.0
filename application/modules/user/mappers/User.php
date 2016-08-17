@@ -96,26 +96,6 @@ class User extends \Ilch\Mapper
     }
 
     /**
-     * Returns user model of not confirmed users.
-     *
-     * @return null|\Modules\User\Models\User
-     */
-    public function getNotConfirmedUsers()
-    {
-        $where = [
-            'confirmed' => 0,
-        ];
-
-        $users = $this->getBy($where);
-
-        if (!empty($users)) {
-            return reset($users);
-        }
-
-        return null;
-    }
-
-    /**
      * Returns an array with user models found by the where clause of false if
      * none found.
      *
