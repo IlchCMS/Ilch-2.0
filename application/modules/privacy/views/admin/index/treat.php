@@ -15,7 +15,6 @@
             <?=$this->getTrans('show') ?>:
         </label>
         <div class="col-lg-4">
-
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" 
                     <?php if ($this->get('privacy') != ''): ?>
@@ -73,7 +72,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="text" class="col-lg-2 control-label">
+        <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-10">

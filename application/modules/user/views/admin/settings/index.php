@@ -33,7 +33,7 @@
     </div>
     <div id="rulesForRegist" <?php if ($this->get('regist_accept') != '1') { echo 'class="hidden"'; } ?>>
         <div class="form-group">
-            <label for="regist_rules" class="col-lg-2 control-label">
+            <label for="ck_1" class="col-lg-2 control-label">
                     <?=$this->getTrans('rulesForRegist') ?>:
             </label>
             <div class="col-lg-10">
@@ -49,7 +49,7 @@
     <div id="registAccept" <?php if ($this->get('regist_accept') != '1') { echo 'class="hidden"'; } ?>>
         <div id="confirmMail" <?php if ($this->get('regist_confirm') != '1') { echo 'class="hidden"'; } ?>>
             <div class="form-group">
-                <label for="regist_confirm_mail" class="col-lg-2 control-label">
+                <label for="ck_2" class="col-lg-2 control-label">
                     <?=$this->getTrans('mailForRegist') ?>:
                     <br /><br />
                     <div class="small">
@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="regist_confirm_mail" class="col-lg-2 control-label">
+        <label for="ck_3" class="col-lg-2 control-label">
             <?=$this->getTrans('mailForManuallyConfirm') ?>:
             <br /><br />
             <div class="small">
@@ -90,7 +90,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="password_change_mail" class="col-lg-2 control-label">
+        <label for="ck_4" class="col-lg-2 control-label">
             <?=$this->getTrans('mailForNewPassword') ?>:
             <br /><br />
             <div class="small">

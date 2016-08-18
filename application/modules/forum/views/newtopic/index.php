@@ -41,9 +41,9 @@ if ($this->getUser()) {
                 </div>
                 <?php if ($this->getUser()->isAdmin()): ?>
                     <div class="form-group">
-                        <label for="forumTypeFixed" class="col-lg-2 control-label">
+                        <div class="col-lg-2 control-label">
                             <?=$this->getTrans('forumTypeFixed') ?>:
-                        </label>
+                        </div>
                         <div class="col-lg-2">
                             <div class="radio">
                                 <label>

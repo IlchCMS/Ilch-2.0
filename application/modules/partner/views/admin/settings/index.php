@@ -25,6 +25,7 @@
             <div class="col-lg-1">
                 <input type="number"
                        class="form-control"
+                       id="boxHeight"
                        name="boxHeight"
                        min="0"
                        value="<?=$this->get('boxHeight') ?>">
@@ -38,6 +39,7 @@
             <div class="col-lg-1">
                 <input type="number"
                        class="form-control"
+                       id="sliderSpeed"
                        name="sliderSpeed"
                        min="0"
                        value="<?=$this->get('sliderSpeed') ?>">

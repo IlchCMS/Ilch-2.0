@@ -28,6 +28,7 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="name"
                    name="name"
                    placeholder="Name"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } else { echo $this->get('post')['name']; } ?>" />
@@ -40,13 +41,14 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="link"
                    name="link"
                    placeholder="http://"
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } else { echo $this->get('post')['link']; } ?>" />
         </div>
     </div>
     <div class="form-group<?=in_array('banner', $this->get('errorFields')) ? ' has-error' : '' ?>">
-        <label for="banner" class="col-lg-2 control-label">
+        <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-4">

@@ -12,9 +12,9 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="title" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('show') ?>:
-        </label>
+        </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="jobs-yes" name="show" value="1"
@@ -42,12 +42,13 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="title"
                    name="title"
                    value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getTitle()); } ?>" />
         </div>
     </div>
     <div class="form-group">
-        <label for="text" class="col-lg-2 control-label">
+        <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-10">
@@ -65,6 +66,7 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="email"
                    name="email"
                    value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } ?>" />
         </div>

@@ -16,12 +16,13 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="title"
                    name="title"
                    value="<?php if ($linkus != '') { echo $this->escape($linkus->getTitle()); } ?>" />
         </div>
     </div>
     <div class="form-group">
-        <label for="banner" class="col-lg-2 control-label">
+        <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-4">

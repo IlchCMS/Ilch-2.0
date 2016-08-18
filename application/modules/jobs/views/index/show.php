@@ -34,7 +34,7 @@ $jobs = $this->get('jobs');
                 </div>
             </label>
             <div class="col-lg-3">
-                <select class="form-control" name="title">
+                <select class="form-control" id="title" name="title">
                     <?php foreach ($jobs as $jobs): ?>
                         <option value="<?=$jobs->getTitle() ?>" <?=($this->getRequest()->getParam('id') == $jobs->getId()) ? 'selected="selected"' : '' ?>>
                             <?=$this->escape($jobs->getTitle()) ?>
