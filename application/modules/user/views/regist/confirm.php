@@ -33,8 +33,7 @@ if (empty($code) || empty($confirm)): ?>
             <i class="fa fa-check-circle text-success" title=""></i>
         </div>
         <div class="col-lg-10">
-            Ihr Benutzerkonto wurde erfolgreich freigeschaltet.<br />
-            Sie können sich jetzt mit Ihren Benutzerdaten anmelden.
+            <?=$this->getTrans('accountApproved') ?>
         </div>
     </div>
 <?php endif; ?>
