@@ -8,6 +8,7 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="enemyNameInput"
                    name="enemyName"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyName(); } ?>" />
         </div>
@@ -19,6 +20,7 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="enemyTagInput"
                    name="enemyTag"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyTag(); } ?>" />
         </div>
@@ -30,12 +32,13 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="enemyHomepageInput"
                    name="enemyHomepage"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyHomepage(); } ?>" />
         </div>
     </div>
     <div class="form-group">
-        <label for="enemyImage"
+        <label for="selectedImage"
                 class="col-lg-2 control-label">
             <?=$this->getTrans('enemyImage') ?>:
         </label>
@@ -58,6 +61,7 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="enemyContactNameInput"
                    name="enemyContactName"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyContactName(); } ?>" />
         </div>
@@ -69,6 +73,7 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="enemyContactEmailInput"
                    name="enemyContactEmail"
                    value="<?php if ($this->get('enemy') != '') { echo $this->get('enemy')->getEnemyContactEmail(); } ?>" />
         </div>

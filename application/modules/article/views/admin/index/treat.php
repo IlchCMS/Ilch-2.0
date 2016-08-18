@@ -18,7 +18,7 @@ if ($this->get('article') != '') {
     <?=$this->getTokenField(); ?>
     <div class="form-group">
         <label for="title" class="col-lg-2 control-label">
-            <?=$this->getTrans('title') ?>
+            <?=$this->getTrans('title') ?>:
         </label>
         <div class="col-lg-4">
             <input type="text"
@@ -30,7 +30,7 @@ if ($this->get('article') != '') {
     </div>
     <div class="form-group">
         <label for="cats" class="col-lg-2 control-label">
-            <?=$this->getTrans('cats') ?>
+            <?=$this->getTrans('cats') ?>:
         </label>
         <div class="col-lg-4">
             <select class="form-control" id="cats" name="cats">
@@ -55,7 +55,7 @@ if ($this->get('article') != '') {
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
         <div class="form-group">
             <label for="language" class="col-lg-2 control-label">
-                <?=$this->getTrans('language') ?>
+                <?=$this->getTrans('language') ?>:
             </label>
             <div class="col-lg-8">
                 <select class="form-control" id="language" name="language">
@@ -80,7 +80,7 @@ if ($this->get('article') != '') {
     <legend>SEO</legend>
     <div class="form-group">
         <label for="description" class="col-lg-2 control-label">
-            <?=$this->getTrans('description') ?>
+            <?=$this->getTrans('description') ?>:
         </label>
         <div class="col-lg-4">
             <textarea class="form-control" 
@@ -90,7 +90,7 @@ if ($this->get('article') != '') {
     </div>
     <div class="form-group">
         <label for="permaLink" class="col-lg-2 control-label">
-            <?=$this->getTrans('permaLink') ?>
+            <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-4">
             <?=$this->getUrl() ?>/index.php/
@@ -103,7 +103,7 @@ if ($this->get('article') != '') {
     <legend><?=$this->getTrans('options') ?></legend>
     <div class="form-group">
         <label for="selectedImage" class="col-lg-2 control-label">
-            <?=$this->getTrans('image'); ?>
+            <?=$this->getTrans('image') ?>:
         </label>
         <div class="col-lg-4">
             <div class="input-group">
@@ -118,7 +118,7 @@ if ($this->get('article') != '') {
     </div>
     <div class="form-group">
         <label for="imageSource" class="col-lg-2 control-label">
-            <?=$this->getTrans('imageSource') ?>
+            <?=$this->getTrans('imageSource') ?>:
         </label>
         <div class="col-lg-4">
             <input type="text"
@@ -129,7 +129,7 @@ if ($this->get('article') != '') {
     </div>
     <div class="form-group">
         <label for="preview" class="col-lg-2 control-label">
-            <?=$this->getTrans('preview') ?>
+            <?=$this->getTrans('preview') ?>:
         </label>
         <div class="col-lg-4">
             <a id="preview" class="btn btn-default"><?=$this->getTrans('show') ?></a>

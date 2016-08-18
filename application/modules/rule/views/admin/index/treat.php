@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="text" class="col-lg-2 control-label">
+        <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-10">

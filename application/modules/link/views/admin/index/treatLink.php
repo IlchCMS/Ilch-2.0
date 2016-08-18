@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="banner" class="col-lg-2 control-label">
+        <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
         <div class="col-lg-4">
@@ -69,17 +69,18 @@
         </label>
         <div class="col-lg-4">
             <textarea class="form-control"
+                      id="desc"
                       name="desc" 
                       cols="45" 
                       rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } else { echo $this->get('post')['desc']; } ?></textarea>
         </div>
     </div>
     <div class="form-group">
-        <label for="desc" class="col-lg-2 control-label">
-            <?=$this->getTrans('category'); ?>:
+        <label for="catId" class="col-lg-2 control-label">
+            <?=$this->getTrans('category') ?>:
         </label>
         <div class="col-lg-4">
-            <select class="form-control" name="catId">
+            <select class="form-control" id="catId" name="catId">
                 <option>-- <?=$this->getTrans('optionNoCategory') ?> --</option>
                 <?php
                 if ($this->get('cats') != '') {

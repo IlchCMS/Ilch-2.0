@@ -40,6 +40,7 @@
         </label>
         <div class="col-lg-4">
             <textarea class="form-control"
+                      id="desc"
                       name="desc"
                       cols="45"
                       rows="3"><?php if ($this->get('category') != '') { echo $this->escape($this->get('category')->getDesc()); } else { echo $this->get('post')['desc']; } ?></textarea>

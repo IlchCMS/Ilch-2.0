@@ -19,6 +19,7 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="groupNameInput"
                    name="groupName"
                    value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupName(); } ?>" />
         </div>
@@ -30,12 +31,13 @@
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
+                   id="groupTagInput"
                    name="groupTag"
                    value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupTag(); } ?>" />
         </div>
     </div>
     <div class="form-group">
-        <label for="groupImage" class="col-lg-2 control-label">
+        <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('groupImage') ?>:
         </label>
         <div class="col-lg-4">
@@ -51,7 +53,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="assignedMember" class="col-lg-2 control-label">
+        <label for="warGroup" class="col-lg-2 control-label">
                 <?=$this->getTrans('assignedMember') ?>
         </label>
         <div class="col-lg-8">

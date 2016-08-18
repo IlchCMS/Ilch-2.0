@@ -28,6 +28,7 @@ if ($history != '') {
         <div class="col-lg-2 input-group date date form_datetime">
             <input type="text"
                    class="form-control"
+                   id="date"
                    name="date"
                    value="<?php if ($history != '') { echo $date; } ?>"
                    readonly>
@@ -49,7 +50,7 @@ if ($history != '') {
         </div>
     </div>
     <div class="form-group">
-        <label for="text" class="col-lg-2 control-label">
+        <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
         <div class="col-lg-10">

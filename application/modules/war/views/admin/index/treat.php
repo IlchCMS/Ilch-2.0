@@ -47,12 +47,13 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="dtp_input1" class="col-md-2 control-label">
+            <label for="warTimeInput" class="col-md-2 control-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
             <div class="input-group date form_datetime col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="warTimeInput"
                        name="warTime"
                        size="16"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarTime(); } ?>"
@@ -69,6 +70,7 @@
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="warMapInput"
                        name="warMap"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarMaps(); } ?>" />
             </div>
@@ -80,6 +82,7 @@
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="warServerInput"
                        name="warServer"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarServer(); } ?>" />
             </div>
@@ -91,12 +94,13 @@
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="warPasswordInput"
                        name="warPassword"
                        value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarPassword(); } ?>" />
             </div>
         </div>
         <div class="form-group">
-            <label for="warXonxInput" class="col-lg-2 control-label">
+            <label for="warXonx" class="col-lg-2 control-label">
                 <?=$this->getTrans('warXonx') ?>:
             </label>
             <div class="col-lg-2">
@@ -125,7 +129,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="warGameInput" class="col-lg-2 control-label">
+            <label for="warGame" class="col-lg-2 control-label">
                 <?=$this->getTrans('warGame'); ?>:
             </label>
             <div class="col-lg-2">
@@ -154,7 +158,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="warMatchtypeInput" class="col-lg-2 control-label">
+            <label for="warMatchtype" class="col-lg-2 control-label">
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
             <div class="col-lg-2">
@@ -188,9 +192,9 @@
         <?php else: ?>
             <legend><?=$this->getTrans('warResultInfo') ?></legend>
             <div class="form-group">
-                <label for="warReportInfo" class="col-lg-2 control-label">
+                <div class="col-lg-2">
                     <?=$this->getTrans('warResultInfo') ?>:
-                </label>
+                </div>
                 <div class="col-lg-4">
                     <span><?=$this->getTrans('warResultInfoText') ?></span>
                 </div>

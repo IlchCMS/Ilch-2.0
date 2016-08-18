@@ -70,7 +70,7 @@
             <?=$this->getTrans('contactPerson') ?>:
         </label>
         <div class="col-lg-2">
-            <select class="form-control" name="contact">
+            <select class="form-control" id="contact" name="contact">
                 <?php
                 foreach ($this->get('users') as $user) {
                     $selected = '';
@@ -89,6 +89,7 @@
         </label>
         <div class="col-lg-2">
             <input type="checkbox"
+                   id="voiceServer"
                    name="voiceServer"
                    value="1"
                    onclick="showMe('voiceServerInfo', this)"
@@ -114,6 +115,7 @@
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="voiceServerIP"
                        name="voiceServerIP"
                        placeholder="IP:Port"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerIP()); } ?>" />
@@ -126,6 +128,7 @@
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="voiceServerPW"
                        name="voiceServerPW"
                        placeholder="********"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getVoiceServerPW()); } ?>" />
@@ -138,6 +141,7 @@
         </label>
         <div class="col-lg-2">
             <input type="checkbox"
+                   id="gameServer"
                    name="gameServer"
                    value="1"
                    onclick="showMe('gameServerInfo', this)"
@@ -163,6 +167,7 @@
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="gameServerIP"
                        name="gameServerIP"
                        placeholder="IP:Port"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerIP()); } ?>" />
@@ -175,6 +180,7 @@
             <div class="col-lg-4">
                 <input type="text"
                        class="form-control"
+                       id="gameServerPW"
                        name="gameServerPW"
                        placeholder="********"
                        value="<?php if ($this->get('training') != '') { echo $this->escape($this->get('training')->getGameServerPW()); } ?>" />

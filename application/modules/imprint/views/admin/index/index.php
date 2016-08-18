@@ -3,7 +3,7 @@
     <?=$this->getTokenField() ?>
     <?php if ($this->get('imprintStyle') == '0'): ?>
         <div class="form-group">
-            <label for="rank" class="col-lg-2 control-label">
+            <label for="paragraph" class="col-lg-2 control-label">
                 <?=$this->getTrans('paragraph') ?>:
             </label>
             <div class="col-lg-4">
@@ -102,7 +102,7 @@
         </div>
         <br />
         <div class="form-group">
-            <label for="disclaimer" class="col-lg-2 control-label">
+            <label for="ck_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('disclaimer') ?>:
             </label>
             <div class="col-lg-12">
@@ -264,7 +264,7 @@
         </div>
         <br />
         <div class="form-group">
-            <label for="other" class="col-lg-2 control-label">
+            <label for="ck_2" class="col-lg-2 control-label">
                 <?=$this->getTrans('other') ?>:
             </label>
             <div class="col-lg-12">
@@ -278,7 +278,7 @@
         </div>
         <br />
         <div class="form-group">
-            <label for="disclaimer" class="col-lg-2 control-label">
+            <label for="ck_3" class="col-lg-2 control-label">
                 <?=$this->getTrans('disclaimer') ?>:
             </label>
             <div class="col-lg-12">
