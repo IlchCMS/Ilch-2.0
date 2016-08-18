@@ -41,4 +41,6 @@ return [
     'commentDateTime' => 'Datum/Uhrzeit',
     'media' => 'Medien',
     'picturesPerPage' => 'Bilder pro Seite',
+    'missingTitle' => 'Es muss ein Titel angegeben werden.',
+    'missingCat' => 'Es muss zuerst eine Kategorie hinzugefügt werden.',
 ];
