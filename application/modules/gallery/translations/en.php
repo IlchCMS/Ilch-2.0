@@ -41,4 +41,6 @@ return [
     'commentDateTime' => 'Date/Time',
     'media' => 'Media',
     'picturesPerPage' => 'Pictures per page',
+    'missingTitle' => 'It is required to add a title.',
+    'missingCat' => 'It is required to add a category first.',
 ];

@@ -93,7 +93,7 @@ function rec($item, $forumMapper, $obj)
         </div>
         <div class="dyn"></div>
         <div class="col-lg-offset-3 actions">
-            <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd'); ?>">
+            <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd') ?>">
         </div>
     </div>
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
@@ -290,7 +290,7 @@ $(document).ready (
         );
 
         $('#downloadsForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');
+            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd') ?>">');
             resetBox();
         });
     }
