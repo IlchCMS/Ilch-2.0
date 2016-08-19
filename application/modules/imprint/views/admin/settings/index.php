@@ -2,9 +2,9 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="imprintStyle" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('site') ?>:
-        </label>
+        </div>
         <div class="col-lg-2">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="imprint-privat" name="imprintStyle" value="0" <?php if ($this->get('imprintStyle') == '0') { echo 'checked="checked"'; } ?> />

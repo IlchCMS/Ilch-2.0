@@ -11,11 +11,10 @@
             <legend><?=$this->getTrans('settingsSetting') ?></legend>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-
                 <div class="form-group">
-                    <label for="opt_mail" class="col-lg-3 control-label">
+                    <div class="col-lg-3 control-label">
                         <?=$this->getTrans('optMail') ?>:
-                    </label>
+                    </div>
                     <div class="col-lg-4">
                         <div class="flipswitch">
                             <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="opt_mail" value="1" <?php if ($profil->getOptMail() == '1') { echo 'checked="checked"'; } ?> />

@@ -12,9 +12,9 @@
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
                 <div class="form-group">
-                    <label for="opt_newsletter" class="col-lg-3 control-label">
+                    <div class="col-lg-3 control-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
-                    </label>
+                    </div>
                     <div class="col-lg-4">
                         <div class="flipswitch">
                             <input type="radio" class="flipswitch-input" id="newsletter_yes" name="opt_newsletter" value="1" <?php if ($countMail == '1') { echo 'checked="checked"'; } ?> />

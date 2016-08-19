@@ -11,9 +11,9 @@
         ?>
     </legend>
     <div class="form-group">
-        <label for="title" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('show') ?>:
-        </label>
+        </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" 

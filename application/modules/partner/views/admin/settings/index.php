@@ -4,9 +4,9 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="slider" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('slider') ?>:
-        </label>
+        </div>
         <div class="col-lg-2">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="slider-on" name="slider" value="1" <?php if ($this->get('slider') == '1') { echo 'checked="checked"'; } ?> />

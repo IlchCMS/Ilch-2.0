@@ -2,9 +2,9 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="guestbookSettings" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('entrySettings') ?>:
-        </label>
+        </div>
         <div class="col-lg-2">
             <div class="flipswitch">  
                 <input type="radio" class="flipswitch-input" id="setfree-yes" name="entrySettings" value="1" <?php if ($this->get('setfree') == '1') { echo 'checked="checked"'; } ?> />  
