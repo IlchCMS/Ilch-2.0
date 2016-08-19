@@ -1,9 +1,19 @@
 <legend><?=$this->getTrans('settings') ?></legend>
+<?php if ($this->get('errors') !== null): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group<?=in_array('articlesPerPage', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="articlesPerPageInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('articlePerPage') ?>:
+            <?=$this->getTrans('articlesPerPage') ?>:
         </label>
         <div class="col-lg-1">
             <input type="number"

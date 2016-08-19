@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Article\Controllers\Admin;
+use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
 {
