@@ -1,14 +1,13 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Ilch\Validation;
 
 /**
  * Validation data class
- * This is just a mapper for the data a validations receives
+ * This is just a mapper for the data a validations receives.
  */
 class Data
 {
@@ -69,8 +68,8 @@ class Data
     {
         if (isset($this->getParams()[$name])) {
             return $this->getParams()[$name];
-        } else {
-            return null;
         }
+
+        return;
     }
 }

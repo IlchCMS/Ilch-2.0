@@ -1,42 +1,33 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Ilch\Validation\Validators;
 
 /**
- * Same validation class
+ * Same validation class.
  */
 class Same extends Base
 {
     protected $errorKey = 'validation.errors.same.fieldsDontMatch';
+    protected $minParams = 1;
+    protected $maxParams = 2;
 
-    /**
-     * Runs the validation
-     * @param   Object \Ilch\Validation\Data $data
-     *     Possible Parameters:
-     *         as: the targeted field
-     *         strict: 0|1
-     * @returns Array  Validation result
-     */
     public function run()
     {
-        $data = $this->data;
+        $strict = $this->data->getParam(1);
 
-        if ((bool) $data->getParam('strict') === true) {
-            $result = $data->getValue() === $data->getInput()[$data->getParam('as')];
-        } else {
-            $result = $data->getValue() == $data->getInput()[$data->getParam('as')];
+        $result = $this->value === $this->data->getInput()[$this->data->getParam(0)];
+
+        if (is_null($strict)) {
+            $result = $this->value == $this->data->getInput()[$this->data->getParam(0)];
         }
-
-        $as = isset($this->fieldAliases[$data->getParam('as')]) ? $this->fieldAliases[$data->getParam('as')] : $data->getParam('as');
 
         return [
             'result' => $result,
-            'error_key' => $this->getErrorKey($data),
-            'error_params' => [[$as, true]]
+            'error_key' => $this->getErrorKey($this->data),
+            'error_params' => [[$this->data->getParam(0), true]],
         ];
     }
 }

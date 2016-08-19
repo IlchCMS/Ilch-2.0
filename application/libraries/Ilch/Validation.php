@@ -1,30 +1,51 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Ilch;
-
-use Ilch\Registry;
 
 use Ilch\Validation\Data;
 use Ilch\Validation\ErrorBag;
 
 /**
- * Validation class
+ * Validation class.
  */
 class Validation
 {
-
     protected static $builtInValidators = [
-        'required'  => '\Ilch\Validation\Validators\Required',      // Parameters: none
-        'same'      => '\Ilch\Validation\Validators\Same',          // Parameters: strict:0|1, as:field_name
-        'captcha'   => '\Ilch\Validation\Validators\Captcha',       // Parameters: none
-        'length'    => '\Ilch\Validation\Validators\Length',        // Parameters: min: int, max: int
-        'url'       => '\Ilch\Validation\Validators\Url',           // Parameters: none
-        'email'     => '\Ilch\Validation\Validators\Email',         // Parameters: none
-        'unique'    => '\Ilch\Validation\Validators\Unique',        // Parameters: table, column
+        // Usage: required
+        'required' => '\Ilch\Validation\Validators\Required',
+
+        // Usage: same:<field_name>[,strict]
+        'same' => '\Ilch\Validation\Validators\Same',
+
+        // Usage: captcha
+        'captcha' => '\Ilch\Validation\Validators\Captcha',
+
+        // Usage: url
+        'url' => '\Ilch\Validation\Validators\Url',
+
+        // Usage: email
+        'email' => '\Ilch\Validation\Validators\Email',
+
+        // Usage: unique:<table_name>[,<column_name>,<ignoreId>,<ignoreIdColumn>]
+        'unique' => '\Ilch\Validation\Validators\Unique',
+
+        // Usage: numeric
+        'numeric' => '\Ilch\Validation\Validators\Numeric',
+
+        // Usage: integer
+        'integer' => '\Ilch\Validation\Validators\Integer',
+
+        // Usage: size:<value>[,string]
+        'size' => '\Ilch\Validation\Validators\Size',
+
+        // Usage: min:<value>[,string]
+        'min' => '\Ilch\Validation\Validators\Min',
+
+        // Usage: max:<value>[,string]
+        'max' => '\Ilch\Validation\Validators\Max',
     ];
 
     protected static $validators = [];
@@ -43,10 +64,10 @@ class Validation
     protected $passes = true;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param Array $input An array with input
-     * @param Array $rules An array with validation rules
+     * @param array $input An array with input
+     * @param array $rules An array with validation rules
      */
     private function __construct($input, $rules, $breakChain, $autoRun)
     {
@@ -62,7 +83,7 @@ class Validation
     }
 
     /**
-     * Runs the validation
+     * Runs the validation.
      */
     public function run()
     {
@@ -70,26 +91,22 @@ class Validation
 
         foreach ($this->rules as $field => $rules) {
             // Iterating over the rules
-            foreach (explode("|", $rules) as $rule) {
+            foreach (explode('|', $rules) as $rule) {
                 // Iterating over the rules of that field
-                if (strpos($rule, ",") === false) {
+                if (strpos($rule, ':') === false) {
                     $vRule = $rule;
                     $vData = new Data($field, array_dot($this->input, $field), [], $this->input);
                 } else {
-                    $params = explode(",", $rule);
-                    $vRule = $params[0];
-                    unset($params[0]);
+                    $parts = explode(':', $rule);
+                    $vRule = $parts[0];
 
                     $vParams = [];
+                    $params = explode(',', $parts[1]);
 
                     foreach ($params as $param) {
-                        if (strpos($rule, ":") === false) {
-                            $vParams[] = trim($param);
-                        } else {
-                            $p = explode(":", $param);
-                            $vParams[trim($p[0])] = trim($p[1]);
-                        }
+                        array_push($vParams, $param);
                     }
+
                     $vData = new Data($field, array_dot($this->input, $field), $vParams, $this->input);
                 }
 
@@ -107,7 +124,7 @@ class Validation
                         if (isset($validation['error_params'])) {
                             foreach ($validation['error_params'] as $param) {
                                 if (is_array($param)) {
-                                    if ($param[1] === true) {
+                                    if (isset($param[1]) && $param[1] === true) {
                                         array_push($args, $this->getTranslator()->trans($param[0]));
                                     } else {
                                         array_push($args, $param[0]);
@@ -133,9 +150,10 @@ class Validation
     }
 
     /**
-     * Performs a validation
-     * @param String $rule An alias of an existing validator
-     * @param Object $data A Data-Object with validation data
+     * Performs a validation.
+     *
+     * @param string $rule An alias of an existing validator
+     * @param object $data A Data-Object with validation data
      */
     protected function validate($rule, $data)
     {
@@ -150,9 +168,11 @@ class Validation
     }
 
     /**
-     * Generating all the error messages
-     * @param   Object \Ilch\Translator $translator The translator instance
-     * @return Array  An array with translated error messages
+     * Generating all the error messages.
+     *
+     * @param object \Ilch\Translator $translator The translator instance
+     *
+     * @return array An array with translated error messages
      */
     public function getErrors($translator = null)
     {
@@ -160,32 +180,35 @@ class Validation
     }
 
     /**
-     * Creates a new validation instance
-     * @param   Array   $input       An array with inputs (e.g. user inputs)
-     * @param   Array   $rules       An array with validation rules
-     * @param Boolean [$breakChain = true]    Whether the validation should stop on validation errors or not
-     * @param Boolean [$autoRun    = true]    If false you have to manually run the validation
+     * Creates a new validation instance.
+     *
+     * @param array $input An array with inputs (e.g. user inputs)
+     * @param array $rules An array with validation rules
+     * @param bool [$breakChain = true]    Whether the validation should stop on validation errors or not
+     * @param bool [$autoRun    = true]    If false you have to manually run the validation
      * @returns Object  A new Validation Object
      */
     public static function create($input, $rules, $breakChain = true, $autoRun = true)
     {
-        return new Validation($input, $rules, $breakChain, $autoRun);
+        return new self($input, $rules, $breakChain, $autoRun);
     }
 
     /**
-     * Returns the validation result
-     * @return Boolean
+     * Returns the validation result.
+     *
+     * @return bool
      */
     public function isValid()
     {
         return $this->passes;
     }
 
-
     /**
-     * Checks if the specified field has a validation error
-     * @param   String  $field Field name
-     * @return Boolean
+     * Checks if the specified field has a validation error.
+     *
+     * @param string $field Field name
+     *
+     * @return bool
      */
     public function hasError($field)
     {
@@ -193,8 +216,9 @@ class Validation
     }
 
     /**
-     * Returns an array with all field names which have validation errors
-     * @return Array
+     * Returns an array with all field names which have validation errors.
+     *
+     * @return array
      */
     public function getFieldsWithError()
     {
@@ -202,9 +226,10 @@ class Validation
     }
 
     /**
-     * Adds the specified validator
-     * @param String        $alias     An alias for this validator
-     * @param Object|String $validator This must be a string pointing to a valid class or a Closure
+     * Adds the specified validator.
+     *
+     * @param string        $alias     An alias for this validator
+     * @param object|string $validator This must be a string pointing to a valid class or a Closure
      */
     public static function addValidator($alias, $validator)
     {
@@ -221,8 +246,9 @@ class Validation
     }
 
     /**
-     * Gets all validators (added and builtIn combined)
-     * @return Array All Validators known at this time during runtime
+     * Gets all validators (added and builtIn combined).
+     *
+     * @return array All Validators known at this time during runtime
      */
     public static function getValidators()
     {
