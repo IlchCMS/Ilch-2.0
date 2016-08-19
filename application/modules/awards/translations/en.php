@@ -20,5 +20,5 @@ return [
     'noAwards' => 'No Awards available',
     'awards' => 'Awards',
     'currentlyThereAre' => 'Currently, there are',
-    'invalidUserTeam' => 'User or team.',
+    'invalidUserTeam' => 'User or team',
 ];
