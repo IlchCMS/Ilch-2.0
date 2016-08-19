@@ -88,12 +88,6 @@ class Index extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->isPost()) {
-            $model = new AwardsModel();
-
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
-
             $post = [
                 'date' => new \Ilch\Date(trim($this->getRequest()->getPost('date'))),
                 'rank'  => trim($this->getRequest()->getPost('rank')),
@@ -116,6 +110,11 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
+                $model = new AwardsModel();
+
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
                 $model->setDate($post['date']);
                 $model->setRank($post['rank']);
                 $model->setEvent($this->getRequest()->getPost('event'));
