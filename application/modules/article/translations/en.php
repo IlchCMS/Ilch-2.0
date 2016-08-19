@@ -8,6 +8,7 @@ return [
     'menuArticle' => 'Article',
     'menuArchives' => 'Archive',
     'title' => 'Title',
+    'content' => 'Content',
     'language' => 'Language',
     'permaLink' => 'Permalink',
     'adress' => 'Adress',

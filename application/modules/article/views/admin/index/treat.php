@@ -14,9 +14,21 @@ if ($this->get('article') != '') {
     }
     ?>
 </legend>
+
+<?php if ($this->get('errors') !== null): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
-    <div class="form-group">
+    <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -25,10 +37,10 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getTitle()); } ?>" />
+                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('cats', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="cats" class="col-lg-2 control-label">
             <?=$this->getTrans('cats') ?>:
         </label>
@@ -44,12 +56,12 @@ if ($this->get('article') != '') {
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('content', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <div class="col-lg-offset-2 col-lg-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="content"
-                      toolbar="ilch_html"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } ?></textarea>
+                      toolbar="ilch_html"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } else { echo $this->get('post')['content']; } ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
@@ -88,7 +100,7 @@ if ($this->get('article') != '') {
                       name="description"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getDescription()); } ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('permaLink', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="permaLink" class="col-lg-2 control-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>
@@ -97,11 +109,11 @@ if ($this->get('article') != '') {
             <input type="text"
                    id="permaLink"
                    name="permaLink"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } ?>" />
+                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
         </div>
     </div>
     <legend><?=$this->getTrans('options') ?></legend>
-    <div class="form-group">
+    <div class="form-group<?=in_array('image', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:
         </label>
@@ -111,7 +123,7 @@ if ($this->get('article') != '') {
                        class="form-control"
                        id="selectedImage"
                        name="image"
-                       value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } ?>" />
+                       value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } else { echo $this->get('post')['image']; } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
