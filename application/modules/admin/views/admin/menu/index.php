@@ -303,35 +303,35 @@ $(document).ready
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label">Menü</label>\n\
+            menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
                         <div class="col-lg-4"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Adresse</label>\n\
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('address') ?></label>\n\
                                 <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
-                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Seite</label>\n\
+                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('page') ?></label>\n\
                                 <div class="col-lg-4"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$page->getTitle().'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Modul</label>\n\
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('module') ?></label>\n\
                                 <div class="col-lg-4"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label">Box</label>\n\
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('box') ?></label>\n\
                                 <div class="col-lg-4"><?='<select class="form-control" id="boxkey">';
                 foreach ($boxesDir as $moDir => $modulBoxes) { foreach ($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach ($boxes as $box) { echo '<option value="'.$box->getId().'">self_'.$box->getTitle().'</option>';} echo '</select>'; ?></div></div>');
             }
         });
 
         $('#menuForm').on('click', '#menuItemEditCancel', function() {
-            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="Menuitem hinzufügen">');
+            $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">');
             resetBox();
         });
 
         $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="Editieren">\n\
-                               <input type="button" class="btn" id="menuItemEditCancel" value="Abbrechen">');
+           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
+                               <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
            $('#title').val($(this).parent().find('.hidden_title').val());
            $('#type').val($(this).parent().find('.hidden_type').val());
            $('#id').val($(this).closest('li').attr('id'));
