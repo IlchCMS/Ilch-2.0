@@ -2,9 +2,9 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="html" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('showHtml') ?>:
-        </label>
+        </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="html-yes" name="html" value="1" <?php if ($this->get('linkus_html') == '1') { echo 'checked="checked"'; } ?> />
@@ -16,9 +16,9 @@
         </div>
     </div>
     <div class="form-group">
-            <label for="bbcode" class="col-lg-2 control-label">
-                <?=$this->getTrans('showBBBCode') ?>:
-            </label>
+        <div class="col-lg-2 control-label">
+            <?=$this->getTrans('showBBBCode') ?>:
+        </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="bbcode-yes" name="bbcode" value="1" <?php if ($this->get('linkus_bbcode') == '1') { echo 'checked="checked"'; } ?> />

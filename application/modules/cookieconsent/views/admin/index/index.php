@@ -2,9 +2,9 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="cookieConsent" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentShow') ?>:
-        </label>
+        </div>
         <div class="col-lg-2">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="cookie-consent-yes" name="cookieConsent" value="1" <?php if ($this->get('cookieConsent') == '1') { echo 'checked="checked"'; } ?> />  

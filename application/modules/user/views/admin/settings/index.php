@@ -2,9 +2,9 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="regist_accept" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('acceptUserRegis') ?>:
-        </label>
+        </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="regist-accept-yes" name="regist_accept" value="1" <?php if ($this->get('regist_accept') == '1') { echo 'checked="checked"'; } ?> />  
@@ -17,9 +17,9 @@
     </div>
     <div id="registRules" <?php if ($this->get('regist_accept') != '1') { echo 'class="hidden"'; } ?>>
         <div class="form-group">
-            <label for="regist_confirm" class="col-lg-2 control-label">
+            <div class="col-lg-2 control-label">
                 <?=$this->getTrans('confirmRegistrationEmail') ?>:
-            </label>
+            </div>
             <div class="col-lg-4">
                 <div class="flipswitch">
                     <input type="radio" class="flipswitch-input" id="regist-confirm-yes" name="regist_confirm" value="1" <?php if ($this->get('regist_confirm') == '1') { echo 'checked="checked"'; } ?> />  
@@ -162,9 +162,9 @@
 
     <legend><?=$this->getTrans('menuSettingsGallery') ?></legend>
     <div class="form-group">
-        <label for="usergallery_allowed" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('usergalleryAllowed') ?>:
-        </label>
+        </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="usergallery-allowed-yes" name="usergallery_allowed" value="1" <?php if ($this->get('usergallery_allowed') == '1') { echo 'checked="checked"'; } ?> />  

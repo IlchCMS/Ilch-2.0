@@ -8,9 +8,9 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
-        <label for="reply" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('acceptReply') ?>:
-        </label>
+        </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="reply-yes" name="reply" value="1" <?php if ($this->get('comment_reply') == '1') { echo 'checked="checked"'; } ?> />
@@ -35,9 +35,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="showAvatarInput" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('showAvatar') ?>:
-        </label>
+        </div>
         <div class="col-lg-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="avatar-yes" name="check_avatar" value="1" <?php if ($this->get('comment_avatar') == '1') { echo 'checked="checked"'; } ?> />
@@ -49,9 +49,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="showDateInput" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('showDateTime') ?>:
-        </label>
+        </div>
         <div class="col-lg-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="date-yes" name="check_date" value="1" <?php if ($this->get('comment_date') == '1') { echo 'checked="checked"'; } ?> />

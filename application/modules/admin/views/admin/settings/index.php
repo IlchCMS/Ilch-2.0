@@ -52,9 +52,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="multilingualAcp" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('multilingualAcp') ?>:
-        </label>
+        </div>
         <div class="col-lg-2">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="multilingualAcp-on" name="multilingualAcp" value="1" <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"'; } ?> />
@@ -167,9 +167,9 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="modRewrite" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('modRewrite') ?>:
-        </label>
+        </div>
         <div class="col-lg-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="modRewrite-on" name="modRewrite" value="1" <?php if ($this->get('modRewrite') == '1') { echo 'checked="checked"'; } ?> />
@@ -183,9 +183,9 @@
 
     <legend><?=$this->getTrans('backendFunctions') ?></legend>
     <div class="form-group">
-        <label for="navbarFixed" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('navbarFixed') ?>:
-        </label>
+        </div>
         <div class="col-lg-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="navbarFixed-on" name="navbarFixed" value="1" <?php if ($this->get('navbarFixed') == 'navbar-fixed-top') { echo 'checked="checked"'; } ?> />
@@ -197,9 +197,9 @@
         </div>
     </div>
     <div id="hmenuFixed" class="form-group <?php if (empty($this->get('navbarFixed'))) { echo 'hidden'; } ?>">
-        <label for="hmenuFixed" class="col-lg-2 control-label">
+        <div class="col-lg-2 control-label">
             <?=$this->getTrans('hmenuFixed') ?>:
-        </label>
+        </div>
         <div class="col-lg-8">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="hmenuFixed-on" name="hmenuFixed" value="1" <?php if ($this->get('hmenuFixed') == 'hmenu-fixed') { echo 'checked="checked"'; } ?> />
