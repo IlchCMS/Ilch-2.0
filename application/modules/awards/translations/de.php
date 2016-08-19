@@ -20,4 +20,5 @@ return [
     'noAwards' => 'Keine Auszeichnungen vorhanden',
     'awards' => 'Auszeichnungen',
     'currentlyThereAre' => 'Derzeit gibt es',
+    'invalidUserTeam' => 'Benutzer oder Team',
 ];
