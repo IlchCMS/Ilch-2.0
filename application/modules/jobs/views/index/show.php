@@ -11,6 +11,7 @@ $jobs = $this->get('jobs');
 </style>
 
 <legend><?=$this->getTrans('menuJob') ?></legend>
+
 <?php if ($job != ''): ?>
     <div class="row">
         <div class="col-lg-1">
@@ -25,9 +26,21 @@ $jobs = $this->get('jobs');
 
 <?php if ($this->getUser()): ?>
     <legend><?=$this->getTrans('apply') ?></legend>
+
+    <?php if ($this->get('errors') !== null): ?>
+        <div class="alert alert-danger" role="alert">
+            <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+            <ul>
+                <?php foreach ($this->get('errors') as $error): ?>
+                    <li><?= $error; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
     <form action="" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
-        <div class="form-group">
+        <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
             <label for="title" class="col-lg-3 control-label">
                 <div class="text-left">
                     <?=$this->getTrans('applyAs') ?>:
@@ -48,11 +61,11 @@ $jobs = $this->get('jobs');
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="text"
-                          toolbar="ilch_html"
+                          toolbar="ilch_bbcode"
                           rows="5"></textarea>
             </div>
         </div>
-        <div class="col-lg-12" align="right">
+        <div class="col-lg-12 text-right">
             <?=$this->getSaveBar('apply', 'Apply') ?>
         </div>
     </form>

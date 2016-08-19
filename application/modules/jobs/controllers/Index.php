@@ -8,6 +8,7 @@ namespace Modules\Jobs\Controllers;
 
 use Modules\Jobs\Mappers\Jobs as JobsMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -32,16 +33,24 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuJobs'), ['action' => 'index'])
                 ->add($job->getTitle(), ['action' => 'show', 'id' => $id]);
+           
+        $post = [
+            'title' => '',
+            'text' => ''
+        ];
 
         if ($this->getRequest()->getPost('saveApply')) {
-            $title = trim($this->getRequest()->getPost('title'));
-            $text = trim($this->getRequest()->getPost('text'));
-            
-            echo $title;
+            $post = [
+                'title' => trim($this->getRequest()->getPost('title')),
+                'text' => trim($this->getRequest()->getPost('text'))
+            ];
 
-            if (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } else {
+            $validation = Validation::create($post, [
+                'title' => 'required',
+                'text' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
                 $date = new \Ilch\Date();
                 $job = $jobsMapper->getJobsById($id);
                 $user = $userMapper->getUserById($this->getUser()->getId());
@@ -70,11 +79,15 @@ class Index extends \Ilch\Controller\Frontend
                 $mail->send();
 
                 $this->addMessage('sendSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('job', $job);
         $this->getView()->set('jobs', $jobsMapper->getJobs(['show' => 1]));
     }

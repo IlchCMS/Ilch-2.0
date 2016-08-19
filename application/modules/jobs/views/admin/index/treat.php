@@ -9,7 +9,19 @@
     }
     ?>
 </legend>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
+
+<?php if ($this->get('errors') !== null): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <div class="col-lg-2 control-label">
@@ -35,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -44,10 +56,10 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getTitle()); } ?>" />
+                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -56,10 +68,10 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getText()); } ?></textarea>
+                      rows="5"><?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getText()); } else { echo $this->get('post')['text']; } ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('email', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="email" class="col-lg-2 control-label">
             <?=$this->getTrans('email') ?>:
         </label>
@@ -68,7 +80,7 @@
                    class="form-control"
                    id="email"
                    name="email"
-                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } ?>" />
+                   value="<?php if ($this->get('jobs') != '') { echo $this->escape($this->get('jobs')->getEmail()); } else { echo $this->get('post')['email']; } ?>" />
         </div>
     </div>
     <?php

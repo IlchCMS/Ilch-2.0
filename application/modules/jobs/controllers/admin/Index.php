@@ -8,6 +8,7 @@ namespace Modules\Jobs\Controllers\Admin;
 
 use Modules\Jobs\Mappers\Jobs as JobsMapper;
 use Modules\Jobs\Models\Jobs as JobsModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -76,35 +77,48 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
+        $post = [
+            'title' => '',
+            'text' => '',
+            'email' => '',
+            'show' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $model = new JobsModel();
+            $post = [
+                'title' => trim($this->getRequest()->getPost('title')),
+                'text' => trim($this->getRequest()->getPost('text')),
+                'email' => trim($this->getRequest()->getPost('email')),
+                'show' => $this->getRequest()->getPost('show')
+            ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $validation = Validation::create($post, [
+                'title' => 'required',
+                'text' => 'required',
+                'email' => 'required|email'
+            ]);
 
-            $title = trim($this->getRequest()->getPost('title'));
-            $text = trim($this->getRequest()->getPost('text'));
-            $email = trim($this->getRequest()->getPost('email'));
-
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } elseif (empty($email)) {
-                $this->addMessage('missingEmail', 'danger');
-            } else {
-                $model->setTitle($title);
-                $model->setText($text);
-                $model->setEmail($email);
+            if ($validation->isValid()) {
+                $model = new JobsModel();
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                $model->setTitle($this->getRequest()->getPost('title'));
+                $model->setText($this->getRequest()->getPost('text'));
+                $model->setEmail($this->getRequest()->getPost('email'));
                 $model->setShow($this->getRequest()->getPost('show'));
                 $jobsMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function updateAction()

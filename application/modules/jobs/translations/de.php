@@ -21,6 +21,6 @@ return [
     'jobs' => 'Jobs',
     'apply' => 'Bewerben',
     'applyAs' => 'Bewerbung als',
-    'hide' => 'ausblenden',
-    'show' => 'einblenden',
+    'hide' => 'Ausblenden',
+    'show' => 'Einblenden',
 ];
