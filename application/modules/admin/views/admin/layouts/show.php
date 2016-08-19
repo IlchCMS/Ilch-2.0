@@ -18,7 +18,7 @@ foreach ($layouts as $layout): ?>
                 <div class="col-lg-12">
                     <div class="thumbnail">
                         <span data-toggle="modal" data-target="#infoModal">
-                            <img src="<?=$layout->thumb ?>" alt="<?=$this->escape($layout->name) ?>" title="<?=$this->escape($layout->name) ?>" />
+                            <img src="<?=$layout->thumb ?>" class="img-thumbnail" alt="<?=$this->escape($layout->name) ?>" title="<?=$this->escape($layout->name) ?>" />
                         </span>
                     </div>
                 </div>
@@ -104,7 +104,7 @@ foreach ($layouts as $layout): ?>
             <?php endif; ?>
         </div>
 
-        <?=$this->getDialog('infoModal', $this->escape($layout->name), '<center><img src="'.$layout->thumb.'" alt="'.$this->escape($layout->name).'" /></center>'); ?>
+        <?=$this->getDialog('infoModal', $this->escape($layout->name), '<center><img src="'.$layout->thumb.'" class="img-thumbnail" alt="'.$this->escape($layout->name).'" /></center>'); ?>
     <?php endif; ?>
 <?php endforeach; ?>
 

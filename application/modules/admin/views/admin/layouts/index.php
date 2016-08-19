@@ -26,7 +26,7 @@
                     <span data-toggle="modal"
                           data-target="#infoModal<?=$layout->getKey() ?>"
                           title="<?=$this->getTrans('info') ?>">
-                        <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" title="<?=$this->escape($layout->getName()) ?>" />
+                        <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" class="img-thumbnail" alt="<?=$this->escape($layout->getName()) ?>" title="<?=$this->escape($layout->getName()) ?>" />
                     </span>
                 </div>
                 <div class="panel-footer">
@@ -74,7 +74,7 @@
         <?php
         if ($layout->getLink() != '') {
             $screen = '<a href="'.$layout->getLink().'" alt="'.$this->escape($layout->getAuthor()).'" title="'.$this->escape($layout->getAuthor()).'" target="_blank">
-                       <img src="'.$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png').'" alt="'.$this->escape($layout->getName()).'" title="'.$this->escape($layout->getName()).'" />
+                       <img src="'.$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png').'" class="img-thumbnail" alt="'.$this->escape($layout->getName()).'" title="'.$this->escape($layout->getName()).'" />
                        </a>';
             $author = '<a href="'.$layout->getLink().'" alt="'.$this->escape($layout->getAuthor()).'" title="'.$this->escape($layout->getAuthor()).'" target="_blank">'.$this->escape($layout->getAuthor()).'</a>';
         } else {
