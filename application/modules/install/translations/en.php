@@ -1,7 +1,6 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 return [
@@ -34,6 +33,8 @@ return [
     'dbPrefix' => 'prefix',
     'dbConnectionError' => 'could not connect to database-server',
     'dbDatabaseError' => 'Please select a database',
+    'dbDatabaseDoesNotExist' => 'The specified database does not exist',
+    'dbDatabaseCouldNotConnect' => 'Could not connect to server.',
     'dbHostInfo' => 'The address of the database server most localhost',
     'dbUserInfo' => 'Your MySQL username',
     'writable' => 'writable',

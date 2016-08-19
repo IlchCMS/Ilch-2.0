@@ -1,7 +1,6 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 return [
@@ -31,9 +30,11 @@ return [
     'dbPassword' => 'Passwort',
     'selectDatabase' => 'Datenbank auswählen',
     'dbName' => 'Datenbank',
-    'dbPrefix'=> 'Prefix',
+    'dbPrefix' => 'Prefix',
     'dbConnectionError' => 'Konnte keine Verbindung zur Datenbank herstellen',
     'dbDatabaseError' => 'Bitte wähle eine Datenbank aus',
+    'dbDatabaseDoesNotExist' => 'Die gewählte Datenbank existiert nicht.',
+    'dbDatabaseCouldNotConnect' => 'Konnte keine Verbindung zum Server herstellen.',
     'dbHostInfo' => 'Die Adresse des Datenbankservers meistens localhost',
     'dbUserInfo' => 'Dein MySQL Benutzername',
     'writable' => 'Beschreibbar',
