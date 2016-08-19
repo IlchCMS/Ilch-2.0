@@ -1,7 +1,6 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Modules\Install\Controllers;
@@ -14,7 +13,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $fileConfig = new File();
         $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
-        if ($fileConfig->get('dbUser') !== null AND $this->getRequest()->getActionName() !== 'finish') {
+        if ($fileConfig->get('dbUser') !== null and $this->getRequest()->getActionName() !== 'finish') {
             /*
              * Cms is installed
              */
@@ -81,7 +80,7 @@ class Index extends \Ilch\Controller\Frontend
         $licenseFile = ROOT_PATH.'/license.html';
         if (file_exists($licenseFile)) {
             $license = file_get_contents($licenseFile);
-            if (preg_match('~<body[^>]*>(.*?)</body>~si', $license, $licenseContent)){ 
+            if (preg_match('~<body[^>]*>(.*?)</body>~si', $license, $licenseContent)) {
                 $licenseContent = $licenseContent[1];
             }
 
@@ -125,23 +124,23 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if (!is_writable(APPLICATION_PATH.'/modules/media/static/upload/')) {
-             $errors['writableMedia'] = true;
+            $errors['writableMedia'] = true;
         }
 
         if (!is_writable(APPLICATION_PATH.'/modules/smilies/static/img/')) {
-             $errors['writableMedia'] = true;
+            $errors['writableMedia'] = true;
         }
 
         if (!is_writable(APPLICATION_PATH.'/modules/user/static/upload/avatar/')) {
-             $errors['writableAvatar'] = true;
+            $errors['writableAvatar'] = true;
         }
 
         if (!is_writable(APPLICATION_PATH.'/modules/user/static/upload/gallery/')) {
-             $errors['writableAvatar'] = true;
+            $errors['writableAvatar'] = true;
         }
 
         if (!is_writable(ROOT_PATH.'/certificate/')) {
-             $errors['writableCertificate'] = true;
+            $errors['writableCertificate'] = true;
         }
 
         if (!extension_loaded('openssl')) {
@@ -155,15 +154,15 @@ class Index extends \Ilch\Controller\Frontend
 
         if (file_exists(ROOT_PATH.'/certificate/Certificate.crt')) {
             if (!array_key_exists('opensslExtensionMissing', $errors)) {
-                 $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
-                 $certinfo = openssl_x509_parse($public_key);
-                 $validTo = $certinfo['validTo_time_t'];
-                 if ($validTo < time()) {
+                $public_key = file_get_contents(ROOT_PATH.'/certificate/Certificate.crt');
+                $certinfo = openssl_x509_parse($public_key);
+                $validTo = $certinfo['validTo_time_t'];
+                if ($validTo < time()) {
                     $errors['expiredCert'] = true;
-                 }
+                }
             }
         } else {
-             $errors['missingCert'] = true;
+            $errors['missingCert'] = true;
         }
 
         if ($this->getRequest()->isPost() && empty($errors)) {
@@ -228,9 +227,12 @@ class Index extends \Ilch\Controller\Frontend
         $result = mysqli_query($con, 'SHOW DATABASES');
 
         $dbList = [];
-        while ($row = mysqli_fetch_row($result)) {
-            if (($row[0] != 'information_schema') && ($row[0] != 'performance_schema') && ($row[0] != 'mysql')) {
-                $dbList[] = $row[0];
+
+        if ($result !== false) {
+            while ($row = mysqli_fetch_row($result)) {
+                if (($row[0] != 'information_schema') && ($row[0] != 'performance_schema') && ($row[0] != 'mysql')) {
+                    $dbList[] = $row[0];
+                }
             }
         }
 
@@ -238,6 +240,32 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isPost()) {
             $_SESSION['install']['dbName'] = $this->getRequest()->getPost('dbName');
             $_SESSION['install']['dbPrefix'] = $this->getRequest()->getPost('dbPrefix');
+
+            try {
+                $ilch = new \Ilch\Database\Factory();
+                $db = $ilch->getInstanceByEngine($_SESSION['install']['dbEngine']);
+                $hostParts = explode(':', $_SESSION['install']['dbHost']);
+                $port = null;
+
+                if (!empty($hostParts[1])) {
+                    $port = $hostParts[1];
+                }
+
+                $db->connect(
+                    reset($hostParts),
+                    $_SESSION['install']['dbUser'],
+                    $_SESSION['install']['dbPassword'],
+                    $port
+                );
+
+                $selectDb = $db->setDatabase($_SESSION['install']['dbName']);
+            } catch (\Exception $e) {
+                $errors['dbDatabase'] = 'dbDatabaseCouldNotConnect';
+            }
+
+            if (!$selectDb) {
+                $errors['dbDatabase'] = 'dbDatabaseDoesNotExist';
+            }
 
             if (empty($_SESSION['install']['dbName'])) {
                 $errors['dbDatabase'] = 'dbDatabaseError';
@@ -397,7 +425,7 @@ class Index extends \Ilch\Controller\Frontend
                     $sort += 10;
                 }
 
-               $boxes = "INSERT INTO `[prefix]_menu_items` (`menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
+                $boxes = "INSERT INTO `[prefix]_menu_items` (`menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
                         (1, 80, 0, 0, 0, 'user_login', 4, 'Login', '', ''),
                         (1, 90, 0, 0, 0, 'admin_layoutswitch', 4, 'Layout', '', ''),
                         (1, 100, 0, 0, 0, 'statistic_stats', 4, 'Statistik', '', ''),
@@ -431,56 +459,54 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * System-Modules
          */
-        $modules['user']['types']          = [];
-        $modules['article']['types']       = [];
-        $modules['media']['types']         = [];
-        $modules['comment']['types']       = [];
-        $modules['contact']['types']       = [];
-        $modules['imprint']['types']       = [];
-        $modules['privacy']['types']       = [];
+        $modules['user']['types'] = [];
+        $modules['article']['types'] = [];
+        $modules['media']['types'] = [];
+        $modules['comment']['types'] = [];
+        $modules['contact']['types'] = [];
+        $modules['imprint']['types'] = [];
+        $modules['privacy']['types'] = [];
         $modules['cookieconsent']['types'] = [];
-        $modules['statistic']['types']     = [];
-        $modules['smilies']['types']       = [];
+        $modules['statistic']['types'] = [];
+        $modules['smilies']['types'] = [];
 
         /*
          * Optional-Modules.
          */
-        $modules['checkout']['types']   = ['clan'];
-        $modules['war']['types']        = ['clan'];
-        $modules['history']['types']    = ['clan'];
-        $modules['rule']['types']       = ['clan'];
-        $modules['training']['types']   = ['clan'];
-        $modules['forum']['types']      = ['clan', 'private'];
-        $modules['guestbook']['types']  = ['clan', 'private'];
-        $modules['link']['types']       = ['clan', 'private'];
-        $modules['linkus']['types']     = ['clan', 'private'];
-        $modules['partner']['types']    = ['clan', 'private'];
-        $modules['shoutbox']['types']   = ['clan', 'private'];
-        $modules['gallery']['types']    = ['clan', 'private'];
-        $modules['downloads']['types']  = ['clan', 'private'];
+        $modules['checkout']['types'] = ['clan'];
+        $modules['war']['types'] = ['clan'];
+        $modules['history']['types'] = ['clan'];
+        $modules['rule']['types'] = ['clan'];
+        $modules['training']['types'] = ['clan'];
+        $modules['forum']['types'] = ['clan', 'private'];
+        $modules['guestbook']['types'] = ['clan', 'private'];
+        $modules['link']['types'] = ['clan', 'private'];
+        $modules['linkus']['types'] = ['clan', 'private'];
+        $modules['partner']['types'] = ['clan', 'private'];
+        $modules['shoutbox']['types'] = ['clan', 'private'];
+        $modules['gallery']['types'] = ['clan', 'private'];
+        $modules['downloads']['types'] = ['clan', 'private'];
         $modules['newsletter']['types'] = ['clan', 'private'];
-        $modules['birthday']['types']   = ['clan', 'private'];
-        $modules['events']['types']     = ['clan', 'private'];
-        $modules['calendar']['types']   = ['clan', 'private'];
-        $modules['away']['types']       = ['clan', 'private'];
-        $modules['awards']['types']     = ['clan', 'private'];
-        $modules['jobs']['types']       = ['clan', 'private'];
-        $modules['faq']['types']        = ['clan', 'private'];
+        $modules['birthday']['types'] = ['clan', 'private'];
+        $modules['events']['types'] = ['clan', 'private'];
+        $modules['calendar']['types'] = ['clan', 'private'];
+        $modules['away']['types'] = ['clan', 'private'];
+        $modules['awards']['types'] = ['clan', 'private'];
+        $modules['jobs']['types'] = ['clan', 'private'];
+        $modules['faq']['types'] = ['clan', 'private'];
 
         foreach ($modules as $key => $module) {
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
             $config = new $configClass($this->getTranslator());
             $modules[$key]['config'] = $config;
 
-            if (in_array($type, $module['types']))
-            {
-               $modules[$key]['checked'] = true;
+            if (in_array($type, $module['types'])) {
+                $modules[$key]['checked'] = true;
             }
         }
 
         $modulesToInstall = [];
-        if (!empty($_SESSION['install']['modulesToInstall'][$type]))
-        {
+        if (!empty($_SESSION['install']['modulesToInstall'][$type])) {
             $modulesToInstall = $_SESSION['install']['modulesToInstall'][$type];
         }
 
