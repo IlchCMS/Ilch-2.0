@@ -19,7 +19,7 @@ if ($awards != '') {
     ?>
 </legend>
 
-<?php if ($this->get('errors') !== null): ?>
+<?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
         <ul>
