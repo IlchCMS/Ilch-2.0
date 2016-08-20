@@ -8,6 +8,7 @@ namespace Modules\Rule\Controllers\Admin;
 
 use Modules\Rule\Mappers\Rule as RuleMapper;
 use Modules\Rule\Models\Rule as RuleModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -78,34 +79,48 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
+        $post = [
+            'title' => '',
+            'text' => '',
+            'paragraph' => '',
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $model = new RuleModel();
+            $post = [
+                'title' => trim($this->getRequest()->getPost('title')),
+                'text' => trim($this->getRequest()->getPost('text')),
+                'paragraph' => $this->getRequest()->getPost('paragraph'),
+            ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $validation = Validation::create($post, [
+                'title' => 'required',
+                'text' => 'required',
+                'paragraph' => 'required|numeric|integer|min:1',
+            ]);
 
-            $title = trim($this->getRequest()->getPost('title'));
-            $text = trim($this->getRequest()->getPost('text'));
-            $paragraph = $this->getRequest()->getPost('paragraph');
+            if ($validation->isValid()) {
+                $model = new RuleModel();
 
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } elseif (!is_numeric($paragraph) OR $paragraph < 1 OR strpos($paragraph, '.' ) !== false) {
-                $this->addMessage('invalidParagraph', 'danger');
-            } else {
-                $model->setParagraph($paragraph);
-                $model->setTitle($title);
-                $model->setText($text);
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+
+                $model->setParagraph($post['paragraph']);
+                $model->setTitle($post['title']);
+                $model->setText($post['text']);
                 $ruleMapper->save($model);
 
                 $this->addMessage('saveSuccess');
 
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()
