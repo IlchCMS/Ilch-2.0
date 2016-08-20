@@ -8,7 +8,17 @@
         }
         ?>
     </legend>
-    <div class="form-group">
+    <?php if ($this->get('errors') !== null): ?>
+        <div class="alert alert-danger" role="alert">
+            <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+            <ul>
+                <?php foreach ($this->get('errors') as $error): ?>
+                    <li><?= $error; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+    <div class="form-group<?=in_array('paragraph', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="paragraph" class="col-lg-2 control-label">
             <?=$this->getTrans('paragraph') ?>:
         </label>
@@ -18,10 +28,10 @@
                    id="paragraph"
                    name="paragraph"
                    min="1"
-                   value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getParagraph()); } else { echo '1'; } ?>">
+                   value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getParagraph()); } else { echo $this->get('post')['paragraph']; } ?>">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -30,10 +40,10 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getTitle()); } ?>" />
+                   value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -42,7 +52,7 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getText()); } ?></textarea>
+                      rows="5"><?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getText()); } else { echo $this->get('post')['text']; } ?></textarea>
         </div>
     </div>
     <?php if ($this->get('rule') != '') {
