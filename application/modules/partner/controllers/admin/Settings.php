@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Partner\Controllers\Admin;
+use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
 {
@@ -38,24 +39,40 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuPartner'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
+        $post = [
+            'slider' => '',
+            'boxSliderHeight' => '',
+            'boxSliderSpeed' => '',
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $boxHeight = $this->getRequest()->getPost('boxHeight');
-            $sliderSpeed = $this->getRequest()->getPost('sliderSpeed');
-            
-            if (!is_numeric($boxHeight) or $boxHeight <= 0) {
-                $this->addMessage('invalidBoxHeight', 'danger');
-            } elseif (!is_numeric($sliderSpeed) or $sliderSpeed <= 0) {
-                $this->addMessage('invalidSliderSpeed', 'danger');
-            } else {
+            $post = [
+                'slider' => $this->getRequest()->getPost('slider'),
+                'boxSliderHeight' => $this->getRequest()->getPost('boxSliderHeight'),
+                'boxSliderSpeed' => $this->getRequest()->getPost('boxSliderSpeed'),
+            ];
+
+            $validation = Validation::create($post, [
+                'slider' => 'required|numeric|integer|min:0|max:1',
+                'boxSliderHeight' => 'required|numeric|integer|min:0',
+                'boxSliderSpeed' => 'required|numeric|integer|min:0',
+            ]);
+
+            if ($validation->isValid()) {
                 $this->getConfig()->set('partners_slider', $this->getRequest()->getPost('slider'));
-                $this->getConfig()->set('partners_box_height', $boxHeight);
-                $this->getConfig()->set('partners_slider_speed', $sliderSpeed);
+                $this->getConfig()->set('partners_box_height', $this->getRequest()->getPost('boxSliderHeight'));
+                $this->getConfig()->set('partners_slider_speed', $this->getRequest()->getPost('boxSliderSpeed'));
                 $this->addMessage('saveSuccess');
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('slider', $this->getConfig()->get('partners_slider'));
-        $this->getView()->set('boxHeight', $this->getConfig()->get('partners_box_height'));
-        $this->getView()->set('sliderSpeed', $this->getConfig()->get('partners_slider_speed'));
+        $this->getView()->set('boxSliderHeight', $this->getConfig()->get('partners_box_height'));
+        $this->getView()->set('boxSliderSpeed', $this->getConfig()->get('partners_slider_speed'));
     }
 }
