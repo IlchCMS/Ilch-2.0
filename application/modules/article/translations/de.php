@@ -8,6 +8,7 @@ return [
     'menuArticle' => 'Artikel',
     'menuArchives' => 'Archiv',
     'title' => 'Titel',
+    'content' => 'Inhalt',
     'language' => 'Sprache',
     'permaLink' => 'Permalink',
     'adress' => 'Adresse',
@@ -36,6 +37,5 @@ return [
     'commentDateTime' => 'Datum/Uhrzeit',
     'missingName' => 'Es wurde kein Name für die Kategorie eingegeben.',
     'categoryInUse' => 'Diese Kategorie kann nicht gelöscht werden, da sie noch Artikeln zugewiesen ist.',
-    'articlePerPage' => 'Artikel pro Seite',
-    'invalidArticlesPerPage' => 'Artikel pro Seite ist ungültig.',
+    'articlesPerPage' => 'Artikel pro Seite',
 ];

@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Article\Controllers\Admin;
+use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
 {
@@ -45,12 +46,21 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            if (!is_numeric($this->getRequest()->getPost('articlesPerPage')) or $this->getRequest()->getPost('articlesPerPage') <= 0) {
-                $this->addMessage('invalidArticlesPerPage', 'danger');
-            } else {
+            $post = [
+                'articlesPerPage' => $this->getRequest()->getPost('articlesPerPage'),
+            ];
+
+            $validation = Validation::create($post, [
+                'articlesPerPage' => 'numeric|integer|min:1'
+            ]);
+
+            if ($validation->isValid()) {
                 $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
                 $this->addMessage('saveSuccess');
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
         $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'));
