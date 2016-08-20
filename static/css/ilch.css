@@ -1,20 +1,39 @@
+/* Article */
 .article_image {
     padding: 10px;
     border-radius: 4px;
     display:block;
     margin: 10px auto 10px auto;
 }
+.article-box .ellipsis {
+    display: -webkit-flex;
+    display: flex;
+}
+.article-box .ellipsis-item {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    align-items: center;
+}
+.article-box .badge {
+    margin: auto;
+}
 
+
+/* Gallery and Download */
 #gallery, #downloads {
     float: none;
     width: 100%;
     display:inline-block;
 }
-
 #gallery, #downloads img{
     width: 100%;
     height: auto;
 }
+
+
 
 .captcha {
     padding-left: 15px !important;

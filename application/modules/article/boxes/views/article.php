@@ -1,15 +1,19 @@
 <?php $articles = $this->get('articles'); ?>
 
 <?php if (!empty($articles)): ?>
-    <ul class="list-unstyled">
-        <?php foreach ($articles as $article): ?>
-            <li>
-                <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>">
-                    <?=$this->escape($article->getTitle()) ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <div class="article-box">
+        <ul class="list-unstyled">
+            <?php foreach ($articles as $article): ?>
+                <li class="ellipsis">
+                    <span class="ellipsis-item">
+                        <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>">
+                            <?=$this->escape($article->getTitle()) ?>
+                        </a>
+                    </span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>
