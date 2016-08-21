@@ -8,6 +8,7 @@ namespace Modules\Linkus\Controllers\Admin;
 
 use Modules\Linkus\Mappers\Linkus as LinkusMapper;
 use Modules\Linkus\Models\Linkus as LinkusModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -82,30 +83,52 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        if ($this->getRequest()->isPost()) {
-            $model = new LinkusModel();
+        $post = [
+            'title' => '',
+            'banner' => '',
+        ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
+        if ($this->getRequest()->isPost()) {
+            // Add BASE_URL to get a complete URL for validation
+            $banner = trim($this->getRequest()->getPost('banner'));
+            if (!empty($banner)) {
+                $banner = BASE_URL.'/'.$banner;
             }
 
-            $title = trim($this->getRequest()->getPost('title'));
-            $banner = trim($this->getRequest()->getPost('banner'));
+            $post = [
+                'title' => trim($this->getRequest()->getPost('title')),
+                'banner' => $banner,
+            ];
 
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif (empty($banner)) {
-                $this->addMessage('missingBanner', 'danger');
-            } else {
-                $model->setTitle($title);
-                $model->setBanner($banner);
+            $validation = Validation::create($post, [
+                'title' => 'required',
+                'banner' => 'required|url',
+            ]);
+
+            $post['banner'] = trim($this->getRequest()->getPost('banner'));
+
+            if ($validation->isValid()) {
+                $model = new LinkusModel();
+
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+
+                $model->setTitle($post['title']);
+                $model->setBanner($post['banner']);
                 $linkusMapper->save($model);
 
                 $this->addMessage('saveSuccess');
 
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()
