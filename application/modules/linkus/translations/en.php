@@ -12,8 +12,6 @@ return [
     'bbcodeForForum' => 'BB-Code (for Foren)',
     'noLinkus' => 'No entries available',
     'showHtml' => 'Show HTML-Code?',
-    'showBBBCode' => 'Show BB-Code?',
-    'missingTitle' => 'Title was not filled',
-    'missingBanner' => 'Banner was not filled',
+    'showBBCode' => 'Show BB-Code?',
     'noneEnabled' => 'At least one option must be enabled.',
 ];
