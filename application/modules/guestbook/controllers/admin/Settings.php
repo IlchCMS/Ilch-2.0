@@ -41,6 +41,7 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
             $this->getConfig()->set('gbook_entriesPerPage', $this->getRequest()->getPost('entriesPerPage'));
+
             $this->addMessage('saveSuccess');
         }
 

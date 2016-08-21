@@ -48,13 +48,13 @@ class Index extends \Ilch\Controller\Admin
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
                     $guestbookMapper->delete($entryId);
                 }
-                
+
                 $this->redirect(['action' => 'index']);
             }
 
             if ($this->getRequest()->getPost('action') == 'setfree') {
                 foreach ($this->getRequest()->getPost('check_entries') as $entryId) {
-                    $model = new \Modules\Guestbook\Models\Entry();
+                    $model = new GuestbookModel();
                     $model->setId($entryId);
                     $model->setFree(1);
                     $guestbookMapper->save($model);
@@ -80,6 +80,7 @@ class Index extends \Ilch\Controller\Admin
             $guestbookMapper = new GuestbookMapper();
 
             $guestbookMapper->delete($this->getRequest()->getParam('id'));
+
             $this->addMessage('deleteSuccess');
         }
 
@@ -94,6 +95,7 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $guestbookMapper = new GuestbookMapper();
+
             $model = new GuestbookModel();
             $model->setId($this->getRequest()->getParam('id'));
             $model->setFree(1);

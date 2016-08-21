@@ -14,7 +14,8 @@ class Index extends \Ilch\Controller\Frontend
     {
         $linkusMapper = new LinkusMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuLinkus'), ['action' => 'index']);
 
         $this->getView()->set('linkus', $linkusMapper->getLinkus());
     }

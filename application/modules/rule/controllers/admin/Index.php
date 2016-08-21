@@ -82,36 +82,33 @@ class Index extends \Ilch\Controller\Admin
         $post = [
             'title' => '',
             'text' => '',
-            'paragraph' => '',
+            'paragraph' => ''
         ];
 
         if ($this->getRequest()->isPost()) {
             $post = [
-                'title' => trim($this->getRequest()->getPost('title')),
-                'text' => trim($this->getRequest()->getPost('text')),
                 'paragraph' => $this->getRequest()->getPost('paragraph'),
+                'title' => trim($this->getRequest()->getPost('title')),
+                'text' => trim($this->getRequest()->getPost('text'))
             ];
 
             $validation = Validation::create($post, [
-                'title' => 'required',
-                'text' => 'required',
                 'paragraph' => 'required|numeric|integer|min:1',
+                'title' => 'required',
+                'text' => 'required'
             ]);
 
             if ($validation->isValid()) {
                 $model = new RuleModel();
-
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-
                 $model->setParagraph($post['paragraph']);
                 $model->setTitle($post['title']);
                 $model->setText($post['text']);
                 $ruleMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
 

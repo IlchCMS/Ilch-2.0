@@ -15,7 +15,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $linkMapper = new LinkMapper();
         $categoryMapper = new CategoryMapper();
-        
+
         if ($this->getRequest()->getParam('cat_id')) {
             $category = $categoryMapper->getCategoryById($this->getRequest()->getParam('cat_id'));
             $parentCategories = $categoryMapper->getCategoriesForParent($category->getParentId());
@@ -50,9 +50,11 @@ class Index extends \Ilch\Controller\Frontend
     public function redirectAction()
     {
         $linkMapper = new LinkMapper();
+
         $linkModel = $linkMapper->getLinkById($this->getRequest()->getParam('link_id'));
         $linkModel->setHits($linkModel->getHits() + 1);
         $linkMapper->save($linkModel);
+
         header("location: ".$linkModel->getLink());
         exit;
     }

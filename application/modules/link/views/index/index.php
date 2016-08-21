@@ -8,7 +8,7 @@
             </colgroup>
             <tr>
                 <th><?=$this->getTrans('category') ?></th>
-                <th style="text-align:center"><?=$this->getTrans('links') ?></th>
+                <th class="text-center"><?=$this->getTrans('links') ?></th>
             </tr>
             <?php foreach ($this->get('categorys') as $category): ?>
                 <tr>
@@ -39,7 +39,7 @@
         </colgroup>
         <tr>
             <th><?=$this->getTrans('links') ?></th>
-            <th style="text-align:center"><?=$this->getTrans('hits') ?></th>
+            <th class="text-center"><?=$this->getTrans('hits') ?></th>
         </tr>
         <?php if ($this->get('links') != ''): ?>
             <?php foreach ($this->get('links') as $link): ?>
@@ -65,7 +65,7 @@
                         <a href="<?=$this->getUrl(['action' => 'redirect', 'link_id' => $link->getId()]) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$banner ?></a><br />
                         <?=$desc ?>
                     </td>
-                    <td align="center" style="vertical-align:middle"><?=$this->escape($link->getHits()) ?></td>
+                    <td class="text-center" style="vertical-align:middle"><?=$this->escape($link->getHits()) ?></td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>

@@ -109,17 +109,14 @@ class Index extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $model = new LinkusModel();
-
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-
                 $model->setTitle($post['title']);
                 $model->setBanner($post['banner']);
                 $linkusMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
 

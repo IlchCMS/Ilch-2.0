@@ -55,7 +55,8 @@ class Settings extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
+                $this->getConfig()->set('article_articlesPerPage', $post['articlesPerPage']);
+
                 $this->addMessage('saveSuccess');
             }
 

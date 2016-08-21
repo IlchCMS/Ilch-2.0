@@ -103,10 +103,10 @@ class Index extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setTitle($this->getRequest()->getPost('title'));
-                $model->setText($this->getRequest()->getPost('text'));
-                $model->setEmail($this->getRequest()->getPost('email'));
-                $model->setShow($this->getRequest()->getPost('show'));
+                $model->setTitle($post['title']);
+                $model->setText($post['text']);
+                $model->setEmail($post['email']);
+                $model->setShow($post['show']);
                 $jobsMapper->save($model);
 
                 $this->addMessage('saveSuccess');

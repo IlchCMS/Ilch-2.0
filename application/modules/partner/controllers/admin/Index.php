@@ -137,11 +137,6 @@ class Index extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->isPost()) {
-            $model = new PartnerModel();
-
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
 
             $banner = trim($this->getRequest()->getPost('banner'));
             if (!empty($banner)) {
@@ -151,7 +146,7 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $post = [
-                'name' => $this->getRequest()->getPost('name'),
+                'name' => trim($this->getRequest()->getPost('name')),
                 'link' => trim($this->getRequest()->getPost('link')),
                 'banner' => $banner
             ];
@@ -162,17 +157,25 @@ class Index extends \Ilch\Controller\Admin
                 'banner' => 'required|url'
             ]);
 
+            $post['banner'] = trim($this->getRequest()->getPost('banner'));
+
             if ($validation->isValid()) {
-                $model->setName($this->getRequest()->getPost('name'));
-                $model->setLink($this->getRequest()->getPost('link'));
-                $model->setBanner($this->getRequest()->getPost('banner'));
+                $model = new PartnerModel();
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                $model->setName($post['name']);
+                $model->setLink($post['link']);
+                $model->setBanner($post['banner']);
                 $model->setFree(1);
                 $partnerMapper->save($model);
 
                 unset($_SESSION['captcha']);
+
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
             }
+
             unset($_SESSION['captcha']);
 
             $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());

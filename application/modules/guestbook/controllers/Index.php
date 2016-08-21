@@ -149,15 +149,15 @@ class Index extends \Ilch\Controller\Frontend
                 $model->setFree($this->getConfig()->get('gbook_autosetfree'));
                 $guestbookMapper->save($model);
 
+                unset($_SESSION['captcha']);
+                
                 if ($this->getConfig()->get('gbook_autosetfree') == 0) {
                     $this->addMessage('check', 'success');
                 }
-
-                unset($_SESSION['captcha']);
                 $this->redirect(['action' => 'index']);
             }
-            unset($_SESSION['captcha']);
 
+            unset($_SESSION['captcha']);
             /*
                 Nun werden noch die Fehler generiert und an das View übergeben.
                 $validation->getErrors() benötigt immer die aktuelle Translator-Instanz, damit

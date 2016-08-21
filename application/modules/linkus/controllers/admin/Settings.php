@@ -61,8 +61,8 @@ class Settings extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('linkus_html', $this->getRequest()->getPost('showHtml'));
-                $this->getConfig()->set('linkus_bbcode', $this->getRequest()->getPost('showBBCode'));
+                $this->getConfig()->set('linkus_html', $post['showHtml']);
+                $this->getConfig()->set('linkus_bbcode', $post['showBBCode']);
                 $this->addMessage('saveSuccess');
             }
 

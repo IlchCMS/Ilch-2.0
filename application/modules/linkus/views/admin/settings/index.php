@@ -1,3 +1,13 @@
+<?php
+if (empty($this->get('errorFields'))) {
+    $showHtml = (bool)$this->get('linkus_html') == '1';
+    $showBBCode = (bool)$this->get('linkus_bbcode') == '1';
+} else {
+    $showHtml = (bool)$this->get('post')['showHtml'] == '1';
+    $showBBCode = (bool)$this->get('post')['showBBCode'] == '1';
+}
+?>
+
 <legend><?=$this->getTrans('settings') ?></legend>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
@@ -9,15 +19,6 @@
         </ul>
     </div>
 <?php endif; ?>
-<?php
-if (empty($this->get('errorFields'))) {
-    $showHtml = (bool)$this->get('linkus_html') == '1';
-    $showBBCode = (bool)$this->get('linkus_bbcode') == '1';
-} else {
-    $showHtml = (bool)$this->get('post')['showHtml'] == '1';
-    $showBBCode = (bool)$this->get('post')['showBBCode'] == '1';
-}
-?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group<?=in_array('showHtml', $this->get('errorFields')) ? ' has-error' : '' ?>">

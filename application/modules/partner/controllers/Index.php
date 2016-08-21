@@ -42,15 +42,19 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $model = new PartnerModel();
-                $model->setName($this->getRequest()->getPost('name'));
-                $model->setLink($this->getRequest()->getPost('link'));
-                $model->setBanner($this->getRequest()->getPost('banner'));
+                $model->setName($post['name']);
+                $model->setLink($post['link']);
+                $model->setBanner($post['banner']);
                 $model->setFree(0);
                 $partnerMapper->save($model);
+
+                unset($_SESSION['captcha']);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
             }
+
+            unset($_SESSION['captcha']);
 
             $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
             $errorFields = $validation->getFieldsWithError();

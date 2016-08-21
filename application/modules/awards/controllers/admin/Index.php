@@ -82,8 +82,9 @@ class Index extends \Ilch\Controller\Admin
         $post = [
             'date' => '',
             'rank'  => '',
-            'utId'  => '',
             'typ'  => '',
+            'utId'  => '',
+            'event'  => '',
             'page' => '',
         ];
 
@@ -91,8 +92,9 @@ class Index extends \Ilch\Controller\Admin
             $post = [
                 'date' => new \Ilch\Date(trim($this->getRequest()->getPost('date'))),
                 'rank'  => trim($this->getRequest()->getPost('rank')),
-                'utId'  => trim($this->getRequest()->getPost('utId')),
                 'typ'  => trim($this->getRequest()->getPost('typ')),
+                'utId'  => trim($this->getRequest()->getPost('utId')),
+                'event' => $this->getRequest()->getPost('event'),
                 'page' => $this->getRequest()->getPost('page'),
             ];
 
@@ -111,20 +113,18 @@ class Index extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $model = new AwardsModel();
-
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
                 $model->setDate($post['date']);
                 $model->setRank($post['rank']);
-                $model->setEvent($this->getRequest()->getPost('event'));
-                $model->setURL($this->getRequest()->getPost('page'));
-                $model->setUTId($post['utId']);
                 $model->setTyp($post['typ']);
+                $model->setUTId($post['utId']);
+                $model->setEvent($post['event']);
+                $model->setURL($post['page']);
                 $awardsMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
 

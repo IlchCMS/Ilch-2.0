@@ -7,7 +7,6 @@
     }
     ?>
 </legend>
-
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
@@ -18,7 +17,6 @@
         </ul>
     </div>
 <?php endif; ?>
-
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">

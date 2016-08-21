@@ -103,8 +103,10 @@ class Index extends \Ilch\Controller\Admin
             'cats' => '',
             'title' => '',
             'content' => '',
-            'image' => '',
+            'description' => '',
             'permaLink' => '',
+            'image' => '',
+            'imageSource' => '',
         ];
 
         if ($this->getRequest()->isPost()) {
@@ -123,16 +125,18 @@ class Index extends \Ilch\Controller\Admin
                 'cats' => $this->getRequest()->getPost('cats'),
                 'title' => $this->getRequest()->getPost('title'),
                 'content' => $this->getRequest()->getPost('content'),
-                'image' => $image,
+                'description' => $this->getRequest()->getPost('description'),
                 'permaLink' => $permaLink,
+                'image' => $image,
+                'imageSource' => $this->getRequest()->getPost('imageSource'),
             ];
 
             $validation = Validation::create($post, [
                 'cats' => 'required|numeric|integer|min:1',
                 'title' => 'required',
                 'content' => 'required',
-                'image' => 'url',
                 'permaLink' => 'url',
+                'image' => 'url',
             ]);
 
             // Restore original values
@@ -141,26 +145,22 @@ class Index extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $model = new ArticleModel();
-
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-
-                $model->setCatId($this->getRequest()->getPost('cats'));
-                $model->setAuthorId($this->getUser()->getId());
-                $model->setDescription($this->getRequest()->getPost('description'));
-                $model->setTitle($this->getRequest()->getPost('title'));
-                $model->setContent($this->getRequest()->getPost('content'));
-                $model->setArticleImage($this->getRequest()->getPost('image'));
-                $model->setArticleImageSource($this->getRequest()->getPost('imageSource'));
-                $model->setPerma($this->getRequest()->getPost('permaLink'));
-
                 if ($this->getRequest()->getPost('language') != '') {
                     $model->setLocale($this->getRequest()->getPost('language'));
                 } else {
                     $model->setLocale('');
                 }
-
+                $model->setCatId($post['cats']);
+                $model->setAuthorId($this->getUser()->getId());
+                $model->setDescription($post['description']);
+                $model->setTitle($post['title']);
+                $model->setContent($post['content']);
+                $model->setPerma($post['permaLink']);
+                $model->setArticleImage($post['image']);
+                $model->setArticleImageSource($post['imageSource']);
                 $articleMapper->save($model);
 
                 $this->redirect(['action' => 'index']);

@@ -62,8 +62,8 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                 $messageReplace = [
-                        '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$title,
-                        '{content}' => $text,
+                        '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$post['title'],
+                        '{content}' => $post['text'],
                         '{sitetitle}' => $this->getConfig()->get('page_title'),
                         '{date}' => $date->format("l, d. F Y", true),
                 ];
@@ -71,7 +71,7 @@ class Index extends \Ilch\Controller\Frontend
 
                 $mail = new \Ilch\Mail();
                 $mail->setTo($job->getEmail(), '')
-                        ->setSubject($this->getTranslator()->trans('applyAs').' '.$title)
+                        ->setSubject($this->getTranslator()->trans('applyAs').' '.$post['title'])
                         ->setFrom($user->getEmail(), $user->getName())
                         ->setMessage($message)
                         ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');

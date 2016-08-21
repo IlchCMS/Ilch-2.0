@@ -148,14 +148,8 @@ class Index extends \Ilch\Controller\Admin
             'catId' => '',
         ];
 
-        $this->getView()->set('cats', $categoryMapper->getCategories());
-
         if ($this->getRequest()->isPost()) {
             $model = new LinkModel();
-
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
 
             // Add BASE_URL if banner starts with application to get a complete URL for validation
             $banner = trim($this->getRequest()->getPost('banner'));
@@ -166,10 +160,10 @@ class Index extends \Ilch\Controller\Admin
             }
 
             $post = [
-                'name' => $this->getRequest()->getPost('name'),
+                'name' => trim($this->getRequest()->getPost('name')),
                 'link' => trim($this->getRequest()->getPost('link')),
                 'banner' => $banner,
-                'desc' => $this->getRequest()->getPost('desc'),
+                'desc' => trim($this->getRequest()->getPost('desc')),
                 'catId' => $this->getRequest()->getPost('catId'),
             ];
 
@@ -184,13 +178,17 @@ class Index extends \Ilch\Controller\Admin
                 'catId' => 'numeric|integer|min:0',
             ]);
 
+            $post['banner'] = trim($this->getRequest()->getPost('banner'));
+
             if ($validation->isValid()) {
-                $model->setName($this->getRequest()->getPost('name'));
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                $model->setName($post['name']);
                 $model->setLink($post['link']);
-                // Used on purpose instead of $banner to save some bytes in the database
-                $model->setBanner($this->getRequest()->getPost('banner'));
-                $model->setDesc($this->getRequest()->getPost('desc'));
-                $model->setCatId($this->getRequest()->getPost('catId'));
+                $model->setBanner($post['banner']);
+                $model->setDesc($post['desc']);
+                $model->setCatId($post['catId']);
                 $linkMapper->save($model);
 
                 $this->addMessage('saveSuccess');
@@ -203,6 +201,7 @@ class Index extends \Ilch\Controller\Admin
 
         $this->getView()->set('post', $post);
         $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
+        $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
     public function treatCatAction()
@@ -227,15 +226,9 @@ class Index extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->isPost()) {
-            $model = new CategoryModel();
-
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
-
             $post = [
-                'name' => $this->getRequest()->getPost('name'),
-                'desc' => $this->getRequest()->getPost('desc')
+                'name' => trim($this->getRequest()->getPost('name')),
+                'desc' => trim($this->getRequest()->getPost('desc'))
             ];
 
             $validation = Validation::create($post, [
@@ -243,11 +236,15 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model->setName($this->getRequest()->getPost('name'));
-                $model->setDesc($this->getRequest()->getPost('desc'));
+                $model = new CategoryModel();
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
                 if (!empty($this->getRequest()->getParam('parentId'))) {
                     $model->setParentID($this->getRequest()->getParam('parentId'));
                 }
+                $model->setName($post['name']);
+                $model->setDesc($post['desc']);
                 $categorykMapper->save($model);
 
                 $this->addMessage('saveSuccess');
