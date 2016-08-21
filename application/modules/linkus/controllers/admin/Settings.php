@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Linkus\Controllers\Admin;
+use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
 {
@@ -38,12 +39,39 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuLinkus'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
+        $post = [
+            'showHtml' => '',
+            'showBBCode' => '',
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('linkus_html', $this->getRequest()->getPost('html'));
-            $this->getConfig()->set('linkus_bbcode', $this->getRequest()->getPost('bbcode'));
-            $this->addMessage('saveSuccess');
+            $post = [
+                'showHtml' => $this->getRequest()->getPost('showHtml'),
+                'showBBCode' => $this->getRequest()->getPost('showBBCode'),
+            ];
+
+            Validation::setCustomFieldAliases([
+                'showHtml' => 'htmlForWebsite',
+                'showBBCode' => 'bbcodeForForum',
+            ]);
+
+            $validation = Validation::create($post, [
+                'showHtml' => 'required|numeric|integer|min:0|max:1',
+                'showBBCode' => 'required|numeric|integer|min:0|max:1',
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('linkus_html', $this->getRequest()->getPost('showHtml'));
+                $this->getConfig()->set('linkus_bbcode', $this->getRequest()->getPost('showBBCode'));
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('linkus_html', $this->getConfig()->get('linkus_html'));
         $this->getView()->set('linkus_bbcode', $this->getConfig()->get('linkus_bbcode'));
     }
