@@ -47,7 +47,7 @@
                    value="<?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getLink()); } else { echo $this->get('post')['link']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('banner', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>
@@ -75,13 +75,13 @@
                       rows="3"><?php if ($this->get('link') != '') { echo $this->escape($this->get('link')->getDesc()); } else { echo $this->get('post')['desc']; } ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('catId', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="catId" class="col-lg-2 control-label">
             <?=$this->getTrans('category') ?>:
         </label>
         <div class="col-lg-4">
             <select class="form-control" id="catId" name="catId">
-                <option>-- <?=$this->getTrans('optionNoCategory') ?> --</option>
+                <option value="0">-- <?=$this->getTrans('optionNoCategory') ?> --</option>
                 <?php
                 if ($this->get('cats') != '') {
                     foreach ($this->get('cats') as $model) {

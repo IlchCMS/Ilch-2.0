@@ -144,7 +144,8 @@ class Index extends \Ilch\Controller\Admin
             'name' => '',
             'link' => '',
             'banner' => '',
-            'desc' => ''
+            'desc' => '',
+            'catId' => '',
         ];
 
         $this->getView()->set('cats', $categoryMapper->getCategories());
@@ -168,13 +169,19 @@ class Index extends \Ilch\Controller\Admin
                 'name' => $this->getRequest()->getPost('name'),
                 'link' => trim($this->getRequest()->getPost('link')),
                 'banner' => $banner,
-                'desc' => $this->getRequest()->getPost('desc')
+                'desc' => $this->getRequest()->getPost('desc'),
+                'catId' => $this->getRequest()->getPost('catId'),
             ];
+
+            Validation::setCustomFieldAliases([
+                'catId' => 'category',
+            ]);
 
             $validation = Validation::create($post, [
                 'name' => 'required',
                 'link' => 'required|url',
-                'banner' => 'url'
+                'banner' => 'url',
+                'catId' => 'numeric|integer|min:0',
             ]);
 
             if ($validation->isValid()) {
