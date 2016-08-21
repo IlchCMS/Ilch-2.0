@@ -14,7 +14,7 @@ return [
     'validation.errors.url.noValidUrl' => '%s muss eine gültige URL sein.',
     'validation.errors.email.noValidEmail' => '%s muss eine gültige E-Mail-Adresse sein.',
     'validation.errors.unique.valueExists' => '%s `%s` ist bereits in Verwendung.',
-    'validation.errors.numeric.mustBeNumeric' => '%s muss eine gültiger Zahlenwert sein.',
+    'validation.errors.numeric.mustBeNumeric' => '%s muss ein gültiger Zahlenwert sein.',
     'validation.errors.integer.mustBeInteger' => '%s muss eine Ganzzahl sein.',
     'validation.errors.size.numeric' => '%s muss genau %s betragen.',
     'validation.errors.size.string' => '%s muss genau %s Zeichen lang sein.',
