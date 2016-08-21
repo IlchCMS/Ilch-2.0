@@ -18,8 +18,5 @@ return [
     'pictureSelect' => 'Bild',
     'videoSelect' => 'Video',
     'locationSelect' => 'Ort',
-    'missingDate' => 'Datum muss ausgefüllt werden',
-    'missingTitle' => 'Titel muss ausgefüllt werden',
-    'missingText' => 'Text muss ausgefüllt werden',
     'noHistorys' => 'Keine Geschichten vorhanden',
 ];
