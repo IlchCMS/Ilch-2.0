@@ -19,9 +19,19 @@ if ($history != '') {
     }
     ?>
 </legend>
+<?php if (!empty($this->get('errors'))): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group<?=in_array('date', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -30,14 +40,14 @@ if ($history != '') {
                    class="form-control"
                    id="date"
                    name="date"
-                   value="<?php if ($history != '') { echo $date; } ?>"
+                   value="<?php if ($history != '') { echo $date; } else { echo $this->get('post')['date']; } ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -46,10 +56,10 @@ if ($history != '') {
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($history != '') { echo $this->escape($history->getTitle()); } ?>" />
+                   value="<?php if ($history != '') { echo $this->escape($history->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -58,7 +68,7 @@ if ($history != '') {
                       id="ck_1"
                       name="text"
                       toolbar="ilch_html"
-                      rows="5"><?php if ($history != '') { echo $this->escape($history->getText()); } ?></textarea>
+                      rows="5"><?php if ($history != '') { echo $this->escape($history->getText()); } else { echo $this->get('post')['text']; } ?></textarea>
         </div>
     </div>
     <div class="form-group">

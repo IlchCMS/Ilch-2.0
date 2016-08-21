@@ -18,8 +18,5 @@ return [
     'pictureSelect' => 'Picture',
     'videoSelect' => 'Video',
     'locationSelect' => 'Location',
-    'missingDate' => 'Date was not filled',
-    'missingTitle' => 'Title was not filled',
-    'missingText' => 'Text was not filled',
     'noHistorys' => 'No histories available',
 ];

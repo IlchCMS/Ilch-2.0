@@ -8,6 +8,7 @@ namespace Modules\History\Controllers\Admin;
 
 use Modules\History\Mappers\History as HistoryMapper;
 use Modules\History\Models\History as HistoryModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -76,38 +77,53 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
+        $post = [
+            'date' => '',
+            'title' => '',
+            'type' => '',
+            'color' => '',
+            'text' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $model = new HistoryModel();
+            $post = [
+                'date' => new \Ilch\Date(trim($this->getRequest()->getPost('date'))),
+                'title' => trim($this->getRequest()->getPost('title')),
+                'type' => trim($this->getRequest()->getPost('type')),
+                'color' => trim($this->getRequest()->getPost('color')),
+                'text' => trim($this->getRequest()->getPost('text'))
+            ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $validation = Validation::create($post, [
+                'date' => 'required',
+                'title' => 'required',
+                'text' => 'required'
+            ]);
 
-            $date = new \Ilch\Date(trim($this->getRequest()->getPost('date')));
-            $title = trim($this->getRequest()->getPost('title'));
-            $type = trim($this->getRequest()->getPost('type'));
-            $color = trim($this->getRequest()->getPost('color'));
-            $text = trim($this->getRequest()->getPost('text'));
+            if ($validation->isValid()) {
+                $model = new HistoryModel();
 
-            if (empty($date)) {
-                $this->addMessage('missingDate', 'danger');
-            } elseif (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } else {
-                $model->setDate($date);
-                $model->setTitle($title);
-                $model->setType($type);
-                $model->setColor($color);
-                $model->setText($text);
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+
+                $model->setDate($post['date']);
+                $model->setTitle($post['title']);
+                $model->setType($post['type']);
+                $model->setColor($post['color']);
+                $model->setText($post['text']);
                 $historyMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()
