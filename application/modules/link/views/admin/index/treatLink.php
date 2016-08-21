@@ -81,7 +81,7 @@
         </label>
         <div class="col-lg-4">
             <select class="form-control" id="catId" name="catId">
-                <option>-- <?=$this->getTrans('optionNoCategory') ?> --</option>
+                <option value="0">-- <?=$this->getTrans('optionNoCategory') ?> --</option>
                 <?php
                 if ($this->get('cats') != '') {
                     foreach ($this->get('cats') as $model) {
