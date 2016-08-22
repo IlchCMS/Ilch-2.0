@@ -8,6 +8,7 @@ namespace Modules\Contact\Controllers\Admin;
 
 use Modules\Contact\Mappers\Receiver as ReceiverMapper;
 use Modules\Contact\Models\Receiver as ReceiverModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -84,28 +85,41 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        if ($this->getRequest()->isPost()) {
-            $name = $this->getRequest()->getPost('name');
-            $email = $this->getRequest()->getPost('email');
+        $post = [
+            'name' => '',
+            'email' => ''
+        ];
 
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif (empty($email)) {
-                $this->addMessage('missingEmail', 'danger');
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->addMessage('invalidEmail', 'danger');
-            } else {
+        if ($this->getRequest()->isPost()) {
+            $post = [
+                'name' => $this->getRequest()->getPost('name'),
+                'email' => $this->getRequest()->getPost('email')
+            ];
+
+            $validation = Validation::create($post, [
+                'name' => 'required',
+                'email' => 'required|email'
+            ]);
+
+            if ($validation->isValid()) {
                 $model = new ReceiverModel();
 
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setName($name);
-                $model->setEmail($email);
+
+                $model->setName($post['name']);
+                $model->setEmail($post['email']);
                 $receiverMapper->save($model);
 
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }
