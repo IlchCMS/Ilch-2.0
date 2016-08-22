@@ -15,8 +15,6 @@ return [
     'answer' => 'Antwort',
     'entries' => 'Einträge',
     'deleteFailed' => 'Es befinden sich noch Einträge in der Kategorie',
-    'missingQuestion' => 'Frage muss ausgefüllt werden',
-    'missingAnswer' => 'Antwort muss ausgefüllt werden',
     'missingTitle' => 'Titel muss ausgefüllt werden',
     'noFaqs' => 'Keine FAQs vorhanden',
     'noCategory' => 'Keine Kategorie vorhanden',

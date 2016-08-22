@@ -15,8 +15,6 @@ return [
     'answer' => 'Answer',
     'entries' => 'Entries',
     'deleteFailed' => 'There are still entries in the category',
-    'missingQuestion' => 'Question was not filled',
-    'missingAnswer' => 'Answer was not filled',
     'missingTitle' => 'Title was not filled',
     'noFaqs' => 'No FAQs available',
     'noCategory' => 'No category available',
