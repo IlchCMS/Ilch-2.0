@@ -9,6 +9,7 @@ namespace Modules\Faq\Controllers\Admin;
 use Modules\Faq\Mappers\Faq as FaqMapper;
 use Modules\Faq\Models\Faq as FaqModel;
 use Modules\Faq\Mappers\Category as CategoryMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -83,32 +84,47 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
+        $post = [
+            'catId' => '',
+            'question' => '',
+            'answer' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $model = new FaqModel();
+            $post = [
+                'catId' => $this->getRequest()->getPost('catId'),
+                'question' => $this->getRequest()->getPost('question'),
+                'answer' => $this->getRequest()->getPost('answer')
+            ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
+            $validation = Validation::create($post, [
+                'catId' => 'required|numeric|integer|min:0',
+                'question' => 'required',
+                'answer' => 'required'
+            ]);
 
-            $question = $this->getRequest()->getPost('question');
-            $answer = $this->getRequest()->getPost('answer');
+            if ($validation->isValid()) {
+                $model = new FaqModel();
 
-            if (empty($question)) {
-                $this->addMessage('missingQuestion', 'danger');
-            } elseif (empty($answer)) {
-                $this->addMessage('missingAnswer', 'danger');
-            } else {
-                $model->setQuestion($question);
-                $model->setAnswer($answer);
-                $model->setCatId($this->getRequest()->getPost('catId'));
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+
+                $model->setQuestion($post['question']);
+                $model->setAnswer($post['answer']);
+                $model->setCatId($post['catId']);
                 $faqMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
