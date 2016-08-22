@@ -8,6 +8,7 @@ namespace Modules\Checkout\Controllers\Admin;
 
 use Modules\Checkout\Mappers\Currency as CurrencyMapper;
 use Modules\Checkout\Models\Currency as CurrencyModel;
+use Ilch\Validation;
 
 class Currency extends \Ilch\Controller\Admin
 {
@@ -93,25 +94,45 @@ class Currency extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat', 'id' => 'treat']);
         }
 
+        $post = [
+            'id' => '',
+            'name' => ''
+        ];
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
-            $id = $this->getRequest()->getPost('id');
-            $name = trim($this->getRequest()->getPost('name'));
+            $post = [
+                'id' => $this->getRequest()->getPost('id'),
+                'name' => trim($this->getRequest()->getPost('name'))
+            ];
 
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif ($currencyMapper->currencyWithNameExists($name)) {
-                $this->addMessage('alreadyExisting', 'danger');
-            } else {
-                $currencyModel = new CurrencyModel();
-
-                $currencyModel->setId($id);
-                $currencyModel->setName($name);
-                $currencyMapper->save($currencyModel);
-
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
+            $idValidators = 'required|numeric|integer|min:1';
+            
+            if (!$this->getRequest()->getParam('id')) {
+                $idValidators = 'numeric|integer|min:1';
             }
+
+            $validation = Validation::create($post, [
+                'id' => $idValidators,
+                'name' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
+                if ($currencyMapper->currencyWithNameExists($post['name'])) {
+                    $this->addMessage('alreadyExisting', 'danger');
+                } else {
+                    $currencyModel = new CurrencyModel();
+
+                    $currencyModel->setId($post['id']);
+                    $currencyModel->setName($post['name']);
+                    $currencyMapper->save($currencyModel);
+
+                    $this->addMessage('saveSuccess');
+                    $this->redirect(['action' => 'index']);
+                }
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
         $currency = $currencyMapper->getCurrencyById($id);
@@ -121,6 +142,7 @@ class Currency extends \Ilch\Controller\Admin
             $currency = new CurrencyModel();
         }
 
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('currency', $currency);
     }
 

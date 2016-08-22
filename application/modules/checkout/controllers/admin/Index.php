@@ -9,6 +9,7 @@ namespace Modules\Checkout\Controllers\Admin;
 use Modules\Checkout\Mappers\Checkout as CheckoutMapper;
 use Modules\Checkout\Mappers\Currency as CurrencyMapper;
 use Ilch\Date as IlchDate;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -58,40 +59,53 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
-        if ($this->getRequest()->isPost()) {
-            $name = $this->getRequest()->getPost('name');
-            $datetime = trim($this->getRequest()->getPost('datetime'));
-            $usage = trim($this->getRequest()->getPost('usage'));
-            $amount = trim($this->getRequest()->getPost('amount'));
+        $post = [
+            'name' => '',
+            'datetime' => '',
+            'usage' => '',
+            'amount' => ''
+        ];
 
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif (empty($usage)) {
-                $this->addMessage('missingUsage', 'danger');
-            } elseif (empty($amount)) {
-                $this->addMessage('missingAmount', 'danger');
-            } elseif (!is_numeric($amount)) {
-                $this->addMessage('invalidAmount', 'danger');
-            } else {
+        if ($this->getRequest()->isPost()) {
+            $post = [
+                'name' => $this->getRequest()->getPost('name'),
+                'datetime' => trim($this->getRequest()->getPost('datetime')),
+                'usage' => trim($this->getRequest()->getPost('usage')),
+                'amount' => trim($this->getRequest()->getPost('amount'))
+            ];
+
+            $validation = Validation::create($post, [
+                'name' => 'required',
+                'datetime' => 'required',
+                'usage' => 'required',
+                'amount' => 'required|numeric'
+            ]);
+
+            if ($validation->isValid()) {
                 $model = new \Modules\Checkout\Models\Entry();
-                $model->setName($name);
-                $model->setDatetime($datetime);
-                $model->setUsage($usage);
-                $model->setAmount($amount);
+                $model->setName($post['name']);
+                $model->setDatetime($post['datetime']);
+                $model->setUsage($post['usage']);
+                $model->setAmount($post['amount']);
                 $checkoutMapper->save($model);
 
                 $this->addMessage('saveSuccess');
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkout_currency'))[0];
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('checkout', $checkoutMapper->getEntries());
         $this->getView()->set('checkoutdate', $ilchdate->toDb());
         $this->getView()->set('amount', $checkoutMapper->getAmount());
         $this->getView()->set('amountplus', $checkoutMapper->getAmountPlus());
         $this->getView()->set('amountminus', $checkoutMapper->getAmountMinus());
-        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
+        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkout_currency'));
         $this->getView()->set('currency', $currency->getName());
     }
 
@@ -103,15 +117,37 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'settings']);
 
+        $post = [
+            'checkoutContact' => '',
+            'checkoutCurrency' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('checkout_contact', $this->getRequest()->getPost('checkout_contact'));
-            $this->getConfig()->set('checkout_currency', $this->getRequest()->getPost('checkout_currency'));
-            $this->addMessage('saveSuccess');
+            $post = [
+                'checkoutContact' => $this->getRequest()->getPost('checkoutContact'),
+                'checkoutCurrency' => $this->getRequest()->getPost('checkoutCurrency')
+            ];
+
+            $validation = Validation::create($post, [
+                'checkoutContact' => 'required',
+                'checkoutCurrency' => 'required|numeric|integer|min:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('checkout_contact', $post['checkoutContact']);
+                $this->getConfig()->set('checkout_currency', $post['checkoutCurrency']);
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('currencies', $currencyMapper->getCurrencies());
-        $this->getView()->set('checkout_contact', $this->getConfig()->get('checkout_contact'));
-        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
+        $this->getView()->set('checkoutContact', $this->getConfig()->get('checkout_contact'));
+        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkout_currency'));
     }
 
     public function treatPaymentAction()
@@ -123,41 +159,56 @@ class Index extends \Ilch\Controller\Admin
         $checkoutMapper = new CheckoutMapper();
         $id = $this->getRequest()->getParam('id');
 
-        if ($this->getRequest()->isPost()) {
-            $name = $this->getRequest()->getPost('name');
-            $datetime = trim($this->getRequest()->getPost('datetime'));
-            $usage = trim($this->getRequest()->getPost('usage'));
-            $amount = trim($this->getRequest()->getPost('amount'));
-            $id = trim($this->getRequest()->getPost('id'));
+        $post = [
+            'name' => '',
+            'datetime' => '',
+            'usage' => '',
+            'amount' => '',
+            'id' => ''
+        ];
 
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif (empty($usage)) {
-                $this->addMessage('missingUsage', 'danger');
-            } elseif (empty($amount)) {
-                $this->addMessage('missingAmount', 'danger');
-            } elseif (!is_numeric($amount)) {
-                $this->addMessage('invalidAmount', 'danger');
-            } else {
+        if ($this->getRequest()->isPost()) {
+            $post = [
+                'name' => $this->getRequest()->getPost('name'),
+                'datetime' => trim($this->getRequest()->getPost('datetime')),
+                'usage' => trim($this->getRequest()->getPost('usage')),
+                'amount' => trim($this->getRequest()->getPost('amount')),
+                'id' => trim($this->getRequest()->getPost('id'))
+            ];
+
+            $validation = Validation::create($post, [
+                'name' => 'required',
+                'datetime' => 'required',
+                'usage' => 'required',
+                'amount' => 'required|numeric',
+                'id' => 'required|numeric|integer|min:1'
+            ]);
+
+            if ($validation->isValid()) {
                 $model = new \Modules\Checkout\Models\Entry();
-                $model->setId($id);
-                $model->setName($name);
-                $model->setDatetime($datetime);
-                $model->setUsage($usage);
-                $model->setAmount($amount);
+                $model->setId($post['id']);
+                $model->setName($post['name']);
+                $model->setDatetime($post['datetime']);
+                $model->setUsage($post['usage']);
+                $model->setAmount($post['amount']);
                 $checkoutMapper->save($model);
 
                 $this->addMessage('saveSuccess');
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('checkout', $checkoutMapper->getEntryById($id));
         $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
     }
 
     public function delAction()
     {
-        if ($this->getRequest()) {
+        if ($this->getRequest()->isSecure()) {
             $checkoutMapper = new CheckoutMapper();
             $id = $this->getRequest()->getParam('id');
             $checkoutMapper->deleteById($id);
