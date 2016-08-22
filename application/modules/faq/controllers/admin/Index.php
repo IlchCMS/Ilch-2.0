@@ -98,7 +98,7 @@ class Index extends \Ilch\Controller\Admin
             ];
 
             $validation = Validation::create($post, [
-                'catId' => 'required|numeric|integer|min:0',
+                'catId' => 'required|numeric|integer|min:1',
                 'question' => 'required',
                 'answer' => 'required'
             ]);
