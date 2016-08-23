@@ -365,7 +365,7 @@ if (! function_exists('random_int')) {
          * lose precision, so the <= and => operators might accidentally let a float
          * through.
          */
-        
+
         try {
             $min = RandomCompat_intval($min);
         } catch (TypeError $ex) {
@@ -380,7 +380,7 @@ if (! function_exists('random_int')) {
                 'random_int(): $max must be an integer'
             );
         }
-        
+
         /**
          * Now that we've verified our weak typing system has given us an integer,
          * let's validate the logic then we can move forward with generating random
@@ -493,4 +493,21 @@ if (! function_exists('random_int')) {
         } while (!is_int($val) || $val > $max || $val < $min);
         return (int) $val;
     }
+}
+
+/**
+ * Translation shortcut
+ * @return string Translation
+ */
+function t()
+{
+    static $translator;
+
+    if (is_null($translator)) {
+        $translator = \Ilch\Registry::get('translator');
+    }
+
+    $args = func_get_args();
+
+    return call_user_func_array([$translator, 'trans'], $args);
 }

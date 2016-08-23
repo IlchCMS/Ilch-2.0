@@ -179,21 +179,6 @@ abstract class Base
     }
 
     /**
-     * Returns the translated text for a specific key.
-     *
-     * @param string   $key
-     * @param [, mixed $args [, mixed $... ]]
-     *
-     * @return string
-     */
-    public function t($key)
-    {
-        $args = func_get_args();
-
-        return call_user_func_array([$this->getTranslator(), 'trans'], $args);
-    }
-
-    /**
      * Gets the base url.
      *
      * @param string $url

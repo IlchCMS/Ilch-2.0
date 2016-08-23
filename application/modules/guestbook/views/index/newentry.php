@@ -1,8 +1,8 @@
-<legend><?=$this->t('menuGuestbook') ?></legend>
+<legend><?=t('menuGuestbook') ?></legend>
 
 <?php if (!empty($this->errors()->hasErrors())): ?>
     <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->t('errorsOccured') ?>:</strong>
+        <strong> <?=t('errorsOccured') ?>:</strong>
         <ul>
             <?php foreach ($this->errors()->getErrorMessages() as $error): ?>
                 <li><?= $error; ?></li>
@@ -15,7 +15,7 @@
     <?=$this->getTokenField() ?>
     <div class="form-group hidden">
         <label class="col-lg-2 control-label">
-            <?=$this->t('bot') ?>*
+            <?=t('bot') ?>*
         </label>
         <div class="col-lg-8">
             <input type="text"
@@ -26,7 +26,7 @@
     </div>
     <div class="form-group<?= $this->errors()->hasError('name') ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">
-            <?=$this->t('name') ?>*
+            <?=t('name') ?>*
         </label>
         <div class="col-lg-8">
             <input type="text"
@@ -38,7 +38,7 @@
     </div>
     <div class="form-group<?= $this->errors()->hasError('email') ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">
-            <?=$this->t('email') ?>*
+            <?=t('email') ?>*
         </label>
         <div class="col-lg-8">
             <input type="text"
@@ -50,19 +50,19 @@
     </div>
     <div class="form-group<?= $this->errors()->hasError('homepage') ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">
-            <?=$this->t('page') ?>
+            <?=t('page') ?>
         </label>
         <div class="col-lg-8">
            <input type="text"
                   class="form-control"
                   name="homepage"
-                  placeholder="<?=$this->t('page') ?>"
+                  placeholder="<?=t('page') ?>"
                   value="<?=$this->old('homepage'); ?>" />
         </div>
     </div>
     <div class="form-group<?= $this->errors()->hasError('text') ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">
-            <?=$this->t('message') ?>*
+            <?=t('message') ?>*
         </label>
         <div class="col-lg-8">
             <textarea class="form-control ckeditor"
@@ -80,7 +80,7 @@
     ?>
     <div class="form-group<?= $this->errors()->hasError('captcha') ? ' has-error' : '' ?>">
         <label class="col-lg-2 control-label">
-            <?=$this->t('captcha') ?>
+            <?=t('captcha') ?>
         </label>
         <div class="col-lg-8">
             <?=$this->getCaptchaField() ?>
@@ -93,7 +93,7 @@
                   class="form-control"
                   autocomplete="off"
                   name="captcha"
-                  placeholder="<?=$this->t('captcha') ?>" />
+                  placeholder="<?=t('captcha') ?>" />
             <span class="input-group-addon">
                 <a href="javascript:void(0)" onclick="
                     document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
@@ -111,4 +111,4 @@
     </div>
 </form>
 
-<?=$this->getDialog("smiliesModal", $this->t('smilies'), "<iframe frameborder='0'></iframe>"); ?>
+<?=$this->getDialog("smiliesModal", t('smilies'), "<iframe frameborder='0'></iframe>"); ?>
