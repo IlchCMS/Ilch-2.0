@@ -8,7 +8,7 @@ $(document).ready(function(){
             CKEDITOR.replace( id , {
                 removePlugins: 'bbcode',
                 disableObjectResizing: false,
-                contentsCss: [CKEDITOR.basePath + '../../css/bootstrap.css'],
+                contentsCss: [CKEDITOR.basePath + '../../css/bootstrap.min.css'],
                 allowedContent: true,
                 toolbar : toolbar
             });

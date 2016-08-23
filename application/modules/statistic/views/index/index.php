@@ -9,7 +9,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuStatistic') ?></legend>
 <div class="row">

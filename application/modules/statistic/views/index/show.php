@@ -8,7 +8,7 @@ $browser = $this->getRequest()->getParam('browser');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <?php if ($this->get('statisticOSVersionList') != '' AND $os != ''): ?>
     <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - Windows</i></legend>
