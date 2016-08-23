@@ -1,7 +1,6 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Ilch;
@@ -11,7 +10,8 @@ class View extends Design\Base
     /**
      * Loads a view script.
      *
-     * @param  string $viewScript
+     * @param string $viewScript
+     *
      * @return string
      */
     public function loadScript($viewScript)
@@ -28,15 +28,17 @@ class View extends Design\Base
     /**
      * Loads a view file.
      *
-     * @param string $url
-     * @param mixed[] $data
+     * @param string $file
+     * @param array  $data
      */
     public function load($file, $data = [])
     {
         $request = $this->getRequest();
-        $view = new \Ilch\View($request,
+        $view = new \Ilch\View(
+            $request,
             $this->getTranslator(),
-            $this->getRouter());
+            $this->getRouter()
+        );
         $view->setArray($data);
 
         echo $view->loadScript(APPLICATION_PATH.'/modules/'.$request->getModuleName().'/views/'.$file);
@@ -46,7 +48,9 @@ class View extends Design\Base
      * Gets the save bar html.
      *
      * @param string $saveKey
+     * @param string $nameKey
      * @param string $deleteKey
+     *
      * @return string
      */
     public function getSaveBar($saveKey = 'saveButton', $nameKey = null, $deleteKey = '')
@@ -70,8 +74,9 @@ class View extends Design\Base
     /**
      * Gets the list bar html.
      *
-     * @param array $actions
+     * @param array  $actions
      * @param string $name
+     *
      * @return string
      */
     public function getListBar($actions = [], $name = '')
@@ -83,23 +88,26 @@ class View extends Design\Base
                                 $this->getTrans('selected').' <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu listChooser" role="menu">';
-                                foreach ($actions as $key => $name) {
-                                    $html .= '<li><a href="#" data-hiddenkey="'.$key.'">'.$this->getTrans($name).'</a></li>';
-                                }
+        foreach ($actions as $key => $name) {
+            $html .= '<li><a href="#" data-hiddenkey="'.$key.'">'.$this->getTrans($name).'</a></li>';
+        }
         $html .= '</ul></div></div>';
 
-        return $html; 
+        return $html;
     }
 
     /**
      * Gets the edit icon html.
      *
      * @param array $url
+     *
      * @return string
      */
     public function getEditIcon($url)
     {
-        $html = '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'"><span class="fa fa-edit text-success"></span></a>';
+        $html = '<a href="'.$this->getUrl($url).'" title="'.$this->getTrans('edit').'">
+            <span class="fa fa-edit text-success"></span>
+        </a>';
 
         return $html;
     }
@@ -108,11 +116,15 @@ class View extends Design\Base
      * Gets the delete icon html.
      *
      * @param array $url
+     *
      * @return string
      */
     public function getDeleteIcon($url)
     {
-        $html = '<a class="delete_button" href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'">
+        $html = '<a class="delete_button"
+                    href="'.$this->getUrl($url, null, true).'"
+                    title="'.$this->getTrans('delete').'"
+                >
                     <span class="fa fa-trash-o text-danger"></span>
                  </a>';
 
@@ -123,10 +135,34 @@ class View extends Design\Base
      * Gets check all checkbox.
      *
      * @param string $childs
+     *
      * @return string
      */
     public function getCheckAllCheckbox($childs)
     {
         return '<input type="checkbox" class="check_all" data-childs="'.$childs.'" />';
+    }
+
+    /**
+     * Returns the input data from the last request.
+     *
+     * @param string $key     Array key
+     * @param string $default Default value if key not found
+     *
+     * @return mixed
+     */
+    public function old($key = null, $default = '')
+    {
+        return $this->getRequest()->old($key, $default);
+    }
+
+    /**
+     * Returns the validation errors from the last request.
+     *
+     * @return \Ilch\Validation\ErrorBag
+     */
+    public function errors()
+    {
+        return $this->getRequest()->errors();
     }
 }

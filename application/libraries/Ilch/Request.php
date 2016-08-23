@@ -1,20 +1,22 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Ilch;
 
+/**
+ * Request class.
+ */
 class Request
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isAdmin = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isAjax = false;
 
@@ -39,6 +41,79 @@ class Request
     protected $params;
 
     /**
+     * Form input from the last request.
+     *
+     * @var array
+     */
+    protected $oldInput;
+
+    /**
+     * Validation errors from the last request.
+     *
+     * @var \Ilch\Validation\ErrorBag
+     */
+    protected $validationErrors;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->oldInput = array();
+        $this->validationErrors = new \Ilch\Validation\ErrorBag();
+
+        $this->checkForOldInput();
+        $this->checkForValidationErrors();
+    }
+
+    /**
+     * Checks the session for old input data.
+     */
+    public function checkForOldInput()
+    {
+        if (isset($_SESSION['ilch_old_input'])) {
+            $this->oldInput = $_SESSION['ilch_old_input'];
+
+            unset($_SESSION['ilch_old_input']);
+        }
+    }
+
+    /**
+     * Checks the session for validation errors.
+     */
+    public function checkForValidationErrors()
+    {
+        if (isset($_SESSION['ilch_validation_errors'])) {
+            $this->validationErrors->setErrors($_SESSION['ilch_validation_errors']);
+
+            unset($_SESSION['ilch_validation_errors']);
+        }
+    }
+
+    /**
+     * Returns the old input for the given key.
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function old($key = null, $default = '')
+    {
+        return array_dot($this->oldInput, $key, $default);
+    }
+
+    /**
+     * Returns the validation errorbag.
+     *
+     * @return \Ilch\Validation\ErrorBag
+     */
+    public function errors()
+    {
+        return $this->validationErrors;
+    }
+
+    /**
      * Gets admin request flag.
      *
      * @return string
@@ -51,7 +126,7 @@ class Request
     /**
      * Sets admin request flag.
      *
-     * @param boolean $admin
+     * @param bool $admin
      */
     public function setIsAdmin($admin)
     {
@@ -61,11 +136,12 @@ class Request
     /**
      * Gets Ajax request flag.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAjax()
     {
-        if ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest") || $this->isAjax) {
+        if ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') ||
+            $this->isAjax) {
             return true;
         }
 
@@ -75,7 +151,7 @@ class Request
     /**
      * Sets ajax request flag.
      *
-     * @param boolean $ajax
+     * @param bool $ajax
      */
     public function setIsAjax($ajax)
     {
@@ -145,21 +221,20 @@ class Request
     /**
      * Gets param with given key.
      *
-     * @return string|null
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
      */
-    public function getParam($key)
+    public function getParam($key, $default = null)
     {
-        if (isset($this->params[$key])) {
-            return $this->params[$key];
-        }
-
-        return null;
+        return array_dot($this->params, $key, $default);
     }
 
     /**
      * Sets the param with the given key / value.
      *
-     * @param string $name
+     * @param string $key
      * @param string $value
      */
     public function setParam($key, $value)
@@ -190,7 +265,7 @@ class Request
     /**
      * Checks if request is a POST - request.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPost()
     {
@@ -205,8 +280,9 @@ class Request
      *      foo.bar     > foo['bar']
      *      foo.bar.baz > foo['bar']['baz']
      *
-     * @param  string $key
-     * @param  string $default This gets returned if $key does not exist
+     * @param string $key
+     * @param string $default This gets returned if $key does not exist
+     *
      * @return string|null
      */
     public function getPost($key = null, $default = null)
@@ -217,24 +293,20 @@ class Request
     /**
      * Get get-value by key.
      *
-     * @param  string $key
+     * @param string $key
+     * @param mixed  $default
+     *
      * @return mixed
      */
-    public function getQuery($key = '')
+    public function getQuery($key = null, $default = null)
     {
-        if ($key === '') {
-            return $_GET;
-        } elseif (isset($_GET[$key])) {
-            return $_GET[$key];
-        } else {
-            return null;
-        }
+        return array_dot($_GET, $key, $default);
     }
 
     /**
      * Checks if request is secure.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSecure()
     {
@@ -246,7 +318,8 @@ class Request
         }
 
         // Delete the used tokens.
-        // Just delete the token used in a GET-Request to avoid "no valid secure token given, add function getTokenField() to formular".
+        // Just delete the token used in a GET-Request to avoid "no valid secure token given,
+        // add function getTokenField() to formular".
         // unset($_SESSION['token'][$this->getPost('ilch_token')]);
         if (!$this->isPost()) {
             unset($_SESSION['token'][$this->getParam('ilch_token')]);

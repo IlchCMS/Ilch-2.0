@@ -1,11 +1,13 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Ilch\Design;
 
+/**
+ * Base class.
+ */
 abstract class Base
 {
     /**
@@ -16,7 +18,7 @@ abstract class Base
     private $helpers = [];
 
     /**
-     * Name of the layout that will be used
+     * Name of the layout that will be used.
      *
      * @var string
      */
@@ -27,7 +29,7 @@ abstract class Base
      *
      * @param string $name
      * @param string $type
-     * @param mixed $obj
+     * @param mixed  $obj
      */
     public function addHelper($name, $type, $obj)
     {
@@ -66,7 +68,7 @@ abstract class Base
     private $data = [];
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $modRewrite;
 
@@ -87,7 +89,8 @@ abstract class Base
     /**
      * Gets view data.
      *
-     * @param  string     $key
+     * @param string $key
+     *
      * @return mixed|null
      */
     public function get($key)
@@ -96,14 +99,14 @@ abstract class Base
             return $this->data[$key];
         }
 
-        return null;
+        return;
     }
 
     /**
      * Set view data.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function set($key, $value)
     {
@@ -163,20 +166,38 @@ abstract class Base
     /**
      * Returns the translated text for a specific key.
      *
-     * @param string $key
+     * @param string   $key
      * @param [, mixed $args [, mixed $... ]]
+     *
      * @return string
      */
     public function getTrans($key)
     {
-      $args = func_get_args();
-      return call_user_func_array([$this->getTranslator(), 'trans'], $args);
+        $args = func_get_args();
+
+        return call_user_func_array([$this->getTranslator(), 'trans'], $args);
+    }
+
+    /**
+     * Returns the translated text for a specific key.
+     *
+     * @param string   $key
+     * @param [, mixed $args [, mixed $... ]]
+     *
+     * @return string
+     */
+    public function t($key)
+    {
+        $args = func_get_args();
+
+        return call_user_func_array([$this->getTranslator(), 'trans'], $args);
     }
 
     /**
      * Gets the base url.
      *
-     * @param  string  $url
+     * @param string $url
+     *
      * @return string
      */
     public function getBaseUrl($url = '')
@@ -184,10 +205,11 @@ abstract class Base
         return BASE_URL.'/'.$url;
     }
 
-   /**
+    /**
      * Gets the layout url.
      *
      * @param string $url
+     *
      * @return string
      */
     public function getLayoutUrl($url = '')
@@ -203,6 +225,7 @@ abstract class Base
      * Gets the module url.
      *
      * @param string $url
+     *
      * @return string
      */
     public function getModuleUrl($url = '')
@@ -217,7 +240,8 @@ abstract class Base
     /**
      * Gets the system, static url.
      *
-     * @param  string $url
+     * @param string $url
+     *
      * @return string
      */
     public function getStaticUrl($url = '')
@@ -232,7 +256,8 @@ abstract class Base
     /**
      * Escape the given string.
      *
-     * @param  string $string
+     * @param string $string
+     *
      * @return string
      */
     public function escape($string)
@@ -244,6 +269,7 @@ abstract class Base
      * Gets html from bbcode.
      *
      * @param string $bbcode
+     *
      * @return string
      */
     public function getHtmlFromBBCode($bbcode)
@@ -255,22 +281,22 @@ abstract class Base
 
         $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<div class="quote">{param}</div>');
         $parser->addCodeDefinition($builder->build());
-        
+
         $builder = new \JBBCode\CodeDefinitionBuilder('list', '<ul>{param}</ul>');
         $parser->addCodeDefinition($builder->build());
-        
+
         $builder = new \JBBCode\CodeDefinitionBuilder('*', '<li>{param}</li>');
         $parser->addCodeDefinition($builder->build());
-        
+
         $builder = new \JBBCode\CodeDefinitionBuilder('email', '<a href="mailto:{param}">{param}</a>');
         $parser->addCodeDefinition($builder->build());
 
         $builder = new \JBBCode\CodeDefinitionBuilder('img', '<img src="{param}" alt="Image">');
         $parser->addCodeDefinition($builder->build());
-        
+
         $builder = new \JBBCode\CodeDefinitionBuilder('i', '<em>{param}</em>');
         $parser->addCodeDefinition($builder->build());
- 
+
         $builder = new \JBBCode\CodeDefinitionBuilder('u', '<u>{param}</u>');
         $parser->addCodeDefinition($builder->build());
 
@@ -290,17 +316,18 @@ abstract class Base
     /**
      * Creates a full url for the given parts.
      *
-     * @param  array|string $url
-     * @param  string  $route
-     * @param  boolean $secure
+     * @param array|string $url
+     * @param string       $route
+     * @param bool         $secure
+     *
      * @return string
      */
     public function getUrl($url = [], $route = null, $secure = false)
     {
         $config = \Ilch\Registry::get('config');
- 
+
         if ($config !== null && $this->modRewrite === null) {
-            $this->modRewrite = (bool)$config->get('mod_rewrite');
+            $this->modRewrite = (bool) $config->get('mod_rewrite');
         }
 
         if (empty($url)) {
@@ -356,10 +383,12 @@ abstract class Base
     }
 
     /**
-     * Returns a full url for the current url with only the given parts changed
+     * Returns a full url for the current url with only the given parts changed.
+     *
      * @param array $urlParts
-     * @param bool $resetParams
-     * @param bool $secure
+     * @param bool  $resetParams
+     * @param bool  $secure
+     *
      * @return string
      */
     public function getCurrentUrl(array $urlParts = [], $resetParams = true, $secure = false)
@@ -367,7 +396,7 @@ abstract class Base
         $currentUrlParts = [
             'module' => $this->request->getModuleName(),
             'controller' => $this->request->getControllerName(),
-            'action' => $this->request->getActionName()
+            'action' => $this->request->getActionName(),
         ];
 
         $params = $this->request->getParams();
@@ -395,11 +424,12 @@ abstract class Base
     }
 
     /**
-     * Generates a token and stores it in user-session
+     * Generates a token and stores it in user-session.
      *
      * @return string
      */
-    public function generateToken() {
+    public function generateToken()
+    {
         $token = bin2hex(openssl_random_pseudo_bytes(32));
         $_SESSION['token'][$token] = $token;
 
@@ -421,9 +451,11 @@ abstract class Base
     /**
      * Gets the MediaModal.
      * Place inside Javascript tag.
-     * 
-     * @param string $mediaButton Define Media Button by given URL
+     *
+     * @param string $mediaButton  Define Media Button by given URL
      * @param string $actionButton Define Action Button by given URL
+     * @param int    $inputId
+     *
      * @return string
      */
     public function getMedia($mediaButton = null, $actionButton = null, $inputId = null)
@@ -446,7 +478,7 @@ abstract class Base
     /**
      * Gets the page queries.
      *
-     * @return integer
+     * @return int
      */
     public function queryCount()
     {
@@ -458,8 +490,9 @@ abstract class Base
     /**
      * Limit the given string to the given length.
      *
-     * @param  string  $str
-     * @param  integer $length
+     * @param string $str
+     * @param int    $length
+     *
      * @return string
      */
     public function limitString($str, $length)
@@ -467,7 +500,7 @@ abstract class Base
         if (strlen($str) <= $length) {
             return $str;
         } else {
-            return preg_replace("/[^ ]*$/", '', substr($str, 0, $length)).'...';
+            return preg_replace('/[^ ]*$/', '', substr($str, 0, $length)).'...';
         }
     }
 
@@ -492,7 +525,12 @@ abstract class Base
     }
 
     /**
-     * Gets the dialog.
+     * Generates a modal.
+     *
+     * @param string $id
+     * @param string $name
+     * @param string $content
+     * @param bool   $submit
      *
      * @return string
      */
@@ -513,8 +551,8 @@ abstract class Base
                         '.$content.'
                     </div>
                     <div class="modal-footer">';
-                        if ($submit != null) {
-                            $html .= '<button type="button"
+        if ($submit) {
+            $html .= '<button type="button"
                                  class="btn btn-primary"
                                  id="modalButton">'.$this->getTrans('ack').'
                             </button>
@@ -522,14 +560,14 @@ abstract class Base
                                     class="btn btn-default"
                                     data-dismiss="modal">'.$this->getTrans('cancel').'
                             </button>';
-                        } else {
-                            $html .= '<button type="button"
+        } else {
+            $html .= '<button type="button"
                                 class="btn btn-primary"
                                 data-dismiss="modal">
                             '.$this->getTrans('close').'
                             </button>';
-                        }
-                    $html .= '</div>
+        }
+        $html .= '</div>
                 </div>
             </div>
         </div>';
