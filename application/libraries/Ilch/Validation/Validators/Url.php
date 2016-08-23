@@ -1,13 +1,12 @@
 <?php
 /**
  * @copyright Ilch 2.0
- * @package ilch
  */
 
 namespace Ilch\Validation\Validators;
 
 /**
- * Required validation class
+ * Required validation class.
  */
 class Url extends Base
 {
@@ -19,24 +18,30 @@ class Url extends Base
     // https://gist.github.com/dperini/729294
     const REGEXP = '%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu';
 
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
     protected $errorKey = 'validation.errors.url.noValidUrl';
 
+    /**
+     * Runs the validation.
+     *
+     * @return self
+     */
     public function run()
     {
-        $data = $this->data;
-        $value = $data->getValue();
+        $value = $this->getValue();
 
         if (empty($value)) {
-            $result = true;
-        } else {
-            $result = (bool) preg_match(static::REGEXP, $value);
+            $this->setIsValid(true);
+
+            return $this;
         }
 
-        return [
-            'result' => $result,
-            'error_key' => $this->getErrorKey($data),
-        ];
+        $this->setIsValid((bool) preg_match(static::REGEXP, $value));
+
+        return $this;
     }
-
-
 }

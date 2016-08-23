@@ -10,32 +10,56 @@ namespace Ilch\Validation\Validators;
  */
 class Size extends Base
 {
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
     protected $errorKey = 'validation.errors.size.numeric';
-    protected $minParams = 1;
-    protected $maxParams = 2;
 
+    /**
+     * Minimum parameter count needed.
+     *
+     * @var int
+     */
+    protected $minParams = 1;
+
+    /**
+     * Runs the validation.
+     *
+     * @return self
+     */
     public function run()
     {
-        $numberString = isset($this->params[1]) && $this->params[1] === 'string' ? true : null;
+        $numberString = $this->getParameter(1) === 'string' ? true : false;
 
-        return [
-            'result' => $this->value === '' || $this->getSize($this->value, $numberString) === (int) $this->params[0],
-            'error_key' => $this->getErrorKey($this->data),
-            'error_params' => [[$this->params[0]]],
-        ];
+        $this->setIsValid(
+            $this->value === '' || $this->getSize($this->getValue(), $numberString) === (int) $this->getParameter(0)
+        );
+        $this->setErrorParameters([$this->getParameter(0)]);
+
+        return $this;
     }
 
-    protected function getSize($value, $numberString = null)
+    /**
+     * Gets the size.
+     *
+     * @param string|int|array $value        The value to check
+     * @param bool             $numberString Is it a number string?
+     *
+     * @return int The size of the value
+     */
+    protected function getSize($value, $numberString)
     {
         if (is_numeric($value) && !$numberString) {
             return (int) $value;
         } elseif (is_array($value)) {
-            $this->errorKey = 'validation.errors.size.array';
+            $this->setErrorKey('validation.errors.size.array');
 
             return count($value);
         }
 
-        $this->errorKey = 'validation.errors.size.string';
+        $this->setErrorKey('validation.errors.size.string');
 
         return mb_strlen($value);
     }

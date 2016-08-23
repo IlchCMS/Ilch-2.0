@@ -10,18 +10,22 @@ namespace Ilch\Validation\Validators;
  */
 class Numeric extends Base
 {
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
     protected $errorKey = 'validation.errors.numeric.mustBeNumeric';
 
+    /**
+     * Runs the validation.
+     *
+     * @return self
+     */
     public function run()
     {
-        $data = $this->data;
-        $value = $data->getValue();
+        $this->setIsValid($this->getValue() === '' || is_numeric($this->getValue()));
 
-        $result = $value === '' || is_numeric($value);
-
-        return [
-            'result' => $result,
-            'error_key' => $this->getErrorKey($data),
-        ];
+        return $this;
     }
 }

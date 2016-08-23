@@ -10,24 +10,38 @@ namespace Ilch\Validation\Validators;
  */
 class Same extends Base
 {
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
     protected $errorKey = 'validation.errors.same.fieldsDontMatch';
-    protected $minParams = 1;
-    protected $maxParams = 2;
 
+    /**
+     * Minimum parameter count needed.
+     *
+     * @var int
+     */
+    protected $minParams = 1;
+
+    /**
+     * Runs the validation.
+     *
+     * @return self
+     */
     public function run()
     {
-        $strict = $this->data->getParam(1);
+        $strict = $this->getParameter(1);
 
-        $result = $this->value === $this->data->getInput()[$this->data->getParam(0)];
+        $result = $this->getValue() === array_dot($this->getInput(), $this->getParameter(0));
 
         if (is_null($strict)) {
-            $result = $this->value == $this->data->getInput()[$this->data->getParam(0)];
+            $result = $this->getValue() == array_dot($this->getInput(), $this->getParameter(0));
         }
 
-        return [
-            'result' => $result,
-            'error_key' => $this->getErrorKey($this->data),
-            'error_params' => [[$this->data->getParam(0), true]],
-        ];
+        $this->setIsValid($result);
+        $this->setErrorParameters([$this->getParameter(0)]);
+
+        return $this;
     }
 }
