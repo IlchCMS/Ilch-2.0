@@ -18,7 +18,7 @@
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -30,7 +30,7 @@
                    value="<?php if ($linkus != '') { echo $this->escape($linkus->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('banner', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('banner', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>

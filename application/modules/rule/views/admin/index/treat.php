@@ -18,7 +18,7 @@
             </ul>
         </div>
     <?php endif; ?>
-    <div class="form-group<?=in_array('paragraph', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('paragraph', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="paragraph" class="col-lg-2 control-label">
             <?=$this->getTrans('paragraph') ?>:
         </label>
@@ -31,7 +31,7 @@
                    value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getParagraph()); } else { echo $this->get('post')['paragraph']; } ?>">
         </div>
     </div>
-    <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -43,7 +43,7 @@
                    value="<?php if ($this->get('rule') != '') { echo $this->escape($this->get('rule')->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>

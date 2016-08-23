@@ -14,7 +14,7 @@
 <?php if ($receivers != ''): ?>
     <form method="POST" class="form-horizontal" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group<?=in_array('receiver', $this->get('errorFields')) ? ' has-error' : '' ?>">
+        <div class="form-group <?=in_array('receiver', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="receiver" class="col-lg-2 control-label">
                 <?=$this->getTrans('receiver') ?>:
             </label>
@@ -26,7 +26,7 @@
                 </select>
             </div>
         </div>
-        <div class="form-group<?=in_array('senderName', $this->get('errorFields')) ? ' has-error' : '' ?>">
+        <div class="form-group <?=in_array('senderName', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="name" class="col-lg-2 control-label">
                 <?=$this->getTrans('name') ?>:
             </label>
@@ -38,7 +38,7 @@
                        value="<?=$this->get('post')['senderName'] ?>" />
             </div>
         </div>
-        <div class="form-group<?=in_array('senderEmail', $this->get('errorFields')) ? ' has-error' : '' ?>">
+        <div class="form-group <?=in_array('senderEmail', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="email" class="col-lg-2 control-label">
                 <?=$this->getTrans('email') ?>:
             </label>
@@ -50,7 +50,7 @@
                        value="<?=$this->get('post')['senderEmail'] ?>" />
             </div>
         </div>
-        <div class="form-group<?=in_array('message', $this->get('errorFields')) ? ' has-error' : '' ?>">
+        <div class="form-group <?=in_array('message', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="message" class="col-lg-2 control-label">
                 <?=$this->getTrans('message') ?>:
             </label>
@@ -61,7 +61,7 @@
                           rows="5"><?=$this->get('post')['message'] ?></textarea>
             </div>
         </div>
-        <div class="form-group<?=in_array('captcha', $this->get('errorFields')) ? ' has-error' : '' ?>">
+        <div class="form-group <?=in_array('captcha', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label class="col-lg-2 control-label">
                 <?=$this->getTrans('captcha') ?>:
             </label>

@@ -21,7 +21,7 @@ if (empty($this->get('errorFields'))) {
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('showHtml', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('showHtml', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('showHtml') ?>:
         </div>
@@ -35,7 +35,7 @@ if (empty($this->get('errorFields'))) {
             </div>
         </div>
     </div>
-    <div class="form-group<?=in_array('showBBCode', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('showBBCode', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('showBBCode') ?>:
         </div>

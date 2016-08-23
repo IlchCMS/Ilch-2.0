@@ -20,7 +20,7 @@ if (empty($this->get('errorFields'))) {
 ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('slider', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('slider', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('slider') ?>:
         </div>
@@ -35,7 +35,7 @@ if (empty($this->get('errorFields'))) {
         </div>
     </div>
     <div id="contentHeight" class="<?php if (!$slider) { echo 'hidden'; } ?>">
-        <div class="form-group<?=in_array('boxSliderHeight', $this->get('errorFields')) ? ' has-error' : '' ?>">
+        <div class="form-group <?=in_array('boxSliderHeight', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="boxSliderHeight" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderHeight') ?>:
             </label>
@@ -49,7 +49,7 @@ if (empty($this->get('errorFields'))) {
             </div>
         </div>
 
-        <div class="form-group<?=in_array('boxSliderSpeed', $this->get('errorFields')) ? ' has-error' : '' ?>">
+        <div class="form-group <?=in_array('boxSliderSpeed', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="boxSliderSpeed" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderSpeed') ?>:
             </label>

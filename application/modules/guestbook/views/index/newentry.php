@@ -26,7 +26,7 @@
                    placeholder="Bot" />
         </div>
     </div>
-    <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('name', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>*
         </label>
@@ -38,7 +38,7 @@
                    value="<?=$this->get('post')['name'] ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('email', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('email', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('email') ?>*
         </label>
@@ -50,7 +50,7 @@
                    value="<?=$this->get('post')['email'] ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('homepage', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('homepage', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('page') ?>
         </label>
@@ -62,7 +62,7 @@
                   value="<?=$this->get('post')['homepage'] ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('message') ?>*
         </label>
@@ -82,7 +82,7 @@
         echo $message;
     }
     ?>
-    <div class="form-group<?=in_array('captcha', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('captcha', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('captcha') ?>
         </label>
@@ -90,7 +90,7 @@
             <?=$this->getCaptchaField() ?>
         </div>
     </div>
-    <div class="form-group<?=in_array('captcha', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('captcha', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <div class="col-lg-offset-2 col-lg-8 input-group captcha">
             <input type="text"
                   id="captcha-form"

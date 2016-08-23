@@ -20,7 +20,7 @@
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('name', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"

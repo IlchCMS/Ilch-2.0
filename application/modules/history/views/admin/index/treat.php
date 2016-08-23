@@ -31,7 +31,7 @@ if ($history != '') {
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('date', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('date', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -47,7 +47,7 @@ if ($history != '') {
             </span>
         </div>
     </div>
-    <div class="form-group<?=in_array('title', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -59,7 +59,7 @@ if ($history != '') {
                    value="<?php if ($history != '') { echo $this->escape($history->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('text', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>

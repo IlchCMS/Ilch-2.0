@@ -1,4 +1,4 @@
-<legend><?= $this->getTrans('manage') ?></legend>
+<legend><?=$this->getTrans('manage') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">
@@ -8,11 +8,9 @@
                 <col class="icon_width">
                 <col class="icon_width">
                 <col>
-                <?php
-                if ($this->get('multilingual')) {
-                    echo '<col class="col-lg-1">';
-                }
-                ?>
+                <?php if ($this->get('multilingual')): ?>
+                    <col class="col-lg-1">
+                <?php endif; ?>
             </colgroup>
             <thead>
                 <tr>
@@ -36,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if ($this->get('pages') != ''): ?>
+                <?php if (!empty($this->get('pages'))): ?>
                     <?php foreach ($this->get('pages') as $page): ?>
                         <tr>
                             <td><input type="checkbox" name="check_pages[]" value="<?=$page->getId() ?>" /></td>
@@ -66,7 +64,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="<?php if ($this->get('multilingual')) { echo 5; } else { echo 4; } ?>"><?=$this->getTrans('noPages') ?></td>
+                        <td colspan="<?=($this->get('multilingual')) ? '5' : '4' ?>"><?=$this->getTrans('noPages') ?></td>
                     </tr>
                 <?php endif; ?>
             </tbody>

@@ -19,7 +19,7 @@
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('name', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('name', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -31,7 +31,7 @@
                    value="<?php if ($this->get('receiver') != '') { echo $this->escape($this->get('receiver')->getName()); } else { echo $this->get('post')['name']; } ?>" />
         </div>
     </div>
-    <div class="form-group<?=in_array('email', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('email', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="email" class="col-lg-2 control-label">
                 <?=$this->getTrans('email') ?>:
         </label>

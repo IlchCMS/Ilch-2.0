@@ -1,42 +1,42 @@
 <?php $categoryMapper = $this->get('categoryMapper'); ?>
 
 <legend><?=$this->getTrans('manage') ?></legend>
-<?php if ($this->get('articles') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField() ?>
-        <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <colgroup>
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col>
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="col-lg-2">
+                <col>
+                <?php if ($this->get('multilingual')): ?>
+                    <col class="col-lg-1">
+                <?php endif; ?>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('check_articles') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th><?=$this->getTrans('cats') ?></th>
+                    <th><?=$this->getTrans('title') ?></th>
                     <?php if ($this->get('multilingual')): ?>
-                        <col class="col-lg-1">
-                    <?php endif; ?>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th><?=$this->getCheckAllCheckbox('check_articles') ?></th>
-                        <th></th>
-                        <th></th>
-                        <th><?=$this->getTrans('cats') ?></th>
-                        <th><?=$this->getTrans('title') ?></th>
-                        <?php if ($this->get('multilingual')): ?>
-                            <th class="text-right">
-                                <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
-                                    <?php if ($key == $this->get('contentLanguage')): ?>
-                                        <?php continue; ?>
-                                    <?php endif; ?>
+                        <th class="text-right">
+                            <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
+                                <?php if ($key == $this->get('contentLanguage')): ?>
+                                    <?php continue; ?>
+                                <?php endif; ?>
 
-                                    <img src="<?=$this->getStaticUrl('img/'.$key.'.png') ?>">
-                                <?php endforeach; ?>
-                            </th>
-                        <?php endif; ?>
-                    </tr>
-                </thead>
-                <tbody>
+                                <img src="<?=$this->getStaticUrl('img/'.$key.'.png') ?>">
+                            <?php endforeach; ?>
+                        </th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($this->get('articles'))): ?>
                     <?php foreach ($this->get('articles') as $article): ?>
                         <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
                         <tr>
@@ -62,11 +62,13 @@
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        <?=$this->getListBar(['delete' => 'delete']) ?>
-    </form>
-<?php else: ?>
-    <?=$this->getTrans('noArticles') ?>
-<?php endif; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="<?=($this->get('multilingual')) ? '6' : '5' ?>"><?=$this->getTrans('noArticles') ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <?=$this->getListBar(['delete' => 'delete']) ?>
+</form>

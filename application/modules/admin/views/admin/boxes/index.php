@@ -1,47 +1,45 @@
 <legend><?=$this->getTrans('manage') ?></legend>
-<?php if ($this->get('boxes') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField() ?>
-        <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <colgroup>
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col>
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="icon_width">
+                <col>
+                <?php if ($this->get('multilingual')): ?>
+                    <col class="col-lg-1">
+                <?php endif; ?>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('check_boxes') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th><?=$this->getTrans('boxTitle') ?></th>
                     <?php if ($this->get('multilingual')): ?>
-                        <col>
-                    <?php endif; ?>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th><?=$this->getCheckAllCheckbox('check_boxes') ?></th>
-                        <th></th>
-                        <th></th>
-                        <th><?=$this->getTrans('boxTitle') ?></th>
-                        <?php if ($this->get('multilingual')): ?>
-                            <th class="text-right">
-                                <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
-                                    <?php if ($key == $this->get('contentLanguage')): ?>
-                                        <?php continue; ?>
-                                    <?php endif; ?>
+                        <th class="text-right">
+                            <?php foreach ($this->getTranslator()->getLocaleList() as $key => $value): ?>
+                                <?php if ($key == $this->get('contentLanguage')): ?>
+                                    <?php continue; ?>
+                                <?php endif; ?>
 
-                                    <img src="<?=$this->getStaticUrl('img/'.$key.'.png') ?>">
-                                <?php endforeach; ?>
-                            </th>
-                        <?php endif; ?>
-                    </tr>
-                </thead>
-                <tbody>
+                                <img src="<?=$this->getStaticUrl('img/'.$key.'.png') ?>">
+                            <?php endforeach; ?>
+                        </th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!empty($this->get('boxes'))): ?>
                     <?php foreach ($this->get('boxes') as $box): ?>
                         <tr>
                             <td>
                                 <input type="checkbox" name="check_boxes[]" value="<?=$box->getId() ?>" />
                             </td>
                             <td>
-                                <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId()]) ?>">
-                                    <i class="fa fa-edit text-success"></i>
-                                </a>
+                                <?=$this->getEditIcon(['action' => 'treat', 'id' => $box->getId()]) ?>
                             </td>
                             <td>
                                 <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $box->getId()]) ?>
@@ -70,14 +68,16 @@
                             <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        <?=$this->getListBar(['delete' => 'delete']) ?>
-    </form>
-<?php else: ?>
-    <?=$this->getTrans('noBoxes') ?>
-<?php endif; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="<?=($this->get('multilingual')) ? '5' : '4' ?>"><?=$this->getTrans('noBoxes') ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <?=$this->getListBar(['delete' => 'delete']) ?>
+</form>
 
 <script>
 $('.deleteBox').on('click', function(event) {

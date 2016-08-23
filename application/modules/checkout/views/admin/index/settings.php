@@ -11,13 +11,13 @@
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group<?=in_array('checkoutContact', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('checkoutContact', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <textarea class="form-control ckeditor"
                   id="ck_1"
                   toolbar="ilch_html"
                   name="checkoutContact"><?php if ($this->get('checkoutContact') != '') { echo $this->get('checkoutContact') ; } ?></textarea>
     </div>
-    <div class="form-group<?=in_array('checkoutCurrency', $this->get('errorFields')) ? ' has-error' : '' ?>">
+    <div class="form-group <?=in_array('checkoutCurrency', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="checkoutCurrency" class="control-label">
             <?=$this->getTrans('checkoutCurrency') ?>:
         </label>
