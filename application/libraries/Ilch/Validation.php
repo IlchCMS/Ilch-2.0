@@ -5,7 +5,7 @@
 
 namespace Ilch;
 
-use Ilch\Validation\Data;
+use stdClass;
 use Ilch\Validation\ErrorBag;
 
 /**
@@ -13,6 +13,11 @@ use Ilch\Validation\ErrorBag;
  */
 class Validation
 {
+    /**
+     * Array with all built in validators.
+     *
+     * @var array
+     */
     protected static $builtInValidators = [
         // Usage: required
         'required' => '\Ilch\Validation\Validators\Required',
@@ -48,36 +53,99 @@ class Validation
         'max' => '\Ilch\Validation\Validators\Max',
     ];
 
+    /**
+     * Validators added on runtime.
+     *
+     * @var array
+     */
     protected static $validators = [];
+
+    /**
+     * Custom field aliases.
+     *
+     * @var array
+     */
     protected static $customFieldAliases = [];
 
+    /**
+     * Custom field aliases.
+     *
+     * @var array
+     */
+    protected static $customErrorKeys = [];
+
+    /**
+     * User input.
+     *
+     * @var array
+     */
     protected $input;
+
+    /**
+     * Validation rules.
+     *
+     * @var array
+     */
     protected $rules;
-    protected $breakChain;
 
-    protected $errors;
+    /**
+     * Stop validation for field on error.
+     *
+     * @var bool
+     */
+    protected static $breakChain = true;
 
+    /**
+     * Auto run validation on creation.
+     *
+     * @var bool
+     */
+    protected static $autoRun = true;
+
+    /**
+     * Holds error messages.
+     *
+     * @var \Ilch\Validation\ErrorBag
+     */
     protected $errorBag;
+
+    /**
+     * The translator instance.
+     *
+     * @var \Ilch\Translator
+     */
     protected $translator;
 
-    protected $fields_with_error = [];
+    /**
+     * Array with parsed validation rules.
+     *
+     * @var array
+     */
+    protected $validationRules = array();
+
+    /**
+     * Validation state.
+     *
+     * @var bool
+     */
     protected $passes = true;
 
     /**
-     * Constructor.
+     * Creates a new validation instance.
      *
-     * @param array $input An array with input
+     * @param array $input An array with inputs (e.g. user inputs)
      * @param array $rules An array with validation rules
+     *
+     * @return object A new Validation Object
      */
-    private function __construct($input, $rules, $breakChain, $autoRun)
+    private function __construct($input, $rules)
     {
         $this->input = $input;
         $this->rules = $rules;
-        $this->breakChain = $breakChain;
         $this->errorBag = new ErrorBag();
         $this->translator = Registry::get('translator');
 
-        if ($autoRun) {
+        if (self::$autoRun) {
             $this->run();
         }
     }
@@ -87,94 +155,129 @@ class Validation
      */
     public function run()
     {
-        $availableValidators = self::getValidators();
+        $this->parseRules();
+        $this->validateRules();
+    }
 
+    /**
+     * Parses the rule strings.
+     */
+    protected function parseRules()
+    {
         foreach ($this->rules as $field => $rules) {
-            // Iterating over the rules
-            foreach (explode('|', $rules) as $rule) {
-                // Iterating over the rules of that field
-                if (strpos($rule, ':') === false) {
-                    $vRule = $rule;
-                    $vData = new Data($field, array_dot($this->input, $field), [], $this->input);
-                } else {
-                    $parts = explode(':', $rule);
-                    $vRule = $parts[0];
+            foreach (explode('|', $rules) as $validator) {
+                if (strpos($validator, ':') === false) {
+                    $this->validationRules[$field][$validator] = null;
 
-                    $vParams = [];
-                    $params = explode(',', $parts[1]);
-
-                    foreach ($params as $param) {
-                        array_push($vParams, $param);
-                    }
-
-                    $vData = new Data($field, array_dot($this->input, $field), $vParams, $this->input);
+                    continue;
                 }
 
-                if (isset($availableValidators[$vRule])) {
-                    $validation = $this->validate($vRule, $vData);
+                $parts = explode(':', $validator);
 
-                    if ($validation['result'] === false) {
-                        $this->passes = false;
+                $validator = $parts[0];
+                $params = explode(',', $parts[1]);
 
-                        $args = [
-                            $validation['error_key'],
-                            $this->getTranslator()->trans($field),
-                        ];
+                $this->validationRules[$field][$validator] = null;
 
-                        if (isset($validation['error_params'])) {
-                            foreach ($validation['error_params'] as $param) {
-                                if (is_array($param)) {
-                                    if (isset($param[1]) && $param[1] === true) {
-                                        array_push($args, $this->getTranslator()->trans($param[0]));
-                                    } else {
-                                        array_push($args, $param[0]);
-                                    }
-                                } else {
-                                    array_push($args, $param);
-                                }
-                            }
-                        }
-
-                        $errorMessage = call_user_func_array([$this->getTranslator(), 'trans'], $args);
-                        $this->getErrorBag()->addError($field, $errorMessage);
-
-                        if ($this->breakChain) {
-                            break;
-                        }
+                foreach ($params as $param) {
+                    if (empty($param)) {
+                        continue;
                     }
-                } else {
-                    throw new \InvalidArgumentException('The validator "'.$vRule.'" has not been registered.');
+
+                    $this->validationRules[$field][$validator][] = $param;
                 }
             }
         }
     }
 
     /**
-     * Performs a validation.
-     *
-     * @param string $rule An alias of an existing validator
-     * @param object $data A Data-Object with validation data
+     * Calls the validators using the parsed validation rules.
      */
-    protected function validate($rule, $data)
+    public function validateRules()
     {
-        $validator = self::getValidators()[$rule];
-        if (($validator instanceof \Closure)) {
-            $result = $validator($data);
-        } else {
-            $result = (new $validator($data, self::$customFieldAliases))->run();
-        }
+        foreach ($this->validationRules as $field => $validators) {
+            foreach ($validators as $validator => $parameters) {
+                $data = new stdClass();
+                $data->field = $field;
+                $data->parameters = $parameters;
+                $data->input = $this->input;
 
-        return $result;
+                $result = $this->checkResult($this->validate($validator, $data));
+
+                if (self::$breakChain && !$result) {
+                    break;
+                }
+            }
+        }
     }
 
     /**
-     * Generating all the error messages.
+     * Parses a validator result.
      *
-     * @param object \Ilch\Translator $translator The translator instance
+     * @param \Ilch\Validation\Validators\Base $validator A validator instance
+     */
+    protected function checkResult(\Ilch\Validation\Validators\Base $validator)
+    {
+        if ($validator->isValid() === false) {
+            $this->handleError($validator);
+        }
+
+        return $validator->isValid();
+    }
+
+    /**
+     * Handles the processing of the error messages.
+     *
+     * @param string $validator The validator instance
+     */
+    protected function handleError($validator)
+    {
+        $field = $validator->getField();
+        $rawField = $validator->getField();
+        $errorKey = $validator->getErrorKey();
+        $errorParameters = $validator->getErrorParameters();
+
+        if (isset(self::$customFieldAliases[$field])) {
+            $field = self::$customFieldAliases[$field];
+        }
+
+        if (isset(self::$customErrorKeys[$field][$validator->getName()][$errorKey])) {
+            $errorKey = self::$customErrorKeys[$field][$validator->getName()][$errorKey];
+        }
+
+        $translatorParameters = [];
+
+        foreach ($errorParameters as $errorParameter) {
+            $translatorParameters[] = $this->getTranslator()->trans($errorParameter);
+        }
+
+        array_unshift($translatorParameters, $errorKey, $this->getTranslator()->trans($field));
+
+        $errorMessage = call_user_func_array([$this->getTranslator(), 'trans'], $translatorParameters);
+
+        $this->getErrorBag()->addError($rawField, $errorMessage);
+    }
+
+    /**
+     * Performs a validation.
+     *
+     * @param string $validator An alias of an existing validator
+     * @param object $data      A Data-Object with validation data
+     */
+    protected function validate($validator, $data)
+    {
+        $validator = self::getValidators()[$validator];
+        $validator = (new $validator($data))->run();
+
+        return $validator;
+    }
+
+    /**
+     * Returns an array with all errors.
      *
      * @return array An array with translated error messages
      */
-    public function getErrors($translator = null)
+    public function getErrors()
     {
         return $this->getErrorBag()->getErrors();
     }
@@ -184,13 +287,12 @@ class Validation
      *
      * @param array $input An array with inputs (e.g. user inputs)
      * @param array $rules An array with validation rules
-     * @param bool [$breakChain = true]    Whether the validation should stop on validation errors or not
-     * @param bool [$autoRun    = true]    If false you have to manually run the validation
-     * @returns Object  A new Validation Object
+     *
+     * @return \Ilch\Validation A new Validation Object
      */
-    public static function create($input, $rules, $breakChain = true, $autoRun = true)
+    public static function create($input, $rules)
     {
-        return new self($input, $rules, $breakChain, $autoRun);
+        return new self($input, $rules);
     }
 
     /**
@@ -200,7 +302,7 @@ class Validation
      */
     public function isValid()
     {
-        return $this->passes;
+        return !$this->getErrorBag()->hasErrors();
     }
 
     /**
@@ -255,18 +357,63 @@ class Validation
         return self::$validators + self::$builtInValidators;
     }
 
+    /**
+     * Sets custom field aliases (instead of field name).
+     *
+     * @param string $aliases
+     */
     public static function setCustomFieldAliases($aliases)
     {
         self::$customFieldAliases = $aliases;
     }
 
+    /**
+     * Sets custom error keys.
+     *
+     * @param string $errorKeys
+     */
+    public static function setCustomErrorKeys($errorKeys)
+    {
+        self::$customErrorKeys = $errorKeys;
+    }
+
+    /**
+     * Returns the ErrorBag instance.
+     *
+     * @return \Ilch\Validation\ErrorBag
+     */
     public function getErrorBag()
     {
         return $this->errorBag;
     }
 
+    /**
+     * Returns the Translator instance.
+     *
+     * @return \Ilch\Translator
+     */
     public function getTranslator()
     {
         return $this->translator;
+    }
+
+    /**
+     * Set the value of Stop validation for field on error.
+     *
+     * @param bool $breakChain
+     */
+    public static function setBreakChain($breakChain)
+    {
+        self::$breakChain = $breakChain;
+    }
+
+    /**
+     * Set the value of Auto run validation on creation.
+     *
+     * @param bool $autoRun
+     */
+    public static function setAutoRun($autoRun)
+    {
+        self::$autoRun = $autoRun;
     }
 }

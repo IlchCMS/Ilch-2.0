@@ -12,23 +12,38 @@ use Ilch\Registry;
  */
 class Unique extends Base
 {
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
     protected $errorKey = 'validation.errors.unique.valueExists';
-    protected $minParams = 1;
-    protected $maxParams = 4;
 
+    /**
+     * Minimum parameter count needed.
+     *
+     * @var int
+     */
+    protected $minParams = 1;
+
+    /**
+     * Runs the validation.
+     *
+     * @return self
+     */
     public function run()
     {
         $db = Registry::get('db');
 
-        $table = $this->data->getParam(0);
-        $column = is_null($this->data->getParam(1)) ? $this->data->getField() : $this->data->getParam(1);
+        $table = $this->getParameter(0);
+        $column = is_null($this->getParameter(1)) ? $this->getField() : $this->getParameter(1);
 
-        $ignoreId = $this->data->getParam(2);
-        $ignoreIdColumn = is_null($this->data->getParam(3)) ? 'id' : $this->data->getParam(3);
+        $ignoreId = $this->getParameter(2);
+        $ignoreIdColumn = is_null($this->getParameter(3)) ? 'id' : $this->getParameter(3);
 
         $whereLeft = 'LOWER(`'.$column.'`)';
         $whereMiddle = '=';
-        $whereRight = $db->escape(strtolower($this->data->getValue()), true);
+        $whereRight = $db->escape(strtolower($this->getValue()), true);
 
         $where = new \Ilch\Database\Mysql\Expression\Comparison($whereLeft, $whereMiddle, $whereRight);
 
@@ -42,10 +57,9 @@ class Unique extends Base
 
         $result = $result->execute();
 
-        return [
-            'result' => $result->getNumRows() === 0,
-            'error_key' => $this->getErrorKey($this->data),
-            'error_params' => [[$db->escape($this->data->getValue()), false]],
-        ];
+        $this->setIsValid($result->getNumRows() === 0);
+        $this->setErrorParameters([$this->getValue()]);
+
+        return $this;
     }
 }

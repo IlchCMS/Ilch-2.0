@@ -10,18 +10,22 @@ namespace Ilch\Validation\Validators;
  */
 class Integer extends Base
 {
+    /**
+     * Default error key for this validator.
+     *
+     * @var string
+     */
     protected $errorKey = 'validation.errors.integer.mustBeInteger';
 
+    /**
+     * Runs the validation.
+     *
+     * @return self
+     */
     public function run()
     {
-        $data = $this->data;
-        $value = $data->getValue();
+        $this->setIsValid($this->getValue() === '' || filter_var($this->getValue(), FILTER_VALIDATE_INT) !== false);
 
-        $result = $value === '' || filter_var($value, FILTER_VALIDATE_INT) !== false;
-
-        return [
-            'result' => $result,
-            'error_key' => $this->getErrorKey($data),
-        ];
+        return $this;
     }
 }
