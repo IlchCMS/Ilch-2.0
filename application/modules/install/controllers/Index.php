@@ -111,6 +111,10 @@ class Index extends \Ilch\Controller\Frontend
             $errors['version'] = true;
         }
 
+        if (!is_writable(ROOT_PATH)) {
+            $errors['writableRootPath'] = true;
+        }
+
         if (!is_writable(APPLICATION_PATH)) {
             $errors['writableConfig'] = true;
         }
