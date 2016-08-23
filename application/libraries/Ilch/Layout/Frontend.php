@@ -128,12 +128,11 @@ class Frontend extends Base
                 <title>'.$this->escape($this->getTitle()).'</title>
                 <meta name="description" content="'.$this->escape($this->getDescription()).'">';
 
-        $html .= '<link href="'.$this->getStaticUrl('css/normalize.css').'" rel="stylesheet">
-                <link href="'.$this->getStaticUrl('css/font-awesome.min.css').'" rel="stylesheet">
+        $html .= '<link href="'.$this->getStaticUrl('css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
-                <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.css').'" rel="stylesheet">
+                <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.js').'"></script>
-                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.js').'"></script>
+                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.min.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ckeditor/ckeditor.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
