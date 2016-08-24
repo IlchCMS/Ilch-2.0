@@ -20,6 +20,28 @@
                 </td>
             </tr>
             <tr>
+                <td>PHP-<?=$this->getTrans('extension') ?> Multibyte String (mbstring)</td>
+                <td class="text-success"><?=$this->getTrans('existing') ?>
+                <td>
+                    <?php if (extension_loaded('mbstring')): ?>
+                        <span class="text-success"><?=$this->getTrans('existing') ?></span>
+                    <?php else: ?>
+                        <span class="text-danger"><?=$this->getTrans('missing') ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>PHP-<?=$this->getTrans('extension') ?> Zip</td>
+                <td class="text-success"><?=$this->getTrans('existing') ?>
+                <td>
+                    <?php if (extension_loaded('zip')): ?>
+                        <span class="text-success"><?=$this->getTrans('existing') ?></span>
+                    <?php else: ?>
+                        <span class="text-danger"><?=$this->getTrans('missing') ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
                 <td>PHP-<?=$this->getTrans('extension') ?> OpenSSL</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>

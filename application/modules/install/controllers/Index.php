@@ -147,6 +147,14 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableCertificate'] = true;
         }
 
+        if (!extension_loaded('mbstring')) {
+            $errors['mbstringExtensionMissing'] = true;
+        }
+
+        if (!extension_loaded('zip')) {
+            $errors['zipExtensionMissing'] = true;
+        }
+
         if (!extension_loaded('openssl')) {
             $errors['opensslExtensionMissing'] = true;
             $errors['expiredCertUnknown'] = true;
