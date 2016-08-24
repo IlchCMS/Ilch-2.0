@@ -23,6 +23,13 @@ abstract class Base
     private $layoutKey;
 
     /**
+     * Box url that will be used
+     *
+     * @var string
+     */
+    private $boxUrl;
+
+    /**
      * Adds view/layout helper.
      *
      * @param string $name
@@ -489,6 +496,31 @@ abstract class Base
     public function setLayoutKey($layoutKey)
     {
         $this->layoutKey = $layoutKey;
+    }
+
+    /**
+     * Gets the box url.
+     *
+     * @param string $url
+     * @return string
+     */
+    public function getBoxUrl($url = '')
+    {
+        if (empty($url)) {
+            return $this->boxUrl;
+        }
+
+        return $this->boxUrl.'/'.$url;
+    }
+
+    /**
+     * Set the box url.
+     *
+     * @param $boxUrl
+     */
+    public function setBoxUrl($boxUrl)
+    {
+        $this->boxUrl = $boxUrl;
     }
 
     /**
