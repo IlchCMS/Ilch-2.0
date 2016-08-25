@@ -16,7 +16,4 @@ return [
     'fileTooBig' => 'Die Datei ist zu groß.',
     'extensionNotAllowed' => 'Dateien mit dieser Dateiendung sind nicht erlaubt.',
     'allowedFileExtensions' => 'Erlaubte Dateiendungen',
-    'missingName' => 'Name muss ausgefüllt werden',
-    'missingUrl' => 'Smilie muss ausgewählt werden',
-    'smiliesPerPage' => 'Smilies pro Seite',
 ];

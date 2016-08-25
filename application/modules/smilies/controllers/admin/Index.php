@@ -8,6 +8,7 @@ namespace Modules\Smilies\Controllers\Admin;
 
 use Modules\Smilies\Mappers\Smilies as SmiliesMapper;
 use Modules\Smilies\Models\Smilies as SmiliesModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -78,30 +79,53 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('smilie', $smiliesMapper->getSmilieById($this->getRequest()->getParam('id')));
         }
 
-        if ($this->getRequest()->isPost()) {
-            $model = new SmiliesModel();
+        $post = [
+            'name' => '',
+            'url' => ''
+        ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
+        if ($this->getRequest()->isPost()) {
+            $url = trim($this->getRequest()->getPost('url'));
+            if (!empty($url)) {
+                $url = BASE_URL.'/'.$url;
             }
 
-            $name = trim($this->getRequest()->getPost('name'));
-            $url = trim($this->getRequest()->getPost('url'));
+            $post = [
+                'name' => trim($this->getRequest()->getPost('name')),
+                'url' => $url
+            ];
 
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } elseif (empty($url)) {
-                $this->addMessage('missingUrl', 'danger');
-            } else {
-                $model->setName($name);
-                $model->setUrl($url);
+            Validation::setCustomFieldAliases([
+                'url' => 'image'
+            ]);
+
+            $validation = Validation::create($post, [
+                'name' => 'required',
+                'url' => 'required|url'
+            ]);
+
+            $post['url'] = trim($this->getRequest()->getPost('url'));
+
+            if ($validation->isValid()) {
+                $model = new SmiliesModel();
+
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+
+                $model->setName($post['name']);
+                $model->setUrl($post['url']);
                 $smiliesMapper->save($model);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()
