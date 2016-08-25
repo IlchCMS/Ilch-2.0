@@ -8,13 +8,15 @@ namespace Modules\Away\Controllers;
 
 use Modules\Away\Mappers\Away as AwayMapper;
 use Modules\Away\Models\Away as AwayModel;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {        
-        $awayModel = new AwayModel();
         $awayMapper = new AwayMapper();
+        $awayModel = new AwayModel();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
@@ -44,6 +46,7 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('aways', $awayMapper->getAway());
     }
 

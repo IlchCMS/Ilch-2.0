@@ -7,6 +7,7 @@
 namespace Modules\Away\Controllers\Admin;
 
 use Modules\Away\Mappers\Away as AwayMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -31,6 +32,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $awayMapper = new AwayMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index'])
@@ -46,6 +48,7 @@ class Index extends \Ilch\Controller\Admin
 
         $aways = $awayMapper->getAway();
 
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('aways', $aways);
     }
 

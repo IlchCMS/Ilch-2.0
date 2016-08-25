@@ -1,3 +1,5 @@
+<?php $userMapper = $this->get('userMapper'); ?>
+
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('aways') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
@@ -26,7 +28,6 @@
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('aways') as $away): ?>
-                        <?php $userMapper = new \Modules\User\Mappers\User() ?>
                         <?php $user = $userMapper->getUserById($away->getUserId()) ?>
                         <tr>
                             <td><input type="checkbox" name="check_aways[]" value="<?=$away->getId() ?>" /></td>

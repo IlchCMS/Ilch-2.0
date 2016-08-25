@@ -46,6 +46,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $awardsMapper = new AwardsMapper();
+        $userMapper = new UserMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
@@ -59,6 +60,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('awards', $awardsMapper->getAwards());
     }
 

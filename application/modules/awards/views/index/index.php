@@ -1,3 +1,5 @@
+<?php $userMapper = $this->get('userMapper'); ?>
+
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuAwards') ?></legend>
@@ -28,7 +30,6 @@
                         <?php if ($awards->getTyp() == 1): ?>
                             <?=$awards->getUTId() ?>
                         <?php else: ?>
-                            <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                             <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
                         <?php endif; ?>

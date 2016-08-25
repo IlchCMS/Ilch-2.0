@@ -1,3 +1,5 @@
+<?php $userMapper = $this->get('userMapper'); ?>
+
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('awards') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
@@ -36,7 +38,6 @@
                             <?php if ($awards->getTyp() == 2): ?>
                                 <td><?=$awards->getUTId() ?></td>
                             <?php else: ?>
-                                <?php $userMapper = new \Modules\User\Mappers\User(); ?>
                                 <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                                 <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                             <?php endif; ?>

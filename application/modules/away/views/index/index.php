@@ -1,5 +1,5 @@
 <?php
-$userMapper = new \Modules\User\Mappers\User();
+$userMapper = $this->get('userMapper');
 if ($this->getUser()) {
     $userCheck = $userMapper->getUserById($this->getUser()->getId());
 }
