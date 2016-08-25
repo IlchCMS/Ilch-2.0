@@ -3,8 +3,11 @@ $articles = $this->get('articles');
 $categoryMapper = $this->get('categoryMapper');
 $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
+?>
 
-if ($articles != ''):
+<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
+
+<?php if ($articles != ''):
     foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());
         $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());

@@ -3,6 +3,8 @@ $articleMapper = $this->get('articleMapper');
 $cats = $this->get('cats');
 ?>
 
+<link href="<?=$this->getBoxUrl('static/css/article.css') ?>" rel="stylesheet">
+
 <?php if ($cats != ''): ?>
     <div class="article-box">
         <ul class="list-unstyled">

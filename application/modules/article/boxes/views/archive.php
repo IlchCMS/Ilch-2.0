@@ -3,6 +3,8 @@ $articleMapper = $this->get('articleMapper');
 $archive = $this->get('archive');
 ?>
 
+<link href="<?=$this->getBoxUrl('static/css/article.css') ?>" rel="stylesheet">
+
 <?php if (!empty($archive)): ?>
     <div class="article-box">
         <ul class="list-unstyled">

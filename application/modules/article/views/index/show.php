@@ -12,8 +12,11 @@ $preview = $this->getRequest()->getParam('preview');
 $config = $this->get('config');
 $date = new \Ilch\Date($article->getDateCreated());
 $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
+?>
 
-function rec($id, $uid, $req, $obj)
+<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
+
+<?php function rec($id, $uid, $req, $obj)
 {
     $commentMappers = $obj->get('commentMapper');
     $userMapper = $obj->get('userMapper');

@@ -1,0 +1,18 @@
+.article_image {
+    padding: 10px;
+    border-radius: 4px;
+    display:block;
+    margin: 10px auto 10px auto;
+}
+.article-box .ellipsis {
+    display: -webkit-flex;
+    display: flex;    
+    align-items: center;
+}
+.article-box .ellipsis-item {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

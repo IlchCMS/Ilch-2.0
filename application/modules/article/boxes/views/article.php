@@ -1,5 +1,7 @@
 <?php $articles = $this->get('articles'); ?>
 
+<link href="<?=$this->getBoxUrl('static/css/article.css') ?>" rel="stylesheet">
+
 <?php if (!empty($articles)): ?>
     <div class="article-box">
         <ul class="list-unstyled">

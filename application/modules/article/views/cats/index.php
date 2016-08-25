@@ -3,6 +3,8 @@ $articleMapper = $this->get('articleMapper');
 $cats = $this->get('cats');
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('menuCats') ?></legend>
 <?php if ($cats != ''): ?>
     <ul class="list-group">

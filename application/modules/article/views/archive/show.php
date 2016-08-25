@@ -6,6 +6,8 @@ $userMapper = $this->get('userMapper');
 $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
+
 <legend><?=$this->getTrans('monthArchives') ?>: <i><?=$date->format('F Y', true) ?></i></legend>
 <?php if ($articles != ''): ?>
     <?php
