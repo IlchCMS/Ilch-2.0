@@ -113,7 +113,7 @@ class Frontend extends Base
         }
 
         $view->setLayoutKey($this->getLayoutKey());
-        $view->setBoxUrl(APPLICATION_PATH.'/modules/'.$moduleKey);
+        $view->setBoxUrl('application/modules/'.$moduleKey);
 
         return $view->loadScript($viewPath);
     }

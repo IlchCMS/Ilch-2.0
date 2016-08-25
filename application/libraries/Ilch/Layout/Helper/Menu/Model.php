@@ -130,7 +130,7 @@ class Model
                             }
 
                             $view->setLayoutKey($this->layout->getLayoutKey());
-                            $view->setBoxUrl(APPLICATION_PATH.'/modules/'.$moduleKey);
+                            $view->setBoxUrl('application/modules/'.$moduleKey);
 
                             $output = $view->loadScript($viewPath);
                             $box = new \Modules\Admin\Models\Box();

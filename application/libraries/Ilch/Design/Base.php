@@ -507,10 +507,10 @@ abstract class Base
     public function getBoxUrl($url = '')
     {
         if (empty($url)) {
-            return $this->boxUrl;
+            return $this->getUrl().'/'.$this->boxUrl;
         }
 
-        return $this->boxUrl.'/'.$url;
+        return $this->getUrl().'/'.$this->boxUrl.'/'.$url;
     }
 
     /**
