@@ -6,7 +6,7 @@
         <meta name="description" content="Ilch <?=VERSION ?> - Installation">
         <link rel="shortcut icon" type="image/x-icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>">
         <link href="<?=$this->getStaticUrl('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?=$this->getStaticUrl('css/font-awesome.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getStaticUrl('css/font-awesome.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/install/static/css/install.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">

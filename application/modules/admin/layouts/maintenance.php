@@ -20,7 +20,7 @@ $date = new \Ilch\Date();
 
         <!-- STYLES -->
         <link href="<?=$this->getStaticUrl('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?=$this->getStaticUrl('css/font-awesome.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getStaticUrl('css/font-awesome.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getBaseUrl('application/modules/admin/static/css/maintenance.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
