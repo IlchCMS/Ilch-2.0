@@ -1,4 +1,5 @@
 <?php $linkus = $this->get('linkus'); ?>
+
 <legend>
     <?php if ($linkus != ''): ?>
         <?=$this->getTrans('edit') ?>
@@ -40,7 +41,7 @@
                        class="form-control"
                        id="selectedImage_1"
                        name="banner"
-                       value="<?php if ($linkus != '') { echo $this->escape($linkus->getBanner()); } else { echo $this->get('post')['banner']; } ?>" 
+                       value="<?php if ($linkus != '') { echo $this->escape($linkus->getBanner()); } else { echo $this->get('post')['banner']; } ?>"
                        readonly />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>

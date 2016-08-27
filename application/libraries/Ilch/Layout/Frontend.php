@@ -26,6 +26,40 @@ class Frontend extends Base
     }
 
     /**
+     * Gets page favicon from config.
+     *
+     * @return string
+     */
+    public function getFavicon()
+    {
+        $config = \Ilch\Registry::get('config');
+        $favicon = $config->get('favicon');
+
+        if (empty($favicon)) {
+            return 'static/img/favicon.ico';
+        }
+
+        return $favicon;
+    }
+
+    /**
+     * Gets page favicon from config.
+     *
+     * @return string
+     */
+    public function getAppleIcon()
+    {
+        $config = \Ilch\Registry::get('config');
+        $appleIcon = $config->get('apple_icon');
+
+        if (empty($appleIcon)) {
+            return 'static/img/appleicon.png';
+        }
+
+        return $config->get('apple_icon');
+    }
+
+    /**
      * Gets page title from config or meta settings.
      *
      * @return string
@@ -127,7 +161,9 @@ class Frontend extends Base
     {
         $html = '<meta charset="utf-8">
                 <title>'.$this->escape($this->getTitle()).'</title>
-                <meta name="description" content="'.$this->escape($this->getDescription()).'">';
+                <link rel="icon" href="'.$this->getBaseUrl($this->escape($this->getFavicon())).'" type="image/x-icon">
+                <meta name="description" content="'.$this->escape($this->getDescription()).'">
+                <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">';
 
         $html .= '<link href="'.$this->getStaticUrl('css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">

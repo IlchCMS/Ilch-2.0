@@ -22,7 +22,10 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
         $databaseConfig->set('default_layout', 'clan3columns');
         $databaseConfig->set('start_page', 'module_article');
+        $databaseConfig->set('favicon', '');
+        $databaseConfig->set('apple_icon', '');
         $databaseConfig->set('page_title', 'ilch - Content Management System');
+        $databaseConfig->set('description', 'Das ilch CMS bietet dir ein einfach erweiterbares Grundsystem, welches keinerlei Kenntnisse in Programmiersprachen voraussetzt.');
         $databaseConfig->set('standardMail', $_SESSION['install']['adminEmail']);
         $databaseConfig->set('defaultPaginationObjects', 20);
         $databaseConfig->set('admin_layout_top_nav', 'navbar-fixed-top');
@@ -103,7 +106,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `date_created` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_pages_content` (
                   `page_id` INT(11) NOT NULL,

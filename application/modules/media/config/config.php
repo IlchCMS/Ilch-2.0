@@ -30,7 +30,7 @@ class Config extends \Ilch\Config\Install
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('media_uploadpath', 'application/modules/media/static/upload/');
-        $databaseConfig->set('media_ext_img', 'jpg jpeg png gif bmp tiff svg');
+        $databaseConfig->set('media_ext_img', 'jpg jpeg png gif bmp tiff svg ico');
         $databaseConfig->set('media_ext_video', 'mp3 m4a ac3 aiff mid ogg wav mov mpeg mp4 avi mpg wma flv webm');
         $databaseConfig->set('media_ext_file', 'zip rar gz tar iso dmg doc docx rtf pdf xls xlsx txt csv html xhtml psd sql log fla xml ade adp mdb accdb ppt pptx odt ots ott odb odg otp otg odf ods odp css ai');
     }

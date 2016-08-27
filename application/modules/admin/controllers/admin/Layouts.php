@@ -27,12 +27,20 @@ class Layouts extends \Ilch\Controller\Admin
                 'icon' => 'fa fa-search',
                 'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'search'])
             ],
+            [
+                'name' => 'menuSettings',
+                'active' => false,
+                'icon' => 'fa fa-cogs',
+                'url' => $this->getLayout()->getUrl(['controller' => 'layouts', 'action' => 'settings'])
+            ]
         ];
 
         if ($this->getRequest()->getActionName() == 'index') {
             $items[0]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'search' OR $this->getRequest()->getActionName() == 'show') {
             $items[1]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() == 'settings') {
+            $items[2]['active'] = true;
         } else {
             $items[0]['active'] = true;
         }
@@ -130,6 +138,22 @@ class Layouts extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('layouts', $layoutsDir);
+    }
+
+    public function settingsAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
+
+        if ($this->getRequest()->isPost()) {
+            $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'));
+            $this->getConfig()->set('apple_icon', $this->getRequest()->getPost('appleIcon'));
+
+            $this->addMessage('saveSuccess');
+        }
+
+        $this->getView()->set('favicon', $this->getConfig()->get('favicon'));
+        $this->getView()->set('appleIcon', $this->getConfig()->get('apple_icon'));
     }
 
     public function deleteAction()

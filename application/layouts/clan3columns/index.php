@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <?=$this->getHeader() ?>
         <link href="<?=$this->getStaticUrl('css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getLayoutUrl('style.css') ?>" rel="stylesheet">
         <?=$this->getCustomCSS() ?>
-        <link rel="icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>" type="image/x-icon" />
         <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap.min.js') ?>"></script>
     </head>
     <body>
