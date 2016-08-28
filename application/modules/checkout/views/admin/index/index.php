@@ -57,17 +57,17 @@ $currency = $this->escape($this->get('currency'));
         <div class="panel panel-default">
             <div class="panel-body">
                 <strong>
-                    <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$currency ; } 
-                    else { echo $this->getTrans('balancetotal'), ': 0 ', $currency ;}
+                    <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->escape($this->getFormattedCurrency($this->get('amount'), $currency)); } 
+                    else { echo $this->getTrans('balancetotal'), ': ', $this->escape($this->getFormattedCurrency(0, $currency)) ;}
                     ?>
                 </strong>
                 <br>
-                <?php if ($this->get('amountplus') != '') { echo $this->getTrans('totalpaid'),': ', $this->get('amountplus'), ' '.$currency ; }
-                else { echo $this->getTrans('totalpaid'), ': 0 ', $currency ;}
+                <?php if ($this->get('amountplus') != '') { echo $this->getTrans('totalpaid'),': ', $this->escape($this->getFormattedCurrency($this->get('amountplus'), $currency)); } 
+                else { echo $this->getTrans('totalpaid'), ': ', $this->escape($this->getFormattedCurrency(0, $currency)) ;}
                 ?>
                 <br>
-                <?php if ($this->get('amountminus') != '') { echo $this->getTrans('totalpaidout'),': ', $this->get('amountminus'), ' '.$currency ; }
-                else { echo $this->getTrans('totalpaidout'), ': 0 ', $currency ;}
+                <?php if ($this->get('amountminus') != '') { echo $this->getTrans('totalpaidout'),': ', $this->escape($this->getFormattedCurrency($this->get('amountminus'), $currency)); } 
+                else { echo $this->getTrans('totalpaidout'), ': ', $this->escape($this->getFormattedCurrency(0, $currency)) ;}
                 ?>
             </div>
         </div>
@@ -79,8 +79,7 @@ $currency = $this->escape($this->get('currency'));
                     <li class="list-group-item">
                         <?=$this->escape($checkout->getName()) ?>: 
                         <strong>
-                            <?=$this->escape($checkout->getAmount()) ?>
-                            <?=$currency ?>
+                            <?=$this->escape($this->getFormattedCurrency($checkout->getAmount(), $currency)) ?>
                         </strong> 
                         <?=$this->getTrans('for') ?>: 
                         <?=$this->escape($checkout->getUsage()) ?>

@@ -60,11 +60,11 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (1, "EUR (€)");
-                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (2, "USD ($)");
-                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (3, "GBP (£)");
-                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (4, "AUD ($)");
-                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (5, "NZD ($)");
+                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (1, "EUR");
+                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (2, "USD");
+                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (3, "GBP");
+                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (4, "AUD");
+                INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (5, "NZD");
                 INSERT INTO `[prefix]_checkout_currencies` (`id`, `name`) VALUES (6, "CHF");';
     }
 
