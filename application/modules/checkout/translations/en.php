@@ -17,7 +17,7 @@ return [
     'accountdata' => 'Account data',
     'book' => 'Book',
     'for' => 'for',
-    'amountinfo' => 'e.g. -30 for an expense or +30 for a revenue, with no point or comma.',
+    'amountinfo' => 'e.g. -30.50 for an expense or +30 for a revenue.',
     'balancetotal' => 'Balance total',
     'totalpaid' => 'Total paid',
     'totalpaidout' => 'Total paid out',
