@@ -10,9 +10,19 @@
         <?=$this->getTrans('treatGroup') ?>
     <?php endif; ?>
 </legend>
+<?php if (!empty($this->get('errors'))): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
-    <div class="form-group">
+    <div class="form-group <?=in_array('groupName', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="groupNameInput" class="col-lg-2 control-label">
             <?=$this->getTrans('groupName') ?>:
         </label>
@@ -21,10 +31,10 @@
                    class="form-control"
                    id="groupNameInput"
                    name="groupName"
-                   value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupName(); } ?>" />
+                   value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupName(); } else { echo $this->get('post')['groupName']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=in_array('groupTag', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="groupTagInput" class="col-lg-2 control-label">
             <?=$this->getTrans('groupTag') ?>:
         </label>
@@ -33,10 +43,10 @@
                    class="form-control"
                    id="groupTagInput"
                    name="groupTag"
-                   value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupTag(); } ?>" />
+                   value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupTag(); } else { echo $this->get('post')['groupTag']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=in_array('groupImage', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('groupImage') ?>:
         </label>
@@ -47,12 +57,12 @@
                        id="selectedImage_1"
                        name="groupImage"
                        placeholder="<?=$this->getTrans('groupImage') ?>"
-                       value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupImage(); } ?>" />
+                       value="<?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupImage(); } else { echo $this->get('post')['groupImage']; } ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media_1()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=in_array('userGroup', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="warGroup" class="col-lg-2 control-label">
                 <?=$this->getTrans('assignedMember') ?>
         </label>

@@ -8,6 +8,7 @@ namespace Modules\War\Controllers\Admin;
 
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Models\Enemy as EnemyModel;
+use Ilch\Validation;
 
 class Enemy extends \Ilch\Controller\Admin
 {
@@ -96,46 +97,66 @@ class Enemy extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manageNewEnemy'), ['action' => 'treat']);
         }
 
-        if ($this->getRequest()->isPost()) {
-            $enemyModel = new EnemyModel();
+        $post = [
+            'enemyName' => '',
+            'enemyTag' => '',
+            'enemyImage' => '',
+            'enemyHomepage' => '',
+            'enemyContactName' => '',
+            'enemyContactEmail' => ''
+        ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $enemyModel->setId($this->getRequest()->getParam('id'));
+        if ($this->getRequest()->isPost()) {
+            $enemyImage = trim($this->getRequest()->getPost('enemyImage'));
+            if (!empty($enemyImage)) {
+                $enemyImage = BASE_URL.'/'.$enemyImage;
             }
 
-            $enemyName = trim($this->getRequest()->getPost('enemyName'));
-            $enemyTag = trim($this->getRequest()->getPost('enemyTag'));
-            $enemyImage = trim($this->getRequest()->getPost('enemyImage'));
-            $enemyHomepage = $this->getRequest()->getPost('enemyHomepage');
-            $enemyContactName = $this->getRequest()->getPost('enemyContactName');
-            $enemyContactEmail = $this->getRequest()->getPost('enemyContactEmail');
+            $post = [
+                'enemyName' => trim($this->getRequest()->getPost('enemyName')),
+                'enemyTag' => trim($this->getRequest()->getPost('enemyTag')),
+                'enemyImage' => $enemyImage,
+                'enemyHomepage' => $this->getRequest()->getPost('enemyHomepage'),
+                'enemyContactName' => $this->getRequest()->getPost('enemyContactName'),
+                'enemyContactEmail' => $this->getRequest()->getPost('enemyContactEmail')
+            ];
 
-            if (empty($enemyName)) {
-                $this->addMessage('missingEnemyName', 'danger');
-            } elseif (empty($enemyTag)) {
-                $this->addMessage('missingEnemyTag', 'danger');
-            } elseif (empty($enemyImage)) {
-                $this->addMessage('missingEnemyImage', 'danger');
-            } elseif (empty($enemyHomepage)) {
-                $this->addMessage('missingEnemyHomepage', 'danger');
-            } elseif (empty($enemyContactName)) {
-                $this->addMessage('missingContactName', 'danger');
-            } elseif (empty($enemyContactEmail)) {
-                $this->addMessage('missingContactEmail', 'danger');
-            } else {
-                $enemyModel->setEnemyName($enemyName);
-                $enemyModel->setEnemyTag($enemyTag);
-                $enemyModel->setEnemyImage($enemyImage);
-                $enemyModel->setEnemyHomepage($enemyHomepage);
-                $enemyModel->setEnemyContactName($enemyContactName);
-                $enemyModel->setEnemyContactEmail($enemyContactEmail);
+            $validation = Validation::create($post, [
+                'enemyName' => 'required',
+                'enemyTag' => 'required',
+                'enemyHomepage' => 'required|url',
+                'enemyImage' => 'required|url',
+                'enemyContactName' => 'required',
+                'enemyContactEmail' => 'required|email'
+            ]);
+
+            $post['enemyImage'] = trim($this->getRequest()->getPost('enemyImage'));
+
+            if ($validation->isValid()) {
+                $enemyModel = new EnemyModel();
+
+                if ($this->getRequest()->getParam('id')) {
+                    $enemyModel->setId($this->getRequest()->getParam('id'));
+                }
+
+                $enemyModel->setEnemyName($post['enemyName']);
+                $enemyModel->setEnemyTag($post['enemyTag']);
+                $enemyModel->setEnemyImage($post['enemyImage']);
+                $enemyModel->setEnemyHomepage($post['enemyHomepage']);
+                $enemyModel->setEnemyContactName($post['enemyContactName']);
+                $enemyModel->setEnemyContactEmail($post['enemyContactEmail']);
                 $enemyMapper->save($enemyModel);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()

@@ -9,6 +9,7 @@ namespace Modules\War\Controllers\Admin;
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Models\Group as GroupModel;
 use Modules\User\Mappers\Group as UserGroupMapper;
+use Ilch\Validation;
 
 class Group extends \Ilch\Controller\Admin
 {
@@ -101,38 +102,58 @@ class Group extends \Ilch\Controller\Admin
         $userGroupList = $userGroupMapper->getGroupList();
         $this->getView()->set('userGroupList', $userGroupList);
 
-        if ($this->getRequest()->isPost()) {
-            $groupModel = new GroupModel();
+        $post = [
+            'groupName' => '',
+            'groupTag' => '',
+            'groupImage' => '',
+            'userGroup' => ''
+        ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $groupModel->setId($this->getRequest()->getParam('id'));
+        if ($this->getRequest()->isPost()) {
+            $groupImage = trim($this->getRequest()->getPost('groupImage'));
+            if (!empty($groupImage)) {
+                $groupImage = BASE_URL.'/'.$groupImage;
             }
 
-            $groupName = trim($this->getRequest()->getPost('groupName'));
-            $groupTag = trim($this->getRequest()->getPost('groupTag'));
-            $groupImage = trim($this->getRequest()->getPost('groupImage'));
-            $groupMember = $this->getRequest()->getPost('userGroup');
+            $post = [
+                'groupName' => trim($this->getRequest()->getPost('groupName')),
+                'groupTag' => trim($this->getRequest()->getPost('groupTag')),
+                'groupImage' => $groupImage,
+                'userGroup' => $this->getRequest()->getPost('userGroup')
+            ];
 
-            if (empty($groupName)) {
-                $this->addMessage('missingGroupName', 'danger');
-            } elseif (empty($groupImage)) {
-                $this->addMessage('missingGroupImage', 'danger');
-            } elseif (empty($groupMember)) {
-                $this->addMessage('missingGroupMember', 'danger');
-            } elseif (empty($groupTag)) {
-                $this->addMessage('missingGroupTag', 'danger');
-            } else {
-                $groupModel->setGroupMember($groupMember);
-                $groupModel->setGroupName($groupName);
-                $groupModel->setGroupTag($groupTag);
-                $groupModel->setGroupImage($groupImage);
+            $validation = Validation::create($post, [
+                'groupName' => 'required',
+                'groupTag' => 'required',
+                'groupImage' => 'required|url',
+                'userGroup' => 'required|numeric|integer|min:1'
+            ]);
+
+            $post['groupImage'] = trim($this->getRequest()->getPost('groupImage'));
+
+            if ($validation->isValid()) {
+                $groupModel = new GroupModel();
+
+                if ($this->getRequest()->getParam('id')) {
+                    $groupModel->setId($this->getRequest()->getParam('id'));
+                }
+
+                $groupModel->setGroupMember($post['userGroup']);
+                $groupModel->setGroupName($post['groupName']);
+                $groupModel->setGroupTag($post['groupTag']);
+                $groupModel->setGroupImage($post['groupImage']);
                 $groupMapper->save($groupModel);
 
                 $this->addMessage('saveSuccess');
-
                 $this->redirect(['action' => 'index']);
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function delAction()
