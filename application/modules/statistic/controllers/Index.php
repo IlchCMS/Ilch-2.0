@@ -151,7 +151,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuOnline'), ['action' => 'online']);
 
-        $this->getView()->set('modulesMapper', $modulesMapper);
+        $this->getView()->set('modulesMapper', $moduleMapper);
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('userOnlineList', $statisticMapper->getVisitsOnline());
     }
