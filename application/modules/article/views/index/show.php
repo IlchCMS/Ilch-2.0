@@ -28,8 +28,8 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
     foreach ($fk_comments as $fk_comment) {
         $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
         $user = $userMapper->getUserById($fk_comment->getUserId());
-        if ($req > $config->get('comment_interleaving')) {
-            $req = $config->get('comment_interleaving');
+        if ($req > $config->get('comment_nesting')) {
+            $req = $config->get('comment_nesting');
         }
 
         $col = 10 - $req;
