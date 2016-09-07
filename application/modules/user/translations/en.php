@@ -277,6 +277,9 @@ return [
     // Providers
     'menuAuthProviders' => 'Auth providers',
 
+    'socialMedia' => 'Social Media',
+    'socialMediaDesc' => 'Here you can connect your account with social networks.',
+
     'providers.title' => 'Connect authentication providers',
     'providers.linkedToAccount' => 'Connected to account %s on %s',
     'providers.notLinked' => 'You did not connect your accounts yet.',
