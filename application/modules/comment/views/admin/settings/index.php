@@ -22,16 +22,16 @@
          </div>
     </div>
     <div class="form-group">
-        <label for="interleaving" class="col-lg-2 control-label">
-            <?=$this->getTrans('interleaving') ?>:
+        <label for="nesting" class="col-lg-2 control-label">
+            <?=$this->getTrans('nesting') ?>:
         </label>
         <div class="col-lg-1">
             <input class="form-control"
                    type="number"
-                   id="interleaving"
-                   name="interleaving"
+                   id="nesting"
+                   name="nesting"
                    min="0"
-                   value="<?=$this->get('comment_interleaving') ?>">
+                   value="<?=$this->get('comment_nesting') ?>">
         </div>
     </div>
     <div class="form-group">

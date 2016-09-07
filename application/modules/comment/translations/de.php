@@ -17,9 +17,9 @@ return [
     'reply' => 'Antworten',
     'dateTime' => 'Datum/Uhrzeit',
     'commentUser' => 'Benutzer',
-    'interleaving' => 'Antworten Verschachtelung',
-    'acceptReply' => 'Kommentar antworten erlauben?',
+    'nesting' => 'Antworten Verschachtelung',
+    'acceptReply' => 'Antworten auf Kommentare erlauben?',
     'showAvatar' => 'Avatar anzeigen?',
     'showDateTime' => 'Datum/Uhrzeit anzeigen?',
-    'CommentCommentInfoText' => 'Information zur Konfiguration der Kommentare.',
+    'CommentCommentInfoText' => 'Eine zu tiefe Kommentar-Verschachtelung kann dazu führen, dass die Kommentare zu klein dargestellt werden.',
 ];
