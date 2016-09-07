@@ -70,6 +70,7 @@ class Index extends \Ilch\Controller\Frontend
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
+            $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
         }
 
         if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
