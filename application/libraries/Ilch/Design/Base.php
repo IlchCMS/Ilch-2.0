@@ -181,6 +181,19 @@ abstract class Base
     }
 
     /**
+     * Returns an amount of money of the currency supplied formatted in locale-typical style.
+     *
+     * @param float amount
+     * @param string currency code (ISO 4217)
+     * @return string
+     */
+    public function getFormattedCurrency($amount, $currencyCode)
+    {
+      $args = func_get_args();
+      return call_user_func_array([$this->getTranslator(), 'getFormattedCurrency'], $args);
+    }
+
+    /**
      * Gets the base url.
      *
      * @param  string  $url
