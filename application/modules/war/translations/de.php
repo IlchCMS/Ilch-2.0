@@ -34,10 +34,6 @@ return [
     'assignedMember' => 'Member auswählen',
     'selectAssignedMember' => 'Member',
     'toGroups' => 'Zur Gruppen Übersicht',
-    'missingGroupName' => 'Es wurde kein Gruppenname eingegeben.',
-    'missingGroupImage' => 'Es wurde kein Bild für die Gruppe ausgewählt.',
-    'missingGroupMember' => 'Es wurden keine Mitglieder ausgewählt.',
-    'missingGroupTag' => 'Es wurde kein Gruppen-Tag eingegeben.',
 
     'manageNewEnemy' => 'Neuen Gegner erstellen',
     'manageEnemy' => 'Gegner verwalten',
@@ -53,12 +49,6 @@ return [
     'enemyContactEmail' => 'Gegner Kontakt Email',
     'enemysContactName' => 'Kontakt Name',
     'enemysContactEmail' => 'Kontakt Email',
-    'missingEnemyName' => 'Der Name des Gegners wurde nicht eingegeben.',
-    'missingEnemyTag' => 'Es wurde nicht das Tag des Gegners eingegeben.',
-    'missingEnemyImage' => 'Es wurde kein Bild für den Gegner ausgewählt.',
-    'missingEnemyHomepage' => 'Die Homepage des Gegners wurde nicht eingegeben.',
-    'missingContactName' => 'Es wurde keine Kontaktperson beim Gegner angegeben.',
-    'missingContactEmail' => 'Es wurde keine Kontakt-E-Mail-Adresse des Gegners eingegeben.',
 
     'manageNextWar' => 'Next War erstellen',
     'nextWarOverview' => 'Next War Übersicht',

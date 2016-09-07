@@ -6,6 +6,8 @@
 
 namespace Modules\War\Controllers\Admin;
 
+use Ilch\Validation;
+
 class Settings extends \Ilch\Controller\Admin
 {
     public function init()
@@ -50,13 +52,38 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manageWarOverview'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
+        $post = [
+            'warsPerPage' => '',
+            'enemiesPerPage' => '',
+            'groupsPerPage' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('war_warsPerPage', $this->getRequest()->getPost('warsPerPage'));
-            $this->getConfig()->set('war_enemiesPerPage', $this->getRequest()->getPost('enemiesPerPage'));
-            $this->getConfig()->set('war_groupsPerPage', $this->getRequest()->getPost('groupsPerPage'));
-            $this->addMessage('saveSuccess');
+            $post = [
+                'warsPerPage' => $this->getRequest()->getPost('warsPerPage'),
+                'enemiesPerPage' => $this->getRequest()->getPost('enemiesPerPage'),
+                'groupsPerPage' => $this->getRequest()->getPost('groupsPerPage')
+            ];
+
+            $validation = Validation::create($post, [
+                'warsPerPage' => 'numeric|integer|min:1',
+                'enemiesPerPage' => 'numeric|integer|min:1',
+                'groupsPerPage' => 'numeric|integer|min:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('war_warsPerPage', $post['warsPerPage']);
+                $this->getConfig()->set('war_enemiesPerPage', $post['enemiesPerPage']);
+                $this->getConfig()->set('war_groupsPerPage', $post['groupsPerPage']);
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('warsPerPage', $this->getConfig()->get('war_warsPerPage'));
         $this->getView()->set('enemiesPerPage', $this->getConfig()->get('war_enemiesPerPage'));
         $this->getView()->set('groupsPerPage', $this->getConfig()->get('war_groupsPerPage'));
