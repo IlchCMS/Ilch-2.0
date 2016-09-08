@@ -25,4 +25,6 @@ return [
     'validation.errors.max.numeric' => '%s darf höchstens %s betragen.',
     'validation.errors.max.string' => '%s darf höchstens %s Zeichen lang sein.',
     'validation.errors.max.array' => '%s darf höchstens %s Einträge haben.',
+
+    'saveSuccess' => 'Erfolgreich gespeichert',
 ];

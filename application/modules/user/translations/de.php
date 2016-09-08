@@ -234,7 +234,6 @@ return [
     'galleryItemAdd' => 'Hinzufügen',
     'noImages' => 'Keine Bilder vorhanden',
     'treatImage' => 'Bild bearbeiten',
-    'saveSuccess' => 'Erfolgreich gespeichert',
     'deleteSuccess' => 'Erfolgreich gelöscht',
     'images' => 'Bilder',
     'comments' => 'Kommentare',
