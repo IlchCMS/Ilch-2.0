@@ -10,7 +10,6 @@ return [
     'updateButton' => 'Aktualisieren',
     'selected' => 'markierte...',
     'downSuccess' => 'Erfolgreich heruntergeladen',
-    'deleteSuccess' => 'Erfolgreich gelöscht',
     'uninstallSuccess' => 'Erfolgreich deinstalliert',
     'freeSuccess' => 'Erfolgreich freigeschaltet',
     'installSuccess' => 'Erfolgreich installiert',
