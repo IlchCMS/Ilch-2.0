@@ -13,7 +13,7 @@ class Infos extends \Ilch\Mapper
     /**
      * Gets all modules folder rights.
      *
-     * @return array|\Modules\Admin\Models\Infos[]
+     * @return InfosModel[]|array
      */
     public function getModulesFolderRights()
     {
@@ -27,11 +27,37 @@ class Infos extends \Ilch\Mapper
         }
 
         $module = [];
-
         foreach ($moduleArray as $entries) {
             $moduleModel = new InfosModel();
             $moduleModel->setKey($entries['key']);
             $moduleModel->setFolder($entries['folder']);
+            $module[] = $moduleModel;
+        }
+
+        return $module;
+    }
+
+    /**
+     * Gets all modules php extensions.
+     *
+     * @return InfosModel[]|array
+     */
+    public function getModulesPHPExtensions()
+    {
+        $moduleArray = $this->db()->select('*')
+                ->from('modules_php_extensions')
+                ->execute()
+                ->fetchRows();
+
+        if (empty($moduleArray)) {
+            return null;
+        }
+
+        $module = [];
+        foreach ($moduleArray as $entries) {
+            $moduleModel = new InfosModel();
+            $moduleModel->setKey($entries['key']);
+            $moduleModel->setExtension($entries['extension']);
             $module[] = $moduleModel;
         }
 

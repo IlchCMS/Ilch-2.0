@@ -6,9 +6,6 @@
 
 namespace Modules\Admin\Models;
 
-/**
- * The box model class.
- */
 class Box extends \Ilch\Model
 {
     /**

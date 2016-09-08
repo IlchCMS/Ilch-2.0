@@ -63,6 +63,11 @@ class Config extends \Ilch\Config\Install
                   `name` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+                CREATE TABLE IF NOT EXISTS `[prefix]_modules_php_extensions` (
+                  `key` VARCHAR(255) NOT NULL,
+                  `extension` VARCHAR(255) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules_folderrights` (
                   `key` VARCHAR(255) NOT NULL,
                   `folder` VARCHAR(255) NOT NULL

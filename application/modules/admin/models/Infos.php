@@ -23,9 +23,16 @@ class Infos extends \Ilch\Model
     protected $folder;
 
     /**
+     * The extension of the module.
+     *
+     * @var string
+     */
+    protected $extension;
+
+    /**
      * Gets the key of the module.
      *
-     * @return DateTime
+     * @return string
      */
     public function getKey()
     {
@@ -48,7 +55,7 @@ class Infos extends \Ilch\Model
     /**
      * Gets the folder of the module.
      *
-     * @return DateTime
+     * @return string
      */
     public function getFolder()
     {
@@ -64,6 +71,29 @@ class Infos extends \Ilch\Model
     public function setFolder($folder)
     {
         $this->folder = (string)$folder;
+
+        return $this;
+    }
+
+    /**
+     * Gets the extension of the module.
+     *
+     * @return string
+     */
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+
+    /**
+     * Sets the extension of the module.
+     *
+     * @param string $extension
+     * @return this
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = (string)$extension;
 
         return $this;
     }

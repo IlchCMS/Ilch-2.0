@@ -6,9 +6,6 @@
 
 namespace Modules\Admin\Models;
 
-/**
- * The module model class.
- */
 class Module extends \Ilch\Model
 {
     /**

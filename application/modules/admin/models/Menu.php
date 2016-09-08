@@ -6,9 +6,6 @@
 
 namespace Modules\Admin\Models;
 
-/**
- * The menu model class.
- */
 class Menu extends \Ilch\Model
 {
     /**

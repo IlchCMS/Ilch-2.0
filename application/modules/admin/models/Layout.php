@@ -6,9 +6,6 @@
 
 namespace Modules\Admin\Models;
 
-/**
- * The layout model class.
- */
 class Layout extends \Ilch\Model
 {
     /**

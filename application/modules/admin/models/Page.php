@@ -6,9 +6,6 @@
 
 namespace Modules\Admin\Models;
 
-/**
- * The page model class.
- */
 class Page extends \Ilch\Model
 {
     /**

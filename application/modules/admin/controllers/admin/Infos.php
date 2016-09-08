@@ -20,6 +20,12 @@ class Infos extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'index'])
             ],
             [
+                'name' => 'menuPHPExtensions',
+                'active' => false,
+                'icon' => 'fa fa-cubes',
+                'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'phpextensions'])
+            ],
+            [
                 'name' => 'menuFolderRights',
                 'active' => false,
                 'icon' => 'fa fa-folder-open',
@@ -39,12 +45,14 @@ class Infos extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getActionName() == 'folderrights') {
+        if ($this->getRequest()->getActionName() == 'phpextensions') {
             $items[1]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'folderrights') {
+            $items[2]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'certificate') {
-            $items[2]['active'] = true;
+            $items[3]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'shortcuts') {
-            $items[3]['active'] = true; 
+            $items[4]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -95,6 +103,17 @@ class Infos extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('hmenuFolderRights'), ['action' => 'folderrights']);
 
         $this->getView()->set('folderrights', $InfosMapper->getModulesFolderRights());
+    }
+
+    public function phpextensionsAction()
+    {
+        $InfosMapper = new InfosMapper();
+
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuPHPExtensions'), ['action' => 'phpextensions']);
+
+        $this->getView()->set('phpExtensions', $InfosMapper->getModulesPHPExtensions());
     }
 
     public function certificateAction()
