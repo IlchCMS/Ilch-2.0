@@ -64,6 +64,7 @@ class Settings extends \Ilch\Controller\Admin
             $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'));
     }
 }
