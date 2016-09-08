@@ -20,7 +20,11 @@
                 <?php endforeach; ?>
             </select>
         <?php else: ?>
-            <input class="form-control" type="text" id="dbName" name="dbName">
+            <input type="text"
+                   class="form-control"
+                   id="dbName"
+                   name="dbName"
+                   value="<?php if ($this->get('dbName') != '') { echo $this->escape($this->get('dbName')); } ?>" />
         <?php endif; ?>
     </div>
     <?php if (!empty($errors['dbDatabase'])): ?>

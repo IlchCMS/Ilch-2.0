@@ -378,7 +378,6 @@ class Index extends \Ilch\Controller\Frontend
                     if (!empty($config->config)) {
                         $moduleModel = new \Modules\Admin\Models\Module();
                         $moduleModel->setKey($config->config['key']);
-
                         if (isset($config->config['author'])) {
                             $moduleModel->setAuthor($config->config['author']);
                         }
@@ -393,8 +392,9 @@ class Index extends \Ilch\Controller\Frontend
                         if (isset($config->config['system_module'])) {
                             $moduleModel->setSystemModule(true);
                         }
-
-                        $moduleModel->setVersion($config->config['version']);
+                        if (isset($config->config['version'])) {
+                            $moduleModel->setVersion($config->config['version']);
+                        }
                         $moduleModel->setIconSmall($config->config['icon_small']);
                         $moduleMapper->save($moduleModel);
                     }
