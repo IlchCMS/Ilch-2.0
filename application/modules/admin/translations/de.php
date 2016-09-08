@@ -9,7 +9,6 @@ return [
     'saveButton' => 'Speichern',
     'updateButton' => 'Aktualisieren',
     'selected' => 'markierte...',
-    'saveSuccess' => 'Erfolgreich gespeichert',
     'downSuccess' => 'Erfolgreich heruntergeladen',
     'deleteSuccess' => 'Erfolgreich gelöscht',
     'uninstallSuccess' => 'Erfolgreich deinstalliert',

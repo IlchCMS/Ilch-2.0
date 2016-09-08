@@ -9,7 +9,6 @@ return [
     'saveButton' => 'Save',
     'updateButton' => 'Update',
     'selected' => 'selected...',
-    'saveSuccess' => 'Saved successful',
     'downSuccess' => 'Successfully downloaded',
     'deleteSuccess' => 'Deleted successful',
     'uninstallSuccess' => 'Successfully uninstalled',
