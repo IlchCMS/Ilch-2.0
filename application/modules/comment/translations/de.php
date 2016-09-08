@@ -12,7 +12,6 @@ return [
     'commentLink' => 'Link',
     'noComments' => 'Keine Kommentare',
     'commentModul' => 'Modul',
-    'commentID' => 'ID',
     'submit' => 'Eintragen',
     'reply' => 'Antworten',
     'dateTime' => 'Datum/Uhrzeit',

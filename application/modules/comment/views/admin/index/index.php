@@ -9,18 +9,16 @@
                 <colgroup>
                     <col class="icon_width">
                     <col class="icon_width">
-                    <col class="icon_width">
                     <col class="col-lg-2">
                     <col class="col-lg-1">
                     <col class="col-lg-1">
-                    <col class="col-lg-1">				
+                    <col class="col-lg-1">
                     <col>
                 </colgroup>
                 <thead>
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_comments') ?></th>
                         <th></th>
-                        <th><?=$this->getTrans('commentID') ?></th>
                         <th><?=$this->getTrans('commentDateTime') ?></th>
                         <th><?=$this->getTrans('commentFrom') ?></th>
                         <th><?=$this->getTrans('commentModul') ?></th>
@@ -39,7 +37,6 @@
                         <tr>
                             <td><input type="checkbox" name="check_comments[]" value="<?=$comment->getId() ?>" /></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $comment->getId()]) ?></td>
-                            <td><?=$comment->getId() ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></td>
                             <td><?=$modules->getName() ?></td>

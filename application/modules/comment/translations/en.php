@@ -12,7 +12,6 @@ return [
     'commentLink' => 'Link',
     'noComments' => 'No comments',
     'commentModul' => 'Modul',
-    'commentID' => 'ID',
     'submit' => 'Save',
     'reply' => 'Reply',
     'dateTime' => 'Date/Time',
