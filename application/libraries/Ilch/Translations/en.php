@@ -27,4 +27,5 @@ return [
     'validation.errors.max.array' => '%s may not have more than %s items.',
 
     'saveSuccess' => 'Saved successful',
+    'deleteSuccess' => 'Delete successful',
 ];
