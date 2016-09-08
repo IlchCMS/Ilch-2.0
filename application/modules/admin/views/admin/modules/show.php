@@ -1,5 +1,6 @@
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/star-rating/css/star-rating.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuModules').' '.$this->getTrans('info') ?></legend>
 <?php
@@ -16,6 +17,49 @@ foreach ($modules as $module): ?>
         <div id="module">
             <div class="col-lg-6 col-sm-12">
                 <div class="row">
+                    <?php if ($module->thumbs != ''): ?>
+                        <div class="col-lg-12">
+                            <div id="jssor_1" class="slider">
+                                <div data-u="slides" class="slides">
+                                    <?php foreach ($module->thumbs as $thumb): ?>
+                                        <div data-p="112.50" style="display: none;">
+                                            <img data-u="image" src="<?=$thumb->img ?>" />
+                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                            <div data-u="caption" data-t="5" class="caption">
+                                                <?php if ($thumb->desc != ''): ?>
+                                                    <?=$this->escape($thumb->desc) ?>
+                                                <?php else: ?>
+                                                    <?=$this->escape($module->name) ?>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <!-- Bullet Navigator -->
+                                <div data-u="navigator" class="jssorb01">
+                                    <div data-u="prototype" style="width:12px;height:12px;"></div>
+                                </div>
+                                <!-- Thumbnail Navigator -->
+                                <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
+                                    <div class="thumbslider"></div>
+                                    <!-- Thumbnail Item Skin Begin -->
+                                    <div data-u="slides" style="cursor: pointer;">
+                                        <div data-u="prototype" class="p">
+                                            <div class="w">
+                                                <div data-u="thumbnailtemplate" class="t"></div>
+                                            </div>
+                                            <div class="c"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Thumbnail Item Skin End -->
+                                </div>
+                                <!-- Arrow Navigator -->
+                                <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
+                                <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
                     <div class="col-lg-2 col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('name') ?>:</b>
                     </div>
@@ -98,3 +142,44 @@ foreach ($modules as $module): ?>
 <?php endforeach; ?>
 
 <script src="<?=$this->getStaticUrl('js/star-rating/js/star-rating.js') ?>" type="text/javascript"></script>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider-21.1.5.min.js') ?>"></script>
+<script>
+jQuery(document).ready(function ($) {
+    var jssor_1_options = {
+        $AutoPlay: true,
+        $ArrowNavigatorOptions: {
+          $Class: $JssorArrowNavigator$
+        },
+        $BulletNavigatorOptions: {
+          $Class: $JssorBulletNavigator$
+        },
+        $ThumbnailNavigatorOptions: {
+          $Class: $JssorThumbnailNavigator$,
+          $Cols: 9,
+          $SpacingX: 3,
+          $SpacingY: 3,
+          $Align: 260
+        }
+    };
+
+    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+    //responsive code begin
+    //you can remove responsive code if you don't want the slider scales while window resizing
+    function ScaleSlider() {
+        var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+        if (refSize) {
+            refSize = Math.min(refSize, 600);
+            jssor_1_slider.$ScaleWidth(refSize);
+        }
+        else {
+            window.setTimeout(ScaleSlider, 90);
+        }
+    }
+    ScaleSlider();
+    $(window).bind("load", ScaleSlider);
+    $(window).bind("resize", ScaleSlider);
+    $(window).bind("orientationchange", ScaleSlider);
+    //responsive code end
+});
+</script>

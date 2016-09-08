@@ -156,18 +156,18 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog` (
-                  `c_id` INT(10) NOT NULL AUTO_INCREMENT,
-                  `user_one` INT(10) UNSIGNED NOT NULL,
-                  `user_two` INT(10) UNSIGNED NOT NULL,
+                  `c_id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `user_one` INT(11) UNSIGNED NOT NULL,
+                  `user_two` INT(11) UNSIGNED NOT NULL,
                   `time` DATETIME NOT NULL,
                   PRIMARY KEY (`c_id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
-                  `cr_id` INT(10) NOT NULL AUTO_INCREMENT,
+                  `cr_id` INT(11) NOT NULL AUTO_INCREMENT,
                   `reply` TEXT,
-                  `user_id_fk` INT(10) unsigned NOT NULL,
-                  `c_id_fk` INT(10) NOT NULL,
+                  `user_id_fk` INT(11) unsigned NOT NULL,
+                  `c_id_fk` INT(11) NOT NULL,
                   `time` DATETIME NOT NULL,
                   `read` INT(11) DEFAULT 0,
                   PRIMARY KEY (`cr_id`)
@@ -228,44 +228,46 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
-                (1, "Administrator"),(2, "User"),(3, "Guest");
-
-                INSERT INTO `[prefix]_user_menu` (`id`, `key`) VALUES
-                (1, "user/panel/index"),
-                (2, "user/panel/dialog"),
-                (3, "user/panel/gallery"),
-                (4, "user/panel/settings");
-
                 CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers` (
-                  `key` varchar(45) NOT NULL,
-                  `name` varchar(255) NOT NULL,
-                  `icon` varchar(255) DEFAULT NULL,
-                  `module` varchar(255) DEFAULT NULL,
+                  `key` VARCHAR(45) NOT NULL,
+                  `name` VARCHAR(255) NOT NULL,
+                  `icon` VARCHAR(255) DEFAULT NULL,
+                  `module` VARCHAR(255) DEFAULT NULL,
                   PRIMARY KEY (`key`),
                   UNIQUE KEY `key_UNIQUE` (`key`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_auth_providers_modules` (
-                  `module` varchar(255) NOT NULL,
-                  `provider` varchar(255) NOT NULL,
-                  `auth_controller` varchar(255) DEFAULT NULL,
-                  `auth_action` varchar(255) DEFAULT NULL,
-                  `unlink_controller` varchar(255) DEFAULT NULL,
-                  `unlink_action` varchar(255) DEFAULT NULL,
-                  PRIMARY KEY (`module`,`provider`)
+                  `module` VARCHAR(50) NOT NULL,
+                  `provider` VARCHAR(50) NOT NULL,
+                  `auth_controller` VARCHAR(255) DEFAULT NULL,
+                  `auth_action` VARCHAR(255) DEFAULT NULL,
+                  `unlink_controller` VARCHAR(255) DEFAULT NULL,
+                  `unlink_action` VARCHAR(255) DEFAULT NULL,
+                  PRIMARY KEY (`module`, `provider`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_auth_providers` (
-                  `user_id` int(11) NOT NULL,
-                  `provider` varchar(255) NOT NULL,
-                  `identifier` varchar(255) NOT NULL,
-                  `screen_name` varchar(255) DEFAULT NULL,
-                  `oauth_token` varchar(255) DEFAULT NULL,
-                  `oauth_token_secret` varchar(255) DEFAULT NULL,
-                  `created_at` varchar(45) DEFAULT NULL,
-                  PRIMARY KEY (`user_id`,`provider`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+                  `user_id` INT(11) NOT NULL,
+                  `provider` VARCHAR(50) NOT NULL,
+                  `identifier` VARCHAR(255) NOT NULL,
+                  `screen_name` VARCHAR(255) DEFAULT NULL,
+                  `oauth_token` VARCHAR(255) DEFAULT NULL,
+                  `oauth_token_secret` VARCHAR(255) DEFAULT NULL,
+                  `created_at` VARCHAR(45) DEFAULT NULL,
+                  PRIMARY KEY (`user_id`, `provider`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                INSERT INTO `[prefix]_groups` (`id`, `name`) VALUES
+                (1, "Administrator"),
+                (2, "User"),
+                (3, "Guest");
+
+                INSERT INTO `[prefix]_user_menu` (`id`, `key`) VALUES
+                (1, "user/panel/index"),
+                (2, "user/panel/dialog"),
+                (3, "user/panel/gallery"),
+                (4, "user/panel/settings");';
     }
 
     public function getUpdate()
