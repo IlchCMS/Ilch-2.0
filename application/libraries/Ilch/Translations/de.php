@@ -27,4 +27,5 @@ return [
     'validation.errors.max.array' => '%s darf höchstens %s Einträge haben.',
 
     'saveSuccess' => 'Erfolgreich gespeichert',
+    'deleteSuccess' => 'Erfolgreich gelöscht',
 ];
