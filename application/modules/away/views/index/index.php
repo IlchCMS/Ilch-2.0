@@ -32,7 +32,7 @@ if ($this->getUser()) {
                         <tr>
                             <td>
                                 <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a><br />
-                                <?=$away->getReason() ?>
+                                <?=$this->escape($away->getReason()) ?>
                             </td>
                             <?php $startDate = new \Ilch\Date($away->getStart()); ?>
                             <?php $endDate = new \Ilch\Date($away->getEnd()); ?>
@@ -98,7 +98,7 @@ if ($this->getUser()) {
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="5"><?=$away->getText() ?></td>
+                            <td colspan="5"><?=$this->escape($away->getText()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
