@@ -51,8 +51,8 @@
                             <?php else: ?>
                                 <td style="color: #ff0000;"><?=$startDate->format('d.m.Y', true) ?> - <?=$endDate->format('d.m.Y', true) ?></td>
                             <?php endif; ?>
-                            <td><?=$away->getReason() ?></td>
-                            <td><?=$away->getText() ?></td>
+                            <td><?=$this->escape($away->getReason()) ?></td>
+                            <td><?=$this->escape($away->getText()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
