@@ -89,6 +89,7 @@ class Index extends \Ilch\Controller\Frontend
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
+            $this->redirect(['action' => 'showImage', 'gallery' => $galleryId, 'id' => $id]);
         }
 
         $this->getView()->set('commentMapper', $commentMapper);
