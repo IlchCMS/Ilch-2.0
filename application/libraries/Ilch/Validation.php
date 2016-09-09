@@ -180,7 +180,7 @@ class Validation
                 $this->validationRules[$field][$validator] = null;
 
                 foreach ($params as $param) {
-                    if (empty($param)) {
+                    if (empty($param) && $param !== '0') {
                         continue;
                     }
 
