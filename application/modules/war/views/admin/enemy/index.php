@@ -49,16 +49,16 @@
                                 <?=$this->getDeleteIcon($deleteArray) ?>
                             </td>
                             <td>
-                                <?=$enemy->getEnemyName() ?>
+                                <?=$this->escape($enemy->getEnemyName()) ?>
                             </td>
                             <td>
-                                <?=$enemy->getEnemyTag() ?>
+                                <?=$this->escape($enemy->getEnemyTag()) ?>
                             </td>
                             <td>
                                 <img class="group-image" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" />
                             </td>
                             <td>
-                                <?=$enemy->getEnemyContactName() ?>
+                                <?=$this->escape($enemy->getEnemyContactName()) ?>
                             </td>
                             <td>
                                 <?=$enemy->getEnemyContactEmail() ?>

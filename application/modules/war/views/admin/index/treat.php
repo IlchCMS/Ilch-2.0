@@ -22,7 +22,7 @@
                             <?php if ($this->get('war') != '' and $this->get('war')->getWarEnemy() == $enemy->getId()): ?>
                                 <?php $selected = 'selected="selected"'; ?>
                             <?php endif; ?>
-                            <option <?=$selected ?> value="<?=$enemy->getId() ?>"><?=$enemy->getEnemyName() ?></option>
+                            <option <?=$selected ?> value="<?=$enemy->getId() ?>"><?=$this->escape($enemy->getEnemyName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
@@ -40,7 +40,7 @@
                             <?php if ($this->get('war') != '' and $this->get('war')->getWarGroup() == $group->getId()): ?>
                                 <?php $selected = 'selected="selected"'; ?>
                             <?php endif; ?>
-                            <option <?=$selected ?> value="<?=$group->getId() ?>"><?=$group->getGroupName() ?></option>
+                            <option <?=$selected ?> value="<?=$group->getId() ?>"><?=$this->escape($group->getGroupName()) ?></option>
                         <?php endforeach; ?>
                     </optgroup>
                 </select>
@@ -113,7 +113,7 @@
                                 <?php if ($this->get('war') != '' and $this->get('war')->getWarXonx() == $opt->getWarXonx()): ?>
                                     <?php $selected = 'selected="selected"'; ?>
                                 <?php endif; ?>
-                                <option <?=$selected ?> value="<?=$opt->getWarXonx() ?>"><?=$opt->getWarXonx() ?></option>
+                                <option <?=$selected ?> value="<?=$opt->getWarXonx() ?>"><?=$this->escape($opt->getWarXonx()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -142,7 +142,7 @@
                                 <?php if ($this->get('war') != '' and $this->get('war')->getWarGame() == $opt->getWarGame()): ?>
                                     <?php $selected = 'selected="selected"'; ?>
                                 <?php endif; ?>
-                                <option <?=$selected ?> value="<?=$opt->getWarGame() ?>"><?=$opt->getWarGame() ?></option>
+                                <option <?=$selected ?> value="<?=$opt->getWarGame() ?>"><?=$this->escape($opt->getWarGame()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>
@@ -171,7 +171,7 @@
                                 <?php if ($this->get('war') != '' and $this->get('war')->getWarMatchtype() == $opt->getWarMatchtype()): ?>
                                     <?php $selected = 'selected="selected"'; ?>
                                 <?php endif; ?>
-                                <option <?=$selected ?> value="<?=$opt->getWarMatchtype() ?>"><?=$opt->getWarMatchtype() ?></option>
+                                <option <?=$selected ?> value="<?=$opt->getWarMatchtype() ?>"><?=$this->escape($opt->getWarMatchtype()) ?></option>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </optgroup>

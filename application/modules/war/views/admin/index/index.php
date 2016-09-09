@@ -64,8 +64,8 @@
                             <td><input type="checkbox" name="check_war[]" value="<?=$war->getId() ?>" /></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
-                            <td><?=$war->getWarEnemy() ?></td>
-                            <td><?=$war->getWarGroup() ?></td>
+                            <td><?=$this->escape($war->getWarEnemy()) ?></td>
+                            <td><?=$this->escape($war->getWarGroup()) ?></td>
                             <td><?=date('d.m.Y H:i', strtotime($war->getWarTime())) ?></td>
                             <td>
                                 <?php if ($war->getWarStatus() == '1'): ?>
