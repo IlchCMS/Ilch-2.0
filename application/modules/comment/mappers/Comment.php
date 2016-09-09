@@ -131,18 +131,17 @@ class Comment extends \Ilch\Mapper
             $this->db()->delete('comments')
                 ->where(['id' => $id])
                 ->execute();
-            $id = $this->commentExists($id);
+            $id = $this->getCommentIdbyFKid($id);
         } while($id);
     }
 
     /**
-     * Check if a comment exists with a specific fk_id
-     * and return it's id.
+     * Get the id of a comment with a specific fk_id.
      *
      * @param integer $fk_id
      * @return integer $id
      */
-    public function commentExists($fk_id) {
+    public function getCommentIdbyFKid($fk_id) {
         return $this->db()->select('id', 'comments', ['fk_id' => $fk_id])
             ->execute()
             ->fetchCell();
