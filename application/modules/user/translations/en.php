@@ -234,7 +234,6 @@ return [
     'galleryItemAdd' => 'Append',
     'noImages' => 'No images available',
     'treatImage' => 'Treat image',
-    'deleteSuccess' => 'Deleted successful',
     'images' => 'Images',
     'comments' => 'Comments',
     'submit' => 'Save',

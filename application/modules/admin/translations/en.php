@@ -10,7 +10,6 @@ return [
     'updateButton' => 'Update',
     'selected' => 'selected...',
     'downSuccess' => 'Successfully downloaded',
-    'deleteSuccess' => 'Deleted successful',
     'uninstallSuccess' => 'Successfully uninstalled',
     'freeSuccess' => 'Successful activated',
     'installSuccess' => 'Successfully installed',
