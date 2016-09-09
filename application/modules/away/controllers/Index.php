@@ -9,43 +9,63 @@ namespace Modules\Away\Controllers;
 use Modules\Away\Mappers\Away as AwayMapper;
 use Modules\Away\Models\Away as AwayModel;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
-    {        
+    {
         $awayMapper = new AwayMapper();
-        $awayModel = new AwayModel();
         $userMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
-        if ($this->getRequest()->getPost('saveAway')) {
-            $reason = trim($this->getRequest()->getPost('reason'));
-            $start = new \Ilch\Date(trim($this->getRequest()->getPost('start')));
-            $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
-            $text = trim($this->getRequest()->getPost('text'));
+        $post = [
+            'reason' => '',
+            'start' => '',
+            'end' => '',
+            'text' => ''
+        ];
 
-            if (empty($reason)) {
-                $this->addMessage('missingReason', 'danger');
-            } elseif (empty($start)) {
-                $this->addMessage('missingStart', 'danger');
-            } elseif (empty($end)) {
-                $this->addMessage('missingEnd', 'danger');
-            } elseif (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } else {
+        if ($this->getRequest()->getPost('saveAway')) {
+            $post = [
+                'reason' => trim($this->getRequest()->getPost('reason')),
+                'start' => new \Ilch\Date(trim($this->getRequest()->getPost('start'))),
+                'end' => new \Ilch\Date(trim($this->getRequest()->getPost('end'))),
+                'text' => trim($this->getRequest()->getPost('text'))
+            ];
+
+            Validation::setCustomFieldAliases([
+                'start' => 'when',
+                'end' => 'when',
+                'text' => 'description'
+            ]);
+
+            $validation = Validation::create($post, [
+                'reason' => 'required',
+                'start' => 'required',
+                'end' => 'required',
+                'text' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
+                $awayModel = new AwayModel();
                 $awayModel->setUserId($this->getUser()->getId());
-                $awayModel->setReason($reason);
-                $awayModel->setStart($start);
-                $awayModel->setEnd($end);
-                $awayModel->setText($text);
+                $awayModel->setReason($post['reason']);
+                $awayModel->setStart($post['start']);
+                $awayModel->setEnd($post['end']);
+                $awayModel->setText($post['text']);
                 $awayMapper->save($awayModel);
 
                 $this->addMessage('saveSuccess');
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('aways', $awayMapper->getAway());
     }

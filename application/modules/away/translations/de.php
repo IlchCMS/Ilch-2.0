@@ -19,8 +19,4 @@ return [
     'declined' => 'abgelehnt',
     'approved' => 'genehmigt',
     'addButton' => 'Eintragen',
-    'missingReason' => 'Grund muss ausgefüllt werden',
-    'missingStart' => 'Start Datum muss ausgefüllt werden',
-    'missingEnd' => 'Enddatum muss ausgefüllt werden',
-    'missingText' => 'Beschreibung muss ausgefüllt werden',
 ];

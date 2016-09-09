@@ -9,6 +9,16 @@ if ($this->getUser()) {
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuAway') ?></legend>
+<?php if (!empty($this->get('errors'))): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
@@ -116,7 +126,7 @@ if ($this->getUser()) {
         <?=$this->getTokenField() ?>
         <legend><?=$this->getTrans('menuEntry'); ?></legend>
 
-        <div class="form-group">
+        <div class="form-group <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="reason" class="col-lg-2 control-label">
                 <?=$this->getTrans('reason') ?>:
             </label>
@@ -125,10 +135,10 @@ if ($this->getUser()) {
                        class="form-control"
                        id="reason"
                        name="reason"
-                       value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getTitle()); } ?>" />
+                       value="<?php if ($this->get('post') != '') { echo $this->get('post')['reason']; } else { echo ''; } ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=(in_array('start', $this->get('errorFields')) or in_array('end', $this->get('errorFields'))) ? 'has-error' : '' ?>">
             <label for="start" class="col-md-2 control-label">
                 <?=$this->getTrans('when') ?>:
             </label>
@@ -155,7 +165,7 @@ if ($this->getUser()) {
                 </span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="text" class="col-lg-2 control-label">
                 <?=$this->getTrans('description') ?>:
             </label>
@@ -163,7 +173,7 @@ if ($this->getUser()) {
                 <textarea class="form-control"
                           name="text"
                           id="text"
-                          rows="3"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
+                          rows="3"><?php if ($this->get('post') != '') { echo $this->get('post')['text']; } else { echo ''; } ?></textarea>
             </div>
         </div>
         <div class="col-lg-8" align="right">
