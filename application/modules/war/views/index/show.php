@@ -11,7 +11,7 @@ $enemy = $this->get('enemy');
     <div class="center-text row no_margin">
         <div class="col-md-5">
             <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>">
-            <h4><span><?=$group->getGroupName() ?></span></h4>
+            <h4><span><?=$this->escape($group->getGroupName()) ?></span></h4>
         </div>
         <div class="col-md-2 plays-vs">
             <h4>
@@ -22,7 +22,7 @@ $enemy = $this->get('enemy');
         </div>
         <div class="col-md-5">
             <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" alt="<?=$enemy->getEnemyName() ?>">
-            <h4><span><?=$enemy->getEnemyName() ?></span></h4>
+            <h4><span><?=$this->escape($enemy->getEnemyName()) ?></span></h4>
         </div>
     </div>
     <div class="col-lg-6">
@@ -86,7 +86,7 @@ $enemy = $this->get('enemy');
                     <?php foreach ($this->get('games') as $game): ?>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <span class=""><?=$game->getMap() ?></span>
+                                <span class=""><?=$this->escape($game->getMap()) ?></span>
                                 <span class="pull-right"><?=$game->getGroupPoints() ?> : <?=$game->getEnemyPoints() ?></span>
                             </li>
                         </ul>
@@ -101,7 +101,7 @@ $enemy = $this->get('enemy');
                 <h3 class="panel-title"><?=$this->getTrans('warReport') ?></h3>
             </div>
             <div class="panel-body">
-                <?=$war->getWarReport() ?>
+                <?=$this->escape($war->getWarReport()) ?>
             </div>
         </div>
     </div>

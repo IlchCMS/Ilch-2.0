@@ -30,8 +30,8 @@
                 <?php foreach ($this->get('war') as $war): ?>
                     <?php $date = new \Ilch\Date($war->getWarTime()) ?>
                     <tr>
-                        <td><?=$war->getWarEnemy() ?></td>
-                        <td><?=$war->getWarGroup() ?></td>
+                        <td><?=$this->escape($war->getWarEnemy()) ?></td>
+                        <td><?=$this->escape($war->getWarGroup()) ?></td>
                         <td><?=$date->format("d.m.Y H:i", true) ?></td>
                         <td>
                             <?php if ($war->getWarStatus() == '1'): ?>

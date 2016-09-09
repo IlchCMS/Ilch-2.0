@@ -27,14 +27,14 @@
                         <?=$this->getTrans('warResult') ?>
                     </label>
                     <div class="col-lg-2">
-                        <input type="text"
+                        <input type="number"
                                class="form-control"
                                name="warErgebnisGroup[]"
                                placeholder="<?=$this->getTrans('warResultWe') ?>"
                                value="<?=$game->getGroupPoints() ?>">
                     </div>
                     <div class="col-lg-2">
-                        <input type="text"
+                        <input type="number"
                                class="form-control"
                                name="warErgebnisEnemy[]"
                                placeholder="<?=$this->getTrans('warResultEnemy') ?>"
