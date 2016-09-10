@@ -34,7 +34,7 @@
                                 <?php endif; ?>
                             </td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
-                            <td><a href="<?=$this->getUrl('events/show/event/id/'.$event->getId()) ?>" target="_blank"><?=$event->getTitle() ?></a></td>
+                            <td><a href="<?=$this->getUrl('events/show/event/id/'.$event->getId()) ?>" target="_blank"><?=$this->escape($event->getTitle()) ?></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -39,7 +39,7 @@ $(function() {
             <?php if ($this->get('calendarList') != ''): ?>
                 <?php foreach ($this->get('calendarList') as $calendarList): ?>
                     {
-                        title: '<?=$calendarList->getTitle() ?>',
+                        title: '<?=$this->escape($calendarList->getTitle()) ?>',
                         start: '<?=$calendarList->getStart() ?>',
                         end  : '<?=$calendarList->getEnd() ?>',
                         color: '<?=$calendarList->getColor() ?>',
@@ -56,7 +56,7 @@ $(function() {
                 <?php foreach ($this->get('birthdayList') as $birthdayList): ?>
                     <?php if ($birthdayList->getBirthday() != '0000-00-00'): ?>
                         {
-                            title: '<?=$birthdayList->getName() ?> (<?=floor(($year.date('md') - str_replace("-", "", $birthdayList->getBirthday())) / 10000 + 1) ?>)',
+                            title: '<?=$this->escape($birthdayList->getName()) ?> (<?=floor(($year.date('md') - str_replace("-", "", $birthdayList->getBirthday())) / 10000 + 1) ?>)',
                             start: '<?=$year.'-'.date('m-d', strtotime($birthdayList->getBirthday())) ?>',
                             color: '#257e4a',
                             url  : '<?=$this->getUrl('user/profil/index/user/' . $birthdayList->getId()) ?>'
@@ -86,7 +86,7 @@ $(function() {
             <?php if ($this->get('eventList') != ''): ?>
                 <?php foreach ($this->get('eventList') as $eventList): ?>
                     {
-                        title: '<?=$eventList->getTitle() ?>',
+                        title: '<?=$this->escape($eventList->getTitle()) ?>',
                         start: '<?=$eventList->getStart() ?>',
                         end  : '<?=$eventList->getEnd() ?>',
                         color: '#C52C66',
