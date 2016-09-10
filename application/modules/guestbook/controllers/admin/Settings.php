@@ -6,6 +6,8 @@
 
 namespace Modules\Guestbook\Controllers\Admin;
 
+use Ilch\Validation;
+
 class Settings extends \Ilch\Controller\Admin
 {
     public function init()
@@ -38,13 +40,35 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-        if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
-            $this->getConfig()->set('gbook_entriesPerPage', $this->getRequest()->getPost('entriesPerPage'));
+        $post = [
+            'entrySettings' => '',
+            'entriesPerPage' => ''
+        ];
 
-            $this->addMessage('saveSuccess');
+        if ($this->getRequest()->isPost()) {
+            $post = [
+                'entrySettings' => $this->getRequest()->getPost('entrySettings'),
+                'entriesPerPage' => $this->getRequest()->getPost('entriesPerPage')
+            ];
+
+            $validation = Validation::create($post, [
+                'entrySettings' => 'required|numeric|integer|min:0|max:1',
+                'entriesPerPage' => 'numeric|integer|min:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('gbook_autosetfree', $post['entrySettings']);
+                $this->getConfig()->set('gbook_entriesPerPage', $post['entriesPerPage']);
+
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('setfree', $this->getConfig()->get('gbook_autosetfree'));
         $this->getView()->set('entriesPerPage', $this->getConfig()->get('gbook_entriesPerPage'));
     }
