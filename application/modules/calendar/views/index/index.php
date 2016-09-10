@@ -69,7 +69,7 @@ $(function() {
             <?php if ($this->get('awayList') != ''): ?>
                 <?php foreach ($this->get('awayList') as $awayList): ?>
                     {
-                        title: '<?=$awayList->getReason() ?>',
+                        title: '<?=$this->escape($awayList->getReason()) ?>',
                         start: '<?=$awayList->getStart() ?> 00:00:00',
                         end  : '<?=$awayList->getEnd() ?> 23:59:59',
                         <?php if ($awayList->getStatus() == 0 OR $awayList->getStatus() == 2): ?>

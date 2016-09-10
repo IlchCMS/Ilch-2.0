@@ -47,7 +47,8 @@ class Index extends \Ilch\Controller\Frontend
                 'reason' => 'required',
                 'start' => 'required',
                 'end' => 'required',
-                'text' => 'required'
+                'text' => 'required',
+                'calendarShow' => 'numeric|integer|min:1|max:1'
             ]);
 
             if ($validation->isValid()) {
