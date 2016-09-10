@@ -46,6 +46,7 @@ class Config extends \Ilch\Config\Install
                   `end` DATE NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
                   `status` INT(11) NOT NULL DEFAULT '2',
+                  `show` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
     }

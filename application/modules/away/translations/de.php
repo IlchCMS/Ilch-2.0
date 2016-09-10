@@ -19,4 +19,5 @@ return [
     'declined' => 'abgelehnt',
     'approved' => 'genehmigt',
     'addButton' => 'Eintragen',
+    'calendarShow' => 'im Kalender anzeigen?',
 ];

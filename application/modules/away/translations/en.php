@@ -19,4 +19,5 @@ return [
     'declined' => 'declined',
     'approved' => 'approved',
     'addButton' => 'Entry',
+    'calendarShow' => 'Show in the calendar?',
 ];

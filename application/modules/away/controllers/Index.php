@@ -24,7 +24,8 @@ class Index extends \Ilch\Controller\Frontend
             'reason' => '',
             'start' => '',
             'end' => '',
-            'text' => ''
+            'text' => '',
+            'calendarShow' => ''
         ];
 
         if ($this->getRequest()->getPost('saveAway')) {
@@ -32,7 +33,8 @@ class Index extends \Ilch\Controller\Frontend
                 'reason' => trim($this->getRequest()->getPost('reason')),
                 'start' => new \Ilch\Date(trim($this->getRequest()->getPost('start'))),
                 'end' => new \Ilch\Date(trim($this->getRequest()->getPost('end'))),
-                'text' => trim($this->getRequest()->getPost('text'))
+                'text' => trim($this->getRequest()->getPost('text')),
+                'calendarShow' => trim($this->getRequest()->getPost('calendarShow'))
             ];
 
             Validation::setCustomFieldAliases([
@@ -55,13 +57,19 @@ class Index extends \Ilch\Controller\Frontend
                 $awayModel->setStart($post['start']);
                 $awayModel->setEnd($post['end']);
                 $awayModel->setText($post['text']);
+                $awayModel->setShow($post['calendarShow']);
                 $awayMapper->save($awayModel);
 
                 $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             }
 
             $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
             $errorFields = $validation->getFieldsWithError();
+        }
+
+        if ($awayMapper->existsTable('calendar') == true) {
+            $this->getView()->set('calendarShow', 1);
         }
 
         $this->getView()->set('post', $post);

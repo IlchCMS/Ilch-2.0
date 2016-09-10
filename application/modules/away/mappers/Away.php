@@ -39,6 +39,7 @@ class Away extends \Ilch\Mapper
             $entryModel->setEnd($entries['end']);
             $entryModel->setText($entries['text']);
             $entryModel->setStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
             $away[] = $entryModel;
 
         }
@@ -59,6 +60,13 @@ class Away extends \Ilch\Mapper
         return reset($away);
     }
 
+    public function existsTable($table)
+    {
+        $module = $this->db()->ifTableExists('[prefix]_'.$table);
+
+        return $module;
+    }
+
     /**
      * Inserts or updates away model.
      *
@@ -71,7 +79,8 @@ class Away extends \Ilch\Mapper
             'reason' => $away->getReason(),
             'start' => $away->getStart(),
             'end' => $away->getEnd(),
-            'text' => $away->getText()
+            'text' => $away->getText(),
+            'show' => $away->getShow()
         ];
 
         if ($away->getId()) {

@@ -65,6 +65,23 @@ $(function() {
                 <?php endforeach; ?>
             <?php endforeach; ?>
 
+            // away entries
+            <?php if ($this->get('awayList') != ''): ?>
+                <?php foreach ($this->get('awayList') as $awayList): ?>
+                    {
+                        title: '<?=$awayList->getReason() ?>',
+                        start: '<?=$awayList->getStart() ?> 00:00:00',
+                        end  : '<?=$awayList->getEnd() ?> 23:59:59',
+                        <?php if ($awayList->getStatus() == 0 OR $awayList->getStatus() == 2): ?>
+                            color  : '#DF0101',
+                        <?php else: ?>
+                            color  : '#04B404',
+                        <?php endif; ?>
+                        url  : '<?=$this->getUrl('away/index/index/#' . $awayList->getId()) ?>'
+                    },
+                <?php endforeach; ?>
+            <?php endif; ?>
+
             // event entries
             <?php if ($this->get('eventList') != ''): ?>
                 <?php foreach ($this->get('eventList') as $eventList): ?>

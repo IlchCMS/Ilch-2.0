@@ -39,7 +39,7 @@ if ($this->getUser()) {
                 <tbody>
                     <?php foreach ($this->get('aways') as $away): ?>
                         <?php $user = $userMapper->getUserById($away->getUserId()) ?>
-                        <tr>
+                        <tr id="<?=$away->getId() ?>">
                             <td>
                                 <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a><br />
                                 <?=$this->escape($away->getReason()) ?>
@@ -176,6 +176,20 @@ if ($this->getUser()) {
                           rows="3"><?php if ($this->get('post') != '') { echo $this->get('post')['text']; } else { echo ''; } ?></textarea>
             </div>
         </div>
+        <?php if ($this->get('calendarShow') == 1): ?>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="checkbox"
+                           id="calendarShow"
+                           name="calendarShow"
+                           value="1"
+                           <?php if ($this->get('post')['calendarShow'] != '') { echo 'checked'; } else { echo ''; } ?> />
+                    <label for="calendarShow">
+                        <?=$this->getTrans('calendarShow') ?>
+                    </label>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="col-lg-8" align="right">
             <?=$this->getSaveBar('addButton', 'Away') ?>
         </div>

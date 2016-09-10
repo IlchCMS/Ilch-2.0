@@ -58,6 +58,13 @@ class Away extends \Ilch\Model
     protected $status;
 
     /**
+     * The show of the away.
+     *
+     * @var int
+     */
+    protected $show;
+
+    /**
      * Gets the id of the away.
      *
      * @return int
@@ -214,6 +221,29 @@ class Away extends \Ilch\Model
     public function setStatus($status)
     {
         $this->status = (int)$status;
+
+        return $this;
+    }
+
+    /**
+     * Gets the show of the away.
+     *
+     * @return int
+     */
+    public function getShow()
+    {
+        return $this->show;
+    }
+
+    /**
+     * Sets the show of the away.
+     *
+     * @param int $show
+     * @return this
+     */
+    public function setShow($show)
+    {
+        $this->show = (int)$show;
 
         return $this;
     }
