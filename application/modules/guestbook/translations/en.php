@@ -25,5 +25,5 @@ return [
     'captcha' => 'Captcha',
     'smilies' => 'Smilies',
     'close' => 'Close',
-    'entriesPerPage' => 'Einträge pro Seite',
+    'entriesPerPage' => 'Entries per page',
 ];
