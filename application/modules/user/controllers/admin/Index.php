@@ -112,49 +112,50 @@ class Index extends \Ilch\Controller\Admin
      */
     public function setfreeAction()
     {
-        $userMapper = new UserMapper();
+        if ($this->getRequest()->isSecure()) {
+            $userMapper = new UserMapper();
+            $date = new \Ilch\Date();
 
-        $date = new \Ilch\Date();
+            $model = new UserModel();
+            $model->setId($this->getRequest()->getParam('id'));
+            $model->setDateConfirmed($date->format("Y-m-d H:i:s", true));
+            $model->setConfirmed(1);
+            $userMapper->save($model);
+            
+            $layout = '';
 
-        $model = new UserModel();
-        $model->setId($this->getRequest()->getParam('id'));
-        $model->setDateConfirmed($date->format("Y-m-d H:i:s", true));
-        $model->setConfirmed(1);
-        $userMapper->save($model);
-        
-        $layout = '';
+            if (isset($_SESSION['layout'])) {
+                $layout = $_SESSION['layout'];
+            }
 
-        if (isset($_SESSION['layout'])) {
-            $layout = $_SESSION['layout'];
+            if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php')) {
+                $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php');
+            } else {
+                $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/manuallyconfirm.php');
+            }
+
+            $user = $userMapper->getUserById($this->getRequest()->getParam('id'));
+
+            $messageReplace = [
+                    '{content}' => $this->getConfig()->get('manually_confirm_mail'),
+                    '{sitetitle}' => $this->getConfig()->get('page_title'),
+                    '{date}' => $date->format("l, d. F Y", true),
+                    '{name}' => $user->getName(),
+                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+            ];
+            $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
+
+            $mail = new \Ilch\Mail();
+            $mail->setTo($user->getEmail(), $user->getName())
+                    ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                    ->setFrom($this->getTranslator()->trans('automaticEmail'), $this->getConfig()->get('page_title'))
+                    ->setMessage($message)
+                    ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
+            $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
+            $mail->send();
+
+            $this->addMessage('freeSuccess');
         }
-
-        if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php')) {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/user/layouts/mail/manuallyconfirm.php');
-        } else {
-            $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/manuallyconfirm.php');
-        }
-
-        $user = $userMapper->getUserById($this->getRequest()->getParam('id'));
-
-        $messageReplace = [
-                '{content}' => $this->getConfig()->get('manually_confirm_mail'),
-                '{sitetitle}' => $this->getConfig()->get('page_title'),
-                '{date}' => $date->format("l, d. F Y", true),
-                '{name}' => $user->getName(),
-                '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
-        ];
-        $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
-
-        $mail = new \Ilch\Mail();
-        $mail->setTo($user->getEmail(), $user->getName())
-                ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                ->setFrom($this->getTranslator()->trans('automaticEmail'), $this->getConfig()->get('page_title'))
-                ->setMessage($message)
-                ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-        $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
-        $mail->send();
-
-        $this->addMessage('freeSuccess');
 
         $this->redirect(['action' => 'index', 'showsetfree' => 1]);
     }
