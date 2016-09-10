@@ -32,7 +32,7 @@ $user = $userMapper->getUserById($event->getUserId());
                 <div class="dateDayPic"><?=$start->format("d", true) ?></div>
                 <div class="dateMonthPic"><?=$start->format("M", true) ?></div>
             </div>
-            <div class="titlePic"><?=$event->getTitle() ?></div>
+            <div class="titlePic"><?=$this->escape($event->getTitle()) ?></div>
         </div>
         <div class="naviPic">
             <div class="naviGast">
@@ -96,12 +96,12 @@ $user = $userMapper->getUserById($event->getUserId());
             </div>
             <?php
             if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != '') {
-                echo '<a id="showMap">'.$place[0].'</a>';
+                echo '<a id="showMap">'.$this->escape($place[0]).'</a>';
             } else {
-               echo $place[0];
+               echo $this->escape($place[0]);
             }
             if (!empty($place[1])) {
-                echo '<br /><span class="eventAddress text-muted">'.$place[1].'</span>';
+                echo '<br /><span class="eventAddress text-muted">'.$this->escape($place[1]).'</span>';
             }
             ?>
             <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
@@ -149,7 +149,7 @@ $user = $userMapper->getUserById($event->getUserId());
             <strong><?=$this->getTrans('description') ?></strong>
         </div>
         <div class="eventBoxContent">
-            <?=nl2br($this->getHtmlFromBBCode($event->getText())) ?>
+            <?=nl2br($this->getHtmlFromBBCode($this->escape($event->getText()))) ?>
         </div>
     </div>
 
@@ -195,7 +195,7 @@ $user = $userMapper->getUserById($event->getUserId());
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
                             <span class="small"><?=$commentDate->format("Y.m.d H:i", true) ?></span>
                         </div>
-                        <div class="commentEventText"><?=nl2br($eventComments->getText()) ?></div>
+                        <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
                     </div>
                     <br />
                 <?php endforeach; ?>
@@ -204,7 +204,7 @@ $user = $userMapper->getUserById($event->getUserId());
     </div>
 </div>
 
-<?=$this->getDialog('showBigGoogleMapsModal', $event->getPlace(), '<div id="big-map-canvas"></div>') ?>
+<?=$this->getDialog('showBigGoogleMapsModal', $this->escape($event->getPlace()), '<div id="big-map-canvas"></div>') ?>
 <?php if ($this->get('event_google_maps_api_key') != ''): ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>" async defer></script>
 <?php endif; ?>

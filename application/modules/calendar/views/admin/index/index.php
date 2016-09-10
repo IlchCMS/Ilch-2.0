@@ -34,7 +34,7 @@
                                     <?=date('d.m.Y H:i', strtotime($calendar->getEnd())) ?>
                                 <?php endif; ?>
                             </td>
-                            <td><?=$calendar->getTitle() ?></td>
+                            <td><?=$this->escape($calendar->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
