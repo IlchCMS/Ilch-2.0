@@ -74,7 +74,7 @@
                             </td>
                             <td>
                                 <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
-                                    <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()]) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
+                                    <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
                                 <?php else: ?>                                
                                     <?=$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]) ?>
                                 <?php endif; ?>
