@@ -204,7 +204,7 @@ $user = $userMapper->getUserById($event->getUserId());
     </div>
 </div>
 
-<?=$this->getDialog('showBigGoogleMapsModal', $this->escape($event->getPlace()), '<div id="big-map-canvas"></div>') ?>
+<?=$this->getDialog('showBigGoogleMapsModal', $event->getPlace(), '<div id="big-map-canvas"></div>') ?>
 <?php if ($this->get('event_google_maps_api_key') != ''): ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>" async defer></script>
 <?php endif; ?>
