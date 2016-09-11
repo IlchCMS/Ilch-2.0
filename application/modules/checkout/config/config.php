@@ -23,6 +23,9 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Checkout',
                 'description' => 'Here you can manage your clan cash.',
             ],
+        ],
+        'phpextensions' => [
+            'intl'
         ]
     ];
 
