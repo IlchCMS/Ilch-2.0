@@ -39,7 +39,7 @@ foreach ($layouts as $layout): ?>
                         $filename = basename($layout->downloadLink);
                         $filename = strstr($filename,'.',true);
                         if (in_array($filename, $this->get('layouts'))): ?>
-                            <span class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
+                            <span class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check text-success"></i>
                             </span>
                         <?php else: ?>

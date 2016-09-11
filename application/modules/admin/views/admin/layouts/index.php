@@ -26,14 +26,14 @@
                     <span data-toggle="modal"
                           data-target="#infoModal<?=$layout->getKey() ?>"
                           title="<?=$this->getTrans('info') ?>">
-                        <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" class="img-thumbnail" alt="<?=$this->escape($layout->getName()) ?>" title="<?=$this->escape($layout->getName()) ?>" />
+                        <img src="<?=$this->getStaticUrl('../application/layouts/'.$layout->getKey().'/config/screen.png') ?>" alt="<?=$this->escape($layout->getName()) ?>" title="<?=$this->escape($layout->getName()) ?>" />
                     </span>
                 </div>
                 <div class="panel-footer">
                     <div class="clearfix">
                         <div class="pull-left">
                                 <?php if ($this->get('defaultLayout') == $layout->getKey()): ?>
-                                    <span class="btn btn-default disabled" title="<?=$this->getTrans('isDefault') ?>">
+                                    <span class="btn disabled" title="<?=$this->getTrans('isDefault') ?>">
                                         <i class="fa fa-check text-success"></i>
                                     </span>
                                 <?php else: ?>
