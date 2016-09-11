@@ -37,10 +37,10 @@ foreach ($modules as $module): ?>
         }
         ?>
         <div id="module">
-            <div class="col-lg-6 col-sm-12">
+            <div class="col-lg-6 col-xs-12">
                 <div class="row">
                     <?php if (!empty($module->thumbs)): ?>
-                        <div class="col-lg-12">
+                        <div class="col-xs-12">
                             <div id="jssor_1" class="slider">
                                 <div data-u="slides" class="slides">
                                     <?php foreach ($module->thumbs as $thumb): ?>
@@ -109,7 +109,7 @@ foreach ($modules as $module): ?>
                     <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('hits') ?>:</b>
                     </div>
-                    <div class=col-sm-9 col-xs-6">
+                    <div class="col-sm-9 col-xs-6">
                         <?=$module->hits ?>
                     </div>
                     <div class="col-sm-3 col-xs-6">
@@ -145,10 +145,10 @@ foreach ($modules as $module): ?>
                     </div>
                 <?php endif; ?>
                 <br />
-                <div class="col-lg-12">
+                <div class="col-xs-12">
                     <b><?=$this->getTrans('desc') ?>:</b>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-xs-12">
                     <?=$this->escape($module->desc) ?>
                 </div>
             </div>

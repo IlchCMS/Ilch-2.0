@@ -29,7 +29,7 @@ foreach ($layouts as $layout): ?>
             </div>
             <div class="panel-body">
                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layout->id]); ?>" title="<?=$this->getTrans('info') ?>">
-                    <img src="<?=$layout->thumb ?>" class="img-thumbnail" alt="<?=$this->escape($layout->name) ?>" />
+                    <img src="<?=$layout->thumbs[0]->img ?>" alt="<?=$this->escape($layout->name) ?>" />
                 </a>
             </div>
             <div class="panel-footer">
@@ -67,4 +67,3 @@ foreach ($layouts as $layout): ?>
         </div>
     </div>
 <?php endforeach; ?>
-
