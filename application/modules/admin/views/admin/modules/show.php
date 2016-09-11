@@ -1,12 +1,15 @@
+<?php
+$moduleMapper = $this->get('moduleMapper');
+$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
+$modules = json_decode($modulesList);
+?>
+
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/star-rating/css/star-rating.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuModules').' '.$this->getTrans('info') ?></legend>
 <?php
-$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
-$modules = json_decode($modulesList);
-
 if (empty($modules)) {
     echo $this->getTrans('noModulesAvailable');
     return;
@@ -14,10 +17,29 @@ if (empty($modules)) {
 
 foreach ($modules as $module): ?>
     <?php if ($module->id == $this->getRequest()->getParam('id')): ?>
+        <?php
+        if (!empty($module->phpextensions)) {
+            $extensionCheck = [];
+            foreach ($module->phpextensions as $extension) {
+                $extensionCheck[] = $moduleMapper->getLoadedPHPExtensions($extension);
+            }
+
+            $phpExtensions = array_combine($module->phpextensions, $extensionCheck);
+            foreach ($phpExtensions as $key => $value) {
+                if ($value == true) {
+                    $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
+                } else {
+                    $phpExtension[] = '<font color="#a94442">'.$key.'</font>';
+                }
+            }
+
+            $phpExtension = implode(", ", $phpExtension);
+        }
+        ?>
         <div id="module">
             <div class="col-lg-6 col-sm-12">
                 <div class="row">
-                    <?php if ($module->thumbs != ''): ?>
+                    <?php if (!empty($module->thumbs)): ?>
                         <div class="col-lg-12">
                             <div id="jssor_1" class="slider">
                                 <div data-u="slides" class="slides">
@@ -60,22 +82,22 @@ foreach ($modules as $module): ?>
                         </div>
                     <?php endif; ?>
 
-                    <div class="col-lg-2 col-sm-3 col-xs-6">
+                    <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('name') ?>:</b>
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-6">
+                    <div class="col-sm-9 col-xs-6">
                         <?=$this->escape($module->name) ?>
                     </div>
-                    <div class="col-lg-2 col-sm-3 col-xs-6">
+                    <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('version') ?>:</b>
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-6">
+                    <div class="col-sm-9 col-xs-6">
                         <?=$module->version ?>
                     </div>
-                    <div class="col-lg-2 col-sm-3 col-xs-6">
+                    <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('author') ?>:</b>
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-6">
+                    <div class="col-sm-9 col-xs-6">
                         <?php if ($module->link != ''): ?>
                             <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank">
                                 <i><?=$this->escape($module->author) ?></i>
@@ -84,22 +106,22 @@ foreach ($modules as $module): ?>
                             <i><?=$this->escape($module->author) ?></i>
                         <?php endif; ?>
                     </div>
-                    <div class="col-lg-2 col-sm-3 col-xs-6">
+                    <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('hits') ?>:</b>
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-6">
+                    <div class=col-sm-9 col-xs-6">
                         <?=$module->hits ?>
                     </div>
-                    <div class="col-lg-2 col-sm-3 col-xs-6">
+                    <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('downloads') ?>:</b>
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-6">
+                    <div class="col-sm-9 col-xs-6">
                         <?=$module->downs ?>
                     </div>
-                    <div class="col-lg-2 col-sm-3 col-xs-6">
+                    <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('rating') ?>:</b>
                     </div>
-                    <div class="col-lg-10 col-sm-9 col-xs-6">
+                    <div class="col-sm-9 col-xs-6">
                         <span title="<?=$module->rating ?> <?php if ($module->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
                             <input type="number"
                                    class="rating"
@@ -111,6 +133,17 @@ foreach ($modules as $module): ?>
                         </span>
                     </div>
                 </div>
+                <?php if (!empty($module->phpextensions)): ?>
+                    <div class="row">
+                        <br />
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('phpExtensions') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$phpExtension ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <br />
                 <div class="col-lg-12">
                     <b><?=$this->getTrans('desc') ?>:</b>
@@ -125,7 +158,11 @@ foreach ($modules as $module): ?>
             <?php
             $filename = basename($module->downloadLink);
             $filename = strstr($filename,'.',true);
-            if (in_array($filename, $this->get('modules'))): ?>
+            if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
+                <button class="btn disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
+                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                </button>
+            <?php elseif (in_array($filename, $this->get('modules'))): ?>
                 <button class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>

@@ -1,10 +1,13 @@
+<?php
+$moduleMapper = $this->get('moduleMapper');
+$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
+$modules = json_decode($modulesList);
+?>
+
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('search') ?></legend>
 <?php
-$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
-$modules = json_decode($modulesList);
-
 if (empty($modules)) {
     echo $this->getTrans('noModulesAvailable');
     return;
@@ -25,6 +28,25 @@ if (empty($modules)) {
         </thead>
         <tbody>
             <?php foreach ($modules as $module):  ?>
+                <?php
+                if (!empty($module->phpextensions)) {
+                    $extensionCheck = [];
+                    foreach ($module->phpextensions as $extension) {
+                        $extensionCheck[] = $moduleMapper->getLoadedPHPExtensions($extension);
+                    }
+
+                    $phpExtensions = array_combine($module->phpextensions, $extensionCheck);
+                    foreach ($phpExtensions as $key => $value) {
+                        if ($value == true) {
+                            $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
+                        } else {
+                            $phpExtension[] = '<font color="#a94442">'.$key.'</font>';
+                        }
+                    }
+
+                    $phpExtension = implode(", ", $phpExtension);
+                }
+                ?>
                 <tr>
                     <td>
                         <a href="<?=$this->getUrl(['action' => 'show', 'id' => $module->id]); ?>" title="<?=$this->getTrans('info') ?>"><?=$this->escape($module->name) ?></a>
@@ -41,29 +63,34 @@ if (empty($modules)) {
                         <?php
                         $filename = basename($module->downloadLink);
                         $filename = strstr($filename,'.',true);
-                        if (in_array($filename, $this->get('modules'))): ?>
-                            <span class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
+                        if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('phpExtensionError') ?>">
+                                <i class="fa fa-download"></i>
+                            </button>
+                        <?php elseif (in_array($filename, $this->get('modules'))): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check text-success"></i>
-                            </span>
-                            <?php else: ?>
-                                <form method="POST" action="">
-                                    <?=$this->getTokenField() ?>
-                                    <button type="submit"
-                                            class="btn btn-default"
-                                            name="url"
-                                            value="<?=$module->downloadLink ?>"
-                                            title="<?=$this->getTrans('moduleDownload') ?>">
-                                        <i class="fa fa-download"></i>
-                                    </button>
-                                </form>
-                            <?php endif; ?>
+                            </button>
+                        <?php else: ?>
+                            <form method="POST" action="">
+                                <?=$this->getTokenField() ?>
+                                <button type="submit"
+                                        class="btn btn-default"
+                                        name="url"
+                                        value="<?=$module->downloadLink ?>"
+                                        title="<?=$this->getTrans('moduleDownload') ?>">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                            </form>
+                        <?php endif; ?>
 
-                            <a href="<?=$this->getUrl(['action' => 'show', 'id' => $module->id]); ?>" title="<?=$this->getTrans('info') ?>">
-                                <span class="btn btn-default">
-                                    <i class="fa fa-info text-info"></i>
-                                </span>
-                            </a>
-                        </form>
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $module->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                            <span class="btn btn-default">
+                                <i class="fa fa-info text-info"></i>
+                            </span>
+                        </a>
                     </td>
                     <td><?=$module->desc ?></td>
                 </tr>

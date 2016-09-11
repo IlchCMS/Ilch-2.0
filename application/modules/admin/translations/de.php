@@ -181,6 +181,7 @@ return [
     'hmenuPHPInfo' => 'PHP Info',
     'hmenuFolderRights' => 'Ordner Rechte',
     'hmenuCertificate' => 'Zertifikat',
+    'phpExtensionError' => 'Nicht alle PHP-Erweiterungen aktiviert',
     'phpExtensions' => 'PHP-Erweiterungen',
     'extension' => 'Erweiterung',
     'existing' => 'vorhanden',

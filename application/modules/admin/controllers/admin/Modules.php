@@ -50,28 +50,31 @@ class Modules extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
-        $modules = new ModuleMapper();
+        $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
 
-        $this->getView()->set('modules', $modules->getModules());
+        $this->getView()->set('modules', $moduleMapper->getModules());
     }
 
     public function notinstalledAction()
     {
-        $modules = new ModuleMapper();
+        $moduleMapper = new ModuleMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuNotInstalled'), ['action' => 'notinstalled']);
 
-        $this->getView()->set('modulesNotInstalled', $modules->getModulesNotInstalled());
+        $this->getView()->set('moduleMapper', $moduleMapper);
+        $this->getView()->set('modulesNotInstalled', $moduleMapper->getModulesNotInstalled());
     }
 
     public function searchAction()
     {
+        $moduleMapper = new ModuleMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
@@ -108,11 +111,14 @@ class Modules extends \Ilch\Controller\Admin
             $modulesDir[] = basename($modulesPath);
         }
 
+        $this->getView()->set('moduleMapper', $moduleMapper);
         $this->getView()->set('modules', $modulesDir);
     }
 
     public function showAction()
     {
+        $moduleMapper = new ModuleMapper();
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
@@ -122,6 +128,7 @@ class Modules extends \Ilch\Controller\Admin
             $modulesDir[] = basename($modulesPath);
         }
 
+        $this->getView()->set('moduleMapper', $moduleMapper);
         $this->getView()->set('modules', $modulesDir);
     }
 
@@ -169,14 +176,14 @@ class Modules extends \Ilch\Controller\Admin
 
     public function uninstallAction()
     {
-        $modules = new ModuleMapper();
+        $moduleMapper = new ModuleMapper();
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
             $config = new $configClass($this->getTranslator());
             $config->uninstall();
-            $modules->delete($key);
+            $moduleMapper->delete($key);
 
             $this->addMessage('deleteSuccess');
         }
@@ -186,8 +193,6 @@ class Modules extends \Ilch\Controller\Admin
 
     public function deleteAction()
     {
-        $modules = new ModuleMapper();
-
         if ($this->getRequest()->isSecure()) {
             removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
 

@@ -48,6 +48,11 @@ class Module extends \Ilch\Model
     protected $link;
 
     /**
+     * @var string
+     */
+    protected $phpExtension;
+
+    /**
      * Gets the key.
      *
      * @return string
@@ -215,10 +220,30 @@ class Module extends \Ilch\Model
     /**
      * Sets the link.
      *
-     * @param string $link
+     * @param string $phpExtension
      */
-    public function setLink($link)
+    public function setLink($phpExtension)
     {
-        $this->link = (string)$link;
+        $this->link = (string)$phpExtension;
+    }
+
+    /**
+     * Gets the php extension.
+     *
+     * @return array
+     */
+    public function getPHPExtension()
+    {
+        return $this->phpExtension;
+    }
+
+    /**
+     * Sets the  php extension.
+     *
+     * @param array $phpExtension
+     */
+    public function setPHPExtension($phpExtension)
+    {
+        $this->phpExtension = $phpExtension;
     }
 }

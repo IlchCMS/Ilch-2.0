@@ -17,8 +17,6 @@ class Module extends \Ilch\Mapper
      */
     public function getModules()
     {
-        $modules = [];
-
         $modulesRows = $this->db()->select()
             ->fields(['m.key', 'm.system', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
             ->from(['m' => 'modules'])
@@ -28,6 +26,7 @@ class Module extends \Ilch\Mapper
             ->execute()
             ->fetchRows();
 
+        $modules = [];
         foreach ($modulesRows as $moduleRow) {
             $moduleModel = new ModuleModel();
             $moduleModel->setKey($moduleRow['key']);
@@ -90,11 +89,23 @@ class Module extends \Ilch\Mapper
                     $moduleModel->addContent($key, $value);
                 }
             }
+            if (isset($config->config['phpextensions'])) {
+                $moduleModel->setPHPExtension($config->config['phpextensions']);
+            }
 
             $modules[] = $moduleModel;
         }
 
         return $modules;
+    }
+
+    public function getLoadedPHPExtensions($extension)
+    {
+        if (extension_loaded($extension)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

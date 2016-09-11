@@ -1,3 +1,7 @@
+<?php 
+$moduleMapper = $this->get('moduleMapper');
+?>
+
 <legend><?=$this->getTrans('modulesNotInstalled') ?></legend>
 <?php if ($this->get('modulesNotInstalled') != ''): ?>
     <div class="table-responsive">
@@ -14,7 +18,27 @@
             </thead>
             <tbody>
                 <?php foreach ($this->get('modulesNotInstalled') as $module): ?>
-                    <?php $content = $module->getContentForLocale($this->getTranslator()->getLocale()); ?>
+                    <?php
+                    $content = $module->getContentForLocale($this->getTranslator()->getLocale());
+
+                    if ($module->getPHPExtension() != '') {
+                        $extensionCheck = [];
+                        foreach ($module->getPHPExtension() as $extension) {
+                            $extensionCheck[] = $moduleMapper->getLoadedPHPExtensions($extension);
+                        }
+
+                        $phpExtensions = array_combine($module->getPHPExtension(), $extensionCheck);
+                        foreach ($phpExtensions as $key => $value) {
+                            if ($value == true) {
+                                $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
+                            } else {
+                                $phpExtension[] = '<font color="#a94442">'.$key.'</font>';
+                            }
+                        }
+
+                        $phpExtension = implode(", ", $phpExtension);
+                    }
+                    ?>
                     <tr>
                         <td>
                             <?=$content['name'] ?>
@@ -30,9 +54,16 @@
                                 <?php endif; ?>
                             </small>
                             <br /><br />
-                            <a href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('installModule') ?>">
-                                <i class="fa fa-save"></i>
-                            </a>
+                            <?php if ($module->getPHPExtension() != '' AND in_array(false, $extensionCheck)): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('phpExtensionError') ?>">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                            <?php else: ?>
+                                <a href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('installModule') ?>">
+                                    <i class="fa fa-save"></i>
+                                </a>
+                            <?php endif; ?>
                             <span class="btn btn-default"
                                   data-toggle="modal"
                                   data-target="#infoModal<?=$module->getKey() ?>"
@@ -56,9 +87,14 @@
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }
+                    $phpExtensions = '';
+                    if ($module->getPHPExtension() != '') {
+                        $phpExtensions = '<b>'.$this->getTrans('phpExtensions').':</b> '.$phpExtension.'<br /><br />';
+                    }
                     $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$content['name'].'<br />
                                    <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
                                    <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
+                                   '.$phpExtensions.'
                                    <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
                     ?>
                     <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>

@@ -180,6 +180,7 @@ return [
     'hmenuPHPInfo' => 'PHP Info',
     'hmenuFolderRights' => 'Folder Rights',
     'hmenuCertificate' => 'Certificate',
+    'phpExtensionError' => 'Not all PHP-Extensions active',
     'phpExtensions' => 'PHP-Extensions',
     'extension' => 'Extension',
     'existing' => 'existing',
