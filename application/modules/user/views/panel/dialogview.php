@@ -9,10 +9,10 @@
                 <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
             </div>
             <div class="col-lg-10">
-                <legend>Willkommen <?=$this->escape($profil->getName()) ?></legend>
+                <legend><?=$this->getTrans('dialogWelcome') ?> <?=$this->escape($profil->getName()) ?></legend>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <i class="fa fa-comment"></i> Dialog
+                        <i class="fa fa-comment"></i> <?=$this->getTrans('dialog') ?>
                     </div>
                     <div class="shout_box">
                         <div class="message_box" id="niceScroll">
@@ -26,7 +26,7 @@
                                           toolbar="ilch_bbcode"></textarea>
                             </div>
                             <div>
-                                <button class="btn btn-default pull-right" id="myBtn">Absenden</button>
+                                <button class="btn btn-default pull-right" id="myBtn"><?=$this->getTrans('dialogSubmit') ?></button>
                             </div>
                         </div>
                     </div>
