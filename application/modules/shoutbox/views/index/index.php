@@ -12,7 +12,7 @@
                     </td>
                 <?php else: ?>
                     <td>
-                        <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$user->getName() ?></a></b>: <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                        <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>: <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
                     </td>
                 <?php endif; ?>
             </tr>

@@ -71,7 +71,7 @@ if ($this->getUser()) {
                         <a href="#<?=$post->getId() ?>"><img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11"></a>
                         <?=$this->getTrans('by') ?>
                         <strong>
-                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured"><?=$post->getAutor()->getName() ?></a>
+                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured"><?=$this->escape($post->getAutor()->getName()) ?></a>
                         </strong>
                         »
                         <?=$date->format("d.m.Y H:i:s", true) ?>
@@ -84,7 +84,7 @@ if ($this->getUser()) {
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>"><img src="<?=$this->getBaseUrl($post->getAutor()->getAvatar()) ?>" alt="User avatar" height="100" width="100"></a>
                         <br>
                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
-                            <?=$post->getAutor()->getName() ?>
+                            <?=$this->escape($post->getAutor()->getName()) ?>
                         </a>
                     </dt>
                     <dd><?php foreach ($post->getAutor()->getGroups() as $group) : ?>

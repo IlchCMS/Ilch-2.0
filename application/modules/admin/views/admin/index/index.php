@@ -9,7 +9,7 @@ $ilchNewsList = url_get_contents('http://ilch2.de/ilchNews.php');
 $ilchNews = json_decode($ilchNewsList);
 ?>
 
-<h3><?=$this->getTrans('welcomeBack', $name) ?> !</h3>
+<h3><?=$this->getTrans('welcomeBack', $this->escape($name)) ?> !</h3>
 <?=$this->getTrans('welcomeBackDescripton') ?>
 <br /><br /><br />
 <div class="row">
