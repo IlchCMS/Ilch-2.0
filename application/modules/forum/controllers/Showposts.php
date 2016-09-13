@@ -35,7 +35,9 @@ class Showposts extends \Ilch\Controller\Frontend
         $posts = $postMapper->getPostByTopicId($topicId, $pagination);
         $post = $topicMapper->getPostById($topicId);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('forum'))
+                ->add($forum->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
@@ -124,8 +126,9 @@ class Showposts extends \Ilch\Controller\Frontend
         if ($this->getUser()) {
             $userAccess = new Accesses($this->getRequest());
             if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $userAccess->hasAccess('forum')) {
-                $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum') . ' - ' . $forum->getTitle());
-
+                $this->getLayout()->getTitle()
+                        ->add($this->getTranslator()->trans('forum'))
+                        ->add($forum->getTitle());
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                     ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])

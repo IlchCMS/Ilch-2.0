@@ -20,11 +20,12 @@ class Index extends \Ilch\Controller\Frontend
         $galleryMapper = new GalleryMapper();
         $imageMapper = new ImageMapper();
 
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('gallery'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index']);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery'));
         $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent(1, 0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
@@ -41,7 +42,9 @@ class Index extends \Ilch\Controller\Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('gallery_picturesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('gallery_picturesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle());
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('gallery'))
+                ->add($gallery->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
@@ -64,7 +67,10 @@ class Index extends \Ilch\Controller\Frontend
         $gallery = $galleryMapper->getGalleryById($galleryId);
         $image = $imageMapper->getImageById($id);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$this->getTranslator()->trans('image').' - '.$image->getImageTitle());
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('gallery'))
+                ->add($this->getTranslator()->trans('image'))
+                ->add($image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$image->getImageDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])

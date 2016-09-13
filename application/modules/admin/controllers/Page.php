@@ -20,7 +20,8 @@ class Page extends \Ilch\Controller\Frontend
         if ($page == null) {
             $this->getView()->set('content', 'page not found');
         } else {
-            $this->getLayout()->set('metaTitle', $page->getTitle());
+            $this->getLayout()->getTitle()
+                    ->add($page->getTitle());
             $this->getLayout()->set('metaDescription', $page->getDescription());
             $this->getLayout()->getHmenu()
                     ->add($page->getTitle(), $page->getPerma());

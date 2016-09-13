@@ -32,4 +32,3 @@ class GetAdminHmenu
         return $this->model;
     }
 }
-

@@ -44,7 +44,9 @@ class Showtopics extends \Ilch\Controller\Frontend
 
         $groupIdsArray = explode(',',implode(',', $groupIds));
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('forum'))
+                ->add($forum->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])

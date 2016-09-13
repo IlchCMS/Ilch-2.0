@@ -58,4 +58,3 @@ class GetMenu
         return $menu->getItems($template, $options);
     }
 }
-

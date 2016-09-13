@@ -23,13 +23,14 @@ class Gallery extends \Ilch\Controller\Frontend
 
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
 
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('gallery'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
                 ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
                 ->add($this->getTranslator()->trans('menuGallery'), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery'));
         $this->getView()->set('galleryItems', $galleryMapper->getGalleryItemsByParent($this->getRequest()->getParam('user'), 1, 0));
         $this->getView()->set('galleryMapper', $galleryMapper);
         $this->getView()->set('imageMapper', $imageMapper);
@@ -46,7 +47,9 @@ class Gallery extends \Ilch\Controller\Frontend
         $gallery = $galleryMapper->getGalleryById($id);
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle());
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('gallery'))
+                ->add($gallery->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
@@ -76,7 +79,10 @@ class Gallery extends \Ilch\Controller\Frontend
         $image = $imageMapper->getImageById($id);
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('gallery').' - '.$gallery->getTitle().' - '.$image->getImageTitle());
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('gallery'))
+                ->add($gallery->getTitle())
+                ->add($image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])

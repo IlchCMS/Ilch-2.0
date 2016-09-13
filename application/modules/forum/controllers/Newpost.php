@@ -23,8 +23,9 @@ class Newpost extends \Ilch\Controller\Frontend
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
         $post = $topicMapper->getPostById($topicId);
 
-        $this->getLayout()->set('metaTitle', $this->getTranslator()->trans('forum').' - '.$forum->getTitle());
-        
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('forum'))
+                ->add($forum->getTitle());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])

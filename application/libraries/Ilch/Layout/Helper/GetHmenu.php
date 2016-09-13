@@ -32,4 +32,3 @@ class GetHmenu
         return $this->model;
     }
 }
-

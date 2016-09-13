@@ -20,9 +20,10 @@ class Frontend extends Base
     {
         parent::__construct($request, $translator, $router);
 
+        $this->addHelper('getTitle', 'layout', new \Ilch\Layout\Helper\GetTitle($this));
+        $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
         $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
-        $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
     }
 
     /**
@@ -57,27 +58,6 @@ class Frontend extends Base
         }
 
         return $config->get('apple_icon');
-    }
-
-    /**
-     * Gets page title from config or meta settings.
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        $config = \Ilch\Registry::get('config');
-        $metaTitle = $this->get('metaTitle');
-
-        if (!empty($metaTitle)) {
-            return $metaTitle;
-        }
-
-        if (!empty($config) && $config->get('page_title') !== '') {
-            return $config->get('page_title');
-        }
-
-        return '';
     }
  
     /**

@@ -97,7 +97,8 @@ class Index extends \Ilch\Controller\Frontend
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 
-            $this->getLayout()->set('metaTitle', $article->getTitle());
+            $this->getLayout()->getTitle()
+                    ->add($article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
