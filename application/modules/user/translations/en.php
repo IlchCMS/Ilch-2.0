@@ -189,6 +189,8 @@ return [
     'menuSignature' => 'Signature',
     'menuPassword' => 'Password',
     'menuAvatar' => 'Avatar',
+    'dialogWelcome' => 'Welcome',
+    'dialogSubmit' => 'Send',
     'successAvatar' => 'Avatar changed successfully',
     'failedFiletypes' => 'Avatar does not contain Allowed file format.',
     'failedFilesize' => 'Avatar has unauthorized width, height or is too big.',
