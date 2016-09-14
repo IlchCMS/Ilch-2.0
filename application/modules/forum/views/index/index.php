@@ -124,5 +124,5 @@ function rec($item, $obj, $readAccess, $i)
         </em>
     </div>
     <h3 class="dark-header"><?=$this->getTrans('statistics') ?></h3>
-    <div class="dark-header-content"><?=$this->getTrans('totalPosts') ?> <strong><?=$forumStatistics->getCountPosts() ?></strong> • <?=$this->getTrans('totalTopics') ?> <strong><?=$forumStatistics->getCountTopics() ?></strong> • <?=$this->getTrans('totalMembers') ?> <strong><?=$forumStatistics->getCountUsers() ?></strong> • <?=$this->getTrans('newMember') ?> <strong><?=$this->get('registNewUser')->getName() ?></strong></div>
+    <div class="dark-header-content"><?=$this->getTrans('totalPosts') ?> <strong><?=$forumStatistics->getCountPosts() ?></strong> • <?=$this->getTrans('totalTopics') ?> <strong><?=$forumStatistics->getCountTopics() ?></strong> • <?=$this->getTrans('totalMembers') ?> <strong><?=$forumStatistics->getCountUsers() ?></strong> • <?=$this->getTrans('newMember') ?> <strong><?=$this->escape($this->get('registNewUser')->getName()) ?></strong></div>
 </div>

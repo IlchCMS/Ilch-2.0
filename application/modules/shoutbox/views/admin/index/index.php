@@ -32,7 +32,7 @@
                             <?php if ($shoutbox->getUid() == '0'): ?>
                                 <td><?=$this->escape($shoutbox->getName()) ?></td>
                             <?php else: ?>
-                                <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
+                                <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                             <?php endif; ?>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><?=$this->escape($shoutbox->getTextarea()) ?></td>

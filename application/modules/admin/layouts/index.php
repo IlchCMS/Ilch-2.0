@@ -226,7 +226,7 @@
                         <?php endif; ?>
                         <li class="dropdown dropdown-user">
                             <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
-                                <i class="fa fa-user hidden-sm hidden-md"></i> <?=$name ?>
+                                <i class="fa fa-user hidden-sm hidden-md"></i> <?=$this->escape($name) ?>
                                 <b class="caret"></b>
                             </a>
                             <ul role="menu" class="dropdown-menu">

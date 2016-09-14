@@ -20,14 +20,14 @@
                         <div class="dialog-body clearfix">
                             <div class="header">
                                 <strong>
-                                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialogview', 'id' => $dialog->getCId()]) ?>"><?=$dialog->getName() ?></a>
+                                    <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialogview', 'id' => $dialog->getCId()]) ?>"><?=$this->escape($dialog->getName()) ?></a>
                                 </strong>
                                 <small class="pull-right">
                                     <i class="fa fa-clock-o"></i> <?=$dialog->getTime() ?>
                                 </small>
                             </div>
                             <p>
-                               <?=nl2br($this->getHtmlFromBBCode($dialog->getText())) ?>
+                               <?=nl2br($this->getHtmlFromBBCode($this->escape($dialog->getText()))) ?>
                             </p>
                         </div>
                     </li>

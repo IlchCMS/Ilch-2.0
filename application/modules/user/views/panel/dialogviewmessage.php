@@ -11,12 +11,12 @@
                     </span>
                     <div class="chat-body clearfix">
                         <div class="header">
-                            <strong class="primary-font"><?=$key->getName() ?></strong>
+                            <strong class="primary-font"><?=$this->escape($key->getName()) ?></strong>
                             <small class="pull-right text-muted">
                                 <i class="fa fa-clock-o"></i> <?=$key->getTime() ?>
                             </small>
                         </div>
-                        <p><?=nl2br($this->getHtmlFromBBCode($key->getText())) ?></p>
+                        <p><?=nl2br($this->getHtmlFromBBCode($this->escape($key->getText()))) ?></p>
                     </div>
                 </li>
             <?php endforeach; ?>
