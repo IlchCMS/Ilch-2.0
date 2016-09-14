@@ -29,7 +29,7 @@ $date = new \Ilch\Date();
         <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/bootstrap.min.js') ?>"></script>
-        <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.js') ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.min.js') ?>"></script>
     </head>
     <body>
         <div class="container">
