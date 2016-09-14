@@ -127,8 +127,23 @@ class Comment extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete('comments')
-            ->where(['id' => $id])
-            ->execute();
+        do {
+            $this->db()->delete('comments')
+                ->where(['id' => $id])
+                ->execute();
+            $id = $this->getCommentIdbyFKid($id);
+        } while($id);
+    }
+
+    /**
+     * Get the id of a comment with a specific fk_id.
+     *
+     * @param integer $fk_id
+     * @return integer $id
+     */
+    public function getCommentIdbyFKid($fk_id) {
+        return $this->db()->select('id', 'comments', ['fk_id' => $fk_id])
+            ->execute()
+            ->fetchCell();
     }
 }
