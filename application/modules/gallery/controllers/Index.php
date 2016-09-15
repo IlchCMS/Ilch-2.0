@@ -63,19 +63,18 @@ class Index extends \Ilch\Controller\Frontend
         $config = \Ilch\Registry::get('config');
 
         $id = $this->getRequest()->getParam('id');
-        $galleryId = $this->getRequest()->getParam('gallery');
-        $gallery = $galleryMapper->getGalleryById($galleryId);
         $image = $imageMapper->getImageById($id);
+        $gallery = $galleryMapper->getGalleryById($image->getCat());
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('gallery'))
-                ->add($this->getTranslator()->trans('image'))
+                ->add($gallery->getTitle())
                 ->add($image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$image->getImageDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuGalleryOverview'), ['action' => 'index'])
-                ->add($gallery->getTitle(), ['action' => 'show', 'id' => $galleryId])
-                ->add($image->getImageTitle(), ['action' => 'showimage', 'gallery' => $galleryId, 'id' => $id]);
+                ->add($gallery->getTitle(), ['action' => 'show', 'id' => $gallery->getId()])
+                ->add($image->getImageTitle(), ['action' => 'showimage', 'id' => $id]);
 
         $model = new ImageModel();
         $model->setImageId($image->getImageId());
@@ -86,22 +85,31 @@ class Index extends \Ilch\Controller\Frontend
             $date = new \Ilch\Date();
             $commentModel = new CommentModel();
             if ($this->getRequest()->getPost('fkId')) {
-                $commentModel->setKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
+                $commentModel->setKey('gallery/index/showimage/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
                 $commentModel->setFKId($this->getRequest()->getPost('fkId'));
             } else {
-                $commentModel->setKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id);
+                $commentModel->setKey('gallery/index/showimage/id/'.$id);
             }
             $commentModel->setText($this->getRequest()->getPost('comment_text'));
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
-            $this->redirect(['action' => 'showImage', 'gallery' => $galleryId, 'id' => $id]);
+            $this->redirect(['action' => 'showImage', 'id' => $id]);
+        }
+        if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
+            $id = $this->getRequest()->getParam('id');
+            $commentId = $this->getRequest()->getParam('commentId');
+            $key = $this->getRequest()->getParam('key');
+
+            $commentMapper->updateLike($commentId, $key);
+
+            $this->redirect(['action' => 'showimage', 'id' => $id.'#comment_'.$commentId]);
         }
 
         $this->getView()->set('commentMapper', $commentMapper);
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('config', $config);
         $this->getView()->set('image', $imageMapper->getImageById($id));
-        $this->getView()->set('comments', $commentMapper->getCommentsByKey('gallery/index/showimage/gallery/'.$galleryId.'/id/'.$id));
+        $this->getView()->set('comments', $commentMapper->getCommentsByKey('gallery/index/showimage/id/'.$id));
     }
 }

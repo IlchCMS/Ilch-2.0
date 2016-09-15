@@ -31,8 +31,6 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('comment_reply', '1');
         $databaseConfig->set('comment_nesting', '5');
-        $databaseConfig->set('comment_avatar', '1');
-        $databaseConfig->set('comment_date', '1');
     }
 
     public function getInstallSql()
@@ -44,6 +42,8 @@ class Config extends \Ilch\Config\Install
                   `date_created` DATETIME NOT NULL,
                   `user_id` INT(11) NOT NULL,
                   `fk_id` INT(11) NOT NULL DEFAULT 0,
+                  `up` INT(11) NOT NULL DEFAULT 0,
+                  `down` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

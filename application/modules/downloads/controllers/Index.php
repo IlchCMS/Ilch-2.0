@@ -66,20 +66,18 @@ class Index extends \Ilch\Controller\Frontend
         $config = \Ilch\Registry::get('config');
 
         $id = $this->getRequest()->getParam('id');
-        $downloadsId = $this->getRequest()->getParam('downloads');
-        $downloads = $downloadsMapper->getDownloadsById($downloadsId);
         $file = $fileMapper->getFileById($id);
-        $comments = $commentMapper->getCommentsByKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
+        $download = $downloadsMapper->getDownloadsById($file->getCat());
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('downloads'))
-                ->add($this->getTranslator()->trans('file'))
+                ->add($download->getTitle())
                 ->add($file->getFileTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('downloads').' - '.$file->getFileDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuDownloadsOverview'), ['action' => 'index'])
-                ->add($downloads->getTitle(), ['action' => 'show', 'id' => $downloadsId])
-                ->add($file->getFileTitle(), ['action' => 'showfile', 'downloads' => $downloadsId, 'id' => $id]);
+                ->add($download->getTitle(), ['action' => 'show', 'id' => $download->getId()])
+                ->add($file->getFileTitle(), ['action' => 'showfile', 'id' => $id]);
 
         $model = new FileModel();
         $model->setFileId($file->getFileId());
@@ -90,22 +88,31 @@ class Index extends \Ilch\Controller\Frontend
             $date = new \Ilch\Date();
             $commentModel = new CommentModel();
             if ($this->getRequest()->getPost('fkId')) {
-                $commentModel->setKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
+                $commentModel->setKey('downloads/index/showfile/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
                 $commentModel->setFKId($this->getRequest()->getPost('fkId'));
             } else {
-                $commentModel->setKey('downloads/index/showfile/downloads/'.$downloadsId.'/id/'.$id);
+                $commentModel->setKey('downloads/index/showfile/id/'.$id);
             }
             $commentModel->setText($this->getRequest()->getPost('comment_text'));
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
-            $this->redirect(['action' => 'showFile', 'downloads' => $downloadsId, 'id' => $id]);
+            $this->redirect(['action' => 'showFile', 'id' => $id]);
+        }
+        if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
+            $id = $this->getRequest()->getParam('id');
+            $commentId = $this->getRequest()->getParam('commentId');
+            $key = $this->getRequest()->getParam('key');
+
+            $commentMapper->updateLike($commentId, $key);
+
+            $this->redirect(['action' => 'showFile', 'id' => $id.'#comment_'.$commentId]);
         }
 
         $this->getView()->set('commentMapper', $commentMapper);
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('config', $config);
         $this->getView()->set('file', $fileMapper->getFileById($id));
-        $this->getView()->set('comments', $comments);
+        $this->getView()->set('comments', $commentMapper->getCommentsByKey('downloads/index/showfile/id/'.$id));
     }
 }

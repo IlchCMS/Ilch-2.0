@@ -29,13 +29,6 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
     }
 
-    public function uninstall()
-    {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_articles`;
-                                 DROP TABLE `[prefix]_articles_cats`;
-                                 DROP TABLE `[prefix]_articles_content`;');
-    }
-
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_articles` (

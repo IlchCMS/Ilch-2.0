@@ -39,11 +39,11 @@
 
 <div id="gallery">
     <?php foreach ($this->get('image') as $image): ?>
-        <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/gallery/'.$this->getRequest()->getParam('id').'/id/'.$image->getId()); ?>
+        <?php $commentsCount = $commentMapper->getCountComments('gallery/index/showimage/id/'.$image->getId()); ?>
         <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-image thumbnail">
-                    <a href="<?=$this->getUrl(['action' => 'showimage', 'gallery'  => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?>">
+                    <a href="<?=$this->getUrl(['action' => 'showimage', 'id' => $image->getId()]) ?>">
                         <img src="<?=$this->getUrl().'/'.$image->getImageThumb() ?>" class="panel-image-preview" alt="<?=$image->getImageTitle() ?>" />
                     </a>
                 </div>

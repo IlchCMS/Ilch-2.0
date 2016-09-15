@@ -73,14 +73,14 @@ class Gallery extends \Ilch\Controller\Frontend
         $config = \Ilch\Registry::get('config');
 
         $id = $this->getRequest()->getParam('id');
-        $galleryId = $this->getRequest()->getParam('gallery');
         $userId = $this->getRequest()->getParam('user');
-        $gallery = $galleryMapper->getGalleryById($galleryId);
         $image = $imageMapper->getImageById($id);
+        $gallery = $galleryMapper->getGalleryById($image->getCat());
         $profil = $userMapper->getUserById($this->getRequest()->getParam('user'));
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('gallery'))
+                ->add($profil->getName())
                 ->add($gallery->getTitle())
                 ->add($image->getImageTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('gallery').' - '.$gallery->getDesc());
@@ -88,8 +88,8 @@ class Gallery extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index', 'action' => 'index'])
                 ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
                 ->add($this->getTranslator()->trans('menuGallery'), ['controller' => 'gallery', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
-                ->add($gallery->getTitle(), ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $galleryId])
-                ->add($image->getImageTitle(), ['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'gallery' => $galleryId, 'id' => $id]);
+                ->add($gallery->getTitle(), ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $gallery->getId()])
+                ->add($image->getImageTitle(), ['action' => 'showimage', 'user' => $this->getRequest()->getParam('user'), 'id' => $id]);
 
         $model = new GalleryImageModel();
         $model->setImageId($image->getImageId());
@@ -100,22 +100,31 @@ class Gallery extends \Ilch\Controller\Frontend
             $date = new \Ilch\Date();
             $commentModel = new CommentModel();
             if ($this->getRequest()->getPost('fkId')) {
-                $commentModel->setKey('user/gallery/showimage/user/'.$userId.'/gallery/'.$galleryId.'/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
+                $commentModel->setKey('user/gallery/showimage/user/'.$userId.'/id/'.$id.'/id_c/'.$this->getRequest()->getPost('fkId'));
                 $commentModel->setFKId($this->getRequest()->getPost('fkId'));
             } else {
-                $commentModel->setKey('user/gallery/showimage/user/'.$userId.'/gallery/'.$galleryId.'/id/'.$id);
+                $commentModel->setKey('user/gallery/showimage/user/'.$userId.'/id/'.$id);
             }
             $commentModel->setText($this->getRequest()->getPost('comment_text'));
             $commentModel->setDateCreated($date);
             $commentModel->setUserId($this->getUser()->getId());
             $commentMapper->save($commentModel);
-            $this->redirect(['action' => 'showImage', 'user' => $userId, 'gallery' => $galleryId, 'id' => $id]);
+            $this->redirect(['action' => 'showImage', 'user' => $userId, 'id' => $id]);
+        }
+        if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
+            $id = $this->getRequest()->getParam('id');
+            $commentId = $this->getRequest()->getParam('commentId');
+            $key = $this->getRequest()->getParam('key');
+
+            $commentMapper->updateLike($commentId, $key);
+
+            $this->redirect(['action' => 'showimage', 'user' => $userId, 'id' => $id.'#comment_'.$commentId]);
         }
 
         $this->getView()->set('commentMapper', $commentMapper);
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('config', $config);
         $this->getView()->set('image', $imageMapper->getImageById($id));
-        $this->getView()->set('comments', $commentMapper->getCommentsByKey('user/gallery/showimage/user/'.$userId.'/gallery/'.$galleryId.'/id/'.$id));
+        $this->getView()->set('comments', $commentMapper->getCommentsByKey('user/gallery/showimage/user/'.$userId.'/id/'.$id));
     }
 }

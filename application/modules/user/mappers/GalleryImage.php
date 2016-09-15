@@ -23,6 +23,7 @@ class GalleryImage extends \Ilch\Mapper
         $entryModel->setImageUrl($imageRow['url']);
         $entryModel->setImageTitle($imageRow['image_title']);
         $entryModel->setImageDesc($imageRow['image_description']);
+        $entryModel->setCat($imageRow['cat']);
         $entryModel->setVisits($imageRow['visits']);
 
         return $entryModel;

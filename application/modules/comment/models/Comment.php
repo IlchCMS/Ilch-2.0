@@ -6,9 +6,6 @@
 
 namespace Modules\Comment\Models;
 
-/**
- * The comment model class.
- */
 class Comment extends \Ilch\Model
 {
     /**
@@ -40,6 +37,16 @@ class Comment extends \Ilch\Model
      * @var DateTime
      */
     protected $dateCreated;
+	
+    /**
+     * @var integer
+     */
+    protected $up;
+	
+    /**
+     * @var integer
+     */
+    protected $down;
 
     /**
      * @return integer
@@ -116,7 +123,7 @@ class Comment extends \Ilch\Model
 
         return $this;
     }
-	
+
     /**
      * @return integer
      */
@@ -150,5 +157,43 @@ class Comment extends \Ilch\Model
     public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getUp()
+    {
+        return $this->up;
+    }
+
+    /**
+     * @param integer $up
+     * @return this
+     */
+    public function setUp($up)
+    {
+        $this->up = (int)$up;
+
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getDown()
+    {
+        return $this->down;
+    }
+
+    /**
+     * @param integer $down
+     * @return this
+     */
+    public function setDown($down)
+    {
+        $this->down = (int)$down;
+
+        return $this;
     }
 }

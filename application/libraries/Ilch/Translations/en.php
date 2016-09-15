@@ -4,6 +4,7 @@
  */
 
 return [
+    // validation
     'errorsOccured' => 'The following errors occured',
     'validation.errors.required.fieldIsRequired' => '%s was not filled out.',
     'validation.errors.same.fieldsDontMatch' => '%s must be equal %s.',
@@ -26,6 +27,11 @@ return [
     'validation.errors.max.string' => '%s may not be greater than %s characters.',
     'validation.errors.max.array' => '%s may not have more than %s items.',
 
+    // general
     'saveSuccess' => 'Saved successful',
     'deleteSuccess' => 'Delete successful',
+
+    // comment module
+    'iLike' => 'I like this',
+    'notLike' => 'I dislike this',
 ];

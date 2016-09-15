@@ -24,6 +24,7 @@ class File extends \Ilch\Mapper
         $entryModel->setFileImage($fileRow['file_image']);
         $entryModel->setFileTitle($fileRow['file_title']);
         $entryModel->setFileDesc($fileRow['file_description']);
+        $entryModel->setCat($fileRow['cat']);
         $entryModel->setVisits($fileRow['visits']);
 
         return $entryModel;

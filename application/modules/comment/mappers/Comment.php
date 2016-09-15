@@ -31,6 +31,8 @@ class Comment extends \Ilch\Mapper
             $commentModel->setText($commentRow['text']);
             $commentModel->setUserId($commentRow['user_id']);
             $commentModel->setDateCreated($commentRow['date_created']);
+            $commentModel->setUp($commentRow['up']);
+            $commentModel->setDown($commentRow['down']);
             $comments[] = $commentModel;
         }
 
@@ -55,6 +57,8 @@ class Comment extends \Ilch\Mapper
             $commentModel->setText($commentRow['text']);
             $commentModel->setUserId($commentRow['user_id']);
             $commentModel->setDateCreated($commentRow['date_created']);
+            $commentModel->setUp($commentRow['up']);
+            $commentModel->setDown($commentRow['down']);
             $comments[] = $commentModel;
         }
 
@@ -81,6 +85,8 @@ class Comment extends \Ilch\Mapper
             $commentModel->setText($commentRow['text']);
             $commentModel->setUserId($commentRow['user_id']);
             $commentModel->setDateCreated($commentRow['date_created']);
+            $commentModel->setUp($commentRow['up']);
+            $commentModel->setDown($commentRow['down']);
             $comments[] = $commentModel;
         }
 
@@ -98,9 +104,26 @@ class Comment extends \Ilch\Mapper
                 FROM `[prefix]_comments`
                 WHERE `key` LIKE "'.$key.'%"';
 
-        $article = $this->db()->queryCell($sql);
+        $count = $this->db()->queryCell($sql);
 
-        return $article;
+        return $count;
+    }
+
+    /**
+     * Updates comment like with given id and key.
+     *
+     * @param integer $id
+     * @param integer $key
+     */
+    public function updateLike($id, $key)
+    {
+        $sql = 'UPDATE `[prefix]_comments`
+                SET `'.$key.'` = `'.$key.'` + 1
+                WHERE `id` = '.$id;
+
+        $like = $this->db()->queryCell($sql);
+
+        return $like;
     }
 
     /**

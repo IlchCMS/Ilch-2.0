@@ -4,6 +4,7 @@
  */
 
 return [
+    // validation
     'errorsOccured' => 'Es sind folgende Fehler aufgetreten',
     'validation.errors.required.fieldIsRequired' => '%s muss ausgefüllt werden.',
     'validation.errors.same.fieldsDontMatch' => '%s muss mit %s übereinstimmen.',
@@ -26,6 +27,11 @@ return [
     'validation.errors.max.string' => '%s darf höchstens %s Zeichen lang sein.',
     'validation.errors.max.array' => '%s darf höchstens %s Einträge haben.',
 
+    // general
     'saveSuccess' => 'Erfolgreich gespeichert',
     'deleteSuccess' => 'Erfolgreich gelöscht',
+
+    // comment module
+    'iLike' => 'Mag ich',
+    'notLike' => 'Mag ich nicht',
 ];

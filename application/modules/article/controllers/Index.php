@@ -72,6 +72,15 @@ class Index extends \Ilch\Controller\Frontend
             $commentMapper->save($commentModel);
             $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
         }
+        if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
+            $id = $this->getRequest()->getParam('id');
+            $commentId = $this->getRequest()->getParam('commentId');
+            $key = $this->getRequest()->getParam('key');
+
+            $commentMapper->updateLike($commentId, $key);
+
+            $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
+        }
 
         if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
             $this->getLayout()->getHmenu()

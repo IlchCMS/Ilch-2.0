@@ -188,8 +188,8 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL,
                   `image_id` VARCHAR(150)NOT NULL,
-                  `image_title` VARCHAR(255) NOT NULL,
-                  `image_description` VARCHAR(255) NOT NULL,
+                  `image_title` VARCHAR(255) NOT NULL NULL DEFAULT \'\',
+                  `image_description` VARCHAR(255) NOT NULL NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
@@ -198,9 +198,9 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_gallery_items` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL,
-                  `gallery_id` INT(11) NOT NULL,
-                  `sort` INT(11) NOT NULL,
-                  `parent_id` INT(11) NOT NULL,
+                  `gallery_id` INT(11) NOT NULL DEFAULT 0,
+                  `sort` INT(11) NOT NULL DEFAULT 0,
+                  `parent_id` INT(11) NOT NULL DEFAULT 0,
                   `type` INT(11) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,

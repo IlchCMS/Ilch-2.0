@@ -18,7 +18,5 @@ return [
     'commentUser' => 'User',
     'nesting' => 'Reply nesting',
     'acceptReply' => 'Allow replies on comments?',
-    'showAvatar' => 'Show avatar?',
-    'showDateTime' => 'Show date/time?',
     'CommentCommentInfoText' => 'A too deep nesting of comments may result in comments displayed too small.',
 ];

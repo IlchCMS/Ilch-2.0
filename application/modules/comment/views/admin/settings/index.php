@@ -1,5 +1,3 @@
-<link href="<?=$this->getModuleUrl('static/css/comment.css') ?>" rel="stylesheet">
-
 <legend><?=$this->getTrans('settings') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info" ></i>
@@ -42,34 +40,6 @@
                    name="nesting"
                    min="0"
                    value="<?=$this->get('comment_nesting') ?>">
-        </div>
-    </div>
-    <div class="form-group <?=in_array('check_avatar', $this->get('errorFields')) ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('showAvatar') ?>:
-        </div>
-        <div class="col-lg-8">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="avatar-yes" name="check_avatar" value="1" <?php if ($this->get('comment_avatar') == '1') { echo 'checked="checked"'; } ?> />
-                <label for="avatar-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="avatar-no" name="check_avatar" value="0" <?php if ($this->get('comment_avatar') != '1') { echo 'checked="checked"'; } ?> />
-                <label for="avatar-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
-    <div class="form-group <?=in_array('check_date', $this->get('errorFields')) ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('showDateTime') ?>:
-        </div>
-        <div class="col-lg-8">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="date-yes" name="check_date" value="1" <?php if ($this->get('comment_date') == '1') { echo 'checked="checked"'; } ?> />
-                <label for="date-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                <input type="radio" class="flipswitch-input" id="date-no" name="check_date" value="0" <?php if ($this->get('comment_date') != '1') { echo 'checked="checked"'; } ?> />
-                <label for="date-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
         </div>
     </div>
     <?=$this->getSaveBar() ?>

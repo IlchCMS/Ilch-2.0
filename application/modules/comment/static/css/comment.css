@@ -1,83 +1,41 @@
-/*Comment List styles*/
-.comment-list .row {
-    margin-bottom: 0px;
-}
-.comment-list .panel .panel-heading {
-    padding: 4px 15px;
-    position: absolute;
-    border: none;
-    /*Panel-heading border radius*/
-    border-top-right-radius: 0px;
-    top: 1px;
-}
-.comment-list .panel .panel-heading.right {
-    border-right-width: 0px;
-    /*Panel-heading border radius*/
-    border-top-left-radius: 0px;
-    right: 16px;
-    color: #cccccc;
-}
-.comment-list .panel .panel-heading .panel-body {
-    padding-top: 6px;
-}
-.comment-list figcaption {
-    /*For wrapping text in thumbnail*/
-    word-wrap: break-word;
-}
-.comment-list p {
-    margin: 0px;
-}
-.comment-list .submit {
-    margin-top: 10px;
-}
-.comment-list .thumbnail {
-    padding: 4px;
-    width: 88px;
-    margin: 0px auto;
+.replyHidden {
+    display: none;
 }
 
-.comment-list .comment-post {
-    margin-top: 6px;
+.comment-list .comment-img {
+    width: 46px;
+    height: 46px;
 }
 
-/**
- * for comments
- * look like a ticket
- */
-.comment-list .panel .panel-bodylist {
-    position: relative;
-    padding: 15px;
-    background: #f2f2f2;
-    border: 2px solid white;
-    -webkit-transition: all 0.25s ease-in-out;
-    -o-transition: all 0.25s ease-in-out;
-    -moz-transition: all 0.25s ease-in-out;
-    transition: all 0.25s ease-in-out;
+.comment-list .panel {
+    box-shadow: none;
+    border-radius: 0;
+    border: 0;
+    margin-bottom: 0;
 }
-.comment-list .panel .panel-bodylist:hover {
-    background: white;
-    border-color: #e6e6e6;
+
+.comment-list .panel-body {
+    padding: 25px 20px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
-.comment-list .panel .panel-bodylist:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-width: 0 25px 25px 0;
-    border-style: solid;
-    border-color: white white #cccccc #cccccc;
-    background: #cccccc;
+
+.comment-list .media-block .media-left {
     display: block;
-    width: 0;
-    -webkit-transition: all 0.25s ease-in-out;
-    -o-transition: all 0.25s ease-in-out;
-    -moz-transition: all 0.25s ease-in-out;
-    transition: all 0.25s ease-in-out;
+    float: left
 }
-.comment-list .panel .panel-bodylist:hover:before {
-    border-width: 0;
+
+.comment-list .media-block .media-body {
+    display: block;
+    overflow: hidden;
+    width: auto
 }
-.comment-list .panel .panel-bodylist span {
-    float: right;
-    font-size: 13px;
+
+.comment-list .btn-hover-success:hover {
+    color: #fff;
+    background-color: #3c763d;
+}
+.comment-list .btn-hover-danger:hover {
+    color: #fff;
+    background-color: #a94442;
 }

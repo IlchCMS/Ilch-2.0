@@ -39,7 +39,7 @@
 <div id="gallery">
     <?php
     foreach ($this->get('file') as $file):
-    $commentsCount = $commentMapper->getCountComments('downloads/index/showfile/downloads/'.$this->getRequest()->getParam('id').'/id/'.$file->getId());
+    $commentsCount = $commentMapper->getCountComments('downloads/index/showfile/id/'.$file->getId());
     $image = '';
     if ($file->getFileImage() != '') {
         $image = $this->getBaseUrl($file->getFileImage());
@@ -50,7 +50,7 @@
         <div class="col-xs-6 col-md-4 col-lg-3 col-sm-4">
             <div class="panel panel-default">
                 <div class="panel-image thumbnail">
-                    <a href="<?=$this->getUrl(['action' => 'showfile', 'downloads'  => $this->getRequest()->getParam('id'), 'id' => $file->getId()]) ?>">
+                    <a href="<?=$this->getUrl(['action' => 'showfile', 'id' => $file->getId()]) ?>">
                         <img src="<?=$image ?>" class="panel-image-preview" alt="<?=$file->getFileTitle() ?>" />
                     </a>
                 </div>

@@ -51,7 +51,7 @@
 }
 </style>
 
-<h3><?=$this->getTrans('downloads') ?></h3>
+<legend><?=$this->getTrans('downloads') ?></legend>
 <?php
 $downloadsMapper = $this->get('downloadsMapper');
 $downloadsItems = $this->get('downloadsItems');
