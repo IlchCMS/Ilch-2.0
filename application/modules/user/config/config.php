@@ -188,8 +188,8 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL,
                   `image_id` VARCHAR(150)NOT NULL,
-                  `image_title` VARCHAR(255) NOT NULL NULL DEFAULT \'\',
-                  `image_description` VARCHAR(255) NOT NULL NULL DEFAULT \'\',
+                  `image_title` VARCHAR(255) NOT NULL DEFAULT \'\',
+                  `image_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `cat` MEDIUMINT(9) NOT NULL DEFAULT 0,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)

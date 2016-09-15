@@ -44,7 +44,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `topic_id` INT(11) NOT NULL,
                   `topic_title` VARCHAR(255) NOT NULL,
-                  `topic_description` VARCHAR(255) NOT NULL,
+                  `topic_description` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `text` VARCHAR(255) NOT NULL,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   `creator_id` INT(10) NOT NULL,
@@ -59,11 +59,11 @@ class Config extends \Ilch\Config\Install
                   `topic_id` VARCHAR(150) NOT NULL,
                   `text` TEXT NOT NULL,
                   `visits` INT(11) NOT NULL DEFAULT 0,
-                  `user_name` VARCHAR(255) NOT NULL,
+                  `user_name` VARCHAR(255) NOT NULL DEFAULT \'\',
                   `user_id` INT(10) NOT NULL,
                   `date_created` DATETIME NOT NULL,
-                  `forum_id` INT(11) NOT NULL,
-                  `read` VARCHAR(225) NOT NULL,
+                  `forum_id` INT(11) NOT NULL DEFAULT 0,
+                  `read` VARCHAR(225) NOT NULL DEFAULT \'\',
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
