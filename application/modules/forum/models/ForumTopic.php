@@ -119,6 +119,13 @@ class ForumTopic extends \Ilch\Model
      */
     protected $date_created;
 
+    /**
+     * The status of the topic.
+     *
+     * @var integer
+     */
+    protected $status;
+
    /**
      * Gets the id of the file.
      *
@@ -459,5 +466,25 @@ class ForumTopic extends \Ilch\Model
         $this->date_created = $dateCreated;
 
         return $this;
+    }
+
+    /**
+     * Gets the status of the topic.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Sets the status of the topic.
+     *
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = (int)$status;
     }
 }

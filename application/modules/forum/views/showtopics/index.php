@@ -1,4 +1,3 @@
-<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
 <?php
 $forum = $this->get('forum');
 $forumEdit = $this->get('forumEdit');
@@ -12,6 +11,8 @@ if ($this->getUser()) {
     $userAccess =  $this->get('userAccess');
 }
 ?>
+
+<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
 
 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
     <div id="forum">
@@ -60,13 +61,19 @@ if ($this->getUser()) {
                     <li class="row bg1">
                         <dl class="icon" style="
                             <?php if ($this->getUser()): ?>
-                                <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
-                                    background-image: url(<?=$this->getModuleUrl('static/img/forum_read.png') ?>);
+                                <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 0): ?>
+                                    background-image: url(<?=$this->getModuleUrl('static/img/topic_read.png') ?>);
+                                <?php elseif (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 1): ?>
+                                    background-image: url(<?=$this->getModuleUrl('static/img/topic_read_locked.png') ?>);
+                                <?php elseif ($topic->getStatus() == 1): ?>
+                                    background-image: url(<?=$this->getModuleUrl('static/img/topic_unread_locked.png') ?>);
                                 <?php else: ?>
                                     background-image: url(<?=$this->getModuleUrl('static/img/topic_unread.png') ?>);
                                 <?php endif; ?>
+                            <?php elseif ($topic->getStatus() == 1): ?>
+                                background-image: url(<?=$this->getModuleUrl('static/img/topic_read_locked.png') ?>);
                             <?php else: ?>
-                                background-image: url(<?=$this->getModuleUrl('static/img/forum_read.png') ?>);
+                                background-image: url(<?=$this->getModuleUrl('static/img/topic_read.png') ?>);
                             <?php endif; ?>
                                 background-repeat: no-repeat;">
                             <dt>
@@ -109,29 +116,53 @@ if ($this->getUser()) {
             </ul>
         </div>
         <div class="topic-actions">
+            <?php if ($this->getUser()): ?>
+                <div class="buttons">
+                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-labeled bgblue">
+                        <span class="btn-label">
+                            <i class="fa fa-plus"></i>
+                        </span><?=$this->getTrans('createNewTopic') ?>
+                    </a>
+                </div>
+            <?php else: ?>
+                <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
+                <div class="buttons">
+                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
+                        <span class="btn-label">
+                            <i class="fa fa-user"></i>
+                        </span><?=$this->getTrans('loginTopic') ?>
+                    </a>
+                </div>
+            <?php endif; ?>
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
+        </div>
+        <div class="topic-actions">
             <?php if ($adminAccess || (!empty($userAccess) AND $userAccess->hasAccess('forum'))): ?>
                 <?php if (!$forumEdit): ?>
                     <form action="" method="post">
-                        <?php echo $this->getTokenField(); ?>
+                        <?=$this->getTokenField() ?>
                         <button class="btn btn-default" name="forumEdit" value="forumEdit"><?=$this->getTrans('forumEdit') ?></button>
                     </form>
                 <?php else: ?>
                     <button class="btn btn-labeled bgblue" name="topicDelete" value="topicDelete" OnClick="SetAction1()"><?=$this->getTrans('topicDelete') ?></button>
                     <button class="btn btn-labeled bgblue" name="topicMove" value="topicMove" OnClick="SetAction2()"><?=$this->getTrans('topicMove') ?></button>
-                    <button class="btn btn-labeled bgblue" name="topicChangeStatus"><?=$this->getTrans('topicChangeStatus') ?></button>
+                    <button class="btn btn-labeled bgblue" name="topicChangeStatus" value="topicChangeStatus" OnClick="SetAction3()"><?=$this->getTrans('topicChangeStatus') ?></button>
 
                     <script type="text/javascript">
                         function SetAction1() {
-                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'delete','forumid' => $forum->getId()]) ?>";
+                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'delete', 'forumid' => $forum->getId()]) ?>";
                         }
 
                         function SetAction2() {
-                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'edittopic', 'action' => 'index','forumid' => $forum->getId()]) ?>";
+                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'edittopic', 'action' => 'index', 'forumid' => $forum->getId()]) ?>";
+                        }
+
+                        function SetAction3() {
+                            document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'edittopic', 'action' => 'status', 'forumid' => $forum->getId()]) ?>";
                         }
                     </script>
                 <?php endif; ?>
             <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>
         <?php if ($forumEdit): ?>
             </form>

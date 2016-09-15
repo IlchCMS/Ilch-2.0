@@ -67,10 +67,12 @@ class Showtopics extends \Ilch\Controller\Frontend
     public function deleteAction()
     {
         $topicMapper = new TopicMapper();
+
         if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicDelete') == 'topicDelete') {
             foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
                 $topicMapper->deleteById($topicId);
             }
+
             $this->addMessage('deleteSuccess');
             $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]);
         }

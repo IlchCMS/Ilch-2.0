@@ -69,4 +69,23 @@ class Edittopic extends \Ilch\Controller\Frontend
             }
         }
     }
+
+    public function statusAction()
+    {
+        $topicMapper = new TopicMapper();
+
+        if ($this->getUser()) {
+            $access = new Accesses($this->getRequest());
+            if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
+                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('topicChangeStatus') == 'topicChangeStatus') {
+                    foreach ($this->getRequest()->getPost('check_topics') as $topicId) {
+                        $topicMapper->updateStatus($topicId);
+                    }
+
+                    $this->addMessage('saveSuccess');
+                    $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]);
+                }
+            }
+        }
+    }
 }

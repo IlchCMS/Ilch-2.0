@@ -51,6 +51,7 @@ class Config extends \Ilch\Config\Install
                   `date_created` DATETIME NOT NULL,
                   `forum_id` INT(11) NOT NULL,
                   `type` INT(11) NOT NULL DEFAULT 0,
+                  `status` INT(11) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 

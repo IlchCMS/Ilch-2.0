@@ -36,6 +36,7 @@ class Topic extends \Ilch\Mapper
             $entryModel->setTopicId($id);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
+            $entryModel->setStatus($entries['status']);
             if ($userMapper->getUserById($entries['creator_id'])) {
                 $entryModel->setAuthor($userMapper->getUserById($entries['creator_id']));
             } else {
@@ -78,6 +79,7 @@ class Topic extends \Ilch\Mapper
             $entryModel->setTopicId($entries['topic_id']);
             $entryModel->setVisits($entries['visits']);
             $entryModel->setType($entries['type']);
+            $entryModel->setStatus($entries['status']);
             if ($userMapper->getUserById($entries['creator_id'])) {
                 $entryModel->setAuthor($userMapper->getUserById($entries['creator_id']));
             } else {
@@ -111,6 +113,7 @@ class Topic extends \Ilch\Mapper
                 $entryModel->setAuthor($userMapper->getDummyUser());
             }
         $entryModel->setDateCreated($fileRow['date_created']);
+        $entryModel->setStatus($fileRow['status']);
 
         return $entryModel;
     }
@@ -174,12 +177,36 @@ class Topic extends \Ilch\Mapper
         }
     }
 
+    /**
+     * Updates topic status with given id.
+     *
+     * @param integer $id
+     */
+    public function updateStatus($id)
+    {
+        $status = (int) $this->db()->select('status')
+                        ->from('forum_topics')
+                        ->where(['id' => $id])
+                        ->execute()
+                        ->fetchCell();
+
+        if ($status == 1) {
+            $this->db()->update('forum_topics')
+                ->values(['status' => 0])
+                ->where(['id' => $id])
+                ->execute();
+        } else {
+            $this->db()->update('forum_topics')
+                ->values(['status' => 1])
+                ->where(['id' => $id])
+                ->execute();
+        }
+    }
+
     public function getLastInsertId()
     {
         return $this->last_insert_id;
     }
-
-    
 
     public function getPostByTopicId($id, $pagination = NULL)
     {

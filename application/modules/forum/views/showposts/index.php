@@ -16,7 +16,7 @@ if ($this->getUser()) {
         <h3><?=$topicpost->getTopicTitle() ?></h3>
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
-                <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                <?php if ($topicpost->getStatus() == 0 AND (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true)): ?>
                     <div class="buttons">
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
                             <span class="btn-label">
@@ -98,7 +98,7 @@ if ($this->getUser()) {
         <?php endforeach; ?>
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
-                <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                <?php if ($topicpost->getStatus() == 0 AND (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true)): ?>
                     <div class="buttons">
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
                             <span class="btn-label">
