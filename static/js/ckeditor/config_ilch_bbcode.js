@@ -6,7 +6,7 @@
 CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchSmileysPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal( 'ilchsmileys', ilchSmileysPlugin);
-        config.extraPlugins = "ilchsmileys";
+        config.extraPlugins = "ilchsmileys,bbcode";
     }
     config.toolbar = 'ilch_bbcode';
     config.toolbar_ilch_bbcode =
