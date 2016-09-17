@@ -111,10 +111,41 @@ class Modules extends \Ilch\Controller\Admin
             $modulesDir[] = basename($modulesPath);
         }
 
-        $this->getView()->set('moduleMapper', $moduleMapper);
+        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
         $this->getView()->set('modules', $modulesDir);
     }
+    
+    public function updateAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $transfer = new \Ilch\Transfer();
+            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
+            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
 
+            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                // Certificate is missing or expired.
+                $this->addMessage('certMissingOrExpired', 'danger');
+                return;
+            }
+
+            $transfer->save();
+
+            $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
+            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
+            if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
+                // Verification failed. Drop the potentially bad files.
+                unlink($transfer->getZipFile());
+                unlink($transfer->getZipFile().'-signature.sig');
+                $this->addMessage('moduleVerificationFailed', 'danger');
+                return;
+            }
+
+            $transfer->update();
+            $this->addMessage('updateSuccess');
+        }
+    }
+    
     public function showAction()
     {
         $moduleMapper = new ModuleMapper();

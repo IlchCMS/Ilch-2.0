@@ -1,5 +1,4 @@
 <?php
-$moduleMapper = $this->get('moduleMapper');
 $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modules = json_decode($modulesList);
 ?>
@@ -21,7 +20,7 @@ foreach ($modules as $module): ?>
         if (!empty($module->phpextensions)) {
             $extensionCheck = [];
             foreach ($module->phpextensions as $extension) {
-                $extensionCheck[] = $moduleMapper->getLoadedPHPExtensions($extension);
+                $extensionCheck[] = extension_loaded($extension);
             }
 
             $phpExtensions = array_combine($module->phpextensions, $extensionCheck);

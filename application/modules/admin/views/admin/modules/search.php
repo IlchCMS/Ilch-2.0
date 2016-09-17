@@ -1,7 +1,7 @@
 <?php
-$moduleMapper = $this->get('moduleMapper');
 $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modules = json_decode($modulesList);
+$versionsOfModules = $this->get('versionsOfModules');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
@@ -32,7 +32,7 @@ if (empty($modules)) {
                 if (!empty($module->phpextensions)) {
                     $extensionCheck = [];
                     foreach ($module->phpextensions as $extension) {
-                        $extensionCheck[] = $moduleMapper->getLoadedPHPExtensions($extension);
+                        $extensionCheck[] = extension_loaded($extension);
                     }
 
                     $phpExtensions = array_combine($module->phpextensions, $extensionCheck);
@@ -68,11 +68,22 @@ if (empty($modules)) {
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
                                 <i class="fa fa-download"></i>
                             </button>
-                        <?php elseif (in_array($filename, $this->get('modules'))): ?>
+                        <?php elseif (in_array($filename, $this->get('modules')) && $module->version == $versionsOfModules[$module->key]['version']): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check text-success"></i>
                             </button>
+                        <?php elseif (in_array($filename, $this->get('modules')) && $module->version > $versionsOfModules[$module->key]['version']): ?>
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                                <?=$this->getTokenField() ?>
+                                <button type="submit"
+                                        class="btn btn-default"
+                                        name="url"
+                                        value="<?=$module->downloadLink ?>"
+                                        title="<?=$this->getTrans('moduleUpdate') ?>">
+                                    <i class="fa fa-refresh"></i>
+                                </button>
+                            </form>
                         <?php else: ?>
                             <form method="POST" action="">
                                 <?=$this->getTokenField() ?>
