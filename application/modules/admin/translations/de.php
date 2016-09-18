@@ -184,6 +184,8 @@ return [
     'hmenuFolderRights' => 'Ordner Rechte',
     'hmenuCertificate' => 'Zertifikat',
     'phpExtensionError' => 'Nicht alle PHP-Erweiterungen aktiviert',
+    'phpVersionError' => 'Die Version von PHP ist zu alt.',
+    'ilchCoreError' => 'Die Ilch-Kern Version ist zu alt.',
     'phpExtensions' => 'PHP-Erweiterungen',
     'extension' => 'Erweiterung',
     'existing' => 'vorhanden',

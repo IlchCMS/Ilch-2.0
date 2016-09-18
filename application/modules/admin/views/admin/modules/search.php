@@ -68,6 +68,16 @@ if (empty($modulesOnUpdateServer)) {
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
                                 <i class="fa fa-download"></i>
                             </button>
+                        <?php elseif (version_compare(phpversion(), $moduleOnUpdateServer->phpVersion, '<')): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('phpVersionError') ?>">
+                                <i class="fa fa-download"></i>
+                            </button>
+                        <?php elseif (version_compare(VERSION, $moduleOnUpdateServer->ilchCore, '<')): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('ilchCoreError') ?>">
+                                <i class="fa fa-download"></i>
+                            </button>
                         <?php elseif (in_array($filename, $this->get('modules')) && $moduleOnUpdateServer->version <= $versionsOfModules[$moduleOnUpdateServer->key]['version']): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">

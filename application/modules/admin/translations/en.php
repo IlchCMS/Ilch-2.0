@@ -183,6 +183,8 @@ return [
     'hmenuFolderRights' => 'Folder Rights',
     'hmenuCertificate' => 'Certificate',
     'phpExtensionError' => 'Not all PHP-Extensions active',
+    'phpVersionError' => 'The version of PHP is too old.',
+    'ilchCoreError' => 'The Ilch-core version is too old.',
     'phpExtensions' => 'PHP-Extensions',
     'extension' => 'Extension',
     'existing' => 'existing',
