@@ -1,6 +1,6 @@
-<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
 <?php
 $posts = $this->get('posts');
+$cat = $this->get('cat');
 $topicpost = $this->get('post');
 $readAccess = $this->get('readAccess');
 $forum = $this->get('forum');
@@ -11,9 +11,16 @@ if ($this->getUser()) {
 }
 ?>
 
+<link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
+
+<legend>
+    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a> 
+    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a> 
+    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a> 
+    <i class="forum fa fa-chevron-right"></i> <?=$topicpost->getTopicTitle() ?>
+</legend>
 <?php if (is_in_array($readAccess, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
     <div id="forum">
-        <h3><?=$topicpost->getTopicTitle() ?></h3>
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
                 <?php if ($topicpost->getStatus() == 0 AND (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true)): ?>
@@ -87,7 +94,8 @@ if ($this->getUser()) {
                             <?=$this->escape($post->getAutor()->getName()) ?>
                         </a>
                     </dt>
-                    <dd><?php foreach ($post->getAutor()->getGroups() as $group) : ?>
+                    <dd>
+                        <?php foreach ($post->getAutor()->getGroups() as $group): ?>
                             <?=$group->getName() ?><br>
                         <?php endforeach; ?>
                     </dd>

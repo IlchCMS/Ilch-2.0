@@ -20,8 +20,9 @@ class Showcat extends \Ilch\Controller\Frontend
         $cat = $forumMapper->getForumById($catId);
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('forumOverview'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forumOverview'));
+                ->add($this->getTranslator()->trans('forum'))
+                ->add($cat->getTitle());
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index','action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()]);

@@ -1,4 +1,4 @@
-<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 <?php
 $forumItems = $this->get('forumItems');
 $readAccess = $this->get('groupIdsArray');

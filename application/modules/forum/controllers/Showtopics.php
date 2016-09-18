@@ -45,6 +45,7 @@ class Showtopics extends \Ilch\Controller\Frontend
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
+                ->add($cat->getTitle())
                 ->add($forum->getTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
@@ -56,6 +57,7 @@ class Showtopics extends \Ilch\Controller\Frontend
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('forum', $forum);
+        $this->getView()->set('cat', $cat);
         $this->getView()->set('topicMapper', $topicMapper);
         $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('topics', $topicMapper->getTopicsByForumId($forumId, $pagination));

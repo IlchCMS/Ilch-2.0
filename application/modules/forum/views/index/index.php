@@ -1,15 +1,14 @@
-<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
 <?php
 $forumItems = $this->get('forumItems');
 $readAccess = $this->get('groupIdsArray');
+$usersOnlineList = $this->get('usersOnlineList');
 $usersOnline = $this->get('usersOnline');
 $guestOnline = $this->get('guestOnline');
 $forumStatistics = $this->get('forumStatics');
-$ins = $usersOnline + $guestOnline;
+$ins = $usersOnline+$guestOnline;
 
 function rec($item, $obj, $readAccess, $i)
 {
-    //dumpVar($item->getSubItems());
     $subItems = $item->getSubItems();
     $topics = $item->getTopics();
     $lastPost = $item->getLastPost();
@@ -30,49 +29,80 @@ function rec($item, $obj, $readAccess, $i)
     }
 ?>
     <?php if ($item->getType() === 0 && $subItemsFalse == true): ?>
-        <ul class="topiclist">
+        <ul class="forenlist">
             <li class="header">
                 <dl class="icon">
-                    <dt><a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>"><?=$item->getTitle() ?></a></dt>
-                    <dd class="topics"><?=$obj->getTrans('topics') ?></dd>
-                    <dd class="posts"><?=$obj->getTrans('posts') ?></dd>
-                    <dd class="lastpost"><span><?=$obj->getTrans('lastPost') ?></span></dd>
+                    <dt>
+                        <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
+                            <?=$item->getTitle() ?>
+                        </a>
+                    </dt>
                 </dl>
+                <?php if ($item->getDesc() != ''): ?>
+                    <dl class="desc small">
+                        <dt>
+                            <?=$item->getDesc() ?>
+                        </dt>
+                    </dl>
+                <?php endif; ?>
             </li>
         </ul>
     <?php endif; ?>
 
     <?php if (is_in_array($readAccess, explode(',', $item->getReadAccess())) || $adminAccess == true): ?>
         <?php if ($item->getType() != 0): ?>
-            <ul class="topiclist forums">
+            <ul class="forenlist forums">
                 <li class="row">
-                    <dl class="icon" style="
+                    <dl class="icon 
                         <?php if ($obj->getUser() && $lastPost): ?>
                             <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
-                                background-image: url(<?=$obj->getModuleUrl('static/img/forum_read.png') ?>);
+                                topic-read
                             <?php else: ?>
-                                background-image: url(<?=$obj->getModuleUrl('static/img/topic_unread.png') ?>);
+                                topic-unread
                             <?php endif; ?>
                         <?php else: ?>
-                            background-image: url(<?=$obj->getModuleUrl('static/img/forum_read.png') ?>);
+                            topic-read
                         <?php endif; ?>
-                            background-repeat: no-repeat;">
+                    ">
                         <dt>
-                            <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index','forumid' => $item->getId()]) ?>" class="forumtitle"><?=$item->getTitle() ?></a><br>
-                            <?=$item->getDesc() ?>
+                            <a href="<?=$obj->getUrl(['controller' => 'showtopics', 'action' => 'index','forumid' => $item->getId()]) ?>">
+                                <?=$item->getTitle() ?>
+                            </a>
+                            <br>
+                            <div class="small">
+                                <?=$item->getDesc() ?>
+                            </div>
                         </dt>
-                        <dd class="topics"><?=$topics; ?> <dfn><?=$obj->getTrans('topics') ?></dfn></dd>
-                        <dd class="posts"><?=$posts; ?> <dfn><?=$obj->getTrans('posts') ?></dfn></dd>
-                        <dd class="lastpost">
+                        <dd class="posts small">
+                            <div class="pull-left text-nowrap stats">
+                                <?=$obj->getTrans('topics') ?>:
+                                <br />
+                                <?=$obj->getTrans('posts') ?>:
+                            </div>
+                            <div class="pull-left text-justify">
+                                <?=$topics ?>
+                                <br />
+                                <?=$posts ?>
+                            </div>
+                        </dd>
+                        <dd class="lastpost small">
                             <?php if ($lastPost): ?>
-                                <span>
-                                    <img style="width:30px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>"> <?=$obj->getTrans('by') ?>
-                                    <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>"><?=$lastPost->getAutor()->getName() ?></a>
+                                <div class="pull-left">
+                                    <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
+                                        <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
+                                    </a>
+                                </div>
+                                <div class="pull-left">
+                                    <?=$obj->getTrans('by') ?>
+                                    <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
+                                        <?=$obj->escape($lastPost->getAutor()->getName()) ?>
+                                    </a>
                                     <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
                                         <img src="<?=$obj->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$obj->getTrans('viewLastPost') ?>" title="<?=$obj->getTrans('viewLastPost') ?>" height="10" width="12">
                                     </a>
-                                    <br><?=$lastPost->getDateCreated() ?>
-                                </span>
+                                    <br>
+                                    <?=$lastPost->getDateCreated() ?>
+                                </div>
                             <?php endif; ?>
                         </dd>
                     </dl>
@@ -80,6 +110,7 @@ function rec($item, $obj, $readAccess, $i)
             </ul>
         <?php endif; ?>
     <?php endif; ?>
+
     <?php
     if (!empty($subItems) && $i == 0) {
         $i++;
@@ -90,19 +121,11 @@ function rec($item, $obj, $readAccess, $i)
     }
 }
 ?>
-<div id="forum" class="col-lg-12">
-    <h3><?=$this->getTrans('forumOverview') ?></h3>
-    <div class="topic-actions">
-        <?php if ($this->getUser()): ?>
-            <div class="buttons">
-                <a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
-                    <span class="btn-label">
-                        <i class="fa fa-eye"></i>
-                    </span><?=$this->getTrans('showNewPosts') ?>
-                </a>
-            </div>
-        <?php endif; ?>
-    </div>
+
+<link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
+
+<legend><?=$this->getTrans('forum') ?></legend>
+<div id="forum">
     <?php if (!empty($forumItems)): ?>
         <?php foreach ($forumItems as $item): ?>
             <div class="forabg">
@@ -110,19 +133,81 @@ function rec($item, $obj, $readAccess, $i)
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
-    <h3 class="dark-header"><?=$this->getTrans('whoOnline') ?></h3>
-    <div class="dark-header-content">
-        Insgesamt sind <strong><?=$guestOnline+$usersOnline?></strong> Besucher online: <strong><?=$usersOnline ?></strong> registrierte <strong><?=$guestOnline ?></strong> Gäste (basierend auf den aktiven Besuchern der letzten 5 Minuten)<br>
-        Der Besucherrekord liegt bei 1767 Besuchern, die am 27.09.2014 online waren.<br> <br>
-        <br><em><?=$this->getTrans('legend') ?>:
-            <?php foreach ($this->get('listGroups') as $group) : ?>
-                <?php if ($group->getName() == 'Guest'): ?>
-                <?php else: ?>
-                    <?=$group->getName() ?>,
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </em>
+    <div class="foren-actions">
+        <ul>
+            <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>">Unbeantwortete Themen</a></li>
+            <?php if ($this->getUser()): ?>
+                <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>"><?=$this->getTrans('showNewPosts') ?></a></li>
+            <?php endif; ?>
+            <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>">Aktive Themen</a></li>
+            <?php if ($this->getUser()): ?>
+                <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>">Alle Foren als gelesen markieren</a></li>
+            <?php endif; ?>
+        </ul>
     </div>
-    <h3 class="dark-header"><?=$this->getTrans('statistics') ?></h3>
-    <div class="dark-header-content"><?=$this->getTrans('totalPosts') ?> <strong><?=$forumStatistics->getCountPosts() ?></strong> • <?=$this->getTrans('totalTopics') ?> <strong><?=$forumStatistics->getCountTopics() ?></strong> • <?=$this->getTrans('totalMembers') ?> <strong><?=$forumStatistics->getCountUsers() ?></strong> • <?=$this->getTrans('newMember') ?> <strong><?=$this->escape($this->get('registNewUser')->getName()) ?></strong></div>
+
+    <div class="dark-header"><?=$this->getTrans('currentInfo') ?></div>
+    <div class="dark-header-content">
+        <h5><i class="fa fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
+        <div class="statistics">
+            <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>"><?=$usersOnline+$guestOnline ?> Benutzer online</a>. Registrierte Benutzer: <?=$usersOnline ?>, Gäste: <?=$guestOnline ?><br />
+            <ul class="user-list">
+                <?php foreach ($usersOnlineList as $user): ?>
+                    <?php
+                    $groups = [];
+                    foreach ($user->getGroups() as $group) {
+                        $groups[] = $group->getName();
+                    }
+                    ?>
+
+                    <?php if ((in_array('Administrator', $groups))): ?>
+                        <li><strong><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></strong></li>
+                    <?php else: ?>
+                        <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </ul>
+            <br />
+            <div class="small">
+                <ul class="group-legend">
+                    <li><?=$this->getTrans('legend') ?>:</li>
+                    <?php foreach ($this->get('listGroups') as $group): ?>
+                        <?php if ($group->getName() != 'Guest'): ?>
+                            <?php if ($group->getName() == 'Administrator'): ?>
+                                <li><strong><?=$group->getName() ?></strong></li>
+                            <?php else: ?>
+                                <li><?=$group->getName() ?></li>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+        <hr />
+        <h5><i class="fa fa-user"></i> <?=$this->getTrans('whoWasHere') ?></h5>
+        <div class="statistics">
+            Insgesamt waren 217 Benutzer Online:<br />
+            66 registrierte und 169 Besucher (basierend auf den aktiven Besuchern der letzten 5 Minuten)<br /><br />
+            Der Besucherrekord liegt bei 1.767 Besuchern, die am 27.09.2014 online waren.
+        </div>
+        <hr />
+        <div class="stats">
+            <h5><i class="fa fa-pie-chart"></i> <?=$this->getTrans('statistics') ?></h5>
+            <ul class="statistics">
+                <li><?=$this->getTrans('totalPosts') ?>: <?=$forumStatistics->getCountPosts() ?></li>
+                <li><?=$this->getTrans('totalTopics') ?>: <?=$forumStatistics->getCountTopics() ?></li>
+                <li><?=$this->getTrans('totalMembers') ?>: <?=$forumStatistics->getCountUsers() ?></li>
+                <li><?=$this->getTrans('newMember') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->get('registNewUser')->getId()]) ?>" title="<?=$this->escape($this->get('registNewUser')->getName()) ?>"><?=$this->escape($this->get('registNewUser')->getName()) ?></a></li>
+            </ul>
+        </div>
+        <hr />
+        <div class="legend">
+            <h5><i class="fa fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
+            <ul class="statistics">
+                <li><img src="<?=$this->getModuleUrl('static/img/topic_unread.png') ?>" class="legendIcon"> <?=$this->getTrans('legendNewPost') ?></li>
+                <li><img src="<?=$this->getModuleUrl('static/img/topic_read.png') ?>" class="legendIcon"> <?=$this->getTrans('legendReadPost') ?></li>
+                <li><img src="<?=$this->getModuleUrl('static/img/topic_read_locked.png') ?>" class="legendIcon"> <?=$this->getTrans('legendThreadLocked') ?></li>
+            </ul>
+        </div>
+    </div>
 </div>

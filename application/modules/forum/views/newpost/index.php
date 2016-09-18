@@ -1,4 +1,4 @@
-<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <h3 class="blue-header col-lg-12"><?=$this->getTrans('newPost') ?></h3>
 <form class="form-horizontal" method="POST" action="">

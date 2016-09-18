@@ -22,9 +22,7 @@ class Index extends \Ilch\Controller\Frontend
         $staticsMapper = new ForumStaticsMapper();
         $groupMapper = new GroupMapper();
 
-        
         $forumItems = $forumMapper->getForumItemsByParent(1, 0);
-
         $allOnlineUsers = $visitMapper->getVisitsCountOnline();
         $usersOnline = $visitMapper->getVisitsOnlineUser();
 
@@ -44,13 +42,14 @@ class Index extends \Ilch\Controller\Frontend
         $groupIdsArray = explode(',',implode(',', $groupIds));
 
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('forumOverview'));
-        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forumOverview'));
+                ->add($this->getTranslator()->trans('forum'));
+        $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['action' => 'index']);
 
         $this->getView()->set('groupIdsArray', $groupIdsArray);
         $this->getView()->set('forumItems', $forumItems);
+        $this->getView()->set('usersOnlineList', $usersOnline);
         $this->getView()->set('usersOnline', count($usersOnline));
         $this->getView()->set('guestOnline', $allOnlineUsers - count($usersOnline));
         $this->getView()->set('forumStatics', $staticsMapper->getForumStatistics());

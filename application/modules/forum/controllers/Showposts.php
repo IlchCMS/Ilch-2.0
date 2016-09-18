@@ -37,7 +37,9 @@ class Showposts extends \Ilch\Controller\Frontend
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
-                ->add($forum->getTitle());
+                ->add($cat->getTitle())
+                ->add($forum->getTitle())
+                ->add($post->getTopicTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
@@ -77,6 +79,7 @@ class Showposts extends \Ilch\Controller\Frontend
         $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('post', $post);
+        $this->getView()->set('cat', $cat);
         $this->getView()->set('posts', $posts);
         $this->getView()->set('forum', $forum);
         $this->getView()->set('readAccess', $readAccess);

@@ -41,8 +41,8 @@ class Edittopic extends \Ilch\Controller\Frontend
 
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-            ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
-            ->add($forum->getTitle(), ['action' => 'index', 'forumid' => $forumId]);
+            ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
+            ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId]);
 
         $this->getView()->set('groupIdsArray', $groupIdsArray);
         $this->getView()->set('forumItems', $forumItems);

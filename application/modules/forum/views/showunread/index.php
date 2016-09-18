@@ -1,4 +1,4 @@
-<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 <?php
 $topics = $this->get('topics');
 $topicMapper = $this->get('topicMapper');

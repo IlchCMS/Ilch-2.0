@@ -8,7 +8,7 @@ if ($this->getUser()) {
 }
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/forum-style.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <?php if (is_in_array($readAccess, explode(',', $forum->getCreateAccess())) || $adminAccess == true): ?>
     <h3 class="blue-header col-lg-12"><?=$this->getTrans('createNewTopic') ?></h3>
