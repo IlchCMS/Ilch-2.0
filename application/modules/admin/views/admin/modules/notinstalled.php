@@ -34,6 +34,18 @@
 
                         $phpExtension = implode(", ", $phpExtension);
                     }
+
+                    if (version_compare(phpversion(), $module->getPHPVersion(), '>=')) {
+                        $phpVersion = '<font color="#3c763d">'.$module->getPHPVersion().'</font>';
+                    } else {
+                        $phpVersion = '<font color="#a94442">'.$module->getPHPVersion().'</font>';
+                    }
+
+                    if (version_compare($this->get('coreVersion'), $module->getIlchCore(), '>=')) {
+                        $ilchCore = '<font color="#3c763d">'.$module->getIlchCore().'</font>';
+                    } else {
+                        $ilchCore = '<font color="#a94442">'.$module->getIlchCore().'</font>';
+                    }
                     ?>
                     <tr>
                         <td>
@@ -89,10 +101,10 @@
                     }
                     $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$this->escape($content['name']).'<br />
                                    <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
-                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br /><br />
+                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
                                    <b>'.$this->getTrans('requirements').'</b><br />
-                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$this->escape($module->getIlchCore()).'<br />
-                                   <b>'.$this->getTrans('phpVersion').':</b> '.$this->escape($module->getPHPVersion()).'<br />
+                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$ilchCore.'<br />
+                                   <b>'.$this->getTrans('phpVersion').':</b> '.$phpVersion.'<br />
                                    '.$phpExtensions.'
                                    <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
                     ?>

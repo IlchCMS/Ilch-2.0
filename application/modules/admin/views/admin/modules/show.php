@@ -34,6 +34,18 @@ foreach ($modules as $module): ?>
 
             $phpExtension = implode(", ", $phpExtension);
         }
+
+        if (version_compare(phpversion(), $module->phpVersion, '>=')) {
+            $phpVersion = '<font color="#3c763d">'.$module->phpVersion.'</font>';
+        } else {
+            $phpVersion = '<font color="#a94442">'.$module->phpVersion.'</font>';
+        }
+
+        if (version_compare($this->get('coreVersion'), $module->ilchCore, '>=')) {
+            $ilchCore = '<font color="#3c763d">'.$module->ilchCore.'</font>';
+        } else {
+            $ilchCore = '<font color="#a94442">'.$module->ilchCore.'</font>';
+        }
         ?>
         <div id="module">
             <div class="col-lg-6 col-xs-12">
@@ -141,13 +153,13 @@ foreach ($modules as $module): ?>
                         <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
                     </div>
                     <div class="col-sm-9 col-xs-6">
-                        <?=$module->ilchCore ?>
+                        <?=$ilchCore ?>
                     </div>
                     <div class="col-sm-3 col-xs-6">
                         <b><?=$this->getTrans('phpVersion') ?>:</b>
                     </div>
                     <div class="col-sm-9 col-xs-6">
-                        <?=$module->phpVersion ?>
+                        <?=$phpVersion ?>
                     </div>
                     <?php if (!empty($module->phpExtensions)): ?>
                         <div class="col-sm-3 col-xs-6">

@@ -34,17 +34,6 @@ if (empty($modulesOnUpdateServer)) {
                     foreach ($moduleOnUpdateServer->phpextensions as $extension) {
                         $extensionCheck[] = extension_loaded($extension);
                     }
-
-                    $phpExtensions = array_combine($moduleOnUpdateServer->phpextensions, $extensionCheck);
-                    foreach ($phpExtensions as $key => $value) {
-                        if ($value == true) {
-                            $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
-                        } else {
-                            $phpExtension[] = '<font color="#a94442">'.$key.'</font>';
-                        }
-                    }
-
-                    $phpExtension = implode(", ", $phpExtension);
                 }
                 ?>
                 <tr>
