@@ -78,12 +78,12 @@ if (empty($modulesOnUpdateServer)) {
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
                                 <i class="fa fa-download"></i>
                             </button>
-                        <?php elseif (in_array($filename, $this->get('modules')) && $moduleOnUpdateServer->version <= $versionsOfModules[$moduleOnUpdateServer->key]['version']): ?>
+                        <?php elseif (in_array($filename, $this->get('modules')) && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check text-success"></i>
                             </button>
-                        <?php elseif (in_array($filename, $this->get('modules')) && $moduleOnUpdateServer->version > $versionsOfModules[$moduleOnUpdateServer->key]['version']): ?>
+                        <?php elseif (in_array($filename, $this->get('modules')) && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
