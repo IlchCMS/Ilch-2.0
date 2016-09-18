@@ -72,4 +72,5 @@ return [
     'legendReadPost' => 'Read posts',
     'legendThreadLocked' => 'Thread closed',
     'noThreads' => 'No Threads available',
+    'noNewThreads' => 'No new Threads available',
 ];

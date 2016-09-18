@@ -9,7 +9,7 @@ $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
-    $userAccess =  $this->get('userAccess');
+    $userAccess = $this->get('userAccess');
 }
 ?>
 
@@ -20,7 +20,6 @@ if ($this->getUser()) {
     <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>  
     <i class="forum fa fa-chevron-right"></i> <?=$forum->getTitle() ?>
 </legend>
-
 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
     <div id="forum">
         <div class="topic-actions">
@@ -46,7 +45,7 @@ if ($this->getUser()) {
         </div>
         <?php if ($forumEdit): ?>
             <form class="form-horizontal" name="editForm" method="POST" action="">
-                <?php echo $this->getTokenField(); ?>
+                <?=$this->getTokenField(); ?>
         <?php endif; ?>
         <div class="forabg">
             <ul class="topiclist">
@@ -114,24 +113,22 @@ if ($this->getUser()) {
                                     </div>
                                 </dd>
                                 <dd class="lastpost small">
-                                    <span>
-                                        <div class="pull-left">
-                                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
-                                                <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
-                                            </a>
-                                        </div>
-                                        <div class="pull-left">
-                                            <?=$this->getTrans('by') ?>
-                                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
-                                                <?=$this->escape($lastPost->getAutor()->getName()) ?>
-                                            </a>
-                                            <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
-                                                <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
-                                            </a>
-                                            <br>
-                                            <?=$lastPost->getDateCreated() ?>
-                                        </div>
-                                    </span>
+                                    <div class="pull-left">
+                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
+                                            <img style="width:40px; padding-right: 5px;" src="<?=$this->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
+                                        </a>
+                                    </div>
+                                    <div class="pull-left">
+                                        <?=$this->getTrans('by') ?>
+                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$this->escape($lastPost->getAutor()->getName()) ?>">
+                                            <?=$this->escape($lastPost->getAutor()->getName()) ?>
+                                        </a>
+                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
+                                            <img src="<?=$this->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$this->getTrans('viewLastPost') ?>" title="<?=$this->getTrans('viewLastPost') ?>" height="10" width="12">
+                                        </a>
+                                        <br>
+                                        <?=$lastPost->getDateCreated() ?>
+                                    </div>
                                 </dd>
                                 <?php if ($forumEdit): ?>
                                     <dd class="forumEdit"><input type="checkbox" name="check_topics[]" value="<?=$topic->getId() ?>" /></dd>

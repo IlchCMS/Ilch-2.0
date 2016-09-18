@@ -7,7 +7,7 @@ $forum = $this->get('forum');
 $adminAccess = null;
 if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
-    $userAccess =  $this->get('userAccess');
+    $userAccess = $this->get('userAccess');
 }
 ?>
 

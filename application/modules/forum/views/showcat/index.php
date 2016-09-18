@@ -74,24 +74,22 @@ function rec($item, $forumMapper, $obj, $readAccess)
                         </dd>
                         <dd class="lastpost small">
                             <?php if ($lastPost): ?>
-                                <span>
-                                    <div class="pull-left">
-                                        <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
-                                            <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
-                                        </a>
-                                    </div>
-                                    <div class="pull-left">
-                                        <?=$obj->getTrans('by') ?>
-                                        <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
-                                            <?=$obj->escape($lastPost->getAutor()->getName()) ?>
-                                        </a>
-                                        <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
-                                            <img src="<?=$obj->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$obj->getTrans('viewLastPost') ?>" title="<?=$obj->getTrans('viewLastPost') ?>" height="10" width="12">
-                                        </a>
-                                        <br>
-                                        <?=$lastPost->getDateCreated() ?>
-                                    </div>
-                                </span>
+                                <div class="pull-left">
+                                    <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
+                                        <img style="width:40px; padding-right: 5px;" src="<?=$obj->getBaseUrl($lastPost->getAutor()->getAvatar()) ?>">
+                                    </a>
+                                </div>
+                                <div class="pull-left">
+                                    <?=$obj->getTrans('by') ?>
+                                    <a href="<?=$obj->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $lastPost->getAutor()->getId()]) ?>" title="<?=$obj->escape($lastPost->getAutor()->getName()) ?>">
+                                        <?=$obj->escape($lastPost->getAutor()->getName()) ?>
+                                    </a>
+                                    <a href="<?=$obj->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]) ?>#<?=$lastPost->getId() ?>">
+                                        <img src="<?=$obj->getModuleUrl('static/img/icon_topic_latest.png') ?>" alt="<?=$obj->getTrans('viewLastPost') ?>" title="<?=$obj->getTrans('viewLastPost') ?>" height="10" width="12">
+                                    </a>
+                                    <br>
+                                    <?=$lastPost->getDateCreated() ?>
+                                </div>
                             <?php endif; ?>
                         </dd>
                     </dl>

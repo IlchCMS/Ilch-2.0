@@ -468,7 +468,11 @@ li.header dd {
         padding: 10px 12px;
     }
     #forum ul.forums dl.icon.topic-read,
-    #forum ul.topics dl.icon.topic-read {
+    #forum ul.topics dl.icon.topic-read,
+    #forum ul.forums dl.icon.topic-unread,
+    #forum ul.topics dl.icon.topic-unread,
+    #forum ul.topics dl.icon.topic-read-locked,
+    #forum ul.topics dl.icon.topic-unread-locked {
         min-height: 41px;
         background-position: 5px 50%;
         background-repeat: no-repeat;

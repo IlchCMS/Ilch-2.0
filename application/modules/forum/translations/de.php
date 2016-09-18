@@ -72,4 +72,5 @@ return [
     'legendReadPost' => 'Gelesene Beiträge',
     'legendThreadLocked' => 'Thema geschlossen',
     'noThreads' => 'Keine Themen vorhanden',
+    'noNewThreads' => 'Keine neuen Themen vorhanden',
 ];

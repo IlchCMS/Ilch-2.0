@@ -37,11 +37,12 @@ class Showunread extends \Ilch\Controller\Frontend
             $pagination->setPage($this->getRequest()->getParam('page'));
 
             $this->getLayout()->getTitle()
+                    ->add($this->getTranslator()->trans('forum'))
                     ->add($this->getTranslator()->trans('showNewPosts'));
             $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('showNewPosts'));
             $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('showNewPosts'), ['action' => 'index']);
+                    ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
+                    ->add($this->getTranslator()->trans('showNewPosts'), ['action' => 'index']);
 
             $this->getView()->set('topicMapper', $topicMapper);
             $this->getView()->set('forumMapper', $forumMapper);
