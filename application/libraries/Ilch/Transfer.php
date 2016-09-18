@@ -369,7 +369,6 @@ class Transfer
                 } 
             }
         }
-        curl_close($this->getTransferUrl());
         $this->setContent($content);
         return true;
     }

@@ -191,6 +191,7 @@ HTACCESS;
         if ($result == '') {
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
         }
+        curl_close($this->getTransferUrl());
 
         $this->getView()->set('versions', $result);
 
