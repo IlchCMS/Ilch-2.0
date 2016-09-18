@@ -66,7 +66,7 @@ class Module extends \Ilch\Mapper
         $modulesNotInstalled = array_diff($modulesDir, $modulesDB);
 
         if (empty($modulesNotInstalled)) {
-            return;
+            return [];
         }
 
         foreach ($modulesNotInstalled as $module) {
@@ -97,15 +97,6 @@ class Module extends \Ilch\Mapper
         }
 
         return $modules;
-    }
-
-    public function getLoadedPHPExtensions($extension)
-    {
-        if (extension_loaded($extension)) {
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -141,6 +132,25 @@ class Module extends \Ilch\Mapper
             ->from('modules')
             ->execute()
             ->fetchList();
+
+        if (empty($modulesRows)) {
+            return [];
+        }
+
+        return $modulesRows;
+    }
+
+    public function getVersionsOfModules() {
+        $modulesRows = $this->db()->select(['key','version'])
+            ->from('modules')
+            ->execute()
+            ->fetchRows('key');
+
+        $modulesNotInstalled = $this->getModulesNotInstalled();
+
+        foreach ($modulesNotInstalled as $moduleNotInstalled) {
+            $modulesRows[$moduleNotInstalled->getKey()] = array('key' => $moduleNotInstalled->getKey(), 'version' => $moduleNotInstalled->getVersion());
+        }
 
         if (empty($modulesRows)) {
             return [];

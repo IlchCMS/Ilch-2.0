@@ -369,7 +369,6 @@ class Transfer
                 } 
             }
         }
-        curl_close($this->getTransferUrl());
         $this->setContent($content);
         return true;
     }
@@ -411,6 +410,14 @@ class Transfer
 
                         if (isset($config->config['system_module'])) {
                             $moduleModel->setSystemModule(true);
+                        }
+
+                        if (isset($config->config['link'])) {
+                            $moduleModel->setLink($config->config['link']);
+                        }
+
+                        if (isset($config->config['version'])) {
+                            $moduleModel->setVersion($config->config['version']);
                         }
 
                         $moduleModel->setIconSmall($config->config['icon_small']);

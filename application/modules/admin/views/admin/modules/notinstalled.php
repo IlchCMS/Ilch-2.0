@@ -1,9 +1,5 @@
-<?php 
-$moduleMapper = $this->get('moduleMapper');
-?>
-
 <legend><?=$this->getTrans('modulesNotInstalled') ?></legend>
-<?php if ($this->get('modulesNotInstalled') != ''): ?>
+<?php if (!empty($this->get('modulesNotInstalled'))): ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -24,7 +20,7 @@ $moduleMapper = $this->get('moduleMapper');
                     if ($module->getPHPExtension() != '') {
                         $extensionCheck = [];
                         foreach ($module->getPHPExtension() as $extension) {
-                            $extensionCheck[] = $moduleMapper->getLoadedPHPExtensions($extension);
+                            $extensionCheck[] = extension_loaded($extension);
                         }
 
                         $phpExtensions = array_combine($module->getPHPExtension(), $extensionCheck);
