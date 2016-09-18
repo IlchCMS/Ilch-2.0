@@ -24,7 +24,9 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage your clan cash.',
             ],
         ],
-        'phpextensions' => [
+        'ilchCore' => '2.0.0',
+        'phpVersion' => '5.6',
+        'phpExtensions' => [
             'intl'
         ]
     ];
