@@ -50,6 +50,16 @@ class Module extends \Ilch\Model
     /**
      * @var string
      */
+    protected $ilchCore;
+
+    /**
+     * @var string
+     */
+    protected $phpVersion;
+
+    /**
+     * @var string
+     */
     protected $phpExtension;
 
     /**
@@ -220,11 +230,51 @@ class Module extends \Ilch\Model
     /**
      * Sets the link.
      *
-     * @param string $phpExtension
+     * @param string $link
      */
-    public function setLink($phpExtension)
+    public function setLink($link)
     {
-        $this->link = (string)$phpExtension;
+        $this->link = (string)$link;
+    }
+
+    /**
+     * Gets the ilch core version.
+     *
+     * @return string
+     */
+    public function getIlchCore()
+    {
+        return $this->ilchCore;
+    }
+
+    /**
+     * Sets the ilch core version.
+     *
+     * @param string $ilchCore
+     */
+    public function setIlchCore($ilchCore)
+    {
+        $this->ilchCore = $ilchCore;
+    }
+
+    /**
+     * Gets the php version.
+     *
+     * @return string
+     */
+    public function getPHPVersion()
+    {
+        return $this->phpVersion;
+    }
+
+    /**
+     * Sets the php version.
+     *
+     * @param string $phpVersion
+     */
+    public function setPHPVersion($phpVersion)
+    {
+        $this->phpVersion = $phpVersion;
     }
 
     /**
@@ -238,7 +288,7 @@ class Module extends \Ilch\Model
     }
 
     /**
-     * Sets the  php extension.
+     * Sets the php extension.
      *
      * @param array $phpExtension
      */

@@ -17,13 +17,13 @@ if (empty($modules)) {
 foreach ($modules as $module): ?>
     <?php if ($module->id == $this->getRequest()->getParam('id')): ?>
         <?php
-        if (!empty($module->phpextensions)) {
+        if (!empty($module->phpExtensions)) {
             $extensionCheck = [];
-            foreach ($module->phpextensions as $extension) {
+            foreach ($module->phpExtensions as $extension) {
                 $extensionCheck[] = extension_loaded($extension);
             }
 
-            $phpExtensions = array_combine($module->phpextensions, $extensionCheck);
+            $phpExtensions = array_combine($module->phpExtensions, $extensionCheck);
             foreach ($phpExtensions as $key => $value) {
                 if ($value == true) {
                     $phpExtension[] = '<font color="#3c763d">'.$key.'</font>';
@@ -132,17 +132,32 @@ foreach ($modules as $module): ?>
                         </span>
                     </div>
                 </div>
-                <?php if (!empty($module->phpextensions)): ?>
-                    <div class="row">
-                        <br />
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <b><?=$this->getTrans('requirements') ?></b>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
+                    </div>
+                    <div class="col-sm-9 col-xs-6">
+                        <?=$module->ilchCore ?>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <b><?=$this->getTrans('phpVersion') ?>:</b>
+                    </div>
+                    <div class="col-sm-9 col-xs-6">
+                        <?=$module->phpVersion ?>
+                    </div>
+                    <?php if (!empty($module->phpExtensions)): ?>
                         <div class="col-sm-3 col-xs-6">
                             <b><?=$this->getTrans('phpExtensions') ?>:</b>
                         </div>
                         <div class="col-sm-9 col-xs-6">
                             <?=$phpExtension ?>
                         </div>
-                    </div>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>
                 <br />
                 <div class="col-xs-12">
                     <b><?=$this->getTrans('desc') ?>:</b>

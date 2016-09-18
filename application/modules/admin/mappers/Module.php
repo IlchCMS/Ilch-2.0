@@ -89,8 +89,10 @@ class Module extends \Ilch\Mapper
                     $moduleModel->addContent($key, $value);
                 }
             }
-            if (isset($config->config['phpextensions'])) {
-                $moduleModel->setPHPExtension($config->config['phpextensions']);
+            $moduleModel->setIlchCore($config->config['ilchCore']);
+            $moduleModel->setPHPVersion($config->config['phpVersion']);
+            if (isset($config->config['phpExtensions'])) {
+                $moduleModel->setPHPExtension($config->config['phpExtensions']);
             }
 
             $modules[] = $moduleModel;

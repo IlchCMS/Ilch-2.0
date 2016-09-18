@@ -87,9 +87,12 @@
                     if ($module->getPHPExtension() != '') {
                         $phpExtensions = '<b>'.$this->getTrans('phpExtensions').':</b> '.$phpExtension.'<br /><br />';
                     }
-                    $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$content['name'].'<br />
+                    $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$this->escape($content['name']).'<br />
                                    <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
-                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
+                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br /><br />
+                                   <b>'.$this->getTrans('requirements').'</b><br />
+                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$this->escape($module->getIlchCore()).'<br />
+                                   <b>'.$this->getTrans('phpVersion').':</b> '.$this->escape($module->getPHPVersion()).'<br />
                                    '.$phpExtensions.'
                                    <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
                     ?>
