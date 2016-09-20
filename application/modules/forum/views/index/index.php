@@ -133,17 +133,21 @@ function rec($item, $obj, $readAccess, $i)
             </div>
         <?php endforeach; ?>
     <?php endif; ?>
-    <div class="foren-actions">
-        <ul>
-            <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>">Unbeantwortete Themen</a></li>
+    <div class="foren-actions clearfix">
+        <ul class="pull-left">
+            <li><a href="<?=$this->getUrl(['controller' => 'showunansweredtopics', 'action' => 'index']) ?>"><?=$this->getTrans('showUnansweredTopics') ?></a></li>
             <?php if ($this->getUser()): ?>
-                <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>"><?=$this->getTrans('showNewPosts') ?></a></li>
+                <li><a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'index']) ?>"><?=$this->getTrans('showNewPosts') ?></a></li>
             <?php endif; ?>
-            <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>">Aktive Themen</a></li>
-            <?php if ($this->getUser()): ?>
-                <li><a href="<?=$this->getUrl(['controller' => 'showunread', 'action' => 'index']) ?>">Alle Foren als gelesen markieren</a></li>
-            <?php endif; ?>
+            <li><a href="<?=$this->getUrl(['controller' => 'showactivetopics', 'action' => 'index']) ?>"><?=$this->getTrans('showActiveTopics') ?></a></li>
         </ul>
+        <?php if ($this->getUser()): ?>
+            <!--            
+                <div class="pull-right">
+                    <a href="<?=$this->getUrl(['controller' => 'markallread', 'action' => 'index']) ?>">Alle Foren als gelesen markieren</a>
+                </div>
+            -->
+        <?php endif; ?>
     </div>
 
     <div class="dark-header"><?=$this->getTrans('currentInfo') ?></div>

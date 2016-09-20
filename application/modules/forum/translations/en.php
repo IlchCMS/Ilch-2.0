@@ -50,6 +50,8 @@ return [
     'no' => 'No',
     'joined' => 'Joined',
     'showNewPosts' => 'New posts',
+    'showUnansweredTopics' => 'Unanswered topics',
+    'showActiveTopics' => 'Active topics',
     'noPosts' => 'No posts available',
     'totalMembers' => 'Total members',
     'newMember' => 'Newest member',

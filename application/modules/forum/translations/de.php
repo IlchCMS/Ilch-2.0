@@ -50,6 +50,8 @@ return [
     'no' => 'Nein',
     'joined' => 'Dabei seit',
     'showNewPosts' => 'Neue Beiträge',
+    'showUnansweredTopics' => 'Unbeantwortete Themen',
+    'showActiveTopics' => 'Aktive Themen',
     'noPosts' => 'Keine Beiträge vorhanden',
     'totalMembers' => 'Mitglieder insgesamt',
     'newMember' => 'Wir begrüßen unseren neuesten Benutzer,',

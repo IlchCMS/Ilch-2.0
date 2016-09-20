@@ -10,7 +10,7 @@ use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\User\Mappers\User as UserMapper;
 
-class Showunread extends \Ilch\Controller\Frontend
+class Shownewposts extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {

@@ -527,10 +527,6 @@ li.header dd {
     #forum .stats ul.statistics li:after {
         content: " • ";
     }
-    #forum .foren-actions ul li:last-child,
-    #forum .stats ul.statistics li:last-child {
-        display: block;
-    }
     #forum .foren-actions ul li:nth-child(3):after,
     #forum .foren-actions ul li:last-child:after,
     #forum .stats ul.statistics li:nth-child(3):after,
@@ -559,9 +555,5 @@ li.header dd {
     #forum .forabg ul.forenlist dd.lastpost img,
     #forum .forabg ul.topiclist dd.lastpost img {
         display: inline;
-    }
-
-    #forum .foren-actions ul li:last-child {
-        float: right;
     }
 }

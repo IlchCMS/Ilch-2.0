@@ -13,7 +13,7 @@ if ($this->getUser()) {
 
 <legend>
     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a> 
-    <i class="forum fa fa-chevron-right"></i> <?=$this->getTrans('showNewPosts') ?>
+    <i class="forum fa fa-chevron-right"></i> <?=$this->getTrans('showUnansweredTopics') ?>
 </legend>
 <div id="forum">
     <div class="forabg">
@@ -32,7 +32,7 @@ if ($this->getUser()) {
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
-                    <?php if (!in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
+                    <?php if ($countPosts -1 == 0): ?>
                         <li class="row bg1">
                             <dl class="icon 
                                 <?php if ($this->getUser()): ?>
@@ -100,9 +100,6 @@ if ($this->getUser()) {
                                 </dd>
                             </dl>
                         </li>
-                    <?php else: ?>
-                        <li class="row text-center"><?=$this->getTrans('noNewThreads') ?></li>
-                        <?php break; ?>
                     <?php endif; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
