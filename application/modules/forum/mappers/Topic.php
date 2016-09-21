@@ -54,7 +54,7 @@ class Topic extends \Ilch\Mapper
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
                 FROM `[prefix]_forum_topics`
-                GROUP by type, id
+                GROUP by type, `id`, `topic_id`, `topic_title`, `topic_description`, `text`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
                 ORDER by type DESC, id DESC';
         if ($pagination != null) {
             $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
