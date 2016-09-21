@@ -55,15 +55,25 @@
         </div>
     <?php endif; ?>
 
-    <legend>SEO</legend>
+    <legend><?=$this->getTrans('seo') ?></legend>
     <div class="form-group">
-        <label for="descriptionInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('description') ?>:
+        <label for="description" class="col-lg-2 control-label">
+            <?=$this->getTrans('seoDescription') ?>:
         </label>
         <div class="col-lg-8">
             <textarea class="form-control"
-                      id="descriptionInput"
+                      id="description"
                       name="description"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } ?></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="keywords" class="col-lg-2 control-label">
+            <?=$this->getTrans('seoKeywords') ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control"
+                      id="keywords"
+                      name="keywords"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getKeywords()); } ?></textarea>
         </div>
     </div>
     <div class="form-group">

@@ -90,6 +90,7 @@ class Page extends \Ilch\Controller\Admin
             }
 
             $model->setDescription($this->getRequest()->getPost('description'));
+            $model->setKeywords($this->getRequest()->getPost('keywords'));
             $model->setTitle($this->getRequest()->getPost('pageTitle'));
             $model->setContent($this->getRequest()->getPost('pageContent'));
             

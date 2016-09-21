@@ -89,29 +89,6 @@ if ($this->get('article') != '') {
             </div>
         </div>
     <?php endif; ?>
-    <legend>SEO</legend>
-    <div class="form-group">
-        <label for="description" class="col-lg-2 control-label">
-            <?=$this->getTrans('description') ?>:
-        </label>
-        <div class="col-lg-4">
-            <textarea class="form-control" 
-                      id="description" 
-                      name="description"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getDescription()); } ?></textarea>
-        </div>
-    </div>
-    <div class="form-group <?=in_array('permaLink', $this->get('errorFields')) ? 'has-error' : '' ?>">
-        <label for="permaLink" class="col-lg-2 control-label">
-            <?=$this->getTrans('permaLink') ?>:
-        </label>
-        <div class="col-lg-4">
-            <?=$this->getUrl() ?>/index.php/
-            <input type="text"
-                   id="permaLink"
-                   name="permaLink"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
-        </div>
-    </div>
     <legend><?=$this->getTrans('options') ?></legend>
     <div class="form-group <?=in_array('image', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
@@ -145,6 +122,39 @@ if ($this->get('article') != '') {
         </label>
         <div class="col-lg-4">
             <a id="preview" class="btn btn-default"><?=$this->getTrans('show') ?></a>
+        </div>
+    </div>
+    <legend><?=$this->getTrans('seo') ?></legend>
+    <div class="form-group">
+        <label for="description" class="col-lg-2 control-label">
+            <?=$this->getTrans('seoDescription') ?>:
+        </label>
+        <div class="col-lg-4">
+            <textarea class="form-control" 
+                      id="description" 
+                      name="description"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getDescription()); } ?></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="keywords" class="col-lg-2 control-label">
+            <?=$this->getTrans('seoKeywords') ?>:
+        </label>
+        <div class="col-lg-4">
+            <textarea class="form-control" 
+                      id="keywords" 
+                      name="keywords"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getKeywords()); } ?></textarea>
+        </div>
+    </div>
+    <div class="form-group <?=in_array('permaLink', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <label for="permaLink" class="col-lg-2 control-label">
+            <?=$this->getTrans('permaLink') ?>:
+        </label>
+        <div class="col-lg-4">
+            <?=$this->getUrl() ?>/index.php/
+            <input type="text"
+                   id="permaLink"
+                   name="permaLink"
+                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
         </div>
     </div>
     <?php

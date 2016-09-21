@@ -23,6 +23,7 @@ class Page extends \Ilch\Controller\Frontend
             $this->getLayout()->getTitle()
                     ->add($page->getTitle());
             $this->getLayout()->set('metaDescription', $page->getDescription());
+            $this->getLayout()->set('metaKeywords', $page->getKeywords());
             $this->getLayout()->getHmenu()
                     ->add($page->getTitle(), $page->getPerma());
 

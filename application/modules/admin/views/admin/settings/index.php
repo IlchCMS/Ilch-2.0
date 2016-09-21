@@ -145,24 +145,24 @@
 
     <legend><?=$this->getTrans('seo') ?></legend>
     <div class="form-group">
-        <label for="pageTitleInput" class="col-lg-2 control-label">
+        <label for="pageTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
         <div class="col-lg-8">
             <input type="text"
                    class="form-control"
-                   id="pageTitleInput"
+                   id="pageTitle"
                    name="pageTitle"
                    value="<?=$this->escape($this->get('pageTitle')) ?>" />
         </div>
     </div>
     <div class="form-group">
-        <label for="descriptionInput" class="col-lg-2 control-label">
-            <?=$this->getTrans('description') ?>:
+        <label for="description" class="col-lg-2 control-label">
+            <?=$this->getTrans('seoDescription') ?>:
         </label>
         <div class="col-lg-8">
             <textarea class="form-control"
-                      id="descriptionInput"
+                      id="description"
                       name="description"><?=$this->escape($this->get('description')) ?></textarea>
         </div>
     </div>

@@ -44,6 +44,13 @@ class Page extends \Ilch\Model
     protected $description;
 
     /**
+     * The keywords of the page.
+     *
+     * @var string
+     */
+    protected $keywords;
+
+    /**
      * The locale of the page.
      *
      * @var string
@@ -155,6 +162,26 @@ class Page extends \Ilch\Model
     public function setDescription($description)
     {
         $this->description = (string)$description;
+    }
+
+    /**
+     * Gets the keywords of the page.
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Sets the keywords of the page.
+     *
+     * @param string $keywords
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = (string)$keywords;
     }
 
     /**

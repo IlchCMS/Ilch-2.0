@@ -73,7 +73,6 @@ return [
     'off' => 'Off',
     'yes' => 'Yes',
     'no' => 'No',
-    'seo' => 'SEO',
     'httpOrMedia' => 'http:// or Media',
     'favicon' => 'Favicon',
     'appleIcon' => 'Apple Touch Icon',

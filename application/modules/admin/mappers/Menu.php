@@ -9,9 +9,6 @@ namespace Modules\Admin\Mappers;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
 
-/**
- * The menu mapper class.
- */
 class Menu extends \Ilch\Mapper
 {
     /**

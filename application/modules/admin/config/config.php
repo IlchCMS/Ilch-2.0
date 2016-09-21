@@ -117,6 +117,7 @@ class Config extends \Ilch\Config\Install
                   `page_id` INT(11) NOT NULL,
                   `content` MEDIUMTEXT NOT NULL,
                   `description` MEDIUMTEXT NOT NULL,
+                  `keywords` MEDIUMTEXT NOT NULL,
                   `locale` VARCHAR(255) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `perma` VARCHAR(255) NOT NULL

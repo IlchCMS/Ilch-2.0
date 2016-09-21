@@ -109,6 +109,7 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getTitle()
                     ->add($article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());
+            $this->getLayout()->set('metaKeywords', $article->getKeywords());
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index'])

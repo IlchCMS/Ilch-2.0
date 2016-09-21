@@ -66,6 +66,13 @@ class Article extends \Ilch\Model
      * @var string
      */
     protected $description;
+    
+    /**
+     * The keywords of the article.
+     *
+     * @var string
+     */
+    protected $keywords;
 
     /**
      * The locale of the article.
@@ -243,7 +250,7 @@ class Article extends \Ilch\Model
     }
 
     /**
-     * Gets the description of the page.
+     * Gets the description of the article.
      *
      * @return string
      */
@@ -253,13 +260,33 @@ class Article extends \Ilch\Model
     }
 
     /**
-     * Sets the description of the page.
+     * Sets the description of the article.
      *
      * @param string $description
      */
     public function setDescription($description)
     {
         $this->description = (string)$description;
+    }
+
+    /**
+     * Gets the keywords of the article.
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Sets the keywords of the article.
+     *
+     * @param string $keywords
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = (string)$keywords;
     }
 
     /**

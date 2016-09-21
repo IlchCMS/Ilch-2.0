@@ -8,9 +8,6 @@ namespace Modules\Admin\Mappers;
 
 use Modules\Admin\Models\Box as BoxModel;
 
-/**
- * The box mapper class.
- */
 class Box extends \Ilch\Mapper
 {
     /**

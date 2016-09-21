@@ -8,15 +8,12 @@ namespace Modules\Admin\Mappers;
 
 use Modules\Admin\Models\Page as PageModel;
 
-/**
- * The page mapper class.
- */
 class Page extends \Ilch\Mapper
 {
     /**
      * Get page lists for overview.
      *
-     * @param  string $locale
+     * @param string $locale
      * @return PageModel[]|array
      */
     public function getPageList($locale = '')
@@ -24,7 +21,7 @@ class Page extends \Ilch\Mapper
         $sql = 'SELECT pc.title, pc.perma, p.id FROM `[prefix]_pages` as p
                 LEFT JOIN `[prefix]_pages_content` as pc ON p.id = pc.page_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY p.id,pc.title, pc.perma';
+                GROUP BY p.id, pc.title, pc.perma';
         $pageArray = $this->db()->queryArray($sql);
 
         if (empty($pageArray)) {
@@ -46,8 +43,8 @@ class Page extends \Ilch\Mapper
     /**
      * Returns page model found by the key.
      *
-     * @param  string              $id
-     * @param  string              $locale
+     * @param string $id
+     * @param string $locale
      * @return PageModel|null
      */
     public function getPageByIdLocale($id, $locale = '')
@@ -64,6 +61,7 @@ class Page extends \Ilch\Mapper
         $pageModel = new PageModel();
         $pageModel->setId($pageRow['id']);
         $pageModel->setDescription($pageRow['description']);
+        $pageModel->setKeywords($pageRow['keywords']);
         $pageModel->setTitle($pageRow['title']);
         $pageModel->setContent($pageRow['content']);
         $pageModel->setLocale($pageRow['locale']);
@@ -107,6 +105,7 @@ class Page extends \Ilch\Mapper
                     ->values([
                         'title' => $page->getTitle(),
                         'description' => $page->getDescription(),
+                        'keywords' => $page->getKeywords(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma()
                     ])
@@ -120,6 +119,7 @@ class Page extends \Ilch\Mapper
                     ->values([
                         'page_id' => $page->getId(),
                         'description' => $page->getDescription(),
+                        'keywords' => $page->getKeywords(),
                         'title' => $page->getTitle(),
                         'content' => $page->getContent(),
                         'perma' => $page->getPerma(),
@@ -137,6 +137,7 @@ class Page extends \Ilch\Mapper
                 ->values([
                     'page_id' => $pageId,
                     'description' => $page->getDescription(),
+                    'keywords' => $page->getKeywords(),
                     'title' => $page->getTitle(),
                     'content' => $page->getContent(),
                     'perma' => $page->getPerma(),

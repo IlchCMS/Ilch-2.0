@@ -104,6 +104,7 @@ class Index extends \Ilch\Controller\Admin
             'title' => '',
             'content' => '',
             'description' => '',
+            'keywords' => '',
             'permaLink' => '',
             'image' => '',
             'imageSource' => '',
@@ -126,6 +127,7 @@ class Index extends \Ilch\Controller\Admin
                 'title' => $this->getRequest()->getPost('title'),
                 'content' => $this->getRequest()->getPost('content'),
                 'description' => $this->getRequest()->getPost('description'),
+                'keywords' => $this->getRequest()->getPost('keywords'),
                 'permaLink' => $permaLink,
                 'image' => $image,
                 'imageSource' => $this->getRequest()->getPost('imageSource'),
@@ -156,6 +158,7 @@ class Index extends \Ilch\Controller\Admin
                 $model->setCatId($post['cats']);
                 $model->setAuthorId($this->getUser()->getId());
                 $model->setDescription($post['description']);
+                $model->setKeywords($post['keywords']);
                 $model->setTitle($post['title']);
                 $model->setContent($post['content']);
                 $model->setPerma($post['permaLink']);

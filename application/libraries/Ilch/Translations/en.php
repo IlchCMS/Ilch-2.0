@@ -31,6 +31,11 @@ return [
     'saveSuccess' => 'Saved successful',
     'deleteSuccess' => 'Delete successful',
 
+    // seo
+    'seo' => 'SEO',
+    'seoDescription' => 'Description',
+    'seoKeywords' => 'Keywords',
+
     // comment module
     'iLike' => 'I like this',
     'notLike' => 'I dislike this',

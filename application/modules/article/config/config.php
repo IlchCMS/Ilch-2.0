@@ -50,6 +50,7 @@ class Config extends \Ilch\Config\Install
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   `content` MEDIUMTEXT NOT NULL,
                   `description` MEDIUMTEXT NULL DEFAULT NULL,
+                  `keywords` MEDIUMTEXT NULL DEFAULT NULL,
                   `locale` VARCHAR(255) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `perma` VARCHAR(255) NULL DEFAULT NULL,
