@@ -24,7 +24,7 @@ class Article extends \Ilch\Mapper
                 ->from(['p' => 'articles'])
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id'])
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source'])
                 ->order(['date_created' => 'DESC']);
 
         if ($pagination !== null) {
@@ -77,7 +77,7 @@ class Article extends \Ilch\Mapper
                 ->from(['p' => 'articles'])
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source'])
                 ->where(['p.cat_id' => $catId, 'pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id'])
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source'])
                 ->order(['id' => 'DESC']);
 
         if ($pagination !== null) {
@@ -134,7 +134,7 @@ class Article extends \Ilch\Mapper
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', [])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo])
-            ->group(['p.id' => 'DESC']);
+            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.locale', 'pc.title', 'pc.perma', 'pc.article_img', 'pc.article_img_source']);
 
         $result = $select->execute();
         $articleArray = $result->fetchRows();
@@ -189,9 +189,9 @@ class Article extends \Ilch\Mapper
      */
     public function getArticleDateList($limit = null)
     {
-        $sql = 'SELECT *
+        $sql = 'SELECT `id`, `date_created`
                 FROM `[prefix]_articles`
-                GROUP BY YEAR(date_created), MONTH(date_created)
+                GROUP BY YEAR(date_created), MONTH(date_created), `id`,`date_created`
                 ORDER BY `date_created` DESC';
 
         if ($limit !== null) {
@@ -230,7 +230,7 @@ class Article extends \Ilch\Mapper
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source'])
                 ->join(['m' => 'media'], 'pc.article_img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id'])
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.title', 'pc.perma', 'pc.content', 'pc.article_img', 'pc.article_img_source', 'm.url_thumb', 'm.url'])
                 ->order(['date_created' => 'DESC']);
 
         if ($limit !== null) {

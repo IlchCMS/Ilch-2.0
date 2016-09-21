@@ -99,6 +99,9 @@ class Mysql
         }
 
         $this->conn->set_charset('utf8');
+
+        $mode = "SET SESSION sql_mode = 'ONLY_FULL_GROUP_BY'";
+        mysqli_query($this->conn, $mode);
     }
 
     /**

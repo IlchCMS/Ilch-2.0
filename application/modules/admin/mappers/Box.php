@@ -24,7 +24,8 @@ class Box extends \Ilch\Mapper
         $sql = 'SELECT bc.title, b.id FROM [prefix]_boxes as b
                 LEFT JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
                 AND bc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY b.id';
+                GROUP BY b.id, bc.title
+                ORDER by b.id DESC';
         $boxArray = $this->db()->queryArray($sql);
 
         if (empty($boxArray)) {

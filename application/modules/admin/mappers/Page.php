@@ -24,7 +24,7 @@ class Page extends \Ilch\Mapper
         $sql = 'SELECT pc.title, pc.perma, p.id FROM `[prefix]_pages` as p
                 LEFT JOIN `[prefix]_pages_content` as pc ON p.id = pc.page_id
                     AND pc.locale = "'.$this->db()->escape($locale).'"
-                GROUP BY p.id';
+                GROUP BY p.id,pc.title, pc.perma';
         $pageArray = $this->db()->queryArray($sql);
 
         if (empty($pageArray)) {

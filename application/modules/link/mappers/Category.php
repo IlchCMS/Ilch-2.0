@@ -27,7 +27,7 @@ class Category extends \Ilch\Mapper
             $sql .= ' AND lc.`'.$key.'` = "'.$this->db()->escape($value).'"';
         }
 
-        $sql .= 'GROUP BY lc.id';
+        $sql .= 'GROUP BY `lc`.`id`, `lc`.`parent_id`, `lc`.`pos`, `lc`.`name`, `lc`.`desc`';
         $categoryArray = $this->db()->queryArray($sql);
 
         if (empty($categoryArray)) {
