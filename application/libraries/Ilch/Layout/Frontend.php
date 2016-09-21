@@ -61,6 +61,22 @@ class Frontend extends Base
     }
  
     /**
+     * Gets page keywords from meta settings.
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        $metaKeywords = $this->get('metaKeywords');
+
+        if (!empty($metaKeywords)) {
+            return $metaKeywords;
+        }
+
+        return '';
+    }
+ 
+    /**
      * Gets page description from config or meta settings.
      *
      * @return string
@@ -142,7 +158,8 @@ class Frontend extends Base
         $html = '<meta charset="utf-8">
                 <title>'.$this->escape($this->getTitle()).'</title>
                 <link rel="icon" href="'.$this->getBaseUrl($this->escape($this->getFavicon())).'" type="image/x-icon">
-                <meta name="description" content="'.$this->escape($this->getDescription()).'">
+                <meta name="keywords" content="'.$this->escape($this->getKeywords()).'" />
+                <meta name="description" content="'.$this->escape($this->getDescription()).'" />
                 <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">';
 
         $html .= '<link href="'.$this->getStaticUrl('css/font-awesome.min.css').'" rel="stylesheet">
