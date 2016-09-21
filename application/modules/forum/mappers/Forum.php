@@ -245,7 +245,8 @@ class Forum extends \Ilch\Mapper
         $sql = 'SELECT COUNT(`p`.`topic_id`), `t`.`id`, `t`.`topic_id`, `p`.`id`, `p`.`topic_id`
                 FROM `[prefix]_forum_topics` AS `t`
                 LEFT JOIN `[prefix]_forum_posts` AS `p` ON `t`.`id` = `p`.`topic_id`
-                WHERE `t`.`topic_id` = '.$id;
+                WHERE `t`.`topic_id` = '.$id.'
+                GROUP BY `t`.`id`, `t`.`topic_id`, `p`.`id`, `p`.`topic_id`';
 
         $topics = $this->db()->queryCell($sql);
 
