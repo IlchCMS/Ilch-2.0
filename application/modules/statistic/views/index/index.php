@@ -223,9 +223,8 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                 <div class="list-group">
                     <?php foreach ($this->get('statisticHourList') as $statisticList): ?>
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
-                        <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><?=$date->format("H") ?>:00 <?=$this->getTrans('clock') ?></strong>
+                            <strong><?=$statisticList->getDate() ?>:00 <?=$this->getTrans('clock') ?></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -408,7 +407,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
                                     <?php if ($statisticList->getOS() == 'Windows'): ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS() ?></a>
+                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS().' '.$statisticList->getOSVersion() ?></a>
                                     <?php else: ?>
                                         <?=$statisticList->getOS() ?>
                                     <?php endif; ?>
