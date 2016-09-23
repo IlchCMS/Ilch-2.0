@@ -44,19 +44,6 @@ class ForumTopic extends \Ilch\Model
     protected $author;
 
     /**
-     * Description of the file.
-     *
-     * @var string
-     */
-    protected $topic_desc;
-
-    /**
-     * Description of the file.
-     *
-     * @var string
-     */
-    protected $text;
-    /**
      * Image of the file.
      *
      * @var string
@@ -186,25 +173,6 @@ class ForumTopic extends \Ilch\Model
         return $this->author;
     }
 
-    /**
-     * Gets the file desc.
-     *
-     * @return string
-     */
-    public function getTopicDesc()
-    {
-        return $this->topic_desc;
-    }
-
-    /**
-     * Gets the file desc.
-     *
-     * @return string
-     */
-    public function getText()
-    {
-        return $this->text;
-    }
     /**
      * Gets the file image.
      *
@@ -363,26 +331,6 @@ class ForumTopic extends \Ilch\Model
     public function setTopicImage($topicImage)
     {
         $this->topic_image = (string) $topicImage;
-    }
-
-    /**
-     * Sets the desc.
-     *
-     * @param string $fileDesc
-     */
-    public function setTopicDesc($topicDesc)
-    {
-        $this->topic_desc = (string) $topicDesc;
-    }
-
-    /**
-     * Sets the desc.
-     *
-     * @param string $fileDesc
-     */
-    public function setText($text)
-    {
-        $this->text = (string) $text;
     }
 
     /**

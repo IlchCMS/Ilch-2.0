@@ -43,7 +43,6 @@ class Newtopic extends \Ilch\Controller\Frontend
                 $dateTime = new \Ilch\Date();
 
                 $topicModel->setTopicTitle($this->getRequest()->getPost('topicTitle'));
-                $topicModel->setText($this->getRequest()->getPost('text'));
                 $topicModel->setTopicId($id);
                 $topicModel->setForumId($id);
                 $topicModel->setCat($id);
