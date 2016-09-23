@@ -10,6 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'media',
+        'version' => '1.0',
         'icon_small' => 'fa-th',
         'system_module' => true,
         'languages' => [
@@ -21,7 +22,9 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Media',
                 'description' => 'Here you can manage your media',
             ],
-        ]
+        ],
+        'ilchCore' => '2.0.0',
+        'phpVersion' => '5.6'
     ];
 
     public function install()

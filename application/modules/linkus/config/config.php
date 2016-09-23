@@ -23,7 +23,9 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Link Us',
                 'description' => 'Here you can manage the link us.',
             ],
-        ]
+        ],
+        'ilchCore' => '2.0.0',
+        'phpVersion' => '5.6'
     ];
 
     public function install()

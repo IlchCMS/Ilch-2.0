@@ -23,7 +23,9 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Events',
                 'description' => 'Here you can add and change events.',
             ],
-        ]
+        ],
+        'ilchCore' => '2.0.0',
+        'phpVersion' => '5.6'
     ];
 
     public function install()

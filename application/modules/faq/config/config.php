@@ -23,7 +23,9 @@ class Config extends \Ilch\Config\Install
                 'name' => 'F.A.Q.',
                 'description' => 'Here you can manage your FAQ - Frequently Asked Questions.',
             ],
-        ]
+        ],
+        'ilchCore' => '2.0.0',
+        'phpVersion' => '5.6'
     ];
 
     public function install()
