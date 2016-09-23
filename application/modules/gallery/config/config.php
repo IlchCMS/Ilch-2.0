@@ -23,7 +23,9 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Gallery',
                 'description' => 'Here you can manage the gallery.',
             ],
-        ]
+        ],
+        'ilchCore' => '2.0.0',
+        'phpVersion' => '5.6'
     ];
 
     public function install()
