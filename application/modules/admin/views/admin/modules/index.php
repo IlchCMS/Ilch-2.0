@@ -1,10 +1,13 @@
-<legend><?=$this->getTrans('modulesInstalled') ?></legend>
 <?php
 $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 ?>
-<div class="table-responsive">
+
+<link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
+
+<legend><?=$this->getTrans('modulesInstalled') ?></legend>
+<div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
             <col class="col-lg-2">
@@ -61,16 +64,16 @@ $versionsOfModules = $this->get('versionsOfModules');
                                 }
                             }
                             if (!empty($moduleOnUpdateServerFound) && version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
-                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
-                                        <?=$this->getTokenField() ?>
-                                        <button type="submit"
-                                                class="btn btn-default"
-                                                name="url"
-                                                value="<?=$moduleOnUpdateServerFound->downloadLink ?>"
-                                                title="<?=$this->getTrans('moduleUpdate') ?>">
-                                            <i class="fa fa-refresh"></i>
-                                        </button>
-                                    </form>
+                                <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                                    <?=$this->getTokenField() ?>
+                                    <button type="submit"
+                                            class="btn btn-default"
+                                            name="url"
+                                            value="<?=$moduleOnUpdateServerFound->downloadLink ?>"
+                                            title="<?=$this->getTrans('moduleUpdate') ?>">
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                </form>
                             <?php endif; ?>
                         </td>
                         <td><?=$content['description'] ?></td>
