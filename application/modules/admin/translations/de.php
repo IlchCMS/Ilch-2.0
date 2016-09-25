@@ -119,6 +119,7 @@ return [
     'menuCustomCSS' => 'Benutzerdefinierte CSS',
     'alreadyExists' => 'Bereits vorhanden',
     'layoutDownload' => 'Layout herunterladen',
+    'layoutUpdate' => 'Layout aktualisieren',
     'moduleDownload' => 'Modul herunterladen',
     'moduleUpdate' => 'Modul aktualisieren',
     'rating' => 'Bewertung',

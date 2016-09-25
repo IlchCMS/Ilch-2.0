@@ -1,10 +1,22 @@
 <?php
-$config['name'] = 'Ilch-Clan';
-$config['version'] = '1.0';
-$config['author'] = 'Ilch.de';
-$config['link'] = 'http://ilch.de';
-$config['desc'] = '2 Spalten Clan Layout';
-$config['layouts']['index_full'] = [['module' => 'user', 'controller' => 'panel']]; //only for example
-$config['layouts']['index_full'] = [['module' => 'forum']]; //only for example
-//$config['layouts']['index_full'] = array(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'newentry'));
-//$config['modulekey'] = 'Name of Module';
+namespace Layouts\Clan3Columns\Config;
+
+class Config extends \Ilch\Config\Install
+{
+    public $config = [
+        'name' => 'Ilch-Clan',
+        'version' => '1.0',
+        'author' => 'Ilch.de',
+        'link' => 'http://ilch.de',
+        'desc' => '2 Spalten Clan Layout',
+        'layouts' => ['index_full' => [['module' => 'user', 'controller' => 'panel']]], //only for example
+        'layouts' => ['index_full' => [['module' => 'forum']]] //only for example
+        //'layouts'['index_full'] => array(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'newentry')),
+        //'modulekey' => 'Name of Module'
+    ];
+
+    public function getUpdate()
+    {
+
+    }
+}

@@ -119,6 +119,7 @@ return [
     'menuCustomCSS' => 'Custom CSS',
     'alreadyExists' => 'Already exists',
     'layoutDownload' => 'Download layout',
+    'layoutUpdate' => 'Update layout',
     'moduleDownload' => 'Download module',
     'moduleUpdate' => 'Update module',
     'hits' => 'Hits',

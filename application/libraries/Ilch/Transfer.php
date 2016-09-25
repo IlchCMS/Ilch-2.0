@@ -369,6 +369,9 @@ class Transfer
                 } 
             }
         }
+        zip_close($zipHandle);
+        unlink($this->zipFile);
+        unlink($this->zipFile.'-signature.sig');
         $this->setContent($content);
         return true;
     }
@@ -428,6 +431,7 @@ class Transfer
         }
         $zip->close();
         unlink($this->zipFile);
+        unlink($this->zipFile.'-signature.sig');
         $this->setContent($content);
         return true;
     }
