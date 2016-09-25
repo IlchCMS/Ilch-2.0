@@ -32,12 +32,14 @@
                 <optgroup label="<?=$this->getTrans('layouts') ?>">
                     <?php $layouts = []; ?>
                     <?php foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath): ?>
-                        <?php include_once $layoutPath.'/config/config.php'; ?>
-                        <?php if (empty($config['modulekey'])): ?>
-                            <?php $config['modulekey'] = ''; ?>
+                        <?php
+                        $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\config';
+                        $config = new $configClass($this->getTranslator()); ?>
+                        <?php if (empty($config->config['modulekey'])): ?>
+                            <?php $config->config['modulekey'] = ''; ?>
                         <?php endif; ?>
 
-                        <?php $module = $config['modulekey']; ?>
+                        <?php $module = $config->config['modulekey']; ?>
                         <?php $selected = ''; ?>
                         <?php if ($this->get('startPage') == 'layouts_'.$module): ?>
                             <?php $selected = 'selected="selected"'; ?>
