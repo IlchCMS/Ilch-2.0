@@ -57,6 +57,7 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
 
         $this->getView()->set('modules', $moduleMapper->getModules());
+        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
     }
 
     public function notinstalledAction()
