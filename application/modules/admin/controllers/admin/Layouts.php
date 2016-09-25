@@ -58,25 +58,29 @@ class Layouts extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
 
         $layouts = [];
+
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
+            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\config';
+            $config = new $configClass($this->getTranslator());
             $model = new LayoutModel();
             $model->setKey(basename($layoutPath));
-            include_once $layoutPath.'/config/config.php';
-            $model->setName($config['name']);
-            $model->setVersion($config['version']);
-            $model->setAuthor($config['author']);
-            if (!empty($config['link'])) {
-                $model->setLink($config['link']);
+            $model->setName($config->config['name']);
+            $model->setVersion($config->config['version']);
+            $model->setAuthor($config->config['author']);
+            if (!empty($config->config['link'])) {
+                $model->setLink($config->config['link']);
             }
-            $model->setDesc($config['desc']);
-            if (!empty($config['modulekey'])) {
-                $model->setModulekey($config['modulekey']);
+            $model->setDesc($config->config['desc']);
+            if (!empty($config->config['modulekey'])) {
+                $model->setModulekey($config->config['modulekey']);
             }
             $layouts[] = $model;
+            $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
         }
 
         $this->getView()->set('defaultLayout', $this->getConfig()->get('default_layout'));
         $this->getView()->set('layouts', $layouts);
+        $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
     }
 
     public function defaultAction()
@@ -120,10 +124,45 @@ class Layouts extends \Ilch\Controller\Admin
         }
 
         foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
+            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\config';
+            $config = new $configClass($this->getTranslator());
+            $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
             $layoutsDir[] = basename($layoutPath);
         }
 
+        $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
         $this->getView()->set('layouts', $layoutsDir);
+    }
+
+    public function updateAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $transfer = new Transfer();
+            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
+            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+
+            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                // Certificate is missing or expired.
+                $this->addMessage('certMissingOrExpired', 'danger');
+                return;
+            }
+
+            $transfer->save();
+
+            $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
+            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
+            if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
+                // Verification failed. Drop the potentially bad files.
+                unlink($transfer->getZipFile());
+                unlink($transfer->getZipFile().'-signature.sig');
+                $this->addMessage('layoutVerificationFailed', 'danger');
+                return;
+            }
+
+            $transfer->update();
+            $this->addMessage('updateSuccess');
+        }
     }
 
     public function showAction()

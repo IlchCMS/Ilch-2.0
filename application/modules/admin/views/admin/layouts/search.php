@@ -3,52 +3,64 @@
 <legend><?=$this->getTrans('search') ?></legend>
 <?php
 $layoutsList = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
-$layouts = json_decode($layoutsList);
+$layoutsOnUpdateServer = json_decode($layoutsList);
+$versionsOfLayouts = $this->get('versionsOfLayouts');
 
-if (empty($layouts)) {
+if (empty($layoutsOnUpdateServer)) {
     echo $this->getTrans('noLayoutsAvailable');
     return;
 }
 
-foreach ($layouts as $layout): ?>
+foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
     <div id="layouts" class="col-lg-3 col-sm-6">
         <div class="panel panel-ilch">
             <div class="panel-heading">
                 <div class="clearfix">
                     <div class="pull-left">
-                        <b><?=$this->escape($layout->name) ?></b>
+                        <b><?=$this->escape($layoutOnUpdateServer->name) ?></b>
                     </div>
                     <div class="pull-right">
-                        <?php if ($layout->link != ''): ?>
-                            <a href="<?=$layout->link ?>" alt="<?=$this->escape($layout->author) ?>" title="<?=$this->escape($layout->author) ?>" target="_blank"><i><?=$this->escape($layout->author) ?></i></a>
+                        <?php if ($layoutOnUpdateServer->link != ''): ?>
+                            <a href="<?=$layoutOnUpdateServer->link ?>" alt="<?=$this->escape($layoutOnUpdateServer->author) ?>" title="<?=$this->escape($layoutOnUpdateServer->author) ?>" target="_blank"><i><?=$this->escape($layoutOnUpdateServer->author) ?></i></a>
                         <?php else: ?>
-                            <i><?=$this->escape($layout->author) ?></i>
+                            <i><?=$this->escape($layoutOnUpdateServer->author) ?></i>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
             <div class="panel-body">
-                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layout->id]); ?>" title="<?=$this->getTrans('info') ?>">
-                    <img src="<?=$layout->thumbs[0]->img ?>" alt="<?=$this->escape($layout->name) ?>" />
+                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                    <img src="<?=$layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
                 </a>
             </div>
             <div class="panel-footer">
                 <div class="clearfix">
                     <div class="pull-left">
                         <?php
-                        $filename = basename($layout->downloadLink);
+                        $filename = basename($layoutOnUpdateServer->downloadLink);
                         $filename = strstr($filename,'.',true);
-                        if (in_array($filename, $this->get('layouts'))): ?>
+                        if (in_array($filename, $this->get('layouts')) && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '>=')): ?>
                             <span class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check text-success"></i>
                             </span>
+                        <?php elseif (in_array($filename, $this->get('layouts')) && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '<')): ?>
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                                <?=$this->getTokenField() ?>
+                                <button type="submit"
+                                        class="btn btn-default"
+                                        name="url"
+                                        value="<?=$layoutOnUpdateServer->downloadLink ?>"
+                                        title="<?=$this->getTrans('layoutUpdate') ?>">
+                                    <i class="fa fa-refresh"></i>
+                                </button>
+                            </form>
                         <?php else: ?>
                             <form method="POST" action="">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
                                         name="url"
-                                        value="<?=$layout->downloadLink ?>"
+                                        value="<?=$layoutOnUpdateServer->downloadLink ?>"
                                         title="<?=$this->getTrans('layoutDownload') ?>">
                                     <i class="fa fa-download"></i>
                                 </button>
@@ -56,7 +68,7 @@ foreach ($layouts as $layout): ?>
                         <?php endif; ?>
                     </div>
                     <div class="pull-right">
-                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layout->id]); ?>" title="<?=$this->getTrans('info') ?>">
+                        <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
                             <span class="btn btn-default">
                                 <i class="fa fa-info text-info"></i>
                             </span>
