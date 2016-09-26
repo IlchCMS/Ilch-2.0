@@ -8,7 +8,7 @@ Ilch 2.0 ist der direkte Nachfolger der Ilch Versionen 1.1.
 
 ### Installation der Entwicklerversion
 - Dateien in das Webverzeichnis legen
-- [Composer installieren](https://getcomposer.org/download/) (falls noch nicht geschehen)
+- [Composer installieren](https://getcomposer.org/download/) (falls noch nicht geschehen) (Alternativ development/bin/setup.sh aufrufen)
 - `composer install` ausführen, um die Abhängigkeiten zu laden
 - Aufrufen der "/index.php"
 - Den Bildschirmanweisungen folgen

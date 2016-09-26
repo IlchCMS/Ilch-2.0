@@ -5,11 +5,11 @@ php:
   - 7.0
 
 install:
-  - bash development/bin/setup.sh travis
+  - cp development/travis/config.php tests/config.php
   - mysql -e 'create database ilch2_test;'
+  - composer install
 
-
-script: cd tests && ../development/bin/phpunit
+script: cd tests && ../vendor/bin/phpunit
 
 notifications:
   webhooks:
