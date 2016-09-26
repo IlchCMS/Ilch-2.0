@@ -8,6 +8,7 @@ namespace Modules\Forum\Controllers;
 
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
+use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\User\Mappers\User as UserMapper;
 
 class Showactivetopics extends \Ilch\Controller\Frontend
@@ -16,6 +17,7 @@ class Showactivetopics extends \Ilch\Controller\Frontend
     {
         $forumMapper = new ForumMapper();
         $topicMapper = new TopicMapper();
+        $postMapper = new PostMapper();
         $pagination = new \Ilch\Pagination();
         $userMapper = new UserMapper();
 
@@ -47,8 +49,9 @@ class Showactivetopics extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('showActiveTopics'), ['action' => 'index']);
 
-        $this->getView()->set('topicMapper', $topicMapper);
         $this->getView()->set('forumMapper', $forumMapper);
+        $this->getView()->set('topicMapper', $topicMapper);
+        $this->getView()->set('postMapper', $postMapper);
         $this->getView()->set('topics', $topicMapper->getTopics($pagination));
         $this->getView()->set('groupIdsArray', $groupIdsArray);
         $this->getView()->set('pagination', $pagination);

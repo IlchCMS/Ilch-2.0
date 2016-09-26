@@ -11,24 +11,25 @@ function rec($item, $forumMapper, $obj)
         $class = 'mjs-nestedSortable-leaf';
     }
 
-    echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
-    echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
-                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
-                    <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
-                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
-                    <input type="hidden" class="hidden_read_access" name="items['.$item->getId().'][readAccess]" value="'.$item->getReadAccess().'" />
-                    <input type="hidden" class="hidden_replay_access" name="items['.$item->getId().'][replayAccess]" value="'.$item->getReplayAccess().'" />
-                    <input type="hidden" class="hidden_create_access" name="items['.$item->getId().'][createAccess]" value="'.$item->getCreateAccess().'" />
-                    <span></span>
-                </span>
-                <span class="title">'.$item->getTitle().'</span>
-                <span class="item_delete">
-                    <i class="fa fa-times-circle"></i>
-                </span><span class="item_edit">
-                    <i class="fa fa-edit"></i>
-                </span>
-            </div>';
+    echo '<li id="list_'.$item->getId().'" class="'.$class.'">
+        <div><span class="disclose"><i class="fa fa-minus-circle"></i>
+            <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
+            <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$item->getTitle().'" />
+            <input type="hidden" class="hidden_desc" name="items['.$item->getId().'][desc]" value="'.$item->getDesc().'" />
+            <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
+            <input type="hidden" class="hidden_prefix" name="items['.$item->getId().'][prefix]" value="'.$item->getPrefix().'" />
+            <input type="hidden" class="hidden_read_access" name="items['.$item->getId().'][readAccess]" value="'.$item->getReadAccess().'" />
+            <input type="hidden" class="hidden_replay_access" name="items['.$item->getId().'][replayAccess]" value="'.$item->getReplayAccess().'" />
+            <input type="hidden" class="hidden_create_access" name="items['.$item->getId().'][createAccess]" value="'.$item->getCreateAccess().'" />
+            <span></span>
+        </span>
+        <span class="title">'.$item->getTitle().'</span>
+        <span class="item_delete">
+            <i class="fa fa-times-circle"></i>
+        </span><span class="item_edit">
+            <i class="fa fa-edit"></i>
+        </span>
+    </div>';
 
     if (!empty($subItems)) {
         echo '<ol>';
@@ -44,7 +45,7 @@ function rec($item, $forumMapper, $obj)
 }
 ?>
 
-<form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]); ?>">
+<form class="form-horizontal" id="forumForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]); ?>">
     <?=$this->getTokenField(); ?>
     <legend><?=$this->getTrans('forum'); ?></legend>
     <div class="col-lg-6">
@@ -129,13 +130,14 @@ $(document).ready (
             isTree: true,
             expandOnHover: 700,
             startCollapsed: false,
-            protectRoot:true,
+            protectRoot: true
         });
+
         $('.disclose').on('click', function () {
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
             $(this).find('i').toggleClass('fa-minus-circle').toggleClass('fa-plus-circle');
         });
-        $('#downloadsForm').submit (
+        $('#forumForm').submit (
             function () {
                 $('#hiddenMenu').val(JSON.stringify($('.sortable').nestedSortable('toArray', {startDepthCount: 0})));
             }
@@ -144,7 +146,7 @@ $(document).ready (
             $(this).closest('li').remove();
         });
 
-        $('#downloadsForm').on('change', '#type', function() {
+        $('#forumForm').on('change', '#type', function() {
             var options = '';
 
             $('#sortable').find('li').each(function() {
@@ -159,23 +161,25 @@ $(document).ready (
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
+            menuHtml = '<div class="form-group"><label for="menukey" class="col-lg-3 control-label"><?=$this->getTrans('menuSelection') ?></label>\n\
                         <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>\n\
-                        <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('see') ?></label>\n\
+                        <div class="form-group"><label for="prefix" class="col-lg-3 control-label"><?=$this->getTrans('prefix') ?></label>\n\
+                        <div class="col-lg-6"><input type="text" class="form-control" id="prefix"></div></div>\n\
+                        <div class="form-group"><label for="assignedGroupsRead" class="col-lg-3 control-label"><?=$this->getTrans('see') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsRead" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
-                        <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
+                        <div class="form-group"><label for="assignedGroupsReplay" class="col-lg-3 control-label"><?=$this->getTrans('answer') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsReplay" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
                         <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>\n\
                         <?php endforeach; ?>\n\
                         </select></div></div>\n\
-                        <div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
+                        <div class="form-group"><label for="assignedGroupsCreate" class="col-lg-3 control-label"><?=$this->getTrans('create') ?></label>\n\
                         <div class="col-lg-6"><select class="chosen-select form-control" id="assignedGroupsCreate" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>\n\
                         \n\
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>\n\
@@ -185,8 +189,16 @@ $(document).ready (
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
-             } else if ($(this).val() == '1') {
+            } else if ($(this).val() == '1') {
                 $('.dyn').html(menuHtml);
+                $('#prefix').tokenfield();
+                $('#prefix').on('tokenfield:createtoken', function (event) {
+                    var existingTokens = $(this).tokenfield('getTokens');
+                    $.each(existingTokens, function(index, token) {
+                        if (token.value === event.attrs.value)
+                            event.preventDefault();
+                    });
+                });
                 $('#assignedGroupsRead').chosen();
                 $('#assignedGroupsRead_chosen').css('width', '100%'); // Workaround for chosen resize bug.
                 $('#assignedGroupsReplay').chosen();
@@ -196,26 +208,22 @@ $(document).ready (
             }
         });
 
-            $('#downloadsForm').on('click', '#menuItemAdd', function () {
-                    if ($('#title').val() == '') {
-                        alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
-                        return;
-                    }
+        $('#forumForm').on('click', '#menuItemAdd', function () {
+            if ($('#title').val() == '') {
+                alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
+                return;
+            }
 
             append = '#sortable';
-
             if ($('#type').val() != 0 && $('#menukey').val() != 0 ) {
                 id = $('#menukey').val();
-
                 if ($('#sortable #'+id+' ol').length > 0) {
-
                 } else {
                     $('<ol></ol>').appendTo('#sortable #'+id);
                 }
 
                 if (!isNaN(id)) {
                     append = '#sortable #list_'+id+' ol';
-
                     if ($(append).length == 0) {
                         $('<ol></ol>').appendTo('#sortable #list_'+id);
                     }
@@ -225,43 +233,43 @@ $(document).ready (
                     }
                     append = '#sortable #'+id+' ol';
                 }
-
             }
 
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
-                    +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
-                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
-                    +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
-                    +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
-                    +'<input type="hidden" class="hidden_read_access" name="items[tmp_'+itemId+'][readAccess]" value="'+$('#assignedGroupsRead').val()+'" />'
-                    +'<input type="hidden" class="hidden_replay_access" name="items[tmp_'+itemId+'][replayAccess]" value="'+$('#assignedGroupsReplay').val()+'" />'
-                    +'<input type="hidden" class="hidden_create_access" name="items[tmp_'+itemId+'][createAccess]" value="'+$('#assignedGroupsCreate').val()+'" />'
-                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span></div></li>').appendTo(append);
+                +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
+                +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
+                +'<input type="hidden" class="hidden_desc" name="items[tmp_'+itemId+'][desc]" value="'+$('#desc').val()+'" />'
+                +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
+                +'<input type="hidden" class="hidden_prefix" name="items[tmp_'+itemId+'][prefix]" value="'+$('#prefix').val()+'" />'
+                +'<input type="hidden" class="hidden_read_access" name="items[tmp_'+itemId+'][readAccess]" value="'+$('#assignedGroupsRead').val()+'" />'
+                +'<input type="hidden" class="hidden_replay_access" name="items[tmp_'+itemId+'][replayAccess]" value="'+$('#assignedGroupsReplay').val()+'" />'
+                +'<input type="hidden" class="hidden_create_access" name="items[tmp_'+itemId+'][createAccess]" value="'+$('#assignedGroupsCreate').val()+'" />'
+                +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
-            }
-        );
+        });
 
         $('.sortable').on('click', '.item_edit', function() {
-
             $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
-                               <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
+                                <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
             $('#title').val($(this).parent().find('.hidden_title').val());
             $('#desc').val($(this).parent().find('.hidden_desc').val());
             $('#type').val($(this).parent().find('.hidden_type').val());
             $('#type').change();
+            $('#prefix').val($(this).parent().find('.hidden_prefix').val());
+            $('#prefix').tokenfield('setTokens', $(this).parent().find('.hidden_prefix').val());
 
-            $.each( $(this).parent().find('.hidden_read_access').val().split(","), function(index, element) {
+            $.each($(this).parent().find('.hidden_read_access').val().split(","), function(index, element) {
                 $('#assignedGroupsRead > option[value=' + element + ']').prop("selected", true);
              });
             $('#assignedGroupsRead').trigger("chosen:updated");
 
-            $.each( $(this).parent().find('.hidden_replay_access').val().split(","), function(index, element) {
+            $.each($(this).parent().find('.hidden_replay_access').val().split(","), function(index, element) {
                 $('#assignedGroupsReplay > option[value=' + element + ']').prop("selected", true);
              });
             $('#assignedGroupsReplay').trigger("chosen:updated");
 
-            $.each( $(this).parent().find('.hidden_create_access').val().split(","), function(index, element) {
+            $.each($(this).parent().find('.hidden_create_access').val().split(","), function(index, element) {
                 $('#assignedGroupsCreate > option[value=' + element + ']').prop("selected", true);
              });
             $('#assignedGroupsCreate').trigger("chosen:updated");
@@ -269,27 +277,26 @@ $(document).ready (
             //$('#assignedGroupsReplay').val($(this).parent().find('.hidden_replay_access').val());
             //$('#assignedGroupsCreate').val($(this).parent().find('.hidden_create_access').val());
             $('#id').val($(this).closest('li').attr('id'));
-
         });
 
-        $('#downloadsForm').on('click', '#menuItemEdit', function () {
-                if ($('#title').val() == '') {
-                    alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
-                    return;
-                }
-
-                $('#'+$('#id').val()).find('.title:first').text($('#title').val());
-                $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
-                $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
-                $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
-                $('#'+$('#id').val()).find('.hidden_read_access:first').val($('#assignedGroupsRead').val());
-                $('#'+$('#id').val()).find('.hidden_replay_access:first').val($('#assignedGroupsReplay').val());
-                $('#'+$('#id').val()).find('.hidden_create_access:first').val($('#assignedGroupsCreate').val());
-                resetBox();
+        $('#forumForm').on('click', '#menuItemEdit', function () {
+            if ($('#title').val() == '') {
+                alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
+                return;
             }
-        );
 
-        $('#downloadsForm').on('click', '#menuItemEditCancel', function() {
+            $('#'+$('#id').val()).find('.title:first').text($('#title').val());
+            $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
+            $('#'+$('#id').val()).find('.hidden_desc:first').val($('#desc').val());
+            $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
+            $('#'+$('#id').val()).find('.hidden_prefix:first').val($('#prefix').val());
+            $('#'+$('#id').val()).find('.hidden_read_access:first').val($('#assignedGroupsRead').val());
+            $('#'+$('#id').val()).find('.hidden_replay_access:first').val($('#assignedGroupsReplay').val());
+            $('#'+$('#id').val()).find('.hidden_create_access:first').val($('#assignedGroupsCreate').val());
+            resetBox();
+        });
+
+        $('#forumForm').on('click', '#menuItemEditCancel', function() {
             $('.actions').html('<input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('forumItemAdd') ?>">');
             resetBox();
         });
@@ -402,5 +409,42 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     -moz-border-radius: 3px;
     border-radius: 3px;
     margin: -1px;*/
+}
+
+
+/* tokenfield */
+.tokenfield.form-control {
+    padding: 2px 2px;
+    padding-bottom: 0;
+}
+.tokenfield .token {
+    background-color: #fff;
+    height: 28px;
+    border-radius: 4px;
+    margin: 0 6px 2px 0;
+    border: 1px solid #ccc;
+    color: #333;
+    cursor: pointer;
+}
+.tokenfield .token:hover {
+    border-color: #ccc;
+}
+.tokenfield .token .token-label{
+    padding: 3px 0 0 5px;
+}
+.tokenfield .token .close {
+    padding: 0 7px 0 1px;
+    font-size: 19px;
+    color: #888;
+    opacity: 1;
+    text-shadow: none;
+}
+.tokenfield .token .close:hover {
+    color: #464646;
+}
+.tokenfield .token-input {
+    margin: 0;
+    height: auto;
+    padding: 4px 6px;
 }
 </style>

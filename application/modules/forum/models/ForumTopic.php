@@ -30,6 +30,13 @@ class ForumTopic extends \Ilch\Model
     protected $topic_id;
 
     /**
+     * Prefix of the topic.
+     *
+     * @var integer
+     */
+    protected $topic_prefix;
+
+    /**
      * Title of the file.
      *
      * @var string
@@ -151,6 +158,16 @@ class ForumTopic extends \Ilch\Model
     public function getTopicThumb()
     {
         return $this->topicThumb;
+    }
+
+    /**
+     * Gets the topic prefix.
+     *
+     * @return integer
+     */
+    public function getTopicPrefix()
+    {
+        return $this->topic_prefix;
     }
 
     /**
@@ -301,6 +318,16 @@ class ForumTopic extends \Ilch\Model
     public function setTopicThumb($topicThumb)
     {
         $this->topicthumb = (string)$topicThumb;
+    }
+
+    /**
+     * Sets the prefix.
+     *
+     * @param string $topicPrefix
+     */
+    public function setTopicPrefix($topicPrefix)
+    {
+        $this->topic_prefix = (int)$topicPrefix;
     }
 
     /**

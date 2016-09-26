@@ -19,7 +19,7 @@ class Topic extends \Ilch\Mapper
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
                 FROM `[prefix]_forum_topics`
                 WHERE forum_id = '.$id.'
-                GROUP by type, `id`, `topic_id`, `topic_title`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
+                GROUP by type, `id`, `topic_id`, `topic_prefix`, `topic_title`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
                 ORDER by type DESC, id DESC
                 LIMIT '.implode(',',$pagination->getLimit());
 
@@ -41,6 +41,7 @@ class Topic extends \Ilch\Mapper
             } else {
                 $entryModel->setAuthor($userMapper->getDummyUser());
             }
+            $entryModel->setTopicPrefix($entries['topic_prefix']);
             $entryModel->setTopicTitle($entries['topic_title']);
             $entryModel->setDateCreated($entries['date_created']);
             $entry[] = $entryModel;
@@ -53,7 +54,7 @@ class Topic extends \Ilch\Mapper
     {
         $sql = 'SELECT SQL_CALC_FOUND_ROWS *
                 FROM `[prefix]_forum_topics`
-                GROUP by type, `id`, `topic_id`, `topic_title`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
+                GROUP by type, `id`, `topic_id`, `topic_prefix`, `topic_title`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
                 ORDER by type DESC, id DESC';
         if ($pagination != null) {
             $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
@@ -83,6 +84,7 @@ class Topic extends \Ilch\Mapper
             } else {
                 $entryModel->setAuthor($userMapper->getDummyUser());
             }
+            $entryModel->setTopicPrefix($entries['topic_prefix']);
             $entryModel->setTopicTitle($entries['topic_title']);
             $entryModel->setDateCreated($entries['date_created']);
             $entry[] = $entryModel;
@@ -101,6 +103,7 @@ class Topic extends \Ilch\Mapper
         $entryModel = new TopicModel();
         $userMapper = new UserMapper();
         $entryModel->setId($fileRow['id']);
+        $entryModel->setTopicPrefix($fileRow['topic_prefix']);
         $entryModel->setTopicTitle($fileRow['topic_title']);
         $entryModel->setCreatorId($fileRow['creator_id']);
         $entryModel->setVisits($fileRow['visits']);
@@ -161,6 +164,7 @@ class Topic extends \Ilch\Mapper
         } else {
             $this->db()->insert('forum_topics')
                 ->values([
+                    'topic_prefix' => $model->getTopicPrefix(),
                     'topic_title' => $model->getTopicTitle(),
                     'topic_id' => $model->getTopicId(),
                     'forum_id' => $model->getForumId(),

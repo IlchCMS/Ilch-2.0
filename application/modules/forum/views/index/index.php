@@ -144,7 +144,7 @@ function rec($item, $obj, $readAccess, $i)
         <?php if ($this->getUser()): ?>
             <!--            
                 <div class="pull-right">
-                    <a href="<?=$this->getUrl(['controller' => 'markallread', 'action' => 'index']) ?>">Alle Foren als gelesen markieren</a>
+                    <a href="<?=$this->getUrl(['controller' => 'markallread', 'action' => 'index']) ?>"><?=$this->getTrans('markAllAsRead') ?></a>
                 </div>
             -->
         <?php endif; ?>

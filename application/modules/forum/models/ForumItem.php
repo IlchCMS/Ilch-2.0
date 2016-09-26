@@ -112,6 +112,13 @@ class ForumItem extends \Ilch\Model
     protected $posts;
 
     /**
+     * Prefix of the item.
+     *
+     * @var string
+     */
+    protected $prefix;
+
+    /**
      * Gets the id.
      *
      * @return integer
@@ -389,5 +396,25 @@ class ForumItem extends \Ilch\Model
     public function setPosts($posts)
     {
         $this->posts = $posts;
+    }
+
+    /**
+     * Gets the prefix.
+     *
+     * @return string
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * Sets the prefix.
+     *
+     * @param string $prefix
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = (string) $prefix;
     }
 }

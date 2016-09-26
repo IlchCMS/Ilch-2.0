@@ -1,4 +1,5 @@
 <?php
+$forumMapper = $this->get('forumMapper');
 $posts = $this->get('posts');
 $cat = $this->get('cat');
 $topicpost = $this->get('post');
@@ -9,6 +10,20 @@ if ($this->getUser()) {
     $adminAccess = $this->getUser()->isAdmin();
     $userAccess = $this->get('userAccess');
 }
+
+$forumPrefix = $forumMapper->getForumByTopicId($topicpost->getId());
+$prefix = '';
+if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
+    $prefix = explode(',', $forumPrefix->getPrefix());
+    array_unshift($prefix, '');
+
+    foreach ($prefix as $key => $value) {
+        if ($topicpost->getTopicPrefix() == $key) {
+            $value = trim($value);
+            $prefix = '['.$value.'] ';
+        }
+    }
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
@@ -17,29 +32,37 @@ if ($this->getUser()) {
     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a> 
     <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a> 
     <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a> 
-    <i class="forum fa fa-chevron-right"></i> <?=$topicpost->getTopicTitle() ?>
+    <i class="forum fa fa-chevron-right"></i> <?=$prefix.$topicpost->getTopicTitle() ?>
 </legend>
 <?php if (is_in_array($readAccess, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
     <div id="forum">
         <div class="topic-actions">
-            <?php if ($this->getUser()): ?>
-                <?php if ($topicpost->getStatus() == 0 AND (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true)): ?>
+            <?php if ($topicpost->getStatus() == 0): ?>
+                <?php if ($this->getUser()): ?>
+                    <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                        <div class="buttons">
+                            <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
+                                <span class="btn-label">
+                                    <i class="fa fa-plus"></i>
+                                </span><?=$this->getTrans('createNewPost') ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                     <div class="buttons">
-                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
+                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
                             <span class="btn-label">
-                                <i class="fa fa-plus"></i>
-                            </span><?=$this->getTrans('createNewPost') ?>
+                                <i class="fa fa-user"></i>
+                            </span><?=$this->getTrans('loginPost') ?>
                         </a>
                     </div>
                 <?php endif; ?>
             <?php else: ?>
-                <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
-                <div class="buttons">
-                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
-                        <span class="btn-label">
-                            <i class="fa fa-user"></i>
-                        </span><?=$this->getTrans('loginPost') ?>
-                    </a>
+                <div class="btn btn-labeled bgblue">
+                    <span class="btn-label">
+                        <i class="fa fa-lock"></i>
+                    </span><?=$this->getTrans('lockPost') ?>
                 </div>
             <?php endif; ?>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>
@@ -105,24 +128,28 @@ if ($this->getUser()) {
             </div>
         <?php endforeach; ?>
         <div class="topic-actions">
-            <?php if ($this->getUser()): ?>
-                <?php if ($topicpost->getStatus() == 0 AND (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true)): ?>
-                    <div class="buttons">
+            <?php if ($topicpost->getStatus() == 0): ?>
+                <?php if ($this->getUser()): ?>
+                    <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
                         <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-labeled bgblue">
                             <span class="btn-label">
                                 <i class="fa fa-plus"></i>
                             </span><?=$this->getTrans('createNewPost') ?>
                         </a>
-                    </div>
-                <?php endif; ?>
-            <?php else: ?>
-                <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
-                <div class="buttons">
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
                         <span class="btn-label">
                             <i class="fa fa-user"></i>
                         </span><?=$this->getTrans('loginPost') ?>
                     </a>
+                <?php endif; ?>
+            <?php else: ?>
+                <div class="btn btn-labeled bgblue">
+                    <span class="btn-label">
+                        <i class="fa fa-lock"></i>
+                    </span><?=$this->getTrans('lockPost') ?>
                 </div>
             <?php endif; ?>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>

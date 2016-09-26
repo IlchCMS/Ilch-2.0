@@ -34,6 +34,7 @@ class Forum extends \Ilch\Mapper
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemId);
             $itemModel->setForumId($forumId);
+            $itemModel->setPrefix($itemRow['prefix']);
             $itemModel->setReadAccess($itemRow['read_access']);
             $itemModel->setReplayAccess($itemRow['replay_access']);
             $itemModel->setCreateAccess($itemRow['create_access']);
@@ -67,6 +68,7 @@ class Forum extends \Ilch\Mapper
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
         $itemModel->setForumId($itemRows['forum_id']);
+        $itemModel->setPrefix($itemRows['prefix']);
         $itemModel->setReadAccess($itemRows['read_access']);
         $itemModel->setReplayAccess($itemRows['replay_access']);
         $itemModel->setCreateAccess($itemRows['create_access']);
@@ -79,7 +81,7 @@ class Forum extends \Ilch\Mapper
         $select = $this->db()->select();
         $result = $select->fields(['t.id', 't.topic_id'])
             ->from(['t' => 'forum_topics'])
-            ->join(['i' => 'forum_items'], 'i.id = t.topic_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.parent_id', 'i.forum_id', 'i.read_access', 'i.replay_access', 'i.create_access'])
+            ->join(['i' => 'forum_items'], 'i.id = t.topic_id', 'LEFT', ['i.id', 'i.type', 'i.title', 'i.description', 'i.prefix', 'i.parent_id', 'i.forum_id', 'i.read_access', 'i.replay_access', 'i.create_access'])
             ->where(['t.id' => $topicId]);
 
         $items = $result->execute();
@@ -97,6 +99,7 @@ class Forum extends \Ilch\Mapper
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
         $itemModel->setForumId($itemRows['forum_id']);
+        $itemModel->setPrefix($itemRows['prefix']);
         $itemModel->setReadAccess($itemRows['read_access']);
         $itemModel->setReplayAccess($itemRows['replay_access']);
         $itemModel->setCreateAccess($itemRows['create_access']);
@@ -155,6 +158,7 @@ class Forum extends \Ilch\Mapper
         $itemModel->setDesc($itemRows['description']);
         $itemModel->setParentId($itemRows['parent_id']);
         $itemModel->setForumId($itemRows['forum_id']);
+        $itemModel->setPrefix($itemRows['prefix']);
         $itemModel->setReadAccess($itemRows['read_access']);
         $itemModel->setReplayAccess($itemRows['replay_access']);
         $itemModel->setCreateAccess($itemRows['create_access']);
@@ -171,6 +175,7 @@ class Forum extends \Ilch\Mapper
             'parent_id' => $forumItem->getParentId(),
             'type' => $forumItem->getType(),
             'description' => $forumItem->getDesc(),
+            'prefix' => $forumItem->getPrefix(),
             'read_access' => $forumItem->getReadAccess(),
             'replay_access' => $forumItem->getReplayAccess(),
             'create_access' => $forumItem->getCreateAccess()
@@ -231,6 +236,7 @@ class Forum extends \Ilch\Mapper
             $itemModel->setDesc($itemRow['description']);
             $itemModel->setParentId($itemRow['parent_id']);
             $itemModel->setForumId($forumId);
+            $itemModel->setPrefix($itemRow['prefix']);
             $itemModel->setReadAccess($itemRow['read_access']);
             $itemModel->setReplayAccess($itemRow['replay_access']);
             $itemModel->setCreateAccess($itemRow['create_access']);

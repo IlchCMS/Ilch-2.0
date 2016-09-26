@@ -16,14 +16,35 @@ if ($this->getUser()) {
         <?=$this->getTokenField() ?>
         <div class="row">
             <div class="col-md-12">
+                <?php if ($forum->getPrefix() != ''): ?>
+                    <?php $prefix = explode(',', $forum->getPrefix()); ?>
+                    <?php array_unshift($prefix, ''); ?>
+                    <div class="form-group">
+                        <label for="topicPrefix" class="col-lg-2 control-label">
+                            <?=$this->getTrans('topicPrefix') ?>:
+                        </label>
+                        <div class="col-lg-8">
+                            <select class="form-control" id="topicPrefix" name="topicPrefix">
+                                <?php foreach ($prefix as $key => $value): ?>
+                                    <?php $selected = ''; ?>
+                                    <?php if ($key == 0): ?>
+                                        <?php $selected = 'selected="selected"'; ?>
+                                    <?php endif; ?>
+
+                                    <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <div class="form-group">
-                    <label for="topicTitleInput" class="col-lg-2 control-label">
+                    <label for="topicTitle" class="col-lg-2 control-label">
                         <?=$this->getTrans('topicTitle') ?>:
                     </label>
                     <div class="col-lg-8">
                         <input type="text"
                                class="form-control"
-                               id="topicTitleInput"
+                               id="topicTitle"
                                name="topicTitle"
                                value="" />
                     </div>

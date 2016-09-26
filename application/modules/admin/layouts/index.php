@@ -19,6 +19,7 @@
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getStaticUrl('js/tokenfield/css/bootstrap-tokenfield.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
 
         <script>
@@ -36,6 +37,7 @@
         <script src="<?=$this->getStaticUrl('js/bootstrap.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('../application/modules/admin/static/js/functions.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
+        <script src="<?=$this->getStaticUrl('js/tokenfield/bootstrap-tokenfield.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/jquery.validate.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
@@ -58,7 +60,7 @@
          */
         jQuery.extend(jQuery.validator.messages, {
             required: <?=json_encode($this->getTrans('validateRequired')) ?>,
-            email: <?=json_encode($this->getTrans('validateEmail')) ?>,
+            email: <?=json_encode($this->getTrans('validateEmail')) ?>
         });
         </script>
 

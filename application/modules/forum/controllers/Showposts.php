@@ -35,17 +35,30 @@ class Showposts extends \Ilch\Controller\Frontend
         $posts = $postMapper->getPostByTopicId($topicId, $pagination);
         $post = $topicMapper->getPostById($topicId);
 
+        $prefix = '';
+        if ($forumId->getPrefix() != '' AND $post->getTopicPrefix() > 0) {
+            $prefix = explode(',', $forumId->getPrefix());
+            array_unshift($prefix, '');
+
+            foreach ($prefix as $key => $value) {
+                if ($post->getTopicPrefix() == $key) {
+                    $value = trim($value);
+                    $prefix = '['.$value.'] ';
+                }
+            }
+        }
+
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
                 ->add($cat->getTitle())
                 ->add($forum->getTitle())
-                ->add($post->getTopicTitle());
+                ->add($prefix.$post->getTopicTitle());
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
                 ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId->getId()])
-                ->add($post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                ->add($prefix.$post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
 
         $topicModel->setId($topicId);
         $topicModel->setVisits($post->getVisits() + 1);
@@ -78,6 +91,7 @@ class Showposts extends \Ilch\Controller\Frontend
         }
         $readAccess = explode(',',implode(',', $ids));
 
+        $this->getView()->set('forumMapper', $forumMapper);
         $this->getView()->set('post', $post);
         $this->getView()->set('cat', $cat);
         $this->getView()->set('posts', $posts);

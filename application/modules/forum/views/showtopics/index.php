@@ -5,6 +5,7 @@ $forumEdit = $this->get('forumEdit');
 $topics = $this->get('topics');
 $topicMapper = $this->get('topicMapper');
 $forumMapper = $this->get('forumMapper');
+$postMapper = $this->get('postMapper');
 $groupIdsArray = $this->get('groupIdsArray');
 $adminAccess = null;
 if ($this->getUser()) {
@@ -63,9 +64,11 @@ if ($this->getUser()) {
             <ul class="topiclist topics">
                 <?php if (!empty($topics)): ?>
                     <?php foreach ($topics as $topic): ?>
+                        <?php $firstPost = $postMapper->getPostByTopicId($topic->getId()) ?>
                         <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                         <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
-                        <li class="row">
+                        <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
+                        <li class="row <?php if ($topic->getType() == '1') { echo 'tack'; } ?>">
                             <dl class="icon 
                                 <?php if ($this->getUser()): ?>
                                     <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 0): ?>
@@ -83,7 +86,19 @@ if ($this->getUser()) {
                                     topic-read
                                 <?php endif; ?>
                             ">
-                                <dt>
+                                <dt title="<?=$firstPost[0]->getText() ?>">
+                                    <?php
+                                    if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
+                                        $prefix = explode(',', $forumPrefix->getPrefix());
+                                        array_unshift($prefix, '');
+
+                                        foreach ($prefix as $key => $value) {
+                                            if ($topic->getTopicPrefix() == $key) {
+                                                echo '<span class="label label-default">'.$value.'</span>';
+                                            }
+                                        }
+                                    }
+                                    ?>
                                     <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="topictitle">
                                         <?=$topic->getTopicTitle() ?>
                                     </a>
@@ -200,3 +215,7 @@ if ($this->getUser()) {
     exit;
     ?>
 <?php endif; ?>
+
+<script>
+$('.row.tack').last().addClass('last');
+</script>

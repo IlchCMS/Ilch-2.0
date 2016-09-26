@@ -24,7 +24,9 @@ class Newtopic extends \Ilch\Controller\Frontend
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
-                ->add($forum->getTitle());
+                ->add($cat->getTitle())
+                ->add($forum->getTitle())
+                ->add($this->getTranslator()->trans('newTopicTitle'));
         $this->getLayout()->set('metaDescription', $this->getTranslator()->trans('forum').' - '.$forum->getDesc());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
@@ -42,6 +44,7 @@ class Newtopic extends \Ilch\Controller\Frontend
                 $topicMapper = new TopicMapper();
                 $dateTime = new \Ilch\Date();
 
+                $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix'));
                 $topicModel->setTopicTitle($this->getRequest()->getPost('topicTitle'));
                 $topicModel->setTopicId($id);
                 $topicModel->setForumId($id);

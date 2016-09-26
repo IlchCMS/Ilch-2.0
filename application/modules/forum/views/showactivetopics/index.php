@@ -1,7 +1,8 @@
 <?php
 $topics = $this->get('topics');
-$topicMapper = $this->get('topicMapper');
 $forumMapper = $this->get('forumMapper');
+$topicMapper = $this->get('topicMapper');
+$postMapper = $this->get('postMapper');
 $date = new \Ilch\Date();
 $dateLessHours = new \Ilch\Date("-1 day");
 $groupIdsArray = $this->get('groupIdsArray');
@@ -31,6 +32,8 @@ if ($this->getUser()) {
         <ul class="topiclist topics">
             <?php foreach ($topics as $topic): ?>
                 <?php $forum = $forumMapper->getForumById($topic->getTopicId()); ?>
+                <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
+                <?php $firstPost = $postMapper->getPostByTopicId($topic->getId()) ?>
                 <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
@@ -53,7 +56,19 @@ if ($this->getUser()) {
                                     topic-read
                                 <?php endif; ?>
                             ">
-                                <dt>
+                                <dt title="<?=$firstPost[0]->getText() ?>">
+                                    <?php
+                                    if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
+                                        $prefix = explode(',', $forumPrefix->getPrefix());
+                                        array_unshift($prefix, '');
+
+                                        foreach ($prefix as $key => $value) {
+                                            if ($topic->getTopicPrefix() == $key) {
+                                                echo '<span class="label label-default">'.$value.'</span>';
+                                            }
+                                        }
+                                    }
+                                    ?>
                                     <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="topictitle">
                                         <?=$topic->getTopicTitle() ?>
                                     </a>

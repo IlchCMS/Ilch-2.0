@@ -50,6 +50,7 @@ class Config extends \Ilch\Config\Install
                   `type` INT(11) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,
+                  `prefix` VARCHAR(255) NOT NULL,
                   `read_access` VARCHAR(255) NOT NULL,
                   `replay_access` VARCHAR(255) NOT NULL,
                   `create_access` VARCHAR(255) NOT NULL,
@@ -59,6 +60,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `topic_id` INT(11) NOT NULL,
+                  `topic_prefix` INT(11) NOT NULL DEFAULT 0,
                   `topic_title` VARCHAR(255) NOT NULL,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   `creator_id` INT(10) NOT NULL,
