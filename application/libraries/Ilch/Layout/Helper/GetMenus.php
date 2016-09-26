@@ -6,14 +6,20 @@
 
 namespace Ilch\Layout\Helper;
 
+use Ilch\Layout\Base as Layout;
+use Ilch\Layout\Helper\Menu\Mapper;
+
 class GetMenus
 {
+    /** @var Layout */
+    private $layout;
+
     /**
      * Injects the layout.
      *
-     * @param Ilch\Layout $layout
+     * @param Layout $layout
      */
-    public function __construct($layout)
+    public function __construct(Layout $layout)
     {
         $this->layout = $layout;
     }
@@ -21,11 +27,11 @@ class GetMenus
     /**
      * Gets all menus.
      *
-     * @return Ilch\Layout\Helper\Menu\Model[]
+     * @return \Ilch\Layout\Helper\Menu\Model[]
      */
     public function getMenus()
     {
-        $helperMapper = new \Ilch\Layout\Helper\Menu\Mapper($this->layout);
+        $helperMapper = new Mapper($this->layout);
 
         return $helperMapper->getMenus();
     }

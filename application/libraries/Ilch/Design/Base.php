@@ -268,8 +268,6 @@ abstract class Base
      */
     public function getHtmlFromBBCode($bbcode)
     {
-        require_once APPLICATION_PATH.'/libraries/jbbcode/Parser.php';
-
         $parser = new \JBBCode\Parser();
         $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
 

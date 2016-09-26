@@ -6,6 +6,8 @@
 
 namespace Ilch\Database;
 
+use Ilch\DebugBar;
+
 class Factory
 {
     /**
@@ -22,6 +24,16 @@ class Factory
         }
 
         $dbClass = '\\Ilch\\Database\\'.$dbData['dbEngine'];
+
+        $addDebugCollector = false;
+        if (DebugBar::isInitialized()) {
+            $debugDbClass = $dbClass . 'Debug';
+            if (class_exists($debugDbClass)) {
+                $dbClass = $debugDbClass;
+                $addDebugCollector = true;
+            }
+        }
+
         if (!class_exists($dbClass)) {
             throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
         }
@@ -36,6 +48,10 @@ class Factory
         $db->connect(reset($hostParts), $dbData['dbUser'], $dbData['dbPassword'], $port);
         $db->setDatabase($dbData['dbName']);
         $db->setPrefix($dbData['dbPrefix']);
+
+        if ($addDebugCollector) {
+            DebugBar::getInstance()->addCollector(new DebugBar\DataCollector\MysqlCollector($db));
+        }
 
         return $db;
     }

@@ -6,70 +6,39 @@
 
 namespace Ilch;
 
-require_once APPLICATION_PATH.'/libraries/Ilch/Functions.php';
-
+/**
+ * Class Loader for loading classes of modules
+ */
 class Loader
 {
-    /**
-     * @var string[]
-     */
-    protected $namespaces = ['Ilch'];
-
     /**
      * Initialize "spl_autoload_register".
      */
     public function __construct()
     {
-        /**
-         * Loads all needed files for the given class.
-         *
-         * @param string $class
-         * @throws \InvalidArgumentException
-         */
-        spl_autoload_register(function ($class) {
-            $class = str_replace('\\', '/', $class);
-            $classParts = explode('/', $class);
-            $path = APPLICATION_PATH;
-            $type = 'modules';
-
-            /*
-             * Libraries path handling.
-             */
-            foreach ($this->namespaces as $nameSpace) {
-                if (strpos($classParts[0], $nameSpace) !== false) {
-                    $type = 'libraries';
-                    $path = $path.'/libraries';
-                    break;
-                }
-            }
-
-            /*
-             * Modules path handling.
-             */
-            if ($type == 'modules') {
-                $lastClassPart = $classParts[count($classParts)-1];
-                unset($classParts[count($classParts)-1]);
-                $classParts = array_map('strtolower', $classParts);
-                $class = implode('/', $classParts).'/'.$lastClassPart;
-            }
-
-            /*
-             * General loading handling.
-             */
-            if (file_exists($path.'/'. $class . '.php')) {
-                require_once($path.'/'. $class . '.php');
-            }
-        });
+        spl_autoload_register([$this, 'loadModuleClass']);
     }
 
     /**
-     * Adds loader namespace.
-     *
-     * @param string $namespace
+     * Load a module class
+     * @param string $class
      */
-    public function registNamespace($namespace)
+    private function loadModuleClass($class)
     {
-        $this->namespaces[$namespace] = $namespace;
+        $class = str_replace('\\', '/', $class);
+        $classParts = explode('/', $class);
+
+        $lastClassPart = array_pop($classParts);
+        $classParts = array_map('strtolower', $classParts);
+
+        $filePath = APPLICATION_PATH . '/' . implode('/', $classParts) . '/'.$lastClassPart . '.php';
+
+        /*
+         * General loading handling.
+         */
+        if (file_exists($filePath)) {
+            require $filePath;
+        }
     }
 }
 

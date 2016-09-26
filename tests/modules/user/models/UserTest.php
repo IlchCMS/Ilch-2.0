@@ -8,6 +8,7 @@ namespace Modules\User\Models;
 
 use PHPUnit\Ilch\TestCase;
 use Ilch\Registry;
+use Ilch\Database\Mysql;
 
 /**
  * Tests the user model class.
@@ -19,12 +20,11 @@ class UserTest extends TestCase
     /**
      * Filling the timezone which the Ilch_Date object will use.
      *
-     * @var Array
+     * @var array
      */
-    protected $configData =
-        [
+    protected $configData = [
         'timezone' => 'Europe/Berlin'
-        ];
+    ];
 
     /**
      * Tests if the user id can be set and returned again.
@@ -143,7 +143,7 @@ class UserTest extends TestCase
         $user->setId(123);
         $user->addGroup($group);
 
-        $dbMock = $this->getMock('Ilch_Database', ['queryCell']);
+        $dbMock = $this->createPartialMock(Mysql::class, ['queryCell']);
         $dbMock->expects($this->once())
             ->method('queryCell')
             ->with(

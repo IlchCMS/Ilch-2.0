@@ -1,7 +1,7 @@
 #!/bin/sh
-if [ ! -f "/vagrant/development/bin/phpunit" ];
+if [ ! -f "/vagrant/vendor/bin/phpunit" ];
 then
     echo "phpunit is not installed, run /vagrant/development/bin/setup.sh";
 fi
 
-/vagrant/development/bin/phpunit $@
+/vagrant/vendor/bin/phpunit $@

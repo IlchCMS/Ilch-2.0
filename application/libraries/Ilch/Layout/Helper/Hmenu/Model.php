@@ -6,6 +6,8 @@
 
 namespace Ilch\Layout\Helper\Hmenu;
 
+use Ilch\Layout\Base as Layout;
+
 class Model
 {
     /**
@@ -14,11 +16,16 @@ class Model
     protected $data;
 
     /**
+     * @var Layout
+     */
+    private $layout;
+
+    /**
      * Injects the layout.
      *
-     * @param Ilch\Layout $layout
+     * @param Layout $layout
      */
-    public function __construct($layout)
+    public function __construct(Layout $layout)
     {
         $this->layout = $layout;
     }

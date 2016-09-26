@@ -461,7 +461,7 @@ class Mysql
      * @return void
      * @throws Exception
      */
-    private function handleError($sql, $subQuery = null)
+    protected function handleError($sql, $subQuery = null)
     {
         switch (self::$errorHandling) {
             default:

@@ -6,6 +6,14 @@
 
 namespace Ilch\Layout;
 
+/**
+ * Class Frontend
+ * @package Ilch\Layout
+ *
+ * @method string getMenu(int $menuId, string $tpl = '', array $options = array()) rendering of a menu
+ * @method \Ilch\Layout\Helper\Menu\Model[] getMenus() get all menus
+ * @method \Ilch\Layout\Helper\Hmenu\Model getHmenu() get the hmenu
+ */
 class Frontend extends Base
 {
     /**
@@ -151,6 +159,7 @@ class Frontend extends Base
     /**
      * Gets the header.
      *
+     * //TODO: rework loading of css and jss to be more dynamic!!!
      * @return string
      */
     public function getHeader()
@@ -171,6 +180,10 @@ class Frontend extends Base
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
+
+        if (\Ilch\DebugBar::isInitialized()) {
+            $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->renderHead();
+        }
 
         if ($this->getConfigKey('cookie_consent') != 0) {
             $html .= '<script type="text/javascript">
@@ -213,6 +226,10 @@ class Frontend extends Base
             var ilchSmileysPlugin = "'.$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/').'";
             var ilchSmileysPluginUrl = "'.$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']).'";
         </script>';
+
+        if (\Ilch\DebugBar::isInitialized()) {
+            $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->render();
+        }
 
         return $html;
     }

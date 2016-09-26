@@ -21,6 +21,7 @@ define('ILCH_SERVER', 'http://www.ilch.de/ilch2');
 define('SERVER_TIMEZONE', $serverTimeZone);
 define('DEFAULT_MODULE', 'page');
 define('DEFAULT_LAYOUT', 'index');
+define('DEBUG_MODE', true);
 
 /*
  * Path could not be under root.
@@ -36,10 +37,13 @@ define('REWRITE_BASE', $rewriteBaseParts);
 $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
 define('BASE_URL', $protocol.'://'.$_SERVER['HTTP_HOST'].REWRITE_BASE);
 
-
-require_once APPLICATION_PATH.'/libraries/Ilch/Loader.php';
+//register autoloaders
+require ROOT_PATH . '/vendor/autoload.php';
 $loader = new \Ilch\Loader();
-$loader->registNamespace('Thumb');
+
+if (DEBUG_MODE) {
+    \Ilch\DebugBar::init();
+}
 
 \Ilch\Registry::set('startTime', microtime(true));
 

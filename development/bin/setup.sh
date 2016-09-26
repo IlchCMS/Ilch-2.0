@@ -9,19 +9,7 @@ else
     ./composer.phar self-update
 fi
 cd ..
-if [ "$1" = "travis" ]; then
-    bin/composer.phar install --no-dev
-    cat << PHP > ../tests/config.php
-<?php
-//Config for Tests
-\$config["dbEngine"] = "Mysql";
-\$config["dbHost"] = "127.0.0.1";
-\$config["dbUser"] = "travis";
-\$config["dbPassword"] = "";
-\$config["dbName"] = "ilch2_test";
-\$config["dbPrefix"] = "";
-PHP
-else
-    bin/composer.phar install
-fi
+bin/composer.phar install
+cd ..
+development/bin/composer.phar install
 cd ${START_PWD}

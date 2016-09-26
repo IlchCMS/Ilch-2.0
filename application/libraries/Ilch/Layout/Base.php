@@ -33,15 +33,15 @@ abstract class Base extends \Ilch\Design\Base
      * Loads layout helper.
      *
      * @param string $name
-     * @param mixed $args
+     * @param array $args
      * @return mixed|null
      */
-    public function __call($name, $args)
+    public function __call($name, array $args)
     {
         $layout = $this->getHelper($name, 'layout');
 
         if (!empty($layout)) {
-            return $layout->$name($args);
+            return call_user_func_array([$layout, $name], $args);
         }
 
         return null;
