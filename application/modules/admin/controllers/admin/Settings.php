@@ -75,8 +75,6 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
             $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
-            $this->getConfig()->set('description', $this->getRequest()->getPost('description'));
-            $this->getConfig()->set('page_title', $this->getRequest()->getPost('pageTitle'));
             $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
             $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
             $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
@@ -118,8 +116,6 @@ HTACCESS;
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingualAcp', $this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
-        $this->getView()->set('description', $this->getConfig()->get('description'));
-        $this->getView()->set('pageTitle', $this->getConfig()->get('page_title'));
         $this->getView()->set('startPage', $this->getConfig()->get('start_page'));
         $this->getView()->set('modRewrite', $this->getConfig()->get('mod_rewrite'));
         $this->getView()->set('standardMail', $this->getConfig()->get('standardMail'));

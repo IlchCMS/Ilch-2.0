@@ -58,7 +58,6 @@ class Layouts extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
 
         $layouts = [];
-
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
             $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\config';
             $config = new $configClass($this->getTranslator());
@@ -187,12 +186,16 @@ class Layouts extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'));
             $this->getConfig()->set('apple_icon', $this->getRequest()->getPost('appleIcon'));
+            $this->getConfig()->set('page_title', $this->getRequest()->getPost('pageTitle'));
+            $this->getConfig()->set('description', $this->getRequest()->getPost('description'));
 
             $this->addMessage('saveSuccess');
         }
 
         $this->getView()->set('favicon', $this->getConfig()->get('favicon'));
         $this->getView()->set('appleIcon', $this->getConfig()->get('apple_icon'));
+        $this->getView()->set('pageTitle', $this->getConfig()->get('page_title'));
+        $this->getView()->set('description', $this->getConfig()->get('description'));
     }
 
     public function deleteAction()

@@ -5,7 +5,7 @@
         <label for="startPage" class="col-lg-2 control-label">
             <?=$this->getTrans('startPage') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <select class="form-control" id="startPage" name="startPage">
                 <optgroup label="<?=$this->getTrans('pages') ?>">
                     <?php foreach ($this->get('pages') as $page): ?>
@@ -57,7 +57,7 @@
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('multilingualAcp') ?>:
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="multilingualAcp-on" name="multilingualAcp" value="1" <?php if ($this->get('multilingualAcp') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="multilingualAcp-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -71,7 +71,7 @@
         <label for="languageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('contentLanguage') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-4">
             <select class="form-control" id="languageInput" name="contentLanguage">
                 <?php foreach ($this->get('languages') as $key => $value): ?>
                     <?php $selected = ''; ?>
@@ -88,7 +88,7 @@
         <label for="localeInput" class="col-lg-2 control-label">
             <?=$this->getTrans('locale') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-4">
             <select class="form-control" id="languageInput" name="locale">
                 <?php foreach ($this->get('languages') as $key => $value): ?>
                     <?php $selected = ''; ?>
@@ -105,7 +105,7 @@
         <label for="standardMailInput" class="col-lg-2 control-label">
             <?=$this->getTrans('timezone') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <select class="form-control" id="timezone" name="timezone">
                 <?php $timezones = $this->get('timezones'); ?>
                 <?php for ($i = 0; $i < count($timezones); $i++): ?>
@@ -123,7 +123,7 @@
         <label for="standardMailInput" class="col-lg-2 control-label">
             <?=$this->getTrans('standardMail') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <input type="text"
                    class="form-control"
                    id="standardMailInput"
@@ -144,35 +144,11 @@
                    value="<?=$this->escape($this->get('defaultPaginationObjects')) ?>" />
         </div>
     </div>
-
-    <legend><?=$this->getTrans('seo') ?></legend>
-    <div class="form-group">
-        <label for="pageTitle" class="col-lg-2 control-label">
-            <?=$this->getTrans('pageTitle') ?>:
-        </label>
-        <div class="col-lg-8">
-            <input type="text"
-                   class="form-control"
-                   id="pageTitle"
-                   name="pageTitle"
-                   value="<?=$this->escape($this->get('pageTitle')) ?>" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="description" class="col-lg-2 control-label">
-            <?=$this->getTrans('seoDescription') ?>:
-        </label>
-        <div class="col-lg-8">
-            <textarea class="form-control"
-                      id="description"
-                      name="description"><?=$this->escape($this->get('description')) ?></textarea>
-        </div>
-    </div>
     <div class="form-group">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('modRewrite') ?>:
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="modRewrite-on" name="modRewrite" value="1" <?php if ($this->get('modRewrite') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="modRewrite-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -188,7 +164,7 @@
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('navbarFixed') ?>:
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="navbarFixed-on" name="navbarFixed" value="1" <?php if ($this->get('navbarFixed') == 'navbar-fixed-top') { echo 'checked="checked"'; } ?> />
                 <label for="navbarFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
@@ -202,7 +178,7 @@
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('hmenuFixed') ?>:
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="hmenuFixed-on" name="hmenuFixed" value="1" <?php if ($this->get('hmenuFixed') == 'hmenu-fixed') { echo 'checked="checked"'; } ?> />
                 <label for="hmenuFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>

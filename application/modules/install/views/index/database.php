@@ -1,8 +1,6 @@
 <?php $errors = $this->get('errors'); ?>
 
-<div class="form-group <?php if (!empty($errors['dbDatabase'])) {
-    echo 'has-error';
-}; ?>">
+<div class="form-group <?php if (!empty($errors['dbDatabase'])) { echo 'has-error'; }; ?>">
     <label for="dbName" class="col-lg-3 control-label">
         <?=$this->getTrans('dbName') ?>:
     </label>
@@ -40,10 +38,6 @@
                class="form-control"
                id="dbPrefix"
                name="dbPrefix"
-               value="<?php if ($this->get('dbPrefix') != '') {
-    echo $this->escape($this->get('dbPrefix'));
-} else {
-    echo 'ilch_';
-} ?>" />
+               value="<?php if ($this->get('dbPrefix') != '') { echo $this->escape($this->get('dbPrefix')); } else { echo 'ilch_'; } ?>" />
     </div>
 </div>

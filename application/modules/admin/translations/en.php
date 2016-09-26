@@ -172,6 +172,7 @@ return [
     'permaLink' => 'Perma link',
     'pageAdress' => 'Page adress',
     'noPages' => 'No pages available',
+    'choose' => 'Choose',
 
     'menuInfos' => 'Information',
     'menuPHPInfo' => 'PHP Info',
