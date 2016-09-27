@@ -29,9 +29,9 @@ if (empty($modulesOnUpdateServer)) {
         <tbody>
             <?php foreach ($modulesOnUpdateServer as $moduleOnUpdateServer):  ?>
                 <?php
-                if (!empty($moduleOnUpdateServer->phpextensions)) {
+                if (!empty($moduleOnUpdateServer->phpExtensions)) {
                     $extensionCheck = [];
-                    foreach ($moduleOnUpdateServer->phpextensions as $extension) {
+                    foreach ($moduleOnUpdateServer->phpExtensions as $extension) {
                         $extensionCheck[] = extension_loaded($extension);
                     }
                 }
@@ -52,7 +52,7 @@ if (empty($modulesOnUpdateServer)) {
                         <?php
                         $filename = basename($moduleOnUpdateServer->downloadLink);
                         $filename = strstr($filename,'.',true);
-                        if (!empty($moduleOnUpdateServer->phpextensions) AND in_array(false, $extensionCheck)): ?>
+                        if (!empty($moduleOnUpdateServer->phpExtensions) AND in_array(false, $extensionCheck)): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
                                 <i class="fa fa-download"></i>
