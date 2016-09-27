@@ -9,9 +9,13 @@ class Config extends \Ilch\Config\Install
         'author' => 'Ilch.de',
         'link' => 'http://ilch.de',
         'desc' => '2 Spalten Clan Layout',
-        'layouts' => ['index_full' => [['module' => 'user', 'controller' => 'panel']]], //only for example
-        'layouts' => ['index_full' => [['module' => 'forum']]] //only for example
-        //'layouts'['index_full'] => array(array('module' => 'guestbook', 'controller' => 'index', 'action' => 'newentry')),
+        'layouts' => [
+            'index_full' => [
+                ['module' => 'user', 'controller' => 'panel'],
+                ['module' => 'forum'],
+                ['module' => 'guestbook'],
+            ]//only for example
+        ],
         //'modulekey' => 'Name of Module'
     ];
 
