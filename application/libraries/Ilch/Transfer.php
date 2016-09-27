@@ -372,6 +372,7 @@ class Transfer
         zip_close($zipHandle);
         unlink($this->zipFile);
         unlink($this->zipFile.'-signature.sig');
+        $this->curlClose();
         $this->setContent($content);
         return true;
     }
@@ -432,7 +433,20 @@ class Transfer
         $zip->close();
         unlink($this->zipFile);
         unlink($this->zipFile.'-signature.sig');
+        $this->curlClose();
         $this->setContent($content);
         return true;
+    }
+
+    private function curlClose()
+    {
+        if (is_resource($this->transferUrl)) {
+          curl_close($this->transferUrl);
+        }
+    }
+
+    public function __destruct()
+    {
+        $this->curlClose();
     }
 }
