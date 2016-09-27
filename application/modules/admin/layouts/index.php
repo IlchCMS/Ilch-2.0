@@ -174,7 +174,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php if ($this->getUser()->isAdmin()): ?>
-                            <li class="<?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'settings') { echo 'active'; } ?>">
+                            <li class="<?php if ($this->getRequest()->getModuleName() == 'admin' && ($this->getRequest()->getControllerName() == 'settings' OR $this->getRequest()->getControllerName() == 'backup')) { echo 'active'; } ?>">
                                 <a href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>">
                                     <i class="fa fa-cogs"></i> <span class="visible-xs-inline"><?=$this->getTrans('menuSettings') ?></span>
                                 </a>

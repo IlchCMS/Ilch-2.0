@@ -35,7 +35,7 @@ class Settings extends \Ilch\Controller\Admin
                 'name' => 'menuBackup',
                 'active' => false,
                 'icon' => 'fa fa-download',
-                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'backup'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'backup', 'action' => 'index'])
             ],
             [
                 'name' => 'menuUpdate',
@@ -224,13 +224,5 @@ HTACCESS;
         } else {
             $this->getView()->set('versions', '');
         }
-    }
-
-    public function backupAction()
-    {
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuBackup'), ['action' => 'backup']);
-        
     }
 }

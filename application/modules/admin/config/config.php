@@ -121,7 +121,15 @@ class Config extends \Ilch\Config\Install
                   `locale` VARCHAR(255) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `perma` VARCHAR(255) NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_backup` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(255) NOT NULL,
+                  `file` VARCHAR(255) NOT NULL,
+                  `date` DATETIME NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate()

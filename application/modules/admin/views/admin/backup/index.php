@@ -1,0 +1,42 @@
+<legend><?=$this->getTrans('menuBackup') ?></legend>
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="icon_width">
+                <col class="col-lg-2">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?=$this->getCheckAllCheckbox('id') ?></th>
+                    <th></th>
+                    <th></th>
+                    <th><?=$this->getTrans('date') ?></th>
+                    <th><?=$this->getTrans('name') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($this->get('backups') != ''): ?>
+                    <?php foreach ($this->get('backups') as $backup): ?>
+                        <tr>
+                            <td><input type="checkbox" name="id[]" value="<?=$backup->getId() ?>" /></td>
+                            <td><a href="<?=BASE_URL.'/'.$backup->getFile() ?>" title="<?=$this->getTrans('download') ?>"><i class="fa fa-download"></i></a></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
+                            <td><?=$this->escape($backup->getDate()) ?></td>
+                            <td><?=$this->escape($backup->getName()) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5"><?=$this->getTrans('noBackups') ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+    <?=$this->getListBar(['delete' => 'delete']) ?>
+</form>
