@@ -63,18 +63,41 @@ $versionsOfModules = $this->get('versionsOfModules');
                                     break;
                                 }
                             }
-                            if (!empty($moduleOnUpdateServerFound) && version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
-                                <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
-                                    <?=$this->getTokenField() ?>
-                                    <button type="submit"
-                                            class="btn btn-default"
-                                            name="url"
-                                            value="<?=$moduleOnUpdateServerFound->downloadLink ?>"
-                                            title="<?=$this->getTrans('moduleUpdate') ?>">
+                            if (!empty($moduleOnUpdateServerFound)) {
+                                if (!empty($moduleOnUpdateServerFound->phpExtensions)) {
+                                    $extensionCheck = [];
+                                    foreach ($moduleOnUpdateServerFound->phpExtensions as $extension) {
+                                        $extensionCheck[] = extension_loaded($extension);
+                                    }
+                                }
+                                if (!empty($moduleOnUpdateServerFound->phpExtensions) AND in_array(false, $extensionCheck)): ?>
+                                    <button class="btn disabled"
+                                            title="<?=$this->getTrans('phpExtensionError') ?>">
                                         <i class="fa fa-refresh"></i>
                                     </button>
-                                </form>
-                            <?php endif; ?>
+                                <?php elseif (version_compare(phpversion(), $moduleOnUpdateServerFound->phpVersion, '<')): ?>
+                                    <button class="btn disabled"
+                                            title="<?=$this->getTrans('phpVersionError') ?>">
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                <?php elseif (version_compare(VERSION, $moduleOnUpdateServerFound->ilchCore, '<')): ?>
+                                    <button class="btn disabled"
+                                            title="<?=$this->getTrans('ilchCoreError') ?>">
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                <?php elseif (version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                                        <?=$this->getTokenField() ?>
+                                        <button type="submit"
+                                                class="btn btn-default"
+                                                name="url"
+                                                value="<?=$moduleOnUpdateServerFound->downloadLink ?>"
+                                                title="<?=$this->getTrans('moduleUpdate') ?>">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            <?php } ?>
                         </td>
                         <td><?=$content['description'] ?></td>
                     </tr>
