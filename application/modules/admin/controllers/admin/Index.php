@@ -24,9 +24,12 @@ class Index extends \Ilch\Controller\Admin
         $update->setTransferUrl($this->getConfig()->get('master_update_url'));
         $update->setVersionNow($this->getConfig()->get('version'));
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
+        $update->setCurlOpt(CURLOPT_TIMEOUT, 20);
+        $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
 
         if ($update->getVersions() == '') {
+            $this->getView()->set('curlErrorOccured', true);
             $this->addMessage(curl_error($update->getTransferUrl()), 'danger');
         }
 

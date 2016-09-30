@@ -181,6 +181,7 @@ HTACCESS;
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_FAILONERROR, true);
+        $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
         $update->setZipSavePath(ROOT_PATH.'/updates/');
 
         $result = $update->getVersions();

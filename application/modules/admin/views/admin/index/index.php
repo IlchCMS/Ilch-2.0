@@ -55,6 +55,8 @@ $ilchNews = json_decode($ilchNewsList);
             <?=$this->getTrans('system') ?>
             <?php if ($this->get('foundNewVersions')): ?>
                 <span class="label label-danger"><?=$this->getTrans('notUpToDate') ?></span>
+            <?php elseif ($this->get('curlErrorOccured')): ?>
+                <span class="label label-warning"><?=$this->getTrans('versionQueryFailed') ?></span>
             <?php else: ?>
                 <span class="label label-success"><?=$this->getTrans('upToDate') ?></span>
             <?php endif; ?>
@@ -79,6 +81,8 @@ $ilchNews = json_decode($ilchNewsList);
                         <td>
                             <?php if ($this->get('newVersion')): ?>
                                 <?=$this->get('newVersion') ?>
+                            <?php elseif ($this->get('curlErrorOccured')): ?>
+                                <?=$this->getTrans('versionNA') ?>
                             <?php else: ?>
                                 <?=VERSION ?>
                             <?php endif; ?>
