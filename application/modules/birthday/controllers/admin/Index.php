@@ -6,6 +6,8 @@
 
 namespace Modules\Birthday\Controllers\Admin;
 
+use Ilch\Validation;
+
 class Index extends \Ilch\Controller\Admin
 {
     public function init()
@@ -32,11 +34,29 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuBirthday'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
+        $post = [
+            'numberOfBirthdaysShow' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('bday_boxShow', $this->getRequest()->getPost('entrySettings'));
-            $this->addMessage('saveSuccess');
+            $post = [
+                'numberOfBirthdaysShow' => $this->getRequest()->getPost('numberOfBirthdaysShow')
+            ];
+
+            $validation = Validation::create($post, [
+                'numberOfBirthdaysShow' => 'required|numeric|integer|min:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('bday_boxShow', $this->getRequest()->getPost('numberOfBirthdaysShow'));
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
-        
-        $this->getView()->set('setShow', $this->getConfig()->get('bday_boxShow'));
+
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
+        $this->getView()->set('numberOfBirthdaysShow', $this->getConfig()->get('bday_boxShow'));
     }
 }
