@@ -96,7 +96,7 @@ class Backup extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $date = new \Ilch\Date();
             $dbDate = $date->format('Y-m-d H-i-s', true);
-            $filename = $date->format('Y-m-d_H-i-s', true);
+            $filename = $date->format('Y-m-d_H-i-s', true).bin2hex(openssl_random_pseudo_bytes(32));
 
             $fileConfig = new File();
             $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
