@@ -250,6 +250,21 @@ abstract class Base
     }
 
     /**
+     * Gets the system, vendor url.
+     *
+     * @param  string $url
+     * @return string
+     */
+    public function getVendorUrl($url = '')
+    {
+        if (empty($url)) {
+            return BASE_URL.'/vendor/';
+        }
+
+        return BASE_URL.'/vendor/'.$url;
+    }
+
+    /**
      * Escape the given string.
      *
      * @param  string $string

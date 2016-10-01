@@ -3,10 +3,10 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <?=$this->getHeader() ?>
-        <link href="<?=$this->getStaticUrl('css/bootstrap.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getLayoutUrl('style.css') ?>" rel="stylesheet">
         <?=$this->getCustomCSS() ?>
-        <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap.min.js') ?>"></script>
+        <script type="text/javascript" src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
     </head>
     <body>
         <div id="main">

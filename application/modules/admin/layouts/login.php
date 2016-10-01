@@ -16,8 +16,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
         <link rel="shortcut icon" type="image/x-icon" href="<?=$this->getStaticUrl('img/favicon.ico') ?>">
-        <link href="<?=$this->getStaticUrl('css/bootstrap.min.css') ?>" rel="stylesheet">
-        <link href="<?=$this->getStaticUrl('css/font-awesome.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
+        <link href="<?=$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/login.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
