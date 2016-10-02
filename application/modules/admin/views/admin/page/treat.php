@@ -78,7 +78,7 @@
         <div class="col-lg-8">
             <textarea class="form-control"
                       id="description"
-                      name="description"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } ?></textarea>
+                      name="description"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } else { echo $this->get('post')['description']; } ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -88,7 +88,7 @@
         <div class="col-lg-8">
             <textarea class="form-control"
                       id="keywords"
-                      name="keywords"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getKeywords()); } ?></textarea>
+                      name="keywords"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getKeywords()); } else { echo $this->get('post')['keywords']; } ?></textarea>
         </div>
     </div>
     <div class="form-group">
@@ -100,7 +100,7 @@
             <input type="text"
                    id="pagePerma"
                    name="pagePerma"
-                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } ?>" />
+                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['pagePerma']; } ?>" />
         </div>
     </div>
     <?php
@@ -121,7 +121,7 @@ if ($this->get('page') != '') {
     $pageID = $this->get('page')->getId();
 }
 ?>
-$('#pageTitleInput').change (
+$('#pageTitle').change (
     function () {
         $('#pagePerma').val
         (
@@ -132,10 +132,19 @@ $('#pageTitleInput').change (
     }
 );
 
-$('#pageLanguageInput').change (
+$('#pageLanguage').change (
     this,
     function () {
         top.location.href = '<?=$this->getUrl(['id' => $pageID]); ?>/locale/'+$(this).val()
     }
 );
+
+$('#keywords').tokenfield();
+$('#keywords').on('tokenfield:createtoken', function (event) {
+    var existingTokens = $(this).tokenfield('getTokens');
+    $.each(existingTokens, function(index, token) {
+        if (token.value === event.attrs.value)
+            event.preventDefault();
+    });
+});
 </script>

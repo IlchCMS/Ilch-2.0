@@ -410,41 +410,4 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     border-radius: 3px;
     margin: -1px;*/
 }
-
-
-/* tokenfield */
-.tokenfield.form-control {
-    padding: 2px 2px;
-    padding-bottom: 0;
-}
-.tokenfield .token {
-    background-color: #fff;
-    height: 28px;
-    border-radius: 4px;
-    margin: 0 6px 2px 0;
-    border: 1px solid #ccc;
-    color: #333;
-    cursor: pointer;
-}
-.tokenfield .token:hover {
-    border-color: #ccc;
-}
-.tokenfield .token .token-label{
-    padding: 3px 0 0 5px;
-}
-.tokenfield .token .close {
-    padding: 0 7px 0 1px;
-    font-size: 19px;
-    color: #888;
-    opacity: 1;
-    text-shadow: none;
-}
-.tokenfield .token .close:hover {
-    color: #464646;
-}
-.tokenfield .token-input {
-    margin: 0;
-    height: auto;
-    padding: 4px 6px;
-}
 </style>

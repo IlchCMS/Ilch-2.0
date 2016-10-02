@@ -93,19 +93,26 @@ class Page extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->isPost()) {
+            // Create full-url of permaLink.
+            $pagePerma = BASE_URL.'/index.php/'.$this->getRequest()->getPost('pagePerma');
+
             $post = [
                 'pageTitle' => htmlentities($this->getRequest()->getPost('pageTitle')),
                 'pageContent' => trim($this->getRequest()->getPost('pageContent')),
-                'pageLanguage' => trim($this->getRequest()->getPost('pageLanguage')),
-                'keywords' => trim($this->getRequest()->getPost('keywords')),
+                'pageLanguage' => $this->getRequest()->getPost('pageLanguage'),
+                'keywords' => $this->getRequest()->getPost('keywords'),
                 'description' => trim($this->getRequest()->getPost('description')),
-                'pagePerma' => trim($this->getRequest()->getPost('pagePerma'))
+                'pagePerma' => $pagePerma,
             ];
 
             $validation = Validation::create($post, [
                 'pageTitle' => 'required',
-                'pageContent' => 'required'
+                'pageContent' => 'required',
+                'pagePerma' => 'url'
             ]);
+
+            // Restore original values
+            $post['pagePerma'] = $this->getRequest()->getPost('pagePerma');
 
             if ($validation->isValid()) {
                 $model = new PageModel();
