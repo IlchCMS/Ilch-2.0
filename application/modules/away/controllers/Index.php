@@ -18,7 +18,8 @@ class Index extends \Ilch\Controller\Frontend
         $awayMapper = new AwayMapper();
         $userMapper = new UserMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuAway'), ['action' => 'index']);
 
         $post = [
             'reason' => '',

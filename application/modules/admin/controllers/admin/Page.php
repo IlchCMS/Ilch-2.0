@@ -8,6 +8,7 @@ namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\Page as PageModel;
+use Ilch\Validation;
 
 class Page extends \Ilch\Controller\Admin
 {
@@ -82,31 +83,57 @@ class Page extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
+        $post = [
+            'pageTitle' => '',
+            'pageContent' => '',
+            'pageLanguage' => '',
+            'keywords' => '',
+            'description' => '',
+            'pagePerma' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $model = new PageModel();
+            $post = [
+                'pageTitle' => htmlentities($this->getRequest()->getPost('pageTitle')),
+                'pageContent' => trim($this->getRequest()->getPost('pageContent')),
+                'pageLanguage' => trim($this->getRequest()->getPost('pageLanguage')),
+                'keywords' => trim($this->getRequest()->getPost('keywords')),
+                'description' => trim($this->getRequest()->getPost('description')),
+                'pagePerma' => trim($this->getRequest()->getPost('pagePerma'))
+            ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
+            $validation = Validation::create($post, [
+                'pageTitle' => 'required',
+                'pageContent' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
+                $model = new PageModel();
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                $model->setTitle($post['pageTitle']);
+                $model->setContent($post['pageContent']);
+                $model->setKeywords($post['keywords']);
+                $model->setDescription($post['description']);
+                if ($this->getRequest()->getPost('pageLanguage') != '') {
+                    $model->setLocale($post['pageLanguage']);
+                } else {
+                    $model->setLocale('');
+                }
+                $model->setPerma($post['pagePerma']);
+                $pageMapper->save($model);
+
+                $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             }
 
-            $model->setDescription($this->getRequest()->getPost('description'));
-            $model->setKeywords($this->getRequest()->getPost('keywords'));
-            $model->setTitle($this->getRequest()->getPost('pageTitle'));
-            $model->setContent($this->getRequest()->getPost('pageContent'));
-            
-            if ($this->getRequest()->getPost('pageLanguage') != '') {
-                $model->setLocale($this->getRequest()->getPost('pageLanguage'));
-            } else {
-                $model->setLocale('');
-            }
-
-            $model->setPerma($this->getRequest()->getPost('pagePerma'));
-
-            $pageMapper->save($model);
-
-            $this->redirect(['action' => 'index']);
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));

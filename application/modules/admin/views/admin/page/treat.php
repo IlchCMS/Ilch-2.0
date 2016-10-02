@@ -7,34 +7,49 @@
     }
     ?>
 </legend>
+
+<?php if (!empty($this->get('errors'))): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
-        <label for="pageTitleInput" class="col-lg-2 control-label">
+    <div class="form-group <?=in_array('pageTitle', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <label for="pageTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
         <div class="col-lg-8">
             <input type="text"
                    class="form-control"
-                   id="pageTitleInput"
+                   id="pageTitle"
                    name="pageTitle"
-                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getTitle()); } ?>" />
+                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getTitle()); } else { echo $this->get('post')['pageTitle']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-offset-2 col-lg-8">
+    <div class="form-group <?=in_array('pageContent', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <label for="pageContent" class="col-lg-2 control-label">
+            <?=$this->getTrans('pageContent') ?>:
+        </label>
+        <div class="col-lg-8">
             <textarea class="form-control ckeditor"
-                      id="ck_1" name="pageContent"
-                      toolbar="ilch_html"><?php if ($this->get('page') != '') { echo $this->get('page')->getContent(); } ?></textarea>
+                      id="pageContent" name="pageContent"
+                      toolbar="ilch_html"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getContent()); } else { echo $this->get('post')['pageContent']; } ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
         <div class="form-group">
-            <label for="pageLanguageInput" class="col-lg-2 control-label">
+            <label for="pageLanguage" class="col-lg-2 control-label">
                 <?=$this->getTrans('pageLanguage') ?>:
             </label>
             <div class="col-lg-8">
-                <select class="form-control" id="pageLanguageInput" name="pageLanguage">
+                <select class="form-control" id="pageLanguage" name="pageLanguage">
                     <?php
                     foreach ($this->get('languages') as $key => $value) {
                         $selected = '';
