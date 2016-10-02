@@ -97,7 +97,7 @@ class Page extends \Ilch\Controller\Admin
             $pagePerma = BASE_URL.'/index.php/'.$this->getRequest()->getPost('pagePerma');
 
             $post = [
-                'pageTitle' => htmlentities($this->getRequest()->getPost('pageTitle')),
+                'pageTitle' => $this->getRequest()->getPost('pageTitle'),
                 'pageContent' => trim($this->getRequest()->getPost('pageContent')),
                 'pageLanguage' => $this->getRequest()->getPost('pageLanguage'),
                 'keywords' => $this->getRequest()->getPost('keywords'),
