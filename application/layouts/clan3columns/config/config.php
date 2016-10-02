@@ -1,4 +1,5 @@
 <?php
+
 namespace Layouts\Clan3Columns\Config;
 
 class Config extends \Ilch\Config\Install

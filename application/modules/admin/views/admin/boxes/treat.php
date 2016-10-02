@@ -1,37 +1,56 @@
+<legend>
+    <?php
+    if ($this->get('box') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
+
+<?php if (!empty($this->get('errors'))): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->get('errors') as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <legend>
-        <?php if ($this->get('box') != ''): ?>
-            <?=$this->getTrans('editBox') ?>
-        <?php else: ?>
-            <?=$this->getTrans('addBox') ?>
-        <?php endif; ?>
-    </legend>
-    <div class="form-group">
-        <label for="boxTitleInput" class="col-lg-2 control-label">
+    <div class="form-group <?=in_array('boxTitle', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <label for="boxTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('boxTitle') ?>:
         </label>
-        <div class="col-lg-2">
+        <div class="col-lg-4">
             <input type="text"
                    class="form-control"
-                   id="boxTitleInput"
+                   id="boxTitle"
                    name="boxTitle"
-                   value="<?php if ($this->get('box') != '') { echo $this->escape($this->get('box')->getTitle()); } ?>" />
+                   value="<?php if ($this->get('box') != '') { echo $this->escape($this->get('box')->getTitle()); } else { echo $this->get('post')['boxTitle']; } ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <textarea class="form-control ckeditor"
-                  id="ck_1"
-                  name="boxContent"
-                  toolbar="ilch_html"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } ?></textarea>
+    <div class="form-group <?=in_array('boxContent', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <label for="boxContent" class="col-lg-2 control-label">
+            <?=$this->getTrans('boxContent') ?>:
+        </label>
+        <div class="col-lg-8">
+            <textarea class="form-control ckeditor"
+                      id="boxContent"
+                      name="boxContent"
+                      toolbar="ilch_html"><?php if ($this->get('box') != '') { echo $this->get('box')->getContent(); } else { echo $this->get('post')['boxContent']; } ?></textarea>
+        </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
         <div class="form-group">
-            <label for="boxLanguageInput" class="col-lg-2 control-label">
+            <label for="boxLanguage" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxLanguage') ?>:
             </label>
             <div class="col-lg-2">
-                <select class="form-control" id="boxLanguageInput" name="boxLanguage">
+                <select class="form-control" id="boxLanguage" name="boxLanguage">
                     <?php foreach ($this->get('languages') as $key => $value): ?>
                         <?php $selected = ''; ?>
 
@@ -63,7 +82,7 @@
     <?php $boxID = $this->get('box')->getId(); ?>
 <?php endif; ?>
 
-$('#boxLanguageInput').change (
+$('#boxLanguage').change (
     this,
     function () {
         top.location.href = '<?=$this->getUrl(['id' => $boxID]); ?>/locale/'+$(this).val()

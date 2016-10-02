@@ -25,7 +25,7 @@
         <label for="pageTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <input type="text"
                    class="form-control"
                    id="pageTitle"
@@ -75,7 +75,7 @@
         <label for="description" class="col-lg-2 control-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <textarea class="form-control"
                       id="description"
                       name="description"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getDescription()); } else { echo $this->get('post')['description']; } ?></textarea>
@@ -85,17 +85,17 @@
         <label for="keywords" class="col-lg-2 control-label">
             <?=$this->getTrans('seoKeywords') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <textarea class="form-control"
                       id="keywords"
                       name="keywords"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getKeywords()); } else { echo $this->get('post')['keywords']; } ?></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=in_array('pagePerma', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="pagePerma" class="col-lg-2 control-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>
-        <div class="col-lg-8">
+        <div class="col-lg-4">
             <?=$this->getUrl() ?>/index.php/
             <input type="text"
                    id="pagePerma"

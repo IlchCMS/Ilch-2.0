@@ -8,6 +8,7 @@ namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
+use Ilch\Validation;
 
 class Boxes extends \Ilch\Controller\Admin
 {
@@ -101,27 +102,48 @@ class Boxes extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
+        $post = [
+            'boxTitle' => '',
+            'boxContent' => '',
+            'boxLanguage' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $model = new BoxModel();
+            $post = [
+                'boxTitle' => htmlentities($this->getRequest()->getPost('boxTitle')),
+                'boxContent' => trim($this->getRequest()->getPost('boxContent')),
+                'boxLanguage' => $this->getRequest()->getPost('boxLanguage')
+            ];
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
+            $validation = Validation::create($post, [
+                'boxTitle' => 'required',
+                'boxContent' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
+                $model = new BoxModel();
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                $model->setTitle($post['boxTitle']);
+                $model->setContent($post['boxContent']);
+                if ($this->getRequest()->getPost('boxLanguage') != '') {
+                    $model->setLocale($post['boxLanguage']);
+                } else {
+                    $model->setLocale('');
+                }
+                $boxMapper->save($model);
+
+                $this->addMessage('saveSuccess');
+                $this->redirect(['action' => 'index']);
             }
 
-            $model->setTitle($this->getRequest()->getPost('boxTitle'));
-            $model->setContent($this->getRequest()->getPost('boxContent'));
-
-            if ($this->getRequest()->getPost('boxLanguage') != '') {
-                $model->setLocale($this->getRequest()->getPost('boxLanguage'));
-            } else {
-                $model->setLocale('');
-            }
-
-            $boxMapper->save($model);
-
-            $this->redirect(['action' => 'index']);
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('post', $post);
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
