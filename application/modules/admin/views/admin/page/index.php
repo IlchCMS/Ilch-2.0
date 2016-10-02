@@ -41,7 +41,7 @@
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $page->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $page->getId()]) ?></td>
                             <td>
-                                <a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($page->getPerma()) ?>"><?=$page->getTitle() ?></a>
+                                <a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($page->getPerma()) ?>"><?=$this->escape($page->getTitle()) ?></a>
                             </td>
                             <?php
                             if ($this->get('multilingual')) {
