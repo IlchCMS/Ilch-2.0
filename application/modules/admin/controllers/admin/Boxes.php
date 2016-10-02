@@ -110,7 +110,7 @@ class Boxes extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $post = [
-                'boxTitle' => htmlentities($this->getRequest()->getPost('boxTitle')),
+                'boxTitle' => $this->getRequest()->getPost('boxTitle'),
                 'boxContent' => trim($this->getRequest()->getPost('boxContent')),
                 'boxLanguage' => $this->getRequest()->getPost('boxLanguage')
             ];

@@ -46,7 +46,7 @@
                             </td>
                             <td>
                                 <?php if ($box->getTitle() !== ''): ?>
-                                    <?=$box->getTitle() ?>
+                                    <?=$this->escape($box->getTitle()) ?>
                                 <?php else: ?>
                                     <?=$this->getTrans('noTitleBox') ?>
                                 <?php endif; ?>
