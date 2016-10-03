@@ -20,6 +20,7 @@ use Modules\User\Models\GalleryImage as GalleryImageModel;
 use Modules\User\Mappers\Media as MediaMapper;
 use Modules\User\Models\Media as MediaModel;
 use Ilch\Date as IlchDate;
+use Ilch\Validation;
 
 use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Mappers\ProfileFields as ProfileFieldsMapper;
@@ -266,14 +267,33 @@ class Panel extends BaseController
                 ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
                 ->add($this->getTranslator()->trans('menuSetting'), ['controller' => 'panel', 'action' => 'setting']);
 
-        if ($this->getRequest()->isPost()) {
-            $model = new UserModel();
-            $model->setId($this->getUser()->getId());
-            $model->setOptMail($this->getRequest()->getPost('opt_mail'));
-            $profilMapper->save($model);
+        $post = [
+            'optMail' => ''
+        ];
 
-            $this->redirect(['action' => 'setting']);
+        if ($this->getRequest()->isPost()) {
+            $post = [
+                'optMail' => $this->getRequest()->getPost('optMail')
+            ];
+
+            $validation = Validation::create($post, [
+                'optMail' => 'required|numeric|integer|min:0|max:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $model = new UserModel();
+                $model->setId($this->getUser()->getId());
+                $model->setOptMail($post['optMail']);
+                $profilMapper->save($model);
+
+                $this->redirect(['action' => 'setting']);
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function dialogAction()
