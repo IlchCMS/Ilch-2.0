@@ -100,7 +100,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($post, [
-                'name' => 'required',
+                'name' => 'required|unique:smilies,name',
                 'url' => 'required|url'
             ]);
 
@@ -156,6 +156,10 @@ class Index extends \Ilch\Controller\Admin
             $this->addMessage('writableMedia', 'danger');
         }
 
+        $values = [
+            'name' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
             $upload = new \Ilch\Upload();
             $upload->setFile($_FILES['upl']['name']);
@@ -168,8 +172,22 @@ class Index extends \Ilch\Controller\Admin
             }
             $upload->upload();
 
+            $index = 0;
+            do {
+                $values = [
+                    'name' => $upload->getName(),
+                ];
+
+                $values['name'] = $upload->getName().(($index > 0) ? $index : '');
+
+                $validation = Validation::create($values, [
+                    'name' => 'required|unique:smilies,name'
+                ]);
+                $index++;
+            } while(!$validation->isValid());
+
             $model = new SmiliesModel();
-            $model->setName($upload->getName());
+            $model->setName($values['name']);
             $model->setUrl($upload->getUrl());
             $model->setUrlThumb($upload->getUrlThumb());
             $model->setEnding($upload->getEnding());
