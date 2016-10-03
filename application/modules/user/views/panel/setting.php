@@ -9,17 +9,27 @@
         </div>
         <div class="col-lg-10">
             <legend><?=$this->getTrans('settingsSetting') ?></legend>
+            <?php if (!empty($this->get('errors'))): ?>
+                <div class="alert alert-danger" role="alert">
+                    <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+                    <ul>
+                        <?php foreach ($this->get('errors') as $error): ?>
+                            <li><?= $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group">
+                <div class="form-group <?=in_array('optMail', $this->get('errorFields')) ? 'has-error' : '' ?>">
                     <div class="col-lg-3 control-label">
                         <?=$this->getTrans('optMail') ?>:
                     </div>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="opt_mail" value="1" <?php if ($profil->getOptMail() == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?php if ($profil->getOptMail() == '1') { echo 'checked="checked"'; } ?> />
                             <label for="opt_mail_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="opt_mail" value="0" <?php if ($profil->getOptMail() == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="optMail" value="0" <?php if ($profil->getOptMail() == '0') { echo 'checked="checked"'; } ?> />
                             <label for="opt_mail_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>
