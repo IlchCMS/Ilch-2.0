@@ -155,6 +155,8 @@ return [
     'system' => 'System',
     'upToDate' => 'up to date',
     'notUpToDate' => 'not up to date',
+    'versionQueryFailed' => 'Version query failed',
+    'versionNA' => 'not available',
     'installedVersion' => 'Installed Version',
     'serverVersion' => 'Server Version',
     'description' => 'Description',
