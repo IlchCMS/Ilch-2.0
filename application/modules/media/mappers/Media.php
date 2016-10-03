@@ -234,6 +234,7 @@ class Media extends \Ilch\Mapper
         $mediaModel = new MediaModel();
         $mediaModel->setUrlThumb($mediaRow['url_thumb']);
         $mediaModel->setUrl($mediaRow['url']);
+        $mediaModel->setName($mediaRow['name']);
         
         return $mediaModel;
     }

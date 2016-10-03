@@ -69,12 +69,12 @@ class File extends \Ilch\Mapper
     {
         if ($model->getId()) {
             $this->db()->update('downloads_files')
-                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat()])
+                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
             $this->db()->insert('downloads_files')
-                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat()])
+                ->values(['file_id' => $model->getFileId(),'cat' => $model->getCat(), 'file_title' => $model->getFileTitle()])
                 ->execute();
         }
     }

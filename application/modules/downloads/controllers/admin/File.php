@@ -7,6 +7,8 @@
 namespace Modules\Downloads\Controllers\Admin;
 
 use Modules\Downloads\Mappers\File as FileMapper;
+use Modules\Downloads\Models\File as FileModel;
+use Ilch\Validation;
 
 class File extends \Ilch\Controller\Admin
 {
@@ -57,20 +59,27 @@ class File extends \Ilch\Controller\Admin
         $id = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
-            $fileTitle = $this->getRequest()->getPost('fileTitle');
-            $fileImage = $this->getRequest()->getPost('fileImage');
-            $fileDesc = $this->getRequest()->getPost('fileDesc');
+            $post = ['fileTitle' => $this->getRequest()->getPost('fileTitle')];
+            $validation = Validation::create($post, ['fileTitle' => 'required']);
 
-            $model = new \Modules\Downloads\Models\File();
-            $model->setId($id);
-            $model->setFileImage($fileImage);
-            $model->setFileTitle($fileTitle);
-            $model->setFileDesc($fileDesc);
-            $fileMapper->saveFileTreat($model);
+            if ($validation->isValid()) {
+                $fileImage = $this->getRequest()->getPost('fileImage');
+                $fileDesc = $this->getRequest()->getPost('fileDesc');
 
-            $this->addMessage('saveSuccess');
+                $model = new FileModel();
+                $model->setId($id);
+                $model->setFileImage($fileImage);
+                $model->setFileTitle($post['fileTitle']);
+                $model->setFileDesc($fileDesc);
+                $fileMapper->saveFileTreat($model);
+
+                $this->addMessage('saveSuccess');
+            }
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('file', $fileMapper->getFileById($id));
     }
 }

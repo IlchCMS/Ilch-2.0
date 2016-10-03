@@ -8,6 +8,8 @@ namespace Modules\Downloads\Controllers\Admin;
 
 use Modules\Downloads\Mappers\File as FileMapper;
 use Modules\Downloads\Mappers\Downloads as DownloadsMapper;
+use Modules\Media\Mappers\Media as MediaMapper;
+use Modules\Downloads\Models\File as FileModel;
 
 class Downloads extends \Ilch\Controller\Admin
 {
@@ -68,10 +70,13 @@ class Downloads extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost()) {
             foreach ($this->getRequest()->getPost('check_image') as $fileId ) {
+                $mediaMapper = new MediaMapper();
+                $file = $mediaMapper->getByWhere(['id' => $fileId]);
                 $catId = $this->getRequest()->getParam('id');
-                $model = new \Modules\Downloads\Models\File();
+                $model = new FileModel();
                 $model->setFileId($fileId);
                 $model->setCat($catId);
+                $model->setFileTitle($file->getName());
                 $fileMapper->save($model);
             }
         }
@@ -91,7 +96,7 @@ class Downloads extends \Ilch\Controller\Admin
         if ($this->getRequest()->getPost()) {
             $fileTitle = $this->getRequest()->getPost('fileTitle');
             $fileDesc = $this->getRequest()->getPost('fileDesc');
-            $model = new \Modules\Downloads\Models\File();
+            $model = new FileModel();
             $model->setId($id);
             $model->setFileTitle($fileTitle);
             $model->setFileDesc($fileDesc);

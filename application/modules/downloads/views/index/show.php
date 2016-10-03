@@ -55,6 +55,7 @@
                     </a>
                 </div>
                 <div class="panel-footer text-center">
+                    <i class="fa fa-pencil"></i> <?=$file->getFileTitle() ?></br>
                     <i class="fa fa-comment-o"></i> <?=$commentsCount ?>
                     <i class="fa fa-eye"> <?=$file->getVisits() ?></i>
                 </div>
