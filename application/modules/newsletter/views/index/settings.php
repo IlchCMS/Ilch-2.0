@@ -8,18 +8,28 @@
             <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
         </div>
         <div class="col-lg-10">
-            <legend><?=$this->getTrans('settings') ?></legend>
+            <legend><?=$this->getTrans('setting') ?></legend>
+            <?php if (!empty($this->get('errors'))): ?>
+                <div class="alert alert-danger" role="alert">
+                    <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+                    <ul>
+                        <?php foreach ($this->get('errors') as $error): ?>
+                            <li><?= $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group">
+                <div class="form-group <?=in_array('acceptNewsletter', $this->get('errorFields')) ? 'has-error' : '' ?>">
                     <div class="col-lg-3 control-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
                     </div>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" id="newsletter_yes" name="opt_newsletter" value="1" <?php if ($countMail == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="newsletter_yes" name="acceptNewsletter" value="1" <?php if ($countMail == '1') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" id="newsletter_no" name="opt_newsletter" value="0" <?php if ($countMail == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="newsletter_no" name="acceptNewsletter" value="0" <?php if ($countMail == '0') { echo 'checked="checked"'; } ?> />
                             <label for="newsletter_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>

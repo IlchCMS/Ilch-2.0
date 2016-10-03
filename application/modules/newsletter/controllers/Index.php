@@ -10,6 +10,7 @@ use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\Usermenu as UserMenuMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -81,15 +82,33 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuSettings'), ['module' => 'user', 'controller' => 'panel', 'action' => 'settings'])
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['controller' => 'index', 'action' => 'settings']);
 
-        if ($this->getRequest()->isPost()) {
-            $newsletterModel = new NewsletterModel();
-            $newsletterModel->setId($this->getUser()->getId());
-            $newsletterModel->setNewsletter($this->getRequest()->getPost('opt_newsletter'));
-            $newsletterMapper->saveUserEmail($newsletterModel);
+        $post = [
+            'acceptNewsletter' => ''
+        ];
 
-            $this->redirect(['action' => 'settings']);
+        if ($this->getRequest()->isPost()) {
+            $post = [
+                'acceptNewsletter' => $this->getRequest()->getPost('acceptNewsletter')
+            ];
+
+            $validation = Validation::create($post, [
+                'acceptNewsletter' => 'required|numeric|integer|min:0|max:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $newsletterModel = new NewsletterModel();
+                $newsletterModel->setId($this->getUser()->getId());
+                $newsletterModel->setNewsletter($post['acceptNewsletter']);
+                $newsletterMapper->saveUserEmail($newsletterModel);
+
+                $this->redirect(['action' => 'settings']);
+            }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('countMail', $newsletterMapper->countEmails($this->getUser()->getEmail()));
         $this->getView()->set('usermenu', $UserMenuMapper->getUserMenu());
         $this->getView()->set('profil', $userMapper->getUserById($this->getUser()->getId()));
