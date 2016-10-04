@@ -221,41 +221,54 @@ class Panel extends BaseController
                 ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
                 ->add($this->getTranslator()->trans('menuPassword'), ['controller' => 'panel', 'action' => 'password']);
 
+        $post = [
+            'password' => '',
+            'password2' => ''
+        ];
+
         if ($this->getRequest()->isPost()) {
-            $password = trim($this->getRequest()->getPost('password'));
-            $password2 = trim($this->getRequest()->getPost('password2'));
+            $post = [
+                'password' => $this->getRequest()->getPost('password'),
+                'password2' => $this->getRequest()->getPost('password2')
+            ];
 
-            if (empty($password)) {
-                $this->addMessage('passwordEmpty', $type = 'danger');
-                $this->redirect(['action' => 'password']);
-            } elseif (empty($password2)) {
-                $this->addMessage('passwordRetypeEmpty', $type = 'danger');
-                $this->redirect(['action' => 'password']);
-            } elseif (strlen($password) < 6 OR strlen($password) > 30) {
-                $this->addMessage('passwordLength', $type = 'danger');
-                $this->redirect(['action' => 'password']);
-            } elseif ($password != $password2) {
-                $this->addMessage('passwordNotEqual', $type = 'danger');
+            Validation::setCustomFieldAliases([
+                'password' => 'profileNewPassword',
+                'password2' => 'profileNewPasswordRetype',
+            ]);
+
+            $validation = Validation::create($post, [
+                'password' => 'required|min:6|max:30',
+                'password2' => 'required|min:6|max:30'
+            ]);
+
+            if ($validation->isValid()) {
+                if ($post['password'] == $post['password2']) {
+                    // Delete all stored authTokens of a user when he changes his password.
+                    // This will invalidate all possibly stolen rememberMe-cookies.
+                    $authTokenMapper = new \Modules\User\Mappers\AuthToken();
+                    $authTokenMapper->deleteAllAuthTokenOfUser($this->getUser()->getId());
+
+                    $post['password'] = (new PasswordService())->hash($post['password']);
+
+                    $model = new UserModel();
+                    $model->setId($this->getUser()->getId());
+                    $model->setPassword($post['password']);
+                    $profilMapper->save($model);
+
+                    $this->addMessage('passwordSuccess');
+                } else {
+                    $this->addMessage('passwordNotEqual', $type = 'danger');
+                }
+
                 $this->redirect(['action' => 'password']);
             }
 
-            if (!empty($password) AND !empty($password2) AND $password == $password2) {
-                // Delete all stored authTokens of a user when he changes his password.
-                // This will invalidate all possibly stolen rememberMe-cookies.
-                $authTokenMapper = new \Modules\User\Mappers\AuthToken();
-                $authTokenMapper->deleteAllAuthTokenOfUser($this->getUser()->getId());
-
-                $password = (new PasswordService())->hash($password);
-
-                $model = new UserModel();
-                $model->setId($this->getUser()->getId());
-                $model->setPassword($password);
-                $profilMapper->save($model);
-
-                $this->addMessage('passwordSuccess');
-                $this->redirect(['action' => 'password']);
-            }
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
+
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function settingAction()
