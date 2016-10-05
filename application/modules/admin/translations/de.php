@@ -88,7 +88,7 @@ return [
     'ack' => 'Bestätigen',
     'cancel' => 'Abbrechen',
     'needAcknowledgement' => 'Bestätigung erforderlich',
-    'pageTitle' => 'Ttitel',
+    'pageTitle' => 'Titel',
     'pageContent' => 'Content',
     'startPage' => 'Startseite',
     'locale' => 'Standard Seiten Sprache',

@@ -100,7 +100,7 @@
             <input type="text"
                    id="pagePerma"
                    name="pagePerma"
-                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['pagePerma']; } ?>" />
+                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
         </div>
     </div>
     <?php
@@ -123,11 +123,29 @@ if ($this->get('page') != '') {
 ?>
 $('#pageTitle').change (
     function () {
+        var entityMap = {
+            "&": "",
+            "<": "",
+            ">": "",
+            '"': '',
+            "'": '',
+            "/": '',
+            "(": '',
+            ")": '',
+            " ": '-',
+            ";": ''
+        };
+
+        function escapeHtml(string) {
+            return String(string).replace(/[&<>"'\/(); ]/g, function (s) {
+                return entityMap[s];
+            });
+        }
+        var title = escapeHtml($('#pageTitle').val());
         $('#pagePerma').val
         (
-            $(this).val()
-            .toLowerCase()
-            .replace(/ /g,'-')+'.html'
+            title
+            .toLowerCase()+'.html'
         );
     }
 );

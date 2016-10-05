@@ -94,7 +94,25 @@ class Page extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             // Create full-url of permaLink.
-            $pagePerma = BASE_URL.'/index.php/'.$this->getRequest()->getPost('pagePerma');
+            $entityMap = [
+                "&" => "",
+                "<" => "",
+                ">" => "",
+                '"' => "",
+                "'" => "",
+                "/" => "",
+                "(" => "",
+                ")" => "",
+                ";" => ""
+            ];
+
+            $pagePerma = strtr($this->getRequest()->getPost('pagePerma'), $entityMap);
+
+            if ($pagePerma != '') {
+                $pagePermaUrl = BASE_URL.'/index.php/'.$pagePerma;
+            } else {
+                $pagePermaUrl = '';
+            }
 
             $post = [
                 'pageTitle' => $this->getRequest()->getPost('pageTitle'),
@@ -102,17 +120,16 @@ class Page extends \Ilch\Controller\Admin
                 'pageLanguage' => $this->getRequest()->getPost('pageLanguage'),
                 'keywords' => $this->getRequest()->getPost('keywords'),
                 'description' => trim($this->getRequest()->getPost('description')),
-                'pagePerma' => $pagePerma,
+                'permaLink' => $pagePermaUrl,
             ];
 
             $validation = Validation::create($post, [
                 'pageTitle' => 'required',
                 'pageContent' => 'required',
-                'pagePerma' => 'url'
+                'permaLink' => 'url|required'
             ]);
 
             // Restore original values
-            $post['pagePerma'] = $this->getRequest()->getPost('pagePerma');
 
             if ($validation->isValid()) {
                 $model = new PageModel();
@@ -128,7 +145,7 @@ class Page extends \Ilch\Controller\Admin
                 } else {
                     $model->setLocale('');
                 }
-                $model->setPerma($post['pagePerma']);
+                $model->setPerma($pagePerma);
                 $pageMapper->save($model);
 
                 $this->addMessage('saveSuccess');
