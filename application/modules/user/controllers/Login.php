@@ -104,14 +104,18 @@ class Login extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->getPost('saveNewPassword')) {
             $confirmedCode = $this->getRequest()->getParam('code');
+            $selector = $this->getRequest()->getParam('selector');
 
             if (empty($confirmedCode)) {
                 $this->addMessage('missingConfirmedCode', 'danger');
+            } elseif (empty($selector)) {
+                $this->addMessage('missingSelector', 'danger');
             } else {
                 $userMapper = new UserMapper();
-                $user = $userMapper->getUserByConfirmedCode($confirmedCode);
+                $user = $userMapper->getUserBySelector($selector);
 
-                if (!empty($user)) {
+                // Compare confirmedCode from the database with the one provided as parameter in the url
+                if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
                     $password = trim($this->getRequest()->getPost('password'));
                     $password2 = trim($this->getRequest()->getPost('password2'));
 
@@ -133,6 +137,7 @@ class Login extends \Ilch\Controller\Frontend
                         $password = (new PasswordService())->hash($password);
                         $user->setConfirmed(1);
                         $user->setConfirmedCode('');
+                        $user->setSelector('');
                         $user->setPassword($password);
                         $userMapper->save($user);
 
@@ -166,14 +171,16 @@ class Login extends \Ilch\Controller\Frontend
                 }
 
                 if (!empty($user)) {
-                    $confirmedCode = md5(uniqid(rand()));
+                    $selector = bin2hex(openssl_random_pseudo_bytes(9));
+                    $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
+                    $user->setSelector($selector);
                     $user->setConfirmedCode($confirmedCode);
                     $userMapper->save($user);
 
                     $name = $user->getName();
                     $email = $user->getEmail();
                     $sitetitle = $this->getConfig()->get('page_title');
-                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                     $date = new \Ilch\Date();
 
                     $layout = '';

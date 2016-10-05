@@ -110,6 +110,7 @@ class Config extends \Ilch\Config\Install
                   `date_last_activity` DATETIME NULL DEFAULT NULL,
                   `confirmed` INT(11) DEFAULT 1,
                   `confirmed_code` VARCHAR(255) NULL DEFAULT NULL,
+                  `selector` char(18),
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
