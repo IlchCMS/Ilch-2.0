@@ -106,10 +106,8 @@ class Login extends \Ilch\Controller\Frontend
             $confirmedCode = $this->getRequest()->getParam('code');
             $selector = $this->getRequest()->getParam('selector');
 
-            if (empty($confirmedCode)) {
-                $this->addMessage('missingConfirmedCode', 'danger');
-            } elseif (empty($selector)) {
-                $this->addMessage('missingSelector', 'danger');
+            if (empty($confirmedCode) or empty($selector)) {
+                $this->addMessage('incompleteNewPasswordUrl', 'danger');
             } else {
                 $userMapper = new UserMapper();
                 $user = $userMapper->getUserBySelector($selector);
