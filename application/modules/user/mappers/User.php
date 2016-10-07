@@ -96,6 +96,27 @@ class User extends \Ilch\Mapper
     }
 
     /**
+     * Returns user model found by the selector.
+     *
+     * @param  string $selector
+     * @return null|\Modules\User\Models\User
+     */
+    public function getUserBySelector($selector)
+    {
+        $where = [
+            'selector' => (string)$selector,
+        ];
+
+        $users = $this->getBy($where);
+
+        if (!empty($users)) {
+            return reset($users);
+        }
+
+        return null;
+    }
+
+    /**
      * Returns an array with user models found by the where clause of false if
      * none found.
      *
@@ -239,6 +260,10 @@ class User extends \Ilch\Mapper
             $user->setConfirmedCode($userRow['confirmed_code']);
         }
 
+        if (isset($userRow['selector'])) {
+            $user->setSelector($userRow['selector']);
+        }
+
         return $user;
     }
 
@@ -260,6 +285,7 @@ class User extends \Ilch\Mapper
         $dateCreated = $user->getDateCreated();
         $confirmed = $user->getConfirmed();
         $confirmedCode = $user->getConfirmedCode();
+        $selector = $user->getSelector();
 
         if (!empty($name)) {
             $fields['name'] = $user->getName();
@@ -291,6 +317,10 @@ class User extends \Ilch\Mapper
 
         if ($confirmedCode !== null) {
             $fields['confirmed_code'] = $confirmedCode;
+        }
+
+        if ($selector !== null) {
+            $fields['selector'] = $selector;
         }
 
         $fields['first_name'] = $user->getFirstName();

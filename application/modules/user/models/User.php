@@ -153,7 +153,14 @@ class User extends \Ilch\Model
      * @var string
      */
     protected $confirmedCode;
-    
+
+    /**
+     * selector of the user.
+     *
+     * @var string
+     */
+    protected $selector;
+
     /**
      * The associated user group object.
      *
@@ -341,6 +348,29 @@ class User extends \Ilch\Model
     public function setConfirmedCode($confirmedCode)
     {
         $this->confirmedCode = (string)$confirmedCode;
+
+        return $this;
+    }
+
+    /**
+     * Returns the selector of the user.
+     *
+     * @return string
+     */
+    public function getSelector()
+    {
+        return $this->selector;
+    }
+
+    /**
+     * Saves the selector of the user.
+     *
+     * @param string $selector
+     * @return User
+     */
+    public function setSelector($selector)
+    {
+        $this->selector = (string)$selector;
 
         return $this;
     }

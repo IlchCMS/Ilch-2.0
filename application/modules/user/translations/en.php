@@ -148,6 +148,7 @@ return [
     'buttonNewPassword' => 'New Password request',
     'missingNameEmail' => 'Name or E-Mail was not filled',
     'newPasswordSuccess' => 'You can now log in with your new password',
+    'incompleteNewPasswordUrl' => 'The url to change your password is invalid.',
     'newPasswordEMailSuccess' => 'New Password send via E-Mail',
     'newPasswordFailed' => 'User or E-Mail not available',
     'loginSuccessful' => 'You logged in successfully.',

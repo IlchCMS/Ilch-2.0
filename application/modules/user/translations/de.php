@@ -149,6 +149,7 @@ return [
     'missingNameEmail' => 'Name oder E-Mail muss ausgefüllt werden',
     'newPasswordSuccess' => 'Sie können sich nun mit ihrem neuen Passwort einloggen',
     'newPasswordEMailSuccess' => 'Neues Passwort wurde per E-Mail zugesendet',
+    'incompleteNewPasswordUrl' => 'Die Adresse zur Änderung ihres Passwortes ist ungültig.',
     'newPasswordFailed' => 'Benutzer oder E-Mail nicht vorhanden',
     'loginSuccessful' => 'Sie haben sich erfolgreich eingeloggt.',
     'loginFailed' => 'Sie haben einen fehlerhaften Benutzername, E-Mail oder Passwort angegeben. Bitte prüfen Sie ihre Angaben und versuche Sie es erneut.',
