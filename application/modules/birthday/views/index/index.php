@@ -46,7 +46,7 @@ $date = new \Ilch\Date();
     <div class="panel panel-default">
         <div class="panel-heading">
             <?php $month = date('F', mktime(0, 0, 0, +$x, 1, 1)); ?>
-            <strong><?=$this->getTrans($month) ?></strong>
+            <strong><?=$month ?></strong>
             <span class="pull-right">
                 <strong><?=$monthsUserCount; ?> <?=$this->getTrans('people') ?></strong>
             </span>
