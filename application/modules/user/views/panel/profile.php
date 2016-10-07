@@ -183,6 +183,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
 <script type="text/javascript">
 $(document).ready(function() {
     $(".form_datetime").datetimepicker({
+        endDate: new Date(),
         format: "dd.mm.yyyy",
         autoclose: true,
         language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
