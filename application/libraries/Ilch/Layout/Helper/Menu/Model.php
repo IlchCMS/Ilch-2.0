@@ -107,7 +107,7 @@ class Model
                 if ($item->isMenu() || $item->isBox()) {
                     $html = str_replace('%c', $htmlMenuItems, $html);
                     $htmlMenuItems = '';
-                    $html .= str_replace('%s', $item->getTitle(), $tpl);
+                    $html .= str_replace('%s', $this->layout->escape($item->getTitle()), $tpl);
 
                     if ($item->isBox()) {
                         if ($item->getBoxId()) {
@@ -175,12 +175,12 @@ class Model
         }
 
         if ($item->isExternalLink()) {
-            $html .= '<a href="'.$item->getHref().'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$item->getHref().'">'.$this->layout->escape($item->getTitle()).'</a>';
         } elseif ($item->isPageLink()) {
             $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
-            $html .= '<a href="'.$this->layout->getUrl($page->getPerma()).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->layout->getUrl($page->getPerma()).'">'.$this->layout->escape($item->getTitle()).'</a>';
         } elseif ($item->isModuleLink()) {
-            $html .= '<a href="'.$this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']).'">'.$item->getTitle().'</a>';
+            $html .= '<a href="'.$this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']).'">'.$this->layout->escape($item->getTitle()).'</a>';
         }
 
         if (!empty($subItems)) {
