@@ -20,8 +20,8 @@
                         <hr />
                         <div class="row rating-desc">
                             <div class="col-md-12">
-                                <span>WIN</span>(36)<span class="separator">|</span>
-                                <span>LOOS</span>(100)
+                                <span><?=$this->getTrans('warWin') ?></span>(36)<span class="separator">|</span>
+                                <span><?=$this->getTrans('warLost') ?></span>(100)
                             </div>
                         </div>
                     </div>

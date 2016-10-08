@@ -101,7 +101,7 @@ $enemy = $this->get('enemy');
                 <h3 class="panel-title"><?=$this->getTrans('warReport') ?></h3>
             </div>
             <div class="panel-body">
-                <?=$this->escape($war->getWarReport()) ?>
+                <?=$war->getWarReport() ?>
             </div>
         </div>
     </div>
