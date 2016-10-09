@@ -75,27 +75,6 @@ class User extends \Ilch\Mapper
     }
 
     /**
-     * Returns user model found by the confirmed_code.
-     *
-     * @param  string $confirmed
-     * @return null|\Modules\User\Models\User
-     */
-    public function getUserByConfirmedCode($confirmed)
-    {
-        $where = [
-            'confirmed_code' => (string)$confirmed,
-        ];
-
-        $users = $this->getBy($where);
-
-        if (!empty($users)) {
-            return reset($users);
-        }
-
-        return null;
-    }
-
-    /**
      * Returns user model found by the selector.
      *
      * @param  string $selector
