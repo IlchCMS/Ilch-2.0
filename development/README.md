@@ -9,8 +9,10 @@ so dass alle Entwickler mit dem gleichen System arbeiten und sich um deren Einri
 4. Ändere die Datei Vagrantfile entsprechend deinen Wünschen, sie sollte aber auch ohne Änderungen funktionieren
 5. Starte eine Konsole (unter Windows möglichst PowerShell, GitBash oder CygWin verwenden)
 6. In das Hauptverzeichnis des Projektes per Shell wechseln
-7. Die VM mit __vargrant up__ initialisieren (Dies dauert beim ersten mal eine ganze Weile, da einiges heruntergeladen werden muss)
-8. VM kann im Browser über http://localhost:8080 aufgerufen werden, soweit du keinen anderen Port konfiguriert hast
+7. _[optional]_ Installiere  das Plugin vagrant-vbguest, welches immer die aktuelle VirtualBox Guest Additions in die VM integriert, 
+   dafür muss `vagrant plugin install vagrant-vbguest` ausgeführt werden
+8. Die VM mit __vagrant up__ initialisieren (Dies dauert beim ersten mal eine ganze Weile, da einiges heruntergeladen werden muss)
+9. VM kann im Browser über http://localhost:8080 aufgerufen werden, soweit du keinen anderen Port konfiguriert hast
 
 ## Benutzung nach Intialisierung
 

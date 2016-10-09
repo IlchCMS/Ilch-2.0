@@ -19,6 +19,9 @@ class DebugBar
         if (class_exists('\DebugBar\StandardDebugBar')) {
             self::$debugBar = new \DebugBar\StandardDebugBar();
             set_error_handler([__CLASS__, 'errorHandler']);
+            //set base url
+            $jsRenderer = self::$debugBar->getJavascriptRenderer();
+            $jsRenderer->setBaseUrl(REWRITE_BASE . $jsRenderer->getBaseUrl());
             return true;
         }
         return false;

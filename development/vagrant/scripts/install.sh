@@ -2,12 +2,19 @@
 # script to install needed software and do some configuration (called as root)
 export DEBIAN_FRONTEND=noninteractive
 
-aptitude -q -y update
+#configure locale and timezone
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+locale-gen en_US.UTF-8
+echo "Europe/Berlin" > /etc/timezone && \
+dpkg-reconfigure -f noninteractive tzdata && \
+sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
+dpkg-reconfigure --frontend=noninteractive locales && \
+update-locale LANG=en_US.UTF-8
 
-# configure update
-echo "grub-pc grub-pc/install_devices multiselect /dev/sda" | debconf-set-selections && \
-echo "grub-pc grub-pc/install_devices_disks_changed multiselect /dev/sda" | debconf-set-selections && \
-aptitude -q -y upgrade
+aptitude -q -y update
 
 #install apache2
 aptitude -q -y install apache2
@@ -26,21 +33,13 @@ sed -e 's/^bind-address/#bind-address/' -i /etc/mysql/my.cnf
 echo "CREATE DATABASE ilch2; CREATE DATABASE ilch2test;" | mysql -uroot -proot
 
 # install php
-aptitude -q -y install php5 php5-mysqlnd php5-gd php5-xdebug php5-curl libapache2-mod-php5
+aptitude -q -y install php5 php5-mysqlnd php5-gd php5-xdebug php5-curl php5-intl libapache2-mod-php5
 
 # configure xdebug fore remote debugging
-cat /vagrant/development/vagrant/xdebug.ini | tee -a /etc/php5/conf.d/20-xdebug.ini > /dev/null
+cat /vagrant/development/vagrant/xdebug.ini | tee -a /etc/php5/mods-available/xdebug.ini > /dev/null
 
-# link document root to vagrant folder
-rm -rf /var/www
-ln -s /vagrant/ /var/www
-
-# allow .htaccess override
-sed -e 's/AllowOverride None/AllowOverride All/' -i /etc/apache2/sites-available/default
-
-# set timezone
-echo "Europe/Berlin" > /etc/timezone && \
-dpkg-reconfigure --frontend noninteractive tzdata
+# configure web server
+cp -f /vagrant/development/vagrant/000-default.conf /etc/apache2/sites-available/
 
 # install mailhog
 sh /vagrant/development/vagrant/scripts/install_mailhog.sh

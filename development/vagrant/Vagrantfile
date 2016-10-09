@@ -5,11 +5,17 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "puppetlabs/debian-7.8-64-nocm"
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vm.box = "debian/jessie64"
+  else
+    config.vm.box = "debian/contrib-jessie64"
+  end
 
   config.vm.network "forwarded_port", guest: 80, host: 8080
   config.vm.network "forwarded_port", guest: 8025, host: 8025
   config.vm.network "forwarded_port", guest: 3306, host: 13306
+
+  config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
 
 #  config.vm.provider "virtualbox" do |vb|
 #    # Use VBoxManage to customize the VM. For example to change memory:
