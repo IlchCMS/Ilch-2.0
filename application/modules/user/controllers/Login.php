@@ -114,21 +114,21 @@ class Login extends \Ilch\Controller\Frontend
 
                 // Compare confirmedCode from the database with the one provided as parameter in the url
                 if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
-                    $password = trim($this->getRequest()->getPost('password'));
-                    $password2 = trim($this->getRequest()->getPost('password2'));
+                    $password = $this->getRequest()->getPost('password');
+                    $password2 = $this->getRequest()->getPost('password2');
 
                     if (empty($password)) {
                         $this->addMessage('passwordEmpty', $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
+                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
                     } elseif (empty($password2)) {
                         $this->addMessage('passwordRetypeEmpty', $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
+                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
                     } elseif (strlen($password) < 6 OR strlen($password) > 30) {
                         $this->addMessage('passwordLength', $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
+                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
                     } elseif ($password != $password2) {
                         $this->addMessage('passwordNotEqual', $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'code' => $confirmedCode]);
+                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
                     }
 
                     if (!empty($password) AND !empty($password2) AND $password == $password2) {
