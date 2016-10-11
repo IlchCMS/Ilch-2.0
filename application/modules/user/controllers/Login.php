@@ -118,16 +118,17 @@ class Login extends \Ilch\Controller\Frontend
                     $password2 = $this->getRequest()->getPost('password2');
 
                     if (empty($password)) {
-                        $this->addMessage('passwordEmpty', $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
+                        $message = 'passwordEmpty';
                     } elseif (empty($password2)) {
-                        $this->addMessage('passwordRetypeEmpty', $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
+                        $message = 'passwordRetypeEmpty';
                     } elseif (strlen($password) < 6 OR strlen($password) > 30) {
-                        $this->addMessage('passwordLength', $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
+                        $message = 'passwordLength';
                     } elseif ($password != $password2) {
-                        $this->addMessage('passwordNotEqual', $type = 'danger');
+                        $message = 'passwordNotEqual';
+                    }
+
+                    if (!empty($message)) {
+                        $this->addMessage($message, $type = 'danger');
                         $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
                     }
 
