@@ -15,7 +15,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>PHP-<?=$this->getTrans('extension') ?> Internationalization support (intl)</td>
+                <td>Internationalization support (intl)</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
                     <?php if (extension_loaded('intl')): ?>
@@ -26,7 +26,7 @@
                 </td>
             </tr>
             <tr>
-                <td>PHP-<?=$this->getTrans('extension') ?> Multibyte String (mbstring)</td>
+                <td>Multibyte String (mbstring)</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
                     <?php if (extension_loaded('mbstring')): ?>
@@ -37,7 +37,7 @@
                 </td>
             </tr>
             <tr>
-                <td>PHP-<?=$this->getTrans('extension') ?> Zip</td>
+                <td>Zip</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
                     <?php if (extension_loaded('zip')): ?>
@@ -48,7 +48,7 @@
                 </td>
             </tr>
             <tr>
-                <td>PHP-<?=$this->getTrans('extension') ?> OpenSSL</td>
+                <td>OpenSSL</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
                     <?php if (extension_loaded('openssl')): ?>
@@ -59,7 +59,7 @@
                 </td>
             </tr>
             <tr>
-                <td>PHP-<?=$this->getTrans('extension') ?> cURL</td>
+                <td>cURL</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
                     <?php if (extension_loaded('curl')): ?>
@@ -72,7 +72,7 @@
             <?php if ($this->get('phpExtensions') != ''): ?>
                 <?php foreach ($this->get('phpExtensions') as $phpExtension): ?>
                     <tr>
-                        <td>PHP-<?=$this->getTrans('extension') ?> <?=$phpExtension->getExtension() ?></td>
+                        <td><?=$phpExtension->getExtension() ?></td>
                         <td class="text-success"><?=$this->getTrans('existing') ?></td>
                         <td>
                             <?php if (extension_loaded($phpExtension->getExtension())): ?>
