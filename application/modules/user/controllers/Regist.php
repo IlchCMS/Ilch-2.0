@@ -32,13 +32,13 @@ class Regist extends \Ilch\Controller\Frontend
             }
         } else {
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index']);
-        
+
             $this->getView();
         }
     }
-    
+
     public function inputAction()
-    {    
+    {
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
@@ -95,28 +95,32 @@ class Regist extends \Ilch\Controller\Frontend
                     $groupMapper = new \Modules\User\Mappers\Group();
                     $userGroup = $groupMapper->getGroupById(2);
                     $currentDate = new \Ilch\Date();
-                    $model = new \Modules\User\Models\User();
-                    $model->setName($name);
-                    $model->setPassword((new PasswordService())->hash($password));
-                    $model->setEmail($email);
-                    $model->setDateCreated($currentDate->format("Y-m-d H:i:s", true));
-                    $model->addGroup($userGroup);
+                    $user = new \Modules\User\Models\User();
+                    $user->setName($name);
+                    $user->setPassword((new PasswordService())->hash($password));
+                    $user->setEmail($email);
+                    $user->setDateCreated($currentDate->format("Y-m-d H:i:s", true));
+                    $user->addGroup($userGroup);
 
                 if ($this->getConfig()->get('regist_confirm') == 0) {
-                    $model->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
+                    $user->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
                 } else {
-                    $confirmedCode = md5(uniqid(rand()));
-                    $model->setConfirmed(0);
-                    $model->setConfirmedCode($confirmedCode);
+                    $selector = bin2hex(openssl_random_pseudo_bytes(9));
+                    // 33 bytes instead of 32 bytes just that the confirmedCode to confirm a registration
+                    // is different from the one to change a password and therefore can only be used for this purpose.
+                    $confirmedCode = bin2hex(openssl_random_pseudo_bytes(33));
+                    $user->setSelector($selector);
+                    $user->setConfirmedCode($confirmedCode);
+                    $user->setConfirmed(0);
                 }
-                $registMapper->save($model);
+                $registMapper->save($user);
 
                 $_SESSION["name"] = $name;
                 $_SESSION["email"] = $email;
 
                 if ($this->getConfig()->get('regist_confirm') == 1) {
                     $sitetitle = $this->getConfig()->get('page_title');
-                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
+                    $confirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                     $date = new \Ilch\Date();
                     $layout = '';
 
@@ -159,55 +163,59 @@ class Regist extends \Ilch\Controller\Frontend
     }
 
     public function finishAction()
-    {        
+    {
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('step3to3'), ['action' => 'finish']);
-        
+
         $this->getView()->set('regist_confirm', $this->getConfig()->get('regist_confirm'));    
     }
 
     public function confirmAction()
-    {        
+    {
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuConfirm'), ['action' => 'confirm']);
-        
+
         $errors = [];
-        
+
         if ($this->getRequest()->getPost('saveConfirm')) {
+            $selector = $this->getRequest()->getParam('selector');
             $confirmedCode = $this->getRequest()->getPost('confirmedCode');
+
+            if (empty($selector)) {
+                $errors['selector'] = 'fieldEmpty';
+            }
 
             if (empty($confirmedCode)) {
                 $errors['confirmedCode'] = 'fieldEmpty';
             }
-            
+
             if (empty($errors)) {
-                $this->redirect(['controller' => 'regist', 'action' => 'confirm', 'code' => $confirmedCode]);
+                $this->redirect(['controller' => 'regist', 'action' => 'confirm', 'selector' => $selector, 'code' => $confirmedCode]);
             }
-            
+
             $this->getView()->set('errors', $errors);
-            
         } else {
             $userMapper = new UserMapper();
-            $confirmed = $this->getRequest()->getParam('code');
-            $user = $userMapper->getUserByConfirmedCode($confirmed);
-            
-            if (!empty($confirmed)) {
-                if (!empty($user)) {
+            $selector = $this->getRequest()->getParam('selector');
+            $confirmedCode = $this->getRequest()->getParam('code');
+            $user = $userMapper->getUserBySelector($selector);
+
+            if (!empty($confirmedCode) and !empty($selector)) {
+                if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
                     $currentDate = new \Ilch\Date();
                     $user->setDateConfirmed($currentDate);
                     $user->setConfirmed(1);
                     $user->setConfirmedCode('');
+                    $user->setSelector('');
                     $userMapper->save($user);
 
-                    $confirmed = '1';
-                    $this->getView()->set('confirmed', $confirmed);
+                    $this->getView()->set('confirmed', '1');
                 } else {
-                    $confirmed = null;
-                    $this->getView()->set('confirmed', $confirmed);
-                    
-                    $_SESSION['messages'][] = ['text' => 'Aktivierungscode Falsch', 'type' => 'warning'];
+                    $this->getView()->set('confirmed', null);
+
+                    $_SESSION['messages'][] = ['text' => $this->getTrans('confirmedCodeWrong'), 'type' => 'warning'];
                 }
             } else {
                 $this->getView();
