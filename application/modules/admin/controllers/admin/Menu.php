@@ -62,6 +62,18 @@ class Menu extends \Ilch\Controller\Admin
                     }
 
                     foreach ($items as $item) {
+                        $entityMap = [
+                            "&" => "",
+                            "<" => "",
+                            ">" => "",
+                            '"' => "",
+                            "'" => "",
+                            "/" => "",
+                            "(" => "",
+                            ")" => "",
+                            ";" => ""
+                        ];
+
                         $menuItem = new MenuItem();
 
                         if (strpos($item['id'], 'tmp_') !== false) {
@@ -74,7 +86,7 @@ class Menu extends \Ilch\Controller\Admin
                         $menuItem->setType($item['type']);
                         $menuItem->setSiteId($item['siteid']);
                         $menuItem->setHref($item['href']);
-                        $menuItem->setTitle($item['title']);
+                        $menuItem->setTitle(strtr($item['title'], $entityMap));
 
                         if ((int)$item['boxkey'] > 0) {
                             $menuItem->setBoxId($item['boxkey']);

@@ -201,8 +201,30 @@ $(document).ready
             }
         );
 
+        var entityMap = {
+            "&": "",
+            "<": "",
+            ">": "",
+            '"': '',
+            "'": '',
+            "/": '',
+            "(": '',
+            ")": '',
+            " ": '-',
+            ";": ''
+        };
+
+        function escapeHtml(string) {
+            return String(string).replace(/[&<>"'\/(); ]/g, function (s) {
+                return entityMap[s];
+            });
+        };
+
         $('#menuForm').on('click', '#menuItemAdd', function () {
-            if ($('#title').val() == '') {
+
+            var title = escapeHtml($('#title').val());
+
+            if (title == '') {
                 alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                 return;
             }
@@ -244,21 +266,22 @@ $(document).ready
 
             $('<li id="tmp_'+itemId+'"><div><span class="disclose"><span>'
                     +'<input type="hidden" class="hidden_id" name="items[tmp_'+itemId+'][id]" value="tmp_'+itemId+'" />'
-                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+$('#title').val()+'" />'
+                    +'<input type="hidden" class="hidden_title" name="items[tmp_'+itemId+'][title]" value="'+title+'" />'
                     +'<input type="hidden" class="hidden_href" name="items[tmp_'+itemId+'][href]" value="'+$('#href').val()+'" />'
                     +'<input type="hidden" class="hidden_type" name="items[tmp_'+itemId+'][type]" value="'+$('#type').val()+'" />'
                     +'<input type="hidden" class="hidden_siteid" name="items[tmp_'+itemId+'][siteid]" value="'+$('#siteid').val()+'" />'
                     +'<input type="hidden" class="hidden_boxkey" name="items[tmp_'+itemId+'][boxkey]" value="'+$('#boxkey').val()+'" />'
                     +'<input type="hidden" class="hidden_modulekey" name="items[tmp_'+itemId+'][modulekey]" value="'+modulKey+'" />'
                     +'<input type="hidden" class="hidden_menukey" name="items[tmp_'+itemId+'][menukey]" value="'+$('#menukey').val()+'" />'
-                    +'</span></span><span class="title">'+$('#title').val()+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
+                    +'</span></span><span class="title">'+title+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
             }
         );
 
         $('#menuForm').on('click', '#menuItemEdit', function () {
-                if ($('#title').val() == '') {
+                var title = escapeHtml($('#title').val());
+                if (title == '') {
                     alert(<?=json_encode($this->getTrans('missingTitle')) ?>);
                     return;
                 }
@@ -272,8 +295,8 @@ $(document).ready
                     modulKey = boxkeyParts[0];
                 }
 
-                $('#'+$('#id').val()).find('.title:first').text($('#title').val());
-                $('#'+$('#id').val()).find('.hidden_title:first').val($('#title').val());
+                $('#'+$('#id').val()).find('.title:first').text(title);
+                $('#'+$('#id').val()).find('.hidden_title:first').val(title);
                 $('#'+$('#id').val()).find('.hidden_href:first').val($('#href').val());
                 $('#'+$('#id').val()).find('.hidden_type:first').val($('#type').val());
                 $('#'+$('#id').val()).find('.hidden_siteid:first').val($('#siteid').val());
