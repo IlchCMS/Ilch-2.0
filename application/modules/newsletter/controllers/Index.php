@@ -24,7 +24,7 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getPost('saveNewsletter')) {
             $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
             if ($countEmails == 0) {
-                $newsletterModel =NewsletterModel();
+                $newsletterModel = new NewsletterModel();
                 $newsletterModel->setEmail($this->getRequest()->getPost('email'));
                 $newsletterMapper->saveEmail($newsletterModel);
 
