@@ -13,7 +13,7 @@ $archive = $this->get('archive');
                 <li class="ellipsis">
                     <span class="ellipsis-item">
                         <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'archive', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>">
-                            <?=$date->format("F Y", true) ?>
+                            <?=$this->getTrans($date->format("F", true)).$date->format(" Y", true) ?>
                         </a>
                     </span>
                     <span class="badge">
