@@ -52,7 +52,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                             <div class="panel-heading">
                                 <h1 class="panel-title text-center">
                                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $registNewUser->getId()]) ?>">
-                                        <?=$registNewUser->getName() ?>
+                                        <?=$this->escape($registNewUser->getName()) ?>
                                     </a>
                                 </h1>
                             </div>
@@ -139,7 +139,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                                             <?=$smallIcon ?>
                                         </div>
                                         <div class="info">
-                                            <h3 class="title"><strong><?=$module->getName() ?></strong></h3>
+                                            <h3 class="title"><strong><?=$this->escape($module->getName()) ?></strong></h3>
                                         </div>
                                     </div>
                                     <div class="space"></div>
@@ -245,7 +245,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><?=$date->format("l") ?></strong>
+                            <strong><?=$this->getTrans($date->format("l")) ?></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">
@@ -287,7 +287,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <?php $date = new \Ilch\Date($statisticList->getDate()); ?>
                         <div class="list-group-item">
-                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format("Y - F", true) ?></a></strong>
+                            <strong><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format("Y - ", true).$this->getTrans($date->format("F", true)) ?></a></strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>
                             <div class="radio">
                                 <div class="progress" style="margin-bottom: 0px;">

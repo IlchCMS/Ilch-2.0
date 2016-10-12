@@ -50,4 +50,13 @@ return [
     'October' => 'Oktober',
     'November' => 'November',
     'December' => 'Dezember',
+
+    // weekday name
+    'Monday' => 'Montag',
+    'Tuesday' => 'Dienstag',
+    'Wednesday' => 'Mittwoch',
+    'Thursday' => 'Donnerstag',
+    'Friday' => 'Freitag',
+    'Saturday' => 'Samstag',
+    'Sunday' => 'Sonntag',
 ];
