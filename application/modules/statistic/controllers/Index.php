@@ -62,7 +62,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
-                    ->add($date->format('F', true), ['action' => 'show', 'year' => $year, 'month' => $month])
+                    ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($os, ['action' => 'show', 'year' => $year, 'month' => $month, 'os' => $os]);
         }
@@ -79,7 +79,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
-                    ->add($date->format('F', true), ['action' => 'show', 'year' => $year, 'month' => $month])
+                    ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year])
                     ->add($browser, ['action' => 'show', 'year' => $year, 'month' => $month, 'browser' => $browser]);
         }
@@ -96,7 +96,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuStatistic'), ['action' => 'index'])
-                    ->add($date->format('F', true), ['action' => 'show', 'year' => $year, 'month' => $month])
+                    ->add($this->getTranslator()->trans($date->format('F', true)), ['action' => 'show', 'year' => $year, 'month' => $month])
                     ->add($date->format('Y', true), ['action' => 'show', 'year' => $year]);
         }
         if ($year != '') {
