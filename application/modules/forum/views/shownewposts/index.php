@@ -20,7 +20,7 @@ if ($this->getUser()) {
     <div class="forabg">
         <ul class="topiclist">
             <li class="header">
-                <dl class="icon">
+                <dl class="title">
                     <dt><?=$this->getTrans('topics') ?></dt>
                     <dd class="posts"><?=$this->getTrans('replies') ?> / <?=$this->getTrans('views') ?></dd>
                     <dd class="lastpost"><span><?=$this->getTrans('lastPost') ?></span></dd>

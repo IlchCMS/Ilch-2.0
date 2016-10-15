@@ -31,7 +31,7 @@ function rec($item, $obj, $readAccess, $i)
     <?php if ($item->getType() === 0 && $subItemsFalse == true): ?>
         <ul class="forenlist">
             <li class="header">
-                <dl class="icon">
+                <dl class="title">
                     <dt>
                         <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
                             <?=$item->getTitle() ?>
@@ -40,9 +40,7 @@ function rec($item, $obj, $readAccess, $i)
                 </dl>
                 <?php if ($item->getDesc() != ''): ?>
                     <dl class="desc small">
-                        <dt>
-                            <?=$item->getDesc() ?>
-                        </dt>
+                        <?=$item->getDesc() ?>
                     </dl>
                 <?php endif; ?>
             </li>
@@ -150,68 +148,70 @@ function rec($item, $obj, $readAccess, $i)
         <?php endif; ?>
     </div>
 
-    <div class="dark-header"><?=$this->getTrans('currentInfo') ?></div>
-    <div class="dark-header-content">
-        <h5><i class="fa fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
-        <div class="statistics">
-            <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>"><?=$usersOnline+$guestOnline ?> Benutzer online</a>. Registrierte Benutzer: <?=$usersOnline ?>, Gäste: <?=$guestOnline ?><br />
-            <ul class="user-list">
-                <?php foreach ($usersOnlineList as $user): ?>
-                    <?php
-                    $groups = [];
-                    foreach ($user->getGroups() as $group) {
-                        $groups[] = $group->getName();
-                    }
-                    ?>
+    <div class="statistic">
+        <div class="header"><?=$this->getTrans('currentInfo') ?></div>
+        <div class="content">
+            <h5><i class="fa fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
+            <div class="statistics">
+                <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>"><?=$usersOnline+$guestOnline ?> Benutzer online</a>. Registrierte Benutzer: <?=$usersOnline ?>, Gäste: <?=$guestOnline ?><br />
+                <ul class="user-list">
+                    <?php foreach ($usersOnlineList as $user): ?>
+                        <?php
+                        $groups = [];
+                        foreach ($user->getGroups() as $group) {
+                            $groups[] = $group->getName();
+                        }
+                        ?>
 
-                    <?php if ((in_array('Administrator', $groups))): ?>
-                        <li><strong><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></strong></li>
-                    <?php else: ?>
-                        <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></li>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </ul>
-            <br />
-            <div class="small">
-                <ul class="group-legend">
-                    <li><?=$this->getTrans('legend') ?>:</li>
-                    <?php foreach ($this->get('listGroups') as $group): ?>
-                        <?php if ($group->getName() != 'Guest'): ?>
-                            <?php if ($group->getName() == 'Administrator'): ?>
-                                <li><strong><?=$group->getName() ?></strong></li>
-                            <?php else: ?>
-                                <li><?=$group->getName() ?></li>
-                            <?php endif; ?>
+                        <?php if ((in_array('Administrator', $groups))): ?>
+                            <li><strong><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></strong></li>
+                        <?php else: ?>
+                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></li>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
+                <br />
+                <div class="small">
+                    <ul class="group-legend">
+                        <li><?=$this->getTrans('legend') ?>:</li>
+                        <?php foreach ($this->get('listGroups') as $group): ?>
+                            <?php if ($group->getName() != 'Guest'): ?>
+                                <?php if ($group->getName() == 'Administrator'): ?>
+                                    <li><strong><?=$group->getName() ?></strong></li>
+                                <?php else: ?>
+                                    <li><?=$group->getName() ?></li>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <hr />
-        <h5><i class="fa fa-user"></i> <?=$this->getTrans('whoWasHere') ?></h5>
-        <div class="statistics">
-            Insgesamt waren 217 Benutzer Online:<br />
-            66 registrierte und 169 Besucher (basierend auf den aktiven Besuchern der letzten 5 Minuten)<br /><br />
-            Der Besucherrekord liegt bei 1.767 Besuchern, die am 27.09.2014 online waren.
-        </div>
-        <hr />
-        <div class="stats">
-            <h5><i class="fa fa-pie-chart"></i> <?=$this->getTrans('statistics') ?></h5>
-            <ul class="statistics">
-                <li><?=$this->getTrans('totalPosts') ?>: <?=$forumStatistics->getCountPosts() ?></li>
-                <li><?=$this->getTrans('totalTopics') ?>: <?=$forumStatistics->getCountTopics() ?></li>
-                <li><?=$this->getTrans('totalMembers') ?>: <?=$forumStatistics->getCountUsers() ?></li>
-                <li><?=$this->getTrans('newMember') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->get('registNewUser')->getId()]) ?>" title="<?=$this->escape($this->get('registNewUser')->getName()) ?>"><?=$this->escape($this->get('registNewUser')->getName()) ?></a></li>
-            </ul>
-        </div>
-        <hr />
-        <div class="legend">
-            <h5><i class="fa fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
-            <ul class="statistics">
-                <li><img src="<?=$this->getModuleUrl('static/img/topic_unread.png') ?>" class="legendIcon"> <?=$this->getTrans('legendNewPost') ?></li>
-                <li><img src="<?=$this->getModuleUrl('static/img/topic_read.png') ?>" class="legendIcon"> <?=$this->getTrans('legendReadPost') ?></li>
-                <li><img src="<?=$this->getModuleUrl('static/img/topic_read_locked.png') ?>" class="legendIcon"> <?=$this->getTrans('legendThreadLocked') ?></li>
-            </ul>
+            <hr />
+            <h5><i class="fa fa-user"></i> <?=$this->getTrans('whoWasHere') ?></h5>
+            <div class="statistics">
+                Insgesamt waren 217 Benutzer Online:<br />
+                66 registrierte und 169 Besucher (basierend auf den aktiven Besuchern der letzten 5 Minuten)<br /><br />
+                Der Besucherrekord liegt bei 1.767 Besuchern, die am 27.09.2014 online waren.
+            </div>
+            <hr />
+            <div class="stats">
+                <h5><i class="fa fa-pie-chart"></i> <?=$this->getTrans('statistics') ?></h5>
+                <ul class="statistics">
+                    <li><?=$this->getTrans('totalPosts') ?>: <?=$forumStatistics->getCountPosts() ?></li>
+                    <li><?=$this->getTrans('totalTopics') ?>: <?=$forumStatistics->getCountTopics() ?></li>
+                    <li><?=$this->getTrans('totalMembers') ?>: <?=$forumStatistics->getCountUsers() ?></li>
+                    <li><?=$this->getTrans('newMember') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->get('registNewUser')->getId()]) ?>" title="<?=$this->escape($this->get('registNewUser')->getName()) ?>"><?=$this->escape($this->get('registNewUser')->getName()) ?></a></li>
+                </ul>
+            </div>
+            <hr />
+            <div class="legend">
+                <h5><i class="fa fa-bars"></i> <?=$this->getTrans('legend') ?></h5>
+                <ul class="statistics">
+                    <li><img src="<?=$this->getModuleUrl('static/img/topic_unread.png') ?>" class="legendIcon"> <?=$this->getTrans('legendNewPost') ?></li>
+                    <li><img src="<?=$this->getModuleUrl('static/img/topic_read.png') ?>" class="legendIcon"> <?=$this->getTrans('legendReadPost') ?></li>
+                    <li><img src="<?=$this->getModuleUrl('static/img/topic_read_locked.png') ?>" class="legendIcon"> <?=$this->getTrans('legendThreadLocked') ?></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

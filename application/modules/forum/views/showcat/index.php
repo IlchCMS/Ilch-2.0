@@ -16,9 +16,9 @@ function rec($item, $forumMapper, $obj, $readAccess)
     }
 ?>
     <?php if ($item->getType() === 0): ?>
-        <ul class="topiclist">
+        <ul class="forenlist">
             <li class="header">
-                <dl class="icon">
+                <dl class="title">
                     <dt>
                         <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
                             <?=$item->getTitle() ?>
@@ -27,9 +27,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                 </dl>
                 <?php if ($item->getDesc() != ''): ?>
                     <dl class="desc small">
-                        <dt>
-                            <?=$item->getDesc() ?>
-                        </dt>
+                        <?=$item->getDesc() ?>
                     </dl>
                 <?php endif; ?>
             </li>
@@ -38,7 +36,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
 
     <?php if (is_in_array($readAccess, explode(',', $item->getReadAccess())) || $adminAccess == true): ?>
         <?php if ($item->getType() != 0): ?>
-            <ul class="topiclist forums">
+            <ul class="forenlist forums">
                 <li class="row">
                     <dl class="icon 
                         <?php if ($obj->getUser() && $lastPost): ?>
@@ -109,7 +107,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <legend><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a> <i class="forum fa fa-chevron-right"></i> <?=$cat->getTitle() ?></legend>
-<div id="forum" class="col-lg-12">
+<div id="forum">
     <?php
     $adminAccess = null;
     if ($this->getUser()) {
@@ -126,7 +124,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
         <div class="forabg">
             <ul class="forenlist">
                 <li class="header">
-                    <dl class="icon">
+                    <dl class="title">
                         <dt>
                             <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>">
                                 <?=$cat->getTitle() ?>
@@ -135,9 +133,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                     </dl>
                     <?php if ($cat->getDesc() != ''): ?>
                         <dl class="desc small">
-                            <dt>
-                                <?=$cat->getDesc() ?>
-                            </dt>
+                            <?=$cat->getDesc() ?>
                         </dl>
                     <?php endif; ?>
                 </li>
