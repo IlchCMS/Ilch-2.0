@@ -15,8 +15,8 @@
             <?php if ($this->get('emails') != ''): ?>
                 <?php foreach ($this->get('userList') as $user): ?>
                     <tr>
-                        <td><?=$user['name']; ?></td>
-                        <td><?=($user['email'] === '') ? 'NotRegistUser' : $user['email']; ?></td>
+                        <td><?=$this->escape($user['name']) ?></td>
+                        <td><?=($user['email'] === '') ? 'NotRegistUser' : $this->escape($user['email']) ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>

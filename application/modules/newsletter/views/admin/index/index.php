@@ -33,8 +33,8 @@
                                 <?=$this->getDeleteIcon($deleteArray) ?>
                             </td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
-                            <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
-                            <td><a href="<?=$this->getUrl('admin/newsletter/index/show/id/'.$entry->getId()) ?>"><?=$entry->getSubject() ?></a></td>
+                            <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
+                            <td><a href="<?=$this->getUrl('admin/newsletter/index/show/id/'.$entry->getId()) ?>"><?=$this->escape($entry->getSubject()) ?></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
