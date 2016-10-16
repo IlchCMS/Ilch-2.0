@@ -21,19 +21,36 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuNewsletter'), ['action' => 'index']);
 
+        $post = [
+            'email' => ''
+        ];
+
         if ($this->getRequest()->getPost('saveNewsletter')) {
-            $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
-            if ($countEmails == 0) {
-                $newsletterModel = new NewsletterModel();
-                $newsletterModel->setEmail($this->getRequest()->getPost('email'));
-                $newsletterMapper->saveEmail($newsletterModel);
+            $post = [
+                'email' => $this->getRequest()->getPost('email')
+            ];
 
-                $this->addMessage('subscribeSuccess');
-            } else {
-                $newsletterMapper->deleteEmail($this->getRequest()->getPost('email'));
+            $validation = Validation::create($post, [
+                'email' => 'required|email'
+            ]);
 
-                $this->addMessage('unsubscribeSuccess');
+            if ($validation->isValid()) {
+                $countEmails = $newsletterMapper->countEmails($post['email']);
+                if ($countEmails == 0) {
+                    $newsletterModel = new NewsletterModel();
+                    $newsletterModel->setEmail($post['email']);
+                    $newsletterMapper->saveEmail($newsletterModel);
+
+                    $this->addMessage('subscribeSuccess');
+                } else {
+                    $newsletterMapper->deleteEmail($post['email']);
+
+                    $this->addMessage('unsubscribeSuccess');
+                }
             }
+
+            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $errorFields = $validation->getFieldsWithError();
         }
 
         $this->getView();
