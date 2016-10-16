@@ -89,7 +89,7 @@ return [
     'cancel' => 'Abbrechen',
     'needAcknowledgement' => 'Bestätigung erforderlich',
     'pageTitle' => 'Titel',
-    'pageContent' => 'Content',
+    'pageContent' => 'Inhalt',
     'startPage' => 'Startseite',
     'locale' => 'Standard Seiten Sprache',
     'pages' => 'Seiten',
@@ -98,7 +98,7 @@ return [
     'menu' => 'Menü',
     'deleteMenu' => 'Menü löschen',
     'askIfDeleteMenu' => 'Sind Sie sicher, dass das Menü "%s" entfernt werden soll?',
-    'multilingualAcp' => 'Multisprachige Einstellungen',
+    'multilingualAcp' => 'Mehrsprachige Einstellungen',
     'list' => 'Liste',
     'menuActionNewLayout' => 'Neues Layout hinzufügen',
     'overview' => 'Übersicht',
@@ -137,7 +137,7 @@ return [
     'star' => 'Stern',
     'stars' => 'Sterne',
     'boxTitle' => 'Titel',
-    'boxContent' => 'Content',
+    'boxContent' => 'Inhalt',
     'noTitleBox' => 'Box hat keinen Titel',
     'addBox' => 'Neue Box hinzufügen',
     'editBox' => 'Box editieren',
@@ -147,7 +147,7 @@ return [
     'updateButtonBox' => 'Box aktualisieren',
     'noBoxes' => 'Keine Boxen vorhanden',
     'treat' => 'Bearbeiten',
-    'askIfDeleteBox' => 'Sind Sie sicher dass die Box "%s" entfernt werden soll?',
+    'askIfDeleteBox' => 'Sind Sie sicher, dass die Box "%s" entfernt werden soll?',
     'modRewrite' => 'Mod-Rewrite',
     'administrate' => 'Administrieren',
     'desc' => 'Beschreibung',
@@ -276,6 +276,6 @@ return [
 
     'noLayoutsAvailable' => 'Entweder es sind keine Layouts verfügbar oder die Liste der Layouts konnte nicht abgefragt werden.',
     'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht abgefragt werden.',
-    
+
     'awaitingUnlocking' => 'Freischaltung erwartet',
 ];
