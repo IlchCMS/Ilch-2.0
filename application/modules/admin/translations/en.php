@@ -47,7 +47,7 @@ return [
     'noUserEmailGiven' => 'No username/email was provided.',
     'contentLanguage' => 'Contentlanguage',
     'standardMail' => 'Standard E-Mail sender',
-    'defaultPaginationObjects' => 'default count of objects per page',
+    'defaultPaginationObjects' => 'Default count of objects per page',
     'timezone' => 'timezone',
     'home' => 'Start',
     'navigation' => 'Navigation',
@@ -267,7 +267,7 @@ return [
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',
-    'moduleVerificationFailed' => 'Modul war beschädigt oder manipuliert. Modul verworfen.',
+    'moduleVerificationFailed' => 'Module was damaged or manipulated. Module discarded.',
 
     'enableSelectedEntries' => 'Enable the selected entries?',
     'deleteSelectedEntries' => 'Delete the selected entries?',
@@ -275,6 +275,6 @@ return [
 
     'noLayoutsAvailable' => 'Either there are no layouts available or the list of layouts could not be fetched from the server.',
     'noModulesAvailable' => 'Either there are no modules available or the list of modules could not be fetched from the server.',
-    
+
     'awaitingUnlocking' => 'Awaiting approval',
 ];
