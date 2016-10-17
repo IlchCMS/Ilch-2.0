@@ -92,7 +92,7 @@ abstract class Base extends \Ilch\Design\Base
         }
 
         foreach ($messages as $key => $message) {
-            $html = '<div class="alert alert-'.$message['type'].' alert-dismissable">
+            $html .= '<div class="alert alert-'.$message['type'].' alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             '.$this->escape($message['text']).'</div>';
             unset($_SESSION['messages'][$key]);
