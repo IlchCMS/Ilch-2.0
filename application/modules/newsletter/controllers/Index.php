@@ -38,14 +38,12 @@ class Index extends \Ilch\Controller\Frontend
                 $countEmails = $newsletterMapper->countEmails($post['email']);
                 if ($countEmails == 0) {
                     $newsletterModel = new NewsletterModel();
+                    $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
+                    $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
                     $newsletterModel->setEmail($post['email']);
                     $newsletterMapper->saveEmail($newsletterModel);
 
                     $this->addMessage('subscribeSuccess');
-                } else {
-                    $newsletterMapper->deleteEmail($post['email']);
-
-                    $this->addMessage('unsubscribeSuccess');
                 }
             }
 
@@ -53,7 +51,7 @@ class Index extends \Ilch\Controller\Frontend
             $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView();
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 
     public function showAction()
@@ -76,13 +74,23 @@ class Index extends \Ilch\Controller\Frontend
 
     public function unsubscribeAction()
     {
-        $newsletterMapper = new NewsletterMapper();
+        $selector = $this->getRequest()->getParam('selector');
+        $confirmCode = $this->getRequest()->getParam('code');
 
-        $countEmail = $newsletterMapper->countEmails($this->getRequest()->getParam('email'));
-        if ($countEmail == 1) {
-            $newsletterMapper->deleteEmail($this->getRequest()->getParam('email'));
+        if (empty($confirmCode) or empty($selector)) {
+            $this->addMessage('incompleteUnsubscribeUrl', 'danger');
+        } else {
+            $newsletterMapper = new NewsletterMapper();
 
-            $this->addMessage('unsubscribeSuccess');
+            $subscriber = $newsletterMapper->getSubscriberBySelector($selector);
+            if (!empty($subscriber) and hash_equals($subscriber->getConfirmCode(), $confirmCode)) {
+                $countEmail = $newsletterMapper->countEmails($subscriber->getEmail());
+                if ($countEmail == 1) {
+                    $newsletterMapper->deleteEmail($subscriber->getEmail());
+
+                    $this->addMessage('unsubscribeSuccess');
+                }
+            }
         }
 
         $this->redirect(['action' => 'index']);

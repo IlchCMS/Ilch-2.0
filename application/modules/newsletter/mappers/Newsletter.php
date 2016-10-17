@@ -47,7 +47,6 @@ class Newsletter extends \Ilch\Mapper
     /**
      * Gets the Newsletter entries.
      *
-     * @param array $where
      * @return NewsletterModel[]|array
      */
     public function getMail()
@@ -66,12 +65,39 @@ class Newsletter extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $entryModel = new NewsletterModel();
             $entryModel->setEmail($entries['email']);
+            $entryModel->setSelector($entries['selector']);
+            $entryModel->setConfirmCode($entries['confirmCode']);
             $entry[] = $entryModel;
         }
 
         return $entry;
     }
-    
+
+    /**
+     * Gets the Newsletter subscriber by the selector.
+     *
+     * @param string $selector
+     * @return NewsletterModel|null
+     */
+    public function getSubscriberBySelector($selector)
+    {
+        $entryArray = $this->db()->select('*')
+                ->from('newsletter_mails')
+                ->where(['selector' => $selector])
+                ->execute()
+                ->fetchAssoc();
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entryModel = new NewsletterModel();
+        $entryModel->setEmail($entryArray['email']);
+        $entryModel->setConfirmCode($entryArray['confirmCode']);
+
+        return $entryModel;
+    }
+
     public function getLastId()
     {
         $sql = 'SELECT MAX(id)
@@ -158,7 +184,9 @@ class Newsletter extends \Ilch\Mapper
                 ->values
                         (
                         [
-                            'email' => $newsletter->getEmail()
+                            'email' => $newsletter->getEmail(),
+                            'selector' => $newsletter->getSelector(),
+                            'confirmCode' => $newsletter->getConfirmCode(),
                         ]
                 )
                 ->execute();
@@ -220,7 +248,14 @@ class Newsletter extends \Ilch\Mapper
 
         if ($newsletterMail == '0') {
             $this->db()->insert('newsletter_mails')
-                ->values(['email' => $userMail])
+                ->values
+                        (
+                        [
+                            'email' => $userMail,
+                            'selector' => $newsletter->getSelector(),
+                            'confirmCode' => $newsletter->getConfirmCode()
+                        ]
+                        )
                 ->execute();
         } else {
             $this->db()->delete('newsletter_mails')

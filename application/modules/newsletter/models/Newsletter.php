@@ -51,6 +51,20 @@ class Newsletter extends \Ilch\Model
     protected $email;
 
     /**
+     * The selector of the subscription.
+     *
+     * @var string
+     */
+    protected $selector;
+
+    /**
+     * The confirmCode of the subscription.
+     *
+     * @var string
+     */
+    protected $confirmCode;
+
+    /**
      * Newsletter user option
      *
      * @var string
@@ -191,6 +205,52 @@ class Newsletter extends \Ilch\Model
     public function setEmail($email)
     {
         $this->email = (string)$email;
+
+        return $this;
+    }
+
+    /**
+     * Gets the selector of the subscription.
+     *
+     * @return string
+     */
+    public function getSelector()
+    {
+        return $this->selector;
+    }
+
+    /**
+     * Sets the selector of the subscription.
+     *
+     * @param string $selector
+     * @return this
+     */
+    public function setSelector($selector)
+    {
+        $this->selector = (string)$selector;
+
+        return $this;
+    }
+
+    /**
+     * Gets the confirmCode of the subscription.
+     *
+     * @return string
+     */
+    public function getConfirmCode()
+    {
+        return $this->confirmCode;
+    }
+
+    /**
+     * Sets the confirmCode of the subscription.
+     *
+     * @param string $confirmCode
+     * @return this
+     */
+    public function setConfirmCode($confirmCode)
+    {
+        $this->confirmCode = (string)$confirmCode;
 
         return $this;
     }
