@@ -16,6 +16,8 @@ update-locale LANG=en_US.UTF-8
 
 aptitude -q -y update
 
+aptitude -q -y install curl
+
 #install apache2
 aptitude -q -y install apache2
 a2enmod rewrite
