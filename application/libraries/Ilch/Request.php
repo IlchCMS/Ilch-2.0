@@ -39,6 +39,77 @@ class Request
     protected $params;
 
     /**
+     * Form input from the last request.
+     *
+     * @var array
+     */
+    protected $oldInput;
+
+    /**
+     * Validation errors from the last request.
+     *
+     * @var \Ilch\Validation\ErrorBag
+     */
+    protected $validationErrors;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->oldInput = array();
+        $this->validationErrors = new \Ilch\Validation\ErrorBag();
+
+        $this->checkForOldInput();
+        $this->checkForValidationErrors();
+    }
+
+    /**
+     * Checks the session for old input data.
+     */
+    public function checkForOldInput()
+    {
+        if (isset($_SESSION['ilch_old_input'])) {
+            $this->oldInput = $_SESSION['ilch_old_input'];
+            unset($_SESSION['ilch_old_input']);
+        }
+    }
+
+    /**
+     * Checks the session for validation errors.
+     */
+    public function checkForValidationErrors()
+    {
+        if (isset($_SESSION['ilch_validation_errors'])) {
+            $this->validationErrors->setErrors($_SESSION['ilch_validation_errors']);
+            unset($_SESSION['ilch_validation_errors']);
+        }
+    }
+
+    /**
+     * Returns the old input for the given key.
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return mixed
+     */
+    public function getOldInput($key = null, $default = '')
+    {
+        return array_dot($this->oldInput, $key, $default);
+    }
+
+    /**
+     * Returns the validation errorbag.
+     *
+     * @return \Ilch\Validation\ErrorBag
+     */
+    public function getErrors()
+    {
+        return $this->validationErrors;
+    }
+
+    /**
      * Gets admin request flag.
      *
      * @return string
