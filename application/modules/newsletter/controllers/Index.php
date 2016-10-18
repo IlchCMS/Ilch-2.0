@@ -42,9 +42,9 @@ class Index extends \Ilch\Controller\Frontend
                     $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
                     $newsletterModel->setEmail($post['email']);
                     $newsletterMapper->saveEmail($newsletterModel);
-
-                    $this->addMessage('subscribeSuccess');
                 }
+
+                $this->addMessage('subscribeSuccess');
             }
 
             $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
