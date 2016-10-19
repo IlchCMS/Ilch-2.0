@@ -35,7 +35,7 @@
                    class="form-control"
                    name="name"
                    placeholder="Name"
-                   value="<?= $this->old('name') ?>" />
+                   value="<?= $this->originalInput('name') ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
@@ -47,7 +47,7 @@
                    class="form-control"
                    name="email"
                    placeholder="E-Mail"
-                   value="<?= $this->old('email') ?>" />
+                   value="<?= $this->originalInput('email') ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
@@ -59,7 +59,7 @@
                   class="form-control"
                   name="homepage"
                   placeholder="<?=$this->getTrans('page') ?>"
-                  value="<?= $this->old('homepage') ?>" />
+                  value="<?= $this->originalInput('homepage') ?>" />
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
@@ -71,7 +71,7 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_bbcode"
-                      required><?= $this->old('text') ?></textarea>
+                      required><?= $this->originalInput('text') ?></textarea>
         </div>
     </div>
     <div class="form-group <?= $this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
