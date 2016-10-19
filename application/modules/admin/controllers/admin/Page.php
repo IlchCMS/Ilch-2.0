@@ -130,6 +130,7 @@ class Page extends \Ilch\Controller\Admin
             ]);
 
             // Restore original values
+            $post['permaLink'] = $pagePerma;
 
             if ($validation->isValid()) {
                 $model = new PageModel();
