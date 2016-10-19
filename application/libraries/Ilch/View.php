@@ -138,7 +138,7 @@ class View extends Design\Base
      *
      * @return mixed
      */
-    public function old($key = null, $default = '')
+    public function originalInput($key = null, $default = '')
     {
         return $this->getRequest()->getOldInput($key, $default);
     }
