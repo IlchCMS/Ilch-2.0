@@ -16,13 +16,13 @@
             <?=$this->getTrans('entrySettings') ?>:
         </div>
         <div class="col-lg-2">
-            <div class="flipswitch">  
-                <input type="radio" class="flipswitch-input" id="setfree-yes" name="entrySettings" value="1" <?php if ($this->get('setfree') == '1') { echo 'checked="checked"'; } ?> />  
-                <label for="setfree-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>  
-                <input type="radio" class="flipswitch-input" id="setfree-no" name="entrySettings" value="2" <?php if ($this->get('setfree') != '1') { echo 'checked="checked"'; } ?> />  
-                <label for="setfree-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>  
-                <span class="flipswitch-selection"></span>  
-            </div>  
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="setfree-yes" name="entrySettings" value="1" <?php if ($this->get('setfree') == '1') { echo 'checked="checked"'; } ?> />
+                <label for="setfree-yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="setfree-no" name="entrySettings" value="0" <?php if ($this->get('setfree') != '1') { echo 'checked="checked"'; } ?> />  
+                <label for="setfree-no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
         </div>
     </div>
     <div class="form-group <?=in_array('entriesPerPage', $this->get('errorFields')) ? 'has-error' : '' ?>">
@@ -37,6 +37,6 @@
                    min="1"
                    value="<?=($this->escape($this->get('entriesPerPage')) != '') ? $this->escape($this->get('entriesPerPage')) : $this->escape($this->get('post')['entriesPerPage']) ?>" />
         </div>
-    </div>    
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
