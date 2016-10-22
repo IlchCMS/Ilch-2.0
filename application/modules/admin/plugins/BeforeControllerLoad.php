@@ -34,6 +34,7 @@ class BeforeControllerLoad
 
             $userMapper = new UserMapper();
             $translator = new \Ilch\Translator();
+            $translator->load(APPLICATION_PATH.'/modules/admin/translations');
             $user = $userMapper->getUserById($userId);
 
             if ($config->get('maintenance_mode') && !$request->isAdmin()) {
