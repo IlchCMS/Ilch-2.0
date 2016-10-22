@@ -1,11 +1,11 @@
 <legend><?=$this->getTrans('menuGuestbook') ?></legend>
 
 <!-- Fehlerausgabe der Validation -->
-<?php if (!empty($this->get('errors'))): ?>
+<?php if ($this->validation()->hasErrors()): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
         <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
                 <li><?= $error; ?></li>
             <?php endforeach; ?>
         </ul>
@@ -26,7 +26,7 @@
                    placeholder="Bot" />
         </div>
     </div>
-    <div class="form-group <?=in_array('name', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>*
         </label>
@@ -35,10 +35,10 @@
                    class="form-control"
                    name="name"
                    placeholder="Name"
-                   value="<?=$this->get('post')['name'] ?>" />
+                   value="<?= $this->originalInput('name') ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('email', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?= $this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('email') ?>*
         </label>
@@ -47,10 +47,10 @@
                    class="form-control"
                    name="email"
                    placeholder="E-Mail"
-                   value="<?=$this->get('post')['email'] ?>" />
+                   value="<?= $this->originalInput('email') ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('homepage', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?= $this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('page') ?>
         </label>
@@ -59,10 +59,10 @@
                   class="form-control"
                   name="homepage"
                   placeholder="<?=$this->getTrans('page') ?>"
-                  value="<?=$this->get('post')['homepage'] ?>" />
+                  value="<?= $this->originalInput('homepage') ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('text', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?= $this->validation()->hasError('text') ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('message') ?>*
         </label>
@@ -71,18 +71,10 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_bbcode"
-                      required>
-                <?=$this->get('post')['text'] ?>
-            </textarea>
+                      required><?= $this->originalInput('text') ?></textarea>
         </div>
     </div>
-    <?php
-    $message = $this->get('message');
-    if (!empty($message)) {
-        echo $message;
-    }
-    ?>
-    <div class="form-group <?=in_array('captcha', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?= $this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
         <label class="col-lg-2 control-label">
             <?=$this->getTrans('captcha') ?>
         </label>
@@ -90,7 +82,7 @@
             <?=$this->getCaptchaField() ?>
         </div>
     </div>
-    <div class="form-group <?=in_array('captcha', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?= $this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
         <div class="col-lg-offset-2 col-lg-8 input-group captcha">
             <input type="text"
                   id="captcha-form"

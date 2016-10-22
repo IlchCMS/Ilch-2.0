@@ -64,15 +64,16 @@ class Base
      *
      * @param array|string $url
      * @param string  $route
-     * @param boolean $rewrite
      */
-    public function redirect($url = [], $route = null, $rewrite = false)
+    public function redirect($url = null, $route = null)
     {
-        if (!is_string($url) || preg_match('~^[a-z]+://.*~', $url) === 0) {
-            $url = $this->getLayout()->getUrl($url, $route, $rewrite);
+        $redirector = new \Ilch\Redirect($this->getRequest());
+
+        if (!is_null($url)) {
+            $redirector->to($url, $route);
         }
-        header("Location: " . $url);
-        exit;
+
+        return $redirector;
     }
 
     /**
@@ -134,7 +135,7 @@ class Base
     {
         return $this->view;
     }
-    
+
     /**
      * Gets the user object.
      *

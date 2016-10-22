@@ -88,7 +88,7 @@ class View extends Design\Base
                                 }
         $html .= '</ul></div></div>';
 
-        return $html; 
+        return $html;
     }
 
     /**
@@ -128,5 +128,28 @@ class View extends Design\Base
     public function getCheckAllCheckbox($childs)
     {
         return '<input type="checkbox" class="check_all" data-childs="'.$childs.'" />';
+    }
+
+    /**
+     * Returns the input data from the last request.
+     *
+     * @param string $key     Array key
+     * @param string $default Default value if key not found
+     *
+     * @return mixed
+     */
+    public function originalInput($key = null, $default = '')
+    {
+        return $this->getRequest()->getOldInput($key, $default);
+    }
+
+    /**
+     * Returns the validation errors from the last request.
+     *
+     * @return \Ilch\Validation\ErrorBag
+     */
+    public function validation()
+    {
+        return $this->getRequest()->getErrors();
     }
 }

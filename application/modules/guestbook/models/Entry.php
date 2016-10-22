@@ -135,6 +135,8 @@ class Entry extends \Ilch\Model
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -145,6 +147,8 @@ class Entry extends \Ilch\Model
     public function setEmail($email)
     {
         $this->email = (string)$email;
+
+        return $this;
     }
 
     /**
@@ -155,6 +159,8 @@ class Entry extends \Ilch\Model
     public function setText($text)
     {
         $this->text = (string)$text;
+
+        return $this;
     }
 
     /**
@@ -165,6 +171,8 @@ class Entry extends \Ilch\Model
     public function setName($name)
     {
         $this->name = (string)$name;
+
+        return $this;
     }
 
     /**
@@ -175,6 +183,8 @@ class Entry extends \Ilch\Model
     public function setHomepage($homepage)
     {
         $this->homepage = (string)$homepage;
+
+        return $this;
     }
 
     /**
@@ -185,6 +195,8 @@ class Entry extends \Ilch\Model
     public function setDatetime($datetime)
     {
         $this->datetime = (string)$datetime;
+
+        return $this;
     }
 
     /**
@@ -195,5 +207,7 @@ class Entry extends \Ilch\Model
     public function setFree($free)
     {
         $this->setFree = (integer)$free;
+
+        return $this;
     }
 }
