@@ -146,7 +146,7 @@ class Index extends \Ilch\Controller\Admin
                         '{date}' => $date->format("l, d. F Y", true),
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
                         '{unreadable}' => $this->getTranslator()->trans('mailUnreadable', $newsletterMapper->getLastId(), $email->getEmail()),
-                        '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getEmail()),
+                        '{unsubscribe}' => $this->getTranslator()->trans('mailUnsubscribe', $email->getSelector(), $email->getConfirmCode()),
                     ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 

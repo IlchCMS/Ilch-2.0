@@ -54,6 +54,8 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_newsletter_mails` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `email` VARCHAR(100) NOT NULL,
+                  `selector` char(18),
+                  `confirmCode` char(64),
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 

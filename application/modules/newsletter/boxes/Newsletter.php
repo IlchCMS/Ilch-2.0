@@ -33,10 +33,10 @@ class Newsletter extends \Ilch\Box
                 $countEmails = $newsletterMapper->countEmails($post['email']);
                 if ($countEmails == 0) {
                     $newsletterModel = new NewsletterModel();
+                    $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
+                    $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
                     $newsletterModel->setEmail($post['email']);
                     $newsletterMapper->saveEmail($newsletterModel);
-                } else {
-                    $newsletterMapper->deleteEmail($post['email']);
                 }
             }
 
@@ -44,6 +44,6 @@ class Newsletter extends \Ilch\Box
             $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView();
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }
