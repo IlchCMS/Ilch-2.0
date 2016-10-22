@@ -2,7 +2,7 @@
 <?php
 $forumItems = $this->get('forumItems');
 $readAccess = $this->get('groupIdsArray');
-$edittopicitems = $this->get('edittopicitems');
+$edittopicitems[] = $this->get('edittopicitems');
 
 function rec($item, $obj, $readAccess, $i)
 {
