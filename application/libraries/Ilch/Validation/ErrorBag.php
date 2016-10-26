@@ -12,6 +12,7 @@ namespace Ilch\Validation;
  */
 class ErrorBag
 {
+    /** @var array */
     protected $errors;
 
     public function __construct()
@@ -23,7 +24,7 @@ class ErrorBag
     {
         $messages = [];
 
-        foreach (array_values($this->getErrors()) as $errors) {
+        foreach ($this->getErrors() as $errors) {
             foreach ($errors as $error) {
                 array_push($messages, $error);
             }
@@ -37,6 +38,11 @@ class ErrorBag
         return count($this->getErrors()) > 0;
     }
 
+    /**
+     * @param string $field
+     * @param string $message
+     * @return $this
+     */
     public function addError($field, $message)
     {
         $this->errors[$field][] = $message;
@@ -44,6 +50,10 @@ class ErrorBag
         return $this;
     }
 
+    /**
+     * Get the field names of where errors occurred
+     * @return array
+     */
     public function getErrorFields()
     {
         return array_keys($this->getErrors());
@@ -52,17 +62,19 @@ class ErrorBag
     /**
      * Checks if a given field has an error
      *
+     * @param string $field
+     *
      * @return boolean
      */
     public function hasError($field)
     {
-        return in_array($field, array_keys($this->getErrors()));
+        return !empty($this->errors[$field]);
     }
 
     /**
      * Gets the value of errors.
      *
-     * @return mixed
+     * @return array
      */
     public function getErrors()
     {
@@ -72,11 +84,11 @@ class ErrorBag
     /**
      * Sets the value of errors.
      *
-     * @param mixed $errors the errors
+     * @param array $errors the errors
      *
      * @return self
      */
-    public function setErrors($errors)
+    public function setErrors(array $errors)
     {
         $this->errors = $errors;
 

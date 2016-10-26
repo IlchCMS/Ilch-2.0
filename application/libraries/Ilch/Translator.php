@@ -58,7 +58,7 @@ class Translator
     /**
      * Loads a translation array for the set locale from the given directory.
      *
-     * @param  string  $transDirectory The directory where the translation resides.
+     * @param  string  $transDir The directory where the translation resides.
      * @return boolean True if the translations got loaded, false if not.
      */
     public function load($transDir)
@@ -107,6 +107,15 @@ class Translator
         $translatedText = call_user_func_array('sprintf', $arguments);
 
         return $translatedText;
+    }
+
+    /**
+     * Set translation from code (for unit tests)
+     * @param array $translations
+     */
+    public function setTranslations(array $translations)
+    {
+        $this->translations = $translations;
     }
 
     /**
@@ -171,15 +180,13 @@ class Translator
     /**
      * Returns an amount of money of the currency supplied formatted in locale-typical style.
      *
-     * @param float amount
-     * @param string currency code (ISO 4217)
+     * @param float $amount
+     * @param string $currencyCode (ISO 4217)
      * @return string
      */
     public function getFormattedCurrency($amount, $currencyCode)
     {
-        $returnValue;
-
-        $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::CURRENCY); 
+        $numberFormatter = new \NumberFormatter($this->getLocale(), \NumberFormatter::CURRENCY);
         $returnValue = $numberFormatter->formatCurrency($amount, $currencyCode);
 
         if (intl_is_failure($numberFormatter->getErrorCode())) {

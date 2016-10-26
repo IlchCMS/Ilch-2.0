@@ -5,6 +5,18 @@
 
 namespace Ilch;
 
+use Ilch\Validation\Validators\Base;
+use Ilch\Validation\Validators\Captcha;
+use Ilch\Validation\Validators\Email;
+use Ilch\Validation\Validators\Integer;
+use Ilch\Validation\Validators\Max;
+use Ilch\Validation\Validators\Min;
+use Ilch\Validation\Validators\Numeric;
+use Ilch\Validation\Validators\Required;
+use Ilch\Validation\Validators\Same;
+use Ilch\Validation\Validators\Size;
+use Ilch\Validation\Validators\Unique;
+use Ilch\Validation\Validators\Url;
 use stdClass;
 use Ilch\Validation\ErrorBag;
 
@@ -20,37 +32,37 @@ class Validation
      */
     protected static $builtInValidators = [
         // Usage: required
-        'required' => '\Ilch\Validation\Validators\Required',
+        'required' => Required::class,
 
         // Usage: same:<field_name>[,strict]
-        'same' => '\Ilch\Validation\Validators\Same',
+        'same' => Same::class,
 
         // Usage: captcha
-        'captcha' => '\Ilch\Validation\Validators\Captcha',
+        'captcha' => Captcha::class,
 
         // Usage: url
-        'url' => '\Ilch\Validation\Validators\Url',
+        'url' => Url::class,
 
         // Usage: email
-        'email' => '\Ilch\Validation\Validators\Email',
+        'email' => Email::class,
 
         // Usage: unique:<table_name>[,<column_name>,<ignoreId>,<ignoreIdColumn>]
-        'unique' => '\Ilch\Validation\Validators\Unique',
+        'unique' => Unique::class,
 
         // Usage: numeric
-        'numeric' => '\Ilch\Validation\Validators\Numeric',
+        'numeric' => Numeric::class,
 
         // Usage: integer
-        'integer' => '\Ilch\Validation\Validators\Integer',
+        'integer' => Integer::class,
 
         // Usage: size:<value>[,string]
-        'size' => '\Ilch\Validation\Validators\Size',
+        'size' => Size::class,
 
         // Usage: min:<value>[,string]
-        'min' => '\Ilch\Validation\Validators\Min',
+        'min' => Min::class,
 
         // Usage: max:<value>[,string]
-        'max' => '\Ilch\Validation\Validators\Max',
+        'max' => Max::class,
     ];
 
     /**
@@ -135,10 +147,8 @@ class Validation
      *
      * @param array $input An array with inputs (e.g. user inputs)
      * @param array $rules An array with validation rules
-     *
-     * @return object A new Validation Object
      */
-    private function __construct($input, $rules)
+    private function __construct(array $input, array $rules)
     {
         $this->input = $input;
         $this->rules = $rules;
@@ -214,9 +224,11 @@ class Validation
     /**
      * Parses a validator result.
      *
-     * @param \Ilch\Validation\Validators\Base $validator A validator instance
+     * @param Base $validator A validator instance
+     *
+     * @return bool
      */
-    protected function checkResult(\Ilch\Validation\Validators\Base $validator)
+    protected function checkResult(Base $validator)
     {
         if ($validator->isValid() === false) {
             $this->handleError($validator);
@@ -228,9 +240,9 @@ class Validation
     /**
      * Handles the processing of the error messages.
      *
-     * @param string $validator The validator instance
+     * @param Base $validator The validator instance
      */
-    protected function handleError($validator)
+    protected function handleError(Base $validator)
     {
         $field = $validator->getField();
         $rawField = $validator->getField();
@@ -262,11 +274,13 @@ class Validation
      * Performs a validation.
      *
      * @param string $validator An alias of an existing validator
-     * @param object $data      A Data-Object with validation data
+     * @param stdClass $data      A Data-Object with validation data
+     *
+     * @return Base
      */
-    protected function validate($validator, $data)
+    protected function validate($validator, stdClass $data)
     {
-        $validator = self::getValidators()[$validator];
+        $validator = $this->getValidator($validator);
         $validator = (new $validator($data))->run();
 
         return $validator;
@@ -290,7 +304,7 @@ class Validation
      *
      * @return \Ilch\Validation A new Validation Object
      */
-    public static function create($input, $rules)
+    public static function create(array $input, array $rules)
     {
         return new self($input, $rules);
     }
@@ -314,7 +328,7 @@ class Validation
      */
     public function hasError($field)
     {
-        return in_array($field, $this->fields_with_error);
+        return $this->getErrorBag()->hasError($field);
     }
 
     /**
@@ -350,7 +364,7 @@ class Validation
     /**
      * Gets all validators (added and builtIn combined).
      *
-     * @return array All Validators known at this time during runtime
+     * @return Base[] All Validators known at this time during runtime
      */
     public static function getValidators()
     {
@@ -415,5 +429,19 @@ class Validation
     public static function setAutoRun($autoRun)
     {
         self::$autoRun = $autoRun;
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function getValidator($name)
+    {
+        $validators = self::getValidators();
+        if (!isset($validators[$name])) {
+            throw new \InvalidArgumentException(sprintf('No validator with name "%s" is registered', $name));
+        }
+
+        return $validators[$name];
     }
 }

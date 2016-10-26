@@ -15,9 +15,11 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * A data array which will be used to create a config object for the registry.
      *
-     * @var Array
+     * @var array
      */
     protected $configData = [];
+
+    protected $tearDownCallbacks = [];
 
     /**
      * Filling the config object with individual testcase data.
@@ -27,5 +29,30 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         TestHelper::setConfigInRegistry($this->configData);
 
         parent::setUp();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        foreach ($this->tearDownCallbacks as $callback) {
+            if (is_callable($callback)) {
+                $callback();
+            }
+        }
+        $this->tearDownCallbacks = [];
+    }
+
+    /**
+     * Add a single run tearDown callback
+     *
+     * @param callable $callback
+     */
+    protected function addTearDownCallback(callable $callback)
+    {
+        $this->tearDownCallbacks[] = $callback;
     }
 }
