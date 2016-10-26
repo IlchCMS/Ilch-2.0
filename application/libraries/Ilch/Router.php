@@ -265,8 +265,8 @@ class Router
             $this->request->setControllerName('index');
             $this->request->setActionName('index');
         } elseif (strpos($startPage, 'page_') !== false) {
-            $this->request->setModuleName('page');
-            $this->request->setControllerName('index');
+            $this->request->setModuleName('admin');
+            $this->request->setControllerName('page');
             $this->request->setActionName('show');
             $this->request->setParam('id', str_replace('page_', '', $startPage));
             $this->request->setParam('locale', $locale);
