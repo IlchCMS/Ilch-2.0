@@ -20,12 +20,14 @@ class Topic extends \Ilch\Mapper
                 FROM `[prefix]_forum_topics`
                 WHERE forum_id = '.$id.'
                 GROUP by type, `id`, `topic_id`, `topic_prefix`, `topic_title`, `visits`, `creator_id`, `date_created`, `forum_id`, `status`
-                ORDER by type DESC, id DESC
-                LIMIT '.implode(',',$pagination->getLimit());
+                ORDER by type DESC, id DESC';
+
+        if (!empty($pagination)) {
+            $sql .= ' LIMIT '.implode(',',$pagination->getLimit());
+            $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
+        }
 
         $fileArray = $this->db()->queryArray($sql);
-        $pagination->setRows($this->db()->querycell('SELECT FOUND_ROWS()'));
-
         $entry = [];
 
         foreach ($fileArray as $entries) {

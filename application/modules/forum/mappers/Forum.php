@@ -9,6 +9,7 @@ namespace Modules\Forum\Mappers;
 use Modules\Forum\Models\ForumItem as ForumItem;
 use Modules\Forum\Models\ForumPost as PostModel;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Forum\Mappers\Topic as TopicMapper;
 
 class Forum extends \Ilch\Mapper
 {
@@ -209,8 +210,14 @@ class Forum extends \Ilch\Mapper
  
     public function deleteItem($forumItem)
     {
+        $topicMapper = new TopicMapper();
+        $id = $forumItem->getId();
+        $topics = $topicMapper->getTopicsByForumId($id);
+        foreach ($topics as $topic){
+            $topicMapper->deleteById($topic->getId());
+        }
         $this->db()->delete('forum_items')
-            ->where(['id' => $forumItem->getId()])
+            ->where(['id' => $id])
             ->execute();
     }
 
