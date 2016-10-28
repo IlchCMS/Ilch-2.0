@@ -1,8 +1,18 @@
 <legend><?=$this->getTrans('add') ?></legend>
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <?php if ($this->get('emails') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
             <label for="subject" class="col-lg-2 control-label">
                 <?=$this->getTrans('subject') ?>:
             </label>
@@ -10,10 +20,11 @@
                 <input type="text"
                        class="form-control"
                        id="subject"
-                       name="subject" />
+                       name="subject"
+                       value="<?=$this->originalInput('subject') ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
             <label for="ck_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('text') ?>:
             </label>
@@ -22,7 +33,7 @@
                           id="ck_1"
                           name="text"
                           toolbar="ilch_html"
-                          rows="5"></textarea>
+                          rows="5"><?=$this->originalInput('text') ?></textarea>
             </div>
         </div>
         <?=$this->getSaveBar('send') ?>
