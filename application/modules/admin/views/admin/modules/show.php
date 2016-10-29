@@ -4,7 +4,7 @@ $modules = json_decode($modulesList);
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
-<link href="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/css/star-rating.css') ?>" rel="stylesheet">
+<link href="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/css/star-rating.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuModules').' '.$this->getTrans('info') ?></legend>
@@ -204,7 +204,7 @@ foreach ($modules as $module): ?>
     <?php endif; ?>
 <?php endforeach; ?>
 
-<script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/star-rating.js') ?>" type="text/javascript"></script>
+<script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/star-rating.min.js') ?>" type="text/javascript"></script>
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider-21.1.5.min.js') ?>"></script>
 <script>
 jQuery(document).ready(function ($) {
