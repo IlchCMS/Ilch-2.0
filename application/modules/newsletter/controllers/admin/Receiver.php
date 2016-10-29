@@ -46,6 +46,14 @@ class Receiver extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new NewsletterModel();
 
+            if ($this->getRequest()->getPost('check_entries')) {
+                if ($this->getRequest()->getPost('action') == 'delete') {
+                    foreach ($this->getRequest()->getPost('check_entries') as $email) {
+                        $newsletterMapper->deleteEmail($email);
+                    }
+                }
+            }
+
             foreach ($this->getRequest()->getPost('check_users') as $userEmail) {
                 if ($userEmail != '') {
                     $newsletterModel->setEmail($userEmail);
@@ -57,5 +65,18 @@ class Receiver extends \Ilch\Controller\Admin
 
         $this->getView()->set('emails', $newsletterMapper->getMail());
         $this->getView()->set('userList', $newsletterMapper->getSendMailUser());
-    }   
+    }
+
+    public function deleteAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $newsletterMapper = new NewsletterMapper();
+
+            $newsletterMapper->deleteSubscriberBySelector($this->getRequest()->getParam('selector'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
 }

@@ -205,6 +205,18 @@ class Newsletter extends \Ilch\Mapper
     }
 
     /**
+     * Deletes newsletter email with given selector.
+     *
+     * @param string $selector
+     */
+    public function deleteSubscriberBySelector($selector)
+    {
+        $this->db()->delete('newsletter_mails')
+                ->where(['selector' => $selector])
+                ->execute();
+    }
+
+    /**
      * Deletes newsletter with given id.
      *
      * @param integer $id
@@ -225,7 +237,7 @@ class Newsletter extends \Ilch\Mapper
     public function getSendMailUser()
     {
         return $this->db()->select()
-                ->fields(['nm.email'])
+                ->fields(['nm.email', 'nm.selector'])
                 ->from(['nm' => 'newsletter_mails'])
                 ->join(['u' => 'users'], 'u.email = nm.email', 'LEFT', ['name' => 'u.name'])
                 ->execute()
