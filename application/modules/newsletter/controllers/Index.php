@@ -122,6 +122,8 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $newsletterModel = new NewsletterModel();
+                $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
+                $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
                 $newsletterModel->setId($this->getUser()->getId());
                 $newsletterModel->setNewsletter($post['acceptNewsletter']);
                 $newsletterMapper->saveUserEmail($newsletterModel);
