@@ -11,8 +11,6 @@ return [
     'text' => 'Text',
     'from' => 'Von',
     'noNewsletter' => 'Keine Newsletter vorhanden.',
-    'missingSubject' => 'Betreff muss ausgefüllt werden',
-    'missingText' => 'Text muss ausgefüllt werden',
     'sendSuccess' => 'Newsletter erfolgreich versendet',
     'show' => 'Anschauen',
     'add' => 'Schreiben',

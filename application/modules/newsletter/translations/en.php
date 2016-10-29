@@ -11,8 +11,6 @@ return [
     'text' => 'Text',
     'from' => 'From',
     'noNewsletter' => 'No newsletter available.',
-    'missingSubject' => 'Subject was not filled',
-    'missingText' => 'Text was not filled',
     'sendSuccess' => 'Newsletter sent successfully',
     'show' => 'Show',
     'add' => 'Write',

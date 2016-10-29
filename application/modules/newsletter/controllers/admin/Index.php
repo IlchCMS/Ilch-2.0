@@ -9,6 +9,7 @@ namespace Modules\Newsletter\Controllers\Admin;
 use Modules\Newsletter\Mappers\Newsletter as NewsletterMapper;
 use Modules\Newsletter\Models\Newsletter as NewsletterModel;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -85,7 +86,7 @@ class Index extends \Ilch\Controller\Admin
     }
 
     public function showAction()
-    {        
+    {
         $newsletterMapper = new NewsletterMapper();
         $userMapper = new UserMapper();
 
@@ -117,18 +118,21 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $newsletterModel = new NewsletterModel();
 
-            $subject = trim($this->getRequest()->getPost('subject'));
-            $text = trim($this->getRequest()->getPost('text'));
+            $post = [
+                'subject' => trim($this->getRequest()->getPost('subject')),
+                'text' => trim($this->getRequest()->getPost('text'))
+            ];
 
-            if (empty($subject)) {
-                $this->addMessage('missingSubject', 'danger');
-            } elseif (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } else {
+            $validation = Validation::create($post, [
+                'subject'   => 'required',
+                'text'      => 'required'
+            ]);
+
+            if ($validation->isValid()) {
                 $newsletterModel->setDateCreated($date);
                 $newsletterModel->setUserId($this->getUser()->getId());
-                $newsletterModel->setSubject($subject);
-                $newsletterModel->setText($text);
+                $newsletterModel->setSubject($post['subject']);
+                $newsletterModel->setText($post['text']);
                 $newsletterMapper->save($newsletterModel);
 
                 if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/newsletter/layouts/mail/newsletter.php')) {
@@ -140,8 +144,8 @@ class Index extends \Ilch\Controller\Admin
                 $emails = $newsletterMapper->getMail();
                 foreach ($emails as $email) {
                     $messageReplace = [
-                        '{subject}' => $subject,
-                        '{content}' => $text,
+                        '{subject}' => $post['subject'],
+                        '{content}' => $post['text'],
                         '{sitetitle}' => $this->getConfig()->get('page_title'),
                         '{date}' => $date->format("l, d. F Y", true),
                         '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
@@ -152,7 +156,7 @@ class Index extends \Ilch\Controller\Admin
 
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email->getEmail(), '')
-                            ->setSubject($subject)
+                            ->setSubject($post['subject'])
                             ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
                             ->setMessage($message)
                             ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
@@ -160,10 +164,15 @@ class Index extends \Ilch\Controller\Admin
                     $mail->send();
                 }
 
-                $this->addMessage('sendSuccess');
-
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('sendSuccess')
+                    ->to(['action' => 'index']);
             }
+
+            $this->redirect()
+                ->withInput($post)
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
 
         $this->getView()->set('emails', $newsletterMapper->getMail());
