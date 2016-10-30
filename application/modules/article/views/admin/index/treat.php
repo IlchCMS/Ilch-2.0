@@ -150,11 +150,15 @@ if ($this->get('article') != '') {
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-4">
-            <?=$this->getUrl() ?>/index.php/
-            <input type="text"
-                   id="permaLink"
-                   name="permaLink"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3"><?=$this->getUrl() ?>/index.php/</span>
+                <input class="form-control"
+                       type="text"
+                       id="permaLink"
+                       name="permaLink"
+                       value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+            </div>
         </div>
     </div>
     <?php
