@@ -8,6 +8,7 @@ namespace Modules\Shoutbox\Boxes;
 
 use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
 use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
+use Ilch\Validation;
 
 class Shoutbox extends \Ilch\Box
 {
@@ -17,19 +18,24 @@ class Shoutbox extends \Ilch\Box
         $uniqid = $this->getUniqid();
 
         if (($this->getRequest()->getPost('form_'.$uniqid) || $this->getRequest()->isAjax()) && $this->getRequest()->getPost('bot') === '') {
-            $name = $this->getRequest()->getPost('shoutbox_name');
-            $textarea = $this->getRequest()->getPost('shoutbox_textarea');
-            $uid = 0;
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'shoutbox_name'         => 'required',
+                'shoutbox_textarea'      => 'required'
+            ]);
 
-            if ($this->getUser() !== null) {
-                $uid = $this->getUser()->getId();
+            if ($validation->isValid()) {
+                $uid = 0;
+
+                if ($this->getUser() !== null) {
+                    $uid = $this->getUser()->getId();
+                }
+
+                $shoutboxModel = new ShoutboxModel();
+                $shoutboxModel->setUid($uid);
+                $shoutboxModel->setName($this->getRequest()->getPost('shoutbox_name'));
+                $shoutboxModel->setTextarea($this->getRequest()->getPost('shoutbox_textarea'));
+                $shoutboxMapper->save($shoutboxModel);
             }
-
-            $shoutboxModel = new ShoutboxModel();
-            $shoutboxModel->setUid($uid);
-            $shoutboxModel->setName($name);
-            $shoutboxModel->setTextarea($textarea);
-            $shoutboxMapper->save($shoutboxModel);
         }
 
         $this->getView()->setArray([
