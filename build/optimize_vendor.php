@@ -19,8 +19,23 @@ $directories = [
     'fortawesome' => [
         'keep' => [
             'font-awesome/css/font-awesome.min.css',
-            'font-awesome/fonts/'
+            'font-awesome/fonts/',
+            'font-awesome/README.md',
         ],
+    ],
+    'ifsnop'      => [
+        'keep' => [
+            'mysqldump-php/src/',
+            'mysqldump-php/README.md',
+            'mysqldump-php/composer.json',
+        ]
+    ],
+    'jbbcode'     => [
+        'remove' => [
+            'jbbcode/JBBCode/examples/',
+            'jbbcode/JBBCode/tests/',
+            'jbbcode/.gitignore',
+        ]
     ],
     'kartik-v'    => [
         'keep' => [
@@ -28,13 +43,17 @@ $directories = [
             'bootstrap-star-rating/js/star-rating.min.js',
             'bootstrap-star-rating/js/star-rating_locale_de.js',
             'bootstrap-star-rating/img/',
+            'bootstrap-star-rating/LICENSE.md',
+            'bootstrap-star-rating/README.md',
         ],
     ],
     'twbs'        => [
         'keep' => [
             'bootstrap/dist/css/bootstrap.min.css',
             'bootstrap/dist/js/bootstrap.min.js',
-            'bootstrap/dist/fonts/'
+            'bootstrap/dist/fonts/',
+            'bootstrap/LICENSE',
+            'bootstrap/README.md',
         ]
     ],
 ];
@@ -83,7 +102,7 @@ function removeEmptySubFolders($path)
  */
 function quoteForPattern($fileOrDir)
 {
-    $isDir = $fileOrDir[strlen($fileOrDir) -1 ] === DIRECTORY_SEPARATOR;
+    $isDir = $fileOrDir[strlen($fileOrDir) - 1] === DIRECTORY_SEPARATOR;
     $quoted = preg_quote($fileOrDir);
     if (!$isDir) {
         $quoted .= '$';
@@ -104,7 +123,8 @@ foreach ($directories as $baseDir => $dirOptions) {
         }
     } elseif (isset($dirOptions['remove'])) {
         foreach ($dirOptions['remove'] as $remove) {
-            $remove[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $remove);
+            $keeps[] = $baseDirPath;
+            $removes[] = $baseDirPath . str_replace('/', DIRECTORY_SEPARATOR, $remove);
         }
     }
 }
@@ -115,11 +135,18 @@ $removePattern = '~^(' . implode('|', array_map('quoteForPattern', $removes)) . 
 $keepFiles = preg_grep($keepPattern, $vendorFiles);
 $removeFiles = preg_grep($removePattern, $vendorFiles);
 
-$filesToDelete = array_diff($vendorFiles, $keepFiles);
-$filesToDelete = array_intersect($filesToDelete, $removeFiles);
+$filesToDelete = array_diff($vendorFiles, array_diff($keepFiles, $removeFiles));
 
+$savedSpace = 0;
 foreach ($filesToDelete as $item) {
+    $savedSpace += filesize($item);
     unlink($item);
 }
 
 removeEmptySubFolders($vendorPath);
+
+echo sprintf(
+    'Removed %d files from the vendor directory saving %s kB.',
+    count($filesToDelete),
+    number_format($savedSpace / 1024, 2, '.', ' ')
+);
