@@ -7,7 +7,10 @@
 namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Models\User as UserModel;
+use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Service\Password as PasswordService;
+use Ilch\Validation;
 
 class Regist extends \Ilch\Controller\Frontend
 {
@@ -19,104 +22,81 @@ class Regist extends \Ilch\Controller\Frontend
                     ->add($this->getTranslator()->trans('step1to3'), ['action' => 'index']);
 
             if ($this->getRequest()->getPost('saveRegist')) {
-                if ($this->getRequest()->getPost('acceptRule') == 1) {
-                    $this->redirect(['action' => 'input']);
-                } else {
-                    $this->getView()->set('error', true);
-                    $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
-                    $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
+                $validation = Validation::create($this->getRequest()->getPost(), [
+                    'acceptRule' => 'required'
+                ]);
+
+                if ($validation->isValid()) {
+                    $this->redirect()
+                        ->to(['action' => 'input']);
                 }
+
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'index']);
             } else {
                 $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
                 $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
             }
         } else {
-            $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index']);
-
-            $this->getView();
+            $this->getLayout()->getHmenu()
+                    ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index']);
         }
     }
 
     public function inputAction()
     {
+        $registMapper = new UserMapper();
+
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
 
-        $registMapper = new UserMapper();
-        $errors = [];
+        if ($this->getRequest()->getPost('saveRegist') AND $this->getRequest()->getPost('bot') === '') {
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'name' => 'required',
+                'password' => 'required|same:password2',
+                'password2' => 'required',
+                'email' => 'required|email',
+                'captcha' => 'captcha'
+            ]);
 
-        if ($this->getRequest()->getPost('saveRegist')) {
-            $name = $this->getRequest()->getPost('name');
-            $password = $this->getRequest()->getPost('password');
-            $password2 = $this->getRequest()->getPost('password2');
-            $email = trim($this->getRequest()->getPost('email'));
-            $captcha = trim(strtolower($this->getRequest()->getPost('captcha')));
-
-            $profilName = $registMapper->getUserByName($name);
-            $profilEmail = $registMapper->getUserByEmail($email);
-
-            if (empty($_SESSION['captcha']) || $captcha != $_SESSION['captcha']) {
-                $errors['captcha'] = 'invalidCaptcha';
-            }
-
+            $profilName = $registMapper->getUserByName($this->getRequest()->getPost('name'));
+            $profilEmail = $registMapper->getUserByEmail($this->getRequest()->getPost('email'));
             if (!empty($profilName)) {
-                $errors['name'] = 'nameExist';
+                $validation->getErrorBag()->addError('name', $this->getTranslator()->trans('nameExist'));
             }
-
             if (!empty($profilEmail)) {
-                $errors['email'] = 'emailExist';
+                $validation->getErrorBag()->addError('email', $this->getTranslator()->trans('emailExist'));
             }
 
-            if (empty($name)) {
-                $errors['name'] = 'fieldEmpty';
-            }
+            if ($validation->isValid()) {
+                $groupMapper = new GroupMapper();
+                $userGroup = $groupMapper->getGroupById(2);
+                $currentDate = new \Ilch\Date();
 
-            if (empty($password)) {
-                $errors['password'] = 'fieldEmpty';
-            }
-
-            if (empty($password2)) {
-                $errors['password2'] = 'fieldEmpty';
-            }
-
-            if ($password !== $password2) {
-                $errors['password'] = 'fieldDiffersPassword';
-                $errors['password2'] = 'fieldDiffersPassword';
-            }
-
-            if (empty($email)) {
-                $errors['email'] = 'fieldEmpty';
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors['email'] = 'fieldEmail';
-            }
-
-            if (empty($errors)) {
-                    $groupMapper = new \Modules\User\Mappers\Group();
-                    $userGroup = $groupMapper->getGroupById(2);
-                    $currentDate = new \Ilch\Date();
-                    $user = new \Modules\User\Models\User();
-                    $user->setName($name);
-                    $user->setPassword((new PasswordService())->hash($password));
-                    $user->setEmail($email);
-                    $user->setDateCreated($currentDate->format("Y-m-d H:i:s", true));
-                    $user->addGroup($userGroup);
-
+                $model = new UserModel();
                 if ($this->getConfig()->get('regist_confirm') == 0) {
-                    $user->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
+                    $model->setDateConfirmed($currentDate->format("Y-m-d H:i:s", true));
                 } else {
                     $selector = bin2hex(openssl_random_pseudo_bytes(9));
                     // 33 bytes instead of 32 bytes just that the confirmedCode to confirm a registration
                     // is different from the one to change a password and therefore can only be used for this purpose.
                     $confirmedCode = bin2hex(openssl_random_pseudo_bytes(33));
-                    $user->setSelector($selector);
-                    $user->setConfirmedCode($confirmedCode);
-                    $user->setConfirmed(0);
+                    $model->setSelector($selector);
+                    $model->setConfirmedCode($confirmedCode);
+                    $model->setConfirmed(0);
                 }
-                $registMapper->save($user);
+                $model->setName($this->getRequest()->getPost('name'))
+                    ->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')))
+                    ->setEmail($this->getRequest()->getPost('email'))
+                    ->setDateCreated($currentDate->format("Y-m-d H:i:s", true))
+                    ->addGroup($userGroup);
+                $registMapper->save($model);
 
-                $_SESSION["name"] = $name;
-                $_SESSION["email"] = $email;
+                $_SESSION["name"] = $this->getRequest()->getPost('name');
+                $_SESSION["email"] = $this->getRequest()->getPost('email');
 
                 if ($this->getConfig()->get('regist_confirm') == 1) {
                     $sitetitle = $this->getConfig()->get('page_title');
@@ -134,32 +114,34 @@ class Regist extends \Ilch\Controller\Frontend
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/registconfirm.php');
                     }
                     $messageReplace = [
-                            '{content}' => $this->getConfig()->get('regist_confirm_mail'),
-                            '{sitetitle}' => $sitetitle,
-                            '{date}' => $date->format("l, d. F Y", true),
-                            '{name}' => $name,
-                            '{confirm}' => $confirmCode,
-                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                        '{content}' => $this->getConfig()->get('regist_confirm_mail'),
+                        '{sitetitle}' => $sitetitle,
+                        '{date}' => $date->format("l, d. F Y", true),
+                        '{name}' => $this->getRequest()->getPost('name'),
+                        '{confirm}' => $confirmCode,
+                        '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                     ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
-                    $mail->setTo($email, $name)
-                            ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                            ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
-                            ->setMessage($message)
-                            ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
+                    $mail->setTo($this->getRequest()->getPost('email'), $this->getRequest()->getPost('name'))
+                        ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                        ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
+                        ->setMessage($message)
+                        ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
                     $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
                     $mail->send();
                 }
 
-                $this->redirect(['action' => 'finish']);
+                $this->redirect()
+                    ->to(['action' => 'finish']);
             }
 
-            $this->getView()->set('errors', $errors);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'input']);
         }
-
-        $this->getView();
     }
 
     public function finishAction()

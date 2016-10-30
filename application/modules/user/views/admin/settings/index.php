@@ -69,24 +69,24 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="ck_3" class="col-lg-2 control-label">
-            <?=$this->getTrans('mailForManuallyConfirm') ?>:
-            <br /><br />
-            <div class="small">
-                <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
-                <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
-                <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?>
+        <div class="form-group">
+            <label for="ck_3" class="col-lg-2 control-label">
+                <?=$this->getTrans('mailForManuallyConfirm') ?>:
+                <br /><br />
+                <div class="small">
+                    <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
+                    <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
+                    <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?>
+                </div>
+            </label>
+            <div class="col-lg-10">
+                <textarea class="form-control ckeditor"
+                          id="ck_3"
+                          name="manually_confirm_mail"
+                          toolbar="ilch_html"
+                          cols="60"
+                          rows="5"><?=$this->get('manually_confirm_mail') ?></textarea>
             </div>
-        </label>
-        <div class="col-lg-10">
-            <textarea class="form-control ckeditor"
-                      id="ck_3"
-                      name="manually_confirm_mail"
-                      toolbar="ilch_html"
-                      cols="60"
-                      rows="5"><?=$this->get('manually_confirm_mail') ?></textarea>
         </div>
     </div>
     <div class="form-group">

@@ -4,6 +4,19 @@ $errors = $this->get('errors');
 
 <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
 
+<!-- Fehlerausgabe der Validation -->
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+<!-- Ende Fehlerausgabe der Validation -->
+
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="regist panel panel-default">
@@ -11,7 +24,18 @@ $errors = $this->get('errors');
             <?=$this->getTrans('logindata') ?>
         </div>
         <div class="panel-body">
-            <div class="form-group <?php if (!empty($errors['name'])) { echo 'has-error'; }; ?>">
+            <div class="form-group hidden">
+                <label class="col-lg-2 control-label">
+                    <?=$this->getTrans('bot') ?>*
+                </label>
+                <div class="col-lg-8">
+                    <input type="text"
+                           class="form-control"
+                           name="bot"
+                           placeholder="Bot" />
+                </div>
+            </div>
+            <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
                 <label for="name" class="control-label col-lg-2">
                     <?=$this->getTrans('name') ?>:
                 </label>
@@ -19,13 +43,11 @@ $errors = $this->get('errors');
                     <input type="text"
                            class="form-control"
                            id="name"
-                           name="name" />
-                    <?php if (!empty($errors['name'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['name']) ?></span>
-                    <?php endif; ?>
+                           name="name"
+                           value="<?= $this->originalInput('name') ?>" />
                 </div>
             </div>
-            <div class="form-group <?php if (!empty($errors['password'])) { echo 'has-error'; }; ?>">
+            <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
                 <label for="password" class="control-label col-lg-2">
                     <?=$this->getTrans('password') ?>:
                 </label>
@@ -33,13 +55,11 @@ $errors = $this->get('errors');
                     <input type="password"
                            class="form-control"
                            id="password"
-                           name="password" />
-                    <?php if (!empty($errors['password'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['password']) ?></span>
-                    <?php endif; ?>
+                           name="password"
+                           value="<?= $this->originalInput('password') ?>" />
                 </div>
             </div>
-            <div class="form-group <?php if (!empty($errors['password2'])) { echo 'has-error'; }; ?>">
+            <div class="form-group <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
                 <label for="password2" class="control-label col-lg-2">
                     <?=$this->getTrans('password2') ?>:
                 </label>
@@ -47,13 +67,11 @@ $errors = $this->get('errors');
                     <input type="password"
                            class="form-control"
                            id="password2"
-                           name="password2" />
-                    <?php if (!empty($errors['password2'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['password2']) ?></span>
-                    <?php endif; ?>
+                           name="password2"
+                           value="<?= $this->originalInput('password2') ?>" />
                 </div>
             </div>
-            <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
+            <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
                 <label for="email" class="control-label col-lg-2">
                     <?=$this->getTrans('emailAdress') ?>:
                 </label>
@@ -61,13 +79,11 @@ $errors = $this->get('errors');
                     <input type="text"
                            class="form-control"
                            id="email"
-                           name="email" />
-                    <?php if (!empty($errors['email'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['email']) ?></span>
-                    <?php endif; ?>
+                           name="email"
+                           value="<?= $this->originalInput('email') ?>" />
                 </div>
             </div>
-            <div class="form-group <?php if (!empty($errors['captcha'])) { echo 'has-error'; }; ?>">
+            <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
                 <label class="col-lg-2 control-label">
                     <?=$this->getTrans('captcha') ?>:
                 </label>
@@ -75,7 +91,7 @@ $errors = $this->get('errors');
                     <?=$this->getCaptchaField() ?>
                 </div>
             </div>
-            <div class="form-group <?php if (!empty($errors['email'])) { echo 'has-error'; }; ?>">
+            <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
                 <div class="col-lg-offset-2 col-lg-8 input-group captcha">
                     <input type="text"
                            class="form-control"
@@ -91,11 +107,6 @@ $errors = $this->get('errors');
                             <i class="fa fa-refresh"></i>
                         </a>
                     </span>
-                </div>
-                <div class="col-lg-offset-2 col-lg-10">
-                    <?php if (!empty($errors['captcha'])): ?>
-                        <span class="help-inline"><?=$this->getTrans($errors['captcha']) ?></span>
-                    <?php endif; ?>
                 </div>
             </div>
         </div>
