@@ -27,7 +27,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
         $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
         $user = $userMapper->getUserById($fk_comment->getUserId());
         if ($req >= $config->get('comment_nesting')) {
-            $req = $config->get('comment_nesting')-1;
+            $req = $config->get('comment_nesting');
         }
         ?>
 
@@ -72,7 +72,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                                     </button>
                                 </div>
                             <?php endif; ?>
-                            <?php if ($obj->getUser() AND $config->get('comment_reply') == 1): ?>
+                            <?php if ($obj->getUser() AND $config->get('comment_reply') == 1 AND $req < $config->get('comment_nesting')-1): ?>
                                 <a href="javascript:slideReply('reply_<?=$fk_comment->getId() ?>');" class="btn btn-sm btn-default btn-hover-primary">
                                     <i class="fa fa-reply"></i> <?=$obj->getTrans('reply') ?>
                                 </a>
@@ -282,7 +282,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                                                     </button>
                                                 </div>
                                             <?php endif; ?>
-                                            <?php if ($this->getUser() AND $config->get('comment_reply') == 1): ?>
+                                            <?php if ($this->getUser() AND $config->get('comment_reply') == 1 AND $config->get('comment_nesting') > 0): ?>
                                                 <a href="javascript:slideReply('reply_<?=$comment->getId() ?>');" class="btn btn-sm btn-default btn-hover-primary">
                                                     <i class="fa fa-reply"></i> <?=$this->getTrans('reply') ?>
                                                 </a>
