@@ -32,8 +32,10 @@ $(function() {
             $form = $btn.closest('form'),
             dataString = $form.serialize();
 
-        if ($form.find('[name=shoutbox_name]').val() == '' || $form.find('[name=shoutbox_textarea]').val() == '') {
-            alert("Please Enter Some Text");
+        if ($form.find('[name=shoutbox_name]').val() == '') {
+            alert(<?=json_encode($this->getTrans('missingName')) ?>);
+        } else if ($form.find('[name=shoutbox_textarea]').val() == '') {
+            alert(<?=json_encode($this->getTrans('missingMessage')) ?>);
         } else {
             $.ajax({
                 type: "POST",
@@ -90,8 +92,8 @@ $(function() {
                            class="form-control"
                            name="shoutbox_name"
                            placeholder="Name"
-                           value="<?php if ($this->getUser() !== null) { echo $this->escape($this->getUser()->getName()); } ?>"
-                           required />
+                           value="<?=($this->getUser() !== null) ? $this->escape($this->getUser()->getName()) : '' ?>"
+                           <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
                 </div>
             </div>
             <div class="form-group">
