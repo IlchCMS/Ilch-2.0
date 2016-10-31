@@ -210,8 +210,8 @@ $(document).ready
             "/": '',
             "(": '',
             ")": '',
-            " ": '-',
-            ";": ''
+            ";": '',
+            " ": ' '
         };
 
         function escapeHtml(string) {

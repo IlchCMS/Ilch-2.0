@@ -96,11 +96,14 @@
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-4">
-            <?=$this->getUrl() ?>/index.php/
-            <input type="text"
-                   id="pagePerma"
-                   name="pagePerma"
-                   value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3"><?=$this->getUrl() ?>/index.php/</span>
+                <input class="form-control"
+                       type="text"
+                       id="pagePerma"
+                       name="pagePerma"
+                       value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+            </div>
         </div>
     </div>
     <?php
