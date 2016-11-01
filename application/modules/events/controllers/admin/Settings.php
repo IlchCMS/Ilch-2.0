@@ -6,6 +6,8 @@
 
 namespace Modules\Events\Controllers\Admin;
 
+use Ilch\Validation;
+
 class Settings extends \Ilch\Controller\Admin
 {
     public function init()
@@ -39,14 +41,38 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('event_height', $this->getRequest()->getPost('event_height'));
-            $this->getConfig()->set('event_width', $this->getRequest()->getPost('event_width'));
-            $this->getConfig()->set('event_size', $this->getRequest()->getPost('event_size'));
-            $this->getConfig()->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'));
-            $this->getConfig()->set('event_google_maps_api_key', $this->getRequest()->getPost('event_google_maps_api_key'));
-            $this->getConfig()->set('event_google_maps_map_typ', $this->getRequest()->getPost('event_google_maps_map_typ'));
-            $this->getConfig()->set('event_google_maps_zoom', $this->getRequest()->getPost('event_google_maps_zoom'));
-            $this->addMessage('saveSuccess');
+            Validation::setCustomFieldAliases([
+                'event_height'                  => 'imageHeight',
+                'event_width'                   => 'imageWidth',
+                'event_size'                    => 'imageSizeBytes',
+                'event_filetypes'               => 'imageAllowedFileExtensions',
+                'event_google_maps_map_typ'     => 'googleMapsMapTyp',
+                'event_google_maps_zoom'        => 'googleMapsZoom'
+            ]);
+
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'event_height'                  => 'required|numeric|min:1',
+                'event_width'                   => 'required|numeric|min:1',
+                'event_size'                    => 'required|numeric|min:1',
+                'event_filetypes'               => 'required',
+                'event_google_maps_map_typ'     => 'required',
+                'event_google_maps_zoom'        => 'required|numeric|min:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('event_height', $this->getRequest()->getPost('event_height'));
+                $this->getConfig()->set('event_width', $this->getRequest()->getPost('event_width'));
+                $this->getConfig()->set('event_size', $this->getRequest()->getPost('event_size'));
+                $this->getConfig()->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'));
+                $this->getConfig()->set('event_google_maps_api_key', $this->getRequest()->getPost('event_google_maps_api_key'));
+                $this->getConfig()->set('event_google_maps_map_typ', $this->getRequest()->getPost('event_google_maps_map_typ'));
+                $this->getConfig()->set('event_google_maps_zoom', $this->getRequest()->getPost('event_google_maps_zoom'));
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->redirect()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('event_height', $this->getConfig()->get('event_height'));
