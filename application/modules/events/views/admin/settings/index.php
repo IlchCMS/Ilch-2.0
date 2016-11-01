@@ -1,45 +1,58 @@
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuSettings') ?></legend>
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('event_height') ? 'has-error' : '' ?>">
         <label for="event_height" class="col-lg-2 control-label">
             <?=$this->getTrans('imageHeight') ?>:
         </label>
         <div class="col-lg-2">
-            <input type="text"
+            <input type="number"
                    class="form-control required"
                    id="event_height"
                    name="event_height"
+                   min="1"
                    value="<?=$this->get('event_height') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('event_width') ? 'has-error' : '' ?>">
         <label for="event_width" class="col-lg-2 control-label">
             <?=$this->getTrans('imageWidth') ?>:
         </label>
         <div class="col-lg-2">
-            <input type="text"
+            <input type="number"
                    class="form-control required"
                    id="event_width"
                    name="event_width"
+                   min="1"
                    value="<?=$this->get('event_width') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('event_size') ? 'has-error' : '' ?>">
         <label for="event_size" class="col-lg-2 control-label">
             <?=$this->getTrans('imageSizeBytes') ?>:
         </label>
         <div class="col-lg-2">
-            <input type="text"
+            <input type="number"
                    class="form-control required"
                    id="event_size"
                    name="event_size"
+                   min="1"
                    value="<?=$this->get('event_size') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('event_filetypes') ? 'has-error' : '' ?>">
         <label for="event_filetypes" class="col-lg-2 control-label">
             <?=$this->getTrans('imageAllowedFileExtensions') ?>:
         </label>
@@ -68,7 +81,7 @@
                    value="<?=$this->get('event_google_maps_api_key') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('event_google_maps_map_typ') ? 'has-error' : '' ?>">
         <label for="event_google_maps_map_typ" class="col-lg-2 control-label">
             <?=$this->getTrans('googleMapsMapTyp') ?>:
         </label>
@@ -81,7 +94,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('event_google_maps_zoom') ? 'has-error' : '' ?>">
         <label for="event_google_maps_zoom" class="col-lg-2 control-label">
             <?=$this->getTrans('googleMapsZoom') ?>:
         </label>
