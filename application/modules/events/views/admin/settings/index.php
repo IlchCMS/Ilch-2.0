@@ -23,7 +23,8 @@
                    id="event_height"
                    name="event_height"
                    min="1"
-                   value="<?=$this->get('event_height') ?>" />
+                   value="<?=$this->get('event_height') ?>" 
+                   required />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('event_width') ? 'has-error' : '' ?>">
@@ -36,7 +37,8 @@
                    id="event_width"
                    name="event_width"
                    min="1"
-                   value="<?=$this->get('event_width') ?>" />
+                   value="<?=$this->get('event_width') ?>"
+                   required />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('event_size') ? 'has-error' : '' ?>">
@@ -49,7 +51,8 @@
                    id="event_size"
                    name="event_size"
                    min="1"
-                   value="<?=$this->get('event_size') ?>" />
+                   value="<?=$this->get('event_size') ?>"
+                   required />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('event_filetypes') ? 'has-error' : '' ?>">
@@ -61,7 +64,8 @@
                    class="form-control required"
                    id="event_filetypes"
                    name="event_filetypes"
-                   value="<?=$this->get('event_filetypes') ?>" />
+                   value="<?=$this->get('event_filetypes') ?>"
+                   required />
         </div>
     </div>
 
@@ -104,7 +108,8 @@
                    id="event_google_maps_zoom"
                    name="event_google_maps_zoom"
                    min="1"
-                   value="<?=$this->get('event_google_maps_zoom') ?>" />
+                   value="<?=$this->get('event_google_maps_zoom') ?>"
+                   required />
         </div>
     </div>
     <?=$this->getSaveBar() ?>
