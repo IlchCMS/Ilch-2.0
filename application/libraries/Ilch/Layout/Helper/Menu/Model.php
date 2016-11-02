@@ -165,22 +165,59 @@ class Model
         $subItems = $menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $html = '';
 
+        if ($item->isExternalLink()) {
+            $link = $item->getHref();
+            $title = $this->layout->escape($item->getTitle());
+        } elseif ($item->isPageLink()) {
+            $link = $this->layout->getUrl($pageMapper->getPageByIdLocale($item->getSiteId(), $locale));
+            $title = $this->layout->escape($item->getTitle());
+        } elseif ($item->isModuleLink()) {
+            $link = $this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']);
+            $title = $this->layout->escape($item->getTitle());
+        } else {
+            $link = '';
+            $title = '';
+        }
+
         if ($item->isLink()) {
 
+            $origin = $this->layout->getRouter()->getOrigin();
+
             if ($parentType === 0 || ($parentType != 0 && array_dot($options, 'menus.allow-nesting') === false)) {
-                $html = '<li class="' . array_dot($options, 'menus.li-class-root') . '">';
+
+                $class = [];
+
+                if(array_dot($options, 'menus.li-class-root')) {
+                    $class[] = array_dot($options, 'menus.li-class-root');
+                }
+
+                // add nesting class if active and configured
+                if (
+                    !empty($subItems)
+                    && array_dot($options, 'menus.allow-nesting') === true
+                    && array_dot($options, 'menus.li-class-root-nesting')
+                ) {
+                    $class[] = array_dot($options, 'menus.li-class-root-nesting');
+                }
+
+                // add active class if configured and the link matches the origin source
+                if
+                (
+                    array_dot($options, 'menus.li-class-root-active')
+                    && $origin === $link
+                ) {
+                    $class[] = array_dot($options, 'menus.li-class-root-active');
+                }
+
+                $html = '<li' . (!empty($class) ? ' class="' . implode(' ', $class) . '"' : '') . '>';
             } else {
+
                 $html = '<li class="' . array_dot($options, 'menus.li-class-child') . '">';
             }
         }
 
-        if ($item->isExternalLink()) {
-            $html .= '<a href="'.$item->getHref().'">'.$this->layout->escape($item->getTitle()).'</a>';
-        } elseif ($item->isPageLink()) {
-            $page = $pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
-            $html .= '<a href="'.$this->layout->getUrl($page->getPerma()).'">'.$this->layout->escape($item->getTitle()).'</a>';
-        } elseif ($item->isModuleLink()) {
-            $html .= '<a href="'.$this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']).'">'.$this->layout->escape($item->getTitle()).'</a>';
+        if(!empty($link) && !empty($title)) {
+            $html .= '<a href="'.$link.'">'.$title.'</a>';
         }
 
         if (!empty($subItems)) {

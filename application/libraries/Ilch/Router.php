@@ -27,6 +27,11 @@ class Router
     private $request;
 
     /**
+     * @var string
+     */
+    private $origin;
+
+    /**
      * Injects request.
      *
      * @param \Ilch\Request $request
@@ -122,6 +127,26 @@ class Router
     public function getQuery()
     {
         return $this->query;
+    }
+
+    /**
+     * Gets the origin path from which the user comes.
+     *
+     * @return string
+     */
+    public function getOrigin()
+    {
+        return $this->origin;
+    }
+
+    /**
+     * Fills the origin with the full url path from which the user comes.
+     */
+    protected function fillOrigin()
+    {
+        $this->origin = $_SERVER['REQUEST_SCHEME'].'://'
+                      . $_SERVER['HTTP_HOST']
+                      . $_SERVER['REQUEST_URI'];
     }
 
     /**
@@ -371,6 +396,7 @@ class Router
         $this->request->setControllerName('index');
         $this->request->setActionName('index');
 
+        $this->fillOrigin();
         $this->fillQuery();
         $query = $this->getQuery();
 

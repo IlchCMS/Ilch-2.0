@@ -268,4 +268,12 @@ class Page
     {
         return $this->request;
     }
+
+    /**
+     * @return \Ilch\Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
+    }
 }
