@@ -21,7 +21,8 @@
                        class="form-control"
                        id="subject"
                        name="subject"
-                       value="<?=$this->originalInput('subject') ?>" />
+                       value="<?=$this->originalInput('subject') ?>"
+                       required />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
