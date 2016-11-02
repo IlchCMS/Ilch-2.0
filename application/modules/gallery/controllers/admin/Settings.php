@@ -6,6 +6,8 @@
 
 namespace Modules\Gallery\Controllers\Admin;
 
+use Ilch\Validation;
+
 class Settings extends \Ilch\Controller\Admin
 {
     public function init()
@@ -39,8 +41,18 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('gallery_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
-            $this->addMessage('saveSuccess');
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'picturesPerPage'                  => 'numeric|min:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('gallery_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->redirect()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('picturesPerPage', $this->getConfig()->get('gallery_picturesPerPage'));
