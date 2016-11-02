@@ -157,8 +157,8 @@ $config = $this->get('config');
             </a>
         </div>
         <div class="col-md-6">
-            <h3><?=$image->getImageTitle() ?></h3>
-            <p><?=$image->getImageDesc() ?></p>
+            <h3><?=$this->escape($image->getImageTitle()) ?></h3>
+            <p><?=$this->escape($image->getImageDesc()) ?></p>
         </div>
     </div>
 </div>
