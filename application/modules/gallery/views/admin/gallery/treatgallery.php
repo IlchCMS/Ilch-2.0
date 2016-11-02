@@ -34,8 +34,8 @@
                             <?php else: ?>
                                 <td><img class="image thumbnail img-responsive" src="<?=$this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>"/></td>
                             <?php endif; ?>
-                            <td><?=$image->getImageTitle() ?></td>
-                            <td><div class="table_text"><?=$image->getImageDesc() ?></div></td>
+                            <td><?=$this->escape($image->getImageTitle()) ?></td>
+                            <td><div class="table_text"><?=$this->escape($image->getImageDesc()) ?></div></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

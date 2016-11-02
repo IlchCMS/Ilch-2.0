@@ -10,7 +10,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
     if ($item->getType() === 0) {
         echo '<div class="page-header">
-              <h4>'.$obj->getTrans('cat').': '.$item->getTitle().' <small>'.$item->getDesc().'</small>
+              <h4>'.$obj->getTrans('cat').': '.$obj->escape($item->getTitle()).' <small>'.$obj->escape($item->getDesc()).'</small>
               </h4><hr>';
     }
 
@@ -34,14 +34,14 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
                         <div class="col-md-8">
                             <div class="lib-row lib-header">
                                 <a href="'.$obj->getUrl(['action' => 'show', 'user' => $item->getUserId(), 'id' => $item->getId()]).'" >
-                                    '.$item->getTitle().'
+                                    '.$obj->escape($item->getTitle()).'
                                 </a>
                                 <p class="text-left">'.$obj->getTrans('images').': '. count($imageCount).'</p>
                                 <div class="lib-header-seperator"></div>
                                 
                             </div>
                             <div class="lib-row lib-desc">
-                                '.$item->getDesc().'
+                                '.$obj->escape($item->getDesc()).'
                             </div>
                         </div>
                     </div>
