@@ -49,6 +49,11 @@ class Comment extends \Ilch\Model
     protected $down;
 
     /**
+     * @var string
+     */
+    protected $voted;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -193,6 +198,25 @@ class Comment extends \Ilch\Model
     public function setDown($down)
     {
         $this->down = (int)$down;
+
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getVoted()
+    {
+        return $this->voted;
+    }
+
+    /**
+     * @param integer $voted
+     * @return this
+     */
+    public function setVoted($voted)
+    {
+        $this->voted = (string)$voted;
 
         return $this;
     }

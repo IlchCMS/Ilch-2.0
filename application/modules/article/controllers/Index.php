@@ -60,7 +60,7 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();
             $commentModel = new CommentModel();
-            if ($this->getRequest()->getPost('fkId')) {                
+            if ($this->getRequest()->getPost('fkId')) {
                 $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id').'/id_c/'.$this->getRequest()->getPost('fkId'));
                 $commentModel->setFKId($this->getRequest()->getPost('fkId'));
             } else {
@@ -75,9 +75,17 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
             $id = $this->getRequest()->getParam('id');
             $commentId = $this->getRequest()->getParam('commentId');
-            $key = $this->getRequest()->getParam('key');
+            $oldComment = $commentMapper->getCommentById($commentId);
 
-            $commentMapper->updateLike($commentId, $key);
+            $commentModel = new CommentModel();
+            $commentModel->setId($commentId);
+            if ($this->getRequest()->getParam('key') == 'up') {
+                $commentModel->setUp($oldComment->getUp()+1);
+            } else {
+                $commentModel->setDown($oldComment->getDown()+1);
+            }
+            $commentModel->setVoted($oldComment->getVoted().$this->getUser()->getId().',');
+            $commentMapper->saveLike($commentModel);
 
             $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
         }

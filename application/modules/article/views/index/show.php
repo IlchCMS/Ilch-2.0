@@ -26,6 +26,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
     foreach ($fk_comments as $fk_comment) {
         $commentDate = new \Ilch\Date($fk_comment->getDateCreated());
         $user = $userMapper->getUserById($fk_comment->getUserId());
+        $voted = explode(',', $fk_comment->getVoted());
         if ($req >= $config->get('comment_nesting')) {
             $req = $config->get('comment_nesting');
         }
@@ -53,7 +54,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                         </div>
                         <p><?=nl2br($fk_comment->getText()) ?></p>
                         <div>
-                            <?php if ($obj->getUser()): ?>
+                            <?php if ($obj->getUser() AND in_array($obj->getUser()->getId(), $voted) == false): ?>
                                 <div class="btn-group">
                                     <a class="btn btn-sm btn-default btn-hover-success" href="<?=$obj->getUrl(['id' => $id, 'commentId' => $fk_comment->getId(), 'key' => 'up']) ?>" title="<?=$obj->getTrans('iLike') ?>">
                                         <i class="fa fa-thumbs-up"></i> <?=$obj->escape($fk_comment->getUp()) ?>
@@ -64,10 +65,10 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                                 </div>
                             <?php else: ?>
                                 <div class="btn-group">
-                                    <button class="btn btn-sm btn-default btn-hover-success">
+                                    <button class="btn btn-sm btn-default btn-success">
                                         <i class="fa fa-thumbs-up"></i> <?=$obj->escape($fk_comment->getUp()) ?>
                                     </button>
-                                    <button class="btn btn-sm btn-default btn-hover-danger">
+                                    <button class="btn btn-sm btn-default btn-danger">
                                         <i class="fa fa-thumbs-down"></i> <?=$obj->escape($fk_comment->getDown()) ?>
                                     </button>
                                 </div>
@@ -244,6 +245,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
             <?php foreach ($comments as $comment): ?>
                 <?php $user = $userMapper->getUserById($comment->getUserId()); ?>
                 <?php $commentDate = new \Ilch\Date($comment->getDateCreated()); ?>
+                <?php $voted = explode(',', $comment->getVoted()); ?>
                 <section class="comment-list">
                     <article id="comment_<?=$comment->getId() ?>">
                         <div class="panel">
@@ -263,7 +265,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                                         </div>
                                         <p><?=nl2br($this->escape($comment->getText())) ?></p>
                                         <div>
-                                            <?php if ($this->getUser()): ?>
+                                            <?php if ($this->getUser() AND in_array($this->getUser()->getId(), $voted) == false): ?>
                                                 <div class="btn-group">
                                                     <a class="btn btn-sm btn-default btn-hover-success" href="<?=$this->getUrl(['id' => $article->getId(), 'commentId' => $comment->getId(), 'key' => 'up']) ?>" title="<?=$this->getTrans('iLike') ?>">
                                                         <i class="fa fa-thumbs-up"></i> <?=$this->escape($comment->getUp()) ?>
@@ -274,10 +276,10 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                                                 </div>
                                             <?php else: ?>
                                                 <div class="btn-group">
-                                                    <button class="btn btn-sm btn-default btn-hover-success">
+                                                    <button class="btn btn-sm btn-default btn-success">
                                                         <i class="fa fa-thumbs-up"></i> <?=$this->escape($comment->getUp()) ?>
                                                     </button>
-                                                    <button class="btn btn-sm btn-default btn-hover-danger">
+                                                    <button class="btn btn-sm btn-default btn-danger">
                                                         <i class="fa fa-thumbs-down"></i> <?=$this->escape($comment->getDown()) ?>
                                                     </button>
                                                 </div>

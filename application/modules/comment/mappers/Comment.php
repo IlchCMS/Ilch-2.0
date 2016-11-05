@@ -33,10 +33,37 @@ class Comment extends \Ilch\Mapper
             $commentModel->setDateCreated($commentRow['date_created']);
             $commentModel->setUp($commentRow['up']);
             $commentModel->setDown($commentRow['down']);
+            $commentModel->setVoted($commentRow['voted']);
             $comments[] = $commentModel;
         }
 
         return $comments;
+    }
+
+    public function getCommentById($id)
+    {
+        $commentRow = $this->db()->select('*')
+            ->from('comments')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($commentRow)) {
+            return null;
+        }
+
+        $commentModel = new CommentModel();
+        $commentModel->setId($commentRow['id']);
+        $commentModel->setFKId($commentRow['fk_id']);
+        $commentModel->setKey($commentRow['key']);
+        $commentModel->setText($commentRow['text']);
+        $commentModel->setUserId($commentRow['user_id']);
+        $commentModel->setDateCreated($commentRow['date_created']);
+        $commentModel->setUp($commentRow['up']);
+        $commentModel->setDown($commentRow['down']);
+        $commentModel->setVoted($commentRow['voted']);
+
+        return $commentModel;
     }
 	
     public function getCommentsByFKid($key)
@@ -59,6 +86,7 @@ class Comment extends \Ilch\Mapper
             $commentModel->setDateCreated($commentRow['date_created']);
             $commentModel->setUp($commentRow['up']);
             $commentModel->setDown($commentRow['down']);
+            $commentModel->setVoted($commentRow['voted']);
             $comments[] = $commentModel;
         }
 
@@ -87,6 +115,7 @@ class Comment extends \Ilch\Mapper
             $commentModel->setDateCreated($commentRow['date_created']);
             $commentModel->setUp($commentRow['up']);
             $commentModel->setDown($commentRow['down']);
+            $commentModel->setVoted($commentRow['voted']);
             $comments[] = $commentModel;
         }
 
@@ -110,20 +139,22 @@ class Comment extends \Ilch\Mapper
     }
 
     /**
-     * Updates comment like with given id and key.
+     * Save comment like.
      *
-     * @param integer $id
-     * @param integer $key
+     * @param CommentModel $comment
      */
-    public function updateLike($id, $key)
+    public function saveLike(CommentModel $comment)
     {
-        $sql = 'UPDATE `[prefix]_comments`
-                SET `'.$key.'` = `'.$key.'` + 1
-                WHERE `id` = '.$id;
+        $fields = [
+            'down' => $comment->getDown(),
+            'up' => $comment->getUp(),
+            'voted' => $comment->getVoted()
+        ];
 
-        $like = $this->db()->queryCell($sql);
-
-        return $like;
+        $this->db()->update('comments')
+            ->values($fields)
+            ->where(['id' => $comment->getId()])
+            ->execute();
     }
 
     /**
