@@ -17,7 +17,9 @@ class GetMenu
             'ul-class-root' => 'list-unstyled ilch_menu_ul',
             'ul-class-child' => 'list-unstyled ilch_menu_ul',
             'li-class-root' => '',
+            'li-class-root-nesting' => '',
             'li-class-child' => '',
+            'li-class-active' => '',
             'allow-nesting' => true,
         ],
         'boxes' => [
@@ -51,6 +53,8 @@ class GetMenu
         $helperMapper = new MapperHelper($this->layout);
         $menuMapper = new MenuMapper();
         $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
+
+        //TODO: optimize loading of menus (less queries!!!)
 
         return $menu->getItems($tpl, array_replace_recursive(self::DEFAULT_OPTIONS, $options));
     }

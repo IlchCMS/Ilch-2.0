@@ -37,10 +37,14 @@ class GetMenuTest extends DatabaseTestCase
      *
      * @param array $options
      * @param string $expected
+     * @param string $currentUrlModule
      */
-    public function testGetMenu(array $options, $expected)
+    public function testGetMenu(array $options, $expected, $currentUrlModule = 'article')
     {
         $request = new Request();
+        $request->setModuleName($currentUrlModule);
+        $request->setControllerName('index');
+        $request->setActionName('index');
         $layout = new Frontend($request, new Translator(), new Router($request), '');
 
         $out = new GetMenu($layout);
@@ -57,20 +61,21 @@ class GetMenuTest extends DatabaseTestCase
             'default options' => [
                 'options' => GetMenu::DEFAULT_OPTIONS,
                 'expected' => $menuTitle . '<ul class="list-unstyled ilch_menu_ul">'
-                    . '<li class=""><a href="/index.php/article/index/index">Artikel</a></li>'
-                    . '<li class=""><a href="/index.php/user/index/index">Benutzer</a>'
+                    . '<li><a href="/index.php/article/index/index">Artikel</a></li>'
+                    . '<li><a href="/index.php/user/index/index">Benutzer</a>'
                     . '<ul class="list-unstyled ilch_menu_ul">'
-                        . '<li class=""><a href="/index.php/jobs/index/index">Jobs</a></li>'
-                        . '<li class=""><a href="/index.php/birthday/index/index">Geburtstag</a></li>'
-                    . '</ul></li><li class=""><a href="/index.php/testseite">Seite</a></li></ul>' . $testBox
+                        . '<li><a href="/index.php/jobs/index/index">Jobs</a></li>'
+                        . '<li><a href="/index.php/birthday/index/index">Geburtstag</a></li>'
+                    . '</ul></li><li><a href="/index.php/testseite">Seite</a></li></ul>' . $testBox
             ],
-            'different classes for everything' => [
+            'different classes for everything, with li-class-active' => [
                 'options' => [
                     'menus' => [
                         'ul-class-root' => 'root-ul',
                         'ul-class-child' => 'child-ul',
                         'li-class-root' => 'root-li',
                         'li-class-child' => 'child-li',
+                        'li-class-active' => 'active',
                         'allow-nesting' => true,
                     ],
                     'boxes' => [
@@ -78,12 +83,27 @@ class GetMenuTest extends DatabaseTestCase
                     ],
                 ],
                 'expected' => $menuTitle . '<ul class="root-ul">'
-                    . '<li class="root-li"><a href="/index.php/article/index/index">Artikel</a></li>'
+                    . '<li class="root-li active"><a href="/index.php/article/index/index">Artikel</a></li>'
                     . '<li class="root-li"><a href="/index.php/user/index/index">Benutzer</a>'
                     . '<ul class="child-ul">'
                         . '<li class="child-li"><a href="/index.php/jobs/index/index">Jobs</a></li>'
                         . '<li class="child-li"><a href="/index.php/birthday/index/index">Geburtstag</a></li>'
                     . '</ul></li><li class="root-li"><a href="/index.php/testseite">Seite</a></li></ul>' . $testBox
+            ],
+            'test li-class-root-nesting option' => [
+                'options' => [
+                    'menus' => [
+                        'li-class-root-nesting' => 'li-has-children',
+                    ],
+
+                ],
+                'expected' => $menuTitle . '<ul class="list-unstyled ilch_menu_ul">'
+                    . '<li><a href="/index.php/article/index/index">Artikel</a></li>'
+                    . '<li class="li-has-children"><a href="/index.php/user/index/index">Benutzer</a>'
+                    . '<ul class="list-unstyled ilch_menu_ul">'
+                    . '<li><a href="/index.php/jobs/index/index">Jobs</a></li>'
+                    . '<li><a href="/index.php/birthday/index/index">Geburtstag</a></li>'
+                    . '</ul></li><li><a href="/index.php/testseite">Seite</a></li></ul>' . $testBox
             ],
             'nesting disabled' => [
                 'options' => [
@@ -91,6 +111,7 @@ class GetMenuTest extends DatabaseTestCase
                         'ul-class-root' => 'root-ul',
                         'ul-class-child' => 'child-ul',
                         'li-class-root' => 'root-li',
+                        'li-class-root-nesting' => 'li-has-children',
                         'li-class-child' => 'child-li',
                         'allow-nesting' => false,
                     ],
@@ -105,13 +126,14 @@ class GetMenuTest extends DatabaseTestCase
                     . '<li class="root-li"><a href="/index.php/birthday/index/index">Geburtstag</a></li>'
                     . '<li class="root-li"><a href="/index.php/testseite">Seite</a></li></ul>' . $testBox
             ],
-            'boxes disabled' => [
+            'boxes disabled with nested active' => [
                 'options' => [
                     'menus' => [
                         'ul-class-root' => 'root-ul',
                         'ul-class-child' => 'child-ul',
                         'li-class-root' => 'root-li',
                         'li-class-child' => 'child-li',
+                        'li-class-active' => 'active',
                         'allow-nesting' => true,
                     ],
                     'boxes' => [
@@ -122,9 +144,10 @@ class GetMenuTest extends DatabaseTestCase
                     . '<li class="root-li"><a href="/index.php/article/index/index">Artikel</a></li>'
                     . '<li class="root-li"><a href="/index.php/user/index/index">Benutzer</a>'
                     . '<ul class="child-ul">'
-                    . '<li class="child-li"><a href="/index.php/jobs/index/index">Jobs</a></li>'
+                    . '<li class="child-li active"><a href="/index.php/jobs/index/index">Jobs</a></li>'
                     . '<li class="child-li"><a href="/index.php/birthday/index/index">Geburtstag</a></li>'
-                    . '</ul></li><li class="root-li"><a href="/index.php/testseite">Seite</a></li></ul>'
+                    . '</ul></li><li class="root-li"><a href="/index.php/testseite">Seite</a></li></ul>',
+                'currentUrlModule' => 'jobs'
             ],
         ];
     }

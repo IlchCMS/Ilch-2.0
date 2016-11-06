@@ -370,6 +370,9 @@ abstract class Base
             }
 
             foreach ($url as $key => $value) {
+                if (empty($value)) {
+                    continue;
+                }
                 $urlParts[] = $key . '/' . $value;
             }
 

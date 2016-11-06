@@ -6,7 +6,7 @@
 
 namespace Ilch;
 
-class Box extends \Ilch\Controller\Base
+abstract class Box extends Controller\Base
 {
     /**
      * Hold the database adapter.
@@ -14,7 +14,7 @@ class Box extends \Ilch\Controller\Base
      * @var \Ilch\Database\Mysql
      */
     private $db;
-    
+
     /**
      * @var integer
      */
@@ -28,17 +28,22 @@ class Box extends \Ilch\Controller\Base
     /**
      * Injects the layout/view to the controller.
      *
-     * @param \Ilch\Layout\Base $layout
-     * @param \Ilch\View        $view
-     * @param \Ilch\Request     $request
-     * @param \Ilch\Router      $router
-     * @param \Ilch\Translator   $translator
+     * @param Layout\Base $layout
+     * @param View $view
+     * @param Request $request
+     * @param Router $router
+     * @param Translator $translator
      */
-    public function __construct(\Ilch\Layout\Base $layout, \Ilch\View $view, \Ilch\Request $request, \Ilch\Router $router, \Ilch\Translator $translator)
-    {
+    public function __construct(
+        Layout\Base $layout,
+        View $view,
+        Request $request,
+        Router $router,
+        Translator $translator
+    ) {
         parent::__construct($layout, $view, $request, $router, $translator);
         $this->db = Registry::get('db');
-        
+
         if (!isset(Box::$staticBoxUniqid)) {
             Box::$staticBoxUniqid = 0;
         } else {
@@ -55,11 +60,11 @@ class Box extends \Ilch\Controller\Base
      */
     public function getUniqid()
     {
-        return 'box_'.$this->boxUniqid;
+        return 'box_' . $this->boxUniqid;
     }
 
     /**
-     * Shortcut for getDatabse.
+     * Shortcut for getDatabase
      *
      * @return \Ilch\Database\Mysql
      */
@@ -80,4 +85,11 @@ class Box extends \Ilch\Controller\Base
     {
         throw new \LogicException('php redirect is not possible in boxes');
     }
+
+    /**
+     * Prepare the view variables for rendering this box
+     *
+     * @return void
+     */
+    abstract public function render();
 }
