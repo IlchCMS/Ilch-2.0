@@ -190,6 +190,19 @@ class Comment extends \Ilch\Mapper
     }
 
     /**
+     * Delete comment with given $key
+     *
+     * @param string $key
+     */
+    public function deleteByKey($key)
+    {
+        $sql = 'DELETE FROM `[prefix]_comments`
+                WHERE `key` LIKE "'.$key.'%"';
+
+        $this->db()->query($sql);
+    }
+
+    /**
      * Get the id of a comment with a specific fk_id.
      *
      * @param integer $fk_id

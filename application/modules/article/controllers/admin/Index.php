@@ -7,8 +7,9 @@
 namespace Modules\Article\Controllers\Admin;
 
 use Modules\Article\Mappers\Article as ArticleMapper;
-use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Article\Models\Article as ArticleModel;
+use Modules\Article\Mappers\Category as CategoryMapper;
+use Modules\Comment\Mappers\Comment as CommentMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -59,6 +60,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $articleMapper = new ArticleMapper();
         $categoryMapper = new CategoryMapper();
+        $commentMapper = new CommentMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
@@ -67,6 +69,7 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_articles')) {
             foreach ($this->getRequest()->getPost('check_articles') as $articleId) {
                 $articleMapper->delete($articleId);
+                $commentMapper->deleteByKey('article/index/show/id/'.$articleId);
             }
         }
 
