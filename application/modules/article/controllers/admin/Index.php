@@ -188,7 +188,9 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $articleMapper = new ArticleMapper();
+            $commentMapper = new CommentMapper();
             $articleMapper->delete($this->getRequest()->getParam('id'));
+            $commentMapper->deleteByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
         }
 
         $this->redirect(['action' => 'index']);
