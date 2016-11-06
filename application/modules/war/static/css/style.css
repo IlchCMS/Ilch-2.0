@@ -58,6 +58,10 @@
 .lastwar-box [class*="col-"] {
     padding: 0;
 }
+.nextwar-box i,
+.lastwar-box i {
+    padding-right: 4px;
+}
 .nextwar-box img,
 .lastwar-box img {
     float: left;
