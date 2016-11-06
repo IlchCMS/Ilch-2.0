@@ -99,9 +99,17 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
             $id = $this->getRequest()->getParam('id');
             $commentId = $this->getRequest()->getParam('commentId');
-            $key = $this->getRequest()->getParam('key');
+            $oldComment = $commentMapper->getCommentById($commentId);
 
-            $commentMapper->updateLike($commentId, $key);
+            $commentModel = new CommentModel();
+            $commentModel->setId($commentId);
+            if ($this->getRequest()->getParam('key') == 'up') {
+                $commentModel->setUp($oldComment->getUp()+1);
+            } else {
+                $commentModel->setDown($oldComment->getDown()+1);
+            }
+            $commentModel->setVoted($oldComment->getVoted().$this->getUser()->getId().',');
+            $commentMapper->saveLike($commentModel);
 
             $this->redirect(['action' => 'showimage', 'id' => $id.'#comment_'.$commentId]);
         }
