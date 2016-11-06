@@ -24,7 +24,7 @@ class Frontend extends Base
         if (!empty($layoutKey)) {
             
             if (is_file(APPLICATION_PATH.'/layouts/'.$layoutKey.'/config/config.php')) {
-                $configClass = '\\layouts\\'.ucfirst(basename($layoutKey)).'\\config\\config';
+                $configClass = '\\Layouts\\'.ucfirst(basename($layoutKey)).'\\config\\Config';
                 $layoutConfig = new $configClass($this->getTranslator());
                 if (array_key_exists('layouts', $layoutConfig->config)) {
                     $config['layouts'] = $layoutConfig->config['layouts'];

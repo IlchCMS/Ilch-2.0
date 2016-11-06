@@ -33,7 +33,7 @@
                     <?php $layouts = []; ?>
                     <?php foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath): ?>
                         <?php
-                        $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\config';
+                        $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
                         $config = new $configClass($this->getTranslator()); ?>
                         <?php if (empty($config->config['modulekey'])): ?>
                             <?php $config->config['modulekey'] = ''; ?>

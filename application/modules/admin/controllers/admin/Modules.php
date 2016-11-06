@@ -172,7 +172,7 @@ class Modules extends \Ilch\Controller\Admin
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $config->install();
 
@@ -214,7 +214,7 @@ class Modules extends \Ilch\Controller\Admin
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $config->uninstall();
             $moduleMapper->delete($key);

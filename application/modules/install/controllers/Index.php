@@ -371,7 +371,7 @@ class Index extends \Ilch\Controller\Frontend
                 $db->dropTablesByPrefix($db->getPrefix());
 
                 foreach ($modulesToInstall as $module) {
-                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\config';
+                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
                     $config->install();
 
@@ -427,7 +427,7 @@ class Index extends \Ilch\Controller\Frontend
                         continue;
                     }
 
-                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\config';
+                    $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
                     $config = new $configClass($this->getTranslator());
 
                     $menuItem = new \Modules\Admin\Models\MenuItem();
@@ -512,7 +512,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['faq']['types'] = ['clan', 'private'];
 
         foreach ($modules as $key => $module) {
-            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\config';
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $modules[$key]['config'] = $config;
 

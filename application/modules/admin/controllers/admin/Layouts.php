@@ -59,7 +59,7 @@ class Layouts extends \Ilch\Controller\Admin
 
         $layouts = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
-            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\config';
+            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $model = new LayoutModel();
             $model->setKey(basename($layoutPath));
@@ -123,7 +123,7 @@ class Layouts extends \Ilch\Controller\Admin
         }
 
         foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
-            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\config';
+            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
             $layoutsDir[] = basename($layoutPath);
@@ -209,7 +209,7 @@ class Layouts extends \Ilch\Controller\Admin
             if (is_dir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'))) {
                 $modules = new ModuleMapper();
 
-                $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\config';
+                $configClass = '\\Modules\\'.ucfirst($this->getRequest()->getParam('key')).'\\Config\\Config';
                 $config = new $configClass();
                 $config->uninstall();
                 $modules->delete($this->getRequest()->getParam('key'));

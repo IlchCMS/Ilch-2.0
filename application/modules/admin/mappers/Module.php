@@ -71,7 +71,7 @@ class Module extends \Ilch\Mapper
 
         foreach ($modulesNotInstalled as $module) {
             $moduleModel = new ModuleModel();
-            $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\config';
+            $configClass = '\\Modules\\'.ucfirst($module).'\\Config\\Config';
             $config = new $configClass();
 
             $moduleModel->setKey($config->config['key']);
