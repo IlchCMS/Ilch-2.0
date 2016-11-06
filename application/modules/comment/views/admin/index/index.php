@@ -1,54 +1,40 @@
-<?php $locale = $this->get('locale'); ?>
+<?php
+$commentMapper = $this->get('commentMapper');
+$modulesMapper = $this->get('modulesMapper');
+$locale = $this->get('locale');
+?>
 
 <legend><?=$this->getTrans('manage') ?></legend>
-<?php if ($this->get('comments') != ''): ?>
-    <form class="form-horizontal" method="POST" action="">
-        <?=$this->getTokenField() ?>
-        <div class="table-responsive">
-            <table class="table table-hover table-striped">
-                <colgroup>
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="col-lg-2">
-                    <col class="col-lg-1">
-                    <col class="col-lg-1">
-                    <col class="col-lg-1">
-                    <col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th><?=$this->getCheckAllCheckbox('check_comments') ?></th>
-                        <th></th>
-                        <th><?=$this->getTrans('commentDateTime') ?></th>
-                        <th><?=$this->getTrans('commentFrom') ?></th>
-                        <th><?=$this->getTrans('commentModul') ?></th>
-                        <th><?=$this->getTrans('commentLink') ?></th>
-                        <th><?=$this->getTrans('commentText') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $userMapper = new \Modules\User\Mappers\User() ?>
-                    <?php $modulesMapper = new \Modules\Admin\Mappers\Module(); ?>
-                    <?php foreach ($this->get('comments') as $comment): ?>
-                        <?php $user = $userMapper->getUserById($comment->getUserId()) ?>
-                        <?php $date = new \Ilch\Date($comment->getDateCreated()) ?>
-                        <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
-                        <?php $modules = $modulesMapper->getModulesByKey($commentKey, $locale); ?>
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col />
+                <col class="col-lg-1" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th><?=$this->getTrans('commentModul') ?></th>
+                    <th class="text-center"><?=$this->getTrans('comments') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($this->get('modules')): ?>
+                    <?php foreach ($this->get('modules') as $module): ?>
+                        <?php $modules = $modulesMapper->getModulesByKey($module, $locale); ?>
+                        <?php $comments = $commentMapper->getCommentsLikeKey($module); ?>
                         <tr>
-                            <td><input type="checkbox" name="check_comments[]" value="<?=$comment->getId() ?>" /></td>
-                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $comment->getId()]) ?></td>
-                            <td><?=$date->format("d.m.Y H:i", true) ?></td>
-                            <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></td>
-                            <td><?=$modules->getName() ?></td>
-                            <td><a target="_blank" href="<?=$this->getUrl($comment->getKey()) ?>#comment_<?=$comment->getId() ?>"><?=$modules->getName() ?></a></td>
-                            <td><?=nl2br($this->escape($comment->getText())) ?></td>
+                            <td><a href="<?=$this->getUrl('admin/comment/index/show/key/'.$module) ?>"><?=$modules->getName() ?></a>
+                            <td class="text-center"><?=count($comments) ?></td>
                         </tr>
                     <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-        <?=$this->getListBar(['delete' => 'delete']) ?>
-    </form>
-<?php else: ?>
-    <?=$this->getTranslator()->trans('noComments') ?>
-<?php endif; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="2"><?=$this->getTrans('noComments') ?></td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</form>

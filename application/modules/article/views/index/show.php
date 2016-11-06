@@ -115,7 +115,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                                             </p>
                                             <div>
                                                 <div class="content_savebox">
-                                                    <button type="submit" class="btn btn-sm btn-default " name="saveComment" value="save">
+                                                    <button type="submit" class="btn btn-sm btn-default" name="saveComment" value="save">
                                                         <?=$obj->getTrans('submit') ?>
                                                     </button>
                                                 </div>
@@ -324,7 +324,7 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
                                                                 </p>
                                                                 <div>
                                                                     <div class="content_savebox">
-                                                                        <button type="submit" class="btn btn-sm btn-default " name="saveComment" value="save">
+                                                                        <button type="submit" class="btn btn-sm btn-default" name="saveComment" value="save">
                                                                             <?=$this->getTrans('submit') ?>
                                                                         </button>
                                                                     </div>

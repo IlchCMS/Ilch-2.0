@@ -40,6 +40,33 @@ class Comment extends \Ilch\Mapper
         return $comments;
     }
 
+    public function getCommentsLikeKey($key)
+    {
+        $sql = 'SELECT *
+                FROM `[prefix]_comments`
+                WHERE `key` LIKE "'.$key.'%"
+                ORDER BY `id` DESC';
+
+        $commentsArray = $this->db()->queryArray($sql);
+
+        $comments = [];
+        foreach ($commentsArray as $commentRow) {
+            $commentModel = new CommentModel();
+            $commentModel->setId($commentRow['id']);
+            $commentModel->setFKId($commentRow['fk_id']);
+            $commentModel->setKey($commentRow['key']);
+            $commentModel->setText($commentRow['text']);
+            $commentModel->setUserId($commentRow['user_id']);
+            $commentModel->setDateCreated($commentRow['date_created']);
+            $commentModel->setUp($commentRow['up']);
+            $commentModel->setDown($commentRow['down']);
+            $commentModel->setVoted($commentRow['voted']);
+            $comments[] = $commentModel;
+        }
+
+        return $comments;
+    }
+
     public function getCommentById($id)
     {
         $commentRow = $this->db()->select('*')
