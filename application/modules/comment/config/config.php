@@ -44,6 +44,7 @@ class Config extends \Ilch\Config\Install
                   `fk_id` INT(11) NOT NULL DEFAULT 0,
                   `up` INT(11) NOT NULL DEFAULT 0,
                   `down` INT(11) NOT NULL DEFAULT 0,
+                  `voted` LONGTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
