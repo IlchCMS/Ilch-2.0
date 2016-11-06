@@ -17,6 +17,8 @@ class GetMenu
             'ul-class-root' => 'list-unstyled ilch_menu_ul',
             'ul-class-child' => 'list-unstyled ilch_menu_ul',
             'li-class-root' => '',
+            'li-class-root-active' => '',
+            'li-class-root-nesting' => '',
             'li-class-child' => '',
             'allow-nesting' => true,
         ],
