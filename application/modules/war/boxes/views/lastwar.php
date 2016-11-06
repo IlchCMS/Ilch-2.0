@@ -25,7 +25,7 @@
         }
 
         $gameImg = $this->getBoxUrl('static/img/'.$war->getWarGame().'.png');
-        if ($warMapper->url_check($gameImg) AND file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$war->getWarGame().'.png')) {
+        if (file_exists(APPLICATION_PATH.'/modules/war/static/img/'.$war->getWarGame().'.png')) {
             $gameImg = '<img src="'.$this->getBoxUrl('static/img/'.$war->getWarGame().'.png').'" title="'.$this->escape($war->getWarGame()).'" width="16" height="16">';
         } else {
             $gameImg = '<i class="fa fa-question-circle text-muted" title="'.$war->getWarGame().'"></i>';
