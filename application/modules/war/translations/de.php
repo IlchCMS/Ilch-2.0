@@ -62,6 +62,7 @@ return [
     'nextWarGame' => 'Game',
     'nextWarMatchtype' => 'Matchtype',
     'nextWarReport' => 'Bericht',
+    'vs' => 'vs.',
 
     'manageLastWar' => 'Last War erstellen',
     'lastWarOverview' => 'Last War Übersicht',
@@ -75,6 +76,8 @@ return [
     'lastWarGame' => 'Game',
     'lastWarMatchtype' => 'Matchtype',
     'lastWarReport' => 'Bericht',
+    'nextWarLimit' => 'Next Wars Limit',
+    'lastWarLimit' => 'Last Wars Limit',
 
     'manageWar' => 'War bearbeiten',
     'warStatus' => 'Status',

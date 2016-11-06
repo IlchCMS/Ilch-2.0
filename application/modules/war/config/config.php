@@ -31,6 +31,9 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('war_boxNextWarLimit', '5');
+        $databaseConfig->set('war_boxLastWarLimit', '5');
     }
 
     public function uninstall()
@@ -39,6 +42,8 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_groups`');
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_enemy`');
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_played`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'war_boxNextWarLimit'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'war_boxLastWarLimit'");
     }
 
     public function getInstallSql()

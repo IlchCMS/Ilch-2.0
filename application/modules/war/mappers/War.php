@@ -435,14 +435,14 @@ class War extends \Ilch\Mapper
         // OUTPUT
         if ($days_left == '0') {
             if ($hours_left == '0' AND $minutes_left > '0') {
-                echo '<i>'.$minutes_left . 'm</i>';
+                echo $minutes_left.'m';
             } elseif ($hours_left == '0' AND $minutes_left == '0') {
                 echo 'live';
             } else  {
-                echo '<i>'.$hours_left . 'h ' . $minutes_left . 'm</i>';
+                echo $hours_left.'h '.$minutes_left.'m';
             }
         } else {
-            echo '<i>'.$days_left . 'd ' . $hours_left . 'h</i>';
+            echo $days_left.'d '.$hours_left.'h';
         }
     }
 }

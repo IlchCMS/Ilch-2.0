@@ -167,6 +167,7 @@ return [
     'edit' => 'Edit',
     'manage' => 'Manage',
     'settings' => 'Settings',
+    'boxSettings' => 'Box Settings',
     'installModule' => 'Install',
     'date' => 'Date',
     'title' => 'Title',

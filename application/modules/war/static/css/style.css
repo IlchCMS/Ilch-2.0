@@ -47,3 +47,49 @@
 .center-text img {
     min-width: 100%;
 }
+
+
+/* Box */
+.nextwar-box,
+.lastwar-box {
+    margin: 0 15px;
+}
+.nextwar-box [class*="col-"],
+.lastwar-box [class*="col-"] {
+    padding: 0;
+}
+.nextwar-box img,
+.lastwar-box img {
+    float: left;
+    padding-right: 4px;
+}
+.nextwar-box .ellipsis,
+.lastwar-box .ellipsis {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+.nextwar-box .ellipsis-item,
+.lastwar-box .ellipsis-item {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.nextwar-box .nextwar-vs,
+.lastwar-box .nextwar-vs {
+    display: flex;
+    align-items: flex-end;
+    padding: 0 5px;
+    min-height: 20px;
+}
+.nextwar-box .nextwar-date,
+.lastwar-box .nextwar-date {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-left: 5px;
+    min-height: 20px;
+}

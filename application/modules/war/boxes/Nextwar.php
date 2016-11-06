@@ -14,12 +14,10 @@ class Nextwar extends \Ilch\Box
     {
         $warMapper = new WarMapper();        
         $date = new \Ilch\Date();
-
-        $status = '1';
-        $limit = '5';
+        $config = \Ilch\Registry::get('config');
 
         $this->getView()->set('warMapper', $warMapper);
         $this->getView()->set('date', $date->format(null, true));
-        $this->getView()->set('war', $warMapper->getWarListByStatusAndLimt($status, $limit));
+        $this->getView()->set('war', $warMapper->getWarListByStatusAndLimt(1, $config->get('war_boxNextWarLimit')));
     }
 }

@@ -15,13 +15,10 @@ class Lastwar extends \Ilch\Box
     {
         $warMapper = new WarMapper();
         $gamesMapper = new GamesMapper();
-
-        $status = '2';
-        $limit = '5';
-        $war = $warMapper->getWarListByStatusAndLimt($status, $limit);
+        $config = \Ilch\Registry::get('config');
 
         $this->getView()->set('warMapper', $warMapper);
         $this->getView()->set('gamesMapper', $gamesMapper);
-        $this->getView()->set('war', $war);
+        $this->getView()->set('war', $warMapper->getWarListByStatusAndLimt(2, $config->get('war_boxLastWarLimit')));
     }
 }

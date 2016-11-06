@@ -55,26 +55,34 @@ class Settings extends \Ilch\Controller\Admin
         $post = [
             'warsPerPage' => '',
             'enemiesPerPage' => '',
-            'groupsPerPage' => ''
+            'groupsPerPage' => '',
+            'boxNextWarLimit' => '',
+            'boxLastWarLimit' => ''
         ];
 
         if ($this->getRequest()->isPost()) {
             $post = [
                 'warsPerPage' => $this->getRequest()->getPost('warsPerPage'),
                 'enemiesPerPage' => $this->getRequest()->getPost('enemiesPerPage'),
-                'groupsPerPage' => $this->getRequest()->getPost('groupsPerPage')
+                'groupsPerPage' => $this->getRequest()->getPost('groupsPerPage'),
+                'boxNextWarLimit' => $this->getRequest()->getPost('boxNextWarLimit'),
+                'boxLastWarLimit' => $this->getRequest()->getPost('boxLastWarLimit')
             ];
 
             $validation = Validation::create($post, [
                 'warsPerPage' => 'numeric|integer|min:1',
                 'enemiesPerPage' => 'numeric|integer|min:1',
-                'groupsPerPage' => 'numeric|integer|min:1'
+                'groupsPerPage' => 'numeric|integer|min:1',
+                'boxNextWarLimit' => 'numeric|integer|min:1',
+                'boxLastWarLimit' => 'numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('war_warsPerPage', $post['warsPerPage']);
                 $this->getConfig()->set('war_enemiesPerPage', $post['enemiesPerPage']);
                 $this->getConfig()->set('war_groupsPerPage', $post['groupsPerPage']);
+                $this->getConfig()->set('war_boxNextWarLimit', $post['boxNextWarLimit']);
+                $this->getConfig()->set('war_boxLastWarLimit', $post['boxLastWarLimit']);
                 $this->addMessage('saveSuccess');
             }
 
@@ -87,5 +95,7 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('warsPerPage', $this->getConfig()->get('war_warsPerPage'));
         $this->getView()->set('enemiesPerPage', $this->getConfig()->get('war_enemiesPerPage'));
         $this->getView()->set('groupsPerPage', $this->getConfig()->get('war_groupsPerPage'));
+        $this->getView()->set('boxNextWarLimit', $this->getConfig()->get('war_boxNextWarLimit'));
+        $this->getView()->set('boxLastWarLimit', $this->getConfig()->get('war_boxLastWarLimit'));
     }
 }

@@ -168,6 +168,7 @@ return [
     'edit' => 'Bearbeiten',
     'manage' => 'Verwalten',
     'settings' => 'Einstellungen',
+    'boxSettings' => 'Box Einstellungen',
     'date' => 'Datum',
     'title' => 'Titel',
     'number' => 'Anzahl',
