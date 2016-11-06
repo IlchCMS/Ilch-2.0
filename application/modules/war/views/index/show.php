@@ -1,6 +1,7 @@
-<link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/style.css') ?>" rel="stylesheet">
 
 <?php
+$gamesMapper = $this->get('gamesMapper');
 $war = $this->get('war');
 $group = $this->get('group');
 $enemy = $this->get('enemy');
@@ -46,8 +47,7 @@ $enemy = $this->get('enemy');
             </div>
             <div class="panel-body">
                 <?php
-                $gameMapper = new \Modules\War\Mappers\Games();
-                $games = $gameMapper->getGamesByWarId($war->getId());
+                $games = $gamesMapper->getGamesByWarId($war->getId());
                 $enemyPoints = '';
                 $groupPoints = '';
                 $class = '';
@@ -101,7 +101,7 @@ $enemy = $this->get('enemy');
                 <h3 class="panel-title"><?=$this->getTrans('warReport') ?></h3>
             </div>
             <div class="panel-body">
-                <?=$war->getWarReport() ?>
+                <?=nl2br($this->getHtmlFromBBCode($war->getWarReport())) ?>
             </div>
         </div>
     </div>
