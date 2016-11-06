@@ -7,7 +7,6 @@ namespace PHPUnit\Ilch;
 
 use Ilch\Registry as Registry;
 use Ilch\Database\Factory as Factory;
-use Ilch\Config\File as Config;
 
 /**
  * Base class for database test cases for Ilch.
@@ -19,6 +18,13 @@ use Ilch\Config\File as Config;
  */
 abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
 {
+    /** @var int don't automatically provision - for individual proovsioning */
+    const PROVISION_DISABLED = 0;
+    /** @var int automatically setup and provision db in setUp - for every testMethod */
+    const PROVISION_ON_SETUP = 1;
+    /** @var int automatically setup and provision db in setUpBeforeClass - just once per class - for reading tests*/
+    const PROVISION_ON_SETUP_BEFORE_CLASS = 2;
+
     /**
      * A data array which will be used to create a config object for the registry.
      *
@@ -35,6 +41,23 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
     static private $pdo = null;
 
     /**
+     * @var bool
+     */
+    static protected $dropTablesOnProvision = true;
+
+    /**
+     * Whether the db is provisioned in setUp (true) or setUpBeforeClass (false)
+     * @var int
+     */
+    static protected $fillDbOnSetUp = self::PROVISION_ON_SETUP;
+
+    /**
+     * Files used for creating the database schema
+     * @var array
+     */
+    protected static $dbSchemaFiles = [__DIR__ . '/_files/db_schema.sql'];
+
+    /**
      * Instantiated PHPUnit_Extensions_Database_DB_IDatabaseConnection for the tests.
      *
      * @var \PHPUnit_Extensions_Database_DB_IDatabaseConnection
@@ -49,12 +72,33 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
     protected $db = null;
 
     /**
+     * Save provisioning state for PROVISION_ON_SETUP_BEFORE_CLASS
+     * @var bool
+     */
+    private $dbProvisioned;
+
+    /**
      * Setup config
      */
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
         TestHelper::setConfigInRegistry(static::$configData);
+
+        if (!Registry::has('db')) {
+            $dbFactory = new Factory();
+
+            $config = Registry::get('config');
+            Registry::set('db', $dbFactory->getInstanceByConfig($config));
+        }
+
+        if (static::PROVISION_ON_SETUP_BEFORE_CLASS) {
+            $db = Registry::get('db');
+            if (static::$dropTablesOnProvision) {
+                static::dropTables($db);
+            }
+            $db->queryMulti(static::getSchemaSQLQueries());
+        }
     }
 
     /**
@@ -62,35 +106,23 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
      */
     protected function setUp()
     {
-        $dbFactory = new Factory();
-
-        if (!isset($this->db)) {
-            Registry::remove('db');
-            $config = $this->getConfig();
-            $this->db = $dbFactory->getInstanceByConfig($config);
-            Registry::set('db', $this->db);
-        }
-
+        $this->db = Registry::get('db');
 
         if ($this->db === false) {
-
             $this->markTestIncomplete('Necessary DB configuration is not set.');
             parent::setUp();
             return;
         }
 
         /*
-         * Deleting all tables from the db and setting up the db using the given schema.
+         * Deleting all tables from the db and setting up the db using the given schema
          */
-        $sql = 'SHOW TABLES';
-        $tableList = $this->db->queryList($sql);
-
-        foreach ($tableList as $table) {
-            $sql = 'DROP TABLE ' . $table;
-            $this->db->query($sql);
+        if (static::$fillDbOnSetUp === self::PROVISION_ON_SETUP) {
+            if (static::$dropTablesOnProvision) {
+                static::dropTables($this->db);
+            }
+            $this->db->queryMulti(static::getSchemaSQLQueries());
         }
-
-        $this->db->queryMulti($this->getSchemaSQLQueries());
 
         parent::setUp();
     }
@@ -103,7 +135,7 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
     final public function getConnection()
     {
         $dbData = [];
-        $config = $this->getConfig();
+        $config = Registry::get('config');
 
         foreach (['dbEngine', 'dbHost', 'dbUser', 'dbPassword', 'dbName', 'dbPrefix'] as $configKey) {
             /*
@@ -137,24 +169,45 @@ abstract class DatabaseTestCase extends \PHPUnit_Extensions_Database_TestCase
      *
      * @return string
      */
-    protected function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries()
     {
-        return file_get_contents(__DIR__ . '/_files/db_schema.sql');
+        return array_reduce(self::$dbSchemaFiles, function($carry, $fileName) {
+            $carry .= file_get_contents($fileName);
+            return $carry;
+        }, '');
     }
 
     /**
-     * Returns config or marks test as skipped if config could not be loaded
-     *
-     * @return Config|null
+     * Deleting all tables from the db
+     * @param \Ilch\Database\Mysql $db
      */
-    protected function getConfig()
+    protected static function dropTables(\Ilch\Database\Mysql $db)
     {
-        $config = Registry::get('config');
+        $sql = 'SHOW TABLES';
+        $tableList = $db->queryList($sql);
 
-        if (!$config instanceof Config) {
-            $this->markTestSkipped('Necessary DB configuration is not set.');
+        foreach ($tableList as $table) {
+            $sql = 'DROP TABLE ' . $table;
+            $db->query($sql);
+        }
+    }
+
+    /**
+     * Returns the database operation executed in test setup.
+     *
+     * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation
+     */
+    protected function getSetUpOperation()
+    {
+        if (static::$fillDbOnSetUp === self::PROVISION_ON_SETUP_BEFORE_CLASS) {
+            if ($this->dbProvisioned) {
+                return \PHPUnit_Extensions_Database_Operation_Factory::NONE();
+            }
+            $this->dbProvisioned = true;
+        } elseif (static::$fillDbOnSetUp === self::PROVISION_DISABLED) {
+            return \PHPUnit_Extensions_Database_Operation_Factory::NONE();
         }
 
-        return $config;
+        return \PHPUnit_Extensions_Database_Operation_Factory::CLEAN_INSERT();
     }
 }

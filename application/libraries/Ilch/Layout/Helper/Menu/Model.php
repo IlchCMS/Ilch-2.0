@@ -6,6 +6,9 @@
 
 namespace Ilch\Layout\Helper\Menu;
 
+use Ilch\Layout\Base as Layout;
+use Modules\Admin\Models\MenuItem;
+
 class Model
 {
     /**
@@ -25,9 +28,9 @@ class Model
     /**
      * Injects the layout.
      *
-     * @param Ilch\Layout $layout
+     * @param Layout $layout
      */
-    public function __construct($layout)
+    public function __construct(Layout $layout)
     {
         $this->layout = $layout;
     }
@@ -97,6 +100,7 @@ class Model
         }
 
         if (!empty($items)) {
+            /** @var MenuItem $item */
             foreach ($items as $item) {
 
                 // Do not render boxes if boxes.render is set to false
@@ -145,7 +149,6 @@ class Model
             }
 
             $html = str_replace('%c', $htmlMenuItems, $html);
-            $htmlMenuItems = '';
         }
 
         return $html;
@@ -154,8 +157,10 @@ class Model
     /**
      * Gets the menu items as html-string.
      *
-     * @param \Modules\Admin\Models\MenuItem $item
+     * @param MenuItem $item
+     * @param $locale
      * @param array $options
+     * @param int|null $parentType
      * @return string
      */
     protected function recGetItems($item, $locale, $options = [], $parentType = null)
@@ -166,8 +171,7 @@ class Model
         $html = '';
 
         if ($item->isLink()) {
-
-            if ($parentType === 0 || ($parentType != 0 && array_dot($options, 'menus.allow-nesting') === false)) {
+            if ($parentType === MenuItem::TYPE_MENU || array_dot($options, 'menus.allow-nesting') === false) {
                 $html = '<li class="' . array_dot($options, 'menus.li-class-root') . '">';
             } else {
                 $html = '<li class="' . array_dot($options, 'menus.li-class-child') . '">';
@@ -183,28 +187,47 @@ class Model
             $html .= '<a href="'.$this->layout->getUrl(['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']).'">'.$this->layout->escape($item->getTitle()).'</a>';
         }
 
+        $listClosed = false;
         if (!empty($subItems)) {
             if ($item->isMenu()) {
-                $html .= '<ul class="' . array_dot($options, 'menus.ul-class-root') . '">';
+                $html .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
+            } elseif (array_dot($options, 'menus.allow-nesting') === true) {
+                $html .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-child')) . '>';
             } else {
-                if (array_dot($options, 'menus.allow-nesting') === true) {
-                    $html .= '<ul class="' . array_dot($options, 'menus.ul-class-child') . '">';
-                }
+                $html .= '</li>';
+                $listClosed = true;
             }
 
             foreach ($subItems as $subItem) {
                 $html .= $this->recGetItems($subItem, $locale, $options, $item->getType());
             }
 
-            if ((! $item->isMenu() && array_dot($options, 'menus.allow-nesting') === true) || $item->isMenu()) {
+            if (($item->isMenu() || array_dot($options, 'menus.allow-nesting') === true)) {
                 $html .= '</ul>';
             }
         }
 
-        if (in_array($item->getType(), [1,2,3])) {
+        if ($item->isLink() && !$listClosed) {
             $html .= '</li>';
         }
 
         return $html;
+    }
+
+    /**
+     * @param array|string $classes
+     * @return string
+     */
+    private function createClassAttribute($classes)
+    {
+        if (empty($classes)) {
+            return '';
+        }
+
+        if (is_string($classes)) {
+            $classes = [$classes];
+        }
+
+        return ' class="' . implode(' ', $classes) . '"';
     }
 }

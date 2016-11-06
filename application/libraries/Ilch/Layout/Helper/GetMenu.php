@@ -46,12 +46,12 @@ class GetMenu
      * @param array $options
      * @return string
      */
-    public function getMenu($menuId, $tpl = '', array $options = self::DEFAULT_OPTIONS)
+    public function getMenu($menuId, $tpl = '', array $options = [])
     {
         $helperMapper = new MapperHelper($this->layout);
         $menuMapper = new MenuMapper();
         $menu = $helperMapper->getMenu($menuMapper->getMenuIdForPosition($menuId));
 
-        return $menu->getItems($tpl, $options);
+        return $menu->getItems($tpl, array_replace_recursive(self::DEFAULT_OPTIONS, $options));
     }
 }

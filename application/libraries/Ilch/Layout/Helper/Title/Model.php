@@ -14,16 +14,6 @@ class Model
     protected $data;
 
     /**
-     * Injects the title.
-     *
-     * @param Ilch\Layout $title
-     */
-    public function __construct($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
      * Adds value to title.
      *
      * @param string $value

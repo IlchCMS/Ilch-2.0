@@ -1,0 +1,102 @@
+menu:
+  -
+    id: 1
+    title: "Hauptmenü 1"
+  -
+    id: 2
+    title: "Hauptmenü 2"
+
+menu_items:
+  -
+    id: 1
+    menu_id: 1
+    sort: 0
+    parent_id: 0
+    page_id: 0
+    box_id: 0
+    type: 0
+    title: "Menue"
+  -
+    id: 2
+    menu_id: 1
+    sort: 10
+    parent_id: 1
+    page_id: 0
+    box_id: 0
+    type: 3
+    title: "Artikel"
+    module_key: "article"
+  -
+    id: 3
+    menu_id: 1
+    sort: 20
+    parent_id: 1
+    page_id: 0
+    box_id: 0
+    type: 3
+    title: "Benutzer"
+    module_key: "user"
+  -
+    id: 4
+    menu_id: 1
+    sort: 10
+    parent_id: 3
+    page_id: 0
+    box_id: 0
+    type: 3
+    title: "Jobs"
+    module_key: "jobs"
+  -
+    id: 5
+    menu_id: 1
+    sort: 20
+    parent_id: 3
+    page_id: 0
+    box_id: 0
+    type: 3
+    title: "Geburtstag"
+    module_key: "birthday"
+  -
+    id: 6
+    menu_id: 1
+    sort: 30
+    parent_id: 1
+    page_id: 1
+    box_id: 0
+    type: 2
+    title: "Seite"
+  - id: 7
+    menu_id: 1
+    sort: 40
+    parent_id: 0
+    page_id: 0
+    box_id: 1
+    type: 4
+    title: "Testbox"
+
+boxes:
+  -
+    id: 1
+    date_created: '2016-11-01 10:15:23'
+
+boxes_content:
+  -
+    box_id: 1
+    content: '<p>Inhalt der Testbox</p>'
+    title: 'Testbox'
+    locale: ''
+
+pages:
+  -
+    id: 1
+    date_created: '2016-11-01 10:15:23'
+
+pages_content:
+  -
+    page_id: 1
+    content: '<p>Inhalt der Seite</p>'
+    title: 'Testseite'
+    description: 'Eine Testseite'
+    keywords: 'test page'
+    locale: ''
+    perma: 'testseite'

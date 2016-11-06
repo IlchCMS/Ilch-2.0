@@ -6,6 +6,10 @@
 
 namespace Ilch\Design;
 
+use Ilch\Request;
+use Ilch\Router;
+use Ilch\Translator;
+
 abstract class Base
 {
     /**
@@ -28,6 +32,13 @@ abstract class Base
      * @var string
      */
     private $boxUrl;
+
+    /**
+     * Base url
+     *
+     * @var string
+     */
+    private $baseUrl;
 
     /**
      * Adds view/layout helper.
@@ -53,17 +64,17 @@ abstract class Base
     }
 
     /**
-     * @var \Ilch\Request
+     * @var Request
      */
     private $request;
 
     /**
-     * @var \Ilch\Translator
+     * @var Translator
      */
     private $translator;
 
     /**
-     * @var \Ilch\Router
+     * @var Router
      */
     private $router;
 
@@ -80,15 +91,20 @@ abstract class Base
     /**
      * Injects request and translator to layout/view.
      *
-     * @param \Ilch\Request    $request
-     * @param \Ilch\Translator $translator
-     * @param \Ilch\Router     $router
+     * @param Request $request
+     * @param Translator $translator
+     * @param Router $router
+     * @param string|null $baseUrl
      */
-    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
+    public function __construct(Request $request, Translator $translator, Router $router, $baseUrl = null)
     {
         $this->request = $request;
         $this->translator = $translator;
         $this->router = $router;
+        if (null === $baseUrl) {
+            $baseUrl = BASE_URL;
+        }
+        $this->baseUrl = $baseUrl;
     }
 
     /**
@@ -130,7 +146,7 @@ abstract class Base
     /**
      * Gets the request object.
      *
-     * @return \Ilch\Request
+     * @return Request
      */
     public function getRequest()
     {
@@ -140,7 +156,7 @@ abstract class Base
     /**
      * Gets the router object.
      *
-     * @return \Ilch\Router
+     * @return Router
      */
     public function getRouter()
     {
@@ -150,7 +166,7 @@ abstract class Base
     /**
      * Gets the translator object.
      *
-     * @return \Ilch\Translator
+     * @return Translator
      */
     public function getTranslator()
     {
@@ -183,8 +199,8 @@ abstract class Base
     /**
      * Returns an amount of money of the currency supplied formatted in locale-typical style.
      *
-     * @param float amount
-     * @param string currency code (ISO 4217)
+     * @param float $amount
+     * @param string $currencyCode (ISO 4217)
      * @return string
      */
     public function getFormattedCurrency($amount, $currencyCode)
@@ -201,7 +217,7 @@ abstract class Base
      */
     public function getBaseUrl($url = '')
     {
-        return BASE_URL.'/'.$url;
+        return $this->baseUrl . '/' . $url;
     }
 
    /**
@@ -212,11 +228,7 @@ abstract class Base
      */
     public function getLayoutUrl($url = '')
     {
-        if (empty($url)) {
-            return BASE_URL.'/application/layouts/'.$this->getLayoutKey().'/';
-        }
-
-        return BASE_URL.'/application/layouts/'.$this->getLayoutKey().'/'.$url;
+        return $this->getBaseUrl('application/layouts/'.$this->getLayoutKey().'/'.$url);
     }
 
     /**
@@ -227,11 +239,11 @@ abstract class Base
      */
     public function getModuleUrl($url = '')
     {
-        if (empty($url)) {
-            return BASE_URL.'/application/modules/'.$this->getRequest()->getModuleName();
+        if (!empty($url)) {
+            $url = '/' . $url;
         }
 
-        return BASE_URL.'/application/modules/'.$this->getRequest()->getModuleName().'/'.$url;
+        return $this->getBaseUrl('application/modules/' . $this->getRequest()->getModuleName() . $url);
     }
 
     /**
@@ -242,11 +254,7 @@ abstract class Base
      */
     public function getStaticUrl($url = '')
     {
-        if (empty($url)) {
-            return BASE_URL.'/static/';
-        }
-
-        return BASE_URL.'/static/'.$url;
+        return $this->getBaseUrl('static/' . $url);
     }
 
     /**
@@ -257,11 +265,7 @@ abstract class Base
      */
     public function getVendorUrl($url = '')
     {
-        if (empty($url)) {
-            return BASE_URL.'/vendor/';
-        }
-
-        return BASE_URL.'/vendor/'.$url;
+        return $this->getBaseUrl('/vendor/' . $url);
     }
 
     /**
@@ -337,55 +341,56 @@ abstract class Base
         }
 
         if (empty($url)) {
-            return BASE_URL;
+            return $this->getBaseUrl();
         }
 
-        if (is_string($url)) {
-            return BASE_URL.'/index.php/'.$url;
+        if (is_array($url)) {
+
+            $urlParts = [];
+
+            if (!isset($url['module'])) {
+                $urlParts[] = $this->getRequest()->getModuleName();
+            } else {
+                $urlParts[] = $url['module'];
+                unset($url['module']);
+            }
+
+            if (!isset($url['controller'])) {
+                $urlParts[] = $this->getRequest()->getControllerName();
+            } else {
+                $urlParts[] = $url['controller'];
+                unset($url['controller']);
+            }
+
+            if (!isset($url['action'])) {
+                $urlParts[] = $this->getRequest()->getActionName();
+            } else {
+                $urlParts[] = $url['action'];
+                unset($url['action']);
+            }
+
+            foreach ($url as $key => $value) {
+                $urlParts[] = $key . '/' . $value;
+            }
+
+            if ($secure) {
+                $urlParts[] = 'ilch_token/' . $this->generateToken();
+            }
+
+            $url = implode('/', $urlParts);
         }
 
-        $urlParts = [];
-
-        if (!isset($url['module'])) {
-            $urlParts[] = $this->getRequest()->getModuleName();
-        } else {
-            $urlParts[] = $url['module'];
-            unset($url['module']);
-        }
-
-        if (!isset($url['controller'])) {
-            $urlParts[] = $this->getRequest()->getControllerName();
-        } else {
-            $urlParts[] = $url['controller'];
-            unset($url['controller']);
-        }
-
-        if (!isset($url['action'])) {
-            $urlParts[] = $this->getRequest()->getActionName();
-        } else {
-            $urlParts[] = $url['action'];
-            unset($url['action']);
-        }
-
-        foreach ($url as $key => $value) {
-            $urlParts[] = $key.'/'.$value;
-        }
-
-        if ($secure) {
-            $urlParts[] = 'ilch_token/'.$this->generateToken();
-        }
-
-        $s = '';
-
+        $noRewrite = false;
         if (($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin')) {
-            $s = 'admin/';
+            $url = 'admin/' . $url;
+            $noRewrite = true;
         }
 
-        if ($this->modRewrite && empty($s)) {
-            return BASE_URL.'/'.$s.implode('/', $urlParts);
-        } else {
-            return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
+        if (!($this->modRewrite && !$noRewrite)) {
+            $url = 'index.php/' . $url;
         }
+
+        return $this->getBaseUrl($url);
     }
 
     /**

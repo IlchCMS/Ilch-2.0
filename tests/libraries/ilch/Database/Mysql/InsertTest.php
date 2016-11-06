@@ -42,7 +42,8 @@ class InsertTest extends \PHPUnit_Framework_TestCase
 
     public function testGenerateSqlWithoutTable()
     {
-        $this->setExpectedException('RuntimeException', 'table must be set');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('table must be set');
 
         $this->out->generateSql();
     }
@@ -51,7 +52,8 @@ class InsertTest extends \PHPUnit_Framework_TestCase
     {
         $this->out->into('Test');
 
-        $this->setExpectedException('RuntimeException', 'no valid values for insert');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('no valid values for insert');
 
         $this->out->generateSql();
     }

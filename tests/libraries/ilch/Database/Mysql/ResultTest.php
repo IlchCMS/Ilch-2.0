@@ -11,6 +11,8 @@ use PHPUnit_Extensions_Database_DataSet_IDataSet;
 
 class ResultTest extends DatabaseTestCase
 {
+    static protected $fillDbOnSetUp = self::PROVISION_ON_SETUP_BEFORE_CLASS;
+
     /**
      * Returns the test dataset.
      *

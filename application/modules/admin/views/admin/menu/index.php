@@ -1,19 +1,25 @@
 <?php
+use Ilch\View;
+use Modules\Admin\Mappers\Menu as MenuMapper;
+use Modules\Admin\Models\MenuItem;
+
+/* @var View $this */
+
 $menuItems = $this->get('menuItems');
 $menuMapper = $this->get('menuMapper');
 $pages = $this->get('pages');
 $modules = $this->get('modules');
 $boxes = $this->get('boxes');
 
-function rec($item, $menuMapper, $obj) {
-    $subItems = $menuMapper->getMenuItemsByParent($obj->get('menu')->getId(), $item->getId());
+function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
+    $subItems = $menuMapper->getMenuItemsByParent($view->get('menu')->getId(), $item->getId());
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
     if (empty($subItems)) {
         $class = 'mjs-nestedSortable-leaf';
     }
 
-    if ($item->getType() == 4) {
+    if ($item->isBox()) {
         $class .= ' mjs-nestedSortable-no-nesting';
     }
 
@@ -26,20 +32,20 @@ function rec($item, $menuMapper, $obj) {
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
     echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
                     <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$obj->escape($item->getTitle()).'" />
+                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$view->escape($item->getTitle()).'" />
                     <input type="hidden" class="hidden_href" name="items['.$item->getId().'][href]" value="'.$item->getHref().'" />
                     <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
                     <input type="hidden" class="hidden_siteid" name="items['.$item->getId().'][siteid]" value="'.$item->getSiteId().'" />
                     <input type="hidden" class="hidden_boxkey" name="items['.$item->getId().'][boxkey]" value="'.$boxKey.'" />
                     <input type="hidden" class="hidden_modulekey" name="items['.$item->getId().'][modulekey]" value="'.$item->getModuleKey().'" />
                     <span></span>
-                </span><span class="title">'.$obj->escape($item->getTitle()).'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
+                </span><span class="title">'.$view->escape($item->getTitle()).'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
 
     if (!empty($subItems)) {
         echo '<ol>';
 
         foreach ($subItems as $subItem) {
-            rec($subItem, $menuMapper, $obj);
+            rec($subItem, $menuMapper, $view);
         }
 
         echo '</ol>';
@@ -97,13 +103,13 @@ function rec($item, $menuMapper, $obj) {
                 </label>
                 <div class="col-lg-4">
                     <select class="form-control" id="type">
-                        <option value="0"><?=$this->getTrans('menu') ?></option>
+                        <option value="<?= MenuItem::TYPE_MENU ?>"><?=$this->getTrans('menu') ?></option>
                         <optgroup>
-                            <option value="1"><?=$this->getTrans('externalLinking') ?></option>
-                            <option value="2"><?=$this->getTrans('siteLinking') ?></option>
-                            <option value="3"><?=$this->getTrans('moduleLinking') ?></option>
+                            <option value="<?= MenuItem::TYPE_EXTERNAL_LINK ?>"><?=$this->getTrans('externalLinking') ?></option>
+                            <option value="<?= MenuItem::TYPE_PAGE_LINK ?>"><?=$this->getTrans('siteLinking') ?></option>
+                            <option value="<?= MenuItem::TYPE_MODULE_LINK ?>"><?=$this->getTrans('moduleLinking') ?></option>
                         </optgroup>
-                        <option value="4"><?=$this->getTrans('itemTypeBox') ?></option>
+                        <option value="<?= MenuItem::TYPE_BOX ?>"><?=$this->getTrans('itemTypeBox') ?></option>
                     </select>
                 </div>
             </div>

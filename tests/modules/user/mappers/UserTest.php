@@ -52,7 +52,7 @@ class UserTest extends DatabaseTestCase
      *
      * @return string
      */
-    protected function getSchemaSQLQueries()
+    protected static function getSchemaSQLQueries()
     {
         $config = new ModuleConfig();
         return $config->getInstallSql();

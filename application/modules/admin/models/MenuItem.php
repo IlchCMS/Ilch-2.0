@@ -8,6 +8,12 @@ namespace Modules\Admin\Models;
 
 class MenuItem extends \Ilch\Model
 {
+    const TYPE_MENU = 0;
+    const TYPE_EXTERNAL_LINK = 1;
+    const TYPE_PAGE_LINK = 2;
+    const TYPE_MODULE_LINK = 3;
+    const TYPE_BOX = 4;
+
     /**
      * Id of the item.
      *
@@ -138,7 +144,7 @@ class MenuItem extends \Ilch\Model
     /**
      * Sets the type.
      *
-     * @param integer $id
+     * @param integer $type
      */
     public function setType($type)
     {
@@ -312,7 +318,7 @@ class MenuItem extends \Ilch\Model
      */
     public function isLink()
     {
-        return in_array($this->getType(), [1,2,3]);
+        return in_array($this->getType(), [self::TYPE_EXTERNAL_LINK, self::TYPE_PAGE_LINK, self::TYPE_MODULE_LINK]);
     }
 
     /**
@@ -322,7 +328,7 @@ class MenuItem extends \Ilch\Model
      */
     public function isModuleLink()
     {
-        return $this->getType() === 3;
+        return $this->getType() === self::TYPE_MODULE_LINK;
     }
 
     /**
@@ -332,7 +338,7 @@ class MenuItem extends \Ilch\Model
      */
     public function isExternalLink()
     {
-        return $this->getType() === 1;
+        return $this->getType() === self::TYPE_EXTERNAL_LINK;
     }
 
     /**
@@ -342,7 +348,7 @@ class MenuItem extends \Ilch\Model
      */
     public function isPageLink()
     {
-        return $this->getType() === 2;
+        return $this->getType() === self::TYPE_PAGE_LINK;
     }
 
     /**
@@ -352,7 +358,7 @@ class MenuItem extends \Ilch\Model
      */
     public function isBox()
     {
-        return $this->getType() === 4;
+        return $this->getType() === self::TYPE_BOX;
     }
 
     /**
@@ -362,6 +368,6 @@ class MenuItem extends \Ilch\Model
      */
     public function isMenu()
     {
-        return $this->getType() === 0;
+        return $this->getType() === self::TYPE_MENU;
     }
 }

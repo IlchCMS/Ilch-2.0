@@ -6,6 +6,8 @@
 
 namespace Ilch\Layout\Helper;
 
+use Ilch\Layout\Base as Layout;
+
 class GetTitle
 {
     /**
@@ -16,9 +18,9 @@ class GetTitle
     /**
      * Injects the title.
      *
-     * @param Ilch\Layout $title
+     * @param Layout $title
      */
-    public function __construct($title)
+    public function __construct(Layout $title)
     {
         $this->model = new \Ilch\Layout\Helper\Title\Model($title);
     }

@@ -6,10 +6,15 @@
 
 namespace Ilch\Layout;
 
+use Ilch\Request;
+use Ilch\Router;
+use Ilch\Translator;
+
 /**
  * Class Frontend
  * @package Ilch\Layout
- *
+
+ * @method \Ilch\Layout\Helper\Title\Model getTitle() get the title model
  * @method string getMenu(int $menuId, string $tpl = '', array $options = array()) rendering of a menu
  * @method \Ilch\Layout\Helper\Menu\Model[] getMenus() get all menus
  * @method \Ilch\Layout\Helper\Hmenu\Model getHmenu() get the hmenu
@@ -20,13 +25,14 @@ class Frontend extends Base
      * Adds layout helper.
      *
      * @todo adds helper dynamic from folder.
-     * @param \Ilch\Request $request
-     * @param \Ilch\Translator $translator
-     * @param \Ilch\Router $router
+     * @param Request $request
+     * @param Translator $translator
+     * @param Router $router
+     * @param string|null $baseUrl
      */
-    public function __construct(\Ilch\Request $request, \Ilch\Translator $translator, \Ilch\Router $router)
+    public function __construct(Request $request, Translator $translator, Router $router, $baseUrl = null)
     {
-        parent::__construct($request, $translator, $router);
+        parent::__construct($request, $translator, $router, $baseUrl);
 
         $this->addHelper('getTitle', 'layout', new \Ilch\Layout\Helper\GetTitle($this));
         $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
@@ -213,6 +219,7 @@ class Frontend extends Base
 
             return $html;
         }
+        return '';
     }
 
     /**

@@ -4,6 +4,8 @@
  * @package ilch
  */
 
+use Modules\User\Models\User;
+
 /**
  * Improves "var_dump" function with pre - tags.
  */

@@ -25,8 +25,9 @@ class TestHelper
 
     /**
      * Filling the config object with individual testcase data and injecting it into the registry.
+     * @param array $configData
      */
-    public static function setConfigInRegistry($configData)
+    public static function setConfigInRegistry(array $configData)
     {
         if (static::$config === null) {
             if (!Registry::has('config') && file_exists(CONFIG_PATH . '/config.php')) {
