@@ -12,6 +12,16 @@
     }
     ?>
 </legend>
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
@@ -88,7 +98,7 @@
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -97,10 +107,10 @@
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getTitle()); } ?>" />
+                   value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getTitle()) : $this->originalInput('title') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
         <label for="place" class="col-lg-2 control-label">
             <?=$this->getTrans('place') ?>:
         </label>
@@ -109,10 +119,10 @@
                    class="form-control"
                    id="place"
                    name="place"
-                   value="<?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getPlace()); } ?>" />
+                   value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->originalInput('place') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('text') ?>:
         </label>
@@ -121,7 +131,7 @@
                       id="ck_1"
                       name="text"
                       toolbar="ilch_bbcode"
-                      rows="5"><?php if ($this->get('event') != '') { echo $this->escape($this->get('event')->getText()); } ?></textarea>
+                      rows="5"><?=($this->get('event') != '') ? $this->escape($this->get('event')->getText()) : $this->originalInput('text') ?></textarea>
         </div>
     </div>
     <?php if ($this->get('calendarShow') == 1): ?>
@@ -131,7 +141,7 @@
                        id="calendarShow"
                        name="calendarShow"
                        value="1"
-                       <?php if ($this->get('event') != '' AND $this->get('event')->getShow() == 1) { echo 'checked'; } ?> />
+                       <?php if (($this->get('event') != '' AND $this->get('event')->getShow() == 1) OR $this->originalInput('calendarShow') == 1) { echo 'checked'; } ?> />
                 <label for="calendarShow">
                     <?=$this->getTrans('calendarShow') ?>
                 </label>

@@ -10,6 +10,7 @@ use Modules\Events\Mappers\Events as EventMapper;
 use Modules\Events\Models\Events as EventModel;
 use Modules\Events\Mappers\Entrants as EntrantsMapper;
 use Modules\User\Mappers\Setting as SettingMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -61,108 +62,114 @@ class Index extends \Ilch\Controller\Frontend
                 $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
             }
 
-            $title = trim($this->getRequest()->getPost('title'));
             $start = new \Ilch\Date(trim($this->getRequest()->getPost('start')));
-            $place = trim($this->getRequest()->getPost('place'));
-            $text = trim($this->getRequest()->getPost('text'));
-            $show = trim($this->getRequest()->getPost('calendarShow'));
-            $imageError = false;
+            $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
 
-            if ($this->getRequest()->getPost('end') != '') {
-                $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
-            }
+            $post = [
+                'title' => trim($this->getRequest()->getPost('title')),
+                'place' => trim($this->getRequest()->getPost('place')),
+                'text' => trim($this->getRequest()->getPost('text')),
+                'calendarShow' => trim($this->getRequest()->getPost('calendarShow'))
+            ];
 
-            if (!empty($_FILES['image']['name'])) {
-                $path = $this->getConfig()->get('event_uploadpath');
-                $file = $_FILES['image']['name'];
-                $file_tmpe = $_FILES['image']['tmp_name'];
-                $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                $file_size = $_FILES['image']['size'];
+            $validation = Validation::create($post, [
+                'title'         => 'required',
+                'place'         => 'required',
+                'text'          => 'required',
+                'calendarShow'  => 'numeric|min:0|max:1'
+            ]);
 
-                if (in_array($endung, explode(' ', $imageAllowedFiletypes))) {
-                    $size = getimagesize($file_tmpe);
-                    $width = $size[0];
-                    $height = $size[1];
+            if ($validation->isValid()) {
+                $imageError = false;
 
-                    if ($file_size <= $imageSize) {
-                        $image = $path.time().'.'.$endung;
+                if (!empty($_FILES['image']['name'])) {
+                    $path = $this->getConfig()->get('event_uploadpath');
+                    $file = $_FILES['image']['name'];
+                    $file_tmpe = $_FILES['image']['tmp_name'];
+                    $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                    $file_size = $_FILES['image']['size'];
 
-                        if ($this->getRequest()->getParam('id') AND $event->getImage() != '') {
-                            $eventMapper->delImageById($this->getRequest()->getParam('id'));
-                        }
+                    if (in_array($endung, explode(' ', $imageAllowedFiletypes))) {
+                        $size = getimagesize($file_tmpe);
+                        $width = $size[0];
+                        $height = $size[1];
 
-                        $eventModel->setImage($image);
+                        if ($file_size <= $imageSize) {
+                            $image = $path.time().'.'.$endung;
 
-                        if (move_uploaded_file($file_tmpe, $image)) {
-                            if ($width > $imageWidth OR $height > $imageHeight) {
-                                $upload = new \Ilch\Upload();
+                            if ($this->getRequest()->getParam('id') AND $event->getImage() != '') {
+                                $eventMapper->delImageById($this->getRequest()->getParam('id'));
+                            }
 
-                                // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
-                                if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($image)) {
-                                    unlink($image);
-                                    $imageError = true;
-                                    $this->addMessage('failedFilesize', 'warning');
-                                } else {
-                                    $thumb = new \Thumb\Thumbnail();
-                                    $thumb -> Thumbsize = ($imageWidth <= $imageHeight) ? $imageWidth : $imageHeight;
-                                    $thumb -> Square = true;
-                                    $thumb -> Thumblocation = $path;
-                                    $thumb -> Cropimage = [3,1,50,50,50,50];
-                                    $thumb -> Createthumb($image, 'file');
+                            $eventModel->setImage($image);
+
+                            if (move_uploaded_file($file_tmpe, $image)) {
+                                if ($width > $imageWidth OR $height > $imageHeight) {
+                                    $upload = new \Ilch\Upload();
+
+                                    // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
+                                    if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($image)) {
+                                        unlink($image);
+                                        $imageError = true;
+                                        $this->addMessage('failedFilesize', 'warning');
+                                    } else {
+                                        $thumb = new \Thumb\Thumbnail();
+                                        $thumb -> Thumbsize = ($imageWidth <= $imageHeight) ? $imageWidth : $imageHeight;
+                                        $thumb -> Square = true;
+                                        $thumb -> Thumblocation = $path;
+                                        $thumb -> Cropimage = [3,1,50,50,50,50];
+                                        $thumb -> Createthumb($image, 'file');
+                                    }
                                 }
                             }
+                        } else {
+                            $this->addMessage('failedFilesize', 'warning');
+                            $imageError = true;
                         }
                     } else {
-                        $this->addMessage('failedFilesize', 'warning');
+                        $this->addMessage('failedFiletypes', 'warning');
                         $imageError = true;
                     }
-                } else {
-                    $this->addMessage('failedFiletypes', 'warning');
-                    $imageError = true;
+                }
+
+                if (!$imageError) {
+                    if (!empty($_FILES['image']['name'])) {
+                        $eventModel->setImage($image);
+                    }
+                    if ($this->getConfig()->get('event_google_maps_api_key') != '') {
+                        $eventModel->setLatLong($eventMapper->getLatLongFromAddress($place, $this->getConfig()->get('event_google_maps_api_key')));
+                    }
+
+                    $eventModel->setUserId($this->getUser()->getId());
+                    $eventModel->setTitle($post['title']);
+                    $eventModel->setStart($post['start']);
+                    $eventModel->setEnd($end);
+                    $eventModel->setPlace($post['place']);
+                    $eventModel->setText($post['text']);
+                    $eventModel->setShow($post['calendarShow']);
+                    $eventMapper->save($eventModel);
+
+                    $this->addMessage('saveSuccess');
+
+                    if ($this->getRequest()->getPost('image_delete') != '') {
+                        $eventMapper->delImageById($this->getRequest()->getParam('id'));
+
+                        $this->redirect(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+                    }
+
+                    if ($this->getRequest()->getParam('id')) {
+                        $eventId = $this->getRequest()->getParam('id');
+                        $this->redirect(['controller' => 'show', 'action' => 'event', 'id' => $eventId]);
+                    } else {
+                        $this->redirect(['controller' => 'show', 'action' => 'my']);
+                    }
                 }
             }
 
-            if (empty($start)) {
-                $this->addMessage('missingDate', 'danger');
-            } elseif (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif (empty($place)) {
-                $this->addMessage('missingPlace', 'danger');
-            } elseif (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } elseif ($imageError) {
-            } else {
-                if (!empty($_FILES['image']['name'])) {
-                    $eventModel->setImage($image);
-                }
-                if ($this->getConfig()->get('event_google_maps_api_key') != '') {
-                    $eventModel->setLatLong($eventMapper->getLatLongFromAddress($place, $this->getConfig()->get('event_google_maps_api_key')));
-                }
-
-                $eventModel->setUserId($this->getUser()->getId());
-                $eventModel->setTitle($title);
-                $eventModel->setStart($start);
-                $eventModel->setEnd($end);
-                $eventModel->setPlace($place);
-                $eventModel->setText($text);
-                $eventModel->setShow($show);
-                $eventMapper->save($eventModel);
-
-                $this->addMessage('saveSuccess');
-
-                if ($this->getRequest()->getPost('image_delete') != '') {
-                    $eventMapper->delImageById($this->getRequest()->getParam('id'));
-
-                    $this->redirect(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
-                }
-
-                if ($this->getRequest()->getParam('id')) {
-                    $eventId = $this->getRequest()->getParam('id');
-                    $this->redirect(['controller' => 'show', 'action' => 'event', 'id' => $eventId]);
-                } else {
-                    $this->redirect(['controller' => 'show', 'action' => 'my']);
-                }
-            }
+            $this->redirect()
+                ->withInput($post)
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
 
         if ($eventMapper->existsTable('calendar') == true) {

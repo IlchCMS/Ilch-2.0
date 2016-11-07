@@ -16,10 +16,6 @@ return [
     'text' => 'Text',
     'image' => 'Image',
     'noEvent' => 'No events available.',
-    'missingTitle' => 'Title was not filled',
-    'missingText' => 'Text was not filled',
-    'missingDate' => 'Date was not filled',
-    'missingPlace' => 'Place was not filled',
     'calendarShow' => 'Show event in the calendar?',
 
     'menuEventUpcoming' => 'Upcoming events',

@@ -16,10 +16,6 @@ return [
     'text' => 'Text',
     'image' => 'Bild',
     'noEvent' => 'Keine Veranstaltungen vorhanden.',
-    'missingTitle' => 'Titel muss ausgefüllt werden',
-    'missingText' => 'Text muss ausgefüllt werden',
-    'missingDate' => 'Datum muss ausgefüllt werden',
-    'missingPlace' => 'Ort muss ausgefüllt werden',
     'calendarShow' => 'Event im Kalender anzeigen?',
 
     'menuEventUpcoming' => 'Bevorstehende Veranstaltungen',
