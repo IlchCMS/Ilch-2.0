@@ -97,7 +97,7 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon3"><?=$this->getUrl() ?>/index.php/</span>
+                <span class="input-group-addon" id="basic-addon3"><?=substr($this->getUrl('a', 'default'), 0, -1) ?></span>
                 <input class="form-control"
                        type="text"
                        id="pagePerma"
