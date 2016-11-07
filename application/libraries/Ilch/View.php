@@ -112,11 +112,20 @@ class View extends Design\Base
      */
     public function getDeleteIcon($url)
     {
-        $html = '<a class="delete_button" href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'">
-                    <span class="fa fa-trash-o text-danger"></span>
-                 </a>';
+        $html = '<a href="'.$this->getUrl($url, null, true).'" title="'.$this->getTrans('delete').'"><span class="fa fa-trash-o text-danger"></span></a>';
 
         return $html;
+    }
+
+    /**
+     * Gets checkbox for check delete.
+     *
+     * @param string $id
+     * @return integer
+     */
+    public function getDeleteCheckbox($name, $id)
+    {
+        return '<input type="checkbox" name="'.$name.'[]" value="'.$id.'" />';
     }
 
     /**

@@ -35,7 +35,7 @@ $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'),
                         <?php $date = new \Ilch\Date($comment->getDateCreated()) ?>
                         <?php $commentKey = preg_replace("#[/].*#", "", $comment->getKey()); ?>
                         <tr>
-                            <td><input type="checkbox" name="check_comments[]" value="<?=$comment->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_comments', $comment->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'key' => $commentKey, 'id' => $comment->getId()]) ?></td>
                             <td><?=$date->format("d.m.Y H:i", true) ?></td>
                             <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>

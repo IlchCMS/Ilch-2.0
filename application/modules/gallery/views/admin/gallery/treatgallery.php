@@ -26,7 +26,7 @@
                 <tbody>
                     <?php foreach ($this->get('image') as $image): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_gallery[]" value="<?=$image->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_gallery', $image->getId()) ?></td>
                             <td><?=$this->getEditIcon(['controller' => 'image', 'action' => 'treatimage', 'gallery' => $image->getCat(), 'id' => $image->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $image->getId(), 'gallery' => $this->getRequest()->getParam('id')]) ?></td>
                             <?php if (file_exists($image->getImageThumb())): ?>

@@ -40,8 +40,8 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('check_aways')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
-                foreach ($this->getRequest()->getPost('check_aways') as $awayId) {
-                    $awayMapper->delete($awayId);
+                foreach ($this->getRequest()->getPost('check_aways') as $id) {
+                    $awayMapper->delete($id);
                 }
             }
         }

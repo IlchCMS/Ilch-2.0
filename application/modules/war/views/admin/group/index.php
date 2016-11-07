@@ -34,7 +34,7 @@
                 <tbody>
                     <?php foreach ($this->get('groups') as $group): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_groups[]" value="<?=$group->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_groups', $group->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $group->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $group->getId()]) ?></td>
                             <td><?=$this->escape($group->getGroupName()) ?></td>

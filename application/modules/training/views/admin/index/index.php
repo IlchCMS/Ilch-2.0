@@ -23,7 +23,7 @@
                 <tbody>
                     <?php foreach ($this->get('training') as $training): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_trainings[]" value="<?=$training->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_trainings', $training->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $training->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $training->getId()]) ?></td>
                             <td><?=date('d.m.Y - H:i', strtotime($training->getDate())) ?> </td>

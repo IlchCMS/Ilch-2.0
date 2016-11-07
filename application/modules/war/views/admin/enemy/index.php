@@ -38,31 +38,14 @@
                 <tbody>
                     <?php foreach ($this->get('enemy') as $enemy): ?>
                         <tr>
-                            <td>
-                                <input type="checkbox" name="check_enemy[]" value="<?=$enemy->getId() ?>" />
-                            </td>
-                            <td>
-                                <?=$this->getEditIcon(['action' => 'treat', 'id' => $enemy->getId()]) ?>
-                            </td>
-                            <td>
-                                <?php $deleteArray = ['action' => 'del', 'id' => $enemy->getId()] ?>
-                                <?=$this->getDeleteIcon($deleteArray) ?>
-                            </td>
-                            <td>
-                                <?=$this->escape($enemy->getEnemyName()) ?>
-                            </td>
-                            <td>
-                                <?=$this->escape($enemy->getEnemyTag()) ?>
-                            </td>
-                            <td>
-                                <img class="group-image" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" />
-                            </td>
-                            <td>
-                                <?=$this->escape($enemy->getEnemyContactName()) ?>
-                            </td>
-                            <td>
-                                <?=$enemy->getEnemyContactEmail() ?>
-                            </td>
+                            <td><?=$this->getDeleteCheckbox('check_enemy', $enemy->getId()) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $enemy->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $enemy->getId()]) ?></td>
+                            <td><?=$this->escape($enemy->getEnemyName()) ?></td>
+                            <td><?=$this->escape($enemy->getEnemyTag()) ?></td>
+                            <td><img class="group-image" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" /></td>
+                            <td><?=$this->escape($enemy->getEnemyContactName()) ?></td>
+                            <td><?=$enemy->getEnemyContactEmail() ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

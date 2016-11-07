@@ -91,7 +91,7 @@
                 <tbody>
                     <?php foreach ($this->get('medias') as $media): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_medias[]" value="<?=$media->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_medias', $media->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $media->getId()]) ?></td>
                             <td><?=$media->getEnding() ?></td>
                             <td>

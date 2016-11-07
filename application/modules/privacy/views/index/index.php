@@ -1,17 +1,20 @@
-<?php if ($this->get('privacyShow') != ''): ?>
+<?php if ($this->get('privacy') != ''): ?>
     <?php foreach ($this->get('privacy') as $privacy): ?>
-        <?php if ($this->escape($privacy->getShow()) == '1'): ?>
-            <legend><b><?=$this->escape($privacy->getTitle()) ?></b></legend>
-            <?=$privacy->getText() ?><br /><br />
-        <?php endif; ?>
+        <legend><b><?=$this->escape($privacy->getTitle()) ?></b></legend>
+        <p><?=$privacy->getText() ?><br /></p>
     <?php endforeach; ?>
 
-    <b>Quellen: </b>
-    <?php foreach ($this->get('privacy') as $privacy): ?>
-        <?php if ($this->escape($privacy->getUrlTitle()) != '' AND $this->escape($privacy->getShow()) == '1'): ?>
-            <a href="<?=$this->escape($privacy->getUrl()) ?>" target="_blank"><?=$this->escape($privacy->getUrlTitle()) ?></a>,
-        <?php endif; ?>
-    <?php endforeach; ?>
+    <b><?=$this->getTrans('source') ?>:</b>
+    <?php
+    $quellen = [];
+    foreach ($this->get('privacy') as $privacy) {
+        if ($privacy->getUrlTitle() != '' AND $privacy->getShow() == '1') {
+            $quellen[] = '<a href="'.$this->escape($privacy->getUrl()).'" target="_blank">'.$this->escape($privacy->getUrlTitle()).'</a>';
+        }
+    }
+
+    echo implode(", ", $quellen);
+    ?>
 <?php else: ?>
     <?=$this->getTrans('noPrivacy') ?>
 <?php endif; ?>

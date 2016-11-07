@@ -69,9 +69,7 @@
                         }
                         ?>
                         <tr>
-                            <td>
-                                <input type="checkbox" name="check_users[]" value="<?=$user->getId() ?>" />
-                            </td>
+                            <td><?=$this->getDeleteCheckbox('check_users', $user->getId()) ?></td>
                             <td>
                                 <?php  if ($this->getRequest()->getParam('showsetfree')): ?>
                                     <a href="<?=$this->getUrl(['action' => 'setfree', 'id' => $user->getId()], null, true) ?>" title="<?=$this->getTrans('setfree') ?>"><i class="fa fa-check text-success"></i></a>
@@ -79,9 +77,7 @@
                                     <?=$this->getEditIcon(['action' => 'treat', 'id' => $user->getId()]) ?>
                                 <?php endif; ?>
                             </td>
-                            <td>
-                                <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]) ?>
-                            </td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $user->getId()]) ?></td>
                             <td><?=$this->escape($user->getName()) ?></td>
                             <td><?=$this->escape($user->getEmail()) ?></td>
                             <td><?=$this->escape($user->getDateCreated()) ?></td>

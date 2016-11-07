@@ -30,7 +30,7 @@
                     <?php foreach ($this->get('awards') as $awards) : ?>
                     <?php $getDate = new \Ilch\Date($awards->getDate()); ?>
                         <tr>
-                            <td><input type="checkbox" name="check_entries[]" value="<?=$awards->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_entries', $awards->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $awards->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $awards->getId()]) ?></td>
                             <td><?=$getDate->format('d.m.Y', true) ?></td>

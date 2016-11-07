@@ -31,7 +31,7 @@
                         }
                     ?>
                         <tr>
-                            <td><input type="checkbox" name="check_cats[]" value="<?=$category->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_cats', $category->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treatCat', 'id' => $category->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deleteCat', 'id' => $category->getId()]) ?></td>
                             <td><a href="<?=$this->getUrl(['action' => 'index', 'cat_id' => $category->getId()]) ?>" title="<?=$this->escape($category->getName()) ?>"><?=$this->escape($category->getName()) ?></a><br><?=$getDesc ?></td>
@@ -81,7 +81,7 @@
                         }
                     ?>
                         <tr>
-                            <td><input type="checkbox" name="check_links[]" value="<?=$link->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_links', $link->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treatLink', 'id' => $link->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deleteLink', 'id' => $link->getId()]) ?></td>
                             <td><a href="<?=$this->escape($link->getLink()) ?>" target="_blank" title="<?=$this->escape($link->getName()) ?>"><?=$banner ?></a><br /><?=$desc ?></td>

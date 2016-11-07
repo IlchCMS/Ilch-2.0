@@ -30,15 +30,9 @@
                 foreach ($profileFields as $profileField) :
                 ?>
                 <tr id="<?=$profileField->getId() ?>">
-                    <td>
-                        <input type="checkbox" name="check_users[]" value="<?=$profileField->getId() ?>" />
-                    </td>
-                    <td>
-                        <?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?>
-                    </td>
-                    <td>
-                        <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?>
-                    </td>
+                    <td><?=$this->getDeleteCheckbox('check_users', $profileField->getId()) ?></td>
+                    <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $profileField->getId()]) ?></td>
+                    <td> <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $profileField->getId()]) ?></td>
                     <?php
                     $found = false;
 

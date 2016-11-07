@@ -61,7 +61,7 @@
                 <tbody>
                     <?php foreach ($this->get('war') as $war): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_war[]" value="<?=$war->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_war', $war->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $war->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $war->getId()]) ?></td>
                             <td><?=$this->escape($war->getWarEnemy()) ?></td>

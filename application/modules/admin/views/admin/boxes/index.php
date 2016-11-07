@@ -35,15 +35,9 @@
                 <?php if (!empty($this->get('boxes'))): ?>
                     <?php foreach ($this->get('boxes') as $box): ?>
                         <tr>
-                            <td>
-                                <input type="checkbox" name="check_boxes[]" value="<?=$box->getId() ?>" />
-                            </td>
-                            <td>
-                                <?=$this->getEditIcon(['action' => 'treat', 'id' => $box->getId()]) ?>
-                            </td>
-                            <td>
-                                <?=$this->getDeleteIcon(['action' => 'delete', 'id' => $box->getId()]) ?>
-                            </td>
+                            <td><?=$this->getDeleteCheckbox('check_boxes', $box->getId()) ?></td>
+                            <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $box->getId()]) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $box->getId()]) ?> </td>
                             <td>
                                 <?php if ($box->getTitle() !== ''): ?>
                                     <?=$this->escape($box->getTitle()) ?>

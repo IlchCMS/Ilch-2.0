@@ -47,7 +47,7 @@
             <?php foreach ($this->get('entries') as $entry): ?>
                 <tbody>
                     <tr>
-                        <td><input type="checkbox" name="check_entries[]" value="<?=$entry->getId() ?>" /></td>
+                        <td><?=$this->getDeleteCheckbox('check_entries', $entry->getId()) ?></td>
                         <?php
                             if ($this->getRequest()->getParam('showsetfree')) {
                                 echo '<td>';

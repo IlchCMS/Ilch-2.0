@@ -39,7 +39,7 @@
                             <tbody>
                                 <?php foreach ($this->get('image') as $image): ?>
                                     <tr>
-                                        <td><input type="checkbox" name="check_gallery[]" value="<?=$image->getId() ?>" /></td>
+                                        <td><?=$this->getDeleteCheckbox('check_gallery', $image->getId()) ?></td>
                                         <td><?=$this->getEditIcon(['action' => 'treatgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getId()]) ?></td>
                                         <td><?=$this->getDeleteIcon(['action' => 'delgalleryimage', 'gallery' => $this->getRequest()->getParam('id'), 'id' => $image->getImageId()]) ?></td>
                                         <?php if (file_exists($image->getImageThumb())): ?>

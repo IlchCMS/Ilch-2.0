@@ -30,7 +30,7 @@
                     <?php foreach ($this->get('aways') as $away): ?>
                         <?php $user = $userMapper->getUserById($away->getUserId()) ?>
                         <tr>
-                            <td><input type="checkbox" name="check_aways[]" value="<?=$away->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_aways', $away->getId()) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $away->getId()]) ?></td>
                             <td>
                                 <?php if ($away->getStatus() == 1): ?>

@@ -33,7 +33,7 @@
                         $upload->setFile($media);
                         ?>
                         <tr>
-                            <td><input type="checkbox" name="check_medias[]" value="<?=$media ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_medias', $media) ?></td>
                             <td><?=$upload->getEnding() ?></td>
                             <td>
                                 <?php if (in_array($upload->getEnding(), explode(' ',$this->get('media_ext_img')))): ?>

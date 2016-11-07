@@ -23,7 +23,7 @@
                 <?php if ($this->get('backups') != ''): ?>
                     <?php foreach ($this->get('backups') as $backup): ?>
                         <tr>
-                            <td><input type="checkbox" name="id[]" value="<?=$backup->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('id', $backup->getId()) ?></td>
                             <td><a href="<?=BASE_URL.'/'.$backup->getFile() ?>" title="<?=$this->getTrans('download') ?>"><i class="fa fa-download"></i></a></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
                             <td><?=$this->escape($backup->getDate()) ?></td>

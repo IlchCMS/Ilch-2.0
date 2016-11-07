@@ -1,6 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/birthday.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('settings') ?></legend>
+
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
@@ -11,6 +12,7 @@
         </ul>
     </div>
 <?php endif; ?>
+
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=in_array('numberOfBirthdaysShow', $this->get('errorFields')) ? 'has-error' : '' ?>">

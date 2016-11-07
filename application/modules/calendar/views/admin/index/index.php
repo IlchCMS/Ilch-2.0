@@ -25,7 +25,7 @@
                 <tbody>
                     <?php foreach ($this->get('calendar') as $calendar): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_entries[]" value="<?=$calendar->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_entries', $calendar->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $calendar->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $calendar->getId()]) ?></td>
                             <td><?=date('d.m.Y H:i', strtotime($calendar->getStart())) ?></td>

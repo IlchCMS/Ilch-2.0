@@ -21,11 +21,8 @@
                 <tbody>
                     <?php foreach ($this->get('userList') as $user): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_entries[]" value="<?=$user['email'] ?>" /></td>
-                            <td>
-                                <?php $deleteArray = ['action' => 'delete', 'selector' => $user['selector']] ?>
-                                <?=$this->getDeleteIcon($deleteArray) ?>
-                            </td>
+                            <td><?=$this->getDeleteCheckbox('check_entries', $user['email']) ?></td>
+                            <td><?=$this->getDeleteIcon(['action' => 'delete', 'selector' => $user['selector']]) ?> </td>
                             <td><?=$this->escape($user['name']) ?></td>
                             <td><?=($user['email'] === '') ? 'NotRegistUser' : $this->escape($user['email']) ?></td>
                         </tr>

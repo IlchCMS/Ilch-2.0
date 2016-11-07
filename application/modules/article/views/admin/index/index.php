@@ -40,7 +40,7 @@
                     <?php foreach ($this->get('articles') as $article): ?>
                         <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
                         <tr>
-                            <td><input type="checkbox" name="check_articles[]" value="<?=$article->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_articles', $article->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $article->getId()]) ?></td>
                             <td><a target="_blank" href="<?=$this->getUrl().'/index.php/article/cats/show/id/'.$articlesCats->getId() ?>"><?=$this->escape($articlesCats->getName()) ?></a></td>

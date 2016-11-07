@@ -23,7 +23,7 @@
                 <tbody>
                     <?php foreach ($this->get('smilies') as $smilies): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_entries[]" value="<?=$smilies->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_entries', $smilies->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $smilies->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $smilies->getId()]) ?></td>
                             <td><?=$this->escape($smilies->getName()) ?></td>

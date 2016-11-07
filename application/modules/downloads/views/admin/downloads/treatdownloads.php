@@ -43,7 +43,7 @@ tbody tr td {
                             <?php $image = $this->getBaseUrl('application/modules/media/static/img/nomedia.png') ?>
                         <?php endif; ?>
                         <tr>
-                            <td><input type="checkbox" name="check_downloads[]" value="<?=$file->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_downloads', $file->getId()) ?></td>
                             <td><?=$this->getEditIcon(['controller' => 'file', 'action' => 'treatfile', 'downloads' => $file->getCat(), 'id' => $file->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $file->getId(), 'downloads' => $this->getRequest()->getParam('id')]) ?></td>
                             <td><img class="file thumbnail img-responsive" src="<?=$image ?>"/>

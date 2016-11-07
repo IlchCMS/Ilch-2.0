@@ -146,7 +146,7 @@ if ($this->getUser()) {
                                     </div>
                                 </dd>
                                 <?php if ($forumEdit): ?>
-                                    <dd class="forumEdit"><input type="checkbox" name="check_topics[]" value="<?=$topic->getId() ?>" /></dd>
+                                    <dd class="forumEdit"><?=$this->getDeleteCheckbox('check_topics', $topic->getId()) ?></dd>
                                 <?php endif; ?>
                             </dl>
                         </li>

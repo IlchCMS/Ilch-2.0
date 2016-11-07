@@ -25,7 +25,7 @@
                 <tbody>
                     <?php foreach ($this->get('rules') as $rule): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_entries[]" value="<?=$rule->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_entries', $rule->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $rule->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $rule->getId()]) ?></td>
                             <td><?=$this->escape($rule->getParagraph()) ?></td>
