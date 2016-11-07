@@ -7,15 +7,11 @@
 return [
     'privacy' => 'Privacy Policy',
     'show' => 'Show',
-    'yes' => 'Yes',
-    'no' => 'No',
     'title' => 'Title',
-    'urlTitle' => 'Titel of Source',
+    'urlTitle' => 'Source',
     'url' => 'Link',
     'text' => 'Text',
+    'source' => 'Source',
     'menuPrivacy' => 'Privacy Policy',
-    'missingTitle' => 'Title was not filled',
-    'missingText' => 'Text was not filled',
-    'managePrivacy' => 'Manage Privacy Policy',
     'noPrivacy' => 'No Privacy Policy available',
 ];

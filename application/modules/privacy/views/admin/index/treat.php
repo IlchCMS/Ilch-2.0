@@ -1,26 +1,36 @@
-<?php $privacy = $this->get('privacy'); ?>
+<legend>
+    <?php if ($this->get('privacy') != '') {
+        echo $this->getTrans('edit');
+    } else {
+        echo $this->getTrans('add');
+    }
+    ?>
+</legend>
 
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
+<!-- Fehlerausgabe der Validation -->
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+<!-- Ende Fehlerausgabe der Validation -->
+
+<form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <legend>
-        <?php if ($this->get('privacy') != '') {
-            echo $this->getTrans('edit');
-        } else {
-            echo $this->getTrans('add');
-        }
-        ?>
-    </legend>
     <div class="form-group">
         <div class="col-lg-2 control-label">
-            <?=$this->getTrans('show') ?>:
+            <?=$this->getTrans('show') ?>
         </div>
         <div class="col-lg-4">
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" id="show-on" name="show" value="1" 
-                    <?php if ($this->get('privacy') != ''): ?>
-                        <?php if ($this->get('privacy')->getShow() == 1): ?>
-                            checked="checked"
-                        <?php endif; ?>
+                    <?php if ($this->get('privacy') != '' AND $this->get('privacy')->getShow() == 1): ?>
+                        checked="checked"
                     <?php else: ?>
                         checked="checked"
                     <?php endif; ?> />
@@ -34,33 +44,45 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
-            <?=$this->getTrans('title') ?>:
+            <?=$this->getTrans('title') ?>
         </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getTitle()); } ?>" />
+                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getTitle()) : $this->originalInput('title') ?>" />
+        </div>
+    </div>
+    <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
+        <label for="ck_1" class="col-lg-2 control-label">
+            <?=$this->getTrans('text') ?>
+        </label>
+        <div class="col-lg-10">
+            <textarea class="form-control ckeditor"
+                      id="ck_1"
+                      name="text"
+                      toolbar="ilch_html"
+                      rows="5"><?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getText()) : $this->originalInput('text') ?></textarea>
         </div>
     </div>
     <div class="form-group">
         <label for="urltitle" class="col-lg-2 control-label">
-            <?=$this->getTrans('urlTitle') ?>:
+            <?=$this->getTrans('urlTitle') ?>
         </label>
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
                    id="urltitle"
                    name="urltitle"
-                   value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getUrlTitle()); } ?>" />
+                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrlTitle()) : $this->originalInput('urltitle') ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('url') ? 'has-error' : '' ?>">
         <label for="url" class="col-lg-2 control-label">
-            <?=$this->getTrans('url') ?>:
+            <?=$this->getTrans('url') ?>
         </label>
         <div class="col-lg-4">
             <input type="text"
@@ -68,27 +90,8 @@
                    id="url"
                    name="url"
                    placeholder="http://" 
-                   value="<?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getUrl()); } ?>" />
+                   value="<?=($this->get('privacy') != '') ? $this->escape($this->get('privacy')->getUrl()) : $this->originalInput('url') ?>" />
         </div>
     </div>
-    <div class="form-group">
-        <label for="ck_1" class="col-lg-2 control-label">
-            <?=$this->getTrans('text') ?>:
-        </label>
-        <div class="col-lg-10">
-            <textarea class="form-control ckeditor"
-                      id="ck_1"
-                      name="text"
-                      toolbar="ilch_html"
-                      rows="5"><?php if ($this->get('privacy') != '') { echo $this->escape($this->get('privacy')->getText()); } ?></textarea>
-        </div>
-    </div>
-    <?php if ($this->get('privacy') != '') {
-        echo $this->getSaveBar('updateButton');
-    } else {
-        echo $this->getSaveBar('addButton');
-    }
-    ?>
+    <?=($this->get('privacy') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
-
-<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>

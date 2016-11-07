@@ -7,15 +7,11 @@
 return [
     'privacy' => 'Datenschutzerklärung',
     'show' => 'Anzeigen',
-    'yes' => 'Ja',
-    'no' => 'Nein',
     'title' => 'Titel',
-    'urlTitle' => 'Titel der Quelle',
+    'urlTitle' => 'Quelle',
     'url' => 'Link',
     'text' => 'Text',
+    'source' => 'Quellen',
     'menuPrivacy' => 'Datenschutzerklärung',
-    'missingTitle' => 'Titel muss ausgefüllt werden',
-    'missingText' => 'Text muss ausgefüllt werden',
-    'managePrivacy' => 'Datenschutzerklärung verwalten',
     'noPrivacy' => 'Keine Datenschutzerklärung vorhanden',
 ];

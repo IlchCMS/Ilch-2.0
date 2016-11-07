@@ -5,11 +5,11 @@
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col class="icon_width">
-                    <col>
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col class="icon_width" />
+                    <col />
                 </colgroup>
                 <thead>
                     <tr>
@@ -23,7 +23,7 @@
                 <tbody>
                     <?php foreach ($this->get('privacys') as $privacy): ?>
                         <tr>
-                            <td><input type="checkbox" name="check_privacys[]" value="<?=$privacy->getId() ?>" /></td>
+                            <td><?=$this->getDeleteCheckbox('check_privacys', $privacy->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $privacy->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $privacy->getId()]) ?></td>
                             <td>

@@ -8,6 +8,7 @@ namespace Modules\Privacy\Controllers\Admin;
 
 use Modules\Privacy\Mappers\Privacy as PrivacyMapper;
 use Modules\Privacy\Models\Privacy as PrivacyModel;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -77,31 +78,37 @@ class Index extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
-            $model = new PrivacyModel();
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'title' => 'required',
+                'text' => 'required',
+                'url' => 'url'
+            ]);
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
-
-            $title = trim($this->getRequest()->getPost('title'));
-            $text = trim($this->getRequest()->getPost('text'));
-
-            if (empty($title)) {
-                $this->addMessage('missingTitle', 'danger');
-            } elseif (empty($text)) {
-                $this->addMessage('missingText', 'danger');
-            } else {
-                $model->setTitle($title);
-                $model->setUrlTitle($this->getRequest()->getPost('urltitle'));
-                $model->setUrl($this->getRequest()->getPost('url'));
-                $model->setText($text);
-                $model->setShow($this->getRequest()->getPost('show'));
+            if ($validation->isValid()) {
+                $model = new PrivacyModel();
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                if ($this->getRequest()->getPost('show')) {
+                    $model->setShow(1);
+                } else {
+                    $model->setShow(0);
+                }
+                $model->setTitle($this->getRequest()->getPost('title'))
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setUrlTitle($this->getRequest()->getPost('urltitle'))
+                    ->setUrl($this->getRequest()->getPost('url'));
                 $privacyMapper->save($model);
 
-                $this->addMessage('saveSuccess');
-
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
     }
 

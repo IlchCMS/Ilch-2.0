@@ -14,10 +14,11 @@ class Index extends \Ilch\Controller\Frontend
     {
         $privacyMapper = new PrivacyMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuPrivacy'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPrivacy'), ['action' => 'index']);
 
-        $this->getView()->set('privacy', $privacyMapper->getPrivacy());
-        $this->getView()->set('privacyShow', $privacyMapper->getPrivacy(['show' => 1]));
+        $this->getView()->set('privacy', $privacyMapper->getPrivacy(['show' => 1]));
     }
 }
