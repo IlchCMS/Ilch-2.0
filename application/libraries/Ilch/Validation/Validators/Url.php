@@ -10,6 +10,9 @@ namespace Ilch\Validation\Validators;
  */
 class Url extends Base
 {
+    /**
+     * @var string
+     */
     protected static $regExp;
 
     /**

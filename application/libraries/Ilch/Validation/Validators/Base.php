@@ -89,10 +89,19 @@ abstract class Base
         $this->setParameters($data->parameters);
 
         if ((!is_null($this->minParams) && count($this->getParameters()) < $this->minParams)) {
-            throw new \Exception(get_class($this).' expects at least '.$this->minParams.' parameter(s) given: '
+            throw new \InvalidArgumentException(get_class($this).' expects at least '.$this->minParams.' parameter(s) given: '
                 .count($this->getParameters()));
         }
     }
+
+    /**
+     * Perform the validation task
+     *  - should call ::setIsValid
+     *  - for errors should use ::setErrorKey and optionally setErrorParameters
+     *
+     * @return null
+     */
+    abstract public function run();
 
     /**
      * Get the value of The current field.
@@ -287,6 +296,6 @@ abstract class Base
             return $this->parameters[$key];
         }
 
-        return;
+        return null;
     }
 }

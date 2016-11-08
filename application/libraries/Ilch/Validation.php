@@ -280,8 +280,10 @@ class Validation
      */
     protected function validate($validator, stdClass $data)
     {
-        $validator = $this->getValidator($validator);
-        $validator = (new $validator($data))->run();
+        $validatorClass = $this->getValidator($validator);
+        /** @var Base $validator */
+        $validator = new $validatorClass($data);
+        $validator->run();
 
         return $validator;
     }
