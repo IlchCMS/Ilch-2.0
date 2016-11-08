@@ -173,12 +173,8 @@ return [
 
     'profileNewPassword' => 'New Password',
     'profileNewPasswordRetype' => 'Confirm New Password',
-    'profilePasswordInfo' => 'Must characters 6-30',
-    'passwordEmpty' => 'Password was not filled',
-    'passwordRetypeEmpty' => 'Confirm Password was not filled',
-    'passwordNotEqual' => 'Password is not the same than Confirm Password',
+    'profilePasswordInfo' => 'Must be between 6-30 characters long',
     'passwordSuccessfully' => 'Password changed successfully',
-    'passwordLength' => 'Password is too short or too long',
 
     'panel' => 'Panel',
     'welcome' => 'Welcome',
