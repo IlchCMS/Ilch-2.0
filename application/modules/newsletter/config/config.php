@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can send a newsletter.',
             ],
         ],
+        'boxes' => [
+            'newsletter' => [
+                'de_DE' => [
+                    'name' => 'Newsletter'
+                ],
+                'en_EN' => [
+                    'name' => 'Newsletter'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

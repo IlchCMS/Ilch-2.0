@@ -23,6 +23,16 @@ class Config extends \Ilch\Config\Install
                 'name' => 'User',
                 'description' => 'Here you can create the users.',
             ],
+        ],
+        'boxes' => [
+            'login' => [
+                'de_DE' => [
+                    'name' => 'Login'
+                ],
+                'en_EN' => [
+                    'name' => 'Login'
+                ]
+            ]
         ]
     ];
 

@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can create jobs.',
             ],
         ],
+        'boxes' => [
+            'jobs' => [
+                'de_DE' => [
+                    'name' => 'Jobs'
+                ],
+                'en_EN' => [
+                    'name' => 'Jobs'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

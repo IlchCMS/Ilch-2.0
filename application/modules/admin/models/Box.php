@@ -16,6 +16,27 @@ class Box extends \Ilch\Model
     protected $id;
 
     /**
+     * The key of the box.
+     *
+     * @var string
+     */
+    protected $key;
+
+    /**
+     * The module of the box.
+     *
+     * @var string
+     */
+    protected $module;
+
+    /**
+     * The name of the box.
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * The title of the box.
      *
      * @var string
@@ -61,6 +82,66 @@ class Box extends \Ilch\Model
     public function setId($id)
     {
         $this->id = (int) $id;
+    }
+
+    /**
+     * Gets the box key.
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Sets the box key.
+     *
+     * @param string $key
+     */
+    public function setKey($key)
+    {
+        $this->key = (string) $key;
+    }
+
+    /**
+     * Gets the box module.
+     *
+     * @return string
+     */
+    public function getModule()
+    {
+        return $this->module;
+    }
+
+    /**
+     * Sets the box module.
+     *
+     * @param string $module
+     */
+    public function setModule($module)
+    {
+        $this->module = (string) $module;
+    }
+
+    /**
+     * Gets the box name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Sets the box name.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = (string) $name;
     }
 
     /**
@@ -141,5 +222,16 @@ class Box extends \Ilch\Model
     public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
+    }
+
+    /**
+     * Add content for given language.
+     *
+     * @param string $langKey
+     * @param string $content
+     */
+    public function addContent($langKey, $content)
+    {
+        $this->content[$langKey] = $content;
     }
 }

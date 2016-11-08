@@ -158,7 +158,8 @@ class Menu extends \Ilch\Controller\Admin
         $this->getView()->set('menuItems', $menuItems);
         $this->getView()->set('menuMapper', $menuMapper);
         $this->getView()->set('pages', $pageMapper->getPageList($locale));
-        $this->getView()->set('boxes', (array)$boxMapper->getBoxList($locale));
+        $this->getView()->set('boxes', $boxMapper->getBoxList($this->getTranslator()->getLocale()));
+        $this->getView()->set('self_boxes', (array)$boxMapper->getSelfBoxList($locale));
         $this->getView()->set('modules', $moduleMapper->getModules());
     }
 

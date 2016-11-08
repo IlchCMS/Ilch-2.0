@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the forum.',
             ],
         ],
+        'boxes' => [
+            'forum' => [
+                'de_DE' => [
+                    'name' => 'Forum'
+                ],
+                'en_EN' => [
+                    'name' => 'Forum'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

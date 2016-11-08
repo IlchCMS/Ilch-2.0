@@ -24,6 +24,24 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the wars.',
             ],
         ],
+        'boxes' => [
+            'nextwar' => [
+                'de_DE' => [
+                    'name' => 'Next War'
+                ],
+                'en_EN' => [
+                    'name' => 'Next War'
+                ]
+            ],
+            'lastwar' => [
+                'de_DE' => [
+                    'name' => 'Last War'
+                ],
+                'en_EN' => [
+                    'name' => 'Last War'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

@@ -10,6 +10,7 @@ $menuMapper = $this->get('menuMapper');
 $pages = $this->get('pages');
 $modules = $this->get('modules');
 $boxes = $this->get('boxes');
+$selfBoxes = $this->get('self_boxes');
 
 function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
     $subItems = $menuMapper->getMenuItemsByParent($view->get('menu')->getId(), $item->getId());
@@ -122,25 +123,6 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
     <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
     <?=$this->getSaveBar('saveButton', null, 'deleteMenu') ?>
 </form>
-
-<?php
-$boxesDir = [];
-
-foreach (glob(APPLICATION_PATH.'/modules/*') as $moduleKey) {
-    $moduleKey = basename($moduleKey);
-    $boxesGlob = glob(APPLICATION_PATH.'/modules/'.$moduleKey.'/boxes/*');
-
-    if (!empty($boxesGlob)) {
-        foreach ($boxesGlob as $box) {
-            if (is_dir($box)) {
-                continue;
-            }
-
-            $boxesDir[$moduleKey][] = str_replace('.php', '', strtolower(basename($box)));
-        }
-    }
-}
-?>
 
 <script>
 function resetBox() {
@@ -349,7 +331,7 @@ $(document).ready
             } else if ($(this).val() == '4') {
                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('box') ?></label>\n\
                                 <div class="col-lg-4"><?='<select class="form-control" id="boxkey">';
-                foreach ($boxesDir as $moDir => $modulBoxes) { foreach ($modulBoxes as $boDir) { echo '<option value="'.$moDir.'_'.$boDir.'">'.ucfirst($boDir).'</option>'; }} foreach ($boxes as $box) { echo '<option value="'.$box->getId().'">self_'.$this->escape($box->getTitle()).'</option>';} echo '</select>'; ?></div></div>');
+                foreach ($boxes as $box) { echo '<option value="'.$box->getModule().'_'.$box->getKey().'">'.$box->getName().'</option>'; } foreach ($selfBoxes as $box) { echo '<option value="'.$box->getId().'">self_'.$this->escape($box->getTitle()).'</option>';} echo '</select>'; ?></div></div>');
             }
         });
 

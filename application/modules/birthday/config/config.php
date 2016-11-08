@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage the birthday-box.',
             ],
         ],
+        'boxes' => [
+            'birthday' => [
+                'de_DE' => [
+                    'name' => 'Geburtstag'
+                ],
+                'en_EN' => [
+                    'name' => 'Birthday'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

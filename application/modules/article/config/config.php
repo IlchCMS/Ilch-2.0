@@ -21,6 +21,32 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Articles',
                 'description' => 'Here you can manage the Articles / News.',
             ],
+        ],
+        'boxes' => [
+            'article' => [
+                'de_DE' => [
+                    'name' => 'Artikel'
+                ],
+                'en_EN' => [
+                    'name' => 'Article'
+                ]
+            ],
+            'archive' => [
+                'de_DE' => [
+                    'name' => 'Artikel Archiv'
+                ],
+                'en_EN' => [
+                    'name' => 'Article Archive'
+                ]
+            ],
+            'categories' => [
+                'de_DE' => [
+                    'name' => 'Artikel Kategorien'
+                ],
+                'en_EN' => [
+                    'name' => 'Article Categories'
+                ]
+            ]
         ]
     ];
 

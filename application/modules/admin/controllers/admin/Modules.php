@@ -7,6 +7,9 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Module as ModuleMapper;
+use Modules\Admin\Models\Module as ModuleModel;
+use Modules\Admin\Mappers\Box as BoxMapper;
+use Modules\Admin\Models\Box as BoxModel;
 
 class Modules extends \Ilch\Controller\Admin
 {
@@ -169,6 +172,7 @@ class Modules extends \Ilch\Controller\Admin
     public function installAction()
     {
         $moduleMapper = new ModuleMapper();
+        $boxMapper = new BoxMapper();
         $key = $this->getRequest()->getParam('key');
 
         if ($this->getRequest()->isSecure()) {
@@ -177,7 +181,7 @@ class Modules extends \Ilch\Controller\Admin
             $config->install();
 
             if (!empty($config->config)) {
-                $moduleModel = new \Modules\Admin\Models\Module();
+                $moduleModel = new ModuleModel();
                 $moduleModel->setKey($config->config['key']);
 
                 if (isset($config->config['author'])) {
@@ -200,6 +204,15 @@ class Modules extends \Ilch\Controller\Admin
 
                 $moduleModel->setIconSmall($config->config['icon_small']);
                 $moduleMapper->save($moduleModel);
+
+                if (isset($config->config['boxes'])) {
+                    $boxModel = new BoxModel();
+                    $boxModel->setModule($config->config['key']);
+                    foreach ($config->config['boxes'] as $key => $value) {
+                        $boxModel->addContent($key, $value);
+                    }
+                    $boxMapper->install($boxModel);
+                }
             }
 
             $this->addMessage('installSuccess');

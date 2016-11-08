@@ -18,6 +18,36 @@ class Box extends \Ilch\Mapper
      */
     public function getBoxList($locale)
     {
+        $sql = 'SELECT * FROM [prefix]_modules_boxes_content
+                WHERE `locale` = "'.$locale.'"';
+        $boxArray = $this->db()->queryArray($sql);
+
+        if (empty($boxArray)) {
+            return [];
+        }
+
+        $boxes = [];
+        foreach ($boxArray as $boxRow) {
+            $boxModel = new BoxModel();
+            $boxModel->setKey($boxRow['key']);
+            $boxModel->setModule($boxRow['module']);
+            $boxModel->setLocale($boxRow['locale']);
+            $boxModel->setName($boxRow['name']);
+
+            $boxes[] = $boxModel;
+        }
+
+        return $boxes;
+    }
+
+    /**
+     * Get box lists for overview.
+     *
+     * @param string $locale
+     * @return BoxModel[]|array
+     */
+    public function getSelfBoxList($locale)
+    {
         $sql = 'SELECT bc.title, b.id FROM [prefix]_boxes as b
                 LEFT JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
                 AND bc.locale = "'.$this->db()->escape($locale).'"
@@ -30,7 +60,6 @@ class Box extends \Ilch\Mapper
         }
 
         $boxes = [];
-
         foreach ($boxArray as $boxRow) {
             $boxModel = new BoxModel();
             $boxModel->setId($boxRow['id']);
@@ -49,7 +78,7 @@ class Box extends \Ilch\Mapper
      * @param string $locale
      * @return BoxModel|null
      */
-    public function getBoxByIdLocale($id, $locale = '')
+    public function getSelfBoxByIdLocale($id, $locale = '')
     {
         $sql = 'SELECT * FROM [prefix]_boxes as b
                 INNER JOIN [prefix]_boxes_content as bc ON b.id = bc.box_id
@@ -70,6 +99,27 @@ class Box extends \Ilch\Mapper
     }
 
     /**
+     * Inserts box model in the database.
+     *
+     * @param BoxModel $box
+     */
+    public function install(BoxModel $box)
+    {
+        foreach ($box->getContent() as $key => $content) {
+            foreach ($content as $lang => $value) {
+                $this->db()->insert('modules_boxes_content')
+                    ->values([
+                        'key' => $key,
+                        'module' => $box->getModule(),
+                        'locale' => $lang,
+                        'name' => $value['name']
+                    ])
+                    ->execute();
+            }
+        }
+    }
+
+    /**
      * Inserts or updates a box model in the database.
      *
      * @param BoxModel $box
@@ -77,7 +127,7 @@ class Box extends \Ilch\Mapper
     public function save(BoxModel $box)
     {
         if ($box->getId()) {
-            if ($this->getBoxByIdLocale($box->getId(), $box->getLocale())) {
+            if ($this->getSelfBoxByIdLocale($box->getId(), $box->getLocale())) {
                 $this->db()->update('boxes_content')
                     ->values(['title' => $box->getTitle(), 'content' => $box->getContent()])
                     ->where(['box_id' => $box->getId(), 'locale' => $box->getLocale()])

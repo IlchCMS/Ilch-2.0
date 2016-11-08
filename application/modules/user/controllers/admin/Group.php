@@ -233,7 +233,7 @@ class Group extends \Ilch\Controller\Admin
         $articles = $articleMapper->getArticles();
 
         $boxMapper = new BoxMapper();
-        $boxes = $boxMapper->getBoxList($this->getTranslator()->getLocale());
+        $boxes = $boxMapper->getSelfBoxList($this->getTranslator()->getLocale());
 
         $accessTypes = [
             'module' => $modules,

@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can manage your shoutbox.',
             ],
         ],
+        'boxes' => [
+            'shoutbox' => [
+                'de_DE' => [
+                    'name' => 'Shoutbox'
+                ],
+                'en_EN' => [
+                    'name' => 'Shoutbox'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

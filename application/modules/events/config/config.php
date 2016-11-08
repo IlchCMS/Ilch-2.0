@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can add and change events.',
             ],
         ],
+        'boxes' => [
+            'events' => [
+                'de_DE' => [
+                    'name' => 'Veranstaltungen'
+                ],
+                'en_EN' => [
+                    'name' => 'Events'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

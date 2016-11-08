@@ -55,7 +55,7 @@ class Boxes extends \Ilch\Controller\Admin
             }
         }
 
-        $boxes = $boxMapper->getBoxList('');
+        $boxes = $boxMapper->getSelfBoxList('');
 
         /*
          * Filtering boxes out which are not allowed for the user.
@@ -95,7 +95,7 @@ class Boxes extends \Ilch\Controller\Admin
                 $locale = $this->getRequest()->getParam('locale');
             }
 
-            $this->getView()->set('box', $boxMapper->getBoxByIdLocale($this->getRequest()->getParam('id'), $locale));
+            $this->getView()->set('box', $boxMapper->getSelfBoxByIdLocale($this->getRequest()->getParam('id'), $locale));
         } else {
             $this->getLayout()->getAdminHmenu()
                     ->add($this->getTranslator()->trans('menuBoxes'), ['action' => 'index'])

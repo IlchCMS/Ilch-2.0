@@ -364,6 +364,7 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                 $moduleMapper = new \Modules\Admin\Mappers\Module();
+                $boxMapper = new \Modules\Admin\Mappers\Box();
 
                 /*
                  * Clear old tables.
@@ -397,6 +398,15 @@ class Index extends \Ilch\Controller\Frontend
                         }
                         $moduleModel->setIconSmall($config->config['icon_small']);
                         $moduleMapper->save($moduleModel);
+
+                        if (isset($config->config['boxes'])) {
+                            $boxModel = new \Modules\Admin\Models\Box();
+                            $boxModel->setModule($config->config['key']);
+                            foreach ($config->config['boxes'] as $key => $value) {
+                                $boxModel->addContent($key, $value);
+                            }
+                            $boxMapper->install($boxModel);
+                        }
                     }
                 }
 

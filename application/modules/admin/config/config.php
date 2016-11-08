@@ -8,6 +8,28 @@ namespace Modules\Admin\Config;
 
 class Config extends \Ilch\Config\Install
 {
+    public $config = [
+        'key' => 'admin',
+        'boxes' => [
+            'langswitch' => [
+                'de_DE' => [
+                    'name' => 'Sprachauswahl'
+                ],
+                'en_EN' => [
+                    'name' => 'Language selection'
+                ]
+            ],
+            'layoutswitch' => [
+                'de_DE' => [
+                    'name' => 'Layoutauswahl'
+                ],
+                'en_EN' => [
+                    'name' => 'Layout selection'
+                ]
+            ]
+        ]
+    ];
+
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
@@ -71,6 +93,13 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules_folderrights` (
                   `key` VARCHAR(255) NOT NULL,
                   `folder` VARCHAR(255) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_modules_boxes_content` (
+                  `key` VARCHAR(255) NOT NULL,
+                  `module` VARCHAR(255) NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL,
+                  `name` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_menu` (

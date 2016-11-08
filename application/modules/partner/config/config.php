@@ -24,6 +24,16 @@ class Config extends \Ilch\Config\Install
                 'description' => 'Here you can create new partners.',
             ],
         ],
+        'boxes' => [
+            'partner' => [
+                'de_DE' => [
+                    'name' => 'Partner'
+                ],
+                'en_EN' => [
+                    'name' => 'Partner'
+                ]
+            ]
+        ],
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

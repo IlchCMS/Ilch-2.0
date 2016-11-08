@@ -130,7 +130,7 @@ class Model
                     continue;
                 }
                 if ($item->getBoxId()) {
-                    $box = $this->boxMapper->getBoxByIdLocale($item->getBoxId(), $locale);
+                    $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
                 } else {
                     $box = $this->loadBoxFromModule($item);
                 }

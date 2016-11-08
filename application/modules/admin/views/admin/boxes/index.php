@@ -52,7 +52,7 @@
                                             <?php continue; ?>
                                         <?php endif; ?>
 
-                                        <?php if ($this->get('boxMapper')->getBoxByIdLocale($box->getId(), $key) != null): ?>
+                                        <?php if ($this->get('boxMapper')->getSelfBoxByIdLocale($box->getId(), $key) != null): ?>
                                             <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa fa-edit"></i></a>
                                         <?php else: ?>
                                             <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $box->getId(), 'locale' => $key]) ?>"><i class="fa fa-plus-circle"></i></a>
