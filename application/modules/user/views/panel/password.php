@@ -7,11 +7,11 @@
         </div>
         <div class="col-lg-10">
             <legend><?=$this->getTrans('settingsPassword'); ?></legend>
-            <?php if (!empty($this->get('errors'))): ?>
+            <?php if ($this->validation()->hasErrors()): ?>
                 <div class="alert alert-danger" role="alert">
                     <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
                     <ul>
-                        <?php foreach ($this->get('errors') as $error): ?>
+                        <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
                             <li><?= $error; ?></li>
                         <?php endforeach; ?>
                     </ul>
@@ -19,7 +19,7 @@
             <?php endif; ?>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField(); ?>
-                <div class="form-group <?=in_array('password', $this->get('errorFields')) ? 'has-error' : '' ?>">
+                <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileNewPassword'); ?>*
                     </label>
@@ -33,7 +33,7 @@
                         <?=$this->getTrans('profilePasswordInfo'); ?>
                     </div>
                 </div>
-                <div class="form-group <?=in_array('password2', $this->get('errorFields')) ? 'has-error' : '' ?>">
+                <div class="form-group <?=$this->validation()->hasError('password2') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileNewPasswordRetype'); ?>*
                     </label>

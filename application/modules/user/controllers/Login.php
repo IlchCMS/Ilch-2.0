@@ -12,6 +12,7 @@ use Modules\User\Mappers\CookieStolen as CookieStolenMapper;
 use Modules\User\Models\AuthToken as AuthTokenModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\User\Service\Login as LoginService;
+use Ilch\Validation;
 
 use Modules\User\Mappers\AuthProvider;
 
@@ -114,34 +115,30 @@ class Login extends \Ilch\Controller\Frontend
 
                 // Compare confirmedCode from the database with the one provided as parameter in the url
                 if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
-                    $password = $this->getRequest()->getPost('password');
-                    $password2 = $this->getRequest()->getPost('password2');
+                    Validation::setCustomFieldAliases([
+                        'password' => 'profileNewPassword',
+                        'password2' => 'profileNewPasswordRetype',
+                    ]);
 
-                    if (empty($password)) {
-                        $message = 'passwordEmpty';
-                    } elseif (empty($password2)) {
-                        $message = 'passwordRetypeEmpty';
-                    } elseif (strlen($password) < 6 OR strlen($password) > 30) {
-                        $message = 'passwordLength';
-                    } elseif ($password != $password2) {
-                        $message = 'passwordNotEqual';
-                    }
+                    $validation = Validation::create($this->getRequest()->getPost(), [
+                        'password' => 'required|min:6:string|max:30:string',
+                        'password2' => 'required|same:password|min:6:string|max:30:string'
+                    ]);
 
-                    if (!empty($message)) {
-                        $this->addMessage($message, $type = 'danger');
-                        $this->redirect(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
-                    }
-
-                    if (!empty($password) AND !empty($password2) AND $password == $password2) {
-                        $password = (new PasswordService())->hash($password);
+                    if ($validation->isValid()) {
                         $user->setConfirmed(1);
                         $user->setConfirmedCode('');
                         $user->setSelector('');
-                        $user->setPassword($password);
+                        $user->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')));
                         $userMapper->save($user);
 
-                        $this->addMessage('newPasswordSuccess');
-                        $this->redirect(['action' => 'index']);
+                        $this->redirect()
+                            ->withMessage('newPasswordSuccess')
+                            ->to(['action' => 'index']);
+                    } else {
+                        $this->redirect()
+                            ->withErrors($validation->getErrorBag())
+                            ->to(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);
                     }
                 } else {
                     $this->addMessage('newPasswordFailed', 'danger');                    

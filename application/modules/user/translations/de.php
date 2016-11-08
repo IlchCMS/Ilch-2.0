@@ -170,11 +170,7 @@ return [
     'profileNewPassword' => 'Neues Passwort',
     'profileNewPasswordRetype' => 'Wiederholen des Passworts',
     'profilePasswordInfo' => 'Muss zwischen 6 und 30 Zeichen lang sein',
-    'passwordEmpty' => 'Passwort muss ausgefüllt werden',
-    'passwordRetypeEmpty' => 'Passwort muss wiederholt werden',
-    'passwordNotEqual' => 'Passwort stimmt nicht mit dem wiederholten Passwort überein',
     'passwordSuccess' => 'Passwort erfolgreich geändert',
-    'passwordLength' => 'Passwort ist zu kurz oder zu lang',
 
     'panel' => 'Panel',
     'welcome' => 'Willkommen',
