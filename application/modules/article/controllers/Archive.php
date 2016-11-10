@@ -37,6 +37,8 @@ class Archive extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
         $pagination = new \Ilch\Pagination();
 
+        $this->getLayout()->header()
+            ->css('static/css/article.css');
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
@@ -59,6 +61,9 @@ class Archive extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
 
         $date = new \Ilch\Date($this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
+
+        $this->getLayout()->header()
+            ->css('static/css/article.css');
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])

@@ -15,6 +15,7 @@ use Ilch\Translator;
  * @package Ilch\Layout
 
  * @method \Ilch\Layout\Helper\Title\Model getTitle() get the title model
+ * @method \Ilch\Layout\Helper\Header\Model header() get the header model
  * @method string getMenu(int $menuId, string $tpl = '', array $options = array()) rendering of a menu
  * @method \Ilch\Layout\Helper\Menu\Model[] getMenus() get all menus
  * @method \Ilch\Layout\Helper\Hmenu\Model getHmenu() get the hmenu
@@ -35,6 +36,7 @@ class Frontend extends Base
         parent::__construct($request, $translator, $router, $baseUrl);
 
         $this->addHelper('getTitle', 'layout', new \Ilch\Layout\Helper\GetTitle($this));
+        $this->addHelper('header', 'layout', new \Ilch\Layout\Helper\Header($this));
         $this->addHelper('getHmenu', 'layout', new \Ilch\Layout\Helper\GetHmenu($this));
         $this->addHelper('getMenu', 'layout', new \Ilch\Layout\Helper\GetMenu($this));
         $this->addHelper('getMenus', 'layout', new \Ilch\Layout\Helper\GetMenus($this));
@@ -175,9 +177,8 @@ class Frontend extends Base
                 <link rel="icon" href="'.$this->getBaseUrl($this->escape($this->getFavicon())).'" type="image/x-icon">
                 <meta name="keywords" content="'.$this->escape($this->getKeywords()).'" />
                 <meta name="description" content="'.$this->escape($this->getDescription()).'" />
-                <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">';
-
-        $html .= '<link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css').'" rel="stylesheet">
+                <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">
+                <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.js').'"></script>
@@ -186,6 +187,8 @@ class Frontend extends Base
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
+
+        $html .= $this->header();
 
         if (\Ilch\DebugBar::isInitialized()) {
             $html .= \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->renderHead();

@@ -5,8 +5,6 @@ $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
-
 <legend><?=$this->getTrans('menuArchives') ?></legend>
 <?php if ($articles != ''): ?>
     <ul class="list-group">

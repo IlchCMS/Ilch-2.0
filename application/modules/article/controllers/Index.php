@@ -36,6 +36,10 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
         $pagination = new \Ilch\Pagination();
 
+        $this->getLayout()->header()
+                ->css('static/css/article.css');
+        $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuArticle'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
@@ -114,7 +118,11 @@ class Index extends \Ilch\Controller\Frontend
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 
+            $this->getLayout()->header()
+                    ->css('static/css/article.css')
+                    ->css('../comment/static/css/comment.css');
             $this->getLayout()->getTitle()
+                    ->add($this->getTranslator()->trans('menuArticle'))
                     ->add($article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());
             $this->getLayout()->set('metaKeywords', $article->getKeywords());

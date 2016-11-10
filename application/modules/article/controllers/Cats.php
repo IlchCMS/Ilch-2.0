@@ -31,6 +31,11 @@ class Cats extends \Ilch\Controller\Frontend
         $articleMapper = new ArticleMapper();
         $categoryMapper = new CategoryMapper();
 
+        $this->getLayout()->header()
+            ->css('static/css/article.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuArticle'))
+            ->add($this->getTranslator()->trans('menuCats'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
@@ -49,6 +54,12 @@ class Cats extends \Ilch\Controller\Frontend
 
         $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 
+        $this->getLayout()->header()
+            ->css('static/css/article.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuArticle'))
+            ->add($this->getTranslator()->trans('menuCats'))
+            ->add($articlesCats->getName());
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])

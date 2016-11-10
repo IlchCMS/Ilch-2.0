@@ -6,8 +6,6 @@ $userMapper = $this->get('userMapper');
 $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
-
 <legend><?=$this->getTrans('catArchives') ?>: <i><?=$this->escape($articlesCats->getName()) ?></i></legend>
 <?php if ($articles != ''):
     foreach ($articles as $article):

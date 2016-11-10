@@ -5,8 +5,6 @@ $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
-
 <?php if ($articles != ''):
     foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());

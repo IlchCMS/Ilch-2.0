@@ -153,9 +153,6 @@ $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$arti
 }
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/article.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
-
 <?php if ($preview): ?>
     <div class="article_preview"></div>
 <?php endif; ?>
