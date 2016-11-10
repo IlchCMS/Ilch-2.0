@@ -23,12 +23,12 @@ class Header
      */
     public function __construct(Layout $header)
     {
-        $this->model = new Model(($header));
+        $this->model = new Model($header);
     }
 
     /**
      * Gets the header
-     * @return \Ilch\Layout\Helper\Header\Model
+     * @return Model
      */
     public function header()
     {

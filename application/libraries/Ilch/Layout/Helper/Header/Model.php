@@ -34,7 +34,7 @@ class Model
      * Gets the Cascading Style Sheets
      *
      * @param string $value
-     * @return \Ilch\Layout\Helper\Header\Model
+     * @return Model
      */
     public function css($value)
     {
@@ -47,7 +47,7 @@ class Model
      * Gets the Javascript
      *
      * @param string $value
-     * @return \Ilch\Layout\Helper\Header\Model
+     * @return Model
      */
     public function js($value)
     {
