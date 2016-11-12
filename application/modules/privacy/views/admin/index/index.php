@@ -37,7 +37,7 @@
                                     </a>
                                 <?php endif; ?>
                             </td>
-                            <td><?=$privacy->getTitle() ?></td>
+                            <td><?=$this->escape($privacy->getTitle()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
