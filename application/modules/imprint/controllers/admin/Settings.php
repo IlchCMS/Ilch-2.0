@@ -6,6 +6,8 @@
 
 namespace Modules\Imprint\Controllers\Admin;
 
+use Ilch\Validation;
+
 class Settings extends \Ilch\Controller\Admin
 {
     public function init()
@@ -39,8 +41,22 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('imprint_style', $this->getRequest()->getPost('imprintStyle'));
-            $this->addMessage('saveSuccess');
+            Validation::setCustomFieldAliases([
+                'imprintStyle' => 'site'
+            ]);
+
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'imprintStyle'      => 'required|numeric|min:0|max:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('imprint_style', $this->getRequest()->getPost('imprintStyle'));
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->redirect()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('imprintStyle', $this->getConfig()->get('imprint_style'));
