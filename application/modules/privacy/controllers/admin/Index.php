@@ -79,6 +79,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
+                'show' => 'required|numeric|integer|min:0|max:1',
                 'title' => 'required',
                 'text' => 'required',
                 'url' => 'url'
@@ -89,11 +90,7 @@ class Index extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                if ($this->getRequest()->getPost('show')) {
-                    $model->setShow(1);
-                } else {
-                    $model->setShow(0);
-                }
+                $model->setShow($this->getRequest()->getPost('show'));
                 $model->setTitle($this->getRequest()->getPost('title'))
                     ->setText($this->getRequest()->getPost('text'))
                     ->setUrlTitle($this->getRequest()->getPost('urltitle'))
