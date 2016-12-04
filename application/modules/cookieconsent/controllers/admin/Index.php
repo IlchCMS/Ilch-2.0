@@ -40,7 +40,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                cookieConsent => 'required|numeric|min:0|max:1',
+                cookieConsent => 'required|numeric|integer|min:0|max:1',
                 cookieConsentStyle => 'required',
                 cookieConsentPos => 'required',
                 cookieConsentMessage => 'required',
