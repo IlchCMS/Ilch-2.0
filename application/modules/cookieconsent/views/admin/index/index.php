@@ -1,7 +1,17 @@
 <legend><?=$this->getTrans('settings') ?></legend>
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('cookieConsent') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentShow') ?>:
         </div>
@@ -15,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('cookieConsentStyle') ? 'has-error' : '' ?>">
         <label for="cookieConsentStyle" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentStyle') ?>:
         </label>
@@ -26,7 +36,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('cookieConsentPos') ? 'has-error' : '' ?>">
         <label for="cookieConsentPos" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentPos') ?>:
         </label>
@@ -38,7 +48,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('cookieConsentMessage') ? 'has-error' : '' ?>">
         <label for="cookieConsentMessage" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentMessage') ?>:
         </label>
@@ -46,10 +56,10 @@
             <input type="text"
                    class="form-control"
                    name="cookieConsentMessage"
-                   value="<?=$this->escape($this->get('cookieConsentMessage')) ?>" />
+                   value="<?=($this->originalInput('cookieConsentMessage') != '') ? $this->escape($this->originalInput('cookieConsentMessage')) : $this->escape($this->get('cookieConsentMessage')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('cookieConsentText') ? 'has-error' : '' ?>">
         <label for="cookieConsentText" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentText') ?>:
         </label>
@@ -58,7 +68,7 @@
                       id="ck_1"
                       name="cookieConsentText"
                       toolbar="ilch_html"
-                      rows="5"><?=$this->escape($this->get('cookieConsentText')) ?></textarea>
+                      rows="5"><?=($this->originalInput('cookieConsentText') != '') ? $this->escape($this->originalInput('cookieConsentText')) : $this->escape($this->get('cookieConsentText')) ?></textarea>
         </div>
     </div>
     <?=$this->getSaveBar() ?>
