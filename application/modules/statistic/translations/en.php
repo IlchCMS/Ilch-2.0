@@ -48,4 +48,6 @@ return [
     'unknown' => 'Unknown',
     'numberVisits' => 'Visitor',
     'noStatistic' => 'No Statistic available',
+
+    'everythingDisabled' => 'The administrator decided to display nothing here.',
 ];

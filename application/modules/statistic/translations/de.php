@@ -48,4 +48,6 @@ return [
     'unknown' => 'Unbekannt',
     'numberVisits' => 'Besucher',
     'noStatistic' => 'Keine Statistik vorhanden',
+
+    'everythingDisabled' => 'Der Administrator hat alle Statistiken ausgeblendet.',
 ];
