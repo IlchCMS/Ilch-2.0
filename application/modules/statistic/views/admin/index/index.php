@@ -11,7 +11,7 @@
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('siteStatistic') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('siteStatistic') ?>:
         </div>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('visitsStatistic') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('visitsStatistic') ?>:
         </div>
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('browserStatistic') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('browserStatistic') ?>:
         </div>
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('osStatistic') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('osStatistic') ?>:
         </div>
