@@ -46,6 +46,11 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('statisticBrowserList', $statisticMapper->getVisitsBrowser($date->format('Y', true)));
         $this->getView()->set('statisticLanguageList', $statisticMapper->getVisitsLanguage($date->format('Y', true)));
         $this->getView()->set('statisticOSList', $statisticMapper->getVisitsOS($date->format('Y', true)));
+
+        $this->getView()->set('siteStatistic', $this->getConfig()->get('statistic_site'));
+        $this->getView()->set('visitsStatistic', $this->getConfig()->get('statistic_visits'));
+        $this->getView()->set('browserStatistic', $this->getConfig()->get('statistic_browser'));
+        $this->getView()->set('osStatistic', $this->getConfig()->get('statistic_os'));
     }
 
     public function showAction()

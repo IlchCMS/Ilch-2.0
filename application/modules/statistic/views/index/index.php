@@ -6,12 +6,21 @@ $languageCodes = new \Modules\Statistic\Plugins\languageCodes();
 $date = new \Ilch\Date();
 $dateCmsInstalled = new \Ilch\Date($this->get('dateCmsInstalled'));
 $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
+$siteStatistic = $this->get('siteStatistic');
+$visitsStatistic = $this->get('visitsStatistic');
+$browserStatistic = $this->get('browserStatistic');
+$osStatistic = $this->get('osStatistic');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuStatistic') ?></legend>
+<?php if (!$siteStatistic And !$visitsStatistic And !$browserStatistic And !$osStatistic) : ?>
+<?=$this->getTrans('everythingDisabled') ?>
+<?php endif; ?>
+
+<?php if ($siteStatistic) : ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
@@ -152,7 +161,9 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         </div>
     </div>
 </div>
+<?php endif; ?>
 
+<?php if ($visitsStatistic) : ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
@@ -322,7 +333,9 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         </div>
     </div>
 </div>
+<?php endif; ?>
 
+<?php if ($browserStatistic) : ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
@@ -385,7 +398,9 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         </div>
     </div>
 </div>
+<?php endif; ?>
 
+<?php if ($osStatistic) : ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
@@ -426,6 +441,7 @@ $registNewUser = $userMapper->getUserById($this->get('registNewUser'));
         </div>
     </div>
 </div>
+<?php endif; ?>
 
 <script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
 <script type="text/javascript">
