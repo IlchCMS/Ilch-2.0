@@ -62,9 +62,6 @@ class Index extends \Ilch\Controller\Frontend
                 $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
             }
 
-            $start = new \Ilch\Date(trim($this->getRequest()->getPost('start')));
-            $end = new \Ilch\Date(trim($this->getRequest()->getPost('end')));
-
             $post = [
                 'title' => trim($this->getRequest()->getPost('title')),
                 'place' => trim($this->getRequest()->getPost('place')),
@@ -142,8 +139,8 @@ class Index extends \Ilch\Controller\Frontend
 
                     $eventModel->setUserId($this->getUser()->getId());
                     $eventModel->setTitle($post['title']);
-                    $eventModel->setStart($post['start']);
-                    $eventModel->setEnd($end);
+                    $eventModel->setStart(new \Ilch\Date(trim($this->getRequest()->getPost('start'))));
+                    $eventModel->setEnd(new \Ilch\Date(trim($this->getRequest()->getPost('end'))));
                     $eventModel->setPlace($post['place']);
                     $eventModel->setText($post['text']);
                     $eventModel->setShow($post['calendarShow']);
