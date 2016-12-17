@@ -63,50 +63,70 @@ class Panel extends BaseController
         $this->getView()->set('profileFields', $profileFields);
         $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
 
-        $errors = [];
         if ($this->getRequest()->isPost()) {
-            $email = trim($this->getRequest()->getPost('email'));
             $firstname = trim($this->getRequest()->getPost('first-name'));
             $lastname = trim($this->getRequest()->getPost('last-name'));
-            $homepage = trim($this->getRequest()->getPost('homepage'));
             $facebook = trim($this->getRequest()->getPost('facebook'));
             $twitter = trim($this->getRequest()->getPost('twitter'));
             $google = trim($this->getRequest()->getPost('google'));
             $city = trim($this->getRequest()->getPost('city'));
             $birthday = new \Ilch\Date(trim($this->getRequest()->getPost('birthday')));
 
-            if (empty($email)) {
-                $this->addMessage('emailEmpty');
-                $this->redirect(['action' => 'profile']);
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->addMessage('emailError');
-                $this->redirect(['action' => 'profile']);
+            Validation::setCustomFieldAliases([
+                'email' => 'profileEmail',
+                'homepage' => 'profileHomepage'
+            ]);
+
+            $post = [
+                'email' => trim($this->getRequest()->getPost('email')),
+                'firstname' => trim($this->getRequest()->getPost('first-name')),
+                'lastname' => trim($this->getRequest()->getPost('last-name')),
+                'homepage' => trim($this->getRequest()->getPost('homepage')),
+                'facebook' => trim($this->getRequest()->getPost('facebook')),
+                'twitter' => trim($this->getRequest()->getPost('twitter')),
+                'google' => trim($this->getRequest()->getPost('google')),
+                'city' => trim($this->getRequest()->getPost('city')),
+                'birthday' => new \Ilch\Date(trim($this->getRequest()->getPost('birthday')))
+            ];
+
+            foreach ($profileFields as $profileField) {
+                $post[$profileField->getName()] = trim($this->getRequest()->getPost($profileField->getName()));
             }
 
-            if (empty($errors)) {
+            $validation = Validation::create($post, [
+                'email' => 'required|email',
+                'homepage' => 'url'
+            ]);
+
+            if ($validation->isValid()) {
                 $model = new UserModel();
                 $model->setId($this->getUser()->getId());
-                $model->setEmail($email);
-                $model->setFirstName($firstname);
-                $model->setLastName($lastname);
-                $model->setHomepage($homepage);
-                $model->setFacebook($facebook);
-                $model->setTwitter($twitter);
-                $model->setGoogle($google);
-                $model->setCity($city);
-                $model->setBirthday($birthday);
+                $model->setEmail($post['email']);
+                $model->setFirstName($post['firstname']);
+                $model->setLastName($post['lastname']);
+                $model->setHomepage($post['homepage']);
+                $model->setFacebook($post['facebook']);
+                $model->setTwitter($post['twitter']);
+                $model->setGoogle($post['google']);
+                $model->setCity($post['city']);
+                $model->setBirthday($post['birthday']);
                 $profilMapper->save($model);
 
                 foreach ($profileFields as $profileField) {
                     $profileFieldsContent = new ProfileFieldContentModel();
                     $profileFieldsContent->setFieldId($profileField->getId());
                     $profileFieldsContent->setUserId($this->getUser()->getId());
-                    $profileFieldsContent->setValue(trim($this->getRequest()->getPost($profileField->getName())));
+                    $profileFieldsContent->setValue($post[$profileField->getName()]);
                     $profileFieldsContentMapper->save($profileFieldsContent);
                 }
 
                 $this->redirect(['action' => 'profile']);
             }
+
+            $this->redirect()
+                ->withInput($post)
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'profile']);
         }
     }
 
