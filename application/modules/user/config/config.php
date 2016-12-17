@@ -114,6 +114,7 @@ class Config extends \Ilch\Config\Install
                   `birthday` DATE NULL DEFAULT NULL,
                   `avatar` VARCHAR(255) NOT NULL DEFAULT "",
                   `signature` VARCHAR(255) NOT NULL DEFAULT "",
+                  `opt_mail` INT(11) DEFAULT 1,
                   `opt_gallery` INT(11) DEFAULT 1,
                   `date_created` DATETIME NOT NULL,
                   `date_confirmed` DATETIME NULL DEFAULT NULL,

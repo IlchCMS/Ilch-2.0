@@ -263,33 +263,29 @@ class Panel extends BaseController
                 ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
                 ->add($this->getTranslator()->trans('menuSetting'), ['controller' => 'panel', 'action' => 'setting']);
 
-        $post = [
-            'optMail' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'optMail' => $this->getRequest()->getPost('optMail')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'optMail' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
                 $model = new UserModel();
                 $model->setId($this->getUser()->getId());
-                $model->setOptMail($post['optMail']);
+                $model->setOptMail($this->getRequest()->getPost('optMail'));
                 $profilMapper->save($model);
 
-                $this->redirect(['action' => 'setting']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'setting']);
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'setting']);
         }
-
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
+        
+        $this->getView()->set('optMail', $profilMapper->getUserById($this->getUser()->getId())->getOptMail());
     }
 
     public function dialogAction()
