@@ -203,8 +203,6 @@ return [
     'settingsProfileInfo' => 'Here you can see and manage your Profile data.',
     'settingsPasswordInfo' => 'Here you can manage your Password.',
     'settingsSettingInfo' => 'Here you can manage your Setting.',
-    'emailError' => 'E-Mail is not valid.',
-    'emailEmpty' => 'E-Mail was not filled.',
     'profileSettings' => 'Profile',
     'profileEmail' => 'E-Mail',
     'profileFirstName' => 'First name',

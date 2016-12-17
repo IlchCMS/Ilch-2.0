@@ -16,9 +16,19 @@ $birthday = new \Ilch\Date($profil->getBirthday());
         </div>
         <div class="col-lg-10">
             <legend><?=$this->getTrans('profileSettings') ?></legend>
+            <?php if ($this->validation()->hasErrors()): ?>
+                <div class="alert alert-danger" role="alert">
+                    <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+                    <ul>
+                        <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                            <li><?= $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group">
+                <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileEmail'); ?>*
                     </label>
@@ -27,7 +37,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                                class="form-control"
                                name="email"
                                placeholder="<?=$this->escape($profil->getEmail()) ?>"
-                               value="<?=$this->escape($profil->getEmail()) ?>"
+                               value="<?=($this->originalInput('email') != '') ? $this->escape($this->originalInput('email')) : $this->escape($profil->getEmail()) ?>"
                                required />
                     </div>
                 </div>
@@ -40,7 +50,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                                class="form-control"
                                name="first-name"
                                placeholder="<?=$this->escape($profil->getFirstName()) ?>"
-                               value="<?=$this->escape($profil->getFirstName()) ?>"/>
+                               value="<?=($this->originalInput('firstname') != '') ? $this->escape($this->originalInput('firstname')) : $this->escape($profil->getFirstName()) ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,10 +62,10 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                                class="form-control"
                                name="last-name"
                                placeholder="<?=$this->escape($profil->getLastName()) ?>"
-                               value="<?=$this->escape($profil->getLastName()) ?>"/>
+                               value="<?=($this->originalInput('lastname') != '') ? $this->escape($this->originalInput('lastname')) : $this->escape($profil->getLastName()) ?>" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group <?=$this->validation()->hasError('homepage') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileHomepage'); ?>
                     </label>
@@ -64,7 +74,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                               class="form-control"
                               name="homepage"
                               placeholder="<?=$this->escape($profil->getHomepage()) ?>"
-                              value="<?=$this->escape($profil->getHomepage()) ?>" />
+                              value="<?=($this->originalInput('homepage') != '') ? $this->escape($this->originalInput('homepage')) : $this->escape($profil->getHomepage()) ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -76,7 +86,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                               class="form-control"
                               name="facebook"
                               placeholder="<?=$this->escape($profil->getFacebook()) ?>"
-                              value="<?=$this->escape($profil->getFacebook()) ?>" />
+                              value="<?=($this->originalInput('facebook') != '') ? $this->escape($this->originalInput('facebook')) : $this->escape($profil->getFacebook()) ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -88,7 +98,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                               class="form-control"
                               name="twitter"
                               placeholder="<?=$this->escape($profil->getTwitter()) ?>"
-                              value="<?=$this->escape($profil->getTwitter()) ?>" />
+                              value="<?=($this->originalInput('twitter') != '') ? $this->escape($this->originalInput('twitter')) : $this->escape($profil->getTwitter()) ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -100,7 +110,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                               class="form-control"
                               name="google"
                               placeholder="<?=$this->escape($profil->getGoogle()) ?>"
-                              value="<?=$this->escape($profil->getGoogle()) ?>" />
+                              value="<?=($this->originalInput('google') != '') ? $this->escape($this->originalInput('google')) : $this->escape($profil->getGoogle()) ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -112,7 +122,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                               class="form-control"
                               name="city"
                               placeholder="<?=$this->escape($profil->getCity()) ?>"
-                              value="<?=$this->escape($profil->getCity()) ?>" />
+                              value="<?=($this->originalInput('city') != '') ? $this->escape($this->originalInput('city')) : $this->escape($profil->getCity()) ?>" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -141,10 +151,14 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                     
                     if(!$profileField->getType()) :
                         $value = '';
-                        foreach($profileFieldsContent as $profileFieldContent) {
-                            if($profileField->getId() == $profileFieldContent->getFieldId()) {
-                                $value = $this->escape($profileFieldContent->getValue());
-                                break;
+                        if ($this->originalInput($profileField->getName()) != '') {
+                            $value = $this->escape($this->originalInput($profileField->getName()));
+                        } else {
+                            foreach($profileFieldsContent as $profileFieldContent) {
+                                if($profileField->getId() == $profileFieldContent->getFieldId()) {
+                                    $value = $this->escape($profileFieldContent->getValue());
+                                    break;
+                                }
                             }
                         } ?>
                         <div class="form-group">

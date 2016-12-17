@@ -199,8 +199,6 @@ return [
     'settingsProfileInfo' => 'Hier kannst du deine Profildaten einsehen und bearbeiten.',
     'settingsPasswordInfo' => 'Hier kannst du dein Passwort bearbeiten.',
     'settingsSettingInfo' => 'Hier kannst du deine Einstellung bearbeiten.',
-    'emailError' => 'E-Mail ist nicht gültig.',
-    'emailEmpty' => 'E-Mail darf nicht leer sein.',
     'profileSettings' => 'Profil',
     'profileEmail' => 'E-Mail',
     'profileFirstName' => 'Vorname',
