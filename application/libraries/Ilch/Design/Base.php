@@ -334,18 +334,21 @@ abstract class Base
      */
     public function getUrl($url = [], $route = null, $secure = false)
     {
-        $config = \Ilch\Registry::get('config');
- 
-        if ($config !== null && $this->modRewrite === null) {
-            $this->modRewrite = (bool)$config->get('mod_rewrite');
+        if ($this->modRewrite === null) {
+            $config = \Ilch\Registry::get('config');
+            if ($config !== null) {
+                $this->modRewrite = (bool) $config->get('mod_rewrite');
+            } else {
+                $this->modRewrite = false;
+            }
         }
 
         if (empty($url)) {
             return $this->getBaseUrl();
         }
 
+        $rewrite = true;
         if (is_array($url)) {
-
             $urlParts = [];
 
             if (!isset($url['module'])) {
@@ -370,10 +373,12 @@ abstract class Base
             }
 
             foreach ($url as $key => $value) {
-                if (empty($value)) {
-                    continue;
+                if (is_string($key)) {
+                    $urlParts[] = $key;
                 }
-                $urlParts[] = $key . '/' . $value;
+                if (!empty($value)) {
+                    $urlParts[] = $value;
+                }
             }
 
             if ($secure) {
@@ -381,15 +386,14 @@ abstract class Base
             }
 
             $url = implode('/', $urlParts);
+
+            if (($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin')) {
+                $url = 'admin/' . $url;
+                $rewrite = false;
+            }
         }
 
-        $noRewrite = false;
-        if (($this->getRequest()->isAdmin() && $route === null) || ($route !== null && $route == 'admin')) {
-            $url = 'admin/' . $url;
-            $noRewrite = true;
-        }
-
-        if (!($this->modRewrite && !$noRewrite)) {
+        if (!$this->modRewrite || !$rewrite) {
             $url = 'index.php/' . $url;
         }
 
