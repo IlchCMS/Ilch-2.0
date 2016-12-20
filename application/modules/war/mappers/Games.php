@@ -58,10 +58,16 @@ class Games extends \Ilch\Mapper
             'enemy_pionts' => $model->getEnemyPoints()
         ];
 
-        $this->db()->insert('war_played')
+        if ($model->getId()) {
+            $this->db()->update('war_played')
+                ->values($fields)
+                ->where(['id' => $model->getId()])
+                ->execute();
+        } else {
+            $this->db()->insert('war_played')
                 ->values($fields)
                 ->execute();
-        
+        }
     }
 
     /**
