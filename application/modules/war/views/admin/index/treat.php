@@ -7,10 +7,20 @@
         <?=$this->getTrans('manageWar') ?>
     <?php endif; ?>
 </legend>
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <?php if ($this->get('group') != '' and $this->get('enemy') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warEnemy') ? 'has-error' : '' ?>">
             <label for="warEnemy" class="col-lg-2 control-label">
                 <?=$this->getTrans('warEnemy') ?>:
             </label>
@@ -28,7 +38,7 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warGroup') ? 'has-error' : '' ?>">
             <label for="warGroup" class="col-lg-2 control-label">
                 <?=$this->getTrans('warGroup') ?>:
             </label>
@@ -46,7 +56,7 @@
                 </select>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warTime') ? 'has-error' : '' ?>">
             <label for="warTimeInput" class="col-md-2 control-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
@@ -63,7 +73,7 @@
                 </span>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warMap') ? 'has-error' : '' ?>">
             <label for="warMapInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warMap') ?>:
             </label>
@@ -72,10 +82,10 @@
                        class="form-control"
                        id="warMapInput"
                        name="warMap"
-                       value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarMaps(); } ?>" />
+                       value="<?=($this->originalInput('warMap') != '') ? $this->originalInput('warMap') : $this->get('war')->getWarMaps() ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warServer') ? 'has-error' : '' ?>">
             <label for="warServerInput" class="col-lg-2 control-label">
                 <?=$this->getTrans('warServer') ?>:
             </label>
@@ -84,7 +94,7 @@
                        class="form-control"
                        id="warServerInput"
                        name="warServer"
-                       value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarServer(); } ?>" />
+                       value="<?=($this->originalInput('warServer') != '') ? $this->originalInput('warServer') : $this->get('war')->getWarServer() ?>" />
             </div>
         </div>
         <div class="form-group">
@@ -96,10 +106,10 @@
                        class="form-control"
                        id="warPasswordInput"
                        name="warPassword"
-                       value="<?php if ($this->get('war') != '') { echo $this->get('war')->getWarPassword(); } ?>" />
+                       value="<?=($this->originalInput('warPassword') != '') ? $this->originalInput('warPassword') : $this->get('war')->getWarPassword() ?>" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warXonx') ? 'has-error' : '' ?>">
             <label for="warXonx" class="col-lg-2 control-label">
                 <?=$this->getTrans('warXonx') ?>:
             </label>
@@ -128,7 +138,7 @@
                        value="" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warGame') ? 'has-error' : '' ?>">
             <label for="warGame" class="col-lg-2 control-label">
                 <?=$this->getTrans('warGame'); ?>:
             </label>
@@ -157,7 +167,7 @@
                        value="" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('warMatchtype') ? 'has-error' : '' ?>">
             <label for="warMatchtype" class="col-lg-2 control-label">
                 <?=$this->getTrans('warMatchtype') ?>:
             </label>
@@ -206,7 +216,7 @@
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?php if ($this->get('war') != '') { echo $this->get('war')->getWarReport(); } ?></textarea>
+                          toolbar="ilch_html"><?=($this->originalInput('warReport') != '') ? $this->originalInput('warReport') : $this->get('war')->getWarReport() ?></textarea>
             </div>
         </div>
         <legend><?=$this->getTrans('warStatus') ?></legend>
