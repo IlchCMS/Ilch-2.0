@@ -147,6 +147,8 @@ return [
     'updateButtonBox' => 'Box aktualisieren',
     'noBoxes' => 'Keine Boxen vorhanden',
     'treat' => 'Bearbeiten',
+    'notVisible' => 'Nicht sichtbar für',
+    'selectAssignedGroups' => 'Ausgewählte Gruppen',
     'askIfDeleteBox' => 'Sind Sie sicher, dass die Box "%s" entfernt werden soll?',
     'modRewrite' => 'Mod-Rewrite',
     'administrate' => 'Administrieren',

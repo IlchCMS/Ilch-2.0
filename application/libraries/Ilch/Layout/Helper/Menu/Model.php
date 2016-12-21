@@ -106,6 +106,17 @@ class Model
      */
     public function getItems($tpl = '', $options = [])
     {
+        $groupIds = [3];
+
+        if ($this->layout->getUser()) {
+            $groupIds = [];
+            foreach ($this->layout->getUser()->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
+            }
+        }
+
+        $groupIdsArray = explode(',',implode(',', $groupIds));
+
         $items = $this->menuMapper->getMenuItemsByParent($this->getId(), 0);
         if (empty($items)) {
             return '';
@@ -124,27 +135,32 @@ class Model
 
         /** @var MenuItem $item */
         foreach ($items as $item) {
-            if ($item->isBox()) {
-                // Do not render boxes if boxes.render is set to false
-                if (array_dot($options, 'boxes.render') === false) {
-                    continue;
-                }
-                if ($item->getBoxId()) {
-                    $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
-                } else {
-                    $box = $this->loadBoxFromModule($item);
+            if (!is_in_array($groupIdsArray, explode(',', $item->getAccess()))) {
+                if ($item->isBox()) {
+                    // Do not render boxes if boxes.render is set to false
+                    if (array_dot($options, 'boxes.render') === false) {
+                        continue;
+                    }
+                    if ($item->getBoxId()) {
+                        $box = $this->boxMapper->getSelfBoxByIdLocale($item->getBoxId(), $locale);
+                    } else {
+                        $box = $this->loadBoxFromModule($item);
+                    }
+
+                    $contentHtml = $box->getContent();
+                } else { //is Menu
+
+                    $contentHtml = '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
+
+                    foreach ($this->menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId()) as $menuItem) {
+                        $contentHtml .= $this->recGetItems($menuItem, $locale, $options, $item->getType());
+                    }
+
+                    $contentHtml .= '</ul>';
                 }
 
-                $contentHtml = $box->getContent();
-            } else { //is Menu
-                $contentHtml = '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
-                foreach ($this->menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId()) as $menuItem) {
-                    $contentHtml .= $this->recGetItems($menuItem, $locale, $options, $item->getType());
-                }
-                $contentHtml .= '</ul>';
+                $html .= str_replace(['%s', '%c'], [$this->layout->escape($item->getTitle()), $contentHtml], $tpl);
             }
-
-            $html .= str_replace(['%s', '%c'], [$this->layout->escape($item->getTitle()), $contentHtml], $tpl);
         }
 
         return $html;
@@ -161,6 +177,17 @@ class Model
      */
     protected function recGetItems($item, $locale, $options = [], $parentType = null)
     {
+        $groupIds = [3];
+
+        if ($this->layout->getUser()) {
+            $groupIds = [];
+            foreach ($this->layout->getUser()->getGroups() as $groups) {
+                $groupIds[] = $groups->getId();
+            }
+        }
+
+        $groupIdsArray = explode(',',implode(',', $groupIds));
+
         $subItems = $this->menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
         $liClasses = [];
 
@@ -175,7 +202,7 @@ class Model
         } elseif ($item->isPageLink()) {
             $page = $this->pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
             $href = $this->layout->getUrl($page->getPerma());
-        } elseif ($item->isModuleLink()) {
+        } elseif ($item->isModuleLink() && !is_in_array($groupIdsArray, explode(',', $item->getAccess()))) {
             $href = $this->layout->getUrl(
                 ['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']
             );

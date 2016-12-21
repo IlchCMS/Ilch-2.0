@@ -92,6 +92,13 @@ class MenuItem extends \Ilch\Model
     protected $href;
 
     /**
+     * Access of the item.
+     *
+     * @var string
+     */
+    protected $access;
+
+    /**
      * Gets the id.
      *
      * @return integer
@@ -369,5 +376,25 @@ class MenuItem extends \Ilch\Model
     public function isMenu()
     {
         return $this->getType() === self::TYPE_MENU;
+    }
+
+    /**
+     * Gets the access id.
+     *
+     * @return string
+     */
+    public function getAccess()
+    {
+        return $this->access;
+    }
+
+    /**
+     * Sets the access id.
+     *
+     * @param $access
+     */
+    public function setAccess($access)
+    {
+        $this->access = $access;
     }
 }

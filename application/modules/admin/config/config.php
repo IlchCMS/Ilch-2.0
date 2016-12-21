@@ -120,6 +120,7 @@ class Config extends \Ilch\Config\Install
                   `title` VARCHAR(255) NOT NULL,
                   `href` VARCHAR(255) NULL DEFAULT NULL,
                   `module_key` VARCHAR(255) NULL DEFAULT NULL,
+                  `access` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
                 

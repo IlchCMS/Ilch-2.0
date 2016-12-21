@@ -10,6 +10,7 @@ use Modules\Admin\Mappers\Menu as MenuMapper;
 use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
+use Modules\User\Mappers\Group as UserGroupMapper;
 
 class Menu extends \Ilch\Controller\Admin
 {
@@ -31,6 +32,7 @@ class Menu extends \Ilch\Controller\Admin
 
         $menuMapper = new MenuMapper();
         $pageMapper = new PageMapper();
+        $userGroupMapper = new UserGroupMapper();
 
         /*
          * Saves the item tree to database.
@@ -87,6 +89,7 @@ class Menu extends \Ilch\Controller\Admin
                         $menuItem->setSiteId($item['siteid']);
                         $menuItem->setHref($item['href']);
                         $menuItem->setTitle(strtr($item['title'], $entityMap));
+                        $menuItem->setAccess($item['access']);
 
                         if ((int)$item['boxkey'] > 0) {
                             $menuItem->setBoxId($item['boxkey']);
@@ -141,6 +144,7 @@ class Menu extends \Ilch\Controller\Admin
         $menuItems = $menuMapper->getMenuItemsByParent($menuId, 0);
         $menu = $menuMapper->getMenu($menuId);
         $menus = $menuMapper->getMenus();
+        $userGroupList = $userGroupMapper->getGroupList();
 
         $moduleMapper = new \Modules\Admin\Mappers\Module();
         $boxMapper = new \Modules\Admin\Mappers\Box();
@@ -161,6 +165,7 @@ class Menu extends \Ilch\Controller\Admin
         $this->getView()->set('boxes', $boxMapper->getBoxList($this->getTranslator()->getLocale()));
         $this->getView()->set('self_boxes', (array)$boxMapper->getSelfBoxList($locale));
         $this->getView()->set('modules', $moduleMapper->getModules());
+        $this->getView()->set('userGroupList', $userGroupList);
     }
 
     public function addAction()

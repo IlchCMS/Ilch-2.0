@@ -39,6 +39,7 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
                     <input type="hidden" class="hidden_siteid" name="items['.$item->getId().'][siteid]" value="'.$item->getSiteId().'" />
                     <input type="hidden" class="hidden_boxkey" name="items['.$item->getId().'][boxkey]" value="'.$boxKey.'" />
                     <input type="hidden" class="hidden_modulekey" name="items['.$item->getId().'][modulekey]" value="'.$item->getModuleKey().'" />
+                    <input type="hidden" class="hidden_access" name="items['.$item->getId().'][access]" value="'.$item->getAccess().'" />
                     <span></span>
                 </span><span class="title">'.$view->escape($item->getTitle()).'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
 
@@ -91,18 +92,18 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
         <div class="col-lg-5 changeBox">
             <input type="hidden" id="id" value="" />
             <div class="form-group">
-                <label for="title" class="col-lg-2 control-label">
+                <label for="title" class="col-lg-3 control-label">
                     <?=$this->getTrans('itemTitle') ?>
                 </label>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <input type="text" class="form-control" id="title" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="type" class="col-lg-2 control-label">
+                <label for="type" class="col-lg-3 control-label">
                     <?=$this->getTrans('itemType') ?>
                 </label>
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <select class="form-control" id="type">
                         <option value="<?= MenuItem::TYPE_MENU ?>"><?=$this->getTrans('menu') ?></option>
                         <optgroup>
@@ -115,6 +116,13 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
                 </div>
             </div>
             <div class="dyn"></div>
+            <div class="form-group"><label for="assignedGroups" class="col-lg-3 control-label"><?=$this->getTrans('notVisible') ?></label>
+                <div class="col-lg-6"><select class="chosen-select form-control" id="access" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+                        <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                            <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>
+                        <?php endforeach; ?>
+                    </select></div></div>
+
             <div class="actions">
                 <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
             </div>
@@ -133,6 +141,8 @@ function resetBox() {
     .removeAttr('selected');
 
     $('#type').change();
+    $('#access').val('');
+    $('#access').trigger("chosen:updated");
 }
 
 $('.deleteMenu').on('click', function(event) {
@@ -261,6 +271,7 @@ $(document).ready
                     +'<input type="hidden" class="hidden_boxkey" name="items[tmp_'+itemId+'][boxkey]" value="'+$('#boxkey').val()+'" />'
                     +'<input type="hidden" class="hidden_modulekey" name="items[tmp_'+itemId+'][modulekey]" value="'+modulKey+'" />'
                     +'<input type="hidden" class="hidden_menukey" name="items[tmp_'+itemId+'][menukey]" value="'+$('#menukey').val()+'" />'
+                    +'<input type="hidden" class="hidden_access" name="items[tmp_'+itemId+'][access]" value="'+$('#access').val()+'" />'
                     +'</span></span><span class="title">'+title+'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div></li>').appendTo(append);
             itemId++;
             resetBox();
@@ -291,6 +302,7 @@ $(document).ready
                 $('#'+$('#id').val()).find('.hidden_modulekey:first').val(modulKey);
                 $('#'+$('#id').val()).find('.hidden_boxkey:first').val($('#boxkey').val());
                 $('#'+$('#id').val()).find('.hidden_menukey:first').val($('#menukey').val());
+                $('#'+$('#id').val()).find('.hidden_access:first').val($('#access').val());
                 resetBox();
             }
         );
@@ -314,23 +326,23 @@ $(document).ready
                 return;
             }
 
-            menuHtml = '<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
-                        <div class="col-lg-4"><select class="form-control" id="menukey">'+options+'</select></div></div>';
+            menuHtml = '<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('labelMenu') ?></label>\n\
+                        <div class="col-lg-6"><select class="form-control" id="menukey">'+options+'</select></div></div>';
 
             if ($(this).val() == '0') {
                 $('.dyn').html('');
             } else if ($(this).val() == '1') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('address') ?></label>\n\
-                                <div class="col-lg-4"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('address') ?></label>\n\
+                                <div class="col-lg-6"><input type="text" class="form-control" id="href" value="http://" /></div></div>'+menuHtml);
             } else if ($(this).val() == '2') {
-                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('page') ?></label>\n\
-                                <div class="col-lg-4"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$this->escape($page->getTitle()).'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
+                 $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('page') ?></label>\n\
+                                <div class="col-lg-6"><?php if (!empty($pages)) { echo '<select class="form-control" id="siteid">'; foreach ($pages as $page) { echo '<option value="'.$page->getId().'">'.$this->escape($page->getTitle()).'</option>';} echo '</select>'; } else { echo $this->getTrans('missingSite'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '3') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('module') ?></label>\n\
-                                <div class="col-lg-4"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('module') ?></label>\n\
+                                <div class="col-lg-6"><?php if (!empty($modules)) { echo '<select class="form-control" id="modulekey">'; foreach ($modules as $module) { $content = $module->getContentForLocale($this->getTranslator()->getLocale()); echo '<option value="'.$module->getKey().'">'.$content['name'].'</option>';} echo '</select>'; } else { echo $this->getTrans('missingModule'); } ?></div></div>'+menuHtml);
             } else if ($(this).val() == '4') {
-                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-2 control-label"><?=$this->getTrans('box') ?></label>\n\
-                                <div class="col-lg-4"><?='<select class="form-control" id="boxkey">';
+                $('.dyn').html('<div class="form-group"><label for="href" class="col-lg-3 control-label"><?=$this->getTrans('box') ?></label>\n\
+                                <div class="col-lg-6"><?='<select class="form-control" id="boxkey">';
                 foreach ($boxes as $box) { echo '<option value="'.$box->getModule().'_'.$box->getKey().'">'.$box->getName().'</option>'; } foreach ($selfBoxes as $box) { echo '<option value="'.$box->getId().'">self_'.$this->escape($box->getTitle()).'</option>';} echo '</select>'; ?></div></div>');
             }
         });
@@ -341,8 +353,8 @@ $(document).ready
         });
 
         $('.sortable').on('click', '.item_edit', function() {
-           $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
-                               <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
+            $('.actions').html('<input type="button" class="btn" id="menuItemEdit" value="<?=$this->getTrans('edit') ?>">\n\
+                                <input type="button" class="btn" id="menuItemEditCancel" value="<?=$this->getTrans('cancel') ?>">');
            $('#title').val($(this).parent().find('.hidden_title').val());
            $('#type').val($(this).parent().find('.hidden_type').val());
            $('#id').val($(this).closest('li').attr('id'));
@@ -352,7 +364,15 @@ $(document).ready
            $('#boxkey').val($(this).parent().find('.hidden_boxkey').val());
            $('#modulekey').val($(this).parent().find('.hidden_modulekey').val());
            $('#menukey').val($(this).parent().find('.hidden_menukey').val());
+           $('#access').val($(this).parent().find('.hidden_access').val());
+           $.each($(this).parent().find('.hidden_access').val().split(","), function(index, element) {
+               $('#access > option[value=' + element + ']').prop("selected", true);
+           });
+           $('#access').trigger("chosen:updated");
         });
+
+        $('#access').chosen();
+        $('#access_chosen').css('width', '100%'); // Workaround for chosen resize bug.
     }
 );
 </script>

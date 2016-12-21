@@ -97,6 +97,7 @@ class Menu extends \Ilch\Mapper
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setParentId($itemRow['parent_id']);
             $itemModel->setModuleKey($itemRow['module_key']);
+            $itemModel->setAccess($itemRow['access']);
             $itemModel->setMenuId($menuId);
             $items[] = $itemModel;
         }
@@ -131,6 +132,7 @@ class Menu extends \Ilch\Mapper
             $itemModel->setHref($itemRow['href']);
             $itemModel->setTitle($itemRow['title']);
             $itemModel->setModuleKey($itemRow['module_key']);
+            $itemModel->setAccess($itemRow['access']);
             $itemModel->setParentId($itemId);
             $itemModel->setMenuId($menuId);
             $items[] = $itemModel;
@@ -157,7 +159,8 @@ class Menu extends \Ilch\Mapper
             'box_id' => $menuItem->getBoxId(),
             'box_key' => $menuItem->getBoxKey(),
             'type' => $menuItem->getType(),
-            'module_key' => $menuItem->getModuleKey()
+            'module_key' => $menuItem->getModuleKey(),
+            'access' => $menuItem->getAccess()
         ];
 
         foreach ($fields as $key => $value) {

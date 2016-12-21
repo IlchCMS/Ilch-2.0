@@ -146,6 +146,8 @@ return [
     'updateButtonBox' => 'Update box',
     'noBoxes' => 'No Boxes',
     'treat' => 'Treat',
+    'notVisible' => 'Not visible for',
+    'selectAssignedGroups' => 'Selected groups',
     'askIfDeleteBox' => 'Are you sure you want delete the box "%s"?',
     'modRewrite' => 'Mod-Rewrite',
     'administrate' => 'Administrate',
