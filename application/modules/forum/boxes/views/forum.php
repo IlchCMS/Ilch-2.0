@@ -18,12 +18,12 @@ if ($this->getUser()) {
                 <li style="line-height: 25px;">
                     <?php if ($this->getUser()): ?>
                         <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
-                            <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/forum_read.png') ?>" style="float: left; margin-top: 8px;">
+                            <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/topic_read.png') ?>" style="float: left; margin-top: 8px;">
                         <?php else: ?>
                             <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/topic_unread.png') ?>" style="float: left; margin-top: 8px;">
                         <?php endif; ?>
                     <?php else: ?>
-                        <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/forum_read.png') ?>" style="float: left; margin-top: 8px;">
+                        <img src="<?=$this->getStaticUrl('../application/modules/forum/static/img/topic_read.png') ?>" style="float: left; margin-top: 8px;">
                     <?php endif; ?>
                     <a href="<?=$this->getUrl(['module' => 'forum', 'controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId()]) ?>">
                         <?=$topic->getTopicTitle() ?>
