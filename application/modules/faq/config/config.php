@@ -49,7 +49,7 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_faq_cats` (
+                CREATE TABLE IF NOT EXISTS `[prefix]_faqs_cats` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `title` VARCHAR(100) NOT NULL,
                   PRIMARY KEY (`id`)

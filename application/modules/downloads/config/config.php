@@ -35,7 +35,7 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_downloads_imgs`');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_downloads_files`');
         $this->db()->queryMulti('DROP TABLE `[prefix]_downloads_items`');
     }
 
