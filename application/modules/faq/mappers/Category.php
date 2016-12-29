@@ -19,7 +19,7 @@ class Category extends \Ilch\Mapper
     public function getCategories($where = [])
     {
         $categoryArray = $this->db()->select('*')
-            ->from('faq_cats')
+            ->from('faqs_cats')
             ->where($where)
             ->execute()
             ->fetchRows();
@@ -55,7 +55,7 @@ class Category extends \Ilch\Mapper
     public function getCategoryMinId()
     {
         $categoryRow = $this->db()->select('*')
-            ->from('faq_cats')
+            ->from('faqs_cats')
             ->order(['id' => 'ASC'])
             ->limit('1')
             ->execute()
@@ -79,12 +79,12 @@ class Category extends \Ilch\Mapper
     public function save(CategoryModel $category)
     {
         if ($category->getId()) {
-            $this->db()->update('faq_cats')
+            $this->db()->update('faqs_cats')
                 ->values(['title' => $category->getTitle()])
                 ->where(['id' => $category->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('faq_cats')
+            $this->db()->insert('faqs_cats')
                 ->values(['title' => $category->getTitle()])
                 ->execute();
         }
@@ -97,7 +97,7 @@ class Category extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $this->db()->delete('faq_cats')
+        $this->db()->delete('faqs_cats')
             ->where(['id' => $id])
             ->execute();
     }
