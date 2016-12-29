@@ -17,7 +17,7 @@ class Index extends \Ilch\Controller\Frontend
             /*
              * Cms is installed
              */
-            $this->redirect();
+            $this->redirect()->to();
         } else {
             /*
              * Cms not installed yet.
