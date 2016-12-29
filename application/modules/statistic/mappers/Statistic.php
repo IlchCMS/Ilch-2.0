@@ -68,10 +68,7 @@ class Statistic extends \Ilch\Mapper
     public function getVisitsHour($year = null, $month = null)
     {
         $sql = 'SELECT
-                DATE (`date`) `date_full`,
                 HOUR (`date`) `date_hour`,
-                YEAR(`date`) `date_year`,
-                MONTH(`date`) `date_month`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null AND $year != null) {
@@ -81,7 +78,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY `date_year`, `date_month`, `date_full`, `date_hour`
+        $sql .= ' GROUP BY `date_hour`
                 ORDER BY `date_hour` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -106,8 +103,6 @@ class Statistic extends \Ilch\Mapper
         $sql = 'SELECT
                 DATE (`date`) `date_full`,
                 WEEKDAY(`date`) `date_week`,
-                YEAR(`date`) `date_year`,
-                MONTH(`date`) `date_month`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null AND $year != null) {
@@ -117,7 +112,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY WEEKDAY(`date`), `date_year`, `date_month`, `date_full`
+        $sql .= ' GROUP BY WEEKDAY(`date`), `date_full`
                 ORDER BY `date` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -173,11 +168,7 @@ class Statistic extends \Ilch\Mapper
 
     public function getVisitsYearMonth($year = null)
     {
-        $sql = 'SELECT
-                DATE (`date`) `date_full`,
-                YEAR(`date`) `date_year`,
-                MONTH(`date`) `date_month`,
-                COUNT(`id`) AS `visits`
+        $sql = 'SELECT DATE(`date`) AS `date_full`, MONTH(`date`) AS `date_month`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($year != null) {
             $date = $year.'-01-01';
@@ -185,8 +176,8 @@ class Statistic extends \Ilch\Mapper
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';
         }
-        $sql .= ' GROUP BY `date_year`, `date_month`, `date_full`
-                ORDER BY `date` DESC';
+        $sql .= ' GROUP BY `date_full`,`date_month`
+                ORDER BY MONTH(`date`) DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -207,18 +198,14 @@ class Statistic extends \Ilch\Mapper
 
     public function getVisitsYear($year = null)
     {
-        $sql = 'SELECT
-                DATE (`date`) `date_full`,
-                YEAR(`date`) `date_year`,
-                MONTH(`date`) `date_month`,
-                COUNT(`id`) AS `visits`
+        $sql = 'SELECT YEAR(`date`) as year_full, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($year != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY `date_year`, `date_month`, `date_full`
-                ORDER BY `date` DESC';
+        $sql .= ' GROUP BY YEAR(`date`)
+                  ORDER BY YEAR(`date`) DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -230,7 +217,7 @@ class Statistic extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setDate($entries['date_full']);
+            $statisticModel->setDate($entries['year_full']);
             $entry[] = $statisticModel;
         }
 
@@ -239,32 +226,27 @@ class Statistic extends \Ilch\Mapper
 
     public function getVisitsBrowser($year = null, $month = null, $browser = null)
     {
-        $sql = 'SELECT
-                YEAR(`date`) `date_year`,
-                MONTH(`date`) `date_month`,
-                `browser`,
-                `browser_version`,
-                COUNT(`id`) AS `visits`
+        $sql = 'SELECT `browser`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null AND $year != null AND $browser != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'") AND browser = "'.$browser.'"
-                      GROUP BY `browser_version`, `date_year`, `date_month`, `browser`
+                      GROUP BY `browser`
                       ORDER BY `visits` DESC';
         } elseif ($month == null AND $year != null AND $browser != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND browser = "'.$browser.'"
-                      GROUP BY `browser_version`, `date_year`, `date_month`, `browser`
+                      GROUP BY `browser`
                       ORDER BY `visits` DESC';
         } elseif ($month != null AND $year != null) {
             $date = $year.'-'.$month.'-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'") AND MONTH(`date`) = MONTH("'.$date.'")
-                      GROUP BY `browser`, `date_year`, `date_month`, `browser_version`
+                      GROUP BY `browser`
                       ORDER BY `visits` DESC';
         } elseif ($month == null AND $year != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")
-                      GROUP BY `browser`, `date_year`, `date_month`, `browser_version`
+                      GROUP BY `browser`
                       ORDER BY `visits` DESC';
         }
 
@@ -279,7 +261,6 @@ class Statistic extends \Ilch\Mapper
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
             $statisticModel->setBrowser($entries['browser']);
-            $statisticModel->setBrowserVersion($entries['browser_version']);
             $entry[] = $statisticModel;
         }
 
