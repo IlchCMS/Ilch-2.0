@@ -106,8 +106,8 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `war_id` INT(11) DEFAULT NULL,
                   `map` VARCHAR(255) NOT NULL DEFAULT "",
-                  `group_pionts` MEDIUMINT(9) DEFAULT NULL,
-                  `enemy_pionts` MEDIUMINT(9) DEFAULT NULL,
+                  `group_points` MEDIUMINT(9) DEFAULT NULL,
+                  `enemy_points` MEDIUMINT(9) DEFAULT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
