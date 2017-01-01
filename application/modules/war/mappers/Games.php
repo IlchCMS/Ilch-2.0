@@ -36,8 +36,8 @@ class Games extends \Ilch\Mapper
             $gameModel->setId($game['id']);
             $gameModel->setWarId($game['war_id']);
             $gameModel->setMap(($game['map']));
-            $gameModel->setGroupPoints(($game['group_pionts']));
-            $gameModel->setEnemyPoints(($game['enemy_pionts']));
+            $gameModel->setGroupPoints(($game['group_points']));
+            $gameModel->setEnemyPoints(($game['enemy_points']));
             $games[] = $gameModel;
         }
 
@@ -54,8 +54,8 @@ class Games extends \Ilch\Mapper
         $fields = [
             'war_id' => $model->getWarId(),
             'map' => $model->getMap(),
-            'group_pionts' => $model->getGroupPoints(),
-            'enemy_pionts' => $model->getEnemyPoints()
+            'group_points' => $model->getGroupPoints(),
+            'enemy_points' => $model->getEnemyPoints()
         ];
 
         if ($model->getId()) {
