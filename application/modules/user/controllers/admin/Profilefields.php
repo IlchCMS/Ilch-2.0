@@ -158,8 +158,12 @@ class ProfileFields extends \Ilch\Controller\Admin
                 }
             }
 
-            if (!empty($profileFieldId) && empty($profileFieldData['id'])) {
-                $this->addMessage('newProfileFieldMsg');
+            if (!empty($profileFieldId)) {
+                if (empty($profileFieldData['id'])) {
+                    $this->addMessage('newProfileFieldMsg');
+                } else {
+                    $this->addMessage('saveSuccess');
+                }
             }
 
             $this->redirect(['action' => 'treat', 'id' => $profileFieldId]);
