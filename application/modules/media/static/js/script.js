@@ -85,7 +85,7 @@ $(function() {
         },
         
         done:function(e, data) {
-            // Something has gone wrong!
+            // Success!
             data.context.addClass('finish');
             data.context.find('span').removeClass('fa fa-spinner');
             data.context.find('span').addClass('fa fa-check');
