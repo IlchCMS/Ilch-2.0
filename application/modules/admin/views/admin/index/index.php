@@ -94,7 +94,7 @@ $ilchNews = json_decode($ilchNewsList);
                             <td>
                                 <!-- TODO: Remove this message when the update function is going live. -->
                                 Update function is not yet running in current stage of development.<br />
-                                <a href="<?=$this->getUrl(['controller' => 'update', 'action' => 'index']) ?>"><?=$this->getTrans('updateNow') ?></a>
+                                <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'update']) ?>"><?=$this->getTrans('updateNow') ?></a>
                             </td>
                         </tr>
                     <?php endif; ?>
