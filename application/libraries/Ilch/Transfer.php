@@ -363,9 +363,13 @@ class Transfer
                     include $thisFileName;
 
                     $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
-                    $config = new $configClass();
+                    if (class_exists($configClass)) {
+                        $config = new $configClass();
 
-                    $content[] = $config->getUpdate();
+                        if (method_exists($config, 'getUpdate')) {
+                            $content[] = $config->getUpdate();
+                        }
+                    }
                 } 
             }
         }
