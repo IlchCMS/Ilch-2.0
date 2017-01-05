@@ -175,22 +175,18 @@ class Backup extends \Ilch\Controller\Admin
             if (!empty($backup)) {
                 $fullPath = $path.$backup->getName();
                 if ($fd = fopen($fullPath, "r")) {
-                    $fsize = filesize($fullPath);
                     $path_parts = pathinfo($fullPath);
                     // Remove the random part of the filename as it should not end in e.g. the browser history.
                     $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts["basename"]);
-                    $ext = strtolower($path_parts["extension"]);
-                    switch ($ext) {
-                        case "gz":
+
+                    if (strtolower($path_parts["extension"]) == "gz") {
                         header("Content-type: application/x-gzip");
                         header("Content-Disposition: filename=\"".$publicFileName."\"");
-                        break;
-                        default;
+                    } else {
                         header("Content-type: application/x-sql");
                         header("Content-Disposition: filename=\"".$publicFileName."\"");
-                        break;
                     }
-                    header("Content-length: $fsize");
+                    header("Content-length: ".filesize($fullPath));
                     // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
                     header("Cache-control: private");
                     while(!feof($fd)) {
