@@ -26,7 +26,9 @@ class Statistic extends \Ilch\Mapper
 
         $users = [];
         foreach ($rows as $row) {
-            $users[] = $userMapper->getUserById($row['user_id']);
+            if ($userMapper->getUserById($row['user_id'])) {
+                $users[] = $userMapper->getUserById($row['user_id']);
+            }
         }
 
         return $users;
