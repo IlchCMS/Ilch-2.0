@@ -23,13 +23,6 @@ class Backup extends \Ilch\Model
     protected $name;
 
     /**
-     * The file of the backup.
-     *
-     * @var string
-     */
-    protected $file;
-
-    /**
      * The datetime of the backup.
      *
      * @var string
@@ -74,26 +67,6 @@ class Backup extends \Ilch\Model
     public function setName($name)
     {
         $this->name = (string) $name;
-    }
-
-    /**
-     * Gets the backup file.
-     *
-     * @return string
-     */
-    public function getFile()
-    {
-        return $this->file;
-    }
-
-    /**
-     * Sets the backup file.
-     *
-     * @param string $file
-     */
-    public function setFile($file)
-    {
-        $this->file = (string) $file;
     }
 
     /**

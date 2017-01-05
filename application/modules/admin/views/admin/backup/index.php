@@ -24,7 +24,7 @@
                     <?php foreach ($this->get('backups') as $backup): ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('id', $backup->getId()) ?></td>
-                            <td><a href="<?=BASE_URL.'/'.$backup->getFile() ?>" title="<?=$this->getTrans('download') ?>"><i class="fa fa-download"></i></a></td>
+                            <td><a href="<?=$this->getUrl(['action' => 'download', 'id' => $backup->getId()], null, true) ?>" title="<?=$this->getTrans('download') ?>"><span class="fa fa-download"></span></a></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $backup->getId()]) ?></td>
                             <td><?=$this->escape($backup->getDate()) ?></td>
                             <td><?=$this->escape($backup->getName()) ?></td>
