@@ -123,6 +123,7 @@ return [
     'addDatabases' => 'Add CREATE DATABASE statement',
     'dropTable' => 'Add DROP TABLE statement',
     'noBackups' => 'No backups available',
+    'backupNotFound' => 'The backup was not found or could not be opened.',
     'menuCustomCSS' => 'Custom CSS',
     'alreadyExists' => 'Already exists',
     'layoutDownload' => 'Download layout',

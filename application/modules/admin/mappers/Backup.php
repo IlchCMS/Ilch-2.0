@@ -30,12 +30,36 @@ class Backup extends \Ilch\Mapper
             $backupModel = new BackupModel();
             $backupModel->setId($entries['id']);
             $backupModel->setName($entries['name']);
-            $backupModel->setFile($entries['file']);
             $backupModel->setDate($entries['date']);
             $backups[] = $backupModel;
         }
 
         return $backups;
+    }
+
+    /**
+     * Gets a backup by id.
+     *
+     * @param int $id
+     */
+    public function getBackupById($id)
+    {
+        $result = $this->db()->select('*')
+                ->from('backup')
+                ->where(['id' => $id])
+                ->execute()
+                ->fetchAssoc();
+
+        if (empty($result)) {
+            return null;
+        }
+
+        $backupModel = new BackupModel();
+        $backupModel->setId($result['id']);;
+        $backupModel->setName($result['name']);
+        $backupModel->setDate($result['date']);
+        
+        return $backupModel;
     }
 
     /**
@@ -47,7 +71,6 @@ class Backup extends \Ilch\Mapper
     {
         $fields = [
             'name' => $backup->getName(),
-            'file' => $backup->getFile(),
             'date' => $backup->getDate()
         ];
 
@@ -63,16 +86,6 @@ class Backup extends \Ilch\Mapper
      */
     public function delete($id)
     {
-        $fileRow = $this->db()->select('*')
-            ->from('backup')
-            ->where(['id' => $id])
-            ->execute()
-            ->fetchAssoc();
-
-        if (file_exists($fileRow['file'])) {
-            unlink($fileRow['file']);
-        }
-
         $this->db()->delete('backup')
             ->where(['id' => $id])
             ->execute();

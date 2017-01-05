@@ -146,7 +146,6 @@ class Backup extends \Ilch\Controller\Admin
                 $backupModel = new BackupModel();
 
                 $backupModel->setName($dbname.'_'.$filename.$compressFile);
-                $backupModel->setFile('backups/'.$dbname.'_'.$filename.$compressFile);
                 $backupModel->setDate($dbDate);
                 $backupMapper->save($backupModel);
 
@@ -158,10 +157,58 @@ class Backup extends \Ilch\Controller\Admin
         }
     }
 
+    public function downloadAction()
+    {
+        if (!$this->getRequest()->isSecure()) {
+            return;
+        }
+
+        set_time_limit(0); 
+        $path = ROOT_PATH.'/backups/';
+
+        $id = $this->getRequest()->getParam('id');
+
+        if (!empty($id)) {
+            $backupMapper = new BackupMapper();
+            $backup = $backupMapper->getBackupById($id);
+
+            if (!empty($backup)) {
+                $fullPath = $path.$backup->getName();
+                if ($fd = fopen($fullPath, "r")) {
+                    $path_parts = pathinfo($fullPath);
+                    // Remove the random part of the filename as it should not end in e.g. the browser history.
+                    $publicFileName = preg_replace('/_[^_.]*\./', '.', $path_parts["basename"]);
+
+                    if (strtolower($path_parts["extension"]) == "gz") {
+                        header("Content-type: application/x-gzip");
+                        header("Content-Disposition: filename=\"".$publicFileName."\"");
+                    } else {
+                        header("Content-type: application/x-sql");
+                        header("Content-Disposition: filename=\"".$publicFileName."\"");
+                    }
+                    header("Content-length: ".filesize($fullPath));
+                    // RFC2616 section 14.9.1: Indicates that all or part of the response message is intended for a single user and MUST NOT be cached by a shared cache, such as a proxy server.
+                    header("Cache-control: private");
+                    while(!feof($fd)) {
+                        $buffer = fread($fd, 2048);
+                        echo $buffer;
+                    }
+                } else {
+                    $this->addMessage('backupNotFound', 'danger');
+                }
+                fclose($fd);
+            }
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
+
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {
             $backupMapper = new BackupMapper();
+            $backup = $backupMapper->getBackupById($this->getRequest()->getParam('id'));
+            unlink(ROOT_PATH.'/backups/'.$backup->getName());
             $backupMapper->delete($this->getRequest()->getParam('id'));
 
             $this->addMessage('deleteSuccess');
