@@ -61,6 +61,7 @@ class Modules extends \Ilch\Controller\Admin
 
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
+        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
     }
 
     public function notinstalledAction()
@@ -118,6 +119,7 @@ class Modules extends \Ilch\Controller\Admin
 
         $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
         $this->getView()->set('modules', $modulesDir);
+        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
     }
     
     public function updateAction()

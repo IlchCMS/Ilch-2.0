@@ -2,6 +2,7 @@
 $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
+$coreVersion = $this->get('coreVersion');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
@@ -80,7 +81,7 @@ $versionsOfModules = $this->get('versionsOfModules');
                                             title="<?=$this->getTrans('phpVersionError') ?>">
                                         <i class="fa fa-refresh"></i>
                                     </button>
-                                <?php elseif (version_compare(VERSION, $moduleOnUpdateServerFound->ilchCore, '<')): ?>
+                                <?php elseif (version_compare($coreVersion, $moduleOnUpdateServerFound->ilchCore, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
                                         <i class="fa fa-refresh"></i>
