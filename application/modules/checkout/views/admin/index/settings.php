@@ -1,9 +1,9 @@
 <legend><?=$this->getTrans('accountdata') ?></legend>
-<?php if (!empty($this->get('errors'))): ?>
+<?php if ($this->validation()->hasErrors()): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
         <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
                 <li><?= $error; ?></li>
             <?php endforeach; ?>
         </ul>
@@ -11,13 +11,13 @@
 <?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('checkoutContact', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('checkoutContact') ? 'has-error' : '' ?>">
         <textarea class="form-control ckeditor"
                   id="ck_1"
                   toolbar="ilch_html"
                   name="checkoutContact"><?php if ($this->get('checkoutContact') != '') { echo $this->get('checkoutContact') ; } ?></textarea>
     </div>
-    <div class="form-group <?=in_array('checkoutCurrency', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('checkoutCurrency') ? 'has-error' : '' ?>">
         <label for="checkoutCurrency" class="control-label">
             <?=$this->getTrans('checkoutCurrency') ?>:
         </label>

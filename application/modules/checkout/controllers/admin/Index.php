@@ -92,14 +92,14 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('saveSuccess');
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput($post)
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkout_currency'))[0];
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('checkout', $checkoutMapper->getEntries());
         $this->getView()->set('checkoutdate', $ilchdate->toDb());
         $this->getView()->set('amount', $checkoutMapper->getAmount());
@@ -117,18 +117,8 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('checkout'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'settings']);
 
-        $post = [
-            'checkoutContact' => '',
-            'checkoutCurrency' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'checkoutContact' => $this->getRequest()->getPost('checkoutContact'),
-                'checkoutCurrency' => $this->getRequest()->getPost('checkoutCurrency')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'checkoutContact' => 'required',
                 'checkoutCurrency' => 'required|numeric|integer|min:1'
             ]);
@@ -139,12 +129,12 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('saveSuccess');
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'settings']);
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('currencies', $currencyMapper->getCurrencies());
         $this->getView()->set('checkoutContact', $this->getConfig()->get('checkout_contact'));
         $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkout_currency'));
@@ -196,12 +186,12 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('saveSuccess');
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput($post)
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treatPayment', 'id' => $id]);
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('checkout', $checkoutMapper->getEntryById($id));
         $this->getView()->set('checkout_currency', $this->getConfig()->get('checkout_currency'));
     }
