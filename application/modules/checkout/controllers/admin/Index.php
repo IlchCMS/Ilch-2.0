@@ -124,8 +124,8 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('checkout_contact', $post['checkoutContact']);
-                $this->getConfig()->set('checkout_currency', $post['checkoutCurrency']);
+                $this->getConfig()->set('checkout_contact', $this->getRequest()->getPost('checkoutContact'));
+                $this->getConfig()->set('checkout_currency', $this->getRequest()->getPost('checkoutCurrency'));
                 $this->addMessage('saveSuccess');
             }
 
