@@ -147,10 +147,6 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableCertificate'] = true;
         }
 
-        if (!extension_loaded('intl')) {
-            $errors['intlExtensionMissing'] = true;
-        }
-
         if (!extension_loaded('mbstring')) {
             $errors['mbstringExtensionMissing'] = true;
         }
@@ -501,7 +497,7 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * Optional-Modules.
          */
-        $modules['checkout']['types'] = ['clan'];
+        $modules['checkoutBasic']['types'] = ['clan'];
         $modules['war']['types'] = ['clan'];
         $modules['history']['types'] = ['clan'];
         $modules['rule']['types'] = ['clan'];
