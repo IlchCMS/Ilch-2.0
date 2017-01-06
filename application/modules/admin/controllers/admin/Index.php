@@ -66,5 +66,6 @@ class Index extends \Ilch\Controller\Admin
         $this->getView()->set('usersNotConfirmed', $userMapper->getUserList(['confirmed' => 0]));
 
         $this->getView()->set('moduleLocales', $moduleLocales);
+        $this->getView()->set('version', $this->getConfig()->get('version'));
     }
 }

@@ -7,6 +7,7 @@ if ($this->getUser()->getFirstName() != '') {
 
 $ilchNewsList = url_get_contents('http://ilch2.de/ilchNews.php');
 $ilchNews = json_decode($ilchNewsList);
+$version = $this->get('version');
 ?>
 
 <h3><?=$this->getTrans('welcomeBack', $this->escape($name)) ?> !</h3>
@@ -74,7 +75,7 @@ $ilchNews = json_decode($ilchNewsList);
                 <tbody>
                     <tr>
                         <td><?=$this->getTrans('installedVersion') ?></td>
-                        <td><?=VERSION ?></td>
+                        <td><?=$version ?></td>
                     </tr>
                     <tr>
                         <td><?=$this->getTrans('serverVersion') ?></td>
@@ -84,7 +85,7 @@ $ilchNews = json_decode($ilchNewsList);
                             <?php elseif ($this->get('curlErrorOccured')): ?>
                                 <?=$this->getTrans('versionNA') ?>
                             <?php else: ?>
-                                <?=VERSION ?>
+                                <?=$version ?>
                             <?php endif; ?>
                         </td>
                     </tr>

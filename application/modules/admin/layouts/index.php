@@ -78,7 +78,7 @@
                             </a>
                         </div>
                     <?php endif; ?>
-                    <img title="Version <?=VERSION ?>" class="pull-left logo hidden-sm" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>" />
+                    <img title="Version <?=$config->get('version') ?>" class="pull-left logo hidden-sm" src="<?=$this->getStaticUrl('img/ilch_logo_2.png') ?>" />
                     <div class="hidden-md hidden-lg hidden-sm">
                         <a class="<?php if ($this->getRequest()->getModuleName() == 'admin' && $this->getRequest()->getControllerName() == 'index') { echo 'active'; }?> home" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'index', 'action' => 'index']) ?>">
                             <i class="fa fa-home"></i>
