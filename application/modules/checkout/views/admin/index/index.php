@@ -3,19 +3,29 @@ $currency = $this->escape($this->get('currency'));
 ?>
 
 <legend><?=$this->getTrans('bookings') ?></legend>
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
                    id="name"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="" />
+                   value="<?=$this->escape($this->originalInput('name')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('checkoutdate') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -25,17 +35,17 @@ $currency = $this->escape($this->get('currency'));
                    value="<?php if ($this->get('checkoutdate') != '') { echo $this->get('checkoutdate'); } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
                    id="usage"
                    name="usage"
                    placeholder="<?=$this->getTrans('usage') ?>"
-                   value="" />
+                   value="<?=$this->escape($this->originalInput('usage')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('amount') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -47,7 +57,7 @@ $currency = $this->escape($this->get('currency'));
                    data-placement="bottom" 
                    data-original-title="<?=$this->getTrans('amount') ?>" 
                    data-trigger="hover"
-                   value="" />
+                   value="<?=$this->escape($this->originalInput('amount')) ?>" />
         </div>
     </div>
     <br>

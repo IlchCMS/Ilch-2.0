@@ -1,9 +1,9 @@
 <legend><?=$this->getTrans('treatpayment') ?></legend>
-<?php if (!empty($this->get('errors'))): ?>
+<?php if ($this->validation()->hasErrors()): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
         <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
                 <li><?= $error; ?></li>
             <?php endforeach; ?>
         </ul>
@@ -19,7 +19,7 @@
                    id="name"
                    name="name"
                    placeholder="<?=$this->getTrans('name') ?>"
-                   value="<?php if (empty($this->get('errors'))) { echo $this->escape($checkout->getName()); } else { echo $this->get('post')['name']; } ?>" />
+                   value="<?=($this->originalInput('name') != '') ? $this->escape($this->originalInput('name')) : $this->escape($checkout->getName()) ?>" />
         </div>
     </div>
     <div class="form-group <?=in_array('datetime', $this->get('errorFields')) ? 'has-error' : '' ?>">
@@ -29,7 +29,7 @@
                    id="datetime"
                    name="datetime"
                    placeholder="<?=$this->getTrans('datetime') ?>"
-                   value="<?php if (empty($this->get('errors'))) { echo $this->escape($checkout->getDateTime()); } else { echo $this->get('post')['datetime']; } ?>" />
+                   value="<?=($this->originalInput('datetime') != '') ? $this->escape($this->originalInput('datetime')) : $this->escape($checkout->getDateTime()) ?>" />
         </div>
     </div>
     <div class="form-group <?=in_array('usage', $this->get('errorFields')) ? 'has-error' : '' ?>">
@@ -39,7 +39,7 @@
                    id="usage"
                    name="usage"
                    placeholder="<?=$this->getTrans('usage') ?>"
-                   value="<?php if (empty($this->get('errors'))) { echo $this->escape($checkout->getUsage()); } else { echo $this->get('post')['usage']; } ?>" />
+                   value="<?=($this->originalInput('usage') != '') ? $this->escape($this->originalInput('usage')) : $this->escape($checkout->getUsage()) ?>" />
         </div>
     </div>
     <div class="form-group hidden">
@@ -63,7 +63,7 @@
                    data-placement="bottom" 
                    data-original-title="<?=$this->getTrans('amount') ?>" 
                    data-trigger="hover"
-                   value="<?php if (empty($this->get('errors'))) { echo $this->escape($checkout->getAmount()); } else { echo $this->get('post')['amount']; } ?>" />
+                   value="<?=($this->originalInput('amount') != '') ? $this->escape($this->originalInput('amount')) : $this->escape($checkout->getAmount()) ?>" />
         </div>
     </div>
     <?php endforeach; ?>
