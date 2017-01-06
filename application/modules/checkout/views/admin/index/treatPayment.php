@@ -12,7 +12,7 @@
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <?php foreach ($this->get('checkout') as $checkout): ?>
-    <div class="form-group <?=in_array('name', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -22,7 +22,7 @@
                    value="<?=($this->originalInput('name') != '') ? $this->escape($this->originalInput('name')) : $this->escape($checkout->getName()) ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('datetime', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('datetime') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -32,7 +32,7 @@
                    value="<?=($this->originalInput('datetime') != '') ? $this->escape($this->originalInput('datetime')) : $this->escape($checkout->getDateTime()) ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('usage', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('usage') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
@@ -51,7 +51,7 @@
                    value="<?=$this->escape($checkout->getId()) ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('amount', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('amount') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <input type="text"
                    class="form-control"
