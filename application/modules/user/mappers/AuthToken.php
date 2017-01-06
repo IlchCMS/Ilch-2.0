@@ -11,7 +11,7 @@ use Modules\User\Models\AuthToken as AuthTokenModel;
 class AuthToken extends \Ilch\Mapper
 {
     /**
-     * Returns the selector of the user.
+     * Returns the row of the user.
      *
      * @param string selector
      * @return array

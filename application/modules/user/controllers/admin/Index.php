@@ -7,6 +7,7 @@
 namespace Modules\User\Controllers\Admin;
 
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\AuthToken as AuthTokenMapper;
 use Modules\User\Mappers\Group as GroupMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
@@ -79,6 +80,7 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $userMapper = new UserMapper();
+        $authTokenMapper = new AuthTokenMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index']);
@@ -90,6 +92,7 @@ class Index extends \Ilch\Controller\Admin
                 if ($deleteUser->getId() != Registry::get('user')->getId()) {
                     if ($deleteUser->hasGroup(1) && $userMapper->getAdministratorCount() == 1) {} else {
                         $userMapper->delete($deleteUser->getId());
+                        $authTokenMapper->deleteAllAuthTokenOfUser($deleteUser->getId());
                     }
                 }
             }
@@ -219,6 +222,8 @@ class Index extends \Ilch\Controller\Admin
     public function deleteAction()
     {
         $userMapper = new UserMapper();
+        $authTokenMapper = new AuthTokenMapper();
+
         $profileFieldsContentMapper = new ProfileFieldsContentMapper();
 
         $userId = $this->getRequest()->getParam('id');
@@ -253,7 +258,8 @@ class Index extends \Ilch\Controller\Admin
                 }
 
                 $profileFieldsContentMapper->deleteProfileFieldContentByUserId($userId);
-                if ($userMapper->delete($userId)) {                    
+                if ($userMapper->delete($userId)) {
+                    $authTokenMapper->deleteAllAuthTokenOfUser($userId);
                     $this->addMessage('delUserMsg');
                 }
             }
