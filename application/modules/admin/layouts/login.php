@@ -22,7 +22,7 @@
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/login.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
 
-        <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('components/jquery/jquery.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.min.js') ?>"></script>
     </head>
     <body>

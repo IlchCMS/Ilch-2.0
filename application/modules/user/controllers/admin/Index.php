@@ -194,11 +194,12 @@ class Index extends \Ilch\Controller\Admin
 
             $date = new \Ilch\Date();
             $user->setDateCreated($date);
-
             $userId = $userMapper->save($user);
-            $this->addMessage('success');
+
             if (!empty($userId) && empty($userData['id'])) {
                 $this->addMessage('newUserMsg');
+            } else {
+                $this->addMessage('success');
             }
         }
 

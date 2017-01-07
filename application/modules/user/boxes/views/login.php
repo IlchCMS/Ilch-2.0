@@ -63,13 +63,16 @@
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
 
-<script>
-$(document).ready(function() {
-    window.setInterval(function() {
+<script type="text/javascript">
+$(document).ready(function(){
+    function loadMessage() {
+        $('#checknewmessage').load('<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>');
+    }
+
+    loadMessage();
+
+    setInterval(function() {
         loadMessage();
-        function loadMessage() {
-            $('#checknewmessage').load('<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>');
-        };
-    }, 5000);
+    }, 60000);
 });
 </script>

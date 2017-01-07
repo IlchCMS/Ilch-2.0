@@ -181,7 +181,7 @@ class Frontend extends Base
                 <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
-                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.js').'"></script>
+                <script type="text/javascript" src="'.$this->getVendorUrl('components/jquery/jquery.min.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.min.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ckeditor/ckeditor.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>

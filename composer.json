@@ -15,7 +15,8 @@
         "ifsnop/mysqldump-php": "2.*",
         "kartik-v/bootstrap-star-rating": "^4.0",
         "twbs/bootstrap": "^3.3",
-        "fortawesome/font-awesome": "^4.6"
+        "fortawesome/font-awesome": "^4.6",
+        "components/jquery": "^3.1"
     },
     "require-dev": {
         "maximebf/debugbar": "^1.12",

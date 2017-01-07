@@ -22,7 +22,7 @@
         <link href="<?=$this->getStaticUrl('../application/modules/admin/static/css/admin.css') ?>" rel="stylesheet">
 
         <!-- SCRIPTS -->
-        <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('components/jquery/jquery.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery.mjs.nestedSortable.js') ?>"></script>
         <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>

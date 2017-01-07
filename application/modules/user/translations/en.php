@@ -163,6 +163,7 @@ return [
 
     'logout' => 'Logout',
     'message' => 'Message',
+    'newMessage' => 'New',
     'userPanel' => 'User Panel',
     'hello' => 'Hello',
     'admincenter' => 'Admincenter',

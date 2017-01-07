@@ -4,9 +4,49 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "53b5e3f7e507e272f10e09575163a59e",
-    "content-hash": "a79d7e0628ff4d41c0130053d36ffba5",
+    "hash": "714f1982434a2c40558a692df697aeff",
+    "content-hash": "e1feb57ed8385c18a9b740e10d10496d",
     "packages": [
+        {
+            "name": "components/jquery",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jquery.git",
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jquery/zipball/09a1658378bc1f818856086396ebeab7d0ec2276",
+                "reference": "09a1658378bc1f818856086396ebeab7d0ec2276",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.js"
+                    ],
+                    "files": [
+                        "jquery.min.js",
+                        "jquery.min.map"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Resig",
+                    "email": "jeresig@gmail.com"
+                }
+            ],
+            "description": "jQuery JavaScript Library",
+            "homepage": "http://jquery.com",
+            "time": "2016-09-23 06:06:29"
+        },
         {
             "name": "fortawesome/font-awesome",
             "version": "v4.6.3",

@@ -159,6 +159,7 @@ return [
 
     'logout' => 'Logout',
     'message' => 'Nachricht',
+    'newMessage' => 'Neu',
     'userPanel' => 'User Panel',
     'hello' => 'Hallo',
     'admincenter' => 'Admincenter',

@@ -30,7 +30,7 @@
         </script>
 
         <!-- SCRIPTS -->
-        <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('components/jquery/jquery.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery.ui.touch-punch.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery.mjs.nestedSortable.js') ?>"></script>

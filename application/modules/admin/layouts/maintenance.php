@@ -26,7 +26,7 @@ $date = new \Ilch\Date();
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
 
         <!-- SCRIPTS -->
-        <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('components/jquery/jquery.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.min.js') ?>"></script>
         <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/countdown/jquery.countdown.min.js') ?>"></script>

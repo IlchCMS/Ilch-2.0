@@ -102,8 +102,7 @@ class Dialog extends \Ilch\Mapper
         $sql = 'SELECT R.cr_id,R.time,R.reply,R.read,R.user_id_fk,U.id,U.name,U.avatar
                 FROM [prefix]_users U, [prefix]_users_dialog_reply R
                 WHERE R.user_id_fk=U.id
-                AND
-                R.c_id_fk='.$c_id.'
+                AND R.c_id_fk='.$c_id.'
                 AND R.read = 0
                 ORDER BY R.cr_id DESC';
 

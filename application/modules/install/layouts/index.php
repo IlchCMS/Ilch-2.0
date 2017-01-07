@@ -10,7 +10,7 @@
         <link href="<?=$this->getStaticUrl('css/ilch.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('../application/modules/install/static/css/install.css') ?>" rel="stylesheet">
         <link href="<?=$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css') ?>" rel="stylesheet">
-        <script src="<?=$this->getStaticUrl('js/jquery.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('components/jquery/jquery.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery-ui.min.js') ?>"></script>
         <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
     </head>
