@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Modules\CheckoutBasic\Controllers\Admin;
+namespace Modules\Checkoutbasic\Controllers\Admin;
 
-use Modules\CheckoutBasic\Mappers\Currency as CurrencyMapper;
-use Modules\CheckoutBasic\Models\Currency as CurrencyModel;
+use Modules\Checkoutbasic\Mappers\Currency as CurrencyMapper;
+use Modules\Checkoutbasic\Models\Currency as CurrencyModel;
 use Ilch\Validation;
 
 class Currency extends \Ilch\Controller\Admin
@@ -65,7 +65,7 @@ class Currency extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_currencies')) {
                 foreach ($this->getRequest()->getPost('check_currencies') as $id) {
-                    if ($currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('checkoutBasic_currency')) {
+                    if ($currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('checkoutbasic_currency')) {
                         $this->addMessage('currencyInUse', 'danger');
                         continue;
                     }
@@ -152,7 +152,7 @@ class Currency extends \Ilch\Controller\Admin
             $currencyMapper = new CurrencyMapper();
 
             $id = $this->getRequest()->getParam('id');
-            if ($currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('checkoutBasic_currency')) {
+            if ($currencyMapper->getCurrencyById($id)[0]->getId() == $this->getConfig()->get('checkoutbasic_currency')) {
                 $this->addMessage('currencyInUse', 'danger');
                 $this->redirect(['action' => 'index']);
             }

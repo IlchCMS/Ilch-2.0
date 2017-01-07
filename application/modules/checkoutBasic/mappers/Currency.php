@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Modules\CheckoutBasic\Mappers;
+namespace Modules\Checkoutbasic\Mappers;
 
-use Modules\CheckoutBasic\Models\Currency as CurrencyModel;
+use Modules\Checkoutbasic\Models\Currency as CurrencyModel;
 
 class Currency extends \Ilch\Mapper
 {
@@ -19,7 +19,7 @@ class Currency extends \Ilch\Mapper
     public function getCurrencies($where = [])
     {
         $currenciesArray = $this->db()->select('*')
-            ->from('checkoutBasic_currencies')
+            ->from('checkoutbasic_currencies')
             ->where($where)
             ->order(['name' => 'ASC'])
             ->execute()
@@ -61,7 +61,7 @@ class Currency extends \Ilch\Mapper
      */
     public function currencyWithNameExists($name)
     {
-        return (boolean) $this->db()->select('COUNT(*)', 'checkoutBasic_currencies', ['name' => $name])
+        return (boolean) $this->db()->select('COUNT(*)', 'checkoutbasic_currencies', ['name' => $name])
             ->execute()
             ->fetchCell();
     }
@@ -74,12 +74,12 @@ class Currency extends \Ilch\Mapper
     public function save(CurrencyModel $model)
     {
         if ($model->getId()) {
-            $this->db()->update('checkoutBasic_currencies')
+            $this->db()->update('checkoutbasic_currencies')
                 ->values(['name' => $model->getName()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('checkoutBasic_currencies')
+            $this->db()->insert('checkoutbasic_currencies')
                 ->values(['name' => $model->getName()])
                 ->execute();
         }
@@ -92,7 +92,7 @@ class Currency extends \Ilch\Mapper
      */
     public function deleteCurrencyById($id)
     {
-        return $this->db()->delete('checkoutBasic_currencies')
+        return $this->db()->delete('checkoutbasic_currencies')
             ->where(['id' => $id])
             ->execute();
     }

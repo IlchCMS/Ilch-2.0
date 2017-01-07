@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Modules\CheckoutBasic\Mappers;
+namespace Modules\Checkoutbasic\Mappers;
 
-use Modules\CheckoutBasic\Models\Entry as CheckoutModel;
+use Modules\Checkoutbasic\Models\Entry as CheckoutModel;
 
 class Checkout extends \Ilch\Mapper
 {
@@ -19,7 +19,7 @@ class Checkout extends \Ilch\Mapper
     public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
-            ->from('checkoutBasic')
+            ->from('checkoutbasic')
             ->where($where)
             ->order(['id' => 'DESC'])
             ->execute()
@@ -52,21 +52,21 @@ class Checkout extends \Ilch\Mapper
 
     public function getAmount()
     {
-        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutBasic')
+        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic')
             ->execute()
             ->fetchCell();
     }
 
     public function getAmountPlus()
     {
-        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutBasic', ['amount >' => 0])
+        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic', ['amount >' => 0])
             ->execute()
             ->fetchCell();
     }
 
     public function getAmountMinus()
     {
-        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutBasic', ['amount <' => 0])
+        return $this->db()->select('ROUND(SUM(amount),2)', 'checkoutbasic', ['amount <' => 0])
             ->execute()
             ->fetchCell();
     }
@@ -79,12 +79,12 @@ class Checkout extends \Ilch\Mapper
     public function save(CheckoutModel $model)
     {
         if ($model->getId()) {
-            $this->db()->update('checkoutBasic')
+            $this->db()->update('checkoutbasic')
                 ->values(['name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()])
                 ->where(['id' => $model->getId()])
                 ->execute();
         } else {
-            $this->db()->insert('checkoutBasic')
+            $this->db()->insert('checkoutbasic')
                 ->values(['name' => $model->getName(),'date_created' => $model->getDatetime(),'usage' => $model->getUsage(),'amount' => $model->getAmount()])
                 ->execute();
         }
@@ -97,7 +97,7 @@ class Checkout extends \Ilch\Mapper
      */
     public function deleteById($id)
     {
-        return $this->db()->delete('checkoutBasic')
+        return $this->db()->delete('checkoutbasic')
             ->where(['id' => $id])
             ->execute();
     }

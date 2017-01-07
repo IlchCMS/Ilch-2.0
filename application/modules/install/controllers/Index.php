@@ -497,7 +497,7 @@ class Index extends \Ilch\Controller\Frontend
         /*
          * Optional-Modules.
          */
-        $modules['checkoutBasic']['types'] = ['clan'];
+        $modules['checkoutbasic']['types'] = ['clan'];
         $modules['war']['types'] = ['clan'];
         $modules['history']['types'] = ['clan'];
         $modules['rule']['types'] = ['clan'];
