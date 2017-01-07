@@ -9,7 +9,7 @@ return [
     'menuSystemCheck' => 'Systemüberprüfung',
     'menuConnect' => 'DB Verbindung',
     'menuDatabase' => 'Datenbankauswahl',
-    'menuConfig' => 'Konfiguration',
+    'menuConfiguration' => 'Konfiguration',
     'menuFinish' => 'Installieren',
     'backButton' => 'Zurück',
     'nextButton' => 'Weiter',

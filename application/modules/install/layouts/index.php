@@ -61,7 +61,7 @@
                             <button type="submit" class="btn btn-primary pull-right" name="save">
                                 <?php $buttonTrans = 'nextButton'; ?>
 
-                                <?php if ($this->getRequest()->getActionName() == 'config'): ?>
+                                <?php if ($this->getRequest()->getActionName() == 'configuration'): ?>
                                     <?php $buttonTrans = 'installButton'; ?>
                                 <?php endif; ?>
 

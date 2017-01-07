@@ -9,7 +9,7 @@ return [
     'menuSystemCheck' => 'Systemcheck',
     'menuConnect' => 'DB connect',
     'menuDatabase' => 'DB select',
-    'menuConfig' => 'Configuration',
+    'menuConfiguration' => 'Configuration',
     'menuFinish' => 'Install',
     'backButton' => 'Back',
     'nextButton' => 'Next',
