@@ -35,7 +35,7 @@ class Index extends \Ilch\Controller\Frontend
                 'systemcheck' => ['langKey' => 'menuSystemCheck'],
                 'connect' => ['langKey' => 'menuConnect'],
                 'database' => ['langKey' => 'menuDatabase'],
-                'config' => ['langKey' => 'menuConfig'],
+                'configuration' => ['langKey' => 'menuConfiguration'],
                 'finish' => ['langKey' => 'menuFinish'],
             ];
 
@@ -284,7 +284,7 @@ class Index extends \Ilch\Controller\Frontend
             }
 
             if (empty($errors)) {
-                $this->redirect(['action' => 'config']);
+                $this->redirect(['action' => 'configuration']);
             }
 
             $this->getView()->set('errors', $errors);
@@ -299,7 +299,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('database', $dbList);
     }
 
-    public function configAction()
+    public function configurationAction()
     {
         $errors = [];
         if ($this->getRequest()->isPost()) {
