@@ -15,10 +15,10 @@
         </thead>
         <tbody>
             <tr>
-                <td>Internationalization support (intl)</td>
+                <td>MySQLi (mysqli)</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <?php if (extension_loaded('intl')): ?>
+                    <?php if (extension_loaded('mysqli')): ?>
                         <span class="text-success"><?=$this->getTrans('existing') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('missing') ?></span>
