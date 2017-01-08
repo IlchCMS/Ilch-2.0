@@ -37,7 +37,7 @@ return [
     'dbDatabaseCouldNotConnect' => 'Konnte keine Verbindung zum Server herstellen.',
     'dbHostInfo' => 'Die Adresse des Datenbankservers meistens localhost',
     'dbUserInfo' => 'Dein MySQL Benutzername',
-    'writable' => 'Beschreibbar',
+    'writable' => 'beschreibbar',
     'notWritable' => 'nicht beschreibbar',
     'usage' => 'Benutzung',
     'successInstalled' => 'Ilch CMS wurde erfolgreich installiert',
