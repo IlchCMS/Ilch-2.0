@@ -1,5 +1,5 @@
-<div class="row">
-    <i><?=$this->getTrans('obligatoryModules') ?></i><br><br>
+<div class="row module-select">
+    <b><i><?=$this->getTrans('obligatoryModules') ?>:</i></b><br><br>
     <?php foreach ($this->get('modules') as $key => $module): ?>
         <?php if (isset($module['config']->config['system_module'])): ?>
             <div class="col-lg-4 col-md-3 col-sm-3">
@@ -11,7 +11,7 @@
         <?php endif; ?>
     <?php endforeach; ?>
     <span class="clearfix"></span>
-    <br><i><?=$this->getTrans('optionalModules') ?></i><br><br>
+    <br><b><i><?=$this->getTrans('optionalModules') ?>:</i></b><br><br>
     <?php foreach ($this->get('modules') as $key => $module): ?>
         <?php if (!isset($module['config']->config['system_module'])): ?>
             <div class="col-lg-4 col-md-3 col-sm-3">

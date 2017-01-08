@@ -150,3 +150,9 @@ div.license h4 {
     font-size: 14px;
     font-weight: bold;
 }
+
+
+/* Configuration content */
+.module-select label {
+    font-weight: normal;
+}
