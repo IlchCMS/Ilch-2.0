@@ -4,7 +4,7 @@
  * @package ilch
  */
 
-namespace Modules\CheckoutBasic\Models;
+namespace Modules\Checkoutbasic\Models;
 
 class Entry extends \Ilch\Model
 {

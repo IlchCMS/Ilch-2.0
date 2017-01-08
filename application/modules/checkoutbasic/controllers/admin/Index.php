@@ -4,10 +4,10 @@
  * @package ilch
  */
 
-namespace Modules\CheckoutBasic\Controllers\Admin;
+namespace Modules\Checkoutbasic\Controllers\Admin;
 
-use Modules\CheckoutBasic\Mappers\Checkout as CheckoutMapper;
-use Modules\CheckoutBasic\Mappers\Currency as CurrencyMapper;
+use Modules\Checkoutbasic\Mappers\Checkout as CheckoutMapper;
+use Modules\Checkoutbasic\Mappers\Currency as CurrencyMapper;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
 
@@ -82,7 +82,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model = new \Modules\CheckoutBasic\Models\Entry();
+                $model = new \Modules\Checkoutbasic\Models\Entry();
                 $model->setName($post['name']);
                 $model->setDatetime($post['datetime']);
                 $model->setUsage($post['usage']);
@@ -98,14 +98,14 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
-        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkoutBasic_currency'))[0];
+        $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkoutbasic_currency'))[0];
 
         $this->getView()->set('checkout', $checkoutMapper->getEntries());
         $this->getView()->set('checkoutdate', $ilchdate->toDb());
         $this->getView()->set('amount', $checkoutMapper->getAmount());
         $this->getView()->set('amountplus', $checkoutMapper->getAmountPlus());
         $this->getView()->set('amountminus', $checkoutMapper->getAmountMinus());
-        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkoutBasic_currency'));
+        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkoutbasic_currency'));
         $this->getView()->set('currency', $currency->getName());
     }
 
@@ -124,8 +124,8 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('checkoutBasic_contact', $this->getRequest()->getPost('checkoutContact'));
-                $this->getConfig()->set('checkoutBasic_currency', $this->getRequest()->getPost('checkoutCurrency'));
+                $this->getConfig()->set('checkoutbasic_contact', $this->getRequest()->getPost('checkoutContact'));
+                $this->getConfig()->set('checkoutbasic_currency', $this->getRequest()->getPost('checkoutCurrency'));
                 $this->addMessage('saveSuccess');
             }
 
@@ -136,8 +136,8 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('currencies', $currencyMapper->getCurrencies());
-        $this->getView()->set('checkoutContact', $this->getConfig()->get('checkoutBasic_contact'));
-        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkoutBasic_currency'));
+        $this->getView()->set('checkoutContact', $this->getConfig()->get('checkoutbasic_contact'));
+        $this->getView()->set('checkoutCurrency', $this->getConfig()->get('checkoutbasic_currency'));
     }
 
     public function treatPaymentAction()
@@ -175,7 +175,7 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model = new \Modules\CheckoutBasic\Models\Entry();
+                $model = new \Modules\Checkoutbasic\Models\Entry();
                 $model->setId($post['id']);
                 $model->setName($post['name']);
                 $model->setDatetime($post['datetime']);
@@ -193,7 +193,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('checkout', $checkoutMapper->getEntryById($id));
-        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkoutBasic_currency'));
+        $this->getView()->set('checkout_currency', $this->getConfig()->get('checkoutbasic_currency'));
     }
 
     public function delAction()

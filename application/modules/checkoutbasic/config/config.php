@@ -4,12 +4,12 @@
  * @package ilch
  */
 
-namespace Modules\CheckoutBasic\Config;
+namespace Modules\Checkoutbasic\Config;
 
 class Config extends \Ilch\Config\Install
 {
     public $config = [
-        'key' => 'checkoutBasic',
+        'key' => 'checkoutbasic',
         'version' => '1.0',
         'icon_small' => 'fa-credit-card',
         'author' => 'Stantin, Thomas',
@@ -33,21 +33,21 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('checkoutBasic_contact', '<p>Kontoinhaber: Max Mustermann</p><p>Bankname: Muster Sparkasse</p><p>Kontonummer: 123</p><p>Bankleitzahl: 123</p><p>BIC: 123</p><p>IBAN: 123</p><p>Verwendungszweck: Spende f&uuml;r ilch.de ;-)</p>');
-        $databaseConfig->set('checkoutBasic_currency', '1');
+        $databaseConfig->set('checkoutbasic_contact', '<p>Kontoinhaber: Max Mustermann</p><p>Bankname: Muster Sparkasse</p><p>Kontonummer: 123</p><p>Bankleitzahl: 123</p><p>BIC: 123</p><p>IBAN: 123</p><p>Verwendungszweck: Spende f&uuml;r ilch.de ;-)</p>');
+        $databaseConfig->set('checkoutbasic_currency', '1');
     }
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_checkoutBasic`');
-        $this->db()->queryMulti('DROP TABLE `[prefix]_checkoutBasic_currencies`');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'checkoutBasic_contact'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'checkoutBasic_currency'");
+        $this->db()->queryMulti('DROP TABLE `[prefix]_checkoutbasic`');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_checkoutbasic_currencies`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'checkoutbasic_contact'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'checkoutbasic_currency'");
     }
 
     public function getInstallSql()
     {
-        return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkoutBasic` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
                   `date_created` DATETIME NOT NULL,
                   `name` VARCHAR(255) NOT NULL,
@@ -56,18 +56,18 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                CREATE TABLE IF NOT EXISTS `[prefix]_checkoutBasic_currencies` (
+                CREATE TABLE IF NOT EXISTS `[prefix]_checkoutbasic_currencies` (
                   `id` INT(14) NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                INSERT INTO `[prefix]_checkoutBasic_currencies` (`id`, `name`) VALUES (1, "EUR (€)");
-                INSERT INTO `[prefix]_checkoutBasic_currencies` (`id`, `name`) VALUES (2, "USD ($)");
-                INSERT INTO `[prefix]_checkoutBasic_currencies` (`id`, `name`) VALUES (3, "GBP (£)");
-                INSERT INTO `[prefix]_checkoutBasic_currencies` (`id`, `name`) VALUES (4, "AUD ($)");
-                INSERT INTO `[prefix]_checkoutBasic_currencies` (`id`, `name`) VALUES (5, "NZD ($)");
-                INSERT INTO `[prefix]_checkoutBasic_currencies` (`id`, `name`) VALUES (6, "CHF");';
+                INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (1, "EUR (€)");
+                INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (2, "USD ($)");
+                INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (3, "GBP (£)");
+                INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (4, "AUD ($)");
+                INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (5, "NZD ($)");
+                INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (6, "CHF");';
     }
 
     public function getUpdate()
