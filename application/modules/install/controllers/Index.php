@@ -119,6 +119,10 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableConfig'] = true;
         }
 
+        if (!is_writable(ROOT_PATH.'/backups/')) {
+            $errors['writableBackups'] = true;
+        }
+
         if (!is_writable(ROOT_PATH.'/updates/')) {
             $errors['writableUpdates'] = true;
         }
