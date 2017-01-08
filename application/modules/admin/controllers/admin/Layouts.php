@@ -169,7 +169,7 @@ class Layouts extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
-                ->add($this->getTranslator()->trans('menuLayout').' '.$this->getTranslator()->trans('info'), ['action' => 'show']);
+                ->add($this->getTranslator()->trans('menuLayout').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
             $layoutsDir[] = basename($layoutPath);
@@ -181,7 +181,8 @@ class Layouts extends \Ilch\Controller\Admin
     public function settingsAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings']);
 
         if ($this->getRequest()->isPost()) {
             $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'));

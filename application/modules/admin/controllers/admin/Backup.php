@@ -72,8 +72,8 @@ class Backup extends \Ilch\Controller\Admin
         $backupMapper = new BackupMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuBackup'), ['action' => 'backup']);
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'settings', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuBackup'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('id')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -89,9 +89,9 @@ class Backup extends \Ilch\Controller\Admin
     public function createAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuBackup'), ['action' => 'backup'])
-                ->add($this->getTranslator()->trans('add'), ['action' => 'createbackup']);
+                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'settings', 'action' => 'index'])
+                ->add($this->getTranslator()->trans('menuBackup'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'create']);
 
         if ($this->getRequest()->isPost()) {
             $date = new \Ilch\Date();

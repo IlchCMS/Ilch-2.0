@@ -160,7 +160,7 @@ class Modules extends \Ilch\Controller\Admin
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
-                ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show']);
+                ->add($this->getTranslator()->trans('menuModules').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
             $modulesDir[] = basename($modulesPath);
