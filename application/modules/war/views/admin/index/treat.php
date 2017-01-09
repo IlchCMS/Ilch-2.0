@@ -78,11 +78,19 @@
                 <?=$this->getTrans('warMap') ?>:
             </label>
             <div class="col-lg-4">
+                <?php
+                $value = "";
+                if ($this->originalInput('warMap') != '') {
+                    $value = $this->originalInput('warMap');
+                } elseif ($this->get('war') != '') {
+                    $value = $this->get('war')->getWarMaps();
+                }
+                ?>
                 <input type="text"
                        class="form-control"
                        id="warMapInput"
                        name="warMap"
-                       value="<?=($this->originalInput('warMap') != '') ? $this->originalInput('warMap') : $this->get('war')->getWarMaps() ?>" />
+                       value="<?=$value ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('warServer') ? 'has-error' : '' ?>">
@@ -90,11 +98,19 @@
                 <?=$this->getTrans('warServer') ?>:
             </label>
             <div class="col-lg-4">
+                <?php
+                $value = "";
+                if ($this->originalInput('warServer') != '') {
+                    $value = $this->originalInput('warServer');
+                } elseif ($this->get('war') != '') {
+                    $value = $this->get('war')->getWarServer();
+                }
+                ?>
                 <input type="text"
                        class="form-control"
                        id="warServerInput"
                        name="warServer"
-                       value="<?=($this->originalInput('warServer') != '') ? $this->originalInput('warServer') : $this->get('war')->getWarServer() ?>" />
+                       value="<?=$value ?>" />
             </div>
         </div>
         <div class="form-group">
@@ -102,11 +118,19 @@
                 <?=$this->getTrans('warPassword') ?>:
             </label>
             <div class="col-lg-4">
+                <?php
+                $value = "";
+                if ($this->originalInput('warPassword') != '') {
+                    $value = $this->originalInput('warPassword');
+                } elseif ($this->get('war') != '') {
+                    $value = $this->get('war')->getWarPassword();
+                }
+                ?>
                 <input type="text"
                        class="form-control"
                        id="warPasswordInput"
                        name="warPassword"
-                       value="<?=($this->originalInput('warPassword') != '') ? $this->originalInput('warPassword') : $this->get('war')->getWarPassword() ?>" />
+                       value="<?=$value ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('warXonx') ? 'has-error' : '' ?>">
@@ -213,10 +237,18 @@
         <legend><?=$this->getTrans('warReport') ?></legend>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8">
+                <?php
+                $value = "";
+                if ($this->originalInput('warReport') != '') {
+                    $value = $this->originalInput('warReport');
+                } elseif ($this->get('war') != '') {
+                    $value = $this->get('war')->getWarReport();
+                }
+                ?>
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?=($this->originalInput('warReport') != '') ? $this->originalInput('warReport') : $this->get('war')->getWarReport() ?></textarea>
+                          toolbar="ilch_html"><?=$value ?></textarea>
             </div>
         </div>
         <legend><?=$this->getTrans('warStatus') ?></legend>
