@@ -82,7 +82,13 @@
                        class="form-control"
                        id="warMapInput"
                        name="warMap"
-                       value="<?=($this->originalInput('warMap') != '') ? $this->originalInput('warMap') : $this->get('war')->getWarMaps() ?>" />
+                       <?php if ($this->originalInput('warMap') != '') {
+                           echo 'value="'.$this->originalInput('warMap').'" />';
+                       } elseif ($this->get('war') != '') {
+                           echo 'value="'.$this->get('war')->getWarMaps().'" />';
+                       } else {
+                           echo 'value="" />';
+                       }?>
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('warServer') ? 'has-error' : '' ?>">
@@ -94,7 +100,14 @@
                        class="form-control"
                        id="warServerInput"
                        name="warServer"
-                       value="<?=($this->originalInput('warServer') != '') ? $this->originalInput('warServer') : $this->get('war')->getWarServer() ?>" />
+                       <?php if ($this->originalInput('warServer') != '') {
+                           echo 'value="'.$this->originalInput('warServer').'" />';
+                       } else if ($this->get('war') != '') {
+                           echo 'value="'.$this->get('war')->getWarServer().'" />';
+                       } else {
+                           echo 'value="" />';
+                       }
+                       ?>
             </div>
         </div>
         <div class="form-group">
@@ -106,7 +119,13 @@
                        class="form-control"
                        id="warPasswordInput"
                        name="warPassword"
-                       value="<?=($this->originalInput('warPassword') != '') ? $this->originalInput('warPassword') : $this->get('war')->getWarPassword() ?>" />
+                       <?php if ($this->originalInput('warPassword') != '') {
+                           echo 'value="'.$this->originalInput('warPassword').'" />';
+                       } elseif ($this->get('war') != '') {
+                           echo 'value="'.$this->get('war')->getWarPassword().'" />';
+                       } else {
+                           echo 'value="" />';
+                       } ?>
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('warXonx') ? 'has-error' : '' ?>">
@@ -216,7 +235,15 @@
                 <textarea class="form-control ckeditor"
                           id="ck_1"
                           name="warReport"
-                          toolbar="ilch_html"><?=($this->originalInput('warReport') != '') ? $this->originalInput('warReport') : $this->get('war')->getWarReport() ?></textarea>
+                          toolbar="ilch_html">
+                          <?php if ($this->originalInput('warReport') != '') {
+                              echo $this->originalInput('warReport');
+                          } elseif ($this->get('war') != '') {
+                              echo $this->get('war')->getWarReport();
+                          } else {
+                              echo 'value="" />';
+                          } ?>
+                          </textarea>
             </div>
         </div>
         <legend><?=$this->getTrans('warStatus') ?></legend>
