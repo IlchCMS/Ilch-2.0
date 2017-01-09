@@ -88,7 +88,7 @@
                            echo 'value="'.$this->get('war')->getWarMaps().'" />';
                        } else {
                            echo 'value="" />';
-                       }?>
+                       } ?>
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('warServer') ? 'has-error' : '' ?>">
@@ -106,8 +106,7 @@
                            echo 'value="'.$this->get('war')->getWarServer().'" />';
                        } else {
                            echo 'value="" />';
-                       }
-                       ?>
+                       } ?>
             </div>
         </div>
         <div class="form-group">
@@ -240,8 +239,6 @@
                               echo $this->originalInput('warReport');
                           } elseif ($this->get('war') != '') {
                               echo $this->get('war')->getWarReport();
-                          } else {
-                              echo 'value="" />';
                           } ?>
                           </textarea>
             </div>
