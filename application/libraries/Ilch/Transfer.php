@@ -272,7 +272,7 @@ class Transfer
      */
     public function save()
     {
-        if (!file_exists($this->zipFile)) {
+        try {
             $newUpdate = url_get_contents($this->getDownloadUrl());
             if (!is_dir($this->getZipSavePath())) mkdir ($this->getZipSavePath());
             $dlHandler = fopen($this->zipFile, 'w');
@@ -283,8 +283,17 @@ class Transfer
             $dlHandler = fopen($this->zipSigFile, 'w');
             fwrite($dlHandler, $newUpdate);
             fclose($dlHandler);
+        } finally {
+            $signature = file_get_contents($this->getZipFile().'-signature.sig');
+            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
+            if (!$this->verifyFile($pubKeyfile, $this->getZipFile(), $signature)) {
+                // Verification failed. Drop the potentially bad files.
+                unlink($this->getZipFile());
+                unlink($this->getZipFile().'-signature.sig');
+                return false;
+            }
+            return true;
         }
-        return false;
     }
 
     /**

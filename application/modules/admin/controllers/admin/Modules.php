@@ -97,14 +97,7 @@ class Modules extends \Ilch\Controller\Admin
                 return;
             }
 
-            $transfer->save();
-
-            $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
-            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
-            if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
-                // Verification failed. Drop the potentially bad files.
-                unlink($transfer->getZipFile());
-                unlink($transfer->getZipFile().'-signature.sig');
+            if (!$transfer->save()) {
                 $this->addMessage('moduleVerificationFailed', 'danger');
                 return;
             }
@@ -136,14 +129,7 @@ class Modules extends \Ilch\Controller\Admin
                 return;
             }
 
-            $transfer->save();
-
-            $signature = file_get_contents($transfer->getZipFile().'-signature.sig');
-            $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
-            if (!$transfer->verifyFile($pubKeyfile, $transfer->getZipFile(), $signature)) {
-                // Verification failed. Drop the potentially bad files.
-                unlink($transfer->getZipFile());
-                unlink($transfer->getZipFile().'-signature.sig');
+            if (!$transfer->save()) {
                 $this->addMessage('moduleVerificationFailed', 'danger');
                 return;
             }

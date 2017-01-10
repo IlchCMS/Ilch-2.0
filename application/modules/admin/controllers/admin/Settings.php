@@ -204,23 +204,15 @@ HTACCESS;
                     $this->getView()->set('certMissingOrExpired', true);
                     return false;
                 }
-                $update->save();
-                $signature = file_get_contents($update->getZipFile().'-signature.sig');
-                $pubKeyfile = ROOT_PATH.'/certificate/Certificate.crt';
-                if (!$update->verifyFile($pubKeyfile, $update->getZipFile(), $signature)) {
-                    // Verification failed. Drop the potentially bad files.
-                    unlink($update->getZipFile());
-                    unlink($update->getZipFile().'-signature.sig');
+                if (!$update->save()) {
                     $this->getView()->set('verificationFailed', true);
+                    return;
                 }
             }
             if ($doUpdate == true) {
                 $update->update();
                 $this->getView()->set('content', $update->getContent());
                 //$this->getConfig()->set('version', $newVersion);
-                // Cleanup after the update was installed.
-                unlink($update->getZipFile());
-                unlink($update->getZipFile().'-signature.sig');
             }
         } else {
             $this->getView()->set('versions', '');
