@@ -509,6 +509,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['war']['types'] = ['clan'];
         $modules['history']['types'] = ['clan'];
         $modules['rule']['types'] = ['clan'];
+        $modules['teams']['types'] = ['clan'];
         $modules['training']['types'] = ['clan'];
         $modules['forum']['types'] = ['clan', 'private'];
         $modules['guestbook']['types'] = ['clan', 'private'];
