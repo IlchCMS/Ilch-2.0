@@ -269,6 +269,7 @@ return [
     'updateReady' => 'Update bereit zum Installieren.',
     'installNow' => 'Jetzt installieren?',
     'updateComplied' => 'Erfolgreich installiert',
+    'updateFailed' => 'Installation fehlgeschlagen',
     'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
     'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',

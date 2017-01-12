@@ -268,6 +268,7 @@ return [
     'updateReady' => 'Update ready to install.',
     'installNow' => 'Install now?',
     'updateComplied' => 'Successfully installed',
+    'updateFailed' => 'Installation failed',
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',

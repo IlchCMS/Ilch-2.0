@@ -210,9 +210,11 @@ HTACCESS;
                 }
             }
             if ($doUpdate == true) {
-                $update->update();
-                $this->getView()->set('content', $update->getContent());
-                //$this->getConfig()->set('version', $newVersion);
+                if ($update->update()) {
+                    $this->getView()->set('content', $update->getContent());
+                    //$this->getConfig()->set('version', $newVersion);
+                    $this->getView()->set('updateSuccessfull', true);
+                }
             }
         } else {
             $this->getView()->set('versions', '');
