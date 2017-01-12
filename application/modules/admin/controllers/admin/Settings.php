@@ -171,6 +171,8 @@ HTACCESS;
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuUpdate'), ['action' => 'update']);
 
+        $this->addMessage('backupBeforeUpdate', 'danger');
+
         $doUpdate = $this->getRequest()->getParam('doupdate');
         $doSave = $this->getRequest()->getParam('dosave');
         $version = $this->getConfig()->get('version');

@@ -256,6 +256,7 @@ return [
     'shortcutCustumCSStoggleComment' => 'Comment or remove comment from selected lines',
 
     'menuUpdate' => 'Update',
+    'backupBeforeUpdate' => 'It is recommended to create a backup of the installation and the database before executing an update.',
     'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
     'versionNow' => 'Current version: ',
     'readReleas' => 'Read current release version...',
