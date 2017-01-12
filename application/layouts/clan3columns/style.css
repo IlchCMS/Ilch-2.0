@@ -215,6 +215,10 @@ header .container .gaming .gaming-name {
     text-decoration: none;
 }
 
+.ilch--new-message a.text-danger {
+    color: #a94442;
+}
+
 .footer .container {
     margin-top: 15px;
 }

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-        $('.ckeditor').each(function() {
+    $('.ckeditor').each(function() {
         var id = $(this).attr('id');
         var toolbar = $(this).attr('toolbar');
 

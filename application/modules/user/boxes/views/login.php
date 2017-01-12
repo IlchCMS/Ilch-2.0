@@ -5,7 +5,7 @@
         <?=$this->getTrans('userPanel') ?>
     </a>
     <br />
-    <div id="checknewmessage"></div>
+    <div class="ilch--new-message"></div>
     <?php if ($this->get('userAccesses') || $this->getUser()->isAdmin()): ?>
         <a target="_blank" href="<?=$this->getUrl(['module' => 'admin', 'controller' => 'admin', 'action' => 'index']) ?>">
             <?=$this->getTrans('admincenter') ?>
@@ -63,14 +63,16 @@
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
 
-<script type="text/javascript">
-$(document).ready(function(){
+<script type="text/javascript" >
+$(document).ready(function () {
+    var messageDiv = $(".ilch--new-message"),
+        messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>";
+
     function loadMessage() {
-        $('#checknewmessage').load('<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>');
-    }
+        messageDiv.load(messageCheckLink);
+    };
 
     loadMessage();
-
     setInterval(function() {
         loadMessage();
     }, 60000);
