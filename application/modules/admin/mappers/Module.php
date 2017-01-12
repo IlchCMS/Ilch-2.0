@@ -49,10 +49,13 @@ class Module extends \Ilch\Mapper
     public function getModulesNotInstalled()
     {
         foreach (glob(APPLICATION_PATH.'/modules/*') as $modulePath) {
-            $moduleModel = new ModuleModel();
-            $moduleModel->setKey(basename($modulePath));
-            $modulesDir[] = $moduleModel->getKey();
+            if (is_dir($modulePath)) {
+                $moduleModel = new ModuleModel();
+                $moduleModel->setKey(basename($modulePath));
+                $modulesDir[] = $moduleModel->getKey();
+            }
         }
+
         $removeModule = ['admin', 'install', 'sample', 'error'];
         $modulesDir = array_diff($modulesDir, $removeModule);
 
