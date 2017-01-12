@@ -171,6 +171,8 @@ HTACCESS;
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuUpdate'), ['action' => 'update']);
 
+        $this->addMessage('backupBeforeUpdate', 'danger');
+
         $doUpdate = $this->getRequest()->getParam('doupdate');
         $doSave = $this->getRequest()->getParam('dosave');
         $version = $this->getConfig()->get('version');
@@ -210,9 +212,11 @@ HTACCESS;
                 }
             }
             if ($doUpdate == true) {
-                $update->update();
-                $this->getView()->set('content', $update->getContent());
-                //$this->getConfig()->set('version', $newVersion);
+                if ($update->update()) {
+                    $this->getView()->set('content', $update->getContent());
+                    //$this->getConfig()->set('version', $newVersion);
+                    $this->getView()->set('updateSuccessfull', true);
+                }
             }
         } else {
             $this->getView()->set('versions', '');

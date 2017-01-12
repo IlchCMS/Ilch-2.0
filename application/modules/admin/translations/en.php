@@ -256,6 +256,7 @@ return [
     'shortcutCustumCSStoggleComment' => 'Comment or remove comment from selected lines',
 
     'menuUpdate' => 'Update',
+    'backupBeforeUpdate' => 'It is recommended to create a backup of the installation and the database before executing an update.',
     'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
     'versionNow' => 'Current version: ',
     'readReleas' => 'Read current release version...',
@@ -268,6 +269,7 @@ return [
     'updateReady' => 'Update ready to install.',
     'installNow' => 'Install now?',
     'updateComplied' => 'Successfully installed',
+    'updateFailed' => 'Installation failed',
     'certMissingOrExpired' => 'Certificate is missing or expired.',
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',

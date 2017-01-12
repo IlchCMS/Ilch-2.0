@@ -257,6 +257,7 @@ return [
     'shortcutCustumCSStoggleComment' => 'Zum auskommentieren von markierten Zeilen oder um die Kommentar wieder zu entfernen',
 
     'menuUpdate' => 'Update',
+    'backupBeforeUpdate' => 'Es wird empfohlen eine Sicherheitskopie der Installation und der Datenbank anzulegen, bevor ein Update durchgeführt wird.',
     'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
     'versionNow' => 'Aktuelle Version: ',
     'readReleas' => 'Lese aktuelle Release Version...',
@@ -269,6 +270,7 @@ return [
     'updateReady' => 'Update bereit zum Installieren.',
     'installNow' => 'Jetzt installieren?',
     'updateComplied' => 'Erfolgreich installiert',
+    'updateFailed' => 'Installation fehlgeschlagen',
     'certMissingOrExpired' => 'Zertifikat fehlt oder ist abgelaufen.',
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
     'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',

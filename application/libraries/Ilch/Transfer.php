@@ -337,57 +337,62 @@ class Transfer
     }
 
     /**
-     * @return true
+     * @return true/false
      */
     public function update()
     {
-        $zipHandle = zip_open($this->zipFile);
-        $content = [];
-        while ($aF = zip_read($zipHandle)) {
-
-            $thisFileName = zip_entry_name($aF);
-            $thisFileDir = dirname($thisFileName);
-
-            //Continue if its not a file
-            if (substr($thisFileName,-1,1) == '/') continue;
-
-            //Make the directory if we need to...
-            if (!is_dir (ROOT_PATH.'/'.$thisFileDir)) {
-                mkdir (ROOT_PATH.'/'.$thisFileDir, 0777, true );
-                $content[] = 'Created new Directory: '.$thisFileDir;
+        try {
+            $zipHandle = zip_open($this->zipFile);
+            if (!is_resource($zipHandle)) {
+                return false;
             }
+            $content = [];
+            while ($aF = zip_read($zipHandle)) {
+                $thisFileName = zip_entry_name($aF);
+                $thisFileDir = dirname($thisFileName);
 
-            //Overwrite the file
-            if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
-                $content[] = 'New file: '.$thisFileName.'...........';
-                $contents = zip_entry_read($aF, zip_entry_filesize($aF));
-                $contents = str_replace("\r\n", "\n", $contents);
-                $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'w');
-                @fwrite($updateThis, $contents);
-                @fclose($updateThis);
-                unset($contents);
+                //Continue if its not a file
+                if (substr($thisFileName,-1,1) == '/') continue;
 
-                //If we need to run commands, then do it.
-                if ($thisFileName == $thisFileDir.'/config.php') {
-                    include $thisFileName;
+                //Make the directory if we need to...
+                if (!is_dir (ROOT_PATH.'/'.$thisFileDir)) {
+                    mkdir (ROOT_PATH.'/'.$thisFileDir, 0777, true );
+                    $content[] = 'Created new Directory: '.$thisFileDir;
+                }
 
-                    $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
-                    if (class_exists($configClass)) {
-                        $config = new $configClass();
+                //Overwrite the file
+                if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
+                    $content[] = 'New file: '.$thisFileName.'...........';
+                    $contents = zip_entry_read($aF, zip_entry_filesize($aF));
+                    $contents = str_replace("\r\n", "\n", $contents);
+                    $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'w');
+                    @fwrite($updateThis, $contents);
+                    @fclose($updateThis);
+                    unset($contents);
 
-                        if (method_exists($config, 'getUpdate')) {
-                            $content[] = $config->getUpdate();
+                    //If we need to run commands, then do it.
+                    if ($thisFileName == $thisFileDir.'/config.php') {
+                        include $thisFileName;
+
+                        $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
+                        if (class_exists($configClass)) {
+                            $config = new $configClass();
+
+                            if (method_exists($config, 'getUpdate')) {
+                                $content[] = $config->getUpdate();
+                            }
                         }
-                    }
-                } 
+                    } 
+                }
             }
+            $this->setContent($content);
+            return true;
+        } finally {
+            zip_close($zipHandle);
+            unlink($this->zipFile);
+            unlink($this->zipFile.'-signature.sig');
+            $this->curlClose();
         }
-        zip_close($zipHandle);
-        unlink($this->zipFile);
-        unlink($this->zipFile.'-signature.sig');
-        $this->curlClose();
-        $this->setContent($content);
-        return true;
     }
 
     /**

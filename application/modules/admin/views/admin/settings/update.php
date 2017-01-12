@@ -5,6 +5,7 @@ $doSave = $this->getRequest()->getParam('dosave');
 $newVersion = $this->get('newVersion');
 $certMissingOrExpired = $this->get('certMissingOrExpired');
 $verificationFailed = $this->get('verificationFailed');
+$updateSuccessfull = $this->get('updateSuccessfull');
 ?>
 
 <legend><?=$this->getTrans('updateProcess') ?></legend>
@@ -41,12 +42,16 @@ $verificationFailed = $this->get('verificationFailed');
             <?php endif; ?>
         <?php endif; ?>
         <?php if ($doUpdate): ?>
-            <div class="list-files" id="list-files">
-                <?php foreach ($this->get('content') as $list): ?>
-                    <p><?=$list ?></p>
-                <?php endforeach; ?>
-            </div>
-            <p><?=$this->getTrans('updateComplied') ?></p>
+            <?php if ($updateSuccessfull) : ?>
+                <div class="list-files" id="list-files">
+                    <?php foreach ($this->get('content') as $list): ?>
+                        <p><?=$list ?></p>
+                    <?php endforeach; ?>
+                </div>
+                <p><?=$this->getTrans('updateComplied') ?></p>
+            <?php else: ?>
+                <p><?=$this->getTrans('updateFailed') ?></p>
+            <?php endif; ?>
         <?php endif; ?>
     <?php endif; ?>
     </div>
