@@ -87,7 +87,7 @@ $coreVersion = $this->get('coreVersion');
                                         <i class="fa fa-refresh"></i>
                                     </button>
                                 <?php elseif (version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
-                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                                    <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'from' => 'index']) ?>">
                                         <?=$this->getTokenField() ?>
                                         <button type="submit"
                                                 class="btn btn-default"

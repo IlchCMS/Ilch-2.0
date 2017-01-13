@@ -76,7 +76,7 @@ if (empty($modulesOnUpdateServer)) {
                                 <i class="fa fa-check text-success"></i>
                             </button>
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"

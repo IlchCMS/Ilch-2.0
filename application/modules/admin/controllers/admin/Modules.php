@@ -137,6 +137,7 @@ class Modules extends \Ilch\Controller\Admin
 
             $transfer->update();
             $this->addMessage('updateSuccess');
+            $this->redirect(['action' => $this->getRequest()->getParam('from')]);
         }
     }
     
