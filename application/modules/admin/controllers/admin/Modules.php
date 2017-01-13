@@ -85,6 +85,8 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
 
+        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+
         if ($this->getRequest()->isSecure()) {
             $transfer = new \Ilch\Transfer();
             $transfer->setZipSavePath(ROOT_PATH.'/updates/');
@@ -112,7 +114,6 @@ class Modules extends \Ilch\Controller\Admin
 
         $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
         $this->getView()->set('modules', $modulesDir);
-        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
     }
     
     public function updateAction()
