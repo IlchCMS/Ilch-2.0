@@ -53,27 +53,29 @@ if (empty($modulesOnUpdateServer)) {
                         <?php
                         $filename = basename($moduleOnUpdateServer->downloadLink);
                         $filename = strstr($filename,'.',true);
+                        $isInstalled = in_array($filename, $this->get('modules'));
+                        $iconClass = ($isInstalled) ? 'fa fa-refresh' : 'fa fa-download';
                         if (!empty($moduleOnUpdateServer->phpExtensions) AND in_array(false, $extensionCheck)): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
-                                <i class="fa fa-download"></i>
+                                <i class="<?=$iconClass ?>"></i>
                             </button>
                         <?php elseif (version_compare(phpversion(), $moduleOnUpdateServer->phpVersion, '<')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpVersionError') ?>">
-                                <i class="fa fa-download"></i>
+                                <i class="<?=$iconClass ?>"></i>
                             </button>
                         <?php elseif (version_compare($coreVersion, $moduleOnUpdateServer->ilchCore, '<')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('ilchCoreError') ?>">
-                                <i class="fa fa-download"></i>
+                                <i class="<?=$iconClass ?>"></i>
                             </button>
-                        <?php elseif (in_array($filename, $this->get('modules')) && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
+                        <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '>=')): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check text-success"></i>
                             </button>
-                        <?php elseif (in_array($filename, $this->get('modules')) && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
+                        <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
