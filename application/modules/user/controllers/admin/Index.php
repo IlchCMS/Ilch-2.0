@@ -184,12 +184,13 @@ class Index extends \Ilch\Controller\Admin
 
             $user = $userMapper->loadFromArray($userData);
 
-            if (!empty($userData['groups'])) {
-                foreach ($userData['groups'] as $groupId) {
-                    $group = new GroupModel();
-                    $group->setId($groupId);
-                    $user->addGroup($group);
-                }
+            if (empty($userData['groups'])) {
+                $userData['groups'][0] = 2;
+            }
+            foreach ($userData['groups'] as $groupId) {
+                $group = new GroupModel();
+                $group->setId($groupId);
+                $user->addGroup($group);
             }
 
             $date = new \Ilch\Date();
@@ -211,6 +212,9 @@ class Index extends \Ilch\Controller\Admin
             $user = $userMapper->getUserById($userId);
         } else {
             $user = new UserModel();
+            $group = new GroupModel();
+            $group->setId(2);
+            $user->addGroup($group);
         }
 
         $this->getView()->set('user', $user);
