@@ -396,64 +396,69 @@ class Transfer
     }
 
     /**
-     * @return true
+     * @return true/false
      */
     public function install()
     {
-        $zip = new \ZipArchive();
-        $zip->open($this->zipFile);
-        $zip->extractTo(ROOT_PATH);
-        $content = [];
-        for ($i = 0; $i < $zip->numFiles; $i++) {
-            $thisFileName = $zip->getNameIndex($i);
-            $thisFileDir = dirname($thisFileName);
-            //If we need to run commands, then do it.
-            if ($thisFileName == $thisFileDir.'/config.php') {
-                include $thisFileName;
-                $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
-                if (class_exists($configClass)) {
-                    $config = new $configClass();
-                    if (method_exists($config, 'install')) {
-                        $content[] = $config->install();
+        try {
+            $zip = new \ZipArchive();
+            if ($zip->open($this->zipFile) !== true) {
+                return false;
+            }
+            $zip->extractTo(ROOT_PATH);
+            $content = [];
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $thisFileName = $zip->getNameIndex($i);
+                $thisFileDir = dirname($thisFileName);
+                //If we need to run commands, then do it.
+                if ($thisFileName == $thisFileDir.'/config.php') {
+                    include $thisFileName;
+                    $configClass = str_replace("/", "\\", str_replace('application', '', str_replace('.php', '', $thisFileName)));
+                    if (class_exists($configClass)) {
+                        $config = new $configClass();
+                        if (method_exists($config, 'install')) {
+                            $content[] = $config->install();
 
-                        $moduleMapper = new \Modules\Admin\Mappers\Module();
-                        $moduleModel = new \Modules\Admin\Models\Module();
-                        $moduleModel->setKey($config->config['key']);
+                            $moduleMapper = new \Modules\Admin\Mappers\Module();
+                            $moduleModel = new \Modules\Admin\Models\Module();
+                            $moduleModel->setKey($config->config['key']);
 
-                        if (isset($config->config['author'])) {
-                            $moduleModel->setAuthor($config->config['author']);
-                        }
-
-                        if (isset($config->config['languages'])) {
-                            foreach ($config->config['languages'] as $key => $value) {
-                                $moduleModel->addContent($key, $value);
+                            if (isset($config->config['author'])) {
+                                $moduleModel->setAuthor($config->config['author']);
                             }
-                        }
 
-                        if (isset($config->config['system_module'])) {
-                            $moduleModel->setSystemModule(true);
-                        }
+                            if (isset($config->config['languages'])) {
+                                foreach ($config->config['languages'] as $key => $value) {
+                                    $moduleModel->addContent($key, $value);
+                                }
+                            }
 
-                        if (isset($config->config['link'])) {
-                            $moduleModel->setLink($config->config['link']);
-                        }
+                            if (isset($config->config['system_module'])) {
+                                $moduleModel->setSystemModule(true);
+                            }
 
-                        if (isset($config->config['version'])) {
-                            $moduleModel->setVersion($config->config['version']);
-                        }
+                            if (isset($config->config['link'])) {
+                                $moduleModel->setLink($config->config['link']);
+                            }
 
-                        $moduleModel->setIconSmall($config->config['icon_small']);
-                        $moduleMapper->save($moduleModel);
+                            if (isset($config->config['version'])) {
+                                $moduleModel->setVersion($config->config['version']);
+                            }
+
+                            $moduleModel->setIconSmall($config->config['icon_small']);
+                            $moduleMapper->save($moduleModel);
+                        }
                     }
                 }
             }
+            $this->setContent($content);
+            return true;
+        } finally {
+            $zip->close();
+            unlink($this->zipFile);
+            unlink($this->zipFile.'-signature.sig');
+            $this->curlClose();
         }
-        $zip->close();
-        unlink($this->zipFile);
-        unlink($this->zipFile.'-signature.sig');
-        $this->curlClose();
-        $this->setContent($content);
-        return true;
     }
 
     private function curlClose()

@@ -85,59 +85,71 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
 
-        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+        try {
+            if ($this->getRequest()->isSecure()) {
+                $transfer = new \Ilch\Transfer();
+                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
+                $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+                $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
 
-        if ($this->getRequest()->isSecure()) {
-            $transfer = new \Ilch\Transfer();
-            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                    // Certificate is missing or expired.
+                    $this->addMessage('certMissingOrExpired', 'danger');
+                    return;
+                }
 
-            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
-                // Certificate is missing or expired.
-                $this->addMessage('certMissingOrExpired', 'danger');
-                return;
+                if (!$transfer->save()) {
+                    $this->addMessage('moduleVerificationFailed', 'danger');
+                    return;
+                }
+
+                if (!$transfer->install()) {
+                    $this->addMessage('moduleInstallationFailed', 'danger');
+                    return;
+                }
+
+                $this->addMessage('downSuccess');
+            }
+        } finally {
+            foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+                $modulesDir[] = basename($modulesPath);
             }
 
-            if (!$transfer->save()) {
-                $this->addMessage('moduleVerificationFailed', 'danger');
-                return;
-            }
-
-            $transfer->install();
-            $this->addMessage('downSuccess');
+            $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
+            $this->getView()->set('modules', $modulesDir);
+            $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
         }
-
-        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
-            $modulesDir[] = basename($modulesPath);
-        }
-
-        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
-        $this->getView()->set('modules', $modulesDir);
     }
     
     public function updateAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $transfer = new \Ilch\Transfer();
-            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+            try {
+                $transfer = new \Ilch\Transfer();
+                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
+                $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+                $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
 
-            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
-                // Certificate is missing or expired.
-                $this->addMessage('certMissingOrExpired', 'danger');
-                return;
+                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                    // Certificate is missing or expired.
+                    $this->addMessage('certMissingOrExpired', 'danger');
+                    return;
+                }
+
+                if (!$transfer->save()) {
+                    $this->addMessage('moduleVerificationFailed', 'danger');
+                    return;
+                }
+
+                if (!$transfer->update()) {
+                    $this->addMessage('moduleUpdateFailed', 'danger');
+                    return;
+                }
+
+                $this->addMessage('updateSuccess');
+            } finally {
+                $this->redirect(['action' => $this->getRequest()->getParam('from')]);
             }
-
-            if (!$transfer->save()) {
-                $this->addMessage('moduleVerificationFailed', 'danger');
-                return;
-            }
-
-            $transfer->update();
-            $this->addMessage('updateSuccess');
-            $this->redirect(['action' => $this->getRequest()->getParam('from')]);
         }
     }
     
