@@ -94,59 +94,73 @@ class Layouts extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
 
-        if ($this->getRequest()->isSecure()) {
-            $transfer = new Transfer();
-            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+        try {
+            if ($this->getRequest()->isSecure()) {
+                $transfer = new Transfer();
+                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
+                $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+                $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
 
-            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
-                // Certificate is missing or expired.
-                $this->addMessage('certMissingOrExpired', 'danger');
-                return;
+                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                    // Certificate is missing or expired.
+                    $this->addMessage('certMissingOrExpired', 'danger');
+                    return;
+                }
+
+                if (!$transfer->save()) {
+                    $this->addMessage('layoutVerificationFailed', 'danger');
+                    return;
+                }
+
+                if (!$transfer->install()) {
+                    $this->addMessage('layoutInstallationFailed', 'danger');
+                    return;
+                }
+
+                $this->addMessage('downSuccess');
+            }
+        } finally {
+            foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
+                $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
+                $layoutsDir[] = basename($layoutPath);
             }
 
-            if (!$transfer->save()) {
-                $this->addMessage('layoutVerificationFailed', 'danger');
-                return;
-            }
-
-            $transfer->install();
-            $this->addMessage('downSuccess');
+            $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
+            $this->getView()->set('layouts', $layoutsDir);
         }
-
-        foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
-            $configClass = '\\Layouts\\'.ucfirst(basename($layoutPath)).'\\Config\\Config';
-            $config = new $configClass($this->getTranslator());
-            $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
-            $layoutsDir[] = basename($layoutPath);
-        }
-
-        $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
-        $this->getView()->set('layouts', $layoutsDir);
     }
 
     public function updateAction()
     {
         if ($this->getRequest()->isSecure()) {
-            $transfer = new Transfer();
-            $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-            $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-            $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+            try {
+                $transfer = new Transfer();
+                $transfer->setZipSavePath(ROOT_PATH.'/updates/');
+                $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
+                $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
 
-            if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
-                // Certificate is missing or expired.
-                $this->addMessage('certMissingOrExpired', 'danger');
-                return;
+                if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
+                    // Certificate is missing or expired.
+                    $this->addMessage('certMissingOrExpired', 'danger');
+                    return;
+                }
+
+                if (!$transfer->save()) {
+                    $this->addMessage('layoutVerificationFailed', 'danger');
+                    return;
+                }
+
+                if (!$transfer->update()) {
+                    $this->addMessage('layoutUpdateFailed', 'danger');
+                    return;
+                }
+
+                $this->addMessage('updateSuccess');
+            } finally {
+                $this->redirect(['action' => $this->getRequest()->getParam('from')]);
             }
-
-            if (!$transfer->save()) {
-                $this->addMessage('layoutVerificationFailed', 'danger');
-                return;
-            }
-
-            $transfer->update();
-            $this->addMessage('updateSuccess');
         }
     }
 
