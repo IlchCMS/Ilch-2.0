@@ -275,6 +275,8 @@ return [
     'verificationFailed' => 'Update war beschädigt oder manipuliert. Update verworfen.',
     'layoutVerificationFailed' => 'Layout war beschädigt oder manipuliert. Layout verworfen.',
     'moduleVerificationFailed' => 'Modul war beschädigt oder manipuliert. Modul verworfen.',
+    'moduleInstallationFailed' => 'Modul konnte nicht installiert werden.',
+    'moduleUpdateFailed' => 'Modul konnte nicht aktualisiert werden.',
 
     'enableSelectedEntries' => 'Sollen die markierten Einträge wirklich freigeschaltet werden?',
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
