@@ -44,7 +44,7 @@ foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
                                 <i class="fa fa-check text-success"></i>
                             </span>
                         <?php elseif (in_array($filename, $this->get('layouts')) && version_compare($versionsOfLayouts[$layoutOnUpdateServer->key], $layoutOnUpdateServer->version, '<')): ?>
-                            <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'from' => 'search']) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"

@@ -274,7 +274,9 @@ return [
     'verificationFailed' => 'Update was damaged or manipulated. Update discarded.',
     'layoutVerificationFailed' => 'Layout was damaged or manipulated. Layout discarded.',
     'moduleVerificationFailed' => 'Module was damaged or manipulated. Module discarded.',
+    'layoutInstallationFailed' => 'The installation of the layout failed.',
     'moduleInstallationFailed' => 'The installation of the module failed.',
+    'layoutUpdateFailed' => 'The update of the layout failed.',
     'moduleUpdateFailed' => 'The update of the module failed.',
 
     'enableSelectedEntries' => 'Enable the selected entries?',

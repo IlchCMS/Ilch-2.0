@@ -49,7 +49,7 @@ $versionsOfLayouts = $this->get('versionsOfLayouts');
                         }
 
                         if (!empty($layoutOnUpdateServerFound) && version_compare($versionsOfLayouts[$layoutOnUpdateServerFound->key], $layoutOnUpdateServerFound->version, '<')): ?>
-                                <form method="POST" action="<?=$this->getUrl(['action' => 'update']) ?>">
+                                <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'from' => 'index']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
                                             class="btn btn-default"
