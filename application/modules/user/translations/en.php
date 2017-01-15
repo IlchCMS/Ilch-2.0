@@ -55,6 +55,7 @@ return [
     'delAdminGroup' => 'It is not allowed to delete the group "Administrator".',
     'delGuestGroup' => 'It is not allowed to delete the group "Guest".',
     'delUserGroup' => 'It is not allowed to delete the group "User".',
+    'delDefaultGroups' => 'It is not allowed to delete the group "Administrator", "User" or "Guest".',
     'noGroupsExist' => 'No groups exist.',
 
     'menuAccess' => 'Grouprights',

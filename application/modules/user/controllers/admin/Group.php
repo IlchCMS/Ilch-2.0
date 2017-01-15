@@ -93,8 +93,11 @@ class Group extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_groups')) {
             foreach ($this->getRequest()->getPost('check_groups') as $groupId) {
-                if ($groupId != 1) {
+                if ($groupId != 1 && $groupId != 2 && $groupId != 3) {
                     $groupMapper->delete($groupId);
+                } else {
+                    $this->addMessage('delDefaultGroups', 'warning');
+                    break;
                 }
             }
         }
