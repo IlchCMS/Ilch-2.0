@@ -17,11 +17,11 @@ class Config extends \Ilch\Config\Install
         'languages' => [
             'de_DE' => [
                 'name' => 'Kasse',
-                'description' => 'Hier kann die Clan-Kasse gepflegt werden.',
+                'description' => 'Die Basisversion des Kassen-Moduls. Hier kann die Clan-Kasse gepflegt werden.',
             ],
             'en_EN' => [
                 'name' => 'Checkout',
-                'description' => 'Here you can manage your clan cash.',
+                'description' => 'The basic version of the checkout-module. Here you can manage your clan cash.',
             ],
         ],
         'ilchCore' => '2.0.0',
