@@ -260,17 +260,23 @@ $(document).ready (
             $('#prefix').tokenfield('setTokens', $(this).parent().find('.hidden_prefix').val());
 
             $.each($(this).parent().find('.hidden_read_access').val().split(","), function(index, element) {
-                $('#assignedGroupsRead > option[value=' + element + ']').prop("selected", true);
+                if (element) {
+                    $('#assignedGroupsRead > option[value=' + element + ']').prop("selected", true);
+                }
              });
             $('#assignedGroupsRead').trigger("chosen:updated");
 
             $.each($(this).parent().find('.hidden_replay_access').val().split(","), function(index, element) {
-                $('#assignedGroupsReplay > option[value=' + element + ']').prop("selected", true);
+                if (element) {
+                    $('#assignedGroupsReplay > option[value=' + element + ']').prop("selected", true);
+                }
              });
             $('#assignedGroupsReplay').trigger("chosen:updated");
 
             $.each($(this).parent().find('.hidden_create_access').val().split(","), function(index, element) {
-                $('#assignedGroupsCreate > option[value=' + element + ']').prop("selected", true);
+                if (element) {
+                    $('#assignedGroupsCreate > option[value=' + element + ']').prop("selected", true);
+                }
              });
             $('#assignedGroupsCreate').trigger("chosen:updated");
 
