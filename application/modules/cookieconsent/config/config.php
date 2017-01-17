@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
             </ul>');
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

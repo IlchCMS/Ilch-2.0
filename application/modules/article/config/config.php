@@ -92,7 +92,7 @@ class Config extends \Ilch\Config\Install
                 (1, 1, "Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "startseite.html", "");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

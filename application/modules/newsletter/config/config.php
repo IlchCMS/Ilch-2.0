@@ -74,7 +74,7 @@ class Config extends \Ilch\Config\Install
                 ("newsletter/index/settings", "en_EN", "Here you can manage your Newsletter settings.", "Newsletter");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

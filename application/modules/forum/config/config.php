@@ -104,7 +104,7 @@ class Config extends \Ilch\Config\Install
                 (1, 1, "Willkommen im Ilch 2.0 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.\n\nViel Erfolg\nIlch", 0, NOW(), 2);';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

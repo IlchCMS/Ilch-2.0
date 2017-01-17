@@ -70,7 +70,7 @@ class Config extends \Ilch\Config\Install
                 INSERT INTO `[prefix]_checkoutbasic_currencies` (`id`, `name`) VALUES (6, "CHF");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

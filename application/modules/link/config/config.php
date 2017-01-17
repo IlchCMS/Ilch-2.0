@@ -66,7 +66,7 @@ class Config extends \Ilch\Config\Install
                 (1, "ilch", "Du suchst ein einfach strukturiertes Content Management System? Dann bist du bei ilch genau richtig! ", "http://www.ilch.de/include/images/linkus/468x60.png", "http://ilch.de");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

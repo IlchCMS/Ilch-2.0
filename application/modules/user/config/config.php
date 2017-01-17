@@ -282,7 +282,7 @@ class Config extends \Ilch\Config\Install
                 (4, "user/panel/settings");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }
