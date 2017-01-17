@@ -141,11 +141,18 @@ class Modules extends \Ilch\Controller\Admin
                     return;
                 }
 
-                if (!$transfer->update()) {
+                $key = $this->getRequest()->getParam('key');
+                $moduleMapper = new ModuleMapper();
+                $moduleModel = $moduleMapper->getModuleByKey($key);
+
+                if (!$transfer->update($moduleModel->getVersion())) {
                     $this->addMessage('moduleUpdateFailed', 'danger');
                     return;
                 }
 
+                $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $moduleMapper->updateVersion($key, $config->config['version']);
                 $this->addMessage('updateSuccess');
             } finally {
                 $this->redirect(['action' => $this->getRequest()->getParam('from')]);

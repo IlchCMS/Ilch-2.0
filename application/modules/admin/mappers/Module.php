@@ -129,6 +129,35 @@ class Module extends \Ilch\Mapper
     }
 
     /**
+     * Get module with given key.
+     *
+     * @param string $key
+     *
+     * @return ModuleModel
+     */
+    public function getModuleByKey($key) {
+        $moduleRow = $this->db()->select('*')
+            ->from('modules')
+            ->where(['key' => $key])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($moduleRow)) {
+            return;
+        }
+
+        $moduleModel = new ModuleModel();
+        $moduleModel->setKey($moduleRow['key']);
+        $moduleModel->setSystemModule($moduleRow['system']);
+        $moduleModel->setVersion($moduleRow['version']);
+        $moduleModel->setLink($moduleRow['link']);
+        $moduleModel->setIconSmall($moduleRow['icon_small']);
+        $moduleModel->setAuthor($moduleRow['author']);
+        $moduleModel->addContent($moduleRow['locale'], ['name' => $moduleRow['name'], 'description' => $moduleRow['description']]);
+        return $moduleModel;
+    }
+
+    /**
      * Gets an array of keys of the installed modules.
      */
     public function getKeysInstalledModules()
@@ -162,6 +191,20 @@ class Module extends \Ilch\Mapper
         }
 
         return $modulesRows;
+    }
+
+    /**
+     * Update the version of a module in the database.
+     *
+     * @param string $key
+     * @param string $version
+     *
+     */
+    public function updateVersion($key, $version) {
+        $this->db()->update('modules')
+            ->values(['version' => $version])
+            ->where(['key' => $key])
+            ->execute();
     }
 
     /**
