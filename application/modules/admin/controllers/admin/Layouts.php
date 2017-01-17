@@ -151,8 +151,8 @@ class Layouts extends \Ilch\Controller\Admin
                     $this->addMessage('layoutVerificationFailed', 'danger');
                     return;
                 }
-
-                if (!$transfer->update()) {
+                
+                if (!$transfer->update($this->getRequest()->getParam('version'))) {
                     $this->addMessage('layoutUpdateFailed', 'danger');
                     return;
                 }
