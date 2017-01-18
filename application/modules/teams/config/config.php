@@ -65,7 +65,7 @@ class Config extends \Ilch\Config\Install
                 ("teams", "static/upload/image");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

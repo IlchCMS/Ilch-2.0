@@ -20,7 +20,7 @@ class Config extends \Ilch\Config\Install
         //'modulekey' => 'Name of Module'
     ];
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

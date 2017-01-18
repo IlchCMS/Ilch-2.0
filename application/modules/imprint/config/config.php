@@ -91,7 +91,7 @@ class Config extends \Ilch\Config\Install
                 ("Angaben gemäß § 5 TMG:", "Max Mustermann", "Musterstraße 111", "12345 Musterhausen");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

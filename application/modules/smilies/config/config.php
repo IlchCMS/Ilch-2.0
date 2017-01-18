@@ -66,7 +66,7 @@ class Config extends \Ilch\Config\Install
                 ("mail", "application/modules/smilies/static/img/envelope.png", "application/modules/smilies/static/img/thumb_envelope.png", "png");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }

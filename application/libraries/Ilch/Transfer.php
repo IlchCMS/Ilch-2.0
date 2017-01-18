@@ -339,7 +339,7 @@ class Transfer
     /**
      * @return true/false
      */
-    public function update()
+    public function update($installedVersion)
     {
         try {
             $zipHandle = zip_open($this->zipFile);
@@ -379,10 +379,10 @@ class Transfer
                             $config = new $configClass();
 
                             if (method_exists($config, 'getUpdate')) {
-                                $content[] = $config->getUpdate();
+                                $content[] = $config->getUpdate($installedVersion);
                             }
                         }
-                    } 
+                    }
                 }
             }
             $this->setContent($content);

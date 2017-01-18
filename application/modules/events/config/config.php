@@ -94,7 +94,7 @@ class Config extends \Ilch\Config\Install
                 ("events", "static/upload/image");';
     }
 
-    public function getUpdate()
+    public function getUpdate($installedVersion)
     {
 
     }
