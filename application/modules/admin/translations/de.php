@@ -288,4 +288,6 @@ return [
     'noModulesAvailable' => 'Entweder es sind keine Module verfügbar oder die Liste der Module konnte nicht abgefragt werden.',
 
     'awaitingUnlocking' => 'Freischaltung erwartet',
+
+    'noRights' => 'Keine Berechtigung',
 ];

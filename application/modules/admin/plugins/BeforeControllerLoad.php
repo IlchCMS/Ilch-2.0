@@ -7,6 +7,7 @@
 namespace Modules\Admin\Plugins;
 
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Accesses as Accesses;
 
 /**
  * Does admin operations before the controller loads.
@@ -49,6 +50,8 @@ class BeforeControllerLoad
             }
         }
 
+        $user = \Ilch\Registry::get('user');
+
         if ($request->isAdmin() && $request->getControllerName() !== 'login' && !\Ilch\Registry::get('user')) {
             /*
              * User is not logged in yet but wants to go to the admincenter, redirect him to the login.
@@ -59,6 +62,11 @@ class BeforeControllerLoad
              * User is logged in but wants to go to the login, redirect him to the admincenter.
              */
             $pluginData['controller']->redirect(['module' => 'admin', 'controller' => 'index', 'action' => 'index']);
+        } elseif ($request->getModuleName() === 'admin' && $request->getControllerName() !== 'login' && $request->getActionName() !== 'logout' && \Ilch\Registry::get('user') && !$user->hasAccess('Admin')) {
+                $access = new Accesses($pluginData['request']);
+                if (!$access->hasAccess('Admin')) {
+                    $pluginData['controller']->redirect()->withMessage('noRights', 'danger')->to();
+                };
         }
     }
 }

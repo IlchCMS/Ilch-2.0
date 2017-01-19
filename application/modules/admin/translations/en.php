@@ -287,4 +287,6 @@ return [
     'noModulesAvailable' => 'Either there are no modules available or the list of modules could not be fetched from the server.',
 
     'awaitingUnlocking' => 'Awaiting approval',
+
+    'noRights' => 'Keine Berechtigung',
 ];
