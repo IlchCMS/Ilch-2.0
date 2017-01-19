@@ -288,5 +288,5 @@ return [
 
     'awaitingUnlocking' => 'Awaiting approval',
 
-    'noRights' => 'Keine Berechtigung',
+    'noRights' => 'No permission',
 ];
