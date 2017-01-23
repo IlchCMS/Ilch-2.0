@@ -53,51 +53,50 @@ foreach ($modules as $module): ?>
         ?>
         <div id="module" class="tab-content">
             <div class="tab-pane active" id="info">
-                <div class="col-lg-6 col-xs-12">
-                    <div class="row">
-                        <?php if (!empty($module->thumbs)): ?>
-                            <div class="col-xs-12">
-                                <div id="jssor_1" class="slider">
-                                    <div data-u="slides" class="slides">
-                                        <?php foreach ($module->thumbs as $thumb): ?>
-                                            <div data-p="112.50" style="display: none;">
-                                                <img data-u="image" src="<?=$thumb->img ?>" />
-                                                <img data-u="thumb" src="<?=$thumb->img ?>" />
-                                                <div data-u="caption" data-t="5" class="caption">
-                                                    <?php if ($thumb->desc != ''): ?>
-                                                        <?=$this->escape($thumb->desc) ?>
-                                                    <?php else: ?>
-                                                        <?=$this->escape($module->name) ?>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                    <!-- Bullet Navigator -->
-                                    <div data-u="navigator" class="jssorb01">
-                                        <div data-u="prototype" style="width:12px;height:12px;"></div>
-                                    </div>
-                                    <!-- Thumbnail Navigator -->
-                                    <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
-                                        <div class="thumbslider"></div>
-                                        <!-- Thumbnail Item Skin Begin -->
-                                        <div data-u="slides" style="cursor: pointer;">
-                                            <div data-u="prototype" class="p">
-                                                <div class="w">
-                                                    <div data-u="thumbnailtemplate" class="t"></div>
-                                                </div>
-                                                <div class="c"></div>
+                <div class="col-xs-12 col-lg-6">
+                    <?php if (!empty($module->thumbs)): ?>
+                        <div class="col-xs-12">
+                            <div id="jssor_1" class="slider">
+                                <div data-u="slides" class="slides">
+                                    <?php foreach ($module->thumbs as $thumb): ?>
+                                        <div data-p="112.50" style="display: none;">
+                                            <img data-u="image" src="<?=$thumb->img ?>" />
+                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                            <div data-u="caption" data-t="5" class="caption">
+                                                <?php if ($thumb->desc != ''): ?>
+                                                    <?=$this->escape($thumb->desc) ?>
+                                                <?php else: ?>
+                                                    <?=$this->escape($module->name) ?>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
-                                        <!-- Thumbnail Item Skin End -->
-                                    </div>
-                                    <!-- Arrow Navigator -->
-                                    <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
-                                    <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
+                                    <?php endforeach; ?>
                                 </div>
+                                <!-- Bullet Navigator -->
+                                <div data-u="navigator" class="jssorb01">
+                                    <div data-u="prototype" style="width:12px;height:12px;"></div>
+                                </div>
+                                <!-- Thumbnail Navigator -->
+                                <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
+                                    <div class="thumbslider"></div>
+                                    <!-- Thumbnail Item Skin Begin -->
+                                    <div data-u="slides" style="cursor: pointer;">
+                                        <div data-u="prototype" class="p">
+                                            <div class="w">
+                                                <div data-u="thumbnailtemplate" class="t"></div>
+                                            </div>
+                                            <div class="c"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Thumbnail Item Skin End -->
+                                </div>
+                                <!-- Arrow Navigator -->
+                                <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
+                                <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
                             </div>
-                        <?php endif; ?>
-
+                        </div>
+                    <?php endif; ?>
+                    <div class="row">
                         <div class="col-sm-3 col-xs-6">
                             <b><?=$this->getTrans('name') ?>:</b>
                         </div>
@@ -148,39 +147,39 @@ foreach ($modules as $module): ?>
                                        data-show-caption="false">
                             </span>
                         </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <b><?=$this->getTrans('requirements') ?></b>
-                            </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <b><?=$this->getTrans('requirements') ?>:</b>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$ilchCore ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('phpVersion') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$phpVersion ?>
+                        </div>
+                        <?php if (!empty($module->phpExtensions)): ?>
                             <div class="col-sm-3 col-xs-6">
-                                <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
+                                <b><?=$this->getTrans('phpExtensions') ?>:</b>
                             </div>
                             <div class="col-sm-9 col-xs-6">
-                                <?=$ilchCore ?>
+                                <?=$phpExtension ?>
                             </div>
-                            <div class="col-sm-3 col-xs-6">
-                                <b><?=$this->getTrans('phpVersion') ?>:</b>
-                            </div>
-                            <div class="col-sm-9 col-xs-6">
-                                <?=$phpVersion ?>
-                            </div>
-                            <?php if (!empty($module->phpExtensions)): ?>
-                                <div class="col-sm-3 col-xs-6">
-                                    <b><?=$this->getTrans('phpExtensions') ?>:</b>
-                                </div>
-                                <div class="col-sm-9 col-xs-6">
-                                    <?=$phpExtension ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        <br />
-                        <div class="col-xs-12">
-                            <b><?=$this->getTrans('desc') ?>:</b>
-                        </div>
-                        <div class="col-xs-12">
-                            <?=$this->escape($module->desc) ?>
-                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <br />
+                    <div class="col-xs-12">
+                        <b><?=$this->getTrans('desc') ?>:</b>
+                    </div>
+                    <div class="col-xs-12">
+                        <?=$this->escape($module->desc) ?>
                     </div>
                 </div>
             </div>
