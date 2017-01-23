@@ -7,7 +7,11 @@ $modules = json_decode($modulesList);
 <link href="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/css/star-rating.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuModules').' '.$this->getTrans('info') ?></legend>
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+    <li class="active"><a href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
+    <li><a href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
+</ul>
+<br />
 <?php
 if (empty($modules)) {
     echo $this->getTrans('noModulesAvailable');
@@ -47,135 +51,146 @@ foreach ($modules as $module): ?>
             $ilchCore = '<font color="#a94442">'.$module->ilchCore.'</font>';
         }
         ?>
-        <div id="module">
-            <div class="col-lg-6 col-xs-12">
-                <div class="row">
-                    <?php if (!empty($module->thumbs)): ?>
-                        <div class="col-xs-12">
-                            <div id="jssor_1" class="slider">
-                                <div data-u="slides" class="slides">
-                                    <?php foreach ($module->thumbs as $thumb): ?>
-                                        <div data-p="112.50" style="display: none;">
-                                            <img data-u="image" src="<?=$thumb->img ?>" />
-                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
-                                            <div data-u="caption" data-t="5" class="caption">
-                                                <?php if ($thumb->desc != ''): ?>
-                                                    <?=$this->escape($thumb->desc) ?>
-                                                <?php else: ?>
-                                                    <?=$this->escape($module->name) ?>
-                                                <?php endif; ?>
+        <div id="module" class="tab-content">
+            <div class="tab-pane active" id="info">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="row">
+                        <?php if (!empty($module->thumbs)): ?>
+                            <div class="col-xs-12">
+                                <div id="jssor_1" class="slider">
+                                    <div data-u="slides" class="slides">
+                                        <?php foreach ($module->thumbs as $thumb): ?>
+                                            <div data-p="112.50" style="display: none;">
+                                                <img data-u="image" src="<?=$thumb->img ?>" />
+                                                <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                                <div data-u="caption" data-t="5" class="caption">
+                                                    <?php if ($thumb->desc != ''): ?>
+                                                        <?=$this->escape($thumb->desc) ?>
+                                                    <?php else: ?>
+                                                        <?=$this->escape($module->name) ?>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                                <!-- Bullet Navigator -->
-                                <div data-u="navigator" class="jssorb01">
-                                    <div data-u="prototype" style="width:12px;height:12px;"></div>
-                                </div>
-                                <!-- Thumbnail Navigator -->
-                                <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
-                                    <div class="thumbslider"></div>
-                                    <!-- Thumbnail Item Skin Begin -->
-                                    <div data-u="slides" style="cursor: pointer;">
-                                        <div data-u="prototype" class="p">
-                                            <div class="w">
-                                                <div data-u="thumbnailtemplate" class="t"></div>
-                                            </div>
-                                            <div class="c"></div>
-                                        </div>
+                                        <?php endforeach; ?>
                                     </div>
-                                    <!-- Thumbnail Item Skin End -->
+                                    <!-- Bullet Navigator -->
+                                    <div data-u="navigator" class="jssorb01">
+                                        <div data-u="prototype" style="width:12px;height:12px;"></div>
+                                    </div>
+                                    <!-- Thumbnail Navigator -->
+                                    <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
+                                        <div class="thumbslider"></div>
+                                        <!-- Thumbnail Item Skin Begin -->
+                                        <div data-u="slides" style="cursor: pointer;">
+                                            <div data-u="prototype" class="p">
+                                                <div class="w">
+                                                    <div data-u="thumbnailtemplate" class="t"></div>
+                                                </div>
+                                                <div class="c"></div>
+                                            </div>
+                                        </div>
+                                        <!-- Thumbnail Item Skin End -->
+                                    </div>
+                                    <!-- Arrow Navigator -->
+                                    <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
+                                    <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
                                 </div>
-                                <!-- Arrow Navigator -->
-                                <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
-                                <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
                             </div>
-                        </div>
-                    <?php endif; ?>
-
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('name') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$this->escape($module->name) ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('version') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$module->version ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('author') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?php if ($module->link != ''): ?>
-                            <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank">
-                                <i><?=$this->escape($module->author) ?></i>
-                            </a>
-                        <?php else: ?>
-                            <i><?=$this->escape($module->author) ?></i>
                         <?php endif; ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('hits') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$module->hits ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('downloads') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$module->downs ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('rating') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <span title="<?=$module->rating ?> <?php if ($module->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
-                            <input type="number"
-                                   class="rating"
-                                   value="<?=$module->rating ?>"
-                                   data-size="xs"
-                                   data-readonly="true"
-                                   data-show-clear="false"
-                                   data-show-caption="false">
-                        </span>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-xs-12">
-                        <b><?=$this->getTrans('requirements') ?></b>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$ilchCore ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('phpVersion') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$phpVersion ?>
-                    </div>
-                    <?php if (!empty($module->phpExtensions)): ?>
+
                         <div class="col-sm-3 col-xs-6">
-                            <b><?=$this->getTrans('phpExtensions') ?>:</b>
+                            <b><?=$this->getTrans('name') ?>:</b>
                         </div>
                         <div class="col-sm-9 col-xs-6">
-                            <?=$phpExtension ?>
+                            <?=$this->escape($module->name) ?>
                         </div>
-                    <?php endif; ?>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('version') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$module->version ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('author') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?php if ($module->link != ''): ?>
+                                <a href="<?=$module->link ?>" alt="<?=$this->escape($module->author) ?>" title="<?=$this->escape($module->author) ?>" target="_blank">
+                                    <i><?=$this->escape($module->author) ?></i>
+                                </a>
+                            <?php else: ?>
+                                <i><?=$this->escape($module->author) ?></i>
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('hits') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$module->hits ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('downloads') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$module->downs ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('rating') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <span title="<?=$module->rating ?> <?php if ($module->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
+                                <input type="number"
+                                       class="rating"
+                                       value="<?=$module->rating ?>"
+                                       data-size="xs"
+                                       data-readonly="true"
+                                       data-show-clear="false"
+                                       data-show-caption="false">
+                            </span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <b><?=$this->getTrans('requirements') ?></b>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <b><?=$this->getTrans('ilchCoreVersion') ?>:</b>
+                            </div>
+                            <div class="col-sm-9 col-xs-6">
+                                <?=$ilchCore ?>
+                            </div>
+                            <div class="col-sm-3 col-xs-6">
+                                <b><?=$this->getTrans('phpVersion') ?>:</b>
+                            </div>
+                            <div class="col-sm-9 col-xs-6">
+                                <?=$phpVersion ?>
+                            </div>
+                            <?php if (!empty($module->phpExtensions)): ?>
+                                <div class="col-sm-3 col-xs-6">
+                                    <b><?=$this->getTrans('phpExtensions') ?>:</b>
+                                </div>
+                                <div class="col-sm-9 col-xs-6">
+                                    <?=$phpExtension ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <br />
+                        <div class="col-xs-12">
+                            <b><?=$this->getTrans('desc') ?>:</b>
+                        </div>
+                        <div class="col-xs-12">
+                            <?=$this->escape($module->desc) ?>
+                        </div>
+                    </div>
                 </div>
-                <br />
+            </div>
+            <div class="tab-pane" id="changelog">
                 <div class="col-xs-12">
-                    <b><?=$this->getTrans('desc') ?>:</b>
-                </div>
-                <div class="col-xs-12">
-                    <?=$this->escape($module->desc) ?>
+                    <?php if (!empty($module->changelog)) {
+                        echo $module->changelog;
+                    } else {
+                        echo $this->getTrans('noChangelog');
+                    } ?>
                 </div>
             </div>
         </div>
