@@ -3,6 +3,10 @@ $(document).ready(function(){
         var id = $(this).attr('id');
         var toolbar = $(this).attr('toolbar');
 
+        if (CKEDITOR.instances[id]) {
+            CKEDITOR.instances[id].destroy();
+        }
+
         if (toolbar === 'ilch_html') {
             CKEDITOR.env.isCompatible = true;
             CKEDITOR.replace( id , {
