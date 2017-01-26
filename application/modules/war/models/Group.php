@@ -51,6 +51,13 @@ class Group extends \Ilch\Model
     protected $groupMember;
 
     /**
+     * The Group Desc.
+     *
+     * @var string
+     */
+    protected $groupDesc;
+
+    /**
      * Gets the id of the group.
      *
      * @return integer
@@ -168,5 +175,25 @@ class Group extends \Ilch\Model
     public function setGroupMember($groupMember)
     {
         $this->groupMember = (string)$groupMember;
+    }
+
+    /**
+     * Gets the group Desc.
+     *
+     * @return string
+     */
+    public function getGroupDesc()
+    {
+        return $this->groupDesc;
+    }
+
+    /**
+     * Sets the group Desc.
+     *
+     * @param string $groupDesc
+     */
+    public function setGroupDesc($groupDesc)
+    {
+        $this->groupDesc = (string)$groupDesc;
     }
 }

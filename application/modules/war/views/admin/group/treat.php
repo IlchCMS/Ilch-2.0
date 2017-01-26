@@ -62,6 +62,20 @@
             </div>
         </div>
     </div>
+    <div class="form-group">
+        <label for="groupDesc" class="col-lg-2 control-label">
+            <?=$this->getTrans('groupDesc') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <textarea class="form-control"
+                          name="groupDesc"
+                          cols="50"
+                          rows="5"
+                          placeholder="<?=$this->getTrans('groupDesc') ?>"><?php if ($this->get('groups') != '') { echo $this->get('groups')->getGroupDesc(); } ?></textarea>
+            </div>
+        </div>
+    </div>
     <div class="form-group <?=in_array('userGroup', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="warGroup" class="col-lg-2 control-label">
                 <?=$this->getTrans('assignedMember') ?>

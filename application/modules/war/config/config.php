@@ -71,6 +71,7 @@ class Config extends \Ilch\Config\Install
                   `name` VARCHAR(32) NOT NULL,
                   `tag` VARCHAR(20) NOT NULL,
                   `image` VARCHAR(255) NOT NULL,
+                  `desc` VARCHAR(255) NOT NULL,
                   `member` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

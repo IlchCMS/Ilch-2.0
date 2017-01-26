@@ -106,7 +106,8 @@ class Group extends \Ilch\Controller\Admin
             'groupName' => '',
             'groupTag' => '',
             'groupImage' => '',
-            'userGroup' => ''
+            'userGroup' => '',
+            'groupDesc' => ''
         ];
 
         if ($this->getRequest()->isPost()) {
@@ -119,7 +120,8 @@ class Group extends \Ilch\Controller\Admin
                 'groupName' => trim($this->getRequest()->getPost('groupName')),
                 'groupTag' => trim($this->getRequest()->getPost('groupTag')),
                 'groupImage' => $groupImage,
-                'userGroup' => $this->getRequest()->getPost('userGroup')
+                'userGroup' => $this->getRequest()->getPost('userGroup'),
+                'groupDesc' => trim($this->getRequest()->getPost('groupDesc')),
             ];
 
             $validation = Validation::create($post, [
@@ -142,6 +144,7 @@ class Group extends \Ilch\Controller\Admin
                 $groupModel->setGroupName($post['groupName']);
                 $groupModel->setGroupTag($post['groupTag']);
                 $groupModel->setGroupImage($post['groupImage']);
+                $groupModel->setGroupDesc($post['groupDesc']);
                 $groupMapper->save($groupModel);
 
                 $this->addMessage('saveSuccess');

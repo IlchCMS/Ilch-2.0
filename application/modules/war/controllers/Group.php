@@ -8,6 +8,7 @@ namespace Modules\War\Controllers;
 
 use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\War as WarMapper;
+use Modules\War\Mappers\Games as GamesMapper;
 
 class Group extends \Ilch\Controller\Frontend
 {
@@ -18,12 +19,16 @@ class Group extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuGroupList'), ['action' => 'index']);
 
         $groupMapper = new GroupMapper();
+        $warMapper = new WarMapper();
+        $gamesMapper = new GamesMapper();
         $pagination = new \Ilch\Pagination();
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('war_warsPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('war_warsPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
         $this->getView()->set('groups', $groupMapper->getGroupList($pagination));
+        $this->getView()->set('warMapper', $warMapper);
+        $this->getView()->set('gamesMapper', $gamesMapper);
         $this->getView()->set('pagination', $pagination);
     }
 
@@ -31,6 +36,7 @@ class Group extends \Ilch\Controller\Frontend
     {
         $groupMapper = new GroupMapper();
         $warMapper = new WarMapper();
+        $gamesMapper = new GamesMapper();
         $pagination = new \Ilch\Pagination();
 
         $id = $this->getRequest()->getParam('id');
@@ -45,6 +51,8 @@ class Group extends \Ilch\Controller\Frontend
 
         $this->getView()->set('group', $group);
         $this->getView()->set('war', $warMapper->getWarsByWhere('group ='.$id, $pagination));
+        $this->getView()->set('warMapper', $warMapper);
+        $this->getView()->set('gamesMapper', $gamesMapper);
         $this->getView()->set('pagination', $pagination);
     }
 }

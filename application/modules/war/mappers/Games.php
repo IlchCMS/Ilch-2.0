@@ -45,6 +45,40 @@ class Games extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Games.
+     *
+     * @param array[]
+     * @return GameModel[]|array
+     */
+    public function getGamesByWhere($where = [])
+    {
+        $select = $this->db()->select('*')
+            ->from('war_played')
+            ->where($where)
+            ->order(['war_id' => 'DESC'])
+            ->execute()
+            ->fetchRows();
+
+        if (empty($select)) {
+            return null;
+        }
+
+        $games = [];
+
+        foreach ($select as $game) {
+            $gameModel = new GamesModel();
+            $gameModel->setId($game['id']);
+            $gameModel->setWarId($game['war_id']);
+            $gameModel->setMap(($game['map']));
+            $gameModel->setGroupPoints(($game['group_points']));
+            $gameModel->setEnemyPoints(($game['enemy_points']));
+            $games[] = $gameModel;
+        }
+
+        return $games;
+    }
+
+    /**
      * Inserts or updates Game entry.
      *
      * @param GameModel $model

@@ -48,6 +48,7 @@ class Group extends \Ilch\Mapper
             $entryModel->setGroupTag($entries['tag']);
             $entryModel->setGroupImage($entries['image']);
             $entryModel->setGroupMember($entries['member']);
+            $entryModel->setGroupDesc($entries['desc']);
             $entry[] = $entryModel;
         }
 
@@ -62,7 +63,7 @@ class Group extends \Ilch\Mapper
      */
     public function getGroupList($pagination = null)
     {
-        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.id, g.name, g.tag, g.image, g.member, m.url, m.url_thumb
+        $sql = 'SELECT SQL_CALC_FOUND_ROWS g.id, g.name, g.tag, g.image, g.member, g.desc, m.url, m.url_thumb
                 FROM `[prefix]_war_groups` as g
                 LEFT JOIN [prefix]_media m ON g.image = m.url
                 ORDER by g.id DESC
@@ -84,6 +85,7 @@ class Group extends \Ilch\Mapper
             $entryModel->setGroupTag($entries['tag']);
             $entryModel->setGroupImage($entries['url_thumb']);
             $entryModel->setGroupMember($entries['member']);
+            $entryModel->setGroupDesc($entries['desc']);
             $entry[] = $entryModel;
         }
 
@@ -114,6 +116,7 @@ class Group extends \Ilch\Mapper
         $groupModel->setGroupTag($groupRow['tag']);
         $groupModel->setGroupImage($groupRow['image']);
         $groupModel->setGroupMember($groupRow['member']);
+        $groupModel->setGroupDesc($groupRow['desc']);
 
         return $groupModel;
     }
@@ -129,7 +132,8 @@ class Group extends \Ilch\Mapper
             'name' => $model->getGroupName(),
             'tag' => $model->getGroupTag(),
             'image' => $model->getGroupImage(),
-            'member' => $model->getGroupMember()
+            'member' => $model->getGroupMember(),
+            'desc' => $model->getGroupDesc()
         ];
 
         if ($model->getId()) {

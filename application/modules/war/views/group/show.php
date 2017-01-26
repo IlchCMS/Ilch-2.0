@@ -1,9 +1,44 @@
-<?php $group = $this->get('group') ?>
+<?php
+$group = $this->get('group');
+$warMapper = $this->get('warMapper');
+$gamesMapper = $this->get('gamesMapper');
 
+$win = 0;
+$lost = 0;
+$drawn = 0;
+$winCount = 0;
+$lostCont = 0;
+$drawnCount = 0;
+
+$wars = $warMapper->getWars(['group' => $group->getId()]);
+
+foreach ($wars as $war) {
+    $enemyPoints = '';
+    $groupPoints = '';
+    $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
+
+    foreach ($games as $game) {
+        $groupPoints += $game->getGroupPoints();
+        $enemyPoints += $game->getEnemyPoints();
+    }
+    if ($groupPoints > $enemyPoints) {
+        $win++;
+    }
+    if ($groupPoints < $enemyPoints) {
+        $lost++;
+    }
+    if ($groupPoints == $enemyPoints) {
+        $drawn++;
+    }
+    $winCount = $win;
+    $lostCont = $lost;
+    $drawnCount = $drawn;
+}
+?>
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
 <div id="war_index">
-    <div class="col-lg-12">
+    <div class="col-lg-12 no_padding">
         <div class="row">
             <div class="col-xs-12 col-md-6 text-center">
                 <img src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>" class="thumbnail img-responsive" />
@@ -12,12 +47,15 @@
                 <h3>
                     <?=$this->escape($group->getGroupName()) ?>
                 </h3>
-                <p>...</p>
+                <strong><?=$this->getTrans('groupDesc') ?></strong>
+                <p><?=$this->escape($group->getGroupDesc()) ?></p>
                 <hr />
                 <div class="row rating-desc">
                     <div class="col-md-12">
-                        <span><?=$this->getTrans('warWin') ?></span>(36)<span class="separator">|</span>
-                        <span><?=$this->getTrans('warLost') ?></span>(100)
+                        <strong><?=$this->getTrans('games') ?></strong></br>
+                        <span><?=$this->getTrans('warWin') ?></span>(<?=$winCount ?>)<span class="separator">|</span>
+                        <span><?=$this->getTrans('warLost') ?></span>(<?=$lostCont ?>)<span class="separator">|</span>
+                        <span><?=$this->getTrans('warDrawn') ?></span>(<?=$drawnCount ?>)
                     </div>
                 </div>
             </div>

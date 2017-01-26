@@ -122,4 +122,6 @@ return [
     'warsPerPage' => 'Wars per page',
     'enemiesPerPage' => 'Enemies per page',
     'groupsPerPage' => 'Groups per page',
+    'games' => 'Games',
+    'groupDesc' => 'Group description',
 ];

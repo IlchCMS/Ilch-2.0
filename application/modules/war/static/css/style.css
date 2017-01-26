@@ -44,6 +44,9 @@
 .no_margin {
     margin: 0px !important;
 }
+.no_padding {
+    padding: 0px !important;
+}
 .center-text img {
     min-width: 100%;
 }
