@@ -66,7 +66,7 @@ $versionsOfLayouts = $this->get('versionsOfLayouts');
                                 </span>
                             <?php else: ?>
                                 <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('setDefault') ?>">
-                                    <i class="fa unchecked"></i>
+                                    <i class="fa fa-check"></i>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>
