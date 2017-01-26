@@ -113,7 +113,7 @@ return [
     'warRemoveMaps' => 'Map entfernen',
     'warNew' => 'Neu',
     'warsOverview' => 'Wars Übersicht',
-    'warPlay' => 'Match details',
+    'warPlay' => 'War-Details',
     'warWin' => 'Gewonnen',
     'warLost' => 'Verloren',
     'warDrawn' => 'Unentschieden',
