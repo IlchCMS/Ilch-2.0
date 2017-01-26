@@ -96,69 +96,74 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $model = new TeamsModel();
-                if ($this->getRequest()->getParam('id')) {
-                    $model->setId($this->getRequest()->getParam('id'));
-                }
+                if (!($teamsMapper->containsTeam($this->getRequest()->getPost('name')) && !$this->getRequest()->getParam('id'))) {
+                    $model = new TeamsModel();
 
-                if ($this->getRequest()->getPost('image_delete') != '') {
-                    $teamsMapper->delImageById($this->getRequest()->getParam('id'));
-                }
+                    if ($this->getRequest()->getParam('id')) {
+                        $model->setId($this->getRequest()->getParam('id'));
+                    }
 
-                if ($this->getRequest()->getPost('img') != '') {
-                    $allowedFiletypes = $this->getConfig()->get('teams_filetypes');
-                    $imageMaxHeight = $this->getConfig()->get('teams_height');
-                    $imageMaxWidth = $this->getConfig()->get('teams_width');
-                    $path = $this->getConfig()->get('teams_uploadpath');
-                    $file = $_FILES['img']['name'];
-                    $file_tmpe = $_FILES['img']['tmp_name'];
-                    $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                    $imageInfo = getimagesize($file_tmpe);
+                    if ($this->getRequest()->getPost('image_delete') != '') {
+                        $teamsMapper->delImageById($this->getRequest()->getParam('id'));
+                    }
 
-                    if (in_array($endung, explode(' ', $allowedFiletypes)) && strpos($imageInfo['mime'], 'image/') === 0) {
-                        if ($this->getRequest()->getParam('id')) {
-                            $teamsMapper->delImageById($this->getRequest()->getParam('id'));
-                        }
+                    if ($this->getRequest()->getPost('img') != '') {
+                        $allowedFiletypes = $this->getConfig()->get('teams_filetypes');
+                        $imageMaxHeight = $this->getConfig()->get('teams_height');
+                        $imageMaxWidth = $this->getConfig()->get('teams_width');
+                        $path = $this->getConfig()->get('teams_uploadpath');
+                        $file = $_FILES['img']['name'];
+                        $file_tmpe = $_FILES['img']['tmp_name'];
+                        $endung = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                        $imageInfo = getimagesize($file_tmpe);
 
-                        $width = $imageInfo[0];
-                        $height = $imageInfo[1];
-                        $newName = str_replace(' ','',$this->getRequest()->getPost('name'));
-                        $image = $path.$newName.'.'.$endung;
-
-                        if (move_uploaded_file($file_tmpe, $image)) {
-                            if ($width > $imageMaxWidth OR $height > $imageMaxHeight) {
-                                $upload = new \Ilch\Upload();
-
-                                // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
-                                if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($image)) {
-                                    unlink($image);
-                                    $this->addMessage('failedFilesize', 'warning');
-                                } else {
-                                    $thumb = new \Thumb\Thumbnail();
-                                    $thumb -> Thumbsize = ($imageMaxWidth <= $imageMaxHeight) ? $imageMaxWidth : $imageMaxHeight;
-                                    $thumb -> Square = true;
-                                    $thumb -> Thumblocation = $path;
-                                    $thumb -> Cropimage = [3,1,50,50,50,50];
-                                    $thumb -> Createthumb($image, 'file');
-                                }
-
+                        if (in_array($endung, explode(' ', $allowedFiletypes)) && strpos($imageInfo['mime'], 'image/') === 0) {
+                            if ($this->getRequest()->getParam('id')) {
+                                $teamsMapper->delImageById($this->getRequest()->getParam('id'));
                             }
 
-                            $model->setImg($image);
-                        }
-                    } else {
-                        $this->addMessage('failedFiletypes', 'warning');
-                    }
-                }
-                $model->setName($this->getRequest()->getPost('name'))
-                    ->setLeader($this->getRequest()->getPost('leader'))
-                    ->setCoLeader($this->getRequest()->getPost('coLeader'))
-                    ->setGroupId($this->getRequest()->getPost('groupId'));
-                $teamsMapper->save($model);
+                            $width = $imageInfo[0];
+                            $height = $imageInfo[1];
+                            $newName = str_replace(' ','',$this->getRequest()->getPost('name'));
+                            $image = $path.$newName.'.'.$endung;
 
-                $this->redirect()
-                    ->withMessage('saveSuccess')
-                    ->to(['action' => 'index']);
+                            if (move_uploaded_file($file_tmpe, $image)) {
+                                if ($width > $imageMaxWidth OR $height > $imageMaxHeight) {
+                                    $upload = new \Ilch\Upload();
+
+                                    // Take an educated guess on how big the image is going to be in memory to decide if it should be tried to crop the image.
+                                    if (($upload->returnBytes(ini_get('memory_limit')) - memory_get_usage(true)) < $upload->guessRequiredMemory($image)) {
+                                        unlink($image);
+                                        $this->addMessage('failedFilesize', 'warning');
+                                    } else {
+                                        $thumb = new \Thumb\Thumbnail();
+                                        $thumb -> Thumbsize = ($imageMaxWidth <= $imageMaxHeight) ? $imageMaxWidth : $imageMaxHeight;
+                                        $thumb -> Square = true;
+                                        $thumb -> Thumblocation = $path;
+                                        $thumb -> Cropimage = [3,1,50,50,50,50];
+                                        $thumb -> Createthumb($image, 'file');
+                                    }
+
+                                }
+
+                                $model->setImg($image);
+                            }
+                        } else {
+                            $this->addMessage('failedFiletypes', 'warning');
+                        }
+                    }
+                    $model->setName($this->getRequest()->getPost('name'))
+                        ->setLeader($this->getRequest()->getPost('leader'))
+                        ->setCoLeader($this->getRequest()->getPost('coLeader'))
+                        ->setGroupId($this->getRequest()->getPost('groupId'));
+                    $teamsMapper->save($model);
+
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['action' => 'index']);
+                } else {
+                    $this->addMessage('teamAlreadyExists', 'warning');
+                }
             }
 
             $this->redirect()

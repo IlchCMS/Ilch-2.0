@@ -48,13 +48,27 @@ class Teams extends \Ilch\Mapper
      * Get Team by given Id.
      *
      * @param integer $id
-     * @return PrivacyModel|null
+     * @return TeamsModel|null
      */
     public function getTeamById($id)
     {
         $team = $this->getTeams(['id' => $id]);
 
         return reset($team);
+    }
+
+    /**
+     * Check if there is already a team with a specific name.
+     *
+     * @param string $name
+     * @return bool true/false
+     */
+    public function containsTeam($name) {
+        $select = $this->db()->select('*');
+        return (bool) $select->from('teams')
+            ->where(['name' => $name])
+            ->execute()
+            ->getNumRows();
     }
 
     /**
