@@ -197,7 +197,7 @@ class Regist extends \Ilch\Controller\Frontend
                 } else {
                     $this->getView()->set('confirmed', null);
 
-                    $_SESSION['messages'][] = ['text' => $this->getTrans('confirmedCodeWrong'), 'type' => 'warning'];
+                    $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans('confirmedCodeWrong'), 'type' => 'warning'];
                 }
             } else {
                 $this->getView();
