@@ -21,5 +21,4 @@ return [
     'imageHeight' => 'Image hight',
     'imageWidth' => 'Image width',
     'allowedFileExtensions' => 'Allowed file extensions',
-    'teamAlreadyExists' => 'There is already a team with this name.',
 ];

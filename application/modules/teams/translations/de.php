@@ -21,5 +21,4 @@ return [
     'imageHeight' => 'Bild Höhe',
     'imageWidth' => 'Bild Breite',
     'allowedFileExtensions' => 'Erlaubte Dateiendungen',
-    'teamAlreadyExists' => 'Es gibt bereits ein Team mit diesem Namen.',
 ];
