@@ -89,7 +89,7 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'name' => 'required',
+                'name' => 'required|unique:teams,name,'.$this->getRequest()->getParam('id'),
                 'leader' => 'required|numeric|integer',
                 'coLeader' => 'numeric|integer',
                 'groupId' => 'required|numeric|integer|min:1'
@@ -97,6 +97,7 @@ class Index extends \Ilch\Controller\Admin
 
             if ($validation->isValid()) {
                 $model = new TeamsModel();
+
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
