@@ -55,21 +55,12 @@ class Regist extends \Ilch\Controller\Frontend
 
         if ($this->getRequest()->getPost('saveRegist') AND $this->getRequest()->getPost('bot') === '') {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'name' => 'required',
+                'name' => 'required|unique:users,name',
                 'password' => 'required|min:6:string|max:30:string',
                 'password2' => 'required|same:password|min:6:string|max:30:string',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email',
                 'captcha' => 'captcha'
             ]);
-
-            $profilName = $registMapper->getUserByName($this->getRequest()->getPost('name'));
-            $profilEmail = $registMapper->getUserByEmail($this->getRequest()->getPost('email'));
-            if (!empty($profilName)) {
-                $validation->getErrorBag()->addError('name', $this->getTranslator()->trans('nameExist'));
-            }
-            if (!empty($profilEmail)) {
-                $validation->getErrorBag()->addError('email', $this->getTranslator()->trans('emailExist'));
-            }
 
             if ($validation->isValid()) {
                 $groupMapper = new GroupMapper();
@@ -197,7 +188,7 @@ class Regist extends \Ilch\Controller\Frontend
                 } else {
                     $this->getView()->set('confirmed', null);
 
-                    $_SESSION['messages'][] = ['text' => $this->getTrans('confirmedCodeWrong'), 'type' => 'warning'];
+                    $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans('confirmedCodeWrong'), 'type' => 'warning'];
                 }
             } else {
                 $this->getView();
