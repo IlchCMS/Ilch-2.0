@@ -202,7 +202,7 @@ class Login extends \Ilch\Controller\Frontend
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email,$name)
                             ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                            ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
+                            ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
                             ->setMessage($message)
                             ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
                     $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
