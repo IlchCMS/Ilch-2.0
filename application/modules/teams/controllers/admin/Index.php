@@ -142,7 +142,6 @@ class Index extends \Ilch\Controller\Admin
                                     $thumb -> Cropimage = [3,1,50,50,50,50];
                                     $thumb -> Createthumb($image, 'file');
                                 }
-
                             }
 
                             $model->setImg($image);
