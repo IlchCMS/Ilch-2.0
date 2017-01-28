@@ -65,8 +65,8 @@ $versionsOfLayouts = $this->get('versionsOfLayouts');
                                     <i class="fa fa-check text-success"></i>
                                 </span>
                             <?php else: ?>
-                                <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()]) ?>" class="btn btn-default" title="<?=$this->getTrans('setDefault') ?>">
-                                    <i class="fa fa-check"></i>
+                                <a href="<?=$this->getUrl(['action' => 'default', 'key' => $layout->getKey()]) ?>" class="btn btn-default unchecked" title="<?=$this->getTrans('setDefault') ?>">
+                                    <i class="fa"></i>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>

@@ -28,8 +28,11 @@
     background-color: #ccc;
 }
 
-#layouts .unchecked {
+#layouts .unchecked i {
     width: 14px;
+}
+#layouts .unchecked:hover i:before {
+    content: "\f00c";
 }
 
 #modules form {
