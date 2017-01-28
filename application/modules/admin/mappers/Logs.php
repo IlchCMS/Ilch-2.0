@@ -1,0 +1,99 @@
+<?php
+/**
+ * @copyright Ilch 2.0
+ * @package ilch
+ */
+
+namespace Modules\Admin\Mappers;
+
+use Modules\Admin\Models\Logs as LogsModel;
+use Ilch\Date as IlchDate;
+
+class Logs extends \Ilch\Mapper
+{
+    /**
+     * Gets all logs.
+     *
+     * @param string $date
+     * @return LogsModel[]|array
+     */
+    public function getLogs($date)
+    {
+        $sql = 'SELECT *
+                FROM `[prefix]_logs`
+                WHERE `date` LIKE "'.$date.'%"
+                ORDER BY `date` DESC';
+        $entriesArray = $this->db()->queryArray($sql);
+
+        if (empty($entriesArray)) {
+            return null;
+        }
+
+        $logs = [];
+        foreach ($entriesArray as $entry) {
+            $model = new LogsModel();
+            $model->setId($entry['id']);
+            $model->setUserId($entry['user_id']);
+            $model->setDate($entry['date']);
+            $model->setInfo($entry['info']);
+            $logs[] = $model;
+        }
+
+        return $logs;
+    }
+
+    /**
+     * Gets all logs date.
+     *
+     * @return LogsModel[]|array
+     */
+    public function getLogsDate()
+    {
+        $sql = 'SELECT DATE(`date`) AS `date_full`, MONTH(`date`) AS `date_month`, DAY(`date`) AS `date_day`
+                FROM `[prefix]_logs`
+                GROUP BY `date_full`, `date_month`, `date_day`
+                ORDER BY `date_full` DESC';
+        $entriesArray = $this->db()->queryArray($sql);
+
+        if (empty($entriesArray)) {
+            return null;
+        }
+
+        $logs = [];
+        foreach ($entriesArray as $entry) {
+            $model = new LogsModel();
+            $model->setDate($entry['date_full']);
+            $logs[] = $model;
+        }
+
+        return $logs;
+    }
+
+    /**
+     * Insert log.
+     *
+     * @param int $userId
+     * @param string $info
+     */
+    public function saveLog($userId, $info)
+    {
+        $date = new IlchDate();
+        $date->modify('-1 minutes');
+
+        $sql = 'SELECT COUNT(*)
+                FROM `[prefix]_logs`
+                WHERE user_id = '.$userId.' AND info = "'.$info.'" AND date > "'.$date->toDb(true).'"';
+        $count = $this->db()->queryCell($sql);
+
+        if ($count == 0) {
+            $fields = [
+                'user_id' => $userId,
+                'info' => $info
+            ];
+
+            $this->db()->insert('logs')
+                ->values($fields)
+                ->execute();
+        }
+    }
+}

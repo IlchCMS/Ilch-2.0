@@ -6,6 +6,8 @@
 
 namespace Modules\Admin\Controllers\Admin;
 
+use Modules\Admin\Mappers\Logs as LogsMapper;
+
 class Index extends \Ilch\Controller\Admin
 {
     public function init()
@@ -64,7 +66,6 @@ class Index extends \Ilch\Controller\Admin
         $moduleLocales['user'] = $modulesMapper->getModulesByKey('user', $this->getTranslator()->getLocale());
 
         $this->getView()->set('usersNotConfirmed', $userMapper->getUserList(['confirmed' => 0]));
-
         $this->getView()->set('moduleLocales', $moduleLocales);
         $this->getView()->set('version', $this->getConfig()->get('version'));
     }

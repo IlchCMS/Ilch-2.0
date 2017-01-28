@@ -7,6 +7,7 @@
 namespace Modules\Admin\Plugins;
 
 use Modules\Admin\Mappers\Page as PageMapper;
+use Modules\Admin\Mappers\Logs as LogsMapper;
 
 class AfterDatabaseLoad
 {
@@ -25,6 +26,16 @@ class AfterDatabaseLoad
             $request->setActionName('show');
             $request->setParam('id', $permas[$url]['page_id']);
             $request->setParam('locale', $permas[$url]['locale']);
+        }
+
+        // Log the entrys
+        $logsMapper = new LogsMapper();
+        $currentUrl = $_SERVER['REQUEST_URI'];
+
+        if (strpos($currentUrl, '/admin/') == true AND $_SESSION['user_id']) {
+            $userId = (int) $_SESSION['user_id'];
+
+            $logsMapper->saveLog($userId, $currentUrl);
         }
     }
 }

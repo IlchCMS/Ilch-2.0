@@ -7,6 +7,8 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Infos as InfosMapper;
+use Modules\Admin\Mappers\Logs as LogsMapper;
+use Modules\User\Mappers\User as UserMapper;
 
 class Infos extends \Ilch\Controller\Admin
 {
@@ -32,6 +34,12 @@ class Infos extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'folderrights'])
             ],
             [
+                'name' => 'menuLogs',
+                'active' => false,
+                'icon' => 'fa fa-folder-open',
+                'url' => $this->getLayout()->getUrl(['controller' => 'infos', 'action' => 'logs'])
+            ],
+            [
                 'name' => 'menuCertificate',
                 'active' => false,
                 'icon' => 'fa fa-key',
@@ -46,15 +54,17 @@ class Infos extends \Ilch\Controller\Admin
         ];
 
         if ($this->getRequest()->getActionName() == 'phpextensions') {
-            $items[1]['active'] = true; 
+            $items[1]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'folderrights') {
-            $items[2]['active'] = true; 
-        } elseif ($this->getRequest()->getActionName() == 'certificate') {
+            $items[2]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() == 'logs') {
             $items[3]['active'] = true;
+        } elseif ($this->getRequest()->getActionName() == 'certificate') {
+            $items[4]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'shortcuts') {
-            $items[4]['active'] = true; 
+            $items[5]['active'] = true;
         } else {
-            $items[0]['active'] = true; 
+            $items[0]['active'] = true;
         }
 
         $this->getLayout()->addMenu
@@ -96,24 +106,38 @@ class Infos extends \Ilch\Controller\Admin
 
     public function folderrightsAction()
     {
-        $InfosMapper = new InfosMapper();
+        $infosMapper = new InfosMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('hmenuFolderRights'), ['action' => 'folderrights']);
 
-        $this->getView()->set('folderrights', $InfosMapper->getModulesFolderRights());
+        $this->getView()->set('folderrights', $infosMapper->getModulesFolderRights());
+    }
+
+    public function logsAction()
+    {
+        $logsMapper = new LogsMapper();
+        $userMapper = new UserMapper();
+
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('hmenuLogs'), ['action' => 'logs']);
+
+        $this->getView()->set('logsMapper', $logsMapper);
+        $this->getView()->set('userMapper', $userMapper);
+        $this->getView()->set('logsDate', $logsMapper->getLogsDate());
     }
 
     public function phpextensionsAction()
     {
-        $InfosMapper = new InfosMapper();
+        $infosMapper = new InfosMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuPHPExtensions'), ['action' => 'phpextensions']);
 
-        $this->getView()->set('phpExtensions', $InfosMapper->getModulesPHPExtensions());
+        $this->getView()->set('phpExtensions', $infosMapper->getModulesPHPExtensions());
     }
 
     public function certificateAction()

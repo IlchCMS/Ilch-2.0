@@ -257,6 +257,13 @@ return [
     'shortcutCustumCSSMultiEdit' => 'Marked with the mouse multiple lines for simultaneous editing',
     'shortcutCustumCSStoggleComment' => 'Comment or remove comment from selected lines',
 
+    'menuLogs' => 'Logs',
+    'hmenuLogs' => 'Logs',
+    'logs' => 'Logs',
+    'time' => 'Time',
+    'users' => 'Users',
+    'unknow' => 'Unknow',
+
     'menuUpdate' => 'Update',
     'backupBeforeUpdate' => 'It is recommended to create a backup of the installation and the database before executing an update.',
     'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',

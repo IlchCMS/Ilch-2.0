@@ -158,6 +158,14 @@ class Config extends \Ilch\Config\Install
                   `name` VARCHAR(255) NOT NULL,
                   `date` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_logs` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `user_id` VARCHAR(255) NOT NULL,
+                  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  `info` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 

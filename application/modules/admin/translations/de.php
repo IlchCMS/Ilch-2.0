@@ -258,6 +258,13 @@ return [
     'shortcutCustumCSSMultiEdit' => 'Markiert mit der Maus mehrere Zeilen zur gleichzeitigen Bearbeitung',
     'shortcutCustumCSStoggleComment' => 'Zum auskommentieren von markierten Zeilen oder um die Kommentar wieder zu entfernen',
 
+    'menuLogs' => 'Logs',
+    'hmenuLogs' => 'Logs',
+    'logs' => 'Logs',
+    'time' => 'Uhrzeit',
+    'users' => 'Benutzer',
+    'unknow' => 'Unbekannt',
+
     'menuUpdate' => 'Update',
     'backupBeforeUpdate' => 'Es wird empfohlen eine Sicherheitskopie der Installation und der Datenbank anzulegen, bevor ein Update durchgeführt wird.',
     'updateProcess' => 'Ilch 2.0 UPDATE PROCESS',
