@@ -6,6 +6,8 @@
 
 namespace Modules\Teams\Controllers\Admin;
 
+use Ilch\Validation;
+
 class Settings extends \Ilch\Controller\Admin
 {
     public function init()
@@ -39,10 +41,27 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('teams_height', $this->getRequest()->getPost('image_height'));
-            $this->getConfig()->set('teams_width', $this->getRequest()->getPost('image_width'));
-            $this->getConfig()->set('teams_filetypes', strtolower($this->getRequest()->getPost('image_filetypes')));
-            $this->addMessage('saveSuccess');
+            Validation::setCustomFieldAliases([
+                'image_height' => 'imageHeight',
+                'image_width' => 'imageWidth'
+            ]);
+
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'image_height' => 'required|numeric|integer|min:1',
+                'image_width' => 'required|numeric|integer|min:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('teams_height', $this->getRequest()->getPost('image_height'));
+                $this->getConfig()->set('teams_width', $this->getRequest()->getPost('image_width'));
+                $this->getConfig()->set('teams_filetypes', strtolower($this->getRequest()->getPost('image_filetypes')));
+                $this->addMessage('saveSuccess');
+            }
+
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('teams_height', $this->getConfig()->get('teams_height'));
