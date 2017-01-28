@@ -18,7 +18,14 @@ $groupMapper = $this->get('groupMapper');
                 <?php endif; ?>
             </div>
             <div class="col-lg-12">
-                <?php $groupList = $groupMapper->getUsersForGroup($teamlist->getGroupId()); ?>
+                <?php
+                $groupList = $groupMapper->getUsersForGroup($teamlist->getGroupId()); 
+                $leaders = [
+                    $teamlist->getLeader(),
+                    $teamlist->getCoLeader()
+                ];
+                $groupList = array_unique(array_merge($groupList, $leaders));
+                ?>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
                         <colgroup>
