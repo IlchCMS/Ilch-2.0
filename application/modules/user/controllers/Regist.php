@@ -120,7 +120,7 @@ class Regist extends \Ilch\Controller\Frontend
                         ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
                         ->setMessage($message)
                         ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                    $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
+                    $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
                     $mail->send();
                 }
 
