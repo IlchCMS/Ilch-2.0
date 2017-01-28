@@ -150,21 +150,25 @@ class Index extends \Ilch\Controller\Admin
                         $this->addMessage('failedFiletypes', 'warning');
                     }
                 }
+
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setLeader($this->getRequest()->getPost('leader'))
                     ->setCoLeader($this->getRequest()->getPost('coLeader'))
                     ->setGroupId($this->getRequest()->getPost('groupId'));
                 $teamsMapper->save($model);
-
-                $this->redirect()
-                    ->withMessage('saveSuccess')
-                    ->to(['action' => 'index']);
             }
 
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
+            if ($this->getRequest()->getParam('id')) {
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
+            } else {
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'treat']);
+            }
         }
 
         $this->getView()->set('userList', $userMapper->getUserList());
