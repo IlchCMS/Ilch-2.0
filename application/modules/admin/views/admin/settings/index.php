@@ -1,3 +1,13 @@
+<?php if ($this->validation()->hasErrors()): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
+        <ul>
+            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
+                <li><?= $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
 <legend><?=$this->getTrans('settings') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -53,7 +63,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('multilingualAcp') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('multilingualAcp') ?>:
         </div>
@@ -102,7 +112,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="standardMailInput" class="col-lg-2 control-label">
+        <label for="timezone" class="col-lg-2 control-label">
             <?=$this->getTrans('timezone') ?>:
         </label>
         <div class="col-lg-4">
@@ -119,19 +129,20 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('standardMail') ? 'has-error' : '' ?>">
         <label for="standardMailInput" class="col-lg-2 control-label">
             <?=$this->getTrans('standardMail') ?>:
         </label>
         <div class="col-lg-4">
-            <input type="text"
+            <input type="email"
                    class="form-control"
                    id="standardMailInput"
                    name="standardMail"
-                   value="<?=$this->escape($this->get('standardMail')) ?>" />
+                   value="<?=$this->escape($this->get('standardMail')) ?>"
+                   required />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('defaultPaginationObjects') ? 'has-error' : '' ?>">
         <label for="defaultPaginationObjectsInput" class="col-lg-2 control-label">
             <?=$this->getTrans('defaultPaginationObjects') ?>:
         </label>
@@ -144,7 +155,7 @@
                    value="<?=$this->escape($this->get('defaultPaginationObjects')) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('modRewrite') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('modRewrite') ?>:
         </div>
@@ -160,7 +171,7 @@
     </div>
 
     <legend><?=$this->getTrans('backendFunctions') ?></legend>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('navbarFixed') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('navbarFixed') ?>:
         </div>
@@ -174,7 +185,7 @@
             </div>
         </div>
     </div>
-    <div id="hmenuFixed" class="form-group <?php if (empty($this->get('navbarFixed'))) { echo 'hidden'; } ?>">
+    <div id="hmenuFixed" class="form-group <?php if (empty($this->get('navbarFixed'))) { echo 'hidden'; } else { echo $this->validation()->hasError('navbarFixed') ? 'has-error' : ''; } ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('hmenuFixed') ?>:
         </div>
