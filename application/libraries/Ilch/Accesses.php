@@ -51,20 +51,17 @@ class Accesses
     {
 
         $userId = '';
-        $user = '';
         $groupAccessList = '';
         $groupIds = [0];
 
         if (isset($_SESSION['user_id'])) {
             $userId = $_SESSION['user_id'];
-        } else {
-            $userId = '3';
         }
 
         $userMapper = new \Modules\User\Mappers\User();
         $groupMapper = new \Modules\User\Mappers\Group();
 
-        if ($userId != '3') {
+        if ($userId) {
             $user = $userMapper->getUserById($userId);
 
             $groupIds = [];

@@ -151,10 +151,10 @@ class Index extends \Ilch\Controller\Admin
             $mail = new \Ilch\Mail();
             $mail->setTo($user->getEmail(), $user->getName())
                     ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                    ->setFrom($this->getTranslator()->trans('automaticEmail'), $this->getConfig()->get('page_title'))
+                    ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
                     ->setMessage($message)
                     ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-            $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
+            $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
             $mail->send();
 
             $this->addMessage('freeSuccess');
