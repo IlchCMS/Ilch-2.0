@@ -7,7 +7,11 @@ $layouts = json_decode($layoutsList);
 <link href="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/css/star-rating.min.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuLayout').' '.$this->getTrans('info') ?></legend>
+<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+    <li class="active"><a href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
+    <li><a href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
+</ul>
+<br />
 <?php
 
 if (empty($layouts)) {
@@ -17,107 +21,121 @@ if (empty($layouts)) {
 
 foreach ($layouts as $layout): ?>
     <?php if ($layout->id == $this->getRequest()->getParam('id')): ?>
-        <div id="layout">
-            <div class="col-lg-6 col-xs-12">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div id="jssor_1" class="slider">
-                            <div data-u="slides" class="slides">
-                                <?php foreach ($layout->thumbs as $thumb): ?>
-                                    <div data-p="112.50" style="display: none;">
-                                        <img data-u="image" src="<?=$thumb->img ?>" />
-                                        <img data-u="thumb" src="<?=$thumb->img ?>" />
-                                        <div data-u="caption" data-t="5" class="caption">
-                                            <?php if ($thumb->desc != ''): ?>
-                                                <?=$this->escape($thumb->desc) ?>
-                                            <?php else: ?>
-                                                <?=$this->escape($module->name) ?>
-                                            <?php endif; ?>
+        <div id="layout" class="tab-content">
+            <div class="tab-pane active" id="info">
+                <div class="col-xs-12 col-lg-6">
+                    <?php if (!empty($layout->thumbs)): ?>
+                        <div class="col-xs-12">
+                            <div id="jssor_1" class="slider">
+                                <div data-u="slides" class="slides">
+                                    <?php foreach ($layout->thumbs as $thumb): ?>
+                                        <div data-p="112.50" style="display: none;">
+                                            <img data-u="image" src="<?=$thumb->img ?>" />
+                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                            <div data-u="caption" data-t="5" class="caption">
+                                                <?php if ($thumb->desc != ''): ?>
+                                                    <?=$this->escape($thumb->desc) ?>
+                                                <?php else: ?>
+                                                    <?=$this->escape($layout->name) ?>
+                                                <?php endif; ?>
+                                            </div>
                                         </div>
-                                    </div>
-                                <?php endforeach; ?>
-                            </div>
-                            <!-- Bullet Navigator -->
-                            <div data-u="navigator" class="jssorb01">
-                                <div data-u="prototype" style="width:12px;height:12px;"></div>
-                            </div>
-                            <!-- Thumbnail Navigator -->
-                            <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
-                                <div class="thumbslider"></div>
-                                <!-- Thumbnail Item Skin Begin -->
-                                <div data-u="slides" style="cursor: pointer;">
-                                    <div data-u="prototype" class="p">
-                                        <div class="w">
-                                            <div data-u="thumbnailtemplate" class="t"></div>
-                                        </div>
-                                        <div class="c"></div>
-                                    </div>
+                                    <?php endforeach; ?>
                                 </div>
-                                <!-- Thumbnail Item Skin End -->
+                                <!-- Bullet Navigator -->
+                                <div data-u="navigator" class="jssorb01">
+                                    <div data-u="prototype" style="width:12px;height:12px;"></div>
+                                </div>
+                                <!-- Thumbnail Navigator -->
+                                <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
+                                    <div class="thumbslider"></div>
+                                    <!-- Thumbnail Item Skin Begin -->
+                                    <div data-u="slides" style="cursor: pointer;">
+                                        <div data-u="prototype" class="p">
+                                            <div class="w">
+                                                <div data-u="thumbnailtemplate" class="t"></div>
+                                            </div>
+                                            <div class="c"></div>
+                                        </div>
+                                    </div>
+                                    <!-- Thumbnail Item Skin End -->
+                                </div>
+                                <!-- Arrow Navigator -->
+                                <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
+                                <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
                             </div>
-                            <!-- Arrow Navigator -->
-                            <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
-                            <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
+                        </div>
+                    <?php endif; ?>
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('name') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$this->escape($layout->name) ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('version') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$layout->version ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('author') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?php if ($layout->link != ''): ?>
+                                <a href="<?=$layout->link ?>" alt="<?=$this->escape($layout->author) ?>" title="<?=$this->escape($layout->author) ?>" target="_blank">
+                                    <i><?=$this->escape($layout->author) ?></i>
+                                </a>
+                            <?php else: ?>
+                                <i><?=$this->escape($layout->author) ?></i>
+                            <?php endif; ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('hits') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$layout->hits ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('downloads') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <?=$layout->downs ?>
+                        </div>
+                        <div class="col-sm-3 col-xs-6">
+                            <b><?=$this->getTrans('rating') ?>:</b>
+                        </div>
+                        <div class="col-sm-9 col-xs-6">
+                            <span title="<?=$layout->rating ?> <?php if ($layout->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
+                                <input type="number"
+                                       class="rating"
+                                       value="<?=$layout->rating ?>"
+                                       data-size="xs"
+                                       data-readonly="true"
+                                       data-show-clear="false"
+                                       data-show-caption="false">
+                            </span>
                         </div>
                     </div>
-
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('name') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$this->escape($layout->name) ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('version') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$layout->version ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('author') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?php if ($layout->link != ''): ?>
-                            <a href="<?=$layout->link ?>" alt="<?=$this->escape($layout->author) ?>" title="<?=$this->escape($layout->author) ?>" target="_blank">
-                                <i><?=$this->escape($layout->author) ?></i>
-                            </a>
-                        <?php else: ?>
-                            <i><?=$this->escape($layout->author) ?></i>
-                        <?php endif; ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('hits') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$layout->hits ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('downloads') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <?=$layout->downs ?>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <b><?=$this->getTrans('rating') ?>:</b>
-                    </div>
-                    <div class="col-sm-9 col-xs-6">
-                        <span title="<?=$layout->rating ?> <?php if ($layout->rating == 1) { echo $this->getTrans('star'); } else { echo $this->getTrans('stars'); } ?>">
-                            <input type="number"
-                                   class="rating"
-                                   value="<?=$layout->rating ?>"
-                                   data-size="xs"
-                                   data-readonly="true"
-                                   data-show-clear="false"
-                                   data-show-caption="false">
-                        </span>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <b><?=$this->getTrans('desc') ?>:</b>
+                        </div>
+                        <div class="col-xs-12">
+                            <?=$this->escape($layout->desc) ?>
+                        </div>
                     </div>
                 </div>
-                <br />
+            </div>
+            <div class="tab-pane" id="changelog">
                 <div class="col-xs-12">
-                    <b><?=$this->getTrans('desc') ?>:</b>
-                </div>
-                <div class="col-xs-12">
-                    <?=$this->escape($layout->desc) ?>
+                    <?php if (!empty($layout->changelog)) {
+                        echo $layout->changelog;
+                    } else {
+                        echo $this->getTrans('noChangelog');
+                    } ?>
                 </div>
             </div>
         </div>
