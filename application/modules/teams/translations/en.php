@@ -21,4 +21,6 @@ return [
     'imageHeight' => 'Image hight',
     'imageWidth' => 'Image width',
     'allowedFileExtensions' => 'Allowed file extensions',
+    'failedFiletypes' => 'Image does not contain allowed file format.',
+    'failedFilesize' => 'Image has unauthorized width, height or is too big.',
 ];
