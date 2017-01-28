@@ -55,7 +55,7 @@ class Mail extends \Ilch\Controller\Frontend
                         ->setFrom($email, $name)
                         ->setMessage($message)
                         ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
+                $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
                 $mail->send();
 
                 $this->addMessage('emailSuccess');

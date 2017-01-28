@@ -117,10 +117,10 @@ class Regist extends \Ilch\Controller\Frontend
                     $mail = new \Ilch\Mail();
                     $mail->setTo($this->getRequest()->getPost('email'), $this->getRequest()->getPost('name'))
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                        ->setFrom($this->getTranslator()->trans('automaticEmail'), $sitetitle)
+                        ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
                         ->setMessage($message)
                         ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                    $mail->setAdditionalParameters('-f '.$this->getConfig()->get('standardMail'));
+                    $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
                     $mail->send();
                 }
 
