@@ -7,6 +7,7 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Ilch\Transfer as IlchTransfer;
+use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
 {
@@ -73,29 +74,39 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
-            $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
-            $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
-            $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
-            $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
-            $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
-            $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
-            $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
-            if ($this->getRequest()->getPost('navbarFixed') === '1') {
-                $this->getConfig()->set('admin_layout_top_nav', 'navbar-fixed-top');
-                
-                if ($this->getRequest()->getPost('hmenuFixed') === '1') {
-                    $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
-                } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'multilingualAcp' => 'required|numeric|integer|min:0|max:1',
+                'modRewrite' => 'required|numeric|integer|min:0|max:1',
+                'standardMail' => 'required|email',
+                'defaultPaginationObjects' => 'numeric|integer|min:1',
+                'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
+                'navbarFixed' => 'required|numeric|integer|min:0|max:1'
+            ]);
+
+            if ($validation->isValid()) {
+                $this->getConfig()->set('multilingual_acp', $this->getRequest()->getPost('multilingualAcp'));
+                $this->getConfig()->set('content_language', $this->getRequest()->getPost('contentLanguage'));
+                $this->getConfig()->set('start_page', $this->getRequest()->getPost('startPage'));
+                $this->getConfig()->set('mod_rewrite', (int)$this->getRequest()->getPost('modRewrite'));
+                $this->getConfig()->set('standardMail', $this->getRequest()->getPost('standardMail'));
+                $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
+                $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
+                $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
+                if ($this->getRequest()->getPost('navbarFixed') === '1') {
+                    $this->getConfig()->set('admin_layout_top_nav', 'navbar-fixed-top');
+                    
+                    if ($this->getRequest()->getPost('hmenuFixed') === '1') {
+                        $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
+                    } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
+                        $this->getConfig()->set('admin_layout_hmenu', '');
+                    }
+                } elseif ($this->getRequest()->getPost('navbarFixed') === '0') {
+                    $this->getConfig()->set('admin_layout_top_nav', '');
                     $this->getConfig()->set('admin_layout_hmenu', '');
                 }
-            } elseif ($this->getRequest()->getPost('navbarFixed') === '0') {
-                $this->getConfig()->set('admin_layout_top_nav', '');
-                $this->getConfig()->set('admin_layout_hmenu', '');
-            }
 
-            if ((int)$this->getRequest()->getPost('modRewrite')) {
-                $htaccess = <<<'HTACCESS'
+                if ((int)$this->getRequest()->getPost('modRewrite')) {
+                    $htaccess = <<<'HTACCESS'
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase %1$s/
@@ -105,12 +116,17 @@ class Settings extends \Ilch\Controller\Admin
     RewriteRule . %1$s/index.php [L]
 </IfModule>
 HTACCESS;
-                file_put_contents(ROOT_PATH.'/.htaccess', sprintf($htaccess, REWRITE_BASE));
-            } elseif (file_exists(ROOT_PATH.'/.htaccess')) {
-                file_put_contents(ROOT_PATH.'/.htaccess', '');
+                    file_put_contents(ROOT_PATH.'/.htaccess', sprintf($htaccess, REWRITE_BASE));
+                } elseif (file_exists(ROOT_PATH.'/.htaccess')) {
+                    file_put_contents(ROOT_PATH.'/.htaccess', '');
+                }
+
+                $this->addMessage('saveSuccess');
             }
 
-            $this->addMessage('saveSuccess');
+            $this->redirect()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
