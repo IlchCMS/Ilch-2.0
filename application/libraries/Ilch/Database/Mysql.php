@@ -317,6 +317,20 @@ class Mysql
     }
 
     /**
+     * Truncate the table.
+     *
+     * @param string $table
+     * @return \mysqli_result
+     */
+    public function truncate($table)
+    {
+        $sql = 'TRUNCATE TABLE `' . $table . '`';
+        $sql = $this->getSqlWithPrefix($sql);
+
+        return $this->query($sql);
+    }
+
+    /**
      * Create the field part for the given array.
      *
      * @param  array $fields

@@ -124,6 +124,10 @@ class Infos extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('hmenuInfos'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('hmenuLogs'), ['action' => 'logs']);
 
+        if ($this->getRequest()->isPost()) {
+            $logsMapper->clearLog();
+        }
+
         $this->getView()->set('logsMapper', $logsMapper);
         $this->getView()->set('userMapper', $userMapper);
         $this->getView()->set('logsDate', $logsMapper->getLogsDate());

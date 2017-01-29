@@ -258,9 +258,10 @@ return [
     'shortcutCustumCSSMultiEdit' => 'Markiert mit der Maus mehrere Zeilen zur gleichzeitigen Bearbeitung',
     'shortcutCustumCSStoggleComment' => 'Zum auskommentieren von markierten Zeilen oder um die Kommentar wieder zu entfernen',
 
-    'menuLogs' => 'Logs',
-    'hmenuLogs' => 'Logs',
-    'logs' => 'Logs',
+    'menuLogs' => 'Protokoll',
+    'hmenuLogs' => 'Protokoll',
+    'logs' => 'Protokoll',
+    'clearLog' => 'Protokoll löschen',
     'time' => 'Uhrzeit',
     'users' => 'Benutzer',
     'unknow' => 'Unbekannt',

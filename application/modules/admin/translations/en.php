@@ -260,6 +260,7 @@ return [
     'menuLogs' => 'Logs',
     'hmenuLogs' => 'Logs',
     'logs' => 'Logs',
+    'clearLog' => 'Clear log',
     'time' => 'Time',
     'users' => 'Users',
     'unknow' => 'Unknow',

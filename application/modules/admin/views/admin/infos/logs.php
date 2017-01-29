@@ -5,6 +5,10 @@ $userMapper = $this->get('userMapper');
 
 <legend><?=$this->getTrans('logs') ?></legend>
 
+<form class="form-horizontal" method="POST" action="">
+    <?=$this->getTokenField() ?>
+    <button type="submit" name="clearLog"><?=$this->getTrans('clearLog') ?></button>
+</form><br>
 <?php if ($this->get('logsDate') != ''): ?>
     <?php foreach ($this->get('logsDate') as $logDate): ?>
         <?php $date = new \Ilch\Date($logDate->getDate()); ?>
