@@ -95,6 +95,10 @@ class Index extends \Ilch\Controller\Admin
                 'groupId' => 'required|numeric|integer|min:1'
             ]);
 
+            if ($this->getRequest()->getPost('leader') == $this->getRequest()->getPost('coLeader')) {
+                $validation->getErrorBag()->addError('coLeader', $this->getTranslator()->trans('leaderCoLeaderIdentic'));
+            }
+
             if ($validation->isValid()) {
                 $model = new TeamsModel();
 
@@ -156,6 +160,8 @@ class Index extends \Ilch\Controller\Admin
                     ->setCoLeader($this->getRequest()->getPost('coLeader'))
                     ->setGroupId($this->getRequest()->getPost('groupId'));
                 $teamsMapper->save($model);
+
+                $this->addMessage('saveSuccess');
             }
 
             if ($this->getRequest()->getParam('id')) {
