@@ -211,16 +211,20 @@ class Redirect
             $urlParts[] = $key.'/'.$value;
         }
 
-        $s = '';
-
-        if (($this->request->isAdmin() && $route === null) || ($route !== null && $route == 'admin')) {
-            $s = 'admin/';
+        if ($this->request->isAdmin() && $route === null) {
+            $route = "admin";
         }
 
-        if ($modRewrite && empty($s)) {
-            return BASE_URL.'/'.$s.implode('/', $urlParts);
+        $prefix = '';
+        
+        if ($route !== null && $route !== 'frontend') {
+            $prefix = $route. '/';
+        }
+
+        if ($modRewrite) {
+            return BASE_URL.'/'.$prefix.implode('/', $urlParts);
         } else {
-            return BASE_URL.'/index.php/'.$s.implode('/', $urlParts);
+            return BASE_URL.'/index.php/'.$prefix.implode('/', $urlParts);
         }
     }
 }
