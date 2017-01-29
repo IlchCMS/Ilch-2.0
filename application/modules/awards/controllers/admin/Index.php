@@ -9,6 +9,7 @@ namespace Modules\Awards\Controllers\Admin;
 use Modules\Awards\Mappers\Awards as AwardsMapper;
 use Modules\Awards\Models\Awards as AwardsModel;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Teams\Mappers\Teams as TeamsMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -47,6 +48,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
+        $teamsMapper = new TeamsMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
@@ -61,6 +63,7 @@ class Index extends \Ilch\Controller\Admin
         }
 
         $this->getView()->set('userMapper', $userMapper);
+        $this->getView()->set('teamsMapper', $teamsMapper);
         $this->getView()->set('awards', $awardsMapper->getAwards());
     }
 
@@ -68,6 +71,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
+        $teamsMapper = new TeamsMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -133,9 +137,11 @@ class Index extends \Ilch\Controller\Admin
             $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
             $errorFields = $validation->getFieldsWithError();
         }
+
         $this->getView()->set('post', $post);
         $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]));
+        $this->getView()->set('teams', $teamsMapper->getTeams());
     }
 
     public function delAction()

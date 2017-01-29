@@ -77,7 +77,6 @@ if ($awards != '') {
             <select class="form-control" id="user" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 2) { echo 'disabled';} ?>>
                 <?php foreach ($this->get('users') as $user) {
                         $selected = '';
-
                         if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $user->getId()) {
                             $selected = 'selected="selected"';
                         }
@@ -100,13 +99,16 @@ if ($awards != '') {
                    <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2) { echo 'checked="checked"';} ?>>
         </div>
         <div class="col-lg-2">
-            <input type="text"
-                   class="form-control"
-                   id="team"
-                   name="utId"
-                   <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>
-                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>
-                   value="<?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() != 1) { echo $this->escape($this->get('awards')->getUTId()); } ?>" />
+            <select class="form-control" id="team" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>>
+                <?php foreach ($this->get('teams') as $team) {
+                    $selected = '';
+                    if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId()) {
+                        $selected = 'selected="selected"';
+                    }
+                    echo '<option '.$selected.' value="'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
+                }
+                ?>
+            </select>
         </div>
     </div>
     <div class="form-group">

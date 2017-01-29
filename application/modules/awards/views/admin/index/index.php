@@ -1,4 +1,7 @@
-<?php $userMapper = $this->get('userMapper'); ?>
+<?php
+$userMapper = $this->get('userMapper');
+$teamsMapper = $this->get('teamsMapper');
+?>
 
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php if ($this->get('awards') != ''): ?>
@@ -36,12 +39,18 @@
                             <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($awards->getRank()) ?></td>
                             <?php if ($awards->getTyp() == 2): ?>
-                                <td><?=$awards->getUTId() ?></td>
+                                <?php $team = $teamsMapper->getTeamById($awards->getUTId()); ?>
+                                <td><a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a></td>
                             <?php else: ?>
                                 <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                                 <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                             <?php endif; ?>
-                            <td><a href="<?=$awards->getURL() ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank"><?=$this->escape($awards->getEvent()) ?></td>
+
+                            <?php if ($awards->getEvent() != '' AND $awards->getURL() != ''): ?>
+                                <td><a href="<?=$this->escape($awards->getURL()) ?>" title="<?=$this->escape($awards->getEvent()) ?>" target="_blank"><?=$this->escape($awards->getEvent()) ?></a></td>
+                            <?php elseif ($awards->getEvent() != '' AND $awards->getURL() == ''): ?>
+                                <td><?=$this->escape($awards->getEvent()) ?></td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
