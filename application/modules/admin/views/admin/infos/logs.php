@@ -7,7 +7,7 @@ $userMapper = $this->get('userMapper');
 
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <button type="submit" name="clearLog"><?=$this->getTrans('clearLog') ?></button>
+    <button type="submit" class="btn" name="clearLog"><?=$this->getTrans('clearLog') ?></button>
 </form><br>
 <?php if ($this->get('logsDate') != ''): ?>
     <?php foreach ($this->get('logsDate') as $logDate): ?>
