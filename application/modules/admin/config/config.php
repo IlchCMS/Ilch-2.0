@@ -163,7 +163,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_logs` (
                   `user_id` VARCHAR(255) NOT NULL,
                   `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                  `info` VARCHAR(255) NOT NULL,
+                  `info` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 
