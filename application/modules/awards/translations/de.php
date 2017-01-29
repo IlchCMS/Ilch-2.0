@@ -21,4 +21,6 @@ return [
     'awards' => 'Auszeichnungen',
     'currentlyThereAre' => 'Derzeit gibt es',
     'invalidUserTeam' => 'Benutzer oder Team',
+    'formerTeam' => 'Ehemaliges Team',
+    'formerUser' => 'Ehemaliger Benutzer',
 ];
