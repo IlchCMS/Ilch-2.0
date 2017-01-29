@@ -32,7 +32,11 @@ $teamsMapper = $this->get('teamsMapper');
                     <div class="rank_info">
                         <?php if ($awards->getTyp() == 2): ?>
                             <?php $team = $teamsMapper->getTeamById($awards->getUTId()); ?>
-                            <a href="<?=$this->getUrl('teams/index/index') ?>"><?=$this->escape($team->getName()) ?></a>
+                            <?php if ($team) : ?>
+                                <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
+                            <?php else: ?>
+                                <?=$this->getTrans('formerTeam') ?>
+                            <?php endif; ?>
                         <?php else: ?>
                             <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
