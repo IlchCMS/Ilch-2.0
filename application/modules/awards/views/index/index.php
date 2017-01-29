@@ -39,7 +39,11 @@ $teamsMapper = $this->get('teamsMapper');
                             <?php endif; ?>
                         <?php else: ?>
                             <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
-                            <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
+                            <?php if ($user) : ?>
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
+                            <?php else: ?>
+                                <?=$this->getTrans('formerUser') ?>
+                            <?php endif; ?>
                         <?php endif; ?>
                         <br />
                         <?=date('d.m.Y', strtotime($awards->getDate())) ?><br />

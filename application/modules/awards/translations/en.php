@@ -22,4 +22,5 @@ return [
     'currentlyThereAre' => 'Currently, there are',
     'invalidUserTeam' => 'User or team',
     'formerTeam' => 'former team',
+    'formerUser' => 'former user',
 ];
