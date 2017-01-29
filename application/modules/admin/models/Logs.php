@@ -9,13 +9,6 @@ namespace Modules\Admin\Models;
 class Logs extends \Ilch\Model
 {
     /**
-     * The id of the log.
-     *
-     * @var int
-     */
-    protected $id;
-
-    /**
      * The user id of the log.
      *
      * @var int
@@ -35,26 +28,6 @@ class Logs extends \Ilch\Model
      * @var string
      */
     protected $info;
-
-    /**
-     * Gets the id of the log.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Sets the id of the log.
-     *
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = (int) $id;
-    }
 
     /**
      * Gets the user id of the log.

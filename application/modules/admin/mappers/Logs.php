@@ -32,7 +32,6 @@ class Logs extends \Ilch\Mapper
         $logs = [];
         foreach ($entriesArray as $entry) {
             $model = new LogsModel();
-            $model->setId($entry['id']);
             $model->setUserId($entry['user_id']);
             $model->setDate($entry['date']);
             $model->setInfo($entry['info']);
@@ -95,5 +94,14 @@ class Logs extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
+    }
+
+    /**
+     * Clear log.
+     *
+     */
+    public function clearLog()
+    {
+        $this->db()->truncate('[prefix]_logs');
     }
 }
