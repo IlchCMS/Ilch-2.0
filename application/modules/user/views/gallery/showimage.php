@@ -109,7 +109,7 @@ $config = $this->get('config');
                                             </p>
                                             <div>
                                                 <div class="content_savebox">
-                                                    <button type="submit" class="btn btn-sm btn-default " name="saveComment" value="save">
+                                                    <button type="submit" class="btn btn-default btn-sm" name="saveComment" value="save">
                                                         <?=$obj->getTrans('submit') ?>
                                                     </button>
                                                 </div>
@@ -195,7 +195,7 @@ $config = $this->get('config');
                                         </p>
                                         <div>
                                             <div class="content_savebox">
-                                                <button type="submit" class="btn btn-sm btn-default " name="saveComment" value="save">
+                                                <button type="submit" class="btn btn-default btn-sm" name="saveComment" value="save">
                                                     <?=$this->getTrans('submit') ?>
                                                 </button>
                                             </div>
@@ -291,7 +291,7 @@ $config = $this->get('config');
                                                             </p>
                                                             <div>
                                                                 <div class="content_savebox">
-                                                                    <button type="submit" class="btn btn-sm btn-default " name="saveComment" value="save">
+                                                                    <button type="submit" class="btn btn-default btn-sm" name="saveComment" value="save">
                                                                         <?=$this->getTrans('submit') ?>
                                                                     </button>
                                                                 </div>

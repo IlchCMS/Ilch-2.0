@@ -62,7 +62,7 @@
     </div>
 
     <div class="content_savebox">
-        <button type="submit" class="btn" name="save" value="save">
+        <button type="submit" class="btn btn-default" name="save" value="save">
             <?=$this->getTrans('saveButton') ?>
         </button>
         <input type="hidden" class="content_savebox_hidden" name="action" value="" />

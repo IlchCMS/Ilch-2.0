@@ -199,17 +199,17 @@ foreach ($modules as $module): ?>
             $filename = basename($module->downloadLink);
             $filename = strstr($filename,'.',true);
             if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
-                <button class="btn disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
+                <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (in_array($filename, $this->get('modules'))): ?>
-                <button class="btn disabled" title="<?=$this->getTrans('alreadyExists') ?>">
+                <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
                 <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search']) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn" name="url" value="<?=$module->downloadLink ?>">
+                    <button type="submit" class="btn btn-default" name="url" value="<?=$module->downloadLink ?>">
                         <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>

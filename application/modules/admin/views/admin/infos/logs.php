@@ -4,11 +4,6 @@ $userMapper = $this->get('userMapper');
 ?>
 
 <legend><?=$this->getTrans('logs') ?></legend>
-
-<form class="form-horizontal" method="POST" action="">
-    <?=$this->getTokenField() ?>
-    <button type="submit" class="btn" name="clearLog"><?=$this->getTrans('clearLog') ?></button>
-</form><br>
 <?php if ($this->get('logsDate') != ''): ?>
     <?php foreach ($this->get('logsDate') as $logDate): ?>
         <?php $date = new \Ilch\Date($logDate->getDate()); ?>
@@ -51,3 +46,10 @@ $userMapper = $this->get('userMapper');
         </div>
     <?php endforeach; ?>
 <?php endif; ?>
+
+<div class="content_savebox">
+    <form class="form-horizontal" method="POST" action="">
+        <?=$this->getTokenField() ?>
+        <button type="submit" name="clearLog" class="btn btn-default"><?=$this->getTrans('clearLog') ?></button>
+    </form>
+</div>
