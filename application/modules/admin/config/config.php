@@ -76,7 +76,7 @@ class Config extends \Ilch\Config\Install
                   `link` VARCHAR(255) NULL DEFAULT NULL,
                   `icon_small` VARCHAR(255) NOT NULL,
                   UNIQUE KEY `key` (`key`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules_content` (
                   `key` VARCHAR(255) NOT NULL,
@@ -164,7 +164,7 @@ class Config extends \Ilch\Config\Install
                   `user_id` VARCHAR(255) NOT NULL,
                   `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                   `info` VARCHAR(255) NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 
     public function getUpdate($installedVersion)
