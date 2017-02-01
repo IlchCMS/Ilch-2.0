@@ -11,7 +11,7 @@ class Config extends \Ilch\Config\Install
     public $config = [
         'key' => 'partner',
         'version' => '1.0',
-        'icon_small' => 'fa-users',
+        'icon_small' => 'fa-handshake-o',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
         'languages' => [
