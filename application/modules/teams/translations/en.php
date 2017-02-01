@@ -11,6 +11,7 @@ return [
     'leader' => 'Leader',
     'coLeader' => 'CoLeader',
     'noCoLeader' => 'No CoLeader',
+    'member' => 'Member',
     'members' => 'Members',
     'users' => 'Users',
     'group' => 'Group',

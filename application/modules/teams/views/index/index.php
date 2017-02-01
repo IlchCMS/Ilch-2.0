@@ -49,6 +49,8 @@ $groupMapper = $this->get('groupMapper');
                                             echo $this->getTrans('leader');
                                         } elseif ($teamlist->getCoLeader() == $user->getId()) {
                                             echo $this->getTrans('coLeader');
+                                        } else {
+                                            echo $this->getTrans('member');
                                         }
                                         ?>
                                     </td>
