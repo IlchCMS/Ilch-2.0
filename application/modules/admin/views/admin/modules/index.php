@@ -4,6 +4,7 @@ $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
+$configurations = $this->get('configurations');
 
 function checkOthersDependencies($module, $dependencies) {
     $dependencyCheck = [];
@@ -163,8 +164,15 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                     }
                     $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$content['name'].'<br />
                                    <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
-                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
-                                   <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
+                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br />
+                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$configurations[$module->getKey()]['ilchCore'].'<br />
+                                   <b>'.$this->getTrans('phpVersion').':</b> '.$configurations[$module->getKey()]['phpVersion'].'<br />
+                                   <b>'.$this->getTrans('dependencies').':</b><br />';
+                    foreach ($configurations[$module->getKey()]['depends'] as $key => $value) {
+                        $moduleInfo .= $key.': '. str_replace(',','', $value).'<br />';
+                    }
+
+                    $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
 
                     $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
                     foreach (checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies) as $key => $value) {

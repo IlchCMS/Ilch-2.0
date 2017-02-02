@@ -203,7 +203,6 @@ return [
     'phpVersionError' => 'The version of PHP is too old.',
     'ilchCoreError' => 'The Ilch-core version is too old.',
     'dependencyError' => 'Dependencies not fullfilled',
-    'dependency' => 'Dependencies',
     'dependencyInfo' => 'Other moduls are dependent on this module. Uninstall or update these moduls first.',
     'requirements' => 'Requirements',
     'ilchCoreVersion' => 'Ilch-core version',

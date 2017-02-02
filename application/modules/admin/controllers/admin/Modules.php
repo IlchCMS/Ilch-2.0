@@ -67,12 +67,14 @@ class Modules extends \Ilch\Controller\Admin
             if (class_exists($configClass)) {
                 $config = new $configClass($this->getTranslator());
                 $dependencies[$key] = $config->config['depends'];
+                $configurations[$key] = $config->config;
             }
         }
 
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
         $this->getView()->set('dependencies', $dependencies);
+        $this->getView()->set('configurations', $configurations);
         $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
     }
 
