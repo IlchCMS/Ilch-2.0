@@ -3,6 +3,35 @@ $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
+$dependencies = $this->get('dependencies');
+
+function checkOthersDependencies($module, $dependencies) {
+    $dependencyCheck = [];
+    foreach ($dependencies as $dependency) {
+        $key = key($module);
+        if (array_key_exists($key, $dependency)) {
+            $parsed = explode(',', $dependency[$key]);
+            if (!version_compare($module[$key], $parsed[1], $parsed[0])) {
+                $dependencyCheck[array_search(array($key => $dependency[$key]), $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
+            }
+        }
+    }
+
+    return $dependencyCheck;
+}
+
+function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
+    foreach ($moduleOnUpdateServer->depends as $key => $value) {
+        if (array_key_exists($key, $versionsOfModules)) {
+            $parsed = explode(',', $value);
+            if (!version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
@@ -55,6 +84,7 @@ if (empty($modulesOnUpdateServer)) {
                         $filename = strstr($filename,'.',true);
                         $isInstalled = in_array($filename, $this->get('modules'));
                         $iconClass = ($isInstalled) ? 'fa fa-refresh' : 'fa fa-download';
+
                         if (!empty($moduleOnUpdateServer->phpExtensions) AND in_array(false, $extensionCheck)): ?>
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('phpExtensionError') ?>">
@@ -74,6 +104,18 @@ if (empty($modulesOnUpdateServer)) {
                             <button class="btn disabled"
                                     title="<?=$this->getTrans('alreadyExists') ?>">
                                 <i class="fa fa-check text-success"></i>
+                            </button>
+                        <?php elseif ($isInstalled && !empty(checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies))): ?>
+                            <button class="btn disabled"
+                                    data-toggle="modal"
+                                    data-target="#infoModal<?=$moduleOnUpdateServer->key ?>"
+                                    title="<?=$this->getTrans('dependencyError') ?>">
+                                <i class="<?=$iconClass ?>"></i>
+                            </button>
+                        <?php elseif (!checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)): ?>
+                            <button class="btn disabled"
+                                    title="<?=$this->getTrans('dependencyError') ?>">
+                                <i class="<?=$iconClass ?>"></i>
                             </button>
                         <?php elseif ($isInstalled && version_compare($versionsOfModules[$moduleOnUpdateServer->key]['version'], $moduleOnUpdateServer->version, '<')): ?>
                             <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $moduleOnUpdateServer->key, 'from' => 'search']) ?>">
@@ -107,6 +149,13 @@ if (empty($modulesOnUpdateServer)) {
                     </td>
                     <td><?=$moduleOnUpdateServer->desc ?></td>
                 </tr>
+                <?php
+                    $moduleInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
+                    foreach (checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies) as $key => $value) {
+                        $moduleInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
+                    }
+                ?>
+                <?=$this->getDialog('infoModal'.$moduleOnUpdateServer->key, $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
             <?php endforeach; ?>
         </tbody>
     </table>

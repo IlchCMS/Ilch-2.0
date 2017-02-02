@@ -1,5 +1,17 @@
 <legend><?=$this->getTrans('modulesNotInstalled') ?></legend>
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
+    <?php
+    function checkOwnDependencies($versionsOfModules, $dependencies) {
+        foreach ($dependencies as $key => $value) {
+            $parsed = explode(',', $value);
+            if (!version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -65,6 +77,11 @@
                             <?php if ($module->getPHPExtension() != '' AND in_array(false, $extensionCheck)): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('phpExtensionError') ?>">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                            <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()])): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('dependencyError') ?>">
                                     <i class="fa fa-save"></i>
                                 </button>
                             <?php else: ?>

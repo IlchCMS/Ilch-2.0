@@ -3,6 +3,35 @@ $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
+$dependencies = $this->get('dependencies');
+
+function checkOthersDependencies($module, $dependencies) {
+    $dependencyCheck = [];
+    foreach ($dependencies as $dependency) {
+        $key = key($module);
+        if (array_key_exists($key, $dependency)) {
+            $parsed = explode(',', $dependency[$key]);
+            if (!version_compare($module[$key], $parsed[1], $parsed[0])) {
+                $dependencyCheck[array_search(array($key => $dependency[$key]), $dependencies)] = [$key => str_replace(',','', $dependency[$key])];
+            }
+        }
+    }
+
+    return $dependencyCheck;
+}
+
+function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
+    foreach ($moduleOnUpdateServer->depends as $key => $value) {
+        if (array_key_exists($key, $versionsOfModules)) {
+            $parsed = explode(',', $value);
+            if (!version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
@@ -23,6 +52,18 @@ $coreVersion = $this->get('coreVersion');
         <tbody>
             <?php foreach ($this->get('modules') as $module):
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
+
+                $moduleOnUpdateServerFound = null;
+                $filename = '';
+                foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
+                    if ($moduleOnUpdateServer->key == $module->getKey()) {
+                        $filename = basename($moduleOnUpdateServer->downloadLink);
+                        $filename = strstr($filename,'.',true);
+                        $moduleOnUpdateServerFound = $moduleOnUpdateServer;
+                        break;
+                    }
+                }
+
                 if ($this->getUser()->hasAccess('module_'.$module->getKey()) && !$module->getSystemModule()): ?>
                     <tr>
                         <td>
@@ -49,21 +90,20 @@ $coreVersion = $this->get('coreVersion');
                                 <i class="fa fa-info text-info"></i>
                             </span>
                             <?php if (!isset($config->isSystemModule)): ?>
+                                <?php if (!empty(checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies))): ?>
+                                    <button class="btn disabled"
+                                            data-toggle="modal"
+                                            data-target="#dependencyInfoModal<?=$moduleOnUpdateServerFound->key ?>"
+                                            title="<?=$this->getTrans('dependencyError') ?>">
+                                        <i class="fa fa-trash-o text-warning"></i>
+                                    </button>
+                                <?php else: ?>
                                 <a href="<?=$this->getUrl(['action' => 'uninstall', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('uninstall') ?>">
                                    <i class="fa fa-trash-o text-warning"></i>
                                 </a>
+                                <?php endif; ?>
                             <?php endif; ?>
                             <?php
-                            $moduleOnUpdateServerFound = null;
-                            $filename = '';
-                            foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
-                                if ($moduleOnUpdateServer->key == $module->getKey()) {
-                                    $filename = basename($moduleOnUpdateServer->downloadLink);
-                                    $filename = strstr($filename,'.',true);
-                                    $moduleOnUpdateServerFound = $moduleOnUpdateServer;
-                                    break;
-                                }
-                            }
                             if (!empty($moduleOnUpdateServerFound)) {
                                 if (!empty($moduleOnUpdateServerFound->phpExtensions)) {
                                     $extensionCheck = [];
@@ -84,6 +124,18 @@ $coreVersion = $this->get('coreVersion');
                                 <?php elseif (version_compare($coreVersion, $moduleOnUpdateServerFound->ilchCore, '<')): ?>
                                     <button class="btn disabled"
                                             title="<?=$this->getTrans('ilchCoreError') ?>">
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                <?php elseif (!empty(checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies))): ?>
+                                    <button class="btn disabled"
+                                            data-toggle="modal"
+                                            data-target="#dependencyInfoModal<?=$moduleOnUpdateServerFound->key ?>"
+                                            title="<?=$this->getTrans('dependencyError') ?>">
+                                        <i class="fa fa-refresh"></i>
+                                    </button>
+                                <?php elseif (!checkOwnDependencies($versionsOfModules, $moduleOnUpdateServerFound)): ?>
+                                    <button class="btn disabled"
+                                            title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="fa fa-refresh"></i>
                                     </button>
                                 <?php elseif (version_compare($versionsOfModules[$moduleOnUpdateServerFound->key]['version'], $moduleOnUpdateServerFound->version, '<')): ?>
@@ -113,8 +165,14 @@ $coreVersion = $this->get('coreVersion');
                                    <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
                                    <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
                                    <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
+
+                    $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
+                    foreach (checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies) as $key => $value) {
+                        $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
+                    }
                     ?>
                     <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
+                    <?=$this->getDialog('dependencyInfoModal'.$moduleOnUpdateServerFound->key, $this->getTrans('menuModules').' '.$this->getTrans('info'), $dependencyInfo); ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </tbody>
