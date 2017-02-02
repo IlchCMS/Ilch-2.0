@@ -172,7 +172,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                     }
                     ?>
                     <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
-                    <?=$this->getDialog('dependencyInfoModal'.$moduleOnUpdateServerFound->key, $this->getTrans('menuModules').' '.$this->getTrans('info'), $dependencyInfo); ?>
+                    <?=$this->getDialog('dependencyInfoModal'.$moduleOnUpdateServerFound->key, $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo); ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </tbody>

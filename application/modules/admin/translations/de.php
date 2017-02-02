@@ -204,6 +204,7 @@ return [
     'phpVersionError' => 'Die Version von PHP ist zu alt.',
     'ilchCoreError' => 'Die Ilch-Kern Version ist zu alt.',
     'dependencyError' => 'Abhängigkeiten sind nicht erfüllt.',
+    'dependency' => 'Abhängigkeiten',
     'dependencyInfo' => 'Andere Module sind von diesem Modul abhängig. Deinstallieren oder aktualisieren Sie diese Module zuerst.',
     'requirements' => 'Anforderungen',
     'ilchCoreVersion' => 'Ilch-Kern Version',

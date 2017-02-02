@@ -150,12 +150,12 @@ if (empty($modulesOnUpdateServer)) {
                     <td><?=$moduleOnUpdateServer->desc ?></td>
                 </tr>
                 <?php
-                    $moduleInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
+                    $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
                     foreach (checkOthersDependencies([$moduleOnUpdateServer->key => $moduleOnUpdateServer->version], $dependencies) as $key => $value) {
-                        $moduleInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
+                        $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
                     }
                 ?>
-                <?=$this->getDialog('infoModal'.$moduleOnUpdateServer->key, $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
+                <?=$this->getDialog('infoModal'.$moduleOnUpdateServer->key, $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo); ?>
             <?php endforeach; ?>
         </tbody>
     </table>
