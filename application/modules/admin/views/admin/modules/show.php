@@ -2,6 +2,7 @@
 $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
+$coreVersion = $this->get('coreVersion');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
@@ -64,7 +65,7 @@ foreach ($modules as $module): ?>
             $phpVersion = '<font color="#a94442">'.$module->phpVersion.'</font>';
         }
 
-        if (version_compare($this->get('coreVersion'), $module->ilchCore, '>=')) {
+        if (version_compare($coreVersion, $module->ilchCore, '>=')) {
             $ilchCore = '<font color="#3c763d">'.$module->ilchCore.'</font>';
         } else {
             $ilchCore = '<font color="#a94442">'.$module->ilchCore.'</font>';
@@ -227,6 +228,18 @@ foreach ($modules as $module): ?>
             $filename = strstr($filename,'.',true);
             if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
+                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                </button>
+            <?php elseif (!version_compare(phpversion(), $module->phpVersion, '>=')): ?>
+                <button class="btn btn-default disabled" title="<?=$this->getTrans('phpVersionError') ?>">
+                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                </button>
+            <?php elseif (!version_compare($coreVersion, $module->ilchCore, '>=')): ?>
+                <button class="btn btn-default disabled" title="<?=$this->getTrans('ilchCoreError') ?>">
+                    <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
+                </button>
+            <?php elseif (!empty($dependencyCheck)): ?>
+                <button class="btn btn-default disabled" title="<?=$this->getTrans('dependencyError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
             <?php elseif (in_array($filename, $this->get('modules'))): ?>
