@@ -1,6 +1,7 @@
 <?php
 $modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
 $modules = json_decode($modulesList);
+$versionsOfModules = $this->get('versionsOfModules');
 ?>
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
@@ -37,6 +38,24 @@ foreach ($modules as $module): ?>
             }
 
             $phpExtension = implode(", ", $phpExtension);
+        }
+
+        if (!empty($module->depends)) {
+            $dependencyCheck = [];
+            foreach ($module->depends as $key => $value) {
+                $parsed = explode(',', $value);
+                $dependencyCheck[$key] = ['condition' => str_replace(',','', $value), 'result' => version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])];
+            }
+
+            foreach ($dependencyCheck as $key => $value) {
+                if ($value['result'] == true) {
+                    $dependency[] = '<font color="#3c763d">'.$key.' '.$value['condition'].'</font>';
+                } else {
+                    $dependency[] = '<font color="#a94442">'.$key.' '.$value['condition'].'</font>';
+                }
+            }
+
+            $dependency = implode(", ", $dependency);
         }
 
         if (version_compare(phpversion(), $module->phpVersion, '>=')) {
@@ -171,6 +190,14 @@ foreach ($modules as $module): ?>
                             </div>
                             <div class="col-sm-9 col-xs-6">
                                 <?=$phpExtension ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!empty($module->depends)): ?>
+                            <div class="col-sm-3 col-xs-6">
+                                <b><?=$this->getTrans('dependencies') ?>:</b>
+                            </div>
+                            <div class="col-sm-9 col-xs-6">
+                                <?=$dependency ?>
                             </div>
                         <?php endif; ?>
                     </div>

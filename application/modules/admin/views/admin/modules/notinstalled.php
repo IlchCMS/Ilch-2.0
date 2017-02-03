@@ -1,5 +1,17 @@
 <legend><?=$this->getTrans('modulesNotInstalled') ?></legend>
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
+    <?php
+    function checkOwnDependencies($versionsOfModules, $dependencies) {
+        foreach ($dependencies as $key => $value) {
+            $parsed = explode(',', $value);
+            if (!version_compare($versionsOfModules[$key]['version'], $parsed[1], $parsed[0])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
@@ -67,6 +79,11 @@
                                         title="<?=$this->getTrans('phpExtensionError') ?>">
                                     <i class="fa fa-save"></i>
                                 </button>
+                            <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()])): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('dependencyError') ?>">
+                                    <i class="fa fa-save"></i>
+                                </button>
                             <?php else: ?>
                                 <a href="<?=$this->getUrl(['action' => 'install', 'key' => $module->getKey()], null, true) ?>" class="btn btn-default" title="<?=$this->getTrans('installModule') ?>">
                                     <i class="fa fa-save"></i>
@@ -106,7 +123,11 @@
                                    <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$ilchCore.'<br />
                                    <b>'.$this->getTrans('phpVersion').':</b> '.$phpVersion.'<br />
                                    '.$phpExtensions.'
-                                   <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
+                                   <b>'.$this->getTrans('dependencies').':</b><br />';
+                    foreach ($module->getDepends() as $key => $value) {
+                        $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
+                    }
+                    $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
                     ?>
                     <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
                 <?php endforeach; ?>

@@ -59,8 +59,22 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
 
+        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+            $key = basename($modulesPath);
+            $modulesDir[] = $key;
+
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            if (class_exists($configClass)) {
+                $config = new $configClass($this->getTranslator());
+                $dependencies[$key] = $config->config['depends'];
+                $configurations[$key] = $config->config;
+            }
+        }
+
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
+        $this->getView()->set('dependencies', $dependencies);
+        $this->getView()->set('configurations', $configurations);
         $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
     }
 
@@ -72,8 +86,25 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuNotInstalled'), ['action' => 'notinstalled']);
 
-        $this->getView()->set('moduleMapper', $moduleMapper);
-        $this->getView()->set('modulesNotInstalled', $moduleMapper->getModulesNotInstalled());
+        $modulesNotInstalled = $moduleMapper->getModulesNotInstalled();
+
+        // Return early if there is nothing to show to avoid doing unnecessary work.
+        if (empty($modulesNotInstalled)) {
+            return;
+        }
+
+        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+            $key = basename($modulesPath);
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            if (class_exists($configClass)) {
+                $config = new $configClass($this->getTranslator());
+                $dependencies[$key] = $config->config['depends'];
+            }
+        }
+
+        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
+        $this->getView()->set('modulesNotInstalled', $modulesNotInstalled);
+        $this->getView()->set('dependencies', $dependencies);
         $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
     }
 
@@ -112,11 +143,19 @@ class Modules extends \Ilch\Controller\Admin
             }
         } finally {
             foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
-                $modulesDir[] = basename($modulesPath);
+                $key = basename($modulesPath);
+                $modulesDir[] = $key;
+
+                $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+                if (class_exists($configClass)) {
+                    $config = new $configClass($this->getTranslator());
+                    $dependencies[$key] = $config->config['depends'];
+                }
             }
 
             $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
             $this->getView()->set('modules', $modulesDir);
+            $this->getView()->set('dependencies', $dependencies);
             $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
         }
     }
@@ -173,6 +212,7 @@ class Modules extends \Ilch\Controller\Admin
             $modulesDir[] = basename($modulesPath);
         }
 
+        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
         $this->getView()->set('moduleMapper', $moduleMapper);
         $this->getView()->set('modules', $modulesDir);
         $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
