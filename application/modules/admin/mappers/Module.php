@@ -97,6 +97,9 @@ class Module extends \Ilch\Mapper
             if (isset($config->config['phpExtensions'])) {
                 $moduleModel->setPHPExtension($config->config['phpExtensions']);
             }
+            if (isset($config->config['depends'])) {
+                $moduleModel->setDepends($config->config['depends']);
+            }
 
             $modules[] = $moduleModel;
         }

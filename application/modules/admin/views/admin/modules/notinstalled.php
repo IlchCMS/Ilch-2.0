@@ -123,7 +123,11 @@
                                    <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$ilchCore.'<br />
                                    <b>'.$this->getTrans('phpVersion').':</b> '.$phpVersion.'<br />
                                    '.$phpExtensions.'
-                                   <b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
+                                   <b>'.$this->getTrans('dependencies').':</b><br />';
+                    foreach ($module->getDepends() as $key => $value) {
+                        $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
+                    }
+                    $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
                     ?>
                     <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
                 <?php endforeach; ?>

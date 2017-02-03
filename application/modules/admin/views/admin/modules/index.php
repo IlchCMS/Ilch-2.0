@@ -169,7 +169,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                    <b>'.$this->getTrans('phpVersion').':</b> '.$configurations[$module->getKey()]['phpVersion'].'<br />
                                    <b>'.$this->getTrans('dependencies').':</b><br />';
                     foreach ($configurations[$module->getKey()]['depends'] as $key => $value) {
-                        $moduleInfo .= $key.': '. str_replace(',','', $value).'<br />';
+                        $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
                     }
 
                     $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];

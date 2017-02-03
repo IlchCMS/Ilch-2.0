@@ -63,6 +63,11 @@ class Module extends \Ilch\Model
     protected $phpExtension;
 
     /**
+     * @var string
+     */
+    protected $depends;
+
+    /**
      * Gets the key.
      *
      * @return string
@@ -295,5 +300,25 @@ class Module extends \Ilch\Model
     public function setPHPExtension($phpExtension)
     {
         $this->phpExtension = $phpExtension;
+    }
+
+    /**
+     * Gets the dependencies.
+     *
+     * @return array
+     */
+    public function getDepends()
+    {
+        return $this->depends;
+    }
+
+    /**
+     * Sets the dependencies.
+     *
+     * @param array $depends
+     */
+    public function setDepends($depends)
+    {
+        $this->depends = $depends;
     }
 }
