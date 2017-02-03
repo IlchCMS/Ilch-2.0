@@ -79,6 +79,16 @@
                                         title="<?=$this->getTrans('phpExtensionError') ?>">
                                     <i class="fa fa-save"></i>
                                 </button>
+                            <?php elseif (!version_compare(phpversion(), $module->getPHPVersion(), '>=')): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('phpVersionError') ?>">
+                                    <i class="fa fa-save"></i>
+                                </button>
+                            <?php elseif (!version_compare($this->get('coreVersion'), $module->getIlchCore(), '>=')): ?>
+                                <button class="btn disabled"
+                                        title="<?=$this->getTrans('ilchCoreError') ?>">
+                                    <i class="fa fa-save"></i>
+                                </button>
                             <?php elseif (!checkOwnDependencies($this->get('versionsOfModules'), $this->get('dependencies')[$module->getKey()])): ?>
                                 <button class="btn disabled"
                                         title="<?=$this->getTrans('dependencyError') ?>">
