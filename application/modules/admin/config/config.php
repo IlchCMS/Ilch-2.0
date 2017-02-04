@@ -116,7 +116,7 @@ class Config extends \Ilch\Config\Install
                   `page_id` INT(11) NOT NULL DEFAULT 0,
                   `box_id` INT(11) NOT NULL DEFAULT 0,
                   `box_key` VARCHAR(255) NULL DEFAULT NULL,
-                  `type` INT(11) NOT NULL,
+                  `type` TINYINT(1) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `href` VARCHAR(255) NULL DEFAULT NULL,
                   `module_key` VARCHAR(255) NULL DEFAULT NULL,

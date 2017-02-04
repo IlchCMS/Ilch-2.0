@@ -55,7 +55,7 @@ class Config extends \Ilch\Config\Install
                   `title` VARCHAR(150) NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
                   `email` VARCHAR(100) NOT NULL,
-                  `show` INT(11) NOT NULL,
+                  `show` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

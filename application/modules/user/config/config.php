@@ -114,12 +114,12 @@ class Config extends \Ilch\Config\Install
                   `birthday` DATE NULL DEFAULT NULL,
                   `avatar` VARCHAR(255) NOT NULL DEFAULT "",
                   `signature` VARCHAR(255) NOT NULL DEFAULT "",
-                  `opt_mail` INT(11) DEFAULT 1,
-                  `opt_gallery` INT(11) DEFAULT 1,
+                  `opt_mail` TINYINT(1) DEFAULT 1,
+                  `opt_gallery` TINYINT(1) DEFAULT 1,
                   `date_created` DATETIME NOT NULL,
                   `date_confirmed` DATETIME NULL DEFAULT NULL,
                   `date_last_activity` DATETIME NULL DEFAULT NULL,
-                  `confirmed` INT(11) DEFAULT 1,
+                  `confirmed` TINYINT(1) DEFAULT 1,
                   `confirmed_code` VARCHAR(255) NULL DEFAULT NULL,
                   `selector` char(18),
                   PRIMARY KEY (`id`)
@@ -149,7 +149,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_profile_fields` (
                   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(255) NOT NULL,
-                  `type` INT(11) NOT NULL,
+                  `type` TINYINT(1) NOT NULL,
                   `position` INT(11) UNSIGNED NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -178,10 +178,10 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_users_dialog_reply` (
                   `cr_id` INT(11) NOT NULL AUTO_INCREMENT,
                   `reply` TEXT,
-                  `user_id_fk` INT(11) unsigned NOT NULL,
+                  `user_id_fk` INT(11) UNSIGNED NOT NULL,
                   `c_id_fk` INT(11) NOT NULL,
                   `time` DATETIME NOT NULL,
-                  `read` INT(11) DEFAULT 0,
+                  `read` TINYINT(1) DEFAULT 0,
                   PRIMARY KEY (`cr_id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -213,7 +213,7 @@ class Config extends \Ilch\Config\Install
                   `gallery_id` INT(11) NOT NULL DEFAULT 0,
                   `sort` INT(11) NOT NULL DEFAULT 0,
                   `parent_id` INT(11) NOT NULL DEFAULT 0,
-                  `type` INT(11) NOT NULL,
+                  `type` TINYINT(1) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)

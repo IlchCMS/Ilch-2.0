@@ -113,7 +113,7 @@ class Index extends \Ilch\Controller\Admin
                 'date'  => 'required',
                 'rank'  => 'required|numeric|integer|min:1',
                 'utId'  => 'required|numeric|integer|min:1',
-                'typ'  => 'required|numeric|integer|min:1',
+                'typ'  => 'required|numeric|integer|min:1|max:2',
                 'page' => 'url',
             ]);
 

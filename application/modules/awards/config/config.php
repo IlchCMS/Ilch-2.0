@@ -47,7 +47,7 @@ class Config extends \Ilch\Config\Install
                   `event` VARCHAR(100) NOT NULL,
                   `url` VARCHAR(150) NOT NULL,
                   `ut_id` INT(11) NOT NULL,
-                  `typ` INT(11) NOT NULL,
+                  `typ` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }

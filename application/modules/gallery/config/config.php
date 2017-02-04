@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
                   `gallery_id` INT(11) NOT NULL DEFAULT 0,
                   `sort` INT(11) NULL DEFAULT 0,
                   `parent_id` INT(11) NULL DEFAULT 0,
-                  `type` INT(11) NOT NULL,
+                  `type` TINYINT(1) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
