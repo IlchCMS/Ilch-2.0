@@ -35,6 +35,10 @@
     content: "\f00c";
 }
 
+#layouts form {
+    display: inline-block;
+}
+
 #modules form {
     display: initial;
 }
