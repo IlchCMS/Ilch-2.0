@@ -532,6 +532,7 @@ class Index extends \Ilch\Controller\Frontend
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $modules[$key]['config'] = $config;
+            $dependencies[$key] = $config->config['depends'];
 
             if (in_array($type, $module['types'])) {
                 $modules[$key]['checked'] = true;
@@ -545,6 +546,7 @@ class Index extends \Ilch\Controller\Frontend
 
         $this->getView()->set('modulesToInstall', $modulesToInstall);
         $this->getView()->set('modules', $modules);
+        $this->getView()->set('dependencies', $dependencies);
     }
 
     public function finishAction()

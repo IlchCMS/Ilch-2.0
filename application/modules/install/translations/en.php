@@ -61,4 +61,5 @@ return [
     'optionalModules' => 'optionally modules',
     'private' => 'private site',
     'clan' => 'clan site',
+    'dependencyMessage' => 'Other modules were selected to fullfill dependencies.',
 ];
