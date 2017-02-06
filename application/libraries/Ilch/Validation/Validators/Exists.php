@@ -40,7 +40,7 @@ class Exists extends Base
      */
     public function run()
     {
-        if (empty($this->getValue())) {
+        if (empty($this->getValue()) && $this->getValue() !== 0 && $this->getValue() !== "0") {
             $this->setIsValid(true);
 
             return $this;
@@ -48,7 +48,6 @@ class Exists extends Base
 
         $this->query = Registry::get('db')->select();
 
-        // exists:table,column,wherecolumn1,wherecolumn1value,...
         $column = is_null($this->getParameter(1)) ? 'id' : $this->getParameter(1);
 
         $this->query->fields($column);
