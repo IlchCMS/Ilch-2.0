@@ -80,14 +80,14 @@ class Config extends \Ilch\Config\Install
                   `lat_long` VARCHAR(100) NULL DEFAULT NULL,
                   `image` VARCHAR(255) NULL DEFAULT NULL,
                   `text` LONGTEXT NOT NULL,
-                  `show` INT(11) NOT NULL,
+                  `show` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 CREATE TABLE IF NOT EXISTS `[prefix]_events_entrants` (
                   `event_id` INT(11) NOT NULL,
                   `user_id` INT(11) NOT NULL,
-                  `status` INT(11) NOT NULL
+                  `status` TINYINT(1) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES

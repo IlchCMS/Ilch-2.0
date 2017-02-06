@@ -57,7 +57,7 @@ class Config extends \Ilch\Config\Install
                   `forum_id` INT(11) NOT NULL,
                   `sort` INT(11) NOT NULL DEFAULT 0,
                   `parent_id` INT(11) NOT NULL DEFAULT 0,
-                  `type` INT(11) NOT NULL,
+                  `type` TINYINT(1) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
                   `description` VARCHAR(255) NOT NULL,
                   `prefix` VARCHAR(255) NOT NULL,
@@ -76,8 +76,8 @@ class Config extends \Ilch\Config\Install
                   `creator_id` INT(10) NOT NULL,
                   `date_created` DATETIME NOT NULL,
                   `forum_id` INT(11) NOT NULL,
-                  `type` INT(11) NOT NULL DEFAULT 0,
-                  `status` INT(11) NOT NULL DEFAULT 0,
+                  `type` TINYINT(1) NOT NULL DEFAULT 0,
+                  `status` TINYINT(1) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 

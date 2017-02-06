@@ -95,7 +95,8 @@ class Index extends \Ilch\Controller\Admin
             $validation = Validation::create($post, [
                 'title' => 'required',
                 'text' => 'required',
-                'email' => 'required|email'
+                'email' => 'required|email',
+                'show' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
