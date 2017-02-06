@@ -17,6 +17,7 @@ use Ilch\Validation\Validators\Same;
 use Ilch\Validation\Validators\Size;
 use Ilch\Validation\Validators\Unique;
 use Ilch\Validation\Validators\Url;
+use Ilch\Validation\Validators\Exists;
 use stdClass;
 use Ilch\Validation\ErrorBag;
 
@@ -31,38 +32,18 @@ class Validation
      * @var array
      */
     protected static $builtInValidators = [
-        // Usage: required
-        'required' => Required::class,
-
-        // Usage: same:<field_name>[,strict]
-        'same' => Same::class,
-
-        // Usage: captcha
         'captcha' => Captcha::class,
-
-        // Usage: url
-        'url' => Url::class,
-
-        // Usage: email
         'email' => Email::class,
-
-        // Usage: unique:<table_name>[,<column_name>,<ignoreId>,<ignoreIdColumn>]
-        'unique' => Unique::class,
-
-        // Usage: numeric
-        'numeric' => Numeric::class,
-
-        // Usage: integer
+        'exists' => Exists::class,
         'integer' => Integer::class,
-
-        // Usage: size:<value>[,string]
-        'size' => Size::class,
-
-        // Usage: min:<value>[,string]
-        'min' => Min::class,
-
-        // Usage: max:<value>[,string]
         'max' => Max::class,
+        'min' => Min::class,
+        'numeric' => Numeric::class,
+        'required' => Required::class,
+        'same' => Same::class,
+        'size' => Size::class,
+        'unique' => Unique::class,
+        'url' => Url::class,
     ];
 
     /**
