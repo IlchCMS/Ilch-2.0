@@ -23,9 +23,11 @@
                 $groupPoints = '';
                 $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
 
-                foreach ($games as $game) {
-                    $groupPoints += $game->getGroupPoints();
-                    $enemyPoints += $game->getEnemyPoints();
+                if($games) {
+                    foreach ($games as $game) {
+                        $groupPoints += $game->getGroupPoints();
+                        $enemyPoints += $game->getEnemyPoints();
+                    }
                 }
                 if ($groupPoints > $enemyPoints) {
                     $win++;

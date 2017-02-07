@@ -90,7 +90,9 @@
                                 <?php $selected = 'selected="selected"'; ?>
                             <?php endif; ?>
                         <?php endif; ?>
-                        <option <?=$selected ?> value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>
+                        <?php if ($groupList->getId() != '3'): ?>
+                            <option <?=$selected ?> value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                 </optgroup>
             </select>

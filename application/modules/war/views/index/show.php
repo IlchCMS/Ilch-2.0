@@ -5,14 +5,18 @@ $gamesMapper = $this->get('gamesMapper');
 $war = $this->get('war');
 $group = $this->get('group');
 $enemy = $this->get('enemy');
+$userMapper = $this->get('userMapper');
+$userGroupMapper = $this->get('userGroupMapper');
+$acceptArray = $this->get('accept');
+$acceptCheckArray = $this->get('acceptCheck');
 ?>
 
 <legend><?=$this->getTrans('warPlay') ?></legend>
 <div class="row">
     <div class="center-text row no_margin">
         <div class="col-md-5">
-            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($group->getGroupImage()) ?>" alt="<?=$group->getGroupName() ?>">
-            <h4><span><?=$this->escape($group->getGroupName()) ?></span></h4>
+            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($group != '' ? $group->getGroupImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$group != '' ? $group->getGroupName() : '' ?>">
+            <h4><span><?=$this->escape($group != '' ? $group->getGroupName() : '') ?></span></h4>
         </div>
         <div class="col-md-2 plays-vs">
             <h4>
@@ -91,6 +95,81 @@ $enemy = $this->get('enemy');
                             </li>
                         </ul>
                     <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?=$this->getTrans('warMember') ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php $userGroupIds = $userGroupMapper->getUsersForGroup($group != '' ? $group->getGroupMember() : ''); ?>
+                <ul class="list-group">
+                    <?php if ($userGroupIds): ?>
+                        <?php foreach ($userGroupIds as $userGroupId): ?>
+                            <?php $user = $userMapper->getUserById($userGroupId); ?>
+                            <li class="list-group-item"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a></li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?=$this->getTrans('warAccept') ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php if ($userGroupIds): ?>
+                    <form id="accept_form" class="form-horizontal" method="POST" action="">
+                        <?=$this->getTokenField() ?>
+                        <ul class="list-group">
+                        <?php if ($acceptCheckArray): ?>
+                            <?php foreach ($acceptCheckArray as $acceptCheck): ?>
+                                <?php $user = $userMapper->getUserById($acceptCheck->getUserId()) ?>
+                                <?php if ($user): ?>
+                                    <?php
+                                    if ($acceptCheck->getAccept() == '1') {
+                                        $class = 'war_win';
+                                        $text = $this->getTrans('has').' '.$this->getTrans('accept');
+                                    }
+                                    if ($acceptCheck->getAccept() == '2') {
+                                        $class = 'war_lost';
+                                        $text = $this->getTrans('has').' '.$this->getTrans('cancel');
+                                    }
+                                    if ($acceptCheck->getAccept() == '3') {
+                                        $class = 'war_drawn';
+                                        $text = $this->getTrans('is').' '.$this->getTrans('undecided');
+                                    }
+                                    ?>
+                                    <li class="list-group-item <?=$class ?>"><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$user->getName() ?></a>: <?=$text ?></li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        </ul>
+                        <?php $userGroupIds = $userGroupMapper->getUsersForGroup($group->getGroupMember()); ?>
+                        <?php foreach ($userGroupIds as $userGroupId): ?>
+                            <?php $user = $userMapper->getUserById($userGroupId); ?>
+                            <?php if ($this->getUser()): ?>
+                                <?php if ($user->getId() == $this->getUser()->getId()): ?>
+                                    <select class="form-control col-lg-3" id="warAccept" name="warAccept">
+                                        <optgroup label="<?=$this->getTrans('choose') ?>">
+                                            <option value="1"><?=$this->getTrans('accept') ?></option>
+                                            <option value="2"><?=$this->getTrans('cancel') ?></option>
+                                            <option value="3"><?=$this->getTrans('undecided') ?></option>
+                                        </optgroup>
+                                    </select>
+                                    <button type="submit" class="btn" name="save" value="save">
+                                        <?=$this->getTrans('save') ?>
+                                    </button>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </form>
                 <?php endif; ?>
             </div>
         </div>

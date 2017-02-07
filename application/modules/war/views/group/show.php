@@ -17,9 +17,11 @@ foreach ($wars as $war) {
     $groupPoints = '';
     $games = $gamesMapper->getGamesByWhere(['war_id' => $war->getId()]);
 
-    foreach ($games as $game) {
-        $groupPoints += $game->getGroupPoints();
-        $enemyPoints += $game->getEnemyPoints();
+    if($games) {
+        foreach ($games as $game) {
+            $groupPoints += $game->getGroupPoints();
+            $enemyPoints += $game->getEnemyPoints();
+        }
     }
     if ($groupPoints > $enemyPoints) {
         $win++;
@@ -129,7 +131,7 @@ foreach ($wars as $war) {
                             <?php if ($games): ?>
                                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a>
                             <?php else: ?>
-                                <?=$this->getTrans('warReportNo') ?>
+                                <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warPlay') ?></a>
                             <?php endif; ?>
                         </td>
                     </tr>

@@ -67,11 +67,7 @@
                         ?>
                         <td <?=$class ?>><?=$groupPoints ?>:<?=$enemyPoints ?></td>
                         <td>
-                            <?php if ($games): ?>
-                                <a href="<?=$this->getUrl(['action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a>
-                            <?php else: ?>
-                                <?=$this->getTrans('warReportNo') ?>
-                            <?php endif; ?>
+                            <a href="<?=$this->getUrl(['action' => 'show', 'id' => $war->getId()]) ?>"><?=$this->getTrans('warReportShow') ?></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

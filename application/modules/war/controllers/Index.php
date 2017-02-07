@@ -10,6 +10,10 @@ use Modules\War\Mappers\Group as GroupMapper;
 use Modules\War\Mappers\Enemy as EnemyMapper;
 use Modules\War\Mappers\Games as GamesMapper;
 use Modules\War\Mappers\War as WarMapper;
+use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\Group as UserGroupMapper;
+use Modules\War\Models\Accept as AcceptModel;
+use Modules\War\Mappers\Accept as AcceptMapper;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -33,20 +37,53 @@ class Index extends \Ilch\Controller\Frontend
         $gamesMapper = new GamesMapper();
         $groupMapper = new GroupMapper();
         $enemyMapper = new EnemyMapper();
+        $userMapper = new UserMapper();
+        $userGroupMapper = new UserGroupMapper();
+        $acceptMapper = new AcceptMapper();
 
         $war = $warMapper->getWarById($this->getRequest()->getParam('id'));
-        $this->getView()->set('games', $gamesMapper->getGamesByWarId($this->getRequest()->getParam('id')));
-        $group = $groupMapper->getGroupById($war->getWarGroup());
-        $enemy = $enemyMapper->getEnemyById($war->getWarEnemy());
 
-        $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
-            ->add($group->getGroupName(), ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()])
-            ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+        if ($war) {
+            $group = $groupMapper->getGroupById($war->getWarGroup());
+            $enemy = $enemyMapper->getEnemyById($war->getWarEnemy());
 
-        $this->getView()->set('gamesMapper', $gamesMapper);
-        $this->getView()->set('group', $group);
-        $this->getView()->set('enemy', $enemy);
-        $this->getView()->set('war', $war);
+            if ($this->getRequest()->isPost() && $this->getUser()) {
+                $checkAccept = $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $this->getRequest()->getParam('id'));
+                $warAccept = (int)$this->getRequest()->getPost('warAccept');
+                $model = new AcceptModel();
+
+                foreach ($checkAccept as $check) {
+                    if($this->getUser()->getId() == $check->getUserId()) {
+                        $model->setId($check->getId());
+                    }
+                }
+                $model->setWarId($war->getId());
+                $model->setUserId($this->getUser()->getId());
+                $model->setAccept($warAccept);
+
+                $acceptMapper->save($model);
+
+                $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            }
+
+            $this->getLayout()->getHmenu()
+                ->add($this->getTranslator()->trans('menuWarList'), ['action' => 'index'])
+                ->add($group != '' ? $group->getGroupName(): '', $group != '' ? ['controller' => 'group', 'action' => 'show', 'id' => $group->getId()] : '')
+                ->add($this->getTranslator()->trans('warPlay'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+
+            $this->getView()->set('games', $gamesMapper->getGamesByWarId($this->getRequest()->getParam('id')));
+            $this->getView()->set('gamesMapper', $gamesMapper);
+            $this->getView()->set('group', $group);
+            $this->getView()->set('enemy', $enemy);
+            $this->getView()->set('war', $war);
+            $this->getView()->set('userMapper', $userMapper);
+            $this->getView()->set('userGroupMapper', $userGroupMapper);
+            $this->getView()->set('accept', $acceptMapper->getAcceptByWhere(['war_id' => $this->getRequest()->getParam('id')]));
+            $this->getView()->set('acceptCheck', $group != '' ? $acceptMapper->getAcceptListByGroupId($group->getGroupMember(), $this->getRequest()->getParam('id')) : '');
+        } else {
+            $this->redirect()
+                ->withMessage('warNotFound', 'warning')
+                ->to(['action' => 'index']);
+        }
     }
 }

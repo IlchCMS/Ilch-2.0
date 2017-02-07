@@ -60,6 +60,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_groups`');
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_enemy`');
         $this->db()->queryMulti('DROP TABLE `[prefix]_war_played`');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_war_accept`');
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'war_boxNextWarLimit'");
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'war_boxLastWarLimit'");
     }
@@ -109,6 +110,14 @@ class Config extends \Ilch\Config\Install
                   `map` VARCHAR(255) NOT NULL DEFAULT "",
                   `group_points` MEDIUMINT(9) DEFAULT NULL,
                   `enemy_points` MEDIUMINT(9) DEFAULT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+                
+                CREATE TABLE IF NOT EXISTS `[prefix]_war_accept` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `war_id` INT(11) DEFAULT NULL,
+                  `user_id` INT(11) DEFAULT NULL,
+                  `accept` TINYINT(1) DEFAULT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
