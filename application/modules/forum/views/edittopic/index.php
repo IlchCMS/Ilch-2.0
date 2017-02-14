@@ -2,7 +2,7 @@
 <?php
 $forumItems = $this->get('forumItems');
 $readAccess = $this->get('groupIdsArray');
-$edittopicitems[] = $this->get('edittopicitems');
+$editTopicItems = $this->get('editTopicItems');
 
 function rec($item, $obj, $readAccess, $i)
 {
@@ -59,8 +59,8 @@ function rec($item, $obj, $readAccess, $i)
                             <?php rec($item, $this, $readAccess, $i = null) ?>
                         <?php endforeach; ?>
                     </select>
-                    <?php foreach ($edittopicitems as $editid): ?>
-                        <input type="hidden" name="topicids[]" value="<?=$editid ?>">
+                    <?php foreach ($editTopicItems as $editId): ?>
+                        <input type="hidden" name="topicids[]" value="<?=$editId ?>">
                     <?php endforeach; ?>
                 </div>
             </div>

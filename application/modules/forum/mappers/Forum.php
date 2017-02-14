@@ -255,19 +255,16 @@ class Forum extends \Ilch\Mapper
 
     public function getCountPostsById($id)
     {
-        $sql = 'SELECT COUNT(`p`.`topic_id`), `t`.`id`, `t`.`topic_id`, `p`.`id`, `p`.`topic_id`
-                FROM `[prefix]_forum_topics` AS `t`
-                LEFT JOIN `[prefix]_forum_posts` AS `p` ON `t`.`id` = `p`.`topic_id`
-                WHERE `t`.`topic_id` = '.$id.'
-                GROUP BY `t`.`id`, `t`.`topic_id`, `p`.`id`, `p`.`topic_id`';
+        $select = $this->db()->select('*')
+            ->fields(['p.id', 'p.topic_id', 't.id', 't.topic_id'])
+            ->from(['t' => 'forum_topics'])
+            ->join(['p' => 'forum_posts'], 'p.topic_id = t.id', 'LEFT', ['p.id', 'p.topic_id'])
+            ->where(['t.topic_id' => $id])
+            ->group(['t.id', 't.topic_id', 'p.id', 'p.topic_id'])
+            ->execute()
+            ->getFoundRows();
 
-        $topics = $this->db()->queryCell($sql);
-
-        if (empty($topics)) {
-            return '0';
-        }
-
-        return $topics;
+        return $select;
     }
 
     public function getCountPostsByTopicId($id)

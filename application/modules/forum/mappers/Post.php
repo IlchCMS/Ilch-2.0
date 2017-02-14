@@ -155,4 +155,17 @@ class Post extends \Ilch\Mapper
                     ->execute();
         }
     }
+
+    public function saveForEdit(PostModel $model)
+    {
+        if ($model->getId()) {
+            $this->db()->update('forum_posts')
+                ->values([
+                    'topic_id' => $model->getTopicId(),
+                    'forum_id' => $model->getForumId()
+                ])
+                ->where(['topic_id' => $model->getTopicId()])
+                ->execute();
+        }
+    }
 }

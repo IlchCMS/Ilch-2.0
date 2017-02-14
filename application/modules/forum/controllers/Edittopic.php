@@ -10,6 +10,8 @@ use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Models\ForumTopic as TopicModel;
+use Modules\Forum\Mappers\Post as PostMapper;
+use Modules\Forum\Models\ForumPost as PostModel;
 use Ilch\Accesses as Accesses;
 
 class Edittopic extends \Ilch\Controller\Frontend
@@ -46,7 +48,7 @@ class Edittopic extends \Ilch\Controller\Frontend
 
         $this->getView()->set('groupIdsArray', $groupIdsArray);
         $this->getView()->set('forumItems', $forumItems);
-        $this->getView()->set('edittopicitems', $this->getRequest()->getPost('check_topics'));
+        $this->getView()->set('editTopicItems', $this->getRequest()->getPost('check_topics'));
     }
 
     public function edittopicAction()
@@ -58,11 +60,21 @@ class Edittopic extends \Ilch\Controller\Frontend
                     $topics = $this->getRequest()->getPost('topicids');
                     $topicMapper = new TopicMapper();
                     $topicModel = new TopicModel();
-                    foreach ($topics as $topicId) {
-                        $topicModel->setId($topicId);
+                    $postMapper = new PostMapper();
+                    $postModel = new PostModel();
+                    foreach ($topics as $topic) {
+                        $topicModel->setId($topic);
                         $topicModel->setTopicId($this->getRequest()->getPost('edit'));
                         $topicModel->setForumId($this->getRequest()->getPost('edit'));
                         $topicMapper->save($topicModel);
+
+                        $posts = $postMapper->getPostByTopicId($topic);
+                        foreach ($posts as $post) {
+                            $postModel->setId($post->getId());
+                            $postModel->setTopicId($this->getRequest()->getPost('edit'));
+                            $postModel->setForumId($this->getRequest()->getPost('edit'));
+                            $postMapper->saveForEdit($postModel);
+                        }
                     }
                     $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getPost('edit')]);
                 }
