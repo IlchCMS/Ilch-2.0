@@ -56,8 +56,8 @@ class Regist extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getPost('saveRegist') AND $this->getRequest()->getPost('bot') === '') {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required|unique:users,name',
-                'password' => 'required|min:6:string|max:30:string',
-                'password2' => 'required|same:password|min:6:string|max:30:string',
+                'password' => 'required|min:6,string|max:30,string',
+                'password2' => 'required|same:password|min:6,string|max:30,string',
                 'email' => 'required|email|unique:users,email',
                 'captcha' => 'captcha'
             ]);
