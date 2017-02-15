@@ -151,9 +151,16 @@ class Base
      *
      * @param string $message
      * @param string|null $type
+     * @param bool|false|string $validationError
      */
-    public function addMessage($message, $type = 'success')
+    public function addMessage($message, $type = 'success', $validationError = false)
     {
-        $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
+        if ($validationError == true) {
+            $_SESSION['messages'][] = ['text' => $message, 'type' => $type, 'validationError' => $validationError];
+        } else {
+            if (!is_array($message)) {
+                $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans($message), 'type' => $type];
+            }
+        }
     }
 }

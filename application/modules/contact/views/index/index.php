@@ -1,16 +1,7 @@
 <?php $receivers = $this->get('receivers'); ?>
 
 <legend><?=$this->getTrans('menuContact') ?></legend>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
+
 <?php if ($receivers != ''): ?>
     <form method="POST" class="form-horizontal" action="">
         <?=$this->getTokenField() ?>

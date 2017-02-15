@@ -66,7 +66,7 @@ class Index extends \Ilch\Controller\Frontend
                 $this->addMessage('sendSuccess');
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $errorFields = $validation->getFieldsWithError();
         }
 

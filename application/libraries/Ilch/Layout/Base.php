@@ -92,10 +92,24 @@ abstract class Base extends \Ilch\Design\Base
         }
 
         foreach ($messages as $key => $message) {
-            $html .= '<div class="alert alert-'.$message['type'].' alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            '.$this->escape($message['text']).'</div>';
-            unset($_SESSION['messages'][$key]);
+            if ($message['validationError'] == true) {
+                $text = '';
+                $text .= '<b>'.$this->getTrans('errorsOccured').'</b>';
+                $text .= '<ul>';
+                foreach ($message['text'] as $messageText) {
+                    $text .= '<li>'.$messageText.'</li>';
+                }
+                $text .= '</ul>';
+                $html .= '<div class="alert alert-'.$message['type'].' alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                '.$text.'</div>';
+                unset($_SESSION['messages'][$key]);
+            } else {
+                $html .= '<div class="alert alert-'.$message['type'].' alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                '.$this->escape($message['text']).'</div>';
+                unset($_SESSION['messages'][$key]);
+            }
         }
 
         return $html.$this->content;

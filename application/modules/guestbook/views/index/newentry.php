@@ -1,18 +1,5 @@
 <legend><?=$this->getTrans('menuGuestbook') ?></legend>
 
-<!-- Fehlerausgabe der Validation -->
-<?php if ($this->validation()->hasErrors()): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-<!-- Ende Fehlerausgabe der Validation -->
-
 <form action="" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>
     <div class="form-group hidden">

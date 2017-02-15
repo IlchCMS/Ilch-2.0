@@ -69,7 +69,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
             }
-
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
