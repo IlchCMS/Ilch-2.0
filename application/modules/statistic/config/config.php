@@ -21,7 +21,27 @@ class Config extends \Ilch\Config\Install
                 'name' => 'Statistic',
                 'description' => 'Here you can show the Site statistic.',
             ],
-        ]
+        ],
+        'boxes' => [
+            'online' => [
+                'de_DE' => [
+                    'name' => 'Online'
+                ],
+                'en_EN' => [
+                    'name' => 'Online'
+                ]
+            ],
+            'stats' => [
+                'de_DE' => [
+                    'name' => 'Statistik'
+                ],
+                'en_EN' => [
+                    'name' => 'Statistic'
+                ]
+            ]
+        ],
+        'ilchCore' => '2.0.0',
+        'phpVersion' => '5.6'
     ];
 
     public function install()
