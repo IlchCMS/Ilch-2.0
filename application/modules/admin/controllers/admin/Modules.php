@@ -10,6 +10,8 @@ use Modules\Admin\Mappers\Module as ModuleMapper;
 use Modules\Admin\Models\Module as ModuleModel;
 use Modules\Admin\Mappers\Box as BoxMapper;
 use Modules\Admin\Models\Box as BoxModel;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
 
 class Modules extends \Ilch\Controller\Admin
 {
@@ -290,7 +292,13 @@ class Modules extends \Ilch\Controller\Admin
     public function deleteAction()
     {
         if ($this->getRequest()->isSecure()) {
+            $notificationPermissionMapper = new NotificationPermissionMapper();
+            $notificationsMapper = new NotificationsMapper();
+
             removeDir(APPLICATION_PATH.'/modules/'.$this->getRequest()->getParam('key'));
+
+            $notificationPermissionMapper->deletePermissionOfModule($this->getRequest()->getParam('key'));
+            $notificationsMapper->deleteNotificationsByModule($this->getRequest()->getParam('key'));
 
             $this->addMessage('deleteSuccess');
         }

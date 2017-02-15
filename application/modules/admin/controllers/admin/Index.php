@@ -7,6 +7,8 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Modules\Admin\Mappers\Logs as LogsMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -17,6 +19,15 @@ class Index extends \Ilch\Controller\Admin
 
     public function indexAction()
     {
+        // Delete selected notifications
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_notifications')) {
+            $notificationsMapper = new NotificationsMapper();
+
+            foreach ($this->getRequest()->getPost('check_notifications') as $notificationId) {
+                $notificationsMapper->deleteNotificationById($notificationId);
+            }
+        }
+
         // Delete all expired authTokens of the remember-me-feature
         $authTokenMapper = new \Modules\User\Mappers\AuthToken();
         $authTokenMapper->deleteExpiredAuthTokens();
@@ -65,8 +76,39 @@ class Index extends \Ilch\Controller\Admin
         $userMapper = new \Modules\User\Mappers\User();
         $moduleLocales['user'] = $modulesMapper->getModulesByKey('user', $this->getTranslator()->getLocale());
 
+        // Check if there are notifications, which need to be shown
+        $notificationsMapper = new NotificationsMapper();
+
         $this->getView()->set('usersNotConfirmed', $userMapper->getUserList(['confirmed' => 0]));
         $this->getView()->set('moduleLocales', $moduleLocales);
         $this->getView()->set('version', $this->getConfig()->get('version'));
+        $this->getView()->set('notifications', $notificationsMapper->getNotifications());
+    }
+
+    public function deleteAction() {
+        if ($this->getRequest()->isSecure()) {
+            $notificationsMapper = new NotificationsMapper();
+            $notificationsMapper->deleteNotificationById($this->getRequest()->getParam('id'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
+    }
+
+    public function revokePermissionAction() {
+        if ($this->getRequest()->isSecure()) {
+            $notificationPermissionMapper = new NotificationPermissionMapper();
+            $notificationsMapper = new NotificationsMapper();
+
+            $module = $this->getRequest()->getParam('key');
+
+            $notificationPermissionMapper->updatePermissionGrantedOfModule($module, false);
+            $notificationsMapper->deleteNotificationsByModule($module);
+
+            $this->addMessage('revokePermissionSuccess');
+        }
+
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -302,4 +302,18 @@ return [
     'awaitingUnlocking' => 'Awaiting approval',
 
     'noRights' => 'No permission',
+
+    'menuNotifications' => 'Notifications',
+    'notifications' => 'Notifications',
+    'message' => 'Message',
+    'revokePermission' => 'Revoke permission to issue notifications.',
+    'grantPermission' => 'Grant permission to issue notifications.',
+    'revokePermissionSuccess' => 'Successfully revoked the permission to issue notifications.',
+    'grantedPermissionSuccess' => 'Successfully granted the permission to issue notifications.',
+    'noNotificationPermissions' => 'No entries existing.',
+    'limit' => 'Limit',
+    'notificationsInfoText' => 'All modules, which showed a message in the admincenter are listed here.<br>
+                                The permission to issue a message to the admincenter can be revoked.<br>
+                                Further it is possible to limit the number of messages a module can issue to the admincenter.
+                                A limit of 0 is the same as no limit.',
 ];

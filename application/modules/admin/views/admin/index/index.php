@@ -7,12 +7,17 @@ if ($this->getUser()->getFirstName() != '') {
 
 $ilchNewsList = url_get_contents('http://ilch2.de/ilchNews.php');
 $ilchNews = json_decode($ilchNewsList);
+$notifications = $this->get('notifications');
 $version = $this->get('version');
 ?>
 
 <h3><?=$this->getTrans('welcomeBack', $this->escape($name)) ?> !</h3>
 <?=$this->getTrans('welcomeBackDescripton') ?>
 <br /><br /><br />
+<?php if (!empty($notifications)): ?>
+<form class="form-horizontal" method="POST" action="">
+<?=$this->getTokenField() ?>
+<?php endif; ?>
 <div class="row">
     <?php if ($this->get('guestbookEntries') or $this->get('partnerEntries')): ?>
         <div class="col-lg-6 col-md-6">
@@ -126,5 +131,45 @@ $version = $this->get('version');
                 </table>
             </div>
         <?php endif; ?>
+        <?php if (!empty($notifications)): ?>
+            <legend><?=$this->getTrans('notifications') ?></legend>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <colgroup>
+                        <col class="icon_width">
+                        <col class="icon_width">
+                        <col class="icon_width">
+                        <col class="col-lg-2">
+                        <col class="col-lg-2">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <th><?=$this->getCheckAllCheckbox('check_notifications') ?></th>
+                        <th></th>
+                        <th></th>
+                        <th><?=$this->getTrans('date') ?></th>
+                        <th><?=$this->getTrans('module') ?></th>
+                        <th><?=$this->getTrans('message') ?></th>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($notifications as $notification): ?>
+                            <?php $date = new \Ilch\Date($notification->getTimestamp()); ?>
+                            <tr>
+                                <td><?=$this->getDeleteCheckbox('check_notifications', $notification->getId()) ?></td>
+                                <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $notification->getId()]) ?></td>
+                                <td><a href="<?=$this->getUrl(['action' => 'revokePermission', 'key' => $notification->getModule()], null, true) ?>" title="<?=$this->getTrans('revokePermission') ?>"><i class="fa fa-check text-success"></i></a></td>
+                                <td><?=$date->format("d.m.Y", true) ?></td>
+                                <td><a href="<?=$notification->getURL() ?>" target="_blank" title="<?=$this->escape($notification->getModule()) ?>"><?=$this->escape($notification->getModule()) ?></a></td>
+                                <td><?=$this->escape($notification->getMessage()) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
+<?php if (!empty($notifications)): ?>
+<?=$this->getListBar(['delete' => 'delete']) ?>
+</form>
+<?php endif; ?>

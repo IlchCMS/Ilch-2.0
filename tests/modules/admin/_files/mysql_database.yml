@@ -1,0 +1,23 @@
+admin_notifications:
+  -
+    id: 1
+    timestamp: "2014-01-01 12:12:12"
+    module: "article"
+    message: "Testmessage1"
+    url: "http://www.google.de"
+  -
+    id: 2
+    timestamp: "2014-01-01 12:12:12"
+    module: "awards"
+    message: "Testmessage2"
+    url: "http://www.ilch.de"
+
+admin_notifications_permission:
+  -
+    module: "article"
+    granted: 1
+    limit: 5
+  -
+    module: "awards"
+    granted: 1
+    limit: 5
