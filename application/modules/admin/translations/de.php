@@ -303,4 +303,18 @@ return [
     'awaitingUnlocking' => 'Freischaltung erwartet',
 
     'noRights' => 'Keine Berechtigung',
+
+    'menuNotifications' => 'Benachrichtigungen',
+    'notifications' => 'Benachrichtigungen',
+    'message' => 'Nachricht',
+    'revokePermission' => 'Erlaubnis für Benachrichtigungen widerrufen.',
+    'grantPermission' => 'Erlaubnis für Benachrichtigungen geben.',
+    'revokePermissionSuccess' => 'Die Erlaubnis Benachrichtigungen anzuzeigen wurde erfolgreich widerrufen.',
+    'grantedPermissionSuccess' => 'Die Erlaubnis Benachrichtigungen anzuzeigen wurde erfolgreich gegeben.',
+    'noNotificationPermissions' => 'Keine Einträge vorhanden.',
+    'limit' => 'Limit',
+    'notificationsInfoText' => 'Hier werden alle Module aufgelistet, die eine Benachrichtigung im Admincenter angezeigt haben.<br>
+                                Den Modulen kann die Erlaubnis Benachrichtigungen im Admincenter anzuzeigen entzogen werden.<br>
+                                Desweiteren kann begrenzt werden wie viele Benachrichtungen ein Modul im Admincenter anzeigen kann.
+                                Ein Limit von 0 ist gleichbedeutend mit kein Limit.',
 ];

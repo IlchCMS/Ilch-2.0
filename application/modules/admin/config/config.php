@@ -164,6 +164,21 @@ class Config extends \Ilch\Config\Install
                   `user_id` VARCHAR(255) NOT NULL,
                   `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                   `info` VARCHAR(255) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications` (
+                  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  `module` VARCHAR(255) NOT NULL,
+                  `message` VARCHAR(255) NOT NULL,
+                  `url` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_admin_notifications_permission` (
+                  `module` VARCHAR(255) NOT NULL,
+                  `granted` TINYINT(1) NOT NULL,
+                  `limit` TINYINT(1) UNSIGNED NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
     }
 

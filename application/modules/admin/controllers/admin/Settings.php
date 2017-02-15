@@ -7,6 +7,8 @@
 namespace Modules\Admin\Controllers\Admin;
 
 use Ilch\Transfer as IlchTransfer;
+use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
+use Modules\Admin\Mappers\Notifications as NotificationsMapper;
 use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
@@ -43,6 +45,12 @@ class Settings extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa fa-refresh',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'update'])
+            ],
+            [
+                'name' => 'menuNotifications',
+                'active' => false,
+                'icon' => 'fa fa-envelope-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'notifications'])
             ]
         ];
 
@@ -54,6 +62,8 @@ class Settings extends \Ilch\Controller\Admin
             $items[3]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'update') {
             $items[4]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'notifications') {
+            $items[5]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -237,5 +247,78 @@ HTACCESS;
         } else {
             $this->getView()->set('versions', '');
         }
+    }
+
+    public function notificationsAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuNotifications'), ['action' => 'notifications']);
+
+        $notificationPermissionMapper = new NotificationPermissionMapper();
+
+        if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_notificationPermissions')) {
+            foreach ($this->getRequest()->getPost('check_notificationPermissions') as $notificationPermissionKey) {
+                $notificationPermissionMapper->deletePermissionOfModule($notificationPermissionKey);
+            }
+        }
+
+        if ($this->getRequest()->isPost()) {
+            $validation;
+            foreach ($this->getRequest()->getPost('data') as $data) {
+                $validation = Validation::create($data, [
+                    'key' => 'required',
+                    'limit' => 'required|numeric|integer|min:0|max:5'
+                ]);
+
+                if ($validation->isValid()) {
+                    $notificationPermissionMapper->updateLimitOfModule($data['key'], $data['limit']);
+                } else {
+                    $this->redirect()
+                        ->withErrors($validation->getErrorBag())
+                        ->to(['action' => 'notifications']);
+                    break;
+                }
+            }
+
+            if ($validation->isValid()) {
+                $this->addMessage('saveSuccess');
+            }
+        }
+
+        $this->getView()->set('notificationPermissions', $notificationPermissionMapper->getPermissions());
+    }
+
+    public function deletePermissionAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $notificationPermissionMapper = new NotificationPermissionMapper();
+
+            $notificationPermissionMapper->deletePermissionOfModule($this->getRequest()->getParam('key'));
+
+            $this->addMessage('deleteSuccess');
+        }
+
+        $this->redirect(['action' => 'notifications']);
+    }
+
+    public function changePermissionAction()
+    {
+        if ($this->getRequest()->isSecure()) {
+            $notificationPermissionMapper = new NotificationPermissionMapper();
+            $notificationsMapper = new NotificationsMapper();
+
+            if ($this->getRequest()->getParam('revoke') == 'true') {
+                $notificationPermissionMapper->updatePermissionGrantedOfModule($this->getRequest()->getParam('key'), 0);
+                $notificationsMapper->deleteNotificationsByModule($this->getRequest()->getParam('key'));
+
+                $this->addMessage('revokePermissionSuccess');
+            } else {
+                $notificationPermissionMapper->updatePermissionGrantedOfModule($this->getRequest()->getParam('key'), 1);
+                $this->addMessage('grantedPermissionSuccess');
+            }
+        }
+
+        $this->redirect(['action' => 'notifications']);
     }
 }
