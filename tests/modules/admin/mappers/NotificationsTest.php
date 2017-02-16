@@ -119,7 +119,7 @@ class NotificationsTest extends DatabaseTestCase
         $notificationModel->setURL('http://www.google.de');
         $_SERVER['HTTP_HOST'] = '127.0.0.1';
 
-        $this->out->addNotification($notificationModel);
+        $this->assertTrue($this->out->addNotification($notificationModel) == 3);
         $notification = $this->out->getNotificationById(3);
         $this->assertTrue($notification->getModule() == 'awards');
         $this->assertTrue($notification->getMessage() == 'Testmessage3');
