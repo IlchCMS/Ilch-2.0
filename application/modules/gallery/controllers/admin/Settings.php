@@ -42,12 +42,14 @@ class Settings extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'picturesPerPage'                  => 'numeric|min:1'
+                'picturesPerPage' => 'numeric|min:1'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('gallery_picturesPerPage', $this->getRequest()->getPost('picturesPerPage'));
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
 
             $this->redirect()
