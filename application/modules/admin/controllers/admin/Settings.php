@@ -134,6 +134,7 @@ HTACCESS;
                 $this->addMessage('saveSuccess');
             }
 
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'index']);
