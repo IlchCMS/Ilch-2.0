@@ -130,12 +130,12 @@ class Notifications extends \Ilch\Mapper
      * Add a notification.
      *
      * @param NotificationModel $notification
-     * @return bool true|false
+     * @return int
      */
     public function addNotification(NotificationModel $notification)
     {
         if (!$this->isValidNotification($notification)) {
-            return false;
+            return 0;
         }
 
         $fields = [
@@ -167,10 +167,10 @@ class Notifications extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
 
-            return true;
+            return $this->db()->getLastInsertId();
         }
 
-        return false;
+        return 0;
     }
 
     /**
