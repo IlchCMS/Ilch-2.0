@@ -98,8 +98,6 @@ $version = $this->get('version');
                         <tr>
                             <td></td>
                             <td>
-                                <!-- TODO: Remove this message when the update function is going live. -->
-                                Update function is not yet running in current stage of development.<br />
                                 <a href="<?=$this->getUrl(['controller' => 'settings', 'action' => 'update']) ?>"><?=$this->getTrans('updateNow') ?></a>
                             </td>
                         </tr>
