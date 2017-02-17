@@ -241,7 +241,7 @@ HTACCESS;
             if ($doUpdate == true) {
                 if ($update->update($version)) {
                     $this->getView()->set('content', $update->getContent());
-                    //$this->getConfig()->set('version', $newVersion);
+                    $this->getConfig()->set('version', $newVersion);
                     $this->getView()->set('updateSuccessfull', true);
                 }
             }
