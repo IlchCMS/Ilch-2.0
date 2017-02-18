@@ -92,7 +92,7 @@ abstract class Base extends \Ilch\Design\Base
         }
 
         foreach ($messages as $key => $message) {
-            if ($message['validationError'] == true) {
+            if (!empty($message['validationError']) And $message['validationError'] == true) {
                 $text = '';
                 $text .= '<b>'.$this->getTrans('errorsOccured').'</b>';
                 $text .= '<ul>';

@@ -22,6 +22,10 @@ function checkOthersDependencies($module, $dependencies) {
 }
 
 function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
+    if (empty($moduleOnUpdateServer->depends)) {
+        return true;
+    }
+
     foreach ($moduleOnUpdateServer->depends as $key => $value) {
         if (array_key_exists($key, $versionsOfModules)) {
             $parsed = explode(',', $value);
