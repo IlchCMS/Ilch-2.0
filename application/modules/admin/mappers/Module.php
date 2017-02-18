@@ -99,6 +99,8 @@ class Module extends \Ilch\Mapper
             }
             if (isset($config->config['depends'])) {
                 $moduleModel->setDepends($config->config['depends']);
+            } else {
+                $moduleModel->setDepends([]);
             }
 
             $modules[] = $moduleModel;
