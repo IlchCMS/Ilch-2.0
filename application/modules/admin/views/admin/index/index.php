@@ -13,7 +13,12 @@ $version = $this->get('version');
 
 <h3><?=$this->getTrans('welcomeBack', $this->escape($name)) ?> !</h3>
 <?=$this->getTrans('welcomeBackDescripton') ?>
-<br /><br /><br />
+<br /><br />
+<div class="alert alert-danger">This is a special version of Ilch 2 to test the update-feature.<br>
+You should only have installed this one if you want to take part in testing the update-feature.<br>
+If this is not the case then visit <a href="http://www.ilch.de">www.ilch.de</a> to download the latest stable.<br><br>
+February 2017</div>
+<br />
 <?php if (!empty($notifications)): ?>
 <form class="form-horizontal" method="POST" action="">
 <?=$this->getTokenField() ?>
