@@ -275,6 +275,7 @@ HTACCESS;
                 if ($validation->isValid()) {
                     $notificationPermissionMapper->updateLimitOfModule($data['key'], $data['limit']);
                 } else {
+                    $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                     $this->redirect()
                         ->withErrors($validation->getErrorBag())
                         ->to(['action' => 'notifications']);
