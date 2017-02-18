@@ -168,7 +168,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                    <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$configurations[$module->getKey()]['ilchCore'].'<br />
                                    <b>'.$this->getTrans('phpVersion').':</b> '.$configurations[$module->getKey()]['phpVersion'].'<br />
                                    <b>'.$this->getTrans('dependencies').':</b><br />';
-                    foreach ($configurations[$module->getKey()]['depends'] as $key => $value) {
+                    $dependenciesForInfo = (!empty($configurations[$module->getKey()]['depends']) ? $configurations[$module->getKey()]['depends'] : []);
+                    foreach ($dependenciesForInfo as $key => $value) {
                         $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
                     }
 
