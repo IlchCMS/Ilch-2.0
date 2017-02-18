@@ -91,10 +91,10 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                 <i class="fa fa-info text-info"></i>
                             </span>
                             <?php if (!isset($config->isSystemModule)): ?>
-                                <?php if (!empty(checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies))): ?>
+                                <?php if (!empty(checkOthersDependencies([$module->getKey() => $module->getVersion()], $dependencies))): ?>
                                     <button class="btn disabled"
                                             data-toggle="modal"
-                                            data-target="#dependencyInfoModal<?=$moduleOnUpdateServerFound->key ?>"
+                                            data-target="#dependencyInfoModal<?=$module->getKey() ?>"
                                             title="<?=$this->getTrans('dependencyError') ?>">
                                         <i class="fa fa-trash-o text-warning"></i>
                                     </button>
@@ -175,13 +175,16 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
                     $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
 
-                    $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
-                    foreach (checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies) as $key => $value) {
-                        $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
+                    if (!empty($moduleOnUpdateServerFound)) {
+                        foreach (checkOthersDependencies([$moduleOnUpdateServerFound->key => $moduleOnUpdateServerFound->version], $dependencies) as $key => $value) {
+                            $dependencyInfo .= '<b>'.$key.':</b> '.key($value).$value[key($value)].'<br />';
+                        }
+
+                        $dependencyInfo = '<p>'.$this->getTrans('dependencyInfo').'</p>';
+                        echo $this->getDialog('dependencyInfoModal'.$module->getKey(), $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo);
                     }
                     ?>
                     <?=$this->getDialog('infoModal'.$module->getKey(), $this->getTrans('menuModules').' '.$this->getTrans('info'), $moduleInfo); ?>
-                    <?=$this->getDialog('dependencyInfoModal'.$moduleOnUpdateServerFound->key, $this->getTrans('dependencies').' '.$this->getTrans('info'), $dependencyInfo); ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </tbody>
