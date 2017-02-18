@@ -61,6 +61,8 @@ class Modules extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
 
+        $dependencies = [];
+
         foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
             $modulesDir[] = $key;
@@ -68,7 +70,7 @@ class Modules extends \Ilch\Controller\Admin
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             if (class_exists($configClass)) {
                 $config = new $configClass($this->getTranslator());
-                $dependencies[$key] = $config->config['depends'];
+                $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
                 $configurations[$key] = $config->config;
             }
         }
@@ -95,12 +97,14 @@ class Modules extends \Ilch\Controller\Admin
             return;
         }
 
+        $dependencies = [];
+
         foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
             $key = basename($modulesPath);
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             if (class_exists($configClass)) {
                 $config = new $configClass($this->getTranslator());
-                $dependencies[$key] = $config->config['depends'];
+                $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
             }
         }
 

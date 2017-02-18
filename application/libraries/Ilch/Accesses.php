@@ -51,7 +51,7 @@ class Accesses
     {
 
         $userId = '';
-        $groupAccessList = '';
+        $groupAccessList = [];
         $groupIds = [0];
 
         if (isset($_SESSION['user_id'])) {
