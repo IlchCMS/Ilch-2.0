@@ -388,7 +388,9 @@ class Transfer
             $this->setContent($content);
             return true;
         } finally {
-            zip_close($zipHandle);
+            if (is_resource($zipHandle)) {
+                zip_close($zipHandle);
+            }
             unlink($this->zipFile);
             unlink($this->zipFile.'-signature.sig');
             $this->curlClose();
