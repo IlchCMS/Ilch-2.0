@@ -51,6 +51,12 @@ class Backup extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa fa-refresh',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'update'])
+            ],
+            [
+                'name' => 'menuNotifications',
+                'active' => false,
+                'icon' => 'fa fa-envelope-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'notifications'])
             ]
         ];
 
