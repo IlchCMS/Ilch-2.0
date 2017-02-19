@@ -245,7 +245,7 @@ class Transfer
     public function newVersionFound()
     {
         foreach ($this->getVersionsList() as $vL) {
-            if (preg_replace('/\s+/', '', $vL) > $this->getVersionNow()) {
+            if (version_compare(preg_replace('/\s+/', '', $vL), $this->getVersionNow(), '>')) {
                 $this->setNewVersion(trim(preg_replace('/\s\s+/','', $vL)));
                 $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                 return true;
