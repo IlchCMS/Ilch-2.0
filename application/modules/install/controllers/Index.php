@@ -532,7 +532,7 @@ class Index extends \Ilch\Controller\Frontend
             $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
             $config = new $configClass($this->getTranslator());
             $modules[$key]['config'] = $config;
-            $dependencies[$key] = $config->config['depends'];
+            $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
 
             if (in_array($type, $module['types'])) {
                 $modules[$key]['checked'] = true;

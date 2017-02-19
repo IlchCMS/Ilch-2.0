@@ -245,7 +245,7 @@ class Transfer
     public function newVersionFound()
     {
         foreach ($this->getVersionsList() as $vL) {
-            if (preg_replace('/\s+/', '', $vL) > $this->getVersionNow()) {
+            if (version_compare(preg_replace('/\s+/', '', $vL), $this->getVersionNow(), '>')) {
                 $this->setNewVersion(trim(preg_replace('/\s\s+/','', $vL)));
                 $this->zipFile = $this->getZipSavePath().'Master-'.$this->getNewVersion().'.zip';
                 return true;
@@ -388,7 +388,9 @@ class Transfer
             $this->setContent($content);
             return true;
         } finally {
-            zip_close($zipHandle);
+            if (is_resource($zipHandle)) {
+                zip_close($zipHandle);
+            }
             unlink($this->zipFile);
             unlink($this->zipFile.'-signature.sig');
             $this->curlClose();
