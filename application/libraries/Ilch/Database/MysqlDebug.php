@@ -6,17 +6,27 @@
 
 namespace Ilch\Database;
 
+use DebugBar\DataCollector\ExceptionsCollector;
 use DebugBar\DataCollector\PDO\TracedStatement;
 
 class MysqlDebug extends Mysql
 {
     /** @var TracedStatement[] */
     private $executedStatements;
+    /**
+     * @var ExceptionsCollector
+     */
+    private $exceptionsCollector;
 
-    public function __construct()
+    /**
+     * MysqlDebug constructor.
+     * @param ExceptionsCollector $exceptionsCollector
+     */
+    public function __construct(ExceptionsCollector $exceptionsCollector)
     {
         $this->executedStatements = [];
         self::$errorHandling = self::THROW_EXCEPTIONS;
+        $this->exceptionsCollector = $exceptionsCollector;
     }
 
     /**
@@ -44,6 +54,8 @@ class MysqlDebug extends Mysql
         } catch (Exception $e) {
             $ex = $e;
             $rowCount = 0;
+            $mysqliResult = new \mysqli_result();
+            $this->exceptionsCollector->addThrowable($e);
         }
 
         $tracedStatement->end($ex, $rowCount);

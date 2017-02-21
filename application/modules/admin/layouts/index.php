@@ -52,6 +52,11 @@
         $.key('alt+k', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts']) ?>'; });
         $.key('alt+i', function() { window.open('http://ilch.de/', '_blank'); });
 	</script>
+    <?php
+        if (\Ilch\DebugBar::isInitialized()) {
+            echo \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->renderHead();
+        }
+    ?>
     </head>
     <body id="body" class="">
         <script>
@@ -322,5 +327,10 @@
         var ilchSmileysPlugin = "<?=$this->getBaseUrl('application/modules/smilies/static/js/ilchsmileys/') ?>";
         var ilchSmileysPluginUrl = "<?=$this->getUrl(['module' => 'smilies', 'controller' => 'iframe', 'action' => 'smilies']) ?>";
         </script>
+        <?php
+            if (\Ilch\DebugBar::isInitialized()) {
+                echo \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->render();
+            }
+        ?>
     </body>
 </html>

@@ -29,15 +29,15 @@ class Factory
         if (DebugBar::isInitialized()) {
             $debugDbClass = $dbClass . 'Debug';
             if (class_exists($debugDbClass)) {
-                $dbClass = $debugDbClass;
+                $db = new $debugDbClass(DebugBar::getInstance()->getCollector('exceptions'));
                 $addDebugCollector = true;
             }
+        } elseif (!class_exists($dbClass)) {
+            throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
+        } else {
+            $db = new $dbclass();
         }
 
-        if (!class_exists($dbClass)) {
-            throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
-        }
-        $db = new $dbClass();
         $hostParts = explode(':', $dbData['dbHost']);
         $port = null;
 

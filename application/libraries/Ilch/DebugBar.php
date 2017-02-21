@@ -6,6 +6,8 @@
 
 namespace Ilch;
 
+use DebugBar\DataCollector\ExceptionsCollector;
+
 class DebugBar
 {
     /** @var \DebugBar\DebugBar */
