@@ -32,11 +32,14 @@ class Factory
                 $db = new $debugDbClass(DebugBar::getInstance()->getCollector('exceptions'));
                 $addDebugCollector = true;
             }
-        } elseif (!class_exists($dbClass)) {
-            throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
-        } else {
-            $db = new $dbclass();
         }
+
+        if (!isset($db) && class_exists($dbClass)) {
+            $db = new $dbClass();
+        } else {
+            throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
+        }
+        /** @var Mysql|MysqlDebug $db */
 
         $hostParts = explode(':', $dbData['dbHost']);
         $port = null;
