@@ -34,10 +34,11 @@ class Factory
             }
         }
 
-        if (!isset($db) && class_exists($dbClass)) {
+        if (!isset($db)) {
+            if (!class_exists($dbClass)) {
+                throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
+            }
             $db = new $dbClass();
-        } else {
-            //throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
         }
         /** @var Mysql|MysqlDebug $db */
 
