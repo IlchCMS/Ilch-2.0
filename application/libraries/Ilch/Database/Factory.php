@@ -37,7 +37,7 @@ class Factory
         if (!isset($db) && class_exists($dbClass)) {
             $db = new $dbClass();
         } else {
-            throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
+            //throw new \RuntimeException('Invalid database engine ' . $dbData['dbEngine']);
         }
         /** @var Mysql|MysqlDebug $db */
 
