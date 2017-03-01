@@ -48,7 +48,7 @@ class Teams extends \Ilch\Mapper
      * Get Team by given Id.
      *
      * @param integer $id
-     * @return PrivacyModel|null
+     * @return TeamsModel|null
      */
     public function getTeamById($id)
     {
