@@ -134,7 +134,7 @@ class Index extends \Ilch\Controller\Frontend
                         $eventModel->setImage($image);
                     }
                     if ($this->getConfig()->get('event_google_maps_api_key') != '') {
-                        $eventModel->setLatLong($eventMapper->getLatLongFromAddress($place, $this->getConfig()->get('event_google_maps_api_key')));
+                        $eventModel->setLatLong($eventMapper->getLatLongFromAddress($post['place'], $this->getConfig()->get('event_google_maps_api_key')));
                     }
 
                     $eventModel->setUserId($this->getUser()->getId());
