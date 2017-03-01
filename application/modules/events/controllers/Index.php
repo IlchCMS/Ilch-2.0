@@ -19,6 +19,8 @@ class Index extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuEvents'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
 
@@ -41,12 +43,19 @@ class Index extends \Ilch\Controller\Frontend
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
         if ($this->getRequest()->getParam('id')) {
+            $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuEvents'))
+                ->add($event->getTitle())
+                ->add($this->getTranslator()->trans('edit'));
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
                     ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()])
                     ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $event->getId()]);
 
             $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
         } else {
+            $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuEvents'))
+                ->add($this->getTranslator()->trans('add'));
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }

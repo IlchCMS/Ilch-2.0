@@ -23,6 +23,9 @@ class Show extends \Ilch\Controller\Frontend
         $commentModel = new CommentModel();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuEvents'))
+            ->add($event->getTitle());
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
 
@@ -77,6 +80,9 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuEvents'))
+            ->add($this->getTranslator()->trans('naviEventsUpcoming'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
@@ -90,6 +96,9 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuEvents'))
+            ->add($this->getTranslator()->trans('naviEventsPast'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsPast'), ['action' => 'past']);
@@ -103,6 +112,9 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuEvents'))
+            ->add($this->getTranslator()->trans('naviEventsParticipation'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsParticipation'), ['action' => 'participation']);
@@ -116,6 +128,9 @@ class Show extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuEvents'))
+            ->add($this->getTranslator()->trans('naviEventsMy'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('naviEventsMy'), ['action' => 'my']);
