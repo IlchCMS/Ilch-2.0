@@ -90,18 +90,19 @@ $user = $userMapper->getUserById($event->getUserId());
             <i class="fa fa-clock-o"></i> <?=$start->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
         </div>
         <div class="eventBoxBottom">
-            <?php $place = explode(', ', $event->getPlace(), 2); ?>
+            <?php $place = $this->escape($event->getPlace()); ?>
+            <?php $place = explode(', ', $place, 2); ?>
             <div class="eventPlaceMarker">
                 <i class="fa fa-map-marker"></i>
             </div>
             <?php
             if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != '') {
-                echo '<a id="showMap">'.$this->escape($place[0]).'</a>';
+                echo '<a id="showMap">'.$place[0].'</a>';
             } else {
-               echo $this->escape($place[0]);
+               echo $place[0];
             }
             if (!empty($place[1])) {
-                echo '<br /><span class="eventAddress text-muted">'.$this->escape($place[1]).'</span>';
+                echo '<br /><span class="eventAddress text-muted">'.$place[1].'</span>';
             }
             ?>
             <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
@@ -204,7 +205,8 @@ $user = $userMapper->getUserById($event->getUserId());
     </div>
 </div>
 
-<?=$this->getDialog('showBigGoogleMapsModal', $event->getPlace(), '<div id="big-map-canvas"></div>') ?>
+<?php $place = $this->escape($event->getPlace()); ?>
+<?=$this->getDialog('showBigGoogleMapsModal', $place, '<div id="big-map-canvas"></div>') ?>
 <?php if ($this->get('event_google_maps_api_key') != ''): ?>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>" async defer></script>
 <?php endif; ?>
@@ -241,7 +243,7 @@ $('textarea').on('keyup', function() {
                     position: latLng,
                     map: map,
                     draggable: false,
-                    title: '<?=$event->getTitle() ?>',
+                    title: '<?=$this->escape($event->getTitle()) ?>',
                     animation: google.maps.Animation.DROP
                 });
             }, 600);
@@ -265,13 +267,14 @@ $('textarea').on('keyup', function() {
             var marker = new google.maps.Marker({
                 position: latLng,
                 map: map,
-                title: '<?=$event->getTitle() ?>',
+                title: '<?=$this->escape($event->getTitle()) ?>',
                 animation: google.maps.Animation.DROP
             });
 
-            <?php $infoPlace = str_replace(', ', '<br />', $event->getPlace()); ?>
-            <?php $infoRoutePlace = str_replace(' ', '+', $event->getPlace()); ?>
-            var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$event->getTitle() ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
+            <?php $place = $this->escape($event->getPlace()); ?>
+            <?php $infoPlace = str_replace(', ', '<br />', $place); ?>
+            <?php $infoRoutePlace = str_replace(' ', '+', $place); ?>
+            var infoWindowContent = '<div class="poi-info-window"><div class="title"><?=$this->escape($event->getTitle()) ?></div><div class="address"><?=$infoPlace ?><br /><a href="http://maps.google.com?daddr=<?=$infoRoutePlace ?>" target="_blank"><?=$this->getTrans('googleMapsPlanRoute') ?></a></div></div>';
             var infowindow = new google.maps.InfoWindow({
                 content: infoWindowContent
             });

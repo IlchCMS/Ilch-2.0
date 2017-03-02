@@ -12,16 +12,6 @@
     }
     ?>
 </legend>
-<?php if ($this->validation()->hasErrors()): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
@@ -61,7 +51,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
         <label for="start" class="col-md-2 control-label">
             <?=$this->getTrans('startTime') ?>:
         </label>
@@ -71,14 +61,14 @@
                    id="start"
                    name="start"
                    size="16"
-                   value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } ?>"
+                   value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getStart())); } elseif ($this->originalInput('start') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('start'))); } ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
             </span>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
         <label for="end" class="col-md-2 control-label">
             <?=$this->getTrans('endTime') ?>:
         </label>
@@ -88,7 +78,7 @@
                    id="end"
                    name="end"
                    size="16"
-                   value="<?php if ($this->get('event') != '' AND $this->get('event')->getEnd() != '0000-00-00 00:00:00') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } ?>"
+                   value="<?php if ($this->get('event') != '') { echo date('d.m.Y H:i', strtotime($this->get('event')->getEnd())); } elseif ($this->originalInput('end') != '') { echo date('d.m.Y H:i', strtotime($this->originalInput('end'))); } ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-times"></span>
