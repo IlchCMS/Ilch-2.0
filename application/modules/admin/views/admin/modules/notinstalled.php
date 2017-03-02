@@ -122,20 +122,21 @@
                     } else {
                         $author = $this->escape($module->getAuthor());
                     }
-                    $phpExtensions = '';
-                    if ($module->getPHPExtension() != '') {
-                        $phpExtensions = '<b>'.$this->getTrans('phpExtensions').':</b> '.$phpExtension.'<br /><br />';
-                    }
                     $moduleInfo = '<b>'.$this->getTrans('name').':</b> '.$this->escape($content['name']).'<br />
-                                   <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
-                                   <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
-                                   <b>'.$this->getTrans('requirements').'</b><br />
-                                   <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$ilchCore.'<br />
-                                   <b>'.$this->getTrans('phpVersion').':</b> '.$phpVersion.'<br />
-                                   '.$phpExtensions.'
-                                   <b>'.$this->getTrans('dependencies').':</b><br />';
-                    foreach ($module->getDepends() as $key => $value) {
-                        $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
+                            <b>'.$this->getTrans('version').':</b> '.$this->escape($module->getVersion()).'<br />
+                            <b>'.$this->getTrans('author').':</b> '.$author.'<br /><br />
+                            <b>'.$this->getTrans('requirements').'</b><br />
+                            <b>'.$this->getTrans('ilchCoreVersion').':</b> '.$ilchCore.'<br />
+                            <b>'.$this->getTrans('phpVersion').':</b> '.$phpVersion.'<br />';
+                    if ($module->getPHPExtension()) {
+                        $moduleInfo .= '<b>'.$this->getTrans('phpExtensions').':</b> '.$phpExtension.'<br />';
+                    }
+                    if ($module->getDepends()) {
+                        $moduleInfo .= '<b>'.$this->getTrans('dependencies').':</b><br />';
+
+                        foreach ($module->getDepends() as $key => $value) {
+                            $moduleInfo .= $key.' '. str_replace(',','', $value).'<br />';
+                        }
                     }
                     $moduleInfo .= '<br /><b>'.$this->getTrans('desc').':</b><br />'.$content['description'];
                     ?>
