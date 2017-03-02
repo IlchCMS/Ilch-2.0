@@ -12,9 +12,9 @@ class Events extends \Ilch\Box
 {
     public function render()
     {
-        $date = new \Ilch\Date();
         $eventMapper = new EventMapper();
+        $config = \Ilch\Registry::get('config');
 
-        $this->getView()->set('eventList', $eventMapper->getEventListUpcoming(5));
+        $this->getView()->set('eventList', $eventMapper->getEventListUpcoming($config->get('event_boxEventLimit')));
     }
 }

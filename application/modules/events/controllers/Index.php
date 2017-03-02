@@ -9,6 +9,7 @@ namespace Modules\Events\Controllers;
 use Modules\Events\Mappers\Events as EventMapper;
 use Modules\Events\Models\Events as EventModel;
 use Modules\Events\Mappers\Entrants as EntrantsMapper;
+use Modules\Events\Mappers\Currency as CurrencyMapper;
 use Modules\User\Mappers\Setting as SettingMapper;
 use Ilch\Validation;
 
@@ -40,6 +41,7 @@ class Index extends \Ilch\Controller\Frontend
         $eventMapper = new EventMapper();
         $eventModel = new EventModel();
         $settingMapper = new SettingMapper();
+        $currencyMapper = new CurrencyMapper();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
         if ($this->getRequest()->getParam('id')) {
@@ -78,7 +80,6 @@ class Index extends \Ilch\Controller\Frontend
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'start'        => 'required',
-                'end'          => 'required',
                 'title'        => 'required',
                 'place'        => 'required',
                 'text'         => 'required',
@@ -152,6 +153,9 @@ class Index extends \Ilch\Controller\Frontend
                             ->setEnd(new \Ilch\Date($this->getRequest()->getPost('end')))
                             ->setPlace($this->getRequest()->getPost('place'))
                             ->setText($this->getRequest()->getPost('text'))
+                            ->setCurrency($this->getRequest()->getPost('currency'))
+                            ->setPrice($this->getRequest()->getPost('price'))
+                            ->setPriceArt($this->getRequest()->getPost('priceArt'))
                             ->setShow($this->getRequest()->getPost('calendarShow'));
                     $eventMapper->save($eventModel);
 
@@ -190,6 +194,7 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('image_width', $imageWidth);
         $this->getView()->set('image_size', $imageSize);
         $this->getView()->set('image_filetypes', $imageAllowedFiletypes);
+        $this->getView()->set('currencies', $currencyMapper->getCurrencies());
         $this->getView()->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
     }
 

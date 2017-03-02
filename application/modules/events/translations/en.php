@@ -14,9 +14,14 @@ return [
     'startTime' => 'Start',
     'endTime' => 'End',
     'text' => 'Text',
+    'price' => 'Price',
     'image' => 'Image',
     'noEvent' => 'No events available.',
     'calendarShow' => 'Show event in the calendar?',
+
+    'select' => 'Select',
+    'ticket' => 'Ticket',
+    'entry' => 'Entry',
 
     'menuEventUpcoming' => 'Upcoming events',
     'menuEventAll' => 'All events',
@@ -65,10 +70,17 @@ return [
     'smilies' => 'Smilies',
     'close' => 'Close',
 
+    'currencies' => 'Currencies',
+    'currency' => 'Currency',
+    'currencyInUse' => 'This currency is currently in use and therefore can not be deleted.',
+    'alreadyExisting' => 'A currency with this name already exists.',
+    'noCurrenciesExist' => 'No currencies exists.',
+
     'menuGoogleMaps' => 'Google Maps',
     'googleMapsAPIKey' => 'Google Maps API-Key',
     'createGoogleMapsAPIKey' => 'Create Google Maps API-Key',
     'googleMapsZoom' => 'Map Zoom',
     'googleMapsMapTyp' => 'Map Typ',
     'googleMapsPlanRoute' => 'Plan route',
+    'boxEventLimit' => 'Event limit',
 ];

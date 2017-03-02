@@ -72,6 +72,27 @@ class Events extends \Ilch\Model
     protected $text;
 
     /**
+     * The currency of the event.
+     *
+     * @var int
+     */
+    protected $currency;
+
+    /**
+     * The price of the event.
+     *
+     * @var string
+     */
+    protected $price;
+
+    /**
+     * The price art of the event.
+     *
+     * @var int
+     */
+    protected $priceArt;
+
+    /**
      * The show of the event.
      *
      * @var int
@@ -281,6 +302,75 @@ class Events extends \Ilch\Model
     public function setText($text)
     {
         $this->text = (string)$text;
+
+        return $this;
+    }
+
+    /**
+     * Gets the currency of the event.
+     *
+     * @return int
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * Sets the currency of the event.
+     *
+     * @param string $currency
+     * @return this
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = (int)$currency;
+
+        return $this;
+    }
+
+    /**
+     * Gets the price of the event.
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Sets the price of the event.
+     *
+     * @param string $price
+     * @return this
+     */
+    public function setPrice($price)
+    {
+        $this->price = (string)$price;
+
+        return $this;
+    }
+
+    /**
+     * Gets the price art of the event.
+     *
+     * @return int
+     */
+    public function getPriceArt()
+    {
+        return $this->priceArt;
+    }
+
+    /**
+     * Sets the price art of the event.
+     *
+     * @param string $priceArt
+     * @return this
+     */
+    public function setPriceArt($priceArt)
+    {
+        $this->priceArt = (int)$priceArt;
 
         return $this;
     }

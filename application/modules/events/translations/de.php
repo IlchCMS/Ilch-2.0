@@ -11,12 +11,17 @@ return [
     'creator' => 'Ersteller',
     'title' => 'Titel',
     'place' => 'Ort',
-    'startTime' => 'Start',
+    'startTime' => 'Beginn',
     'endTime' => 'Ende',
     'text' => 'Text',
+    'price' => 'Preis',
     'image' => 'Bild',
     'noEvent' => 'Keine Veranstaltungen vorhanden.',
     'calendarShow' => 'Event im Kalender anzeigen?',
+
+    'select' => 'Auswahl',
+    'ticket' => 'Ticket',
+    'entry' => 'Eintritt',
 
     'menuEventUpcoming' => 'Bevorstehende Veranstaltungen',
     'menuEventAll' => 'Alle Veranstaltungen',
@@ -65,6 +70,12 @@ return [
     'smilies' => 'Smilies',
     'close' => 'Schließen',
 
+    'currencies' => 'Währungen',
+    'currency' => 'Währung',
+    'currencyInUse' => 'Diese Währung wird zurzeit verwendet und kann daher nicht gelöscht werden.',
+    'alreadyExisting' => 'Es existiert bereits eine Währung mit diesem Namen.',
+    'noCurrenciesExist' => 'Keine Währungen vorhanden.',
+
     'menuGoogleMaps' => 'Google Maps',
     'googleMapsAPIKey' => 'Google Maps API-Schlüssel',
     'createGoogleMapsAPIKey' => 'Google Maps API-Schlüssel erstellen',
@@ -72,4 +83,5 @@ return [
     'googleMapsZoom' => 'Map Zoom',
     'googleMapsMapTyp' => 'Map Typ',
     'googleMapsPlanRoute' => 'Route planen',
+    'boxEventLimit' => 'Event Limit',
 ];

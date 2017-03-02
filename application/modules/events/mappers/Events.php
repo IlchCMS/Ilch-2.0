@@ -42,6 +42,9 @@ class Events extends \Ilch\Mapper
             $entryModel->setLatLong($entries['lat_long']);
             $entryModel->setImage($entries['image']);
             $entryModel->setText($entries['text']);
+            $entryModel->setCurrency($entries['currency']);
+            $entryModel->setPrice($entries['price']);
+            $entryModel->setPriceArt($entries['price_art']);
             $entryModel->setShow($entries['show']);
             $entry[] = $entryModel;
         }
@@ -77,6 +80,9 @@ class Events extends \Ilch\Mapper
         $eventModel->setLatLong($eventRow['lat_long']);
         $eventModel->setImage($eventRow['image']);
         $eventModel->setText($eventRow['text']);
+        $eventModel->setCurrency($eventRow['currency']);
+        $eventModel->setPrice($eventRow['price']);
+        $eventModel->setPriceArt($eventRow['price_art']);
         $eventModel->setShow($eventRow['show']);
 
         return $eventModel;
@@ -229,6 +235,8 @@ class Events extends \Ilch\Mapper
      *
      * @param string $address
      * @param string $googleMapsKey
+     *
+     * @return latlongitude
      */
     public function getLatLongFromAddress($address, $googleMapsKey) 
     {
@@ -258,6 +266,9 @@ class Events extends \Ilch\Mapper
             'lat_long' => $event->getLatLong(),
             'image' => $event->getImage(),
             'text' => $event->getText(),
+            'currency' => $event->getCurrency(),
+            'price' => $event->getPrice(),
+            'price_art' => $event->getPriceArt(),
             'show' => $event->getShow()
         ];
 

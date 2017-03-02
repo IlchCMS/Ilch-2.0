@@ -20,6 +20,12 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
+                'name' => 'currencies',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
+            ],
+            [
                 'name' => 'settings',
                 'active' => true,
                 'icon' => 'fa fa-cogs',
@@ -42,24 +48,26 @@ class Settings extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->isPost()) {
             Validation::setCustomFieldAliases([
-                'event_height'                  => 'imageHeight',
-                'event_width'                   => 'imageWidth',
-                'event_size'                    => 'imageSizeBytes',
-                'event_filetypes'               => 'imageAllowedFileExtensions',
-                'event_google_maps_map_typ'     => 'googleMapsMapTyp',
-                'event_google_maps_zoom'        => 'googleMapsZoom'
+                'event_height'              => 'imageHeight',
+                'event_width'               => 'imageWidth',
+                'event_size'                => 'imageSizeBytes',
+                'event_filetypes'           => 'imageAllowedFileExtensions',
+                'event_google_maps_map_typ' => 'googleMapsMapTyp',
+                'event_google_maps_zoom'    => 'googleMapsZoom'
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'event_height'                  => 'required|numeric|min:1',
-                'event_width'                   => 'required|numeric|min:1',
-                'event_size'                    => 'required|numeric|min:1',
-                'event_filetypes'               => 'required',
-                'event_google_maps_map_typ'     => 'required',
-                'event_google_maps_zoom'        => 'required|numeric|min:1'
+                'event_box_event_limit'     => 'required|numeric|min:1',
+                'event_height'              => 'required|numeric|min:1',
+                'event_width'               => 'required|numeric|min:1',
+                'event_size'                => 'required|numeric|min:1',
+                'event_filetypes'           => 'required',
+                'event_google_maps_map_typ' => 'required',
+                'event_google_maps_zoom'    => 'required|numeric|min:1'
             ]);
 
             if ($validation->isValid()) {
+                $this->getConfig()->set('event_box_event_limit', $this->getRequest()->getPost('event_box_event_limit'));
                 $this->getConfig()->set('event_height', $this->getRequest()->getPost('event_height'));
                 $this->getConfig()->set('event_width', $this->getRequest()->getPost('event_width'));
                 $this->getConfig()->set('event_size', $this->getRequest()->getPost('event_size'));
@@ -75,6 +83,7 @@ class Settings extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
+        $this->getView()->set('event_box_event_limit', $this->getConfig()->get('event_box_event_limit'));
         $this->getView()->set('event_height', $this->getConfig()->get('event_height'));
         $this->getView()->set('event_width', $this->getConfig()->get('event_width'));
         $this->getView()->set('event_size', $this->getConfig()->get('event_size'));

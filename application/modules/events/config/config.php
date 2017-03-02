@@ -43,6 +43,7 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('event_boxEventLimit', '5');
         $databaseConfig->set('event_uploadpath', 'application/modules/events/static/upload/image/');
         $databaseConfig->set('event_height', '150');
         $databaseConfig->set('event_width', '450');
@@ -56,16 +57,18 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_events`;
-                                 DROP TABLE `[prefix]_events_entrants`;');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_uploadpath'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_height'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_width'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_size'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_filetypes'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_api_key'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_map_typ'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_zoom'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events'");
+                                 DROP TABLE `[prefix]_events_entrants`;
+                                 DROP TABLE `[prefix]_events_currencies`');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'event_boxEventLimit';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_uploadpath';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_height';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_width';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_size';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_filetypes';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_api_key';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_map_typ';
+                                 DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_zoom';
+                                 DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events'");
     }
 
     public function getInstallSql()
@@ -80,6 +83,9 @@ class Config extends \Ilch\Config\Install
                   `lat_long` VARCHAR(100) NULL DEFAULT NULL,
                   `image` VARCHAR(255) NULL DEFAULT NULL,
                   `text` LONGTEXT NOT NULL,
+                  `currency` TINYINT(1) NOT NULL,
+                  `price` VARCHAR(255) NOT NULL,
+                  `price_art` TINYINT(1) NOT NULL,
                   `show` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -90,8 +96,20 @@ class Config extends \Ilch\Config\Install
                   `status` TINYINT(1) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-                INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES
-                ("events", "static/upload/image");';
+                CREATE TABLE IF NOT EXISTS `[prefix]_events_currencies` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `name` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+                INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (1, "EUR (€)");
+                INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (2, "USD ($)");
+                INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (3, "GBP (£)");
+                INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (4, "AUD ($)");
+                INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (5, "NZD ($)");
+                INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (6, "CHF");
+
+                INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("events", "static/upload/image");';
     }
 
     public function getUpdate($installedVersion)

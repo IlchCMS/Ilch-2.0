@@ -1,11 +1,12 @@
 <?php
 $event = $this->get('event');
 $eventEntrants = $this->get('eventEntrants');
+$userMapper = $this->get('userMapper');
+$currencyMapper = $this->get('currencyMapper');
 
 $start = new \Ilch\Date($event->getStart());
 $end = new \Ilch\Date($event->getEnd());
 $latLong = explode(',', $event->getLatLong());
-$userMapper = new \Modules\User\Mappers\User();
 $user = $userMapper->getUserById($event->getUserId());
 ?>
 
@@ -111,6 +112,27 @@ $user = $userMapper->getUserById($event->getUserId());
                 </div>
             <?php endif; ?>
         </div>
+        <?php if ($event->getPrice() != '' and $event->getCurrency() >= 1): ?>
+            <br />
+            <div class="eventBoxHead">
+                <strong><?=$this->getTrans('price') ?></strong>
+            </div>
+            <div class="eventBoxContent">
+                <?php if ($event->getPriceArt() >= 1) {
+                    if ($event->getPriceArt() == 1) {
+                        echo $this->getTrans('ticket').' ';
+                    } else {
+                        echo $this->getTrans('entry').' ';
+                    }
+                }
+
+                echo str_replace('.', ',', $event->getPrice()).' ';
+
+                $currency = $currencyMapper->getCurrencyById($event->getCurrency());
+                echo $currency[0]->getName();
+                ?>
+            </div>
+        <?php endif; ?>
         <br />
         <div class="eventBoxHead">
             <div style="width: 10%; float: left;">

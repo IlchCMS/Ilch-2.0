@@ -112,6 +112,22 @@
                    required />
         </div>
     </div>
+
+    <legend><?=$this->getTrans('menuBoxes') ?></legend>
+    <div class="form-group <?=$this->validation()->hasError('event_box_event_limit') ? 'has-error' : '' ?>">
+        <label for="event_box_event_limit" class="col-lg-2 control-label">
+            <?=$this->getTrans('boxEventLimit') ?>:
+        </label>
+        <div class="col-lg-1">
+            <input type="number"
+                   class="form-control"
+                   id="event_box_event_limit"
+                   name="event_box_event_limit"
+                   min="1"
+                   value="<?=$this->get('event_box_event_limit') ?>"
+                   required />
+        </div>
+    </div>
     <?=$this->getSaveBar() ?>
 </form>
 

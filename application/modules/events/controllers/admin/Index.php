@@ -21,6 +21,12 @@ class Index extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
+                'name' => 'currencies',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'currency', 'action' => 'index'])
+            ],
+            [
                 'name' => 'settings',
                 'active' => false,
                 'icon' => 'fa fa-cogs',
