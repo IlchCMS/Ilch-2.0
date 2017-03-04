@@ -60,8 +60,12 @@ class AfterDatabaseLoad
             $lang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
         }
 
-        $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
-        $statisticMapper->saveVisit(['user_id' => $userId, 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
+        $request = $pluginData['request'];
+
+        if (!$request->isAdmin()) {
+            $statisticMapper = new \Modules\Statistic\Mappers\Statistic();
+            $statisticMapper->saveVisit(['user_id' => $userId, 'site' => $site, 'referer' => $referer, 'os' => $statisticMapper->getOS('1'), 'os_version' => $statisticMapper->getOS('', '1'), 'browser' => $statisticMapper->getBrowser('1'), 'browser_version' => $statisticMapper->getBrowser(), 'ip' => $ip, 'lang' => $lang]);
+        }
 
         if ($pluginData['request']->getParam('language')) {
             $_SESSION['language'] = $pluginData['request']->getParam('language');
