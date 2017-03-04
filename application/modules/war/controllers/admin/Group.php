@@ -151,7 +151,7 @@ class Group extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $errorFields = $validation->getFieldsWithError();
         }
 

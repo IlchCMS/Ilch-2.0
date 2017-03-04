@@ -83,10 +83,13 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('war_groupsPerPage', $post['groupsPerPage']);
                 $this->getConfig()->set('war_boxNextWarLimit', $post['boxNextWarLimit']);
                 $this->getConfig()->set('war_boxLastWarLimit', $post['boxLastWarLimit']);
-                $this->addMessage('saveSuccess');
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $errorFields = $validation->getFieldsWithError();
         }
 
