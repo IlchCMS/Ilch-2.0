@@ -15,17 +15,6 @@ if ($this->get('article') != '') {
     ?>
 </legend>
 
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">
