@@ -83,7 +83,8 @@ $(document).ready
 );
 
 $(document).ready (function() {
-    if (!$('#left-panel').hasClass('hmenu-fixed')) { 
+    $( "#main:has(.content_savebox)" ).addClass( "savebox_bottom" );
+    if (!$('#left-panel').hasClass('hmenu-fixed')) {
         var element = document.getElementById('header');
         if (typeof(element) !== 'undefined' && element !== null) {
             $(window).scrollTop(0);

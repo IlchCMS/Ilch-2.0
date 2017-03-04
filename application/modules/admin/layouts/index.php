@@ -73,7 +73,7 @@
         <header id="header">
             <!-- TOP NAVBAR -->
             <?php $config = \Ilch\Registry::get('config'); ?>
-            <nav class="navbar navbar-default topnavbar <?=$config->get('admin_layout_top_nav') ?>">
+            <nav class="navbar navbar-default topnavbar navbar-fixed-top">
                 <!-- TOP NAVBAR LEFT -->
                 <div class="navbar-header leftbar">
                     <?php if ($this->hasSidebar()): ?>

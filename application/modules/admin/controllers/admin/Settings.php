@@ -89,8 +89,7 @@ class Settings extends \Ilch\Controller\Admin
                 'modRewrite' => 'required|numeric|integer|min:0|max:1',
                 'standardMail' => 'required|email',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
-                'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
-                'navbarFixed' => 'required|numeric|integer|min:0|max:1'
+                'hmenuFixed' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($validation->isValid()) {
@@ -102,16 +101,9 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('timezone', $this->getRequest()->getPost('timezone'));
                 $this->getConfig()->set('locale', $this->getRequest()->getPost('locale'));
                 $this->getConfig()->set('defaultPaginationObjects', $this->getRequest()->getPost('defaultPaginationObjects'));
-                if ($this->getRequest()->getPost('navbarFixed') === '1') {
-                    $this->getConfig()->set('admin_layout_top_nav', 'navbar-fixed-top');
-                    
-                    if ($this->getRequest()->getPost('hmenuFixed') === '1') {
-                        $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
-                    } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
-                        $this->getConfig()->set('admin_layout_hmenu', '');
-                    }
-                } elseif ($this->getRequest()->getPost('navbarFixed') === '0') {
-                    $this->getConfig()->set('admin_layout_top_nav', '');
+                if ($this->getRequest()->getPost('hmenuFixed') === '1') {
+                    $this->getConfig()->set('admin_layout_hmenu', 'hmenu-fixed');
+                } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
                     $this->getConfig()->set('admin_layout_hmenu', '');
                 }
 
@@ -132,9 +124,10 @@ HTACCESS;
                 }
 
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
 
-            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'index']);
@@ -151,7 +144,6 @@ HTACCESS;
         $this->getView()->set('locale', $this->getConfig()->get('locale'));
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('pages', $pageMapper->getPageList());
-        $this->getView()->set('navbarFixed', $this->getConfig()->get('admin_layout_top_nav'));
         $this->getView()->set('hmenuFixed', $this->getConfig()->get('admin_layout_hmenu'));
         $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
     }

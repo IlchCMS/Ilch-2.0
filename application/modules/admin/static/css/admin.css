@@ -249,11 +249,63 @@ ul > .heading {
     bottom: 0px;
     width:100%;
     position: fixed;
-    padding: 5px 15px 5px 15px;
+    padding: 5px 30px 5px 30px;
     background-color: #EEEEEE;
 }
 .content_savebox:before {
     padding-top: 15px;
+}
+.content_savebox > .save_button {
+    background-color: #699DB6;
+    border-color: rgba(0,0,0,0.3);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    font-weight: bold;
+    color: #FFF;
+}
+
+.content_savebox > .save_button:hover {
+    background-color: #4F87A2;
+    border-color: rgba(0,0,0,0.5);
+}
+
+.content_savebox > .save_button:active {
+    background-color: #3C677B;
+    border-color: rgba(0,0,0,0.9);
+}
+.content_savebox > .save_button {
+    background-color: #699DB6;
+    border-color: rgba(0,0,0,0.3);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    font-weight: bold;
+    color: #FFF;
+}
+
+.content_savebox > .save_button:hover {
+    background-color: #4F87A2;
+    border-color: rgba(0,0,0,0.5);
+}
+
+.content_savebox > .save_button:active {
+    background-color: #3C677B;
+    border-color: rgba(0,0,0,0.9);
+}
+
+.content_savebox > .delete_button {
+    background-color: #E48681;
+    border-color: rgba(0,0,0,0.3);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+    font-weight: bold;
+    color: #FFF;
+}
+
+.content_savebox > .delete_button:hover {
+    background-color: #DA4F49;
+    border-color: rgba(0,0,0,0.5);
+}
+
+.content_savebox > .delete_button:active {
+    background-color: #B32C24;
+    border-color: rgba(0,0,0,0.9);
 }
 .hidden-menu .content_savebox {
     margin-left: -15px;
@@ -319,7 +371,8 @@ iframe {
 }
 #content {
     padding: 10px 15px;
-    position: relative;
+    position: absolute;
+    width: 100%;
 }
 body.container {
     position: absolute;
@@ -355,7 +408,7 @@ aside {
     background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2);
     background-repeat: repeat-x;
     position: relative;
-    z-index: 905;
+
 }
 #header > div {
     display: inline-block;
@@ -372,27 +425,37 @@ aside {
 }
 aside {
     width: 220px;
+    overflow-y: visible !important;
 }
 #left-panel {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 904;
     padding-top: 40px;
 }
 #left-panel > nav {
-    position: fixed;
     width: 220px;
+    overflow-y: visible;
+    overflow-x: hidden;
+    bottom: 0;
+    top: 40px;
 }
 .dropdown-menu .divider {
     background-color: #ccc;
 }
 #main {
     margin-left: 220px;
-    padding: 0;
-    padding-bottom: 52px;
-    min-height: 590px;
-    overflow: hidden;
+    padding-bottom: 80px;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 40px;
+    bottom: 0px;
+}
+.savebox_bottom {
+    bottom: 45px !important;
 }
 #ribbon {
     min-height: 39px;
@@ -412,13 +475,16 @@ aside {
     margin: 0px !important;
     box-sizing: border-box;
 }
+.ribbon-fixed {
+    top: 79px !important;
+}
 .ribbon-fixed > #ribbon {
     position: fixed !important;
     top: 40px;
     z-index: 900;
 }
 .ribbon-fixed > #content {
-    margin-top: 39px;
+    margin-top: 15px;
 }
 #ribbon .breadcrumb {
     display: inline-block;
@@ -733,7 +799,7 @@ legend {
 
 @media (max-width:991px) {
     #main {
-        width: 100% !important;
+        width: auto;
     }
     .hidden-menu  #left-panel:hover ~ #main  {
         margin-left: 10px;
@@ -778,7 +844,6 @@ legend {
         left: 0;
     }
     .hidden-menu #main {
-        position: relative;
         left: 210px;
     }
 }
@@ -819,11 +884,14 @@ legend {
         left: 0;
     }
     .hidden-menu #main {
-        position: relative;
         left: 210px;
     }
 }
 @media (max-width:767px) {
+    #left-panel > nav {
+        position: fixed;
+        overflow-y: auto;
+    }
     #main {
         margin-left: 0;
         overflow-x: hidden;
@@ -862,11 +930,14 @@ legend {
         left: 0;
     }
     .hidden-menu #main {
-        position: relative;
         left: 210px;
     }
 }
 @media only screen and (min-width:0) and (max-width:679px) {
+    #left-panel > nav {
+        position: fixed;
+        overflow-y: auto;
+    }
     #main {
         margin-left: 0;
         overflow-x: hidden;
@@ -905,11 +976,18 @@ legend {
         left: 0;
     }
     .hidden-menu #main {
-        position: relative;
         left: 210px;
+    }
+    .navbar-fixed-top .navbar-collapse {
+        max-height: 240px;
     }
 }
 @media only screen and (min-width:320px) and (max-width:479px) {
+
+    #left-panel > nav {
+        position: fixed;
+        overflow-y: auto;
+    }
     #main {
         margin-left: 0;
         overflow-x: hidden;
@@ -959,7 +1037,6 @@ legend {
         left: 0;
     }
     .hidden-menu #main {
-        position: relative;
         left: 210px;
         overflow-x: hidden;
     }
@@ -971,6 +1048,9 @@ legend {
         width: 100%;
         color: #000;
         padding: 7px 7px !important;
+    }
+    .navbar-fixed-top .navbar-collapse {
+        max-height: 240px;
     }
 }
 

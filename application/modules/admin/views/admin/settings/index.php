@@ -161,21 +161,7 @@
     </div>
 
     <legend><?=$this->getTrans('backendFunctions') ?></legend>
-    <div class="form-group <?=$this->validation()->hasError('navbarFixed') ? 'has-error' : '' ?>">
-        <div class="col-lg-2 control-label">
-            <?=$this->getTrans('navbarFixed') ?>:
-        </div>
-        <div class="col-lg-4">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="navbarFixed-on" name="navbarFixed" value="1" <?php if ($this->get('navbarFixed') == 'navbar-fixed-top') { echo 'checked="checked"'; } ?> />
-                <label for="navbarFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" id="navbarFixed-off" name="navbarFixed" value="0" <?php if ($this->get('navbarFixed') == '') { echo 'checked="checked"'; } ?> />
-                <label for="navbarFixed-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
-        </div>
-    </div>
-    <div id="hmenuFixed" class="form-group <?php if (empty($this->get('navbarFixed'))) { echo 'hidden'; } else { echo $this->validation()->hasError('navbarFixed') ? 'has-error' : ''; } ?>">
+    <div id="hmenuFixed" class="form-group">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('hmenuFixed') ?>:
         </div>
@@ -198,13 +184,6 @@ $('[name="multilingualAcp"]').click(function () {
         $('#contentLanguage').removeClass('hidden');
     } else {
         $('#contentLanguage').addClass('hidden');
-    }
-});
-$('[name="navbarFixed"]').click(function () {
-    if ($(this).val() == "1") {
-        $('#hmenuFixed').removeClass('hidden');
-    } else {
-        $('#hmenuFixed').addClass('hidden');
     }
 });
 </script>
