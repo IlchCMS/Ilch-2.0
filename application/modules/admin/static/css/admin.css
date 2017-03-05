@@ -167,6 +167,9 @@ aside > nav > ul > li > ul > li.active > a,
 aside > nav > ul > li > ul > li.active > a:hover {
     color: #fff;
 }
+aside nav ul .active > a {
+    overflow: hidden;
+}
 
 .topnavbar {
     margin-bottom: 0px !important;
@@ -255,23 +258,7 @@ ul > .heading {
 .content_savebox:before {
     padding-top: 15px;
 }
-.content_savebox > .save_button {
-    background-color: #699DB6;
-    border-color: rgba(0,0,0,0.3);
-    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
-    font-weight: bold;
-    color: #FFF;
-}
 
-.content_savebox > .save_button:hover {
-    background-color: #4F87A2;
-    border-color: rgba(0,0,0,0.5);
-}
-
-.content_savebox > .save_button:active {
-    background-color: #3C677B;
-    border-color: rgba(0,0,0,0.9);
-}
 .content_savebox > .save_button {
     background-color: #699DB6;
     border-color: rgba(0,0,0,0.3);
