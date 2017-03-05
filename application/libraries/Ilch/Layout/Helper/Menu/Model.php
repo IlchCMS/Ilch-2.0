@@ -149,13 +149,21 @@ class Model
 
                     $contentHtml = $box->getContent();
                 } else { //is Menu
+                    $subItems = $this->menuMapper->getMenuItems($item->getMenuId());
 
-                    $contentHtml = '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
+                    // prepare array with parent-child relations
+                    $menuData = array(
+                        'items' => array(),
+                        'parents' => array()
+                    );
 
-                    foreach ($this->menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId()) as $menuItem) {
-                        $contentHtml .= $this->recGetItems($menuItem, $locale, $options, $item->getType());
+                    foreach ($subItems as $subItem) {
+                        $menuData['items'][$subItem->getId()] = $subItem;
+                        $menuData['parents'][$subItem->getParentId()][] = $subItem->getId();
                     }
 
+                    $contentHtml = '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-root')) . '>';
+                    $contentHtml .= $this->buildMenu($item->getId(), $menuData, $locale, $options, $item->getType());
                     $contentHtml .= '</ul>';
                 }
 
@@ -169,14 +177,16 @@ class Model
     /**
      * Gets the menu items as html-string.
      *
-     * @param MenuItem $item
+     * @param int $parentId
+     * @param $menuData
      * @param $locale
      * @param array $options
      * @param int|null $parentType
      * @return string
      */
-    protected function recGetItems($item, $locale, $options = [], $parentType = null)
+    protected function buildMenu($parentId, $menuData, $locale, $options = [], $parentType = null)
     {
+        $html = '';
         $groupIds = [3];
 
         if ($this->layout->getUser()) {
@@ -188,50 +198,54 @@ class Model
 
         $groupIdsArray = explode(',',implode(',', $groupIds));
 
-        $subItems = $this->menuMapper->getMenuItemsByParent($item->getMenuId(), $item->getId());
-        $liClasses = [];
+        if (isset($menuData['parents'][$parentId])) {
+            foreach ($menuData['parents'][$parentId] as $itemId) {
+                $liClasses = [];
 
-        if ($parentType === MenuItem::TYPE_MENU || array_dot($options, 'menus.allow-nesting') === false) {
-            $liClasses[] = array_dot($options, 'menus.li-class-root');
-        } else {
-            $liClasses[] = array_dot($options, 'menus.li-class-child');
-        }
+                if ($parentType === $menuData['items'][$itemId]::TYPE_MENU || array_dot($options, 'menus.allow-nesting') === false) {
+                    $liClasses[] = array_dot($options, 'menus.li-class-root');
+                } else {
+                    $liClasses[] = array_dot($options, 'menus.li-class-child');
+                }
 
-        if ($item->isExternalLink()) {
-            $href = $item->getHref();
-        } elseif ($item->isPageLink()) {
-            $page = $this->pageMapper->getPageByIdLocale($item->getSiteId(), $locale);
-            $href = $this->layout->getUrl($page->getPerma());
-        } elseif ($item->isModuleLink() && !is_in_array($groupIdsArray, explode(',', $item->getAccess()))) {
-            $href = $this->layout->getUrl(
-                ['module' => $item->getModuleKey(), 'action' => 'index', 'controller' => 'index']
-            );
-        } else {
-            return '';
-        }
+                if ($menuData['items'][$itemId]->isExternalLink()) {
+                    $href = $menuData['items'][$itemId]->getHref();
+                } elseif ($menuData['items'][$itemId]->isPageLink()) {
+                    $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
+                    $href = $this->layout->getUrl($page->getPerma());
+                } elseif ($menuData['items'][$itemId]->isModuleLink() && !is_in_array($groupIdsArray, explode(',', $menuData['items'][$itemId]->getAccess()))) {
+                    $href = $this->layout->getUrl(
+                        ['module' => $menuData['items'][$itemId]->getModuleKey(), 'action' => 'index', 'controller' => 'index']
+                    );
+                } else {
+                    return '';
+                }
 
-        // add active class if configured and the link matches the origin source
-        if ($href === $this->currentUrl) {
-            $liClasses[] = array_dot($options, 'menus.li-class-active');
-        }
+                // add active class if configured and the link matches the origin source
+                if ($href === $this->currentUrl) {
+                    $liClasses[] = array_dot($options, 'menus.li-class-active');
+                }
 
-        $contentHtml = '<a href="' . $href . '">' . $this->layout->escape($item->getTitle()) . '</a>';
-        $subItemsHtml = '';
-
-        if (!empty($subItems)) {
-            foreach ($subItems as $subItem) {
-                $subItemsHtml .= $this->recGetItems($subItem, $locale, $options, $item->getType());
-            }
-
-            if (array_dot($options, 'menus.allow-nesting') === true) {
-                $liClasses[] = array_dot($options, 'menus.li-class-root-nesting');
-                $contentHtml .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-child'))
-                    . '>' . $subItemsHtml . '</ul>';
+                $contentHtml = '<a href="' . $href . '">' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
                 $subItemsHtml = '';
+
+                // find childitems recursively
+                $subItemsHtml = $this->buildMenu($itemId, $menuData, $locale, $options, $menuData['items'][$itemId]->getType());
+
+                if (!empty($subItemsHtml)) {
+                    if (array_dot($options, 'menus.allow-nesting') === true) {
+                        $liClasses[] = array_dot($options, 'menus.li-class-root-nesting');
+                        $contentHtml .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-child'))
+                            . '>' . $subItemsHtml . '</ul>';
+                        $subItemsHtml = '';
+                    }
+                }
+
+                $html .= '<li' . $this->createClassAttribute($liClasses) . '>' . $contentHtml . '</li>' . $subItemsHtml;
             }
         }
 
-        return '<li' . $this->createClassAttribute($liClasses) . '>' . $contentHtml . '</li>' . $subItemsHtml;
+        return $html;
     }
 
     /**
