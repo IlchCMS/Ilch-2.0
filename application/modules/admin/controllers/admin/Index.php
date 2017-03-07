@@ -36,6 +36,9 @@ class Index extends \Ilch\Controller\Admin
         $update = new \Ilch\Transfer();
         $update->setTransferUrl($this->getConfig()->get('master_update_url'));
         $update->setVersionNow($this->getConfig()->get('version'));
+        $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
+        $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
+        $update->setCurlOpt(CURLOPT_CAINFO, ROOT_PATH.'/certificate/cacert.pem');
         $update->setCurlOpt(CURLOPT_RETURNTRANSFER, 1);
         $update->setCurlOpt(CURLOPT_TIMEOUT, 20);
         $update->setCurlOpt(CURLOPT_CONNECTTIMEOUT, 10);
