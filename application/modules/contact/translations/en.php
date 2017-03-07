@@ -14,7 +14,6 @@ return [
     'menuReceivers' => 'Receivers',
     'noReceivers' => 'No receivers',
     'contactWebsite' => 'Contact Website ',
-    'captcha' => 'Captcha',
     'captchaRead' => 'Not readable? Change text!',
     'addButton' => 'Send',
 ];

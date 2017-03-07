@@ -104,7 +104,6 @@ return [
     'password2' => 'Password confirm',
     'emailAdress' => 'E-Mail address',
     'fieldEmpty' => 'field must be filled',
-    'captcha' => 'Captcha',
     'invalidCaptcha' => 'Captcha is false',
     'fieldDiffersPassword' => 'passwords are different',
     'fieldEmail' => 'email is not valid',
@@ -169,7 +168,6 @@ return [
     'hello' => 'Hello',
     'admincenter' => 'Admincenter',
 
-    'register' => 'Register',
     'menuLoginWith' => 'Login with',
     'or' => 'or',
 
@@ -218,8 +216,6 @@ return [
     'profileSignature' => 'Signature',
     'profilePassword' => 'Password',
     'profileSubmit' => 'Send',
-    'smilies' => 'Smilies',
-    'close' => 'Close',
 
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail to',

@@ -27,6 +27,9 @@ return [
     // general
     'saveSuccess' => 'Erfolgreich gespeichert',
     'deleteSuccess' => 'Erfolgreich gelöscht',
+    'close' => 'Schließen',
+    'captcha' => 'Captcha',
+    'smilies' => 'Smilies',
 
     // seo
     'seo' => 'SEO',

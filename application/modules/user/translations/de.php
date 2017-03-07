@@ -103,7 +103,6 @@ return [
     'password' => 'Passwort',
     'password2' => 'Passwort Wiederholung',
     'emailAdress' => 'E-Mail Adresse',
-    'captcha' => 'Captcha',
     'readyToLogin' => 'Sie können sich jetzt mit Ihren Benutzerdaten anmelden.',
     'registerMailSent' => 'Es wurde eine E-Mail an <b>%s</b> geschickt, mit Anweisungen, wie Sie Ihr Benutzerkonto aktivieren können.',
     'registerThanks' => 'Vielen Dank <b>%s</b>, dass Sie sich registriert haben.',
@@ -165,7 +164,6 @@ return [
     'hello' => 'Hallo',
     'admincenter' => 'Admincenter',
 
-    'register' => 'Registrieren',
     'menuLoginWith' => 'Login mit',
     'or' => 'oder',
 
@@ -214,8 +212,6 @@ return [
     'profileSignature' => 'Signatur',
     'profilePassword' => 'Passwort',
     'profileSubmit' => 'Absenden',
-    'smilies' => 'Smilies',
-    'close' => 'Schließen',
 
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail an',

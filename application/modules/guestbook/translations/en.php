@@ -22,8 +22,5 @@ return [
     'entrys' => 'Entries',
     'setfree' => 'Set free ',
     'check' => 'Thanks. Entry is checked.',
-    'captcha' => 'Captcha',
-    'smilies' => 'Smilies',
-    'close' => 'Close',
     'entriesPerPage' => 'Entries per page',
 ];

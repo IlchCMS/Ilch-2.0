@@ -67,8 +67,6 @@ return [
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'browse' => 'Durchsuchen',
-    'smilies' => 'Smilies',
-    'close' => 'Schließen',
 
     'currencies' => 'Währungen',
     'currency' => 'Währung',

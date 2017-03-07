@@ -22,8 +22,5 @@ return [
     'entrys' => 'Einträge',
     'setfree' => 'Freischalten ',
     'check' => 'Danke. Eintrag wird geprüft.',
-    'captcha' => 'Captcha',
-    'smilies' => 'Smilies',
-    'close' => 'Schließen',
     'entriesPerPage' => 'Einträge pro Seite',
 ];

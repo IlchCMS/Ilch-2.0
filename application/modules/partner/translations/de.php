@@ -18,7 +18,6 @@ return [
     'entrys' => 'Einträge',
     'addButton' => 'Eintragen',
     'httpOrMedia' => 'http:// oder Medien',
-    'captcha' => 'Captcha',
     'slider' => 'Slider',
     'boxSliderSpeed' => 'Geschwindigkeit des Slider in ms',
     'boxSliderHeight' => 'Höhe der Slider Box',

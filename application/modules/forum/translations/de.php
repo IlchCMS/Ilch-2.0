@@ -59,8 +59,6 @@ return [
     'totalMembers' => 'Mitglieder insgesamt',
     'newMember' => 'Wir begrüßen unseren neuesten Benutzer,',
     'legend' => 'Legende',
-    'smilies' => 'Smilies',
-    'close' => 'Schließen',
     'menuSelection' => 'Menü',
     'prefix' => 'Prefix',
     'see' => 'Sehen',

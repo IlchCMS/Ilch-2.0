@@ -14,7 +14,6 @@ return [
     'menuReceivers' => 'Empfänger',
     'noReceivers' => 'Keine Empfänger',
     'contactWebsite' => 'Kontakt Webseite ',
-    'captcha' => 'Captcha',
     'captchaRead' => 'Nicht lesbar? Text ändern!',
     'addButton' => 'Senden',
 ];
