@@ -16,6 +16,10 @@
     padding-right: 15px !important;
 }
 
+.has-error .cke {
+    border-color: #a94442;
+}
+
 span.social-logins > a.btn.btn-link.provider-twitter {
     color: #1DA1F2;
 }
