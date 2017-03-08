@@ -37,8 +37,7 @@ class Config extends \Ilch\Config\Install
         $date = new \Ilch\Date();
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('version', VERSION, 1);
-        $databaseConfig->set('master_update_url', 'http://ilch2.de/ftp/current-release-versions.php');
-        $databaseConfig->set('master_download_url', 'http://www.ilch2.de/ftp/Master-');
+        $databaseConfig->set('updateserver', 'http://ilch2.de/');
         $databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
         $databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
@@ -178,7 +177,17 @@ class Config extends \Ilch\Config\Install
                   `module` VARCHAR(255) NOT NULL,
                   `granted` TINYINT(1) NOT NULL,
                   `limit` TINYINT(1) UNSIGNED NOT NULL
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_admin_updateservers` (
+                  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                  `url` VARCHAR(255) NOT NULL,
+                  `operator` VARCHAR(255) NOT NULL,
+                  `country` VARCHAR(255) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/", "corian (ilch-Team)", "Germany");
+                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/", "blackcoder (ilch-Team)", "Germany");';
     }
 
     public function getUpdate($installedVersion)

@@ -77,6 +77,7 @@ class Layouts extends \Ilch\Controller\Admin
             $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
         }
 
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/layouts/list.php');
         $this->getView()->set('defaultLayout', $this->getConfig()->get('default_layout'));
         $this->getView()->set('layouts', $layouts);
         $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
@@ -98,8 +99,8 @@ class Layouts extends \Ilch\Controller\Admin
             if ($this->getRequest()->isSecure()) {
                 $transfer = new Transfer();
                 $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-                $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'downloads/layouts/down/'.$this->getRequest()->getParam('key').'.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'downloads/layouts/down/'.$this->getRequest()->getParam('key').'.zip-signature.sig');
 
                 if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
@@ -127,6 +128,7 @@ class Layouts extends \Ilch\Controller\Admin
                 $layoutsDir[] = basename($layoutPath);
             }
 
+            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/layouts/list.php');
             $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
             $this->getView()->set('layouts', $layoutsDir);
         }
@@ -138,8 +140,8 @@ class Layouts extends \Ilch\Controller\Admin
             try {
                 $transfer = new Transfer();
                 $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getRequest()->getPost('url'));
-                $transfer->setDownloadSignatureUrl($this->getRequest()->getPost('url').'-signature.sig');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'downloads/layouts/down/'.$this->getRequest()->getParam('key').'.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'downloads/layouts/down/'.$this->getRequest()->getParam('key').'.zip-signature.sig');
 
                 if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
@@ -175,6 +177,7 @@ class Layouts extends \Ilch\Controller\Admin
             $layoutsDir[] = basename($layoutPath);
         }
 
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/layouts/list.php');
         $this->getView()->set('layouts', $layoutsDir);
     }
 

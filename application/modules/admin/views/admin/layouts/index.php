@@ -2,7 +2,7 @@
 
 <legend><?=$this->getTrans('manage') ?></legend>
 <?php
-$layoutsList = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
+$layoutsList = url_get_contents($this->get('updateserver'));
 $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
 ?>
@@ -38,23 +38,18 @@ $versionsOfLayouts = $this->get('versionsOfLayouts');
                     <div class="pull-left">
                         <?php
                         $layoutOnUpdateServerFound = null;
-                        $filename = '';
                         foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer) {
                             if ($layoutOnUpdateServer->key == $layout->getKey()) {
-                                $filename = basename($layoutOnUpdateServer->downloadLink);
-                                $filename = strstr($filename,'.',true);
                                 $layoutOnUpdateServerFound = $layoutOnUpdateServer;
                                 break;
                             }
                         }
 
                         if (!empty($layoutOnUpdateServerFound) && version_compare($versionsOfLayouts[$layoutOnUpdateServerFound->key], $layoutOnUpdateServerFound->version, '<')): ?>
-                                <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'version' => $versionsOfLayouts[$layoutOnUpdateServerFound->key], 'from' => 'index']) ?>">
+                                <form method="POST" action="<?=$this->getUrl(['action' => 'update', 'key' => $layoutOnUpdateServerFound->key, 'version' => $versionsOfLayouts[$layoutOnUpdateServerFound->key], 'from' => 'index']) ?>">
                                     <?=$this->getTokenField() ?>
                                     <button type="submit"
                                             class="btn btn-default"
-                                            name="url"
-                                            value="<?=$layoutOnUpdateServerFound->downloadLink ?>"
                                             title="<?=$this->getTrans('layoutUpdate') ?>">
                                         <i class="fa fa-refresh"></i>
                                     </button>

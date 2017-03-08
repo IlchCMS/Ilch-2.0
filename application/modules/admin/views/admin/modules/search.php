@@ -1,5 +1,5 @@
 <?php
-$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
+$modulesList = url_get_contents($this->get('updateserver'));
 $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
@@ -84,9 +84,7 @@ if (empty($modulesOnUpdateServer)) {
                         </small>
                         <br /><br />
                         <?php
-                        $filename = basename($moduleOnUpdateServer->downloadLink);
-                        $filename = strstr($filename,'.',true);
-                        $isInstalled = in_array($filename, $this->get('modules'));
+                        $isInstalled = in_array($moduleOnUpdateServer->key, $this->get('modules'));
                         $iconClass = ($isInstalled) ? 'fa fa-refresh' : 'fa fa-download';
 
                         if (!empty($moduleOnUpdateServer->phpExtensions) AND in_array(false, $extensionCheck)): ?>
@@ -126,19 +124,15 @@ if (empty($modulesOnUpdateServer)) {
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
-                                        name="url"
-                                        value="<?=$moduleOnUpdateServer->downloadLink ?>"
                                         title="<?=$this->getTrans('moduleUpdate') ?>">
                                     <i class="fa fa-refresh"></i>
                                 </button>
                             </form>
                         <?php else: ?>
-                            <form method="POST" action="">
+                            <form method="POST" action="<?=$this->getUrl(['action' => 'search', 'key' => $moduleOnUpdateServer->key]) ?>">
                                 <?=$this->getTokenField() ?>
                                 <button type="submit"
                                         class="btn btn-default"
-                                        name="url"
-                                        value="<?=$moduleOnUpdateServer->downloadLink ?>"
                                         title="<?=$this->getTrans('moduleDownload') ?>">
                                     <i class="fa fa-download"></i>
                                 </button>

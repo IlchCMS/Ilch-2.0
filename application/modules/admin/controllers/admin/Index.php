@@ -34,7 +34,7 @@ class Index extends \Ilch\Controller\Admin
 
         // Check if Ilch is up to date
         $update = new \Ilch\Transfer();
-        $update->setTransferUrl($this->getConfig()->get('master_update_url'));
+        $update->setTransferUrl($this->getConfig()->get('updateserver').'ftp/current-release-versions.php');
         $update->setVersionNow($this->getConfig()->get('version'));
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
@@ -82,6 +82,7 @@ class Index extends \Ilch\Controller\Admin
         // Check if there are notifications, which need to be shown
         $notificationsMapper = new NotificationsMapper();
 
+        $this->getView()->set('ilchNewsList', $this->getConfig()->get('updateserver').'ilchNews.php');
         $this->getView()->set('usersNotConfirmed', $userMapper->getUserList(['confirmed' => 0]));
         $this->getView()->set('moduleLocales', $moduleLocales);
         $this->getView()->set('version', $this->getConfig()->get('version'));

@@ -1,5 +1,5 @@
 <?php
-$layoutsList = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
+$layoutsList = url_get_contents($this->get('updateserver'));
 $layouts = json_decode($layoutsList);
 ?>
 
@@ -142,16 +142,14 @@ foreach ($layouts as $layout): ?>
 
         <div class="content_savebox">
             <?php
-            $filename = basename($layout->downloadLink);
-            $filename = strstr($filename,'.',true);
-            if (in_array($filename, $this->get('layouts'))): ?>
+            if (in_array($layout->key, $this->get('layouts'))): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
-                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search']) ?>">
+                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search', 'key' => $layout->key]) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn btn-default" name="url" value="<?=$layout->downloadLink ?>">
+                    <button type="submit" class="btn btn-default">
                         <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>

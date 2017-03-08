@@ -5,7 +5,7 @@ if ($this->getUser()->getFirstName() != '') {
     $name = $this->getUser()->getName();
 }
 
-$ilchNewsList = url_get_contents('http://ilch2.de/ilchNews.php');
+$ilchNewsList = url_get_contents($this->get('ilchNewsList'));
 $ilchNews = json_decode($ilchNewsList);
 $notifications = $this->get('notifications');
 $version = $this->get('version');

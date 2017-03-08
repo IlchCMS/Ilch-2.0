@@ -1,3 +1,7 @@
+<?php
+    $updateservers = $this->get('updateservers');
+    $index = 0;
+?>
 <legend><?=$this->getTrans('settings') ?></legend>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -174,6 +178,37 @@
                 <span class="flipswitch-selection"></span>
             </div>
         </div>
+    </div>
+
+    <legend><?=$this->getTrans('updateserver') ?></legend>
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <colgroup>
+                <col class="icon_width">
+                <col class="icon_width">
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+                <th></th>
+                <th></th>
+                <th><?=$this->getTrans('url') ?></th>
+                <th><?=$this->getTrans('operator') ?></th>
+                <th><?=$this->getTrans('country') ?></th>
+            </thead>
+            <tbody>
+                <?php foreach ($updateservers as $updateserver): ?>
+                    <tr>
+                        <td><input type="radio" id="updateserver<?=$index ?>" name="updateserver" value="<?=$updateserver->getURL() ?>" <?=($updateserver->getURL() == $this->get('updateserver')) ? ' checked="checked"' : '' ?>></td>
+                        <td><?=(strpos($updateserver->getURL(), 'https://') !== false) ? '<span class="fa fa-lock"></span>': '<span class="fa fa-unlock-alt"></span>' ?></td>
+                        <td><?=$this->escape($updateserver->getURL()) ?></td>
+                        <td><?=$this->escape($updateserver->getOperator()) ?></td>
+                        <td><?=$this->escape($updateserver->getCountry()) ?></td>
+                    </tr>
+                <?php $index++; endforeach; ?>
+            </tbody>
+        </table>
     </div>
     <?=$this->getSaveBar() ?>
 </form>

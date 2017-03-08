@@ -9,6 +9,7 @@ namespace Modules\Admin\Controllers\Admin;
 use Ilch\Transfer as IlchTransfer;
 use Modules\Admin\Mappers\NotificationPermission as NotificationPermissionMapper;
 use Modules\Admin\Mappers\Notifications as NotificationsMapper;
+use Modules\Admin\Mappers\Updateservers as UpdateserversMapper;
 use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
@@ -79,6 +80,7 @@ class Settings extends \Ilch\Controller\Admin
     {
         $moduleMapper = new \Modules\Admin\Mappers\Module();
         $pageMapper = new \Modules\Admin\Mappers\Page();
+        $updateserversMapper = new UpdateserversMapper();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index']);
@@ -89,7 +91,8 @@ class Settings extends \Ilch\Controller\Admin
                 'modRewrite' => 'required|numeric|integer|min:0|max:1',
                 'standardMail' => 'required|email',
                 'defaultPaginationObjects' => 'numeric|integer|min:1',
-                'hmenuFixed' => 'required|numeric|integer|min:0|max:1'
+                'hmenuFixed' => 'required|numeric|integer|min:0|max:1',
+                'updateserver' => 'required|url'
             ]);
 
             if ($validation->isValid()) {
@@ -106,6 +109,7 @@ class Settings extends \Ilch\Controller\Admin
                 } elseif ($this->getRequest()->getPost('hmenuFixed') === '0') {
                     $this->getConfig()->set('admin_layout_hmenu', '');
                 }
+                $this->getConfig()->set('updateserver', $this->getRequest()->getPost('updateserver'));
 
                 if ((int)$this->getRequest()->getPost('modRewrite')) {
                     $htaccess = <<<'HTACCESS'
@@ -146,6 +150,8 @@ HTACCESS;
         $this->getView()->set('pages', $pageMapper->getPageList());
         $this->getView()->set('hmenuFixed', $this->getConfig()->get('admin_layout_hmenu'));
         $this->getView()->set('defaultPaginationObjects', $this->getConfig()->get('defaultPaginationObjects'));
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
+        $this->getView()->set('updateservers', $updateserversMapper->getUpdateservers());
     }
 
     public function maintenanceAction()
@@ -198,7 +204,7 @@ HTACCESS;
         $this->getView()->set('version', $version);
 
         $update = new IlchTransfer();
-        $update->setTransferUrl($this->getConfig()->get('master_update_url'));
+        $update->setTransferUrl($this->getConfig()->get('updateserver').'ftp/current-release-versions.php');
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
@@ -216,8 +222,8 @@ HTACCESS;
         $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
-            $update->setDownloadUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip');
-            $update->setDownloadSignatureUrl($this->getConfig()->get('master_download_url').$update->getNewVersion().'.zip-signature.sig');
+            $update->setDownloadUrl($this->getConfig()->get('updateserver').'ftp/Master-'.$update->getNewVersion().'.zip');
+            $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'ftp/Master-'.$update->getNewVersion().'.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);
