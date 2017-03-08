@@ -183,7 +183,8 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
                   `url` VARCHAR(255) NOT NULL,
                   `operator` VARCHAR(255) NOT NULL,
-                  `country` VARCHAR(255) NOT NULL
+                  `country` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/", "corian (ilch-Team)", "Germany");
