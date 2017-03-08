@@ -188,7 +188,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
                 INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/", "corian (ilch-Team)", "Germany");
-                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/", "blackcoder (ilch-Team)", "Germany");';
+                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/ilch-updateserver/", "blackcoder (ilch-Team)", "Germany");';
     }
 
     public function getUpdate($installedVersion)
