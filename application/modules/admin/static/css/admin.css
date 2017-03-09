@@ -470,9 +470,6 @@ aside {
     top: 40px;
     z-index: 900;
 }
-.ribbon-fixed > #content {
-    margin-top: 15px;
-}
 #ribbon .breadcrumb {
     display: inline-block;
     margin: 0;
