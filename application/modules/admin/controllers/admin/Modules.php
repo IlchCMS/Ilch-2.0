@@ -223,7 +223,7 @@ class Modules extends \Ilch\Controller\Admin
             $modulesDir[] = basename($modulesPath);
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/modules/list.php');
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
         $this->getView()->set('moduleMapper', $moduleMapper);
         $this->getView()->set('modules', $modulesDir);

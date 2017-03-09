@@ -1,5 +1,5 @@
 <?php
-$layoutsList = url_get_contents($this->get('updateserver'));
+$layoutsList = url_get_contents($this->get('updateserver').'downloads/layouts/list.php');
 $layouts = json_decode($layoutsList);
 ?>
 
@@ -30,8 +30,8 @@ foreach ($layouts as $layout): ?>
                                 <div data-u="slides" class="slides">
                                     <?php foreach ($layout->thumbs as $thumb): ?>
                                         <div data-p="112.50" style="display: none;">
-                                            <img data-u="image" src="<?=$thumb->img ?>" />
-                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                            <img data-u="image" src="<?=$this->get('updateserver').'downloads/layouts/img/'.$thumb->img ?>" />
+                                            <img data-u="thumb" src="<?=$this->get('updateserver').'downloads/layouts/img/'.$thumb->img ?>" />
                                             <div data-u="caption" data-t="5" class="caption">
                                                 <?php if ($thumb->desc != ''): ?>
                                                     <?=$this->escape($thumb->desc) ?>

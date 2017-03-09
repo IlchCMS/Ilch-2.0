@@ -1,5 +1,5 @@
 <?php
-$modulesList = url_get_contents($this->get('updateserver'));
+$modulesList = url_get_contents($this->get('updateserver').'downloads/modules/list.php');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
@@ -80,8 +80,8 @@ foreach ($modules as $module): ?>
                                 <div data-u="slides" class="slides">
                                     <?php foreach ($module->thumbs as $thumb): ?>
                                         <div data-p="112.50" style="display: none;">
-                                            <img data-u="image" src="<?=$thumb->img ?>" />
-                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                            <img data-u="image" src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" />
+                                            <img data-u="thumb" src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" />
                                             <div data-u="caption" data-t="5" class="caption">
                                                 <?php if ($thumb->desc != ''): ?>
                                                     <?=$this->escape($thumb->desc) ?>

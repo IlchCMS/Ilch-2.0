@@ -128,7 +128,7 @@ class Layouts extends \Ilch\Controller\Admin
                 $layoutsDir[] = basename($layoutPath);
             }
 
-            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/layouts/list.php');
+            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
             $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
             $this->getView()->set('layouts', $layoutsDir);
         }
@@ -177,7 +177,7 @@ class Layouts extends \Ilch\Controller\Admin
             $layoutsDir[] = basename($layoutPath);
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/layouts/list.php');
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
         $this->getView()->set('layouts', $layoutsDir);
     }
 
