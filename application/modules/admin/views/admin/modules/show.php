@@ -1,5 +1,5 @@
 <?php
-$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
+$modulesList = url_get_contents($this->get('updateserver').'downloads/modules/list.php');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
@@ -80,8 +80,8 @@ foreach ($modules as $module): ?>
                                 <div data-u="slides" class="slides">
                                     <?php foreach ($module->thumbs as $thumb): ?>
                                         <div data-p="112.50" style="display: none;">
-                                            <img data-u="image" src="<?=$thumb->img ?>" />
-                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                            <img data-u="image" src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" />
+                                            <img data-u="thumb" src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" />
                                             <div data-u="caption" data-t="5" class="caption">
                                                 <?php if ($thumb->desc != ''): ?>
                                                     <?=$this->escape($thumb->desc) ?>
@@ -224,8 +224,6 @@ foreach ($modules as $module): ?>
 
         <div class="content_savebox">
             <?php
-            $filename = basename($module->downloadLink);
-            $filename = strstr($filename,'.',true);
             if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
@@ -242,14 +240,14 @@ foreach ($modules as $module): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('dependencyError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
-            <?php elseif (in_array($filename, $this->get('modules'))): ?>
+            <?php elseif (in_array($module->key, $this->get('modules'))): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
-                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search']) ?>">
+                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'modules', 'action' => 'search', 'key' => $module->key]) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn btn-default" name="url" value="<?=$module->downloadLink ?>">
+                    <button type="submit" class="btn btn-default">
                         <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>

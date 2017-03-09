@@ -1,5 +1,5 @@
 <?php
-$modulesList = url_get_contents('http://ilch2.de/downloads/modules/list.php');
+$modulesList = url_get_contents($this->get('updateserver'));
 $modulesOnUpdateServer = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
@@ -59,11 +59,8 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                 $content = $module->getContentForLocale($this->getTranslator()->getLocale());
 
                 $moduleOnUpdateServerFound = null;
-                $filename = '';
                 foreach ($modulesOnUpdateServer as $moduleOnUpdateServer) {
                     if ($moduleOnUpdateServer->key == $module->getKey()) {
-                        $filename = basename($moduleOnUpdateServer->downloadLink);
-                        $filename = strstr($filename,'.',true);
                         $moduleOnUpdateServerFound = $moduleOnUpdateServer;
                         break;
                     }
@@ -148,8 +145,6 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
                                         <?=$this->getTokenField() ?>
                                         <button type="submit"
                                                 class="btn btn-default"
-                                                name="url"
-                                                value="<?=$moduleOnUpdateServerFound->downloadLink ?>"
                                                 title="<?=$this->getTrans('moduleUpdate') ?>">
                                             <i class="fa fa-refresh"></i>
                                         </button>

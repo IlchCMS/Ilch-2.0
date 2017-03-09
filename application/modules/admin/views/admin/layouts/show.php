@@ -1,5 +1,5 @@
 <?php
-$layoutsList = url_get_contents('http://ilch2.de/downloads/layouts/list.php');
+$layoutsList = url_get_contents($this->get('updateserver').'downloads/layouts/list.php');
 $layouts = json_decode($layoutsList);
 ?>
 
@@ -30,8 +30,8 @@ foreach ($layouts as $layout): ?>
                                 <div data-u="slides" class="slides">
                                     <?php foreach ($layout->thumbs as $thumb): ?>
                                         <div data-p="112.50" style="display: none;">
-                                            <img data-u="image" src="<?=$thumb->img ?>" />
-                                            <img data-u="thumb" src="<?=$thumb->img ?>" />
+                                            <img data-u="image" src="<?=$this->get('updateserver').'downloads/layouts/img/'.$thumb->img ?>" />
+                                            <img data-u="thumb" src="<?=$this->get('updateserver').'downloads/layouts/img/'.$thumb->img ?>" />
                                             <div data-u="caption" data-t="5" class="caption">
                                                 <?php if ($thumb->desc != ''): ?>
                                                     <?=$this->escape($thumb->desc) ?>
@@ -142,16 +142,14 @@ foreach ($layouts as $layout): ?>
 
         <div class="content_savebox">
             <?php
-            $filename = basename($layout->downloadLink);
-            $filename = strstr($filename,'.',true);
-            if (in_array($filename, $this->get('layouts'))): ?>
+            if (in_array($layout->key, $this->get('layouts'))): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('alreadyExists') ?>">
                     <i class="fa fa-check text-success"></i> <?=$this->getTrans('alreadyExists') ?>
                 </button>
             <?php else: ?>
-                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search']) ?>">
+                <form method="POST" action="<?=$this->getUrl(['module' => 'admin', 'controller' => 'layouts', 'action' => 'search', 'key' => $layout->key]) ?>">
                     <?=$this->getTokenField() ?>
-                    <button type="submit" class="btn btn-default" name="url" value="<?=$layout->downloadLink ?>">
+                    <button type="submit" class="btn btn-default">
                         <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                     </button>
                 </form>
