@@ -37,7 +37,7 @@ class Config extends \Ilch\Config\Install
         $date = new \Ilch\Date();
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('version', VERSION, 1);
-        $databaseConfig->set('updateserver', 'http://ilch2.de/');
+        $databaseConfig->set('updateserver', 'https://ilch2.de/');
         $databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
         $databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
