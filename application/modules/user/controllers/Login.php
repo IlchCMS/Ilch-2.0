@@ -121,8 +121,8 @@ class Login extends \Ilch\Controller\Frontend
                     ]);
 
                     $validation = Validation::create($this->getRequest()->getPost(), [
-                        'password' => 'required|min:6:string|max:30:string',
-                        'password2' => 'required|same:password|min:6:string|max:30:string'
+                        'password' => 'required|min:6,string|max:30,string',
+                        'password2' => 'required|same:password|min:6,string|max:30,string'
                     ]);
 
                     if ($validation->isValid()) {
