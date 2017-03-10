@@ -103,18 +103,25 @@ class User extends \Ilch\Mapper
      * @param  array $where
      * @return null|\Modules\User\Models\User[]
      */
-    protected function getBy($where = [])
+    protected function getBy($where = [], $pagination = null)
     {
-        $userRows = $this->db()->select('*')
+        $select = $this->db()->select('*')
             ->from('users')
-            ->where($where)
-            ->execute()
-            ->fetchRows();
+            ->where($where);
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
 
-        if (!empty($userRows)) {
+        if (!empty($select)) {
+            $entryArray = $result->fetchRows();
             $users = [];
 
-            foreach ($userRows as $userRow) {
+            foreach ($entryArray as $userRow) {
                 $groups = [];
                 $sql = 'SELECT g.*
                         FROM `[prefix]_groups` AS g
@@ -387,9 +394,9 @@ class User extends \Ilch\Mapper
      *
      * @return UserModel[]
      */
-    public function getUserList($where = [])
+    public function getUserList($where = [], $pagination = null)
     {
-        return $this->getBy($where);
+        return $this->getBy($where, $pagination);
     }
 
     /**

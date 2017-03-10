@@ -3,6 +3,7 @@
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <legend><?=$this->getTrans('menuUserList') ?></legend>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
 <div class="row">
     <?php foreach ($this->get('userList') as $userlist): ?>
         <div class="col-lg-4">
@@ -43,3 +44,4 @@
         </div>
     <?php endforeach; ?>
 </div>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
