@@ -20,6 +20,12 @@ class Settings extends \Ilch\Controller\Admin
                 'url' => $this->getLayout()->getUrl(['controller' => 'index', 'action' => 'index'])
             ],
             [
+                'name' => 'applications',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index'])
+            ],
+            [
                 'name' => 'settings',
                 'active' => true,
                 'icon' => 'fa fa-cogs',
@@ -55,7 +61,13 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('teams_height', $this->getRequest()->getPost('image_height'));
                 $this->getConfig()->set('teams_width', $this->getRequest()->getPost('image_width'));
                 $this->getConfig()->set('teams_filetypes', strtolower($this->getRequest()->getPost('image_filetypes')));
-                $this->addMessage('saveSuccess');
+                $this->getConfig()->set('teams_accept_mail', $this->getRequest()->getPost('teams_accept_mail'));
+                $this->getConfig()->set('teams_accept_user_mail', $this->getRequest()->getPost('teams_accept_user_mail'));
+                $this->getConfig()->set('teams_reject_mail', $this->getRequest()->getPost('teams_reject_mail'));
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
 
             $this->redirect()
@@ -67,5 +79,8 @@ class Settings extends \Ilch\Controller\Admin
         $this->getView()->set('teams_height', $this->getConfig()->get('teams_height'));
         $this->getView()->set('teams_width', $this->getConfig()->get('teams_width'));
         $this->getView()->set('teams_filetypes', $this->getConfig()->get('teams_filetypes'));
+        $this->getView()->set('teams_accept_mail', $this->getConfig()->get('teams_accept_mail'));
+        $this->getView()->set('teams_accept_user_mail', $this->getConfig()->get('teams_accept_user_mail'));
+        $this->getView()->set('teams_reject_mail', $this->getConfig()->get('teams_reject_mail'));
     }
 }

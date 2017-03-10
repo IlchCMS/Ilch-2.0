@@ -44,11 +44,18 @@ class Teams extends \Ilch\Model
     protected $coLeader;
 
     /**
-     * The GroupId of the Team.
+     * The Group Id of the Team.
      *
      * @var int
      */
     protected $groupId;
+
+    /**
+     * The Opt In of the Team.
+     *
+     * @var int
+     */
+    protected $optIn;
 
     /**
      * Sets the Id of the Team.
@@ -156,7 +163,7 @@ class Teams extends \Ilch\Model
     }
 
     /**
-     * Gets the GroupId of the Team.
+     * Gets the Group Id of the Team.
      *
      * @return int
      */
@@ -166,12 +173,32 @@ class Teams extends \Ilch\Model
     }
 
     /**
-     * Sets the GroupId of the Team.
+     * Sets the Group Id of the Team.
      *
      * @param int $groupId
      */
     public function setGroupId($groupId)
     {
         $this->groupId = (int)$groupId;
+    }
+
+    /**
+     * Gets the Opt In of the Team.
+     *
+     * @return int
+     */
+    public function getOptIn()
+    {
+        return $this->optIn;
+    }
+
+    /**
+     * Sets the Opt In of the Team.
+     *
+     * @param int $optIn
+     */
+    public function setOptIn($optIn)
+    {
+        $this->optIn = (int)$optIn;
     }
 }

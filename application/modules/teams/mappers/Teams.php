@@ -36,8 +36,9 @@ class Teams extends \Ilch\Mapper
             $entryModel->setName($entries['name']);
             $entryModel->setImg($entries['img']);
             $entryModel->setLeader($entries['leader']);
-            $entryModel->setCoLeader($entries['coleader']);
-            $entryModel->setGroupId ($entries['groupid']);
+            $entryModel->setCoLeader($entries['coLeader']);
+            $entryModel->setGroupId($entries['groupId']);
+            $entryModel->setOptIn($entries['optIn']);
             $teams[] = $entryModel;
         }
 
@@ -91,8 +92,9 @@ class Teams extends \Ilch\Mapper
             'name' => $team->getName(),
             'img' => $team->getImg(),
             'leader' => $team->getLeader(),
-            'coleader' => $team->getCoLeader(),
-            'groupid' => $team->getGroupId()
+            'coLeader' => $team->getCoLeader(),
+            'groupId' => $team->getGroupId(),
+            'optIn' => $team->getOptIn()
         ];
 
         if ($team->getId()) {

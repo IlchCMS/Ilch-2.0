@@ -8,20 +8,6 @@
     }
     ?>
 </legend>
-
-<!-- Fehlerausgabe der Validation -->
-<?php if ($this->validation()->hasErrors()): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-<!-- Ende Fehlerausgabe der Validation -->
-
 <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
@@ -128,6 +114,20 @@
             </select>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('optIn') ? 'has-error' : '' ?>">
+        <label for="optIn" class="col-lg-2 control-label">
+            <?=$this->getTrans('optIn') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="optIn-on" name="optIn" value="1" <?=($this->get('team') != '' AND $this->get('team')->getOptIn() == '1') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optIn') == 1) ? 'checked="checked"' : '' ?> />
+                <label for="optIn-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="optIn-off" name="optIn" value="0" <?=($this->get('team') != '' AND $this->get('team')->getOptIn() == '0') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optIn') == 0) ? 'checked="checked"' : '' ?> />
+                <label for="optIn-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <?=($this->get('team') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
 
@@ -152,4 +152,3 @@ $(document).ready( function() {
     });
 });
 </script>
-

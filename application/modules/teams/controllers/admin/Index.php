@@ -30,6 +30,12 @@ class Index extends \Ilch\Controller\Admin
                 ]
             ],
             [
+                'name' => 'applications',
+                'active' => false,
+                'icon' => 'fa fa-th-list',
+                'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index'])
+            ],
+            [
                 'name' => 'settings',
                 'active' => false,
                 'icon' => 'fa fa-cogs',
@@ -92,7 +98,8 @@ class Index extends \Ilch\Controller\Admin
                 'name' => 'required|unique:teams,name,'.$this->getRequest()->getParam('id'),
                 'leader' => 'required|numeric|integer',
                 'coLeader' => 'numeric|integer',
-                'groupId' => 'required|numeric|integer|min:1'
+                'groupId' => 'required|numeric|integer|min:1',
+                'optIn' => 'required|numeric|integer|min:0|max:1'
             ]);
 
             if ($this->getRequest()->getPost('leader') == $this->getRequest()->getPost('coLeader')) {
@@ -159,22 +166,18 @@ class Index extends \Ilch\Controller\Admin
                     ->setLeader($this->getRequest()->getPost('leader'))
                     ->setCoLeader($this->getRequest()->getPost('coLeader'))
                     ->setGroupId($this->getRequest()->getPost('groupId'));
+                $model->setOptIn($this->getRequest()->getPost('optIn'));
                 $teamsMapper->save($model);
 
-                $this->addMessage('saveSuccess');
-            }
-
-            if ($this->getRequest()->getParam('id')) {
                 $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
-            } else {
-                $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'treat']);
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
 
         $this->getView()->set('userList', $userMapper->getUserList());

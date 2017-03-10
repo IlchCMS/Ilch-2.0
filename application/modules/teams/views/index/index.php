@@ -24,6 +24,7 @@ $groupMapper = $this->get('groupMapper');
                     $teamlist->getLeader(),
                     $teamlist->getCoLeader()
                 ];
+
                 $groupList = array_unique(array_merge($groupList, $leaders));
                 ?>
                 <div class="table-responsive">
@@ -77,6 +78,14 @@ $groupMapper = $this->get('groupMapper');
                                 </tr>
                             <?php endif; ?>
                         <?php endforeach; ?>
+
+
+                        <?php ($this->getUser()) ? $userId = $this->getUser()->getId() : $userId = 0 ?>
+                        <?php  if ($teamlist->getOptIn() == 1 AND (!in_array($userId, $groupList)) OR $userId == 0): ?>
+                            <tr>
+                                <td colspan="3"><a href="<?=$this->getUrl(['action' => 'join', 'id' => $teamlist->getId()]) ?>"><?=$this->getTrans('apply') ?></a></td>
+                            </tr>
+                        <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
