@@ -2467,7 +2467,3 @@ class Thumbnail {
         }        
 	
 }
-
-?>
-
-
