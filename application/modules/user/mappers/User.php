@@ -7,6 +7,7 @@
 namespace Modules\User\Mappers;
 
 use Modules\User\Models\User as UserModel;
+use Modules\User\Mappers\Group as GroupMapper;
 use Ilch\Date as IlchDate;
 
 class User extends \Ilch\Mapper
@@ -407,6 +408,23 @@ class User extends \Ilch\Mapper
             ->fetchCell();
 
         return $userExists;
+    }
+
+    /**
+     * Add User to a Group.
+     *
+     * @param int $userId
+     * @param int $groupId
+     */
+    public function addUserToGroup($userId, $groupId)
+    {
+        $groupMapper = new GroupMapper();
+
+        if ($this->userWithIdExists($userId) AND $groupMapper->groupWithIdExists($groupId) AND !in_array($userId, $groupMapper->getUsersForGroup($groupId))) {
+            $this->db()->insert('users_groups')
+                ->values(['user_id' => $userId, 'group_id' => $groupId])
+                ->execute();
+        }
     }
 
     /**

@@ -64,14 +64,6 @@ class Panel extends BaseController
         $this->getView()->set('profileFieldsTranslation', $profileFieldsTranslation);
 
         if ($this->getRequest()->isPost()) {
-            $firstname = trim($this->getRequest()->getPost('first-name'));
-            $lastname = trim($this->getRequest()->getPost('last-name'));
-            $facebook = trim($this->getRequest()->getPost('facebook'));
-            $twitter = trim($this->getRequest()->getPost('twitter'));
-            $google = trim($this->getRequest()->getPost('google'));
-            $city = trim($this->getRequest()->getPost('city'));
-            $birthday = new \Ilch\Date(trim($this->getRequest()->getPost('birthday')));
-
             Validation::setCustomFieldAliases([
                 'email' => 'profileEmail',
                 'homepage' => 'profileHomepage'
