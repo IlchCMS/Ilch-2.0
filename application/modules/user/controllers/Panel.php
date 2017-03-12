@@ -18,7 +18,6 @@ use Modules\User\Models\GalleryItem as GalleryItemModel;
 use Modules\User\Mappers\GalleryImage as GalleryImageMapper;
 use Modules\User\Models\GalleryImage as GalleryImageModel;
 use Modules\User\Mappers\Media as MediaMapper;
-use Modules\User\Models\Media as MediaModel;
 use Ilch\Date as IlchDate;
 use Ilch\Validation;
 
@@ -316,13 +315,6 @@ class Panel extends BaseController
         if ($this->getRequest()->isPost('fetch')) {
             $dialogMapper = new DialogMapper();
             $c_id = $this->getRequest()->getParam('id');
-            $user = $dialogMapper->getDialogCheckByCId($c_id);
-
-            if ($this->getUser()->getId() != $user->getUserTwo()) {
-                $user_two = $user->getUserOne();
-            } else {
-                $user_two = $user->getUserTwo();
-            }
 
             $dialog = $dialogMapper->getReadLastOneDialog($c_id);
             if ($dialog and $dialog->getUserOne() != $this->getUser()->getId()) {

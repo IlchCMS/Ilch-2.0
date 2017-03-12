@@ -13,6 +13,7 @@
                 <ul class="dialog">
                 <?php if ($this->get('dialog') == !''): ?>
                 <?php foreach ($this->get('dialog') as $dialog): ?>
+                        <?php $date = new \Ilch\Date($dialog->getTime()); ?>
                     <li class="left clearfix" <?php if ($dialog->getRead() != null) {echo 'style="background-color: rgba(239, 229, 219, 0.5)"';} ?>>
                         <span class="pull-left">
                             <img class="img-circle avatar" src="<?=$this->getUrl().'/'.$dialog->getAvatar() ?>" alt="User Avatar">
@@ -23,7 +24,7 @@
                                     <a href="<?=$this->getUrl(['controller' => 'panel', 'action' => 'dialogview', 'id' => $dialog->getCId()]) ?>"><?=$this->escape($dialog->getName()) ?></a>
                                 </strong>
                                 <small class="pull-right">
-                                    <i class="fa fa-clock-o"></i> <?=$dialog->getTime() ?>
+                                    <i class="fa fa-clock-o"></i> <?=$date->format('d.m.Y H:i', true) ?>
                                 </small>
                             </div>
                             <p>
