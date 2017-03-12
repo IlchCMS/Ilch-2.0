@@ -102,7 +102,7 @@
                        type="text"
                        id="pagePerma"
                        name="pagePerma"
-                       value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
+                       value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['pagePerma']; } ?>" />
             </div>
         </div>
     </div>

@@ -120,17 +120,17 @@ class Page extends \Ilch\Controller\Admin
                 'pageLanguage' => $this->getRequest()->getPost('pageLanguage'),
                 'keywords' => $this->getRequest()->getPost('keywords'),
                 'description' => trim($this->getRequest()->getPost('description')),
-                'permaLink' => $pagePermaUrl,
+                'pagePerma' => $pagePermaUrl,
             ];
 
             $validation = Validation::create($post, [
                 'pageTitle' => 'required',
                 'pageContent' => 'required',
-                'permaLink' => 'url|required'
+                'pagePerma' => 'url|required'
             ]);
 
             // Restore original values
-            $post['permaLink'] = $pagePerma;
+            $post['pagePerma'] = $pagePerma;
 
             if ($validation->isValid()) {
                 $model = new PageModel();
