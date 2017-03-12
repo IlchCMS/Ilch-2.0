@@ -47,11 +47,17 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'bday_boxShow'");
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'birthday/birthdays/index/';");
+        }
     }
 
     public function getInstallSql()
     {
-
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            return 'INSERT INTO `[prefix]_calendar_events` (`name`) VALUES ("birthday/birthdays/index/");';
+        }
     }
 
     public function getUpdate($installedVersion)
