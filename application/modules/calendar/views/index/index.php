@@ -1,100 +1,166 @@
 <link href="<?=$this->getModuleUrl('static/css/calendar.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.css') ?>" rel="stylesheet">
-<link href="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.print.css') ?>" rel="stylesheet" media='print'>
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.print.min.css') ?>" rel="stylesheet" media='print'>
 
-<div id='calendar'></div>
+<div class="calendar">
+    <div id="loading"></div>
+
+    <div id='calendar'></div>
+</div>
 
 <script src="<?=$this->getModuleUrl('static/js/fullcalendar/lib/moment.min.js') ?>"></script>
 <script src="<?=$this->getModuleUrl('static/js/fullcalendar/fullcalendar.min.js') ?>"></script>
-<script src="<?=$this->getModuleUrl('static/js/fullcalendar/lang-all.js') ?>"></script>
+<script src="<?=$this->getModuleUrl('static/js/fullcalendar/locale-all.js') ?>"></script>
 <script>
-$(function() {
+$(document).ready(function() {
     var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
     var language = navigator.language || navigator.userLanguage;
 
     $('#calendar').fullCalendar({
         header: {
-            left: 'prev,next today',
+            left: 'prev',
             center: 'title',
-            right: 'agendaDay,agendaWeek,month'
+            right: 'next'
         },
         defaultView: 'month',
-        lang: language,
+        locale: language,
         firstDay: '1',
         eventColor: '#32333B',
-        eventLimit: true,
         contentHeight: 'auto',
+        timeFormat: 'HH:mm',
+        axisFormat: 'HH:mm',
+        eventLimit: true,
+        eventLimitClick: 'listWeek',
+        eventLimitText: '<?=$this->getTrans('calendarLimitText') ?>',
 
-        dayClick: function(date, allDay, jsEvent, view) {
-            $('#calendar').fullCalendar( 'changeView', 'agendaDay' );
-            $('#calendar').fullCalendar( 'gotoDate', date );
+        dayClick: function(date) {
+            $('#calendar').fullCalendar('changeView', 'agendaDay');
+            $('#calendar').fullCalendar('gotoDate', date);
+        },
+        eventClick: function(event, jsEvent, view) {
+            var currentView = view.name;
+
+            if (event.url && currentView == 'agendaDay') {
+                window.open(event.url, "_self");
+                return false;
+            } else {
+                $('#calendar').fullCalendar('changeView', 'agendaDay');
+                $('#calendar').fullCalendar('gotoDate', event.start);
+            }
         },
 
         // from database
-        events: [
-            // calendar entries
-            <?php if ($this->get('calendarList') != ''): ?>
-                <?php foreach ($this->get('calendarList') as $calendarList): ?>
-                    {
-                        title: '<?=$this->escape($calendarList->getTitle()) ?>',
-                        start: '<?=$calendarList->getStart() ?>',
-                        end  : '<?=$calendarList->getEnd() ?>',
-                        color: '<?=$calendarList->getColor() ?>',
-                        url  : '<?=$this->getUrl('calendar/index/show/id/' . $calendarList->getId()) ?>',
-                    },
-                <?php endforeach; ?>
-            <?php endif; ?>
-
-            // birthday entries
-            <?php $yearBegin = date("Y") - 5; ?>
-            <?php $yearEnd = $yearBegin + 15; ?>
-            <?php $years = range($yearBegin, $yearEnd, 1); ?>
-            <?php foreach ($years as $year): ?>
-                <?php foreach ($this->get('birthdayList') as $birthdayList): ?>
-                    <?php if ($birthdayList->getBirthday() != '0000-00-00'): ?>
-                        {
-                            title: '<?=$this->escape($birthdayList->getName()) ?> (<?=floor(($year.date('md') - str_replace("-", "", $birthdayList->getBirthday())) / 10000 + 1) ?>)',
-                            start: '<?=$year.'-'.date('m-d', strtotime($birthdayList->getBirthday())) ?>',
-                            color: '#257e4a',
-                            url  : '<?=$this->getUrl('user/profil/index/user/' . $birthdayList->getId()) ?>'
-                        },
-                    <?php endif; ?>
-                <?php endforeach; ?>
+        eventSources: [
+            <?php foreach ($this->get('events') as $url): ?>
+                {
+                    url: '<?=$this->getUrl($url->getUrl()) ?>'
+                },
             <?php endforeach; ?>
-
-            // away entries
-            <?php if ($this->get('awayList') != ''): ?>
-                <?php foreach ($this->get('awayList') as $awayList): ?>
-                    {
-                        title: '<?=$this->escape($awayList->getReason()) ?>',
-                        start: '<?=$awayList->getStart() ?> 00:00:00',
-                        end  : '<?=$awayList->getEnd() ?> 23:59:59',
-                        <?php if ($awayList->getStatus() == 0 OR $awayList->getStatus() == 2): ?>
-                            color  : '#DF0101',
-                        <?php else: ?>
-                            color  : '#04B404',
-                        <?php endif; ?>
-                        url  : '<?=$this->getUrl('away/index/index/#' . $awayList->getId()) ?>'
-                    },
-                <?php endforeach; ?>
-            <?php endif; ?>
-
-            // event entries
-            <?php if ($this->get('eventList') != ''): ?>
-                <?php foreach ($this->get('eventList') as $eventList): ?>
-                    {
-                        title: '<?=$this->escape($eventList->getTitle()) ?>',
-                        start: '<?=$eventList->getStart() ?>',
-                        end  : '<?=$eventList->getEnd() ?>',
-                        color: '#C52C66',
-                        url  : '<?=$this->getUrl('events/show/event/id/' . $eventList->getId()) ?>'
-                    },
-                <?php endforeach; ?>
-            <?php endif; ?>
         ],
+
+        loading: function(bool) {
+            $('#loading').toggle(bool);
+        }
     });
+
+    addButtons();
+    bindButtonActions();
+
+    function addButtons() {
+        var month = $("<button/>")
+            .addClass("fc-month-button fc-button fc-state-default fc-corner-left fc-state-active")
+            .attr({
+                type: "button"
+            })
+            .text("<?=$this->getTrans('calendarMonth') ?>");
+
+        var week = $("<button/>")
+            .addClass("fc-agendaWeek-button fc-button fc-state-default")
+            .attr({
+                type: "button"
+            })
+            .text("<?=$this->getTrans('calendarWeek') ?>");
+
+        var day = $("<button/>")
+            .addClass("fc-agendaDay-button fc-button fc-state-default fc-corner-right")
+            .attr({
+                type: "button"
+            })
+            .text("<?=$this->getTrans('calendarDay') ?>");
+
+        var today = $("<button/>")
+            .addClass("fc-today-button fc-button fc-state-default fc-corner-left fc-state-disabled")
+            .attr({
+                type: "button",
+                disabled: ""
+            })
+            .text("<?=$this->getTrans('calendarToday') ?>");
+
+        var listWeek = $("<button/>")
+            .addClass("fc-listWeek-button fc-button fc-state-default")
+            .attr({
+                type: "button"
+            })
+            .text("<?=$this->getTrans('calendarWeek') ?>");
+
+        var list = $("<button/>")
+            .addClass("fc-listWeek-button fc-button fc-state-default fc-corner-right fc-listWeek-button-desk")
+            .attr({
+                type: "button"
+            })
+            .text("<?=$this->getTrans('calendarList') ?>");
+
+        var iCal = $("<button/>")
+            .addClass("fc-iCal-button fc-button fc-state-default fc-corner-left fc-corner-right")
+            .attr({
+                type: "button"
+            })
+            .text("<?=$this->getTrans('calendarICal') ?>");
+
+        var btn = $("<div class='fc-head'/>").append(
+            $("<div/>")
+                .addClass("fc-button-group")
+                .append(month)
+                .append(week)
+                .append(listWeek)
+                .append(day),
+            $("<div/>")
+                .addClass("fc-button-group fc-right")
+                .append(iCal),
+            $("<div/>")
+                .addClass("fc-button-group fc-right")
+                .append(today)
+                .append(list)
+        );
+
+        var clear = $("<div/>").addClass("fc-clear");
+
+        $(".fc-toolbar").find(".fc-left").before(btn);
+        $(".fc-toolbar").find(".fc-head").after(clear);
+    }
+
+    function bindButtonActions(){
+        $(".fc-month-button, .fc-agendaWeek-button, .fc-agendaDay-button, .fc-listWeek-button, .fc-iCal-button").on('click', function() {
+            var view = "month";
+            if ($(this).hasClass("fc-agendaWeek-button")) {
+                view = "agendaWeek";
+            } else if ($(this).hasClass("fc-agendaDay-button")) {
+                view = "agendaDay";
+            } else if ($(this).hasClass("fc-listWeek-button")) {
+                view = "listWeek";
+            } else if ($(this).hasClass("fc-iCal-button")) {
+                var currentView = $('#calendar').fullCalendar('getView');
+
+                view = currentView.name;
+                window.location = '<?=$this->getUrl('calendar/events/iCal/') ?>';
+            }
+
+            $('#calendar').fullCalendar('changeView', view);
+        });
+
+        $(".fc-today-button").on('click', function() {
+            $('#calendar').fullCalendar('today');
+        });
+    }
 });
 </script>

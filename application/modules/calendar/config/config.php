@@ -35,7 +35,8 @@ class Config extends \Ilch\Config\Install
 
     public function uninstall()
     {
-        $this->db()->queryMulti('DROP TABLE `[prefix]_calendar`;');
+        $this->db()->queryMulti('DROP TABLE `[prefix]_calendar`;
+                                 DROP TABLE `[prefix]_calendar_events`;');
     }
 
     public function getInstallSql()
@@ -49,7 +50,15 @@ class Config extends \Ilch\Config\Install
                   `text` MEDIUMTEXT DEFAULT NULL,
                   `color` VARCHAR(7) DEFAULT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+                CREATE TABLE IF NOT EXISTS `[prefix]_calendar_events` (
+                  `id` INT(11) NOT NULL AUTO_INCREMENT,
+                  `url` VARCHAR(255) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+                INSERT INTO `[prefix]_calendar_events` (`name`) VALUES ("calendar/events/index/");';
     }
 
     public function getUpdate($installedVersion)

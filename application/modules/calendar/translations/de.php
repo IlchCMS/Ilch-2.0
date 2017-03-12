@@ -17,4 +17,12 @@ return [
     'noDescription' => 'Keine Beschreibung vorhanden',
     'at' => 'um',
     'clock' => 'Uhr',
+
+    'calendarMonth' => 'Monat',
+    'calendarWeek' => 'Woche',
+    'calendarDay' => 'Tag',
+    'calendarToday' => 'Heute',
+    'calendarList' => 'Liste',
+    'calendarICal' => 'iCal',
+    'calendarLimitText' => 'weitere',
 ];

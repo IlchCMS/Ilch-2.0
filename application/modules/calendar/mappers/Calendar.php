@@ -75,6 +75,44 @@ class Calendar extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Calendar entries by start and end.
+     *
+     * @param integer $start
+     * @param integer $end
+     * @return CalendarModel|null
+     */
+    public function getEntriesForJson($start, $end)
+    {
+        if ($start && $end) {
+            $start = new \Ilch\Date($start);
+            $end = new \Ilch\Date($end);
+
+            $sql = sprintf("SELECT * FROM `[prefix]_calendar` WHERE start >= '%s 00:00:00' AND end <= '%s 23:59:59' ORDER BY start ASC;", $start, $end);
+        } else {
+            return null;
+        }
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = [];
+        foreach ($entryArray as $entries) {
+            $entryModel = new CalendarModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setTitle($entries['title']);
+            $entryModel->setStart($entries['start']);
+            $entryModel->setEnd($entries['end']);
+            $entryModel->setColor($entries['color']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
+
+    /**
      * Inserts Calendar term model.
      *
      * @param CalendarModel $term
@@ -100,13 +138,6 @@ class Calendar extends \Ilch\Mapper
                 ->values($fields)
                 ->execute();
         }
-    }
-
-    public function existsTable($table)
-    {
-        $module = $this->db()->ifTableExists('[prefix]_'.$table);
-
-        return $module;
     }
 
     /**
