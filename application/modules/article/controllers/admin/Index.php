@@ -73,6 +73,7 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $this->getView()->set('articleMapper', $articleMapper);
         $this->getView()->set('categoryMapper', $categoryMapper);
         $this->getView()->set('articles', $articleMapper->getArticleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));

@@ -1,4 +1,7 @@
-<?php $categoryMapper = $this->get('categoryMapper'); ?>
+<?php
+$articleMapper = $this->get('articleMapper');
+$categoryMapper = $this->get('categoryMapper');
+?>
 
 <legend><?=$this->getTrans('manage') ?></legend>
 <form class="form-horizontal" method="POST" action="">
@@ -52,7 +55,7 @@
                                             <?php continue; ?>
                                         <?php endif; ?>
 
-                                        <?php if ($this->get('articleMapper')->getArticleByIdLocale($article->getId(), $key) != null): ?>
+                                        <?php if ($articleMapper->getArticleByIdLocale($article->getId(), $key)): ?>
                                             <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-edit"></i></a>
                                         <?php else: ?>
                                             <a href="<?=$this->getUrl(['action' => 'treat', 'id' => $article->getId(), 'locale' => $key]) ?>"><i class="fa fa-plus-circle"></i></a>
