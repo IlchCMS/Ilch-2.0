@@ -68,7 +68,11 @@ class Config extends \Ilch\Config\Install
                                  DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_api_key';
                                  DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_map_typ';
                                  DELETE FROM `[prefix]_config` WHERE `key` = 'event_google_maps_zoom';
-                                 DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events'");
+                                 DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'events';");
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'events/events/index/';");
+        }
     }
 
     public function getInstallSql()
@@ -110,6 +114,10 @@ class Config extends \Ilch\Config\Install
                 INSERT INTO `[prefix]_events_currencies` (`id`, `name`) VALUES (6, "CHF");
 
                 INSERT INTO `[prefix]_modules_folderrights` (`key`, `folder`) VALUES ("events", "static/upload/image");';
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            return 'INSERT INTO `[prefix]_calendar_events` (`name`) VALUES ("events/events/index/");';
+        }
     }
 
     public function getUpdate($installedVersion)

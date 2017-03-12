@@ -231,6 +231,44 @@ class Events extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Events by start and end.
+     *
+     * @param integer $start
+     * @param integer $end
+     * @return EventModel|null
+     */
+    public function getEntriesForJson($start, $end)
+    {
+        if ($start && $end) {
+            $start = new \Ilch\Date($start);
+            $end = new \Ilch\Date($end);
+
+            $sql = sprintf("SELECT * FROM `[prefix]_events` WHERE start >= '%s 00:00:00' AND end <= '%s 23:59:59' ORDER BY start ASC;", $start, $end);
+        } else {
+            return null;
+        }
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entry = [];
+        foreach ($entryArray as $entries) {
+            $entryModel = new EventModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setStart($entries['start']);
+            $entryModel->setEnd($entries['end']);
+            $entryModel->setTitle($entries['title']);
+            $entryModel->setShow($entries['show']);
+            $entry[] = $entryModel;
+        }
+
+        return $entry;
+    }
+
+    /**
      * Get latitude and longitude for Google Maps by address
      *
      * @param string $address
