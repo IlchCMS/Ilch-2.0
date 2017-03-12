@@ -57,7 +57,7 @@ class Config extends \Ilch\Config\Install
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            return 'INSERT INTO `[prefix]_calendar_events` (`name`) VALUES ("away/aways/index/");';
+            return 'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("away/aways/index/");';
         }
     }
 

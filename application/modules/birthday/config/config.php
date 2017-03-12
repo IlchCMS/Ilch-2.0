@@ -56,7 +56,7 @@ class Config extends \Ilch\Config\Install
     public function getInstallSql()
     {
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            return 'INSERT INTO `[prefix]_calendar_events` (`name`) VALUES ("birthday/birthdays/index/");';
+            return 'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("birthday/birthdays/index/");';
         }
     }
 
