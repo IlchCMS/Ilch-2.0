@@ -96,6 +96,45 @@ class Away extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Away entries by start and end.
+     *
+     * @param integer $start
+     * @param integer $end
+     * @return AwayModel|null
+     */
+    public function getEntriesForJson($start, $end)
+    {
+        if ($start && $end) {
+            $start = new \Ilch\Date($start);
+            $end = new \Ilch\Date($end);
+
+            $sql = sprintf("SELECT * FROM `[prefix]_away` WHERE `start` >= '%s 00:00:00' AND `end` <= '%s 23:59:59' AND `show` = 1 ORDER BY `start` ASC;", $start, $end);
+        } else {
+            return null;
+        }
+
+        $entryArray = $this->db()->queryArray($sql);
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $away = [];
+        foreach ($entryArray as $entries) {
+            $entryModel = new AwayModel();
+            $entryModel->setId($entries['id']);
+            $entryModel->setReason($entries['reason']);
+            $entryModel->setStart($entries['start']);
+            $entryModel->setEnd($entries['end']);
+            $entryModel->setStatus($entries['status']);
+            $entryModel->setShow($entries['show']);
+            $away[] = $entryModel;
+        }
+
+        return $away;
+    }
+
+    /**
      * Updates away with given id.
      *
      * @param integer $id

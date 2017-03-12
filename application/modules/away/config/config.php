@@ -36,21 +36,29 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_away`;');
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'away/aways/index/';");
+        }
     }
 
     public function getInstallSql()
     {
-        return "CREATE TABLE IF NOT EXISTS `[prefix]_away` (
+        return 'CREATE TABLE IF NOT EXISTS `[prefix]_away` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `user_id` INT(11) NOT NULL,
                   `reason` VARCHAR(100) NOT NULL,
                   `start` DATE NOT NULL,
                   `end` DATE NOT NULL,
                   `text` MEDIUMTEXT NOT NULL,
-                  `status` INT(11) NOT NULL DEFAULT '2',
+                  `status` INT(11) NOT NULL DEFAULT "2",
                   `show` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            return 'INSERT INTO `[prefix]_calendar_events` (`name`) VALUES ("away/aways/index/");';
+        }
     }
 
     public function getUpdate($installedVersion)
