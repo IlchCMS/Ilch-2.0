@@ -6,7 +6,7 @@
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
 <div class="row">
     <?php foreach ($this->get('userList') as $userlist): ?>
-        <div class="col-lg-4">
+        <div class="col-sm-6 col-md-4">
             <div class="user">
                 <img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($userlist->getAvatar()) ?>" alt="">
                 <h3><a href="<?=$this->getUrl(['controller' => 'profil', 'action' => 'index', 'user' => $userlist->getId()]) ?>" title="<?=$this->escape($userlist->getName()) ?>s <?=$this->getTrans('profile') ?>"><?=$this->escape($userlist->getName()) ?></a></h3>
