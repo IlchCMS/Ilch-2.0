@@ -14,6 +14,7 @@ $(document).ready(function(){
                 disableObjectResizing: false,
                 contentsCss: [CKEDITOR.basePath + '../../../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'],
                 allowedContent: true,
+                customConfig: '../../../static/js/ckeditor/config_ilch_html.js',
                 toolbar : toolbar
             });
         } else {
@@ -21,7 +22,7 @@ $(document).ready(function(){
             CKEDITOR.replace( id , {
                 disableObjectResizing: false,
                 allowedContent: true,
-                customConfig: '../ckeditor/config_ilch_bbcode.js',
+                customConfig: '../../../static/js/ckeditor/config_ilch_bbcode.js',
                 toolbar : toolbar
             });
         };

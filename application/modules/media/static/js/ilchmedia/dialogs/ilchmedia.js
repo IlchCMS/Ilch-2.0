@@ -1,7 +1,7 @@
 CKEDITOR.dialog.add('ilchmediaDialog', function(editor) {
     return{
         title: 'Ilch Media',
-        minWidth: 400,
+        minWidth: 500,
         minHeight: 200,
         contents: [
             {

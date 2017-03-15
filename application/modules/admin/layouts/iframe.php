@@ -30,7 +30,7 @@
         <script src="<?=$this->getStaticUrl('js/validate/jquery.validate.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/additional-methods.min.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/validate/ilch-validate.js') ?>"></script>
-        <script src="<?=$this->getStaticUrl('js/ckeditor/ckeditor.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
     </head>
     <body>

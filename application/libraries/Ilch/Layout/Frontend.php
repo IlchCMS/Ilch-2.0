@@ -183,7 +183,7 @@ class Frontend extends Base
                 <link href="'.$this->getStaticUrl('css/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
                 <script type="text/javascript" src="'.$this->getVendorUrl('components/jquery/jquery.min.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery-ui.min.js').'"></script>
-                <script type="text/javascript" src="'.$this->getStaticUrl('js/ckeditor/ckeditor.js').'"></script>
+                <script type="text/javascript" src="'.$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
                 <script type="text/javascript" src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';

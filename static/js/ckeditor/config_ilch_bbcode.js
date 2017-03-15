@@ -13,8 +13,8 @@ CKEDITOR.editorConfig = function( config ) {
         [
             ['Undo', 'Redo'],
             ['RemoveFormat'],
-            ['Link', 'Unlink', 'Image', 'ilchsmileys'],
             ['Bold', 'Italic', 'Underline'],
+            ['Link', 'Unlink', 'Image', 'ilchsmileys'],
             ['Maximize']
         ];
 };

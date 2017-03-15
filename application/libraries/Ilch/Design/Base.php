@@ -265,7 +265,7 @@ abstract class Base
      */
     public function getVendorUrl($url = '')
     {
-        return $this->getBaseUrl('/vendor/' . $url);
+        return $this->getBaseUrl('vendor/' . $url);
     }
 
     /**
