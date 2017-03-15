@@ -7,13 +7,7 @@ $coreVersion = $this->get('coreVersion');
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 <link href="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/css/star-rating.min.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider.css') ?>" rel="stylesheet">
 
-<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-    <li class="active"><a href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
-    <li><a href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
-</ul>
-<br />
 <?php
 if (empty($modules)) {
     echo $this->getTrans('noModulesAvailable');
@@ -72,50 +66,47 @@ foreach ($modules as $module): ?>
         }
         ?>
         <div id="module" class="tab-content">
+
+            <?php if (!empty($module->thumbs)): ?>
+                <div id="module-search-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <?php $itemI = 0; ?>
+                        <?php foreach ($module->thumbs as $thumb): ?>
+                            <div class="item <?=$itemI == 0 ? 'active' : '' ?>">
+                                <img src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" alt="<?=$this->escape($module->name) ?>">
+                                <div class="carousel-caption">
+                                    <?php if ($thumb->desc != ''): ?>
+                                        <?=$this->escape($thumb->desc) ?>
+                                    <?php else: ?>
+                                        <?=$this->escape($module->name) ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php $itemI++; ?>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <?php if(count($module->thumbs) > 1): ?>
+                        <a class="left carousel-control" href="#module-search-carousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#module-search-carousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+
+            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a href="#info" data-toggle="tab"><?=$this->getTrans('info') ?></a></li>
+                <li><a href="#changelog" data-toggle="tab"><?=$this->getTrans('changelog') ?></a></li>
+            </ul>
+            <br />
+
             <div class="tab-pane active" id="info">
                 <div class="col-xs-12 col-lg-6">
-                    <?php if (!empty($module->thumbs)): ?>
-                        <div class="col-xs-12">
-                            <div id="jssor_1" class="slider">
-                                <div data-u="slides" class="slides">
-                                    <?php foreach ($module->thumbs as $thumb): ?>
-                                        <div data-p="112.50" style="display: none;">
-                                            <img data-u="image" src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" />
-                                            <img data-u="thumb" src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" />
-                                            <div data-u="caption" data-t="5" class="caption">
-                                                <?php if ($thumb->desc != ''): ?>
-                                                    <?=$this->escape($thumb->desc) ?>
-                                                <?php else: ?>
-                                                    <?=$this->escape($module->name) ?>
-                                                <?php endif; ?>
-                                            </div>
-                                        </div>
-                                    <?php endforeach; ?>
-                                </div>
-                                <!-- Bullet Navigator -->
-                                <div data-u="navigator" class="jssorb01">
-                                    <div data-u="prototype" style="width:12px;height:12px;"></div>
-                                </div>
-                                <!-- Thumbnail Navigator -->
-                                <div data-u="thumbnavigator" class="jssort03" data-autocenter="1">
-                                    <div class="thumbslider"></div>
-                                    <!-- Thumbnail Item Skin Begin -->
-                                    <div data-u="slides" style="cursor: pointer;">
-                                        <div data-u="prototype" class="p">
-                                            <div class="w">
-                                                <div data-u="thumbnailtemplate" class="t"></div>
-                                            </div>
-                                            <div class="c"></div>
-                                        </div>
-                                    </div>
-                                    <!-- Thumbnail Item Skin End -->
-                                </div>
-                                <!-- Arrow Navigator -->
-                                <span data-u="arrowleft" class="jssora02l" data-autocenter="2"></span>
-                                <span data-u="arrowright" class="jssora02r" data-autocenter="2"></span>
-                            </div>
-                        </div>
-                    <?php endif; ?>
                     <div class="row">
                         <div class="col-sm-3 col-xs-6">
                             <b><?=$this->getTrans('name') ?>:</b>
@@ -223,8 +214,7 @@ foreach ($modules as $module): ?>
         </div>
 
         <div class="content_savebox">
-            <?php
-            if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
+            <?php if (!empty($module->phpextensions) AND in_array(false, $extensionCheck)): ?>
                 <button class="btn btn-default disabled" title="<?=$this->getTrans('phpExtensionError') ?>">
                     <i class="fa fa-download"></i> <?=$this->getTrans('download') ?>
                 </button>
@@ -257,44 +247,9 @@ foreach ($modules as $module): ?>
 <?php endforeach; ?>
 
 <script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/star-rating.min.js') ?>" type="text/javascript"></script>
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/jssor.slider/jssor.slider-21.1.5.min.js') ?>"></script>
-<script>
-jQuery(document).ready(function ($) {
-    var jssor_1_options = {
-        $AutoPlay: true,
-        $ArrowNavigatorOptions: {
-          $Class: $JssorArrowNavigator$
-        },
-        $BulletNavigatorOptions: {
-          $Class: $JssorBulletNavigator$
-        },
-        $ThumbnailNavigatorOptions: {
-          $Class: $JssorThumbnailNavigator$,
-          $Cols: 9,
-          $SpacingX: 3,
-          $SpacingY: 3,
-          $Align: 260
-        }
-    };
-
-    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
-
-    //responsive code begin
-    //you can remove responsive code if you don't want the slider scales while window resizing
-    function ScaleSlider() {
-        var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
-        if (refSize) {
-            refSize = Math.min(refSize, 600);
-            jssor_1_slider.$ScaleWidth(refSize);
-        }
-        else {
-            window.setTimeout(ScaleSlider, 90);
-        }
-    }
-    ScaleSlider();
-    $(window).bind("load", ScaleSlider);
-    $(window).bind("resize", ScaleSlider);
-    $(window).bind("orientationchange", ScaleSlider);
-    //responsive code end
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#module-search-carousel').carousel();
 });
 </script>
+

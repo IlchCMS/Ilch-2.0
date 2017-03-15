@@ -1236,3 +1236,25 @@ legend {
     height: auto;
     padding: 4px 6px;
 }
+
+
+/* Module and Layout search carousel */
+#module #module-search-carousel,
+#layout #layout-search-carousel {
+    margin: -10px -15px 15px -15px;
+}
+#module #module-search-carousel .carousel-inner .item img,
+#layout #layout-search-carousel .carousel-inner .item img {
+    max-height: 320px;
+    margin: auto;
+}
+#module #module-search-carousel .carousel-inner .item .carousel-caption,
+#layout #layout-search-carousel .carousel-inner .item .carousel-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 10px 15px 5px;
+    background: #333333;
+    background: rgba(0, 0, 0, 0.75);
+}
