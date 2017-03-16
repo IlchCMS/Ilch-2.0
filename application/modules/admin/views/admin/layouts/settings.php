@@ -7,9 +7,6 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <?php if ($this->get('favicon')): ?>
-                    <span class="input-group-addon"><a href="javascript:eraseValue('selectedImage_1')"><i class="fa fa-trash text-danger"></i></a></span>
-                <?php endif; ?>
                 <input type="text"
                        class="form-control"
                        id="selectedImage_1"
@@ -17,7 +14,16 @@
                        placeholder="<?=$this->getTrans('choose') ?>"
                        value="<?=$this->escape($this->get('favicon')); ?>"
                        readonly />
-                <span class="input-group-addon"><a href="javascript:media_1()" id="media"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon">
+                    <a href="javascript:eraseValue('selectedImage_1')">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </span>
+                <span class="input-group-addon">
+                    <a href="javascript:media_1()" id="media">
+                        <i class="fa fa-picture-o"></i>
+                    </a>
+                </span>
             </div>
         </div>
     </div>
@@ -27,9 +33,6 @@
         </label>
         <div class="col-lg-4">
             <div class="input-group">
-                <?php if ($this->get('appleIcon')): ?>
-                    <span class="input-group-addon"><a href="javascript:eraseValue('selectedImage_2')"><i class="fa fa-trash text-danger"></i></a></span>
-                <?php endif; ?>
                 <input type="text"
                        class="form-control"
                        id="selectedImage_2"
@@ -37,7 +40,16 @@
                        placeholder="<?=$this->getTrans('choose') ?>"
                        value="<?=$this->escape($this->get('appleIcon')); ?>"
                        readonly />
-                <span class="input-group-addon"><a href="javascript:media_2()" id="media"><i class="fa fa-picture-o"></i></a></span>
+                <span class="input-group-addon">
+                    <a href="javascript:eraseValue('selectedImage_2')">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </span>
+                <span class="input-group-addon">
+                    <a href="javascript:media_2()" id="media">
+                        <i class="fa fa-picture-o"></i>
+                    </a>
+                </span>
             </div>
         </div>
     </div>
