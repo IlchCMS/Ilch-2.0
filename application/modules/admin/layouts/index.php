@@ -110,7 +110,7 @@
                         <?php endif; ?>
                         <?php
                         $user = \Ilch\Registry::get('user');
-                        $modulesHtml = $systemModuleHtml = '';
+                        $modulesHtml = $systemModuleHtml = $layoutModuleHtml = '';
 
                         foreach ($this->get('modules') as $module) {
                             if ($user->hasAccess('module_'.$module->getKey())) {
@@ -125,6 +125,10 @@
                                     $systemModuleHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
                                                 '.$smallIcon.$content['name'].'
                                                 </a>';
+                                } elseif ($module->getLayoutModule()) {
+                                    $layoutModuleHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
+                                                '.$smallIcon.$content['name'].'
+                                                </a>';
                                 } else {
                                     $modulesHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
                                                 '.$smallIcon.$content['name'].'
@@ -133,7 +137,7 @@
                             }
                         }
                         ?>
-                        <?php if (!empty($modulesHtml) || !empty($systemModuleHtml)): ?>
+                        <?php if (!empty($modulesHtml) || !empty($systemModuleHtml) || !empty($layoutModuleHtml)): ?>
                             <li id="ilch_dropdown" class="dropdown <?php if ($this->getRequest()->getModuleName() !== 'admin') { echo 'active'; } ?>">
                                 <a data-toggle="dropdown" class="dropdown-toggle" target="_blank" href="<?=$this->getUrl() ?>">
                                     <i class="fa fa-puzzle-piece hidden-sm hidden-md"></i> <?=$this->getTrans('modules') ?>
@@ -154,6 +158,12 @@
                                         <div class="list-group list-group-horizontal">
                                             <?=$modulesHtml ?>
                                         </div>
+                                        <?php if (!empty($layoutModuleHtml)): ?>
+                                            <div class="divider"></div>
+                                            <div class="list-group list-group-horizontal">
+                                                <?=$layoutModuleHtml ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </li>
                                 </ul>
                             </li>

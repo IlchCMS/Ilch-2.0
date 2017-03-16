@@ -28,6 +28,11 @@ class Module extends \Ilch\Model
     protected $systemModule = false;
 
     /**
+     * @var boolean
+     */
+    protected $layoutModule = false;
+
+    /**
      * @var string
      */
     protected $author;
@@ -135,6 +140,26 @@ class Module extends \Ilch\Model
     public function getSystemModule()
     {
         return $this->systemModule;
+    }
+
+    /**
+     * Sets layout module flag.
+     *
+     * @param boolean $layout
+     */
+    public function setLayoutModule($layout)
+    {
+        $this->layoutModule = (bool)$layout;
+    }
+
+    /**
+     * Gets layout module flag.
+     *
+     * @return boolean
+     */
+    public function getLayoutModule()
+    {
+        return $this->layoutModule;
     }
 
     /**
