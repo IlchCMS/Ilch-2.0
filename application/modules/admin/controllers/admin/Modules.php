@@ -256,7 +256,7 @@ class Modules extends \Ilch\Controller\Admin
                 if (isset($config->config['system_module'])) {
                     $moduleModel->setSystemModule(true);
                 }
-                if (isset($config->config['layout_module'])) {
+                if (isset($config->config['isLayout'])) {
                     $moduleModel->setLayoutModule(true);
                 }
                 if (isset($config->config['link'])) {
