@@ -511,6 +511,7 @@ class Index extends \Ilch\Controller\Frontend
         $modules['rule']['types'] = ['clan'];
         $modules['teams']['types'] = ['clan'];
         $modules['training']['types'] = ['clan'];
+        $modules['calendar']['types'] = ['clan', 'private'];
         $modules['forum']['types'] = ['clan', 'private'];
         $modules['guestbook']['types'] = ['clan', 'private'];
         $modules['link']['types'] = ['clan', 'private'];
@@ -522,7 +523,6 @@ class Index extends \Ilch\Controller\Frontend
         $modules['newsletter']['types'] = ['clan', 'private'];
         $modules['birthday']['types'] = ['clan', 'private'];
         $modules['events']['types'] = ['clan', 'private'];
-        $modules['calendar']['types'] = ['clan', 'private'];
         $modules['away']['types'] = ['clan', 'private'];
         $modules['awards']['types'] = ['clan', 'private'];
         $modules['jobs']['types'] = ['clan', 'private'];

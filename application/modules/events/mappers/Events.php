@@ -243,7 +243,7 @@ class Events extends \Ilch\Mapper
             $start = new \Ilch\Date($start);
             $end = new \Ilch\Date($end);
 
-            $sql = sprintf("SELECT * FROM `[prefix]_events` WHERE start >= '%s 00:00:00' AND end <= '%s 23:59:59' ORDER BY start ASC;", $start, $end);
+            $sql = sprintf("SELECT * FROM `[prefix]_events` WHERE start >= '%s' AND end <= '%s' AND `show` = 1 ORDER BY start ASC;", $start, $end);
         } else {
             return null;
         }
