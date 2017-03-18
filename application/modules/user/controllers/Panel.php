@@ -302,15 +302,61 @@ class Panel extends BaseController
     public function dialogAction()
     {
         $dialogMapper = new DialogMapper();
+        $ilchdate = new IlchDate;
 
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuDialog'), ['controller' => 'panel', 'action' => 'dialog']);
 
-        $this->getView()->set('dialog', $dialogMapper->getDialog($this->getUser()->getId()));
+        $c_id = $this->getRequest()->getParam('id');
+
+        if ($c_id) {
+            $user = $dialogMapper->getDialogCheckByCId($c_id);
+
+            if ($this->getUser()->getId() != $user->getUserTwo()) {
+                $user_one = $user->getUserTwo();
+                $user_two = $user->getUserOne();
+            } else {
+                $user_one = $user->getUserOne();
+                $user_two = $user->getUserTwo();
+            }
+
+            if ($this->getUser()->getId() == $user_two) {
+                if ($this->getRequest()->isPost()) {
+
+                    $u_id_fk = $this->getUser()->getId();
+                    $text = trim($this->getRequest()->getPost('text'));
+
+                    $model = new DialogModel();
+                    $model->setCId($c_id);
+                    $model->setId($u_id_fk);
+                    $model->setTime($ilchdate->toDb());
+                    $model->setText($text);
+                    $dialogMapper->save($model);
+
+                    $this->redirect(['action' => 'dialog','id'=> $c_id]);
+                }
+
+                $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
+
+                $dialog = $dialogMapper->getReadLastOneDialog($c_id);
+                if ($dialog AND $dialog->getUserOne() != $this->getUser()->getId()) {
+                    $model = new DialogModel();
+                    $model->setCrId($dialog->getCrId());
+                    $model->setRead(1);
+                    $dialogMapper->updateRead($model);
+                }
+            } else {
+                $this->redirect(['action' => 'dialog']);
+            }
+
+            $this->getView()->set('dialog', $dialogMapper->getDialogByCId($user_one));
+        }
+
+        $this->getView()->set('dialogs', $dialogMapper->getDialog($this->getUser()->getId()));
     }
 
-    public function dialogviewmessageAction()
+    public function dialogmessageAction()
     {
         if ($this->getRequest()->isPost('fetch')) {
             $dialogMapper = new DialogMapper();
@@ -325,51 +371,6 @@ class Panel extends BaseController
             }
 
             $this->getView()->set('inbox', $dialogMapper->getDialogMessage($c_id));
-        }
-    }
-
-    public function dialogviewAction()
-    {
-        $DialogMapper = new DialogMapper();
-        $ilchdate = new IlchDate;
-
-        $c_id = $this->getRequest()->getParam('id');
-        $user = $DialogMapper->getDialogCheckByCId($c_id);
-
-        if ($this->getUser()->getId() != $user->getUserTwo()) {
-            $user_two = $user->getUserOne();
-        } else {
-            $user_two = $user->getUserTwo();
-        }
-
-        if ($this->getUser()->getId() == $user_two) {
-            if ($this->getRequest()->isPost()) {
-
-                $u_id_fk = $this->getUser()->getId();
-                $text = trim($this->getRequest()->getPost('text'));
-
-                $model = new DialogModel();
-                $model->setCId($c_id);
-                $model->setId($u_id_fk);
-                $model->setTime($ilchdate->toDb());
-                $model->setText($text);
-                $DialogMapper->save($model);
-
-                $this->redirect(['action' => 'dialogview','id'=> $c_id]);
-            }
-
-            $this->getView()->set('inbox', $DialogMapper->getDialogMessage($c_id));
-
-            $dialog = $DialogMapper->getReadLastOneDialog($c_id);
-            if ($dialog and $dialog->getUserOne() != $this->getUser()->getId()) {
-                $model = new DialogModel();
-                $model->setCrId($dialog->getCrId());
-                $model->setRead(1);
-                $DialogMapper->updateRead($model);
-            }
-
-        } else {
-            $this->redirect(['action' => 'dialog']);
         }
     }
 

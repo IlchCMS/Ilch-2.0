@@ -179,6 +179,7 @@ return [
     'panel' => 'Panel',
     'welcome' => 'Welcome',
     'dialog' => 'Messages',
+    'selectDialog' => 'Please choose a conversation from the left side.',
     'noDialog' => 'No Messages available.',
     'menuPanel' => 'User Panel',
     'menuSetting' => 'Setting',
@@ -216,6 +217,7 @@ return [
     'profileSignature' => 'Signature',
     'profilePassword' => 'Password',
     'profileSubmit' => 'Send',
+    'profileYesterday' => 'Yesterday',
 
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail to',

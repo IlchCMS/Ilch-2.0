@@ -27,7 +27,7 @@ class Dialog extends \Ilch\Mapper
         END
         AND
         (c.user_one = '.$userid.' or c.user_two = '.$userid.')
-        ORDER BY c.c_id DESC';
+        ORDER BY c.time DESC';
 
         $mailArray = $this->db()->queryArray($sql);
 
@@ -63,6 +63,35 @@ class Dialog extends \Ilch\Mapper
         }
 
         return $mails;
+    }
+
+    public function getDialogByCId($cId)
+    {
+        $sql = 'SELECT u.id, u.avatar, u.name
+        FROM [prefix]_users u, [prefix]_users_dialog c
+        WHERE CASE
+        WHEN c.user_two = '.$cId.'
+        THEN c.user_two = u.id
+        WHEN c.user_one = '.$cId.'
+        THEN c.user_one = u.id
+        END';
+
+        $dialogRow = $this->db()->queryRow($sql);
+
+        if (empty($dialogRow)) {
+            return null;
+        }
+
+        $dialogModel = new DialogModel();
+        $dialogModel->setId($dialogRow['id']);
+        $dialogModel->setName($dialogRow['name']);
+        if (file_exists($dialogRow['avatar'])) {
+            $dialogModel->setAvatar($dialogRow['avatar']);
+        }  else {
+            $dialogModel->setAvatar('static/img/noavatar.jpg');
+        }
+
+        return $dialogModel;
     }
 
     /**
@@ -172,7 +201,7 @@ class Dialog extends \Ilch\Mapper
     {
         $sql = 'SELECT user_one, user_two
                 FROM [prefix]_users_dialog
-                WHERE c_id='.$c_id.'';
+                WHERE c_id='.$c_id;
 
         $row = $this->db()->queryRow($sql);
 
@@ -257,14 +286,19 @@ class Dialog extends \Ilch\Mapper
             $this->db()->insert('users_dialog')
                 ->values($fields)
                 ->execute();
-            return ;
+            return;
         }  else {
             $this->db()->insert('users_dialog_reply')
                 ->values($fields)
                 ->execute();
+
+            $this->db()->update('users_dialog')
+                ->values(['time' => $model->getTime()])
+                ->where(['c_id' => $model->getCId()])
+                ->execute();
         }
 
-        return ;
+        return;
     }
 
     /**
@@ -284,6 +318,6 @@ class Dialog extends \Ilch\Mapper
                 ->where(['cr_id' => $model->getCrId()])
                 ->execute();
 
-        return ;
+        return;
     }
 }
