@@ -32,6 +32,7 @@ class Usermenu extends \Ilch\Mapper
             $usermenuModel = new UserMenuModel();
             $usermenuModel->setId($item['id']);
             $usermenuModel->setKey($item['key']);
+            $usermenuModel->setIcon($item['icon']);
             $usermenu[] = $usermenuModel;
         }
 

@@ -56,70 +56,71 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<div id="panel">
-    <div class="row">
-        <div class="col-lg-2">
-            <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
-        </div>
-        <div class="col-lg-10">
+<div class="row">
+    <div class="col-lg-12 profile">
+        <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
+
+        <div class="profile-content active">
             <legend><?=$this->getTrans('menuGallery') ?></legend>
             <?php if ($profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
                 <form class="form-horizontal" id="galleryForm" method="POST" action="">
                     <?=$this->getTokenField() ?>
-                    <div class="col-lg-5">
-                        <ol id="sortable" class="sortable">
-                            <?php
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <ol id="sortable" class="sortable">
+                                <?php
                                 if (!empty($galleryItems)) {
                                     foreach ($galleryItems as $item) {
                                         rec($item, $galleryMapper, $this, $imageMapper);
                                     }
                                 }
-                            ?>
-                        </ol>
-                    </div>
-                    <div class="col-lg-7 changeBox">
-                        <input type="hidden" id="id" value="" />
-                        <div class="form-group">
-                            <label for="title" class="col-lg-4 control-label">
-                                <?=$this->getTrans('title') ?>:
-                            </label>
-                            <div class="col-lg-8">
-                                <input type="text"
-                                       class="form-control"
-                                       id="title"
-                                       name="title" />
+                                ?>
+                            </ol>
+                        </div>
+                        <div class="col-lg-7 changeBox">
+                            <input type="hidden" id="id" value="" />
+                            <div class="form-group">
+                                <label for="title" class="col-lg-4 control-label">
+                                    <?=$this->getTrans('title') ?>:
+                                </label>
+                                <div class="col-lg-8">
+                                    <input type="text"
+                                           class="form-control"
+                                           id="title"
+                                           name="title" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="desc" class="col-lg-4 control-label">
+                                    <?=$this->getTrans('description') ?>:
+                                </label>
+                                <div class="col-lg-8">
+                                    <textarea class="form-control"
+                                              id="desc"
+                                              name="desc"
+                                              rows="8"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-lg-4 control-label">
+                                    <?=$this->getTrans('type') ?>:
+                                </label>
+                                <div class="col-lg-8">
+                                    <select class="form-control" id="type">
+                                        <option value="0"><?=$this->getTrans('cat') ?></option>
+                                        <option value="1"><?=$this->getTrans('gallery') ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="dyn"></div>
+                            <div class="col-lg-offset-4 actions">
+                                <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="desc" class="col-lg-4 control-label">
-                                <?=$this->getTrans('description') ?>:
-                            </label>
-                            <div class="col-lg-8">
-                                <textarea class="form-control"
-                                          id="desc"
-                                          name="desc"
-                                          rows="8"></textarea>
-                            </div>
+                        <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
+                        <div class="col-lg-5">
+                            <?=$this->getSaveBar('saveButton', 'Gallery') ?>
                         </div>
-                        <div class="form-group">
-                            <label for="type" class="col-lg-4 control-label">
-                                <?=$this->getTrans('type') ?>:
-                            </label>
-                            <div class="col-lg-8">
-                                <select class="form-control" id="type">
-                                    <option value="0"><?=$this->getTrans('cat') ?></option>
-                                    <option value="1"><?=$this->getTrans('gallery') ?></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="dyn"></div>
-                        <div class="col-lg-offset-4 actions">
-                            <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('galleryItemAdd') ?>">
-                        </div>
-                    </div>
-                    <input type="hidden" id="hiddenMenu" name="hiddenMenu" value="" />
-                    <div class="col-lg-5">
-                        <?=$this->getSaveBar('saveButton', 'Gallery') ?>
                     </div>
                 </form>
             <?php else: ?>

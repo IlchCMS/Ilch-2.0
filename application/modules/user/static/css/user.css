@@ -160,85 +160,6 @@ input[readonly] {
 }
 
 
-/* Dialog */
-.dialog {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.dialog li {
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px dotted #B3A9A9;
-}
-
-.dialog li.left .dialog-body {
-    margin-left: 60px;
-}
-
-.dialog li.right .dialog-body {
-    margin-right: 60px;
-}
-.dialog li .dialog-body p {
-    margin: 0;
-    padding-top: 10px;
-    color: #777777;
-}
-.avatar {
-    width: 40px;
-    height: auto;
-}
-
-/* Dialog View */
-.shout_box {
-    overflow: hidden;
-    bottom: 0;
-    right: 20%;
-    z-index: 9;
-}
-.shout_box .message_box {
-    background: #FFFFFF;
-    max-height: 400px;
-    overflow: auto;
-    border: 1px solid #CCC;
-}
-.user_info input {
-    width: 98%;
-    height: 25px;
-    border: 1px solid #CCC;
-    border-top: none;
-    padding: 3px 0px 0px 3px;
-    font: 11px 'lucida grande', tahoma, verdana, arial, sans-serif;
-}
-.avatar {
-    width: 40px;
-    height: auto;
-}
-
-/* View Message */
-.chat {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.chat li {
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px dotted #B3A9A9;
-}
-.chat li.left .chat-body {
-    margin-left: 60px;
-}
-.chat li.right .chat-body {
-    margin-right: 60px;
-}
-.chat li .chat-body p {
-    margin: 0;
-    padding-top: 10px;
-    color: #777777;
-}
-
-
 /* Other */
 .date {
     min-width: 210px;
@@ -452,7 +373,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 
 /* profil gallery */
 .lib-panel {
-    margin-bottom: 20Px;
+    margin-bottom: 20px;
 }
 .lib-panel img {
     width: 100%;
@@ -506,4 +427,103 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 
 .text-left{
     font-size: 15px;
+}
+
+
+
+
+
+/* Profile sidebar */
+.profile {
+    display: flex;
+    overflow: hidden;
+}
+.profile-sidebar {
+    background: #fff;
+    width: 280px;
+    float: left;
+    transition: margin-left 0.5s;
+}
+
+.profile-content.active {
+    width: 100%;
+    transition: width 0.5s;
+}
+.profile-sidebar.active {
+    margin-left: -220px;
+    transition: margin-left 0.5s;
+}
+
+.profile-sidebar .push-menu i {
+    color: #428BCA;
+    padding: 5px;
+    margin-right: 10px;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.profile-sidebar .profile-userpic img {
+    width: 80px;
+    height: 80px;
+}
+
+.profile-usertitle {
+    margin-top: 20px;
+}
+
+.profile-name {
+    font-size: 16px;
+    font-weight: 600;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-sidebar .profile-usermenu ul li {
+    border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-sidebar .profile-usermenu ul li:last-child {
+    border-bottom: none;
+}
+
+.profile-sidebar .profile-usermenu ul li a {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.profile-sidebar .profile-usermenu ul li i {
+    font-size: 21px;
+}
+
+.profile-sidebar .profile-usermenu ul li a:hover {
+    background-color: #fafcfd;
+    color: #5b9bd1;
+}
+
+.profile-sidebar .profile-usermenu ul li.active a {
+    color: #5b9bd1;
+    border-left: 2px solid #5b9bd1;
+    margin-left: -2px;
+    border-right: 2px solid #5b9bd1;
+    margin-right: 2px;
+}
+
+/* Profile Content */
+.profile-content {
+    width: 100%;
+    padding-left: 15px;
+    background: #fff;
+    transition: width 0.5s;
+}
+.profile-content .row {
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .profile-content .settings-stretch {
+        display: flex;
+    }
+    .profile-content .settings-stretch .col-md-4 {
+        display: flex;
+    }
 }

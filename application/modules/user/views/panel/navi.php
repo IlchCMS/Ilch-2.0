@@ -15,13 +15,40 @@ function getTransKey($usermenuId) {
 }
 ?>
 
-<img class="panel-profile-image" src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" title="<?=$this->escape($profil->getName()) ?>">
-<ul class="nav">
-    <?php foreach ($this->get('usermenu') as $usermenu) {
-        if ($usermenu->getKey() == 'user/panel/gallery' AND ($this->get('galleryAllowed') == 0 OR $profil->getOptGallery() == 0)) {
+<div class="profile-sidebar active">
+    <div class="push-menu">
+        <i class="fa fa-bars pull-right"></i>
+    </div>
+    <div class="profile-userpic">
+        <img src="<?=$this->getStaticUrl().'../'.$this->escape($profil->getAvatar()) ?>" class="img-circle" title="<?=$this->escape($profil->getName()) ?>">
+    </div>
+    <div class="profile-usertitle">
+        <div class="profile-name">
+            <?=$this->escape($profil->getName()) ?>
+        </div>
+    </div>
+    <div class="profile-usermenu">
+        <ul class="nav">
+            <?php foreach ($this->get('usermenu') as $usermenu) {
+                $class = '';
+                if ($usermenu->getKey() == 'user/panel/'.$this->getRequest()->getActionName()) {
+                    $class = 'active';
+                }
 
-        } else {
-            echo '<li><a class="" href="'.$this->getUrl($usermenu->getKey()).'">'.$this->getTrans(getTransKey($usermenu->getId())).'</a></li>';
-        }
-    } ?>
-</ul>
+                if ($usermenu->getKey() == 'user/panel/gallery' AND ($this->get('galleryAllowed') == 0 OR $profil->getOptGallery() == 0)) {
+                } else {
+                    echo '<li class="'.$class.'"><a href="'.$this->getUrl($usermenu->getKey()).'">'.$this->getTrans(getTransKey($usermenu->getId())).' <i class="fa '.$usermenu->getIcon().' pull-right"></i></a></li>';
+                }
+            } ?>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".push-menu").click(function(){
+        $(".profile-sidebar").toggleClass("active");
+        $(".profile-content").toggleClass("active");
+    });
+});
+</script>

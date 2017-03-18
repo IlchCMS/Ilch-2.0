@@ -37,6 +37,13 @@ class Usermenusettings extends \Ilch\Model
     protected $name;
 
     /**
+     * Icon of the menu.
+     *
+     * @var string
+     */
+    protected $icon;
+
+    /**
      * Sets the menu key.
      *
      * @param int $key
@@ -114,5 +121,25 @@ class Usermenusettings extends \Ilch\Model
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Sets the menu icon.
+     *
+     * @param string $icon
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = (string)$icon;
+    }
+
+    /**
+     * Gets the menu icon.
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
     }
 }

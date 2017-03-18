@@ -157,6 +157,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_user_menu` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `key` VARCHAR(255) NOT NULL,
+                  `icon` VARCHAR(255) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -275,11 +276,11 @@ class Config extends \Ilch\Config\Install
                 (2, "User"),
                 (3, "Guest");
 
-                INSERT INTO `[prefix]_user_menu` (`id`, `key`) VALUES
-                (1, "user/panel/index"),
-                (2, "user/panel/dialog"),
-                (3, "user/panel/gallery"),
-                (4, "user/panel/settings");';
+                INSERT INTO `[prefix]_user_menu` (`id`, `key`, `icon`) VALUES
+                (1, "user/panel/index", "fa-home"),
+                (2, "user/panel/dialog", "fa-envelope"),
+                (3, "user/panel/gallery", "fa-picture-o"),
+                (4, "user/panel/settings", "fa-cogs");';
     }
 
     public function getUpdate($installedVersion)
