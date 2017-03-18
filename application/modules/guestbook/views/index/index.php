@@ -26,7 +26,7 @@
             <td><?=$this->getTrans('date') ?>: <?=$this->escape($entry->getDatetime()) ?></td>
         </tr>
         <tr>
-            <td colspan="3"><?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?></td>
+            <td colspan="3"><?=nl2br($this->getHtmlFromBBCode($entry->getText())) ?></td>
         </tr>
     </table>
 <?php endforeach; ?>
