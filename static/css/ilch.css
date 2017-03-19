@@ -2,14 +2,17 @@
 #gallery, #downloads {
     float: none;
     width: 100%;
-    display:inline-block;
+    display: inline-block;
 }
-#gallery, #downloads img{
+
+#gallery, #downloads img {
     width: 100%;
     height: auto;
 }
 
-
+pre code {
+    white-space: pre !important;
+}
 
 .captcha {
     padding-left: 15px !important;
