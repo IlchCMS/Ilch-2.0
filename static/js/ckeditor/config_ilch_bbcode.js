@@ -6,14 +6,15 @@
 CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchSmileysPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal( 'ilchsmileys', ilchSmileysPlugin);
-        config.extraPlugins = "ilchsmileys,bbcode";
+        config.extraPlugins = "ilchsmileys,bbcode,codesnippet";
     }
     config.toolbar = 'ilch_bbcode';
     config.toolbar_ilch_bbcode =
         [
             ['Undo', 'Redo'],
             ['RemoveFormat'],
-            ['Bold', 'Italic', 'Underline'],
+            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['NumberedList', 'BulletedList', 'Blockquote', 'CodeSnippet'],
             ['Link', 'Unlink', 'Image', 'ilchsmileys'],
             ['Maximize']
         ];
