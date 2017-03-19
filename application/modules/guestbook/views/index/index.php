@@ -5,30 +5,32 @@
     </div>
 </legend>
 <?php foreach ($this->get('entries') as $entry): ?>
-    <table class="table table-striped">
-        <colgroup>
-            <col class="col-lg-3">
-            <col class="col-lg-2">
-            <col>
-        </colgroup>
-        <tr>
-            <td><?=$this->getTrans('from'); ?>: <?=$this->escape($entry->getName()) ?></td>
-            <td>
-                <?php if ($entry->getHomepage() != ''): ?>
-                    <a target="_blank" href="<?=$this->escape($entry->getHomepage()) ?>">
-                        <i class="fa fa-home"></i>
+    <?php $date = new \Ilch\Date($entry->getDatetime()); ?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-6 col-lg-5">
+                    <?=$this->getTrans('from'); ?>: <?=$this->escape($entry->getName()) ?>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
+                        <i class="fa fa-envelope"></i>
                     </a>
-                <?php endif; ?>
-                <a target="_blank" href="mailto:<?=$this->escape($entry->getEmail()) ?>">
-                    <i class="fa fa-envelope"></i>
-                </a>
-            </td>
-            <td><?=$this->getTrans('date') ?>: <?=$this->escape($entry->getDatetime()) ?></td>
-        </tr>
-        <tr>
-            <td colspan="3"><?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?></td>
-        </tr>
-    </table>
+                    <?php if ($entry->getHomepage() != ''): ?>
+                        <a target="_blank" href="<?=$this->escape($entry->getHomepage()) ?>">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    <?php endif; ?>
+                </div>
+                <div class="col-sm-12 col-lg-4">
+                    <?=$this->getTrans('date') ?>: <?=$date->format("H:i d.m.Y", true) ?>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <?=nl2br($this->getHtmlFromBBCode($this->escape($entry->getText()))) ?>
+        </div>
+    </div>
 <?php endforeach; ?>
 
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>

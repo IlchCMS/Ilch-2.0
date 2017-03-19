@@ -17,6 +17,8 @@ class Index extends \Ilch\Controller\Frontend
         $guestbookMapper = new GuestbookMapper();
         $pagination = new \Ilch\Pagination();
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('guestbook'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index']);
 
@@ -30,14 +32,16 @@ class Index extends \Ilch\Controller\Frontend
     public function newEntryAction()
     {
         $guestbookMapper = new GuestbookMapper();
-        $ilchdate = new \Ilch\Date;
+        $ilchDate = new \Ilch\Date;
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('guestbook'))
+            ->add($this->getTranslator()->trans('entry'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('entry'), ['action' => 'newentry']);
 
         if ($this->getRequest()->getPost('saveGuestbook') and ($this->getRequest()->getPost('bot') === '')) {
-
             Validation::setCustomFieldAliases([
                 'homepage' => 'page',
             ]);
@@ -56,9 +60,8 @@ class Index extends \Ilch\Controller\Frontend
                     ->setEmail($this->getRequest()->getPost('email'))
                     ->setText($this->getRequest()->getPost('text'))
                     ->setHomepage($this->getRequest()->getPost('homepage'))
-                    ->setDatetime($ilchdate->toDb())
+                    ->setDatetime($ilchDate->toDb())
                     ->setFree($this->getConfig()->get('gbook_autosetfree'));
-
                 $guestbookMapper->save($model);
 
                 if ($this->getConfig()->get('gbook_autosetfree') == 0) {
