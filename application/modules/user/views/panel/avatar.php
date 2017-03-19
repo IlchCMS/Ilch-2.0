@@ -10,7 +10,7 @@ $settingMapper = $this->get('settingMapper');
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend>Avatar</legend>
+            <h1>Avatar</h1>
             <form action="" class="form-horizontal" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <?=$this->getTokenField(); ?>

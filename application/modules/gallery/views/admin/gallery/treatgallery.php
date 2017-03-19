@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?></legend>
+<h1><?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?></h1>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
 <?php if ($this->get('image')): ?>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">

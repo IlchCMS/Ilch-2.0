@@ -4,7 +4,7 @@
 $date = new \Ilch\Date();
 ?>
 
-<legend><?=$this->getTrans('menuBirthdayList') ?></legend>
+<h1><?=$this->getTrans('menuBirthdayList') ?></h1>
 <?php if ($this->get('birthdayListNOW') != ''): ?>
     <div class="panel panel-primary">
         <div class="panel-heading">

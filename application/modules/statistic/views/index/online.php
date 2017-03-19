@@ -7,7 +7,7 @@ if ($this->getUser()) {
 }
 ?>
 
-<legend><?=$this->getTrans('menuOnlineStatistic') ?></legend>
+<h1><?=$this->getTrans('menuOnlineStatistic') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

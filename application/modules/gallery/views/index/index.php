@@ -116,7 +116,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 }
 </style>
 
-<legend><?=$this->getTrans('menuGallery') ?></legend>
+<h1><?=$this->getTrans('menuGallery') ?></h1>
 <div class="col-lg-12">
     <ul class="media-list">
         <?php if (!empty($galleryItems)): ?>

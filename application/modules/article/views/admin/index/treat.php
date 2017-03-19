@@ -5,7 +5,7 @@ if ($this->get('article') != '') {
 }
 ?>
 
-<legend>
+<h1>
     <?php
     if ($this->get('article') != '') {
         echo $this->getTrans('edit');
@@ -13,7 +13,7 @@ if ($this->get('article') != '') {
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
@@ -78,7 +78,7 @@ if ($this->get('article') != '') {
             </div>
         </div>
     <?php endif; ?>
-    <legend><?=$this->getTrans('options') ?></legend>
+    <h1><?=$this->getTrans('options') ?></h1>
     <div class="form-group <?=in_array('image', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:
@@ -113,7 +113,7 @@ if ($this->get('article') != '') {
             <a id="preview" class="btn btn-default"><?=$this->getTrans('show') ?></a>
         </div>
     </div>
-    <legend><?=$this->getTrans('seo') ?></legend>
+    <h1><?=$this->getTrans('seo') ?></h1>
     <div class="form-group">
         <label for="description" class="col-lg-2 control-label">
             <?=$this->getTrans('seoDescription') ?>:

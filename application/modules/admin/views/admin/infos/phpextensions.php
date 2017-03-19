@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('phpExtensions') ?></legend>
+<h1><?=$this->getTrans('phpExtensions') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

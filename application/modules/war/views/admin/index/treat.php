@@ -1,12 +1,12 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<legend>
+<h1>
     <?php if ($this->getRequest()->getParam('id') == ''): ?>
         <?=$this->getTrans('menuActionNewWar') ?>
     <?php else: ?>
         <?=$this->getTrans('manageWar') ?>
     <?php endif; ?>
-</legend>
+</h1>
 
 <?php if ($this->get('group') != '' and $this->get('enemy') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
@@ -212,10 +212,10 @@
             </div>
         </div>
         <?php if ($this->getRequest()->getParam('id')): ?>
-            <legend><?=$this->getTrans('warResult') ?></legend>
+            <h1><?=$this->getTrans('warResult') ?></h1>
             <div id="games"></div>
         <?php else: ?>
-            <legend><?=$this->getTrans('warResultInfo') ?></legend>
+            <h1><?=$this->getTrans('warResultInfo') ?></h1>
             <div class="form-group">
                 <div class="col-lg-2">
                     <?=$this->getTrans('warResultInfo') ?>:
@@ -225,7 +225,7 @@
                 </div>
             </div>
         <?php endif; ?>
-        <legend><?=$this->getTrans('warReport') ?></legend>
+        <h1><?=$this->getTrans('warReport') ?></h1>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-8">
                 <?php
@@ -242,7 +242,7 @@
                           toolbar="ilch_html"><?=$value ?></textarea>
             </div>
         </div>
-        <legend><?=$this->getTrans('warStatus') ?></legend>
+        <h1><?=$this->getTrans('warStatus') ?></h1>
         <div class="form-group">
             <label for="warStatus" class="col-lg-2 control-label">
                 <?=$this->getTrans('warStatus') ?>:

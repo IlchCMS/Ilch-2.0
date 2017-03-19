@@ -5,7 +5,7 @@
 }
 </style>
 
-<legend><?=$this->getTrans('menuJobs') ?></legend>
+<h1><?=$this->getTrans('menuJobs') ?></h1>
 <?php if ($this->get('jobs') != ''): ?>
     <div class="row">
         <?php foreach ($this->get('jobs') as $jobs): ?>
@@ -13,11 +13,11 @@
                 <i class="fa fa-briefcase fa-4x briefcase"></i>
             </div>
             <div class="col-lg-11" style="margin-bottom: 35px;">
-                <legend>
+                <h1>
                     <a href="<?=$this->getUrl('jobs/index/show/id/' . $jobs->getId()) ?>">
                         <?=$this->escape($jobs->getTitle()) ?>
                     </a>
-                </legend>
+                </h1>
                 <?=$jobs->getText() ?>
 
                 <?php if ($this->getUser()): ?>

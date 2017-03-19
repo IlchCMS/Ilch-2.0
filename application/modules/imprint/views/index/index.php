@@ -7,7 +7,7 @@
 } 
 </style>
 
-<legend><?=$this->getTrans('menuImprint') ?></legend>
+<h1><?=$this->getTrans('menuImprint') ?></h1>
 <?php
 if ($this->get('imprintStyle') == 0) {
     foreach ($this->get('imprint') as $imprint) {

@@ -149,7 +149,7 @@ $config = $this->get('config');
 
 <link href="<?=$this->getModuleUrl('../comment/static/css/comment.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuGallery') ?></legend>
+<h1><?=$this->getTrans('menuGallery') ?></h1>
 <div id="gallery">
     <div class="row">
         <div class="col-md-6">
@@ -166,7 +166,7 @@ $config = $this->get('config');
 
 <div class="row">
     <div class="col-lg-12">
-        <legend class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=$commentsCount ?>)</legend>
+        <legend class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=$commentsCount ?>)</h1>
         <?php if ($this->getUser()): ?>
             <div class="reply">
                 <form action="" class="form-horizontal" method="POST">

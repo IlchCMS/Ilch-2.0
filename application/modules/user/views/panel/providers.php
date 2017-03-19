@@ -7,7 +7,7 @@
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend><?=$this->getTrans('providers.title') ?></legend>
+            <h1><?=$this->getTrans('providers.title') ?></h1>
             <?php foreach ($this->get('providers') as $provider): ?>
                 <h4><i class="fa <?=$provider->getIcon() ?> fa-fw"></i> <?=$provider->getName() ?></h4>
                 <ul class="list-group">

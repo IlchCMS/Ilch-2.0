@@ -6,7 +6,7 @@
 
         <div class="profile-content active">
             <div class="row">
-                <legend><?=$this->getTrans('menuSettings'); ?></legend>
+                <h1><?=$this->getTrans('menuSettings'); ?></h1>
                 <div class="settings-stretch">
                     <div class="col-xs-12 col-md-4">
                         <div class="panel panel-default">

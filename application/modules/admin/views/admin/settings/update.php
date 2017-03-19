@@ -8,7 +8,7 @@ $verificationFailed = $this->get('verificationFailed');
 $updateSuccessfull = $this->get('updateSuccessfull');
 ?>
 
-<legend><?=$this->getTrans('updateProcess') ?></legend>
+<h1><?=$this->getTrans('updateProcess') ?></h1>
 <?php if ($getVersions != ''): ?>
     <div id="update">
     <p><?=$this->getTrans('versionNow') ?><?=$this->get('version') ?></p>

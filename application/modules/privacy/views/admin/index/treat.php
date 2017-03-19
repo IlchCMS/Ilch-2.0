@@ -1,11 +1,11 @@
-<legend>
+<h1>
     <?php if ($this->get('privacy') != '') {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 
 <!-- Fehlerausgabe der Validation -->
 <?php if ($this->validation()->hasErrors()): ?>

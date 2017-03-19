@@ -1,6 +1,6 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuGroups') ?></legend>
+<h1><?=$this->getTrans('menuGroups') ?></h1>
 <?php if ($this->get('groups') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <div id="war_index">

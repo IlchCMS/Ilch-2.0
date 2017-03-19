@@ -1,6 +1,6 @@
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuSettings') ?></legend>
+<h1><?=$this->getTrans('menuSettings') ?></h1>
 <?php if ($this->validation()->hasErrors()): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('menuGoogleMaps') ?></legend>
+    <h1><?=$this->getTrans('menuGoogleMaps') ?></h1>
     <div class="form-group">
         <label for="event_google_maps_api_key" class="col-lg-2 control-label">
             <?=$this->getTrans('googleMapsAPIKey') ?>:
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('menuBoxes') ?></legend>
+    <h1><?=$this->getTrans('menuBoxes') ?></h1>
     <div class="form-group <?=$this->validation()->hasError('event_box_event_limit') ? 'has-error' : '' ?>">
         <label for="event_box_event_limit" class="col-lg-2 control-label">
             <?=$this->getTrans('boxEventLimit') ?>:

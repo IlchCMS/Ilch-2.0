@@ -5,7 +5,7 @@ $locale = $this->get('locale');
 $modules = $modulesMapper->getModulesByKey($this->getRequest()->getParam('key'), $locale);
 ?>
 
-<legend><?=$modules->getName() ?></legend>
+<h1><?=$modules->getName() ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">

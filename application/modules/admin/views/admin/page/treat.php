@@ -1,4 +1,4 @@
-<legend>
+<h1>
     <?php
     if ($this->get('page') != '') {
         echo $this->getTrans('edit');
@@ -6,7 +6,7 @@
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
@@ -70,7 +70,7 @@
         </div>
     <?php endif; ?>
 
-    <legend><?=$this->getTrans('seo') ?></legend>
+    <h1><?=$this->getTrans('seo') ?></h1>
     <div class="form-group">
         <label for="description" class="col-lg-2 control-label">
             <?=$this->getTrans('seoDescription') ?>:

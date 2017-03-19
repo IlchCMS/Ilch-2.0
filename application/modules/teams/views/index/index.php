@@ -5,7 +5,7 @@ $groupMapper = $this->get('groupMapper');
 
 <link href="<?=$this->getModuleUrl('static/css/teams.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuTeams') ?></legend>
+<h1><?=$this->getTrans('menuTeams') ?></h1>
 <div class="teams">
     <?php if ($this->get('teams')): ?>
     <div class="row">

@@ -1,6 +1,6 @@
 <?php $receivers = $this->get('receivers'); ?>
 
-<legend><?=$this->getTrans('menuContact') ?></legend>
+<h1><?=$this->getTrans('menuContact') ?></h1>
 
 <?php if ($receivers != ''): ?>
     <form method="POST" class="form-horizontal" action="">

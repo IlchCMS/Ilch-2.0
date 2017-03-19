@@ -122,7 +122,7 @@ function rec($item, $obj, $readAccess, $i)
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('forum') ?></legend>
+<h1><?=$this->getTrans('forum') ?></h1>
 <div id="forum">
     <?php if (!empty($forumItems)): ?>
         <?php foreach ($forumItems as $item): ?>

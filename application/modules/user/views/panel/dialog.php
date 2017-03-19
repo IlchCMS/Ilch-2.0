@@ -6,7 +6,7 @@
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend><?=$this->getTrans('dialog') ?></legend>
+            <h1><?=$this->getTrans('dialog') ?></h1>
             <div id="uMessenger">
                 <div class="chat">
                     <div class="row chat-wrapper">

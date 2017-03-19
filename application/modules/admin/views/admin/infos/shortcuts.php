@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('keyboardBackendShortcuts') ?></legend>
+<h1><?=$this->getTrans('keyboardBackendShortcuts') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
@@ -40,7 +40,7 @@
     </table>
 </div>
 
-<legend><?=$this->getTrans('keyboardShortcutsCustumCSS') ?></legend>
+<h1><?=$this->getTrans('keyboardShortcutsCustumCSS') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

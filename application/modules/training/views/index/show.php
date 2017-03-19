@@ -3,7 +3,7 @@ $training = $this->get('training');
 $userMapper = new \Modules\User\Mappers\User();
 ?>
 
-<legend><?=$this->getTrans('trainDetails') ?></legend>
+<h1><?=$this->getTrans('trainDetails') ?></h1>
 <div class="form-horizontal">
     <div class="form-group">
         <div class="col-lg-3">
@@ -117,7 +117,7 @@ $userMapper = new \Modules\User\Mappers\User();
     </div>
     <?php if ($this->getUser()): ?>
         <br />
-        <legend><?=$this->getTrans('options') ?></legend>
+        <h1><?=$this->getTrans('options') ?></h1>
         <form class="form-horizontal" method="POST" action="">
             <?=$this->getTokenField() ?>
             <?php if ($this->get('trainEntrantUser') != ''): ?>

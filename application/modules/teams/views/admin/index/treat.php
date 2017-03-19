@@ -1,13 +1,13 @@
 <link href="<?=$this->getModuleUrl('static/css/teams.css') ?>" rel="stylesheet">
 
-<legend>
+<h1>
     <?php if ($this->get('team') != '') {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">

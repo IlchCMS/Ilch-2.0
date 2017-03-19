@@ -1,13 +1,13 @@
 <?php $currency = $this->get('currency'); ?>
 
-<legend>
+<h1>
     <?php if ($this->getRequest()->getParam("id")) {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

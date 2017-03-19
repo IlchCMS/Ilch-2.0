@@ -15,7 +15,7 @@ $osStatistic = $this->get('osStatistic');
 <link href="<?=$this->getModuleUrl('static/css/statistic.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuStatistic') ?></legend>
+<h1><?=$this->getTrans('menuStatistic') ?></h1>
 <?php if (!$siteStatistic And !$visitsStatistic And !$browserStatistic And !$osStatistic) : ?>
 <?=$this->getTrans('everythingDisabled') ?>
 <?php endif; ?>

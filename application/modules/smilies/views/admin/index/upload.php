@@ -2,7 +2,7 @@
 
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('upload') ?></legend>
+<h1><?=$this->getTrans('upload') ?></h1>
 <form id="upload" method="post" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
     <div id="drop">

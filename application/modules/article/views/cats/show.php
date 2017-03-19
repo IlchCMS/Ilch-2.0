@@ -6,7 +6,7 @@ $userMapper = $this->get('userMapper');
 $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('id'));
 ?>
 
-<legend><?=$this->getTrans('catArchives') ?>: <i><?=$this->escape($articlesCats->getName()) ?></i></legend>
+<h1><?=$this->getTrans('catArchives') ?>: <i><?=$this->escape($articlesCats->getName()) ?></i></h1>
 <?php if ($articles != ''):
     foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());

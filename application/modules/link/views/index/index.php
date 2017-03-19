@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('menuLinks') ?></legend>
+<h1><?=$this->getTrans('menuLinks') ?></h1>
 <?php if ($this->get('categorys') != ''): ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">

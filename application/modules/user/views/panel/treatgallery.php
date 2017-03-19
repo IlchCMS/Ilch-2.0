@@ -5,12 +5,12 @@
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend>
+            <h1>
                 <?=$this->getTrans('gallery') ?>: <?=$this->get('galleryTitle') ?>
                 <a id="<?=$this->getRequest()->getParam('id') ?>" href="javascript:media(<?=$this->getRequest()->getParam('id') ?>)">
                     <i class="fa fa-cloud-upload"></i>
                 </a>
-            </legend>
+            </h1>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'treatgallery', 'id' => $this->getRequest()->getParam('id')]) ?>
             <?php if ($this->get('image')): ?>
                 <form class="form-horizontal" method="POST" action="">

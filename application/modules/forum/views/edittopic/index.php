@@ -45,7 +45,7 @@ function rec($item, $obj, $readAccess, $i)
 }
 ?>
 <div id="forum" class="col-lg-12">
-    <legend><?=$this->getTrans('topicMoveTo') ?></legend>
+    <h1><?=$this->getTrans('topicMoveTo') ?></h1>
     <?php if (!empty($forumItems)): ?>
         <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => 'edittopic']) ?>">
             <?php echo $this->getTokenField(); ?>

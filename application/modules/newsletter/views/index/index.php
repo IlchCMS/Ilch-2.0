@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('menuNewsletter') ?></legend>
+<h1><?=$this->getTrans('menuNewsletter') ?></h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

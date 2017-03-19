@@ -21,7 +21,7 @@ $version = $this->get('version');
 <div class="row">
     <?php if ($this->get('guestbookEntries') or $this->get('partnerEntries')): ?>
         <div class="col-lg-6 col-md-6">
-            <legend><?=$this->getTrans('awaitingUnlocking') ?></legend>
+            <h1><?=$this->getTrans('awaitingUnlocking') ?></h1>
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <colgroup>
@@ -57,7 +57,7 @@ $version = $this->get('version');
         </div>
     <?php endif; ?>
     <div class="col-lg-6 col-md-6">
-        <legend>
+        <h1>
             <?=$this->getTrans('system') ?>
             <?php if ($this->get('foundNewVersions')): ?>
                 <span class="label label-danger"><?=$this->getTrans('notUpToDate') ?></span>
@@ -66,7 +66,7 @@ $version = $this->get('version');
             <?php else: ?>
                 <span class="label label-success"><?=$this->getTrans('upToDate') ?></span>
             <?php endif; ?>
-        </legend>
+        </h1>
         <div class="table-responsive">
             <table class="table table-hover table-striped">
                 <colgroup>
@@ -106,7 +106,7 @@ $version = $this->get('version');
             </table>
         </div>
         <?php if (!empty($ilchNews)): ?>
-            <legend>ilch <?=$this->getTrans('news') ?></legend>
+            <h1>ilch <?=$this->getTrans('news') ?></h1>
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <colgroup>
@@ -130,7 +130,7 @@ $version = $this->get('version');
             </div>
         <?php endif; ?>
         <?php if (!empty($notifications)): ?>
-            <legend><?=$this->getTrans('notifications') ?></legend>
+            <h1><?=$this->getTrans('notifications') ?></h1>
             <div class="table-responsive">
                 <table class="table table-hover table-striped">
                     <colgroup>

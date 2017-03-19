@@ -5,7 +5,7 @@ $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
 ?>
 
-<legend><?=$this->getTrans('menuArchives') ?></legend>
+<h1><?=$this->getTrans('menuArchives') ?></h1>
 <?php if ($articles != ''): ?>
     <ul class="list-group">
         <?php

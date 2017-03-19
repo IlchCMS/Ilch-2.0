@@ -1,6 +1,6 @@
 <?php $faqMapper = $this->get('faqMapper'); ?>
 
-<legend><?=$this->getTrans('menuCats') ?></legend>
+<h1><?=$this->getTrans('menuCats') ?></h1>
 <?php if ($this->get('cats') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

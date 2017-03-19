@@ -61,7 +61,7 @@ foreach ($profil->getGroups() as $group) {
     </div>
     <br />
     <div class="profil-content">
-        <legend><?=$this->getTrans('profileDetails') ?></legend>
+        <h1><?=$this->getTrans('profileDetails') ?></h1>
         <div class="row">
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileFirstName') ?>
@@ -118,7 +118,7 @@ foreach ($profil->getGroups() as $group) {
                     <?php else : ?>
                         <div class="clearfix"></div>
                         <br />
-                        <legend><?=$this->escape($profileFieldName) ?></legend>
+                        <h1><?=$this->escape($profileFieldName) ?></h1>
                     <?php endif;
                     break;
                 }
@@ -129,7 +129,7 @@ foreach ($profil->getGroups() as $group) {
         <?php if ($profil->getSignature() != ''): ?>
             <div class="clearfix"></div>
             <br />
-            <legend><?=$this->getTrans('profileSignature') ?></legend>
+            <h1><?=$this->getTrans('profileSignature') ?></h1>
             <div class="row">
                 <div class="col-lg-10 detail">
                     <?=nl2br($this->getHtmlFromBBCode($profil->getSignature())) ?>
@@ -138,7 +138,7 @@ foreach ($profil->getGroups() as $group) {
         <?php endif; ?>
         <div class="clearfix"></div>
         <br />
-        <legend><?=$this->getTrans('others') ?></legend>
+        <h1><?=$this->getTrans('others') ?></h1>
         <div class="row">
             <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('groups') ?>:

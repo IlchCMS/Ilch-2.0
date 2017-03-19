@@ -1,10 +1,10 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('mediaFromImport') ?>
+<h1><?=$this->getTrans('mediaFromImport') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info" ></i>
     </a>
-</legend>
+</h1>
 <?php if (!empty($this->get('media'))): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

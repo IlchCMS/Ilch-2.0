@@ -2,7 +2,7 @@
 $currency = $this->escape($this->get('currency'));
 ?>
 
-<legend><?=$this->getTrans('bookings') ?></legend>
+<h1><?=$this->getTrans('bookings') ?></h1>
 <?php if ($this->validation()->hasErrors()): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
@@ -63,7 +63,7 @@ $currency = $this->escape($this->get('currency'));
     <br>
     <br>
     <div class="col-lg-4">
-        <legend><?=$this->getTrans('bankbalance') ?></legend>
+        <h1><?=$this->getTrans('bankbalance') ?></h1>
         <div class="panel panel-default">
             <div class="panel-body">
                 <strong>
@@ -82,7 +82,7 @@ $currency = $this->escape($this->get('currency'));
             </div>
         </div>
 
-        <legend> <?=$this->getTrans('bookedpayments') ?></legend>
+        <h1> <?=$this->getTrans('bookedpayments') ?></h1>
         <div class="panel-default">
             <ul class="list-group">
                 <?php foreach ($this->get('checkout') as $checkout): ?>

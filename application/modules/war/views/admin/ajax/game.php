@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label class="col-lg-2" ></label>
                 <div class="col-lg-4">
-                    <legend></legend>
+                    <h1></h1>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
         <div class="form-group">
             <label class="col-lg-2" ></label>
             <div class="col-lg-4">
-                <legend></legend>
+                <h1></h1>
             </div>
         </div>
     </div>

@@ -11,7 +11,7 @@ $user = $userMapper->getUserById($event->getUserId());
 ?>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
-<legend>
+<h1>
     <?=$this->getTrans('event') ?>
     <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId()): ?>
         <div class="pull-right">
@@ -19,7 +19,7 @@ $user = $userMapper->getUserById($event->getUserId());
             <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
         </div>
     <?php endif; ?>
-</legend>
+</h1>
 
 <div class="row">
     <div class="col-lg-6">

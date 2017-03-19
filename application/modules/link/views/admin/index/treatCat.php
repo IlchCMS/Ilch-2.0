@@ -1,4 +1,4 @@
-<legend>
+<h1>
     <?php
     if ($this->get('category') != '') {
         echo $this->getTrans('menuActionEditCategory');
@@ -6,7 +6,7 @@
         echo $this->getTrans('menuActionNewCategory');
     }
     ?>
-</legend>
+</h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

@@ -11,7 +11,7 @@ $browser = $this->getRequest()->getParam('browser');
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <?php if ($this->get('statisticOSVersionList') != '' AND $os != ''): ?>
-    <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - Windows</i></legend>
+    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - Windows</i></h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -48,7 +48,7 @@ $browser = $this->getRequest()->getParam('browser');
         </div>
     </div>
 <?php elseif ($this->get('statisticBrowserVersionList') != '' AND $browser != ''): ?>
-    <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - <?=$browser ?></i></legend>
+    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - <?=$browser ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -86,7 +86,7 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 <?php elseif ($this->get('statisticYearMonthDayList') != '' AND $year != '' AND $month != ''): ?>
     <?php $date = new \Ilch\Date($year.'-'.$month.'-01'); ?>
-    <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans($date->format('F', true)).$date->format(' Y', true) ?></i></legend>
+    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans($date->format('F', true)).$date->format(' Y', true) ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -284,7 +284,7 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 <?php elseif ($this->get('statisticYearMonthList') != '' AND $year != '' AND $month == '' AND $os == ''): ?>
     <?php $date = new \Ilch\Date($year.'-01-01'); ?>
-    <legend><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('Y', true) ?></i></legend>
+    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$date->format('Y', true) ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-primary">

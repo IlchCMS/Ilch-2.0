@@ -25,6 +25,15 @@ figcaption {
     font-size: 12px;
 }
 
+h1 {
+    font-size: 21px;
+    line-height: inherit;
+    margin-top: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
+}
+
 .navbar-gaming {
     background: #40434E;
     border-bottom: 1px solid #32333B;

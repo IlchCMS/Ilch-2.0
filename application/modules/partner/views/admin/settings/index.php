@@ -1,6 +1,6 @@
 <link href="<?=$this->getModuleUrl('static/css/partners.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('settings') ?></legend>
+<h1><?=$this->getTrans('settings') ?></h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

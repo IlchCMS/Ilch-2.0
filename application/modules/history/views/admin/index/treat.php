@@ -11,14 +11,14 @@ if ($history != '') {
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<legend>
+<h1>
     <?php if ($history != '') {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

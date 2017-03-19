@@ -1,6 +1,6 @@
 <?php $teamsMapper = $this->get('teamsMapper'); ?>
 
-<legend><?=$this->getTrans('manage') ?></legend>
+<h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('joins')): ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">

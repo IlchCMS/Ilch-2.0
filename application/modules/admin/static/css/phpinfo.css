@@ -4,14 +4,19 @@
     font-weight: normal;
     color: #000;
 }
+#phpinfo h1 {
+    line-height: 1.1;
+    margin-top: 20px;
+    border-bottom: 0;
+}
 #phpinfo h1, h2 {
     text-align: left;
     font-weight: bold;
-    padding: 0px !important;
+    padding: 0 !important;
     margin-bottom: 10px;
 }
 #phpinfo pre {
-    margin: 0px;
+    margin: 0;
 }
 #phpinfo a:link {
     text-decoration: none;

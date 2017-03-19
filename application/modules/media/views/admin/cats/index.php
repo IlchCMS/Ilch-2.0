@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('cats') ?></legend>
+<h1><?=$this->getTrans('cats') ?></h1>
 <?php if ($this->get('cats') != ''): ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>

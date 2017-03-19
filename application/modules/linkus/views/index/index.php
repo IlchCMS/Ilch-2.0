@@ -3,7 +3,7 @@ $linkus = $this->get('linkus');
 $config = \Ilch\Registry::get('config');
 ?>
 
-<legend><?=$this->getTrans('menuLinkus') ?></legend>
+<h1><?=$this->getTrans('menuLinkus') ?></h1>
 <?php if ($linkus != ''): ?>
     <?php foreach ($linkus as $linkus): ?>
         <div class="row">

@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('menuBackup') ?></legend>
+<h1><?=$this->getTrans('menuBackup') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="table-responsive">

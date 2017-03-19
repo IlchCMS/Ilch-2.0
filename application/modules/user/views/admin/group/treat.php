@@ -8,7 +8,7 @@ if ($group->getId()) {
 }
 ?>
 
-<legend><?=$fieldsetLegend ?></legend>
+<h1><?=$fieldsetLegend ?></h1>
 <form action="<?=$this->getUrl(['module' => 'user', 'controller' => 'group', 'action' => 'save']) ?>" method="POST" class="form-horizontal" id="groupForm">
     <?=$this->getTokenField() ?>
     <input type="hidden"

@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('menuGuestbook') ?></legend>
+<h1><?=$this->getTrans('menuGuestbook') ?></h1>
 
 <form action="" class="form-horizontal" method="POST">
     <?=$this->getTokenField() ?>

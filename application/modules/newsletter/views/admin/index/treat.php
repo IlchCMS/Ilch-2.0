@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('add') ?></legend>
+<h1><?=$this->getTrans('add') ?></h1>
 <?php if ($this->validation()->hasErrors()): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

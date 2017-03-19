@@ -1,8 +1,8 @@
-<legend><?=$this->getTrans('settings') ?>
+<h1><?=$this->getTrans('settings') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info" ></i>
     </a>
-</legend>
+</h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

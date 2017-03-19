@@ -3,7 +3,7 @@
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
-<legend>
+<h1>
     <?php
     if ($this->get('event') != '') {
         echo $this->getTrans('edit');
@@ -11,7 +11,7 @@
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">

@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('settings') ?></legend>
+<h1><?=$this->getTrans('settings') ?></h1>
 <?php if ($this->validation()->hasErrors()): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('menuEMails') ?></legend>
+    <h1><?=$this->getTrans('menuEMails') ?></h1>
     <div class="form-group">
         <label for="ck_1" class="col-lg-2 control-label">
             <?=$this->getTrans('mailForAccept') ?>:

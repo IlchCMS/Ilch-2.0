@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('receiver') ?></legend>
+<h1><?=$this->getTrans('receiver') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <?php if ($this->get('emails') != ''): ?>

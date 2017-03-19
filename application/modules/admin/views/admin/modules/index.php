@@ -41,7 +41,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('modulesInstalled') ?></legend>
+<h1><?=$this->getTrans('modulesInstalled') ?></h1>
 <div id="modules" class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

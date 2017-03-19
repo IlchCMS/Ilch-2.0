@@ -2,7 +2,7 @@
     $updateservers = $this->get('updateservers');
     $index = 0;
 ?>
-<legend><?=$this->getTrans('settings') ?></legend>
+<h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">
@@ -164,7 +164,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('backendFunctions') ?></legend>
+    <h1><?=$this->getTrans('backendFunctions') ?></h1>
     <div id="hmenuFixed" class="form-group">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('hmenuFixed') ?>:
@@ -180,7 +180,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('updateserver') ?></legend>
+    <h1><?=$this->getTrans('updateserver') ?></h1>
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>

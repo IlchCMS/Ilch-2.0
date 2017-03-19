@@ -1,9 +1,9 @@
-<legend>
+<h1>
     <?=$this->getTrans('menuGuestbook') ?>
     <div class="pull-right">
         <a href="<?=$this->getUrl(['action' => 'newentry']) ?>"><?=$this->getTrans('entry') ?></a>
     </div>
-</legend>
+</h1>
 <?php foreach ($this->get('entries') as $entry): ?>
     <?php $date = new \Ilch\Date($entry->getDatetime()); ?>
     <div class="panel panel-default">

@@ -77,7 +77,7 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
         <li><a href="<?=$this->getUrl(['action' => 'add']) ?>">+</a></li>
     </ul>
     <br />
-    <legend><?=$this->getTrans('menuChange') ?></legend>
+    <h1><?=$this->getTrans('menuChange') ?></h1>
     <div class="form-group">
         <div class="col-lg-6">
             <ol id="sortable" class="sortable">

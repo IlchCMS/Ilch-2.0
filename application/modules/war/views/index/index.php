@@ -1,9 +1,9 @@
 <link href="<?=$this->getBaseUrl('application/modules/war/static/css/style.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuGroups') ?></legend>
+<h1><?=$this->getTrans('menuGroups') ?></h1>
 <h4><a class="btn btn-default" href="<?=$this->getUrl(['controller' => 'group', 'action' => 'index']) ?>"><?=$this->getTrans('toGroups') ?></a></h4>
 
-<legend><?=$this->getTrans('warsOverview') ?></legend>
+<h1><?=$this->getTrans('warsOverview') ?></h1>
 <?php if ($this->get('war') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <div class="table-responsive">

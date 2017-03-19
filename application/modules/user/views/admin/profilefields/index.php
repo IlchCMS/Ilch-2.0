@@ -1,9 +1,9 @@
-<legend>
+<h1>
     <?=$this->getTrans('menuProfileFields') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info"></i>
     </a>
-</legend>
+</h1>
 <form class="form-horizontal" id="downloadsForm" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="table-responsive">

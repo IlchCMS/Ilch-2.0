@@ -1,6 +1,6 @@
 <?php $rules = $this->get('rules'); ?>
 
-<legend><?=$this->getTrans('menuRules') ?></legend>
+<h1><?=$this->getTrans('menuRules') ?></h1>
 <?php if ($rules != ''): ?>
     <table class="table table-striped table-responsive">
         <?php foreach ($this->get('rules') as $rule): ?>

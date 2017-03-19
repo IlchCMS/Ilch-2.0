@@ -1,6 +1,6 @@
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('search') ?></legend>
+<h1><?=$this->getTrans('search') ?></h1>
 <?php
 $layoutsList = url_get_contents($this->get('updateserver').'downloads/layouts/list.php');
 $layoutsOnUpdateServer = json_decode($layoutsList);

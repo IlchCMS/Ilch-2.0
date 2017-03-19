@@ -5,7 +5,7 @@
 }
 </style>
 
-<legend><?=$this->getTrans('manageWarOverview') ?></legend>
+<h1><?=$this->getTrans('manageWarOverview') ?></h1>
 <?php if ($this->get('war') != ''): ?>
     <div id="filter-media">
         <div id="filter-panel" class="collapse filter-panel">

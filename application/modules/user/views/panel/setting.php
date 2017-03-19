@@ -7,7 +7,7 @@
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend><?=$this->getTrans('settingsSetting') ?></legend>
+            <h1><?=$this->getTrans('settingsSetting') ?></h1>
             <?php if ($this->validation()->hasErrors()): ?>
                 <div class="alert alert-danger" role="alert">
                     <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

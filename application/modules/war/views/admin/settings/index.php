@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('settings') ?></legend>
+<h1><?=$this->getTrans('settings') ?></h1>
 
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('boxSettings') ?></legend>
+    <h1><?=$this->getTrans('boxSettings') ?></h1>
     <div class="form-group <?=in_array('boxNextWarLimit', $this->get('errorFields')) ? 'has-error' : '' ?>">
         <label for="limitNextWarInput" class="col-lg-2 control-label">
             <?=$this->getTrans('nextWarLimit') ?>:

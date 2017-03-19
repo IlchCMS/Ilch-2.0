@@ -21,13 +21,13 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<legend>
+<h1>
     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
     <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
     <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a>
     <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>"><?=$prefix.$topicpost->getTopicTitle() ?></a>
     <i class="forum fa fa-chevron-right"></i> <?=$this->getTrans('newPost') ?>
-</legend>
+</h1>
 <h3 class="blue-header col-lg-12"><?=$this->getTrans('newPost') ?></h3>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>

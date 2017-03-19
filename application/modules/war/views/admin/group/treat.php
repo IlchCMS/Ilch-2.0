@@ -3,13 +3,13 @@
     <?php $memberArray =  explode(" ", $str) ?>
 <?php endif; ?>
 
-<legend>
+<h1>
     <?php if ($this->getRequest()->getParam('id') == ''): ?>
         <?=$this->getTrans('manageNewGroup') ?>
     <?php else: ?>
         <?=$this->getTrans('treatGroup') ?>
     <?php endif; ?>
-</legend>
+</h1>
 
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>

@@ -1,6 +1,6 @@
 <?php if ($this->getUser() == null): ?>
     <form class="form-horizontal" action="" method="post">
-        <legend><?=$this->getTrans('menuLogin') ?></legend>
+        <h1><?=$this->getTrans('menuLogin') ?></h1>
         <?=$this->getTokenField() ?>
         <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl');?>" />
         <?php $errors = $this->get('errors'); ?>
@@ -79,7 +79,7 @@
     </div>
     <?php if ($this->get('regist_accept') == '1'): ?>
         <br /><br /><br />
-        <legend><?=$this->getTrans('menuRegist') ?></legend>
+        <h1><?=$this->getTrans('menuRegist') ?></h1>
         <p>
             <?=$this->getTrans('registDescription') ?>
         </p>

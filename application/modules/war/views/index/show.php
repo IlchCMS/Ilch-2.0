@@ -11,7 +11,7 @@ $acceptArray = $this->get('accept');
 $acceptCheckArray = $this->get('acceptCheck');
 ?>
 
-<legend><?=$this->getTrans('warPlay') ?></legend>
+<h1><?=$this->getTrans('warPlay') ?></h1>
 <div class="row">
     <div class="center-text row no_margin">
         <div class="col-md-5">

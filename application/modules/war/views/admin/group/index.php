@@ -6,7 +6,7 @@
 }
 </style>
 
-<legend><?=$this->getTrans('manageGroups') ?></legend>
+<h1><?=$this->getTrans('manageGroups') ?></h1>
 <?php if ($this->get('groups') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">

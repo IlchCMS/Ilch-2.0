@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('folderRights') ?></legend>
+<h1><?=$this->getTrans('folderRights') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

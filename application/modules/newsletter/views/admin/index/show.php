@@ -5,7 +5,7 @@ $user = $userMapper->getUserById($newsletter->getUserId());
 $date = new \Ilch\Date($newsletter->getDateCreated());
 ?>
 
-<legend><?=$this->getTrans('show') ?></legend>
+<h1><?=$this->getTrans('show') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-horizontal">

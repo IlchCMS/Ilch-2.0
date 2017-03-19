@@ -13,6 +13,14 @@ body {
     direction: ltr;
     overflow-x: hidden;
 }
+h1 {
+    font-size: 21px;
+    line-height: inherit;
+    margin-top: 0;
+    margin-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid #e5e5e5;
+}
 body.modal-open {
     overflow: hidden !important;
 }
@@ -311,9 +319,6 @@ ul > .heading {
 label {
     font-weight: normal;
 }
-legend {
-    font-size: 18px;
-}
 header i {
     color: black;
 }
@@ -603,11 +608,6 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 .header-dropdown-list > li > .dropdown-toggle {
     margin-top: 16px;
     display: block;
-}
-legend {
-    font-weight: 400;
-    margin-top: 0;
-    background: 0 0;
 }
 .btn {
     border-radius: 2px;

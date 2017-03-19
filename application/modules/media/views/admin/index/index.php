@@ -1,6 +1,6 @@
 <link href="<?=$this->getBaseUrl('application/modules/media/static/css/media.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('media') ?></legend>
+<h1><?=$this->getTrans('media') ?></h1>
 <?php if ($this->get('medias') != ''): ?>
     <div id="filter-media" >
         <div id="filter-panel" class="collapse filter-panel">

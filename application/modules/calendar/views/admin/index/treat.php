@@ -2,13 +2,13 @@
 
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <legend>
+    <h1>
         <?php if ($this->get('event') != ''): ?>
             <?=$this->getTrans('edit') ?>
         <?php else: ?>
             <?=$this->getTrans('add') ?>
         <?php endif; ?>
-    </legend>
+    </h1>
     <div class="form-group">
         <label for="start" class="col-lg-2 control-label">
             <?=$this->getTrans('start') ?>:

@@ -1,6 +1,6 @@
 <?php $entrantsMapper = $this->get('entrantsMapper'); ?>
 
-<legend><?=$this->getTrans('menuTraining') ?></legend>
+<h1><?=$this->getTrans('menuTraining') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>

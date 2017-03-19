@@ -1,9 +1,9 @@
-<legend>
+<h1>
     <?=$this->getTrans('certificate') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info"></i>
     </a>
-</legend>
+</h1>
 <?php if ($this->get('certificateMissing') == false): ?>
     <div class="table-responsive">
         <table class="table table-hover table-striped">

@@ -7,7 +7,7 @@
     <li><a href="<?=$_SESSION['media-url-media-button'] ?><?=$this->getRequest()->getParam('id') ?>"><?=$this->getTrans('media') ?></a></li>
 </ul>
 
-<legend><?=$this->getTrans('mediaUpload') ?></legend>
+<h1><?=$this->getTrans('mediaUpload') ?></h1>
 <div class="container">
     <form id="upload" method="post" action="<?=$_SESSION['media-url-upload-controller'] ?>" enctype="multipart/form-data">
         <?=$this->getTokenField() ?>

@@ -2,11 +2,11 @@
 $currency = $this->escape($this->get('currency'));
 ?>
 
-<legend><?=$this->getTrans('accountdata') ?></legend>
+<h1><?=$this->getTrans('accountdata') ?></h1>
 <?php if ($this->get('checkout_contact') != '') { echo $this->get('checkout_contact') ; } ?>
 <br>
 <br>
-<legend><?=$this->getTrans('bankbalance') ?></legend>
+<h1><?=$this->getTrans('bankbalance') ?></h1>
 <div>
     <strong>
         <?php if ($this->get('amount') != '') { echo $this->getTrans('balancetotal'),': ', $this->get('amount'), ' '.$currency ; } 
@@ -24,7 +24,7 @@ $currency = $this->escape($this->get('currency'));
 </div>
 <br>
 <br>
-<legend><?=$this->getTrans('bookedpayments') ?></legend>
+<h1><?=$this->getTrans('bookedpayments') ?></h1>
 <ul>
 <?php foreach ($this->get('checkout') as $checkout): ?>
     <li>

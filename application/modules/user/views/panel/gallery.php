@@ -61,7 +61,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend><?=$this->getTrans('menuGallery') ?></legend>
+            <h1><?=$this->getTrans('menuGallery') ?></h1>
             <?php if ($profil->getOptGallery() != 0 AND $this->get('galleryAllowed') != 0): ?>
                 <form class="form-horizontal" id="galleryForm" method="POST" action="">
                     <?=$this->getTokenField() ?>

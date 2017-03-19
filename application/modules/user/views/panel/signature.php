@@ -7,7 +7,7 @@
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend><?=$this->getTrans('settingsSignature'); ?></legend>
+            <h1><?=$this->getTrans('settingsSignature'); ?></h1>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField(); ?>
                 <div class="form-group">

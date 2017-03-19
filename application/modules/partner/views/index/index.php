@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('menuPartnerAdd') ?></legend>
+<h1><?=$this->getTrans('menuPartnerAdd') ?></h1>
 
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">

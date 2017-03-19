@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('manage') ?></legend>
+<h1><?=$this->getTrans('manage') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <ul class="nav nav-tabs">

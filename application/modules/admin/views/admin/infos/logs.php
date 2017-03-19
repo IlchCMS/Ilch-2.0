@@ -3,7 +3,7 @@ $logsMapper = $this->get('logsMapper');
 $userMapper = $this->get('userMapper');
 ?>
 
-<legend><?=$this->getTrans('logs') ?></legend>
+<h1><?=$this->getTrans('logs') ?></h1>
 <?php if ($this->get('logsDate') != ''): ?>
     <?php foreach ($this->get('logsDate') as $logDate): ?>
         <?php $date = new \Ilch\Date($logDate->getDate()); ?>

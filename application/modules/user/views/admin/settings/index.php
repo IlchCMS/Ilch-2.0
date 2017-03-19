@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('settings') ?></legend>
+<h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group">
@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('menuSettingsAvatar') ?></legend>
+    <h1><?=$this->getTrans('menuSettingsAvatar') ?></h1>
     <div class="form-group">
         <label for="avatar_height" class="col-lg-2 control-label">
             <?=$this->getTrans('avatarHeight') ?>
@@ -160,7 +160,7 @@
         </div>
     </div>
 
-    <legend><?=$this->getTrans('menuSettingsGallery') ?></legend>
+    <h1><?=$this->getTrans('menuSettingsGallery') ?></h1>
     <div class="form-group">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('usergalleryAllowed') ?>:

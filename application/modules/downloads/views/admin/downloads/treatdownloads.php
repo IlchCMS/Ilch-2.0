@@ -9,7 +9,7 @@ tbody tr td {
 }
 </style>
 
-<legend><?=$this->getTrans('downloads') ?>: <?=$this->get('downloadsTitle') ?></legend>
+<h1><?=$this->getTrans('downloads') ?>: <?=$this->get('downloadsTitle') ?></h1>
 <?php if ($this->get('file') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, ['action' => 'treatdownloads', 'id' => $this->getRequest()->getParam('id')]) ?>
     <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">

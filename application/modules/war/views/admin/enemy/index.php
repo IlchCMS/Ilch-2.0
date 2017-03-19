@@ -6,7 +6,7 @@
 }
 </style>
 
-<legend><?=$this->getTrans('manageEnemy') ?></legend>
+<h1><?=$this->getTrans('manageEnemy') ?></h1>
 <?php if ($this->get('enemy') != ''): ?>
     <?=$this->get('pagination')->getHtml($this, []) ?>
     <form class="form-horizontal" method="POST" action="">

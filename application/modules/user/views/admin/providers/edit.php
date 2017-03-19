@@ -8,7 +8,7 @@
     method="POST"
     class="form-horizontal"
 >
-    <legend><?= $this->getTrans('authProvider') ?> <?= $this->get('provider')->getName() ?></legend>
+    <h1><?= $this->getTrans('authProvider') ?> <?= $this->get('provider')->getName() ?></h1>
     <?=$this->getTokenField() ?>
     <div class="form-group">
         <label for="moduleInput" class="col-lg-3 control-label">

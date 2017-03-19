@@ -56,7 +56,7 @@ function rec($item, $downloadsMapper, $obj, $fileMapper)
 
 <form class="form-horizontal" id="downloadsForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <legend><?=$this->getTrans('downloads') ?></legend>
+    <h1><?=$this->getTrans('downloads') ?></h1>
     <div class="col-lg-6">
         <ol id="sortable" class="sortable">
             <?php

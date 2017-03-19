@@ -3,7 +3,7 @@ $articleMapper = $this->get('articleMapper');
 $cats = $this->get('cats');
 ?>
 
-<legend><?=$this->getTrans('menuCats') ?></legend>
+<h1><?=$this->getTrans('menuCats') ?></h1>
 <?php if ($cats != ''): ?>
     <ul class="list-group">
         <?php foreach ($cats as $cat): ?>

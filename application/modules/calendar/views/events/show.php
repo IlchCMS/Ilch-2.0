@@ -5,7 +5,7 @@ $start = new \Ilch\Date($calendar->getStart());
 $end = new \Ilch\Date($calendar->getEnd());
 ?>
 
-<legend><?=$this->escape($calendar->getTitle()) ?></legend>
+<h1><?=$this->escape($calendar->getTitle()) ?></h1>
 <div class="form-horizontal">
     <?php if ($calendar->getPlace()!= ''): ?>
         <div class="form-group">

@@ -3,12 +3,12 @@
     $index = 0;
 ?>
 
-<legend>
+<h1>
     <?=$this->getTrans('notifications') ?>
     <a class="badge" data-toggle="modal" data-target="#infoModal">
         <i class="fa fa-info"></i>
     </a>
-</legend>
+</h1>
 <?php if ($notificationPermissions) : ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

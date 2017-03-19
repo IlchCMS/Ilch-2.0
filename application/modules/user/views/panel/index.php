@@ -9,7 +9,7 @@ $profil = $this->get('profil');
         <?php include APPLICATION_PATH.'/modules/user/views/panel/navi.php'; ?>
 
         <div class="profile-content active">
-            <legend><?=$this->getTrans('welcome'); ?> <?=$this->escape($profil->getName()) ?></legend>
+            <h1><?=$this->getTrans('welcome'); ?> <?=$this->escape($profil->getName()) ?></h1>
         </div>
     </div>
 </div>

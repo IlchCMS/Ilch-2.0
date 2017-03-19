@@ -1,6 +1,6 @@
 <?php $teamsMapper = $this->get('teamsMapper'); ?>
 
-<legend><?=$this->getTrans('application') ?></legend>
+<h1><?=$this->getTrans('application') ?></h1>
 <?php if ($this->get('join')): ?>
     <?php $join = $this->get('join'); ?>
     <div class="form-horizontal">

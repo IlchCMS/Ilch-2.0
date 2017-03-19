@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('manage') ?></legend>
+<h1><?=$this->getTrans('manage') ?></h1>
 <?php if ($this->get('training') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

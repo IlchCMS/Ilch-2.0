@@ -2,7 +2,7 @@
 
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuUserList') ?></legend>
+<h1><?=$this->getTrans('menuUserList') ?></h1>
 <?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
 <div class="row">
     <?php foreach ($this->get('userList') as $userlist): ?>

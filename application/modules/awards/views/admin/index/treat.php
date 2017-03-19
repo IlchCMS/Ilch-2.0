@@ -10,14 +10,14 @@ if ($awards != '') {
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<legend>
+<h1>
     <?php if ($awards != '') {
         echo $this->getTrans('edit');
     } else {
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">

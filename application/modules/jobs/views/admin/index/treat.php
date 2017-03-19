@@ -1,6 +1,6 @@
 <?php $jobs = $this->get('jobs'); ?>
 
-<legend>
+<h1>
     <?php
     if ($this->get('jobs') != '') {
         echo $this->getTrans('edit');
@@ -8,7 +8,7 @@
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">

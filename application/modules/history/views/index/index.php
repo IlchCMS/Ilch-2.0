@@ -2,7 +2,7 @@
 
 <link rel="stylesheet" href="<?=$this->getModuleUrl('static/css/history.css') ?>">
 
-<legend><?=$this->getTrans('menuHistorys') ?></legend>
+<h1><?=$this->getTrans('menuHistorys') ?></h1>
 <?php if ($historys != ''): ?>
     <section id="cd-timeline" class="cd-container">
         <?php foreach ($historys as $history): ?>

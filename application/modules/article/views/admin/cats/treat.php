@@ -1,4 +1,4 @@
-<legend>
+<h1>
     <?php
     if ($this->get('cat') != '') {
         echo $this->getTrans('edit');
@@ -6,7 +6,7 @@
         echo $this->getTrans('add');
    }
    ?>
-</legend>
+</h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="form-group">

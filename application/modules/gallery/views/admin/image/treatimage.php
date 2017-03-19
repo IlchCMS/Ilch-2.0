@@ -1,6 +1,6 @@
 <?php $image = $this->get('image'); ?>
 
-<legend><?=$this->getTrans('treatImage') ?></legend>
+<h1><?=$this->getTrans('treatImage') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div id="gallery">

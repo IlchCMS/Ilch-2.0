@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('manageNewEnemy') ?></legend>
+<h1><?=$this->getTrans('manageNewEnemy') ?></h1>
 
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>

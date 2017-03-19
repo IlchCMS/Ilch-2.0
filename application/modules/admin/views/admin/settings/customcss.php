@@ -4,7 +4,7 @@
 <link href="<?=$this->getModuleUrl('static/js/codemirror/addon/display/fullscreen.css') ?>" rel="stylesheet">
 <link href="<?=$this->getModuleUrl('static/js/codemirror/addon/hint/show-hint.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuCustomCSS') ?></legend>
+<h1><?=$this->getTrans('menuCustomCSS') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">

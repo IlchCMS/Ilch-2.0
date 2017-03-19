@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('settings') ?></legend>
+<h1><?=$this->getTrans('settings') ?></h1>
 <form method="POST" class="form-horizontal" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group">

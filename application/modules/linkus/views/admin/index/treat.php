@@ -1,12 +1,12 @@
 <?php $linkus = $this->get('linkus'); ?>
 
-<legend>
+<h1>
     <?php if ($linkus != ''): ?>
         <?=$this->getTrans('edit') ?>
     <?php else: ?>
         <?=$this->getTrans('add') ?>
     <?php endif; ?>
-</legend>
+</h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

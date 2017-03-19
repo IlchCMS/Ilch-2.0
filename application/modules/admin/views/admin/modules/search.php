@@ -40,7 +40,7 @@ function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
 
 <link href="<?=$this->getModuleUrl('static/css/extsearch.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('search') ?></legend>
+<h1><?=$this->getTrans('search') ?></h1>
 <?php
 if (empty($modulesOnUpdateServer)) {
     echo $this->getTrans('noModulesAvailable');

@@ -8,7 +8,7 @@ if ($file->getFileImage() != '') {
 }
 ?>
 
-<legend><?=$this->getTrans('treatFile') ?></legend>
+<h1><?=$this->getTrans('treatFile') ?></h1>
 <?php if (!empty($this->get('errors'))): ?>
     <div class="alert alert-danger" role="alert">
         <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

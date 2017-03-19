@@ -14,7 +14,7 @@ div.input-group-option{
 }
 </style>
 
-<legend><?=$this->getTrans('newCat') ?></legend>
+<h1><?=$this->getTrans('newCat') ?></h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group form-group-options">

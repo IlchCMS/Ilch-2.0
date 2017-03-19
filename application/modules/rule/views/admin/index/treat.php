@@ -1,13 +1,13 @@
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <legend>
+    <h1>
         <?php if ($this->get('rule') != '') {
             echo $this->getTrans('edit');
         } else {
             echo $this->getTrans('add');
         }
         ?>
-    </legend>
+    </h1>
     <?php if (!empty($this->get('errors'))): ?>
         <div class="alert alert-danger" role="alert">
             <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>

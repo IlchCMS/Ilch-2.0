@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('menuShoutbox') ?></legend>
+<h1><?=$this->getTrans('menuShoutbox') ?></h1>
 <?php if ($this->get('shoutbox') != ''): ?>
     <table class="table table-striped table-responsive">
         <?php foreach ($this->get('shoutbox') as $shoutbox): ?>

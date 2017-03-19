@@ -8,7 +8,7 @@ if ($this->getUser()) {
 <link href="<?=$this->getModuleUrl('static/css/away.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<legend><?=$this->getTrans('menuAway') ?></legend>
+<h1><?=$this->getTrans('menuAway') ?></h1>
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <colgroup>
@@ -114,7 +114,7 @@ if ($this->getUser()) {
 <?php if ($this->getUser()): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <legend><?=$this->getTrans('menuEntry'); ?></legend>
+        <h1><?=$this->getTrans('menuEntry'); ?></h1>
 
         <div class="form-group <?=in_array('reason', $this->get('errorFields')) ? 'has-error' : '' ?>">
             <label for="reason" class="col-lg-2 control-label">

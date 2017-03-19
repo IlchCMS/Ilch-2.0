@@ -1,4 +1,4 @@
-<legend><?=$this->getTrans('modulesNotInstalled') ?></legend>
+<h1><?=$this->getTrans('modulesNotInstalled') ?></h1>
 <?php if (!empty($this->get('modulesNotInstalled'))): ?>
     <?php
     function checkOwnDependencies($versionsOfModules, $dependencies) {

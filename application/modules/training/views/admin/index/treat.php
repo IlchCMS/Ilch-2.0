@@ -1,7 +1,7 @@
 <link href="<?=$this->getModuleUrl('static/css/training.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<legend>
+<h1>
     <?php
     if ($this->get('training') != '') {
         echo $this->getTrans('edit');
@@ -9,7 +9,7 @@
         echo $this->getTrans('add');
     }
     ?>
-</legend>
+</h1>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="form-group">

@@ -37,7 +37,7 @@
 }
 </style>
 
-<legend><?=$this->getTrans('menuGallery') ?></legend>
+<h1><?=$this->getTrans('menuGallery') ?></h1>
 <?php if ($this->get('image') != ''): ?>
     <div id="gallery">
         <?php foreach ($this->get('image') as $image): ?>

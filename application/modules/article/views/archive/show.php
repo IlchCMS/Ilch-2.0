@@ -6,7 +6,7 @@ $userMapper = $this->get('userMapper');
 $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
 ?>
 
-<legend><?=$this->getTrans('monthArchives') ?>: <i><?=$date->format('F Y', true) ?></i></legend>
+<h1><?=$this->getTrans('monthArchives') ?>: <i><?=$date->format('F Y', true) ?></i></h1>
 <?php if ($articles != ''): ?>
     <?php
     foreach ($articles as $article):

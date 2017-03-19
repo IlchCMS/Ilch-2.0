@@ -3,7 +3,7 @@
     <?php $profil = $this->get('profil'); ?>
 
     <?php if ($profil->getOptMail() == 1): ?>
-        <legend><?=$this->getTrans('mailTo') ?> <?=$profil->getName() ?></legend>
+        <h1><?=$this->getTrans('mailTo') ?> <?=$profil->getName() ?></h1>
         <form method="POST" class="form-horizontal" action="">
             <?=$this->getTokenField() ?>
             <div class="form-group">

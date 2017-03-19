@@ -1,6 +1,6 @@
 <?php if ($this->get('privacy') != ''): ?>
     <?php foreach ($this->get('privacy') as $privacy): ?>
-        <legend><b><?=$this->escape($privacy->getTitle()) ?></b></legend>
+        <h1><b><?=$this->escape($privacy->getTitle()) ?></b></h1>
         <p><?=$privacy->getText() ?><br /></p>
     <?php endforeach; ?>
 

@@ -4,7 +4,7 @@ $entrantsMapper = $this->get('entrantsMapper');
 ?>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
-<legend><?=$this->getTrans('menuEventParticipation') ?></legend>
+<h1><?=$this->getTrans('menuEventParticipation') ?></h1>
 <div class="row">
     <div class="col-lg-12">
         <ul class="event-list">

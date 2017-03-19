@@ -65,7 +65,7 @@ foreach ($wars as $war) {
     </div>
 </div>
 
-<legend><?=$this->getTrans('warsOverview') ?></legend>
+<h1><?=$this->getTrans('warsOverview') ?></h1>
 <?php if ($this->get('war') != ''): ?>
     <div class="table-responsive">
         <table class="table table-striped table-hover">

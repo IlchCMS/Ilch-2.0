@@ -10,7 +10,7 @@ $jobs = $this->get('jobs');
 }
 </style>
 
-<legend><?=$this->getTrans('menuJob') ?></legend>
+<h1><?=$this->getTrans('menuJob') ?></h1>
 
 <?php if ($job != ''): ?>
     <div class="row">
@@ -18,14 +18,14 @@ $jobs = $this->get('jobs');
             <i class="fa fa-briefcase fa-4x briefcase"></i>
         </div>
         <div class="col-lg-11" style="margin-bottom: 35px;">
-            <legend><?=$this->escape($job->getTitle()) ?></legend>
+            <h1><?=$this->escape($job->getTitle()) ?></h1>
             <?=$job->getText() ?>
         </div>
     </div>
 <?php endif; ?>
 
 <?php if ($this->getUser()): ?>
-    <legend><?=$this->getTrans('apply') ?></legend>
+    <h1><?=$this->getTrans('apply') ?></h1>
 
     <?php if (!empty($this->get('errors'))): ?>
         <div class="alert alert-danger" role="alert">

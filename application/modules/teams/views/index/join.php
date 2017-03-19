@@ -6,7 +6,7 @@ if ($this->getUser()) {
 }
 ?>
 
-<legend><?=$this->getTrans('menuJoin') ?></legend>
+<h1><?=$this->getTrans('menuJoin') ?></h1>
 <?php if ($this->get('teams') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>

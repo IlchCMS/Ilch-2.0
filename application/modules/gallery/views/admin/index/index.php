@@ -56,7 +56,7 @@ function rec($item, $galleryMapper, $obj, $imageMapper)
 
 <form class="form-horizontal" id="galleryForm" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <legend><?=$this->getTrans('gallery') ?></legend>
+    <h1><?=$this->getTrans('gallery') ?></h1>
     <div class="col-lg-6">
         <ol id="sortable" class="sortable">
             <?php

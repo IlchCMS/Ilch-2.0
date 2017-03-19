@@ -6,14 +6,14 @@ $entrantsMapper = $this->get('entrantsMapper');
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 
 <?php if ($this->get('eventListUpcoming') == '' AND $this->get('getEventList') == '' AND $this->get('getEventListOther') == '' AND $this->get('eventListPast') == ''): ?>
-    <legend><?=$this->getTrans('menuEventAll') ?></legend>
+    <h1><?=$this->getTrans('menuEventAll') ?></h1>
     <div class="row">
         <div class="col-lg-12"><?=$this->getTrans('noEvent') ?></div>
     </div>
 <?php endif; ?>
 
 <?php if ($this->get('eventListUpcoming') != ''): ?>
-    <legend><?=$this->getTrans('menuEventUpcoming') ?></legend>
+    <h1><?=$this->getTrans('menuEventUpcoming') ?></h1>
     <div class="row">
         <div class="col-lg-12">
             <ul class="event-list">
@@ -62,7 +62,7 @@ $entrantsMapper = $this->get('entrantsMapper');
 
 <?php if ($this->get('getEventListOther') != ''): ?>
     <br />
-    <legend><?=$this->getTrans('menuEventOtherList') ?></legend>
+    <h1><?=$this->getTrans('menuEventOtherList') ?></h1>
     <div class="row">
         <div class="col-lg-12">
             <ul class="event-list">
@@ -107,7 +107,7 @@ $entrantsMapper = $this->get('entrantsMapper');
 
 <?php if ($this->get('eventListPast') != ''): ?>
     <br />
-    <legend><?=$this->getTrans('menuEventPast') ?></legend>
+    <h1><?=$this->getTrans('menuEventPast') ?></h1>
     <div class="row">
         <div class="col-lg-12">
             <ul class="event-list">
