@@ -32,7 +32,7 @@ $categoryMapper = $this->get('categoryMapper');
                                     <?php continue; ?>
                                 <?php endif; ?>
 
-                                <img src="<?=$this->getStaticUrl('img/'.$key.'.png') ?>">
+                                <img src="<?=$this->getStaticUrl('img/lang/'.$key.'.png') ?>">
                             <?php endforeach; ?>
                         </th>
                     <?php endif; ?>

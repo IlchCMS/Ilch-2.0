@@ -26,7 +26,7 @@
                             if ($key == $this->get('contentLanguage')) {
                                 continue;
                             }
-                            echo '<img src="'.$this->getStaticUrl('img/'.$key.'.png').'"> ';
+                            echo '<img src="'.$this->getStaticUrl('img/lang/'.$key.'.png').'"> ';
                         }
                         echo '</th>';
                     }
