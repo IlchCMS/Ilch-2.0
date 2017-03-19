@@ -17,8 +17,8 @@ if ($this->getUser()) {
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
 <legend>
-    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a> 
-    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>  
+    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
     <i class="forum fa fa-chevron-right"></i> <?=$forum->getTitle() ?>
 </legend>
 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
@@ -69,7 +69,7 @@ if ($this->getUser()) {
                         <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                         <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
                         <li class="row <?php if ($topic->getType() == '1') { echo 'tack'; } ?>">
-                            <dl class="icon 
+                            <dl class="icon
                                 <?php if ($this->getUser()): ?>
                                     <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 0): ?>
                                         topic-read

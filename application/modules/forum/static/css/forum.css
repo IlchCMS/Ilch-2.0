@@ -455,6 +455,9 @@ legend .forum.fa {
 }
 
 /** TODO: noch bearbeiten **/
+.new-topic {
+    padding-top: 15px;
+}
 .post {
     padding: 12px;
     margin-bottom: 12px;
@@ -486,7 +489,7 @@ legend .forum.fa {
     color: #FFF;
     font-weight: normal;
     clear: both;
-    margin-bottom: 0 !important;
+    margin: 0;
 }
 .blue-header a {
     color: #FFF !important;

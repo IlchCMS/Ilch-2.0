@@ -1,5 +1,6 @@
 <?php
 $forum = $this->get('forum');
+$cat = $this->get('cat');
 $readAccess = $this->get('readAccess');
 
 $adminAccess = null;
@@ -10,12 +11,18 @@ if ($this->getUser()) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
+<legend>
+    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
+    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a>
+    <i class="forum fa fa-chevron-right"></i> <?=$this->getTrans('newTopicTitle') ?>
+</legend>
 <?php if (is_in_array($readAccess, explode(',', $forum->getCreateAccess())) || $adminAccess == true): ?>
     <h3 class="blue-header col-lg-12"><?=$this->getTrans('createNewTopic') ?></h3>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 new-topic">
                 <?php if ($forum->getPrefix() != ''): ?>
                     <?php $prefix = explode(',', $forum->getPrefix()); ?>
                     <?php array_unshift($prefix, ''); ?>
@@ -37,9 +44,9 @@ if ($this->getUser()) {
                         </div>
                     </div>
                 <?php endif; ?>
-                <div class="form-group">
+                <div class="form-group <?=$this->validation()->hasError('topicTitle') ? 'has-error' : '' ?>">
                     <label for="topicTitle" class="col-lg-2 control-label">
-                        <?=$this->getTrans('topicTitle') ?>:
+                        <?=$this->getTrans('topicTitle') ?>
                     </label>
                     <div class="col-lg-8">
                         <input type="text"
@@ -49,9 +56,9 @@ if ($this->getUser()) {
                                value="" />
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
                     <label class="col-lg-2 control-label">
-                        <?=$this->getTrans('text') ?>*
+                        <?=$this->getTrans('text') ?>
                     </label>
                     <div class="col-lg-8">
                         <textarea class="form-control ckeditor"
@@ -63,7 +70,7 @@ if ($this->getUser()) {
                 <?php if ($this->getUser()->isAdmin()): ?>
                     <div class="form-group">
                         <div class="col-lg-2 control-label">
-                            <?=$this->getTrans('forumTypeFixed') ?>:
+                            <?=$this->getTrans('forumTypeFixed') ?>
                         </div>
                         <div class="col-lg-2">
                             <div class="radio">

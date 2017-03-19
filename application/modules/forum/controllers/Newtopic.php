@@ -12,6 +12,7 @@ use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\User\Mappers\User as UserMapper;
+use Ilch\Validation;
 
 class Newtopic extends \Ilch\Controller\Frontend
 {
@@ -35,37 +36,45 @@ class Newtopic extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('newTopicTitle'), ['controller' => 'newtopic','action' => 'index', 'id' => $id]);
 
         if ($this->getRequest()->getPost('saveNewTopic')) {
-            if (empty($this->getRequest()->getPost('text'))) {
-                $this->addMessage('missingText', 'danger');
-            } elseif (empty($this->getRequest()->getPost('topicTitle'))) {
-                $this->addMessage('missingTopicTitle', 'danger');
-            } else {
-                $topicModel = new ForumTopicModel();
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'topicTitle' => 'required',
+                'text' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
                 $topicMapper = new TopicMapper();
+                $postMapper = new PostMapper;
                 $dateTime = new \Ilch\Date();
 
-                $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix'));
-                $topicModel->setTopicTitle($this->getRequest()->getPost('topicTitle'));
-                $topicModel->setTopicId($id);
-                $topicModel->setForumId($id);
-                $topicModel->setCat($id);
-                $topicModel->setCreatorId($this->getUser()->getId());
-                $topicModel->setType($this->getRequest()->getPost('type'));
-                $topicModel->setDateCreated($dateTime);
+                $topicModel = new ForumTopicModel();
+                $topicModel->setTopicPrefix($this->getRequest()->getPost('topicPrefix'))
+                    ->setTopicTitle($this->getRequest()->getPost('topicTitle'))
+                    ->setTopicId($id)
+                    ->setForumId($id)
+                    ->setCat($id)
+                    ->setCreatorId($this->getUser()->getId())
+                    ->setType($this->getRequest()->getPost('type'))
+                    ->setDateCreated($dateTime);
                 $topicMapper->save($topicModel);
 
-                $postMapper = new PostMapper;
-                $postModel = new ForumPostModel;
                 $lastid = $topicMapper->getLastInsertId();
-                $postModel->setTopicId($lastid);
-                $postModel->setUserId($this->getUser()->getId());
-                $postModel->setText($this->getRequest()->getPost('text'));
-                $postModel->setDateCreated($dateTime);
+
+                $postModel = new ForumPostModel;
+                $postModel->setTopicId($lastid)
+                    ->setUserId($this->getUser()->getId())
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setDateCreated($dateTime);
                 $postMapper->save($postModel);
 
-                $this->redirect(['controller' => 'showposts','action' => 'index','topicid' => $lastid]);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastid]);
             }
-
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index', 'id' => $this->getRequest()->getParam('id')]);
         }
 
         $userMapper = new UserMapper();
@@ -88,6 +97,7 @@ class Newtopic extends \Ilch\Controller\Frontend
         $readAccess = explode(',',implode(',', $ids));
 
         $this->getView()->set('readAccess', $readAccess);
+        $this->getView()->set('cat', $cat);
         $this->getView()->set('forum', $forum);
     }
 }

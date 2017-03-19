@@ -9,105 +9,105 @@ namespace Modules\Forum\Models;
 class ForumTopic extends \Ilch\Model
 {
     /**
-     * The id of the image.
+     * The id of the topic.
      *
      * @var integer
      */
     protected $id;
 
     /**
-     * The id of the image.
+     * The last insert id of the topic.
      *
      * @var integer
      */
     protected $last_insert_id;
 
     /**
-     * The fileId of the file.
+     * The topic id of the topic.
      *
      * @var string
      */
     protected $topic_id;
 
     /**
-     * Prefix of the topic.
+     * The Prefix of the topic.
      *
      * @var integer
      */
     protected $topic_prefix;
 
     /**
-     * Title of the file.
+     * The title of the topic.
      *
      * @var string
      */
     protected $topic_title;
 
     /**
-     * Title of the file.
+     * The author of the topic.
      *
      * @var string
      */
     protected $author;
 
     /**
-     * Image of the file.
+     * The image of the topic.
      *
      * @var string
      */
     protected $topic_image;
 
     /**
-     * The cat of the file.
+     * The cat of the topic.
      *
      * @var string
      */
     protected $cat;
 
     /**
-     * The visits of the file.
+     * The visits of the topic.
      *
      * @var string
      */
     protected $visits;
 
     /**
-     * The visits of the file.
+     * The forum id of the topic.
      *
      * @var string
      */
     protected $forum_id;
 
     /**
-     * The imageUrl of the file.
+     * The url of the topic.
      *
      * @var string
      */
     protected $topic_url;
 
     /**
-     * The imageUrl of the file.
+     * The type of the topic.
      *
      * @var string
      */
     protected $type;
 
     /**
-     * The imageUrl of the file.
+     * The read of the topic.
      *
      * @var string
      */
     protected $read;
 
     /**
-     * The imageUrl of the file.
+     * The creator id of the topic.
      *
      * @var string
      */
     protected $creator_id;
 
     /**
-     * The imageUrl of the file.
+     * The date created of the topic.
      *
      * @var string
      */
@@ -121,7 +121,7 @@ class ForumTopic extends \Ilch\Model
     protected $status;
 
    /**
-     * Gets the id of the file.
+     * Gets the id of the topic.
      *
      * @return integer
      */
@@ -131,7 +131,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the id of the file.
+     * Gets the last insert id of the topic.
      *
      * @return integer
      */
@@ -141,7 +141,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the fileId of the file.
+     * Gets the id of the topic.
      *
      * @return string
      */
@@ -151,7 +151,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the fileThumb of the file.
+     * Gets the thumb of the topic.
      *
      * @return string
      */
@@ -161,7 +161,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the topic prefix.
+     * Gets the prefix of the topic.
      *
      * @return integer
      */
@@ -171,7 +171,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the file title.
+     * Gets the title of the topic.
      *
      * @return string
      */
@@ -181,7 +181,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the file title.
+     * Gets the author of the topic.
      *
      * @return string
      */
@@ -191,7 +191,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the file image.
+     * Gets the image of the topic.
      *
      * @return string
      */
@@ -201,7 +201,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the cat of the file.
+     * Gets the cat of the topic.
      *
      * @return string
      */
@@ -211,7 +211,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the visits of the file.
+     * Gets the visits of the topic.
      *
      * @return string
      */
@@ -221,7 +221,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the visits of the file.
+     * Gets the visits of the topic.
      *
      * @return string
      */
@@ -231,7 +231,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the FileUrl of the file.
+     * Gets the FileUrl of the topic.
      *
      * @return string
      */
@@ -241,7 +241,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the id of the file.
+     * Gets the id of the topic.
      *
      * @return integer
      */
@@ -251,7 +251,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the FileUrl of the file.
+     * Gets the type of the topic.
      *
      * @return int
      */
@@ -261,9 +261,9 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Gets the FileUrl of the file.
+     * Gets the read of the topic.
      *
-     * @return int
+     * @return string
      */
     public function getRead()
     {
@@ -271,7 +271,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Returns the date_created \Ilch\Date of the user.
+     * Returns the date_created \Ilch\Date of the topic.
      *
      * @return \Ilch\Date
      */
@@ -281,7 +281,7 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Sets the id of the file.
+     * Sets the id of the topic.
      *
      * @param integer $id
      */
@@ -291,150 +291,192 @@ class ForumTopic extends \Ilch\Model
     }
 
     /**
-     * Sets the id of the file.
+     * Sets the last insert id of the topic.
      *
-     * @param integer $id
+     * @param int $lastInsertId
+     * @return $this
      */
     public function setLastInsertId($lastInsertId)
     {
-        $this->last_insert_id = (int)$lastInsertId;
+        $this->last_insert_id = (int) $lastInsertId;
+
+        return $this;
     }
 
     /**
-     * Sets the fileId of the file.
+     * Sets the id of the topic.
      *
-     * @param string $file_id
+     * @param string $topic_id
+     * @return $this
      */
     public function setTopicId($topic_id)
     {
-        $this->topic_id = (string)$topic_id;
+        $this->topic_id = (string) $topic_id;
+
+        return $this;
     }
 
     /**
-     * Sets the fileThumb of the file.
+     * Sets the thumb of the topic.
      *
-     * @param string $fileThumb
+     * @param string $topicThumb
+     * @return $this
      */
     public function setTopicThumb($topicThumb)
     {
-        $this->topicthumb = (string)$topicThumb;
+        $this->topicthumb = (string) $topicThumb;
+
+        return $this;
     }
 
     /**
-     * Sets the prefix.
+     * Sets the prefix of the topic.
      *
-     * @param string $topicPrefix
+     * @param int $topicPrefix
+     * @return $this
      */
     public function setTopicPrefix($topicPrefix)
     {
-        $this->topic_prefix = (int)$topicPrefix;
+        $this->topic_prefix = (int) $topicPrefix;
+
+        return $this;
     }
 
     /**
-     * Sets the title.
+     * Sets the title of the topic.
      *
-     * @param string $fileTitle
+     * @param string $topicTitle
+     * @return $this
      */
     public function setTopicTitle($topicTitle)
     {
         $this->topic_title = (string) $topicTitle;
+
+        return $this;
     }
 
     /**
-     * Sets the title.
+     * Sets the author of the topic.
      *
-     * @param string $fileTitle
+     * @param string $author
+     * @return $this
      */
     public function setAuthor($author)
     {
         $this->author = $author;
+
+        return $this;
     }
 
     /**
-     * Sets the image.
+     * Sets the image of the topic.
      *
-     * @param string $fileImage
+     * @param string $topicImage
+     * @return $this
      */
     public function setTopicImage($topicImage)
     {
         $this->topic_image = (string) $topicImage;
+
+        return $this;
     }
 
     /**
-     * Sets the cat of the file.
+     * Sets the cat of the topic.
      *
      * @param string $cat
+     * @return $this
      */
     public function setCat($cat)
     {
-        $this->cat = (string)$cat;
+        $this->cat = (string) $cat;
+
+        return $this;
     }
 
     /**
-     * Sets the visits of the file.
+     * Sets the visits of the topic.
      *
      * @param string $visits
+     * @return $this
      */
     public function setVisits($visits)
     {
-        $this->visits = (string)$visits;
+        $this->visits = (string) $visits;
+
+        return $this;
     }
 
     /**
-     * Sets the visits of the file.
+     * Sets the forum id of the topic.
      *
-     * @param string $visits
+     * @param int $forumId
+     * @return $this
      */
     public function setForumId($forumId)
     {
-        $this->forum_id = (int)$forumId;
+        $this->forum_id = (int) $forumId;
+
+        return $this;
     }
 
     /**
-     * Sets the fileUrl of the file.
+     * Sets the url of the topic.
      *
-     * @param string $fileUrl
+     * @param string $topicUrl
+     * @return $this
      */
     public function setTopicUrl($topicUrl)
     {
-        $this->topic_url = (string)$topicUrl;
+        $this->topic_url = (string) $topicUrl;
+
+        return $this;
     }
 
     /**
-     * Sets the id of the file.
+     * Sets the creator id of the topic.
      *
-     * @param integer $id
+     * @param int $creatorId
+     * @return $this
      */
     public function setCreatorId($creatorId)
     {
-        $this->creator_id = (int)$creatorId;
+        $this->creator_id = (int) $creatorId;
+
+        return $this;
     }
 
     /**
-     * Sets the fileUrl of the file.
+     * Sets the type of the topic.
      *
-     * @param string $fileUrl
+     * @param int $type
+     * @return $this
      */
     public function setType($type)
     {
-        $this->type = (int)$type;
+        $this->type = (int) $type;
+
+        return $this;
     }
 
     /**
-     * Sets the fileUrl of the file.
+     * Sets the read of the topic.
      *
-     * @param string $fileUrl
+     * @param string $read
+     * @return $this
      */
     public function setRead($read)
     {
-        $this->read = (string)$read;
+        $this->read = (string) $read;
+
+        return $this;
     }
 
     /**
-     * Saves the date_created \Ilch\Date of the user.
+     * Saves the date_created \Ilch\Date of the topic.
      *
      * @param \Ilch\Date $dateCreated
-     * @return User
+     * @return $this
      */
     public function setDateCreated($dateCreated)
     {
@@ -456,10 +498,13 @@ class ForumTopic extends \Ilch\Model
     /**
      * Sets the status of the topic.
      *
-     * @param string $status
+     * @param int $status
+     * @return $this
      */
     public function setStatus($status)
     {
-        $this->status = (int)$status;
+        $this->status = (int) $status;
+
+        return $this;
     }
 }

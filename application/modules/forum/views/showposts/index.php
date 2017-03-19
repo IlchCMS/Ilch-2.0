@@ -106,8 +106,15 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                         »
                         <?=$date->format("d.m.Y H:i:s", true) ?>
                     </p>
-                    <div class="content"><?=nl2br($this->getHtmlFromBBCode($post->getText())) ?></div>
-                    <div class="signature"><?=nl2br($this->getHtmlFromBBCode($post->getAutor()->getSignature())) ?></div>
+                    <div class="content">
+                        <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getText()))) ?>
+                    </div>
+
+                    <?php if ($post->getAutor()->getSignature()): ?>
+                        <div class="signature">
+                            <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getAutor()->getSignature()))) ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <dl class="postprofile">
                     <dt>

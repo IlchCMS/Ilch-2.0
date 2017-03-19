@@ -10,6 +10,7 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
+use Ilch\Validation;
 
 class Newpost extends \Ilch\Controller\Frontend
 {
@@ -34,22 +35,38 @@ class Newpost extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('newPost'), ['controller' => 'newpost','action' => 'index', 'topicid' => $topicId]);
 
         if ($this->getRequest()->getPost('saveNewPost')) {
-            if (empty($this->getRequest()->getPost('text'))) {
-                $this->addMessage('missingText', 'danger');
-            } else {
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'text' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
                 $postMapper = new PostMapper;
-                $postModel = new ForumPostModel;
                 $dateTime = new \Ilch\Date();
-                $postModel->setTopicId($topicId);
-                $postModel->setUserId($this->getUser()->getId());
-                $postModel->setText($this->getRequest()->getPost('text'));
-                $postModel->setForumId($forum->getId());
-                $postModel->setDateCreated($dateTime);
+
+                $postModel = new ForumPostModel;
+                $postModel->setTopicId($topicId)
+                    ->setUserId($this->getUser()->getId())
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setForumId($forum->getId())
+                    ->setDateCreated($dateTime);
                 $postMapper->save($postModel);
 
                 $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
-                $this->redirect(['controller' => 'showposts','action' => 'index','topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $lastPost->getTopicId(), 'page' => $lastPost->getPage()]);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['controller' => 'newpost', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]);
         }
+
+        $this->getView()->set('forumMapper', $forumMapper);
+        $this->getView()->set('post', $post);
+        $this->getView()->set('cat', $cat);
+        $this->getView()->set('forum', $forum);
     }
 }

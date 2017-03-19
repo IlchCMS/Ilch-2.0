@@ -9,112 +9,112 @@ namespace Modules\Forum\Models;
 class ForumPost extends \Ilch\Model
 {
     /**
-     * The id of the image.
+     * The id of the post.
      *
      * @var integer
      */
     protected $id;
 
     /**
-     * The fileId of the file.
+     * The topic d of the post.
      *
-     * @var string
+     * @var integer
      */
     protected $topic_id;
 
     /**
-     * Title of the file.
+     * The title of the post.
      *
      * @var string
      */
     protected $topic_title;
 
     /**
-     * Description of the file.
+     * The text of the post.
      *
      * @var string
      */
     protected $text;
 
     /**
-     * The cat of the file.
+     * The cat of the post.
      *
-     * @var string
+     * @var integer
      */
     protected $cat;
 
     /**
-     * The visits of the file.
+     * The visits of the post.
      *
      * @var string
      */
     protected $visits;
 
     /**
-     * The visits of the file.
+     * The forum id of the post.
      *
-     * @var string
+     * @var integer
      */
     protected $forum_id;
 
     /**
-     * The visits of the file.
+     * The read of the post.
      *
      * @var string
      */
     protected $read;
 
     /**
-     * The imageUrl of the file.
+     * The page of the post.
      *
      * @var string
      */
     protected $page;
 
     /**
-     * The imageUrl of the file.
+     * The avatar of the post.
      *
      * @var string
      */
     protected $avatar;
 
     /**
-     * The imageUrl of the file.
+     * The imageUrl of the post.
      *
      * @var string
      */
     protected $signature;
 
     /**
-     * The imageUrl of the file.
+     * The user id of the post.
      *
-     * @var string
+     * @var integer
      */
     protected $user_id;
 
     /**
-     * The imageUrl of the file.
+     * The date created of the post.
      *
      * @var string
      */
     protected $date_created;
 
     /**
-     * The imageUrl of the file.
+     * The autor of the post.
      *
      * @var string
      */
     protected $autor;
 
     /**
-     * The imageUrl of the file.
+     * The autor all of the post.
      *
      * @var string
      */
     protected $autorallpost;
 
    /**
-     * Gets the id of the file.
+     * Gets the id of the post.
      *
      * @return integer
      */
@@ -124,7 +124,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the fileId of the file.
+     * Gets the topic id of the post.
      *
      * @return string
      */
@@ -134,7 +134,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the fileThumb of the file.
+     * Gets the read of the post.
      *
      * @return string
      */
@@ -144,7 +144,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the file title.
+     * Gets the title of the post.
      *
      * @return string
      */
@@ -154,7 +154,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the file desc.
+     * Gets the desc of the post.
      *
      * @return string
      */
@@ -164,7 +164,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the file desc.
+     * Gets the file text of the post.
      *
      * @return string
      */
@@ -173,7 +173,7 @@ class ForumPost extends \Ilch\Model
         return $this->text;
     }
     /**
-     * Gets the file image.
+     * Gets the image of the post.
      *
      * @return string
      */
@@ -183,7 +183,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the cat of the file.
+     * Gets the cat of the post.
      *
      * @return string
      */
@@ -193,7 +193,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the visits of the file.
+     * Gets the visits of the post.
      *
      * @return string
      */
@@ -203,7 +203,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the visits of the file.
+     * Gets the forum id of the post.
      *
      * @return string
      */
@@ -213,7 +213,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the FileUrl of the file.
+     * Gets the topic url of the post.
      *
      * @return string
      */
@@ -223,7 +223,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the id of the file.
+     * Gets the user id of the post.
      *
      * @return integer
      */
@@ -233,7 +233,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the FileUrl of the file.
+     * Gets the page of the post.
      *
      * @return string
      */
@@ -243,7 +243,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the FileUrl of the file.
+     * Gets the avatar of the post.
      *
      * @return string
      */
@@ -253,7 +253,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Gets the FileUrl of the file.
+     * Gets the signature of the post.
      *
      * @return string
      */
@@ -263,7 +263,7 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Returns the date_created \Ilch\Date of the user.
+     * Returns the date created \Ilch\Date of the post.
      *
      * @return \Ilch\Date
      */
@@ -273,9 +273,9 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Returns the date_created \Ilch\Date of the user.
+     * Returns the autor of the post.
      *
-     * @return \Ilch\Date
+     * @return string
      */
     public function getAutor()
     {
@@ -283,9 +283,9 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Returns the date_created \Ilch\Date of the user.
+     * Returns the autor all of the post.
      *
-     * @return \Ilch\Date
+     * @return string
      */
     public function getAutorAllPost()
     {
@@ -293,160 +293,202 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Sets the id of the file.
+     * Sets the id of the post.
      *
      * @param integer $id
      */
     public function setId($id)
     {
-        $this->id = (int)$id;
+        $this->id = (int) $id;
     }
 
     /**
-     * Sets the fileId of the file.
+     * Sets the topic id of the post.
      *
-     * @param string $file_id
+     * @param string $topic_id
+     * @return $this
      */
     public function setTopicId($topic_id)
     {
-        $this->topic_id = (string)$topic_id;
+        $this->topic_id = (string) $topic_id;
+
+        return $this;
     }
 
     /**
-     * Sets the fileThumb of the file.
+     * Sets the read of the post.
      *
-     * @param string $fileThumb
+     * @param string $read
+     * @return $this
      */
     public function setRead($read)
     {
         $this->read = $read;
+
+        return $this;
     }
 
     /**
-     * Sets the title.
+     * Sets the title of the post.
      *
-     * @param string $fileTitle
+     * @param string $topicTitle
+     * @return $this
      */
     public function setTopicTitle($topicTitle)
     {
         $this->topic_title = (string) $topicTitle;
+
+        return $this;
     }
 
     /**
-     * Sets the image.
+     * Sets the image of the post.
      *
-     * @param string $fileImage
+     * @param string $topicImage
+     * @return $this
      */
     public function setTopicImage($topicImage)
     {
         $this->topic_image = (string) $topicImage;
+
+        return $this;
     }
 
     /**
-     * Sets the desc.
+     * Sets the desc of the post.
      *
-     * @param string $fileDesc
+     * @param string $topicDesc
+     * @return $this
      */
     public function setTopicDesc($topicDesc)
     {
         $this->topic_desc = (string) $topicDesc;
+
+        return $this;
     }
 
     /**
-     * Sets the desc.
+     * Sets the text of the post.
      *
-     * @param string $fileDesc
+     * @param string $text
+     * @return $this
      */
     public function setText($text)
     {
         $this->text = (string) $text;
+
+        return $this;
     }
 
     /**
-     * Sets the cat of the file.
+     * Sets the cat of the post.
      *
      * @param string $cat
+     * @return $this
      */
     public function setCat($cat)
     {
         $this->cat = (string)$cat;
+
+        return $this;
     }
 
     /**
-     * Sets the visits of the file.
+     * Sets the visits of the post.
      *
      * @param string $visits
+     * @return $this
      */
     public function setVisits($visits)
     {
-        $this->visits = (string)$visits;
+        $this->visits = (string) $visits;
+
+        return $this;
     }
 
     /**
-     * Sets the visits of the file.
+     * Sets the forum id of the post.
      *
-     * @param string $visits
+     * @param int $forumId
+     * @return $this
      */
     public function setForumId($forumId)
     {
-        $this->forum_id = (int)$forumId;
+        $this->forum_id = (int) $forumId;
+
+        return $this;
     }
 
     /**
-     * Sets the fileUrl of the file.
+     * Sets the topic url of the post.
      *
-     * @param string $fileUrl
+     * @param string $topicUrl
+     * @return $this
      */
     public function setTopicUrl($topicUrl)
     {
-        $this->topic_url = (string)$topicUrl;
+        $this->topic_url = (string) $topicUrl;
+
+        return $this;
     }
 
     /**
-     * Sets the id of the file.
+     * Sets the user id of the post.
      *
-     * @param integer $id
+     * @param int $userId
+     * @return $this
      */
     public function setUserId($userId)
     {
-        $this->user_id = (int)$userId;
+        $this->user_id = (int) $userId;
+
+        return $this;
     }
 
     /**
-     * Sets the fileUrl of the file.
+     * Sets the page of the post.
      *
-     * @param string $fileUrl
+     * @param string $page
+     * @return $this
      */
     public function setPage($page)
     {
-        $this->page = (string)$page;
+        $this->page = (string) $page;
+
+        return $this;
     }
 
     /**
-     * Sets the fileUrl of the file.
+     * Sets the avatar of the post.
      *
-     * @param string $fileUrl
+     * @param string $avatar
+     * @return $this
      */
     public function setAvatar($avatar)
     {
-        $this->avatar = (string)$avatar;
+        $this->avatar = (string) $avatar;
+
+        return $this;
     }
 
     /**
-     * Sets the fileUrl of the file.
+     * Sets the signature of the post.
      *
-     * @param string $fileUrl
+     * @param string $signature
+     * @return $this
      */
     public function setSignature($signature)
     {
-        $this->signature = (string)$signature;
+        $this->signature = (string) $signature;
+
+        return $this;
     }
 
     /**
-     * Saves the date_created \Ilch\Date of the user.
+     * Saves the date created \Ilch\Date of the post.
      *
      * @param \Ilch\Date $dateCreated
-     * @return User
+     * @return $this
      */
     public function setDateCreated($dateCreated)
     {
@@ -456,10 +498,10 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Saves the date_created \Ilch\Date of the user.
+     * Saves the $autor of the post.
      *
-     * @param \Ilch\Date $dateCreated
-     * @return User
+     * @param $autor
+     * @return $this
      */
     public function setAutor($autor)
     {
@@ -469,10 +511,10 @@ class ForumPost extends \Ilch\Model
     }
 
     /**
-     * Saves the date_created \Ilch\Date of the user.
+     * Saves the autor all of the post.
      *
-     * @param \Ilch\Date $dateCreated
-     * @return User
+     * @param $autorAllPost
+     * @return $this
      */
     public function setAutorAllPost($autorAllPost)
     {
