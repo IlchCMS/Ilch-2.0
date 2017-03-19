@@ -36,6 +36,11 @@ return [
     'seoDescription' => 'Description',
     'seoKeywords' => 'Keywords',
 
+    // cookieconsent
+    'dismissBTNText' => 'Got it!',
+    'policyLinkText' => 'Learn more',
+    'policyInfoText' => 'This website uses cookies to ensure you get the best experience on our website.',
+
     // comment module
     'iLike' => 'I like this',
     'notLike' => 'I dislike this',

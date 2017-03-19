@@ -75,7 +75,7 @@ class Frontend extends Base
 
         return $config->get('apple_icon');
     }
- 
+
     /**
      * Gets page keywords from meta settings.
      *
@@ -91,7 +91,7 @@ class Frontend extends Base
 
         return '';
     }
- 
+
     /**
      * Gets page description from config or meta settings.
      *
@@ -195,16 +195,31 @@ class Frontend extends Base
         }
 
         if ($this->getConfigKey('cookie_consent') != 0) {
-            $html .= '<script type="text/javascript">
-                    window.cookieconsent_options = {
-                        message: "'.$this->escape($this->getConfigKey('cookie_consent_message')).'",
-                        dismiss: "OK",
-                        learnMore: "Weitere Informationen",
-                        link: "'.$this->getUrl(['module' => 'cookieconsent', 'controller' => 'index', 'action' => 'index']).'",
-                        theme: "'.$this->getStaticUrl('js/cookieconsent/styles/'.$this->escape($this->getConfigKey('cookie_consent_style')).'-'.$this->escape($this->getConfigKey('cookie_consent_pos')).'.css').'"
-                    };
-                    </script>
-                    <script type="text/javascript" src="'.$this->getStaticUrl('js/cookieconsent/cookieconsent.js').'"></script>';
+            $html .= '<script>
+                        window.addEventListener("load", function(){
+                        window.cookieconsent.initialise({
+                          "palette": {
+                            "popup": {
+                              "background": "'.$this->escape($this->getConfigKey('cookie_consent_popup_bg_color')).'",
+                              "text": "'.$this->escape($this->getConfigKey('cookie_consent_popup_text_color')).'"
+                            },
+                            "button": {
+                              "background": "'.$this->escape($this->getConfigKey('cookie_consent_btn_bg_color')).'",
+                              "text": "'.$this->escape($this->getConfigKey('cookie_consent_btn_text_color')).'"
+                            }
+                          },
+                          "theme": "'.$this->escape($this->getConfigKey('cookie_consent_layout')).'",
+                          "position": "'.$this->escape($this->getConfigKey('cookie_consent_pos')).'",
+                          "content": {
+                            "message": "'.$this->getTrans('policyInfoText').'",
+                            "dismiss": "'.$this->getTrans('dismissBTNText').'",
+                            "link": "'.$this->getTrans('policyLinkText').'",
+                            "href": "'.$this->getUrl(['module' => 'cookieconsent', 'controller' => 'index', 'action' => 'index']).'"
+                          }
+                        })});
+                        </script>
+                        <link rel="stylesheet" type="text/css" href="'.$this->getStaticUrl('js/cookieconsent/cookieconsent.min.css').'" />
+                        <script type="text/javascript" src="'.$this->getStaticUrl('js/cookieconsent/cookieconsent.min.js').'"></script>';
         }
 
         return $html;

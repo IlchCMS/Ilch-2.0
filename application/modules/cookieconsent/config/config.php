@@ -28,9 +28,12 @@ class Config extends \Ilch\Config\Install
     {
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('cookie_consent', '0');
-        $databaseConfig->set('cookie_consent_style', 'light');
+        $databaseConfig->set('cookie_consent_layout', 'classic');
         $databaseConfig->set('cookie_consent_pos', 'top');
-        $databaseConfig->set('cookie_consent_message', 'Diese Website nutzt Cookies, um bestmögliche Funktionalität bieten zu können.');
+        $databaseConfig->set('cookie_consent_popup_bg_color', '#000000');
+        $databaseConfig->set('cookie_consent_popup_text_color', '#ffffff');
+        $databaseConfig->set('cookie_consent_btn_bg_color', '#f1d600');
+        $databaseConfig->set('cookie_consent_btn_text_color', '#00000');
         $databaseConfig->set('cookie_consent_text', '<h3>Einsatz von Cookies</h3>
             <p>Wie viele Internetseiten nutzt auch diese Seite Cookies. An dieser Stelle wird erklärt was Cookies sind und wie sie genutzt werden.</p>
             <p>&nbsp;</p>
