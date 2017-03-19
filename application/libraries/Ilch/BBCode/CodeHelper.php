@@ -4,9 +4,9 @@
  * @package ilch
  */
 
-namespace Ilch;
+namespace Ilch\BBCode;
 
-class Code extends \JBBCode\CodeDefinition {
+class CodeHelper extends \JBBCode\CodeDefinition {
     public function __construct($useOption){
         parent::__construct($useOption);
         $this->setTagName('code');

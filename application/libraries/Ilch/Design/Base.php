@@ -289,7 +289,8 @@ abstract class Base
     {
         $parser = new \JBBCode\Parser();
         $parser->addCodeDefinitionSet(new \JBBCode\DefaultCodeDefinitionSet());
-        $parser->addCodeDefinition(new \Ilch\Code(false));
+
+        $parser->addCodeDefinition(new \Ilch\BBCode\CodeHelper(false));
 
         $builder = new \JBBCode\CodeDefinitionBuilder('quote', '<blockquote>{param}</blockquote>');
         $parser->addCodeDefinition($builder->build());
