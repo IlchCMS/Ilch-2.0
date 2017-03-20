@@ -20,7 +20,7 @@ $(function() {
     $(document.body).on('mousedown', function(event) {
         var target = $(event.target);
 
-        if (!target.parents().andSelf().is('#shoutbox-container')) {
+        if (!target.parents().addBack().is('#shoutbox-container')) {
             hideForm();
         }
     });
