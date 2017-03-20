@@ -122,8 +122,8 @@ function rec($item, $obj, $readAccess, $i)
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<h1><?=$this->getTrans('forum') ?></h1>
 <div id="forum">
+    <h1><?=$this->getTrans('forum') ?></h1>
     <?php if (!empty($forumItems)): ?>
         <?php foreach ($forumItems as $item): ?>
             <div class="forabg">
@@ -189,9 +189,7 @@ function rec($item, $obj, $readAccess, $i)
             <hr />
             <h5><i class="fa fa-user"></i> <?=$this->getTrans('whoWasHere') ?></h5>
             <div class="statistics">
-                Insgesamt waren 217 Benutzer Online:<br />
-                66 registrierte und 169 Besucher (basierend auf den aktiven Besuchern der letzten 5 Minuten)<br /><br />
-                Der Besucherrekord liegt bei 1.767 Besuchern, die am 27.09.2014 online waren.
+                <!-- @todo add statistics info -->
             </div>
             <hr />
             <div class="stats">

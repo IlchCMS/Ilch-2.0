@@ -14,11 +14,11 @@ if ($this->getUser()) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<h1>
-    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a> 
-    <i class="forum fa fa-chevron-right"></i> <?=$this->getTrans('showActiveTopics') ?>
-</h1>
 <div id="forum">
+    <h1>
+        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+        <i class="fa fa-chevron-right"></i> <?=$this->getTrans('showActiveTopics') ?>
+    </h1>
     <div class="forabg">
         <ul class="topiclist">
             <li class="header">

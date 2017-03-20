@@ -421,7 +421,7 @@ legend .forum.fa {
 
 /** TODO: noch bearbeiten **/
 .new-topic {
-    padding-top: 15px;
+    padding: 15px 15px 0 15px;
 }
 .post {
     padding: 12px;
@@ -480,12 +480,6 @@ legend .forum.fa {
     vertical-align: bottom;
 }
 
-#forum .postbody .content {
-    border-top: solid 1px #E4E4E4;
-    padding-top: 12px;
-    margin-top: 6px;
-}
-
 #forum .panel h3 {
     margin: 0.5em 0;
     font-size: 1.231em;
@@ -498,8 +492,7 @@ legend .forum.fa {
 }
 
 #forum p.author {
-    margin: 0 15em 0.6em 0;
-    padding: 0 0 5px 0;
+    margin: 0;
     line-height: 1.2em;
     font-size: 0.846em;
 }
@@ -563,8 +556,7 @@ legend .forum.fa {
 }
 
 #forum .topic-actions {
-    height: auto;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
     height: 35px;
     min-height: 35px;
     overflow: hidden;
@@ -592,18 +584,12 @@ legend .forum.fa {
     float: right;
 }
 
-#forum .delete .btn-xs .btn-label {
-    padding: 2px 4px;
-    left: -6px;
-}
-
 #forum .edit {
     padding-right: 5px;
 }
-
-#forum .edit .btn-xs .btn-label {
-    padding: 2px 4px;
-    left: -6px;
+#forum .btn-xs .btn-label {
+    padding: 3px 5px 3px 7px;
+    left: -5px;
 }
 
 #forum .pagination > li > a, .pagination > li > span {
@@ -613,13 +599,24 @@ legend .forum.fa {
 #forum .btn-label {
     position: relative;
     left: -12px;
-    display: inline-block;
-    padding: 6px 12px;
+    padding: 8px;
     background: rgba(0, 0, 0, 0.15);
-    border-radius: 3px 0 0 3px;
 }
 
-#forum .btn-labeled {
-    padding-top: 0;
-    padding-bottom: 0;
+#forum .new-post-head,
+#forum .posts-head {
+    margin-top: 10px;
+    padding: 15px 12px;
+}
+#forum .new-post-head {
+    margin-top: 0;
+}
+#forum .new-topic .prefix {
+    padding-right: 0;
+}
+#forum h1 .fa {
+    font-size: small;
+}
+#forum .post .postbody .hr-top {
+    margin-top: 0;
 }

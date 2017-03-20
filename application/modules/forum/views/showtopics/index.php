@@ -16,31 +16,27 @@ if ($this->getUser()) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<h1>
-    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
-    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
-    <i class="forum fa fa-chevron-right"></i> <?=$forum->getTitle() ?>
-</h1>
 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
     <div id="forum">
+        <h1>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
+            <i class="fa fa-chevron-right"></i> <?=$forum->getTitle() ?>
+        </h1>
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
-                <div class="buttons">
-                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary btn-labeled">
-                        <span class="btn-label">
-                            <i class="fa fa-plus"></i>
-                        </span><?=$this->getTrans('createNewTopic') ?>
-                    </a>
-                </div>
+                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span><?=$this->getTrans('createNewTopic') ?>
+                </a>
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
-                <div class="buttons">
-                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary btn-labeled">
-                        <span class="btn-label">
-                            <i class="fa fa-user"></i>
-                        </span><?=$this->getTrans('loginTopic') ?>
-                    </a>
-                </div>
+                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
+                    <span class="btn-label">
+                        <i class="fa fa-user"></i>
+                    </span><?=$this->getTrans('loginTopic') ?>
+                </a>
             <?php endif; ?>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]); ?>
         </div>
@@ -152,28 +148,24 @@ if ($this->getUser()) {
                         </li>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <li class="row text-center"><?=$this->getTrans('noThreads') ?></li>
+                    <li class="row ilch-border text-center"><?=$this->getTrans('noThreads') ?></li>
                 <?php endif; ?>
             </ul>
         </div>
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
-                <div class="buttons">
-                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary btn-labeled">
-                        <span class="btn-label">
-                            <i class="fa fa-plus"></i>
-                        </span><?=$this->getTrans('createNewTopic') ?>
-                    </a>
-                </div>
+                <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span><?=$this->getTrans('createNewTopic') ?>
+                </a>
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
-                <div class="buttons">
-                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary btn-labeled">
-                        <span class="btn-label">
-                            <i class="fa fa-user"></i>
-                        </span><?=$this->getTrans('loginTopic') ?>
-                    </a>
-                </div>
+                <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
+                    <span class="btn-label">
+                        <i class="fa fa-user"></i>
+                    </span><?=$this->getTrans('loginTopic') ?>
+                </a>
             <?php endif; ?>
             <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]) ?>
         </div>

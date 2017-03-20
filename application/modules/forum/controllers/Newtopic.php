@@ -53,7 +53,7 @@ class Newtopic extends \Ilch\Controller\Frontend
                     ->setForumId($id)
                     ->setCat($id)
                     ->setCreatorId($this->getUser()->getId())
-                    ->setType($this->getRequest()->getPost('type'))
+                    ->setType($this->getRequest()->getPost('fix'))
                     ->setDateCreated($dateTime);
                 $topicMapper->save($topicModel);
 

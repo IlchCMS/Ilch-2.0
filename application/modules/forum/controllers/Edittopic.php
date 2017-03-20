@@ -41,10 +41,16 @@ class Edittopic extends \Ilch\Controller\Frontend
 
         $groupIdsArray = explode(',',implode(',', $groupIds));
 
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('forum'))
+            ->add($cat->getTitle())
+            ->add($forum->getTitle())
+            ->add($this->getTranslator()->trans('topicMove'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
             ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
-            ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId]);
+            ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId])
+            ->add($this->getTranslator()->trans('topicMove'), ['action' => 'index', 'forumid' => $forumId]);
 
         $this->getView()->set('groupIdsArray', $groupIdsArray);
         $this->getView()->set('forumItems', $forumItems);

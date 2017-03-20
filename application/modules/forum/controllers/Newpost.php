@@ -22,16 +22,20 @@ class Newpost extends \Ilch\Controller\Frontend
         $topicId = (int)$this->getRequest()->getParam('topicid');
         $forum = $forumMapper->getForumByTopicId($topicId);
         $cat = $forumMapper->getCatByParentId($forum->getParentId());
+        $topic = $topicMapper->getPostById($topicId);
         $post = $topicMapper->getPostById($topicId);
 
         $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('forum'))
-                ->add($forum->getTitle());
+                ->add($cat->getTitle())
+                ->add($forum->getTitle())
+                ->add($topic->getTopicTitle())
+                ->add($this->getTranslator()->trans('newPost'));
         $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                 ->add($cat->getTitle(), ['controller' => 'showcat','action' => 'index', 'id' => $cat->getId()])
                 ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()])
-                ->add($post->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
+                ->add($topic->getTopicTitle(), ['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId])
                 ->add($this->getTranslator()->trans('newPost'), ['controller' => 'newpost','action' => 'index', 'topicid' => $topicId]);
 
         if ($this->getRequest()->getPost('saveNewPost')) {

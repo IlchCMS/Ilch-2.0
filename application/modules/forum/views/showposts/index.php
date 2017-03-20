@@ -28,84 +28,100 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<h1>
-    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a> 
-    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a> 
-    <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a> 
-    <i class="forum fa fa-chevron-right"></i> <?=$prefix.$topicpost->getTopicTitle() ?>
-</h1>
 <?php if (is_in_array($readAccess, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
     <div id="forum">
-        <div class="topic-actions">
-            <?php if ($topicpost->getStatus() == 0): ?>
-                <?php if ($this->getUser()): ?>
-                    <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
-                        <div class="buttons">
-                            <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-labeled">
+        <h1>
+            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'index']) ?>"><?=$this->getTrans('forum') ?></a>
+            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>"><?=$cat->getTitle() ?></a>
+            <i class="fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forum->getId()]) ?>"><?=$forum->getTitle() ?></a>
+            <i class="fa fa-chevron-right"></i> <?=$prefix.$topicpost->getTopicTitle() ?>
+        </h1>
+        <div class="row">
+            <div class="col-lg-12">
+                <?php if ($topicpost->getStatus() == 0): ?>
+                    <?php if ($this->getUser()): ?>
+                        <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
+                            <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                                 <span class="btn-label">
                                     <i class="fa fa-plus"></i>
                                 </span><?=$this->getTrans('createNewPost') ?>
                             </a>
-                        </div>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
-                    <div class="buttons">
-                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary btn-labeled">
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
+                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary">
                             <span class="btn-label">
                                 <i class="fa fa-user"></i>
                             </span><?=$this->getTrans('loginPost') ?>
                         </a>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <div class="btn btn-primary">
+                        <span class="btn-label">
+                            <i class="fa fa-lock"></i>
+                        </span><?=$this->getTrans('lockPost') ?>
                     </div>
                 <?php endif; ?>
-            <?php else: ?>
-                <div class="btn btn-primary btn-labeled">
-                    <span class="btn-label">
-                        <i class="fa fa-lock"></i>
-                    </span><?=$this->getTrans('lockPost') ?>
+                <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>
+            </div>
+            <div class="col-lg-12">
+                <div class="posts-head ilch-head">
+                    <?=$prefix.$topicpost->getTopicTitle() ?>
                 </div>
-            <?php endif; ?>
-            <?=$this->get('pagination')->getHtml($this, ['action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]); ?>
+            </div>
         </div>
         <?php foreach ($posts as $post): ?>
             <?php $date = new \Ilch\Date($post->getDateCreated()) ?>
             <div id="<?=$post->getId() ?>" class="post ilch-bg">
-                <div class="delete">
-                    <?php if ($this->getUser()): ?>
-                        <?php if ($this->getUser()->isAdmin()): ?>
-                            <p class="delete-post">
-                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()]) ?>" class="btn btn-primary btn-xs btn-labeled">
-                                    <span class="btn-label">
-                                        <i class="fa fa-trash"></i>
-                                    </span><?=$this->getTrans('delete') ?>
-                                </a>
-                            </p>
-                        <?php endif; ?>
-                    <?php endif; ?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p class="author">
+                                    <a href="#<?=$post->getId() ?>"><img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11"></a>
+                                    <?=$this->getTrans('by') ?>
+                                    <strong>
+                                        <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" class="ilch-link-red"><?=$this->escape($post->getAutor()->getName()) ?></a>
+                                    </strong>
+                                    »
+                                    <?=$date->format("d.m.Y H:i:s", true) ?>
+                                </p>
+                            </div>
+                            <div class="col-lg-6 pull-right">
+                                <div class="delete">
+                                    <?php if ($this->getUser()): ?>
+                                        <?php if ($this->getUser()->isAdmin()): ?>
+                                            <p class="delete-post">
+                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'delete', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid'), 'forumid' => $forum->getId()]) ?>" class="btn btn-primary btn-xs">
+                                                    <span class="btn-label">
+                                                        <i class="fa fa-trash"></i>
+                                                    </span><?=$this->getTrans('delete') ?>
+                                                </a>
+                                            </p>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="edit">
+                                    <?php if ($this->getUser()): ?>
+                                        <?php if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $userAccess->hasAccess('forum')): ?>
+                                            <p class="edit-post">
+                                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs">
+                                                    <span class="btn-label">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </span><?=$this->getTrans('edit') ?>
+                                                </a>
+                                            </p>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="edit">
-                    <?php if ($this->getUser()): ?>
-                        <?php if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $userAccess->hasAccess('forum')): ?>
-                            <p class="edit-post">
-                                <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'edit', 'id' => $post->getId(), 'topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-xs btn-labeled">
-                                    <span class="btn-label">
-                                        <i class="fa fa-pencil"></i>
-                                    </span><?=$this->getTrans('edit') ?>
-                                </a>
-                            </p>
-                        <?php endif; ?>
-                    <?php endif; ?>
-                </div>
+
+
                 <div class="postbody">
-                    <p class="author">
-                        <a href="#<?=$post->getId() ?>"><img src="<?=$this->getModuleUrl('static/img/icon_post_target.png') ?>" alt="Post" title="Post" height="9" width="11"></a>
-                        <?=$this->getTrans('by') ?>
-                        <strong>
-                            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $post->getAutor()->getId()]) ?>" class="ilch-link-red"><?=$this->escape($post->getAutor()->getName()) ?></a>
-                        </strong>
-                        »
-                        <?=$date->format("d.m.Y H:i:s", true) ?>
-                    </p>
+                    <hr class="hr-top" />
                     <div class="content">
                         <?=nl2br($this->getHtmlFromBBCode($this->escape($post->getText()))) ?>
                     </div>
@@ -125,7 +141,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     </dt>
                     <dd>
                         <?php foreach ($post->getAutor()->getGroups() as $group): ?>
-                            <?=$group->getName() ?><br>
+                            <i><?=$group->getName() ?></i><br>
                         <?php endforeach; ?>
                     </dd>
                     <dd>&nbsp;</dd>
@@ -138,7 +154,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
             <?php if ($topicpost->getStatus() == 0): ?>
                 <?php if ($this->getUser()): ?>
                     <?php if (is_in_array($readAccess, explode(',', $forum->getReplayAccess())) || $adminAccess == true): ?>
-                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary btn-labeled">
+                        <a href="<?=$this->getUrl(['controller' => 'newpost', 'action' => 'index','topicid' => $this->getRequest()->getParam('topicid')]) ?>" class="btn btn-primary">
                             <span class="btn-label">
                                 <i class="fa fa-plus"></i>
                             </span><?=$this->getTrans('createNewPost') ?>
@@ -153,7 +169,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
                     </a>
                 <?php endif; ?>
             <?php else: ?>
-                <div class="btn btn-primary btn-labeled">
+                <div class="btn btn-primary">
                     <span class="btn-label">
                         <i class="fa fa-lock"></i>
                     </span><?=$this->getTrans('lockPost') ?>

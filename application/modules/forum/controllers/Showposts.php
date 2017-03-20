@@ -13,6 +13,7 @@ use Modules\Forum\Models\ForumPost as ForumPostModel;
 use Modules\Forum\Models\ForumTopic as ForumTopicModel;
 use Modules\User\Mappers\User as UserMapper;
 use Ilch\Accesses as Accesses;
+use Ilch\Validation;
 
 class Showposts extends \Ilch\Controller\Frontend
 {
@@ -145,7 +146,10 @@ class Showposts extends \Ilch\Controller\Frontend
             if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $userAccess->hasAccess('forum')) {
                 $this->getLayout()->getTitle()
                         ->add($this->getTranslator()->trans('forum'))
-                        ->add($forum->getTitle());
+                        ->add($cat->getTitle())
+                        ->add($forum->getTitle())
+                        ->add($topic->getTopicTitle())
+                        ->add($this->getTranslator()->trans('editPost'));
                 $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('forum'), ['controller' => 'index', 'action' => 'index'])
                     ->add($cat->getTitle(), ['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()])
@@ -154,28 +158,41 @@ class Showposts extends \Ilch\Controller\Frontend
                     ->add($this->getTranslator()->trans('editPost'), ['controller' => 'newpost', 'action' => 'index', 'topicid' => $topicId]);
 
                 if ($this->getRequest()->getPost('editPost')) {
-                    if (empty($this->getRequest()->getPost('text'))) {
-                        $this->addMessage('missingText', 'danger');
-                    } else {
+                    $validation = Validation::create($this->getRequest()->getPost(), [
+                        'text' => 'required'
+                    ]);
+
+                    if ($validation->isValid()) {
                         $postMapper = new PostMapper;
+
                         $postModel = new ForumPostModel;
-                        $postModel->setId($postId);
-                        $postModel->setTopicId($topicId);
-                        $postModel->setText($this->getRequest()->getPost('text'));
+                        $postModel->setId($postId)
+                            ->setTopicId($topicId)
+                            ->setText($this->getRequest()->getPost('text'));
                         $postMapper->save($postModel);
 
-                        $this->redirect(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
+                        $this->redirect()
+                            ->withMessage('saveSuccess')
+                            ->to(['controller' => 'showposts', 'action' => 'index', 'topicid' => $topicId]);
                     }
+
+                    $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                    $this->redirect()
+                        ->withInput()
+                        ->withErrors($validation->getErrorBag())
+                        ->to(['controller' => 'showposts', 'action' => 'edit', 'id' => $postId, 'topicid' => $topicId]);
                 }
 
                 $this->getView()->set('post', $postMapper->getPostById($postId));
             } else {
-                $this->addMessage('noAccessForum', 'danger');
-                $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
+                $this->redirect()
+                    ->withMessage('noAccessForum', 'danger')
+                    ->to(['controller' => 'index', 'action' => 'index']);
             }
         } else {
-            $this->addMessage('noAccessForum', 'danger');
-            $this->redirect(['module' => 'forum', 'controller' => 'index', 'action' => 'index']);
+            $this->redirect()
+                ->withMessage('noAccessForum', 'danger')
+                ->to(['controller' => 'index', 'action' => 'index']);
         }
     }
 }
