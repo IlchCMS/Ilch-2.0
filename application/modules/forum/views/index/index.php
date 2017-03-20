@@ -31,7 +31,7 @@ function rec($item, $obj, $readAccess, $i)
     <?php if ($item->getType() === 0 && $subItemsFalse == true): ?>
         <ul class="forenlist">
             <li class="header">
-                <dl class="title">
+                <dl class="title ilch-head">
                     <dt>
                         <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
                             <?=$item->getTitle() ?>
@@ -39,7 +39,7 @@ function rec($item, $obj, $readAccess, $i)
                     </dt>
                 </dl>
                 <?php if ($item->getDesc() != ''): ?>
-                    <dl class="desc small">
+                    <dl class="desc small ilch-bg ilch-border">
                         <?=$item->getDesc() ?>
                     </dl>
                 <?php endif; ?>
@@ -50,7 +50,7 @@ function rec($item, $obj, $readAccess, $i)
     <?php if (is_in_array($readAccess, explode(',', $item->getReadAccess())) || $adminAccess == true): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
-                <li class="row">
+                <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
                         <?php if ($obj->getUser() && $lastPost): ?>
                             <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
@@ -133,27 +133,27 @@ function rec($item, $obj, $readAccess, $i)
     <?php endif; ?>
     <div class="foren-actions clearfix">
         <ul class="pull-left">
-            <li><a href="<?=$this->getUrl(['controller' => 'showunansweredtopics', 'action' => 'index']) ?>"><?=$this->getTrans('showUnansweredTopics') ?></a></li>
+            <li><a href="<?=$this->getUrl(['controller' => 'showunansweredtopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showUnansweredTopics') ?></a></li>
             <?php if ($this->getUser()): ?>
-                <li><a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'index']) ?>"><?=$this->getTrans('showNewPosts') ?></a></li>
+                <li><a href="<?=$this->getUrl(['controller' => 'shownewposts', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showNewPosts') ?></a></li>
             <?php endif; ?>
-            <li><a href="<?=$this->getUrl(['controller' => 'showactivetopics', 'action' => 'index']) ?>"><?=$this->getTrans('showActiveTopics') ?></a></li>
+            <li><a href="<?=$this->getUrl(['controller' => 'showactivetopics', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('showActiveTopics') ?></a></li>
         </ul>
         <?php if ($this->getUser()): ?>
             <!--            
                 <div class="pull-right">
-                    <a href="<?=$this->getUrl(['controller' => 'markallread', 'action' => 'index']) ?>"><?=$this->getTrans('markAllAsRead') ?></a>
+                    <a href="<?=$this->getUrl(['controller' => 'markallread', 'action' => 'index']) ?>" class="ilch-link"><?=$this->getTrans('markAllAsRead') ?></a>
                 </div>
             -->
         <?php endif; ?>
     </div>
 
     <div class="statistic">
-        <div class="header"><?=$this->getTrans('currentInfo') ?></div>
-        <div class="content">
+        <div class="header ilch-head-dark"><?=$this->getTrans('currentInfo') ?></div>
+        <div class="content ilch-border">
             <h5><i class="fa fa-user"></i> <?=$this->getTrans('activeUser') ?></h5>
             <div class="statistics">
-                <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>"><?=$usersOnline+$guestOnline ?> Benutzer online</a>. Registrierte Benutzer: <?=$usersOnline ?>, Gäste: <?=$guestOnline ?><br />
+                <a href="<?=$this->getUrl(['module' => 'statistic', 'controller' => 'index', 'action' => 'online']) ?>" class="ilch-link"><?=$usersOnline+$guestOnline ?> Benutzer online</a>. Registrierte Benutzer: <?=$usersOnline ?>, Gäste: <?=$guestOnline ?><br />
                 <ul class="user-list">
                     <?php foreach ($usersOnlineList as $user): ?>
                         <?php
@@ -164,9 +164,9 @@ function rec($item, $obj, $readAccess, $i)
                         ?>
 
                         <?php if ((in_array('Administrator', $groups))): ?>
-                            <li><strong><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></strong></li>
+                            <li><strong><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></strong></li>
                         <?php else: ?>
-                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a></li>
+                            <li><a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" class="ilch-link"><?=$this->escape($user->getName()) ?></a></li>
                         <?php endif; ?>
                     <?php endforeach; ?>
                 </ul>
@@ -200,7 +200,7 @@ function rec($item, $obj, $readAccess, $i)
                     <li><?=$this->getTrans('totalPosts') ?>: <?=$forumStatistics->getCountPosts() ?></li>
                     <li><?=$this->getTrans('totalTopics') ?>: <?=$forumStatistics->getCountTopics() ?></li>
                     <li><?=$this->getTrans('totalMembers') ?>: <?=$forumStatistics->getCountUsers() ?></li>
-                    <li><?=$this->getTrans('newMember') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->get('registNewUser')->getId()]) ?>" title="<?=$this->escape($this->get('registNewUser')->getName()) ?>"><?=$this->escape($this->get('registNewUser')->getName()) ?></a></li>
+                    <li><?=$this->getTrans('newMember') ?> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $this->get('registNewUser')->getId()]) ?>" class="ilch-link" title="<?=$this->escape($this->get('registNewUser')->getName()) ?>"><?=$this->escape($this->get('registNewUser')->getName()) ?></a></li>
                 </ul>
             </div>
             <hr />

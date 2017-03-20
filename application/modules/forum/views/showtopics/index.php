@@ -26,7 +26,7 @@ if ($this->getUser()) {
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary btn-labeled">
                         <span class="btn-label">
                             <i class="fa fa-plus"></i>
                         </span><?=$this->getTrans('createNewTopic') ?>
@@ -35,7 +35,7 @@ if ($this->getUser()) {
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary btn-labeled">
                         <span class="btn-label">
                             <i class="fa fa-user"></i>
                         </span><?=$this->getTrans('loginTopic') ?>
@@ -51,7 +51,7 @@ if ($this->getUser()) {
         <div class="forabg">
             <ul class="topiclist">
                 <li class="header">
-                    <dl class="title">
+                    <dl class="title ilch-head">
                         <dt><?=$this->getTrans('topics') ?></dt>
                         <dd class="posts"><?=$this->getTrans('replies') ?> / <?=$this->getTrans('views') ?></dd>
                         <dd class="lastpost"><span><?=$this->getTrans('lastPost') ?></span></dd>
@@ -68,7 +68,7 @@ if ($this->getUser()) {
                         <?php $lastPost = $topicMapper->getLastPostByTopicId($topic->getId()) ?>
                         <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                         <?php $forumPrefix = $forumMapper->getForumByTopicId($topic->getId()) ?>
-                        <li class="row <?php if ($topic->getType() == '1') { echo 'tack'; } ?>">
+                        <li class="row ilch-border ilch-bg--hover <?php if ($topic->getType() == '1') { echo 'tack'; } ?>">
                             <dl class="icon
                                 <?php if ($this->getUser()): ?>
                                     <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 0): ?>
@@ -108,7 +108,7 @@ if ($this->getUser()) {
                                     <br>
                                     <div class="small">
                                         <?=$this->getTrans('by') ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
+                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="ilch-link-red">
                                             <?=$this->escape($topic->getAuthor()->getName()) ?>
                                         </a>
                                         »
@@ -159,7 +159,7 @@ if ($this->getUser()) {
         <div class="topic-actions">
             <?php if ($this->getUser()): ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['controller' => 'newtopic', 'action' => 'index','id' => $forum->getId()]) ?>" class="btn btn-primary btn-labeled">
                         <span class="btn-label">
                             <i class="fa fa-plus"></i>
                         </span><?=$this->getTrans('createNewTopic') ?>
@@ -168,7 +168,7 @@ if ($this->getUser()) {
             <?php else: ?>
                 <?php $_SESSION['redirect'] = $this->getRouter()->getQuery(); ?>
                 <div class="buttons">
-                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-labeled bgblue">
+                    <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'index']) ?>" class="btn btn-primary btn-labeled">
                         <span class="btn-label">
                             <i class="fa fa-user"></i>
                         </span><?=$this->getTrans('loginTopic') ?>
@@ -185,9 +185,9 @@ if ($this->getUser()) {
                         <button class="btn btn-default" name="forumEdit" value="forumEdit"><?=$this->getTrans('forumEdit') ?></button>
                     </form>
                 <?php else: ?>
-                    <button class="btn btn-labeled bgblue" name="topicDelete" value="topicDelete" OnClick="SetAction1()"><?=$this->getTrans('topicDelete') ?></button>
-                    <button class="btn btn-labeled bgblue" name="topicMove" value="topicMove" OnClick="SetAction2()"><?=$this->getTrans('topicMove') ?></button>
-                    <button class="btn btn-labeled bgblue" name="topicChangeStatus" value="topicChangeStatus" OnClick="SetAction3()"><?=$this->getTrans('topicChangeStatus') ?></button>
+                    <button class="btn btn-primary" name="topicDelete" value="topicDelete" OnClick="SetAction1()"><?=$this->getTrans('topicDelete') ?></button>
+                    <button class="btn btn-primary" name="topicMove" value="topicMove" OnClick="SetAction2()"><?=$this->getTrans('topicMove') ?></button>
+                    <button class="btn btn-primary" name="topicChangeStatus" value="topicChangeStatus" OnClick="SetAction3()"><?=$this->getTrans('topicChangeStatus') ?></button>
 
                     <script type="text/javascript">
                         function SetAction1() {

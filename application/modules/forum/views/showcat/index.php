@@ -18,7 +18,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
     <?php if ($item->getType() === 0): ?>
         <ul class="forenlist">
             <li class="header">
-                <dl class="title">
+                <dl class="title ilch-head">
                     <dt>
                         <a href="<?=$obj->getUrl(['controller' => 'showcat', 'action' => 'index','id' => $item->getId()]) ?>">
                             <?=$item->getTitle() ?>
@@ -37,7 +37,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
     <?php if (is_in_array($readAccess, explode(',', $item->getReadAccess())) || $adminAccess == true): ?>
         <?php if ($item->getType() != 0): ?>
             <ul class="forenlist forums">
-                <li class="row">
+                <li class="row ilch-border ilch-bg--hover">
                     <dl class="icon 
                         <?php if ($obj->getUser() && $lastPost): ?>
                             <?php if (in_array($obj->getUser()->getId(), explode(',', $lastPost->getRead()))): ?>
@@ -124,7 +124,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
         <div class="forabg">
             <ul class="forenlist">
                 <li class="header">
-                    <dl class="title">
+                    <dl class="title ilch-head">
                         <dt>
                             <a href="<?=$this->getUrl(['controller' => 'showcat', 'action' => 'index', 'id' => $cat->getId()]) ?>">
                                 <?=$cat->getTitle() ?>
@@ -132,7 +132,7 @@ function rec($item, $forumMapper, $obj, $readAccess)
                         </dt>
                     </dl>
                     <?php if ($cat->getDesc() != ''): ?>
-                        <dl class="desc small">
+                        <dl class="desc small ilch-bg ilch-border">
                             <?=$cat->getDesc() ?>
                         </dl>
                     <?php endif; ?>

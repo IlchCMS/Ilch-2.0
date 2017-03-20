@@ -2,7 +2,7 @@
 
 <link href="<?=$this->getModuleUrl('static/css/forum.css') ?>" rel="stylesheet">
 
-<h3 class="blue-header col-lg-12"><?=$this->getTrans('editPost') ?></h3>
+<h3 class="blue-header ilch-head"><?=$this->getTrans('editPost') ?></h3>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row">
@@ -18,7 +18,7 @@
             <div class="form-group">
                 <div class="col-lg-12">
                     <input type="submit"
-                           class="btn"
+                           class="btn btn-primary"
                            name="editPost"
                            value="<?=$this->getTrans('edit'); ?>" />
                 </div>

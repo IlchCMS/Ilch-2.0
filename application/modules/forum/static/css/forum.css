@@ -19,7 +19,6 @@ legend .forum.fa {
     padding: 0;
 }
 #forum .forabg ul.forenlist li.header dl {
-    background-color: #43A6DF;
     margin-bottom: 0;
 }
 #forum .forabg ul.forenlist li.header dl.title {
@@ -34,18 +33,9 @@ legend .forum.fa {
         padding: 15px 12px;
     }
 }
-#forum .forabg ul.forenlist li.header dl.title dt a {
-    color: #FFF;
-}
-#forum .forabg ul.forenlist li.header dl.title dt a:hover {
-    color: #FFF;
-}
 #forum .forabg ul.forenlist li.header dl.desc {
-    background-color: #f2f2f2;
-    border: 1px solid #e4e4e4;
     width: 100%;
     padding: 10px 5px;
-    color: #797979;
     border-top: 0;
 }
 @media (min-width: 768px) {
@@ -54,13 +44,8 @@ legend .forum.fa {
     }
 }
 #forum .forabg ul.forenlist.forums li {
-    color: #777;
     margin: 0;
-    border: 1px solid #E4E4E4;
     border-top: 0;
-}
-#forum .forabg ul.forenlist.forums li:hover {
-    background-color: #F2F2F2;
 }
 #forum .forabg ul.forenlist.forums li.row {
     padding: 10px 0;
@@ -145,11 +130,9 @@ legend .forum.fa {
 #forum .forabg ul.topiclist li {
     display: block;
     list-style-type: none;
-    color: #777;
     margin: 0;
 }
 #forum .forabg ul.topiclist li.header dl {
-    background-color: #43A6DF;
     margin-bottom: 0;
 }
 #forum .forabg ul.topiclist li.header dl.title {
@@ -171,12 +154,6 @@ legend .forum.fa {
     #forum .forabg ul.topiclist li.header dl.title dt {
         width: 52%;
     }
-}
-#forum .forabg ul.topiclist li.header dl.title dt a {
-    color: #FFF;
-}
-#forum .forabg ul.topiclist li.header dl.title dt a:hover {
-    color: #FFF;
 }
 #forum .forabg ul.topiclist li.header dl.title dd {
     display: block;
@@ -217,13 +194,8 @@ legend .forum.fa {
     }
 }
 #forum .forabg ul.topiclist.topics li {
-    color: #777;
     margin: 0;
-    border: 1px solid #E4E4E4;
     border-top: 0;
-}
-#forum .forabg ul.topiclist.topics li:hover {
-    background-color: #F2F2F2;
 }
 #forum .forabg ul.topiclist.topics li.row {
     padding: 10px 0;
@@ -346,22 +318,17 @@ legend .forum.fa {
     }
 }
 #forum .foren-actions a {
-    color: #333;
     text-decoration: underline;
 }
 #forum .foren-actions a:hover {
     text-decoration: none;
 }
 #forum .statistic .header {
-    background-color: #2E3539;
-    color: #FFF;
     padding: 15px 12px;
     margin-top: 30px;
 }
 #forum .statistic .content {
-    background-color: #FFF;
     padding: 12px;
-    border: 1px solid #E4E4E4;
     border-top: 0;
     margin-bottom: 12px;
 }
@@ -371,11 +338,9 @@ legend .forum.fa {
     }
 }
 #forum .statistic .content .statistics a {
-    color: #000;
     text-decoration: underline;
 }
 #forum .statistic .content .statistics a:hover {
-    color: #000;
     text-decoration: none;
 }
 #forum .statistic .content .statistics ul {
@@ -464,18 +429,7 @@ legend .forum.fa {
     background-repeat: no-repeat;
     background-position: 100% 0;
     border: solid 1px #E4E4E4;
-}
-.post:target .content {
-    color: #000;
-}
-
-.bg1 {
-    background-color: #F7F7F7;
     overflow: hidden;
-}
-
-.bg2 {
-    background-color: #F2F2F2;
 }
 
 .rowbg {
@@ -483,22 +437,15 @@ legend .forum.fa {
 }
 
 .blue-header {
-    background-color: #43A6DF;
     line-height: 48px;
     padding: 0 12px;
-    color: #FFF;
     font-weight: normal;
     clear: both;
     margin: 0;
 }
-.blue-header a {
-    color: #FFF !important;
-}
 
 .blue-header-content {
-    background-color: #FFF;
     padding: 12px;
-    border: 1px solid #E4E4E4;
     border-top: 0;
     margin-bottom: 12px;
 }
@@ -506,7 +453,6 @@ legend .forum.fa {
 #forum .postbody {
     padding: 0;
     line-height: 1.48em;
-    color: #333;
     width: 76%;
     float: left;
     clear: both;
@@ -551,12 +497,6 @@ legend .forum.fa {
     line-height: 1.4em;
 }
 
-#forum .posthilit {
-    background-color: #f3f3f3;
-    color: #BCBCBC;
-    padding: 0 2px 1px 2px;
-}
-
 #forum p.author {
     margin: 0 15em 0.6em 0;
     padding: 0 0 5px 0;
@@ -593,8 +533,6 @@ legend .forum.fa {
 #forum .postprofile {
     margin: 5px 0 10px 0;
     min-height: 80px;
-    color: #666;
-    border-left: 1px solid #FFF;
     width: 22%;
     float: right;
     display: inline;
@@ -603,11 +541,6 @@ legend .forum.fa {
 #forum .postprofile dd, .postprofile dt {
     line-height: 1.2em;
     margin-left: 8px;
-}
-
-#forum .postprofile strong {
-    font-weight: normal;
-    color: #000;
 }
 
 #forum .avatar {
@@ -622,68 +555,11 @@ legend .forum.fa {
     overflow: hidden;
 }
 
-* html .post {
-    height: 25%;
-    overflow: hidden;
-}
-
 #forum dl.icon {
     min-height: 35px;
     height: auto !important;
     height: 35px;
     background-repeat: no-repeat;
-}
-
-#forum hr {
-    border-color: #E4E4E4;
-}
-
-#forum .post:target .content {
-    color: #000;
-}
-
-#forum .post:target h3 a {
-    color: #000;
-}
-
-#forum .bgblue, #forum .bgblue:hover {
-    background-color: #43A6DF;
-    color: #FFF !important;
-}
-
-#forum .bgblue:hover {
-    color: #FFF !important;
-    text-decoration: underline;
-}
-
-#forum .postlink:visited {
-    color: #43A6DF;
-    border-bottom-color: #43A6DF;
-}
-
-#forum .postprofile a:active {
-    color: #43A6DF;
-}
-
-#forum ul.forums,
-#forum ul.topics {
-    background-color: #FFF;
-}
-
-#forum li.row:hover {
-    background-color: #F2F2F2;
-}
-
-#forum li.header dt, li.header dd {
-    color: #FFF;
-}
-
-#forum .postbody {
-    color: #333;
-}
-
-#forum .signature {
-    border-top-color: #E4E4E4;
 }
 
 #forum .topic-actions {

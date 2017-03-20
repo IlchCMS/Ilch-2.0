@@ -22,7 +22,7 @@ if ($this->getUser()) {
     <div class="forabg">
         <ul class="topiclist">
             <li class="header">
-                <dl class="title">
+                <dl class="title ilch-head">
                     <dt><?=$this->getTrans('topics') ?></dt>
                     <dd class="posts"><?=$this->getTrans('replies') ?> / <?=$this->getTrans('views') ?></dd>
                     <dd class="lastpost"><span><?=$this->getTrans('lastPost') ?></span></dd>
@@ -38,7 +38,7 @@ if ($this->getUser()) {
                 <?php if (is_in_array($groupIdsArray, explode(',', $forum->getReadAccess())) || $adminAccess == true): ?>
                     <?php $countPosts = $forumMapper->getCountPostsByTopicId($topic->getId()) ?>
                     <?php if ($lastPost->getDateCreated() < $date->format("Y-m-d H:i:s", true) AND $lastPost->getDateCreated() > $dateLessHours->format("Y-m-d H:i:s", true)): ?>
-                        <li class="row bg1">
+                        <li class="row ilch-border ilch-bg--hover">
                             <dl class="icon 
                                 <?php if ($this->getUser()): ?>
                                     <?php if (in_array($this->getUser()->getId(), explode(',', $lastPost->getRead())) AND $topic->getStatus() == 0): ?>
@@ -78,7 +78,7 @@ if ($this->getUser()) {
                                     <br>
                                     <div class="small">
                                         <?=$this->getTrans('by') ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" style="color: #AA0000;" class="username-coloured">
+                                        <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="ilch-link-red">
                                             <?=$this->escape($topic->getAuthor()->getName()) ?>
                                         </a>
                                         »

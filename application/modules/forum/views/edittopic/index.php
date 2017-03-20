@@ -45,7 +45,7 @@ function rec($item, $obj, $readAccess, $i)
 }
 ?>
 <div id="forum" class="col-lg-12">
-    <h1><?=$this->getTrans('topicMoveTo') ?></h1>
+    <h1 class="blue-header ilch-head"><?=$this->getTrans('topicMoveTo') ?></h1>
     <?php if (!empty($forumItems)): ?>
         <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => 'edittopic']) ?>">
             <?php echo $this->getTokenField(); ?>
@@ -65,7 +65,7 @@ function rec($item, $obj, $readAccess, $i)
                 </div>
             </div>
             <div class="col-lg-offset-2 col-lg-10">
-                <button type="submit" class="btn btn-labeled bgblue" name="edittopic" value="edittopic">
+                <button type="submit" class="btn btn-primary" name="edittopic" value="edittopic">
                     <?=$this->getTrans('move') ?>
                 </button>
             </div>

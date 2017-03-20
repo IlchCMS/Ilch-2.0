@@ -28,7 +28,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
     <i class="forum fa fa-chevron-right"></i> <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index', 'topicid' => $this->getRequest()->getParam('topicid')]) ?>"><?=$prefix.$topicpost->getTopicTitle() ?></a>
     <i class="forum fa fa-chevron-right"></i> <?=$this->getTrans('newPost') ?>
 </h1>
-<h3 class="blue-header col-lg-12"><?=$this->getTrans('newPost') ?></h3>
+<h3 class="blue-header ilch-head"><?=$this->getTrans('newPost') ?></h3>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="row">
@@ -44,7 +44,7 @@ if ($forumPrefix->getPrefix() != '' AND $topicpost->getTopicPrefix() > 0) {
             <div class="form-group">
                 <div class="col-lg-12">
                     <input type="submit"
-                           class="btn"
+                           class="btn btn-primary"
                            name="saveNewPost"
                            value="<?php echo $this->getTrans('add'); ?>" />
                 </div>

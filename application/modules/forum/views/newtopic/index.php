@@ -18,7 +18,7 @@ if ($this->getUser()) {
     <i class="forum fa fa-chevron-right"></i> <?=$this->getTrans('newTopicTitle') ?>
 </h1>
 <?php if (is_in_array($readAccess, explode(',', $forum->getCreateAccess())) || $adminAccess == true): ?>
-    <h3 class="blue-header col-lg-12"><?=$this->getTrans('createNewTopic') ?></h3>
+    <h3 class="blue-header ilch-head"><?=$this->getTrans('createNewTopic') ?></h3>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="row">
@@ -94,7 +94,7 @@ if ($this->getUser()) {
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-8">
                         <input type="submit"
-                               class="btn"
+                               class="btn btn-primary"
                                name="saveNewTopic"
                                value="<?=$this->getTrans('add') ?>" />
                     </div>

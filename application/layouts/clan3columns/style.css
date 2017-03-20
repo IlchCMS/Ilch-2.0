@@ -34,6 +34,10 @@ h1 {
     border-bottom: 1px solid #e5e5e5;
 }
 
+hr {
+    border-color: #E4E4E4;
+}
+
 .navbar-gaming {
     background: #40434E;
     border-bottom: 1px solid #32333B;
