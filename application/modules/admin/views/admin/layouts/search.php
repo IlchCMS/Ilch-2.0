@@ -2,7 +2,7 @@
 
 <h1><?=$this->getTrans('search') ?></h1>
 <?php
-$layoutsList = url_get_contents($this->get('updateserver').'downloads/layouts/list.php');
+$layoutsList = url_get_contents($this->get('updateserver').'layouts.php');
 $layoutsOnUpdateServer = json_decode($layoutsList);
 $versionsOfLayouts = $this->get('versionsOfLayouts');
 
@@ -30,7 +30,7 @@ foreach ($layoutsOnUpdateServer as $layoutOnUpdateServer): ?>
             </div>
             <div class="panel-body">
                 <a href="<?=$this->getUrl(['action' => 'show', 'id' => $layoutOnUpdateServer->id]); ?>" title="<?=$this->getTrans('info') ?>">
-                    <img src="<?=$this->get('updateserver').'downloads/layouts/img/'.$layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
+                    <img src="<?=$this->get('updateserver').'layouts/images/'.$layoutOnUpdateServer->thumbs[0]->img ?>" alt="<?=$this->escape($layoutOnUpdateServer->name) ?>" />
                 </a>
             </div>
             <div class="panel-footer">
