@@ -1,5 +1,5 @@
 <?php
-$modulesList = url_get_contents($this->get('updateserver').'downloads/modules/list.php');
+$modulesList = url_get_contents($this->get('updateserver').'modules.php');
 $modules = json_decode($modulesList);
 $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
@@ -73,7 +73,7 @@ foreach ($modules as $module): ?>
                         <?php $itemI = 0; ?>
                         <?php foreach ($module->thumbs as $thumb): ?>
                             <div class="item <?=$itemI == 0 ? 'active' : '' ?>">
-                                <img src="<?=$this->get('updateserver').'downloads/modules/img/'.$module->id.'/'.$thumb->img ?>" alt="<?=$this->escape($module->name) ?>">
+                                <img src="<?=$this->get('updateserver').'modules/images/'.$module->id.'/'.$thumb->img ?>" alt="<?=$this->escape($module->name) ?>">
                                 <div class="carousel-caption">
                                     <?php if ($thumb->desc != ''): ?>
                                         <?=$this->escape($thumb->desc) ?>

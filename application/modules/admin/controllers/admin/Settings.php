@@ -204,7 +204,7 @@ HTACCESS;
         $this->getView()->set('version', $version);
 
         $update = new IlchTransfer();
-        $update->setTransferUrl($this->getConfig()->get('updateserver').'ftp/current-release-versions.php');
+        $update->setTransferUrl($this->getConfig()->get('updateserver').'updates.php');
         $update->setVersionNow($version);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYPEER, TRUE);
         $update->setCurlOpt(CURLOPT_SSL_VERIFYHOST, 2); 
@@ -222,8 +222,8 @@ HTACCESS;
         $this->getView()->set('versions', $result);
 
         if ($update->newVersionFound() == true) {
-            $update->setDownloadUrl($this->getConfig()->get('updateserver').'ftp/Master-'.$update->getNewVersion().'.zip');
-            $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'ftp/Master-'.$update->getNewVersion().'.zip-signature.sig');
+            $update->setDownloadUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip');
+            $update->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'updates/Master-'.$update->getNewVersion().'.zip-signature.sig');
             $newVersion = $update->getNewVersion();
             $this->getView()->set('foundNewVersions', true);
             $this->getView()->set('newVersion', $newVersion);

@@ -1,5 +1,5 @@
 <?php
-$layoutsList = url_get_contents($this->get('updateserver').'downloads/layouts/list.php');
+$layoutsList = url_get_contents($this->get('updateserver').'layouts.php');
 $layouts = json_decode($layoutsList);
 ?>
 
@@ -22,7 +22,7 @@ foreach ($layouts as $layout): ?>
                         <?php $itemI = 0; ?>
                         <?php foreach ($layout->thumbs as $thumb): ?>
                             <div class="item <?=$itemI == 0 ? 'active' : '' ?>">
-                                <img src="<?=$this->get('updateserver').'downloads/layouts/img/'.$thumb->img ?>" alt="<?=$this->escape($layout->name) ?>">
+                                <img src="<?=$this->get('updateserver').'layouts/images/'.$thumb->img ?>" alt="<?=$this->escape($layout->name) ?>">
                                 <div class="carousel-caption">
                                     <?php if ($thumb->desc != ''): ?>
                                         <?=$this->escape($thumb->desc) ?>

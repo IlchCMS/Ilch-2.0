@@ -75,7 +75,7 @@ class Modules extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/modules/list.php');
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php');
         $this->getView()->set('modules', $moduleMapper->getModules());
         $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
         $this->getView()->set('dependencies', $dependencies);
@@ -127,8 +127,8 @@ class Modules extends \Ilch\Controller\Admin
             if ($this->getRequest()->isSecure()) {
                 $transfer = new \Ilch\Transfer();
                 $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'downloads/modules/down/'.$this->getRequest()->getParam('key').'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'downloads/modules/down/'.$this->getRequest()->getParam('key').'.zip-signature.sig');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$this->getRequest()->getParam('key').'.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$this->getRequest()->getParam('key').'.zip-signature.sig');
 
                 if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
@@ -162,7 +162,7 @@ class Modules extends \Ilch\Controller\Admin
                 }
             }
 
-            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'downloads/modules/list.php');
+            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php');
             $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
             $this->getView()->set('modules', $modulesDir);
             $this->getView()->set('dependencies', $dependencies);
@@ -178,8 +178,8 @@ class Modules extends \Ilch\Controller\Admin
 
                 $transfer = new \Ilch\Transfer();
                 $transfer->setZipSavePath(ROOT_PATH.'/updates/');
-                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'downloads/modules/down/'.$key.'.zip');
-                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'downloads/modules/down/'.$key.'.zip-signature.sig');
+                $transfer->setDownloadUrl($this->getConfig()->get('updateserver').'modules/'.$key.'.zip');
+                $transfer->setDownloadSignatureUrl($this->getConfig()->get('updateserver').'modules/'.$key.'.zip-signature.sig');
 
                 if (!$transfer->validateCert(ROOT_PATH.'/certificate/Certificate.crt')) {
                     // Certificate is missing or expired.
