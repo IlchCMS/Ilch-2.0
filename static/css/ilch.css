@@ -35,3 +35,45 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+
+/* ilch Standard */
+.ilch-border {
+    border: 1px solid #E4E4E4;
+}
+.ilch-head {
+    background-color: #337ab7;
+    color: #FFF;
+}
+.ilch-head a,
+.ilch-head a:hover {
+    color: #FFF;
+}
+.ilch-head-dark {
+    background-color: #2E3539;
+    color: #FFF;
+}
+.ilch-head-dark a {
+    color: #FFF;
+}
+.ilch-head-dark a:hover {
+    color: #FFF;
+}
+.ilch-bg {
+    background-color: #F2F2F2;
+}
+.ilch-bg--hover {
+    background-color: #FFF;
+}
+.ilch-bg--hover:hover {
+    background-color: #F2F2F2;
+}
+.ilch-devider {
+    border-color: #E4E4E4;
+}
+.ilch-link {
+    color: #000;
+}
+.ilch-link-red {
+    color: #AA0000;
+}
