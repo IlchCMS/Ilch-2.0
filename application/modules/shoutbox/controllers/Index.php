@@ -25,6 +25,6 @@ class Index extends \Ilch\Controller\Frontend
      */
     public function ajaxAction()
     {
-        echo $this->getLayout()->getBox('Shoutbox', 'Shoutbox');
+        echo $this->getLayout()->getBox('shoutbox', 'shoutbox');
     }
 }
