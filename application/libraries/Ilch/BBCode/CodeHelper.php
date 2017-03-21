@@ -6,15 +6,21 @@
 
 namespace Ilch\BBCode;
 
-class CodeHelper extends \JBBCode\CodeDefinition {
-    public function __construct($useOption){
+class CodeHelper extends \JBBCode\CodeDefinition
+{
+    public function __construct($useOption)
+    {
         parent::__construct($useOption);
         $this->setTagName('code');
         $this->setParseContent(false);
     }
 
-    public function asHtml(\JBBCode\ElementNode $el){
+    public function asHtml(\JBBCode\ElementNode $el)
+    {
         $content = $this->getContent($el);
-        return '<pre class="pre-scrollable"><code>'.htmlspecialchars_decode($content).'</code></pre>';
+        $content = htmlspecialchars_decode($content);
+        $content = preg_replace('/\\r\\n/', '<br>', $content);
+
+        return '<pre class="pre-scrollable"><code>'.$content.'</code></pre>';
     }
 }
