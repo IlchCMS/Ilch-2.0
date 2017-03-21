@@ -65,4 +65,4 @@
     <?=$this->getTrans('noImages') ?>
 <?php endif; ?>
 
-<?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'user' => $this->getRequest()->getParam('user'), 'id' => $this->getRequest()->getParam('id')]) ?>
