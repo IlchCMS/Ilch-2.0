@@ -31,9 +31,11 @@ $osStatistic = $this->get('osStatistic');
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-lg-4">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('siteOnlineSince') ?>: <?=$dateCmsInstalled->format("Y-m-d", true) ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('siteOnlineSince') ?>: <?=$dateCmsInstalled->format("d.m.Y", true) ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center"><?=$dateCmsInstalled->format("Y-m-d", true) ?></h1>
+                                <span class="panel-title text-center">
+                                    <?=$dateCmsInstalled->format("d.m.Y", true) ?>
+                                </span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('siteOnlineSince') ?></strong>
@@ -42,13 +44,13 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('totalUsers') ?>: <?=$this->get('registUserCount') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('totalUsers') ?>: <?=$this->get('registUserCount') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center">
+                                <span class="panel-title text-center">
                                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'index', 'action' => 'index']) ?>">
                                         <?=$this->get('registUserCount') ?>
                                     </a>
-                                </h1>
+                                </span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('totalUsers') ?></strong>
@@ -57,13 +59,13 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-12 col-lg-5">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('lastUser') ?>: <?=$registNewUser->getName() ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('lastUser') ?>: <?=$registNewUser->getName() ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center">
+                                <span class="panel-title text-center">
                                     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $registNewUser->getId()]) ?>">
                                         <?=$this->escape($registNewUser->getName()) ?>
                                     </a>
-                                </h1>
+                                </span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('lastUser') ?></strong>
@@ -72,13 +74,13 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('totalArticles') ?>: <?=$this->get('articlesCount') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('totalArticles') ?>: <?=$this->get('articlesCount') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center">
+                                <span class="panel-title text-center">
                                     <a href="<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'index']) ?>">
                                         <?=$this->get('articlesCount') ?>
                                     </a>
-                                </h1>
+                                </span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('totalArticles') ?></strong>
@@ -87,9 +89,9 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('totalComments') ?>: <?=$this->get('commentsCount') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('totalComments') ?>: <?=$this->get('commentsCount') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center"><?=$this->get('commentsCount') ?></h1>
+                                <span class="panel-title text-center"><?=$this->get('commentsCount') ?></span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('totalComments') ?></strong>
@@ -98,9 +100,9 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('installedModules') ?>: <?=$this->get('modulesCount') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('installedModules') ?>: <?=$this->get('modulesCount') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center"><?=$this->get('modulesCount') ?></h1>
+                                <span class="panel-title text-center"><?=$this->get('modulesCount') ?></span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('installedModules') ?></strong>
@@ -113,9 +115,9 @@ $osStatistic = $this->get('osStatistic');
                             <a href="http://ilch.de" target="_blank">
                                 <div class="ilch-logo">
                                     <div class="panel-heading panel-ilch">
-                                        <h1 class="panel-title ilch-title text-center">
+                                        <span class="panel-title ilch-title text-center">
                                             <?=$this->get('CMSVersion') ?>
-                                        </h1>
+                                        </span>
                                     </div>
                                     <div class="panel-body ilch-body text-left">
                                         <strong><?=$this->getTrans('IlchCMSVersion') ?></strong>
@@ -143,7 +145,7 @@ $osStatistic = $this->get('osStatistic');
                             ?>
                             <div class="col-xs-12 col-md-6 col-lg-3">
                                 <div class="box">
-                                    <div class="icon" title="<?=$this->getTrans('author') ?>: <?=$modules->getAuthor() ?>" style="cursor: help;">
+                                    <div class="icon" title="<?=$this->getTrans('author') ?>: <?=$modules->getAuthor() ?>">
                                         <div class="image">
                                             <?=$smallIcon ?>
                                         </div>
@@ -174,9 +176,9 @@ $osStatistic = $this->get('osStatistic');
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('statToday') ?>: <?=$this->get('visitsToday') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statToday') ?>: <?=$this->get('visitsToday') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center"><?=$this->get('visitsToday') ?></h1>
+                                <span class="panel-title text-center"><?=$this->get('visitsToday') ?></span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('statToday') ?></strong>
@@ -185,13 +187,13 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statMonth') ?>: <?=$this->get('visitsMonth') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center">
+                                <span class="panel-title text-center">
                                     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>">
                                         <?=$this->get('visitsMonth') ?>
                                     </a>
-                                </h1>
+                                </span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('statMonth') ?></strong>
@@ -200,13 +202,13 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statYear') ?>: <?=$this->get('visitsYear') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center">
+                                <span class="panel-title text-center">
                                     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true)]) ?>">
                                         <?=$this->get('visitsYear') ?>
                                     </a>
-                                </h1>
+                                </span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('statYear') ?></strong>
@@ -215,9 +217,9 @@ $osStatistic = $this->get('osStatistic');
                     </div>
 
                     <div class="col-xs-12 col-md-6 col-lg-3">
-                        <div class="panel stats panel-default" title="<?=$this->getTrans('statTotal') ?>: <?=$this->get('visitsAllTotal') ?>" style="cursor: help;">
+                        <div class="panel stats panel-default" title="<?=$this->getTrans('statTotal') ?>: <?=$this->get('visitsAllTotal') ?>">
                             <div class="panel-heading">
-                                <h1 class="panel-title text-center"><?=$this->get('visitsAllTotal') ?></h1>
+                                <span class="panel-title text-center"><?=$this->get('visitsAllTotal') ?></span>
                             </div>
                             <div class="panel-body text-center">
                                 <strong><?=$this->getTrans('statTotal') ?></strong>

@@ -19,6 +19,11 @@
     color: #000 !important;
 }
 
+.panel .stats {
+    text-align: center;
+    cursor: help;
+}
+
 .stats .panel-title {
     font-size: 25px;
     font-weight: bold;
@@ -60,6 +65,7 @@
 .box > .icon {
     text-align: center;
     position: relative;
+    cursor: help;
 }
 .box > .icon > .image {
     position: relative;
