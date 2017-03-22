@@ -45,6 +45,10 @@
     padding: 0;
     margin-bottom: 0;
 }
+.chat .chat-wrapper .chat-list-wrapper .chat-list .no-dialog {
+    padding: 25px 10px;
+    text-align: center;
+}
 .chat .chat-wrapper .chat-list-wrapper .chat-list a {
     color: #000;
     text-decoration: none;

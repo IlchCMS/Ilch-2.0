@@ -66,7 +66,9 @@
                                                 </li>
                                             <?php endforeach; ?>
                                         <?php else: ?>
-                                            <p><?=$this->getTrans('noDialog') ?></p>
+                                            <div class="no-dialog">
+                                                <?=$this->getTrans('noDialog') ?>
+                                            </div>
                                         <?php endif; ?>
 
                                     </ul>
