@@ -33,10 +33,13 @@ class Usermenu extends \Ilch\Model
      * Sets the menu id.
      *
      * @param integer $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -53,10 +56,13 @@ class Usermenu extends \Ilch\Model
      * Sets the menu key.
      *
      * @param int $key
+     * @return $this
      */
     public function setKey($key)
     {
         $this->key = (string)$key;
+
+        return $this;
     }
 
     /**
@@ -73,10 +79,13 @@ class Usermenu extends \Ilch\Model
      * Sets the menu icon.
      *
      * @param int $icon
+     * @return $this
      */
     public function setIcon($icon)
     {
         $this->icon = (string)$icon;
+
+        return $this;
     }
 
     /**

@@ -392,10 +392,10 @@ class Panel extends BaseController
                 $DialogMapper->save($model);
 
                 $c_id = $DialogMapper->getDialogId($user_one);
-                $this->redirect(['action' => 'dialogview', 'id' => $c_id->getCId()]);
+                $this->redirect(['action' => 'dialog', 'id' => $c_id->getCId()]);
             }
 
-            $this->redirect(['action' => 'dialogview', 'id' => $c_exist->getCId()]);
+            $this->redirect(['action' => 'dialog', 'id' => $c_exist->getCId()]);
         }
     }
 
