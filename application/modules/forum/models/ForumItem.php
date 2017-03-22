@@ -6,11 +6,6 @@
 
 namespace Modules\Forum\Models;
 
-/**
- * The Downloads item model class.
- *
- * @package ilch
- */
 class ForumItem extends \Ilch\Model
 {
     /**
@@ -35,14 +30,14 @@ class ForumItem extends \Ilch\Model
     protected $type;
 
     /**
-     * DownloadsId of the item.
+     * Forum Id of the item.
      *
      * @var integer
      */
     protected $forumId;
 
     /**
-     * ParentId of the item.
+     * Parent Id of the item.
      *
      * @var integer
      */
@@ -63,49 +58,49 @@ class ForumItem extends \Ilch\Model
     protected $desc;
 
     /**
-     * ParentId of the item.
+     * Read access of the item.
      *
      * @var integer
      */
     protected $readAccess;
 
     /**
-     * ParentId of the item.
+     * Replay access of the item.
      *
      * @var integer
      */
     protected $replayAccess;
 
     /**
-     * ParentId of the item.
+     * Create access of the item.
      *
      * @var integer
      */
     protected $createAccess;
 
     /**
-     * ParentId of the item.
+     * Sub items of the item.
      *
      * @var integer
      */
     protected $subItems;
 
     /**
-     * ParentId of the item.
+     * Topics of the item.
      *
      * @var integer
      */
     protected $topics;
 
     /**
-     * ParentId of the item.
+     * Last post of the item.
      *
      * @var integer
      */
     protected $lastPost;
 
     /**
-     * ParentId of the item.
+     * Posts of the item.
      *
      * @var integer
      */
@@ -132,10 +127,13 @@ class ForumItem extends \Ilch\Model
      * Sets the id.
      *
      * @param integer $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int) $id;
+
+        return $this;
     }
 
     /**
@@ -152,10 +150,13 @@ class ForumItem extends \Ilch\Model
      * Sets the sort.
      *
      * @param integer $sort
+     * @return $this
      */
     public function setSort($sort)
     {
         $this->sort = (int)$sort;
+
+        return $this;
     }
 
     /**
@@ -172,14 +173,17 @@ class ForumItem extends \Ilch\Model
      * Sets the type.
      *
      * @param integer $type
+     * @return $this
      */
     public function setType($type)
     {
         $this->type = (int)$type;
+
+        return $this;
     }
 
     /**
-     * Gets the Downloads id.
+     * Gets the forum id.
      *
      * @return integer
      */
@@ -189,13 +193,16 @@ class ForumItem extends \Ilch\Model
     }
 
     /**
-     * Sets the Downloads id.
+     * Sets the forum id.
      *
      * @param integer $id
+     * @return $this
      */
     public function setForumId($id)
     {
         $this->forumId = (int) $id;
+
+        return $this;
     }
 
     /**
@@ -212,10 +219,13 @@ class ForumItem extends \Ilch\Model
      * Sets the parent id.
      *
      * @param integer $id
+     * @return $this
      */
     public function setParentId($id)
     {
         $this->parentId = (int) $id;
+
+        return $this;
     }
 
     /**
@@ -232,10 +242,13 @@ class ForumItem extends \Ilch\Model
      * Sets the title.
      *
      * @param string $title
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = (string) $title;
+
+        return $this;
     }
 
     /**
@@ -252,14 +265,17 @@ class ForumItem extends \Ilch\Model
      * Sets the desc.
      *
      * @param string $desc
+     * @return $this
      */
     public function setDesc($desc)
     {
         $this->desc = (string)$desc;
+
+        return $this;
     }
 
     /**
-     * Gets the parent id.
+     * Gets the read access.
      *
      * @return integer
      */
@@ -269,17 +285,20 @@ class ForumItem extends \Ilch\Model
     }
 
     /**
-     * Sets the parent id.
+     * Sets the read access.
      *
-     * @param integer $id
+     * @param integer $readAccess
+     * @return $this
      */
     public function setReadAccess($readAccess)
     {
         $this->readAccess = (string) $readAccess;
+
+        return $this;
     }
 
     /**
-     * Gets the parent id.
+     * Gets the replay access.
      *
      * @return integer
      */
@@ -289,17 +308,20 @@ class ForumItem extends \Ilch\Model
     }
 
     /**
-     * Sets the parent id.
+     * Sets the replay access.
      *
-     * @param integer $id
+     * @param integer $replayAccess
+     * @return $this
      */
     public function setReplayAccess($replayAccess)
     {
         $this->replayAccess = (string) $replayAccess;
+
+        return $this;
     }
 
     /**
-     * Gets the parent id.
+     * Gets the create access.
      *
      * @return integer
      */
@@ -309,19 +331,22 @@ class ForumItem extends \Ilch\Model
     }
 
     /**
-     * Sets the parent id.
+     * Sets the create access.
      *
-     * @param integer $id
+     * @param integer $createAccess
+     * @return $this
      */
     public function setCreateAccess($createAccess)
     {
         $this->createAccess = (string) $createAccess;
+
+        return $this;
     }
 
     /**
      * Gets the sub items.
      *
-     * @return
+     * @return integer
      */
     public function getSubItems()
     {
@@ -332,16 +357,19 @@ class ForumItem extends \Ilch\Model
      * Sets the sub items.
      *
      * @param
+     * @return $this
      */
     public function setSubItems($subItems)
     {
         $this->subItems = $subItems;
+
+        return $this;
     }
 
     /**
      * Gets the topics.
      *
-     * @return
+     * @return integer
      */
     public function getTopics()
     {
@@ -351,17 +379,20 @@ class ForumItem extends \Ilch\Model
     /**
      * Sets the topics.
      *
-     * @param
+     * @param $topics
+     * @return $this
      */
     public function setTopics($topics)
     {
         $this->topics = $topics;
+
+        return $this;
     }
 
     /**
      * Gets the last post.
      *
-     * @return
+     * @return integer
      */
     public function getLastPost()
     {
@@ -371,11 +402,14 @@ class ForumItem extends \Ilch\Model
     /**
      * Sets the last post.
      *
-     * @param
+     * @param $lastPost
+     * @return $this
      */
     public function setLastPost($lastPost)
     {
         $this->lastPost = $lastPost;
+
+        return $this;
     }
 
     /**
@@ -391,11 +425,14 @@ class ForumItem extends \Ilch\Model
     /**
      * Sets the posts.
      *
-     * @param
+     * @param $posts
+     * @return $this
      */
     public function setPosts($posts)
     {
         $this->posts = $posts;
+
+        return $this;
     }
 
     /**
@@ -412,9 +449,12 @@ class ForumItem extends \Ilch\Model
      * Sets the prefix.
      *
      * @param string $prefix
+     * @return $this
      */
     public function setPrefix($prefix)
     {
         $this->prefix = (string) $prefix;
+
+        return $this;
     }
 }
