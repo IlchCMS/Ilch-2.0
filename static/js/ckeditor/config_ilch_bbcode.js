@@ -13,7 +13,7 @@ CKEDITOR.editorConfig = function( config ) {
         [
             ['Undo', 'Redo'],
             ['RemoveFormat'],
-            ['Bold', 'Italic', 'Underline', 'Strike'],
+            ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', 'Blockquote', 'CodeSnippet'],
             ['Link', 'Unlink', 'Image', 'ilchsmileys'],
             ['Maximize']
