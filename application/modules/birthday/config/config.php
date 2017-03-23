@@ -44,7 +44,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('bday_boxShow', '5');
 		
 		if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-			$this->db()->queryMulti("INSERT INTO `[prefix]_calendar_events` WHERE `url` = 'birthday/birthdays/index/';");
+			$this->db()->queryMulti("INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ('birthday/birthdays/index/');");
 		}
     }
 
