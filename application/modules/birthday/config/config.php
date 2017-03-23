@@ -42,6 +42,10 @@ class Config extends \Ilch\Config\Install
     {
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('bday_boxShow', '5');
+		
+		if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+			$this->db()->queryMulti("INSERT INTO `[prefix]_calendar_events` WHERE `url` = 'birthday/birthdays/index/';");
+		}
     }
 
     public function uninstall()
@@ -50,13 +54,6 @@ class Config extends \Ilch\Config\Install
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             $this->db()->queryMulti("DELETE FROM `[prefix]_calendar_events` WHERE `url` = 'birthday/birthdays/index/';");
-        }
-    }
-
-    public function getInstallSql()
-    {
-        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-            return 'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("birthday/birthdays/index/");';
         }
     }
 
