@@ -213,7 +213,7 @@ class Model
                 } elseif ($menuData['items'][$itemId]->isPageLink()) {
                     $page = $this->pageMapper->getPageByIdLocale($menuData['items'][$itemId]->getSiteId(), $locale);
                     $href = $this->layout->getUrl($page->getPerma());
-                } elseif ($menuData['items'][$itemId]->isModuleLink() && !is_in_array($groupIdsArray, explode(',', $menuData['items'][$itemId]->getAccess()))) {
+                } elseif ($menuData['items'][$itemId]->isModuleLink()) {
                     $href = $this->layout->getUrl(
                         ['module' => $menuData['items'][$itemId]->getModuleKey(), 'action' => 'index', 'controller' => 'index']
                     );
@@ -226,22 +226,24 @@ class Model
                     $liClasses[] = array_dot($options, 'menus.li-class-active');
                 }
 
-                $contentHtml = '<a href="' . $href . '">' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
-                $subItemsHtml = '';
+                if (!is_in_array($groupIdsArray, explode(',', $menuData['items'][$itemId]->getAccess()))) {
+                    $contentHtml = '<a href="' . $href . '">' . $this->layout->escape($menuData['items'][$itemId]->getTitle()) . '</a>';
+                    $subItemsHtml = '';
 
-                // find childitems recursively
-                $subItemsHtml = $this->buildMenu($itemId, $menuData, $locale, $options, $menuData['items'][$itemId]->getType());
+                    // find childitems recursively
+                    $subItemsHtml = $this->buildMenu($itemId, $menuData, $locale, $options, $menuData['items'][$itemId]->getType());
 
-                if (!empty($subItemsHtml)) {
-                    if (array_dot($options, 'menus.allow-nesting') === true) {
-                        $liClasses[] = array_dot($options, 'menus.li-class-root-nesting');
-                        $contentHtml .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-child'))
-                            . '>' . $subItemsHtml . '</ul>';
-                        $subItemsHtml = '';
+                    if (!empty($subItemsHtml)) {
+                        if (array_dot($options, 'menus.allow-nesting') === true) {
+                            $liClasses[] = array_dot($options, 'menus.li-class-root-nesting');
+                            $contentHtml .= '<ul' . $this->createClassAttribute(array_dot($options, 'menus.ul-class-child'))
+                                . '>' . $subItemsHtml . '</ul>';
+                            $subItemsHtml = '';
+                        }
                     }
-                }
 
-                $html .= '<li' . $this->createClassAttribute($liClasses) . '>' . $contentHtml . '</li>' . $subItemsHtml;
+                    $html .= '<li' . $this->createClassAttribute($liClasses) . '>' . $contentHtml . '</li>' . $subItemsHtml;
+                }
             }
         }
 
