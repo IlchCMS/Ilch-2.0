@@ -454,6 +454,20 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     transition: margin-left 0.5s;
 }
 
+.profile-sidebar.active > .profile-userpic{
+     height: 0;
+     -webkit-transition: height 0.8s;
+     -moz-transition: height 0.8s;
+     transition: height 0.8s;
+ }
+
+.profile-sidebar > .profile-userpic{
+    height: 80px;
+    -webkit-transition: height 0.8s;
+    -moz-transition: height 0.8s;
+    transition: height 0.8s;
+}
+
 .profile-sidebar .push-menu i {
     color: #428BCA;
     padding: 5px;
