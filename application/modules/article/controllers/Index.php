@@ -104,7 +104,9 @@ class Index extends \Ilch\Controller\Frontend
             $content = $this->getRequest()->getPost('content');
             $image = $this->getRequest()->getPost('image');
 
+            $categoryMapper = new CategoryMapper();
             $articleModel = new ArticleModel();
+
             $articleModel->setTitle($title);
             $articleModel->setCatId($catId);
             $articleModel->setContent($content);
@@ -114,6 +116,8 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('categoryMapper', $categoryMapper);
             $this->getView()->set('commentMapper', $commentMapper);
             $this->getView()->set('article', $articleModel);
+            $this->getView()->set('categoryMapper', $categoryMapper);
+            $this->getView()->set('commentMapper', $commentMapper);
         } else {
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
             $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
