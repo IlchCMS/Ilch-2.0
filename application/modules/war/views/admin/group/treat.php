@@ -106,5 +106,4 @@
 ?>
 
 $('#assignedMember').chosen();
-$('#assignedMember_chosen').css('width', '100%'); // Workaround for chosen resize bug.
 </script>

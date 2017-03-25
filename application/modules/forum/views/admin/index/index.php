@@ -200,11 +200,8 @@ $(document).ready (
                     });
                 });
                 $('#assignedGroupsRead').chosen();
-                $('#assignedGroupsRead_chosen').css('width', '100%'); // Workaround for chosen resize bug.
                 $('#assignedGroupsReplay').chosen();
-                $('#assignedGroupsReplay_chosen').css('width', '100%'); // Workaround for chosen resize bug.
                 $('#assignedGroupsCreate').chosen();
-                $('#assignedGroupsCreate_chosen').css('width', '100%'); // Workaround for chosen resize bug.
             }
         });
 

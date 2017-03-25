@@ -372,7 +372,6 @@ $(document).ready
         });
 
         $('#access').chosen();
-        $('#access_chosen').css('width', '100%'); // Workaround for chosen resize bug.
     }
 );
 </script>

@@ -141,6 +141,5 @@ if ($user->getId()) {
 
 <script>
 $('#assignedGroups').chosen();
-$('#assignedGroups_chosen').css('width', '100%'); // Workaround for chosen resize bug.
 $('#userForm').validate();
 </script>
