@@ -22,25 +22,23 @@ class Login extends \Ilch\Controller\Frontend
     {
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index']);
 
-        $errors = [];
         $redirectUrl = '';
 
         if ($this->getRequest()->isPost()) {
-            if (\Ilch\Registry::get('user')) {
-                $errors['alreadyLoggedIn'] = 'alreadyLoggedIn';
-            }
-
-            $emailName = $this->getRequest()->getPost('login_emailname');
-            $password = $this->getRequest()->getPost('login_password');
             $redirectUrl = $this->getRequest()->getPost('login_redirect_url');
-            $rememberMe = $this->getRequest()->getPost('rememberMe');
 
-            if (empty($emailName)) {
-                $errors['login_emailname'] = 'fieldEmpty';
-            } elseif (empty($password)) {
-                $errors['login_password'] = 'fieldEmpty';
-            } else {
-                $result  = LoginService::factory()->perform($emailName, $password);
+            Validation::setCustomFieldAliases([
+                'login_emailname' => 'nameEmail',
+                'login_password' => 'password',
+            ]);
+
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'login_emailname' => 'required|email',
+                'login_password' => 'required'
+            ]);
+
+            if ($validation->isValid()) {
+                $result  = LoginService::factory()->perform($this->getRequest()->getPost('login_emailname'), $this->getRequest()->getPost('login_password'));
 
                 if ($result->isSuccessful()) {
                     $cookieStolenMapper = new CookieStolenMapper();
@@ -53,7 +51,7 @@ class Login extends \Ilch\Controller\Frontend
                         $this->addMessage($this->getTranslator()->trans('cookieStolen'), 'danger');
                     }
 
-                    if ($rememberMe) {
+                    if ($this->getRequest()->getPost('rememberMe')) {
                         $authTokenModel = new AuthTokenModel();
 
                         // 9 bytes of random data (base64 encoded to 12 characters) for the selector.
@@ -77,9 +75,13 @@ class Login extends \Ilch\Controller\Frontend
                 }
 
                 $this->redirect($redirectUrl);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'index']);
             }
-
-            $this->getView()->set('errors', $errors);
         }
 
         if (!empty($_SESSION['redirect'])) {
@@ -91,7 +93,6 @@ class Login extends \Ilch\Controller\Frontend
 
         $this->getView()->setArray([
             'providers' => $authProvider->getProviders(),
-            'errors' => $errors,
             'regist_accept' => $this->getConfig()->get('regist_accept'),
             'redirectUrl' => $redirectUrl
         ]);

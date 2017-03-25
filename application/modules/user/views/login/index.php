@@ -3,8 +3,7 @@
         <h1><?=$this->getTrans('menuLogin') ?></h1>
         <?=$this->getTokenField() ?>
         <input type="hidden" name="login_redirect_url" value="<?=$this->get('redirectUrl');?>" />
-        <?php $errors = $this->get('errors'); ?>
-        <div class="form-group <?php if (!empty($errors['login_emailname'])) { echo 'has-error'; }; ?>">
+        <div class="form-group <?=$this->validation()->hasError('login_emailname') ? 'has-error' : '' ?>">
             <label for="login_emailname" class="col-lg-2 control-label">
                 <?=$this->getTrans('nameEmail') ?>:
             </label>
@@ -16,12 +15,9 @@
                            id="login_emailname"
                            name="login_emailname" />
                 </div>
-                <?php if (!empty($errors['login_emailname'])): ?>
-                    <span class="help-block"><?=$this->getTrans($errors['login_emailname']) ?></span>
-                <?php endif; ?>
             </div>
         </div>
-        <div class="form-group <?php if (!empty($errors['login_password'])) { echo 'has-error'; }; ?>">
+        <div class="form-group <?=$this->validation()->hasError('login_password') ? 'has-error' : '' ?>">
             <label for="login_password" class="col-lg-2 control-label">
                 <?=$this->getTrans('password') ?>:
             </label>
@@ -33,9 +29,6 @@
                            id="login_password"
                            name="login_password" />
                 </div>
-                <?php if (!empty($errors['login_password'])): ?>
-                    <span class="help-block"><?=$this->getTrans($errors['login_password']) ?></span>
-                <?php endif; ?>
             </div>
         </div>
         <div class="form-group">
