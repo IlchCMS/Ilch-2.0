@@ -33,7 +33,7 @@ class Login extends \Ilch\Controller\Frontend
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'login_emailname' => 'required|email',
+                'login_emailname' => 'required',
                 'login_password' => 'required'
             ]);
 
