@@ -150,49 +150,33 @@ class Regist extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuConfirm'), ['action' => 'confirm']);
 
-        $errors = [];
+        $userMapper = new UserMapper();
+        $selector = $this->getRequest()->getParam('selector');
+        $confirmedCode = $this->getRequest()->getParam('code');
+        $user = $userMapper->getUserBySelector($selector);
+        $startPage = str_replace('module_', '', $this->getConfig()->get('start_page'));
 
-        if ($this->getRequest()->getPost('saveConfirm')) {
-            $selector = $this->getRequest()->getParam('selector');
-            $confirmedCode = $this->getRequest()->getPost('confirmedCode');
+        if (!empty($confirmedCode) and !empty($selector)) {
+            if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
+                $currentDate = new \Ilch\Date();
+                $user->setDateConfirmed($currentDate);
+                $user->setConfirmed(1);
+                $user->setConfirmedCode('');
+                $user->setSelector('');
+                $userMapper->save($user);
 
-            if (empty($selector)) {
-                $errors['selector'] = 'fieldEmpty';
-            }
-
-            if (empty($confirmedCode)) {
-                $errors['confirmedCode'] = 'fieldEmpty';
-            }
-
-            if (empty($errors)) {
-                $this->redirect(['controller' => 'regist', 'action' => 'confirm', 'selector' => $selector, 'code' => $confirmedCode]);
-            }
-
-            $this->getView()->set('errors', $errors);
-        } else {
-            $userMapper = new UserMapper();
-            $selector = $this->getRequest()->getParam('selector');
-            $confirmedCode = $this->getRequest()->getParam('code');
-            $user = $userMapper->getUserBySelector($selector);
-
-            if (!empty($confirmedCode) and !empty($selector)) {
-                if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
-                    $currentDate = new \Ilch\Date();
-                    $user->setDateConfirmed($currentDate);
-                    $user->setConfirmed(1);
-                    $user->setConfirmedCode('');
-                    $user->setSelector('');
-                    $userMapper->save($user);
-
-                    $this->getView()->set('confirmed', '1');
-                } else {
-                    $this->getView()->set('confirmed', null);
-
-                    $_SESSION['messages'][] = ['text' => $this->getTranslator()->trans('confirmedCodeWrong'), 'type' => 'warning'];
-                }
+                $this->redirect()
+                    ->withMessage('accountApproved', 'success')
+                    ->to(['module' => $startPage, 'controller' => 'index', 'action' => 'index']);
             } else {
-                $this->getView();
+                $this->redirect()
+                    ->withMessage('confirmedCodeWrong', 'warning')
+                    ->to(['module' => $startPage, 'controller' => 'index', 'action' => 'index']);
             }
+        } else {
+            $this->redirect()
+                ->withMessage('incompleteActivationUrl', 'warning')
+                ->to(['module' => $startPage, 'controller' => 'index', 'action' => 'index']);
         }
     }
 }

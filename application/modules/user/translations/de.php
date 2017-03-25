@@ -151,10 +151,10 @@ return [
     'loginFailed' => 'Sie haben einen fehlerhaften Benutzername, E-Mail oder Passwort angegeben. Bitte prüfen Sie ihre Angaben und versuche Sie es erneut.',
     'userNotActivated' => 'Benutzer nicht freigeschaltet! Bitte bestätigen Sie ihren Account in der verschickten E-Mail oder fordern Sie eine neue E-Mail mit einen Freischaltlink an.',
     'rememberMe' => 'Angemeldet bleiben?',
-    'manuallyActivateRegistration' => 'Die Aktivierung manuell freischalten',
     'registDescription' => 'Die Registrierung ist in wenigen Augenblicken erledigt und ermöglicht Ihnen auf weitere Funktionen zuzugreifen. Die Administration kann registrierten Benutzern auch zusätzliche Berechtigungen zuweisen.',
-    'accountApproved' => 'Ihr Benutzerkonto wurde erfolgreich freigeschaltet.<br />Sie können sich jetzt mit Ihren Benutzerdaten anmelden.',
+    'accountApproved' => 'Ihr Benutzerkonto wurde erfolgreich freigeschaltet. Sie können sich jetzt mit Ihren Benutzerdaten anmelden.',
     'confirmedCodeWrong' => 'Der Aktivierungscode ist falsch.',
+    'incompleteActivationUrl' => 'Die Adresse zur Äktivierung ihres Benutzerkontos ist ungültig.',
     'cookieStolen' => 'Möglicherweise hat jemand Ihren Cookie gestohlen. Bitte prüfen Sie Ihre Systeme auf Computerschädlinge und ändern Ihr Passwort.',
 
     'logout' => 'Logout',

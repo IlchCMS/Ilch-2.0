@@ -74,8 +74,6 @@
     </form>
     <div class="col-lg-offset-2 col-lg-10">
             <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a><br />
-            <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'regist', 'action' => 'confirm']) ?>"><?=$this->getTrans('manuallyActivateRegistration') ?></a>
-
     </div>
     <?php if ($this->get('regist_accept') == '1'): ?>
         <br /><br /><br />
