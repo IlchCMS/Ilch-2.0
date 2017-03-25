@@ -52,10 +52,10 @@ class Birthday extends \Ilch\Mapper
     public function getEntriesForJson($start, $end)
     {
         if ($start && $end) {
-            $start = new \Ilch\Date($start);
-            $end = new \Ilch\Date($end);
 
-            $sql = sprintf("SELECT * FROM `[prefix]_users` WHERE `birthday` >= '%s' AND `birthday` <= '%s' ORDER BY `birthday` ASC;", $start, $end);
+            $sql = 'SELECT *
+                    FROM `[prefix]_users`
+                    WHERE DayOfYear(`birthday`) BETWEEN DayOfYear("'.$start.'") AND DayOfYear("'.$end.'")';
         } else {
             return null;
         }
