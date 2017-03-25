@@ -20,12 +20,9 @@ $groupMapper = $this->get('groupMapper');
             <div class="col-lg-12">
                 <?php
                 $groupList = $groupMapper->getUsersForGroup($teamlist->getGroupId());
-                $leaders = [
-                    $teamlist->getLeader(),
-                    $teamlist->getCoLeader()
-                ];
-
-                $groupList = array_unique(array_merge($groupList, $leaders));
+                $leaderIds = explode(',', $teamlist->getLeader());
+                $coLeaderIds = explode(',', $teamlist->getCoLeader());
+                $groupList = array_unique(array_merge($groupList, $leaderIds, $coLeaderIds));
                 ?>
                 <div class="table-responsive">
                     <table class="table table-hover table-striped">
@@ -46,9 +43,9 @@ $groupMapper = $this->get('groupMapper');
                                     </td>
                                     <td>
                                         <?php
-                                        if ($teamlist->getLeader() == $user->getId()) {
+                                        if (in_array($user->getId(), $leaderIds)) {
                                             echo $this->getTrans('leader');
-                                        } elseif ($teamlist->getCoLeader() == $user->getId()) {
+                                        } elseif (in_array($user->getId(), $coLeaderIds)) {
                                             echo $this->getTrans('coLeader');
                                         } else {
                                             echo $this->getTrans('member');

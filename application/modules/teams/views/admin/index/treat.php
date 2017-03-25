@@ -30,11 +30,11 @@
             <div class="row">
                 <?php if ($this->get('team') != '' AND $this->get('team')->getImg() != ''): ?>
                     <div class="col-lg-12">
-                            <img src="<?=$this->getBaseUrl().$this->get('team')->getImg() ?>">
+                        <img src="<?=$this->getBaseUrl().$this->get('team')->getImg() ?>">
 
-                            <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
-                                <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
-                            </label>
+                        <label for="image_delete" style="margin-left: 10px; margin-top: 10px;">
+                            <input type="checkbox" id="image_delete" name="image_delete"> <?=$this->getTrans('imageDelete') ?>
+                        </label>
                     </div>
                 <?php endif; ?>
                 <div class="col-lg-12 input-group">
@@ -56,18 +56,26 @@
             <?=$this->getTrans('leader') ?>
         </label>
         <div class="col-lg-4">
-            <select class="form-control" id="leader" name="leader">
-                <optgroup label="<?=$this->getTrans('users') ?>">
-                    <?php foreach ($this->get('userList') as $userList): ?>
-                        <?php $selected = ''; ?>
-                        <?php if ($this->get('team') != ''): ?>
-                            <?php if ($this->get('team')->getLeader() == $userList->getId()): ?>
-                                <?php $selected = 'selected="selected"'; ?>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <option <?=$selected ?> value="<?=$userList->getId() ?>"><?=$userList->getName() ?></option>
-                    <?php endforeach; ?>
-                </optgroup>
+            <select class="chosen-select form-control"
+                    id="leader"
+                    name="leader[]"
+                    data-placeholder="<?=$this->getTrans('selectLeader') ?>"
+                    multiple>
+                <?php foreach ($this->get('userList') as $userList): ?>
+                    <option value="<?=$userList->getId() ?>"
+                        <?php if ($this->get('team') != '') {
+                            $leaderIds = explode(',', $this->get('team')->getLeader());
+                            foreach ($leaderIds as $leaderId) {
+                                if ($userList->getId() == $leaderId) {
+                                    echo 'selected="selected"';
+                                    break;
+                                }
+                            }
+                        }
+                        ?>>
+                        <?=$this->escape($userList->getName()) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -76,19 +84,26 @@
             <?=$this->getTrans('coLeader') ?>
         </label>
         <div class="col-lg-4">
-            <select class="form-control" id="coLeader" name="coLeader">
-                <option <?php if ($this->get('team') != '' AND $this->get('team')->getCoLeader() == 0) { echo 'selected="selected"'; } ?> value="0"><?=$this->getTrans('noCoLeader') ?></option>
-                <optgroup label="<?=$this->getTrans('users') ?>">
-                    <?php foreach ($this->get('userList') as $userList): ?>
-                        <?php $selected = ''; ?>
-                        <?php if ($this->get('team') != ''): ?>
-                            <?php if ($this->get('team')->getCoLeader() == $userList->getId()): ?>
-                                <?php $selected = 'selected="selected"'; ?>
-                            <?php endif; ?>
-                        <?php endif; ?>
-                        <option <?=$selected ?> value="<?=$userList->getId() ?>"><?=$userList->getName() ?></option>
-                    <?php endforeach; ?>
-                </optgroup>
+            <select class="chosen-select form-control"
+                    id="coLeader"
+                    name="coLeader[]"
+                    data-placeholder="<?=$this->getTrans('selectCoLeader') ?>"
+                    multiple>
+                <?php foreach ($this->get('userList') as $userList): ?>
+                    <option value="<?=$userList->getId() ?>"
+                        <?php if ($this->get('team') != '') {
+                            $coLeaderIds = explode(',', $this->get('team')->getCoLeader());
+                            foreach ($coLeaderIds as $coLeaderId) {
+                                if ($userList->getId() == $coLeaderId) {
+                                    echo 'selected="selected"';
+                                    break;
+                                }
+                            }
+                        }
+                        ?>>
+                        <?=$this->escape($userList->getName()) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -132,6 +147,9 @@
 </form>
 
 <script>
+$('#leader').chosen();
+$('#coLeader').chosen();
+
 $(document).on('change', '.btn-file :file', function() {
     var input = $(this),
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -152,3 +170,4 @@ $(document).ready( function() {
     });
 });
 </script>
+

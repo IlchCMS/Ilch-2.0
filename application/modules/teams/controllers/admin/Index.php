@@ -96,13 +96,11 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required|unique:teams,name,'.$this->getRequest()->getParam('id'),
-                'leader' => 'required|numeric|integer',
-                'coLeader' => 'numeric|integer',
                 'groupId' => 'required|numeric|integer|min:1',
                 'optIn' => 'required|numeric|integer|min:0|max:1'
             ]);
 
-            if ($this->getRequest()->getPost('leader') == $this->getRequest()->getPost('coLeader')) {
+            if (count(array_intersect($this->getRequest()->getPost('leader'), $this->getRequest()->getPost('coLeader')))) {
                 $validation->getErrorBag()->addError('coLeader', $this->getTranslator()->trans('leaderCoLeaderIdentic'));
             }
 
@@ -162,9 +160,12 @@ class Index extends \Ilch\Controller\Admin
                     }
                 }
 
+                $leader = implode(",", $this->getRequest()->getPost('leader'));
+                $coLeader = implode(",", $this->getRequest()->getPost('coLeader'));
+
                 $model->setName($this->getRequest()->getPost('name'))
-                    ->setLeader($this->getRequest()->getPost('leader'))
-                    ->setCoLeader($this->getRequest()->getPost('coLeader'))
+                    ->setLeader($leader)
+                    ->setCoLeader($coLeader)
                     ->setGroupId($this->getRequest()->getPost('groupId'));
                 $model->setOptIn($this->getRequest()->getPost('optIn'));
                 $teamsMapper->save($model);

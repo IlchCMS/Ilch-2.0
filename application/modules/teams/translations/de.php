@@ -17,6 +17,8 @@ return [
     'group' => 'Gruppe',
     'groups' => 'Gruppen',
     'profile' => 'Profil',
+    'selectLeader' => 'Wähle ein Leader aus',
+    'selectCoLeader' => 'Wähle ein CoLeader aus',
     'noTeams' => 'Keine Teams vorhanden',
     'imageDelete' => 'Bild löschen?',
     'imageHeight' => 'Bild Höhe',

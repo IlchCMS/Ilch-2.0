@@ -119,7 +119,7 @@ class Teams extends \Ilch\Model
     /**
      * Gets the Leader of the Team.
      *
-     * @return int
+     * @return string
      */
     public function getLeader()
     {
@@ -129,12 +129,12 @@ class Teams extends \Ilch\Model
     /**
      * Sets the Leader of the Team.
      *
-     * @param int $leader
+     * @param string $leader
      * @return this
      */
     public function setLeader($leader)
     {
-        $this->leader = (int)$leader;
+        $this->leader = (string)$leader;
 
         return $this;
     }
@@ -142,7 +142,7 @@ class Teams extends \Ilch\Model
     /**
      * Gets the CoLeader of the Team.
      *
-     * @return int
+     * @return string
      */
     public function getCoLeader()
     {
@@ -152,12 +152,12 @@ class Teams extends \Ilch\Model
     /**
      * Sets the CoLeader of the Team.
      *
-     * @param int $coLeader
+     * @param string $coLeader
      * @return this
      */
     public function setCoLeader($coLeader)
     {
-        $this->coLeader = (int)$coLeader;
+        $this->coLeader = (string)$coLeader;
 
         return $this;
     }

@@ -76,8 +76,8 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(255) NOT NULL,
                   `img` VARCHAR(255) NOT NULL,
-                  `leader` INT(11) NOT NULL,
-                  `coLeader` INT(11) NULL DEFAULT NULL,
+                  `leader` VARCHAR(255) NOT NULL,
+                  `coLeader` VARCHAR(255) NULL DEFAULT NULL,
                   `groupId` INT(11) NOT NULL,
                   `optIn` INT(1) NOT NULL,
                   PRIMARY KEY (`id`)
