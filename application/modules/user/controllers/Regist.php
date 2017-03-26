@@ -166,16 +166,16 @@ class Regist extends \Ilch\Controller\Frontend
 
                 $this->redirect()
                     ->withMessage('accountApproved', 'success')
-                    ->to(['controller' => 'index', 'action' => 'index']);
+                    ->to([]);
             } else {
                 $this->redirect()
                     ->withMessage('confirmedCodeWrong', 'warning')
-                    ->to(['controller' => 'index', 'action' => 'index']);
+                    ->to([]);
             }
         } else {
             $this->redirect()
                 ->withMessage('incompleteActivationUrl', 'warning')
-                ->to(['controller' => 'index', 'action' => 'index']);
+                ->to([]);
         }
     }
 }
