@@ -154,7 +154,6 @@ class Regist extends \Ilch\Controller\Frontend
         $selector = $this->getRequest()->getParam('selector');
         $confirmedCode = $this->getRequest()->getParam('code');
         $user = $userMapper->getUserBySelector($selector);
-        $startPage = str_replace('module_', '', $this->getConfig()->get('start_page'));
 
         if (!empty($confirmedCode) and !empty($selector)) {
             if (!empty($user) and hash_equals($user->getConfirmedCode(), $confirmedCode)) {
@@ -167,16 +166,16 @@ class Regist extends \Ilch\Controller\Frontend
 
                 $this->redirect()
                     ->withMessage('accountApproved', 'success')
-                    ->to(['module' => $startPage, 'controller' => 'index', 'action' => 'index']);
+                    ->to(['controller' => 'index', 'action' => 'index']);
             } else {
                 $this->redirect()
                     ->withMessage('confirmedCodeWrong', 'warning')
-                    ->to(['module' => $startPage, 'controller' => 'index', 'action' => 'index']);
+                    ->to(['controller' => 'index', 'action' => 'index']);
             }
         } else {
             $this->redirect()
                 ->withMessage('incompleteActivationUrl', 'warning')
-                ->to(['module' => $startPage, 'controller' => 'index', 'action' => 'index']);
+                ->to(['controller' => 'index', 'action' => 'index']);
         }
     }
 }
