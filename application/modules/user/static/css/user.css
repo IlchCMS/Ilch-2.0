@@ -104,14 +104,6 @@ input[readonly] {
 }
 
 
-/* Other */
-.date {
-    min-width: 210px;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-
-
 /* login with google+ */
 #customBtn {
     display: inline-block;

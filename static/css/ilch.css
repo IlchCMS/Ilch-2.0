@@ -36,6 +36,12 @@ img {
     height: auto;
 }
 
+.date {
+    min-width: 210px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
 
 /* ilch Standard */
 .ilch-border {

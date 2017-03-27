@@ -72,7 +72,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         <select class="form-control" id="gender" name="gender">
                             <option value="0" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 0) ? "selected='selected'" : ($profil->getGender() == 0) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderUnknow') ?></option>
                             <option value="1" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 1) ? "selected='selected'" : ($profil->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderMale') ?></option>
-                            <option value="2" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 2) ? "selected='selected'" : ($profil->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('profileGenderFemale') ?></option>
+                            <option value="2"><?=$this->getTrans('profileGenderFemale') ?></option>
                         </select>
                     </div>
                 </div>
@@ -144,7 +144,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                         <input type="text"
                                class="form-control"
                                name="birthday"
-                               value="<?php if ($profil->getBirthday() == '0000-00-00') { echo date('d.m.Y'); } else { echo $birthday->format('d.m.Y', true); } ?>">
+                               value="<?php if ($profil->getBirthday() != '0000-00-00') { echo $birthday->format('d.m.Y'); } else { echo ''; } ?>">
                         <span class="input-group-addon">
                             <span class="fa fa-calendar"></span>
                         </span>
@@ -208,6 +208,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
 <script type="text/javascript">
 $(document).ready(function() {
     $(".form_datetime").datetimepicker({
+        defaultDate: new Date(),
         endDate: new Date(),
         format: "dd.mm.yyyy",
         autoclose: true,

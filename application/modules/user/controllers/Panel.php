@@ -77,8 +77,7 @@ class Panel extends BaseController
                 'facebook' => trim($this->getRequest()->getPost('facebook')),
                 'twitter' => trim($this->getRequest()->getPost('twitter')),
                 'google' => trim($this->getRequest()->getPost('google')),
-                'city' => trim($this->getRequest()->getPost('city')),
-                'birthday' => new \Ilch\Date(trim($this->getRequest()->getPost('birthday')))
+                'city' => trim($this->getRequest()->getPost('city'))
             ];
 
             foreach ($profileFields as $profileField) {
@@ -89,6 +88,12 @@ class Panel extends BaseController
                 'email' => 'required|email',
                 'homepage' => 'url'
             ]);
+
+            if ($this->getRequest()->getPost('birthday') != '') {
+                $birthday = new \Ilch\Date($this->getRequest()->getPost('birthday'));
+            } else {
+                $birthday = '00-00-0000';
+            }
 
             if ($validation->isValid()) {
                 $model = new UserModel();
@@ -102,7 +107,7 @@ class Panel extends BaseController
                 $model->setTwitter($post['twitter']);
                 $model->setGoogle($post['google']);
                 $model->setCity($post['city']);
-                $model->setBirthday($post['birthday']);
+                $model->setBirthday($birthday);
                 $profilMapper->save($model);
 
                 foreach ($profileFields as $profileField) {
