@@ -166,7 +166,7 @@ $config = $this->get('config');
 
 <div class="row">
     <div class="col-lg-12">
-        <legend class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=$commentsCount ?>)</h1>
+        <h1 class="page-header" id="comment"><?=$this->getTrans('comments') ?> (<?=$commentsCount ?>)</h1>
         <?php if ($this->getUser()): ?>
             <div class="reply">
                 <form action="" class="form-horizontal" method="POST">
