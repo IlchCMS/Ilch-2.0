@@ -13,7 +13,7 @@
         <label for="start" class="col-lg-2 control-label">
             <?=$this->getTrans('start') ?>:
         </label>
-        <div class="col-lg-2 input-group date form_datetime">
+        <div class="col-lg-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    id="start"
@@ -29,7 +29,7 @@
         <label for="end" class="col-lg-2 control-label">
             <?=$this->getTrans('end') ?>:
         </label>
-        <div class="col-lg-2 input-group date form_datetime">
+        <div class="col-lg-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    id="end"

@@ -46,7 +46,7 @@
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentPopUpBGColor') ?>:
         </label>
-        <div class="col-lg-2 input-group date">
+        <div class="col-lg-2 input-group ilch-date">
             <input class="form-control color {hash:true}"
                    id="cookieConsentPopUpBGColor"
                    name="cookieConsentPopUpBGColor"
@@ -60,7 +60,7 @@
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentPopUpTextColor') ?>:
         </label>
-        <div class="col-lg-2 input-group date">
+        <div class="col-lg-2 input-group ilch-date">
             <input class="form-control color {hash:true}"
                    id="cookieConsentPopUpTextColor"
                    name="cookieConsentPopUpTextColor"
@@ -76,7 +76,7 @@
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentBtnBGColor') ?>:
         </label>
-        <div class="col-lg-2 input-group date">
+        <div class="col-lg-2 input-group ilch-date">
             <input class="form-control color {hash:true}"
                    id="cookieConsentBtnBGColor"
                    name="cookieConsentBtnBGColor"
@@ -90,7 +90,7 @@
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('cookieConsentBtnTextColor') ?>:
         </label>
-        <div class="col-lg-2 input-group date">
+        <div class="col-lg-2 input-group ilch-date">
             <input class="form-control color {hash:true}"
                    id="cookieConsentBtnTextColor"
                    name="cookieConsentBtnTextColor"

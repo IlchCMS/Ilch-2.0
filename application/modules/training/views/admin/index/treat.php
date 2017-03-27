@@ -28,7 +28,7 @@
         <label for="date" class="col-md-2 control-label">
             <?=$this->getTrans('dateTime') ?>:
         </label>
-        <div class="col-lg-2 input-group date form_datetime">
+        <div class="col-lg-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    id="date"

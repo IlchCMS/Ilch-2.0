@@ -1042,13 +1042,6 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
 }
 
 
-/* Other */
-.date {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-}
-
-
 /* Maintenance */
 .range {
     display: table;

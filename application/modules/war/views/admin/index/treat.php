@@ -51,7 +51,7 @@
             <label for="warTimeInput" class="col-md-2 control-label">
                 <?=$this->getTrans('warTime') ?>:
             </label>
-            <div class="input-group date form_datetime col-lg-4">
+            <div class="input-group ilch-date date form_datetime col-lg-4">
                 <input type="text"
                        class="form-control"
                        id="warTimeInput"

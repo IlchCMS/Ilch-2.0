@@ -97,7 +97,7 @@ if ($this->getUser()) {
                 <?=$this->getTrans('age') ?>:
             </label>
             <?php if ($this->getUser() AND $this->getUser()->getBirthday() != '0000-00-00'): ?>
-                <div class="col-lg-2 input-group date">
+                <div class="col-lg-2 input-group ilch-date">
                     <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
                     <input type="text"
                            class="form-control"
@@ -110,7 +110,7 @@ if ($this->getUser()) {
                     </span>
                 </div>
             <?php else: ?>
-                <div class="col-lg-2 input-group date form_datetime">
+                <div class="col-lg-2 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
                            id="age"

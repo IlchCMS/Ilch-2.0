@@ -35,7 +35,7 @@ if ($history != '') {
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
-        <div class="col-lg-2 input-group date date form_datetime">
+        <div class="col-lg-2 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    id="date"
@@ -91,7 +91,7 @@ if ($history != '') {
         <label for="color" class="col-lg-2 control-label">
             <?=$this->getTrans('color') ?>:
         </label>
-        <div class="col-lg-2 input-group date">
+        <div class="col-lg-2 input-group ilch-date">
             <input class="form-control color {hash:true}"
                    id="color"
                    name="color"

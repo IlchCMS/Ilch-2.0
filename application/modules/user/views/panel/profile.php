@@ -140,7 +140,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                     <label class="col-lg-2 control-label">
                         <?=$this->getTrans('profileBirthday'); ?>
                     </label>
-                    <div class="col-lg-2 input-group date form_datetime">
+                    <div class="col-lg-2 input-group ilch-date date form_datetime">
                         <input type="text"
                                class="form-control"
                                name="birthday"

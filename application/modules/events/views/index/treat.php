@@ -55,7 +55,7 @@
         <label for="start" class="col-md-2 control-label">
             <?=$this->getTrans('startTime') ?>:
         </label>
-        <div class="col-lg-4 input-group date form_datetime">
+        <div class="col-lg-4 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    id="start"
@@ -72,7 +72,7 @@
         <label for="end" class="col-md-2 control-label">
             <?=$this->getTrans('endTime') ?>:
         </label>
-        <div class="col-lg-4 input-group date form_datetime">
+        <div class="col-lg-4 input-group ilch-date date form_datetime">
             <input type="text"
                    class="form-control"
                    id="end"
