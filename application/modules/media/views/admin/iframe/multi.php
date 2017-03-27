@@ -137,7 +137,7 @@
     </script>
 <?php endif; ?>
 
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
     function media_loader() { 
         var ID=$(".media_loader:last").attr("id");

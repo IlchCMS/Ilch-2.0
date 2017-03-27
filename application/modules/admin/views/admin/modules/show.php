@@ -246,8 +246,8 @@ foreach ($modules as $module): ?>
     <?php endif; ?>
 <?php endforeach; ?>
 
-<script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/star-rating.min.js') ?>" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="<?=$this->getVendorUrl('kartik-v/bootstrap-star-rating/js/star-rating.min.js') ?>"></script>
+<script>
 $(document).ready(function(){
     $('#module-search-carousel').carousel();
 });

@@ -233,7 +233,7 @@ $user = $userMapper->getUserById($event->getUserId());
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>" async defer></script>
 <?php endif; ?>
 
-<script type="text/javascript">
+<script>
 // Textarea AutoResize
 $('textarea').on('keyup', function() {
     $(this).css('height', 'auto');

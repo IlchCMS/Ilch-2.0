@@ -43,7 +43,7 @@
         <script src="<?=$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery.key.js') ?>"></script>
-	<script type="text/javascript">
+	<script>
         $.key('alt+a', function() { window.location.href ='<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'index']) ?>'; });
         $.key('alt+u', function() { window.location.href ='<?=$this->getUrl(['module' => 'user', 'controller' => 'index', 'action' => 'index']) ?>'; });
         $.key('alt+s', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>'; });

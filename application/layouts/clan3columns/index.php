@@ -6,7 +6,7 @@
         <link href="<?=$this->getVendorUrl('twbs/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
         <link href="<?=$this->getLayoutUrl('style.css') ?>" rel="stylesheet">
         <?=$this->getCustomCSS() ?>
-        <script type="text/javascript" src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
+        <script src="<?=$this->getVendorUrl('twbs/bootstrap/dist/js/bootstrap.min.js') ?>"></script>
     </head>
     <body>
         <header>

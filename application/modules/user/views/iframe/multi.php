@@ -56,7 +56,7 @@
     <?php endif; ?>
 </form>
 
-<script type="text/javascript">
+<script>
 $(".btn").click(function() {
     window.top.$('#mediaModal').modal('hide');
     window.top.reload();

@@ -63,7 +63,7 @@
     <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'login', 'action' => 'forgotpassword']) ?>"><?=$this->getTrans('forgotPassword') ?></a>
 <?php endif; ?>
 
-<script type="text/javascript" >
+<script>
 $(document).ready(function () {
     var messageDiv = $(".ilch--new-message"),
         messageCheckLink = "<?=$this->getUrl(['module' => 'user', 'controller' => 'ajax','action' => 'checknewmessage']); ?>";

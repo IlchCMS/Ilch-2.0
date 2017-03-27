@@ -17,7 +17,7 @@
     <?=$this->getTrans('noSmilies') ?>
 <?php endif; ?>
 
-<script type="text/javascript">
+<script>
 $(".image").click(function() {
     window.top.$('#selectedImage<?=$this->getRequest()->getParam('input') ?>').val($(this).data('url'));
     window.top.$('#mediaModal').modal('hide');

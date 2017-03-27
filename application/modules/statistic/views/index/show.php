@@ -482,8 +482,8 @@ $browser = $this->getRequest()->getParam('browser');
     </div>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
-<script type="text/javascript">
+<script src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
+<script>
 $(document).ready(function() {
     $('.progress .progress-bar').progressbar();
 });

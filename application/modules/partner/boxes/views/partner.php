@@ -49,7 +49,7 @@
     <?php endif; ?>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.min.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jquery.bxslider/jquery.bxslider.min.js') ?>"></script>
 <script>
 $('.bxslider').bxSlider({
     mode: 'vertical',

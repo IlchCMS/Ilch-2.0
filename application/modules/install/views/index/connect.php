@@ -55,7 +55,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
 $(function () {
     $("[rel='tooltip']").tooltip({
         'placement': 'bottom',

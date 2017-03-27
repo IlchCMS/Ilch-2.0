@@ -181,7 +181,7 @@ if ($this->getUser()) {
                     <button class="btn btn-primary" name="topicMove" value="topicMove" OnClick="SetAction2()"><?=$this->getTrans('topicMove') ?></button>
                     <button class="btn btn-primary" name="topicChangeStatus" value="topicChangeStatus" OnClick="SetAction3()"><?=$this->getTrans('topicChangeStatus') ?></button>
 
-                    <script type="text/javascript">
+                    <script>
                         function SetAction1() {
                             document.forms["editForm"].action = "<?=$this->getUrl(['controller' => 'showtopics', 'action' => 'delete', 'forumid' => $forum->getId()]) ?>";
                         }

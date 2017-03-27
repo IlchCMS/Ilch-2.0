@@ -137,7 +137,7 @@
 </div>
 
 <script src="<?=$this->getModuleUrl('static/js/jquery.nicescroll.js') ?>"></script>
-<script type="text/javascript">
+<script>
     $(function(){
         $(".chat-list-wrapper, .message-list-wrapper").niceScroll();
     });

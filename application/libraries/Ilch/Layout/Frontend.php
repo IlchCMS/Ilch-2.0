@@ -181,12 +181,12 @@ class Frontend extends Base
                 <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getVendorUrl('components/jqueryui/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
-                <script type="text/javascript" src="'.$this->getVendorUrl('components/jquery/jquery.min.js').'"></script>
-                <script type="text/javascript" src="'.$this->getVendorUrl('components/jqueryui/jquery-ui.min.js').'"></script>
-                <script type="text/javascript" src="'.$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js').'"></script>
-                <script type="text/javascript" src="'.$this->getStaticUrl('js/ilch.js').'"></script>
-                <script type="text/javascript" src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
-                <script type="text/javascript" src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
+                <script src="'.$this->getVendorUrl('components/jquery/jquery.min.js').'"></script>
+                <script src="'.$this->getVendorUrl('components/jqueryui/jquery-ui.min.js').'"></script>
+                <script src="'.$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js').'"></script>
+                <script src="'.$this->getStaticUrl('js/ilch.js').'"></script>
+                <script src="'.$this->getStaticUrl('js/jquery.mjs.nestedSortable.js').'"></script>
+                <script src="'.$this->getStaticUrl('../application/modules/admin/static/js/functions.js').'"></script>';
 
         $html .= $this->header();
 
@@ -219,7 +219,7 @@ class Frontend extends Base
                         })});
                         </script>
                         <link rel="stylesheet" type="text/css" href="'.$this->getStaticUrl('js/cookieconsent/cookieconsent.min.css').'" />
-                        <script type="text/javascript" src="'.$this->getStaticUrl('js/cookieconsent/cookieconsent.min.js').'"></script>';
+                        <script src="'.$this->getStaticUrl('js/cookieconsent/cookieconsent.min.js').'"></script>';
         }
 
         return $html;
