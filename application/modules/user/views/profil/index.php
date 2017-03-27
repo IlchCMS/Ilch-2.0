@@ -80,6 +80,20 @@ foreach ($profil->getGroups() as $group) {
         </div>
         <div class="row">
             <div class="col-lg-2 detail bold">
+                <?=$this->getTrans('profileGender') ?>
+            </div>
+            <div class="col-lg-10 detail">
+                <?php if ($profil->getGender() == 1) {
+                    echo $this->getTrans('profileGenderMale');
+                } elseif ($profil->getGender() == 2) {
+                    echo $this->getTrans('profileGenderFemale');
+                } else {
+                    echo $this->getTrans('profileGenderUnknow');
+                } ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 detail bold">
                 <?=$this->getTrans('profileCity') ?>
             </div>
             <div class="col-lg-10 detail">

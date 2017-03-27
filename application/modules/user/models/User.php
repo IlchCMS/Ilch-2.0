@@ -44,6 +44,13 @@ class User extends \Ilch\Model
     protected $lastname;
 
     /**
+     * The gender of the user.
+     *
+     * @var int
+     */
+    protected $gender;
+
+    /**
      * The homepage address of the user.
      *
      * @var string
@@ -538,6 +545,29 @@ class User extends \Ilch\Model
     public function setLastName($lastname)
     {
         $this->lastname = (string)$lastname;
+
+        return $this;
+    }
+
+    /**
+     * Returns the gender of the user.
+     *
+     * @return int
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Saves the gender of the user.
+     *
+     * @param int $gender
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = (int)$gender;
 
         return $this;
     }

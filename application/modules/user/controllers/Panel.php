@@ -72,6 +72,7 @@ class Panel extends BaseController
                 'email' => trim($this->getRequest()->getPost('email')),
                 'firstname' => trim($this->getRequest()->getPost('first-name')),
                 'lastname' => trim($this->getRequest()->getPost('last-name')),
+                'gender' => trim($this->getRequest()->getPost('gender')),
                 'homepage' => trim($this->getRequest()->getPost('homepage')),
                 'facebook' => trim($this->getRequest()->getPost('facebook')),
                 'twitter' => trim($this->getRequest()->getPost('twitter')),
@@ -95,6 +96,7 @@ class Panel extends BaseController
                 $model->setEmail($post['email']);
                 $model->setFirstName($post['firstname']);
                 $model->setLastName($post['lastname']);
+                $model->setGender($post['gender']);
                 $model->setHomepage($post['homepage']);
                 $model->setFacebook($post['facebook']);
                 $model->setTwitter($post['twitter']);

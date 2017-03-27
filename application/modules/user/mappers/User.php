@@ -175,6 +175,10 @@ class User extends \Ilch\Mapper
             $user->setLastName($userRow['last_name']);
         }
 
+        if (isset($userRow['gender'])) {
+            $user->setGender($userRow['gender']);
+        }
+
         if (isset($userRow['homepage'])) {
             $user->setHomepage($userRow['homepage']);
         }
@@ -312,6 +316,7 @@ class User extends \Ilch\Mapper
 
         $fields['first_name'] = $user->getFirstName();
         $fields['last_name'] = $user->getLastName();
+        $fields['gender'] = $user->getGender();
         $fields['homepage'] = $user->getHomepage();
         $fields['facebook'] = $user->getFacebook();
         $fields['twitter'] = $user->getTwitter();
