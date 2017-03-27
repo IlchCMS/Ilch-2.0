@@ -118,6 +118,7 @@
                                 <li><a href="/">Home</a></li>
                                 <li><a href="/index.php/contact/index/index">Kontakt</a></li>
                                 <li><a href="/index.php/imprint/index/index">Impressum</a></li>
+                                <li><a href="/index.php/privacy/index/index">Datenschutz</a></li>
                             </ul>
                         </div>
                     </div>
