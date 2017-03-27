@@ -44,7 +44,7 @@ function getTransKey($usermenuId) {
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
 $(document).ready(function(){
     $(".push-menu").click(function(){
         $(".profile-sidebar").toggleClass("active");

@@ -89,7 +89,7 @@
     </script>
 <?php endif; ?>
 
-<script type="text/javascript">
+<script>
 $(document).ready(function()
 {
     function media_loader() 

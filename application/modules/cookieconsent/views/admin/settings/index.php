@@ -103,4 +103,4 @@
     <?=$this->getSaveBar() ?>
 </form>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>
+<script src="<?=$this->getStaticUrl('js/jscolor/jscolor.js') ?>"></script>

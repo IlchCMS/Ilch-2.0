@@ -652,5 +652,5 @@ Right-to-left languages may also include `rtl: true` to make the calendar displa
 If your browser (or those of your users) is displaying characters wrong, chances are the browser is loading the javascript file with a non-unicode encoding.  Simply add `charset="UTF-8"` to your `script` tag:
 
 ```html
-<script type="text/javascript" src="bootstrap-datetimepicker.de.js" charset="UTF-8"></script>
+<script src="bootstrap-datetimepicker.de.js" charset="UTF-8"></script>
 ```

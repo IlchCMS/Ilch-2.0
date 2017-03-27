@@ -51,7 +51,7 @@ class Model
      */
     public function js($value)
     {
-        $this->data[] = '<script type="text/javascript" src="'.$this->layout->getModuleUrl($value).'"></script>';
+        $this->data[] = '<script src="'.$this->layout->getModuleUrl($value).'"></script>';
 
         return $this;
     }
