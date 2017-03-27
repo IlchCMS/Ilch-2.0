@@ -43,76 +43,20 @@
 
 
 /* Userlist */
-.user {
-    padding: 0 0 0 80px;
-    overflow: hidden;
-    margin-bottom: 10px;
-    min-height: 90px;
-    font-size: 14px;
-    line-height: 18px;
-}
-
-.user img {
-    float: left;
-    margin: 2px 0 0 -80px;
-    width: 70px;
-    height: 70px;
-}
-
-.user h3 {
-    font-size: 17px;
-    font-weight: bold;
-    line-height: 21px;
-    margin: 0 0 2px 0;
-}
-
-.userInfo,
-.userLinks {
-    -webkit-transition: all 1500ms ease-in-out;
-    -o-transition: all 1500ms ease-in-out;
-    -moz-transition: all 1500ms ease-in-out;
-    transition: all 1500ms ease-in-out;
-}
-
-.userInfo {
-    line-height: 21px;
-}
-
-.user:hover .userInfo,
-.user:focus .userInfo {
-    display: none;
-}
-
-.userLinks {
-    display: none;
-}
-
-.user:hover .userLinks,
-.user:focus .userLinks {
-    display: block;
-}
-
-.userLinks a {
-    font-size:22px;
-    padding: 2px;
-}
-
-.userLinks a:hover,
-.userLinks a:focus {
+.userlist .user-link:hover,
+.userlist .userLuser-linkinks:focus {
     text-decoration: none;
 }
-
-
-.fa-skype:hover {
+.userlist .fa-skype:hover {
     color: #00b0f6;
 }
-.fa-facebook:hover {
+.userlist .fa-facebook:hover {
     color: #3B5998;
 }
-.fa-google-plus:hover {
+.userlist .fa-google-plus:hover {
     color: #D34836;
 }
-.fa-twitter:hover {
+.userlist .fa-twitter:hover {
     color: #00B7FE;
 }
 

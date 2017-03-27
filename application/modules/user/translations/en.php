@@ -253,6 +253,10 @@ return [
     'selected' => 'selected...',
     'deleteSelectedEntries' => 'Delete the selected entries?',
 
+    'userlistName' => 'Username',
+    'userlistRegist' => 'Registration',
+    'userlistContact' => 'Contact',
+
     'saveButton' => 'Save',
 
     'users' => 'Users',

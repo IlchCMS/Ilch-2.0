@@ -249,6 +249,10 @@ return [
     'selected' => 'markierte...',
     'deleteSelectedEntries' => 'Sollen die markierten Einträge wirklich gelöscht werden?',
 
+    'userlistName' => 'Benutzername',
+    'userlistRegist' => 'Registriert',
+    'userlistContact' => 'Kontakt',
+
     'saveButton' => 'Speichern',
 
     'users' => 'Benutzer',
