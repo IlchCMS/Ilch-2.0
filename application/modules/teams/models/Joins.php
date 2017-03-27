@@ -37,9 +37,16 @@ class Joins extends \Ilch\Model
     protected $email;
 
     /**
-     * The Age from the User.
+     * The Gender from the User.
      *
      * @var int
+     */
+    protected $gender;
+
+    /**
+     * The Age from the User.
+     *
+     * @var string
      */
     protected $age;
 
@@ -63,6 +70,13 @@ class Joins extends \Ilch\Model
      * @var int
      */
     protected $teamId;
+
+    /**
+     * The created Date of the Join.
+     *
+     * @var string
+     */
+    protected $dateCreated;
 
     /**
      * The Text of the Join.
@@ -164,9 +178,32 @@ class Joins extends \Ilch\Model
     }
 
     /**
-     * Gets the Age of the User.
+     * Gets the Gender of the User.
      *
      * @return int
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Sets the Gender of the User.
+     *
+     * @param int $gender
+     * @return $this
+     */
+    public function setGender($gender)
+    {
+        $this->gender = (int)$gender;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Age of the User.
+     *
+     * @return string
      */
     public function getAge()
     {
@@ -176,12 +213,12 @@ class Joins extends \Ilch\Model
     /**
      * Sets the Age of the User.
      *
-     * @param int $age
+     * @param string $age
      * @return $this
      */
     public function setAge($age)
     {
-        $this->age = (int)$age;
+        $this->age = (string)$age;
 
         return $this;
     }
@@ -253,6 +290,29 @@ class Joins extends \Ilch\Model
         $this->teamId = (int)$teamId;
 
         return $this;
+    }
+
+    /**
+     * Sets the created Date of the Join.
+     *
+     * @param string $dateCreated
+     * @return $this
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = (string)$dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Gets the created Date of the Join.
+     *
+     * @return string
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
     }
 
     /**

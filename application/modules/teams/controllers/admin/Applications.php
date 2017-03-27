@@ -70,6 +70,7 @@ class Applications extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuApplications'), ['controller' => 'applications', 'action' => 'index'])
             ->add($join->getName(), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
+        $this->getView()->set('joinsMapper', $joinsMapper);
         $this->getView()->set('teamsMapper', $teamsMapper);
         $this->getView()->set('join', $join);
     }

@@ -6,6 +6,8 @@ if ($this->getUser()) {
 }
 ?>
 
+<link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+
 <h1><?=$this->getTrans('menuJoin') ?></h1>
 <?php if ($this->get('teams') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
@@ -72,17 +74,53 @@ if ($this->getUser()) {
                 <?php endif; ?>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-lg-2 control-label">
+                <?=$this->getTrans('gender'); ?>
+            </label>
+            <div class="col-lg-2">
+                <?php if ($this->getUser()): ?>
+                    <select class="form-control" id="gender" name="gender" <?=($user->getGender() == 0) ? '' : 'disabled="disabled"' ?>>
+                        <option value="1" <?=($user->getGender() == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
+                        <option value="2" <?=($user->getGender() == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
+                    </select>
+                <?php else: ?>
+                    <select class="form-control" id="gender" name="gender">
+                        <option value="1" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 1) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderMale') ?></option>
+                        <option value="2" <?=($this->originalInput('gender') != '' AND $this->originalInput('gender') == 2) ? "selected='selected'" : '' ?>><?=$this->getTrans('genderFemale') ?></option>
+                    </select>
+                <?php endif; ?>
+            </div>
+        </div>
         <div class="form-group <?=$this->validation()->hasError('age') ? 'has-error' : '' ?>">
             <label for="age" class="col-lg-2 control-label">
                 <?=$this->getTrans('age') ?>:
             </label>
-            <div class="col-lg-6">
-                <input type="number"
-                       class="form-control"
-                       id="age"
-                       name="age"
-                       value="<?=$this->originalInput('age') ?>" />
-            </div>
+            <?php if ($this->getUser() AND $this->getUser()->getBirthday() != '0000-00-00'): ?>
+                <div class="col-lg-2 input-group date">
+                    <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
+                    <input type="text"
+                           class="form-control"
+                           id="age"
+                           name="age"
+                           value="<?=$birthday->format('d.m.Y') ?>"
+                           readonly />
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar" disabled></span>
+                    </span>
+                </div>
+            <?php else: ?>
+                <div class="col-lg-2 input-group date form_datetime">
+                    <input type="text"
+                           class="form-control"
+                           id="age"
+                           name="age"
+                           value="<?=($this->originalInput('age') != '') ? $this->originalInput('age') : '' ?>" />
+                    <span class="input-group-addon">
+                        <span class="fa fa-calendar"></span>
+                    </span>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
             <label for="place" class="col-lg-2 control-label">
@@ -139,13 +177,13 @@ if ($this->getUser()) {
                            autocomplete="off"
                            placeholder="<?=$this->getTrans('captcha') ?>" />
                     <span class="input-group-addon">
-                            <a href="javascript:void(0)" onclick="
-                                    document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
-                                    document.getElementById('captcha-form').focus();"
-                               id="change-image">
-                                <i class="fa fa-refresh"></i>
-                            </a>
-                        </span>
+                        <a href="javascript:void(0)" onclick="
+                                document.getElementById('captcha').src='<?=$this->getUrl() ?>/application/libraries/Captcha/Captcha.php?'+Math.random();
+                                document.getElementById('captcha-form').focus();"
+                           id="change-image">
+                            <i class="fa fa-refresh"></i>
+                        </a>
+                    </span>
                 </div>
             </div>
         <?php endif; ?>
@@ -160,3 +198,20 @@ if ($this->getUser()) {
 <?php endif; ?>
 
 <?=$this->getDialog("smiliesModal", $this->getTrans('smilies'), "<iframe frameborder='0'></iframe>"); ?>
+<script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
+<?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
+    <script type="text/javascript" src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
+<?php endif; ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".form_datetime").datetimepicker({
+            defaultDate: new Date(),
+            endDate: new Date(),
+            format: "dd.mm.yyyy",
+            autoclose: true,
+            language: '<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>',
+            minView: 2,
+            todayHighlight: true
+        });
+    });
+</script>

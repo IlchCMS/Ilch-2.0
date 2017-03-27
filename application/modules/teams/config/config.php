@@ -90,8 +90,10 @@ class Config extends \Ilch\Config\Install
                   `email` VARCHAR(255) NOT NULL,
                   `place` VARCHAR(255) NOT NULL,
                   `age` INT(2) NOT NULL,
+                  `gender` INT(1) NOT NULL,
                   `skill` INT(1) NOT NULL,
                   `teamId` INT(11) NOT NULL,
+                  `dateCreated` DATETIME NOT NULL,
                   `text` LONGTEXT NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

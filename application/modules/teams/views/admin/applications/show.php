@@ -1,8 +1,13 @@
-<?php $teamsMapper = $this->get('teamsMapper'); ?>
+<?php
+$joinsMapper = $this->get('joinsMapper');
+$teamsMapper = $this->get('teamsMapper');
+?>
 
 <h1><?=$this->getTrans('application') ?></h1>
 <?php if ($this->get('join')): ?>
     <?php $join = $this->get('join'); ?>
+    <?php $date = new Ilch\Date($join->getDateCreated()); ?>
+    <?php $birthday = new Ilch\Date($join->getAge()); ?>
     <div class="form-horizontal">
         <div class="form-group">
             <label class="col-lg-2">
@@ -20,13 +25,33 @@
                 <?=$join->getEMail() ?>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-lg-2">
+                <?=$this->getTrans('dateTime') ?>:
+            </label>
+            <div class="col-lg-2">
+                <?=$date->format('d.m.Y H:i', true) ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2">
+                <?=$this->getTrans('gender') ?>:
+            </label>
+            <div class="col-lg-2">
+                <?php if ($join->getGender() == 1) {
+                    echo $this->getTrans('genderMale');
+                } elseif ($join->getGender() == 2) {
+                    echo $this->getTrans('genderFemale');
+                } ?>
+            </div>
+        </div>
         <?php if ($join->getAge()): ?>
             <div class="form-group">
                 <label class="col-lg-2">
                     <?=$this->getTrans('age') ?>:
                 </label>
                 <div class="col-lg-2">
-                    <?=$join->getAge() ?>
+                    <?=$birthday->format('d.m.Y') ?> (<?=$joinsMapper->getAge($birthday) ?>)
                 </div>
             </div>
         <?php endif; ?>

@@ -36,10 +36,12 @@ class Joins extends \Ilch\Mapper
             $entryModel->setUserId($entries['userId']);
             $entryModel->setName($entries['name']);
             $entryModel->setEmail($entries['email']);
+            $entryModel->setGender($entries['gender']);
             $entryModel->setAge($entries['age']);
             $entryModel->setPlace($entries['place']);
             $entryModel->setSkill($entries['skill']);
             $entryModel->setTeamId($entries['teamId']);
+            $entryModel->setDateCreated($entries['dateCreated']);
             $entryModel->setText($entries['text']);
             $teams[] = $entryModel;
         }
@@ -61,6 +63,16 @@ class Joins extends \Ilch\Mapper
     }
 
     /**
+     * Get Age from date.
+     *
+     * @param string $date
+     * @return JoinsModel|null
+     */
+    public function getAge($date) {
+        return intval(date('Y', time() - strtotime($date))) - 1970;
+    }
+
+    /**
      * Inserts Join Model.
      *
      * @param JoinsModel $join
@@ -71,10 +83,12 @@ class Joins extends \Ilch\Mapper
             'userId' => $join->getUserId(),
             'name' => $join->getName(),
             'email' => $join->getEmail(),
+            'gender' => $join->getGender(),
             'age' => $join->getAge(),
             'place' => $join->getPlace(),
             'skill' => $join->getSkill(),
             'teamId' => $join->getTeamId(),
+            'dateCreated' => $join->getDateCreated(),
             'text' => $join->getText()
         ];
 

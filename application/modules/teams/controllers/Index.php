@@ -50,7 +50,8 @@ class Index extends \Ilch\Controller\Frontend
                     'name' => 'required|unique:teams_joins,name',
                     'email' => 'required|email|unique:teams_joins,email',
                     'teamId' => 'numeric|integer|min:1',
-                    'age' => 'numeric|integer|min:1|max:99',
+                    'gender' => 'numeric|integer|min:1|max:2',
+                    'age' => 'required',
                     'text' => 'required'
                 ]);
             } else {
@@ -58,7 +59,8 @@ class Index extends \Ilch\Controller\Frontend
                     'name' => 'required|unique:users,name|unique:teams_joins,name',
                     'email' => 'required|email|unique:users,email|unique:teams_joins,email',
                     'teamId' => 'numeric|integer|min:1',
-                    'age' => 'numeric|integer|min:1|max:99',
+                    'gender' => 'numeric|integer|min:1|max:2',
+                    'age' => 'required',
                     'text' => 'required',
                     'captcha' => 'captcha'
                 ]);
@@ -66,16 +68,21 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($validation->isValid()) {
                 $model = new JoinsModel();
+                $currentDate = new \Ilch\Date();
 
                 if ($this->getUser()) {
-                    $model->setUserId($this->getUser()->getId());
+                    $model->setUserId($this->getUser()->getId())
+                        ->setGender($this->getUser()->getGender());
+                } else {
+                    $model->setGender($this->getRequest()->getPost('gender'));
                 }
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setEmail($this->getRequest()->getPost('email'))
-                    ->setAge($this->getRequest()->getPost('age'))
                     ->setPlace($this->getRequest()->getPost('place'))
+                    ->setAge(new \Ilch\Date($this->getRequest()->getPost('age')))
                     ->setSkill($this->getRequest()->getPost('skill'))
                     ->setTeamId($this->getRequest()->getPost('teamId'))
+                    ->setDateCreated($currentDate->toDb())
                     ->setText($this->getRequest()->getPost('text'));
                 $joinsMapper->save($model);
 

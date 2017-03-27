@@ -12,14 +12,17 @@
                 <tr>
                     <th><?=$this->getTrans('name') ?></th>
                     <th><?=$this->getTrans('team') ?></th>
+                    <th><?=$this->getTrans('dateTime') ?></th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($this->get('joins') as $join): ?>
                     <?php $team = $teamsMapper->getTeamById($join->getTeamId()); ?>
+                    <?php $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
                         <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $join->getId()]) ?>" title="<?=$this->getTrans('show') ?>"><?=$this->escape($join->getName()) ?></a></td>
                         <td><?=$this->escape($team->getName()) ?></td>
+                        <td><?=$date->format('d.m.Y H:i', true) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
