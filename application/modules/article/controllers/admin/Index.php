@@ -103,53 +103,15 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $post = [
-            'cats' => '',
-            'title' => '',
-            'content' => '',
-            'description' => '',
-            'keywords' => '',
-            'permaLink' => '',
-            'image' => '',
-            'imageSource' => '',
-        ];
-
         if ($this->getRequest()->isPost()) {
-            // Add BASE_URL if image starts with application to get a complete URL for validation
-            $image = $this->getRequest()->getPost('image');
-            if (!empty($image)) {
-                if (substr($image, 0, 11) == 'application') {
-                    $image = BASE_URL.'/'.$image;
-                }
-            }
-
-            // Create full-url of permaLink.
-            $permaLink = BASE_URL.'/index.php/'.$this->getRequest()->getPost('permaLink');
-
-            $post = [
-                'cats' => $this->getRequest()->getPost('cats'),
-                'title' => $this->getRequest()->getPost('title'),
-                'content' => $this->getRequest()->getPost('content'),
-                'description' => $this->getRequest()->getPost('description'),
-                'keywords' => $this->getRequest()->getPost('keywords'),
-                'permaLink' => $permaLink,
-                'image' => $image,
-                'imageSource' => $this->getRequest()->getPost('imageSource'),
-            ];
-
-            $validation = Validation::create($post, [
-                'cats' => 'required|numeric|integer|min:1',
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'cats' => 'required',
                 'title' => 'required',
                 'content' => 'required',
-                'permaLink' => 'url',
-                'image' => 'url',
             ]);
 
-            // Restore original values
-            $post['image'] = $this->getRequest()->getPost('image');
-            $post['permaLink'] = $this->getRequest()->getPost('permaLink');
-
             if ($validation->isValid()) {
+                $catIds = implode(",", $this->getRequest()->getPost('cats'));
                 $model = new ArticleModel();
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
@@ -159,26 +121,30 @@ class Index extends \Ilch\Controller\Admin
                 } else {
                     $model->setLocale('');
                 }
-                $model->setCatId($post['cats']);
-                $model->setAuthorId($this->getUser()->getId());
-                $model->setDescription($post['description']);
-                $model->setKeywords($post['keywords']);
-                $model->setTitle($post['title']);
-                $model->setContent($post['content']);
-                $model->setPerma($post['permaLink']);
-                $model->setArticleImage($post['image']);
-                $model->setArticleImageSource($post['imageSource']);
+
+                $model->setCatId($catIds)
+                    ->setAuthorId($this->getUser()->getId())
+                    ->setDescription($this->getRequest()->getPost('description'))
+                    ->setKeywords($this->getRequest()->getPost('keywords'))
+                    ->setTitle($this->getRequest()->getPost('title'))
+                    ->setSubTitle($this->getRequest()->getPost('subTitle'))
+                    ->setContent($this->getRequest()->getPost('content'))
+                    ->setPerma($this->getRequest()->getPost('permaLink'))
+                    ->setImage($this->getRequest()->getPost('image'))
+                    ->setImageSource($this->getRequest()->getPost('imgSource'));
                 $articleMapper->save($model);
 
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
-
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('cats', $categoryMapper->getCategories());
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());

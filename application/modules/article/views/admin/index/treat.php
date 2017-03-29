@@ -17,7 +17,7 @@ if ($this->get('article') != '') {
 
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
-    <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -26,31 +26,55 @@ if ($this->get('article') != '') {
                    class="form-control"
                    id="title"
                    name="title"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
+                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('cats', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('subTitle') ? 'has-error' : '' ?>">
+        <label for="subTitle" class="col-lg-2 control-label">
+            <?=$this->getTrans('subTitle') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input type="text"
+                   class="form-control"
+                   id="subTitle"
+                   name="subTitle"
+                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getSubTitle()) : $this->originalInput('subTitle') ?>" />
+        </div>
+    </div>
+    <div class="form-group <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">
         <label for="cats" class="col-lg-2 control-label">
             <?=$this->getTrans('cats') ?>:
         </label>
         <div class="col-lg-4">
-            <select class="form-control" id="cats" name="cats">
+            <select class="chosen-select form-control"
+                    id="cats"
+                    name="cats[]"
+                    data-placeholder="<?=$this->getTrans('selectCategories') ?>"
+                    multiple>
                 <?php foreach ($this->get('cats') as $cats): ?>
-                    <?php $selected = ''; ?>
-                    <?php if ($this->get('article') != '' and $this->get('article')->getCatId() == $cats->getId()): ?>
-                        <?php $selected = 'selected="selected"'; ?>
-                    <?php endif; ?>
-                    <option <?=$selected ?> value="<?=$cats->getId() ?>"><?=$this->escape($cats->getName()) ?></option>
+                    <option value="<?=$cats->getId() ?>"
+                        <?php if ($this->get('article') != '') {
+                            $catIds = explode(',', $this->get('article')->getCatId());
+                            foreach ($catIds as $catId) {
+                                if ($cats->getId() == $catId) {
+                                    echo 'selected="selected"';
+                                    break;
+                                }
+                            }
+                        }
+                        ?>>
+                        <?=$this->escape($cats->getName()) ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
-    <div class="form-group <?=in_array('content', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('content') ? 'has-error' : '' ?>">
         <div class="col-lg-offset-2 col-lg-8">
             <textarea class="form-control ckeditor"
                       id="ck_1"
                       name="content"
-                      toolbar="ilch_html"><?php if ($this->get('article') != '') { echo $this->get('article')->getContent(); } else { echo $this->get('post')['content']; } ?></textarea>
+                      toolbar="ilch_html"><?=($this->get('article') != '') ? $this->get('article')->getContent(): $this->originalInput('content') ?></textarea>
         </div>
     </div>
     <?php if ($this->get('multilingual') && $this->getRequest()->getParam('locale') != ''): ?>
@@ -79,7 +103,7 @@ if ($this->get('article') != '') {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
-    <div class="form-group <?=in_array('image', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:
         </label>
@@ -89,7 +113,7 @@ if ($this->get('article') != '') {
                        class="form-control"
                        id="selectedImage"
                        name="image"
-                       value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImage()); } else { echo $this->get('post')['image']; } ?>" />
+                       value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getImage()) : $this->originalInput('image') ?>" />
                 <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
             </div>
         </div>
@@ -102,7 +126,7 @@ if ($this->get('article') != '') {
             <input type="text"
                    class="form-control"
                    name="imageSource"
-                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getArticleImageSource()); } ?>" />
+                   value="<?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getImageSource()); } ?>" />
         </div>
     </div>
     <div class="form-group">
@@ -134,7 +158,7 @@ if ($this->get('article') != '') {
                       name="keywords"><?php if ($this->get('article') != '') { echo $this->escape($this->get('article')->getKeywords()); } ?></textarea>
         </div>
     </div>
-    <div class="form-group <?=in_array('permaLink', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
         <label for="permaLink" class="col-lg-2 control-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>
@@ -160,6 +184,8 @@ if ($this->get('article') != '') {
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script>
+$('#cats').chosen();
+
 $('#title').change(
     function () {
         $('#permaLink').val
@@ -199,6 +225,14 @@ var ilchPsPlugin = "<?=$this->getBaseUrl('application/modules/media/static/js/il
 
 $('#keywords').tokenfield();
 $('#keywords').on('tokenfield:createtoken', function (event) {
+    var existingTokens = $(this).tokenfield('getTokens');
+    $.each(existingTokens, function(index, token) {
+        if (token.value === event.attrs.value)
+            event.preventDefault();
+    });
+});
+$('#tags').tokenfield();
+$('#tags').on('tokenfield:createtoken', function (event) {
     var existingTokens = $(this).tokenfield('getTokens');
     $.each(existingTokens, function(index, token) {
         if (token.value === event.attrs.value)

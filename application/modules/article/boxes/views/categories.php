@@ -16,7 +16,7 @@ $cats = $this->get('cats');
                         </a>
                     </span>
                     <span class="badge">
-                        <?=count($articleMapper->getArticlesByCats($cat->getId())) ?>
+                        <?=$articleMapper->getCountArticlesByCatId($cat->getId()) ?>
                     </span>
                 </li>
             <?php endforeach; ?>

@@ -9,11 +9,10 @@ $categoryMapper = $this->get('categoryMapper');
     <div class="table-responsive">
         <table class="table table-hover table-striped">
             <colgroup>
-                <col class="icon_width">
-                <col class="icon_width">
-                <col class="icon_width">
-                <col class="col-lg-2">
-                <col>
+                <col class="icon_width" />
+                <col class="icon_width" />
+                <col class="icon_width" />
+                <col />
                 <?php if ($this->get('multilingual')): ?>
                     <col class="col-lg-1">
                 <?php endif; ?>
@@ -23,7 +22,6 @@ $categoryMapper = $this->get('categoryMapper');
                     <th><?=$this->getCheckAllCheckbox('check_articles') ?></th>
                     <th></th>
                     <th></th>
-                    <th><?=$this->getTrans('cats') ?></th>
                     <th><?=$this->getTrans('title') ?></th>
                     <?php if ($this->get('multilingual')): ?>
                         <th class="text-right">
@@ -46,7 +44,6 @@ $categoryMapper = $this->get('categoryMapper');
                             <td><?=$this->getDeleteCheckbox('check_articles', $article->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $article->getId()]) ?></td>
-                            <td><a target="_blank" href="<?=$this->getUrl().'/index.php/article/cats/show/id/'.$articlesCats->getId() ?>"><?=$this->escape($articlesCats->getName()) ?></a></td>
                             <td><a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($article->getPerma()) ?>"><?=$this->escape($article->getTitle()) ?></a></td>
                             <?php if ($this->get('multilingual')): ?>
                                 <td class="text-right">

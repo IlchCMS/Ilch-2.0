@@ -21,7 +21,7 @@ class Article extends \Ilch\Model
     /**
      * The catId of the article.
      *
-     * @var int
+     * @var string
      */
     protected $catId;
 
@@ -52,6 +52,13 @@ class Article extends \Ilch\Model
      * @var string
      */
     protected $title;
+
+    /**
+     * The sub title of the article.
+     *
+     * @var string
+     */
+    protected $subTitle;
 
     /**
      * The content of the article.
@@ -89,25 +96,25 @@ class Article extends \Ilch\Model
     protected $dateCreated;
 
     /**
-     * The articleImage of the article.
+     * The Image of the article.
      *
      * @var string
      */
-    protected $articleImage;
+    protected $image;
 
     /**
-     * The articleImageThumb of the article.
+     * The Image thumb of the article.
      *
      * @var string
      */
-    protected $articleImageThumb;
+    protected $imageThumb;
 
     /**
-     * The articleImageSource of the image.
+     * The Source of the image.
      *
      * @var string
      */
-    protected $articleImageSource;
+    protected $imageSource;
 
     /**
      * Gets the id of the article.
@@ -123,16 +130,19 @@ class Article extends \Ilch\Model
      * Sets the id of the article.
      *
      * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int) $id;
+
+        return $this;
     }
 
     /**
      * Gets the catId of the article.
      *
-     * @return int
+     * @return string
      */
     public function getCatId()
     {
@@ -142,11 +152,14 @@ class Article extends \Ilch\Model
     /**
      * Sets the catId of the article.
      *
-     * @param int $catId
+     * @param string $catId
+     * @return $this
      */
     public function setCatId($catId)
     {
-        $this->catId = (int) $catId;
+        $this->catId = (string) $catId;
+
+        return $this;
     }
 
     /**
@@ -163,10 +176,13 @@ class Article extends \Ilch\Model
      * Sets the authorId of the article.
      *
      * @param int $authorId
+     * @return $this
      */
     public function setAuthorId($authorId)
     {
         $this->authorId = (int) $authorId;
+
+        return $this;
     }
 
     /**
@@ -183,10 +199,13 @@ class Article extends \Ilch\Model
      * Sets the visits of the article.
      *
      * @param int $visits
+     * @return $this
      */
     public function setVisits($visits)
     {
         $this->visits = (int) $visits;
+
+        return $this;
     }
 
     /**
@@ -203,10 +222,13 @@ class Article extends \Ilch\Model
      * Sets the perma of the article.
      *
      * @param int $perma
+     * @return $this
      */
     public function setPerma($perma)
     {
         $this->perma = $perma;
+
+        return $this;
     }
 
     /**
@@ -223,10 +245,36 @@ class Article extends \Ilch\Model
      * Sets the article title.
      *
      * @param string $title
+     * @return $this
      */
     public function setTitle($title)
     {
         $this->title = (string) $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets the article sub title.
+     *
+     * @return string
+     */
+    public function getSubTitle()
+    {
+        return $this->subTitle;
+    }
+
+    /**
+     * Sets the article sub title.
+     *
+     * @param string $subTitle
+     * @return $this
+     */
+    public function setSubTitle($subTitle)
+    {
+        $this->subTitle = (string) $subTitle;
+
+        return $this;
     }
 
     /**
@@ -243,10 +291,13 @@ class Article extends \Ilch\Model
      * Sets the content of the article.
      *
      * @param string $content
+     * @return $this
      */
     public function setContent($content)
     {
         $this->content = (string) $content;
+
+        return $this;
     }
 
     /**
@@ -263,10 +314,13 @@ class Article extends \Ilch\Model
      * Sets the description of the article.
      *
      * @param string $description
+     * @return $this
      */
     public function setDescription($description)
     {
         $this->description = (string)$description;
+
+        return $this;
     }
 
     /**
@@ -283,10 +337,13 @@ class Article extends \Ilch\Model
      * Sets the keywords of the article.
      *
      * @param string $keywords
+     * @return $this
      */
     public function setKeywords($keywords)
     {
         $this->keywords = (string)$keywords;
+
+        return $this;
     }
 
     /**
@@ -303,10 +360,13 @@ class Article extends \Ilch\Model
      * Sets the locale of the article.
      *
      * @param string $locale
+     * @return $this
      */
     public function setLocale($locale)
     {
         $this->locale = (string)$locale;
+
+        return $this;
     }
 
     /**
@@ -323,20 +383,13 @@ class Article extends \Ilch\Model
      * Sets the date_created date of the article.
      *
      * @param DateTime $dateCreated
+     * @return $this
      */
     public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
-    }
 
-    /**
-     * Sets the articleImage of the article.
-     *
-     * @param string $articleImage
-     */
-    public function setArticleImage($articleImage)
-    {
-        $this->articleImage = $articleImage;
+        return $this;
     }
 
     /**
@@ -344,48 +397,67 @@ class Article extends \Ilch\Model
      *
      * @return string
      */
-    public function getArticleImage()
+    public function getImage()
     {
-        return $this->articleImage;
+        return $this->image;
     }
 
     /**
-     * Sets the articleImageThumb of the article.
+     * Sets the Image of the article.
      *
-     * @param string $articleImageThumb
+     * @param string $image
+     * @return $this
      */
-    public function setArticleImageThumb($articleImageThumb)
+    public function setImage($image)
     {
-        $this->articleImageThumb = $articleImageThumb;
+        $this->image = $image;
+
+        return $this;
     }
 
     /**
-     * Gets the article ImageThumb.
-     *
-     * @return string
-     */
-    public function getArticleImageThumb()
-    {
-        return $this->articleImageThumb;
-    }
-
-    /**
-     * Sets the articleImageSource of the image.
-     *
-     * @param string $articleImageSource
-     */
-    public function setArticleImageSource($articleImageSource)
-    {
-        $this->articleImageSource = $articleImageSource;
-    }
-
-    /**
-     * Gets the article Image Source.
+     * Gets the article Image thumb.
      *
      * @return string
      */
-    public function getArticleImageSource()
+    public function getImageThumb()
     {
-        return $this->articleImageSource;
+        return $this->imageThumb;
+    }
+
+    /**
+     * Sets the Image thumb of the article.
+     *
+     * @param string $imageThumb
+     * @return $this
+     */
+    public function setImageThumb($imageThumb)
+    {
+        $this->imageThumb = $imageThumb;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Image Source.
+     *
+     * @return string
+     */
+    public function getImageSource()
+    {
+        return $this->imageSource;
+    }
+
+    /**
+     * Sets the source of the image.
+     *
+     * @param string $imageSource
+     * @return $this
+     */
+    public function setImageSource($imageSource)
+    {
+        $this->imageSource = $imageSource;
+
+        return $this;
     }
 }

@@ -8,7 +8,7 @@ $cats = $this->get('cats');
     <ul class="list-group">
         <?php foreach ($cats as $cat): ?>
             <li class="list-group-item">
-                <span class="badge"><?=count($articleMapper->getArticlesByCats($cat->getId())) ?></span>
+                <span class="badge"><?=$articleMapper->getCountArticlesByCatId($cat->getId()) ?></span>
                 <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $cat->getId()]) ?>"><?=$this->escape($cat->getName()) ?></a>
             </li>
         <?php endforeach; ?>

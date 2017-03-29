@@ -59,7 +59,7 @@ class Config extends \Ilch\Config\Install
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_articles` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `cat_id` INT(11) NULL DEFAULT 0,
+                  `cat_id` VARCHAR(255) NOT NULL,
                   `date_created` DATETIME NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -75,21 +75,22 @@ class Config extends \Ilch\Config\Install
                   `author_id` INT(11) NOT NULL,
                   `visits` INT(11) NOT NULL DEFAULT 0,
                   `content` MEDIUMTEXT NOT NULL,
-                  `description` MEDIUMTEXT NULL DEFAULT NULL,
-                  `keywords` MEDIUMTEXT NULL DEFAULT NULL,
+                  `description` MEDIUMTEXT NOT NULL,
+                  `keywords` VARCHAR(255) NOT NULL,
                   `locale` VARCHAR(255) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
-                  `perma` VARCHAR(255) NULL DEFAULT NULL,
-                  `article_img` VARCHAR(255) NULL DEFAULT NULL,
-                  `article_img_source` VARCHAR(255) NULL DEFAULT NULL
+                  `sub_title` VARCHAR(255) NOT NULL,
+                  `perma` VARCHAR(255) NOT NULL,
+                  `img` VARCHAR(255) NOT NULL,
+                  `img_source` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
                 INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`) VALUES (1, now());
 
                 INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");
 
-                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `content`, `title`, `perma`, `locale`) VALUES
-                (1, 1, "Willkommen auf meiner Internetseite! Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "startseite.html", "");';
+                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `content`, `title`, `sub_title`, `keywords`, `perma`) VALUES
+                (1, 1, "Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "Willkommen auf meiner Internetseite!", "wilkommen, seite, internetseite, vorstellen", "startseite.html");';
     }
 
     public function getUpdate($installedVersion)

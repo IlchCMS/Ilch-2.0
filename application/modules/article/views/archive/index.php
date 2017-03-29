@@ -12,7 +12,13 @@ $userMapper = $this->get('userMapper');
         foreach ($articles as $article):
             $date = new \Ilch\Date($article->getDateCreated());
             $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
-            $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
+
+            $catIds = explode(",", $article->getCatId());
+            $categories = '';
+            foreach ($catIds as $catId) {
+                $articlesCats = $categoryMapper->getCategoryById($catId);
+                $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
+            }
         ?>
             <li class="list-group-item">
                 <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a> - 
@@ -22,11 +28,14 @@ $userMapper = $this->get('userMapper');
                         <i class="fa fa-user" title="<?=$this->getTrans('author') ?>"></i> <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>"><?=$this->escape($user->getName()) ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                 <?php endif; ?>
-                <i class="fa fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(['action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format('d. F Y', true) ?></a>
+                <i class="fa fa-calendar" title="<?=$this->getTrans('date') ?>"></i> <a href="<?=$this->getUrl(['action' => 'show', 'year' => $date->format("Y", true), 'month' => $date->format("m", true)]) ?>"><?=$date->format('d.', true) ?> <?=$this->getTrans($date->format('F', true)) ?> <?=$date->format('Y', true) ?></a>
                 &nbsp;&nbsp;<i class="fa fa-clock-o" title="<?=$this->getTrans('time') ?>"></i> <?=$date->format('H:i', true) ?>
-                &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('menuCats') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $article->getCatId()]) ?>"><?=$articlesCats->getName() ?></a>
+                &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', '); ?>
                 &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
                 &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
+                <?php if ($article->getKeywords() != ''): ?>
+                    <i class="fa fa-hashtag"></i> <?=$article->getKeywords() ?>
+                <?php endif; ?>
             </li>
         <?php endforeach; ?>
     </ul>
