@@ -77,12 +77,14 @@ class Index extends \Ilch\Controller\Frontend
 
     public function licenseAction()
     {
-        $licenseFile = ROOT_PATH.'/license.html';
+        $licenseFile = ROOT_PATH.'/LICENSE';
         if (file_exists($licenseFile)) {
             $license = file_get_contents($licenseFile);
-            if (preg_match('~<body[^>]*>(.*?)</body>~si', $license, $licenseContent)) {
-                $licenseContent = $licenseContent[1];
-            }
+
+            $search = ['<', '>'];
+            $replace   = ['"', '"'];
+            $licenseContent = str_replace($search, $replace, $license);
+            $licenseContent = nl2br($licenseContent);
 
             $this->getView()->set('licenseText', $licenseContent);
         } else {

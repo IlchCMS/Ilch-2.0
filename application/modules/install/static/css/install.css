@@ -139,17 +139,6 @@ div.license {
     overflow-y: scroll;
     overflow-x : hidden;
 }
-div.license h3 {
-    display: block;
-    font-size: 19px;
-    margin-top: 25px;
-    font-weight: bold;
-}
-div.license h4 {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-}
 
 
 /* Configuration content */
