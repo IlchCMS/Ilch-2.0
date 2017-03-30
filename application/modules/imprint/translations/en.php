@@ -23,7 +23,6 @@ return [
     'menuSettings' => 'Settings',
     'settings' => 'Settings',
     'private' => 'Private',
-    'company' => 'Company',
     'site' => 'Site',
     'registration' => 'Registration',
     'commercialRegister' => 'Commercial Register Number',

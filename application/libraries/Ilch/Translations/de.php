@@ -30,6 +30,11 @@ return [
     'close' => 'Schließen',
     'captcha' => 'Captcha',
     'smilies' => 'Smilies',
+    'submit' => 'Eintragen',
+    'reply' => 'Antworten',
+    'delete' => 'Löschen',
+    'edit' => 'Bearbeiten',
+    'add' => 'Add',
 
     // seo
     'seo' => 'SEO',
@@ -42,6 +47,9 @@ return [
     'policyInfoText' => 'Diese Website nutzt Cookies, um bestmögliche Funktionalität bieten zu können.',
 
     // comment module
+    'comments' => 'Kommentare',
+    'commentUser' => 'Benutzer',
+    'commentDateTime' => 'Datum/Uhrzeit',
     'iLike' => 'Mag ich',
     'notLike' => 'Mag ich nicht',
 

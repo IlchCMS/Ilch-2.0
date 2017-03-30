@@ -34,8 +34,6 @@ return [
     'createNewTopic' => 'Neues Thema erstellen',
     'createNewPost' => 'Antworten',
     'lockPost' => 'Geschlossen',
-    'delete' => 'Löschen',
-    'edit' => 'Bearbeiten',
     'noAccessForum' => 'Keine Berechtigung!',
     'noAccessDelete' => 'Keine Berechtigung zum Löschen',
     'forumEdit' => 'Forum bearbeiten',

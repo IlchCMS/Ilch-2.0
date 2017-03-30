@@ -22,5 +22,4 @@ return [
     'apply' => 'Bewerben',
     'applyAs' => 'Bewerbung als',
     'hide' => 'Ausblenden',
-    'show' => 'Einblenden',
 ];

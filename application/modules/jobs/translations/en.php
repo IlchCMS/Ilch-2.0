@@ -22,5 +22,4 @@ return [
     'apply' => 'Apply',
     'applyAs' => 'Apply as',
     'hide' => 'Hide',
-    'show' => 'Show',
 ];

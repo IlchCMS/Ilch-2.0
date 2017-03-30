@@ -34,8 +34,6 @@ return [
     'createNewTopic' => 'Create new topic',
     'createNewPost' => 'Reply',
     'lockPost' => 'Closed',
-    'delete' => 'Delete',
-    'edit' => 'Edit',
     'noAccessForum' => 'No access!',
     'noAccessDelete' => 'No access to delete',
     'forumEdit' => 'Edit forum',

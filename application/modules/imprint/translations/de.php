@@ -23,7 +23,6 @@ return [
     'menuSettings' => 'Einstellungen',
     'settings' => 'Einstellungen',
     'private' => 'Privat',
-    'company' => 'Firma',
     'site' => 'Seite',
     'registration' => 'Registergericht',
     'commercialRegister' => 'Handelsregisternummer',
