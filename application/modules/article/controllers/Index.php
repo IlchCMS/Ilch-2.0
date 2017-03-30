@@ -76,6 +76,7 @@ class Index extends \Ilch\Controller\Frontend
             $commentMapper->save($commentModel);
             $this->redirect(['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
         }
+
         if ($this->getRequest()->getParam('commentId') AND ($this->getRequest()->getParam('key') == 'up' OR $this->getRequest()->getParam('key') == 'down')) {
             $id = $this->getRequest()->getParam('id');
             $commentId = $this->getRequest()->getParam('commentId');
@@ -95,21 +96,24 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
+            $this->getLayout()->getTitle()
+                ->add($this->getTranslator()->trans('menuArticle'))
+                ->add($this->getTranslator()->trans('preview'));
             $this->getLayout()->getHmenu()
                     ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                     ->add($this->getTranslator()->trans('preview'), ['action' => 'index']);
 
-            $title = $this->getRequest()->getPost('title');
-            $catId = $this->getRequest()->getPost('cats');
-            $content = $this->getRequest()->getPost('content');
-            $image = $this->getRequest()->getPost('image');
+            $catIds = implode(",", $this->getRequest()->getPost('cats'));
 
             $articleModel = new ArticleModel();
-            $articleModel->setTitle($title);
-            $articleModel->setCatId($catId);
-            $articleModel->setContent($content);
-            $articleModel->setArticleImage($image);
-            $articleModel->setVisits(0);
+            $articleModel->setTitle($this->getRequest()->getPost('title'))
+                ->setSubTitle($this->getRequest()->getPost('subTitle'))
+                ->setCatId($catIds)
+                ->setKeywords($this->getRequest()->getPost('keywords'))
+                ->setContent($this->getRequest()->getPost('content'))
+                ->setImage($this->getRequest()->getPost('image'))
+                ->setImageSource($this->getRequest()->getPost('imageSource'))
+                ->setVisits(0);
 
             $this->getView()->set('categoryMapper', $categoryMapper);
             $this->getView()->set('commentMapper', $commentMapper);

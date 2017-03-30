@@ -4,10 +4,7 @@ $article = $this->get('article');
 $categoryMapper = $this->get('categoryMapper');
 $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
-$articlesCats = $categoryMapper->getCategoryById($article->getCatId());
 $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
-$image = $article->getImage();
-$imageSource = $article->getImageSource();
 $preview = $this->getRequest()->getParam('preview');
 $config = $this->get('config');
 $date = new \Ilch\Date($article->getDateCreated());
@@ -167,14 +164,13 @@ foreach ($catIds as $catId) {
 <?php if ($article->getSubTitle()): ?>
     <h3><?=$this->escape($article->getSubTitle()) ?></h3>
 <?php endif; ?>
-<?php if (!empty($image)): ?>
+<?php if (!empty($article->getImage())): ?>
     <figure>
-        <img class="article_image" src="<?=$this->getBaseUrl($image) ?>" />
-        <?php if (!empty($imageSource)): ?>
-            <figcaption class="article_image_source"><?=$this->getTrans('articleImageSource') ?>: <?=$this->escape($imageSource) ?></figcaption>
-            <br />
+        <img class="article_image" src="<?=$this->getBaseUrl($article->getImage()) ?>" />
+        <?php if (!empty($article->getImageSource())): ?>
+            <figcaption class="article_image_source"><?=$this->getTrans('imageSource') ?>: <?=$this->escape($article->getImageSource()) ?></figcaption>
         <?php endif; ?>
-    <figure>
+    </figure>
 <?php endif; ?>
 <?=$content ?>
 <hr />

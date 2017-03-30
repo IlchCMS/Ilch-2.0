@@ -6,9 +6,6 @@
 
 namespace Modules\Article\Models;
 
-/**
- * The user category model class.
- */
 class Category extends \Ilch\Mapper
 {
     /**
@@ -39,10 +36,13 @@ class Category extends \Ilch\Mapper
      * Sets the category id.
      *
      * @param int $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int) $id;
+
+        return $this;
     }
 
     /**
@@ -58,9 +58,12 @@ class Category extends \Ilch\Mapper
      * Sets the category name.
      *
      * @param string $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = (string) $name;
+
+        return $this;
     }
 }

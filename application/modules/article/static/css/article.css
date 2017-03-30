@@ -1,8 +1,10 @@
 .article_image {
-    padding: 10px;
-    border-radius: 4px;
     display:block;
+    padding: 10px;
     margin: 10px auto 10px auto;
+}
+.article_image_source {
+    margin-bottom: 20px;
 }
 .article_preview {
     position: fixed;

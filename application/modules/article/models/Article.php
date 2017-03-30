@@ -6,9 +6,6 @@
 
 namespace Modules\Article\Models;
 
-/**
- * The article model class.
- */
 class Article extends \Ilch\Model
 {
     /**

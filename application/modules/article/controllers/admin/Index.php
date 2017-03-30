@@ -131,7 +131,7 @@ class Index extends \Ilch\Controller\Admin
                     ->setContent($this->getRequest()->getPost('content'))
                     ->setPerma($this->getRequest()->getPost('permaLink'))
                     ->setImage($this->getRequest()->getPost('image'))
-                    ->setImageSource($this->getRequest()->getPost('imgSource'));
+                    ->setImageSource($this->getRequest()->getPost('imageSource'));
                 $articleMapper->save($model);
 
                 $this->redirect()
