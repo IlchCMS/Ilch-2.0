@@ -34,7 +34,7 @@ return [
     'reply' => 'Reply',
     'delete' => 'Delete',
     'edit' => 'Edit',
-    'add' => 'Erstellen',
+    'add' => 'Add',
 
     // seo
     'seo' => 'SEO',
