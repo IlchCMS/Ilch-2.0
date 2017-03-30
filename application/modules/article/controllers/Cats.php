@@ -37,11 +37,11 @@ class Cats extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuArticle'))
             ->add($this->getTranslator()->trans('menuCats'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index']);
 
-        $this->getView()->set('articleMapper', $articleMapper);
-        $this->getView()->set('cats', $categoryMapper->getCategories());
+        $this->getView()->set('articleMapper', $articleMapper)
+            ->set('cats', $categoryMapper->getCategories());
     }
 
     public function showAction()
@@ -61,17 +61,17 @@ class Cats extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuCats'))
             ->add($articlesCats->getName());
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
-                ->add($articlesCats->getName(), ['action' => 'show', 'id' => $articlesCats->getId()]);
+            ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+            ->add($articlesCats->getName(), ['action' => 'show', 'id' => $articlesCats->getId()]);
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('categoryMapper', $categoryMapper);
-        $this->getView()->set('commentMapper', $commentMapper);
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('articles', $articleMapper->getArticlesByCats($this->getRequest()->getParam('id'), $this->locale, $pagination));
-        $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('categoryMapper', $categoryMapper)
+            ->set('commentMapper', $commentMapper)
+            ->set('userMapper', $userMapper)
+            ->set('articles', $articleMapper->getArticlesByCats($this->getRequest()->getParam('id'), $this->locale, $pagination))
+            ->set('pagination', $pagination);
     }
 }

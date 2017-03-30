@@ -61,17 +61,18 @@ class Cats extends \Ilch\Controller\Admin
         $categoryMapper = new CategoryMapper();
         
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') === 'delete') {
             foreach ($this->getRequest()->getPost('check_cats') as $catId) {
                 $categoryMapper->delete($catId);
             }
-            $this->addMessage('deleteSuccess');
 
-            $this->redirect(['action' => 'index']);
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('cats', $categoryMapper->getCategories());
@@ -83,16 +84,16 @@ class Cats extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('cat', $categoryMapper->getCategoryById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -109,9 +110,9 @@ class Cats extends \Ilch\Controller\Admin
                 $model->setName($name);
                 $categoryMapper->save($model);
 
-                $this->addMessage('saveSuccess');
-
-                $this->redirect(['action' => 'index']);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
         }
     }
@@ -125,12 +126,14 @@ class Cats extends \Ilch\Controller\Admin
                 $categoryMapper = new CategoryMapper();
                 $categoryMapper->delete($this->getRequest()->getParam('id'));
 
-                $this->addMessage('deleteSuccess');
+                $this->redirect()
+                    ->withMessage('deleteSuccess')
+                    ->to(['action' => 'index']);
             } else {
-                $this->addMessage('categoryInUse', 'danger');
+                $this->redirect()
+                    ->withMessage('categoryInUse', 'danger')
+                    ->to(['action' => 'index']);
             }
-
-            $this->redirect(['action' => 'index']);
         }
     }
 }

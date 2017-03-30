@@ -158,8 +158,10 @@ class Index extends \Ilch\Controller\Admin
             $commentMapper = new CommentMapper();
             $articleMapper->delete($this->getRequest()->getParam('id'));
             $commentMapper->deleteByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
-        }
 
-        $this->redirect(['action' => 'index']);
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
+        }
     }
 }

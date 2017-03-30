@@ -5,6 +5,7 @@
  */
 
 namespace Modules\Article\Controllers\Admin;
+
 use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
@@ -42,29 +43,29 @@ class Settings extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'articlesPerPage' => $this->getRequest()->getPost('articlesPerPage'),
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'articlesPerPage' => 'numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('article_articlesPerPage', $post['articlesPerPage']);
+                $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
 
-                $this->addMessage('saveSuccess');
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
-        $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'));
+        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []))
+            ->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'));
     }
 }

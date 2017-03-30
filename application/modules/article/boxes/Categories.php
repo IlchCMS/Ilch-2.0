@@ -16,7 +16,7 @@ class Categories extends \Ilch\Box
         $categoryMapper = new CategoryMapper();
         $articleMapper = new ArticleMapper();
 
-        $this->getView()->set('articleMapper', $articleMapper);
-        $this->getView()->set('cats', $categoryMapper->getCategories());
+        $this->getView()->set('articleMapper', $articleMapper)
+            ->set('cats', $categoryMapper->getCategories());
     }
 }

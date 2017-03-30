@@ -39,18 +39,21 @@ class Archive extends \Ilch\Controller\Frontend
 
         $this->getLayout()->header()
             ->css('static/css/article.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuArticle'))
+            ->add($this->getTranslator()->trans('menuArchives'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index']);
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('categoryMapper', $categoryMapper);
-        $this->getView()->set('commentMapper', $commentMapper);
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('articles', $articleMapper->getArticles($this->locale, $pagination));
-        $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('categoryMapper', $categoryMapper)
+            ->set('commentMapper', $commentMapper)
+            ->set('userMapper', $userMapper)
+            ->set('articles', $articleMapper->getArticles($this->locale, $pagination))
+            ->set('pagination', $pagination);
     }
 
     public function showAction()
@@ -64,14 +67,18 @@ class Archive extends \Ilch\Controller\Frontend
 
         $this->getLayout()->header()
             ->css('static/css/article.css');
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuArticle'))
+            ->add($this->getTranslator()->trans('menuArchives'))
+            ->add($date->format('F Y', true));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
-                ->add($date->format('F Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
+            ->add($this->getTranslator()->trans('menuArticle'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
+            ->add($date->format('F Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
-        $this->getView()->set('categoryMapper', $categoryMapper);
-        $this->getView()->set('commentMapper', $commentMapper);
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('articles', $articleMapper->getArticlesByDate($date));
+        $this->getView()->set('categoryMapper', $categoryMapper)
+            ->set('commentMapper', $commentMapper)
+            ->set('userMapper', $userMapper)
+            ->set('articles', $articleMapper->getArticlesByDate($date));
     }
 }

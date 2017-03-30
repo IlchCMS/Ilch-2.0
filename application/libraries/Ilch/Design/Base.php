@@ -127,10 +127,13 @@ abstract class Base
      *
      * @param string $key
      * @param mixed $value
+     * @return $this
      */
     public function set($key, $value)
     {
         $this->data[$key] = $value;
+
+        return $this;
     }
 
     /**

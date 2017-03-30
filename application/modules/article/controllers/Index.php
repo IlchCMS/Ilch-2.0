@@ -37,20 +37,20 @@ class Index extends \Ilch\Controller\Frontend
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->header()
-                ->css('static/css/article.css');
+            ->css('static/css/article.css');
         $this->getLayout()->getTitle()
-                ->add($this->getTranslator()->trans('menuArticle'));
+            ->add($this->getTranslator()->trans('menuArticle'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index']);
 
         $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
-        $this->getView()->set('categoryMapper', $categoryMapper);
-        $this->getView()->set('commentMapper', $commentMapper);
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('articles', $articleMapper->getArticles($this->locale, $pagination));
-        $this->getView()->set('pagination', $pagination);
+        $this->getView()->set('categoryMapper', $categoryMapper)
+            ->set('commentMapper', $commentMapper)
+            ->set('userMapper', $userMapper)
+            ->set('articles', $articleMapper->getArticles($this->locale, $pagination))
+            ->set('pagination', $pagination);
     }
 
     public function showAction()
@@ -100,8 +100,8 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuArticle'))
                 ->add($this->getTranslator()->trans('preview'));
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('preview'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('preview'), ['action' => 'index']);
 
             $catIds = implode(",", $this->getRequest()->getPost('cats'));
 
@@ -115,38 +115,46 @@ class Index extends \Ilch\Controller\Frontend
                 ->setImageSource($this->getRequest()->getPost('imageSource'))
                 ->setVisits(0);
 
-            $this->getView()->set('categoryMapper', $categoryMapper);
-            $this->getView()->set('commentMapper', $commentMapper);
-            $this->getView()->set('article', $articleModel);
+            $this->getView()->set('categoryMapper', $categoryMapper)
+                ->set('commentMapper', $commentMapper)
+                ->set('article', $articleModel);
         } else {
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
-            $articlesCats = $categoryMapper->getCategoryById($article->getCatId());
+            $catIds = explode(",", $article->getCatId());
 
             $this->getLayout()->header()
-                    ->css('static/css/article.css')
-                    ->css('../comment/static/css/comment.css');
+                ->css('static/css/article.css')
+                ->css('../comment/static/css/comment.css');
             $this->getLayout()->getTitle()
-                    ->add($this->getTranslator()->trans('menuArticle'))
-                    ->add($article->getTitle());
+                ->add($this->getTranslator()->trans('menuArticle'))
+                ->add($this->getTranslator()->trans('menuCats'));
+            foreach ($catIds as $catId) {
+                $articlesCats = $categoryMapper->getCategoryById($catId);
+                $this->getLayout()->getTitle()->add($articlesCats->getName());
+            }
+            $this->getLayout()->getTitle()->add($article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());
             $this->getLayout()->set('metaKeywords', $article->getKeywords());
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index'])
-                    ->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $articlesCats->getId()])
-                    ->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
+                ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
+            foreach ($catIds as $catId) {
+                $articlesCats = $categoryMapper->getCategoryById($catId);
+                $this->getLayout()->getHmenu()->add($articlesCats->getName(), ['controller' => 'cats', 'action' => 'show', 'id' => $catId]);
+            }
+             $this->getLayout()->getHmenu()->add($article->getTitle(), ['action' => 'show', 'id' => $article->getId()]);
 
             $articleModel = new ArticleModel();
-            $articleModel->setId($article->getId());
-            $articleModel->setVisits($article->getVisits() + 1);
+            $articleModel->setId($article->getId())
+                ->setVisits($article->getVisits() + 1);
             $articleMapper->saveVisits($articleModel);
 
-            $this->getView()->set('categoryMapper', $categoryMapper);
-            $this->getView()->set('commentMapper', $commentMapper);
-            $this->getView()->set('userMapper', $userMapper);
-            $this->getView()->set('config', $config);
-            $this->getView()->set('article', $article);
-            $this->getView()->set('comments', $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id')));
+            $this->getView()->set('categoryMapper', $categoryMapper)
+                ->set('commentMapper', $commentMapper)
+                ->set('userMapper', $userMapper)
+                ->set('config', $config)
+                ->set('article', $article)
+                ->set('comments', $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id')));
         }
     }
 }
