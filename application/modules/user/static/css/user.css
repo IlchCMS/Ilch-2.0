@@ -476,4 +476,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     .profile-content .settings-stretch .col-md-4 {
         display: flex;
     }
+    .profile-content .settings-stretch .col-md-4 .panel {
+        width: 100%;
+    }
 }
