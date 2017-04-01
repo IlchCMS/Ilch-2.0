@@ -316,6 +316,36 @@ class Article extends \Ilch\Mapper
 
         return $articleModel;
     }
+    /**
+     * Get articles.
+     *
+     * @param int $limit
+     * @return ArticleModel[]|array
+     */
+    public function getKeywordsList($limit = null)
+    {
+        $sql = 'SELECT `keywords`
+                FROM `[prefix]_articles_content`';
+
+        if ($limit !== null) {
+            $sql .= ' LIMIT '.(int)$limit;
+        }
+
+        $keywordsArray = $this->db()->queryArray($sql);
+
+        if (empty($keywordsArray)) {
+            return [];
+        }
+
+        $keywordsList = [];
+        foreach ($keywordsArray as $keywords) {
+            $articleModel = new ArticleModel();
+            $articleModel->setKeywords($keywords['keywords']);
+            $keywordsList[] = $articleModel;
+        }
+
+        return $keywordsList;
+    }
 
     /**
      * Returns all article permas.

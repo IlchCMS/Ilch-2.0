@@ -15,6 +15,6 @@ class Archive extends \Ilch\Box
         $articleMapper = new ArticleMapper();
 
         $this->getView()->set('articleMapper', $articleMapper)
-            ->set('archive', $articleMapper->getArticleDateList(10));
+            ->set('archive', $articleMapper->getArticleDateList($this->getConfig()->get('article_box_archiveLimit')));
     }
 }

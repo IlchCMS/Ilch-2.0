@@ -14,6 +14,6 @@ class Article extends \Ilch\Box
     {
         $articleMapper = new ArticleMapper();
 
-        $this->getView()->set('articles', $articleMapper->getArticleList('', 5));
+        $this->getView()->set('articles', $articleMapper->getArticleList('', $this->getConfig()->get('article_box_articleLimit')));
     }
 }

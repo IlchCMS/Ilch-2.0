@@ -466,8 +466,9 @@ class Index extends \Ilch\Controller\Frontend
                         (1, 110, 0, 0, 0, 'statistic_online', 4, 'Online', '', ''),
                         (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
                         (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
-                        (2, 30, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
-                        (2, 40, 0, 0, 0, 'article_archive', 4, 'Archiv', '', '')";
+                        (2, 30, 0, 0, 0, 'article_archive', 4, 'Archiv', '', ''),
+                        (2, 40, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
+                        (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '')";
                 $db->queryMulti($boxes);
 
                 unset($_SESSION['install']);

@@ -46,6 +46,14 @@ class Config extends \Ilch\Config\Install
                 'en_EN' => [
                     'name' => 'Article Categories'
                 ]
+            ],
+            'keywords' => [
+                'de_DE' => [
+                    'name' => 'Artikel Keywords'
+                ],
+                'en_EN' => [
+                    'name' => 'Article Keywords'
+                ]
             ]
         ]
     ];
@@ -53,6 +61,14 @@ class Config extends \Ilch\Config\Install
     public function install()
     {
         $this->db()->queryMulti($this->getInstallSql());
+
+        $databaseConfig = new \Ilch\Config\Database($this->db());
+        $databaseConfig->set('article_box_articleLimit', '5');
+        $databaseConfig->set('article_box_archiveLimit', '5');
+        $databaseConfig->set('article_box_keywordsH2', '17');
+        $databaseConfig->set('article_box_keywordsH3', '20');
+        $databaseConfig->set('article_box_keywordsH4', '23');
+        $databaseConfig->set('article_box_keywordsH5', '26');
     }
 
     public function getInstallSql()
@@ -89,8 +105,8 @@ class Config extends \Ilch\Config\Install
 
                 INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");
 
-                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `content`, `title`, `sub_title`, `keywords`, `perma`) VALUES
-                (1, 1, "Auf dieser Seite möchte ich mich als Person vorstellen.", "Startseite", "Willkommen auf meiner Internetseite!", "wilkommen, seite, internetseite, vorstellen", "startseite.html");';
+                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `title`, `sub_title`, `content`, `keywords`, `perma`) VALUES
+                (1, 1, "Willkommen", "Willkommen beim Ilch CMS!", "<p>Dies ist dein erster Artikel mit dem Ilch - Content Management System</p><p>Bei Fragen oder Probleme im <a href=\"http://www.ilch.de/forum.html\">Ilch Forum</a>&nbsp;melden.</p><p>Viel Erfolg<br />Ilch</p>", "willkommen, ilch, cms, news", "willkommen.html");';
     }
 
     public function getUpdate($installedVersion)

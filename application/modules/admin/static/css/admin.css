@@ -13,7 +13,7 @@ body {
     direction: ltr;
     overflow-x: hidden;
 }
-h1 {
+h1, h2 {
     font-size: 21px;
     line-height: inherit;
     margin-top: 0;
