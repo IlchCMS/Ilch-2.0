@@ -40,7 +40,7 @@ return [
     'gender' => 'Geschlecht',
     'genderMale' => 'Männlich',
     'genderFemale' => 'Weiblich',
-    'age' => 'Alter',
+    'birthday' => 'Geburtstag',
     'place' => 'Wohnort',
     'skill' => 'Erfahrung',
     'beginner' => 'Anfänger',

@@ -1,8 +1,11 @@
 <?php
 $userMapper = $this->get('userMapper');
+$groupMapper = $this->get('groupMapper');
+$userId = 0;
 
 if ($this->getUser()) {
     $user = $userMapper->getUserById($this->getUser()->getId());
+    $userId = $this->getUser()->getId();
 }
 ?>
 
@@ -14,27 +17,32 @@ if ($this->getUser()) {
         <?=$this->getTokenField() ?>
         <div class="form-group <?=$this->validation()->hasError('teamId') ? 'has-error' : '' ?>">
             <label for="teamId" class="col-lg-2 control-label">
-                <?=$this->getTrans('team') ?>:
+                <?=$this->getTrans('team') ?>
             </label>
             <div class="col-lg-4">
                 <select class="form-control" id="teamId" name="teamId">
                     <optgroup label="<?=$this->getTrans('teams') ?>">
-                        <?php foreach ($this->get('teams') as $teamList): ?>
-                            <?php if ($teamList->getOptIn() == 1): ?>
-                                <?php $selected = ''; ?>
-                                <?php if ($this->originalInput('teamId') == $teamList->getId() OR $this->getRequest()->getParam('id') == $teamList->getId()): ?>
-                                    <?php $selected = 'selected="selected"'; ?>
-                                <?php endif; ?>
-                                <option <?=$selected ?> value="<?=$teamList->getId() ?>"><?=$teamList->getName() ?></option>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
+                        <?php foreach ($this->get('teams') as $teamList) {
+                            $groupList = $groupMapper->getUsersForGroup($teamList->getGroupId());
+                            $leaderIds = explode(',', $teamList->getLeader());
+                            $coLeaderIds = explode(',', $teamList->getCoLeader());
+                            $groupList = array_unique(array_merge($leaderIds, $coLeaderIds, $groupList));
+
+                            if ($teamList->getOptIn() == 1 AND (!in_array($userId, $groupList) OR $userId == 0)) {
+                                $selected = '';
+                                if ($this->originalInput('teamId') == $teamList->getId() OR $this->getRequest()->getParam('id') == $teamList->getId()) {
+                                    $selected = 'selected="selected"';
+                                }
+                                echo '<option '.$selected.' value="'.$teamList->getId().'">'.$teamList->getName().'</option>';
+                            }
+                        } ?>
                     </optgroup>
                 </select>
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
             <label for="name" class="col-md-2 control-label">
-                <?=$this->getTrans('name') ?>:
+                <?=$this->getTrans('name') ?>
             </label>
             <div class="col-lg-6">
             <?php if ($this->getUser()): ?>
@@ -55,7 +63,7 @@ if ($this->getUser()) {
         </div>
         <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
             <label for="email" class="col-lg-2 control-label">
-                <?=$this->getTrans('email') ?>:
+                <?=$this->getTrans('email') ?>
             </label>
             <div class="col-lg-6">
                 <?php if ($this->getUser()): ?>
@@ -92,17 +100,17 @@ if ($this->getUser()) {
                 <?php endif; ?>
             </div>
         </div>
-        <div class="form-group <?=$this->validation()->hasError('age') ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('birthday') ? 'has-error' : '' ?>">
             <label for="age" class="col-lg-2 control-label">
-                <?=$this->getTrans('age') ?>:
+                <?=$this->getTrans('birthday') ?>
             </label>
             <?php if ($this->getUser() AND $this->getUser()->getBirthday() != '0000-00-00'): ?>
                 <div class="col-lg-2 input-group ilch-date">
                     <?php $birthday = new \Ilch\Date($this->getUser()->getBirthday()); ?>
                     <input type="text"
                            class="form-control"
-                           id="age"
-                           name="age"
+                           id="birthday"
+                           name="birthday"
                            value="<?=$birthday->format('d.m.Y') ?>"
                            readonly />
                     <span class="input-group-addon">
@@ -113,9 +121,9 @@ if ($this->getUser()) {
                 <div class="col-lg-2 input-group ilch-date date form_datetime">
                     <input type="text"
                            class="form-control"
-                           id="age"
-                           name="age"
-                           value="<?=($this->originalInput('age') != '') ? $this->originalInput('age') : '' ?>" />
+                           id="birthday"
+                           name="birthday"
+                           value="<?=($this->originalInput('birthday') != '') ? $this->originalInput('birthday') : '' ?>" />
                     <span class="input-group-addon">
                         <span class="fa fa-calendar"></span>
                     </span>
@@ -124,7 +132,7 @@ if ($this->getUser()) {
         </div>
         <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
             <label for="place" class="col-lg-2 control-label">
-                <?=$this->getTrans('place') ?>:
+                <?=$this->getTrans('place') ?>
             </label>
             <div class="col-lg-6">
                 <input type="text"
@@ -136,7 +144,7 @@ if ($this->getUser()) {
         </div>
         <div class="form-group <?=$this->validation()->hasError('skill') ? 'has-error' : '' ?>">
             <label for="skill" class="col-lg-2 control-label">
-                <?=$this->getTrans('skill') ?>:
+                <?=$this->getTrans('skill') ?>
             </label>
             <div class="col-lg-2">
                 <select class="form-control" id="skill" name="skill">
@@ -149,7 +157,7 @@ if ($this->getUser()) {
         </div>
         <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
             <label for="ck_1" class="col-lg-2 control-label">
-                <?=$this->getTrans('text') ?>:
+                <?=$this->getTrans('text') ?>
             </label>
             <div class="col-lg-10">
                 <textarea class="form-control ckeditor"
@@ -162,7 +170,7 @@ if ($this->getUser()) {
         <?php if (!$this->getUser()): ?>
             <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
                 <label class="col-lg-2 control-label">
-                    <?=$this->getTrans('captcha') ?>:
+                    <?=$this->getTrans('captcha') ?>
                 </label>
                 <div class="col-lg-8">
                     <?=$this->getCaptchaField() ?>

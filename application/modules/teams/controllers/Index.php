@@ -24,11 +24,11 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuTeams'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index']);
 
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('groupMapper', $groupMapper);
-        $this->getView()->set('teams', $teamsMapper->getTeams());
+        $this->getView()->set('userMapper', $userMapper)
+            ->set('groupMapper', $groupMapper)
+            ->set('teams', $teamsMapper->getTeams());
     }
 
     public function joinAction()
@@ -36,6 +36,7 @@ class Index extends \Ilch\Controller\Frontend
         $teamsMapper = new TeamsMapper();
         $joinsMapper = new JoinsMapper();
         $userMapper = new UserMapper();
+        $groupMapper = new GroupMapper();
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuTeams'))
@@ -51,7 +52,7 @@ class Index extends \Ilch\Controller\Frontend
                     'email' => 'required|email|unique:teams_joins,email',
                     'teamId' => 'numeric|integer|min:1',
                     'gender' => 'numeric|integer|min:1|max:2',
-                    'age' => 'required',
+                    'birthday' => 'required',
                     'text' => 'required'
                 ]);
             } else {
@@ -60,7 +61,7 @@ class Index extends \Ilch\Controller\Frontend
                     'email' => 'required|email|unique:users,email|unique:teams_joins,email',
                     'teamId' => 'numeric|integer|min:1',
                     'gender' => 'numeric|integer|min:1|max:2',
-                    'age' => 'required',
+                    'birthday' => 'required',
                     'text' => 'required',
                     'captcha' => 'captcha'
                 ]);
@@ -79,7 +80,7 @@ class Index extends \Ilch\Controller\Frontend
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setEmail($this->getRequest()->getPost('email'))
                     ->setPlace($this->getRequest()->getPost('place'))
-                    ->setAge(new \Ilch\Date($this->getRequest()->getPost('age')))
+                    ->setBirthday(new \Ilch\Date($this->getRequest()->getPost('birthday')))
                     ->setSkill($this->getRequest()->getPost('skill'))
                     ->setTeamId($this->getRequest()->getPost('teamId'))
                     ->setDateCreated($currentDate->toDb())
@@ -108,7 +109,9 @@ class Index extends \Ilch\Controller\Frontend
             }
         }
 
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('teams', $teamsMapper->getTeams());
+        $this->getView()->set('teamsMapper', $teamsMapper)
+            ->set('userMapper', $userMapper)
+            ->set('groupMapper', $groupMapper)
+            ->set('teams', $teamsMapper->getTeams());
     }
 }

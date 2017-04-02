@@ -40,7 +40,7 @@ return [
     'gender' => 'Gender',
     'genderMale' => 'Male',
     'genderFemale' => 'Female',
-    'age' => 'Age',
+    'birthday' => 'Birthday',
     'place' => 'Place',
     'skill' => 'Skill',
     'beginner' => 'Beginner',

@@ -7,7 +7,7 @@ $teamsMapper = $this->get('teamsMapper');
 <?php if ($this->get('join')): ?>
     <?php $join = $this->get('join'); ?>
     <?php $date = new Ilch\Date($join->getDateCreated()); ?>
-    <?php $birthday = new Ilch\Date($join->getAge()); ?>
+    <?php $birthday = new Ilch\Date($join->getBirthday()); ?>
     <div class="form-horizontal">
         <div class="form-group">
             <label class="col-lg-2">
@@ -45,13 +45,13 @@ $teamsMapper = $this->get('teamsMapper');
                 } ?>
             </div>
         </div>
-        <?php if ($join->getAge()): ?>
+        <?php if ($join->getBirthday()): ?>
             <div class="form-group">
                 <label class="col-lg-2">
-                    <?=$this->getTrans('age') ?>:
+                    <?=$this->getTrans('birthday') ?>:
                 </label>
                 <div class="col-lg-2">
-                    <?=$birthday->format('d.m.Y') ?> (<?=$joinsMapper->getAge($birthday) ?>)
+                    <?=$birthday->format('d.m.Y') ?> (<?=$joinsMapper->getBirthday($birthday) ?>)
                 </div>
             </div>
         <?php endif; ?>

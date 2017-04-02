@@ -78,7 +78,7 @@ $groupMapper = $this->get('groupMapper');
 
 
                         <?php ($this->getUser()) ? $userId = $this->getUser()->getId() : $userId = 0 ?>
-                        <?php  if ($teamlist->getOptIn() == 1 AND (!in_array($userId, $groupList)) OR $userId == 0): ?>
+                        <?php  if ($teamlist->getOptIn() == 1 AND (!in_array($userId, $groupList) OR $userId == 0)): ?>
                             <tr>
                                 <td colspan="3"><a href="<?=$this->getUrl(['action' => 'join', 'id' => $teamlist->getId()]) ?>"><?=$this->getTrans('apply') ?></a></td>
                             </tr>

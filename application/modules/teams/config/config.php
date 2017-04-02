@@ -89,7 +89,7 @@ class Config extends \Ilch\Config\Install
                   `name` VARCHAR(255) NOT NULL,
                   `email` VARCHAR(255) NOT NULL,
                   `place` VARCHAR(255) NOT NULL,
-                  `age` INT(2) NOT NULL,
+                  `birthday` DATE NOT NULL,
                   `gender` INT(1) NOT NULL,
                   `skill` INT(1) NOT NULL,
                   `teamId` INT(11) NOT NULL,

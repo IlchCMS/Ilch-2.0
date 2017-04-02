@@ -44,11 +44,11 @@ class Joins extends \Ilch\Model
     protected $gender;
 
     /**
-     * The Age from the User.
+     * The Birthday from the User.
      *
      * @var string
      */
-    protected $age;
+    protected $birthday;
 
     /**
      * The Place from the User.
@@ -201,24 +201,24 @@ class Joins extends \Ilch\Model
     }
 
     /**
-     * Gets the Age of the User.
+     * Gets the Birthday of the User.
      *
      * @return string
      */
-    public function getAge()
+    public function getBirthday()
     {
-        return $this->age;
+        return $this->birthday;
     }
 
     /**
-     * Sets the Age of the User.
+     * Sets the Birthday of the User.
      *
-     * @param string $age
+     * @param string $birthday
      * @return $this
      */
-    public function setAge($age)
+    public function setBirthday($birthday)
     {
-        $this->age = (string)$age;
+        $this->birthday = (string)$birthday;
 
         return $this;
     }

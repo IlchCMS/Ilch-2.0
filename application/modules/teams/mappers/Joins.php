@@ -37,7 +37,7 @@ class Joins extends \Ilch\Mapper
             $entryModel->setName($entries['name']);
             $entryModel->setEmail($entries['email']);
             $entryModel->setGender($entries['gender']);
-            $entryModel->setAge($entries['age']);
+            $entryModel->setBirthday($entries['birthday']);
             $entryModel->setPlace($entries['place']);
             $entryModel->setSkill($entries['skill']);
             $entryModel->setTeamId($entries['teamId']);
@@ -84,7 +84,7 @@ class Joins extends \Ilch\Mapper
             'name' => $join->getName(),
             'email' => $join->getEmail(),
             'gender' => $join->getGender(),
-            'age' => $join->getAge(),
+            'birthday' => $join->getBirthday(),
             'place' => $join->getPlace(),
             'skill' => $join->getSkill(),
             'teamId' => $join->getTeamId(),
