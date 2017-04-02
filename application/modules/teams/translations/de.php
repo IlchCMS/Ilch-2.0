@@ -27,6 +27,7 @@ return [
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'leaderCoLeaderIdentic' => 'Der Leader und CoLeader sind identisch.',
+    'rightsOfGroup' => 'Mitglieder eines Teams übernehmen die Rechte der zugehörigen Gruppe.',
 
     'menuJoin' => 'Beitreten',
     'menuApplications' => 'Bewerbungen',

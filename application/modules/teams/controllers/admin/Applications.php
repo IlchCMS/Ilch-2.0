@@ -50,6 +50,8 @@ class Applications extends \Ilch\Controller\Admin
         $joinsMapper = new JoinsMapper();
         $teamsMapper = new TeamsMapper();
 
+        $this->addMessage('rightsOfGroup', 'danger');
+
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('menuApplications'), ['action' => 'index']);
@@ -62,6 +64,8 @@ class Applications extends \Ilch\Controller\Admin
     {
         $joinsMapper = new JoinsMapper();
         $teamsMapper = new TeamsMapper();
+
+        $this->addMessage('rightsOfGroup', 'danger');
 
         $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
 

@@ -27,6 +27,7 @@ return [
     'failedFiletypes' => 'Image does not contain allowed file format.',
     'failedFilesize' => 'Image has unauthorized width, height or is too big.',
     'leaderCoLeaderIdentic' => 'The leader and co-leader are identic.',
+    'rightsOfGroup' => 'Members of a team receive the rights of the associated group.',
 
     'menuJoin' => 'Join',
     'menuApplications' => 'Applications',
