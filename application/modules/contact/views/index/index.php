@@ -1,66 +1,63 @@
-<?php $receivers = $this->get('receivers'); ?>
-
 <h1><?=$this->getTrans('menuContact') ?></h1>
-
-<?php if ($receivers != ''): ?>
+<?php if ($this->get('receivers') != ''): ?>
     <form method="POST" class="form-horizontal" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=in_array('receiver', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('receiver') ? 'has-error' : '' ?>">
             <label for="receiver" class="col-lg-2 control-label">
-                <?=$this->getTrans('receiver') ?>:
+                <?=$this->getTrans('receiver') ?>
             </label>
             <div class="col-lg-8">
                 <select class="form-control" id="receiver" name="receiver">
-                    <?php foreach ($receivers as $receiver):?>
+                    <?php foreach ($this->get('receivers') as $receiver): ?>
                         <option value="<?=$receiver->getId() ?>"><?=$this->escape($receiver->getName()) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
-        <div class="form-group <?=in_array('senderName', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('senderName') ? 'has-error' : '' ?>">
             <label for="name" class="col-lg-2 control-label">
-                <?=$this->getTrans('name') ?>:
+                <?=$this->getTrans('name') ?>
             </label>
             <div class="col-lg-8">
                 <input type="text"
                        class="form-control"
                        id="name"
                        name="senderName"
-                       value="<?=$this->get('post')['senderName'] ?>" />
+                       value="<?=$this->originalInput('senderName') ?>" />
             </div>
         </div>
-        <div class="form-group <?=in_array('senderEmail', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('senderEmail') ? 'has-error' : '' ?>">
             <label for="email" class="col-lg-2 control-label">
-                <?=$this->getTrans('email') ?>:
+                <?=$this->getTrans('email') ?>
             </label>
             <div class="col-lg-8">
                 <input type="text"
                        class="form-control"
                        id="email"
                        name="senderEmail"
-                       value="<?=$this->get('post')['senderEmail'] ?>" />
+                       value="<?=$this->originalInput('senderEmail') ?>" />
             </div>
         </div>
-        <div class="form-group <?=in_array('message', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('message') ? 'has-error' : '' ?>">
             <label for="message" class="col-lg-2 control-label">
-                <?=$this->getTrans('message') ?>:
+                <?=$this->getTrans('message') ?>
             </label>
             <div class="col-lg-8">
                 <textarea class="form-control"
                           id="message"
                           name="message"
-                          rows="5"><?=$this->get('post')['message'] ?></textarea>
+                          rows="5"><?=$this->originalInput('message') ?></textarea>
             </div>
         </div>
-        <div class="form-group <?=in_array('captcha', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
             <label class="col-lg-2 control-label">
-                <?=$this->getTrans('captcha') ?>:
+                <?=$this->getTrans('captcha') ?>
             </label>
             <div class="col-lg-8">
                 <?=$this->getCaptchaField() ?>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group <?=$this->validation()->hasError('captcha') ? 'has-error' : '' ?>">
             <div class="col-lg-offset-2 col-lg-8 input-group captcha">
                 <input type="text"
                        class="form-control"

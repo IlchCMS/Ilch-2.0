@@ -13,7 +13,7 @@ return [
     'sendSuccess' => 'Message send successfull',
     'menuReceivers' => 'Receivers',
     'noReceivers' => 'No receivers',
-    'contactWebsite' => 'Contact Website ',
+    'contactWebsite' => 'Contact Website',
     'captchaRead' => 'Not readable? Change text!',
     'addButton' => 'Send',
 ];

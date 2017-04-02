@@ -15,31 +15,18 @@ class Index extends \Ilch\Controller\Frontend
     {
         $receiverMapper = new ReceiverMapper();
 
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuContact'), ['action' => 'index']);
-
-        $post = [
-            'receiver' => '',
-            'senderName' => '',
-            'senderEmail' => '',
-            'message' => '',
-            'captcha' => ''
-        ];
+        $this->getLayout()->getTitle()
+            ->add($this->getTranslator()->trans('menuContact'));
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuContact'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('saveContact')) {
-            $post = [
-                'receiver' => $this->getRequest()->getPost('receiver'),
-                'senderName' => $this->getRequest()->getPost('senderName'),
-                'senderEmail' => $this->getRequest()->getPost('senderEmail'),
-                'message' => $this->getRequest()->getPost('message'),
-                'captcha' => trim(strtolower($this->getRequest()->getPost('captcha')))
-            ];
-
             Validation::setCustomFieldAliases([
                 'senderName' => 'name',
                 'senderEmail' => 'email'
             ]);
 
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'receiver' => 'required',
                 'senderName' => 'required',
                 'senderEmail' => 'required|email',
@@ -48,30 +35,29 @@ class Index extends \Ilch\Controller\Frontend
             ]);
 
             if ($validation->isValid()) {
-                $receiver = $receiverMapper->getReceiverById($post['receiver']);
-                $subject = $this->getTranslator()->trans('contactWebsite').$this->getConfig()->get('page_title').':<'.$post['senderName'].'>('.$post['senderEmail'].')';
+                $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('receiver'));
+                $subject = $this->getTranslator()->trans('contactWebsite').' | '.$this->getConfig()->get('page_title');
 
-                /*
-                * @todo create a general sender.
-                */
                 $mail = new \Ilch\Mail();
                 $mail->setTo($receiver->getEmail(),$receiver->getName())
-                        ->setSubject($subject)
-                        ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
-                        ->setMessage($post['message'])
-                        ->addGeneralHeader('Content-Type', 'text/plain; charset="utf-8"');
+                    ->setSubject($subject)
+                    ->setFrom($this->getRequest()->getPost('senderEmail'), $this->getRequest()->getPost('senderName'))
+                    ->setMessage($this->getRequest()->getPost('message'))
+                    ->addGeneralHeader('Content-Type', 'text/plain; charset="utf-8"');
                 $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
                 $mail->send();
 
-                $this->addMessage('sendSuccess');
+                $this->redirect()
+                    ->withMessage('sendSuccess')
+                    ->to(['action' => 'index']);
             }
-
             $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
-            $errorFields = $validation->getFieldsWithError();
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('receivers', $receiverMapper->getReceivers());
     }
 }
