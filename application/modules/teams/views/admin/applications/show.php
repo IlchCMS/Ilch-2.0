@@ -51,7 +51,7 @@ $teamsMapper = $this->get('teamsMapper');
                     <?=$this->getTrans('birthday') ?>:
                 </label>
                 <div class="col-lg-2">
-                    <?=$birthday->format('d.m.Y') ?> (<?=$joinsMapper->getBirthday($birthday) ?>)
+                    <?=$birthday->format('d.m.Y') ?> (<?=$joinsMapper->getAge($birthday) ?>)
                 </div>
             </div>
         <?php endif; ?>
