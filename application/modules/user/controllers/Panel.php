@@ -509,8 +509,10 @@ class Panel extends BaseController
                 ->add($gallery->getTitle(), ['controller' => 'panel', 'action' => 'treatgallery', 'id' => $id]);
 
         if ($this->getRequest()->getPost('action') == 'delete') {
+            $mediaMapper = new MediaMapper();
+            
             foreach ($this->getRequest()->getPost('check_gallery') as $imageId) {
-                $imageMapper->deleteById($imageId);
+                $mediaMapper->delMediaById($imageId);
             }
 
             $this->addMessage('deleteSuccess');
