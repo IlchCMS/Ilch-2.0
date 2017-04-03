@@ -50,22 +50,20 @@ class Applications extends \Ilch\Controller\Admin
         $joinsMapper = new JoinsMapper();
         $teamsMapper = new TeamsMapper();
 
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuApplications'), ['action' => 'index']);
+
         $this->addMessage('rightsOfGroup', 'danger');
 
-        $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuTeams'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuApplications'), ['action' => 'index']);
-
-        $this->getView()->set('teamsMapper', $teamsMapper);
-        $this->getView()->set('joins', $joinsMapper->getJoins());
+        $this->getView()->set('teamsMapper', $teamsMapper)
+            ->set('joins', $joinsMapper->getJoins());
     }
 
     public function showAction()
     {
         $joinsMapper = new JoinsMapper();
         $teamsMapper = new TeamsMapper();
-
-        $this->addMessage('rightsOfGroup', 'danger');
 
         $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
 
@@ -74,9 +72,11 @@ class Applications extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuApplications'), ['controller' => 'applications', 'action' => 'index'])
             ->add($join->getName(), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
-        $this->getView()->set('joinsMapper', $joinsMapper);
-        $this->getView()->set('teamsMapper', $teamsMapper);
-        $this->getView()->set('join', $join);
+        $this->addMessage('rightsOfGroup', 'danger');
+
+        $this->getView()->set('joinsMapper', $joinsMapper)
+            ->set('teamsMapper', $teamsMapper)
+            ->set('join', $join);
     }
 
     public function acceptAction()
@@ -86,7 +86,6 @@ class Applications extends \Ilch\Controller\Admin
             $teamsMapper = new TeamsMapper();
             $userMapper = new UserMapper();
             $passwordService = new PasswordService();
-            $date = new \Ilch\Date();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
             $name = $join->getName();
@@ -107,10 +106,15 @@ class Applications extends \Ilch\Controller\Admin
                 $password = substr(str_shuffle($password_string), 0, 12);
 
                 $userModel = new UserModel();
+                if ($join->getPlace()) {
+                    $userModel->setCity($join->getPlace());
+                }
                 $userModel->setName($name)
                     ->setPassword($passwordService->hash($password))
                     ->setEmail($email)
-                    ->setDateCreated($date->format("Y-m-d H:i:s", true))
+                    ->setBirthday($join->getBirthday())
+                    ->setGender($join->getGender())
+                    ->setDateCreated($join->getDateCreated())
                     ->addGroup($userGroup)
                     ->setSelector($selector)
                     ->setConfirmedCode($confirmedCode)
@@ -118,9 +122,10 @@ class Applications extends \Ilch\Controller\Admin
                 $userMapper->save($userModel);
             }
 
-            $team = $teamsMapper->getTeamById($join->getTeamId());
+            $team = $teamsMapper->getTeamByGroupId($join->getTeamId());
             $teamname = $team->getName();
             $sitetitle = $this->getConfig()->get('page_title');
+            $date = new \Ilch\Date();
 
             $layout = '';
             if (!empty($_SESSION['layout'])) {
@@ -173,7 +178,7 @@ class Applications extends \Ilch\Controller\Admin
             $teamsMapper = new TeamsMapper();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
-            $team = $teamsMapper->getTeamById($join->getTeamId());
+            $team = $teamsMapper->getTeamByGroupId($join->getTeamId());
             $name = $join->getName();
             $email = $join->getEmail();
             $teamname = $team->getName();

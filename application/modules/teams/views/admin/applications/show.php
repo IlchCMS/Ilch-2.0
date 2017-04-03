@@ -6,6 +6,7 @@ $teamsMapper = $this->get('teamsMapper');
 <h1><?=$this->getTrans('application') ?></h1>
 <?php if ($this->get('join')): ?>
     <?php $join = $this->get('join'); ?>
+    <?php $team = $teamsMapper->getTeamByGroupId($join->getTeamId()); ?>
     <?php $date = new Ilch\Date($join->getDateCreated()); ?>
     <?php $birthday = new Ilch\Date($join->getBirthday()); ?>
     <div class="form-horizontal">
@@ -15,6 +16,14 @@ $teamsMapper = $this->get('teamsMapper');
             </label>
             <div class="col-lg-2">
                 <?=$join->getName() ?>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-2">
+                <?=$this->getTrans('team') ?>:
+            </label>
+            <div class="col-lg-2">
+                <?=$team->getName() ?>
             </div>
         </div>
         <div class="form-group">

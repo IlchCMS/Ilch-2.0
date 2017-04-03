@@ -203,7 +203,7 @@ class Joins extends \Ilch\Model
     /**
      * Gets the Birthday of the User.
      *
-     * @return string
+     * @return \Ilch\Date
      */
     public function getBirthday()
     {
@@ -213,12 +213,12 @@ class Joins extends \Ilch\Model
     /**
      * Sets the Birthday of the User.
      *
-     * @param string $birthday
+     * @param \Ilch\Date $birthday
      * @return $this
      */
     public function setBirthday($birthday)
     {
-        $this->birthday = (string)$birthday;
+        $this->birthday = $birthday;
 
         return $this;
     }
@@ -295,12 +295,12 @@ class Joins extends \Ilch\Model
     /**
      * Sets the created Date of the Join.
      *
-     * @param string $dateCreated
+     * @param \Ilch\Date $dateCreated
      * @return $this
      */
     public function setDateCreated($dateCreated)
     {
-        $this->dateCreated = (string)$dateCreated;
+        $this->dateCreated = $dateCreated;
 
         return $this;
     }
@@ -308,7 +308,7 @@ class Joins extends \Ilch\Model
     /**
      * Gets the created Date of the Join.
      *
-     * @return string
+     * @return \Ilch\Date
      */
     public function getDateCreated()
     {

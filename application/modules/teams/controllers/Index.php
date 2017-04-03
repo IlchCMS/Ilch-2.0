@@ -21,6 +21,8 @@ class Index extends \Ilch\Controller\Frontend
         $userMapper = new UserMapper();
         $groupMapper = new GroupMapper();
 
+        $this->getLayout()->header()
+            ->css('static/css/teams.css');
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuTeams'));
         $this->getLayout()->getHmenu()

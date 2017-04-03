@@ -30,10 +30,10 @@ if ($this->getUser()) {
 
                             if ($teamList->getOptIn() == 1 AND (!in_array($userId, $groupList) OR $userId == 0)) {
                                 $selected = '';
-                                if ($this->originalInput('teamId') == $teamList->getId() OR $this->getRequest()->getParam('id') == $teamList->getId()) {
+                                if ($this->originalInput('teamId') == $teamList->getGroupId() OR $this->getRequest()->getParam('id') == $teamList->getId()) {
                                     $selected = 'selected="selected"';
                                 }
-                                echo '<option '.$selected.' value="'.$teamList->getId().'">'.$teamList->getName().'</option>';
+                                echo '<option '.$selected.' value="'.$teamList->getGroupId().'">'.$teamList->getName().'</option>';
                             }
                         } ?>
                     </optgroup>

@@ -3,8 +3,6 @@ $userMapper = $this->get('userMapper');
 $groupMapper = $this->get('groupMapper');
 ?>
 
-<link href="<?=$this->getModuleUrl('static/css/teams.css') ?>" rel="stylesheet">
-
 <h1><?=$this->getTrans('menuTeams') ?></h1>
 <div class="teams">
     <?php if ($this->get('teams')): ?>
@@ -34,7 +32,7 @@ $groupMapper = $this->get('groupMapper');
                         <tbody>
                         <?php foreach ($groupList as $userId): ?>
                             <?php $user = $userMapper->getUserById($userId); ?>
-                            <?php if ($user): ?>
+                            <?php if ($user AND $user->getConfirmed() == 1): ?>
                                 <tr>
                                     <td>
                                         <a href="<?=$this->getUrl(['module' => 'user', 'controller' => 'profil', 'action' => 'index', 'user' => $user->getId()]) ?>" title="<?=$this->escape($user->getName()) ?>s <?=$this->getTrans('profile') ?>">
@@ -75,7 +73,6 @@ $groupMapper = $this->get('groupMapper');
                                 </tr>
                             <?php endif; ?>
                         <?php endforeach; ?>
-
 
                         <?php ($this->getUser()) ? $userId = $this->getUser()->getId() : $userId = 0 ?>
                         <?php  if ($teamlist->getOptIn() == 1 AND (!in_array($userId, $groupList) OR $userId == 0)): ?>

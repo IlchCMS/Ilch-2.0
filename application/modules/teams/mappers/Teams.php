@@ -59,6 +59,19 @@ class Teams extends \Ilch\Mapper
     }
 
     /**
+     * Get Team by given group id.
+     *
+     * @param integer $id
+     * @return TeamsModel|null
+     */
+    public function getTeamByGroupId($id)
+    {
+        $team = $this->getTeams(['groupId' => $id]);
+
+        return reset($team);
+    }
+
+    /**
      * Delete/Unlink Image by Id.
      *
      * @param int $id
