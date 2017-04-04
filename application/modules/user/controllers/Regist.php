@@ -7,9 +7,10 @@
 namespace Modules\User\Controllers;
 
 use Modules\User\Mappers\User as UserMapper;
-use Modules\User\Models\User as UserModel;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Models\User as UserModel;
 use Modules\User\Service\Password as PasswordService;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Ilch\Validation;
 
 class Regist extends \Ilch\Controller\Frontend
@@ -18,8 +19,8 @@ class Regist extends \Ilch\Controller\Frontend
     {
         if ($this->getConfig()->get('regist_accept') == 1) {
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('step1to3'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('step1to3'), ['action' => 'index']);
 
             if ($this->getRequest()->getPost('saveRegist')) {
                 $validation = Validation::create($this->getRequest()->getPost(), [
@@ -36,12 +37,12 @@ class Regist extends \Ilch\Controller\Frontend
                     ->withErrors($validation->getErrorBag())
                     ->to(['action' => 'index']);
             } else {
-                $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'));
-                $this->getView()->set('regist_accept', $this->getConfig()->get('regist_accept'));
+                $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'))
+                    ->set('regist_accept', $this->getConfig()->get('regist_accept'));
             }
         } else {
             $this->getLayout()->getHmenu()
-                    ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index']);
+                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index']);
         }
     }
 
@@ -50,8 +51,8 @@ class Regist extends \Ilch\Controller\Frontend
         $registMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
+            ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('step2to3'), ['action' => 'input']);
 
         if ($this->getRequest()->getPost('saveRegist') AND $this->getRequest()->getPost('bot') === '') {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -66,6 +67,7 @@ class Regist extends \Ilch\Controller\Frontend
                 $groupMapper = new GroupMapper();
                 $userGroup = $groupMapper->getGroupById(2);
                 $currentDate = new \Ilch\Date();
+                $emailsMapper = new EmailsMapper();
 
                 $model = new UserModel();
                 if ($this->getConfig()->get('regist_confirm') == 0) {
@@ -82,6 +84,7 @@ class Regist extends \Ilch\Controller\Frontend
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setPassword((new PasswordService())->hash($this->getRequest()->getPost('password')))
                     ->setEmail($this->getRequest()->getPost('email'))
+                    ->setLocale($this->getTranslator()->getLocale())
                     ->setDateCreated($currentDate->format("Y-m-d H:i:s", true))
                     ->addGroup($userGroup);
                 $registMapper->save($model);
@@ -93,8 +96,9 @@ class Regist extends \Ilch\Controller\Frontend
                     $sitetitle = $this->getConfig()->get('page_title');
                     $confirmCode = '<a href="'.BASE_URL.'/index.php/user/regist/confirm/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                     $date = new \Ilch\Date();
-                    $layout = '';
+                    $mailContent = $emailsMapper->getEmail('user', 'regist_confirm_mail', $this->getTranslator()->getLocale());
 
+                    $layout = '';
                     if (isset($_SESSION['layout'])) {
                         $layout = $_SESSION['layout'];
                     }
@@ -105,7 +109,7 @@ class Regist extends \Ilch\Controller\Frontend
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/registconfirm.php');
                     }
                     $messageReplace = [
-                        '{content}' => $this->getConfig()->get('regist_confirm_mail'),
+                        '{content}' => $mailContent->getText(),
                         '{sitetitle}' => $sitetitle,
                         '{date}' => $date->format("l, d. F Y", true),
                         '{name}' => $this->getRequest()->getPost('name'),
@@ -138,8 +142,8 @@ class Regist extends \Ilch\Controller\Frontend
     public function finishAction()
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('step3to3'), ['action' => 'finish']);
+            ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('step3to3'), ['action' => 'finish']);
 
         $this->getView()->set('regist_confirm', $this->getConfig()->get('regist_confirm'));    
     }
@@ -147,8 +151,8 @@ class Regist extends \Ilch\Controller\Frontend
     public function confirmAction()
     {
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuConfirm'), ['action' => 'confirm']);
+            ->add($this->getTranslator()->trans('menuRegist'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuConfirm'), ['action' => 'confirm']);
 
         $userMapper = new UserMapper();
         $selector = $this->getRequest()->getParam('selector');

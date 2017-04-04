@@ -220,6 +220,10 @@ class User extends \Ilch\Mapper
             $user->setPassword($userRow['password']);
         }
 
+        if (isset($userRow['locale'])) {
+            $user->setLocale($userRow['locale']);
+        }
+
         if (isset($userRow['opt_mail'])) {
             $user->setOptMail($userRow['opt_mail']);
         }
@@ -325,6 +329,7 @@ class User extends \Ilch\Mapper
         $fields['birthday'] = $user->getBirthday();
         $fields['avatar'] = $user->getAvatar();
         $fields['signature'] = $user->getSignature();
+        $fields['locale'] = $user->getLocale();
         $fields['opt_mail'] = $user->getOptMail();
         $fields['opt_gallery'] = $user->getOptGallery();
 

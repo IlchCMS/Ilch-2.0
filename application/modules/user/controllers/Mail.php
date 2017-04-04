@@ -16,9 +16,9 @@ class Mail extends \Ilch\Controller\Frontend
         $profil = $profilMapper->getUserById($this->getRequest()->getParam('user'));
         
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
-                ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
-                ->add($this->getTranslator()->trans('menuMail'), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
+            ->add($this->getTranslator()->trans('menuUserList'), ['controller' => 'index'])
+            ->add($profil->getName(), ['controller' => 'profil', 'action' => 'index', 'user' => $this->getRequest()->getParam('user')])
+            ->add($this->getTranslator()->trans('menuMail'), ['action' => 'index', 'user' => $this->getRequest()->getParam('user')]);
 
         if ($this->getRequest()->isPost()) {
             $sender = $profilMapper->getUserById($this->getUser()->getId());
@@ -51,10 +51,10 @@ class Mail extends \Ilch\Controller\Frontend
 
                 $mail = new \Ilch\Mail();
                 $mail->setTo($profil->getEmail(), $profil->getName())
-                        ->setSubject($subject)
-                        ->setFrom($email, $name)
-                        ->setMessage($message)
-                        ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
+                    ->setSubject($subject)
+                    ->setFrom($email, $name)
+                    ->setMessage($message)
+                    ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
                 $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
                 $mail->send();
 

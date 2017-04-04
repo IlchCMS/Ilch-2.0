@@ -46,28 +46,6 @@ class Config extends \Ilch\Config\Install
         $databaseConfig->set('regist_rules', '<p>Die Registrierung ist völlig kostenlos</p>
                               <p>Die Betreiber der Seite übernehmen keine Haftung.</p>
                               <p>Bitte verhalten Sie sich angemessen und mit Respekt gegenüber den anderen Community Mitgliedern.</p>');
-        $databaseConfig->set('regist_confirm_mail', '<p>Hallo <b>{name}</b>,</p>
-                              <p>&nbsp;</p>
-                              <p>Willkommen auf <i>{sitetitle}</i>.</p>
-                              <p>um die Registrierung erfolgreich abzuschlie&szlig;en klicken Sie Bitte auf folgenden Link.</p>
-                              <p>{confirm}</p>
-                              <p>&nbsp;</p>
-                              <p>Mit freundlichen Gr&uuml;&szlig;en</p>
-                              <p>Administrator</p>');
-        $databaseConfig->set('manually_confirm_mail', '<p>Hallo <b>{name}</b>,</p>
-                              <p>&nbsp;</p>
-                              <p>Willkommen auf <i>{sitetitle}</i>.</p>
-                              <p>hiermit wurde dein Account freigeschaltet.</p>
-                              <p>&nbsp;</p>
-                              <p>Mit freundlichen Gr&uuml;&szlig;en</p>
-                              <p>Administrator</p>');
-        $databaseConfig->set('password_change_mail', '<p>Hallo <b>{name}</b>,</p>
-                              <p>&nbsp;</p>
-                              <p>um Ihr Passwort auf <i>{sitetitle}</i> zu ändern klicken Sie Bitte auf folgenden Link.</p>
-                              <p>{confirm}</p>
-                              <p>&nbsp;</p>
-                              <p>Mit freundlichen Gr&uuml;&szlig;en</p>
-                              <p>Administrator</p>');
         $databaseConfig->set('avatar_uploadpath', 'application/modules/user/static/upload/avatar/');
         $databaseConfig->set('avatar_height', '120');
         $databaseConfig->set('avatar_width', '120');
@@ -86,6 +64,7 @@ class Config extends \Ilch\Config\Install
         $userModel->setEmail($_SESSION['install']['adminEmail']);
         $userModel->addGroup($groupMapper->getGroupById(1));
         $userModel->addGroup($groupMapper->getGroupById(2));
+        $userModel->setLocale($this->getTranslator()->getLocale());
         $userModel->setDateConfirmed($dateCreated);
         $userModel->setDateCreated($dateCreated);
         $userMapper->save($userModel);
@@ -115,6 +94,7 @@ class Config extends \Ilch\Config\Install
                   `birthday` DATE NULL DEFAULT NULL,
                   `avatar` VARCHAR(255) NOT NULL DEFAULT "",
                   `signature` VARCHAR(255) NOT NULL DEFAULT "",
+                  `locale` VARCHAR(255) NOT NULL,
                   `opt_mail` TINYINT(1) DEFAULT 1,
                   `opt_gallery` TINYINT(1) DEFAULT 1,
                   `date_created` DATETIME NOT NULL,
@@ -281,7 +261,53 @@ class Config extends \Ilch\Config\Install
                 (1, "user/panel/index", "fa-home"),
                 (2, "user/panel/dialog", "fa-envelope"),
                 (3, "user/panel/gallery", "fa-picture-o"),
-                (4, "user/panel/settings", "fa-cogs");';
+                (4, "user/panel/settings", "fa-cogs");
+
+                INSERT INTO `[prefix]_emails` (`moduleKey`, `type`, `desc`, `text`, `locale`) VALUES
+                ("user", "regist_confirm_mail", "Registrierbestätigung", "<p>Hallo <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>Willkommen auf <i>{sitetitle}</i>.</p>
+                      <p>um die Registrierung erfolgreich abzuschlie&szlig;en klicken Sie Bitte auf folgenden Link.</p>
+                      <p>{confirm}</p>
+                      <p>&nbsp;</p>
+                      <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                      <p>Administrator</p>", "de_DE"),
+                ("user", "regist_confirm_mail", "Registration confirmation", "<p>Hello <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>Welcome to <i>{sitetitle}</i>.</p>
+                      <p>To complete the registration, please click the following link.</p>
+                      <p>{confirm}</p>
+                      <p>&nbsp;</p>
+                      <p>Best regards</p>
+                      <p>Administrator</p>", "en_EN"),
+                ("user", "manually_confirm_mail", "Manuelle Registrierbestätigung", "<p>Hallo <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>Willkommen auf <i>{sitetitle}</i>.</p>
+                      <p>hiermit wurde dein Account freigeschaltet.</p>
+                      <p>&nbsp;</p>
+                      <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                      <p>Administrator</p>", "de_DE"),
+                ("user", "manually_confirm_mail", "Manual Registration confirmation", "<p>Hello <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>Welcome to <i>{sitetitle}</i>.</p>
+                      <p>Your account was activated.</p>
+                      <p>&nbsp;</p>
+                      <p>Best regards</p>
+                      <p>Administrator</p>", "en_EN"),
+                ("user", "password_change_mail", "Neues Passwort", "<p>Hallo <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>um Ihr Passwort auf <i>{sitetitle}</i> zu ändern klicken Sie Bitte auf folgenden Link.</p>
+                      <p>{confirm}</p>
+                      <p>&nbsp;</p>
+                      <p>Mit freundlichen Gr&uuml;&szlig;en</p>
+                      <p>Administrator</p>", "de_DE"),
+                ("user", "password_change_mail", "New Password", "<p>Hello <b>{name}</b>,</p>
+                      <p>&nbsp;</p>
+                      <p>to change the Password at <i>{sitetitle}</i> please click at the following link.</p>
+                      <p>{confirm}</p>
+                      <p>&nbsp;</p>
+                      <p>Best regards</p>
+                      <p>Administrator</p>", "en_EN");';
     }
 
     public function getUpdate($installedVersion)

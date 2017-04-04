@@ -9,11 +9,12 @@ namespace Modules\User\Controllers\Admin;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Mappers\AuthToken as AuthTokenMapper;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 use Modules\User\Models\User as UserModel;
 use Modules\User\Models\Group as GroupModel;
 use Modules\User\Service\Password as PasswordService;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use \Ilch\Registry as Registry;
-use Modules\User\Mappers\ProfileFieldsContent as ProfileFieldsContentMapper;
 
 /**
  * Handles action for the main admin configuration page.
@@ -104,10 +105,10 @@ class Index extends \Ilch\Controller\Admin
             $entries = $userMapper->getUserList(['confirmed' => 1]);
         }
 
-        $this->getView()->set('userList', $entries);
-        $this->getView()->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'));
-        $this->getView()->set('errorMsg', $this->getRequest()->getParam('errorMsg'));
-        $this->getView()->set('badge', count($userMapper->getUserList(['confirmed' => 0])));
+        $this->getView()->set('userList', $entries)
+            ->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'))
+            ->set('errorMsg', $this->getRequest()->getParam('errorMsg'))
+            ->set('badge', count($userMapper->getUserList(['confirmed' => 0])));
     }
 
     /**
@@ -117,6 +118,7 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $userMapper = new UserMapper();
+            $emailsMapper = new EmailsMapper();
             $date = new \Ilch\Date();
 
             $model = new UserModel();
@@ -124,9 +126,11 @@ class Index extends \Ilch\Controller\Admin
             $model->setDateConfirmed($date->format("Y-m-d H:i:s", true));
             $model->setConfirmed(1);
             $userMapper->save($model);
-            
-            $layout = '';
 
+            $user = $userMapper->getUserById($this->getRequest()->getParam('id'));
+            $mailContent = $emailsMapper->getEmail('user', 'manually_confirm_mail', $user->getLocale());
+
+            $layout = '';
             if (isset($_SESSION['layout'])) {
                 $layout = $_SESSION['layout'];
             }
@@ -137,23 +141,21 @@ class Index extends \Ilch\Controller\Admin
                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/manuallyconfirm.php');
             }
 
-            $user = $userMapper->getUserById($this->getRequest()->getParam('id'));
-
             $messageReplace = [
-                    '{content}' => $this->getConfig()->get('manually_confirm_mail'),
-                    '{sitetitle}' => $this->getConfig()->get('page_title'),
-                    '{date}' => $date->format("l, d. F Y", true),
-                    '{name}' => $user->getName(),
-                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                '{content}' => $mailContent->getText(),
+                '{sitetitle}' => $this->getConfig()->get('page_title'),
+                '{date}' => $date->format("l, d. F Y", true),
+                '{name}' => $user->getName(),
+                '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
             ];
             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
             $mail = new \Ilch\Mail();
             $mail->setTo($user->getEmail(), $user->getName())
-                    ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                    ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
-                    ->setMessage($message)
-                    ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
+                ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
+                ->setMessage($message)
+                ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
             $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
             $mail->send();
 
@@ -172,8 +174,8 @@ class Index extends \Ilch\Controller\Admin
         $groupMapper = new GroupMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
+            ->add($this->getTranslator()->trans('menuUser'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
 
         if ($this->getRequest()->isPost()) {
             $userData = $this->getRequest()->getPost('user');
@@ -195,6 +197,7 @@ class Index extends \Ilch\Controller\Admin
 
             $date = new \Ilch\Date();
             $user->setDateCreated($date);
+            $user->setLocale($this->getTranslator()->getLocale());
             $userId = $userMapper->save($user);
 
             if (!empty($userId) && empty($userData['id'])) {
@@ -217,8 +220,8 @@ class Index extends \Ilch\Controller\Admin
             $user->addGroup($group);
         }
 
-        $this->getView()->set('user', $user);
-        $this->getView()->set('groupList', $groupMapper->getGroupList());
+        $this->getView()->set('user', $user)
+            ->set('groupList', $groupMapper->getGroupList());
     }
 
     /**

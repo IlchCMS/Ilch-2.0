@@ -114,6 +114,13 @@ class User extends \Ilch\Model
     protected $password;
 
     /**
+     * The locale of the user.
+     *
+     * @var string
+     */
+    protected $locale;
+
+    /**
      * The opt_mail of the user.
      *
      * @var int
@@ -263,6 +270,29 @@ class User extends \Ilch\Model
     public function setPassword($password)
     {
         $this->password = (string)$password;
+
+        return $this;
+    }
+
+    /**
+     * Returns the locale of the user.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Saves the locale of the user.
+     *
+     * @param string $locale
+     * @return User
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = (string)$locale;
 
         return $this;
     }

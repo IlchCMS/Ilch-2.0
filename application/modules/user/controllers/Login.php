@@ -12,6 +12,7 @@ use Modules\User\Mappers\CookieStolen as CookieStolenMapper;
 use Modules\User\Models\AuthToken as AuthTokenModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\User\Service\Login as LoginService;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 use Ilch\Validation;
 
 use Modules\User\Mappers\AuthProvider;
@@ -20,7 +21,8 @@ class Login extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
-        $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index']);
+        $this->getLayout()->getHmenu()
+            ->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index']);
 
         $redirectUrl = '';
 
@@ -101,8 +103,8 @@ class Login extends \Ilch\Controller\Frontend
     public function newpasswordAction()
     {        
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('newPassword'), ['action' => 'newpassword']);
+            ->add($this->getTranslator()->trans('menuUser'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('newPassword'), ['action' => 'newpassword']);
 
         if ($this->getRequest()->getPost('saveNewPassword')) {
             $confirmedCode = $this->getRequest()->getParam('code');
@@ -151,8 +153,8 @@ class Login extends \Ilch\Controller\Frontend
     public function forgotpasswordAction()
     {        
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuForgotPassword'), ['action' => 'forgotpassword']);
+            ->add($this->getTranslator()->trans('menuLogin'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuForgotPassword'), ['action' => 'forgotpassword']);
 
         if ($this->getRequest()->getPost('saveNewPassword')) {
             $name = trim($this->getRequest()->getPost('name'));
@@ -161,8 +163,9 @@ class Login extends \Ilch\Controller\Frontend
                 $this->addMessage('missingNameEmail', 'danger');
             } else {
                 $userMapper = new UserMapper();
-                $user = $userMapper->getUserByEmail($name);
+                $emailsMapper = new EmailsMapper();
 
+                $user = $userMapper->getUserByEmail($name);
                 if ($user == null) {
                     $user = $userMapper->getUserByName($name);
                 }
@@ -179,6 +182,7 @@ class Login extends \Ilch\Controller\Frontend
                     $sitetitle = $this->getConfig()->get('page_title');
                     $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                     $date = new \Ilch\Date();
+                    $mailContent = $emailsMapper->getEmail('user', 'password_change_mail', $this->getUser()->getLocale());
 
                     $layout = '';
                     if (!empty($_SESSION['layout'])) {
@@ -191,21 +195,21 @@ class Login extends \Ilch\Controller\Frontend
                         $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/passwordchange.php');
                     }
                     $messageReplace = [
-                            '{content}' => $this->getConfig()->get('password_change_mail'),
-                            '{sitetitle}' => $sitetitle,
-                            '{date}' => $date->format("l, d. F Y", true),
-                            '{name}' => $name,
-                            '{confirm}' => $confirmCode,
-                            '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
+                        '{content}' => $mailContent->getText(),
+                        '{sitetitle}' => $sitetitle,
+                        '{date}' => $date->format("l, d. F Y", true),
+                        '{name}' => $name,
+                        '{confirm}' => $confirmCode,
+                        '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                     ];
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
                     $mail->setTo($email,$name)
-                            ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                            ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
-                            ->setMessage($message)
-                            ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
+                        ->setSubject($this->getTranslator()->trans('automaticEmail'))
+                        ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
+                        ->setMessage($message)
+                        ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
                     $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
                     $mail->send();
 

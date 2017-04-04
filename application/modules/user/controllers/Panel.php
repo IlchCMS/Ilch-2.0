@@ -277,9 +277,9 @@ class Panel extends BaseController
         $profilMapper = new UserMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
-                ->add($this->getTranslator()->trans('menuSetting'), ['controller' => 'panel', 'action' => 'setting']);
+            ->add($this->getTranslator()->trans('menuPanel'), ['controller' => 'panel', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['controller' => 'panel', 'action' => 'settings'])
+            ->add($this->getTranslator()->trans('menuSetting'), ['controller' => 'panel', 'action' => 'setting']);
 
         if ($this->getRequest()->isPost()) {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -288,8 +288,8 @@ class Panel extends BaseController
 
             if ($validation->isValid()) {
                 $model = new UserModel();
-                $model->setId($this->getUser()->getId());
-                $model->setOptMail($this->getRequest()->getPost('optMail'));
+                $model->setId($this->getUser()->getId())
+                    ->setOptMail($this->getRequest()->getPost('optMail'));
                 $profilMapper->save($model);
 
                 $this->redirect()
@@ -302,8 +302,8 @@ class Panel extends BaseController
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'setting']);
         }
-        
-        $this->getView()->set('optMail', $profilMapper->getUserById($this->getUser()->getId())->getOptMail());
+
+        $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
     }
 
     public function dialogAction()

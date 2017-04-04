@@ -46,69 +46,6 @@
             </div>
         </div>
     </div>
-    <div id="registAccept" <?php if ($this->get('regist_accept') != '1') { echo 'class="hidden"'; } ?>>
-        <div id="confirmMail" <?php if ($this->get('regist_confirm') != '1') { echo 'class="hidden"'; } ?>>
-            <div class="form-group">
-                <label for="ck_2" class="col-lg-2 control-label">
-                    <?=$this->getTrans('mailForRegist') ?>:
-                    <br /><br />
-                    <div class="small">
-                        <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
-                        <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
-                        <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?><br />
-                        <b>{comfirm}</b> = <?=$this->getTrans('settingsRegistVariablesComfirm') ?>
-                    </div>
-                </label>
-                <div class="col-lg-10">
-                    <textarea class="form-control ckeditor"
-                              id="ck_2"
-                              name="regist_confirm_mail"
-                              toolbar="ilch_html"
-                              cols="60"
-                              rows="5"><?=$this->get('regist_confirm_mail') ?></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="ck_3" class="col-lg-2 control-label">
-                <?=$this->getTrans('mailForManuallyConfirm') ?>:
-                <br /><br />
-                <div class="small">
-                    <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
-                    <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
-                    <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?>
-                </div>
-            </label>
-            <div class="col-lg-10">
-                <textarea class="form-control ckeditor"
-                          id="ck_3"
-                          name="manually_confirm_mail"
-                          toolbar="ilch_html"
-                          cols="60"
-                          rows="5"><?=$this->get('manually_confirm_mail') ?></textarea>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="ck_4" class="col-lg-2 control-label">
-            <?=$this->getTrans('mailForNewPassword') ?>:
-            <br /><br />
-            <div class="small">
-                <b><?=$this->getTrans('settingsRegistVariables') ?></b><br />
-                <b>{name}</b> = <?=$this->getTrans('settingsRegistVariablesName') ?><br />
-                <b>{sitetitle}</b> = <?=$this->getTrans('settingsRegistVariablesSitetitle') ?><br />
-                <b>{comfirm}</b> = <?=$this->getTrans('settingsRegistVariablesComfirm') ?>
-            </div>
-        </label>
-        <div class="col-lg-10">
-            <textarea class="form-control ckeditor"
-                      id="ck_4"
-                      name="password_change_mail"
-                      cols="60"
-                      toolbar="ilch_html"
-                      rows="5"><?=$this->get('password_change_mail') ?></textarea>
-        </div>
-    </div>
 
     <h1><?=$this->getTrans('menuSettingsAvatar') ?></h1>
     <div class="form-group">
@@ -215,13 +152,5 @@ $('[name="regist_accept"]').click(function () {
         $('#rulesForRegist').addClass('hidden');
         $('#registAccept').addClass('hidden');
         }
-});
-
-$('[name="regist_confirm"]').click(function () {
-    if ($(this).val() == "1") {
-        $('#confirmMail').removeClass('hidden');
-    } else {
-        $('#confirmMail').addClass('hidden');
-    }
 });
 </script>

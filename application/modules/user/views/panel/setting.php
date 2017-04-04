@@ -1,5 +1,3 @@
-<?php $optMail = $this->get('optMail'); ?>
-
 <link href="<?=$this->getModuleUrl('static/css/user.css') ?>" rel="stylesheet">
 
 <div class="row">
@@ -20,15 +18,32 @@
             <?php endif; ?>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
+                <div class="form-group <?=$this->validation()->hasError('locale') ? 'has-error' : '' ?>">
+                    <div class="col-lg-3 control-label">
+                        <?=$this->getTrans('locale') ?>
+                    </div>
+                    <div class="col-lg-2">
+                        <select class="form-control" id="locale" name="locale">
+                            <?php foreach ($this->get('languages') as $key => $value): ?>
+                                <?php $selected = ''; ?>
+                                <?php if ($this->getUser()->getLocale() == $key): ?>
+                                    <?php $selected = 'selected="selected"'; ?>
+                                <?php endif; ?>
+
+                                <option <?=$selected ?> value="<?=$key ?>"><?=$this->escape($value) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group <?=$this->validation()->hasError('optMail') ? 'has-error' : '' ?>">
                     <div class="col-lg-3 control-label">
-                        <?=$this->getTrans('optMail') ?>:
+                        <?=$this->getTrans('optMail') ?>
                     </div>
                     <div class="col-lg-4">
                         <div class="flipswitch">
-                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?php if ($optMail == '1') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_yes" name="optMail" value="1" <?php if ($this->getUser()->getOptMail() == '1') { echo 'checked="checked"'; } ?> />
                             <label for="opt_mail_yes" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
-                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="optMail" value="0" <?php if ($optMail == '0') { echo 'checked="checked"'; } ?> />
+                            <input type="radio" class="flipswitch-input" id="opt_mail_no" name="optMail" value="0" <?php if ($this->getUser()->getOptMail() == '0') { echo 'checked="checked"'; } ?> />
                             <label for="opt_mail_no" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
                             <span class="flipswitch-selection"></span>
                         </div>
