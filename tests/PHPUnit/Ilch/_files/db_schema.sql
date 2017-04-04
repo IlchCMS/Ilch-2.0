@@ -130,17 +130,3 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
   `user_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `emails`
---
-
-CREATE TABLE IF NOT EXISTS `emails` (
-  `moduleKey` VARCHAR(255) NOT NULL,
-  `type` VARCHAR(255) NOT NULL,
-  `desc` VARCHAR(255) NOT NULL,
-  `text` TEXT NOT NULL,
-  `locale` VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
