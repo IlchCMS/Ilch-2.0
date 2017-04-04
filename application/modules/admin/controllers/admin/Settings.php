@@ -52,6 +52,12 @@ class Settings extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa fa-envelope-o',
                 'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'notifications'])
+            ],
+            [
+                'name' => 'menuEmails',
+                'active' => false,
+                'icon' => 'fa fa-envelope',
+                'url' => $this->getLayout()->getUrl(['controller' => 'emails', 'action' => 'index'])
             ]
         ];
 

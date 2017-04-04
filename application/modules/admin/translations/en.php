@@ -314,4 +314,12 @@ return [
                                 The permission to issue a message to the admincenter can be revoked.<br>
                                 Further it is possible to limit the number of messages a module can issue to the admincenter.
                                 A limit of 0 is the same as no limit.',
+
+    'menuEmails' => 'E-Mails',
+    'hmenuEmails' => 'E-Mails',
+    'emailModules' => 'Modules',
+    'emailModule' => 'Module',
+    'emailDesc' => 'Description',
+    'emailLocale' => 'Language',
+    'emailText' => 'Text',
 ];

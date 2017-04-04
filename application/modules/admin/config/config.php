@@ -66,6 +66,14 @@ class Config extends \Ilch\Config\Install
                   UNIQUE KEY `key` (`key`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+                CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
+                  `moduleKey` VARCHAR(255) NOT NULL,
+                  `type` VARCHAR(255) NOT NULL,
+                  `desc` VARCHAR(255) NOT NULL,
+                  `text` TEXT NOT NULL,
+                  `locale` VARCHAR(255) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
                 CREATE TABLE IF NOT EXISTS `[prefix]_modules` (
                   `key` VARCHAR(255) NOT NULL,
                   `system` TINYINT(1) NOT NULL DEFAULT 0,
