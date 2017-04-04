@@ -72,6 +72,13 @@ class Joins extends \Ilch\Model
     protected $teamId;
 
     /**
+     * The Locale of the Join.
+     *
+     * @var string
+     */
+    protected $locale;
+
+    /**
      * The created Date of the Join.
      *
      * @var string
@@ -288,6 +295,29 @@ class Joins extends \Ilch\Model
     public function setTeamId($teamId)
     {
         $this->teamId = (int)$teamId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Locale of the Join.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Sets the Locale of the Join.
+     *
+     * @param string $locale
+     * @return $this
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = (string)$locale;
 
         return $this;
     }

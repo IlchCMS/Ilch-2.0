@@ -85,6 +85,7 @@ class Index extends \Ilch\Controller\Frontend
                     ->setBirthday(new \Ilch\Date($this->getRequest()->getPost('birthday')))
                     ->setSkill($this->getRequest()->getPost('skill'))
                     ->setTeamId($this->getRequest()->getPost('teamId'))
+                    ->setLocale($this->getTranslator()->getLocale())
                     ->setDateCreated($currentDate->toDb())
                     ->setText($this->getRequest()->getPost('text'));
                 $joinsMapper->save($model);
@@ -100,13 +101,9 @@ class Index extends \Ilch\Controller\Frontend
 
             if ($this->getRequest()->getParam('id')) {
                 $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
                     ->to(['action' => 'join', 'id' => $this->getRequest()->getParam('id')]);
             } else {
                 $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
                     ->to(['action' => 'join']);
             }
         }

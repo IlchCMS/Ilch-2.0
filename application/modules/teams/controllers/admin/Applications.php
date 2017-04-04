@@ -9,9 +9,10 @@ namespace Modules\Teams\Controllers\Admin;
 use Modules\Teams\Mappers\Joins as JoinsMapper;
 use Modules\Teams\Mappers\Teams as TeamsMapper;
 use Modules\User\Mappers\User as UserMapper;
-use Modules\User\Models\User as UserModel;
 use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Models\User as UserModel;
 use Modules\User\Service\Password as PasswordService;
+use Modules\Admin\Mappers\Emails as EmailsMapper;
 
 class Applications extends \Ilch\Controller\Admin
 {
@@ -85,6 +86,8 @@ class Applications extends \Ilch\Controller\Admin
             $joinsMapper = new JoinsMapper();
             $teamsMapper = new TeamsMapper();
             $userMapper = new UserMapper();
+            $groupMapper = new GroupMapper();
+            $emailsMapper = new EmailsMapper();
             $passwordService = new PasswordService();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
@@ -92,13 +95,12 @@ class Applications extends \Ilch\Controller\Admin
             $email = $join->getEmail();
 
             if ($join->getUserId()) {
-                $mailContent = $this->getConfig()->get('teams_accept_user_mail');
+                $user = $userMapper->getUserById($join->getUserId());
+                $mailContent = $emailsMapper->getEmail('teams', 'teams_accept_user_mail', $user->getLocale());
 
                 $userMapper->addUserToGroup($join->getUserId(), $join->getTeamId());
             } else {
-                $groupMapper = new GroupMapper();
-
-                $mailContent = $this->getConfig()->get('teams_accept_mail');
+                $mailContent = $emailsMapper->getEmail('teams', 'teams_accept_mail', $this->getTranslator()->getLocale());
                 $userGroup = $groupMapper->getGroupById($join->getTeamId());
                 $selector = bin2hex(openssl_random_pseudo_bytes(9));
                 $confirmedCode = bin2hex(openssl_random_pseudo_bytes(32));
@@ -138,7 +140,7 @@ class Applications extends \Ilch\Controller\Admin
                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/accept.php');
             }
             $messageReplace = [
-                '{content}' => $mailContent,
+                '{content}' => $mailContent->getText(),
                 '{sitetitle}' => $sitetitle,
                 '{date}' => $date->format("l, d. F Y", true),
                 '{name}' => $name,
@@ -176,6 +178,8 @@ class Applications extends \Ilch\Controller\Admin
         if ($this->getRequest()->isSecure()) {
             $joinsMapper = new JoinsMapper();
             $teamsMapper = new TeamsMapper();
+            $emailsMapper = new EmailsMapper();
+            $userMapper = new UserMapper();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
             $team = $teamsMapper->getTeamByGroupId($join->getTeamId());
@@ -184,6 +188,13 @@ class Applications extends \Ilch\Controller\Admin
             $teamname = $team->getName();
             $sitetitle = $this->getConfig()->get('page_title');
             $date = new \Ilch\Date();
+
+            if ($join->getUserId()) {
+                $user = $userMapper->getUserById($join->getUserId());
+                $mailContent = $emailsMapper->getEmail('teams', 'teams_reject_mail', $user->getLocale());
+            } else {
+                $mailContent = $emailsMapper->getEmail('teams', 'teams_reject_mail', $this->getTranslator()->getLocale());
+            }
 
             $layout = '';
             if (!empty($_SESSION['layout'])) {
@@ -196,7 +207,7 @@ class Applications extends \Ilch\Controller\Admin
                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/reject.php');
             }
             $messageReplace = [
-                '{content}' => $this->getConfig()->get('teams_reject_mail'),
+                '{content}' => $mailContent->getText(),
                 '{sitetitle}' => $sitetitle,
                 '{date}' => $date->format("l, d. F Y", true),
                 '{name}' => $name,

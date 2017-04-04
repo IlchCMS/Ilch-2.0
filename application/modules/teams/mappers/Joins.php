@@ -41,6 +41,7 @@ class Joins extends \Ilch\Mapper
             $entryModel->setPlace($entries['place']);
             $entryModel->setSkill($entries['skill']);
             $entryModel->setTeamId($entries['teamId']);
+            $entryModel->setLocale($entries['locale']);
             $entryModel->setDateCreated($entries['dateCreated']);
             $entryModel->setText($entries['text']);
             $teams[] = $entryModel;
@@ -88,6 +89,7 @@ class Joins extends \Ilch\Mapper
             'place' => $join->getPlace(),
             'skill' => $join->getSkill(),
             'teamId' => $join->getTeamId(),
+            'locale' => $join->getLocale(),
             'dateCreated' => $join->getDateCreated(),
             'text' => $join->getText()
         ];
