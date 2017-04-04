@@ -63,6 +63,8 @@ class Database
      * @param string         $key
      * @param string|integer $value
      * @param integer        $autoload
+     *
+     * @return $this
      */
     public function set($key, $value, $autoload = 0)
     {
@@ -92,6 +94,8 @@ class Database
 
         $this->configData[$key]['value'] = $value;
         $this->configData[$key]['autoload'] = $autoload;
+
+        return $this;
     }
 
     /**

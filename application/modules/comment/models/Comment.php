@@ -63,7 +63,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param integer $id
-     * @return this
+     *
+     * @return $this
      */
     public function setId($id)
     {
@@ -82,7 +83,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param integer $fkId
-     * @return this
+     *
+     * @return $this
      */
     public function setFKId($fkId)
     {
@@ -101,7 +103,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param string $key
-     * @return this
+     *
+     * @return $this
      */
     public function setKey($key)
     {
@@ -120,7 +123,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param string $text
-     * @return this
+     *
+     * @return $this
      */
     public function setText($text)
     {
@@ -139,7 +143,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param integer $userId
-     * @return this
+     *
+     * @return $this
      */
     public function setUserId($userId)
     {
@@ -158,10 +163,14 @@ class Comment extends \Ilch\Model
 
     /**
      * @param DateTime $dateCreated
+     *
+     * @return $this
      */
     public function setDateCreated($dateCreated)
     {
         $this->dateCreated = $dateCreated;
+
+        return $this;
     }
 
     /**
@@ -174,7 +183,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param integer $up
-     * @return this
+     *
+     * @return $this
      */
     public function setUp($up)
     {
@@ -193,7 +203,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param integer $down
-     * @return this
+     *
+     * @return $this
      */
     public function setDown($down)
     {
@@ -212,7 +223,8 @@ class Comment extends \Ilch\Model
 
     /**
      * @param integer $voted
-     * @return this
+     *
+     * @return $this
      */
     public function setVoted($voted)
     {
