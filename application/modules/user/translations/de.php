@@ -222,8 +222,6 @@ return [
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail an',
     'subject' => 'Betreff',
-    'subjectEmpty' => 'Betreff darf nicht leer sein.',
-    'messageEmpty' => 'Nachricht darf nicht leer sein.',
     'emailSuccess' => 'E-Mail wurde erfolgreich versendet',
     'locale' => 'Sprache',
     'optMail' => 'E-Mail von anderen Usern?',

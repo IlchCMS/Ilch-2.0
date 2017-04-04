@@ -1,12 +1,10 @@
 <?php if ($this->getUser() AND $this->getUser()->getId() != $this->getRequest()->getParam('user')): ?>
-    <?php $userMapper = new Modules\User\Mappers\User(); ?>
-    <?php $profil = $this->get('profil'); ?>
-
-    <?php if ($profil->getOptMail() == 1): ?>
-        <h1><?=$this->getTrans('mailTo') ?> <?=$profil->getName() ?></h1>
+    <?php $user = $this->get('user'); ?>
+    <?php if ($user->getOptMail() == 1): ?>
+        <h1><?=$this->getTrans('mailTo') ?> <?=$user->getName() ?></h1>
         <form method="POST" class="form-horizontal" action="">
             <?=$this->getTokenField() ?>
-            <div class="form-group">
+            <div class="form-group <?=$this->validation()->hasError('subject') ? 'has-error' : '' ?>">
                 <label for="subject" class="col-lg-2 control-label">
                     <?=$this->getTrans('subject') ?>:
                 </label>
@@ -15,19 +13,18 @@
                            class="form-control"
                            id="subject"
                            name="subject"
-                           value="" />
+                           value="<?=$this->originalInput('subject') ?>" />
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group <?=$this->validation()->hasError('message') ? 'has-error' : '' ?>">
                 <label for="message" class="col-lg-2 control-label">
                     <?=$this->getTrans('message') ?>:
                 </label>
                 <div class="col-lg-8">
-                    <textarea class="form-control ckeditor"
-                              id="ck_1"
+                    <textarea class="form-control"
+                              id="message"
                               name="message"
-                              rows="5"
-                              toolbar="ilch_html"></textarea>
+                              rows="8"><?=$this->originalInput('message') ?></textarea>
                 </div>
             </div>
             <div class="col-lg-offset-2 col-lg-10">

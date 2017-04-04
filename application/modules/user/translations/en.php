@@ -226,8 +226,6 @@ return [
     'menuMail' => 'E-Mail',
     'mailTo' => 'E-Mail to',
     'subject' => 'Subject',
-    'subjectEmpty' => 'Subject was not filled.',
-    'messageEmpty' => 'Message was not filled.',
     'emailSuccess' => 'E-Mail was successfully send',
     'locale' => 'Locale',
     'optMail' => 'E-Mail from other Users?',
