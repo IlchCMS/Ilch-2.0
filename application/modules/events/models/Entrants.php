@@ -43,7 +43,8 @@ class Entrants extends \Ilch\Model
      * Sets the eventid of the event entrants.
      *
      * @param int $eventId
-     * @return this
+     *
+     * @return $this
      */
     public function setEventId($eventId)
     {
@@ -66,7 +67,8 @@ class Entrants extends \Ilch\Model
      * Sets the userid of the event entrants.
      *
      * @param integer $userId
-     * @return this
+     *
+     * @return $this
      */
     public function setUserId($userId)
     {
@@ -89,7 +91,8 @@ class Entrants extends \Ilch\Model
      * Sets the status from user of the event entrants.
      *
      * @param integer $status
-     * @return this
+     *
+     * @return $this
      */
     public function setStatus($status)
     {

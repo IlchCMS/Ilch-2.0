@@ -6,6 +6,7 @@
 
 namespace Modules\Events\Controllers\Admin;
 
+use Modules\User\Mappers\Group as UserGroupMapper;
 use Ilch\Validation;
 
 class Settings extends \Ilch\Controller\Admin
@@ -42,9 +43,11 @@ class Settings extends \Ilch\Controller\Admin
 
     public function indexAction() 
     {
+        $userGroupMapper = new UserGroupMapper();
+
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost()) {
             Validation::setCustomFieldAliases([
@@ -67,29 +70,39 @@ class Settings extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('event_box_event_limit', $this->getRequest()->getPost('event_box_event_limit'));
-                $this->getConfig()->set('event_height', $this->getRequest()->getPost('event_height'));
-                $this->getConfig()->set('event_width', $this->getRequest()->getPost('event_width'));
-                $this->getConfig()->set('event_size', $this->getRequest()->getPost('event_size'));
-                $this->getConfig()->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'));
-                $this->getConfig()->set('event_google_maps_api_key', $this->getRequest()->getPost('event_google_maps_api_key'));
-                $this->getConfig()->set('event_google_maps_map_typ', $this->getRequest()->getPost('event_google_maps_map_typ'));
-                $this->getConfig()->set('event_google_maps_zoom', $this->getRequest()->getPost('event_google_maps_zoom'));
-                $this->addMessage('saveSuccess');
+                $groupAccesses = implode(",", $this->getRequest()->getPost('event_add_entries_accesses'));
+
+                $this->getConfig()->set('event_add_entries_accesses', $groupAccesses)
+                    ->set('event_box_event_limit', $this->getRequest()->getPost('event_box_event_limit'))
+                    ->set('event_height', $this->getRequest()->getPost('event_height'))
+                    ->set('event_width', $this->getRequest()->getPost('event_width'))
+                    ->set('event_size', $this->getRequest()->getPost('event_size'))
+                    ->set('event_filetypes', $this->getRequest()->getPost('event_filetypes'))
+                    ->set('event_google_maps_api_key', $this->getRequest()->getPost('event_google_maps_api_key'))
+                    ->set('event_google_maps_map_typ', $this->getRequest()->getPost('event_google_maps_map_typ'))
+                    ->set('event_google_maps_zoom', $this->getRequest()->getPost('event_google_maps_zoom'));
+
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
 
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
+                ->withInput()
                 ->withErrors($validation->getErrorBag())
                 ->to(['action' => 'index']);
         }
 
-        $this->getView()->set('event_box_event_limit', $this->getConfig()->get('event_box_event_limit'));
-        $this->getView()->set('event_height', $this->getConfig()->get('event_height'));
-        $this->getView()->set('event_width', $this->getConfig()->get('event_width'));
-        $this->getView()->set('event_size', $this->getConfig()->get('event_size'));
-        $this->getView()->set('event_filetypes', $this->getConfig()->get('event_filetypes'));
-        $this->getView()->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
-        $this->getView()->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'));
-        $this->getView()->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'));
-    }
+        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList())
+            ->set('event_add_entries_accesses', $this->getConfig()->get('event_add_entries_accesses'))
+            ->set('event_box_event_limit', $this->getConfig()->get('event_box_event_limit'))
+            ->set('event_height', $this->getConfig()->get('event_height'))
+            ->set('event_width', $this->getConfig()->get('event_width'))
+            ->set('event_size', $this->getConfig()->get('event_size'))
+            ->set('event_filetypes', $this->getConfig()->get('event_filetypes'))
+            ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
+            ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))
+            ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'));
+        }
 }

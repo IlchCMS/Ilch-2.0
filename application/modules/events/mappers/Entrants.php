@@ -13,25 +13,27 @@ class Entrants extends \Ilch\Mapper
     /**
      * Gets the Event entrants.
      *
-     * @param integer $id
+     * @param int $eventId
+     * @param int $userId
+     *
      * @return EntrantsModel|null
      */
     public function getEventEntrants($eventId, $userId)
     {
         $entryRow = $this->db()->select('*')
-                ->from('events_entrants')
-                ->where(['event_id' => $eventId, 'user_id' => $userId])
-                ->execute()
-                ->fetchAssoc();
+            ->from('events_entrants')
+            ->where(['event_id' => $eventId, 'user_id' => $userId])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($entryRow)) {
             return null;
         }
 
         $entryModel = new EntrantsModel();
-        $entryModel->setEventId($entryRow['event_id']);
-        $entryModel->setUserId($entryRow['user_id']);
-        $entryModel->setStatus($entryRow['status']);
+        $entryModel->setEventId($entryRow['event_id'])
+            ->setUserId($entryRow['user_id'])
+            ->setStatus($entryRow['status']);
 
         return $entryModel;
     }
@@ -39,17 +41,18 @@ class Entrants extends \Ilch\Mapper
     /**
      * Gets the Event entrants.
      *
-     * @param integer $id
-     * @return EntrantsModel|null
+     * @param int $eventId
+     *
+     * @return EntrantsModel[]|array
      */
     public function getEventEntrantsById($eventId)
     {
         $entryArray = $this->db()->select('*')
-                ->from('events_entrants')
-                ->where(['event_id' => $eventId])
-                ->limit('17')
-                ->execute()
-                ->fetchRows();
+            ->from('events_entrants')
+            ->where(['event_id' => $eventId])
+            ->limit('17')
+            ->execute()
+            ->fetchRows();
 
         if (empty($entryArray)) {
             return null;
@@ -58,8 +61,8 @@ class Entrants extends \Ilch\Mapper
         $entry = [];
         foreach ($entryArray as $entries) {
             $entryModel = new EntrantsModel();
-            $entryModel->setUserId($entries['user_id']);
-            $entryModel->setStatus($entries['status']);
+            $entryModel->setUserId($entries['user_id'])
+                ->setStatus($entries['status']);
             $entry[] = $entryModel;
         }
 
@@ -80,38 +83,39 @@ class Entrants extends \Ilch\Mapper
         ];
 
         $userId = (int) $this->db()->select('*')
-                        ->from('events_entrants')
-                        ->where(['user_id' => $event->getUserId(), 'event_id' => $event->getEventId()])
-                        ->execute()
-                        ->fetchCell();
+            ->from('events_entrants')
+            ->where(['user_id' => $event->getUserId(), 'event_id' => $event->getEventId()])
+            ->execute()
+            ->fetchCell();
 
         if ($userId) {
             /*
              * User does exist already, update.
              */
             $this->db()->update('events_entrants')
-                    ->values(['status' => $event->getStatus()])
-                    ->where(['event_id' => $event->getEventId(), 'user_id' => $event->getUserId()])
-                    ->execute();
+                ->values(['status' => $event->getStatus()])
+                ->where(['event_id' => $event->getEventId(), 'user_id' => $event->getUserId()])
+                ->execute();
         } else {
             /*
              * User does not exist yet, insert.
              */
             $userId = $this->db()->insert('events_entrants')
-                    ->values($fields)
-                    ->execute();
+                ->values($fields)
+                ->execute();
         }
     }
 
     /**
      * Deletes user from event with given userId.
      *
-     * @param integer $id
+     * @param int $eventId
+     * @param int $userId
      */
     public function deleteUserFromEvent($eventId, $userId)
     {
         $this->db()->delete('events_entrants')
-                ->where(['user_id' => $userId, 'event_id' => $eventId])
-                ->execute();
+            ->where(['user_id' => $userId, 'event_id' => $eventId])
+            ->execute();
     }
 }

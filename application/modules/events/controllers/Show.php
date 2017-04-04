@@ -31,23 +31,23 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'))
             ->add($event->getTitle());
         $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-                ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
+            ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
 
         if ($this->getRequest()->isPost()) {
             if ($this->getRequest()->getPost('save')) {
-                $entrantsModel->setEventId(trim($this->getRequest()->getPost('id')));
-                $entrantsModel->setUserId($this->getUser()->getId());
-                $entrantsModel->setStatus(trim($this->getRequest()->getPost('save')));
+                $entrantsModel->setEventId(trim($this->getRequest()->getPost('id')))
+                    ->setUserId($this->getUser()->getId())
+                    ->setStatus(trim($this->getRequest()->getPost('save')));
                 $entrantsMapper->saveUserOnEvent($entrantsModel);
 
                 $this->addMessage('saveSuccess');
             }
             if ($this->getRequest()->getPost('commentEvent')) {
                 $date = new \Ilch\Date();
-                $commentModel->setKey('events/show/event/id/'.$this->getRequest()->getParam('id'));
-                $commentModel->setText($this->getRequest()->getPost('commentEvent'));
-                $commentModel->setDateCreated($date);
-                $commentModel->setUserId($this->getUser()->getId());
+                $commentModel->setKey('events/show/event/id/'.$this->getRequest()->getParam('id'))
+                    ->setText($this->getRequest()->getPost('commentEvent'))
+                    ->setDateCreated($date)
+                    ->setUserId($this->getUser()->getId());
                 $commentMapper->save($commentModel);
 
                 $this->addMessage('saveSuccess');
@@ -70,15 +70,15 @@ class Show extends \Ilch\Controller\Frontend
             $this->getView()->set('eventEntrants', $entrantsMapper->getEventEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
         }
 
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('currencyMapper', $currencyMapper);
-        $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
-        $this->getView()->set('eventEntrantsUser', $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id')));
-        $this->getView()->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'))));
-        $this->getView()->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')));
-        $this->getView()->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
-        $this->getView()->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'));
-        $this->getView()->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'));
+        $this->getView()->set('userMapper', $userMapper)
+            ->set('currencyMapper', $currencyMapper)
+            ->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')))
+            ->set('eventEntrantsUser', $entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id')))
+            ->set('eventEntrantsCount', count($entrantsMapper->getEventEntrantsById($this->getRequest()->getParam('id'))))
+            ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')))
+            ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
+            ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))
+            ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'));
     }
 
     public function upcomingAction()
@@ -90,11 +90,11 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'))
             ->add($this->getTranslator()->trans('naviEventsUpcoming'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
 
-        $this->getView()->set('entrantsMapper', $entrantsMapper);
-        $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcomingALL());
+        $this->getView()->set('entrantsMapper', $entrantsMapper)
+            ->set('eventListUpcoming', $eventMapper->getEventListUpcomingALL());
     }
 
     public function pastAction()
@@ -106,11 +106,11 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'))
             ->add($this->getTranslator()->trans('naviEventsPast'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('naviEventsPast'), ['action' => 'past']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('naviEventsPast'), ['action' => 'past']);
 
-        $this->getView()->set('entrantsMapper', $entrantsMapper);
-        $this->getView()->set('eventListPast', $eventMapper->getEventListPast());
+        $this->getView()->set('entrantsMapper', $entrantsMapper)
+            ->set('eventListPast', $eventMapper->getEventListPast());
     }
 
     public function participationAction()
@@ -122,11 +122,11 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'))
             ->add($this->getTranslator()->trans('naviEventsParticipation'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('naviEventsParticipation'), ['action' => 'participation']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('naviEventsParticipation'), ['action' => 'participation']);
 
-        $this->getView()->set('entrantsMapper', $entrantsMapper);
-        $this->getView()->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()));
+        $this->getView()->set('entrantsMapper', $entrantsMapper)
+            ->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()));
     }
 
     public function myAction()
@@ -138,11 +138,11 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'))
             ->add($this->getTranslator()->trans('naviEventsMy'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-                ->add($this->getTranslator()->trans('naviEventsMy'), ['action' => 'my']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
+            ->add($this->getTranslator()->trans('naviEventsMy'), ['action' => 'my']);
 
-        $this->getView()->set('entrantsMapper', $entrantsMapper);
-        $this->getView()->set('eventListMy', $eventMapper->getEntries(['user_id' => $this->getUser()->getId()]));
+        $this->getView()->set('entrantsMapper', $entrantsMapper)
+            ->set('eventListMy', $eventMapper->getEntries(['user_id' => $this->getUser()->getId()]));
     }
 
     public function delAction()

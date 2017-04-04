@@ -15,16 +15,17 @@ class Events extends \Ilch\Mapper
      * Gets the Event entries.
      *
      * @param array $where
+     *
      * @return EventModel[]|array
      */
     public function getEntries($where = [])
     {
         $entryArray = $this->db()->select('*')
-                ->from('events')
-                ->where($where)
-                ->order(['start' => 'ASC'])
-                ->execute()
-                ->fetchRows();
+            ->from('events')
+            ->where($where)
+            ->order(['start' => 'ASC'])
+            ->execute()
+            ->fetchRows();
 
         if (empty($entryArray)) {
             return null;
@@ -33,19 +34,19 @@ class Events extends \Ilch\Mapper
         $entry = [];
         foreach ($entryArray as $entries) {
             $entryModel = new EventModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setUserId($entries['user_id']);
-            $entryModel->setStart($entries['start']);
-            $entryModel->setEnd($entries['end']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setPlace($entries['place']);
-            $entryModel->setLatLong($entries['lat_long']);
-            $entryModel->setImage($entries['image']);
-            $entryModel->setText($entries['text']);
-            $entryModel->setCurrency($entries['currency']);
-            $entryModel->setPrice($entries['price']);
-            $entryModel->setPriceArt($entries['price_art']);
-            $entryModel->setShow($entries['show']);
+            $entryModel->setId($entries['id'])
+                ->setUserId($entries['user_id'])
+                ->setStart($entries['start'])
+                ->setEnd($entries['end'])
+                ->setTitle($entries['title'])
+                ->setPlace($entries['place'])
+                ->setLatLong($entries['lat_long'])
+                ->setImage($entries['image'])
+                ->setText($entries['text'])
+                ->setCurrency($entries['currency'])
+                ->setPrice($entries['price'])
+                ->setPriceArt($entries['price_art'])
+                ->setShow($entries['show']);
             $entry[] = $entryModel;
         }
 
@@ -55,41 +56,42 @@ class Events extends \Ilch\Mapper
     /**
      * Gets event.
      *
-     * @param integer $id
+     * @param int $id
+     *
      * @return EventModel|null
      */
     public function getEventById($id)
     {
         $eventRow = $this->db()->select('*')
-                ->from('events')
-                ->where(['id' => $id])
-                ->execute()
-                ->fetchAssoc();
+            ->from('events')
+            ->where(['id' => $id])
+            ->execute()
+            ->fetchAssoc();
 
         if (empty($eventRow)) {
             return null;
         }
 
         $eventModel = new EventModel();
-        $eventModel->setId($eventRow['id']);
-        $eventModel->setUserId($eventRow['user_id']);
-        $eventModel->setStart($eventRow['start']);
-        $eventModel->setEnd($eventRow['end']);
-        $eventModel->setTitle($eventRow['title']);
-        $eventModel->setPlace($eventRow['place']);
-        $eventModel->setLatLong($eventRow['lat_long']);
-        $eventModel->setImage($eventRow['image']);
-        $eventModel->setText($eventRow['text']);
-        $eventModel->setCurrency($eventRow['currency']);
-        $eventModel->setPrice($eventRow['price']);
-        $eventModel->setPriceArt($eventRow['price_art']);
-        $eventModel->setShow($eventRow['show']);
+        $eventModel->setId($eventRow['id'])
+            ->setUserId($eventRow['user_id'])
+            ->setStart($eventRow['start'])
+            ->setEnd($eventRow['end'])
+            ->setTitle($eventRow['title'])
+            ->setPlace($eventRow['place'])
+            ->setLatLong($eventRow['lat_long'])
+            ->setImage($eventRow['image'])
+            ->setText($eventRow['text'])
+            ->setCurrency($eventRow['currency'])
+            ->setPrice($eventRow['price'])
+            ->setPriceArt($eventRow['price_art'])
+            ->setShow($eventRow['show']);
 
         return $eventModel;
     }
 
     /**
-     * @return \Modules\Events\Mappers\Events[]
+     * @return EventMapper[]|array
      */
     public function getEventListUpcoming($limit = null)
     {
@@ -117,7 +119,7 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @return \Modules\Events\Mappers\Events[]
+     * @return EventMapper[]|array
      */
     public function getEventListUpcomingALL()
     {
@@ -143,17 +145,17 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @return \Modules\Events\Mappers\Events[]
+     * @return EventMapper[]|array
      */
     public function getEventListParticipation($userId)
     {
         $eventMapper = new EventMapper();
 
         $entryRow = $this->db()->select('*')
-                ->from('events')
-                ->where(['user_id' => $userId])
-                ->execute()
-                ->fetchRows();
+            ->from('events')
+            ->where(['user_id' => $userId])
+            ->execute()
+            ->fetchRows();
 
         if (empty($entryRow)) {
             return null;
@@ -168,7 +170,7 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @return \Modules\Events\Mappers\Events[]
+     * @return EventMapper[]|array
      */
     public function getEventListOther($limit = null)
     {
@@ -196,7 +198,7 @@ class Events extends \Ilch\Mapper
     }
 
     /**
-     * @return \Modules\Events\Mappers\Events[]
+     * @return EventMapper[]|array
      */
     public function getEventListPast($limit = null)
     {
@@ -233,9 +235,10 @@ class Events extends \Ilch\Mapper
     /**
      * Gets the Events by start and end.
      *
-     * @param integer $start
-     * @param integer $end
-     * @return EventModel|null
+     * @param int $start
+     * @param int $end
+     *
+     * @return EventModel[]|array
      */
     public function getEntriesForJson($start, $end)
     {
@@ -257,11 +260,11 @@ class Events extends \Ilch\Mapper
         $entry = [];
         foreach ($entryArray as $entries) {
             $entryModel = new EventModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setStart($entries['start']);
-            $entryModel->setEnd($entries['end']);
-            $entryModel->setTitle($entries['title']);
-            $entryModel->setShow($entries['show']);
+            $entryModel->setId($entries['id'])
+                ->setStart($entries['start'])
+                ->setEnd($entries['end'])
+                ->setTitle($entries['title'])
+                ->setShow($entries['show']);
             $entry[] = $entryModel;
         }
 
@@ -274,7 +277,7 @@ class Events extends \Ilch\Mapper
      * @param string $address
      * @param string $googleMapsKey
      *
-     * @return latlongitude
+     * @return $latlongitude
      */
     public function getLatLongFromAddress($address, $googleMapsKey) 
     {
@@ -325,7 +328,7 @@ class Events extends \Ilch\Mapper
     /**
      * Deletes event with given id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function delete($id)
     {

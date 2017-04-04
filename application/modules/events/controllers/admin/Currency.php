@@ -61,8 +61,8 @@ class Currency extends \Ilch\Controller\Admin
         $currencyMapper = new CurrencyMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('currencies'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('currencies'), ['action' => 'index']);
 
         if ($this->getRequest()->isPost() && $this->getRequest()->isSecure()) {
             if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_currencies')) {
@@ -85,14 +85,14 @@ class Currency extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('currencies'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => 'treat']);
+                ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('currencies'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => 'treat']);
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('currencies'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat', 'id' => 'treat']);
+                ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('currencies'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat', 'id' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {

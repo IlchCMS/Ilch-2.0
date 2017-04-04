@@ -36,10 +36,14 @@ class Currency extends \Ilch\Model
      * Sets the id of the currency.
      *
      * @param integer $id
+     *
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
@@ -56,9 +60,13 @@ class Currency extends \Ilch\Model
      * Sets the name of the currency.
      *
      * @param string $name
+     *
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = (string)$name;
+
+        return $this;
     }
 }

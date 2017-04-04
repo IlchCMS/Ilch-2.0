@@ -113,7 +113,8 @@ class Events extends \Ilch\Model
      * Sets the id of the event.
      *
      * @param int $id
-     * @return this
+     *
+     * @return $this
      */
     public function setId($id)
     {
@@ -136,7 +137,8 @@ class Events extends \Ilch\Model
      * Sets the userid of the event.
      *
      * @param int $userId
-     * @return this
+     *
+     * @return $this
      */
     public function setUserId($userId)
     {
@@ -159,7 +161,8 @@ class Events extends \Ilch\Model
      * Sets the start date of the event.
      *
      * @param DateTime $start
-     * @return this
+     *
+     * @return $this
      */
     public function setStart($start)
     {
@@ -182,7 +185,8 @@ class Events extends \Ilch\Model
      * Sets the end date of the event.
      *
      * @param DateTime $end
-     * @return this
+     *
+     * @return $this
      */
     public function setEnd($end)
     {
@@ -205,7 +209,8 @@ class Events extends \Ilch\Model
      * Sets the title of the event.
      *
      * @param string $title
-     * @return this
+     *
+     * @return $this
      */
     public function setTitle($title)
     {
@@ -228,7 +233,8 @@ class Events extends \Ilch\Model
      * Sets the place of the event.
      *
      * @param string $place
-     * @return this
+     *
+     * @return $this
      */
     public function setPlace($place)
     {
@@ -251,7 +257,8 @@ class Events extends \Ilch\Model
      * Sets the lat and long of the place.
      *
      * @param string $latLong
-     * @return this
+     *
+     * @return $this
      */
     public function setLatLong($latLong)
     {
@@ -274,7 +281,8 @@ class Events extends \Ilch\Model
      * Sets the image of the event.
      *
      * @param string $image
-     * @return this
+     *
+     * @return $this
      */
     public function setImage($image)
     {
@@ -297,7 +305,8 @@ class Events extends \Ilch\Model
      * Sets the text of the event.
      *
      * @param string $text
-     * @return this
+     *
+     * @return $this
      */
     public function setText($text)
     {
@@ -320,7 +329,8 @@ class Events extends \Ilch\Model
      * Sets the currency of the event.
      *
      * @param string $currency
-     * @return this
+     *
+     * @return $this
      */
     public function setCurrency($currency)
     {
@@ -343,7 +353,8 @@ class Events extends \Ilch\Model
      * Sets the price of the event.
      *
      * @param string $price
-     * @return this
+     *
+     * @return $this
      */
     public function setPrice($price)
     {
@@ -366,7 +377,8 @@ class Events extends \Ilch\Model
      * Sets the price art of the event.
      *
      * @param string $priceArt
-     * @return this
+     *
+     * @return $this
      */
     public function setPriceArt($priceArt)
     {
@@ -389,7 +401,8 @@ class Events extends \Ilch\Model
      * Sets the show of the event.
      *
      * @param int $show
-     * @return this
+     *
+     * @return $this
      */
     public function setShow($show)
     {

@@ -1,14 +1,12 @@
-<?php $currencies = $this->get('currencies'); ?>
-
 <h1><?=$this->getTrans('currencies') ?></h1>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <table class="table table-hover table-striped">
         <colgroup>
-            <col class="icon_width">
-            <col class="icon_width">
-            <col class="icon_width">
-            <col>
+            <col class="icon_width" />
+            <col class="icon_width" />
+            <col class="icon_width" />
+            <col />
         </colgroup>
         <thead>
             <tr>
@@ -19,8 +17,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (count($currencies) > 0): ?>
-                <?php foreach ($currencies as $currency) : ?>
+            <?php if (count($this->get('currencies')) > 0): ?>
+                <?php foreach ($this->get('currencies') as $currency) : ?>
                     <tr>
                         <td><?=$this->getDeleteCheckbox('check_currencies', $currency->getId()) ?></td>
                         <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $currency->getId()]) ?></td>

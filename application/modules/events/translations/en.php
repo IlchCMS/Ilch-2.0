@@ -64,6 +64,7 @@ return [
     'failedFiletypes' => 'Image does not contain allowed file format.',
     'failedFilesize' => 'Image has unauthorized width, height or is too big.',
     'browse' => 'Browse',
+    'noAccess' => 'No access!',
 
     'currencies' => 'Currencies',
     'currency' => 'Currency',
@@ -71,10 +72,12 @@ return [
     'alreadyExisting' => 'A currency with this name already exists.',
     'noCurrenciesExist' => 'No currencies exists.',
 
+    'addEntriesGroupAccesses' => 'Create entries',
+    'selectGroupAccesses' => 'Choose group',
     'menuGoogleMaps' => 'Google Maps',
     'googleMapsAPIKey' => 'Google Maps API-Key',
     'createGoogleMapsAPIKey' => 'Create Google Maps API-Key',
-    'googleMapsAPIKeyInfoText' => 'Um Google Maps für die Orts Auswahl sowie die Kartenanzeige des Ortes zu verwenden, benötigen Sie einen Google Maps API-Schlüssel.<br /><br /><b>Google Maps API-Schlüssel erstellen</b><br /><ol><li>Besuchen Sie die <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&keyType=CLIENT_SIDE&reusekey=true"><u>Google Webseite</u></a> und melden Sie sich mit Ihrem Google-Konto an.</li><li>Erstellen Sie ein Projekt oder wählen eins aus.</li><li>Klicken Sie auf Erstellen um anschließend den API-Schlüssel zu erstellen.</li></ol>',
+    'googleMapsAPIKeyInfoText' => 'To use Google Maps for location selection and map display, you need a Google Maps API key.<br /><br /><b>Create Google Maps API key</b><br /><ol><li>Visit the <a href="https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend,places_backend&keyType=CLIENT_SIDE&reusekey=true"><u>Google website</u></a> and sign in with your Google Account.</li><li>Create a project or select one.</li><li>Click Create to create the API key.</li></ol>',
     'googleMapsZoom' => 'Map Zoom',
     'googleMapsMapTyp' => 'Map Typ',
     'googleMapsPlanRoute' => 'Plan route',

@@ -240,8 +240,8 @@ $('textarea').on('keyup', function() {
     $(this).height(this.scrollHeight);
 });
 
-// Google Maps
 <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
+    // Google Maps
     $(document).ready(function() {
         var mapCanvas = document.getElementById('map-canvas');
         var latLng = {lat: <?=$latLong[0] ?>, lng: <?=$latLong[1] ?>};

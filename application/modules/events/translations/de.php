@@ -64,6 +64,7 @@ return [
     'failedFiletypes' => 'Bild enthält kein erlaubtes Dateiformat.',
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'browse' => 'Durchsuchen',
+    'noAccess' => 'Keine Berechtigung!',
 
     'currencies' => 'Währungen',
     'currency' => 'Währung',
@@ -71,6 +72,8 @@ return [
     'alreadyExisting' => 'Es existiert bereits eine Währung mit diesem Namen.',
     'noCurrenciesExist' => 'Keine Währungen vorhanden.',
 
+    'addEntriesGroupAccesses' => 'Einträge erstellen',
+    'selectGroupAccesses' => 'Gruppe auswählen',
     'menuGoogleMaps' => 'Google Maps',
     'googleMapsAPIKey' => 'Google Maps API-Schlüssel',
     'createGoogleMapsAPIKey' => 'Google Maps API-Schlüssel erstellen',

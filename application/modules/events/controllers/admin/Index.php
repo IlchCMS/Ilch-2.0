@@ -7,7 +7,6 @@
 namespace Modules\Events\Controllers\Admin;
 
 use Modules\Events\Mappers\Events as EventMapper;
-use Modules\Events\Models\Events as EventModel;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -46,7 +45,7 @@ class Index extends \Ilch\Controller\Admin
         $eventMapper = new EventMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -56,22 +55,21 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $event = $eventMapper->getEntries();
-
-        $this->getView()->set('event', $event);
+        $this->getView()->set('event', $eventMapper->getEntries());
     }
 
     public function showAction()
     {
+        $eventMapper = new EventMapper();
+
         if ($this->getRequest()->isPost('delete')) {
-            $eventMapper = new EventMapper();
             $eventMapper->delete($this->getRequest()->getParam('id'));
 
-            $this->addMessage('deleteSuccess');
-
-            $this->redirect(['action' => 'index']);
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
-        $eventMapper = new EventMapper();
+
         $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
     }
 
@@ -81,9 +79,12 @@ class Index extends \Ilch\Controller\Admin
             $eventMapper = new EventMapper();
             $eventMapper->delete($this->getRequest()->getParam('id'));
 
-            $this->addMessage('deleteSuccess');
+            $this->redirect()
+                ->withMessage('deleteSuccess')
+                ->to(['action' => 'index']);
         }
 
-        $this->redirect(['action' => 'index']);
+        $this->redirect()
+            ->to(['action' => 'index']);
     }
 }

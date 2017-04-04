@@ -14,6 +14,7 @@ class Currency extends \Ilch\Mapper
      * Gets the currencies.
      *
      * @param array $where
+     *
      * @return CurrencyModel[]|array
      */
     public function getCurrencies($where = [])
@@ -33,8 +34,8 @@ class Currency extends \Ilch\Mapper
 
         foreach ($currenciesArray as $currency) {
             $currencyModel = new CurrencyModel();
-            $currencyModel->setId($currency['id']);
-            $currencyModel->setName($currency['name']);
+            $currencyModel->setId($currency['id'])
+                ->setName($currency['name']);
             $currencies[] = $currencyModel;
         }
 
@@ -45,6 +46,7 @@ class Currency extends \Ilch\Mapper
      * Gets the currencies by id.
      *
      * @param int $id
+     *
      * @return CurrencyModel[]|array
      */
     public function getCurrencyById($id)
@@ -76,11 +78,11 @@ class Currency extends \Ilch\Mapper
     /**
      * Deletes the currency by id.
      *
-     * @param integer $id
+     * @param int $id
      */
     public function deleteCurrencyById($id)
     {
-        return $this->db()->delete('events_currencies')
+        $this->db()->delete('events_currencies')
             ->where(['id' => $id])
             ->execute();
     }

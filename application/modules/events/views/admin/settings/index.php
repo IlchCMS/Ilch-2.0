@@ -1,18 +1,36 @@
 <link href="<?=$this->getModuleUrl('static/css/events.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuSettings') ?></h1>
-<?php if ($this->validation()->hasErrors()): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-<form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
+<form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
+    <div class="form-group">
+        <label for="event_add_entries_accesses" class="col-lg-2 control-label">
+            <?=$this->getTrans('addEntriesGroupAccesses') ?>
+        </label>
+        <div class="col-lg-3">
+            <select class="form-control chosen-select"
+                    id="event_add_entries_accesses"
+                    name="event_add_entries_accesses[]"
+                    data-placeholder="<?=$this->getTrans('selectGroupAccesses') ?>"
+                    multiple>
+                <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                    <?php if ($groupList->getId() != 1 AND $groupList->getId() != 3): ?>
+                        <option value="<?=$groupList->getId() ?>"
+                            <?php $addEntriesAccessesIds = explode(',', $this->get('event_add_entries_accesses'));
+                            foreach ($addEntriesAccessesIds as $addEntriesAccessesId) {
+                                if ($groupList->getId() == $addEntriesAccessesId) {
+                                    echo 'selected="selected"';
+                                    break;
+                                }
+                            }
+                            ?>>
+                            <?=$groupList->getName() ?>
+                        </option>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <div class="form-group <?=$this->validation()->hasError('event_height') ? 'has-error' : '' ?>">
         <label for="event_height" class="col-lg-2 control-label">
             <?=$this->getTrans('imageHeight') ?>:
@@ -132,3 +150,7 @@
 </form>
 
 <?=$this->getDialog('googleMapsAPIInfoModal', $this->getTrans('createGoogleMapsAPIKey'), $this->getTrans('googleMapsAPIKeyInfoText')); ?>
+
+<script>
+    $('#event_add_entries_accesses').chosen();
+</script>

@@ -23,17 +23,17 @@ class Index extends \Ilch\Controller\Frontend
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'));
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
+            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
 
         $upcomingLimit = 5;
         $otherLimit = 5;
         $pastLimit = 5;
 
-        $this->getView()->set('entrantsMapper', $entrantsMapper);
-        $this->getView()->set('eventList', $eventMapper->getEntries());
-        $this->getView()->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit));
-        $this->getView()->set('getEventListOther', $eventMapper->getEventListOther($otherLimit));
-        $this->getView()->set('eventListPast', $eventMapper->getEventListPast($pastLimit));
+        $this->getView()->set('entrantsMapper', $entrantsMapper)
+            ->set('eventList', $eventMapper->getEntries())
+            ->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit))
+            ->set('getEventListOther', $eventMapper->getEventListOther($otherLimit))
+            ->set('eventListPast', $eventMapper->getEventListPast($pastLimit));
     }
 
     public function treatAction()
@@ -44,14 +44,15 @@ class Index extends \Ilch\Controller\Frontend
         $currencyMapper = new CurrencyMapper();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
+
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuEvents'))
                 ->add($event->getTitle())
                 ->add($this->getTranslator()->trans('edit'));
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
-                    ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $event->getId()]);
+                ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat', 'id' => $event->getId()]);
 
             $this->getView()->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')));
         } else {
@@ -59,7 +60,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->add($this->getTranslator()->trans('menuEvents'))
                 ->add($this->getTranslator()->trans('add'));
             $this->getLayout()->getHmenu()->add($this->getTranslator()->trans('menuEvents'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         $imageAllowedFiletypes = $this->getConfig()->get('event_filetypes');
@@ -75,7 +76,7 @@ class Index extends \Ilch\Controller\Frontend
 
             Validation::setCustomFieldAliases([
                 'start' => 'startTime',
-                'end' => 'endTime'
+                'end'   => 'endTime'
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -148,15 +149,15 @@ class Index extends \Ilch\Controller\Frontend
                     }
 
                     $eventModel->setUserId($this->getUser()->getId())
-                            ->setTitle($this->getRequest()->getPost('title'))
-                            ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
-                            ->setEnd(new \Ilch\Date($this->getRequest()->getPost('end')))
-                            ->setPlace($this->getRequest()->getPost('place'))
-                            ->setText($this->getRequest()->getPost('text'))
-                            ->setCurrency($this->getRequest()->getPost('currency'))
-                            ->setPrice($this->getRequest()->getPost('price'))
-                            ->setPriceArt($this->getRequest()->getPost('priceArt'))
-                            ->setShow($this->getRequest()->getPost('calendarShow'));
+                        ->setTitle($this->getRequest()->getPost('title'))
+                        ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
+                        ->setEnd(new \Ilch\Date($this->getRequest()->getPost('end')))
+                        ->setPlace($this->getRequest()->getPost('place'))
+                        ->setText($this->getRequest()->getPost('text'))
+                        ->setCurrency($this->getRequest()->getPost('currency'))
+                        ->setPrice($this->getRequest()->getPost('price'))
+                        ->setPriceArt($this->getRequest()->getPost('priceArt'))
+                        ->setShow($this->getRequest()->getPost('calendarShow'));
                     $eventMapper->save($eventModel);
 
                     if ($this->getRequest()->getPost('image_delete') != '') {
@@ -189,13 +190,13 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('calendarShow', 1);
         }
 
-        $this->getView()->set('settingMapper', $settingMapper);
-        $this->getView()->set('image_height', $imageHeight);
-        $this->getView()->set('image_width', $imageWidth);
-        $this->getView()->set('image_size', $imageSize);
-        $this->getView()->set('image_filetypes', $imageAllowedFiletypes);
-        $this->getView()->set('currencies', $currencyMapper->getCurrencies());
-        $this->getView()->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
+        $this->getView()->set('settingMapper', $settingMapper)
+            ->set('image_height', $imageHeight)
+            ->set('image_width', $imageWidth)
+            ->set('image_size', $imageSize)
+            ->set('image_filetypes', $imageAllowedFiletypes)
+            ->set('currencies', $currencyMapper->getCurrencies())
+            ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
     }
 
     public function delAction()
