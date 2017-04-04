@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
 -- Tabellenstruktur für Tabelle `emails`
 --
 
-CREATE TABLE IF NOT EXISTS `[prefix]_emails` (
+CREATE TABLE IF NOT EXISTS `emails` (
   `moduleKey` VARCHAR(255) NOT NULL,
   `type` VARCHAR(255) NOT NULL,
   `desc` VARCHAR(255) NOT NULL,
