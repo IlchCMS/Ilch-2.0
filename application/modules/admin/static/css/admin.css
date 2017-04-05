@@ -779,6 +779,15 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     margin-top: 30px;
 }
 
+table tbody i.fa.fa-sort {
+    cursor: move;
+}
+.ui-sortable-helper {
+    width: auto !important;
+    border: 1px solid #ddd;
+    background: transparent;
+}
+
 @media (min-width: 768px) {
     #ilch_dropdown .full {
         width: 65%;
