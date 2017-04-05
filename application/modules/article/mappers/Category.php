@@ -21,7 +21,7 @@ class Category extends \Ilch\Mapper
         $categoryArray = $this->db()->select('*')
             ->from('articles_cats')
             ->where($where)
-            ->order(['id' => 'ASC'])
+            ->order(['sort' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -52,6 +52,20 @@ class Category extends \Ilch\Mapper
         $cats = $this->getCategories(['id' => $id]);
 
         return reset($cats);
+    }
+
+    /**
+     * Sort category.
+     *
+     * @param int $catId
+     * @param int $key
+     */
+    public function sort($catId, $key)
+    {
+        $this->db()->update('articles_cats')
+            ->values(['sort' => $key])
+            ->where(['id' => $catId])
+            ->execute();
     }
 
     /**

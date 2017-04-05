@@ -21,6 +21,7 @@
                 <?php if (!empty($this->get('cats'))): ?>
                     <?php foreach ($this->get('cats') as $cat): ?>
                         <tr>
+                            <input type="hidden" name="items[]" value="<?=$cat->getId() ?>" />
                             <td><?=$this->getDeleteCheckbox('check_cats', $cat->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $cat->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delcat', 'id' => $cat->getId()]) ?></td>
@@ -35,5 +36,22 @@
             </tbody>
         </table>
     </div>
-    <?=$this->getListBar(['delete' => 'delete']) ?>
+    <div class="content_savebox">
+        <input type="hidden" class="content_savebox_hidden" name="action" value="" />
+        <div class="btn-group dropup">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <?=$this->getTrans('selected') ?> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu listChooser" role="menu">
+                <li><a href="#" data-hiddenkey="delete"><?=$this->getTrans('delete') ?></a></li>
+            </ul>
+        </div>
+        <button type="submit" class="save_button btn btn-default" name="saveCats" value="save">
+            <?=$this->getTrans('saveButton') ?>
+        </button>
+    </div>
 </form>
+
+<script>
+$('.table tbody').sortable();
+</script>

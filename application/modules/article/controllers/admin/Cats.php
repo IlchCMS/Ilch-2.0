@@ -65,6 +65,15 @@ class Cats extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('menuCats'), ['action' => 'index'])
             ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
+        if ($this->getRequest()->getPost('saveCats')) {
+            foreach ($this->getRequest()->getPost('items') as $i => $catId) {
+                $categoryMapper->sort($catId, $i);
+            }
+
+            $this->redirect()
+                ->withMessage('saveSuccess')
+                ->to(['action' => 'index']);
+        }
         if ($this->getRequest()->getPost('action') === 'delete') {
             foreach ($this->getRequest()->getPost('check_cats') as $catId) {
                 $categoryMapper->delete($catId);
