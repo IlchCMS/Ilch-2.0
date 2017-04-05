@@ -498,7 +498,6 @@ nav ul {
     font-size: 13px;
     line-height: .5em;
     list-style: none;
-    position: relative;
 }
 nav ul .active > a {
     color: #000;
@@ -658,13 +657,11 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     position: static !important;
 }
 #ilch_dropdown .full {
-    width: 100%;
-    left: auto !important;
-    right: auto !important;
+    left: auto;
 }
 #ilch_dropdown .full a {
     color: #777;
-    width: 32.7584%;
+    width: 33.3333%;
 }
 #ilch_dropdown .full a:hover, #ilch_dropdown .full a:hover:focus {
     color: #000;
@@ -676,12 +673,6 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     margin-left: 0;
     margin-right: 0;
     border: none;
-}
-#ilch_dropdown a.list-group-item {
-    padding: 7px 0px 7px 20px;
-}
-#ilch_dropdown a.list-group-item:hover {
-    background: none;
 }
 #ilch_dropdown .list-group-item:hover, .list-group-item {
     color: #000;
@@ -782,6 +773,27 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     box-shadow: inset 0 -1px 0 #bbb;
     min-width: 24px;
     text-align: center;
+}
+
+@media (min-width: 768px) {
+    #ilch_dropdown .full {
+        width: 65%;
+    }
+}
+@media (min-width: 992px) {
+    #ilch_dropdown .full {
+        width: 50%;
+    }
+}
+@media (min-width: 1200px) {
+    #ilch_dropdown .full {
+        width: 40%;
+    }
+}
+@media (min-width: 1600px) {
+    #ilch_dropdown .full {
+        width: 30%;
+    }
 }
 
 @media (max-width:991px) {

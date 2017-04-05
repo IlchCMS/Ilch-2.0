@@ -43,19 +43,19 @@
         <script src="<?=$this->getVendorUrl('ckeditor/ckeditor/ckeditor.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/ilch.js') ?>"></script>
         <script src="<?=$this->getStaticUrl('js/jquery.key.js') ?>"></script>
-	<script>
+        <script>
         $.key('alt+a', function() { window.location.href ='<?=$this->getUrl(['module' => 'article', 'controller' => 'index', 'action' => 'index']) ?>'; });
         $.key('alt+u', function() { window.location.href ='<?=$this->getUrl(['module' => 'user', 'controller' => 'index', 'action' => 'index']) ?>'; });
         $.key('alt+s', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'settings', 'action' => 'index']) ?>'; });
         $.key('alt+h', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'index']) ?>'; });
         $.key('alt+k', function() { window.location.href ='<?=$this->getUrl(['module' => 'admin', 'controller' => 'infos', 'action' => 'shortcuts']) ?>'; });
         $.key('alt+i', function() { window.open('http://ilch.de/', '_blank'); });
-	</script>
-    <?php
-        if (\Ilch\DebugBar::isInitialized()) {
-            echo \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->renderHead();
-        }
-    ?>
+        </script>
+        <?php
+            if (\Ilch\DebugBar::isInitialized()) {
+                echo \Ilch\DebugBar::getInstance()->getJavascriptRenderer()->renderHead();
+            }
+        ?>
     </head>
     <body id="body" class="">
         <script>
@@ -122,15 +122,15 @@
                                 }
 
                                 if ($module->getSystemModule()) {
-                                    $systemModuleHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
+                                    $systemModuleHtml .= '<a class="list-group-item" href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
                                                 '.$smallIcon.$content['name'].'
                                                 </a>';
                                 } elseif ($module->getLayoutModule()) {
-                                    $layoutModuleHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
+                                    $layoutModuleHtml .= '<a class="list-group-item" href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
                                                 '.$smallIcon.$content['name'].'
                                                 </a>';
                                 } else {
-                                    $modulesHtml .= '<a class="list-group-item " href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
+                                    $modulesHtml .= '<a class="list-group-item" href="'.$this->getUrl(['module' => $module->getKey(), 'controller' => 'index', 'action' => 'index']).'">
                                                 '.$smallIcon.$content['name'].'
                                                 </a>';
                                 }
