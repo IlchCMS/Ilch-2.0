@@ -31,17 +31,23 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
     }
 
     echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
-    echo '<div><span class="disclose"><i class="fa fa-minus-circle"></i>
-                    <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-                    <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$view->escape($item->getTitle()).'" />
-                    <input type="hidden" class="hidden_href" name="items['.$item->getId().'][href]" value="'.$item->getHref().'" />
-                    <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
-                    <input type="hidden" class="hidden_siteid" name="items['.$item->getId().'][siteid]" value="'.$item->getSiteId().'" />
-                    <input type="hidden" class="hidden_boxkey" name="items['.$item->getId().'][boxkey]" value="'.$boxKey.'" />
-                    <input type="hidden" class="hidden_modulekey" name="items['.$item->getId().'][modulekey]" value="'.$item->getModuleKey().'" />
-                    <input type="hidden" class="hidden_access" name="items['.$item->getId().'][access]" value="'.$item->getAccess().'" />
-                    <span></span>
-                </span><span class="title">'.$view->escape($item->getTitle()).'</span><span class="item_delete"><i class="fa fa-times-circle"></i></span><span class="item_edit"><i class="fa fa-edit"></i></span></div>';
+    echo '<div>
+        <span class="disclose">
+            <i class="fa fa-minus-circle"></i>
+            <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
+            <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$view->escape($item->getTitle()).'" />
+            <input type="hidden" class="hidden_href" name="items['.$item->getId().'][href]" value="'.$item->getHref().'" />
+            <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
+            <input type="hidden" class="hidden_siteid" name="items['.$item->getId().'][siteid]" value="'.$item->getSiteId().'" />
+            <input type="hidden" class="hidden_boxkey" name="items['.$item->getId().'][boxkey]" value="'.$boxKey.'" />
+            <input type="hidden" class="hidden_modulekey" name="items['.$item->getId().'][modulekey]" value="'.$item->getModuleKey().'" />
+            <input type="hidden" class="hidden_access" name="items['.$item->getId().'][access]" value="'.$item->getAccess().'" />
+            <span></span>
+        </span>
+        <span class="title">'.$view->escape($item->getTitle()).'</span>
+        <span class="item_delete"><i class="fa fa-times-circle"></i></span>
+        <span class="item_edit"><i class="fa fa-edit"></i></span>
+    </div>';
 
     if (!empty($subItems)) {
         echo '<ol>';
@@ -79,7 +85,7 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
     <br />
     <h1><?=$this->getTrans('menuChange') ?></h1>
     <div class="form-group">
-        <div class="col-lg-6">
+        <div class="col-sm-7 col-lg-7">
             <ol id="sortable" class="sortable">
                 <?php if (!empty($menuItems)): ?>
                     <?php foreach ($menuItems as $item): ?>
@@ -88,42 +94,47 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
                 <?php endif; ?>
             </ol>
         </div>
-        <div class="col-lg-1"></div>
-        <div class="col-lg-5 changeBox">
+        <div class="col-sm-5 col-lg-5 changeBox">
             <input type="hidden" id="id" value="" />
             <div class="form-group">
-                <label for="title" class="col-lg-3 control-label">
+                <label for="title" class="col-lg-4 control-label">
                     <?=$this->getTrans('itemTitle') ?>
                 </label>
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <input type="text" class="form-control" id="title" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="type" class="col-lg-3 control-label">
+                <label for="type" class="col-lg-4 control-label">
                     <?=$this->getTrans('itemType') ?>
                 </label>
-                <div class="col-lg-6">
+                <div class="col-lg-8">
                     <select class="form-control" id="type">
-                        <option value="<?= MenuItem::TYPE_MENU ?>"><?=$this->getTrans('menu') ?></option>
-                        <optgroup>
-                            <option value="<?= MenuItem::TYPE_EXTERNAL_LINK ?>"><?=$this->getTrans('externalLinking') ?></option>
-                            <option value="<?= MenuItem::TYPE_PAGE_LINK ?>"><?=$this->getTrans('siteLinking') ?></option>
-                            <option value="<?= MenuItem::TYPE_MODULE_LINK ?>"><?=$this->getTrans('moduleLinking') ?></option>
+                        <option value="<?=MenuItem::TYPE_MENU ?>"><?=$this->getTrans('menu') ?></option>
+                        <option value="<?=MenuItem::TYPE_BOX ?>"><?=$this->getTrans('itemTypeBox') ?></option>
+                        <optgroup label="<?=$this->getTrans('linking') ?>">
+                            <option value="<?=MenuItem::TYPE_MODULE_LINK ?>"><?=$this->getTrans('moduleLinking') ?></option>
+                            <option value="<?=MenuItem::TYPE_PAGE_LINK ?>"><?=$this->getTrans('siteLinking') ?></option>
+                            <option value="<?=MenuItem::TYPE_EXTERNAL_LINK ?>"><?=$this->getTrans('externalLinking') ?></option>
                         </optgroup>
-                        <option value="<?= MenuItem::TYPE_BOX ?>"><?=$this->getTrans('itemTypeBox') ?></option>
                     </select>
                 </div>
             </div>
             <div class="dyn"></div>
-            <div class="form-group"><label for="assignedGroups" class="col-lg-3 control-label"><?=$this->getTrans('notVisible') ?></label>
-                <div class="col-lg-6"><select class="chosen-select form-control" id="access" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+            <div class="form-group">
+                <label for="assignedGroups" class="col-lg-4 control-label">
+                    <?=$this->getTrans('notVisible') ?>
+                </label>
+                <div class="col-lg-8">
+                    <select class="chosen-select form-control" id="access" name="user[groups][]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
                         <?php foreach ($this->get('userGroupList') as $groupList): ?>
                             <option value="<?=$groupList->getId() ?>"><?=$groupList->getName() ?></option>
                         <?php endforeach; ?>
-                    </select></div></div>
+                    </select>
+                </div>
+            </div>
 
-            <div class="actions">
+            <div class="col-lg-12 text-right">
                 <input type="button" class="btn" id="menuItemAdd" value="<?=$this->getTrans('menuItemAdd') ?>">
             </div>
         </div>

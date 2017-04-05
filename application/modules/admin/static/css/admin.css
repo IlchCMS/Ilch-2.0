@@ -775,9 +775,16 @@ nav > ul > li:hover > ul::before, nav > ul > li:hover > ul > li::before {
     text-align: center;
 }
 
+.changeBox {
+    margin-top: 30px;
+}
+
 @media (min-width: 768px) {
     #ilch_dropdown .full {
         width: 65%;
+    }
+    .changeBox {
+        margin-top: 0;
     }
 }
 @media (min-width: 992px) {
