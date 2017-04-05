@@ -10,6 +10,7 @@ require APPLICATION_PATH . '/modules/user/config/config.php';
 
 use PHPUnit\Ilch\DatabaseTestCase;
 use Modules\User\Config\Config as ModuleConfig;
+use Modules\Admin\Config\Config as AdminConfig;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\User\Models\User as UserModel;
 
@@ -55,6 +56,8 @@ class UserTest extends DatabaseTestCase
     protected static function getSchemaSQLQueries()
     {
         $config = new ModuleConfig();
-        return $config->getInstallSql();
+        $configAdmin = new AdminConfig();
+        
+        return $configAdmin->getInstallSql().$config->getInstallSql();
     }
 }
