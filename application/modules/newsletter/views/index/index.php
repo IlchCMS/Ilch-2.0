@@ -1,17 +1,7 @@
 <h1><?=$this->getTrans('menuNewsletter') ?></h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" action="" method="post">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('email', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('email') ? 'has-error' : '' ?>">
         <div class="col-lg-4">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>

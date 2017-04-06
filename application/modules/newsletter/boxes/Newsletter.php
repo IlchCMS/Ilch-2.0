@@ -16,16 +16,8 @@ class Newsletter extends \Ilch\Box
     {
         $newsletterMapper = new NewsletterMapper();
 
-        $post = [
-            'email' => ''
-        ];
-
         if ($this->getRequest()->getPost('saveNewsletterBox')) {
-            $post = [
-                'email' => $this->getRequest()->getPost('email')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'email' => 'required|email'
             ]);
 
@@ -35,15 +27,12 @@ class Newsletter extends \Ilch\Box
                     $newsletterModel = new NewsletterModel();
                     $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
                     $newsletterModel->setConfirmCode(bin2hex(openssl_random_pseudo_bytes(32)));
-                    $newsletterModel->setEmail($post['email']);
+                    $newsletterModel->setEmail($this->getRequest()->getPost('email'));
                     $newsletterMapper->saveEmail($newsletterModel);
                 }
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
-
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }

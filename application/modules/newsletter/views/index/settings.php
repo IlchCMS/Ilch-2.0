@@ -8,19 +8,9 @@
 
         <div class="profile-content active">
             <h1><?=$this->getTrans('setting') ?></h1>
-            <?php if (!empty($this->get('errors'))): ?>
-                <div class="alert alert-danger" role="alert">
-                    <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-                    <ul>
-                        <?php foreach ($this->get('errors') as $error): ?>
-                            <li><?= $error; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            <?php endif; ?>
             <form action="" class="form-horizontal" method="POST">
                 <?=$this->getTokenField() ?>
-                <div class="form-group <?=in_array('acceptNewsletter', $this->get('errorFields')) ? 'has-error' : '' ?>">
+                <div class="form-group <?=$this->validation()->hasError('acceptNewsletter') ? 'has-error' : '' ?>">
                     <div class="col-lg-3 control-label">
                         <?=$this->getTrans('acceptNewsletter') ?>:
                     </div>
