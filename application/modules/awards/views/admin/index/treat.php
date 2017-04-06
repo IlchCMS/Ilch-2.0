@@ -19,20 +19,9 @@ if ($awards != '') {
     ?>
 </h1>
 
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('date', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
         <label for="date" class="col-lg-2 control-label">
             <?=$this->getTrans('date') ?>:
         </label>
@@ -48,7 +37,7 @@ if ($awards != '') {
             </span>
         </div>
     </div>
-    <div class="form-group <?=in_array('rank', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('rank') ? 'has-error' : '' ?>">
         <label for="rank" class="col-lg-2 control-label">
             <?=$this->getTrans('rank') ?>:
         </label>
@@ -61,7 +50,7 @@ if ($awards != '') {
                    value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getRank()); } else { echo '1'; } ?>">
         </div>
     </div>
-    <div class="form-group <?=(in_array('typ', $this->get('errorFields')) or in_array('utId', $this->get('errorFields'))) ? 'has-error' : '' ?>">
+    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
         <label for="user" class="col-lg-1 control-label">
             <?=$this->getTrans('user') ?>:
         </label>
@@ -86,7 +75,7 @@ if ($awards != '') {
             </select>
         </div>
     </div>
-    <div class="form-group <?=(in_array('typ', $this->get('errorFields')) or in_array('utId', $this->get('errorFields'))) ? 'has-error' : '' ?>">
+    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
         <label for="team" class="col-lg-1 control-label">
             <?=$this->getTrans('team') ?>:
         </label>
@@ -123,7 +112,7 @@ if ($awards != '') {
                    value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getEvent()); } ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('page', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
         <label for="page" class="col-lg-2 control-label">
             <?=$this->getTrans('page') ?>:
         </label>

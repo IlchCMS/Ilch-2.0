@@ -114,6 +114,7 @@ class Index extends \Ilch\Controller\Admin
                 'rank'  => 'required|numeric|integer|min:1',
                 'utId'  => 'required|numeric|integer|min:1',
                 'typ'  => 'required|numeric|integer|min:1|max:2',
+                'event' => 'required',
                 'page' => 'url',
             ]);
 
@@ -134,12 +135,10 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
         }
 
         $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]));
         $this->getView()->set('teams', $teamsMapper->getTeams());
     }
