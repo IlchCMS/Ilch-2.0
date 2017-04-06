@@ -52,11 +52,9 @@ class Index extends \Ilch\Controller\Admin
                 $this->addMessage('saveSuccess');
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
         }
 
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('numberOfBirthdaysShow', $this->getConfig()->get('bday_boxShow'));
     }
 }

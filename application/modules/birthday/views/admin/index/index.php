@@ -2,20 +2,9 @@
 
 <h1><?=$this->getTrans('settings') ?></h1>
 
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('numberOfBirthdaysShow', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('numberOfBirthdaysShow') ? 'has-error' : '' ?>">
         <label for="numberOfBirthdaysShow" class="col-lg-2 control-label">
             <?=$this->getTrans('numberOfBirthdaysShow') ?>:
         </label>
