@@ -75,18 +75,19 @@ class Category extends \Ilch\Mapper
      */
     public function save(CategoryModel $category)
     {
-        $fields = [
-            'name' => $category->getName()
-        ];
-
         if ($category->getId()) {
             $this->db()->update('articles_cats')
-                ->values($fields)
+                ->values(['name' => $category->getName()])
                 ->where(['id' => $category->getId()])
                 ->execute();
         } else {
+            $lastSort = $this->db()->select('MAX(`sort`) AS maxSort')
+                ->from('articles_cats')
+                ->execute()
+                ->fetchAssoc();
+
             $this->db()->insert('articles_cats')
-                ->values($fields)
+                ->values(['name' => $category->getName(), 'sort' => $lastSort['maxSort']+1])
                 ->execute();
         }
     }

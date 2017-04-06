@@ -9,6 +9,7 @@ namespace Modules\Article\Controllers\Admin;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Article\Models\Category as CategoryModel;
 use Modules\Article\Mappers\Article as ArticleMapper;
+use Ilch\Validation;
 
 class Cats extends \Ilch\Controller\Admin
 {
@@ -41,12 +42,10 @@ class Cats extends \Ilch\Controller\Admin
             ]
         ];
 
-        if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'index') {
-            $items[1]['active'] = true;
-        } elseif ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'treat') {
+        if ($this->getRequest()->getControllerName() == 'cats' AND $this->getRequest()->getActionName() == 'treat') {
             $items[1][0]['active'] = true;
         } else {
-            $items[0]['active'] = true;
+            $items[1]['active'] = true;
         }
 
         $this->getLayout()->addMenu
@@ -106,23 +105,27 @@ class Cats extends \Ilch\Controller\Admin
         }
 
         if ($this->getRequest()->isPost()) {
-            $model = new CategoryModel();
+            $validation = Validation::create($this->getRequest()->getPost(), [
+                'name'  => 'required'
+            ]);
 
-            if ($this->getRequest()->getParam('id')) {
-                $model->setId($this->getRequest()->getParam('id'));
-            }
-
-            $name = trim($this->getRequest()->getPost('name'));
-            if (empty($name)) {
-                $this->addMessage('missingName', 'danger');
-            } else {
-                $model->setName($name);
+            if ($validation->isValid()) {
+                $model = new CategoryModel();
+                if ($this->getRequest()->getParam('id')) {
+                    $model->setId($this->getRequest()->getParam('id'));
+                }
+                $model->setName($this->getRequest()->getPost('name'));
                 $categoryMapper->save($model);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
             }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
     }
 

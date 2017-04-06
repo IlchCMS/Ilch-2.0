@@ -83,6 +83,7 @@ class Config extends \Ilch\Config\Install
                 CREATE TABLE IF NOT EXISTS `[prefix]_articles_cats` (
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `name` VARCHAR(100) NOT NULL,
+                  `sort` INT(11) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 

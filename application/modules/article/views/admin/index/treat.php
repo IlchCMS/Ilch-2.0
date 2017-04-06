@@ -5,16 +5,7 @@ if ($this->get('article') != '') {
 }
 ?>
 
-<h1>
-    <?php
-    if ($this->get('article') != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
-</h1>
-
+<h1><?=($this->get('article') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
     <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
@@ -173,13 +164,7 @@ if ($this->get('article') != '') {
             </div>
         </div>
     </div>
-    <?php
-    if ($this->get('article') != '') {
-        echo $this->getSaveBar('edit');
-    } else {
-        echo $this->getSaveBar('add');
-    }
-    ?>
+    <?=($this->get('article') != '') ?  $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
 
 <?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
