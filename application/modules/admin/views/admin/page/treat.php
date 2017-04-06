@@ -8,20 +8,9 @@
     ?>
 </h1>
 
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('pageTitle', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('pageTitle') ? 'has-error' : '' ?>">
         <label for="pageTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('pageTitle') ?>:
         </label>
@@ -33,7 +22,7 @@
                    value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getTitle()); } else { echo $this->get('post')['pageTitle']; } ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('pageContent', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('pageContent') ? 'has-error' : '' ?>">
         <label for="pageContent" class="col-lg-2 control-label">
             <?=$this->getTrans('pageContent') ?>:
         </label>
@@ -91,8 +80,8 @@
                       name="keywords"><?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getKeywords()); } else { echo $this->get('post')['keywords']; } ?></textarea>
         </div>
     </div>
-    <div class="form-group <?=in_array('pagePerma', $this->get('errorFields')) ? 'has-error' : '' ?>">
-        <label for="pagePerma" class="col-lg-2 control-label">
+    <div class="form-group <?=$this->validation()->hasError('permaLink') ? 'has-error' : '' ?>">
+        <label for="permaLink" class="col-lg-2 control-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>
         <div class="col-lg-4">
@@ -100,9 +89,9 @@
                 <span class="input-group-addon" id="basic-addon3"><?=substr($this->getUrl('a', 'default'), 0, -1) ?></span>
                 <input class="form-control"
                        type="text"
-                       id="pagePerma"
-                       name="pagePerma"
-                       value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['pagePerma']; } ?>" />
+                       id="permaLink"
+                       name="permaLink"
+                       value="<?php if ($this->get('page') != '') { echo $this->escape($this->get('page')->getPerma()); } else { echo $this->get('post')['permaLink']; } ?>" />
             </div>
         </div>
     </div>
@@ -145,7 +134,7 @@ $('#pageTitle').change (
             });
         }
         var title = escapeHtml($('#pageTitle').val());
-        $('#pagePerma').val
+        $('#permaLink').val
         (
             title
             .toLowerCase()+'.html'

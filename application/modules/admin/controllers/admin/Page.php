@@ -89,7 +89,7 @@ class Page extends \Ilch\Controller\Admin
             'pageLanguage' => '',
             'keywords' => '',
             'description' => '',
-            'pagePerma' => ''
+            'permaLink' => ''
         ];
 
         if ($this->getRequest()->isPost()) {
@@ -106,12 +106,12 @@ class Page extends \Ilch\Controller\Admin
                 ";" => ""
             ];
 
-            $pagePerma = strtr($this->getRequest()->getPost('pagePerma'), $entityMap);
+            $permaLink = strtr($this->getRequest()->getPost('permaLink'), $entityMap);
 
-            if ($pagePerma != '') {
-                $pagePermaUrl = BASE_URL.'/index.php/'.$pagePerma;
+            if ($permaLink != '') {
+                $permaLinkUrl = BASE_URL.'/index.php/'.$permaLink;
             } else {
-                $pagePermaUrl = '';
+                $permaLinkUrl = '';
             }
 
             $post = [
@@ -120,17 +120,17 @@ class Page extends \Ilch\Controller\Admin
                 'pageLanguage' => $this->getRequest()->getPost('pageLanguage'),
                 'keywords' => $this->getRequest()->getPost('keywords'),
                 'description' => trim($this->getRequest()->getPost('description')),
-                'pagePerma' => $pagePermaUrl,
+                'permaLink' => $permaLinkUrl,
             ];
 
             $validation = Validation::create($post, [
                 'pageTitle' => 'required',
                 'pageContent' => 'required',
-                'pagePerma' => 'url|required'
+                'permaLink' => 'url|required'
             ]);
 
             // Restore original values
-            $post['pagePerma'] = $pagePerma;
+            $post['permaLink'] = $permaLink;
 
             if ($validation->isValid()) {
                 $model = new PageModel();
@@ -146,19 +146,17 @@ class Page extends \Ilch\Controller\Admin
                 } else {
                     $model->setLocale('');
                 }
-                $model->setPerma($pagePerma);
+                $model->setPerma($permaLink);
                 $pageMapper->save($model);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
         }
 
         $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));

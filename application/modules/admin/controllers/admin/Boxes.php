@@ -138,12 +138,10 @@ class Boxes extends \Ilch\Controller\Admin
                 $this->redirect(['action' => 'index']);
             }
 
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
         }
 
         $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));

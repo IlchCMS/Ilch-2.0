@@ -8,20 +8,9 @@
     ?>
 </h1>
 
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('boxTitle', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('boxTitle') ? 'has-error' : '' ?>">
         <label for="boxTitle" class="col-lg-2 control-label">
             <?=$this->getTrans('boxTitle') ?>:
         </label>
@@ -33,7 +22,7 @@
                    value="<?php if ($this->get('box') != '') { echo $this->escape($this->get('box')->getTitle()); } else { echo $this->get('post')['boxTitle']; } ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('boxContent', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('boxContent') ? 'has-error' : '' ?>">
         <label for="boxContent" class="col-lg-2 control-label">
             <?=$this->getTrans('boxContent') ?>:
         </label>
