@@ -50,9 +50,9 @@ class Index extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $this->getConfig()->set('bday_boxShow', $this->getRequest()->getPost('numberOfBirthdaysShow'));
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
         }
 
         $this->getView()->set('numberOfBirthdaysShow', $this->getConfig()->get('bday_boxShow'));

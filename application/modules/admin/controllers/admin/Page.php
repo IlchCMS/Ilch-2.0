@@ -151,9 +151,9 @@ class Page extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
         }
 
         $this->getView()->set('post', $post);

@@ -64,13 +64,11 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('comment_reply', $post['reply']);
                 $this->getConfig()->set('comment_nesting', $post['nesting']);
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('comment_reply', $this->getConfig()->get('comment_reply'));
         $this->getView()->set('comment_nesting', $this->getConfig()->get('comment_nesting'));
     }
