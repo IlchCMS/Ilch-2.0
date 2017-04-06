@@ -7,30 +7,29 @@ CKEDITOR.editorConfig = function( config ) {
     if (typeof ilchMediaPlugin !== "undefined" && typeof ilchPsPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchmedia', ilchMediaPlugin);
         CKEDITOR.plugins.addExternal('ilchps', ilchPsPlugin);
-        config.extraPlugins = "ilchmedia,ilchps";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,ilchmedia,ilchps";
     }
     else if (typeof ilchMediaPlugin !== "undefined") {
         CKEDITOR.plugins.addExternal('ilchmedia', ilchMediaPlugin);
-        config.extraPlugins = "ilchmedia";
+        config.extraPlugins = "justify,font,colorbutton,colordialog,ilchmedia";
     }
 
     config.protectedSource.push(/<i[^>]*><\/i>/g);
     config.protectedSource.push(/<\?[\s\S]*?\?>/g);
     config.toolbar = 'ilch_html';
     config.toolbar_ilch_html = [
-        { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
+        { name: 'document', groups: [ 'mode' ], items: [ 'Source' ] },
         { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
-        { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
+        { name: 'editing', groups: [ 'spellchecker' ], items: [ 'Scayt' ] },
         '/',
-        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
-        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
+        { name: 'basicstyles', groups: [ 'basicstyles', 'alignment', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'RemoveFormat' ] },
+        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
         { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
         { name: 'insert', items: [ 'Table', 'HorizontalRule' ] },
         '/',
         { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
         { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
-        { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+        { name: 'tools', items: [ 'Maximize' ] },
         { name: 'insert', items: [ 'ilchmedia', 'ilchps' ] }
     ];
 };
