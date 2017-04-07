@@ -311,6 +311,10 @@ abstract class Base
         $builder = new \JBBCode\CodeDefinitionBuilder('email', '<a href="mailto:{param}">{param}</a>');
         $parser->addCodeDefinition($builder->build());
 
+        $builder = new \JBBCode\CodeDefinitionBuilder('size', '<span style="font-size:{option}%;">{param}</span>');
+        $builder->setUseOption(true);
+        $parser->addCodeDefinition($builder->build());
+
         $parser->parse($bbcode);
 
         return $parser->getAsHTML();
