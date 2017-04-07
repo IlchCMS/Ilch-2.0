@@ -6,20 +6,10 @@
     }
     ?>
 </h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <?php if ($this->get('cats') != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
-        <div class="form-group <?=in_array('catId', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('catId') ? 'has-error' : '' ?>">
             <label for="catId" class="col-lg-2 control-label">
                 <?=$this->getTrans('cat'); ?>:
             </label>
@@ -40,7 +30,7 @@
                 </select>
             </div>
         </div>
-        <div class="form-group <?=in_array('question', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
             <label for="question" class="col-lg-2 control-label">
                 <?=$this->getTrans('question') ?>:
             </label>
@@ -49,10 +39,10 @@
                        class="form-control"
                        id="question"
                        name="question"
-                       value="<?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getQuestion()); } else { echo $this->get('post')['question']; } ?>" />
+                       value="<?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getQuestion()); } else { echo $this->originalInput('question'); } ?>" />
             </div>
         </div>
-        <div class="form-group <?=in_array('answer', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('answer') ? 'has-error' : '' ?>">
             <label for="ck_1" class="col-lg-2 control-label">
                 <?=$this->getTrans('answer') ?>:
             </label>
@@ -62,7 +52,7 @@
                           name="answer"
                           cols="45"
                           rows="3"
-                          toolbar="ilch_html"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } else { echo $this->get('post')['answer']; } ?></textarea>
+                          toolbar="ilch_html"><?php if ($this->get('faq') != '') { echo $this->escape($this->get('faq')->getAnswer()); } else { echo $this->originalInput('answer'); } ?></textarea>
             </div>
         </div>
         <?php if ($this->get('faq') != '') {

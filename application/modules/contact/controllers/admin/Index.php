@@ -85,18 +85,8 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $post = [
-            'name' => '',
-            'email' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'name' => $this->getRequest()->getPost('name'),
-                'email' => $this->getRequest()->getPost('email')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'name' => 'required',
                 'email' => 'required|email'
             ]);
@@ -108,18 +98,18 @@ class Index extends \Ilch\Controller\Admin
                     $model->setId($this->getRequest()->getParam('id'));
                 }
 
-                $model->setName($post['name']);
-                $model->setEmail($post['email']);
+                $model->setName($this->getRequest()->getPost('name'));
+                $model->setEmail($this->getRequest()->getPost('email'));
                 $receiverMapper->save($model);
 
                 $this->redirect(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                  ->withInput()
+                  ->withErrors($validation->getErrorBag())
+                  ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
-
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }

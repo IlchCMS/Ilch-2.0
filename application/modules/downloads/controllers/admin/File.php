@@ -59,8 +59,7 @@ class File extends \Ilch\Controller\Admin
         $id = (int)$this->getRequest()->getParam('id');
 
         if ($this->getRequest()->getPost()) {
-            $post = ['fileTitle' => $this->getRequest()->getPost('fileTitle')];
-            $validation = Validation::create($post, ['fileTitle' => 'required']);
+            $validation = Validation::create($this->getRequest()->getPost(), ['fileTitle' => 'required']);
 
             if ($validation->isValid()) {
                 $fileImage = $this->getRequest()->getPost('fileImage');
@@ -69,17 +68,16 @@ class File extends \Ilch\Controller\Admin
                 $model = new FileModel();
                 $model->setId($id);
                 $model->setFileImage($fileImage);
-                $model->setFileTitle($post['fileTitle']);
+                $model->setFileTitle($this->getRequest()->getPost('fileTitle'));
                 $model->setFileDesc($fileDesc);
                 $fileMapper->saveFileTreat($model);
 
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('file', $fileMapper->getFileById($id));
     }
 }

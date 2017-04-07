@@ -84,20 +84,8 @@ class Index extends \Ilch\Controller\Admin
                     ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $post = [
-            'catId' => '',
-            'question' => '',
-            'answer' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'catId' => $this->getRequest()->getPost('catId'),
-                'question' => $this->getRequest()->getPost('question'),
-                'answer' => $this->getRequest()->getPost('answer')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'catId' => 'required|numeric|integer|min:1',
                 'question' => 'required',
                 'answer' => 'required'
@@ -110,21 +98,22 @@ class Index extends \Ilch\Controller\Admin
                     $model->setId($this->getRequest()->getParam('id'));
                 }
 
-                $model->setQuestion($post['question']);
-                $model->setAnswer($post['answer']);
-                $model->setCatId($post['catId']);
+                $model->setQuestion($this->getRequest()->getPost('question'));
+                $model->setAnswer($this->getRequest()->getPost('answer'));
+                $model->setCatId($this->getRequest()->getPost('catId'));
                 $faqMapper->save($model);
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                  ->withInput()
+                  ->withErrors($validation->getErrorBag())
+                  ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 

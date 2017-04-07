@@ -40,35 +40,26 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('guestbook'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-        $post = [
-            'entrySettings' => '',
-            'entriesPerPage' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'entrySettings' => $this->getRequest()->getPost('entrySettings'),
-                'entriesPerPage' => $this->getRequest()->getPost('entriesPerPage')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'entrySettings' => 'required|numeric|integer|min:0|max:1',
                 'entriesPerPage' => 'numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('gbook_autosetfree', $post['entrySettings']);
-                $this->getConfig()->set('gbook_entriesPerPage', $post['entriesPerPage']);
+                $this->getConfig()->set('gbook_autosetfree', $this->getRequest()->getPost('entrySettings'));
+                $this->getConfig()->set('gbook_entriesPerPage', $this->getRequest()->getPost('entriesPerPage'));
 
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                  ->withInput()
+                  ->withErrors($validation->getErrorBag())
+                  ->to(['action' => 'index']);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('setfree', $this->getConfig()->get('gbook_autosetfree'));
         $this->getView()->set('entriesPerPage', $this->getConfig()->get('gbook_entriesPerPage'));
     }

@@ -1,17 +1,7 @@
 <h1><?=$this->getTrans('settings') ?></h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('entrySettings', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('entrySettings') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('entrySettings') ?>:
         </div>
@@ -25,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group <?=in_array('entriesPerPage', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('entriesPerPage') ? 'has-error' : '' ?>">
         <label for="entriesPerPageInput" class="col-lg-2 control-label">
             <?=$this->getTrans('entriesPerPage') ?>:
         </label>
@@ -35,7 +25,7 @@
                    id="entriesPerPageInput"
                    name="entriesPerPage"
                    min="1"
-                   value="<?=($this->escape($this->get('entriesPerPage')) != '') ? $this->escape($this->get('entriesPerPage')) : $this->escape($this->get('post')['entriesPerPage']) ?>" />
+                   value="<?=($this->escape($this->get('entriesPerPage')) != '') ? $this->escape($this->get('entriesPerPage')) : $this->escape($this->originalInput('entriesPerPage')) ?>" />
         </div>
     </div>
     <?=$this->getSaveBar() ?>

@@ -9,16 +9,6 @@ if ($file->getFileImage() != '') {
 ?>
 
 <h1><?=$this->getTrans('treatFile') ?></h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <?php if ($file != ''): ?>
     <form class="form-horizontal" method="POST" action="">
         <div id="gallery">
