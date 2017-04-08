@@ -47,11 +47,12 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect()
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'index']);
             }
-
-            $this->redirect()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('siteStatistic', $this->getConfig()->get('statistic_site'));

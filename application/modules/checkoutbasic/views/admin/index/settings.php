@@ -1,14 +1,4 @@
 <h1><?=$this->getTrans('accountdata') ?></h1>
-<?php if ($this->validation()->hasErrors()): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('checkoutContact') ? 'has-error' : '' ?>">

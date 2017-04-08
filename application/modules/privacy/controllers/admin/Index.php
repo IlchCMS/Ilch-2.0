@@ -100,12 +100,13 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect()
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'treat']);
             }
-
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
         }
     }
 

@@ -3,16 +3,6 @@ $currency = $this->escape($this->get('currency'));
 ?>
 
 <h1><?=$this->getTrans('bookings') ?></h1>
-<?php if ($this->validation()->hasErrors()): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName()]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">

@@ -90,12 +90,13 @@ class Index extends \Ilch\Controller\Admin
                 $checkoutMapper->save($model);
 
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput($post)
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'index']);
             }
-
-            $this->redirect()
-                ->withInput($post)
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'index']);
         }
 
         $currency = $currencyMapper->getCurrencyById($this->getConfig()->get('checkoutbasic_currency'))[0];
@@ -127,12 +128,13 @@ class Index extends \Ilch\Controller\Admin
                 $this->getConfig()->set('checkoutbasic_contact', $this->getRequest()->getPost('checkoutContact'));
                 $this->getConfig()->set('checkoutbasic_currency', $this->getRequest()->getPost('checkoutCurrency'));
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'settings']);
             }
-
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'settings']);
         }
 
         $this->getView()->set('currencies', $currencyMapper->getCurrencies());
@@ -184,12 +186,13 @@ class Index extends \Ilch\Controller\Admin
                 $checkoutMapper->save($model);
 
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput($post)
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'treatPayment', 'id' => $id]);
             }
-
-            $this->redirect()
-                ->withInput($post)
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treatPayment', 'id' => $id]);
         }
 
         $this->getView()->set('checkout', $checkoutMapper->getEntryById($id));

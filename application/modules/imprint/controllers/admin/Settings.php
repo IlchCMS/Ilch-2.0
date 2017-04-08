@@ -52,11 +52,12 @@ class Settings extends \Ilch\Controller\Admin
             if ($validation->isValid()) {
                 $this->getConfig()->set('imprint_style', $this->getRequest()->getPost('imprintStyle'));
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'index']);
             }
-
-            $this->redirect()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('imprintStyle', $this->getConfig()->get('imprint_style'));

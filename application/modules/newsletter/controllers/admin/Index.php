@@ -167,12 +167,13 @@ class Index extends \Ilch\Controller\Admin
                 $this->redirect()
                     ->withMessage('sendSuccess')
                     ->to(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput($post)
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'treat']);
             }
-
-            $this->redirect()
-                ->withInput($post)
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'treat']);
         }
 
         $this->getView()->set('emails', $newsletterMapper->getMail());

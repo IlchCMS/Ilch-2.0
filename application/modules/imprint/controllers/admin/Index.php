@@ -73,6 +73,7 @@ class Index extends \Ilch\Controller\Admin
                     ->to(['action' => 'index']);
             }
 
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             $this->redirect()
                 ->withInput()
                 ->withErrors($validation->getErrorBag())
