@@ -41,9 +41,9 @@
                             <td><?=$this->getDeleteCheckbox('check_enemy', $enemy->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $enemy->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $enemy->getId()]) ?></td>
-                            <td><?=$this->escape($enemy->getEnemyName()) ?></td>
+                            <td><?=(empty($enemy->getEnemyHomepage())) ? $this->escape($enemy->getEnemyName()) : '<a href="'.$enemy->getEnemyHomepage().'">'.$enemy->getEnemyName().'</a>' ?></td>
                             <td><?=$this->escape($enemy->getEnemyTag()) ?></td>
-                            <td><img class="group-image" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" /></td>
+                            <td><?=(empty($enemy->getEnemyImage())) ? '' : '<img class="group-image" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" />' ?></td>
                             <td><?=$this->escape($enemy->getEnemyContactName()) ?></td>
                             <td><?=$enemy->getEnemyContactEmail() ?></td>
                         </tr>

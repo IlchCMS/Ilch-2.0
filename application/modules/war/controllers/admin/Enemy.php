@@ -124,10 +124,9 @@ class Enemy extends \Ilch\Controller\Admin
             $validation = Validation::create($post, [
                 'enemyName' => 'required',
                 'enemyTag' => 'required',
-                'enemyHomepage' => 'required|url',
-                'enemyImage' => 'required|url',
-                'enemyContactName' => 'required',
-                'enemyContactEmail' => 'required|email'
+                'enemyHomepage' => 'url',
+                'enemyImage' => 'url',
+                'enemyContactEmail' => 'email'
             ]);
 
             $post['enemyImage'] = trim($this->getRequest()->getPost('enemyImage'));

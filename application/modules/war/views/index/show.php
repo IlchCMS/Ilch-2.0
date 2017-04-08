@@ -15,7 +15,7 @@ $acceptCheckArray = $this->get('acceptCheck');
 <div class="row">
     <div class="center-text row no_margin">
         <div class="col-md-5">
-            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($group != '' ? $group->getGroupImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$group != '' ? $group->getGroupName() : '' ?>">
+            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($group->getGroupImage() != '' ? $group->getGroupImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$group->getGroupName() != '' ? $group->getGroupName() : '' ?>">
             <h4><span><?=$this->escape($group != '' ? $group->getGroupName() : '') ?></span></h4>
         </div>
         <div class="col-md-2 plays-vs">
@@ -26,7 +26,7 @@ $acceptCheckArray = $this->get('acceptCheck');
             </h4>
         </div>
         <div class="col-md-5">
-            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" alt="<?=$enemy->getEnemyName() ?>">
+            <img class="thumbnail img-responsive" src="<?=$this->getBaseUrl($enemy->getEnemyImage() != '' ? $enemy->getEnemyImage() : 'application/modules/media/static/img/nomedia.png') ?>" alt="<?=$enemy->getEnemyName() != '' ? $enemy->getEnemyName() : '' ?>">
             <h4><span><?=$this->escape($enemy->getEnemyName()) ?></span></h4>
         </div>
     </div>
