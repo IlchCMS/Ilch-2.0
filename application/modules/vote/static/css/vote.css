@@ -1,0 +1,17 @@
+.vote-body {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.vote-body .list-group {
+    margin-bottom: 0;
+}
+.vote-body .progress {
+    margin-bottom: 0;
+}
+.vote-body .progress-bar {
+    -webkit-transition: width 4s ease-in-out;
+    -moz-transition: width 4s ease-in-out;
+    -ms-transition: width 4s ease-in-out;
+    -o-transition: width 4s ease-in-out;
+    transition: width 4s ease-in-out;
+}
