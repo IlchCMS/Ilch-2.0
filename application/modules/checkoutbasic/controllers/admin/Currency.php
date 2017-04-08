@@ -129,10 +129,9 @@ class Currency extends \Ilch\Controller\Admin
                     $this->addMessage('saveSuccess');
                     $this->redirect(['action' => 'index']);
                 }
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
         $currency = $currencyMapper->getCurrencyById($id);
@@ -142,7 +141,6 @@ class Currency extends \Ilch\Controller\Admin
             $currency = new CurrencyModel();
         }
 
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('currency', $currency);
     }
 

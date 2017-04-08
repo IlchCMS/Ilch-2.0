@@ -7,19 +7,9 @@
         <?=$this->getTrans('add') ?>
     <?php endif; ?>
 </h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
         </label>
@@ -31,7 +21,7 @@
                    value="<?php if ($linkus != '') { echo $this->escape($linkus->getTitle()); } else { echo $this->get('post')['title']; } ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('banner', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
         <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>

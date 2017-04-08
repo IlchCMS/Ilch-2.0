@@ -26,18 +26,6 @@ $jobs = $this->get('jobs');
 
 <?php if ($this->getUser()): ?>
     <h1><?=$this->getTrans('apply') ?></h1>
-
-    <?php if (!empty($this->get('errors'))): ?>
-        <div class="alert alert-danger" role="alert">
-            <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-            <ul>
-                <?php foreach ($this->get('errors') as $error): ?>
-                    <li><?= $error; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-
     <form action="" class="form-horizontal" method="POST">
         <?=$this->getTokenField() ?>
         <div class="form-group <?=in_array('title', $this->get('errorFields')) ? 'has-error' : '' ?>">

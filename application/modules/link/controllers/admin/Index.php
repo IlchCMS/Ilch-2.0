@@ -193,14 +193,12 @@ class Index extends \Ilch\Controller\Admin
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
         $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('cats', $categoryMapper->getCategories());
     }
 
@@ -253,13 +251,11 @@ class Index extends \Ilch\Controller\Admin
                 } else {
                     $this->redirect(['action' => 'index']);
                 }
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
         $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }

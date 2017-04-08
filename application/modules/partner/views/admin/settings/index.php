@@ -1,26 +1,16 @@
 <link href="<?=$this->getModuleUrl('static/css/partners.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('settings') ?></h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <?php
-if (empty($this->get('errorFields'))) {
+if (!$this->validation()->hasErrors()) {
     $slider = (bool)$this->get('slider') == '1';
 } else {
-    $slider = (bool)$this->get('post')['slider'] == '1';
+    $slider = (bool)$this->originalInput('slider') == '1';
 }
 ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('slider', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('slider') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('slider') ?>:
         </div>
@@ -35,7 +25,7 @@ if (empty($this->get('errorFields'))) {
         </div>
     </div>
     <div id="contentHeight" class="<?php if (!$slider) { echo 'hidden'; } ?>">
-        <div class="form-group <?=in_array('boxSliderHeight', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('boxSliderHeight') ? 'has-error' : '' ?>">
             <label for="boxSliderHeight" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderHeight') ?>:
             </label>
@@ -45,11 +35,11 @@ if (empty($this->get('errorFields'))) {
                        id="boxSliderHeight"
                        name="boxSliderHeight"
                        min="0"
-                       value="<?=(empty($this->get('errorFields'))) ? $this->get('boxSliderHeight') : $this->get('post')['boxSliderHeight'] ?>">
+                       value="<?=(!$this->validation()->hasErrors()) ? $this->get('boxSliderHeight') : $this->originalInput('boxSliderHeight') ?>">
             </div>
         </div>
 
-        <div class="form-group <?=in_array('boxSliderSpeed', $this->get('errorFields')) ? 'has-error' : '' ?>">
+        <div class="form-group <?=$this->validation()->hasError('boxSliderSpeed') ? 'has-error' : '' ?>">
             <label for="boxSliderSpeed" class="col-lg-2 control-label">
                 <?=$this->getTrans('boxSliderSpeed') ?>:
             </label>
@@ -59,7 +49,7 @@ if (empty($this->get('errorFields'))) {
                        id="boxSliderSpeed"
                        name="boxSliderSpeed"
                        min="0"
-                       value="<?=(empty($this->get('errorFields'))) ? $this->get('boxSliderSpeed') : $this->get('post')['boxSliderSpeed'] ?>">
+                       value="<?=(!$this->validation()->hasErrors()) ? $this->get('boxSliderSpeed') : $this->originalInput('boxSliderSpeed') ?>">
             </div>
         </div>
     </div>

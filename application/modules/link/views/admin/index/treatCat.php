@@ -7,19 +7,9 @@
     }
     ?>
 </h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('name', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>

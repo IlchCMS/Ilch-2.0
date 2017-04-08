@@ -7,21 +7,9 @@
     }
     ?>
 </h1>
-
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?=$error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
-
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('name', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('name') ? 'has-error' : '' ?>">
         <label for="name" class="col-lg-2 control-label">
             <?=$this->getTrans('name') ?>:
         </label>
@@ -34,7 +22,7 @@
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getName()); } else { echo $this->get('post')['name']; } ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('link', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('link') ? 'has-error' : '' ?>">
         <label for="link" class="col-lg-2 control-label">
             <?=$this->getTrans('link') ?>:
         </label>
@@ -47,7 +35,7 @@
                    value="<?php if ($this->get('partner') != '') { echo $this->escape($this->get('partner')->getLink()); } else { echo $this->get('post')['link']; } ?>" />
         </div>
     </div>
-    <div class="form-group <?=in_array('banner', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('banner') ? 'has-error' : '' ?>">
         <label for="selectedImage_1" class="col-lg-2 control-label">
             <?=$this->getTrans('banner') ?>:
         </label>

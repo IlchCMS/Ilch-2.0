@@ -52,15 +52,13 @@ class Index extends \Ilch\Controller\Frontend
 
                 $this->addMessage('saveSuccess');
                 $this->redirect(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
 
             unset($_SESSION['captcha']);
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
         $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
     }
 }

@@ -80,14 +80,11 @@ class Index extends \Ilch\Controller\Frontend
 
                 $this->addMessage('sendSuccess');
                 $this->redirect(['action' => 'index']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('job', $job);
         $this->getView()->set('jobs', $jobsMapper->getJobs(['show' => 1]));
     }

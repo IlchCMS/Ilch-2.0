@@ -1,5 +1,5 @@
 <?php
-if (empty($this->get('errorFields'))) {
+if (!$this->validation()->hasErrors()) {
     $showHtml = (bool)$this->get('linkus_html') == '1';
     $showBBCode = (bool)$this->get('linkus_bbcode') == '1';
 } else {
@@ -9,19 +9,9 @@ if (empty($this->get('errorFields'))) {
 ?>
 
 <h1><?=$this->getTrans('settings') ?></h1>
-<?php if (!empty($this->get('errors'))): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->get('errors') as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField() ?>
-    <div class="form-group <?=in_array('showHtml', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('showHtml') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('showHtml') ?>:
         </div>
@@ -35,7 +25,7 @@ if (empty($this->get('errorFields'))) {
             </div>
         </div>
     </div>
-    <div class="form-group <?=in_array('showBBCode', $this->get('errorFields')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=$this->validation()->hasError('showBBCode') ? 'has-error' : '' ?>">
         <div class="col-lg-2 control-label">
             <?=$this->getTrans('showBBCode') ?>:
         </div>

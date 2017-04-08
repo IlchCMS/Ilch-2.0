@@ -39,38 +39,27 @@ class Settings extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('menuPartner'), ['controller' => 'index', 'action' => 'index'])
                 ->add($this->getTranslator()->trans('settings'), ['action' => 'index']);
 
-        $post = [
-            'slider' => '',
-            'boxSliderHeight' => '',
-            'boxSliderSpeed' => ''
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'slider' => $this->getRequest()->getPost('slider'),
-                'boxSliderHeight' => $this->getRequest()->getPost('boxSliderHeight'),
-                'boxSliderSpeed' => $this->getRequest()->getPost('boxSliderSpeed')
-            ];
-
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'slider' => 'required|numeric|integer|min:0|max:1',
                 'boxSliderHeight' => 'required|numeric|integer|min:0',
                 'boxSliderSpeed' => 'required|numeric|integer|min:0'
             ]);
 
             if ($validation->isValid()) {
-                $this->getConfig()->set('partners_slider', $post['slider']);
-                $this->getConfig()->set('partners_box_height', $post['boxSliderHeight']);
-                $this->getConfig()->set('partners_slider_speed', $post['boxSliderSpeed']);
+                $this->getConfig()->set('partners_slider', $this->getRequest()->getPost('slider'));
+                $this->getConfig()->set('partners_box_height', $this->getRequest()->getPost('boxSliderHeight'));
+                $this->getConfig()->set('partners_slider_speed', $this->getRequest()->getPost('boxSliderSpeed'));
                 $this->addMessage('saveSuccess');
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                  ->withInput()
+                  ->withErrors($validation->getErrorBag())
+                  ->to(['action' => 'index']);
             }
-
-            $this->getView()->set('errors', $validation->getErrorBag()->getErrorMessages());
-            $errorFields = $validation->getFieldsWithError();
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('errorFields', (isset($errorFields) ? $errorFields : []));
         $this->getView()->set('slider', $this->getConfig()->get('partners_slider'));
         $this->getView()->set('boxSliderHeight', $this->getConfig()->get('partners_box_height'));
         $this->getView()->set('boxSliderSpeed', $this->getConfig()->get('partners_slider_speed'));
