@@ -6,16 +6,19 @@
 
 namespace Modules\Cookieconsent\Controllers;
 
+use Modules\Cookieconsent\Mappers\Cookieconsent as CookieConsentMapper;
+
 class Index extends \Ilch\Controller\Frontend
 {
     public function indexAction()
     {
+        $cookieConsentMapper = new CookieConsentMapper();
+
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuCookieConsent'));
         $this->getLayout()->getHmenu()
             ->add($this->getTranslator()->trans('menuCookieConsent'), ['action' => 'index']);
 
-        $this->getView()->set('cookieConsent', $this->getConfig()->get('cookie_consent'));
-        $this->getView()->set('cookieConsentText', $this->getConfig()->get('cookie_consent_text'));
+        $this->getView()->set('cookieConsent', $cookieConsentMapper->getCookieConsentByLocale($this->getTranslator()->getLocale()));
     }
 }

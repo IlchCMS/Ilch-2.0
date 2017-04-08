@@ -22,5 +22,7 @@ return [
     'cookieConsentPosFloatingLeft' => 'unten Links',
     'cookieConsentPosFloatingRight' => 'unten Rechts',
     'cookieConsentPosBottom' => 'am Seitenende',
+    'cookieConsentLocale' => 'Sprache',
+    'cookieConsentDesc' => 'Beschreibung',
     'cookieConsentText' => 'Richtlinien',
 ];

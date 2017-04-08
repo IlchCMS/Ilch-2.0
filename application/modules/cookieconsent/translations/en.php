@@ -22,5 +22,7 @@ return [
     'cookieConsentPosFloatingLeft' => 'Bottom left',
     'cookieConsentPosFloatingRight' => 'Bottom right',
     'cookieConsentPosBottom' => 'Bottom',
+    'cookieConsentLocale' => 'Locale',
+    'cookieConsentDesc' => 'Description',
     'cookieConsentText' => 'Consent',
 ];
