@@ -1,14 +1,4 @@
 <h1><?=$this->getTrans('newPassword'); ?></h1>
-<?php if ($this->validation()->hasErrors()): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-        <ul>
-            <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                <li><?= $error; ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
 <form action="" class="form-horizontal" method="POST">
     <?=$this->getTokenField(); ?>
     <div class="form-group <?=$this->validation()->hasError('password') ? 'has-error' : '' ?>">

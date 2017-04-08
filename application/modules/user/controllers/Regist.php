@@ -30,12 +30,13 @@ class Regist extends \Ilch\Controller\Frontend
                 if ($validation->isValid()) {
                     $this->redirect()
                         ->to(['action' => 'input']);
+                } else {
+                    $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                    $this->redirect()
+                        ->withInput()
+                        ->withErrors($validation->getErrorBag())
+                        ->to(['action' => 'index']);
                 }
-
-                $this->redirect()
-                    ->withInput()
-                    ->withErrors($validation->getErrorBag())
-                    ->to(['action' => 'index']);
             } else {
                 $this->getView()->set('regist_rules', $this->getConfig()->get('regist_rules'))
                     ->set('regist_accept', $this->getConfig()->get('regist_accept'));
@@ -130,12 +131,13 @@ class Regist extends \Ilch\Controller\Frontend
 
                 $this->redirect()
                     ->to(['action' => 'finish']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'input']);
             }
-
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'input']);
         }
     }
 

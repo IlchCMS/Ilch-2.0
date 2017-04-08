@@ -139,6 +139,7 @@ class Login extends \Ilch\Controller\Frontend
                             ->withMessage('newPasswordSuccess')
                             ->to(['action' => 'index']);
                     } else {
+                        $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
                         $this->redirect()
                             ->withErrors($validation->getErrorBag())
                             ->to(['action' => 'newpassword', 'selector' => $selector, 'code' => $confirmedCode]);

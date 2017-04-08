@@ -119,12 +119,13 @@ class Panel extends BaseController
                 }
 
                 $this->redirect(['action' => 'profile']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput($post)
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'profile']);
             }
-
-            $this->redirect()
-                ->withInput($post)
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'profile']);
         }
     }
 
@@ -264,11 +265,12 @@ class Panel extends BaseController
                 $this->redirect()
                     ->withMessage('passwordSuccess')
                     ->to(['action' => 'password']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'password']);
             }
-
-            $this->redirect()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'password']);
         }
     }
 
@@ -295,12 +297,13 @@ class Panel extends BaseController
                 $this->redirect()
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'setting']);
+            } else {
+                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withInput()
+                    ->withErrors($validation->getErrorBag())
+                    ->to(['action' => 'setting']);
             }
-
-            $this->redirect()
-                ->withInput()
-                ->withErrors($validation->getErrorBag())
-                ->to(['action' => 'setting']);
         }
 
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());

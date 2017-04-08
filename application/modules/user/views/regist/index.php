@@ -1,19 +1,5 @@
 <?php if ($this->get('regist_accept') == '1'): ?>
     <?php include APPLICATION_PATH.'/modules/user/views/regist/navi.php'; ?>
-
-    <!-- Fehlerausgabe der Validation -->
-    <?php if ($this->validation()->hasErrors()): ?>
-        <div class="alert alert-danger" role="alert">
-            <strong> <?=$this->getTrans('errorsOccured') ?>:</strong>
-            <ul>
-                <?php foreach ($this->validation()->getErrorMessages() as $error): ?>
-                    <li><?= $error; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
-    <!-- Ende Fehlerausgabe der Validation -->
-
     <form class="form-horizontal" method="POST" action="">
         <?=$this->getTokenField() ?>
         <div class="panel panel-default">
