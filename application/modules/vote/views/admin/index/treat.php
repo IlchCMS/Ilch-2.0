@@ -13,7 +13,7 @@
                     class="form-control">
                 <option value="0" <?=($vote != '' AND $this->escape($vote->getGroup()) == 0) ? 'selected="selected"' : '' ?>>
                     <?=$this->getTrans('groupAll') ?>
-                </option>                
+                </option>
                 <?php foreach($this->get('groups') as $group): ?>
                     <option value="<?=$group->getId() ?>" <?=($vote != '' AND $this->escape($vote->getGroup()) == $group->getId()) ? 'selected="selected"' : '' ?>>
                         <?=$this->escape($group->getName()) ?>
@@ -22,20 +22,21 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('question') ? 'has-error' : '' ?>">
         <label for="question" class="col-lg-2 control-label">
             <?=$this->getTrans('question') ?>:
         </label>
         <div class="col-lg-4">
-            <input class="form-control" 
-                   type="text" 
-                   name="question" 
+            <input class="form-control"
+                   type="text"
+                   id="question"
+                   name="question"
                    value="<?php if ($vote != '') { echo $this->escape($vote->getQuestion()); } ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group <?=$this->validation()->hasError('reply') ? 'has-error' : '' ?>">
         <label for="reply" class="col-lg-2 control-label">
-            <?=$this->getTrans('reply') ?>:
+            <?=$this->getTrans('reply') ?>
         </label>
         <?php if ($vote != ''): ?>
             <?php $resultMapper = new \Modules\Vote\Mappers\Result(); ?>
@@ -57,7 +58,7 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-        <?php else: ?>        
+        <?php else: ?>
             <div class="col-lg-4">
                 <div class="form-group input-group">
                     <input type="text" name="reply[]" class="form-control">
