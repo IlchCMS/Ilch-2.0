@@ -1,6 +1,7 @@
 <?php
 $logsMapper = $this->get('logsMapper');
 $userMapper = $this->get('userMapper');
+$userCache = [];
 ?>
 
 <h1><?=$this->getTrans('logs') ?></h1>
@@ -26,7 +27,13 @@ $userMapper = $this->get('userMapper');
                 <?php $logs = $logsMapper->getLogs($logDate->getDate()); ?>
                 <?php foreach ($logs as $log): ?>
                     <?php $time = new \Ilch\Date($log->getDate()); ?>
-                    <?php $user = $userMapper->getUserById($log->getUserId()) ?>
+                    <?php if (array_key_exists($log->getUserId(), $userCache)) {
+                        $user = $userCache[$log->getUserId()];
+                    } else {
+                        $userCache[$log->getUserId()] = $userMapper->getUserById($log->getUserId());
+                        $user = $userCache[$log->getUserId()];
+                    }
+                    ?>
                     <tr>
                         <td><?=$time->format("H:i:s"); ?></td>
                         <td>
