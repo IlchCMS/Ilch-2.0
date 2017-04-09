@@ -13,7 +13,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 ?>
 
 <link href="<?=$this->getBoxUrl('static/css/vote.css') ?>" rel="stylesheet">
-<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <?php if ($vote != '' ):
     $userId = null;
@@ -51,7 +51,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                                             <?php $result = $resultMapper->getResultByIdAndReply($groupVote->getId(), $voteRes->getReply()); ?>
                                             <?php $totalResult = $resultMapper->getResultById($groupVote->getId()); ?>
                                             <?php if ($result != 0 AND $totalResult != 0): ?>
-                                                <?php $percent = $resultMapper->getPercent($result, $totalResult); ?>>
+                                                <?php $percent = $resultMapper->getPercent($result, $totalResult); ?>
                                             <?php else: ?>
                                                 <?php $percent = 0; ?>
                                             <?php endif; ?>
@@ -103,8 +103,8 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     <?=$this->getTrans('noVote') ?>
 <?php endif; ?>
 
-<script type="text/javascript" src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
-<script type="text/javascript">
+<script src="<?=$this->getStaticUrl('js/bootstrap-progressbar.js') ?>"></script>
+<script>
 $(document).ready(function() {
     $('.progress .progress-bar').progressbar();
 });
