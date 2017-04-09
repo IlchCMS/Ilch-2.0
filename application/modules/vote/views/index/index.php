@@ -12,7 +12,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 }
 ?>
 
-<link href="<?=$this->getBoxUrl('static/css/vote.css') ?>" rel="stylesheet">
+<link href="<?=$this->getModuleUrl('static/css/vote.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <h1><?=$this->getTrans('menuVote') ?></h1>
