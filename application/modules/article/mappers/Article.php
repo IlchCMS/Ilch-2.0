@@ -22,9 +22,9 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
                 ->fields(['p.id', 'p.cat_id', 'p.date_created'])
                 ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.sub_title', 'pc.perma', 'pc.img', 'pc.img_source'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.sub_title', 'pc.perma', 'pc.img', 'pc.img_source'])
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source'])
                 ->order(['date_created' => 'DESC']);
 
         if ($pagination !== null) {
@@ -52,7 +52,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setDescription($articleRow['description']);
             $articleModel->setKeywords($articleRow['keywords']);
             $articleModel->setTitle($articleRow['title']);
-            $articleModel->setSubTitle($articleRow['sub_title']);
+            $articleModel->setTeaser($articleRow['teaser']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
@@ -74,7 +74,7 @@ class Article extends \Ilch\Mapper
      */
     public function getArticlesByCats($catId, $locale = '', $pagination = null)
     {
-        $select = 'SELECT p.id, p.cat_id, p.date_created, pc.visits, pc.author_id, pc.description, pc.keywords, pc.title, pc.sub_title, pc.perma, pc.content, pc.img, pc.img_source
+        $select = 'SELECT p.id, p.cat_id, p.date_created, pc.visits, pc.author_id, pc.description, pc.keywords, pc.title, pc.teaser, pc.perma, pc.content, pc.img, pc.img_source
                 FROM `[prefix]_articles` AS p
                 LEFT JOIN `[prefix]_articles_content` AS pc ON p.id = pc.article_id
                 WHERE p.cat_id LIKE "%'.$catId.'%" AND pc.locale = "'.$this->db()->escape($locale).'"
@@ -96,7 +96,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setDescription($articleRow['description']);
             $articleModel->setKeywords($articleRow['keywords']);
             $articleModel->setTitle($articleRow['title']);
-            $articleModel->setSubTitle($articleRow['sub_title']);
+            $articleModel->setTeaser($articleRow['teaser']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
@@ -128,7 +128,7 @@ class Article extends \Ilch\Mapper
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', [])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo])
-            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.sub_title', 'pc.perma', 'pc.img', 'pc.img_source']);
+            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source']);
 
         $result = $select->execute();
         $articleArray = $result->fetchRows();
@@ -147,7 +147,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setDescription($articleRow['description']);
             $articleModel->setKeywords($articleRow['keywords']);
             $articleModel->setTitle($articleRow['title']);
-            $articleModel->setSubTitle($articleRow['sub_title']);
+            $articleModel->setTeaser($articleRow['teaser']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
@@ -240,10 +240,10 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
                 ->fields(['p.id', 'p.cat_id', 'p.date_created'])
                 ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.sub_title', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source'])
                 ->join(['m' => 'media'], 'pc.img = m.url', 'LEFT', ['m.url_thumb', 'm.url'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.sub_title', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'm.url_thumb', 'm.url'])
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source', 'm.url_thumb', 'm.url'])
                 ->order(['date_created' => 'DESC']);
 
         if ($limit !== null) {
@@ -265,7 +265,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setVisits($articleRow['visits']);
             $articleModel->setKeywords($articleRow['keywords']);
             $articleModel->setTitle($articleRow['title']);
-            $articleModel->setSubTitle($articleRow['sub_title']);
+            $articleModel->setTeaser($articleRow['teaser']);
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->seImage($articleRow['img']);
             $articleModel->setImageThumb($articleRow['url_thumb']);
@@ -288,7 +288,7 @@ class Article extends \Ilch\Mapper
         $select = $this->db()->select()
                 ->fields(['p.id', 'p.cat_id', 'p.date_created'])
                 ->from(['p' => 'articles'])
-                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.sub_title', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source'])
+                ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source'])
                 ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)]);
 
         $result = $select->execute();
@@ -306,7 +306,7 @@ class Article extends \Ilch\Mapper
         $articleModel->setDescription($articleRow['description']);
         $articleModel->setKeywords($articleRow['keywords']);
         $articleModel->setTitle($articleRow['title']);
-        $articleModel->setSubTitle($articleRow['sub_title']);
+        $articleModel->setTeaser($articleRow['teaser']);
         $articleModel->setContent($articleRow['content']);
         $articleModel->setLocale($articleRow['locale']);
         $articleModel->setPerma($articleRow['perma']);
@@ -403,7 +403,7 @@ class Article extends \Ilch\Mapper
                     (
                         [
                             'title' => $article->getTitle(),
-                            'sub_title' => $article->getSubTitle(),
+                            'teaser' => $article->getTeaser(),
                             'description' => $article->getDescription(),
                             'keywords' => $article->getKeywords(),
                             'content' => $article->getContent(),
@@ -430,7 +430,7 @@ class Article extends \Ilch\Mapper
                             'description' => $article->getDescription(),
                             'keywords' => $article->getKeywords(),
                             'title' => $article->getTitle(),
-                            'sub_title' => $article->getSubTitle(),
+                            'teaser' => $article->getTeaser(),
                             'content' => $article->getContent(),
                             'perma' => $article->getPerma(),
                             'locale' => $article->getLocale(),
@@ -461,7 +461,7 @@ class Article extends \Ilch\Mapper
                         'description' => $article->getDescription(),
                         'keywords' => $article->getKeywords(),
                         'title' => $article->getTitle(),
-                        'sub_title' => $article->getSubTitle(),
+                        'teaser' => $article->getTeaser(),
                         'content' => $article->getContent(),
                         'perma' => $article->getPerma(),
                         'locale' => $article->getLocale(),

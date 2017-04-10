@@ -96,7 +96,7 @@ class Config extends \Ilch\Config\Install
                   `keywords` VARCHAR(255) NOT NULL,
                   `locale` VARCHAR(255) NOT NULL,
                   `title` VARCHAR(255) NOT NULL,
-                  `sub_title` VARCHAR(255) NOT NULL,
+                  `teaser` VARCHAR(255) NOT NULL,
                   `perma` VARCHAR(255) NOT NULL,
                   `img` VARCHAR(255) NOT NULL,
                   `img_source` VARCHAR(255) NOT NULL
@@ -106,7 +106,7 @@ class Config extends \Ilch\Config\Install
 
                 INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");
 
-                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `title`, `sub_title`, `content`, `keywords`, `perma`) VALUES
+                INSERT INTO `[prefix]_articles_content` (`article_id`, `author_id`, `title`, `teaser`, `content`, `keywords`, `perma`) VALUES
                 (1, 1, "Willkommen", "Willkommen beim Ilch CMS!", "<p>Dies ist dein erster Artikel mit dem Ilch - Content Management System</p><p>Bei Fragen oder Probleme im <a href=\"http://www.ilch.de/forum.html\">Ilch Forum</a>&nbsp;melden.</p><p>Viel Erfolg<br />Ilch</p>", "willkommen, ilch, cms, news", "willkommen.html");';
     }
 

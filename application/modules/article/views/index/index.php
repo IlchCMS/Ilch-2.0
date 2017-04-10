@@ -5,6 +5,7 @@ $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
 ?>
 
+<h1><?=$this->getTrans('menuArticle') ?></h1>
 <?php if ($articles != ''):
     foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());
@@ -19,10 +20,10 @@ $userMapper = $this->get('userMapper');
             $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
         }
     ?>
-        <h2><a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
-        <?php if ($article->getSubTitle()): ?>
-            <h3><?=$this->escape($article->getSubTitle()) ?></h3>
+        <?php if ($article->getTeaser()): ?>
+            <h3><?=$this->escape($article->getTeaser()) ?></h3>
         <?php endif; ?>
+        <h2><a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
         <?php if (!empty($image)): ?>
             <figure>
                 <img class="article_image" src="<?=$this->getBaseUrl($image) ?>">

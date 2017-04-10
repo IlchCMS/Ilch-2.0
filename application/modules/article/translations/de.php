@@ -8,7 +8,7 @@ return [
     'menuArticle' => 'Artikel',
     'menuArchives' => 'Archiv',
     'title' => 'Titel',
-    'subTitle' => 'Sub-Titel',
+    'teaser' => 'Teaser',
     'content' => 'Inhalt',
     'language' => 'Sprache',
     'permaLink' => 'Permalink',

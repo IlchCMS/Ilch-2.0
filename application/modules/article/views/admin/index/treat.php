@@ -8,6 +8,18 @@ if ($this->get('article') != '') {
 <h1><?=($this->get('article') != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form id="article_form" class="form-horizontal" method="POST" action="">
     <?=$this->getTokenField(); ?>
+    <div class="form-group <?=$this->validation()->hasError('teaser') ? 'has-error' : '' ?>">
+        <label for="teaser" class="col-lg-2 control-label">
+            <?=$this->getTrans('teaser') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input type="text"
+                   class="form-control"
+                   id="teaser"
+                   name="teaser"
+                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTeaser()) : $this->originalInput('teaser') ?>" />
+        </div>
+    </div>
     <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
         <label for="title" class="col-lg-2 control-label">
             <?=$this->getTrans('title') ?>:
@@ -18,18 +30,6 @@ if ($this->get('article') != '') {
                    id="title"
                    name="title"
                    value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getTitle()) : $this->originalInput('title') ?>" />
-        </div>
-    </div>
-    <div class="form-group <?=$this->validation()->hasError('subTitle') ? 'has-error' : '' ?>">
-        <label for="subTitle" class="col-lg-2 control-label">
-            <?=$this->getTrans('subTitle') ?>:
-        </label>
-        <div class="col-lg-4">
-            <input type="text"
-                   class="form-control"
-                   id="subTitle"
-                   name="subTitle"
-                   value="<?=($this->get('article') != '') ? $this->escape($this->get('article')->getSubTitle()) : $this->originalInput('subTitle') ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('cats') ? 'has-error' : '' ?>">

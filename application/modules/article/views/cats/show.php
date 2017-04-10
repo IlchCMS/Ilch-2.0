@@ -21,10 +21,10 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
             $categories .= '<a href="'.$this->getUrl(['controller' => 'cats', 'action' => 'show', 'id' => $catId]).'">'.$articlesCats->getName().'</a>, ';
         }
     ?>
-        <h2><a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
-        <?php if ($article->getSubTitle()): ?>
-            <h3><?=$this->escape($article->getSubTitle()) ?></h3>
+        <?php if ($article->getTeaser()): ?>
+            <h3><?=$this->escape($article->getTeaser()) ?></h3>
         <?php endif; ?>
+        <h2><a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
         <?php if (!empty($image)): ?>
             <figure>
                 <img class="article_image" src="<?=$this->getBaseUrl($image) ?>">

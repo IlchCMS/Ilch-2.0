@@ -107,7 +107,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $articleModel = new ArticleModel();
             $articleModel->setTitle($this->getRequest()->getPost('title'))
-                ->setSubTitle($this->getRequest()->getPost('subTitle'))
+                ->setTeaser($this->getRequest()->getPost('teaser'))
                 ->setCatId($catIds)
                 ->setKeywords($this->getRequest()->getPost('keywords'))
                 ->setContent($this->getRequest()->getPost('content'))

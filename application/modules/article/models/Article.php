@@ -51,11 +51,11 @@ class Article extends \Ilch\Model
     protected $title;
 
     /**
-     * The sub title of the article.
+     * The teaser of the article.
      *
      * @var string
      */
-    protected $subTitle;
+    protected $teaser;
 
     /**
      * The content of the article.
@@ -252,24 +252,24 @@ class Article extends \Ilch\Model
     }
 
     /**
-     * Gets the article sub title.
+     * Gets the article teaser.
      *
      * @return string
      */
-    public function getSubTitle()
+    public function getTeaser()
     {
-        return $this->subTitle;
+        return $this->teaser;
     }
 
     /**
-     * Sets the article sub title.
+     * Sets the article teaser.
      *
-     * @param string $subTitle
+     * @param string $teaser
      * @return $this
      */
-    public function setSubTitle($subTitle)
+    public function setTeaser($teaser)
     {
-        $this->subTitle = (string) $subTitle;
+        $this->teaser = (string)$teaser;
 
         return $this;
     }
