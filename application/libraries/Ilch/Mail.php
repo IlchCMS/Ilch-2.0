@@ -205,7 +205,7 @@ class Mail
     /**
      * @return string
      */
-    public function getType(): string
+    public function getType()
     {
         return $this->type;
     }
