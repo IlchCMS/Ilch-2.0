@@ -9,7 +9,7 @@
             <div class="flipswitch">
                 <input type="radio" class="flipswitch-input" name="smtp_mode" value="1" id="navbarFixed-on" <?php if ($this->get('smtp_mode') == '1') { echo 'checked="checked"'; } ?> />
                 <label for="navbarFixed-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('on') ?></label>
-                <input type="radio" class="flipswitch-input" name="smtp_mode" value="0" id="navbarFixed-off" <?php if ($this->get('smtp_mode') == '0') { echo 'checked="checked"'; } ?> />
+                <input type="radio" class="flipswitch-input" name="smtp_mode" value="0" id="navbarFixed-off" <?php if ($this->get('smtp_mode') == '0' || empty($this->get('smtp_mode'))) { echo 'checked="checked"'; } ?> />
                 <label for="navbarFixed-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('off') ?></label>
                 <span class="flipswitch-selection"></span>
             </div>
