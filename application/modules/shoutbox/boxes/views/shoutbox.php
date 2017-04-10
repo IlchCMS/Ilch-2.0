@@ -1,3 +1,19 @@
+<?php
+$shoutboxMapper = $this->get('shoutboxMapper');
+$groupMapper = $this->get('groupMapper');
+$groupList = explode(',', $this->get('writeAccess'));
+$accessList = [];
+foreach ($groupList AS $groupId) {
+    $accessList[] = $groupMapper->getUsersForGroup($groupId);
+}
+if ($this->getUser()) {
+    $userId = $this->getUser()->getId();
+} else {
+    $userId = 0;
+}
+$searchAccess = $shoutboxMapper->searchInArray($userId, $accessList);
+?>
+
 <script >
 $(function() {
     var $shoutboxContainer = $('#shoutbox-container'),
@@ -60,9 +76,11 @@ $(function() {
     <div id="shoutbox-button-container" class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-12">
-                <div class="pull-left">
-                    <button class="btn" id="shoutbox-slide-down"><?=$this->getTrans('answer') ?></button>
-                </div>
+                <?php if (empty($this->get('writeAccess')) OR $searchAccess): ?>
+                    <div class="pull-left">
+                        <button class="btn" id="shoutbox-slide-down"><?=$this->getTrans('answer') ?></button>
+                    </div>
+                <?php endif; ?>
                 <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
                     <div class="pull-right">
                         <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
@@ -72,87 +90,95 @@ $(function() {
         </div>
     </div>
 
-    <div id="shoutbox-form-container" style="display: none;">
-        <form class="form-horizontal" action="" method="post">
-           <?=$this->getTokenField() ?>
-            <div class="form-group hidden">
-                <label class="col-lg-2 control-label">
-                    <?=$this->getTrans('bot') ?>
-                </label>
-                <div class="col-lg-8">
-                    <input type="text"
-                           class="form-control"
-                           name="bot"
-                           placeholder="Bot" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <input type="text"
-                           class="form-control"
-                           name="shoutbox_name"
-                           placeholder="Name"
-                           value="<?=($this->getUser() !== null) ? $this->escape($this->getUser()->getName()) : '' ?>"
-                           <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <textarea class="form-control"
-                              style="resize: vertical"
-                              name="shoutbox_textarea"
-                              cols="10"
-                              rows="5"
-                              maxlength="<?=$config->get('shoutbox_maxtextlength') ?>"
-                              placeholder="<?=$this->getTrans('message') ?>"
-                              required></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-12">
-                    <div class="pull-left">
-                        <button type="submit" class="btn" name="form_<?=$this->get('uniqid') ?>">
-                            <?=$this->getTrans('answer') ?>
-                        </button>
+    <?php if (empty($this->get('writeAccess')) OR $searchAccess): ?>
+        <div id="shoutbox-form-container" style="display: none;">
+            <form class="form-horizontal" action="" method="post">
+               <?=$this->getTokenField() ?>
+                <div class="form-group hidden">
+                    <label class="col-lg-2 control-label">
+                        <?=$this->getTrans('bot') ?>
+                    </label>
+                    <div class="col-lg-8">
+                        <input type="text"
+                               class="form-control"
+                               name="bot"
+                               placeholder="Bot" />
                     </div>
-                    <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
-                        <div class="pull-right">
-                            <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
-                        </div>
-                    <?php endif; ?>
                 </div>
-            </div>
-        </form>
-    </div>
-
-    <?php if ($this->get('shoutbox') != ''): ?>
-        <table class="table table-bordered table-striped table-responsive">
-            <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
-                <?php $userMapper = new \Modules\User\Mappers\User() ?>
-                <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
-                <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
-                <tr>
-                    <?php if ($shoutbox->getUid() == '0'): ?>
-                        <td>
-                            <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
-                            <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
-                        </td>
-                    <?php else: ?>
-                        <td>
-                            <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
-                            <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
-                        </td>
-                    <?php endif; ?>
-                </tr>
-                <tr>
-                    <?php
-                    /*
-                     * @todo should fix this regex.
-                     */
-                    ?>
-                    <td><?=preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
+                <div class="form-group <?=$this->validation()->hasError('shoutbox_name') ? 'has-error' : '' ?>">
+                    <div class="col-lg-12">
+                        <input type="text"
+                               class="form-control"
+                               name="shoutbox_name"
+                               placeholder="Name"
+                               value="<?=($this->getUser() !== null) ? $this->escape($this->getUser()->getName()) : '' ?>"
+                               <?=($this->getUser() !== null) ? 'readonly' : 'required' ?> />
+                    </div>
+                </div>
+                <div class="form-group <?=$this->validation()->hasError('shoutbox_textarea') ? 'has-error' : '' ?>">
+                    <div class="col-lg-12">
+                        <textarea class="form-control"
+                                  style="resize: vertical"
+                                  name="shoutbox_textarea"
+                                  cols="10"
+                                  rows="5"
+                                  maxlength="<?=$config->get('shoutbox_maxtextlength') ?>"
+                                  placeholder="<?=$this->getTrans('message') ?>"
+                                  required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <div class="pull-left">
+                            <button type="submit" class="btn" name="form_<?=$this->get('uniqid') ?>">
+                                <?=$this->getTrans('answer') ?>
+                            </button>
+                        </div>
+                        <?php if (count($this->get('shoutbox')) == $config->get('shoutbox_limit')): ?>
+                            <div class="pull-right">
+                                <a href="<?=$this->getUrl('shoutbox/index/index/') ?>" class="btn btn-default"><?=$this->getTrans('archive') ?></a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </form>
+        </div>
     <?php endif; ?>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <?php if ($this->get('shoutbox') != ''): ?>
+                <?php foreach ($this->get('shoutbox') as $shoutbox): ?>
+                    <?php $userMapper = new \Modules\User\Mappers\User() ?>
+                    <?php $user = $userMapper->getUserById($shoutbox->getUid()) ?>
+                    <?php $date = new \Ilch\Date($shoutbox->getTime()) ?>
+                    <tr>
+                        <?php if ($shoutbox->getUid() == '0'): ?>
+                            <td>
+                                <b><?=$this->escape($shoutbox->getName()) ?>:</b><br />
+                                <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                            </td>
+                        <?php else: ?>
+                            <td>
+                                <b><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a></b>:<br />
+                                <span class="small"><?=$date->format("d.m.Y H:i", true) ?></span>
+                            </td>
+                        <?php endif; ?>
+                    </tr>
+                    <tr>
+                        <?php
+                        /*
+                         * @todo should fix this regex.
+                         */
+                        ?>
+                        <td><?=preg_replace('/([^\s]{' . $this->get('maxwordlength') . '})(?=[^\s])/', "$1\n", $this->escape($shoutbox->getTextarea())) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td><?=$this->getTrans('noEntrys') ?></td>
+                </tr>
+            <?php endif; ?>
+        </table>
+    </div>
 </div>

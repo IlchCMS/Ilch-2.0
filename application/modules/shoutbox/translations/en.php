@@ -17,6 +17,7 @@ return [
     'maximumTextLength' => 'Maximum text length',
     'settings' => 'Settings',
     'answer' => 'Answer',
+    'writeAccess' => 'Write access',
     'missingName' => 'Please enter a name.',
     'missingMessage' => 'Please enter the message.',
 ];

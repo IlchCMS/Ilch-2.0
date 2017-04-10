@@ -43,28 +43,29 @@ class Config extends \Ilch\Config\Install
         $this->db()->queryMulti($this->getInstallSql());
 
         $databaseConfig = new \Ilch\Config\Database($this->db());
-        $databaseConfig->set('shoutbox_limit', '5');
-        $databaseConfig->set('shoutbox_maxwordlength', '10');
-        $databaseConfig->set('shoutbox_maxtextlength', '50');
+        $databaseConfig->set('shoutbox_limit', '5')
+            ->set('shoutbox_maxwordlength', '10')
+            ->set('shoutbox_maxtextlength', '50');
     }
 
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_shoutbox`');
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_limit'");
-        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_maxwordlength'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_limit';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_maxwordlength';
+            DELETE FROM `[prefix]_config` WHERE `key` = 'shoutbox_writeaccess'");
     }
 
     public function getInstallSql()
     {
         return 'CREATE TABLE IF NOT EXISTS `[prefix]_shoutbox` (
-                  `id` INT(11) NOT NULL AUTO_INCREMENT,
-                  `user_id` INT(11) NOT NULL,
-                  `name` VARCHAR(100) NOT NULL,
-                  `textarea` MEDIUMTEXT NOT NULL,
-                  `time` DATETIME NOT NULL,
-                  PRIMARY KEY (`id`)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `user_id` INT(11) NOT NULL,
+            `name` VARCHAR(100) NOT NULL,
+            `textarea` MEDIUMTEXT NOT NULL,
+            `time` DATETIME NOT NULL,
+            PRIMARY KEY (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
 
     public function getUpdate($installedVersion)

@@ -87,6 +87,18 @@ class Shoutbox extends \Ilch\Mapper
     }
 
     /**
+     * Search in array.
+     *
+     * @param string $item
+     * @param string $array
+     *
+     * @return int
+     */
+    public function searchInArray($item , $array){
+        return preg_match('/"'.$item.'"/i', json_encode($array));
+    }
+
+    /**
      * Insert shoutbox model.
      *
      * @param ShoutboxModel $shoutbox
