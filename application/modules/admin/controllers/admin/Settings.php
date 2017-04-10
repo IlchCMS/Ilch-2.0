@@ -58,6 +58,12 @@ class Settings extends \Ilch\Controller\Admin
                 'active' => false,
                 'icon' => 'fa fa-envelope',
                 'url' => $this->getLayout()->getUrl(['controller' => 'emails', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuMail',
+                'active' => false,
+                'icon' => 'fa fa-newspaper-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'mail'])
             ]
         ];
 
@@ -71,6 +77,8 @@ class Settings extends \Ilch\Controller\Admin
             $items[4]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'notifications') {
             $items[5]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'mail') {
+            $items[7]['active'] = true;
         } else {
             $items[0]['active'] = true; 
         }
@@ -329,5 +337,27 @@ HTACCESS;
         }
 
         $this->redirect(['action' => 'notifications']);
+    }
+
+    public function mailAction()
+    {
+        $this->getLayout()->getAdminHmenu()
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuMail'), ['action' => 'mail']);
+
+        if ($this->getRequest()->isPost()) {
+            $this->getConfig()->set('smtp_mode', $this->getRequest()->getPost('smtp_mode'));
+            $this->getConfig()->set('smtp_server', $this->getRequest()->getPost('smtp_server'));
+            $this->getConfig()->set('smtp_port', $this->getRequest()->getPost('smtp_port'));
+            $this->getConfig()->set('smtp_secure', $this->getRequest()->getPost('smtp_secure'));
+            $this->getConfig()->set('smtp_user', $this->getRequest()->getPost('smtp_user'));
+            $this->getConfig()->set('smtp_pass', $this->getRequest()->getPost('smtp_pass'));
+        }
+        $this->getView()->set('smtp_mode', $this->getConfig()->get('smtp_mode'));
+        $this->getView()->set('smtp_server', $this->getConfig()->get('smtp_server'));
+        $this->getView()->set('smtp_port', $this->getConfig()->get('smtp_port'));
+        $this->getView()->set('smtp_secure', $this->getConfig()->get('smtp_secure'));
+        $this->getView()->set('smtp_user', $this->getConfig()->get('smtp_user'));
+        $this->getView()->set('smtp_pass', $this->getConfig()->get('smtp_pass'));
     }
 }

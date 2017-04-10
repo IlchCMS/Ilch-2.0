@@ -37,6 +37,13 @@ $directories = [
             'jbbcode/.gitignore',
         ]
     ],
+    'phpmailer'     => [
+        'remove' => [
+            'phpmailer/application/libraries/docs',
+            'phpmailer/application/libraries/examples',
+            'phpmailer/application/libraries/test',
+        ]
+    ],
     'kartik-v'    => [
         'keep' => [
             'bootstrap-star-rating/css/star-rating.min.css',

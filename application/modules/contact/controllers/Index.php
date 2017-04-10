@@ -37,15 +37,42 @@ class Index extends \Ilch\Controller\Frontend
             if ($validation->isValid()) {
                 $receiver = $receiverMapper->getReceiverById($this->getRequest()->getPost('receiver'));
                 $subject = $this->getTranslator()->trans('contactWebsite').' | '.$this->getConfig()->get('page_title');
+                $content = $this->getRequest()->getPost('message');
+                $date = new \Ilch\Date();
+                $senderMail = $this->getRequest()->getPost('senderEmail');
+                $senderName = $this->getRequest()->getPost('senderName');
+
+                if ($_SESSION['layout'] == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/contact/layouts/mail/contact.php')) {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/contact/layouts/mail/contact.php');
+                } else {
+                    $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/contact/layouts/mail/contact.php');
+                }
+
+
+                $messageReplace = [
+                    '{subject}' => $subject,
+                    '{content}' => $content,
+                    '{sitetitle}' => $this->getConfig()->get('page_title'),
+                    '{date}' => $date->format("l, d. F Y", true),
+                    '{senderMail}' => $senderMail,
+                    '{senderName}' => $senderName,
+                    '{from}' => $this->getTranslator()->trans('from'),
+                    '{writes}' => $this->getTranslator()->trans('writes'),
+                    '{writeBackLink}' => $this->getTranslator()->trans('writeBackLink'),
+                    '{replay}' => $this->getTranslator()->trans('replay'),
+                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
+
+                ];
+                $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $mail = new \Ilch\Mail();
-                $mail->setTo($receiver->getEmail(),$receiver->getName())
+                $mail->setFromName($this->getConfig()->get('page_title'))
+                    ->setFromEmail($this->getConfig()->get('standardMail'))
+                    ->setToName($receiver->getName())
+                    ->setToEmail($receiver->getEmail())
                     ->setSubject($subject)
-                    ->setFrom($this->getRequest()->getPost('senderEmail'), $this->getRequest()->getPost('senderName'))
-                    ->setMessage($this->getRequest()->getPost('message'))
-                    ->addGeneralHeader('Content-Type', 'text/plain; charset="utf-8"');
-                $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-                $mail->send();
+                    ->setMessage($message)
+                    ->sent();
 
                 $this->redirect()
                     ->withMessage('sendSuccess')

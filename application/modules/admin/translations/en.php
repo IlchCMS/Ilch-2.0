@@ -323,4 +323,12 @@ return [
     'emailDesc' => 'Description',
     'emailLocale' => 'Language',
     'emailText' => 'Text',
+
+    'menuMail' => 'Mail settings',
+    'smtpMode' => 'SMTP-Mode',
+    'smtp_server' => 'SMTP-Server-Adress',
+    'smtp_port' => 'SMTP-Port (optional default = 25)',
+    'smtp_secure' => 'Encryption',
+    'smtp_user' => 'Login',
+    'smtp_pass' => 'Password',
 ];

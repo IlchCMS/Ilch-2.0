@@ -6,79 +6,177 @@
 
 namespace Ilch;
 
-/**
- * Ilch/Mail class.
- */
 class Mail
 {
     /**
-     * @var array $to
+     * @var
      */
-    protected $to = [];
+    protected $fromName;
 
     /**
-     * @var string $subject
+     * @var
+     */
+    protected $fromEmail;
+
+    /**
+     * @var
+     */
+    protected $toName;
+
+    /**
+     * @var
+     */
+    protected $toEmail;
+
+    /**
+     * @var
+     */
+    protected $ccEmail;
+
+    /**
+     * @var
+     */
+    protected $bccEmail;
+
+    /**
+     * @var
      */
     protected $subject;
 
     /**
-     * @var string $message
+     * @var
      */
     protected $message;
 
     /**
-     * @var array $headers
+     * @var string
      */
-    protected $headers = [];
+    protected $type;
 
-    /**
-     * @var string $params
-     */
-    protected $params;
-
-    /**
-     * __construct
-     */
-    public function __construct()
+    public function PHPMailer()
     {
-        $this->reset();
+        return new \PHPMailer();
     }
 
     /**
-     * Resets
+     * @return mixed
      */
-    public function reset()
+    public function getFromName()
     {
-        $this->to = [];
-        $this->headers = [];
-        $this->subject = null;
-        $this->message = null;
-        $this->params = null;
+        return $this->fromName;
+    }
+
+    /**
+     * @param mixed $fromName
+     * @return $this
+     */
+    public function setFromName($fromName)
+    {
+        $this->fromName = $fromName;
         return $this;
     }
 
     /**
-     * @param string $email
-     * @param string $name
+     * @return mixed
      */
-    public function setTo($email, $name = null)
+    public function getFromEmail()
     {
-        $this->to[] = $this->formatHeader((string) $email, (string) $name);
+        return $this->fromEmail;
+    }
+
+    /**
+     * @param mixed $fromEmail
+     * @return $this
+     */
+    public function setFromEmail($fromEmail)
+    {
+        $this->fromEmail = $fromEmail;
         return $this;
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getTo()
+    public function getToName()
     {
-        return $this->to;
+        return $this->toName;
     }
 
     /**
-     * @param string $subject
-     *
-     * @return string Subject
+     * @param mixed $toName
+     * @return $this
+     */
+    public function setToName($toName)
+    {
+        $this->toName = $toName;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToEmail()
+    {
+        return $this->toEmail;
+    }
+
+    /**
+     * @param mixed $toEmail
+     * @return $this
+     */
+    public function setToEmail($toEmail)
+    {
+        $this->toEmail = $toEmail;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCcEmail()
+    {
+        return $this->ccEmail;
+    }
+
+    /**
+     * @param mixed $ccEmail
+     * @return $this
+     */
+    public function setCcEmail($ccEmail)
+    {
+        $this->ccEmail = $ccEmail;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBccEmail()
+    {
+        return $this->bccEmail;
+    }
+
+    /**
+     * @param mixed $bccEmail
+     * @return $this
+     */
+    public function setBccEmail($bccEmail)
+    {
+        $this->bccEmail = $bccEmail;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * @param mixed $subject
+     * @return $this
      */
     public function setSubject($subject)
     {
@@ -87,26 +185,7 @@ class Mail
     }
 
     /**
-     * @return string
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return $this
-     */
-    public function setMessage($message)
-    {
-        $this->message = str_replace("\n.", "\n..", (string) $message);
-        return $this;
-    }
-
-    /**
-     * @return string
+     * @return mixed
      */
     public function getMessage()
     {
@@ -114,119 +193,114 @@ class Mail
     }
 
     /**
-     * @param string $email
-     * @param string $name
-     *
+     * @param mixed $message
      * @return $this
      */
-    public function setFrom($email, $name)
+    public function setMessage($message)
     {
-        $this->addMailHeader('From', (string) $email, (string) $name);
+        $this->message = $message;
         return $this;
     }
 
     /**
-     * @param string $header
-     * @param string $email
-     * @param string $name
-     *
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
      * @return $this
      */
-    public function addMailHeader($header, $email = null, $name = null)
+    public function setType(string $type)
     {
-        $address = $this->formatHeader((string) $email, (string) $name);
-        $this->headers[] = sprintf('%s: %s', (string) $header, $address);
+        $this->type = $type;
         return $this;
     }
 
-    /**
-     * @param string $header
-     * @param mixed  $value
-     *
-     * @return $this
-     */
-    public function addGeneralHeader($header, $value)
+    public function sent()
     {
-        $this->headers[] = sprintf(
-                '%s: %s',
-                (string) $header,
-                (string) $value
-            );
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * @param string $additionalParameters
-     *
-     * @return string
-     */
-    public function setAdditionalParameters($additionalParameters)
-    {
-        $this->params = (string) $additionalParameters;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAdditionalParameters()
-    {
-        return $this->params;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function send()
-    {
-        $to = $this->getToForSend();
-        $headers = $this->getHeadersForSend();
-        $message = $this->message;
-
-        return mail($to, $this->subject, $message, $headers, $this->params);
-    }
-
-    /**
-     * @param string $email
-     * @param string $name
-     *
-     * @return string
-     */
-    public function formatHeader($email, $name = null)
-    {
-        if (empty($name)) {
-            return $email;
+        $config = \Ilch\Registry::get('config');
+        $mail = $this->PHPMailer();
+        $to = $this->getToEmail();
+        if (empty($config->get('smtp_mode')) || $config->get('smtp_mode') == '0') {
+            $this->type = 'mail';
+        } else {
+            $this->type = 'smtp';
         }
-        return sprintf('"%s" <%s>', $name, $email);
-    }
 
-    /**
-     * @return string
-     */
-    public function getHeadersForSend()
-    {
-        if (empty($this->headers)) {
-            return '';
-        }
-        return implode(PHP_EOL, $this->headers);
-    }
+        switch ($this->type) {
+            case 'smtp':
+                $mail->isSMTP(); // telling the class to use SMTP
+                $mail->SMTPAuth = true;
+                //$mail->SMTPDebug = 2;
+                $mail->Host = $config->get('smtp_server'); // SMTP server
+                $mail->Port = (integer)$config->get('smtp_port'); // set the SMTP port
+                if ($config->get('smtp_secure')) {
+                    $mail->SMTPSecure = $config->get('smtp_secure');
+                }
+                $mail->Username = $config->get('smtp_user'); // SMTP account username
+                $mail->Password = $config->get('smtp_pass'); // SMTP account password
 
-    /**
-     * @return string
-     */
-    public function getToForSend()
-    {
-        if (empty($this->to)) {
-            return '';
+                break;
+            case 'mail':
+                $mail->isMail(); // telling the class to use PHP's mail()
+                break;
+            case 'sendmail':
+                $mail->isSendmail(); // telling the class to use Sendmail
+                break;
+            case 'qmail':
+                $mail->isQmail(); // telling the class to use Qmail
+                break;
         }
-        return implode(', ', $this->to);
+
+        try {
+            if ($this->getFromName() != '') {
+                $mail->addReplyTo($this->getFromEmail(), $this->getFromName());
+                $mail->setFrom($this->getFromEmail(), $this->getFromName());
+            } else {
+                $mail->addReplyTo($this->getFromEmail());
+                $mail->setFrom($this->getFromEmail(), $this->getFromEmail());
+            }
+            if ($this->getToName() != '') {
+                $mail->addAddress($to, $this->getToName());
+            } else {
+                $mail->addAddress($to);
+            }
+            if ($this->getBccEmail() != '') {
+                $indiBCC = explode(" ", $this->getBccEmail());
+                foreach ($indiBCC as $key => $value) {
+                    $mail->addBCC($value);
+                }
+            }
+            if ($this->getCcEmail() != '') {
+                $indiCC = explode(" ", $this->getCcEmail());
+                foreach ($indiCC as $key => $value) {
+                    $mail->addCC($value);
+                }
+            }
+        } catch (\phpmailerException $e) { //Catch all kinds of bad addressing
+            throw new \phpmailerException($e->getMessage());
+        }
+        $mail->isHTML();
+        $mail->CharSet = 'UTF-8';
+        $mail->Subject = $this->getSubject();
+        if ($this->getMessage() == '') {
+            $body = '';
+        } else {
+            $body = $this->getMessage();
+        }
+        $mail->WordWrap = 78; // set word wrap to the RFC2822 limit
+        $mail->Body = $body; //Create message bodies and embed images
+        //$mail->addAttachment('images/phpmailer_mini.png', 'phpmailer_mini.png'); // optional name
+        //$mail->addAttachment('images/phpmailer.png', 'phpmailer.png'); // optional name
+        try {
+            $mail->send();
+            //exit(var_dump($mail->ErrorInfo));
+        } catch (\phpmailerException $e) {
+            throw new \phpmailerException($mail->ErrorInfo);
+        }
     }
 }

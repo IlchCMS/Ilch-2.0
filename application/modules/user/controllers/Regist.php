@@ -120,13 +120,13 @@ class Regist extends \Ilch\Controller\Frontend
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
-                    $mail->setTo($this->getRequest()->getPost('email'), $this->getRequest()->getPost('name'))
+                    $mail->setFromName($this->getConfig()->get('page_title'))
+                        ->setFromEmail($this->getConfig()->get('standardMail'))
+                        ->setToName($this->getRequest()->getPost('name'))
+                        ->setToEmail($this->getRequest()->getPost('email'))
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                        ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
                         ->setMessage($message)
-                        ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                    $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-                    $mail->send();
+                        ->sent();
                 }
 
                 $this->redirect()

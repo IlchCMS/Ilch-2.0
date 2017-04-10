@@ -57,6 +57,12 @@ class Emails extends \Ilch\Controller\Admin
                 'active' => true,
                 'icon' => 'fa fa-envelope',
                 'url' => $this->getLayout()->getUrl(['controller' => 'emails', 'action' => 'index'])
+            ],
+            [
+                'name' => 'menuMail',
+                'active' => false,
+                'icon' => 'fa fa-newspaper-o',
+                'url' => $this->getLayout()->getUrl(['controller' => 'settings', 'action' => 'mail'])
             ]
         ];
 

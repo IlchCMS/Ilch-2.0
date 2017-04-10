@@ -155,13 +155,13 @@ class Index extends \Ilch\Controller\Admin
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
-                    $mail->setTo($email->getEmail(), '')
-                            ->setSubject($post['subject'])
-                            ->setFrom($this->getConfig()->get('standardMail'), $this->getConfig()->get('page_title'))
-                            ->setMessage($message)
-                            ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                    $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-                    $mail->send();
+                    $mail->setFromName($this->getConfig()->get('page_title'))
+                        ->setFromEmail($this->getConfig()->get('standardMail'))
+                        ->setToName($email->getEmail())
+                        ->setToEmail($email->getEmail())
+                        ->setSubject($post['subject'])
+                        ->setMessage($message)
+                        ->sent();
                 }
 
                 $this->redirect()
