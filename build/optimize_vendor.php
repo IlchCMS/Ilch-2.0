@@ -39,9 +39,9 @@ $directories = [
     ],
     'phpmailer'     => [
         'remove' => [
-            'phpmailer/application/libraries/docs',
-            'phpmailer/application/libraries/examples',
-            'phpmailer/application/libraries/test',
+            'phpmailer/docs',
+            'phpmailer/examples',
+            'phpmailer/test',
         ]
     ],
     'kartik-v'    => [
