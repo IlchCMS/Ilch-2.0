@@ -36,6 +36,10 @@ return [
     'edit' => 'Edit',
     'add' => 'Add',
 
+    // e-mail
+    'mailFrom' => 'From',
+    'mailWriteBackLink' => 'Please use the following link to reply',
+
     // seo
     'seo' => 'SEO',
     'seoDescription' => 'Description',

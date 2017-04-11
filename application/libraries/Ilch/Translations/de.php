@@ -36,6 +36,10 @@ return [
     'edit' => 'Bearbeiten',
     'add' => 'Erstellen',
 
+    // e-mail
+    'mailFrom' => 'Von',
+    'mailWriteBackLink' => 'Zum Antworten bitte folgenden Link benutzen',
+
     // seo
     'seo' => 'SEO',
     'seoDescription' => 'Beschreibung',
