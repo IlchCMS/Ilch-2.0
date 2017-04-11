@@ -22,7 +22,4 @@ return [
     'apply' => 'Bewerben',
     'applyAs' => 'Bewerbung als',
     'hide' => 'Ausblenden',
-    'from' => 'Von',
-    'writeBackLink' => 'Zum Antworten bitte folgenden Link benutzen',
-    'replay' => 'Antworten',
 ];

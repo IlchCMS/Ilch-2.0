@@ -61,7 +61,6 @@ return [
     'saveSuccess' => 'Successfully sent',
     'acceptSuccess' => 'Successfully accepted',
     'rejectSuccess' => 'Successfully rejected',
-    'noReplyMailFooter' => 'Please do not reply to this email. This mailbox is not monitored, so you will not receive a response.',
     'mailForAccept' => 'E-Mail for Accept',
     'mailForReject' => 'E-Mail for Reject',
     'variables' => 'Variables',

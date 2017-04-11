@@ -39,6 +39,7 @@ return [
     // e-mail
     'mailFrom' => 'Von',
     'mailWriteBackLink' => 'Zum Antworten bitte folgenden Link benutzen',
+    'noReplyMailFooter' => 'Bitte antworten Sie nicht auf diese E-Mail. Dieses Postfach wird nicht überwacht, deshalb werden Sie keine Antwort erhalten.',
 
     // seo
     'seo' => 'SEO',

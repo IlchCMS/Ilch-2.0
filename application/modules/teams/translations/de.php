@@ -61,7 +61,6 @@ return [
     'saveSuccess' => 'Erfolgreich versendet',
     'acceptSuccess' => 'Erfolgreich angenommen',
     'rejectSuccess' => 'Erfolgreich abgelehnt',
-    'noReplyMailFooter' => 'Bitte antworten Sie nicht auf diese E-Mail. Dieses Postfach wird nicht überwacht, deshalb werden Sie keine Antwort erhalten.',
     'mailForAccept' => 'E-Mail Bewerbung annehmen',
     'mailForUserAccept' => 'E-Mail User Bewerbung annehmen',
     'mailForReject' => 'E-Mail Bewerbung ablehnen',

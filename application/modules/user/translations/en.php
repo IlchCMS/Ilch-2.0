@@ -128,7 +128,6 @@ return [
     'automaticEmail' => 'Automatic E-Mail',
     'confirmRegistrationEmail' => 'Confim the Registration via Link?',
     'confirmMailButtonText' => 'Confirm',
-    'noReplyMailFooter' => 'Please do not reply to this email. This mailbox is not monitored, so you will not receive a response.',
     'settingsRegistVariables' => 'Variables',
     'settingsRegistVariablesName' => 'Name from the User',
     'settingsRegistVariablesSitetitle' => 'Pagetitle from the Page',

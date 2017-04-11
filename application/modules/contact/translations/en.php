@@ -16,10 +16,5 @@ return [
     'contactWebsite' => 'Contact Website',
     'captchaRead' => 'Not readable? Change text!',
     'addButton' => 'Send',
-
-    'noReplyMailFooter' => 'Please do not reply to this email. This mailbox is not monitored, so you will not receive a response.',
-    'from' => 'From',
     'writes' => 'writes',
-    'writeBackLink' => 'Please use the following link to reply',
-    'replay' => 'Replay',
 ];

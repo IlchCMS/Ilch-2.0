@@ -124,7 +124,6 @@ return [
     'automaticEmail' => 'Automatische E-Mail',
     'confirmRegistrationEmail' => 'Bestätigen der Registrierung per Link?',
     'confirmMailButtonText' => 'Bestätigen',
-    'noReplyMailFooter' => 'Bitte antworten Sie nicht auf diese E-Mail. Dieses Postfach wird nicht überwacht, deshalb werden Sie keine Antwort erhalten.',
     'settingsRegistVariables' => 'Variablen',
     'settingsRegistVariablesName' => 'Name des Benutzers',
     'settingsRegistVariablesSitetitle' => 'Seitentitel der Homepage',

@@ -39,6 +39,7 @@ return [
     // e-mail
     'mailFrom' => 'From',
     'mailWriteBackLink' => 'Please use the following link to reply',
+    'noReplyMailFooter' => 'Please do not reply to this email. This mailbox is not monitored, so you will not receive a response.',
 
     // seo
     'seo' => 'SEO',
