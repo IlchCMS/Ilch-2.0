@@ -70,9 +70,7 @@ class Settings extends \Ilch\Controller\Admin
         if ($this->getRequest()->getActionName() == 'maintenance') {
             $items[1]['active'] = true;  
         } elseif ($this->getRequest()->getActionName() == 'customcss') {
-            $items[2]['active'] = true; 
-        } elseif ($this->getRequest()->getActionName() == 'backup') {
-            $items[3]['active'] = true; 
+            $items[2]['active'] = true;
         } elseif ($this->getRequest()->getActionName() == 'update') {
             $items[4]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'notifications') {
