@@ -23,28 +23,34 @@ $directories = [
             'font-awesome/README.md',
         ],
     ],
-    'ifsnop'      => [
+    'ifsnop' => [
         'keep' => [
             'mysqldump-php/src/',
             'mysqldump-php/README.md',
             'mysqldump-php/composer.json',
         ]
     ],
-    'jbbcode'     => [
+    'jbbcode'  => [
         'remove' => [
             'jbbcode/JBBCode/examples/',
             'jbbcode/JBBCode/tests/',
             'jbbcode/.gitignore',
         ]
     ],
-    'phpmailer'     => [
+    'phpmailer' => [
         'remove' => [
-            'phpmailer/docs',
-            'phpmailer/examples',
-            'phpmailer/test',
+            'phpmailer/docs/',
+            'phpmailer/examples/',
+            'phpmailer/test/',
         ]
     ],
-    'kartik-v'    => [
+    'ckeditor' => [
+        'remove' => [
+            'ckeditor/.github/',
+            'ckeditor/samples/',
+        ]
+    ],
+    'kartik-v' => [
         'keep' => [
             'bootstrap-star-rating/css/star-rating.min.css',
             'bootstrap-star-rating/js/star-rating.min.js',
@@ -54,7 +60,7 @@ $directories = [
             'bootstrap-star-rating/README.md',
         ],
     ],
-    'twbs'        => [
+    'twbs' => [
         'keep' => [
             'bootstrap/dist/css/bootstrap.min.css',
             'bootstrap/dist/js/bootstrap.min.js',
