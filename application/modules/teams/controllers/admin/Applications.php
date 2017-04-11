@@ -139,7 +139,10 @@ class Applications extends \Ilch\Controller\Admin
             } else {
                 $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/teams/layouts/mail/accept.php');
             }
+
             $messageReplace = [
+                '{reply}' => $this->getTranslator()->trans('reply'),
+                '{subject}' => $this->getTranslator()->trans('subjectAccept'),
                 '{content}' => $mailContent->getText(),
                 '{sitetitle}' => $sitetitle,
                 '{date}' => $date->format("l, d. F Y", true),
@@ -157,13 +160,13 @@ class Applications extends \Ilch\Controller\Admin
             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
             $mail = new \Ilch\Mail();
-            $mail->setTo($email,$name)
+            $mail->setFromName($this->getConfig()->get('page_title'))
+                ->setFromEmail($this->getConfig()->get('standardMail'))
+                ->setToName($name)
+                ->setToEmail($email)
                 ->setSubject($this->getTranslator()->trans('subjectAccept'))
-                ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
                 ->setMessage($message)
-                ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-            $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-            $mail->send();
+                ->sent();
 
             $joinsMapper->delete($this->getRequest()->getParam('id'));
 
@@ -217,13 +220,13 @@ class Applications extends \Ilch\Controller\Admin
             $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
             $mail = new \Ilch\Mail();
-            $mail->setTo($email,$name)
+            $mail->setFromName($this->getConfig()->get('page_title'))
+                ->setFromEmail($this->getConfig()->get('standardMail'))
+                ->setToName($name)
+                ->setToEmail($email)
                 ->setSubject($this->getTranslator()->trans('subjectReject'))
-                ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
                 ->setMessage($message)
-                ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-            $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-            $mail->send();
+                ->sent();
 
             $joinsMapper->delete($this->getRequest()->getParam('id'));
 

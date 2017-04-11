@@ -25,6 +25,7 @@
             -webkit-text-size-adjust: none;
             width: 100%!important;
             height: 100%;
+            background-color: #f6f6f6;
         }
 
         /* -------------------------------------
@@ -90,9 +91,11 @@
         table.body-wrap {
             width: 100%;
             padding: 20px;
+            background-color: #f6f6f6;
         }
 
         table.body-wrap .container {
+            background-color: #FFF;
             border: 1px solid #f0f0f0;
         }
 
@@ -100,7 +103,7 @@
             FOOTER
         ------------------------------------- */
         table.footer-wrap {
-            width: 100%;	
+            width: 100%;
             clear: both!important;
         }
 
@@ -178,12 +181,12 @@
         </style>
     </head>
 
-    <body bgcolor="#f6f6f6">
+    <body>
         <!-- body -->
-        <table class="body-wrap" bgcolor="#f6f6f6">
+        <table class="body-wrap">
             <tr>
                 <td></td>
-                <td class="container" bgcolor="#FFFFFF">
+                <td class="container">
                     <!-- content -->
                     <div class="content">
                         <table>
