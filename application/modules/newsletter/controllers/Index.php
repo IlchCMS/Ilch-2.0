@@ -55,9 +55,9 @@ class Index extends \Ilch\Controller\Frontend
 
         $newsletter = $newsletterMapper->getNewsletterById($this->getRequest()->getParam('id'));
         if ($newsletter != '') {
-            $this->getView()->set('newsletter', $newsletter);            
+            $this->getView()->set('newsletter', $newsletter);
         } else {
-            $this->redirect(['action' => 'index']);            
+            $this->redirect(['action' => 'index']);
         }
     }
 

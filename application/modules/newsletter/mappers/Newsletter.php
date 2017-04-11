@@ -74,6 +74,32 @@ class Newsletter extends \Ilch\Mapper
     }
 
     /**
+     * Gets the Newsletter subscriber by the email.
+     *
+     * @param string $email
+     * @return NewsletterModel|null
+     */
+    public function getSubscriberByEMail($email)
+    {
+        $entryArray = $this->db()->select('*')
+            ->from('newsletter_mails')
+            ->where(['email' => $email])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($entryArray)) {
+            return null;
+        }
+
+        $entryModel = new NewsletterModel();
+        $entryModel->setEmail($entryArray['email']);
+        $entryModel->setSelector($entryArray['selector']);
+        $entryModel->setConfirmCode($entryArray['confirmCode']);
+
+        return $entryModel;
+    }
+
+    /**
      * Gets the Newsletter subscriber by the selector.
      *
      * @param string $selector
