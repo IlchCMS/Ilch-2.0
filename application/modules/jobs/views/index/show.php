@@ -14,10 +14,10 @@ $jobs = $this->get('jobs');
 
 <?php if ($job != ''): ?>
     <div class="row">
-        <div class="col-lg-1">
+        <div class="col-lg-2">
             <i class="fa fa-briefcase fa-4x briefcase"></i>
         </div>
-        <div class="col-lg-11" style="margin-bottom: 35px;">
+        <div class="col-lg-10" style="margin-bottom: 35px;">
             <h1><?=$this->escape($job->getTitle()) ?></h1>
             <?=$job->getText() ?>
         </div>

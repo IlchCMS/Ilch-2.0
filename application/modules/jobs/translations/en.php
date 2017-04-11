@@ -22,4 +22,7 @@ return [
     'apply' => 'Apply',
     'applyAs' => 'Apply as',
     'hide' => 'Hide',
+    'from' => 'From',
+    'writeBackLink' => 'Please use the following link to reply',
+    'replay' => 'Replay',
 ];

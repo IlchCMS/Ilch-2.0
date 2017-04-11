@@ -192,8 +192,11 @@
                                     <p class="small text-muted">{date}</p>
                                     <p>&nbsp;</p>
                                     <p><b>{applyAs}</b></p>
+                                    <p>{from}: {senderName} ({senderMail})</p>
                                     <p>&nbsp;</p>
                                     <p>{content}</p>
+                                    <p>{writeBackLink}:</p>
+                                    <p><a href="mailto:{senderMail}" target="_top">{replay}</a></p>
                                 </td>
                             </tr>
                         </table>

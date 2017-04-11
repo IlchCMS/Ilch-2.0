@@ -9,10 +9,10 @@
 <?php if ($this->get('jobs') != ''): ?>
     <div class="row">
         <?php foreach ($this->get('jobs') as $jobs): ?>
-            <div class="col-lg-1">
+            <div class="col-lg-2">
                 <i class="fa fa-briefcase fa-4x briefcase"></i>
             </div>
-            <div class="col-lg-11" style="margin-bottom: 35px;">
+            <div class="col-lg-10" style="margin-bottom: 35px;">
                 <h1>
                     <a href="<?=$this->getUrl('jobs/index/show/id/' . $jobs->getId()) ?>">
                         <?=$this->escape($jobs->getTitle()) ?>

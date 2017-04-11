@@ -63,20 +63,27 @@ class Index extends \Ilch\Controller\Frontend
 
                 $messageReplace = [
                         '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$post['title'],
+                        '{from}' => $this->getTranslator()->trans('from'),
                         '{content}' => $post['text'],
+                        '{senderMail}' => $user->getEmail(),
+                        '{senderName}' => $user->getName(),
                         '{sitetitle}' => $this->getConfig()->get('page_title'),
                         '{date}' => $date->format("l, d. F Y", true),
+                        '{writeBackLink}' => $this->getTranslator()->trans('writeBackLink'),
+                        '{replay}' => $this->getTranslator()->trans('replay'),
                 ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $mail = new \Ilch\Mail();
-                $mail->setTo($job->getEmail(), '')
-                        ->setSubject($this->getTranslator()->trans('applyAs').' '.$post['title'])
-                        ->setFrom($user->getEmail(), $user->getName())
-                        ->setMessage($message)
-                        ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-                $mail->send();
+                $mail->setFromName($this->getConfig()->get('page_title'))
+                    ->setFromEmail($this->getConfig()->get('standardMail'))
+                    ->setToName('')
+                    ->setToEmail($job->getEmail())
+                    ->setSubject($this->getTranslator()->trans('applyAs').' '.$post['title'])
+                    ->setMessage($message)
+                    ->sent();
+
+
 
                 $this->addMessage('sendSuccess');
                 $this->redirect(['action' => 'index']);
