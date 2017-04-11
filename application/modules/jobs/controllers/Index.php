@@ -62,15 +62,16 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                 $messageReplace = [
-                        '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$post['title'],
-                        '{from}' => $this->getTranslator()->trans('from'),
-                        '{content}' => $post['text'],
-                        '{senderMail}' => $user->getEmail(),
-                        '{senderName}' => $user->getName(),
-                        '{sitetitle}' => $this->getConfig()->get('page_title'),
-                        '{date}' => $date->format("l, d. F Y", true),
-                        '{writeBackLink}' => $this->getTranslator()->trans('writeBackLink'),
-                        '{replay}' => $this->getTranslator()->trans('replay'),
+                    '{applyAs}' => $this->getTranslator()->trans('applyAs').' '.$post['title'],
+                    '{from}' => $this->getTranslator()->trans('mailFrom'),
+                    '{content}' => $post['text'],
+                    '{senderMail}' => $user->getEmail(),
+                    '{senderName}' => $user->getName(),
+                    '{sitetitle}' => $this->getConfig()->get('page_title'),
+                    '{date}' => $date->format("l, d. F Y", true),
+                    '{writeBackLink}' => $this->getTranslator()->trans('mailWriteBackLink'),
+                    '{reply}' => $this->getTranslator()->trans('reply'),
+                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                 ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
@@ -82,8 +83,6 @@ class Index extends \Ilch\Controller\Frontend
                     ->setSubject($this->getTranslator()->trans('applyAs').' '.$post['title'])
                     ->setMessage($message)
                     ->sent();
-
-
 
                 $this->addMessage('sendSuccess');
                 $this->redirect(['action' => 'index']);

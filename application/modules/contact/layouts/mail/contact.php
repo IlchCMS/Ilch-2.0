@@ -25,6 +25,7 @@
             -webkit-text-size-adjust: none;
             width: 100%!important;
             height: 100%;
+            background-color: #f6f6f6;
         }
 
         /* -------------------------------------
@@ -48,9 +49,11 @@
         table.body-wrap {
             width: 100%;
             padding: 20px;
+            background-color: #f6f6f6;
         }
 
         table.body-wrap .container {
+            background-color: #FFF;
             border: 1px solid #f0f0f0;
         }
 
@@ -58,7 +61,7 @@
             FOOTER
         ------------------------------------- */
         table.footer-wrap {
-            width: 100%;	
+            width: 100%;
             clear: both!important;
         }
 
@@ -136,12 +139,12 @@
         </style>
     </head>
 
-    <body bgcolor="#f6f6f6">
+    <body>
         <!-- body -->
-        <table class="body-wrap" bgcolor="#f6f6f6">
+        <table class="body-wrap">
             <tr>
                 <td></td>
-                <td class="container" bgcolor="#FFFFFF">
+                <td class="container">
                     <!-- content -->
                     <div class="content">
                         <table>
@@ -150,11 +153,12 @@
                                     <p class="small text-muted">{date}</p>
                                     <p>&nbsp;</p>
                                     <p><b>{subject}</b></p>
-                                    <p>{from}: <b>{senderName}</b> ({senderMail})</p>
+                                    <p>{from} {senderName} ({senderMail})</p>
+                                    <p>&nbsp;</p>
                                     <p>{senderName} {writes}:</p>
                                     <p>{content}</p>
-                                    <p>{writeBackLink}:</p>
-                                    <p><a href="mailto:{senderMail}" target="_top">{replay}</a></p>
+                                    <p>&nbsp;</p>
+                                    <p>{writeBackLink}: <a href="mailto:{senderMail}?subject=Re: {subject}" target="_top">{reply}</a></p>
                                 </td>
                             </tr>
                         </table>

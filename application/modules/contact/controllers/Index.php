@@ -49,7 +49,6 @@ class Index extends \Ilch\Controller\Frontend
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/contact/layouts/mail/contact.php');
                 }
 
-
                 $messageReplace = [
                     '{subject}' => $subject,
                     '{content}' => $content,
@@ -57,12 +56,11 @@ class Index extends \Ilch\Controller\Frontend
                     '{date}' => $date->format("l, d. F Y", true),
                     '{senderMail}' => $senderMail,
                     '{senderName}' => $senderName,
-                    '{from}' => $this->getTranslator()->trans('from'),
+                    '{from}' => $this->getTranslator()->trans('mailFrom'),
                     '{writes}' => $this->getTranslator()->trans('writes'),
-                    '{writeBackLink}' => $this->getTranslator()->trans('writeBackLink'),
-                    '{replay}' => $this->getTranslator()->trans('replay'),
+                    '{writeBackLink}' => $this->getTranslator()->trans('mailWriteBackLink'),
+                    '{reply}' => $this->getTranslator()->trans('reply'),
                     '{footer}' => $this->getTranslator()->trans('noReplyMailFooter'),
-
                 ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
