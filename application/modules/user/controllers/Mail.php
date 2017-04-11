@@ -47,20 +47,28 @@ class Mail extends \Ilch\Controller\Frontend
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/modules/user/layouts/mail/usermail.php');
                 }
                 $messageReplace = [
+                    '{senderMail}' => $sender->getEmail(),
+                    '{senderName}' => $sender->getName(),
+                    '{from}' => $this->getTranslator()->trans('mailFrom'),
+                    '{writes}' => $this->getTranslator()->trans('writes'),
+                    '{writeBackLink}' => $this->getTranslator()->trans('mailWriteBackLink'),
+                    '{reply}' => $this->getTranslator()->trans('reply'),
+                    '{subject}' => $this->getRequest()->getPost('subject'),
                     '{content}' => $message,
                     '{sitetitle}' => $this->getConfig()->get('page_title'),
-                    '{date}' => $date->format("l, d. F Y", true)
+                    '{date}' => $date->format("l, d. F Y", true),
+                    '{footer}' => $this->getTranslator()->trans('noReplyMailFooter')
                 ];
                 $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                 $mail = new \Ilch\Mail();
-                $mail->setTo($user->getEmail(), $user->getName())
+                $mail->setFromName($this->getConfig()->get('page_title'))
+                    ->setFromEmail($this->getConfig()->get('standardMail'))
+                    ->setToName($user->getName())
+                    ->setToEmail($user->getEmail())
                     ->setSubject($this->getRequest()->getPost('subject'))
-                    ->setFrom($sender->getEmail(), $sender->getName())
                     ->setMessage($message)
-                    ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-                $mail->send();
+                    ->sent();
 
                 $this->redirect()
                     ->withMessage('emailSuccess')

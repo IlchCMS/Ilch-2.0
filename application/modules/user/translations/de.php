@@ -224,6 +224,7 @@ return [
     'emailSuccess' => 'E-Mail wurde erfolgreich versendet',
     'locale' => 'Sprache',
     'optMail' => 'E-Mail von anderen Usern?',
+    'writes' => 'schreibt',
 
     'cat' => 'Kategorie',
     'gallery' => 'Galerie',

@@ -228,6 +228,7 @@ return [
     'emailSuccess' => 'E-Mail was successfully send',
     'locale' => 'Locale',
     'optMail' => 'E-Mail from other Users?',
+    'writes' => 'writes',
 
     'cat' => 'Categorie',
     'gallery' => 'Gallery',

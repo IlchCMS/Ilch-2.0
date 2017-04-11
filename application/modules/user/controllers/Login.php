@@ -206,13 +206,13 @@ class Login extends \Ilch\Controller\Frontend
                     $message = str_replace(array_keys($messageReplace), array_values($messageReplace), $messageTemplate);
 
                     $mail = new \Ilch\Mail();
-                    $mail->setTo($email,$name)
+                    $mail->setFromName($this->getConfig()->get('page_title'))
+                        ->setFromEmail($this->getConfig()->get('standardMail'))
+                        ->setToName($name)
+                        ->setToEmail($email)
                         ->setSubject($this->getTranslator()->trans('automaticEmail'))
-                        ->setFrom($this->getConfig()->get('standardMail'), $sitetitle)
                         ->setMessage($message)
-                        ->addGeneralHeader('Content-Type', 'text/html; charset="utf-8"');
-                    $mail->setAdditionalParameters('-t '.'-f'.$this->getConfig()->get('standardMail'));
-                    $mail->send();
+                        ->sent();
 
                     $this->addMessage('newPasswordEMailSuccess');
                 } else {

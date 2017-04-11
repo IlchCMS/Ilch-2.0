@@ -25,6 +25,7 @@
             -webkit-text-size-adjust: none;
             width: 100%!important;
             height: 100%;
+            background-color: #f6f6f6;
         }
 
         /* -------------------------------------
@@ -90,9 +91,11 @@
         table.body-wrap {
             width: 100%;
             padding: 20px;
+            background-color: #f6f6f6;
         }
 
         table.body-wrap .container {
+            background-color: #FFF;
             border: 1px solid #f0f0f0;
         }
 
@@ -178,12 +181,12 @@
         </style>
     </head>
 
-    <body bgcolor="#f6f6f6">
+    <body>
         <!-- body -->
-        <table class="body-wrap" bgcolor="#f6f6f6">
+        <table class="body-wrap">
             <tr>
                 <td></td>
-                <td class="container" bgcolor="#FFFFFF">
+                <td class="container">
                     <!-- content -->
                     <div class="content">
                         <table>
@@ -191,7 +194,12 @@
                                 <td>
                                     <p class="small text-muted">{date}</p>
                                     <p>&nbsp;</p>
-                                    {content}
+                                    <p>{from} {senderName} ({senderMail})</p>
+                                    <p>&nbsp;</p>
+                                    <p>{senderName} {writes}:</p>
+                                    <p>{content}</p>
+                                    <p>&nbsp;</p>
+                                    <p>{writeBackLink}: <a href="mailto:{senderMail}?subject=Re: {subject}" target="_top">{reply}</a></p>
                                 </td>
                             </tr>
                         </table>
@@ -202,5 +210,19 @@
             </tr>
         </table>
         <!-- /body -->
+
+        <!-- footer -->
+        <table class="footer-wrap">
+            <tr>
+                <td></td>
+                <td class="container">
+                    <div class="content" align="center">
+                        <p>{footer}</p>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <!-- /footer -->
     </body>
 </html>
