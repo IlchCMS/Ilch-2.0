@@ -12,54 +12,70 @@ $modules = $this->get('modules');
 $boxes = $this->get('boxes');
 $selfBoxes = $this->get('self_boxes');
 
-function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
-    $subItems = $menuMapper->getMenuItemsByParent($view->get('menu')->getId(), $item->getId());
+function rec(MenuMapper $menuMapper, View $view) {
+    $items = $menuMapper->getMenuItems($view->get('menu')->getId());
+
+    // prepare array with parent-child relations
+    $menuData = array(
+        'items' => array(),
+        'parents' => array()
+    );
+
+    foreach ($items as $item) {
+        $menuData['items'][$item->getId()] = $item;
+        $menuData['parents'][$item->getParentId()][] = $item->getId();
+    }
+
+    buildMenu(0, $menuData, $view);
+}
+
+function buildMenu($parentId, $menuData, View $view) {
     $class = 'mjs-nestedSortable-branch mjs-nestedSortable-expanded';
 
-    if (empty($subItems)) {
-        $class = 'mjs-nestedSortable-leaf';
-    }
+    if (isset($menuData['parents'][$parentId])) {
+        foreach ($menuData['parents'][$parentId] as $itemId) {
+            if (!isset($menuData['parents'][$itemId])) {
+                $class = 'mjs-nestedSortable-leaf';
+            }
 
-    if ($item->isBox()) {
-        $class .= ' mjs-nestedSortable-no-nesting';
-    }
+            if ($menuData['items'][$itemId]->isBox()) {
+                $class .= ' mjs-nestedSortable-no-nesting';
+            }
 
-    if ($item->getBoxId() > 0) {
-        $boxKey = $item->getBoxId();
-    } else {
-        $boxKey = $item->getBoxKey();
-    }
+            if ($menuData['items'][$itemId]->getBoxId() > 0) {
+                $boxKey = $menuData['items'][$itemId]->getBoxId();
+            } else {
+                $boxKey = $menuData['items'][$itemId]->getBoxKey();
+            }
 
-    echo '<li id="list_'.$item->getId().'" class="'.$class.'">';
-    echo '<div>
-        <span class="disclose">
-            <i class="fa fa-minus-circle"></i>
-            <input type="hidden" class="hidden_id" name="items['.$item->getId().'][id]" value="'.$item->getId().'" />
-            <input type="hidden" class="hidden_title" name="items['.$item->getId().'][title]" value="'.$view->escape($item->getTitle()).'" />
-            <input type="hidden" class="hidden_href" name="items['.$item->getId().'][href]" value="'.$item->getHref().'" />
-            <input type="hidden" class="hidden_type" name="items['.$item->getId().'][type]" value="'.$item->getType().'" />
-            <input type="hidden" class="hidden_siteid" name="items['.$item->getId().'][siteid]" value="'.$item->getSiteId().'" />
-            <input type="hidden" class="hidden_boxkey" name="items['.$item->getId().'][boxkey]" value="'.$boxKey.'" />
-            <input type="hidden" class="hidden_modulekey" name="items['.$item->getId().'][modulekey]" value="'.$item->getModuleKey().'" />
-            <input type="hidden" class="hidden_access" name="items['.$item->getId().'][access]" value="'.$item->getAccess().'" />
-            <span></span>
-        </span>
-        <span class="title">'.$view->escape($item->getTitle()).'</span>
-        <span class="item_delete"><i class="fa fa-times-circle"></i></span>
-        <span class="item_edit"><i class="fa fa-edit"></i></span>
-    </div>';
+            echo '<li id="list_'.$menuData['items'][$itemId]->getId().'" class="'.$class.'">';
+            echo '<div>
+                <span class="disclose">
+                    <i class="fa fa-minus-circle"></i>
+                    <input type="hidden" class="hidden_id" name="items['.$menuData['items'][$itemId]->getId().'][id]" value="'.$menuData['items'][$itemId]->getId().'" />
+                    <input type="hidden" class="hidden_title" name="items['.$menuData['items'][$itemId]->getId().'][title]" value="'.$view->escape($menuData['items'][$itemId]->getTitle()).'" />
+                    <input type="hidden" class="hidden_href" name="items['.$menuData['items'][$itemId]->getId().'][href]" value="'.$menuData['items'][$itemId]->getHref().'" />
+                    <input type="hidden" class="hidden_type" name="items['.$menuData['items'][$itemId]->getId().'][type]" value="'.$menuData['items'][$itemId]->getType().'" />
+                    <input type="hidden" class="hidden_siteid" name="items['.$menuData['items'][$itemId]->getId().'][siteid]" value="'.$menuData['items'][$itemId]->getSiteId().'" />
+                    <input type="hidden" class="hidden_boxkey" name="items['.$menuData['items'][$itemId]->getId().'][boxkey]" value="'.$boxKey.'" />
+                    <input type="hidden" class="hidden_modulekey" name="items['.$menuData['items'][$itemId]->getId().'][modulekey]" value="'.$menuData['items'][$itemId]->getModuleKey().'" />
+                    <input type="hidden" class="hidden_access" name="items['.$menuData['items'][$itemId]->getId().'][access]" value="'.$menuData['items'][$itemId]->getAccess().'" />
+                    <span></span>
+                </span>
+                <span class="title">'.$view->escape($menuData['items'][$itemId]->getTitle()).'</span>
+                <span class="item_delete"><i class="fa fa-times-circle"></i></span>
+                <span class="item_edit"><i class="fa fa-edit"></i></span>
+            </div>';
 
-    if (!empty($subItems)) {
-        echo '<ol>';
-
-        foreach ($subItems as $subItem) {
-            rec($subItem, $menuMapper, $view);
+            if (isset($menuData['parents'][$itemId])) {
+                echo '<ol>';
+                // find childitems recursively
+                buildMenu($itemId, $menuData, $view);
+                echo '</ol>';
+                echo '</li>';
+            }
         }
-
-        echo '</ol>';
     }
-
-    echo '</li>';
 }
 ?>
 
@@ -88,9 +104,7 @@ function rec(MenuItem $item, MenuMapper $menuMapper, View $view) {
         <div class="col-sm-7 col-lg-7">
             <ol id="sortable" class="sortable">
                 <?php if (!empty($menuItems)): ?>
-                    <?php foreach ($menuItems as $item): ?>
-                        <?php rec($item, $menuMapper, $this); ?>
-                    <?php endforeach; ?>
+                    <?php rec($menuMapper, $this) ?>
                 <?php endif; ?>
             </ol>
         </div>
