@@ -16,10 +16,10 @@ function rec(MenuMapper $menuMapper, View $view) {
     $items = $menuMapper->getMenuItems($view->get('menu')->getId());
 
     // prepare array with parent-child relations
-    $menuData = array(
-        'items' => array(),
-        'parents' => array()
-    );
+    $menuData = [
+        'items' => [],
+        'parents' => []
+    ];
 
     foreach ($items as $item) {
         $menuData['items'][$item->getId()] = $item;

@@ -152,10 +152,10 @@ class Model
                     $subItems = $this->menuMapper->getMenuItems($item->getMenuId());
 
                     // prepare array with parent-child relations
-                    $menuData = array(
-                        'items' => array(),
-                        'parents' => array()
-                    );
+                    $menuData = [
+                        'items' => [],
+                        'parents' => []
+                    ];
 
                     foreach ($subItems as $subItem) {
                         $menuData['items'][$subItem->getId()] = $subItem;
