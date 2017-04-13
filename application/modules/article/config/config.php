@@ -65,10 +65,7 @@ class Config extends \Ilch\Config\Install
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('article_box_articleLimit', '5');
         $databaseConfig->set('article_box_archiveLimit', '5');
-        $databaseConfig->set('article_box_keywordsH2', '17');
-        $databaseConfig->set('article_box_keywordsH3', '20');
-        $databaseConfig->set('article_box_keywordsH4', '23');
-        $databaseConfig->set('article_box_keywordsH5', '26');
+        $databaseConfig->set('article_box_keywords', '17,20,23,26');
     }
 
     public function getInstallSql()

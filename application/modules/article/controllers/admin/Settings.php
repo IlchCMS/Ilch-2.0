@@ -61,10 +61,11 @@ class Settings extends \Ilch\Controller\Admin
                 $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
                 $this->getConfig()->set('article_box_articleLimit', $this->getRequest()->getPost('boxArticleLimit'));
                 $this->getConfig()->set('article_box_archiveLimit', $this->getRequest()->getPost('boxArchiveLimit'));
-                $this->getConfig()->set('article_box_keywordsH2', $this->getRequest()->getPost('boxKeywordsH2'));
-                $this->getConfig()->set('article_box_keywordsH3', $this->getRequest()->getPost('boxKeywordsH3'));
-                $this->getConfig()->set('article_box_keywordsH4', $this->getRequest()->getPost('boxKeywordsH4'));
-                $this->getConfig()->set('article_box_keywordsH5', $this->getRequest()->getPost('boxKeywordsH5'));
+                $this->getConfig()->set('article_box_keywords', [
+                    $this->getRequest()->getPost('boxKeywordsH2'),
+                    $this->getRequest()->getPost('boxKeywordsH3'),
+                    $this->getRequest()->getPost('boxKeywordsH4'),
+                    $this->getRequest()->getPost('boxKeywordsH5')]);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -77,12 +78,13 @@ class Settings extends \Ilch\Controller\Admin
                 ->to(['action' => 'index']);
         }
 
+        $keywordsFontSizes = explode(',',$this->getConfig()->get('article_box_keywords'));
         $this->getView()->set('articlesPerPage', $this->getConfig()->get('article_articlesPerPage'))
             ->set('boxArticleLimit', $this->getConfig()->get('article_box_articleLimit'))
             ->set('boxArchiveLimit', $this->getConfig()->get('article_box_archiveLimit'))
-            ->set('boxKeywordsH2', $this->getConfig()->get('article_box_keywordsH2'))
-            ->set('boxKeywordsH3', $this->getConfig()->get('article_box_keywordsH3'))
-            ->set('boxKeywordsH4', $this->getConfig()->get('article_box_keywordsH4'))
-            ->set('boxKeywordsH5', $this->getConfig()->get('article_box_keywordsH5'));
+            ->set('boxKeywordsH2', $keywordsFontSizes[0])
+            ->set('boxKeywordsH3', $keywordsFontSizes[1])
+            ->set('boxKeywordsH4', $keywordsFontSizes[2])
+            ->set('boxKeywordsH5', $keywordsFontSizes[3]);
     }
 }

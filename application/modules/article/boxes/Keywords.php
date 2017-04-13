@@ -23,10 +23,11 @@ class Keywords extends \Ilch\Box
         $keywordsListArray = explode(", ", $keywordsListString);
         $keywordsList = array_count_values($keywordsListArray);
 
+        $keywordsFontSizes = explode(',',$this->getConfig()->get('article_box_keywords'));
         $this->getView()->set('keywordsList', $keywordsList)
-            ->set('keywordsH2', $this->getConfig()->get('article_box_keywordsH2'))
-            ->set('keywordsH3', $this->getConfig()->get('article_box_keywordsH3'))
-            ->set('keywordsH4', $this->getConfig()->get('article_box_keywordsH4'))
-            ->set('keywordsH5', $this->getConfig()->get('article_box_keywordsH5'));
+            ->set('keywordsH2', $keywordsFontSizes[0])
+            ->set('keywordsH3', $keywordsFontSizes[1])
+            ->set('keywordsH4', $keywordsFontSizes[2])
+            ->set('keywordsH5', $keywordsFontSizes[3]);
     }
 }
