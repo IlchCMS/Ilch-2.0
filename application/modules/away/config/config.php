@@ -44,17 +44,18 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
-        $installSql = 'CREATE TABLE IF NOT EXISTS `[prefix]_away` (
-					  `id` INT(11) NOT NULL AUTO_INCREMENT,
-					  `user_id` INT(11) NOT NULL,
-					  `reason` VARCHAR(100) NOT NULL,
-					  `start` DATE NOT NULL,
-					  `end` DATE NOT NULL,
-					  `text` MEDIUMTEXT NOT NULL,
-					  `status` INT(11) NOT NULL DEFAULT "2",
-					  `show` INT(11) NOT NULL,
-					  PRIMARY KEY (`id`)
-					) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
+        $installSql = 
+            'CREATE TABLE IF NOT EXISTS `[prefix]_away` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `user_id` INT(11) NOT NULL,
+            `reason` VARCHAR(100) NOT NULL,
+            `start` DATE NOT NULL,
+            `end` DATE NOT NULL,
+            `text` MEDIUMTEXT NOT NULL,
+            `status` INT(11) NOT NULL DEFAULT "2",
+            `show` INT(11) NOT NULL,
+            PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
 
         if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
             return $installSql.'INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ("away/aways/index/");';

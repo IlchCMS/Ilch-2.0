@@ -81,21 +81,22 @@ class Config extends \Ilch\Config\Install
 
     public function getInstallSql()
     {
-        $installSql = 'CREATE TABLE IF NOT EXISTS `[prefix]_events` (
-                `id` INT(11) NOT NULL AUTO_INCREMENT,
-                `user_id` INT(11) NOT NULL,
-                `start` DATETIME NOT NULL,
-                `end` DATETIME NOT NULL,
-                `title` VARCHAR(100) NOT NULL,
-                `place` VARCHAR(150) NOT NULL,
-                `lat_long` VARCHAR(100) NULL DEFAULT NULL,
-                `image` VARCHAR(255) NULL DEFAULT NULL,
-                `text` LONGTEXT NOT NULL,
-                `currency` TINYINT(1) NOT NULL,
-                `price` VARCHAR(255) NOT NULL,
-                `price_art` TINYINT(1) NOT NULL,
-                `show` TINYINT(1) NOT NULL,
-                PRIMARY KEY (`id`)
+        $installSql =
+            'CREATE TABLE IF NOT EXISTS `[prefix]_events` (
+            `id` INT(11) NOT NULL AUTO_INCREMENT,
+            `user_id` INT(11) NOT NULL,
+            `start` DATETIME NOT NULL,
+            `end` DATETIME NOT NULL,
+            `title` VARCHAR(100) NOT NULL,
+            `place` VARCHAR(150) NOT NULL,
+            `lat_long` VARCHAR(100) NULL DEFAULT NULL,
+            `image` VARCHAR(255) NULL DEFAULT NULL,
+            `text` LONGTEXT NOT NULL,
+            `currency` TINYINT(1) NOT NULL,
+            `price` VARCHAR(255) NOT NULL,
+            `price_art` TINYINT(1) NOT NULL,
+            `show` TINYINT(1) NOT NULL,
+            PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_events_entrants` (

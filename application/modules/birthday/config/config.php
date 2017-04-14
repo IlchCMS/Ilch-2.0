@@ -42,10 +42,10 @@ class Config extends \Ilch\Config\Install
     {
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('bday_boxShow', '5');
-		
-		if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
-			$this->db()->queryMulti("INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ('birthday/birthdays/index/');");
-		}
+
+        if ($this->db()->ifTableExists('[prefix]_calendar_events')) {
+            $this->db()->queryMulti("INSERT INTO `[prefix]_calendar_events` (`url`) VALUES ('birthday/birthdays/index/');");
+        }
     }
 
     public function uninstall()
