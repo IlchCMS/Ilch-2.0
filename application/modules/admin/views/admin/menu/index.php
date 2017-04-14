@@ -391,7 +391,9 @@ $(document).ready
            $('#menukey').val($(this).parent().find('.hidden_menukey').val());
            $('#access').val($(this).parent().find('.hidden_access').val());
            $.each($(this).parent().find('.hidden_access').val().split(","), function(index, element) {
-               $('#access > option[value=' + element + ']').prop("selected", true);
+			   if (element !== "") {
+				   $('#access > option[value=' + element + ']').prop("selected", true);
+			   }
            });
            $('#access').trigger("chosen:updated");
         });
