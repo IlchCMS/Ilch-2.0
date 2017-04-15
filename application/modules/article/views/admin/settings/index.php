@@ -55,7 +55,8 @@
                    id="boxKeywordsH2"
                    name="boxKeywordsH2"
                    min="1"
-                   value="<?=($this->get('boxKeywordsH2') != '') ? $this->escape($this->get('boxKeywordsH2')) : $this->originalInput('boxKeywordsH2') ?>" />
+                   value="<?=($this->get('boxKeywordsH2') != '') ? $this->escape($this->get('boxKeywordsH2')) : $this->originalInput('boxKeywordsH2') ?>"
+                   required />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('boxKeywordsH3') ? 'has-error' : '' ?>">
@@ -68,7 +69,8 @@
                    id="boxKeywordsH3"
                    name="boxKeywordsH3"
                    min="1"
-                   value="<?=($this->get('boxKeywordsH3') != '') ? $this->escape($this->get('boxKeywordsH3')) : $this->originalInput('boxKeywordsH3') ?>" />
+                   value="<?=($this->get('boxKeywordsH3') != '') ? $this->escape($this->get('boxKeywordsH3')) : $this->originalInput('boxKeywordsH3') ?>"
+                   required />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('boxKeywordsH4') ? 'has-error' : '' ?>">
@@ -81,7 +83,8 @@
                    id="boxKeywordsH4"
                    name="boxKeywordsH4"
                    min="1"
-                   value="<?=($this->get('boxKeywordsH4') != '') ? $this->escape($this->get('boxKeywordsH4')) : $this->originalInput('boxKeywordsH4') ?>" />
+                   value="<?=($this->get('boxKeywordsH4') != '') ? $this->escape($this->get('boxKeywordsH4')) : $this->originalInput('boxKeywordsH4') ?>"
+                   required />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('boxKeywordsH5') ? 'has-error' : '' ?>">
@@ -94,7 +97,8 @@
                    id="boxKeywordsH5"
                    name="boxKeywordsH5"
                    min="1"
-                   value="<?=($this->get('boxKeywordsH5') != '') ? $this->escape($this->get('boxKeywordsH5')) : $this->originalInput('boxKeywordsH5') ?>" />
+                   value="<?=($this->get('boxKeywordsH5') != '') ? $this->escape($this->get('boxKeywordsH5')) : $this->originalInput('boxKeywordsH5') ?>"
+                   required />
         </div>
     </div>
 

@@ -51,21 +51,22 @@ class Settings extends \Ilch\Controller\Admin
                 'articlesPerPage' => 'numeric|integer|min:1',
                 'boxArticleLimit' => 'numeric|integer|min:1',
                 'boxArchiveLimit' => 'numeric|integer|min:1',
-                'boxKeywordsH2' => 'numeric|integer|min:1',
-                'boxKeywordsH3' => 'numeric|integer|min:1',
-                'boxKeywordsH4' => 'numeric|integer|min:1',
-                'boxKeywordsH5' => 'numeric|integer|min:1'
+                'boxKeywordsH2' => 'required|numeric|integer|min:1',
+                'boxKeywordsH3' => 'required|numeric|integer|min:1',
+                'boxKeywordsH4' => 'required|numeric|integer|min:1',
+                'boxKeywordsH5' => 'required|numeric|integer|min:1'
             ]);
 
             if ($validation->isValid()) {
                 $this->getConfig()->set('article_articlesPerPage', $this->getRequest()->getPost('articlesPerPage'));
                 $this->getConfig()->set('article_box_articleLimit', $this->getRequest()->getPost('boxArticleLimit'));
                 $this->getConfig()->set('article_box_archiveLimit', $this->getRequest()->getPost('boxArchiveLimit'));
-                $this->getConfig()->set('article_box_keywords', [
+                
+                $this->getConfig()->set('article_box_keywords', implode(',',[
                     $this->getRequest()->getPost('boxKeywordsH2'),
                     $this->getRequest()->getPost('boxKeywordsH3'),
                     $this->getRequest()->getPost('boxKeywordsH4'),
-                    $this->getRequest()->getPost('boxKeywordsH5')]);
+                    $this->getRequest()->getPost('boxKeywordsH5')]));
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
