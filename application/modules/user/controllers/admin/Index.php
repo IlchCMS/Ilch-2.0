@@ -80,6 +80,7 @@ class Index extends \Ilch\Controller\Admin
      */
     public function indexAction()
     {
+        $pagination = new \Ilch\Pagination();
         $userMapper = new UserMapper();
         $authTokenMapper = new AuthTokenMapper();
 
@@ -99,16 +100,20 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
         if ($this->getRequest()->getParam('showsetfree')) {
-            $entries = $userMapper->getUserList(['confirmed' => 0]);
+            $entries = $userMapper->getUserList(['confirmed' => 0], $pagination);
         } else {
-            $entries = $userMapper->getUserList(['confirmed' => 1]);
+            $entries = $userMapper->getUserList(['confirmed' => 1], $pagination);
         }
 
         $this->getView()->set('userList', $entries)
             ->set('showDelUserMsg', $this->getRequest()->getParam('showDelUserMsg'))
             ->set('errorMsg', $this->getRequest()->getParam('errorMsg'))
-            ->set('badge', count($userMapper->getUserList(['confirmed' => 0])));
+            ->set('badge', count($userMapper->getUserList(['confirmed' => 0])))
+            ->set('pagination', $pagination);
     }
 
     /**

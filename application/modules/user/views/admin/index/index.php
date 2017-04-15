@@ -94,3 +94,4 @@
     </div>
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
+<?=$this->get('pagination')->getHtml($this, ['action' => 'index']) ?>
