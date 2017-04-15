@@ -355,7 +355,7 @@ $osStatistic = $this->get('osStatistic');
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <div class="list-group-item">
                             <strong>
-                                <?php if ($statisticList->getBrowser() == '0'): ?>
+                                <?php if (!$statisticList->getBrowser()): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
                                     <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'browser' => $statisticList->getBrowser()]) ?>"><?=$statisticList->getBrowser() ?></a>
@@ -420,14 +420,10 @@ $osStatistic = $this->get('osStatistic');
                         <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsYearTotal')); ?>
                         <div class="list-group-item">
                             <strong>
-                                <?php if ($statisticList->getOS() == '0'): ?>
+                                <?php if (!$statisticList->getOS()): ?>
                                     <?=$this->getTrans('unknown') ?>
                                 <?php else: ?>
-                                    <?php if ($statisticList->getOS() == 'Windows'): ?>
-                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS().' '.$statisticList->getOSVersion() ?></a>
-                                    <?php else: ?>
-                                        <?=$statisticList->getOS() ?>
-                                    <?php endif; ?>
+                                    <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $date->format("Y", true), 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS().' '.$statisticList->getOSVersion() ?></a>
                                 <?php endif; ?>
                             </strong>
                             <span class="pull-right"><?=$statisticList->getVisits() ?></span>

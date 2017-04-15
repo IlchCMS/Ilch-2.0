@@ -11,7 +11,7 @@ $browser = $this->getRequest()->getParam('browser');
 <link href="<?=$this->getStaticUrl('css/bootstrap-progressbar-3.3.4.min.css') ?>" rel="stylesheet">
 
 <?php if ($this->get('statisticOSVersionList') != '' AND $os != ''): ?>
-    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?> - Windows</i></h1>
+    <h1><?=$this->getTrans('menuStatistic') ?>: <i><?=$this->getTrans('osStatistic') ?></i></h1>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -28,7 +28,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if ($statisticList->getOS() == '0'): ?>
+                                    <?php if (!$statisticList->getOS()): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$statisticList->getOS() ?> <?=$statisticList->getOSVersion() ?>
@@ -65,7 +65,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if ($statisticList->getBrowser() == '0'): ?>
+                                    <?php if (!$statisticList->getBrowser()): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?=$statisticList->getBrowser() ?> <?=$statisticList->getBrowserVersion() ?>
@@ -259,7 +259,7 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if ($statisticList->getOS() == '0'): ?>
+                                    <?php if (!$statisticList->getOS()): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
                                         <?php if ($statisticList->getOS() == 'Windows'): ?>
@@ -457,14 +457,10 @@ $browser = $this->getRequest()->getParam('browser');
                             <?php $progressWidth = $statisticMapper->getPercent($statisticList->getVisits(), $this->get('visitsTotal')); ?>
                             <div class="list-group-item">
                                 <strong>
-                                    <?php if ($statisticList->getOS() == '0'): ?>
+                                    <?php if (!$statisticList->getOS()): ?>
                                         <?=$this->getTrans('unknown') ?>
                                     <?php else: ?>
-                                        <?php if ($statisticList->getOS() == 'Windows'): ?>
-                                            <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS().' '.$statisticList->getOSVersion() ?></a>
-                                        <?php else: ?>
-                                            <?=$statisticList->getOS() ?>
-                                        <?php endif; ?>
+                                        <a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'year' => $year, 'os' => $statisticList->getOS()]) ?>"><?=$statisticList->getOS().' '.$statisticList->getOSVersion() ?></a>
                                     <?php endif; ?>
                                 </strong>
                                 <span class="pull-right"><?=$statisticList->getVisits() ?></span>

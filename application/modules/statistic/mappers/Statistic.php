@@ -484,17 +484,27 @@ class Statistic extends \Ilch\Mapper
 
         if ($name != null) {
             $osArray = [
-                'Windows' => '=Windows NT|Windows Server 2003|Windows XP x64|Windows 98|Windows 95=',
+                'Windows' => '=Windows NT|Windows Server 2003|Windows XP x64|Windows 98|Windows Phone|Windows 95=',
                 'Android' => '=Android=',
                 'Linux' => '=Linux|Ubuntu|X11=',
                 'SunOs' => '=SunOS=',
                 'iPhone' => '=iPhone=',
                 'iPad' => '=iPad=',
-                'Mac OS' => '=Mac OS X=',
+                'Mac OS X' => '=Mac OS X=',
+                'Mac OS' => '=Mac OS=',
                 'Macintosh' => '=Mac_PowerPC|Macintosh='
             ];
         } elseif ($version != null) {
             $osArray = [
+                '7.x' => '=Android 7=',
+                '6.x' => '=Android 6=',
+                '5.x' => '=Android 5=',
+                '4.4' => '=Android 4.4=',
+                '4.x' => '=Android 4.1|Android 4.2|Android 4.3=',
+                '4.0' => '=Android 4.0=',
+                '3.x' => '=Android 3=',
+                '2.3' => '=Android 2.3=',
+                '2.2' => '=Android 2.2=',
                 'XP' => '=Windows NT 5.1|Windows XP=',
                 'Vista' => '=Windows NT 6.0|Windows Vista=',
                 '7' => '=Windows NT 6.1|Windows 7=',
@@ -504,8 +514,17 @@ class Statistic extends \Ilch\Mapper
                 '2000' => '=Windows NT 5.0|Windows 2000=',
                 'Server 2003' => '=Windows NT 5\.2|Windows Server 2003|Windows XP x64=',
                 'NT' => '=Windows NT 4|WinNT4=',
+                'Phone 7.x' => '=Windows Phone OS 7=',
+                'Phone 8.0' => '=Windows Phone 8=',
+                'Phone 8.1' => '=Windows Phone 8.1=',
+                '10 Mobile' => '=Windows Phone 10=',
                 '98' => '=Windows 98=',
                 '95' => '=Windows 95=',
+                '10.8' => '=Mac OS X 10.8|Mac OS X 10_8=',
+                '10.9' => '=Mac OS X 10.9|Mac OS X 10_9=',
+                '10.10' => '=Mac OS X 10.10|Mac OS X 10_10=',
+                '10.11' => '=Mac OS X 10.11|Mac OS X 10_11=',
+                '10.12' => '=Mac OS X 10.12|Mac OS X 10_12=',
             ];
         }
 
@@ -515,7 +534,7 @@ class Statistic extends \Ilch\Mapper
             }
         }
 
-        return 0;
+        return "";
     }
 
     public function getBrowser($version = null) {
@@ -543,7 +562,7 @@ class Statistic extends \Ilch\Mapper
             } elseif (preg_match("=Netscape|Navigator=", $useragent)) {
                 return "Netscape";
             } else {
-                return 0;
+                return "";
             }
         } else {
             if (preg_match("=Firefox/([\.a-zA-Z0-9]*)=", $useragent, $browser)) {
@@ -576,11 +595,11 @@ class Statistic extends \Ilch\Mapper
                 if (preg_match('=Version/([\.0-9]*)=', $useragent, $browser)) {
                     $version = $browser[1];
                 } else {
-                    $version = 0;
+                    return "";
                 }
                 return $version;
             } else {
-                return 0;
+                return "";
             }
         }
     }
