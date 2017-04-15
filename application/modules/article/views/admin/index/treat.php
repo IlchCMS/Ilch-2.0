@@ -153,7 +153,7 @@ if ($this->get('article') != '') {
         <label for="permaLink" class="col-lg-2 control-label">
             <?=$this->getTrans('permaLink') ?>:
         </label>
-        <div class="col-lg-4">
+        <div class="col-lg-8">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon3"><?=$this->getUrl() ?>index.php/</span>
                 <input class="form-control"
