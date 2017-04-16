@@ -11,6 +11,11 @@ use Modules\User\Mappers\User as UserMapper;
 
 class Statistic extends \Ilch\Mapper
 {
+    /**
+     * Returns all online users.
+     *
+     * @return []|\Modules\User\Models\User[]
+     */
     public function getVisitsOnlineUser()
     {
         $userMapper = new UserMapper();
@@ -34,6 +39,11 @@ class Statistic extends \Ilch\Mapper
         return $users;
     }
 
+    /**
+     * Returns all online visits.
+     *
+     * @return null|\Modules\Statistic\Models\Statistic[]
+     */
     public function getVisitsOnline()
     {
         $date = new \Ilch\Date();
@@ -650,5 +660,16 @@ class Statistic extends \Ilch\Mapper
                 ->values(['referer' => $row['referer'], 'os' => $row['os'], 'os_version' => $row['os_version'], 'browser' => $row['browser'], 'browser_version' => $row['browser_version'], 'ip_address' => $row['ip'], 'lang' => $row['lang'], 'date' => $date->format('Y-m-d H:i:s', true)])
                 ->execute();
         }
+    }
+
+    /**
+     * Deletes a user from list of online users.
+     *
+     * @param  int $userId
+     */
+    public function deleteUserOnline($userId) {
+        $this->db()->delete('visits_online')
+            ->where(['user_id' => $userId])
+            ->execute();
     }
 }
