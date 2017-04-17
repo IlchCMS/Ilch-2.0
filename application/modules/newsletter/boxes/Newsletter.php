@@ -16,6 +16,7 @@ class Newsletter extends \Ilch\Box
     {
         $newsletterMapper = new NewsletterMapper();
 
+        $this->getView()->set('success', '');
         if ($this->getRequest()->getPost('saveNewsletterBox')) {
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'email' => 'required|email'
@@ -30,8 +31,9 @@ class Newsletter extends \Ilch\Box
                     $newsletterModel->setEmail($this->getRequest()->getPost('email'));
                     $newsletterMapper->saveEmail($newsletterModel);
                 }
+                $this->getView()->set('success', 'true');
             } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->getView()->set('success', 'false');
             }
         }
     }
