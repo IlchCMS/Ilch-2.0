@@ -22,7 +22,7 @@ class Newsletter extends \Ilch\Box
             ]);
 
             if ($validation->isValid()) {
-                $countEmails = $newsletterMapper->countEmails($post['email']);
+                $countEmails = $newsletterMapper->countEmails($this->getRequest()->getPost('email'));
                 if ($countEmails == 0) {
                     $newsletterModel = new NewsletterModel();
                     $newsletterModel->setSelector(bin2hex(openssl_random_pseudo_bytes(9)));
