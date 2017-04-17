@@ -180,7 +180,7 @@ class Statistic extends \Ilch\Mapper
 
     public function getVisitsYearMonth($year = null)
     {
-        $sql = 'SELECT DATE(`date`) AS `date_full`, MONTH(`date`) AS `date_month`, COUNT(`id`) AS `visits`
+        $sql = 'SELECT YEAR(`date`) AS `date_year`, MONTH(`date`) AS `date_month`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($year != null) {
             $date = $year.'-01-01';
@@ -188,7 +188,7 @@ class Statistic extends \Ilch\Mapper
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';
         }
-        $sql .= ' GROUP BY `date_full`,`date_month`
+        $sql .= ' GROUP BY `date_year`,`date_month`
                 ORDER BY MONTH(`date`) DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -201,7 +201,7 @@ class Statistic extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setDate($entries['date_full']);
+            $statisticModel->setDate($entries['date_year'].'-'.$entries['date_month'].'-01');
             $entry[] = $statisticModel;
         }
 
@@ -210,14 +210,14 @@ class Statistic extends \Ilch\Mapper
 
     public function getVisitsYear($year = null)
     {
-        $sql = 'SELECT YEAR(`date`) as year_full, COUNT(`id`) AS `visits`
+        $sql = 'SELECT YEAR(`date`) AS `year_full`, COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($year != null) {
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY YEAR(`date`)
-                  ORDER BY YEAR(`date`) DESC';
+        $sql .= ' GROUP BY `year_full`
+                  ORDER BY `year_full` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -229,7 +229,7 @@ class Statistic extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $statisticModel = new StatisticModel();
             $statisticModel->setVisits($entries['visits']);
-            $statisticModel->setDate($entries['year_full']);
+            $statisticModel->setDate($entries['year_full'].'-01-01');
             $entry[] = $statisticModel;
         }
 
