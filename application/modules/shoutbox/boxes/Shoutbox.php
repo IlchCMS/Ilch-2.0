@@ -8,7 +8,7 @@ namespace Modules\Shoutbox\Boxes;
 
 use Modules\Shoutbox\Mappers\Shoutbox as ShoutboxMapper;
 use Modules\Shoutbox\Models\Shoutbox as ShoutboxModel;
-use Modules\User\Mappers\Group as GroupMapper;
+use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
 class Shoutbox extends \Ilch\Box
@@ -16,8 +16,22 @@ class Shoutbox extends \Ilch\Box
     public function render()
     {
         $shoutboxMapper = new ShoutboxMapper();
-        $groupMapper = new GroupMapper();
+        $userMapper = new UserMapper();
         $uniqid = $this->getUniqid();
+
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+
+        $user = $userMapper->getUserById($userId);
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $group) {
+                $ids[] = $group->getId();
+            }
+        }
 
         if (($this->getRequest()->getPost('form_'.$uniqid) || $this->getRequest()->isAjax()) && $this->getRequest()->getPost('bot') === '') {
             $validation = Validation::create($this->getRequest()->getPost(), [
@@ -40,12 +54,10 @@ class Shoutbox extends \Ilch\Box
         }
 
         $this->getView()->setArray([
-            'shoutboxMapper' => $shoutboxMapper,
-            'groupMapper'    => $groupMapper,
             'uniqid'         => $uniqid,
             'shoutbox'       => $shoutboxMapper->getShoutboxLimit($this->getConfig()->get('shoutbox_limit')),
             'maxwordlength'  => $this->getConfig()->get('shoutbox_maxwordlength'),
-            'writeAccess'    => $this->getConfig()->get('shoutbox_writeaccess')
+            'writeAccess'    => explode(',',implode(',', $ids))
         ]);
     }
 }

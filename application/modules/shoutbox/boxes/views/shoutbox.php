@@ -1,19 +1,3 @@
-<?php
-$shoutboxMapper = $this->get('shoutboxMapper');
-$groupMapper = $this->get('groupMapper');
-$groupList = explode(',', $this->get('writeAccess'));
-$accessList = [];
-foreach ($groupList AS $groupId) {
-    $accessList[] = $groupMapper->getUsersForGroup($groupId);
-}
-if ($this->getUser()) {
-    $userId = $this->getUser()->getId();
-} else {
-    $userId = 0;
-}
-$searchAccess = $shoutboxMapper->searchInArray($userId, $accessList);
-?>
-
 <script >
 $(function() {
     var $shoutboxContainer = $('#shoutbox-container'),
@@ -76,7 +60,7 @@ $(function() {
     <div id="shoutbox-button-container" class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-12">
-                <?php if (empty($this->get('writeAccess')) OR $searchAccess): ?>
+                <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))): ?>
                     <div class="pull-left">
                         <button class="btn" id="shoutbox-slide-down"><?=$this->getTrans('answer') ?></button>
                     </div>
@@ -90,7 +74,7 @@ $(function() {
         </div>
     </div>
 
-    <?php if (empty($this->get('writeAccess')) OR $searchAccess): ?>
+    <?php if (is_in_array($this->get('writeAccess'), explode(',', $config->get('shoutbox_writeaccess')))): ?>
         <div id="shoutbox-form-container" style="display: none;">
             <form class="form-horizontal" action="" method="post">
                <?=$this->getTokenField() ?>
