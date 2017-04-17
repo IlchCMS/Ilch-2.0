@@ -197,14 +197,17 @@ class Article extends \Ilch\Mapper
     }
 
     /**
+     * Get a list for the archive-box.
+     *
      * @param int|null $limit
-     * @return ArticleModel[]
+     * @return []|ArticleModel[]
+     * @todo: Remove the group (aggregate) function MAX() workaround, which avoids duplicated entries in the archive-box if possible.
      */
     public function getArticleDateList($limit = null)
     {
-        $sql = 'SELECT `id`, `date_created`
+        $sql = 'SELECT MAX(`date_created`) AS `date_created`
                 FROM `[prefix]_articles`
-                GROUP BY YEAR(date_created), MONTH(date_created), `id`,`date_created`
+                GROUP BY YEAR(date_created), MONTH(date_created)
                 ORDER BY `date_created` DESC';
 
         if ($limit !== null) {
@@ -220,7 +223,6 @@ class Article extends \Ilch\Mapper
         $articles = [];
         foreach ($articleArray as $articleRow) {
             $articleModel = new ArticleModel();
-            $articleModel->setId($articleRow['id']);
             $articleModel->setDateCreated($articleRow['date_created']);
             $articles[] = $articleModel;
         }
