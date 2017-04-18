@@ -31,7 +31,7 @@ class Index extends BaseController
 
                 foreach ($items as $item) {
                     $validation = Validation::create($item, [
-                        'type' => 'required|numeric',
+                        'type' => 'required|numeric|integer',
                         'title' => 'required',
                         'readAccess' => 'min:0',
                         'replayAccess' => 'min:0',

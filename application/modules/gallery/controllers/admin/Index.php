@@ -51,7 +51,7 @@ class Index extends \Ilch\Controller\Admin
 
                 foreach ($items as $item) {
                     $validation = Validation::create($item, [
-                        'type' => 'required|numeric',
+                        'type' => 'required|numeric|integer',
                         'title' => 'required',
                     ]);
                     if (!$validation->isValid()) {
