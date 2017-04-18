@@ -8,6 +8,7 @@ namespace Modules\Gallery\Controllers\Admin;
 
 use Modules\Gallery\Mappers\Gallery as GalleryMapper;
 use Modules\Gallery\Mappers\Image as ImageMapper;
+use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
 {
@@ -47,6 +48,20 @@ class Index extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
                 $items = $this->getRequest()->getPost('items');
+
+                foreach ($items as $item) {
+                    $validation = Validation::create($item, [
+                        'type' => 'required|numeric',
+                        'title' => 'required',
+                    ]);
+                    if (!$validation->isValid()) {
+                        $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                        $this->redirect()
+                            ->withErrors($validation->getErrorBag())
+                            ->to(['action' => 'index']);
+                    }
+                }
+
                 $oldItems = $galleryMapper->getGalleryItems(1);
 
                 /*
