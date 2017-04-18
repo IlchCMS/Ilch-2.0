@@ -13,7 +13,8 @@ return [
     'ipAdress' => 'IP-Adresse',
     'osBrowser' => 'OS-System / Browser',
     'findOnSite' => 'Befindet sich gerade auf',
-    'onlineGuest' => 'Gäste',
+    'onlineGuests' => 'Gäste',
+    'onlineGuest' => 'Gast',
     'onlineUser' => 'User',
 
     'author' => 'Autor',

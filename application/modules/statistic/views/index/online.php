@@ -47,7 +47,7 @@ if ($this->getUser()) {
                 <tr>
                     <td>
                         <?php if ($userOnlineList->getUserId() == 0): ?>
-                            Gast
+                            <?=$this->getTrans('onlineGuest') ?>
                         <?php else: ?>
                             <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
                         <?php endif; ?>

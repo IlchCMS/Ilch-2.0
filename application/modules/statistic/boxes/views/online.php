@@ -12,4 +12,4 @@
     </ul>
     <hr />
 <?php endif; ?>
-<?=$this->getTrans('onlineGuest') ?>: <?=$this->get('guestOnline') ?>
+<?=$this->getTrans('onlineGuests') ?>: <?=$this->get('guestOnline') ?>

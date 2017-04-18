@@ -13,6 +13,7 @@ return [
     'ipAdress' => 'IP-Adress',
     'osBrowser' => 'OS-System / Browser',
     'findOnSite' => 'Is currently viewing',
+    'onlineGuests' => 'Guests',
     'onlineGuest' => 'Guest',
     'onlineUser' => 'User',
 
