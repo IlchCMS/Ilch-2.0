@@ -9,6 +9,7 @@ namespace Modules\Forum\Controllers\Admin;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Controllers\Admin\Base as BaseController;
 use Modules\User\Mappers\Group as UserGroupMapper;
+use Ilch\Validation;
 
 class Index extends BaseController
 {
@@ -27,6 +28,22 @@ class Index extends BaseController
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
                 $items = $this->getRequest()->getPost('items');
+
+                foreach ($items as $item) {
+                    $validation = Validation::create($item, [
+                        'type' => 'required|numeric',
+                        'title' => 'required',
+                        'readAccess' => 'min:0',
+                        'replayAccess' => 'min:0',
+                    ]);
+                    if (!$validation->isValid()) {
+                        $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                        $this->redirect()
+                            ->withErrors($validation->getErrorBag())
+                            ->to(['action' => 'index']);
+                    }
+                }
+
                 $oldItems = $forumMapper->getForumItems(1);
 
                 /*
