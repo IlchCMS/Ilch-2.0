@@ -11,6 +11,7 @@ use Modules\Admin\Mappers\Page as PageMapper;
 use Modules\Admin\Models\MenuItem;
 use Modules\Admin\Models\Menu as MenuModel;
 use Modules\User\Mappers\Group as UserGroupMapper;
+use Ilch\Validation;
 
 class Menu extends \Ilch\Controller\Admin
 {
@@ -41,6 +42,20 @@ class Menu extends \Ilch\Controller\Admin
             if ($this->getRequest()->getPost('save')) {
                 $sortItems = json_decode($this->getRequest()->getPost('hiddenMenu'));
                 $items = $this->getRequest()->getPost('items');
+
+                foreach ($items as $item) {
+                    $validation = Validation::create($item, [
+                        'type' => 'required|numeric|integer',
+                        'title' => 'required',
+                    ]);
+                    if (!$validation->isValid()) {
+                        $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                        $this->redirect()
+                            ->withErrors($validation->getErrorBag())
+                            ->to(['action' => 'index']);
+                    }
+                }
+
                 $oldItems = $menuMapper->getMenuItems($menuId);
 
                 /*
