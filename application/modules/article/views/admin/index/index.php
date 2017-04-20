@@ -1,6 +1,5 @@
 <?php
 $articleMapper = $this->get('articleMapper');
-$categoryMapper = $this->get('categoryMapper');
 ?>
 
 <h1><?=$this->getTrans('manage') ?></h1>
@@ -39,7 +38,6 @@ $categoryMapper = $this->get('categoryMapper');
             <tbody>
                 <?php if (!empty($this->get('articles'))): ?>
                     <?php foreach ($this->get('articles') as $article): ?>
-                        <?php $articlesCats = $categoryMapper->getCategoryById($article->getCatId()); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_articles', $article->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
