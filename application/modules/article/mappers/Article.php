@@ -69,10 +69,9 @@ class Article extends \Ilch\Mapper
      *
      * @param integer $catId
      * @param string $locale
-     * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByCats($catId, $locale = '', $pagination = null)
+    public function getArticlesByCats($catId, $locale = '')
     {
         $select = 'SELECT p.id, p.cat_id, p.date_created, pc.visits, pc.author_id, pc.description, pc.keywords, pc.title, pc.teaser, pc.perma, pc.content, pc.img, pc.img_source
                 FROM `[prefix]_articles` AS p

@@ -61,6 +61,7 @@ class Index extends \Ilch\Controller\Admin
         $articleMapper = new ArticleMapper();
         $categoryMapper = new CategoryMapper();
         $commentMapper = new CommentMapper();
+        $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
@@ -73,11 +74,15 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
         $this->getView()->set('articleMapper', $articleMapper);
         $this->getView()->set('categoryMapper', $categoryMapper);
-        $this->getView()->set('articles', $articleMapper->getArticleList());
+        $this->getView()->set('articles', $articleMapper->getArticles('', $pagination));
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
+        $this->getView()->set('pagination', $pagination);
     }
 
     public function treatAction()
