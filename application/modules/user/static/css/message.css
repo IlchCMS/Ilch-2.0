@@ -31,7 +31,19 @@
     height: 100%
 }
 .chat .chat-wrapper .message-list-scroll.noscroll {
-    height: calc(100% - 363px)
+    height: calc(100% - 396px)
+}
+
+.chat .chat-wrapper .chat-textarea {
+    position: relative;
+}
+.chat .chat-wrapper .chat-textarea .btn-primary {
+    position: absolute;
+    bottom: 37px;
+    right: 10px;
+    border-radius: 50%;
+    font-size: 16px;
+    display: none;
 }
 
 .chat .chat-wrapper .chat-list-wrapper {
@@ -371,14 +383,8 @@
     .chat .chat-wrapper .message-list-wrapper .message-list li.right .body {
         width: 100%;
     }
-    .cke_bottom {
-        display: none;
-    }
 }
 
-#uMessenger .send-btn {
-    margin-top: 10px;
-}
 #uMessenger .panel {
     border-radius: 0;
     margin-bottom: 0;

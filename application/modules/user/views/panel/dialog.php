@@ -113,16 +113,14 @@
                             <?php if ($this->get('dialog')): ?>
                                 <div class="compose-box">
                                     <div class="row">
-                                        <div class="col-xs-12">
+                                        <div class="col-xs-12 chat-textarea">
                                             <?=$this->getTokenField() ?>
                                             <textarea class="form-control input-sm ckeditor"
                                                       id="ck_1"
                                                       name="ilch_bbcode"
                                                       toolbar="ilch_bbcode"></textarea>
-                                        </div>
-                                        <div class="col-xs-12 send-btn">
                                             <button class="btn btn-primary btn-sm pull-right" id="chatSendBtn">
-                                                <i class="fa fa-location-arrow"></i> <?=$this->getTrans('dialogSubmit') ?>
+                                                <i class="fa fa-location-arrow"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -144,6 +142,12 @@
 
     $("ul.chat-list li").click(function(){
         location.href = $(this).find("a.dialog-link").attr("href");
+    });
+
+    CKEDITOR.on('instanceReady', function(e) {
+        $('.cke_contents iframe').contents().keyup(function(){
+            $(".chat-textarea").find('#chatSendBtn').show();
+        });
     });
 
     if (<?=$this->getRequest()->getParam('id') ?>) {
