@@ -209,7 +209,6 @@ class User extends \Ilch\Mapper
             }  else {
                 $user->setAvatar('static/img/noavatar.jpg');
             }
-            
         }
 
         if (isset($userRow['signature'])) {

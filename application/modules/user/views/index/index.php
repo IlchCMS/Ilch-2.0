@@ -10,7 +10,8 @@
             <div class="table-responsive">
                 <table class="table table-hover table-bordered">
                     <colgroup>
-                        <col class="col-lg-6" />
+                        <col class="col-lg-3" />
+                        <col class="col-lg-3" />
                         <col class="col-lg-3" />
                         <col class="col-lg-3" />
                     </colgroup>
@@ -18,18 +19,23 @@
                     <tr>
                         <th><?=$this->getTrans('userlistName') ?></th>
                         <th><?=$this->getTrans('userlistRegist') ?></th>
+                        <th><?=$this->getTrans('userDateLastActivity') ?></th>
                         <th><?=$this->getTrans('userlistContact') ?></th>
                     </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($this->get('userList') as $userlist): ?>
-                            <?php $ilchDate =  new Ilch\Date($userlist->getDateCreated()); ?>
+                            <?php $ilchDate = new Ilch\Date($userlist->getDateCreated()); ?>
+                            <?php $ilchLastDate = (!empty($userlist->getDateLastActivity())) ? new Ilch\Date($userlist->getDateLastActivity()) : ''; ?>
                             <tr>
                                 <td>
                                     <a href="<?=$this->getUrl(['controller' => 'profil', 'action' => 'index', 'user' => $userlist->getId()]) ?>" title="<?=$this->escape($userlist->getName()) ?>s <?=$this->getTrans('profile') ?>" class="user-link"><?=$this->escape($userlist->getName()) ?></a>
                                 </td>
                                 <td>
                                     <?=substr($this->getTrans($ilchDate->format('l')), 0, 2).', '.$ilchDate->format('d. ').substr($this->getTrans($ilchDate->format('F')), 0, 4).$ilchDate->format(' Y') ?>
+                                </td>
+                                <td>
+                                    <?=(!empty($ilchLastDate)) ? substr($this->getTrans($ilchLastDate->format('l')), 0, 2).', '.$ilchLastDate->format('d. ').substr($this->getTrans($ilchLastDate->format('F')), 0, 4).$ilchLastDate->format(' Y') : ''; ?>
                                 </td>
                                 <td>
                                     <?php if ($this->getUser() AND $this->getUser()->getId() != $this->escape($userlist->getID())): ?>
