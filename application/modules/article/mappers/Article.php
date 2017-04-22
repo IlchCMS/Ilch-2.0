@@ -69,17 +69,27 @@ class Article extends \Ilch\Mapper
      *
      * @param integer $catId
      * @param string $locale
+     * @param \Ilch\Pagination|null $pagination
      * @return ArticleModel[]|array
      */
-    public function getArticlesByCats($catId, $locale = '')
+    public function getArticlesByCats($catId, $locale = '', $pagination = null)
     {
-        $select = 'SELECT p.id, p.cat_id, p.date_created, pc.visits, pc.author_id, pc.description, pc.keywords, pc.title, pc.teaser, pc.perma, pc.content, pc.img, pc.img_source
-                FROM `[prefix]_articles` AS p
-                LEFT JOIN `[prefix]_articles_content` AS pc ON p.id = pc.article_id
-                WHERE p.cat_id LIKE "%'.$catId.'%" AND pc.locale = "'.$this->db()->escape($locale).'"
-                ORDER BY p.id DESC';
+        $select = $this->db()->select()
+            ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+            ->from(['p' => 'articles'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source'])
+            ->where(['p.cat_id LIKE' => '%'.$catId.'%', 'pc.locale' => $this->db()->escape($locale)])
+            ->order(['id' => 'DESC']);
 
-        $articleArray = $this->db()->queryArray($select);
+        if ($pagination !== null) {
+            $select->limit($pagination->getLimit())
+                ->useFoundRows();
+            $result = $select->execute();
+            $pagination->setRows($result->getFoundRows());
+        } else {
+            $result = $select->execute();
+        }
+        $articleArray = $result->fetchRows();
 
         if (empty($articleArray)) {
             return null;

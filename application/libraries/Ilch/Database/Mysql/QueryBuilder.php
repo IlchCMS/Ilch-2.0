@@ -237,7 +237,7 @@ abstract class QueryBuilder
      */
     protected function createComparisonExpression($key, $value)
     {
-        $singleComparisonOperators =  ['=', '<=', '>=', '<', '>', '!=', '<>'];
+        $singleComparisonOperators =  ['=', '<=', '>=', '<', '>', '!=', '<>', 'LIKE'];
 
         // expect comparison of 2 fields -> don't escape (f.e. join conditions)
         if (is_int($key)) {
