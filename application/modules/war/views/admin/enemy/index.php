@@ -43,7 +43,7 @@
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $enemy->getId()]) ?></td>
                             <td><?=(empty($enemy->getEnemyHomepage())) ? $this->escape($enemy->getEnemyName()) : '<a href="'.$enemy->getEnemyHomepage().'">'.$enemy->getEnemyName().'</a>' ?></td>
                             <td><?=$this->escape($enemy->getEnemyTag()) ?></td>
-                            <td><?=(empty($enemy->getEnemyImage())) ? '' : '<img class="group-image" src="<?=$this->getBaseUrl($enemy->getEnemyImage()) ?>" />' ?></td>
+                            <td><?=(empty($enemy->getEnemyImage())) ? '' : '<img class="group-image" src="'.$this->getBaseUrl($enemy->getEnemyImage()).'" />' ?></td>
                             <td><?=$this->escape($enemy->getEnemyContactName()) ?></td>
                             <td><?=$enemy->getEnemyContactEmail() ?></td>
                         </tr>
