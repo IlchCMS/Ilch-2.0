@@ -24,7 +24,7 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
         <?php if ($article->getTeaser()): ?>
             <h3><?=$this->escape($article->getTeaser()) ?></h3>
         <?php endif; ?>
-        <h2><a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
+        <h2><a href="<?=$this->getUrl(['controller' => 'index', 'action' => 'show', 'id' => $article->getId()]) ?>"><?=$this->escape($article->getTitle()) ?></a></h2>
         <?php if (!empty($image)): ?>
             <figure>
                 <img class="article_image" src="<?=$this->getBaseUrl($image) ?>">
