@@ -18,7 +18,8 @@ class Forum extends \Ilch\Box
         $topicMapper = new TopicMapper();
         $userMapper = new UserMapper();
 
-        $groupIds = [0];
+        // Add group 'guest' by default
+        $groupIds = [3];
 
         if ($this->getUser()) {
             $userId = $this->getUser()->getId();
