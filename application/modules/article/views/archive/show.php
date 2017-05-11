@@ -63,6 +63,7 @@ $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRe
         </div>
         <br /><br /><br />
     <?php endforeach; ?>
+    <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]) ?>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>

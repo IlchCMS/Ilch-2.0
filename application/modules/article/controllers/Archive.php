@@ -62,6 +62,7 @@ class Archive extends \Ilch\Controller\Frontend
         $categoryMapper = new CategoryMapper();
         $commentMapper = new CommentMapper();
         $userMapper = new UserMapper();
+        $pagination = new \Ilch\Pagination();
 
         $date = new \Ilch\Date($this->getRequest()->getParam('year').'-'.$this->getRequest()->getParam('month').'-01');
 
@@ -76,9 +77,13 @@ class Archive extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuArchives'), ['action' => 'index'])
             ->add($date->format('F Y', true), ['action' => 'show', 'year' => $this->getRequest()->getParam('year'), 'month' => $this->getRequest()->getParam('month')]);
 
+        $pagination->setRowsPerPage($this->getConfig()->get('defaultPaginationObjects'));
+        $pagination->setPage($this->getRequest()->getParam('page'));
+
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('userMapper', $userMapper)
-            ->set('articles', $articleMapper->getArticlesByDate($date));
+            ->set('articles', $articleMapper->getArticlesByDate($date, $pagination))
+            ->set('pagination', $pagination);
     }
 }
