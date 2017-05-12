@@ -168,7 +168,7 @@ class ProfileFields extends \Ilch\Mapper
         }
 
         if (isset($profileFieldRow['name'])) {
-            $profileField->setName($profileFieldRow['name']);
+            $profileField->setName(str_replace(' ','-',$profileFieldRow['name']));
         }
 
         if (isset($profileFieldRow['type'])) {

@@ -77,7 +77,7 @@ class ProfileFieldsTranslation extends \Ilch\Mapper
         }
 
         if (isset($profileFieldRow['name'])) {
-            $profileFieldTranslation->setName($profileFieldRow['name']);
+            $profileFieldTranslation->setName(str_replace(' ','-',$profileFieldRow['name']));
         }
 
         return $profileFieldTranslation;
