@@ -81,7 +81,8 @@ class Panel extends BaseController
             ];
 
             foreach ($profileFields as $profileField) {
-                $post[$profileField->getName()] = trim($this->getRequest()->getPost($profileField->getName()));
+                $index = 'profileField'.$profileField->getId();
+                $post[$index] = trim($this->getRequest()->getPost($index));
             }
 
             $validation = Validation::create($post, [
@@ -111,10 +112,11 @@ class Panel extends BaseController
                 $profilMapper->save($model);
 
                 foreach ($profileFields as $profileField) {
+                    $index = 'profileField'.$profileField->getId();
                     $profileFieldsContent = new ProfileFieldContentModel();
                     $profileFieldsContent->setFieldId($profileField->getId());
                     $profileFieldsContent->setUserId($this->getUser()->getId());
-                    $profileFieldsContent->setValue($post[$profileField->getName()]);
+                    $profileFieldsContent->setValue($post[$index]);
                     $profileFieldsContentMapper->save($profileFieldsContent);
                 }
 

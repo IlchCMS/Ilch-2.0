@@ -152,8 +152,9 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                     
                     if(!$profileField->getType()) :
                         $value = '';
-                        if ($this->originalInput($profileField->getName()) != '') {
-                            $value = $this->escape($this->originalInput($profileField->getName()));
+                        $index = 'profileField'.$profileField->getId();
+                        if ($this->originalInput($index) != '') {
+                            $value = $this->escape($this->originalInput($index));
                         } else {
                             foreach($profileFieldsContent as $profileFieldContent) {
                                 if($profileField->getId() == $profileFieldContent->getFieldId()) {
@@ -169,7 +170,7 @@ $birthday = new \Ilch\Date($profil->getBirthday());
                             <div class="col-lg-8">
                                <input type="text"
                                       class="form-control"
-                                      name="<?=$this->escape($profileField->getName()) ?>"
+                                      name="<?=$index ?>"
                                       placeholder="<?=$value ?>"
                                       value="<?=$value ?>" />
                             </div>
