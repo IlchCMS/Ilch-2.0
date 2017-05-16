@@ -89,7 +89,7 @@ $('#downloadsForm').submit (
     function () {
         var items = $("#sortable tr");
 
-        var linkIDs = [items.size()];
+        var linkIDs = [items.length];
         var index = 0;
 
         items.each(
