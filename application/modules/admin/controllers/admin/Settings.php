@@ -261,6 +261,7 @@ HTACCESS;
         } else {
             $this->getView()->set('versions', '');
         }
+        curl_close($update->getTransferUrl());
     }
 
     public function notificationsAction()
