@@ -110,7 +110,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
         $postId = (int)$this->getRequest()->getParam('id');
         $topicId = (int)$this->getRequest()->getParam('topicid');
-        $forumId = (int)$this->getRequest()->getParam('forumid');
+        $forumId = $forumMapper->getForumByTopicId($topicId)->getId();
         $countPosts = $forumMapper->getCountPostsByTopicId($topicId);
         if ($this->getUser()) {
             if ($this->getUser()->isAdmin()) {
