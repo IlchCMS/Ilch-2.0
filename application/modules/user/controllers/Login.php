@@ -222,3 +222,4 @@ class Login extends \Ilch\Controller\Frontend
         }
     }
 }
+?>

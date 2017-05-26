@@ -26,5 +26,4 @@ class Index extends \Ilch\Controller\Frontend
         $this->getView()->set('pagination', $pagination);
     }    
 }
-
-
+?>

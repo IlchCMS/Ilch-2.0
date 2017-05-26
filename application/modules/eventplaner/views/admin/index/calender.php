@@ -1,0 +1,1 @@
+<h4><?=$this->getTrans('calenderView');?></h4>
