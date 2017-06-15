@@ -495,6 +495,7 @@ class Statistic extends \Ilch\Mapper
             ];
         } elseif ($version != null) {
             $osArray = [
+                '8.0' => '=Android 8.0=',
                 '7.x' => '=Android 7=',
                 '6.x' => '=Android 6=',
                 '5.x' => '=Android 5=',
@@ -524,6 +525,7 @@ class Statistic extends \Ilch\Mapper
                 '10.10' => '=Mac OS X 10.10|Mac OS X 10_10=',
                 '10.11' => '=Mac OS X 10.11|Mac OS X 10_11=',
                 '10.12' => '=Mac OS X 10.12|Mac OS X 10_12=',
+                '10.13' => '=Mac OS X 10.13|Mac OS X 10_13=',
             ];
         }
 
