@@ -219,7 +219,8 @@ return [
     'writable' => 'writable',
     'notWritable' => 'not writable',
     'certificate' => 'Certificate',
-    'certificateInfoText' => 'The type of the certificate should be RSA, the key size at least 2048-bit and it should be valid.
+    'certificateInfoText' => 'Ilch uses the certificate to verify if the update, module or layout is from the ilch-developers and was not manipulated in the meantime.
+                              The type of the certificate should be RSA, the key size at least 2048-bit and it should be valid.
                               The fingerprint can be helpful to determine if you have the correct certificate.',
     'property' => 'Property',
     'value' => 'Value',
