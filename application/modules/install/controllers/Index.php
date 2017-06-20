@@ -11,6 +11,9 @@ class Index extends \Ilch\Controller\Frontend
 {
     public function init()
     {
+        if (!extension_loaded('openssl')) {
+            die('Ilch CMS 2.* needs at least the PHP openssl extension to try an install.');
+        }
         $fileConfig = new File();
         $fileConfig->loadConfigFromFile(CONFIG_PATH.'/config.php');
         if ($fileConfig->get('dbUser') !== null and $this->getRequest()->getActionName() !== 'finish') {
