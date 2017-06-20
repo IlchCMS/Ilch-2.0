@@ -478,6 +478,13 @@ class Statistic extends \Ilch\Mapper
         return $percent;
     }
 
+    /**
+     * Get the name and/or version of the operating system from the user agent.
+     *
+     * @param  string $name
+     * @param  string $version
+     * @return string
+     */
     public function getOS($name = null, $version = null) {
         $useragent = $_SERVER['HTTP_USER_AGENT'];
 
