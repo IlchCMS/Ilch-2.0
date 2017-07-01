@@ -86,7 +86,7 @@ return [
     'search' => 'Suche',
     'go' => 'Los',
     'welcomeBack' => 'Willkommen zurück %s',
-    'welcomeBackDescripton' => 'Um zu Ihrem gewünschten Ziel zu kommen, benutzen Sie entweder die Navigation oben oder die umfangreiche Suche auf der rechten oberen Seite',
+    'welcomeBackDescripton' => 'Um zu Ihrem gewünschten Ziel zu kommen, benutzen Sie entweder die Navigation oben oder die umfangreiche Suche auf der rechten oberen Seite.',
     'validateRequired' => 'Dieses Feld ist ein Pflichtfeld.',
     'validateEmail' => 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
     'ack' => 'Bestätigen',
