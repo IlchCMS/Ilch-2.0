@@ -23,4 +23,5 @@ return [
     'noCategory' => 'Keine Kategorie vorhanden',
     'httpOrMedia' => 'http:// oder Medien',
     'deleteFailed' => 'Es befinden sich noch Einträge in der Kategorie',
+    'linkInfoText' => 'Die Links einer Kategorie können innerhalb der Kategorie bearbeitet werden.',
 ];

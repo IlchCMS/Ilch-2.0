@@ -1,4 +1,9 @@
-<h1><?=$this->getTrans('manage') ?></h1>
+<h1>
+    <?=$this->getTrans('manage') ?>
+    <a class="badge" data-toggle="modal" data-target="#infoModal">
+        <i class="fa fa-info"></i>
+    </a>
+</h1>
 <form class="form-horizontal" method="POST" action="">
     <?php if ($this->get('categorys') != ''): ?>
         <?=$this->getTokenField() ?>
@@ -35,7 +40,7 @@
                             <td><?=$this->getEditIcon(['action' => 'treatCat', 'id' => $category->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'deleteCat', 'id' => $category->getId()]) ?></td>
                             <td><a href="<?=$this->getUrl(['action' => 'index', 'cat_id' => $category->getId()]) ?>" title="<?=$this->escape($category->getName()) ?>"><?=$this->escape($category->getName()) ?></a><br><?=$getDesc ?></td>
-                            <td style="vertical-align:middle"><?=$category->getLinksCount() ?></td>
+                            <td style="vertical-align:middle"><a href="<?=$this->getUrl(['action' => 'index', 'cat_id' => $category->getId()]) ?>" title="<?=$this->escape($category->getName()) ?>"><?=$category->getLinksCount() ?></a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -96,3 +101,5 @@
 
     <?=$this->getListBar(['delete' => 'delete']) ?>
 </form>
+
+<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('linkInfoText')); ?>
