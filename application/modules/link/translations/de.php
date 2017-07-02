@@ -9,6 +9,8 @@ return [
     'menuCategory' => 'Kategorien',
     'menuActionNewLink' => 'Link hinzufügen',
     'menuActionNewCategory' => 'Kategorie hinzufügen',
+    'menuActionEditLink' => 'Link bearbeiten',
+    'menuActionEditCategory' => 'Kategorie bearbeiten',
     'link' => 'Link',
     'name' => 'Name',
     'banner' => 'Banner',

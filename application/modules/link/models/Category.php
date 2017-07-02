@@ -25,7 +25,7 @@ class Category extends \Ilch\Mapper
     /**
      * The catid of the category.
      *
-     * @var string
+     * @var int
      */
     private $cat;
 
@@ -86,21 +86,21 @@ class Category extends \Ilch\Mapper
     /**
      * Returns the category id.
      *
-     * @return string
+     * @return int
      */
     public function getParentId()
     {
-        return $this->cat_id;
+        return $this->cat;
     }
 
     /**
      * Sets the category id.
      *
-     * @param string $name
+     * @param int $cat
      */
     public function setParentId($cat)
     {
-        $this->cat_id = (string)$cat;
+        $this->cat = $cat;
     }
 
     /**

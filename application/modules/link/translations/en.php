@@ -9,6 +9,8 @@ return [
     'menuCategory' => 'Category',
     'menuActionNewLink' => 'Add link',
     'menuActionNewCategory' => 'Add category',
+    'menuActionEditLink' => 'Edit link',
+    'menuActionEditCategory' => 'Edit category',
     'link' => 'Link',
     'name' => 'Name',
     'banner' => 'Banner',
