@@ -293,6 +293,7 @@ class Panel extends BaseController
             if ($validation->isValid()) {
                 $model = new UserModel();
                 $model->setId($this->getUser()->getId())
+                    ->setLocale($this->getRequest()->getPost('locale'))
                     ->setOptMail($this->getRequest()->getPost('optMail'));
                 $profilMapper->save($model);
 
