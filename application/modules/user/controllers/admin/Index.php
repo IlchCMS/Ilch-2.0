@@ -203,9 +203,12 @@ class Index extends \Ilch\Controller\Admin
                 $user->addGroup($group);
             }
 
-            $date = new \Ilch\Date();
-            $user->setDateCreated($date);
-            $user->setLocale($this->getTranslator()->getLocale());
+            if (empty($userData['id'])) {
+                $date = new \Ilch\Date();
+                $user->setDateCreated($date);
+                $user->setLocale($this->getTranslator()->getLocale());
+            }
+
             $userId = $userMapper->save($user);
 
             if (!empty($userId) && empty($userData['id'])) {
