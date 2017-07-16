@@ -1,7 +1,10 @@
 ### Ilch 2.0 [![Build Status](https://travis-ci.org/IlchCMS/Ilch-2.0.png?branch=master)](https://travis-ci.org/IlchCMS/Ilch-2.0)
 Ilch 2.0 ist der direkte Nachfolger der Ilch Versionen 1.1.
 
-### Download Versionen
+### Neueste Version
+- [Zur neuesten Version](https://github.com/IlchCMS/Ilch-2.0/releases/latest)
+
+### Download Versionen (aktueller Entwicklungsstand)
 - Userversion [![Download](http://ilch2.de/downloads/download-ilch.png)](http://www.ilch.de/ilch2/versions/master.zip)
 - Entwicklerversion [![Download](http://ilch2.de/downloads/download-ilch.png)](https://github.com/IlchCMS/Ilch-2.0/archive/master.zip)
 
