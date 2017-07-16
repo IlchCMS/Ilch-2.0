@@ -37,7 +37,7 @@ class Config extends \Ilch\Config\Install
         $date = new \Ilch\Date();
         $databaseConfig = new \Ilch\Config\Database($this->db());
         $databaseConfig->set('version', VERSION, 1);
-        $databaseConfig->set('updateserver', 'https://ilch2.de/development/stable/');
+        $databaseConfig->set('updateserver', 'https://ilch2.de/development/updateserver/stable/');
         $databaseConfig->set('locale', $this->getTranslator()->getLocale(), 1);
         $databaseConfig->set('date_cms_installed', $date->format('Y-m-d H:i:s'), 1);
         $databaseConfig->set('timezone', $_SESSION['install']['timezone']);
@@ -196,8 +196,8 @@ class Config extends \Ilch\Config\Install
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
-                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/development/stable/", "corian (ilch-Team)", "Germany");
-                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/ilch-updateserver/stable/", "blackcoder (ilch-Team)", "Germany");';
+                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (1, "https://ilch2.de/development/updateserver/stable/", "corian (ilch-Team)", "Germany");
+                INSERT INTO `[prefix]_admin_updateservers` (`id`, `url`, `operator`, `country`) VALUES (2, "https://www.blackcoder.de/ilch-us/stable/", "blackcoder (ilch-Team)", "Germany");';
     }
 
     public function getUpdate($installedVersion)
