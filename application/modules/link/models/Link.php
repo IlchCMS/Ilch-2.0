@@ -16,6 +16,13 @@ class Link extends \Ilch\Model
     protected $id;
 
     /**
+     * The position of the link.
+     *
+     * @var int
+     */
+    protected $position;
+
+    /**
      * The name of the link.
      *
      * @var string
@@ -77,6 +84,28 @@ class Link extends \Ilch\Model
     {
         $this->id = (int)$id;
 
+        return $this;
+    }
+
+    /**
+     * Returns the position of the link.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Sets the position.
+     *
+     * @param int $position
+     * @return this
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int)$position;
         return $this;
     }
 

@@ -27,7 +27,7 @@ class Category extends \Ilch\Mapper
             $sql .= ' AND lc.`'.$key.'` = "'.$this->db()->escape($value).'"';
         }
 
-        $sql .= 'GROUP BY `lc`.`id`, `lc`.`parent_id`, `lc`.`pos`, `lc`.`name`, `lc`.`desc`';
+        $sql .= 'GROUP BY `lc`.`id`, `lc`.`parent_id`, `lc`.`pos`, `lc`.`name`, `lc`.`desc` ORDER BY `lc`.`pos` ASC';
         $categoryArray = $this->db()->queryArray($sql);
 
         if (empty($categoryArray)) {
@@ -39,6 +39,7 @@ class Category extends \Ilch\Mapper
             $categoryModel = new CategoryModel();
             $categoryModel->setId($categoryRow['id']);
             $categoryModel->setParentId($categoryRow['parent_id']);
+            $categoryModel->setPosition($categoryRow['pos']);
             $categoryModel->setName($categoryRow['name']);
             $categoryModel->setDesc($categoryRow['desc']);
             $categoryModel->setLinksCount($categoryRow['count']);
@@ -65,6 +66,7 @@ class Category extends \Ilch\Mapper
     {
         $categoryRow = $this->db()->select('*')
             ->from('link_cats')
+            ->order(['pos' => 'ASC'])
             ->where(['id' => $id])
             ->execute()
             ->fetchAssoc();
@@ -80,6 +82,7 @@ class Category extends \Ilch\Mapper
         $categoryModel = new CategoryModel();
         $categoryModel->setId($categoryRow['id']);
         $categoryModel->setParentId($categoryRow['parent_id']);
+        $categoryModel->setPosition($categoryRow['pos']);
         $categoryModel->setName($categoryRow['name']);
         $categoryModel->setDesc($categoryRow['desc']);
         $models[] = $categoryModel;
@@ -100,6 +103,19 @@ class Category extends \Ilch\Mapper
     }
 
     /**
+     * Updates the position of a category in the database.
+     *
+     * @param int $id, int $position
+     *
+     */
+    public function updatePositionById($id, $position) {
+        $this->db()->update('link_cats')
+            ->values(['pos' => $position])
+            ->where(['id' => $id])
+            ->execute();
+    }
+
+    /**
      * Inserts or updates category model.
      *
      * @param CategoryModel $category
@@ -109,7 +125,8 @@ class Category extends \Ilch\Mapper
         $fields = [
             'name' => $category->getName(),
             'desc' => $category->getDesc(),
-            'parent_id' => $category->getParentId()
+            'parent_id' => $category->getParentId(),
+            'pos' => $category->getPosition()
         ];
 
         if ($category->getId()) {

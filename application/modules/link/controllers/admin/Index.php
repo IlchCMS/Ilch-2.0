@@ -79,7 +79,21 @@ class Index extends \Ilch\Controller\Admin
             $links = $linkMapper->getLinks(['cat_id' => 0]);
             $categorys = $categoryMapper->getCategories(['parent_id' => 0]);
         }
-        
+
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
+            $positions = explode(',', $postData['hiddenMenu']);
+            $positionsCat = explode(',', $postData['hiddenMenuCat']);
+            for($x = 0; $x < count($positions); $x++) {
+                $linkMapper->updatePositionById($positions[$x], $x);
+            }
+            for($x = 0; $x < count($positionsCat); $x++) {
+                $categoryMapper->updatePositionById($positionsCat[$x], $x);
+            }
+            $this->addMessage('saveSuccess');
+            $this->redirect(['action' => 'index']);
+        }
+
         $this->getView()->set('links', $links);
         $this->getView()->set('categorys', $categorys);
     }

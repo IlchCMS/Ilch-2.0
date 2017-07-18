@@ -18,7 +18,12 @@ class Link extends \Ilch\Mapper
      */
     public function getLinks($where = [])
     {
-        $linkArray = $this->db()->select('*')->from('links')->where($where)->execute()->fetchRows();
+        $linkArray = $this->db()->select('*')
+            ->from('links')
+            ->order(['pos' => 'ASC'])
+            ->where($where)
+            ->execute()
+            ->fetchRows();
 
         if (empty($linkArray)) {
             return null;
@@ -29,6 +34,7 @@ class Link extends \Ilch\Mapper
             $linkModel = new LinkModel();
             $linkModel->setId($linkRow['id']);
             $linkModel->setCatId($linkRow['cat_id']);
+            $linkModel->setPosition($linkRow['pos']);
             $linkModel->setName($linkRow['name']);
             $linkModel->setDesc($linkRow['desc']);
             $linkModel->setLink($linkRow['link']);
@@ -55,6 +61,19 @@ class Link extends \Ilch\Mapper
     }
 
     /**
+     * Updates the position of a link in the database.
+     *
+     * @param int $id, int $position
+     *
+     */
+    public function updatePositionById($id, $position) {
+        $this->db()->update('links')
+            ->values(['pos' => $position])
+            ->where(['id' => $id])
+            ->execute();
+    }
+
+    /**
      * Inserts or updates link model.
      *
      * @param LinkModel $link
@@ -67,6 +86,7 @@ class Link extends \Ilch\Mapper
             'banner' => $link->getBanner(),
             'desc' => $link->getDesc(),
             'cat_id' => $link->getCatId(),
+            'pos' => $link->getPosition(),
             'hits' => $link->getHits()
         ];
 

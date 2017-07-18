@@ -16,6 +16,13 @@ class Category extends \Ilch\Mapper
     private $id;
 
     /**
+     * The position of the category.
+     *
+     * @var int
+     */
+    protected $position;
+
+    /**
      * The name of the category.
      *
      * @var string
@@ -61,6 +68,28 @@ class Category extends \Ilch\Mapper
     public function setId($id)
     {
         $this->id = (int) $id;
+    }
+
+    /**
+     * Returns the position of the category.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Sets the position.
+     *
+     * @param int $position
+     * @return this
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int)$position;
+        return $this;
     }
 
     /**
