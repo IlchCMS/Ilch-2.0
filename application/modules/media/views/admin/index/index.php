@@ -110,7 +110,7 @@
                                          style="width:50px; height:auto;" />
                                 <?php endif; ?>
                             </td>
-                            <td><?=$media->getName() ?></td>
+                            <td><a href="<?=$this->getBaseUrl($media->getUrl()) ?>" download="<?=$media->getName().".".$media->getEnding() ?>"><?=$media->getName() ?></a></td>
                             <td><?=$media->getDatetime() ?></td>
                             <td>
                                 <div class="btn-group dropdown">
