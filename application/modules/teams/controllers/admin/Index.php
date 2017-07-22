@@ -100,8 +100,11 @@ class Index extends \Ilch\Controller\Admin
                 'optIn' => 'required|numeric|integer|min:0|max:1'
             ]);
 
-            if (count(array_intersect($this->getRequest()->getPost('leader'), $this->getRequest()->getPost('coLeader')))) {
-                $validation->getErrorBag()->addError('coLeader', $this->getTranslator()->trans('leaderCoLeaderIdentic'));
+            // No need to check if the leader and coleader are identical if one of them is empty.
+            if (!empty($this->getRequest()->getPost('leader')) And !empty($this->getRequest()->getPost('coLeader'))) {
+                if (count(array_intersect($this->getRequest()->getPost('leader'), $this->getRequest()->getPost('coLeader')))) {
+                    $validation->getErrorBag()->addError('coLeader', $this->getTranslator()->trans('leaderCoLeaderIdentic'));
+                }
             }
 
             if ($validation->isValid()) {
@@ -160,8 +163,16 @@ class Index extends \Ilch\Controller\Admin
                     }
                 }
 
-                $leader = implode(",", $this->getRequest()->getPost('leader'));
-                $coLeader = implode(",", $this->getRequest()->getPost('coLeader'));
+                $leader = '';
+                $coLeader = '';
+
+                if (!empty($this->getRequest()->getPost('leader'))) {
+                    $leader = implode(",", $this->getRequest()->getPost('leader'));
+                }
+
+                if (!empty($this->getRequest()->getPost('coLeader'))) {
+                    $coLeader = implode(",", $this->getRequest()->getPost('coLeader'));
+                }
 
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setLeader($leader)
