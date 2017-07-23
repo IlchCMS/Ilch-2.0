@@ -29,7 +29,13 @@ class Applications extends \Ilch\Controller\Admin
                 'name' => 'applications',
                 'active' => true,
                 'icon' => 'fa fa-th-list',
-                'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index'])
+                'url' => $this->getLayout()->getUrl(['controller' => 'applications', 'action' => 'index']),
+                [
+                    'name' => 'history',
+                    'active' => false,
+                    'icon' => 'fa fa-folder-open',
+                    'url' => $this->getLayout()->getUrl(['controller' => 'applicationshistory', 'action' => 'index'])
+                ]
             ],
             [
                 'name' => 'settings',
@@ -168,7 +174,7 @@ class Applications extends \Ilch\Controller\Admin
                 ->setMessage($message)
                 ->sent();
 
-            $joinsMapper->delete($this->getRequest()->getParam('id'));
+            $joinsMapper->updateDecision($this->getRequest()->getParam('id'), 1);
 
             $this->redirect()
                 ->withMessage('acceptSuccess')
@@ -228,7 +234,7 @@ class Applications extends \Ilch\Controller\Admin
                 ->setMessage($message)
                 ->sent();
 
-            $joinsMapper->delete($this->getRequest()->getParam('id'));
+            $joinsMapper->updateDecision($this->getRequest()->getParam('id'), 2);
 
             $this->redirect()
                 ->withMessage('rejectSuccess')

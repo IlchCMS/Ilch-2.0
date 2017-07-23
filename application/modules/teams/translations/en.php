@@ -31,6 +31,7 @@ return [
 
     'menuJoin' => 'Join',
     'menuApplications' => 'Applications',
+    'menuApplicationsHistory' => 'History',
     'menuEMails' => 'E-Mails',
     'optIn' => 'Join possible?',
     'team' => 'Team',
@@ -69,4 +70,11 @@ return [
     'variablesSitetitle' => 'Pagetitle from the Page',
     'variablesConfirm' => 'Confirm button to complete',
     'confirm' => 'Confirm',
+    'history' => 'History',
+    'details' => 'Details',
+    'decision' => 'Decision',
+    'accepted' => 'accepted',
+    'declined' => 'declined',
+    'clearHistory' => 'Clear history',
+    'historyOfUser' => 'Older applications of this user',
 ];

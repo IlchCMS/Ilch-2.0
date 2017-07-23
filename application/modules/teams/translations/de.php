@@ -31,6 +31,7 @@ return [
 
     'menuJoin' => 'Beitreten',
     'menuApplications' => 'Bewerbungen',
+    'menuApplicationsHistory' => 'Verlauf',
     'menuEMails' => 'E-Mails',
     'optIn' => 'Beitreten möglich?',
     'team' => 'Team',
@@ -70,4 +71,11 @@ return [
     'variablesSitetitle' => 'Seitentitel der Homepage',
     'variablesConfirm' => 'Bestätigungs Button zum Abschließen',
     'confirm' => 'Bestätigen',
+    'history' => 'Verlauf',
+    'details' => 'Details',
+    'decision' => 'Entscheidung',
+    'accepted' => 'angenommen',
+    'declined' => 'abgelehnt',
+    'clearHistory' => 'Verlauf löschen',
+    'historyOfUser' => 'Ältere Bewerbungen dieses Benutzers',
 ];

@@ -93,6 +93,20 @@ class Joins extends \Ilch\Model
     protected $text;
 
     /**
+     * The decision of the Join.
+     *
+     * @var int
+     */
+    protected $decision;
+
+    /**
+     * The value of undecided of the Join.
+     *
+     * @var int
+     */
+    protected $undecided;
+
+    /**
      * Sets the Id of the Join.
      *
      * @param int $id
@@ -364,6 +378,53 @@ class Joins extends \Ilch\Model
     public function setText($text)
     {
         $this->text = (string)$text;
+
+        return $this;
+    }
+
+    /**
+     * Gets the status of the Join.
+     * 1 = accepted, 2 = declined
+     *
+     * @return int
+     */
+    public function getDecision()
+    {
+        return $this->decision;
+    }
+
+    /**
+     * Sets the status of the Join.
+     *
+     * @param int $decision
+     * @return $this
+     */
+    public function setDecision($decision)
+    {
+        $this->decision = $decision;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of undecided.
+     *
+     * @return int
+     */
+    public function getUndecided()
+    {
+        return $this->undecided;
+    }
+
+    /**
+     * Sets the value of undecided.
+     *
+     * @param int $undecided
+     * @return $this
+     */
+    public function setUndecided($undecided)
+    {
+        $this->undecided = $undecided;
 
         return $this;
     }

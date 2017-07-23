@@ -50,8 +50,8 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->isPost()) {
             if ($this->getUser()) {
                 $validation = Validation::create($this->getRequest()->getPost(), [
-                    'name' => 'required|unique:teams_joins,name',
-                    'email' => 'required|email|unique:teams_joins,email',
+                    'name' => 'required|unique:teams_joins,name,0,undecided',
+                    'email' => 'required|email|unique:teams_joins,email,0,undecided',
                     'teamId' => 'numeric|integer|min:1',
                     'gender' => 'numeric|integer|min:1|max:2',
                     'birthday' => 'required',
@@ -59,8 +59,8 @@ class Index extends \Ilch\Controller\Frontend
                 ]);
             } else {
                 $validation = Validation::create($this->getRequest()->getPost(), [
-                    'name' => 'required|unique:users,name|unique:teams_joins,name',
-                    'email' => 'required|email|unique:users,email|unique:teams_joins,email',
+                    'name' => 'required|unique:users,name|unique:teams_joins,name,0,undecided',
+                    'email' => 'required|email|unique:users,email|unique:teams_joins,email,0,undecided',
                     'teamId' => 'numeric|integer|min:1',
                     'gender' => 'numeric|integer|min:1|max:2',
                     'birthday' => 'required',
@@ -87,7 +87,8 @@ class Index extends \Ilch\Controller\Frontend
                     ->setTeamId($this->getRequest()->getPost('teamId'))
                     ->setLocale($this->getTranslator()->getLocale())
                     ->setDateCreated($currentDate->toDb())
-                    ->setText($this->getRequest()->getPost('text'));
+                    ->setText($this->getRequest()->getPost('text'))
+                    ->setUndecided(1);
                 $joinsMapper->save($model);
 
                 $this->redirect()

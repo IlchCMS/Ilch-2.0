@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'teams',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-users',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -77,6 +77,8 @@ class Config extends \Ilch\Config\Install
                 `locale` VARCHAR(255) NOT NULL,
                 `dateCreated` DATETIME NOT NULL,
                 `text` LONGTEXT NOT NULL,
+                `decision` TINYINT(1) NOT NULL DEFAULT 0,
+                `undecided` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -128,6 +130,11 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+                // Add new status column needed for the application/joins-history
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `decision` TINYINT;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `undecided` TINYINT;');
+        }
     }
 }
