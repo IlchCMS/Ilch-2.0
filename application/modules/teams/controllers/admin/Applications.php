@@ -130,7 +130,7 @@ class Applications extends \Ilch\Controller\Admin
                 $userMapper->save($userModel);
             }
 
-            $team = $teamsMapper->getTeamByGroupId($join->getTeamId());
+            $team = $teamsMapper->getTeamById($join->getTeamId());
             $teamname = $team->getName();
             $sitetitle = $this->getConfig()->get('page_title');
             $date = new \Ilch\Date();
@@ -191,7 +191,7 @@ class Applications extends \Ilch\Controller\Admin
             $userMapper = new UserMapper();
 
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
-            $team = $teamsMapper->getTeamByGroupId($join->getTeamId());
+            $team = $teamsMapper->getTeamById($join->getTeamId());
             $name = $join->getName();
             $email = $join->getEmail();
             $teamname = $team->getName();
