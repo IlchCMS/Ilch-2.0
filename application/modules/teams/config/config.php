@@ -48,7 +48,7 @@ class Config extends \Ilch\Config\Install
              DELETE FROM `[prefix]_config` WHERE `key` = 'teams_width';
              DELETE FROM `[prefix]_config` WHERE `key` = 'teams_filetypes';
              DELETE FROM `[prefix]_modules_folderrights` WHERE `key` = 'teams';
-             DELETE FROM `[prefix]_emails` WHERE `key` = 'teams'");
+             DELETE FROM `[prefix]_emails` WHERE `moduleKey` = 'teams'");
     }
 
     public function getInstallSql()
