@@ -120,7 +120,7 @@ class Joins extends \Ilch\Mapper
      */
     public function getApplicationHistoryByUserId($userId, $pagination = null)
     {
-        return $this->getApplications(['userId' => $userId, 'undecided' => 0]);
+        return $this->getApplications(['userId' => $userId, 'undecided' => 0], $pagination);
     }
 
     /**

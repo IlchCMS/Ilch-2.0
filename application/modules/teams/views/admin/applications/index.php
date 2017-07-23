@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <?php foreach ($this->get('joins') as $join): ?>
-                    <?php $team = $teamsMapper->getTeamByGroupId($join->getTeamId()); ?>
+                    <?php $team = $teamsMapper->getTeamById($join->getTeamId()); ?>
                     <?php $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
                         <td><a href="<?=$this->getUrl(['action' => 'show', 'id' => $join->getId()]) ?>" title="<?=$this->getTrans('show') ?>"><?=$this->escape($join->getName()) ?></a></td>

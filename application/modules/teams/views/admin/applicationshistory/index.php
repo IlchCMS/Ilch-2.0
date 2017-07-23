@@ -1,4 +1,7 @@
-<?php $teamsMapper = $this->get('teamsMapper'); ?>
+<?php
+$teamsMapper = $this->get('teamsMapper');
+$teamsCache = [];
+?>
 
 <h1><?=$this->getTrans('history') ?></h1>
 <?php if ($this->get('joins')): ?>
@@ -22,8 +25,12 @@
             </thead>
             <tbody>
                 <?php foreach ($this->get('joins') as $join): ?>
-                    <?php $team = $teamsMapper->getTeamByGroupId($join->getTeamId()); ?>
-                    <?php $date = new Ilch\Date($join->getDateCreated()); ?>
+                    <?php if (!array_key_exists($join->getTeamId(), $teamsCache)) {
+                        $teamsCache[$join->getTeamId()] = $teamsMapper->getTeamById($join->getTeamId());
+                    }
+                    $team = $teamsCache[$join->getTeamId()];
+                    
+                    $date = new Ilch\Date($join->getDateCreated()); ?>
                     <tr>
                         <td><a href="<?=$this->getUrl(['action' => 'showuserhistory', 'userId' => $join->getUserId()]) ?>" title="<?=$this->getTrans('show') ?>"><?=$this->escape($join->getName()) ?></a></td>
                         <td><?=$this->escape($team->getName()) ?></td>

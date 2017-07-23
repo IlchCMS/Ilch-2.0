@@ -33,7 +33,7 @@ if ($this->getUser()) {
                                 if ($this->originalInput('teamId') == $teamList->getGroupId() OR $this->getRequest()->getParam('id') == $teamList->getId()) {
                                     $selected = 'selected="selected"';
                                 }
-                                echo '<option '.$selected.' value="'.$teamList->getGroupId().'">'.$teamList->getName().'</option>';
+                                echo '<option '.$selected.' value="'.$teamList->getId().'">'.$teamList->getName().'</option>';
                             }
                         } ?>
                     </optgroup>

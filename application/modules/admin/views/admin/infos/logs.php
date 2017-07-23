@@ -27,12 +27,10 @@ $userCache = [];
                 <?php $logs = $logsMapper->getLogs($logDate->getDate()); ?>
                 <?php foreach ($logs as $log): ?>
                     <?php $time = new \Ilch\Date($log->getDate()); ?>
-                    <?php if (array_key_exists($log->getUserId(), $userCache)) {
-                        $user = $userCache[$log->getUserId()];
-                    } else {
+                    <?php if (!array_key_exists($log->getUserId(), $userCache)) {
                         $userCache[$log->getUserId()] = $userMapper->getUserById($log->getUserId());
-                        $user = $userCache[$log->getUserId()];
                     }
+                    $user = $userCache[$log->getUserId()];
                     ?>
                     <tr>
                         <td><?=$time->format("H:i:s"); ?></td>
