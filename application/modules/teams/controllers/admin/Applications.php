@@ -99,12 +99,13 @@ class Applications extends \Ilch\Controller\Admin
             $join = $joinsMapper->getJoinById($this->getRequest()->getParam('id'));
             $name = $join->getName();
             $email = $join->getEmail();
-
+            $team = $teamsMapper->getTeamById($join->getTeamId());
+            
             if ($join->getUserId()) {
                 $user = $userMapper->getUserById($join->getUserId());
                 $mailContent = $emailsMapper->getEmail('teams', 'teams_accept_user_mail', $user->getLocale());
 
-                $userMapper->addUserToGroup($join->getUserId(), $join->getTeamId());
+                $userMapper->addUserToGroup($join->getUserId(), $team->getGroupId());
             } else {
                 $mailContent = $emailsMapper->getEmail('teams', 'teams_accept_mail', $this->getTranslator()->getLocale());
                 $userGroup = $groupMapper->getGroupById($join->getTeamId());
@@ -130,7 +131,6 @@ class Applications extends \Ilch\Controller\Admin
                 $userMapper->save($userModel);
             }
 
-            $team = $teamsMapper->getTeamById($join->getTeamId());
             $teamname = $team->getName();
             $sitetitle = $this->getConfig()->get('page_title');
             $date = new \Ilch\Date();
