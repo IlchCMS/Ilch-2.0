@@ -1,6 +1,7 @@
 <?php
     $updateservers = $this->get('updateservers');
     $index = 0;
+    $isHTTPS = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? true : false;
 ?>
 <h1><?=$this->getTrans('settings') ?></h1>
 <form class="form-horizontal" method="POST" action="">
@@ -199,6 +200,9 @@
             </thead>
             <tbody>
                 <?php foreach ($updateservers as $updateserver): ?>
+                    <?php if ($isHTTPS && (strpos($updateserver->getURL(), 'https://') === false)) {
+                        continue;
+                    } ?>
                     <tr>
                         <td><input type="radio" id="updateserver<?=$index ?>" name="updateserver" value="<?=$updateserver->getURL() ?>" <?=($updateserver->getURL() == $this->get('updateserver')) ? ' checked="checked"' : '' ?>></td>
                         <td><?=(strpos($updateserver->getURL(), 'https://') !== false) ? '<span class="fa fa-lock"></span>': '<span class="fa fa-unlock-alt"></span>' ?></td>

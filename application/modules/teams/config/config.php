@@ -132,7 +132,7 @@ class Config extends \Ilch\Config\Install
     {
         switch ($installedVersion) {
             case "1.0":
-                // Add new status column needed for the application/joins-history
+                // Add new decision and undecided columns needed for the application/joins-history
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `decision` TINYINT;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `undecided` TINYINT;');
         }
