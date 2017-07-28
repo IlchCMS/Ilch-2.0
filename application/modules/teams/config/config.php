@@ -136,7 +136,8 @@ class Config extends \Ilch\Config\Install
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `decision` TINYINT;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `undecided` TINYINT;');
 
-                $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `position` INT;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `position` INT NOT NULL DEFAULT 0;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT;');
         }
     }
 }
