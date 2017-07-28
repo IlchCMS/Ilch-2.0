@@ -78,4 +78,5 @@ return [
     'declined' => 'abgelehnt',
     'clearHistory' => 'Verlauf löschen',
     'historyOfUser' => 'Ältere Bewerbungen dieses Benutzers',
+    'teamInfoText' => 'Teams können durch ziehen und ablegen sortiert werden.',
 ];

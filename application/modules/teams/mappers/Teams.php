@@ -21,7 +21,7 @@ class Teams extends \Ilch\Mapper
         $entryArray = $this->db()->select('*')
             ->from('teams')
             ->where($where)
-            ->order(['id' => 'ASC'])
+            ->order(['position' => 'ASC'])
             ->execute()
             ->fetchRows();
 
@@ -33,6 +33,7 @@ class Teams extends \Ilch\Mapper
         foreach ($entryArray as $entries) {
             $entryModel = new TeamsModel();
             $entryModel->setId($entries['id']);
+            $entryModel->setPosition($entries['position']);
             $entryModel->setName($entries['name']);
             $entryModel->setImg($entries['img']);
             $entryModel->setLeader($entries['leader']);
@@ -72,6 +73,19 @@ class Teams extends \Ilch\Mapper
     }
 
     /**
+     * Updates the position of the team.
+     *
+     * @param int $id, int $position
+     *
+     */
+    public function updatePositionById($id, $position) {
+        $this->db()->update('teams')
+            ->values(['position' => $position])
+            ->where(['id' => $id])
+            ->execute();
+    }
+
+    /**
      * Delete/Unlink Image by Id.
      *
      * @param int $id
@@ -103,6 +117,7 @@ class Teams extends \Ilch\Mapper
     {
         $fields = [
             'name' => $team->getName(),
+            'position' => $team->getPosition(),
             'img' => $team->getImg(),
             'leader' => $team->getLeader(),
             'coLeader' => $team->getCoLeader(),

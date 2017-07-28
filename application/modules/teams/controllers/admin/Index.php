@@ -72,6 +72,16 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
+        if ($this->getRequest()->isPost()) {
+            $postData = $this->getRequest()->getPost();
+            $positions = explode(',', $postData['hiddenMenu']);
+            for($x = 0; $x < count($positions); $x++) {
+                $teamsMapper->updatePositionById($positions[$x], $x);
+            }
+            $this->addMessage('saveSuccess');
+            $this->redirect(['action' => 'index']);
+        }
+
         $this->getView()->set('teams', $teamsMapper->getTeams());
     }
 

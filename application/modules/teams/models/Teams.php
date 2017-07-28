@@ -16,6 +16,13 @@ class Teams extends \Ilch\Model
     protected $id;
 
     /**
+     * The position of th team.
+     *
+     * @var int
+     */
+    protected $position;
+
+    /**
      * The Name of the Team.
      *
      * @var string
@@ -66,6 +73,29 @@ class Teams extends \Ilch\Model
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
+    }
+
+    /**
+     * Gets the position of the team.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    /**
+     * Sets the position of the team.
+     *
+     * @param int $position
+     * @return this
+     */
+    public function setPosition($position)
+    {
+        $this->position = (int)$position;
 
         return $this;
     }

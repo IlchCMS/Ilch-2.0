@@ -77,4 +77,5 @@ return [
     'declined' => 'declined',
     'clearHistory' => 'Clear history',
     'historyOfUser' => 'Older applications of this user',
+    'teamInfoText' => 'Teams can be sorted by drag and drop.',
 ];
