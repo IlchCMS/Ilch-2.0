@@ -134,7 +134,7 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 // Add new decision and undecided columns needed for the application/joins-history
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `decision` TINYINT;');
-                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `undecided` TINYINT;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `undecided` TINYINT NOT NULL DEFAULT 1;');
 
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `position` INT NOT NULL DEFAULT 0;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT;');
