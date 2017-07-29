@@ -333,24 +333,20 @@ class Upload extends \Ilch\Controller\Base
         }
     }
 
-    public function isAllowedExtension() {
+    public function isAllowedExtension()
+    {
         return in_array($this->getEnding(), explode(' ', $this->getAllowedExtensions()));
     }
 
-    public function returnBytes($val) {
-        $val = trim($val);
-        $last = strtolower($val[strlen($val)-1]);
-        switch($last) {
-            // The 'G' modifier is available since PHP 5.1.0
-            case 'g':
-                $val *= 1024;
-            case 'm':
-                $val *= 1024;
-            case 'k':
-                $val *= 1024;
+    public function returnBytes ($size_str)
+    {
+        switch (substr($size_str, -1))
+        {
+            case 'M': case 'm': return (int)$size_str * 1048576;
+            case 'K': case 'k': return (int)$size_str * 1024;
+            case 'G': case 'g': return (int)$size_str * 1073741824;
+            default: return $size_str;
         }
-
-        return $val;
     }
 
     public function save()
