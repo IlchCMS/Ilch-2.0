@@ -78,8 +78,8 @@ class Config extends \Ilch\Config\Install
                 `locale` VARCHAR(255) NOT NULL,
                 `dateCreated` DATETIME NOT NULL,
                 `text` LONGTEXT NOT NULL,
-                `decision` TINYINT(1) NOT NULL DEFAULT 0,
-                `undecided` TINYINT(1) NOT NULL DEFAULT 0,
+                `decision` TINYINT(1) NOT NULL,
+                `undecided` TINYINT(1) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
@@ -134,11 +134,11 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
                 // Add new decision and undecided columns needed for the application/joins-history
-                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `decision` TINYINT;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `decision` TINYINT NOT NULL;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams_joins` ADD COLUMN `undecided` TINYINT NOT NULL DEFAULT 1;');
 
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `position` INT NOT NULL DEFAULT 0;');
-                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT;');
+                $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT NOT NULL;');
         }
     }
 }
