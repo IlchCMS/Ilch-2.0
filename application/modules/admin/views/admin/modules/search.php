@@ -8,11 +8,13 @@ $dependencies = $this->get('dependencies');
 // Sort the modules by name
 usort($modulesOnUpdateServer, "custom_sort");
 // Define the custom sort function
-function custom_sort($a,$b) {
+function custom_sort($a,$b)
+{
     return strcoll($a->name, $b->name);
 }
 
-function checkOthersDependencies($module, $dependencies) {
+function checkOthersDependencies($module, $dependencies)
+{
     $dependencyCheck = [];
     foreach ($dependencies as $dependency) {
         $key = key($module);
@@ -27,7 +29,8 @@ function checkOthersDependencies($module, $dependencies) {
     return $dependencyCheck;
 }
 
-function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer) {
+function checkOwnDependencies($versionsOfModules, $moduleOnUpdateServer)
+{
     if (empty($moduleOnUpdateServer->depends)) {
         return true;
     }
