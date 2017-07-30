@@ -60,7 +60,8 @@ class Config extends \Ilch\Config\Install
                 `leader` VARCHAR(255) NOT NULL,
                 `coLeader` VARCHAR(255) NULL DEFAULT NULL,
                 `groupId` INT(11) NOT NULL,
-                `optIn` INT(1) NOT NULL,
+                `optIn` TINYINT(1) NOT NULL,
+                `position` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
