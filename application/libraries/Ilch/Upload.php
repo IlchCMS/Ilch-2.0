@@ -298,7 +298,8 @@ class Upload extends \Ilch\Controller\Base
      * @param string $imageFilePath
      * @return int required memory in bytes
      */
-    public function guessRequiredMemory($imageFilePath) {
+    public function guessRequiredMemory($imageFilePath)
+    {
         $imageInfo = getimagesize($imageFilePath);
         if (empty($imageInfo['channels'])) {
             $imageInfo['channels'] = 4;
