@@ -5,15 +5,6 @@ $versionsOfModules = $this->get('versionsOfModules');
 $coreVersion = $this->get('coreVersion');
 $dependencies = $this->get('dependencies');
 
-// Define the custom sort function
-function custom_sort($a,$b)
-{
-    return strcmp($a->name, $b->name);
-}
-
-// Sort the modules by name
-usort($modulesOnUpdateServer, "custom_sort");
-
 function checkOthersDependencies($module, $dependencies)
 {
     $dependencyCheck = [];
