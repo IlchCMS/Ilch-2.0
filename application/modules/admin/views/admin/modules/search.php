@@ -8,7 +8,7 @@ $dependencies = $this->get('dependencies');
 // Define the custom sort function
 function custom_sort($a,$b)
 {
-    return strcoll($a->name, $b->name);
+    return strcmp($a->name, $b->name);
 }
 
 // Sort the modules by name
