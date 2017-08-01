@@ -203,6 +203,12 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
+        switch ($installedVersion) {
+            case "2.0.1":
+                // Add new hide_menu column
+                $this->db()->query('ALTER TABLE `[prefix]_modules` ADD COLUMN `hide_menu` TINYINT(1) NOT NULL DEFAULT 0;');
+        }
+
         return 'Update function executed';
     }
 }
