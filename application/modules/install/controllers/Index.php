@@ -403,6 +403,9 @@ class Index extends \Ilch\Controller\Frontend
                             if (isset($config->config['system_module'])) {
                                 $moduleModel->setSystemModule(true);
                             }
+                            if (isset($config->config['hide_menu'])) {
+                                $moduleModel->setHideMenu(true);
+                            }
                             if (isset($config->config['version'])) {
                                 $moduleModel->setVersion($config->config['version']);
                             }
@@ -485,6 +488,7 @@ class Index extends \Ilch\Controller\Frontend
                 $moduleModel->setKey($config->config['key']);
                 $moduleModel->setAuthor($config->config['author']);
                 $moduleModel->setLayoutModule(true);
+                $moduleModel->setNotLinkedMenu(true);
                 $moduleModel->setLink($config->config['link']);
                 foreach ($config->config['languages'] as $key => $value) {
                     $moduleModel->addContent($key, $value);

@@ -12,6 +12,7 @@ class Config extends \Ilch\Config\Install
         'key' => 'comment',
         'icon_small' => 'fa-comments-o',
         'system_module' => true,
+        'hide_menu' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Kommentare',

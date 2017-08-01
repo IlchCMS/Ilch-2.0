@@ -25,6 +25,7 @@ class Config extends \Ilch\Config\Install
             ],
         ],
         'isLayout' => true,
+        'hide_menu' => true,
         'ilchCore' => '2.0.0',
         'phpVersion' => '5.6'
     ];

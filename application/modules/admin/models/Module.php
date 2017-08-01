@@ -33,6 +33,11 @@ class Module extends \Ilch\Model
     protected $layoutModule = false;
 
     /**
+     * @var boolean
+     */
+    protected $hideMenu = false;
+
+    /**
      * @var string
      */
     protected $author;
@@ -160,6 +165,26 @@ class Module extends \Ilch\Model
     public function getLayoutModule()
     {
         return $this->layoutModule;
+    }
+
+    /**
+     * Sets hide in menu flag.
+     *
+     * @param boolean $hideMenu
+     */
+    public function setHideMenu($hideMenu)
+    {
+        $this->hideMenu = (bool)$hideMenu;
+    }
+
+    /**
+     * Gets hide in menu flag.
+     *
+     * @return boolean
+     */
+    public function getHideMenu()
+    {
+        return $this->hideMenu;
     }
 
     /**

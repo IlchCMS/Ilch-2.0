@@ -18,7 +18,7 @@ class Module extends \Ilch\Mapper
     public function getModules()
     {
         $modulesRows = $this->db()->select()
-            ->fields(['m.key', 'm.system', 'm.layout', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
+            ->fields(['m.key', 'm.system', 'm.layout', 'm.hide_menu', 'm.version', 'm.link', 'm.icon_small', 'm.author'])
             ->from(['m' => 'modules'])
             ->join(['c' => 'modules_content'], 'm.key = c.key', 'LEFT', ['c.locale', 'c.description', 'c.name'])
             ->where(['c.locale' => $this->db()->escape(\Ilch\Registry::get('translator')->getLocale())])
@@ -32,6 +32,7 @@ class Module extends \Ilch\Mapper
             $moduleModel->setKey($moduleRow['key']);
             $moduleModel->setSystemModule($moduleRow['system']);
             $moduleModel->setLayoutModule($moduleRow['layout']);
+            $moduleModel->setHideMenu($moduleRow['hide_menu']);
             $moduleModel->setVersion($moduleRow['version']);
             $moduleModel->setLink($moduleRow['link']);
             $moduleModel->setIconSmall($moduleRow['icon_small']);
@@ -156,6 +157,7 @@ class Module extends \Ilch\Mapper
         $moduleModel->setKey($moduleRow['key']);
         $moduleModel->setSystemModule($moduleRow['system']);
         $moduleModel->setLayoutModule($moduleRow['layout']);
+        $moduleModel->setHideMenu($moduleRow['hide_menu']);
         $moduleModel->setVersion($moduleRow['version']);
         $moduleModel->setLink($moduleRow['link']);
         $moduleModel->setIconSmall($moduleRow['icon_small']);
@@ -228,6 +230,7 @@ class Module extends \Ilch\Mapper
                 'key' => $module->getKey(),
                 'system' => (int) $module->getSystemModule(),
                 'layout' => (int) $module->getLayoutModule(),
+                'hide_menu' => (int) $module->getHideMenu(),
                 'icon_small' => $module->getIconSmall(),
                 'version' => $module->getVersion(),
                 'link' => $module->getLink(),

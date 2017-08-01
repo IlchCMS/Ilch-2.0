@@ -78,6 +78,7 @@ class Config extends \Ilch\Config\Install
                   `key` VARCHAR(255) NOT NULL,
                   `system` TINYINT(1) NOT NULL DEFAULT 0,
                   `layout` TINYINT(1) NOT NULL DEFAULT 0,
+                  `hide_menu` TINYINT(1) NOT NULL DEFAULT 0,
                   `author` VARCHAR(255) NULL DEFAULT NULL,
                   `version` VARCHAR(255) NULL DEFAULT NULL,
                   `link` VARCHAR(255) NULL DEFAULT NULL,

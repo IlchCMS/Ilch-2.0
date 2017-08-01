@@ -259,6 +259,9 @@ class Modules extends \Ilch\Controller\Admin
                 if (isset($config->config['isLayout'])) {
                     $moduleModel->setLayoutModule(true);
                 }
+                if (isset($config->config['hide_menu'])) {
+                    $moduleModel->setHideMenu(true);
+                }
                 if (isset($config->config['link'])) {
                     $moduleModel->setLink($config->config['link']);
                 }

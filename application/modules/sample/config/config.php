@@ -14,7 +14,8 @@ class Config extends \Ilch\Config\Install
         'icon_small' => '',
         'author' => '',
         'link' => '',
-        //'isLayout' => true,
+        // 'isLayout' => true,
+        // 'hide_menu' => true,
         'languages' => [
             'de_DE' => [
                 'name' => 'Sample',
