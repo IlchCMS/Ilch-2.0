@@ -37,6 +37,8 @@ class Config extends \Ilch\Config\Install
     public function uninstall()
     {
         $this->db()->queryMulti('DROP TABLE `[prefix]_clanlayout_settings`;');
+        $this->db()->queryMulti("DELETE FROM `[prefix]_modules` WHERE `key` = 'clanlayout'");
+        $this->db()->queryMulti("DELETE FROM `[prefix]_modules_content` WHERE `key` = 'clanlayout'");
     }
 
     public function getInstallSql()
