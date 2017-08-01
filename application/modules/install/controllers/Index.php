@@ -386,7 +386,7 @@ class Index extends \Ilch\Controller\Frontend
                     $config->install();
 
                     if (!empty($config->config)) {
-                        if ($config->config['key'] != 'admin') {
+                        if ($config->config['key'] != 'admin' && $config->config['key'] != 'clanlayout') {
                             $moduleModel = new \Modules\Admin\Models\Module();
                             $moduleModel->setKey($config->config['key']);
                             if (isset($config->config['author'])) {
@@ -444,7 +444,7 @@ class Index extends \Ilch\Controller\Frontend
                  * Will not linked in menu
                  */
                 foreach ($modulesToInstall as $module) {
-                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'smilies'])) {
+                    if (in_array($module, ['comment', 'shoutbox', 'admin', 'media', 'newsletter', 'statistic', 'cookieconsent', 'error', 'smilies', 'contact', 'imprint', 'privacy'])) {
                         continue;
                     }
 
@@ -463,18 +463,37 @@ class Index extends \Ilch\Controller\Frontend
                 }
 
                 $boxes = "INSERT INTO `[prefix]_menu_items` (`menu_id`, `sort`, `parent_id`, `page_id`, `box_id`, `box_key`, `type`, `title`, `href`, `module_key`) VALUES
-                        (1, 80, 0, 0, 0, 'user_login', 4, 'Login', '', ''),
-                        (1, 90, 0, 0, 0, 'admin_layoutswitch', 4, 'Layout', '', ''),
-                        (1, 100, 0, 0, 0, 'statistic_stats', 4, 'Statistik', '', ''),
-                        (1, 110, 0, 0, 0, 'statistic_online', 4, 'Online', '', ''),
-                        (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
-                        (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
-                        (2, 30, 0, 0, 0, 'article_archive', 4, 'Archiv', '', ''),
-                        (2, 40, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
-                        (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '')";
+                    (1, 80, 0, 0, 0, 'user_login', 4, 'Login', '', ''),
+                    (1, 90, 0, 0, 0, 'admin_layoutswitch', 4, 'Layout', '', ''),
+                    (1, 100, 0, 0, 0, 'statistic_stats', 4, 'Statistik', '', ''),
+                    (1, 110, 0, 0, 0, 'statistic_online', 4, 'Online', '', ''),
+                    (2, 10, 0, 0, 0, 'admin_langswitch', 4, 'Sprache', '', ''),
+                    (2, 20, 0, 0, 0, 'article_article', 4, 'Letzte Artikel', '', ''),
+                    (2, 30, 0, 0, 0, 'article_archive', 4, 'Archiv', '', ''),
+                    (2, 40, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
+                    (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '')";
                 $db->queryMulti($boxes);
 
-                unset($_SESSION['install']);
+                /*
+                 * Install default Layout
+                 */
+                $configClass = '\\Modules\\Clanlayout\\Config\\Config';
+                $config = new $configClass($this->getTranslator());
+                $config->install();
+
+                $moduleModel = new \Modules\Admin\Models\Module();
+                $moduleModel->setKey($config->config['key']);
+                $moduleModel->setAuthor($config->config['author']);
+                $moduleModel->setLayoutModule(true);
+                $moduleModel->setLink($config->config['link']);
+                foreach ($config->config['languages'] as $key => $value) {
+                    $moduleModel->addContent($key, $value);
+                }
+                $moduleModel->setVersion($config->config['version']);
+                $moduleModel->setIconSmall($config->config['icon_small']);
+                $moduleMapper->save($moduleModel);
+
+//                unset($_SESSION['install']);
                 $this->redirect(['action' => 'finish']);
             }
 

@@ -6,7 +6,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'name' => 'Ilch-Clan',
-        'version' => '1.0',
+        'version' => '1.1',
         'author' => 'Ilch.de',
         'link' => 'http://ilch.de',
         'desc' => '3 Spalten Clan Layout',
@@ -17,7 +17,7 @@ class Config extends \Ilch\Config\Install
                 ['module' => 'guestbook'],
             ]//only for example
         ],
-        //'modulekey' => 'Name of Module'
+        'modulekey' => 'clanlayout'
     ];
 
     public function getUpdate($installedVersion)

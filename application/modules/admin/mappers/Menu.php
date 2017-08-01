@@ -186,6 +186,26 @@ class Menu extends \Ilch\Mapper
 
         return $itemId;
     }
+
+    public function getLastMenuId()
+    {
+        $sql = 'SELECT MAX(id)
+                FROM `[prefix]_menu`';
+
+        $entry = $this->db()->queryCell($sql);
+
+        return $entry;
+    }
+
+    public function getLastMenuItemId()
+    {
+        $sql = 'SELECT MAX(id)
+                FROM `[prefix]_menu_items`';
+
+        $entry = $this->db()->queryCell($sql);
+
+        return $entry;
+    }
     
     /**
      * Save one menu.

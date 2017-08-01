@@ -23,8 +23,7 @@
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-navbar-collapse-main">
-                        <?php
-                        echo $this->getMenu
+                        <?=$this->getMenu
                         (
                             1,
                             '<div class="panel panel-gaming">
@@ -71,7 +70,7 @@
                     </div>
 
                     <div class="gaming-name">
-                        Clanname
+                        <?=$this->getBox('clanlayout','headername')?>
                     </div>
                 </div>
             </div>
@@ -81,8 +80,7 @@
             <div class="gaming">
                 <div class="row">
                     <div class="hidden-xs col-sm-3 col-md-2">
-                        <?php
-                        echo $this->getMenu
+                        <?=$this->getMenu
                         (
                             1,
                             '<div class="panel panel-gaming">
@@ -114,12 +112,12 @@
                             &copy; Ilch 2.0 Free Layout | CMS by <a href="http://www.ilch.de/">Ilch</a>
                         </div>
                         <div class="col-xs-12 col-sm-6 nav">
-                            <ul>
-                                <li><a href="/">Home</a></li>
-                                <li><a href="/index.php/contact/index/index">Kontakt</a></li>
-                                <li><a href="/index.php/imprint/index/index">Impressum</a></li>
-                                <li><a href="/index.php/privacy/index/index">Datenschutz</a></li>
-                            </ul>
+                            <?=$this->getMenu
+                            (
+                                3,
+                                '%c'
+                            );
+                            ?>
                         </div>
                     </div>
                 </div>
