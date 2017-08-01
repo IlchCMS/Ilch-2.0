@@ -143,7 +143,7 @@ class Showposts extends \Ilch\Controller\Frontend
 
         if ($this->getUser()) {
             $userAccess = new Accesses($this->getRequest());
-            if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $userAccess->hasAccess('forum')) {
+            if ($this->getUser()->getId() == $post->getAutor()->getId() || $this->getUser()->isAdmin() || $this->getUser()->hasAccess('module_forum')) {
                 $this->getLayout()->getTitle()
                         ->add($this->getTranslator()->trans('forum'))
                         ->add($cat->getTitle())
