@@ -493,7 +493,7 @@ class Index extends \Ilch\Controller\Frontend
                 $moduleModel->setIconSmall($config->config['icon_small']);
                 $moduleMapper->save($moduleModel);
 
-//                unset($_SESSION['install']);
+                unset($_SESSION['install']);
                 $this->redirect(['action' => 'finish']);
             }
 
