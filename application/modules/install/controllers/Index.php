@@ -488,7 +488,7 @@ class Index extends \Ilch\Controller\Frontend
                 $moduleModel->setKey($config->config['key']);
                 $moduleModel->setAuthor($config->config['author']);
                 $moduleModel->setLayoutModule(true);
-                $moduleModel->setNotLinkedMenu(true);
+                $moduleModel->setHideMenu(true);
                 $moduleModel->setLink($config->config['link']);
                 foreach ($config->config['languages'] as $key => $value) {
                     $moduleModel->addContent($key, $value);
