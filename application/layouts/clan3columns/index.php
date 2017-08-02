@@ -23,7 +23,8 @@
                     </div>
 
                     <div class="collapse navbar-collapse" id="bs-navbar-collapse-main">
-                        <?=$this->getMenu
+                        <?php
+                        echo $this->getMenu
                         (
                             1,
                             '<div class="panel panel-gaming">
@@ -70,7 +71,7 @@
                     </div>
 
                     <div class="gaming-name">
-                        <?=$this->getBox('clanlayout','headername')?>
+                        Clanname
                     </div>
                 </div>
             </div>
@@ -80,7 +81,8 @@
             <div class="gaming">
                 <div class="row">
                     <div class="hidden-xs col-sm-2 col-md-3 col-lg-2">
-                        <?=$this->getMenu
+                        <?php
+                        echo $this->getMenu
                         (
                             1,
                             '<div class="panel panel-gaming">
@@ -101,7 +103,8 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-2">
-                        <?=$this->getMenu
+                        <?php
+                        echo $this->getMenu
                         (
                             2,
                             '<div class="panel panel-gaming">
@@ -125,12 +128,12 @@
                             &copy; Ilch 2.0 Free Layout | CMS by <a href="http://www.ilch.de/">Ilch</a>
                         </div>
                         <div class="col-xs-12 col-sm-6 nav">
-                            <?=$this->getMenu
-                            (
-                                3,
-                                '%c'
-                            );
-                            ?>
+                            <ul>
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/index.php/contact/index/index">Kontakt</a></li>
+                                <li><a href="/index.php/imprint/index/index">Impressum</a></li>
+                                <li><a href="/index.php/privacy/index/index">Datenschutz</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

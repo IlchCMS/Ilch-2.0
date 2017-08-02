@@ -386,7 +386,7 @@ class Index extends \Ilch\Controller\Frontend
                     $config->install();
 
                     if (!empty($config->config)) {
-                        if ($config->config['key'] != 'admin' && $config->config['key'] != 'clanlayout') {
+                        if ($config->config['key'] != 'admin') {
                             $moduleModel = new \Modules\Admin\Models\Module();
                             $moduleModel->setKey($config->config['key']);
                             if (isset($config->config['author'])) {
@@ -476,26 +476,6 @@ class Index extends \Ilch\Controller\Frontend
                     (2, 40, 0, 0, 0, 'article_categories', 4, 'Kategorien', '', ''),
                     (2, 50, 0, 0, 0, 'article_keywords', 4, 'Keywords', '', '')";
                 $db->queryMulti($boxes);
-
-                /*
-                 * Install default Layout
-                 */
-                $configClass = '\\Modules\\Clanlayout\\Config\\Config';
-                $config = new $configClass($this->getTranslator());
-                $config->install();
-
-                $moduleModel = new \Modules\Admin\Models\Module();
-                $moduleModel->setKey($config->config['key']);
-                $moduleModel->setAuthor($config->config['author']);
-                $moduleModel->setLayoutModule(true);
-                $moduleModel->setHideMenu(true);
-                $moduleModel->setLink($config->config['link']);
-                foreach ($config->config['languages'] as $key => $value) {
-                    $moduleModel->addContent($key, $value);
-                }
-                $moduleModel->setVersion($config->config['version']);
-                $moduleModel->setIconSmall($config->config['icon_small']);
-                $moduleMapper->save($moduleModel);
 
                 unset($_SESSION['install']);
                 $this->redirect(['action' => 'finish']);
