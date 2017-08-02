@@ -15,10 +15,21 @@
         </thead>
         <tbody>
             <tr>
-                <td>MySQLi (mysqli)</td>
+                <td>gd</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <?php if (extension_loaded('mysqli')): ?>
+                    <?php if (extension_loaded('gd')): ?>
+                        <span class="text-success"><?=$this->getTrans('existing') ?></span>
+                    <?php else: ?>
+                        <span class="text-danger"><?=$this->getTrans('missing') ?></span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>cURL</td>
+                <td class="text-success"><?=$this->getTrans('existing') ?>
+                <td>
+                    <?php if (extension_loaded('curl')): ?>
                         <span class="text-success"><?=$this->getTrans('existing') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('missing') ?></span>
@@ -37,10 +48,10 @@
                 </td>
             </tr>
             <tr>
-                <td>Zip</td>
+                <td>MySQLi (mysqli)</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <?php if (extension_loaded('zip')): ?>
+                    <?php if (extension_loaded('mysqli')): ?>
                         <span class="text-success"><?=$this->getTrans('existing') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('missing') ?></span>
@@ -59,10 +70,10 @@
                 </td>
             </tr>
             <tr>
-                <td>cURL</td>
+                <td>Zip</td>
                 <td class="text-success"><?=$this->getTrans('existing') ?>
                 <td>
-                    <?php if (extension_loaded('curl')): ?>
+                    <?php if (extension_loaded('zip')): ?>
                         <span class="text-success"><?=$this->getTrans('existing') ?></span>
                     <?php else: ?>
                         <span class="text-danger"><?=$this->getTrans('missing') ?></span>

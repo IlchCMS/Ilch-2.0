@@ -156,6 +156,10 @@ class Index extends \Ilch\Controller\Frontend
             $errors['writableCertificate'] = true;
         }
 
+        if (!extension_loaded('gd')) {
+            $errors['gdExtensionMissing'] = true;
+        }
+
         if (!extension_loaded('mysqli')) {
             $errors['mysqliExtensionMissing'] = true;
         }
