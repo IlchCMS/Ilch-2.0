@@ -78,4 +78,5 @@ return [
     'clearHistory' => 'Clear history',
     'historyOfUser' => 'Older applications of this user',
     'teamInfoText' => 'Teams can be sorted by drag and drop.',
+    'teamUsersInfoText' => 'Users of the associated group will be added as members of the team.',
 ];

@@ -79,4 +79,5 @@ return [
     'clearHistory' => 'Verlauf löschen',
     'historyOfUser' => 'Ältere Bewerbungen dieses Benutzers',
     'teamInfoText' => 'Teams können durch ziehen und ablegen sortiert werden.',
+    'teamUsersInfoText' => 'Benutzer in der zugewiesenen Gruppe werden dem Team als Mitglieder hinzugefügt.',
 ];

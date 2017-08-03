@@ -7,6 +7,9 @@
         echo $this->getTrans('add');
     }
     ?>
+    <a class="badge" data-toggle="modal" data-target="#infoModal">
+        <i class="fa fa-info"></i>
+    </a>
 </h1>
 <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
     <?=$this->getTokenField() ?>
@@ -145,6 +148,8 @@
     </div>
     <?=($this->get('team') != '') ? $this->getSaveBar('edit') : $this->getSaveBar('add') ?>
 </form>
+
+<?=$this->getDialog("infoModal", $this->getTrans('info'), $this->getTrans('teamUsersInfoText')); ?>
 
 <script>
 $('#leader').chosen();
