@@ -8,6 +8,7 @@ php:
 install:
   - cp development/travis/config.php tests/config.php
   - mysql -e 'create database ilch2_test;'
+  - mysql -e 'use ilch2_test;'
   - composer install
 
 script: cd tests && ../vendor/bin/phpunit
