@@ -46,7 +46,7 @@ class BeforeControllerLoad
                         $pluginData['layout']->setFile('modules/admin/layouts/maintenance');
                     }
                 }
-                $_SESSION['messages'][] = ['text' => $translator->trans('siteMaintenanceMode'), 'type' => 'danger'];
+                $_SESSION['messages']['maintenance'] = ['text' => $translator->trans('siteMaintenanceMode'), 'type' => 'danger'];
             }
         }
 
