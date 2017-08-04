@@ -80,7 +80,7 @@ class Statistic extends \Ilch\Mapper
     public function getVisitsHour($year = null, $month = null)
     {
         $sql = 'SELECT
-                HOUR (`date`) `date_hour`,
+                HOUR(`date`) AS `date_hour`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null AND $year != null) {
@@ -113,7 +113,7 @@ class Statistic extends \Ilch\Mapper
     public function getVisitsDay($year = null, $month = null)
     {
         $sql = 'SELECT
-                MAX(DATE (`date`)) AS `date_full`,
+                MAX(DATE(`date`)) AS `date_full`,
                 WEEKDAY(`date`) AS `date_week`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
@@ -147,9 +147,9 @@ class Statistic extends \Ilch\Mapper
     public function getVisitsYearMonthDay($year = null, $month = null)
     {
         $sql = 'SELECT 
-                DATE (`date`) `date_full`,
-                YEAR(`date`) `date_year`,
-                MONTH(`date`) `date_month`,
+                DATE(`date`) AS `date_full`,
+                YEAR(`date`) AS `date_year`,
+                MONTH(`date`) AS `date_month`,
                 COUNT(`id`) AS `visits`
                 FROM `[prefix]_visits_stats`';
         if ($month != null AND $year != null) {
