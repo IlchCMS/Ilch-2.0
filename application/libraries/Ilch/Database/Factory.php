@@ -50,7 +50,9 @@ class Factory
         }
 
         $db->connect(reset($hostParts), $dbData['dbUser'], $dbData['dbPassword'], $port);
-        $db->setDatabase($dbData['dbName']);
+        if (!$db->setDatabase($dbData['dbName'])) {
+            throw new \RuntimeException('Unable to select database ' . $dbData['dbName']);
+        };
         $db->setPrefix($dbData['dbPrefix']);
 
         if ($addDebugCollector) {

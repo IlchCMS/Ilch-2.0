@@ -1,16 +1,22 @@
-language: php
+services:
+  - mysql
 
-dist: precise
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+language: php
 
 php:
   - 5.6
   - 7.0
   - 7.1
 
+before_install:
+  - mysql -e 'CREATE DATABASE ilch2_test;'
 install:
   - cp development/travis/config.php tests/config.php
-  - mysql -e 'create database ilch2_test;'
-  - composer install
+  - composer install --prefer-dist
 
 script: cd tests && ../vendor/bin/phpunit
 
