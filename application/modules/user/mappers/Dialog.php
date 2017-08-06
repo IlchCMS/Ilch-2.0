@@ -223,7 +223,7 @@ class Dialog extends \Ilch\Mapper
     */
     public function getDialogCheck( $user_one, $user_two )
     {
-        $sql = 'SELECT c_id
+        $sql = 'SELECT c_id, user_one, user_two
                 FROM [prefix]_users_dialog
                 WHERE (user_one='.$user_one.' AND user_two='.$user_two.') OR
                     (user_one='.$user_two.' AND user_two='.$user_one.')';
