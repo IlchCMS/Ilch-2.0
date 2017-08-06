@@ -90,7 +90,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY `date_hour`
+        $sql .= ' GROUP BY HOUR(`date`)
                 ORDER BY `date_hour` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -124,7 +124,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY `date_week`
+        $sql .= ' GROUP BY WEEKDAY(`date`)
                 ORDER BY `date_week` ASC';
 
         $entryArray = $this->db()->queryArray($sql);
@@ -158,8 +158,8 @@ class Statistic extends \Ilch\Mapper
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE()) AND MONTH(`date`) = MONTH(CURDATE())';
         }
-        $sql .= ' GROUP BY `date_year`, `date_month`, `date_full`
-                ORDER BY `date` DESC';
+        $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`), DATE(`date`)
+                ORDER BY `date_full` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -188,8 +188,8 @@ class Statistic extends \Ilch\Mapper
         } else {
             $sql .= ' WHERE YEAR(`date`) = YEAR(CURDATE())';
         }
-        $sql .= ' GROUP BY `date_year`,`date_month`
-                ORDER BY MONTH(`date`) DESC';
+        $sql .= ' GROUP BY YEAR(`date`), MONTH(`date`)
+                ORDER BY `date_month` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
 
@@ -216,7 +216,7 @@ class Statistic extends \Ilch\Mapper
             $date = $year.'-01-01';
             $sql .= ' WHERE YEAR(`date`) = YEAR("'.$date.'")';
         }
-        $sql .= ' GROUP BY `year_full`
+        $sql .= ' GROUP BY YEAR(`date`)
                   ORDER BY `year_full` DESC';
 
         $entryArray = $this->db()->queryArray($sql);
