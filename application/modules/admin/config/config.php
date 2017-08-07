@@ -207,8 +207,9 @@ class Config extends \Ilch\Config\Install
             case "2.0.1":
                 // Add new hide_menu column
                 $this->db()->query('ALTER TABLE `[prefix]_modules` ADD COLUMN `hide_menu` TINYINT(1) NOT NULL DEFAULT 0;');
+                $this->db()->query('UPDATE `[prefix]_modules` SET `hide_menu` = 1 WHERE `key` = "comment";');
         }
 
-        return 'Update function executed';
+        return 'Update function executed.';
     }
 }
