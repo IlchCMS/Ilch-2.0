@@ -162,7 +162,7 @@ class Module extends \Ilch\Mapper
         $moduleModel->setLink($moduleRow['link']);
         $moduleModel->setIconSmall($moduleRow['icon_small']);
         $moduleModel->setAuthor($moduleRow['author']);
-        $moduleModel->addContent($moduleRow['locale'], ['name' => $moduleRow['name'], 'description' => $moduleRow['description']]);
+
         return $moduleModel;
     }
 
