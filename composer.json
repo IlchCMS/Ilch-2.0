@@ -19,7 +19,8 @@
         "components/jquery": "^3.1",
         "ckeditor/ckeditor": "^4.6",
         "components/jqueryui": "^1.12",
-        "phpmailer/phpmailer": "~5.2"
+        "phpmailer/phpmailer": "~5.2",
+        "sphido/events": "^0.3"
     },
     "require-dev": {
         "maximebf/debugbar": "^1.12",
