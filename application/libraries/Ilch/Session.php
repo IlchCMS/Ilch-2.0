@@ -81,7 +81,7 @@ class Session
      * Is called to read data from a session.
      *
      * @access public
-     * @access Integer $id The id of the current session
+     * @param Integer $id The id of the current session
      * @return Mixed
      */
     public function _read($id)
@@ -121,8 +121,8 @@ class Session
      * into the session record in the database.
      *
      * @access public
-     * @access Integer $id The id of the current session
-     * @access String $sess_data The data of the session
+     * @param Integer $id The id of the current session
+     * @param String $sess_data The data of the session
      * @return Boolean
      */
     public function _write($id, $sess_data)
@@ -171,7 +171,7 @@ class Session
      * Ends a session and deletes it.
      *
      * @access public
-     * @access Integer $id The id of the current session
+     * @param Integer $id The id of the current session
      * @return Boolean
      */
     public function _destroy($id)
@@ -193,7 +193,7 @@ class Session
      * so your session table will be stay clean.
      *
      * @access public
-     * @access Integer $maxlifetime The maximum session lifetime
+     * @param Integer $maxlifetime The maximum session lifetime
      * @return Boolean
      */
     public function _gc($maxlifetime)
