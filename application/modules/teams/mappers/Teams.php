@@ -25,11 +25,12 @@ class Teams extends \Ilch\Mapper
             ->execute()
             ->fetchRows();
 
+        $teams = [];
+
         if (empty($entryArray)) {
-            return null;
+            return $teams;
         }
 
-        $teams = [];
         foreach ($entryArray as $entries) {
             $entryModel = new TeamsModel();
             $entryModel->setId($entries['id']);
