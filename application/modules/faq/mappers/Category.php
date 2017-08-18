@@ -52,11 +52,18 @@ class Category extends \Ilch\Mapper
         return reset($cats);
     }
 
+    /**
+     * Returns first non-empty category.
+     *
+     * @return null|CategoryModel
+     */
     public function getCategoryMinId()
     {
         $categoryRow = $this->db()->select('*')
-            ->from('faqs_cats')
-            ->order(['id' => 'ASC'])
+            ->fields(['c.id', 'c.title', 'faqs' => 'f.cat_id'])
+            ->from(['c' => 'faqs_cats'])
+            ->join(['f' => 'faqs'], 'c.id = f.cat_id')
+            ->order(['c.id' => 'ASC'])
             ->limit('1')
             ->execute()
             ->fetchAssoc();
