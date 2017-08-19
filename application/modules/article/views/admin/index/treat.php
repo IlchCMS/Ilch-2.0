@@ -94,6 +94,16 @@ if ($this->get('article') != '') {
         </div>
     <?php endif; ?>
     <h1><?=$this->getTrans('options') ?></h1>
+    <div class="form-group">
+        <label for="topArticle" class="col-lg-2 control-label">
+            <?=$this->getTrans('topArticle') ?>:
+        </label>
+        <div class="col-lg-4">
+            <input type="checkbox"
+                   name="topArticle"
+                   <?= ($this->get('article')->getTopArticle()) ? 'checked' : '' ?> />
+        </div>
+    </div>
     <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
         <label for="selectedImage" class="col-lg-2 control-label">
             <?=$this->getTrans('image') ?>:

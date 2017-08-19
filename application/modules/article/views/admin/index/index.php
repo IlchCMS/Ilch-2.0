@@ -11,6 +11,7 @@ $articleMapper = $this->get('articleMapper');
                 <col class="icon_width" />
                 <col class="icon_width" />
                 <col class="icon_width" />
+                <col class="icon_width" />
                 <col />
                 <?php if ($this->get('multilingual')): ?>
                     <col class="col-lg-1">
@@ -19,6 +20,7 @@ $articleMapper = $this->get('articleMapper');
             <thead>
                 <tr>
                     <th><?=$this->getCheckAllCheckbox('check_articles') ?></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                     <th><?=$this->getTrans('title') ?></th>
@@ -42,6 +44,7 @@ $articleMapper = $this->get('articleMapper');
                             <td><?=$this->getDeleteCheckbox('check_articles', $article->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $article->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'delete', 'id' => $article->getId()]) ?></td>
+                            <td><?=($article->getTopArticle()) ? '<i class="fa fa-star-o" title="'.$this->getTrans('topArticle').'"></i>' : '' ?></td>
                             <td><a target="_blank" href="<?=$this->getUrl().'/index.php/'.$this->escape($article->getPerma()) ?>"><?=$this->escape($article->getTitle()) ?></a></td>
                             <?php if ($this->get('multilingual')): ?>
                                 <td class="text-right">

@@ -93,6 +93,13 @@ class Article extends \Ilch\Model
     protected $dateCreated;
 
     /**
+     * True/False top article.
+     *
+     * @var boolean
+     */
+    protected $top;
+
+    /**
      * The Image of the article.
      *
      * @var string
@@ -386,6 +393,29 @@ class Article extends \Ilch\Model
     {
         $this->dateCreated = $dateCreated;
 
+        return $this;
+    }
+
+    /**
+     * Gets the value of top.
+     *
+     * @return boolean
+     */
+    public function getTopArticle()
+    {
+        return $this->top;
+    }
+
+    /**
+     * Sets the value of top.
+     *
+     * @param boolean $top
+     * @return $this
+     */
+    public function setTopArticle($top)
+    {
+        $this->top = $top;
+        
         return $this;
     }
 

@@ -22,12 +22,12 @@ class Article extends \Ilch\Mapper
     public function getArticles($locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-                ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top'])
                 ->from(['p' => 'articles'])
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source'])
                 ->where(['pc.locale' => $this->db()->escape($locale)])
-                ->group(['p.id', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source'])
-                ->order(['date_created' => 'DESC']);
+                ->group(['p.id', 'p.cat_id', 'p.date_created', 'p.top', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source'])
+                ->order(['top' => 'DESC', 'date_created' => 'DESC']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
@@ -58,6 +58,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
+            $articleModel->setTopArticle($articleRow['top']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
             $articles[] = $articleModel;
@@ -77,7 +78,7 @@ class Article extends \Ilch\Mapper
     public function getArticlesByCats($catId, $locale = '', $pagination = null)
     {
         $select = $this->db()->select()
-            ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top'])
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.img', 'pc.img_source'])
             ->where(['p.cat_id LIKE' => '%'.$catId.'%', 'pc.locale' => $this->db()->escape($locale)])
@@ -111,6 +112,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
+            $articleModel->setTopArticle($articleRow['top']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
             $articles[] = $articleModel;
@@ -170,6 +172,7 @@ class Article extends \Ilch\Mapper
             $articleModel->setPerma($articleRow['perma']);
             $articleModel->setContent($articleRow['content']);
             $articleModel->setDateCreated($articleRow['date_created']);
+            $articleModel->setTopArticle($articleRow['top']);
             $articleModel->setImage($articleRow['img']);
             $articleModel->setImageSource($articleRow['img_source']);
             $articles[] = $articleModel;
@@ -307,7 +310,7 @@ class Article extends \Ilch\Mapper
     public function getArticleByIdLocale($id, $locale = '')
     {
         $select = $this->db()->select()
-                ->fields(['p.id', 'p.cat_id', 'p.date_created'])
+                ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top'])
                 ->from(['p' => 'articles'])
                 ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source'])
                 ->where(['p.id' => $id, 'pc.locale' => $this->db()->escape($locale)]);
@@ -332,11 +335,13 @@ class Article extends \Ilch\Mapper
         $articleModel->setLocale($articleRow['locale']);
         $articleModel->setPerma($articleRow['perma']);
         $articleModel->setDateCreated($articleRow['date_created']);
+        $articleModel->setTopArticle($articleRow['top']);
         $articleModel->setImage($articleRow['img']);
         $articleModel->setImageSource($articleRow['img_source']);
 
         return $articleModel;
     }
+
     /**
      * Get articles.
      *
@@ -388,6 +393,72 @@ class Article extends \Ilch\Mapper
         }
 
         return $permaArray;
+    }
+
+    /**
+     * Get the top article.
+     *
+     * @return ArticleModel|null
+     */
+    public function getTopArticle()
+    {
+        $articleRow = $this->db()->select('*')
+            ->fields(['p.id', 'p.cat_id', 'p.date_created', 'p.top'])
+            ->from(['p' => 'articles'])
+            ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', ['pc.visits', 'pc.author_id', 'pc.description', 'pc.keywords', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.content', 'pc.locale', 'pc.img', 'pc.img_source'])
+            ->where(['top' => 1])
+            ->execute()
+            ->fetchAssoc();
+
+        if (empty($articleRow)) {
+            return null;
+        }
+
+        $articleModel = new ArticleModel();
+        $articleModel->setId($articleRow['id']);
+        $articleModel->setCatId($articleRow['cat_id']);
+        $articleModel->setAuthorId($articleRow['author_id']);
+        $articleModel->setVisits($articleRow['visits']);
+        $articleModel->setDescription($articleRow['description']);
+        $articleModel->setKeywords($articleRow['keywords']);
+        $articleModel->setTitle($articleRow['title']);
+        $articleModel->setTeaser($articleRow['teaser']);
+        $articleModel->setContent($articleRow['content']);
+        $articleModel->setLocale($articleRow['locale']);
+        $articleModel->setPerma($articleRow['perma']);
+        $articleModel->setDateCreated($articleRow['date_created']);
+        $articleModel->setTopArticle($articleRow['top']);
+        $articleModel->setImage($articleRow['img']);
+        $articleModel->setImageSource($articleRow['img_source']);
+
+        return $articleModel;
+    }
+
+    /**
+     * Set the top article.
+     *
+     * @param int $id
+     */
+    public function setTopArticle($id)
+    {
+        $articleModel = $this->getTopArticle();
+
+        if ($articleModel) {
+            $idTop = $articleModel->getId();
+            $x = 0;
+        } else {
+            $idTop = $id;
+            $x = 1;
+        }
+
+        for ($x; $x <= 1; $x++) {
+            $this->db()->update('articles')
+                ->values(['top' => $x])
+                ->where(['id' => $idTop])
+                ->execute();
+                
+            $idTop = $id;
+        }
     }
 
     /**
@@ -461,6 +532,8 @@ class Article extends \Ilch\Mapper
                     )
                     ->execute();
             }
+
+            $this->setTopArticle($article->getId());
         } else {
             $date = new \Ilch\Date();
             $articleId = $this->db()->insert('articles')
@@ -491,6 +564,8 @@ class Article extends \Ilch\Mapper
                     ]
                 )
                 ->execute();
+                
+            $this->setTopArticle($articleId);
         }
     }
 

@@ -133,6 +133,7 @@ class Index extends \Ilch\Controller\Admin
                     ->setTeaser($this->getRequest()->getPost('teaser'))
                     ->setContent($this->getRequest()->getPost('content'))
                     ->setPerma($this->getRequest()->getPost('permaLink'))
+                    ->setTopArticle($this->getRequest()->getPost('topArticle'))
                     ->setImage($this->getRequest()->getPost('image'))
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
                 $this->trigger(ArticleConfig::EVENT_SAVE_BEFORE, ['model' => $model]);
