@@ -208,6 +208,9 @@ class Config extends \Ilch\Config\Install
                 // Add new hide_menu column
                 $this->db()->query('ALTER TABLE `[prefix]_modules` ADD COLUMN `hide_menu` TINYINT(1) NOT NULL DEFAULT 0;');
                 $this->db()->query('UPDATE `[prefix]_modules` SET `hide_menu` = 1 WHERE `key` = "comment";');
+            case "2.0.2":
+                // Add new top column for the top article feature
+                $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `top` TINYINT(1) NOT NULL DEFAULT 0;');
         }
 
         return 'Update function executed.';

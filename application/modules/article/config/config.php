@@ -81,6 +81,7 @@ class Config extends \Ilch\Config\Install
                   `id` INT(11) NOT NULL AUTO_INCREMENT,
                   `cat_id` VARCHAR(255) NOT NULL,
                   `date_created` DATETIME NOT NULL,
+                  `top` TINYINT(1) NOT NULL DEFAULT 0,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -106,7 +107,7 @@ class Config extends \Ilch\Config\Install
                   `img_source` VARCHAR(255) NOT NULL
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-                INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`) VALUES (1, now());
+                INSERT INTO `[prefix]_articles` (`cat_id`, `date_created`, `top`) VALUES (1, now(), 0);
 
                 INSERT INTO `[prefix]_articles_cats` (`name`) VALUES ("Allgemein");
 
