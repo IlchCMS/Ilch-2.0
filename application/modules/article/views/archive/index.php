@@ -11,7 +11,7 @@ $userMapper = $this->get('userMapper');
         <?php
         foreach ($articles as $article):
             $date = new \Ilch\Date($article->getDateCreated());
-            $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
+            $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
 
             $catIds = explode(",", $article->getCatId());
             $categories = '';

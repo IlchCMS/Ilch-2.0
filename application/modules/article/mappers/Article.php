@@ -7,6 +7,8 @@
 namespace Modules\Article\Mappers;
 
 use Modules\Article\Models\Article as ArticleModel;
+use Modules\Comment\Mappers\Comment as CommentMapper;
+use Modules\Article\Config\Config as ArticleConfig;
 
 class Article extends \Ilch\Mapper
 {
@@ -509,5 +511,21 @@ class Article extends \Ilch\Mapper
             ->execute();
         
         return $deleted;
+    }
+
+    /**
+     * Delete an article with all associated comments
+     * @param $id
+     * @param CommentMapper|null $commentsMapper
+     */
+    public function deleteWithComments($id, CommentMapper $commentsMapper = null)
+    {
+        $this->trigger(ArticleConfig::EVENT_DELETE_BEFORE, ['id' => $id]);
+        $this->delete($id);
+        if ($commentsMapper === null) {
+            $commentsMapper = new CommentMapper();
+        }
+        $commentsMapper->deleteByKey(sprintf(ArticleConfig::COMMENT_KEY_TPL, $id));
+        $this->trigger(ArticleConfig::EVENT_DELETE_AFTER, ['id' => $id]);
     }
 }

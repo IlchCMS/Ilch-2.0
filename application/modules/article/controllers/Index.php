@@ -12,9 +12,15 @@ use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Comment\Models\Comment as CommentModel;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\Article\Config\Config as ArticleConfig;
 
 class Index extends \Ilch\Controller\Frontend
 {
+    /**
+     * @var string
+     */
+    private $locale;
+
     public function init()
     {
         $locale = '';
@@ -64,11 +70,12 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getPost('saveComment')) {
             $date = new \Ilch\Date();
             $commentModel = new CommentModel();
+            $commentKey = sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'));
             if ($this->getRequest()->getPost('fkId')) {
-                $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id').'/id_c/'.$this->getRequest()->getPost('fkId'));
+                $commentModel->setKey($commentKey.'/id_c/'.$this->getRequest()->getPost('fkId'));
                 $commentModel->setFKId($this->getRequest()->getPost('fkId'));
             } else {
-                $commentModel->setKey('article/index/show/id/'.$this->getRequest()->getParam('id'));                
+                $commentModel->setKey($commentKey);
             }
             $commentModel->setText($this->getRequest()->getPost('comment_text'));
             $commentModel->setDateCreated($date);
@@ -154,7 +161,12 @@ class Index extends \Ilch\Controller\Frontend
                 ->set('userMapper', $userMapper)
                 ->set('config', $config)
                 ->set('article', $article)
-                ->set('comments', $commentMapper->getCommentsByKey('article/index/show/id/'.$this->getRequest()->getParam('id')));
+                ->set(
+                    'comments',
+                    $commentMapper->getCommentsByKey(
+                        sprintf(ArticleConfig::COMMENT_KEY_TPL, $this->getRequest()->getParam('id'))
+                    )
+                );
         }
     }
 }

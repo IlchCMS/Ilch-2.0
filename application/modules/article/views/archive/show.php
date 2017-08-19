@@ -11,7 +11,7 @@ $date = new \Ilch\Date(''.$this->getRequest()->getParam('year').'-'.$this->getRe
     <?php
     foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());
-        $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
+        $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
         $image = $article->getImage();
         $imageSource = $article->getImageSource();
 

@@ -10,6 +10,7 @@ use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\Article\Models\Article as ArticleModel;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
+use Modules\Article\Config\Config as ArticleConfig;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Admin
@@ -59,8 +60,6 @@ class Index extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $articleMapper = new ArticleMapper();
-        $categoryMapper = new CategoryMapper();
-        $commentMapper = new CommentMapper();
         $pagination = new \Ilch\Pagination();
 
         $this->getLayout()->getAdminHmenu()
@@ -68,9 +67,9 @@ class Index extends \Ilch\Controller\Admin
                 ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('action') == 'delete' && $this->getRequest()->getPost('check_articles')) {
+            $commentMapper = new CommentMapper();
             foreach ($this->getRequest()->getPost('check_articles') as $articleId) {
-                $articleMapper->delete($articleId);
-                $commentMapper->deleteByKey('article/index/show/id/'.$articleId);
+                $articleMapper->deleteWithComments($articleId, $commentMapper);
             }
         }
 
@@ -136,7 +135,9 @@ class Index extends \Ilch\Controller\Admin
                     ->setPerma($this->getRequest()->getPost('permaLink'))
                     ->setImage($this->getRequest()->getPost('image'))
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
+                $this->trigger(ArticleConfig::EVENT_SAVE_BEFORE, ['model' => $model]);
                 $articleMapper->save($model);
+                $this->trigger(ArticleConfig::EVENT_SAVE_AFTER, ['model' => $model]);
 
                 $this->redirect()
                     ->withMessage('saveSuccess')
@@ -159,9 +160,7 @@ class Index extends \Ilch\Controller\Admin
     {
         if ($this->getRequest()->isSecure()) {
             $articleMapper = new ArticleMapper();
-            $commentMapper = new CommentMapper();
-            $articleMapper->delete($this->getRequest()->getParam('id'));
-            $commentMapper->deleteByKey('article/index/show/id/'.$this->getRequest()->getParam('id'));
+            $articleMapper->deleteWithComments($this->getRequest()->getParam('id'));
 
             $this->redirect()
                 ->withMessage('deleteSuccess')

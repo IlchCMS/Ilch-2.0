@@ -8,6 +8,13 @@ namespace Modules\Article\Config;
 
 class Config extends \Ilch\Config\Install
 {
+    const EVENT_SAVE_BEFORE = 'article_save_before';
+    const EVENT_SAVE_AFTER = 'article_save_after';
+    const EVENT_DELETE_BEFORE = 'article_delete_before';
+    const EVENT_DELETE_AFTER = 'article_delete_after';
+
+    const COMMENT_KEY_TPL = 'article/index/show/id/%d';
+
     public $config = [
         'key' => 'article',
         'icon_small' => 'fa-quote-right',

@@ -10,7 +10,7 @@ $articlesCats = $categoryMapper->getCategoryById($this->getRequest()->getParam('
 <?php if ($articles != ''):
     foreach ($articles as $article):
         $date = new \Ilch\Date($article->getDateCreated());
-        $commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
+        $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
         $image = $article->getImage();
         $imageSource = $article->getImageSource();
 

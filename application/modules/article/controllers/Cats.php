@@ -13,6 +13,11 @@ use Modules\User\Mappers\User as UserMapper;
 
 class Cats extends \Ilch\Controller\Frontend
 {
+    /**
+     * @var string
+     */
+    private $locale;
+
     public function init()
     {
         $locale = '';

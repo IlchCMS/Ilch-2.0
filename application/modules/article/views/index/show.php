@@ -8,7 +8,7 @@ $content = str_replace('[PREVIEWSTOP]', '', $article->getContent());
 $preview = $this->getRequest()->getParam('preview');
 $config = $this->get('config');
 $date = new \Ilch\Date($article->getDateCreated());
-$commentsCount = $commentMapper->getCountComments('article/index/show/id/'.$article->getId());
+$commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
 
 $catIds = explode(",", $article->getCatId());
 $categories = '';

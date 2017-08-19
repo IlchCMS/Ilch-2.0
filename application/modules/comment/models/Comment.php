@@ -34,7 +34,7 @@ class Comment extends \Ilch\Model
     protected $userId;
 	
     /**
-     * @var DateTime
+     * @var \DateTime
      */
     protected $dateCreated;
 	
@@ -154,7 +154,7 @@ class Comment extends \Ilch\Model
     }
 	
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getDateCreated()
     {
@@ -162,7 +162,7 @@ class Comment extends \Ilch\Model
     }
 
     /**
-     * @param DateTime $dateCreated
+     * @param \DateTime $dateCreated
      *
      * @return $this
      */
