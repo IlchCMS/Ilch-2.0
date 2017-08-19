@@ -532,8 +532,6 @@ class Article extends \Ilch\Mapper
                     )
                     ->execute();
             }
-
-            $this->setTopArticle($article->getId());
         } else {
             $date = new \Ilch\Date();
             $articleId = $this->db()->insert('articles')
@@ -564,7 +562,9 @@ class Article extends \Ilch\Mapper
                     ]
                 )
                 ->execute();
-                
+        }
+
+        if ($article->getTopArticle) {
             $this->setTopArticle($articleId);
         }
     }
