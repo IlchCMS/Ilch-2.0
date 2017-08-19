@@ -101,7 +101,7 @@ if ($this->get('article') != '') {
         <div class="col-lg-4">
             <input type="checkbox"
                    name="topArticle"
-                   <?= ($this->get('article')->getTopArticle()) ? 'checked' : '' ?> />
+                   <?= ($this->get('article') && $this->get('article')->getTopArticle()) ? 'checked' : '' ?> />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
