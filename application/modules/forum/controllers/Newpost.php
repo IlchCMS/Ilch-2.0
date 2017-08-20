@@ -10,6 +10,7 @@ use Modules\Forum\Mappers\Post as PostMapper;
 use Modules\Forum\Mappers\Topic as TopicMapper;
 use Modules\Forum\Mappers\Forum as ForumMapper;
 use Modules\Forum\Models\ForumPost as ForumPostModel;
+use Modules\Forum\Config\Config as ForumConfig;
 use Ilch\Validation;
 
 class Newpost extends \Ilch\Controller\Frontend
@@ -53,7 +54,10 @@ class Newpost extends \Ilch\Controller\Frontend
                     ->setText($this->getRequest()->getPost('text'))
                     ->setForumId($forum->getId())
                     ->setDateCreated($dateTime);
+                $this->trigger(ForumConfig::EVENT_SAVEPOST_BEFORE, ['model' => $postModel]);
                 $postMapper->save($postModel);
+                $this->trigger(ForumConfig::EVENT_SAVEPOST_AFTER, ['model' => $postModel]);
+                $this->trigger(ForumConfig::EVENT_ADDPOST_AFTER, ['postModel' => $postModel, 'forum' => $forum, 'category' => $cat, 'topic' => $topic, 'request' => $this->getRequest()]);
 
                 $lastPost = $forumMapper->getLastPostByTopicId($forum->getId());
 
