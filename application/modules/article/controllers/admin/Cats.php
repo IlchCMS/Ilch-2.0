@@ -9,6 +9,7 @@ namespace Modules\Article\Controllers\Admin;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Article\Models\Category as CategoryModel;
 use Modules\Article\Mappers\Article as ArticleMapper;
+use Modules\Article\Config\Config as ArticleConfig;
 use Ilch\Validation;
 
 class Cats extends \Ilch\Controller\Admin
@@ -115,7 +116,15 @@ class Cats extends \Ilch\Controller\Admin
                     $model->setId($this->getRequest()->getParam('id'));
                 }
                 $model->setName($this->getRequest()->getPost('name'));
+                $this->trigger(ArticleConfig::EVENT_SAVECATEGORY_BEFORE, ['model' => $model]);
                 $categoryMapper->save($model);
+                $this->trigger(ArticleConfig::EVENT_SAVECATEGORY_AFTER, ['model' => $model]);
+
+                if ($this->getRequest()->getParam('id')) {
+                    $this->trigger(ArticleConfig::EVENT_EDITCATEGORY_AFTER, ['model' => $model]);
+                } else {
+                    $this->trigger(ArticleConfig::EVENT_ADDCATEGORY_AFTER, ['model' => $model]);
+                }
 
                 $this->redirect()
                     ->withMessage('saveSuccess')

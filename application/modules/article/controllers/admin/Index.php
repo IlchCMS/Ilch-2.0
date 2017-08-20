@@ -140,6 +140,12 @@ class Index extends \Ilch\Controller\Admin
                 $articleMapper->save($model);
                 $this->trigger(ArticleConfig::EVENT_SAVE_AFTER, ['model' => $model]);
 
+                if ($this->getRequest()->getParam('id')) {
+                    $this->trigger(ArticleConfig::EVENT_EDITARTICLE_AFTER, ['model' => $model]);
+                } else {
+                    $this->trigger(ArticleConfig::EVENT_ADDARTICLE_AFTER, ['model' => $model]);
+                }
+
                 $this->redirect()
                     ->withMessage('saveSuccess')
                     ->to(['action' => 'index']);
