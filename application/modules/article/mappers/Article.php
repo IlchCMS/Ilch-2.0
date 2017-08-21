@@ -142,7 +142,7 @@ class Article extends \Ilch\Mapper
             ->from(['p' => 'articles'])
             ->join(['pc' => 'articles_content'], 'p.id = pc.article_id', 'LEFT', [])
             ->where(['p.date_created >=' => $dateFrom, 'p.date_created <' => $dateTo])
-            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source']);
+            ->group(['p.id' => 'DESC', 'p.cat_id', 'p.date_created', 'p.top', 'pc.article_id', 'pc.author_id', 'pc.visits', 'pc.content', 'pc.description', 'pc.keywords', 'pc.locale', 'pc.title', 'pc.teaser', 'pc.perma', 'pc.img', 'pc.img_source']);
 
         if ($pagination !== null) {
             $select->limit($pagination->getLimit())
