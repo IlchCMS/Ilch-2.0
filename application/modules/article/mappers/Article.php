@@ -480,9 +480,12 @@ class Article extends \Ilch\Mapper
      * Inserts or updates a article.
      *
      * @param ArticleModel $article
+     * @return int $id
      */
     public function save(ArticleModel $article)
     {
+        $id = 0;
+
         if ($article->getId()) {
             if ($this->getArticleByIdLocale($article->getId(), $article->getLocale())) {
                 $this->db()->update('articles')
@@ -532,6 +535,8 @@ class Article extends \Ilch\Mapper
                     )
                     ->execute();
             }
+
+            $id = $article->getId();
         } else {
             $date = new \Ilch\Date();
             $articleId = $this->db()->insert('articles')
@@ -562,11 +567,15 @@ class Article extends \Ilch\Mapper
                     ]
                 )
                 ->execute();
+
+            $id = $articleId;
         }
 
-        if ($article->getTopArticle) {
+        if ($article->getTopArticle()) {
             $this->setTopArticle($articleId);
         }
+
+        return $id;
     }
 
     /**
@@ -580,11 +589,11 @@ class Article extends \Ilch\Mapper
         $deleted = $this->db()->delete('articles')
             ->where(['id' => $id])
             ->execute();
-        
+
         $this->db()->delete('articles_content')
             ->where(['article_id' => $id])
             ->execute();
-        
+
         return $deleted;
     }
 
