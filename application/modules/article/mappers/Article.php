@@ -438,27 +438,14 @@ class Article extends \Ilch\Mapper
      * Set the top article.
      *
      * @param int $id
+     * @param int $value
      */
-    public function setTopArticle($id)
+    public function setTopArticle($id, $value)
     {
-        $articleModel = $this->getTopArticle();
-
-        if ($articleModel) {
-            $idTop = $articleModel->getId();
-            $x = 0;
-        } else {
-            $idTop = $id;
-            $x = 1;
-        }
-
-        for ($x; $x <= 1; $x++) {
-            $this->db()->update('articles')
-                ->values(['top' => $x])
-                ->where(['id' => $idTop])
-                ->execute();
-                
-            $idTop = $id;
-        }
+        $this->db()->update('articles')
+            ->values(['top' => $value])
+            ->where(['id' => $id])
+            ->execute();
     }
 
     /**
@@ -571,9 +558,7 @@ class Article extends \Ilch\Mapper
             $id = $articleId;
         }
 
-        if ($article->getTopArticle()) {
-            $this->setTopArticle($articleId);
-        }
+        $this->setTopArticle($id, (bool)$article->getTopArticle());
 
         return $id;
     }
