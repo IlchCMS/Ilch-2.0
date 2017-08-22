@@ -69,6 +69,9 @@ if ($this->getUser()) {
             &nbsp;&nbsp;<i class="fa fa-folder-open-o" title="<?=$this->getTrans('cats') ?>"></i> <?=rtrim($categories, ', '); ?>
             &nbsp;&nbsp;<i class="fa fa-comment-o" title="<?=$this->getTrans('comments') ?>"></i> <a href="<?=$this->getUrl(['action' => 'show', 'id' => $article->getId().'#comment']) ?>"><?=$commentsCount ?></a>
             &nbsp;&nbsp;<i class="fa fa-eye" title="<?=$this->getTrans('hits') ?>"></i> <?=$article->getVisits() ?>
+            <?php if ($article->getTopArticle()) : ?>
+            &nbsp;&nbsp;<i class="fa fa-star-o" title="<?=$this->getTrans('topArticle') ?>"></i>
+            <?php endif; ?>
             <?php if ($article->getKeywords() != ''): ?>
                 <br /><i class="fa fa-hashtag"></i> <?=$article->getKeywords() ?>
             <?php endif; ?>
