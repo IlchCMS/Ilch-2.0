@@ -22,6 +22,7 @@ return [
     'hits' => 'Zugriffe',
     'imageSource' => 'Bild Quelle',
     'options' => 'Optionen',
+    'visibleFor' => 'Sichtbar für',
     'topArticle' => 'Top-Artikel',
     'selectCategories' => 'Kategorien auswählen',
     'menuCats' => 'Kategorien',

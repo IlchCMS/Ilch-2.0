@@ -22,6 +22,7 @@ return [
     'hits' => 'Hits',
     'imageSource' => 'Image Source',
     'options' => 'Options',
+    'visibleFor' => 'Visible for',
     'topArticle' => 'Top article',
     'selectCategories' => 'Select categories',
     'menuCats' => 'Categories',

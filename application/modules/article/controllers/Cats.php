@@ -73,10 +73,26 @@ class Cats extends \Ilch\Controller\Frontend
         $pagination->setRowsPerPage(!$this->getConfig()->get('article_articlesPerPage') ? $this->getConfig()->get('defaultPaginationObjects') : $this->getConfig()->get('article_articlesPerPage'));
         $pagination->setPage($this->getRequest()->getParam('page'));
 
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
+
         $this->getView()->set('categoryMapper', $categoryMapper)
             ->set('commentMapper', $commentMapper)
             ->set('userMapper', $userMapper)
             ->set('articles', $articleMapper->getArticlesByCats($this->getRequest()->getParam('id'), $this->locale, $pagination))
+            ->set('readAccess', $readAccess)
             ->set('pagination', $pagination);
     }
 }

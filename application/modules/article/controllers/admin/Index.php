@@ -10,6 +10,7 @@ use Modules\Article\Mappers\Article as ArticleMapper;
 use Modules\Article\Models\Article as ArticleModel;
 use Modules\Article\Mappers\Category as CategoryMapper;
 use Modules\Comment\Mappers\Comment as CommentMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 use Modules\Article\Config\Config as ArticleConfig;
 use Ilch\Validation;
 
@@ -87,6 +88,7 @@ class Index extends \Ilch\Controller\Admin
     {
         $articleMapper = new ArticleMapper();
         $categoryMapper = new CategoryMapper();
+        $groupMapper = new GroupMapper();
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
@@ -125,6 +127,11 @@ class Index extends \Ilch\Controller\Admin
                     $model->setLocale('');
                 }
 
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
+
                 $model->setCatId($catIds)
                     ->setAuthorId($this->getUser()->getId())
                     ->setDescription($this->getRequest()->getPost('description'))
@@ -134,10 +141,11 @@ class Index extends \Ilch\Controller\Admin
                     ->setContent($this->getRequest()->getPost('content'))
                     ->setPerma($this->getRequest()->getPost('permaLink'))
                     ->setTopArticle($this->getRequest()->getPost('topArticle'))
+                    ->setReadAccess($groups)
                     ->setImage($this->getRequest()->getPost('image'))
                     ->setImageSource($this->getRequest()->getPost('imageSource'));
                 $this->trigger(ArticleConfig::EVENT_SAVE_BEFORE, ['model' => $model]);
-                $articleMapper->save($model);
+                $id = $articleMapper->save($model);
                 $this->trigger(ArticleConfig::EVENT_SAVE_AFTER, ['model' => $model]);
 
                 if ($this->getRequest()->getParam('id')) {
@@ -157,10 +165,14 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat']);
         }
 
+        $groups = explode(',', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), '')->getReadAccess());
+        
         $this->getView()->set('cats', $categoryMapper->getCategories());
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
         $this->getView()->set('multilingual', (bool)$this->getConfig()->get('multilingual_acp'));
+        $this->getView()->set('userGroupList', $groupMapper->getGroupList());
+        $this->getView()->set('groups', $groups);
     }
 
     public function deleteAction()

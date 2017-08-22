@@ -100,6 +100,13 @@ class Article extends \Ilch\Model
     protected $top;
 
     /**
+     * Read access of the article.
+     *
+     * @var string
+     */
+    protected $readAccess;
+
+    /**
      * The Image of the article.
      *
      * @var string
@@ -416,6 +423,29 @@ class Article extends \Ilch\Model
     {
         $this->top = $top;
         
+        return $this;
+    }
+
+    /**
+     * Gets the read access.
+     *
+     * @return string
+     */
+    public function getReadAccess()
+    {
+        return $this->readAccess;
+    }
+
+    /**
+     * Sets the read access.
+     *
+     * @param integer $readAccess
+     * @return $this
+     */
+    public function setReadAccess($readAccess)
+    {
+        $this->readAccess = (string) $readAccess;
+
         return $this;
     }
 

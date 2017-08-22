@@ -3,13 +3,26 @@ $articles = $this->get('articles');
 $categoryMapper = $this->get('categoryMapper');
 $commentMapper = $this->get('commentMapper');
 $userMapper = $this->get('userMapper');
+
+$adminAccess = null;
+if ($this->getUser()) {
+    $adminAccess = $this->getUser()->isAdmin();
+}
 ?>
 
 <h1><?=$this->getTrans('menuArchives') ?></h1>
 <?php if ($articles != ''): ?>
     <ul class="list-group">
         <?php
+        $displayedArticles = 0;
+
         foreach ($articles as $article):
+            if (!is_in_array($this->get('readAccess'), explode(',', $article->getReadAccess())) && $adminAccess == false) {
+                continue;
+            }
+
+            $displayedArticles++;
+
             $date = new \Ilch\Date($article->getDateCreated());
             $commentsCount = $commentMapper->getCountComments(sprintf(Modules\Article\Config\Config::COMMENT_KEY_TPL, $article->getId()));
 
@@ -39,9 +52,13 @@ $userMapper = $this->get('userMapper');
             </li>
         <?php endforeach; ?>
     </ul>
-    <div class="pull-right">
-        <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
-    </div>
+    <?php if ($displayedArticles > 0) : ?>
+        <div class="pull-right">
+            <?=$this->get('pagination')->getHtml($this, ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]) ?>
+        </div>
+    <?php else: ?>
+        <?=$this->getTrans('noArticles') ?>
+    <?php endif; ?>
 <?php else: ?>
     <?=$this->getTrans('noArticles') ?>
 <?php endif; ?>
