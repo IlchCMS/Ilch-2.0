@@ -118,6 +118,21 @@ class Index extends \Ilch\Controller\Frontend
             $this->redirect(['action' => 'show', 'id' => $id.'#comment_'.$commentId]);
         }
 
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
+
         if ($this->getRequest()->isPost() & $this->getRequest()->getParam('preview') == 'true') {
             $this->getLayout()->getTitle()
                 ->add($this->getTranslator()->trans('menuArticle'))
@@ -140,6 +155,7 @@ class Index extends \Ilch\Controller\Frontend
 
             $this->getView()->set('categoryMapper', $categoryMapper)
                 ->set('commentMapper', $commentMapper)
+                ->set('readAccess', $readAccess)
                 ->set('article', $articleModel);
         } else {
             $article = $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'));
@@ -177,6 +193,7 @@ class Index extends \Ilch\Controller\Frontend
                 ->set('userMapper', $userMapper)
                 ->set('config', $config)
                 ->set('article', $article)
+                ->set('readAccess', $readAccess)
                 ->set(
                     'comments',
                     $commentMapper->getCommentsByKey(
