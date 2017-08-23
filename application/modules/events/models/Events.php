@@ -51,6 +51,13 @@ class Events extends \Ilch\Model
     protected $place;
 
     /**
+     * The website of the event.
+     *
+     * @var string
+     */
+    protected $website;
+
+    /**
      * The lat and long of the event.
      *
      * @var string
@@ -239,6 +246,30 @@ class Events extends \Ilch\Model
     public function setPlace($place)
     {
         $this->place = (string)$place;
+
+        return $this;
+    }
+
+    /**
+     * Gets the website of the event.
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Sets the website of the event.
+     *
+     * @param string $website
+     *
+     * @return $this
+     */
+    public function setWebsite($website)
+    {
+        $this->website = (string)$website;
 
         return $this;
     }

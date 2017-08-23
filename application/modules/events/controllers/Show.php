@@ -34,16 +34,15 @@ class Show extends \Ilch\Controller\Frontend
             ->add($event->getTitle(), ['controller' => 'show', 'action' => 'event', 'id' => $event->getId()]);
 
         if ($this->getRequest()->isPost()) {
+            $date = new \Ilch\Date();
+
             if ($this->getRequest()->getPost('save')) {
                 $entrantsModel->setEventId(trim($this->getRequest()->getPost('id')))
                     ->setUserId($this->getUser()->getId())
                     ->setStatus(trim($this->getRequest()->getPost('save')));
                 $entrantsMapper->saveUserOnEvent($entrantsModel);
-
-                $this->addMessage('saveSuccess');
             }
             if ($this->getRequest()->getPost('commentEvent')) {
-                $date = new \Ilch\Date();
                 $commentModel->setKey('events/show/event/id/'.$this->getRequest()->getParam('id'))
                     ->setText($this->getRequest()->getPost('commentEvent'))
                     ->setDateCreated($date)
@@ -54,8 +53,6 @@ class Show extends \Ilch\Controller\Frontend
             }
             if ($this->getRequest()->getPost('deleteUser')) {
                 $entrantsMapper->deleteUserFromEvent($this->getRequest()->getParam('id'), $this->getUser()->getId());
-
-                $this->addMessage('deleteSuccess');
             }
             if ($this->getRequest()->getPost('deleteEvent')) {
                 $eventMapper->delete($this->getRequest()->getParam('id'));
@@ -94,7 +91,7 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListUpcoming', $eventMapper->getEventListUpcomingALL());
+            ->set('eventListUpcoming', $eventMapper->getEventListUpcoming());
     }
 
     public function pastAction()

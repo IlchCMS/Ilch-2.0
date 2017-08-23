@@ -11,6 +11,7 @@ return [
     'creator' => 'Ersteller',
     'title' => 'Titel',
     'place' => 'Ort',
+    'website' => 'Webseite',
     'startTime' => 'Beginn',
     'endTime' => 'Ende',
     'text' => 'Text',
@@ -28,7 +29,6 @@ return [
     'menuEventPast' => 'Vergangene Veranstaltungen',
     'menuEventHost' => 'Meine Veranstaltungen',
     'menuEventParticipation' => 'Veranstaltungsteilnahme',
-    'menuEventOtherList' => 'weitere Veranstaltungen',
     'otherEvents' => 'weitere Veranstaltungen',
     'join' => 'Teilnehmen',
     'entrant' => 'Teilnehmer',
@@ -65,6 +65,7 @@ return [
     'failedFilesize' => 'Bild hat unerlaubte Breite, Höhe oder ist zu groß.',
     'browse' => 'Durchsuchen',
     'noAccess' => 'Keine Berechtigung!',
+    'noSelection' => 'keine Auswahl',
 
     'currencies' => 'Währungen',
     'currency' => 'Währung',

@@ -25,7 +25,7 @@ $entrantsMapper = $this->get('entrantsMapper');
                                     <br /><span class="text-muted"><?=$place[1] ?></span>
                                 <?php endif; ?>
                             </p>
-                            <?php $agree = 1; $maybe = 0; ?>
+                            <?php $agree = 0; $maybe = 0; ?>
                             <?php if ($entrantsMapper->getEventEntrantsById($eventlist->getId()) != ''): ?>
                                 <?php foreach ($entrantsMapper->getEventEntrantsById($eventlist->getId()) as $eventEntrantsUser): ?>
                                     <?php if ($eventEntrantsUser->getStatus() == 1): ?>

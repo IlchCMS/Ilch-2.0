@@ -7,7 +7,10 @@ $currencyMapper = $this->get('currencyMapper');
 $start = new \Ilch\Date($event->getStart());
 $end = new \Ilch\Date($event->getEnd());
 $latLong = explode(',', $event->getLatLong());
-$user = $userMapper->getUserById($event->getUserId());
+
+if ($event->getUserId()) {
+    $user = $userMapper->getUserById($event->getUserId());
+}
 ?>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
@@ -36,9 +39,11 @@ $user = $userMapper->getUserById($event->getUserId());
             <div class="titlePic"><?=$this->escape($event->getTitle()) ?></div>
         </div>
         <div class="naviPic">
-            <div class="naviGast">
-                <strong><?=$this->getTrans('by') ?></strong> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
-            </div>
+            <?php if ($event->getUserId()): ?>
+                <div class="naviGast">
+                    <strong><?=$this->getTrans('by') ?></strong> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
+                </div>
+            <?php endif; ?>
             <div class="naviButtons">
                 <?php if ($this->getUser() AND $event->getStart() > new \Ilch\Date()): ?>
                     <form class="form-horizontal" method="POST" action="">
@@ -139,7 +144,7 @@ $user = $userMapper->getUserById($event->getUserId());
                 <strong><?=$this->getTrans('entrant') ?></strong>
             </div>
             <div style="width: 45%; float: left;" align="right">
-                <?php $agree = 1; $maybe = 0; ?>
+                <?php $agree = 0; $maybe = 0; ?>
                 <?php if ($this->get('eventEntrantsCount') != ''): ?>
                     <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
                         <?php if ($eventEntrantsUser->getStatus() == 1): ?>
@@ -156,17 +161,21 @@ $user = $userMapper->getUserById($event->getUserId());
             </div>
             <div style="clear: both;"></div>
         </div>
-        <div class="eventBoxBottom">
-            <div style="margin-left: 2px;">
-                <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>"></a>
-                <?php if ($this->get('eventEntrantsCount') != ''): ?>
-                    <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
-                    <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
-                        <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+        <?php if ($this->get('eventEntrantsCount') != ''): ?>
+            <div class="eventBoxBottom">
+                <div style="margin-left: 2px;">
+                    <?php if ($event->getUserId()): ?>
+                        <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>"></a>
+                    <?php endif; ?>
+                    <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                        <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
+                        <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
+                            <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
         <br />
         <div class="eventBoxHead">
             <strong><?=$this->getTrans('description') ?></strong>

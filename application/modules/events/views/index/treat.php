@@ -1,7 +1,9 @@
 <?php
 $settingMapper = $this->get('settingMapper');
+$userMapper = $this->get('userMapper');
 $config = \Ilch\Registry::get('config');
 $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
+$users = $userMapper->getUserList();
 ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
@@ -55,6 +57,19 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
                            class="form-control"
                            readonly />
                 </div>
+            </div>
+        </div>
+        <div class="form-group <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
+            <label for="creator" class="col-lg-2 control-label">
+                <?=$this->getTrans('creator') ?>
+            </label>
+            <div class="col-lg-4">
+                <select class="form-control" name="creator" id="creator">
+                    <option selected="selected"><?=$this->getTrans('noSelection') ?></option>
+                    <?php foreach ($users as $user): ?>
+                        <option value="<?=$user->getId() ?>" <?php if ($this->get('event') != '' AND $this->get('event')->getUserId() == $user->getId() OR $this->originalInput('creator') == $user->getId()) { echo 'selected="selected"'; } ?>><?=$user->getName() ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
@@ -116,6 +131,19 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
                        id="place"
                        name="place"
                        value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getPlace()) : $this->originalInput('place') ?>" />
+            </div>
+        </div>
+        <div class="form-group <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
+            <label for="website" class="col-lg-2 control-label">
+                <?=$this->getTrans('website') ?>:
+            </label>
+            <div class="col-lg-6">
+                <input type="text"
+                       class="form-control"
+                       id="website"
+                       name="website"
+                       placeholder="http://"
+                       value="<?=($this->get('event') != '') ? $this->escape($this->get('event')->getWebsite()) : $this->originalInput('website') ?>" />
             </div>
         </div>
         <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">

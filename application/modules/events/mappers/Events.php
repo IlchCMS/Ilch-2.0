@@ -40,6 +40,7 @@ class Events extends \Ilch\Mapper
                 ->setEnd($entries['end'])
                 ->setTitle($entries['title'])
                 ->setPlace($entries['place'])
+                ->setWebsite($entries['website'])
                 ->setLatLong($entries['lat_long'])
                 ->setImage($entries['image'])
                 ->setText($entries['text'])
@@ -79,6 +80,7 @@ class Events extends \Ilch\Mapper
             ->setEnd($eventRow['end'])
             ->setTitle($eventRow['title'])
             ->setPlace($eventRow['place'])
+            ->setWebsite($eventRow['website'])
             ->setLatLong($eventRow['lat_long'])
             ->setImage($eventRow['image'])
             ->setText($eventRow['text'])
@@ -99,36 +101,10 @@ class Events extends \Ilch\Mapper
 
         $sql = 'SELECT *
                 FROM `[prefix]_events`
-                WHERE DAY(start) >= DAY(CURDATE()) AND MONTH(start) = MONTH(CURDATE()) OR MONTH(start) = MONTH(CURDATE()+INTERVAL 1 MONTH)
+                WHERE start > CURDATE()
                 ORDER BY start ASC';
 
         if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
-
-        $rows = $this->db()->queryArray($sql);
-
-        if (empty($rows)) {
-            return null;
-        }
-
-        $events = [];
-        foreach ($rows as $row) {
-            $events[] = $eventMapper->getEventById($row['id']);
-        }
-
-        return $events;
-    }
-
-    /**
-     * @return EventMapper[]|array
-     */
-    public function getEventListUpcomingALL()
-    {
-        $eventMapper = new EventMapper();
-
-        $sql = 'SELECT *
-                FROM `[prefix]_events`
-                WHERE start >= CURDATE()
-                ORDER BY start ASC';
 
         $rows = $this->db()->queryArray($sql);
 
@@ -163,34 +139,6 @@ class Events extends \Ilch\Mapper
 
         $events = [];
         foreach ($entryRow as $row) {
-            $events[] = $eventMapper->getEventById($row['id']);
-        }
-
-        return $events;
-    }
-
-    /**
-     * @return EventMapper[]|array
-     */
-    public function getEventListOther($limit = null)
-    {
-        $eventMapper = new EventMapper();
-
-        $sql = 'SELECT *
-                FROM `[prefix]_events`
-                WHERE DAY(start) > DAY(CURDATE()) AND MONTH(start) > MONTH(CURDATE()) AND MONTH(start) = MONTH(CURDATE()+INTERVAL 2 MONTH)
-                ORDER BY start ASC';
-
-        if ($limit !== null) { $sql .= ' LIMIT '.$limit; }
-
-        $rows = $this->db()->queryArray($sql);
-
-        if (empty($rows)) {
-            return null;
-        }
-
-        $events = [];
-        foreach ($rows as $row) {
             $events[] = $eventMapper->getEventById($row['id']);
         }
 
@@ -304,6 +252,7 @@ class Events extends \Ilch\Mapper
             'end' => $event->getEnd(),
             'title' => $event->getTitle(),
             'place' => $event->getPlace(),
+            'website' => $event->getWebsite(),
             'lat_long' => $event->getLatLong(),
             'image' => $event->getImage(),
             'text' => $event->getText(),

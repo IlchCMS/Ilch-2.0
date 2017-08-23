@@ -11,6 +11,7 @@ return [
     'creator' => 'Creator',
     'title' => 'Title',
     'place' => 'Place',
+    'website' => 'Website',
     'startTime' => 'Start',
     'endTime' => 'End',
     'text' => 'Text',
@@ -28,7 +29,6 @@ return [
     'menuEventPast' => 'Past events',
     'menuEventHost' => 'My events',
     'menuEventParticipation' => 'Event participation',
-    'menuEventOtherList' => 'Other events',
     'otherEvents' => 'Other events',
     'join' => 'Join',
     'entrant' => 'Entrant',
@@ -65,6 +65,7 @@ return [
     'failedFilesize' => 'Image has unauthorized width, height or is too big.',
     'browse' => 'Browse',
     'noAccess' => 'No access!',
+    'noSelection' => 'No selection',
 
     'currencies' => 'Currencies',
     'currency' => 'Currency',

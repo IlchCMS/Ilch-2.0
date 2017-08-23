@@ -11,6 +11,7 @@ use Modules\Events\Models\Events as EventModel;
 use Modules\Events\Mappers\Entrants as EntrantsMapper;
 use Modules\Events\Mappers\Currency as CurrencyMapper;
 use Modules\User\Mappers\Setting as SettingMapper;
+use Modules\User\Mappers\User as UserMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
@@ -26,13 +27,11 @@ class Index extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index']);
 
         $upcomingLimit = 5;
-        $otherLimit = 5;
         $pastLimit = 5;
 
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('eventList', $eventMapper->getEntries())
             ->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit))
-            ->set('getEventListOther', $eventMapper->getEventListOther($otherLimit))
             ->set('eventListPast', $eventMapper->getEventListPast($pastLimit));
     }
 
@@ -42,6 +41,7 @@ class Index extends \Ilch\Controller\Frontend
         $eventModel = new EventModel();
         $settingMapper = new SettingMapper();
         $currencyMapper = new CurrencyMapper();
+        $userMapper = new UserMapper();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
 
@@ -148,11 +148,12 @@ class Index extends \Ilch\Controller\Frontend
                         $eventModel->setLatLong($eventMapper->getLatLongFromAddress($this->getRequest()->getPost('place'), $this->getConfig()->get('event_google_maps_api_key')));
                     }
 
-                    $eventModel->setUserId($this->getUser()->getId())
+                    $eventModel->setUserId($this->getRequest()->getPost('creator'))
                         ->setTitle($this->getRequest()->getPost('title'))
                         ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
                         ->setEnd(new \Ilch\Date($this->getRequest()->getPost('end')))
                         ->setPlace($this->getRequest()->getPost('place'))
+                        ->setWebsite($this->getRequest()->getPost('website'))
                         ->setText($this->getRequest()->getPost('text'))
                         ->setCurrency($this->getRequest()->getPost('currency'))
                         ->setPrice($this->getRequest()->getPost('price'))
@@ -175,7 +176,7 @@ class Index extends \Ilch\Controller\Frontend
                     } else {
                         $this->redirect()
                             ->withMessage('saveSuccess')
-                            ->to(['controller' => 'show', 'action' => 'my']);
+                            ->to(['controller' => 'index', 'action' => 'index']);
                     }
                 }
             }
@@ -191,6 +192,7 @@ class Index extends \Ilch\Controller\Frontend
         }
 
         $this->getView()->set('settingMapper', $settingMapper)
+            ->set('userMapper', $userMapper)
             ->set('image_height', $imageHeight)
             ->set('image_width', $imageWidth)
             ->set('image_size', $imageSize)

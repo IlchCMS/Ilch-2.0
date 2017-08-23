@@ -12,7 +12,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'events',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-ticket',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -89,6 +89,7 @@ class Config extends \Ilch\Config\Install
             `end` DATETIME NOT NULL,
             `title` VARCHAR(100) NOT NULL,
             `place` VARCHAR(150) NOT NULL,
+            `website` VARCHAR(255) NOT NULL,
             `lat_long` VARCHAR(100) NULL DEFAULT NULL,
             `image` VARCHAR(255) NULL DEFAULT NULL,
             `text` LONGTEXT NOT NULL,
@@ -127,6 +128,9 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(255) NOT NULL AFTER `place`;');
+        }
     }
 }
