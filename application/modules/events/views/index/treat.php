@@ -61,7 +61,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('creator') ? 'has-error' : '' ?>">
             <label for="creator" class="col-lg-2 control-label">
-                <?=$this->getTrans('creator') ?>
+                <?=$this->getTrans('by') ?>
             </label>
             <div class="col-lg-4">
                 <select class="form-control" name="creator" id="creator">
@@ -74,7 +74,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('start') ? 'has-error' : '' ?>">
             <label for="start" class="col-md-2 control-label">
-                <?=$this->getTrans('startTime') ?>:
+                <?=$this->getTrans('startTime') ?>
             </label>
             <div class="col-lg-4 input-group ilch-date date form_datetime">
                 <input type="text"
@@ -91,7 +91,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('end') ? 'has-error' : '' ?>">
             <label for="end" class="col-md-2 control-label">
-                <?=$this->getTrans('endTime') ?>:
+                <?=$this->getTrans('endTime') ?>
             </label>
             <div class="col-lg-4 input-group ilch-date date form_datetime">
                 <input type="text"
@@ -111,7 +111,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('title') ? 'has-error' : '' ?>">
             <label for="title" class="col-lg-2 control-label">
-                <?=$this->getTrans('title') ?>:
+                <?=$this->getTrans('title') ?>
             </label>
             <div class="col-lg-6">
                 <input type="text"
@@ -123,7 +123,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('place') ? 'has-error' : '' ?>">
             <label for="place" class="col-lg-2 control-label">
-                <?=$this->getTrans('place') ?>:
+                <?=$this->getTrans('place') ?>
             </label>
             <div class="col-lg-6">
                 <input type="text"
@@ -135,7 +135,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('website') ? 'has-error' : '' ?>">
             <label for="website" class="col-lg-2 control-label">
-                <?=$this->getTrans('website') ?>:
+                <?=$this->getTrans('website') ?>
             </label>
             <div class="col-lg-6">
                 <input type="text"
@@ -148,7 +148,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('text') ? 'has-error' : '' ?>">
             <label for="ck_1" class="col-lg-2 control-label">
-                <?=$this->getTrans('text') ?>:
+                <?=$this->getTrans('text') ?>
             </label>
             <div class="col-lg-10">
                 <textarea class="form-control ckeditor"
@@ -160,7 +160,7 @@ $users = $userMapper->getUserList();
         </div>
         <div class="form-group <?=$this->validation()->hasError('price') ? 'has-error' : '' ?>">
             <label for="price" class="col-lg-2 control-label">
-                <?=$this->getTrans('price') ?>:
+                <?=$this->getTrans('price') ?>
             </label>
             <div class="col-lg-2">
                 <select class="form-control" id="priceArt" name="priceArt">

@@ -14,4 +14,4 @@
 <?php else: ?>
     <?=$this->getTrans('noEvent') ?>
 <?php endif; ?>
-<div align="center"><a href="<?=$this->getUrl('events/index/index/') ?>"><?=$this->getTrans('otherEvents') ?></a></div>
+<div align="center"><a href="<?=$this->getUrl('events/show/upcoming/') ?>"><?=$this->getTrans('otherEvents') ?></a></div>
