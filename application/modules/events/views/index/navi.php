@@ -24,10 +24,6 @@ $groupAccesses = explode(',', $config->get('event_add_entries_accesses'));
                 <li <?php if ($this->getRequest()->getActionName() == 'past') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'past']); ?>"><i class="fa fa-history"></i>&nbsp; <?=$this->getTrans('naviEventsPast') ?></a></li>
                 <?php if ($this->getUser()): ?>
                     <li <?php if ($this->getRequest()->getActionName() == 'participation') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'participation']); ?>"><i class="fa fa-sign-in"></i>&nbsp; <?=$this->getTrans('naviEventsParticipation') ?></a></li>
-
-                    <?php if (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->isAdmin()): ?>
-                        <li <?php if ($this->getRequest()->getActionName() == 'my') { echo 'class="active"'; } ?>><a href="<?=$this->getUrl(['controller' => 'show', 'action' => 'my']); ?>"><i class="fa fa-home"></i>&nbsp; <?=$this->getTrans('naviEventsMy') ?></a></li>
-                    <?php endif; ?>
                 <?php endif; ?>
             </ul>
             <?php if ($this->getUser() AND (in_array($this->getUser()->getId(), $groupAccesses) || $this->getUser()->isAdmin())): ?>

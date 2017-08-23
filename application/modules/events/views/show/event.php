@@ -117,6 +117,13 @@ if ($event->getUserId()) {
                 </div>
             <?php endif; ?>
         </div>
+
+        <?php if ($event->getWebsite()): ?>
+            <div class="eventBoxBottom">
+                <i class="fa fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank"><?=$this->getTrans('website') ?></a>
+            </div>
+        <?php endif; ?>
+
         <?php if ($event->getPrice() != '' and $event->getCurrency() >= 1): ?>
             <br />
             <div class="eventBoxHead">

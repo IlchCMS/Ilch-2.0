@@ -83,6 +83,7 @@ class Index extends \Ilch\Controller\Frontend
                 'start'        => 'required',
                 'title'        => 'required',
                 'place'        => 'required',
+                'website'      => 'url',
                 'text'         => 'required',
                 'calendarShow' => 'numeric|min:0|max:1'
             ]);

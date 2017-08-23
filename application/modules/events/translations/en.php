@@ -49,7 +49,6 @@ return [
     'naviEventsUpcoming' => 'Upcoming',
     'naviEventsPast' => 'Past',
     'naviEventsAdd' => 'Add',
-    'naviEventsMy' => 'My',
     'naviEventsParticipation' => 'Participation',
     'imageHeight' => 'Image height',
     'imageWidth' => 'Image width',

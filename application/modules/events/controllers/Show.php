@@ -126,22 +126,6 @@ class Show extends \Ilch\Controller\Frontend
             ->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()));
     }
 
-    public function myAction()
-    {
-        $eventMapper = new EventMapper();
-        $entrantsMapper = new EntrantsMapper();
-
-        $this->getLayout()->getTitle()
-            ->add($this->getTranslator()->trans('menuEvents'))
-            ->add($this->getTranslator()->trans('naviEventsMy'));
-        $this->getLayout()->getHmenu()
-            ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
-            ->add($this->getTranslator()->trans('naviEventsMy'), ['action' => 'my']);
-
-        $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListMy', $eventMapper->getEntries(['user_id' => $this->getUser()->getId()]));
-    }
-
     public function delAction()
     {
         if ($this->getRequest()->isSecure()) {
