@@ -7,6 +7,7 @@
                 <colgroup>
                     <col class="icon_width">
                     <col class="icon_width">
+                    <col class="icon_width">
                     <col class="col-lg-2">
                     <col class="col-lg-2">
                     <col>
@@ -15,8 +16,9 @@
                     <tr>
                         <th><?=$this->getCheckAllCheckbox('check_entries') ?></th>
                         <th></th>
+                        <th></th>
                         <th><?=$this->getTrans('dateTime') ?></th>
-                        <th><?=$this->getTrans('creator') ?></th>
+                        <th><?=$this->getTrans('by') ?></th>
                         <th><?=$this->getTrans('title') ?></th>
                     </tr>
                 </thead>
@@ -26,6 +28,7 @@
                         <?php $user = $userMapper->getUserById($event->getUserId()) ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $event->getId()) ?></td>
+                            <td><a href="<?=$this->getURL('events/index/treat/id/'.$event->getId()) ?>" target="_blank" title="<?=$this->getTrans('edit') ?>"><i class="fa fa-edit text-success"></i></a></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $event->getId()]) ?></td>
                             <td>
                                 <?=date('d.m.Y H:i', strtotime($event->getStart())) ?>
@@ -33,7 +36,11 @@
                                     - <?=date('H:i', strtotime($event->getEnd())) ?>
                                 <?php endif; ?>
                             </td>
-                            <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a></td>
+                            <td>
+                                <?php if ($event->getUserId()): ?>
+                                    <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$user->getName() ?></a>
+                                <?php endif; ?>
+                            </td>
                             <td><a href="<?=$this->getUrl('events/show/event/id/'.$event->getId()) ?>" target="_blank"><?=$this->escape($event->getTitle()) ?></a></td>
                         </tr>
                     <?php endforeach; ?>

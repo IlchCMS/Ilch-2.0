@@ -8,7 +8,6 @@ return [
     'menuEvents' => 'Veranstaltungen',
     'event' => 'Veranstaltung',
     'dateTime' => 'Datum/Uhrzeit',
-    'creator' => 'Ersteller',
     'title' => 'Titel',
     'place' => 'Ort',
     'website' => 'Webseite',

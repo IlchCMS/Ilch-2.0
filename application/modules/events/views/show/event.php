@@ -16,7 +16,7 @@ if ($event->getUserId()) {
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 <h1>
     <?=$this->getTrans('event') ?>
-    <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId()): ?>
+    <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId() OR $this->getUser()->isAdmin()): ?>
         <div class="pull-right">
             <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
             <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
