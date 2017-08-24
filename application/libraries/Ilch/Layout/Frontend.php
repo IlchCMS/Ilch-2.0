@@ -114,6 +114,26 @@ class Frontend extends Base
     }
 
     /**
+     * Get the meta tag as string
+     *
+     * @param string $key
+     * @return string
+     */
+    public function getMetaTagString($key)
+    {
+        $metaTagModel = $this->get('metaTags')[$key];
+
+        // If either name or http-equiv is specified, then the content attribute must also be specified. Otherwise, it must be omitted.
+        if ($metaTagModel->getName()) {
+            return sprintf('<meta name="%s" content="%s">', $this->escape($metaTagModel->getName()), $this->escape($metaTagModel->getContent()));
+        } else if ($metaTagModel->getHTTPEquiv()){
+            return sprintf('<meta http-equiv="%s" content="%s">', $this->escape($metaTagModel->getHTTPEquiv()), $this->escape($metaTagModel->getContent()));
+        } else {
+            return sprintf('<meta charset="%s">', $this->escape($metaTagModel->getCharset()));
+        }
+    }
+
+    /**
      * Get key from config.
      *
      * @return string
@@ -176,8 +196,14 @@ class Frontend extends Base
                 <title>'.$this->escape($this->getTitle()).'</title>
                 <link rel="icon" href="'.$this->getBaseUrl($this->escape($this->getFavicon())).'" type="image/x-icon">
                 <meta name="keywords" content="'.$this->escape($this->getKeywords()).'" />
-                <meta name="description" content="'.$this->escape($this->getDescription()).'" />
-                <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">
+                <meta name="description" content="'.$this->escape($this->getDescription()).'" />';
+
+        foreach ($this->get('metaTags') as $key => $metaTag) {
+            $html .= '
+            '.$this->getMetaTagString($key);
+        }
+
+        $html .= '<link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">
                 <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getVendorUrl('components/jqueryui/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">

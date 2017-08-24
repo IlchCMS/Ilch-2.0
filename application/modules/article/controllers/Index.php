@@ -13,6 +13,7 @@ use Modules\Comment\Mappers\Comment as CommentMapper;
 use Modules\Comment\Models\Comment as CommentModel;
 use Modules\User\Mappers\User as UserMapper;
 use Modules\Article\Config\Config as ArticleConfig;
+use Ilch\Layout\Helper\MetaTag\Model as MetaTagModel;
 
 class Index extends \Ilch\Controller\Frontend
 {
@@ -174,6 +175,36 @@ class Index extends \Ilch\Controller\Frontend
             $this->getLayout()->getTitle()->add($article->getTitle());
             $this->getLayout()->set('metaDescription', $article->getDescription());
             $this->getLayout()->set('metaKeywords', $article->getKeywords());
+            
+            $metaTagModel = new MetaTagModel();
+            $metaTagModel->setName('og:title')
+                         ->setContent($article->getTitle());
+            $this->getLayout()->add('metaTags', 'og:title', $metaTagModel);
+
+            $metaTagModel = new MetaTagModel();
+            $metaTagModel->setName('og:description')
+                         ->setContent($article->getDescription());
+            $this->getLayout()->add('metaTags', 'og:description', $metaTagModel);
+
+            $metaTagModel = new MetaTagModel();
+            $metaTagModel->setName('og:type')
+                         ->setContent('article');
+            $this->getLayout()->add('metaTags', 'og:type', $metaTagModel);
+
+            if (!empty($article->getImage())) {
+                $metaTagModel = new MetaTagModel();
+                $metaTagModel->setName('og:image')
+                             ->setContent(BASE_URL.'/'.$article->getImage());
+                $this->getLayout()->add('metaTags', 'og:image', $metaTagModel);
+            }
+
+            if (!empty($article->getLocale())) {
+                $metaTagModel = new MetaTagModel();
+                $metaTagModel->setName('og:locale')
+                             ->setContent($article->getLocale());
+                $this->getLayout()->add('metaTags', 'og:locale', $metaTagModel);
+            }
+
             $this->getLayout()->getHmenu()
                 ->add($this->getTranslator()->trans('menuArticle'), ['action' => 'index'])
                 ->add($this->getTranslator()->trans('menuCats'), ['controller' => 'cats', 'action' => 'index']);
