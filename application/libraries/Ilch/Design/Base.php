@@ -108,6 +108,30 @@ abstract class Base
     }
 
     /**
+     * Adds value with specific key ($objectKey) to an array in view data.
+     *
+     * @param string $key
+     * @param string $objectKey
+     * @param mixed $value
+     *
+     * @throws Exception if it was tried to add a value to a non-array.
+     */
+    public function add($key, $objectKey, $value)
+    {
+        if (empty($this->data[$key])) {
+            $this->data[$key] = [];
+        }
+
+        if (is_array($this->data[$key])) {
+            $this->data[$key][$objectKey] = $value;
+
+            return true;
+        } else {
+            throw new \Exception('Unable to add value. The value of `' . $key . '` is not an array.');
+        }
+    }
+
+    /**
      * Gets view data.
      *
      * @param  string     $key
