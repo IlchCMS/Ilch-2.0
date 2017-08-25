@@ -183,7 +183,7 @@ class Login extends \Ilch\Controller\Frontend
                     $sitetitle = $this->getConfig()->get('page_title');
                     $confirmCode = '<a href="'.BASE_URL.'/index.php/user/login/newpassword/selector/'.$selector.'/code/'.$confirmedCode.'" class="btn btn-primary btn-sm">'.$this->getTranslator()->trans('confirmMailButtonText').'</a>';
                     $date = new \Ilch\Date();
-                    $mailContent = $emailsMapper->getEmail('user', 'password_change_mail', $this->getUser()->getLocale());
+                    $mailContent = $emailsMapper->getEmail('user', 'password_change_mail', $user->getLocale());
 
                     $layout = '';
                     if (!empty($_SESSION['layout'])) {
