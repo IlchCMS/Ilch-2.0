@@ -14,234 +14,237 @@ if ($event->getUserId()) {
 ?>
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
-<h1>
-    <?=$this->getTrans('event') ?>
-    <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId() OR $this->getUser()->isAdmin()): ?>
-        <div class="pull-right">
-            <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
-            <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
-        </div>
-    <?php endif; ?>
-</h1>
 
-<div class="row">
-    <div class="col-lg-6">
-        <div class="event-head">
-            <?php if ($this->escape($event->getImage()) != ''): ?>
-                <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic">
-            <?php else: ?>
-                <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic">
-            <?php endif; ?>
-            <div class="datePic">
-                <div class="dateDayPic"><?=$start->format("d", true) ?></div>
-                <div class="dateMonthPic"><?=$start->format("M", true) ?></div>
+<?php if (is_in_array($this->get('readAccess'), explode(',', $event->getReadAccess())) OR $this->getUser() AND $this->getUser()->isAdmin()): ?>
+    <h1>
+        <?=$this->getTrans('event') ?>
+        <?php if ($this->getUser() AND $event->getUserId() == $this->getUser()->getId() OR $this->getUser() AND $this->getUser()->isAdmin()): ?>
+            <div class="pull-right">
+                <?=$this->getEditIcon(['controller' => 'index', 'action' => 'treat', 'id' => $event->getId()]) ?>
+                <?=$this->getDeleteIcon(['controller' => 'index', 'action' => 'del', 'id' => $event->getId()]) ?>
             </div>
-            <div class="titlePic"><?=$this->escape($event->getTitle()) ?></div>
-        </div>
-        <div class="naviPic">
-            <?php if ($event->getUserId()): ?>
-                <div class="naviGast">
-                    <strong><?=$this->getTrans('by') ?></strong> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
+        <?php endif; ?>
+    </h1>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="event-head">
+                <?php if ($this->escape($event->getImage()) != ''): ?>
+                    <img src="<?=$this->getBaseUrl().$this->escape($event->getImage()) ?>" class="headPic">
+                <?php else: ?>
+                    <img src="<?=$this->getModuleUrl('static/img/450x150.jpg') ?>" class="headPic">
+                <?php endif; ?>
+                <div class="datePic">
+                    <div class="dateDayPic"><?=$start->format("d", true) ?></div>
+                    <div class="dateMonthPic"><?=$start->format("M", true) ?></div>
                 </div>
-            <?php endif; ?>
-            <div class="naviButtons">
-                <?php if ($this->getUser() AND $event->getStart() > new \Ilch\Date()): ?>
-                    <form class="form-horizontal" method="POST" action="">
-                        <?=$this->getTokenField() ?>
-                        <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
-                        <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
-                            <?php if ($eventEntrants != ''): ?>
-                                <?php if ($eventEntrants->getUserId() != $this->getUser()->getId()): ?>
-                                    <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
-                                        <?=$this->getTrans('join') ?>
-                                    </button>
-                                    <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
-                                        <?=$this->getTrans('maybe') ?>
-                                    </button>
-                                <?php else: ?>
-                                    <?php if ($eventEntrants->getStatus() == 1): ?>
+                <div class="titlePic"><?=$this->escape($event->getTitle()) ?></div>
+            </div>
+            <div class="naviPic">
+                <?php if ($event->getUserId()): ?>
+                    <div class="naviGast">
+                        <strong><?=$this->getTrans('by') ?></strong> <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a>
+                    </div>
+                <?php endif; ?>
+                <div class="naviButtons">
+                    <?php if ($this->getUser() AND $event->getStart() > new \Ilch\Date()): ?>
+                        <form class="form-horizontal" method="POST" action="">
+                            <?=$this->getTokenField() ?>
+                            <input type="hidden" name="id" value="<?=$this->escape($event->getId()) ?>">
+                            <?php if ($event->getUserId() != $this->getUser()->getId()): ?>
+                                <?php if ($eventEntrants != ''): ?>
+                                    <?php if ($eventEntrants->getUserId() != $this->getUser()->getId()): ?>
+                                        <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
+                                            <?=$this->getTrans('join') ?>
+                                        </button>
                                         <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
                                             <?=$this->getTrans('maybe') ?>
                                         </button>
                                     <?php else: ?>
-                                        <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
-                                            <?=$this->getTrans('agree') ?>
-                                        </button>
+                                        <?php if ($eventEntrants->getStatus() == 1): ?>
+                                            <button type="submit" class="btn btn-sm btn-warning" name="save" value="2">
+                                                <?=$this->getTrans('maybe') ?>
+                                            </button>
+                                        <?php else: ?>
+                                            <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
+                                                <?=$this->getTrans('agree') ?>
+                                            </button>
+                                        <?php endif; ?>
                                     <?php endif; ?>
+                                    <button type="submit" class="btn btn-sm btn-danger" name="deleteUser" value="deleteUser">
+                                        <?=$this->getTrans('decline') ?>
+                                    </button>
+                                <?php else: ?>
+                                    <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
+                                        <?=$this->getTrans('join') ?>
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
+                                        <?=$this->getTrans('maybe') ?>
+                                    </button>
                                 <?php endif; ?>
-                                <button type="submit" class="btn btn-sm btn-danger" name="deleteUser" value="deleteUser">
-                                    <?=$this->getTrans('decline') ?>
-                                </button>
-                            <?php else: ?>
-                                <button type="submit" class="btn btn-sm btn-success" name="save" value="1">
-                                    <?=$this->getTrans('join') ?>
-                                </button>
-                                <button type="submit" class="btn btn-sm btn-warning"name="save" value="2" >
-                                    <?=$this->getTrans('maybe') ?>
-                                </button>
                             <?php endif; ?>
-                        <?php endif; ?>
-                    </form>
-                <?php endif; ?>
-            </div>
-        </div>
-        <br />
-        <div class="eventBoxHead">
-            <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
-                <?php $eventDate = $start->format("H:i").' - '.$end->format("H:i"); ?>
-            <?php else: ?>
-                <?php $eventDate = $start->format("H:i"); ?>
-            <?php endif; ?>
-
-            <i class="fa fa-clock-o"></i> <?=$start->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
-        </div>
-        <div class="eventBoxBottom">
-            <?php $place = $this->escape($event->getPlace()); ?>
-            <?php $place = explode(', ', $place, 2); ?>
-            <div class="eventPlaceMarker">
-                <i class="fa fa-map-marker"></i>
-            </div>
-            <?php
-            if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != '') {
-                echo '<a id="showMap">'.$place[0].'</a>';
-            } else {
-               echo $place[0];
-            }
-            if (!empty($place[1])) {
-                echo '<br /><span class="eventAddress text-muted">'.$place[1].'</span>';
-            }
-            ?>
-            <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
-                <div id="googleMap" style="display: none">
-                    <div id="map-canvas" data-toggle="modal" data-target="#showBigGoogleMapsModal"></div>
+                        </form>
+                    <?php endif; ?>
                 </div>
-            <?php endif; ?>
-        </div>
-
-        <?php if ($event->getWebsite()): ?>
-            <div class="eventBoxBottom">
-                <i class="fa fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank"><?=$this->getTrans('website') ?></a>
             </div>
-        <?php endif; ?>
-
-        <?php if ($event->getPrice() != '' and $event->getCurrency() >= 1): ?>
             <br />
             <div class="eventBoxHead">
-                <strong><?=$this->getTrans('price') ?></strong>
-            </div>
-            <div class="eventBoxContent">
-                <?php if ($event->getPriceArt() >= 1) {
-                    if ($event->getPriceArt() == 1) {
-                        echo $this->getTrans('ticket').' ';
-                    } else {
-                        echo $this->getTrans('entry').' ';
-                    }
-                }
-
-                echo str_replace('.', ',', $event->getPrice()).' ';
-
-                $currency = $currencyMapper->getCurrencyById($event->getCurrency());
-                echo $currency[0]->getName();
-                ?>
-            </div>
-        <?php endif; ?>
-        <br />
-        <div class="eventBoxHead">
-            <div style="width: 10%; float: left;">
-                <strong><?=$this->getTrans('entrant') ?></strong>
-            </div>
-            <div style="width: 45%; float: left;" align="right">
-                <?php $agree = 0; $maybe = 0; ?>
-                <?php if ($this->get('eventEntrantsCount') != ''): ?>
-                    <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
-                        <?php if ($eventEntrantsUser->getStatus() == 1): ?>
-                            <?php $agree++; ?>
-                        <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
-                            <?php $maybe++; ?>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                <?php if ($event->getEnd() != '0000-00-00 00:00:00'): ?>
+                    <?php $eventDate = $start->format("H:i").' - '.$end->format("H:i"); ?>
+                <?php else: ?>
+                    <?php $eventDate = $start->format("H:i"); ?>
                 <?php endif; ?>
-                <?=$agree ?> <?=$this->getTrans('agree') ?>
+
+                <i class="fa fa-clock-o"></i> <?=$start->format("l, d. F Y") ?> <?=$this->getTrans('at') ?> <?=$eventDate ?> <?=$this->getTrans('clock') ?>
             </div>
-            <div style="width: 45%; float: left;" align="right">
-                <?=$maybe ?> <?=$this->getTrans('maybe') ?>
-            </div>
-            <div style="clear: both;"></div>
-        </div>
-        <?php if ($this->get('eventEntrantsCount') != ''): ?>
             <div class="eventBoxBottom">
-                <div style="margin-left: 2px;">
-                    <?php if ($event->getUserId()): ?>
-                        <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>"></a>
-                    <?php endif; ?>
+                <?php $place = $this->escape($event->getPlace()); ?>
+                <?php $place = explode(', ', $place, 2); ?>
+                <div class="eventPlaceMarker">
+                    <i class="fa fa-map-marker"></i>
+                </div>
+                <?php
+                if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != '') {
+                    echo '<a id="showMap">'.$place[0].'</a>';
+                } else {
+                   echo $place[0];
+                }
+                if (!empty($place[1])) {
+                    echo '<br /><span class="eventAddress text-muted">'.$place[1].'</span>';
+                }
+                ?>
+                <?php if ($this->get('event_google_maps_api_key') != '' && $event->getLatLong() != ''): ?>
+                    <div id="googleMap" style="display: none">
+                        <div id="map-canvas" data-toggle="modal" data-target="#showBigGoogleMapsModal"></div>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <?php if ($event->getWebsite()): ?>
+                <div class="eventBoxBottom">
+                    <i class="fa fa-globe"></i> <a href="<?=$userMapper->getHomepage($event->getWebsite()) ?>" target="_blank"><?=$this->getTrans('website') ?></a>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($event->getPrice() != '' and $event->getCurrency() >= 1): ?>
+                <br />
+                <div class="eventBoxHead">
+                    <strong><?=$this->getTrans('price') ?></strong>
+                </div>
+                <div class="eventBoxContent">
+                    <?php if ($event->getPriceArt() >= 1) {
+                        if ($event->getPriceArt() == 1) {
+                            echo $this->getTrans('ticket').' ';
+                        } else {
+                            echo $this->getTrans('entry').' ';
+                        }
+                    }
+
+                    echo str_replace('.', ',', $event->getPrice()).' ';
+
+                    $currency = $currencyMapper->getCurrencyById($event->getCurrency());
+                    echo $currency[0]->getName();
+                    ?>
+                </div>
+            <?php endif; ?>
+            <br />
+            <div class="eventBoxHead">
+                <div style="width: 10%; float: left;">
+                    <strong><?=$this->getTrans('entrant') ?></strong>
+                </div>
+                <div style="width: 45%; float: left;" align="right">
+                    <?php $agree = 0; $maybe = 0; ?>
                     <?php if ($this->get('eventEntrantsCount') != ''): ?>
                         <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
-                        <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
-                            <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
+                            <?php if ($eventEntrantsUser->getStatus() == 1): ?>
+                                <?php $agree++; ?>
+                            <?php elseif ($eventEntrantsUser->getStatus() == 2): ?>
+                                <?php $maybe++; ?>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
+                    <?=$agree ?> <?=$this->getTrans('agree') ?>
                 </div>
+                <div style="width: 45%; float: left;" align="right">
+                    <?=$maybe ?> <?=$this->getTrans('maybe') ?>
+                </div>
+                <div style="clear: both;"></div>
             </div>
-        <?php endif; ?>
-        <br />
-        <div class="eventBoxHead">
-            <strong><?=$this->getTrans('description') ?></strong>
-        </div>
-        <div class="eventBoxContent">
-            <?=nl2br($this->getHtmlFromBBCode($this->escape($event->getText()))) ?>
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-        <div class="form-horizontal">
-            <?php if ($this->getUser() AND ($eventEntrants != '' AND $eventEntrants->getUserId() == $this->getUser()->getId() OR $event->getUserId() == $this->getUser()->getId())): ?>
-                <div class="form-group eventCommentSubmit">
-                    <form action="" class="form-horizontal" method="POST">
-                        <?=$this->getTokenField() ?>
-                        <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
-                        <div style="margin-bottom: 10px; margin-top: 10px;">
-                            <div class="col-lg-12">
-                                <textarea class="eventTextarea" 
-                                          name="commentEvent"
-                                          placeholder="<?=$this->getTrans('writeToEvent') ?>"
-                                          required></textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 eventSubmit">
-                            <button type="submit" class="pull-right btn btn-sm" name="saveEntry">
-                                <?=$this->getTrans('write') ?>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            <?php endif; ?>
-
-            <?php if ($this->get('eventComments') != ''): ?>
-                <div class="eventBoxHead">
-                    <strong><?=$this->getTrans('comments') ?></strong>
-                </div>
-                <?php foreach ($this->get('eventComments') as $eventComments): ?>
-                    <?php $commentUser = $userMapper->getUserById($eventComments->getUserId()); ?>
-                    <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
-                    <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
-                        <?php if ($this->getUser()): ?>
-                            <?php if ($event->getUserId() == $this->getUser()->getId() OR $commentUser->getId() == $this->getUser()->getId()): ?>
-                                <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
-                            <?php endif; ?>
+            <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                <div class="eventBoxBottom">
+                    <div style="margin-left: 2px;">
+                        <?php if ($event->getUserId()): ?>
+                            <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($user->getAvatar()) ?>" title="<?=$this->escape($user->getName()) ?>"></a>
                         <?php endif; ?>
-                        <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
-                        <div class="userEventInfo">
-                            <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
-                            <span class="small"><?=$commentDate->format("Y.m.d H:i", true) ?></span>
-                        </div>
-                        <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
+                        <?php if ($this->get('eventEntrantsCount') != ''): ?>
+                            <?php foreach ($this->get('eventEntrantsUser') as $eventEntrantsUser): ?>
+                            <?php $entrantsUser = $userMapper->getUserById($eventEntrantsUser->getUserId()); ?>
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$entrantsUser->getId()) ?>" target="_blank"><img class="thumbnail" src="<?=$this->getStaticUrl().'../'.$this->escape($entrantsUser->getAvatar()) ?>" title="<?=$this->escape($entrantsUser->getName()) ?>"></a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
-                    <br />
-                <?php endforeach; ?>
+                </div>
             <?php endif; ?>
+            <br />
+            <div class="eventBoxHead">
+                <strong><?=$this->getTrans('description') ?></strong>
+            </div>
+            <div class="eventBoxContent">
+                <?=nl2br($this->getHtmlFromBBCode($this->escape($event->getText()))) ?>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-horizontal">
+                <?php if ($this->getUser() AND ($eventEntrants != '' AND $eventEntrants->getUserId() == $this->getUser()->getId() OR $event->getUserId() == $this->getUser()->getId())): ?>
+                    <div class="form-group eventCommentSubmit">
+                        <form action="" class="form-horizontal" method="POST">
+                            <?=$this->getTokenField() ?>
+                            <input type="hidden" name="id" value="<?= $this->escape($event->getId()) ?>">
+                            <div style="margin-bottom: 10px; margin-top: 10px;">
+                                <div class="col-lg-12">
+                                    <textarea class="eventTextarea"
+                                              name="commentEvent"
+                                              placeholder="<?=$this->getTrans('writeToEvent') ?>"
+                                              required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 eventSubmit">
+                                <button type="submit" class="pull-right btn btn-sm" name="saveEntry">
+                                    <?=$this->getTrans('write') ?>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($this->get('eventComments') != ''): ?>
+                    <div class="eventBoxHead">
+                        <strong><?=$this->getTrans('comments') ?></strong>
+                    </div>
+                    <?php foreach ($this->get('eventComments') as $eventComments): ?>
+                        <?php $commentUser = $userMapper->getUserById($eventComments->getUserId()); ?>
+                        <?php $commentDate = new \Ilch\Date($eventComments->getDateCreated()); ?>
+                        <div class="eventBoxContent" id="<?=$eventComments->getId() ?>">
+                            <?php if ($this->getUser()): ?>
+                                <?php if ($event->getUserId() == $this->getUser()->getId() OR $commentUser->getId() == $this->getUser()->getId()): ?>
+                                    <div class="pull-right" style="height: 40px; top: 0px;"><?=$this->getDeleteIcon(['action' => 'del', 'id' => $eventComments->getId(), 'eventid' => $this->getRequest()->getParam('id')]) ?></div>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <div class="pull-left"><a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><img class="avatar" src="<?=$this->getUrl().'/'.$commentUser->getAvatar() ?>" alt="User Avatar"></a></div>
+                            <div class="userEventInfo">
+                                <a href="<?=$this->getUrl('user/profil/index/user/'.$commentUser->getId()) ?>" target="_blank"><?=$this->escape($commentUser->getName()) ?></a><br />
+                                <span class="small"><?=$commentDate->format("Y.m.d H:i", true) ?></span>
+                            </div>
+                            <div class="commentEventText"><?=nl2br($this->escape($eventComments->getText())) ?></div>
+                        </div>
+                        <br />
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
-</div>
+<?php endif; ?>
 
 <?php $place = $this->escape($event->getPlace()); ?>
 <?=$this->getDialog('showBigGoogleMapsModal', $place, '<div id="big-map-canvas"></div>') ?>

@@ -67,6 +67,20 @@ class Show extends \Ilch\Controller\Frontend
             $this->getView()->set('eventEntrants', $entrantsMapper->getEventEntrants($this->getRequest()->getParam('id'), $this->getUser()->getId()));
         }
 
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
+
         $this->getView()->set('userMapper', $userMapper)
             ->set('currencyMapper', $currencyMapper)
             ->set('event', $eventMapper->getEventById($this->getRequest()->getParam('id')))
@@ -75,13 +89,15 @@ class Show extends \Ilch\Controller\Frontend
             ->set('eventComments', $commentMapper->getCommentsByKey('events/show/event/id/'.$this->getRequest()->getParam('id')))
             ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
             ->set('event_google_maps_map_typ', $this->getConfig()->get('event_google_maps_map_typ'))
-            ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'));
+            ->set('event_google_maps_zoom', $this->getConfig()->get('event_google_maps_zoom'))
+            ->set('readAccess', $readAccess);
     }
 
     public function upcomingAction()
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
+        $userMapper = new UserMapper;
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'))
@@ -90,14 +106,30 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('naviEventsUpcoming'), ['action' => 'upcoming']);
 
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
+
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListUpcoming', $eventMapper->getEventListUpcoming());
+            ->set('eventListUpcoming', $eventMapper->getEventListUpcoming())
+            ->set('readAccess', $readAccess);
     }
 
     public function pastAction()
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
+        $userMapper = new UserMapper;
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'))
@@ -106,14 +138,30 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('naviEventsPast'), ['action' => 'past']);
 
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
+
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListPast', $eventMapper->getEventListPast());
+            ->set('eventListPast', $eventMapper->getEventListPast())
+            ->set('readAccess', $readAccess);
     }
 
     public function participationAction()
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
+        $userMapper = new UserMapper;
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'))
@@ -122,8 +170,23 @@ class Show extends \Ilch\Controller\Frontend
             ->add($this->getTranslator()->trans('menuEvents'), ['controller' => 'index', 'action' => 'index'])
             ->add($this->getTranslator()->trans('naviEventsParticipation'), ['action' => 'participation']);
 
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
+
         $this->getView()->set('entrantsMapper', $entrantsMapper)
-            ->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()));
+            ->set('eventListParticipation', $eventMapper->getEventListParticipation($this->getUser()->getId()))
+            ->set('readAccess', $readAccess);
     }
 
     public function delAction()

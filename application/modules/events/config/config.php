@@ -83,21 +83,22 @@ class Config extends \Ilch\Config\Install
     {
         $installSql =
             'CREATE TABLE IF NOT EXISTS `[prefix]_events` (
-            `id` INT(11) NOT NULL AUTO_INCREMENT,
-            `user_id` INT(11) NOT NULL,
-            `start` DATETIME NOT NULL,
-            `end` DATETIME NOT NULL,
-            `title` VARCHAR(100) NOT NULL,
-            `place` VARCHAR(150) NOT NULL,
-            `website` VARCHAR(255) NOT NULL,
-            `lat_long` VARCHAR(100) NULL DEFAULT NULL,
-            `image` VARCHAR(255) NULL DEFAULT NULL,
-            `text` LONGTEXT NOT NULL,
-            `currency` TINYINT(1) NOT NULL,
-            `price` VARCHAR(255) NOT NULL,
-            `price_art` TINYINT(1) NOT NULL,
-            `show` TINYINT(1) NOT NULL,
-            PRIMARY KEY (`id`)
+                `id` INT(11) NOT NULL AUTO_INCREMENT,
+                `user_id` INT(11) NOT NULL,
+                `start` DATETIME NOT NULL,
+                `end` DATETIME NOT NULL,
+                `title` VARCHAR(100) NOT NULL,
+                `place` VARCHAR(150) NOT NULL,
+                `website` VARCHAR(255) NOT NULL,
+                `lat_long` VARCHAR(100) NULL DEFAULT NULL,
+                `image` VARCHAR(255) NULL DEFAULT NULL,
+                `text` LONGTEXT NOT NULL,
+                `currency` TINYINT(1) NOT NULL,
+                `price` VARCHAR(255) NOT NULL,
+                `price_art` TINYINT(1) NOT NULL,
+                `show` TINYINT(1) NOT NULL,
+                `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\',
+                PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
             CREATE TABLE IF NOT EXISTS `[prefix]_events_entrants` (
@@ -131,6 +132,7 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(255) NOT NULL AFTER `place`;');
+                $this->db()->query('ALTER TABLE `[prefix]_events` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `show`;');
         }
     }
 }

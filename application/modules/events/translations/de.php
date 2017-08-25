@@ -64,6 +64,8 @@ return [
     'browse' => 'Durchsuchen',
     'noAccess' => 'Keine Berechtigung!',
     'noSelection' => 'keine Auswahl',
+    'visibleFor' => 'Sichtbar für',
+    'selectAssignedGroups' => 'Ausgewählte Gruppen',
 
     'currencies' => 'Währungen',
     'currency' => 'Währung',

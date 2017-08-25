@@ -107,6 +107,13 @@ class Events extends \Ilch\Model
     protected $show;
 
     /**
+     * The tead access of the event.
+     *
+     * @var string
+     */
+    protected $readAccess;
+
+    /**
      * Gets the id of the event.
      *
      * @return int
@@ -438,6 +445,30 @@ class Events extends \Ilch\Model
     public function setShow($show)
     {
         $this->show = (int)$show;
+
+        return $this;
+    }
+
+    /**
+     * Gets the read access of the event.
+     *
+     * @return int
+     */
+    public function getReadAccess()
+    {
+        return $this->readAccess;
+    }
+
+    /**
+     * Sets the read access of the event.
+     *
+     * @param string $readAccess
+     *
+     * @return $this
+     */
+    public function setReadAccess($readAccess)
+    {
+        $this->readAccess = (string)$readAccess;
 
         return $this;
     }

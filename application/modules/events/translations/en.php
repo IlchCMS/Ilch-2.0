@@ -64,6 +64,8 @@ return [
     'browse' => 'Browse',
     'noAccess' => 'No access!',
     'noSelection' => 'No selection',
+    'visibleFor' => 'Visible for',
+    'selectAssignedGroups' => 'Selected groups',
 
     'currencies' => 'Currencies',
     'currency' => 'Currency',

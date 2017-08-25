@@ -47,7 +47,8 @@ class Events extends \Ilch\Mapper
                 ->setCurrency($entries['currency'])
                 ->setPrice($entries['price'])
                 ->setPriceArt($entries['price_art'])
-                ->setShow($entries['show']);
+                ->setShow($entries['show'])
+                ->setReadAccess($entries['read_access']);
             $entry[] = $entryModel;
         }
 
@@ -87,7 +88,8 @@ class Events extends \Ilch\Mapper
             ->setCurrency($eventRow['currency'])
             ->setPrice($eventRow['price'])
             ->setPriceArt($eventRow['price_art'])
-            ->setShow($eventRow['show']);
+            ->setShow($eventRow['show'])
+            ->setReadAccess($eventRow['read_access']);
 
         return $eventModel;
     }
@@ -259,7 +261,8 @@ class Events extends \Ilch\Mapper
             'currency' => $event->getCurrency(),
             'price' => $event->getPrice(),
             'price_art' => $event->getPriceArt(),
-            'show' => $event->getShow()
+            'show' => $event->getShow(),
+            'read_access' => $event->getReadAccess()
         ];
 
         if ($event->getId()) {

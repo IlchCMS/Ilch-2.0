@@ -7,6 +7,8 @@ $users = $userMapper->getUserList();
 ?>
 
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/chosen/bootstrap-chosen.css') ?>" rel="stylesheet">
+<link href="<?=$this->getStaticUrl('css/chosen/chosen.css') ?>" rel="stylesheet">
 
 <?php include APPLICATION_PATH.'/modules/events/views/index/navi.php'; ?>
 <h1>
@@ -191,6 +193,20 @@ $users = $userMapper->getUserList();
                 </select>
             </div>
         </div>
+        <div class="form-group">
+            <label for="access" class="col-lg-2 control-label">
+                <?=$this->getTrans('visibleFor') ?>
+            </label>
+            <div class="col-lg-6">
+                <select class="chosen-select form-control" id="access" name="groups[]" data-placeholder="<?=$this->getTrans('selectAssignedGroups') ?>" multiple>
+                    <?php foreach ($this->get('userGroupList') as $groupList): ?>
+                        <?php if ($groupList->getId() != 1): ?>
+                            <option value="<?=$groupList->getId() ?>"<?=(in_array($groupList->getId(), $this->get('groups'))) ? ' selected' : '' ?>><?=$groupList->getName() ?></option>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
         <?php if ($this->get('calendarShow') == 1): ?>
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
@@ -219,6 +235,7 @@ $users = $userMapper->getUserList();
     <?=$this->getTrans('noAccess') ?>
 <?php endif; ?>
 
+<script src="<?=$this->getStaticUrl('js/chosen/chosen.jquery.min.js') ?>"></script>
 <?=$this->getDialog("smiliesModal", $this->getTrans('smilies'), "<iframe frameborder='0'></iframe>"); ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
@@ -228,6 +245,8 @@ $users = $userMapper->getUserList();
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?=$this->get('event_google_maps_api_key') ?>&libraries=places&region=<?=substr($this->getTranslator()->getLocale(), 0, 2) ?>"></script>
 <?php endif; ?>
 <script>
+$('#access').chosen();
+
 $(document).ready(function() {
     $(".form_datetime").datetimepicker({
         format: "dd.mm.yyyy hh:ii",

@@ -12,6 +12,7 @@ use Modules\Events\Mappers\Entrants as EntrantsMapper;
 use Modules\Events\Mappers\Currency as CurrencyMapper;
 use Modules\User\Mappers\Setting as SettingMapper;
 use Modules\User\Mappers\User as UserMapper;
+use Modules\User\Mappers\Group as GroupMapper;
 use Ilch\Validation;
 
 class Index extends \Ilch\Controller\Frontend
@@ -20,6 +21,7 @@ class Index extends \Ilch\Controller\Frontend
     {
         $eventMapper = new EventMapper();
         $entrantsMapper = new EntrantsMapper();
+        $userMapper = new UserMapper;
 
         $this->getLayout()->getTitle()
             ->add($this->getTranslator()->trans('menuEvents'));
@@ -29,10 +31,25 @@ class Index extends \Ilch\Controller\Frontend
         $upcomingLimit = 5;
         $pastLimit = 5;
 
+        $userId = null;
+        if ($this->getUser()) {
+            $userId = $this->getUser()->getId();
+        }
+        $user = $userMapper->getUserById($userId);
+        $ids = [3];
+        if ($user) {
+            $ids = [];
+            foreach ($user->getGroups() as $us) {
+                $ids[] = $us->getId();
+            }
+        }
+        $readAccess = explode(',',implode(',', $ids));
+
         $this->getView()->set('entrantsMapper', $entrantsMapper)
             ->set('eventList', $eventMapper->getEntries())
             ->set('eventListUpcoming', $eventMapper->getEventListUpcoming($upcomingLimit))
-            ->set('eventListPast', $eventMapper->getEventListPast($pastLimit));
+            ->set('eventListPast', $eventMapper->getEventListPast($pastLimit))
+            ->set('readAccess', $readAccess);
     }
 
     public function treatAction()
@@ -42,6 +59,7 @@ class Index extends \Ilch\Controller\Frontend
         $settingMapper = new SettingMapper();
         $currencyMapper = new CurrencyMapper();
         $userMapper = new UserMapper();
+        $groupMapper = new GroupMapper();
 
         $event = $eventMapper->getEventById($this->getRequest()->getParam('id'));
 
@@ -149,6 +167,11 @@ class Index extends \Ilch\Controller\Frontend
                         $eventModel->setLatLong($eventMapper->getLatLongFromAddress($this->getRequest()->getPost('place'), $this->getConfig()->get('event_google_maps_api_key')));
                     }
 
+                    $groups = '';
+                    if (!empty($this->getRequest()->getPost('groups'))) {
+                        $groups = implode(',', $this->getRequest()->getPost('groups'));
+                    }
+
                     $eventModel->setUserId($this->getRequest()->getPost('creator'))
                         ->setTitle($this->getRequest()->getPost('title'))
                         ->setStart(new \Ilch\Date($this->getRequest()->getPost('start')))
@@ -159,7 +182,8 @@ class Index extends \Ilch\Controller\Frontend
                         ->setCurrency($this->getRequest()->getPost('currency'))
                         ->setPrice($this->getRequest()->getPost('price'))
                         ->setPriceArt($this->getRequest()->getPost('priceArt'))
-                        ->setShow($this->getRequest()->getPost('calendarShow'));
+                        ->setShow($this->getRequest()->getPost('calendarShow'))
+                        ->setReadAccess($groups);
                     $eventMapper->save($eventModel);
 
                     if ($this->getRequest()->getPost('image_delete') != '') {
@@ -192,6 +216,12 @@ class Index extends \Ilch\Controller\Frontend
             $this->getView()->set('calendarShow', 1);
         }
 
+        if ($this->getRequest()->getParam('id')) {
+            $groups = explode(',', $eventMapper->getEventById($this->getRequest()->getParam('id'))->getReadAccess());
+        } else {
+            $groups = [1,2,3];
+        }
+
         $this->getView()->set('settingMapper', $settingMapper)
             ->set('userMapper', $userMapper)
             ->set('image_height', $imageHeight)
@@ -199,7 +229,9 @@ class Index extends \Ilch\Controller\Frontend
             ->set('image_size', $imageSize)
             ->set('image_filetypes', $imageAllowedFiletypes)
             ->set('currencies', $currencyMapper->getCurrencies())
-            ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'));
+            ->set('event_google_maps_api_key', $this->getConfig()->get('event_google_maps_api_key'))
+            ->set('userGroupList', $groupMapper->getGroupList())
+            ->set('groups', $groups);
     }
 
     public function delAction()
