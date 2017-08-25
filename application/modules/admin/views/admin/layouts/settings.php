@@ -66,6 +66,16 @@
         </div>
     </div>
     <div class="form-group">
+        <label for="keywords" class="col-lg-2 control-label">
+            <?=$this->getTrans('seoKeywords') ?>:
+        </label>
+        <div class="col-lg-4">
+            <textarea class="form-control"
+                      id="keywords"
+                      name="keywords"><?=$this->escape($this->get('keywords')) ?></textarea>
+        </div>
+    </div>
+    <div class="form-group">
         <label for="description" class="col-lg-2 control-label">
             <?=$this->getTrans('seoDescription') ?>:
         </label>
@@ -94,4 +104,13 @@
 function eraseValue(id) {
     document.getElementById(id).value = "";
 }
+
+$('#keywords').tokenfield();
+$('#keywords').on('tokenfield:createtoken', function (event) {
+    var existingTokens = $(this).tokenfield('getTokens');
+    $.each(existingTokens, function(index, token) {
+        if (token.value === event.attrs.value)
+            event.preventDefault();
+    });
+});
 </script>

@@ -55,7 +55,7 @@ class Layouts extends \Ilch\Controller\Admin
     public function indexAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index']);
 
         $layouts = [];
         foreach (glob(APPLICATION_PATH.'/layouts/*') as $layoutPath) {
@@ -77,10 +77,10 @@ class Layouts extends \Ilch\Controller\Admin
             $versionsOfLayouts[basename($layoutPath)] = $config->config['version'];
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'layouts.php');
-        $this->getView()->set('defaultLayout', $this->getConfig()->get('default_layout'));
-        $this->getView()->set('layouts', $layouts);
-        $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'layouts.php')
+            ->set('defaultLayout', $this->getConfig()->get('default_layout'))
+            ->set('layouts', $layouts)
+            ->set('versionsOfLayouts', $versionsOfLayouts);
     }
 
     public function defaultAction()
@@ -92,8 +92,8 @@ class Layouts extends \Ilch\Controller\Admin
     public function searchAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
+            ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search']);
 
         try {
             if ($this->getRequest()->isSecure()) {
@@ -128,9 +128,9 @@ class Layouts extends \Ilch\Controller\Admin
                 $layoutsDir[] = basename($layoutPath);
             }
 
-            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
-            $this->getView()->set('versionsOfLayouts', $versionsOfLayouts);
-            $this->getView()->set('layouts', $layoutsDir);
+            $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
+                ->set('versionsOfLayouts', $versionsOfLayouts)
+                ->set('layouts', $layoutsDir);
         }
     }
 
@@ -169,37 +169,39 @@ class Layouts extends \Ilch\Controller\Admin
     public function showAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
-                ->add($this->getTranslator()->trans('menuLayout').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
+            ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSearch'), ['action' => 'search'])
+            ->add($this->getTranslator()->trans('menuLayout').' '.$this->getTranslator()->trans('info'), ['action' => 'show', 'id' => $this->getRequest()->getParam('id')]);
 
         foreach (glob(ROOT_PATH.'/application/layouts/*') as $layoutPath) {
             $layoutsDir[] = basename($layoutPath);
         }
 
-        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'));
-        $this->getView()->set('layouts', $layoutsDir);
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver'))
+            ->set('layouts', $layoutsDir);
     }
 
     public function settingsAction()
     {
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings']);
+            ->add($this->getTranslator()->trans('menuLayouts'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('menuSettings'), ['action' => 'settings']);
 
         if ($this->getRequest()->isPost()) {
-            $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'));
-            $this->getConfig()->set('apple_icon', $this->getRequest()->getPost('appleIcon'));
-            $this->getConfig()->set('page_title', $this->getRequest()->getPost('pageTitle'));
-            $this->getConfig()->set('description', $this->getRequest()->getPost('description'));
+            $this->getConfig()->set('favicon', $this->getRequest()->getPost('favicon'))
+                ->set('apple_icon', $this->getRequest()->getPost('appleIcon'))
+                ->set('page_title', $this->getRequest()->getPost('pageTitle'))
+                ->set('keywords', $this->getRequest()->getPost('keywords'))
+                ->set('description', $this->getRequest()->getPost('description'));
 
             $this->addMessage('saveSuccess');
         }
 
-        $this->getView()->set('favicon', $this->getConfig()->get('favicon'));
-        $this->getView()->set('appleIcon', $this->getConfig()->get('apple_icon'));
-        $this->getView()->set('pageTitle', $this->getConfig()->get('page_title'));
-        $this->getView()->set('description', $this->getConfig()->get('description'));
+        $this->getView()->set('favicon', $this->getConfig()->get('favicon'))
+            ->set('appleIcon', $this->getConfig()->get('apple_icon'))
+            ->set('pageTitle', $this->getConfig()->get('page_title'))
+            ->set('keywords', $this->getConfig()->get('keywords'))
+            ->set('description', $this->getConfig()->get('description'));
     }
 
     public function deleteAction()

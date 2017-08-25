@@ -83,10 +83,15 @@ class Frontend extends Base
      */
     public function getKeywords()
     {
+        $config = \Ilch\Registry::get('config');
         $metaKeywords = $this->get('metaKeywords');
 
         if (!empty($metaKeywords)) {
             return $metaKeywords;
+        }
+
+        if (!empty($config) && $config->get('keywords') !== '') {
+            return $config->get('keywords');
         }
 
         return '';
