@@ -72,7 +72,11 @@ if ($this->get('imprintStyle') == 0) {
                 echo '<br />'.$this->getTrans('commercialRegister').': '.$this->escape($imprint->getCommercialRegister());
             }
             if ($this->escape($imprint->getVatId()) != '') {
-                echo '<br />'.$this->getTrans('vatId').': '.$this->escape($imprint->getVatId());
+                if ($this->get('imprintStyle') == '1') {
+                    echo '<br />'.$this->getTrans('taxId').': '.$this->escape($imprint->getVatId());
+                } else {
+                    echo '<br />'.$this->getTrans('vatId').': '.$this->escape($imprint->getVatId());
+                }
             }
             if ($this->escape($imprint->getOther()) != '') {
                 echo '<br /><br />'.$imprint->getOther();

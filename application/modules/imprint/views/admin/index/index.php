@@ -13,7 +13,7 @@
                        value="<?= ($this->originalInput('paragraph') != '') ? $this->originalInput('paragraph') : $this->escape($this->get('imprint')->getParagraph()) ?>" />
             </div>
         </div>
-    <?php if ($this->get('imprintStyle') == '1'): ?>
+    <?php if ($this->get('imprintStyle') >= '1'): ?>
         <div class="form-group">
             <label for="company" class="col-lg-2 control-label">
                 <?=$this->getTrans('company') ?>:
@@ -114,7 +114,7 @@
             </div>
         </div>
         <br />
-    <?php if ($this->get('imprintStyle') == '1'): ?>
+    <?php if ($this->get('imprintStyle') >= '1'): ?>
         <div class="form-group">
             <label for="registration" class="col-lg-2 control-label">
                 <?=$this->getTrans('registration') ?>:
@@ -141,7 +141,11 @@
         </div>
         <div class="form-group">
             <label for="vatid" class="col-lg-2 control-label">
+            <?php if ($this->get('imprintStyle') == '1'): ?>
+                <?=$this->getTrans('taxId') ?>:
+            <?php else: ?>
                 <?=$this->getTrans('vatId') ?>:
+            <?php endif; ?>
             </label>
             <div class="col-lg-4">
                 <input type="text"

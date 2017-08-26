@@ -46,7 +46,7 @@ class Settings extends \Ilch\Controller\Admin
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
-                'imprintStyle'      => 'required|numeric|min:0|max:1'
+                'imprintStyle' => 'required|numeric|min:0|max:2'
             ]);
 
             if ($validation->isValid()) {

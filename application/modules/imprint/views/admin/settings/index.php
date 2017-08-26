@@ -6,13 +6,11 @@
             <?=$this->getTrans('site') ?>:
         </div>
         <div class="col-lg-2">
-            <div class="flipswitch">
-                <input type="radio" class="flipswitch-input" id="imprint-privat" name="imprintStyle" value="0" <?php if ($this->get('imprintStyle') == '0') { echo 'checked="checked"'; } ?> />
-                <label for="imprint-privat" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('private') ?></label>
-                <input type="radio" class="flipswitch-input" id="imprint-company" name="imprintStyle" value="1" <?php if ($this->get('imprintStyle') == '1') { echo 'checked="checked"'; } ?> />
-                <label for="imprint-company" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('company') ?></label>
-                <span class="flipswitch-selection"></span>
-            </div>
+            <select class="form-control" id="imprintStyle" name="imprintStyle">
+                <option value="0" <?php if ($this->get('imprintStyle') == '0') { echo 'selected="selected"'; } ?>><?=$this->getTrans('private') ?></option>
+                <option value="1" <?php if ($this->get('imprintStyle') == '1') { echo 'selected="selected"'; } ?>><?=$this->getTrans('club') ?></option>
+                <option value="2" <?php if ($this->get('imprintStyle') == '2') { echo 'selected="selected"'; } ?>><?=$this->getTrans('company') ?></option>
+            </select>
         </div>
     </div>
     <?=$this->getSaveBar() ?>
