@@ -181,10 +181,12 @@ class Index extends \Ilch\Controller\Frontend
                          ->setContent($article->getTitle());
             $this->getLayout()->add('metaTags', 'og:title', $metaTagModel);
 
-            $metaTagModel = new MetaTagModel();
-            $metaTagModel->setName('og:description')
-                         ->setContent($article->getDescription());
-            $this->getLayout()->add('metaTags', 'og:description', $metaTagModel);
+            if (!empty($article->getDescription())) {
+                $metaTagModel = new MetaTagModel();
+                $metaTagModel->setName('og:description')
+                             ->setContent($article->getDescription());
+                $this->getLayout()->add('metaTags', 'og:description', $metaTagModel);
+            }
 
             $metaTagModel = new MetaTagModel();
             $metaTagModel->setName('og:type')
