@@ -133,6 +133,7 @@ class Config extends \Ilch\Config\Install
             case "1.0":
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `website` VARCHAR(255) NOT NULL AFTER `place`;');
                 $this->db()->query('ALTER TABLE `[prefix]_events` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `show`;');
+                unlink(APPLICATION_PATH.'/modules/events/views/show/my.php');
         }
     }
 }
