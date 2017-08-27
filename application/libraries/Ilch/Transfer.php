@@ -364,7 +364,6 @@ class Transfer
                 if (!is_dir(ROOT_PATH.'/'.$thisFileName)) {
                     $content[] = 'New file: '.$thisFileName.'...........';
                     $contents = zip_entry_read($aF, zip_entry_filesize($aF));
-                    $contents = str_replace("\r\n", "\n", $contents);
                     $updateThis = @fopen(ROOT_PATH.'/'.$thisFileName, 'w');
                     @fwrite($updateThis, $contents);
                     @fclose($updateThis);
