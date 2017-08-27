@@ -203,12 +203,15 @@ class Frontend extends Base
                 <meta name="keywords" content="'.$this->escape($this->getKeywords()).'" />
                 <meta name="description" content="'.$this->escape($this->getDescription()).'" />';
 
-        foreach ($this->get('metaTags') as $key => $metaTag) {
-            $html .= '
-            '.$this->getMetaTagString($key);
+        if (is_array($this->get('metaTags'))) {
+            foreach ($this->get('metaTags') as $key => $metaTag) {
+                $html .= '
+                '.$this->getMetaTagString($key);
+            }
         }
 
-        $html .= '<link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">
+        $html .= '
+                <link rel="apple-touch-icon" href="'.$this->getBaseUrl($this->escape($this->getAppleIcon())).'">
                 <link href="'.$this->getVendorUrl('fortawesome/font-awesome/css/font-awesome.min.css').'" rel="stylesheet">
                 <link href="'.$this->getStaticUrl('css/ilch.css').'" rel="stylesheet">
                 <link href="'.$this->getVendorUrl('components/jqueryui/themes/ui-lightness/jquery-ui.min.css').'" rel="stylesheet">
