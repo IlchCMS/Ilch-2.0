@@ -213,6 +213,9 @@ class Config extends \Ilch\Config\Install
                 // Add new read_access column to restrict who can read an article
                 $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `top` TINYINT(1) NOT NULL DEFAULT 0;');
                 $this->db()->query('ALTER TABLE `[prefix]_articles` ADD COLUMN `read_access` VARCHAR(255) NOT NULL DEFAULT \'1,2,3\';');
+
+                removeDir(ROOT_PATH.'/vendor');
+                rename(ROOT_PATH.'/_vendor', ROOT_PATH.'/vendor');
         }
 
         return 'Update function executed.';
