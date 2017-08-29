@@ -61,13 +61,13 @@ if ($awards != '') {
                    name="typ"
                    value="1"
                    onchange="toggleStatus()"
-                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1) { echo 'checked="checked"';} ?>>
+                   <?=($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1 OR $this->originalInput('typ') == 1) ? 'checked="checked"' : '' ?>>
         </div>
         <div class="col-lg-2">
             <select class="form-control" id="user" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 2) { echo 'disabled';} ?>>
                 <?php foreach ($this->get('users') as $user) {
                         $selected = '';
-                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $user->getId()) {
+                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $user->getId() OR $this->originalInput('utId') == $user->getId()) {
                             $selected = 'selected="selected"';
                         }
                         echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
@@ -87,13 +87,13 @@ if ($awards != '') {
                        name="typ"
                        value="2"
                        onchange="toggleStatus()"
-                       <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2) { echo 'checked="checked"';} ?>>
+                       <?=($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2 OR $this->originalInput('typ') == 2) ? 'checked="checked"' : '' ?>>
             </div>
             <div class="col-lg-2">
                 <select class="form-control" id="team" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>>
                     <?php foreach ($this->get('teams') as $team) {
                         $selected = '';
-                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId()) {
+                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId() OR $this->originalInput('utId') == $team->getId()) {
                             $selected = 'selected="selected"';
                         }
                         echo '<option '.$selected.' value="'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
@@ -103,7 +103,7 @@ if ($awards != '') {
             </div>
         </div>
     <?php endif; ?>
-    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('event')) ? 'has-error' : '' ?>">
+    <div class="form-group <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
         <label for="event" class="col-lg-2 control-label">
             <?=$this->getTrans('event') ?>:
         </label>
