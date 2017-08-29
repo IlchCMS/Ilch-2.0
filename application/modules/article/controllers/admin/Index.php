@@ -165,8 +165,12 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat']);
         }
 
-        $groups = explode(',', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), '')->getReadAccess());
-        
+        if ($this->getRequest()->getParam('id')) {
+            $groups = explode(',', $articleMapper->getArticleByIdLocale($this->getRequest()->getParam('id'), '')->getReadAccess());
+        } else {
+            $groups = [1,2,3];
+        }
+
         $this->getView()->set('cats', $categoryMapper->getCategories());
         $this->getView()->set('contentLanguage', $this->getConfig()->get('content_language'));
         $this->getView()->set('languages', $this->getTranslator()->getLocaleList());
