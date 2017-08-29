@@ -1,4 +1,5 @@
 <?php
+$awardsMapper = $this->get('awardsMapper');
 $awards = $this->get('awards');
 
 if ($awards != '') {
@@ -30,7 +31,7 @@ if ($awards != '') {
                    class="form-control"
                    name="date"
                    id="date"
-                   value="<?php if ($this->get('awards') != '') { echo $date; } ?>"
+                   value="<?=($this->get('awards') != '') ? $date : $this->originalInput('date') ?>"
                    readonly>
             <span class="input-group-addon">
                 <span class="fa fa-calendar"></span>
@@ -47,7 +48,7 @@ if ($awards != '') {
                    id="rank"
                    name="rank"
                    min="1"
-                   value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getRank()); } else { echo '1'; } ?>">
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->originalInput('rank') ?>" />
         </div>
     </div>
     <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
@@ -75,32 +76,34 @@ if ($awards != '') {
             </select>
         </div>
     </div>
-    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
-        <label for="team" class="col-lg-1 control-label">
-            <?=$this->getTrans('team') ?>:
-        </label>
-        <div class="col-lg-1 userTeam">
-            <input type="radio"
-                   id="typ_team"
-                   name="typ"
-                   value="2"
-                   onchange="toggleStatus()"
-                   <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2) { echo 'checked="checked"';} ?>>
-        </div>
-        <div class="col-lg-2">
-            <select class="form-control" id="team" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>>
-                <?php foreach ($this->get('teams') as $team) {
-                    $selected = '';
-                    if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId()) {
-                        $selected = 'selected="selected"';
+    <?php if ($awardsMapper->existsTable('teams') == true): ?>
+        <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
+            <label for="team" class="col-lg-1 control-label">
+                <?=$this->getTrans('team') ?>:
+            </label>
+            <div class="col-lg-1 userTeam">
+                <input type="radio"
+                       id="typ_team"
+                       name="typ"
+                       value="2"
+                       onchange="toggleStatus()"
+                       <?php if ($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2) { echo 'checked="checked"';} ?>>
+            </div>
+            <div class="col-lg-2">
+                <select class="form-control" id="team" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>>
+                    <?php foreach ($this->get('teams') as $team) {
+                        $selected = '';
+                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId()) {
+                            $selected = 'selected="selected"';
+                        }
+                        echo '<option '.$selected.' value="'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
                     }
-                    echo '<option '.$selected.' value="'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
-                }
-                ?>
-            </select>
+                    ?>
+                </select>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
+    <?php endif; ?>
+    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('event')) ? 'has-error' : '' ?>">
         <label for="event" class="col-lg-2 control-label">
             <?=$this->getTrans('event') ?>:
         </label>
@@ -109,7 +112,7 @@ if ($awards != '') {
                    class="form-control"
                    id="event"
                    name="event"
-                   value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getEvent()); } ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getEvent()) : $this->originalInput('event') ?>" />
         </div>
     </div>
     <div class="form-group <?=$this->validation()->hasError('page') ? 'has-error' : '' ?>">
@@ -122,7 +125,7 @@ if ($awards != '') {
                    name="page"
                    id="page"
                    placeholder="http://"
-                   value="<?php if ($this->get('awards') != '') { echo $this->escape($this->get('awards')->getURL()); } else { echo $this->get('post')['page']; } ?>" />
+                   value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getURL()) : $this->originalInput('page') ?>" />
         </div>
     </div>
     <?php if ($this->get('awards') != ''): ?>

@@ -48,11 +48,14 @@ class Index extends \Ilch\Controller\Admin
     {
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
-        $teamsMapper = new TeamsMapper();
+
+        if ($awardsMapper->existsTable('teams') == true) {
+            $teamsMapper = new TeamsMapper();
+        }
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_entries')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -62,54 +65,42 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('teamsMapper', $teamsMapper);
-        $this->getView()->set('awards', $awardsMapper->getAwards());
+        if ($awardsMapper->existsTable('teams') == true) {
+            $this->getView()->set('teamsMapper', $teamsMapper);
+        }
+
+        $this->getView()->set('userMapper', $userMapper)
+            ->set('awards', $awardsMapper->getAwards());
     }
 
     public function treatAction()
     {
         $awardsMapper = new AwardsMapper();
         $userMapper = new UserMapper();
-        $teamsMapper = new TeamsMapper();
+
+        if ($awardsMapper->existsTable('teams') == true) {
+            $teamsMapper = new TeamsMapper();
+        }
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('awards', $awardsMapper->getAwardsById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
-        $post = [
-            'date' => '',
-            'rank'  => '',
-            'typ'  => '',
-            'utId'  => '',
-            'event'  => '',
-            'page' => '',
-        ];
-
         if ($this->getRequest()->isPost()) {
-            $post = [
-                'date' => new \Ilch\Date(trim($this->getRequest()->getPost('date'))),
-                'rank'  => trim($this->getRequest()->getPost('rank')),
-                'typ'  => trim($this->getRequest()->getPost('typ')),
-                'utId'  => trim($this->getRequest()->getPost('utId')),
-                'event' => $this->getRequest()->getPost('event'),
-                'page' => $this->getRequest()->getPost('page'),
-            ];
-
             Validation::setCustomFieldAliases([
                 'utId' => 'invalidUserTeam',
                 'typ' => 'invalidUserTeam',
             ]);
 
-            $validation = Validation::create($post, [
+            $validation = Validation::create($this->getRequest()->getPost(), [
                 'date'  => 'required',
                 'rank'  => 'required|numeric|integer|min:1',
                 'utId'  => 'required|numeric|integer|min:1',
@@ -123,24 +114,32 @@ class Index extends \Ilch\Controller\Admin
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
-                $model->setDate($post['date']);
-                $model->setRank($post['rank']);
-                $model->setTyp($post['typ']);
-                $model->setUTId($post['utId']);
-                $model->setEvent($post['event']);
-                $model->setURL($post['page']);
+                $model->setDate(new \Ilch\Date($this->getRequest()->getPost('date')))
+                    ->setRank($this->getRequest()->getPost('rank'))
+                    ->setTyp($this->getRequest()->getPost('typ'))
+                    ->setUTId($this->getRequest()->getPost('utId'))
+                    ->setEvent($this->getRequest()->getPost('event'))
+                    ->setURL($this->getRequest()->getPost('page'));
                 $awardsMapper->save($model);
 
-                $this->addMessage('saveSuccess');
-                $this->redirect(['action' => 'index']);
-            } else {
-                $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+                $this->redirect()
+                    ->withMessage('saveSuccess')
+                    ->to(['action' => 'index']);
             }
+
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
 
-        $this->getView()->set('post', $post);
-        $this->getView()->set('users', $userMapper->getUserList(['confirmed' => 1]));
-        $this->getView()->set('teams', $teamsMapper->getTeams());
+        if ($awardsMapper->existsTable('teams') == true) {
+            $this->getView()->set('teams', $teamsMapper->getTeams());
+        }
+
+        $this->getView()->set('awardsMapper', $awardsMapper)
+            ->set('users', $userMapper->getUserList(['confirmed' => 1]));
     }
 
     public function delAction()

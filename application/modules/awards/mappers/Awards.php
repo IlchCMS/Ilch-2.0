@@ -103,6 +103,13 @@ class Awards extends \Ilch\Mapper
         }
     }
 
+    public function existsTable($table)
+    {
+        $check = $this->db()->ifTableExists('[prefix]_'.$table);
+
+        return $check;
+    }
+
     /**
      * Deletes awards with given id.
      *
