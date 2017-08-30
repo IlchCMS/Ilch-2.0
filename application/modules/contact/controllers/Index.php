@@ -42,7 +42,11 @@ class Index extends \Ilch\Controller\Frontend
                 $senderMail = $this->getRequest()->getPost('senderEmail');
                 $senderName = $this->getRequest()->getPost('senderName');
 
-                $layout = $_SESSION['layout'];
+                $layout = '';
+                if (isset($_SESSION['layout'])) {
+                    $layout = $_SESSION['layout'];
+                }
+
                 if ($layout == $this->getConfig()->get('default_layout') && file_exists(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/contact/layouts/mail/contact.php')) {
                     $messageTemplate = file_get_contents(APPLICATION_PATH.'/layouts/'.$this->getConfig()->get('default_layout').'/views/modules/contact/layouts/mail/contact.php');
                 } else {
