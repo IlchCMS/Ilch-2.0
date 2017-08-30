@@ -46,18 +46,17 @@
         <div class="col-lg-2">
             <select class="form-control" id="smtp_secure" name="smtp_secure">
                 <optgroup>
-                    <?php $selected = '';
-                    if ($this->escape($this->get('smtp_secure') == 'TLS')) {
-                        $selected = 'selected="selected"';
-                    } elseif ($this->escape($this->get('smtp_secure') == 'SSL')) {
-                        $selected = 'selected="selected"';
-                    } elseif ($this->escape($this->get('smtp_secure') == 'STARTTLS')) {
-                        $selected = 'selected="selected"';
-                    }
-                    ?>
-                    <option <?=$selected ?> value="TLS">TLS</option>
-                    <option <?=$selected ?> value="SSL">SSL</option>
-                    <option <?=$selected ?> value="STARTTLS">STARTTLS</option>
+                    <?php
+                    $values = ['TLS', 'SSL', 'STARTTLS'];
+
+                    foreach ($values as $value) :
+                        $selected = '';
+                        if ($this->get('smtp_secure') == $value) {
+                            $selected = 'selected="selected"';
+                        } ?>
+                        <option <?=$selected ?> value="<?=$this->escape($value) ?>"><?=$this->escape($value) ?></option>
+                    <?php
+                    endforeach; ?>
                 </optgroup>
             </select>
         </div>
