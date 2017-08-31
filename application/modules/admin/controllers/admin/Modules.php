@@ -36,12 +36,20 @@ class Modules extends \Ilch\Controller\Admin
                 'icon' => 'fa fa-search',
                 'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'search'])
             ],
+            [
+                'name' => 'menuUpdates',
+                'active' => false,
+                'icon' => 'fa fa-refresh',
+                'url' => $this->getLayout()->getUrl(['controller' => 'modules', 'action' => 'updates'])
+            ]
         ];
 
         if ($this->getRequest()->getActionName() == 'notinstalled') {
             $items[1]['active'] = true; 
         } elseif ($this->getRequest()->getActionName() == 'search' OR $this->getRequest()->getActionName() == 'show') {
             $items[2]['active'] = true; 
+        } elseif ($this->getRequest()->getActionName() == 'updates') {
+            $items[3]['active'] = true; 
         } else {
             $items[0]['active'] = true; 
         }
@@ -169,7 +177,37 @@ class Modules extends \Ilch\Controller\Admin
             $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
         }
     }
-    
+
+    public function updatesAction()
+    {
+        $moduleMapper = new ModuleMapper();
+
+        $this->getLayout()->getAdminHmenu()
+                ->add($this->getTranslator()->trans('menuModules'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('menuInstalled'), ['action' => 'index']);
+
+        $dependencies = [];
+
+        foreach (glob(ROOT_PATH.'/application/modules/*') as $modulesPath) {
+            $key = basename($modulesPath);
+            $modulesDir[] = $key;
+
+            $configClass = '\\Modules\\'.ucfirst($key).'\\Config\\Config';
+            if (class_exists($configClass)) {
+                $config = new $configClass($this->getTranslator());
+                $dependencies[$key] = (!empty($config->config['depends']) ? $config->config['depends'] : []);
+                $configurations[$key] = $config->config;
+            }
+        }
+
+        $this->getView()->set('updateserver', $this->getConfig()->get('updateserver').'modules.php');
+        $this->getView()->set('modules', $moduleMapper->getModules());
+        $this->getView()->set('versionsOfModules', $moduleMapper->getVersionsOfModules());
+        $this->getView()->set('dependencies', $dependencies);
+        $this->getView()->set('configurations', $configurations);
+        $this->getView()->set('coreVersion', $this->getConfig()->get('version'));
+    }
+
     public function updateAction()
     {
         if ($this->getRequest()->isSecure()) {
