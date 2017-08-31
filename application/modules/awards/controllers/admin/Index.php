@@ -108,14 +108,17 @@ class Index extends \Ilch\Controller\Admin
             ]);
 
             if ($validation->isValid()) {
+                $typ = substr($this->getRequest()->getPost('utId'), 0, 1);
+                $userTeamId = substr($this->getRequest()->getPost('utId'), 2);
+
                 $model = new AwardsModel();
                 if ($this->getRequest()->getParam('id')) {
                     $model->setId($this->getRequest()->getParam('id'));
                 }
                 $model->setDate(new \Ilch\Date($this->getRequest()->getPost('date')))
                     ->setRank($this->getRequest()->getPost('rank'))
-                    ->setImage($this->getRequest()->getPost('image'))
-                    ->setUTId($this->getRequest()->getPost('utId'))
+                    ->setTyp($typ)
+                    ->setUTId($userTeamId)
                     ->setEvent($this->getRequest()->getPost('event'))
                     ->setURL($this->getRequest()->getPost('page'));
                 $awardsMapper->save($model);

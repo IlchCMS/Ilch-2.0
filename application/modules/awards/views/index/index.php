@@ -16,8 +16,6 @@ $teamsMapper = $this->get('teamsMapper');
             </div>
         </div>
         <?php foreach ($this->get('awards') as $awards): ?>
-            <?php $typ = substr($awards->getUTId(), 0, 1); ?>
-            <?php $userTeamId = substr($awards->getUTId(), 2); ?>
             <div class="col-lg-6">
                 <div class="award">
                     <div class="rank" align="center">
@@ -32,15 +30,15 @@ $teamsMapper = $this->get('teamsMapper');
                         <?php endif; ?>
                     </div>
                     <div class="rank_info">
-                        <?php if ($typ == 2): ?>
-                            <?php $team = $teamsMapper->getTeamById($userTeamId); ?>
+                        <?php if ($awards->getTyp() == 2): ?>
+                            <?php $team = $teamsMapper->getTeamById($awards->getUTId()); ?>
                             <?php if ($team) : ?>
                                 <a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a>
                             <?php else: ?>
                                 <?=$this->getTrans('formerTeam') ?>
                             <?php endif; ?>
                         <?php else: ?>
-                            <?php $user = $userMapper->getUserById($userTeamId); ?>
+                            <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                             <?php if ($user) : ?>
                                 <a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>"><?=$this->escape($user->getName()) ?></a>
                             <?php else: ?>
@@ -60,7 +58,7 @@ $teamsMapper = $this->get('teamsMapper');
                     </div>
                     <?php if ($awards->getImage() != ''): ?>
                         <div class="rank_image">
-                            <img src="<?=$this->getBaseUrl($awards->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" />
+                            <img src="<?=$this->getBaseUrl($awards->getImage()) ?>" alt="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" title="<?=$this->getTrans('rank') ?> <?=$awards->getRank() ?>" />
                         </div>
                     <?php endif; ?>
                 </div>

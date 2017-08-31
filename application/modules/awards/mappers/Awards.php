@@ -38,7 +38,8 @@ class Awards extends \Ilch\Mapper
                 ->setImage($entries['image'])
                 ->setEvent($entries['event'])
                 ->setURL($entries['url'])
-                ->setUTId($entries['ut_id']);
+                ->setUTId($entries['ut_id'])
+                ->setTyp($entries['typ']);
             $awards[] = $awardsModel;
         }
 
@@ -70,7 +71,8 @@ class Awards extends \Ilch\Mapper
             ->setImage($awardsRow['image'])
             ->setEvent($awardsRow['event'])
             ->setURL($awardsRow['url'])
-            ->setUTId($awardsRow['ut_id']);
+            ->setUTId($awardsRow['ut_id'])
+            ->setTyp($awardsRow['typ']);
 
         return $awardsModel;
     }
@@ -88,7 +90,8 @@ class Awards extends \Ilch\Mapper
             'image' => $awards->getImage(),
             'event' => $awards->getEvent(),
             'url' => $awards->getURL(),
-            'ut_id' => $awards->getUTId()
+            'ut_id' => $awards->getUTId(),
+            'typ' => $awards->getTyp()
         ];
 
         if ($awards->getId()) {

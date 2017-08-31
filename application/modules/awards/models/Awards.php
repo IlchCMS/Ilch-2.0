@@ -53,9 +53,16 @@ class Awards extends \Ilch\Model
     /**
      * The utId of the awards.
      *
-     * @var string
+     * @var int
      */
     protected $utId;
+
+    /**
+     * The typ of the awards.
+     *
+     * @var int
+     */
+    protected $typ;
 
     /**
      * Gets the id of the awards.
@@ -198,7 +205,7 @@ class Awards extends \Ilch\Model
     /**
      * Gets the utId of the awards.
      *
-     * @return string
+     * @return int
      */
     public function getUTid()
     {
@@ -208,12 +215,35 @@ class Awards extends \Ilch\Model
     /**
      * Sets the utId of the awards.
      *
-     * @param string $utId
+     * @param int $utId
      * @return $this
      */
     public function setUTId($utId)
     {
-        $this->utId = (string)$utId;
+        $this->utId = (int)$utId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the typ of the awards.
+     *
+     * @return int
+     */
+    public function getTyp()
+    {
+        return $this->typ;
+    }
+
+    /**
+     * Sets the typ of the awards.
+     *
+     * @param int $typ
+     * @return $this
+     */
+    public function setTyp($typ)
+    {
+        $this->typ = (int)$typ;
 
         return $this;
     }

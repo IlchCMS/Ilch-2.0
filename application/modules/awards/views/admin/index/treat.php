@@ -67,7 +67,7 @@ if ($awards != '') {
                 <optgroup label="<?=$this->getTrans('user') ?>">
                     <?php foreach ($this->get('users') as $user) {
                             $selected = '';
-                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == '1_'.$user->getId() OR $this->originalInput('utId') == '1_'.$user->getId()) {
+                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $user->getId() AND $this->get('awards')->getTyp() == 1 OR $this->originalInput('utId') == '1_'.$user->getId()) {
                                 $selected = 'selected="selected"';
                             }
                             echo '<option '.$selected.' value="1_'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
@@ -78,7 +78,7 @@ if ($awards != '') {
                     <optgroup label="<?=$this->getTrans('team') ?>">
                         <?php foreach ($this->get('teams') as $team) {
                             $selected = '';
-                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == '2_'.$team->getId() OR $this->originalInput('utId') == '2_'.$team->getId()) {
+                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId() AND $this->get('awards')->getTyp() == 2 OR $this->originalInput('utId') == '2_'.$team->getId()) {
                                 $selected = 'selected="selected"';
                             }
                             echo '<option '.$selected.' value="2_'.$team->getId().'">'.$this->escape($team->getName()).'</option>';

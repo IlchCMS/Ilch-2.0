@@ -31,24 +31,22 @@ $teamsMapper = $this->get('teamsMapper');
                 </thead>
                 <tbody>
                     <?php foreach ($this->get('awards') as $awards) : ?>
-                        <?php $getDate = new \Ilch\Date($awards->getDate()); ?>
-                        <?php $typ = substr($awards->getUTId(), 0, 1); ?>
-                        <?php $userTeamId = substr($awards->getUTId(), 2); ?>
+                    <?php $getDate = new \Ilch\Date($awards->getDate()); ?>
                         <tr>
                             <td><?=$this->getDeleteCheckbox('check_entries', $awards->getId()) ?></td>
                             <td><?=$this->getEditIcon(['action' => 'treat', 'id' => $awards->getId()]) ?></td>
                             <td><?=$this->getDeleteIcon(['action' => 'del', 'id' => $awards->getId()]) ?></td>
                             <td><?=$getDate->format('d.m.Y', true) ?></td>
                             <td><?=$this->escape($awards->getRank()) ?></td>
-                            <?php if ($typ == 2): ?>
-                                <?php $team = $teamsMapper->getTeamById($userTeamId); ?>
+                            <?php if ($awards->getTyp() == 2): ?>
+                                <?php $team = $teamsMapper->getTeamById($awards->getUTId()); ?>
                                 <?php if ($team) : ?>
                                     <td><a href="<?=$this->getUrl('teams/index/index') ?>" target="_blank"><?=$this->escape($team->getName()) ?></a></td>
                                 <?php else: ?>
                                     <td><?=$this->getTrans('formerTeam') ?></td>
                                 <?php endif; ?>
                             <?php else: ?>
-                                <?php $user = $userMapper->getUserById($userTeamId); ?>
+                                <?php $user = $userMapper->getUserById($awards->getUTId()); ?>
                                 <?php if ($user) : ?>
                                     <td><a href="<?=$this->getUrl('user/profil/index/user/'.$user->getId()) ?>" target="_blank"><?=$this->escape($user->getName()) ?></a></td>
                                 <?php else: ?>

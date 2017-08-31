@@ -47,7 +47,8 @@ class Config extends \Ilch\Config\Install
                   `image` VARCHAR(255) NOT NULL,
                   `event` VARCHAR(100) NOT NULL,
                   `url` VARCHAR(150) NOT NULL,
-                  `ut_id` VARCHAR(255) NOT NULL,
+                  `ut_id` INT(11) NOT NULL,
+                  `typ` TINYINT(1) NOT NULL,
                   PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;';
     }
@@ -57,22 +58,6 @@ class Config extends \Ilch\Config\Install
         switch ($installedVersion) {
             case "1.1":
                 $this->db()->query('ALTER TABLE `[prefix]_awards` ADD `image` VARCHAR(255) NOT NULL AFTER `rank`;');
-                $this->db()->query('ALTER TABLE `[prefix]_awards` MODIFY `ut_id` VARCHAR(255) NOT NULL;');
-
-                $awards = $this->db()->select('*')
-                    ->from('awards')
-                    ->execute()
-                    ->fetchRows();
-
-                foreach ($awards as $key => $value) {
-                    if ($value['typ'] == 2) {
-                        $this->db()->query('UPDATE `[prefix]_awards` SET `ut_id` = "2_'.$value['ut_id'].'" WHERE `typ` = 2;');
-                    } else {
-                        $this->db()->query('UPDATE `[prefix]_awards` SET `ut_id` = "1_'.$value['ut_id'].'" WHERE `typ` = 1;');
-                    }
-                };
-
-                $this->db()->query('ALTER TABLE `[prefix]_awards` DROP `typ`;');
         }
     }
 }
