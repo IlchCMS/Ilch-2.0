@@ -61,8 +61,8 @@ class Index extends \Ilch\Controller\Admin
         $teamsMapper = new TeamsMapper();
 
         $this->getLayout()->getAdminHmenu()
-                ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
-                ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
+            ->add($this->getTranslator()->trans('manage'), ['action' => 'index']);
 
         if ($this->getRequest()->getPost('check_teams')) {
             if ($this->getRequest()->getPost('action') == 'delete') {
@@ -72,14 +72,14 @@ class Index extends \Ilch\Controller\Admin
             }
         }
 
-        if ($this->getRequest()->isPost()) {
-            $postData = $this->getRequest()->getPost();
-            $positions = explode(',', $postData['hiddenMenu']);
-            for($x = 0; $x < count($positions); $x++) {
-                $teamsMapper->updatePositionById($positions[$x], $x);
+        if ($this->getRequest()->getPost('saveTeams')) {
+            foreach ($this->getRequest()->getPost('items') as $i => $teamId) {
+                $teamsMapper->sort($teamId, $i);
             }
-            $this->addMessage('saveSuccess');
-            $this->redirect(['action' => 'index']);
+
+            $this->redirect()
+                ->withMessage('saveSuccess')
+                ->to(['action' => 'index']);
         }
 
         $this->getView()->set('teams', $teamsMapper->getTeams());
@@ -93,14 +93,14 @@ class Index extends \Ilch\Controller\Admin
 
         if ($this->getRequest()->getParam('id')) {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('edit'), ['action' => 'treat']);
 
             $this->getView()->set('team', $teamsMapper->getTeamById($this->getRequest()->getParam('id')));
         } else {
             $this->getLayout()->getAdminHmenu()
-                    ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
-                    ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
+                ->add($this->getTranslator()->trans('menuTeams'), ['action' => 'index'])
+                ->add($this->getTranslator()->trans('add'), ['action' => 'treat']);
         }
 
         if ($this->getRequest()->isPost()) {
@@ -202,8 +202,8 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat']);
         }
 
-        $this->getView()->set('userList', $userMapper->getUserList());
-        $this->getView()->set('userGroupList', $userGroupMapper->getGroupList());
+        $this->getView()->set('userList', $userMapper->getUserList())
+            ->set('userGroupList', $userGroupMapper->getGroupList());
     }
 
     public function delAction()

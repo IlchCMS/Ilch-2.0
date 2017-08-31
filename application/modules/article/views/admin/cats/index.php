@@ -56,14 +56,14 @@
 </form>
 
 <script>
-    $('table tbody').sortable({
-        handle: '.fa-sort',
-        cursorAt: { left: 15 },
-        placeholder: "table-sort-drop",
-        forcePlaceholderSize: true,
-        'start': function (event, ui) {
-            ui.placeholder.html("<td colspan='5'></td>");
-            ui.placeholder.height(ui.item.height());
-        }
-    }).disableSelection();
+$('table tbody').sortable({
+    handle: 'td',
+    cursorAt: { left: 15 },
+    placeholder: "table-sort-drop",
+    forcePlaceholderSize: true,
+    'start': function (event, ui) {
+        ui.placeholder.html("<td colspan='5'></td>");
+        ui.placeholder.height(ui.item.height());
+    }
+}).disableSelection();
 </script>

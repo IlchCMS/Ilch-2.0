@@ -110,6 +110,20 @@ class Teams extends \Ilch\Mapper
     }
 
     /**
+     * Sort teams.
+     *
+     * @param int $teamId
+     * @param int $key
+     */
+    public function sort($teamId, $key)
+    {
+        $this->db()->update('teams')
+            ->values(['position' => $key])
+            ->where(['id' => $teamId])
+            ->execute();
+    }
+
+    /**
      * Inserts or updates Team Model.
      *
      * @param TeamsModel $team
