@@ -30,6 +30,13 @@ class Awards extends \Ilch\Model
     protected $rank;
 
     /**
+     * The image of the awards.
+     *
+     * @var string
+     */
+    protected $image;
+
+    /**
      * The event of the awards.
      *
      * @var string
@@ -46,16 +53,9 @@ class Awards extends \Ilch\Model
     /**
      * The utId of the awards.
      *
-     * @var int
+     * @var string
      */
     protected $utId;
-
-    /**
-     * The typ of the awards.
-     *
-     * @var int
-     */
-    protected $typ;
 
     /**
      * Gets the id of the awards.
@@ -71,7 +71,7 @@ class Awards extends \Ilch\Model
      * Sets the id of the awards.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId($id)
     {
@@ -94,7 +94,7 @@ class Awards extends \Ilch\Model
      * Sets the date of the awards.
      *
      * @param string $date
-     * @return this
+     * @return $this
      */
     public function setDate($date)
     {
@@ -117,11 +117,34 @@ class Awards extends \Ilch\Model
      * Sets the rank of the awards.
      *
      * @param int $rank
-     * @return this
+     * @return $this
      */
     public function setRank($rank)
     {
         $this->rank = (int)$rank;
+
+        return $this;
+    }
+
+    /**
+     * Gets the awards Image.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Sets the Image of the awards.
+     *
+     * @param string $image
+     * @return $this
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
 
         return $this;
     }
@@ -140,7 +163,7 @@ class Awards extends \Ilch\Model
      * Sets the event of the awards.
      *
      * @param string $event
-     * @return this
+     * @return $this
      */
     public function setEvent($event)
     {
@@ -163,7 +186,7 @@ class Awards extends \Ilch\Model
      * Sets the url of the awards.
      *
      * @param string $url
-     * @return this
+     * @return $this
      */
     public function setURL($url)
     {
@@ -175,7 +198,7 @@ class Awards extends \Ilch\Model
     /**
      * Gets the utId of the awards.
      *
-     * @return int
+     * @return string
      */
     public function getUTid()
     {
@@ -185,35 +208,12 @@ class Awards extends \Ilch\Model
     /**
      * Sets the utId of the awards.
      *
-     * @param int $utId
-     * @return this
+     * @param string $utId
+     * @return $this
      */
     public function setUTId($utId)
     {
-        $this->utId = (int)$utId;
-
-        return $this;
-    }
-
-    /**
-     * Gets the typ of the awards.
-     *
-     * @return int
-     */
-    public function getTyp()
-    {
-        return $this->typ;
-    }
-
-    /**
-     * Sets the typ of the awards.
-     *
-     * @param int $typ
-     * @return this
-     */
-    public function setTyp($typ)
-    {
-        $this->typ = (int)$typ;
+        $this->utId = (string)$utId;
 
         return $this;
     }

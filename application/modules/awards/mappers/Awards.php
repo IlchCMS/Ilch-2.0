@@ -32,13 +32,13 @@ class Awards extends \Ilch\Mapper
         $awards = [];
         foreach ($awardsArray as $entries) {
             $awardsModel = new AwardsModel();
-            $awardsModel->setId($entries['id']);
-            $awardsModel->setDate($entries['date']);
-            $awardsModel->setRank($entries['rank']);
-            $awardsModel->setEvent($entries['event']);
-            $awardsModel->setURL($entries['url']);
-            $awardsModel->setUTId($entries['ut_id']);
-            $awardsModel->setTyp($entries['typ']);
+            $awardsModel->setId($entries['id'])
+                ->setDate($entries['date'])
+                ->setRank($entries['rank'])
+                ->setImage($entries['image'])
+                ->setEvent($entries['event'])
+                ->setURL($entries['url'])
+                ->setUTId($entries['ut_id']);
             $awards[] = $awardsModel;
         }
 
@@ -64,13 +64,13 @@ class Awards extends \Ilch\Mapper
         }
 
         $awardsModel = new AwardsModel();
-        $awardsModel->setId($awardsRow['id']);
-        $awardsModel->setDate($awardsRow['date']);
-        $awardsModel->setRank($awardsRow['rank']);
-        $awardsModel->setEvent($awardsRow['event']);
-        $awardsModel->setURL($awardsRow['url']);
-        $awardsModel->setUTId($awardsRow['ut_id']);
-        $awardsModel->setTyp($awardsRow['typ']);
+        $awardsModel->setId($awardsRow['id'])
+            ->setDate($awardsRow['date'])
+            ->setRank($awardsRow['rank'])
+            ->setImage($awardsRow['image'])
+            ->setEvent($awardsRow['event'])
+            ->setURL($awardsRow['url'])
+            ->setUTId($awardsRow['ut_id']);
 
         return $awardsModel;
     }
@@ -85,10 +85,10 @@ class Awards extends \Ilch\Mapper
         $fields = [
             'date' => $awards->getDate(),
             'rank' => $awards->getRank(),
+            'image' => $awards->getImage(),
             'event' => $awards->getEvent(),
             'url' => $awards->getURL(),
-            'ut_id' => $awards->getUTId(),
-            'typ' => $awards->getTyp()
+            'ut_id' => $awards->getUTId()
         ];
 
         if ($awards->getId()) {

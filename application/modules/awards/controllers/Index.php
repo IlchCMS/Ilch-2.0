@@ -19,12 +19,12 @@ class Index extends \Ilch\Controller\Frontend
         $teamsMapper = new TeamsMapper();
 
         $this->getLayout()->getHmenu()
-                ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index']);
+            ->add($this->getTranslator()->trans('menuAwards'), ['action' => 'index']);
 
-        $this->getView()->set('userMapper', $userMapper);
-        $this->getView()->set('teamsMapper', $teamsMapper);
-        $this->getView()->set('awards', $awardsMapper->getAwards());
-        $this->getView()->set('awardsCount', count($awardsMapper->getAwards()));
+        $this->getView()->set('userMapper', $userMapper)
+            ->set('teamsMapper', $teamsMapper)
+            ->set('awards', $awardsMapper->getAwards())
+            ->set('awardsCount', count($awardsMapper->getAwards()));
     }
 }
 

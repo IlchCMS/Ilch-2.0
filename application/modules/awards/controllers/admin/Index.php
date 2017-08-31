@@ -97,14 +97,12 @@ class Index extends \Ilch\Controller\Admin
         if ($this->getRequest()->isPost()) {
             Validation::setCustomFieldAliases([
                 'utId' => 'invalidUserTeam',
-                'typ' => 'invalidUserTeam',
             ]);
 
             $validation = Validation::create($this->getRequest()->getPost(), [
                 'date'  => 'required',
                 'rank'  => 'required|numeric|integer|min:1',
-                'utId'  => 'required|numeric|integer|min:1',
-                'typ'  => 'required|numeric|integer|min:1|max:2',
+                'utId'  => 'required',
                 'event' => 'required',
                 'page' => 'url',
             ]);
@@ -116,7 +114,7 @@ class Index extends \Ilch\Controller\Admin
                 }
                 $model->setDate(new \Ilch\Date($this->getRequest()->getPost('date')))
                     ->setRank($this->getRequest()->getPost('rank'))
-                    ->setTyp($this->getRequest()->getPost('typ'))
+                    ->setImage($this->getRequest()->getPost('image'))
                     ->setUTId($this->getRequest()->getPost('utId'))
                     ->setEvent($this->getRequest()->getPost('event'))
                     ->setURL($this->getRequest()->getPost('page'));

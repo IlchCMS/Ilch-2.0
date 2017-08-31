@@ -1,14 +1,9 @@
-.userTeam {
-    top: 7px;
-}
-
-.awards_info {
-    padding: 5px;
-}
-
 .award {
     margin-bottom: 15px;
     border: 1px solid #e5e5e5;
+}
+.awards_info {
+    padding: 5px;
 }
 
 .rank {
@@ -18,9 +13,11 @@
     font-size: 32px;
     font-weight: bold;
 }
-
 .rank_info {
     padding: 5px;
+}
+.rank_image {
+    clear: both;
 }
 
 .img_gold {

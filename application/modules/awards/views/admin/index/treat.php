@@ -11,15 +11,7 @@ if ($awards != '') {
 <link href="<?=$this->getModuleUrl('static/css/awards.css') ?>" rel="stylesheet">
 <link href="<?=$this->getStaticUrl('js/datetimepicker/css/bootstrap-datetimepicker.min.css') ?>" rel="stylesheet">
 
-<h1>
-    <?php if ($awards != '') {
-        echo $this->getTrans('edit');
-    } else {
-        echo $this->getTrans('add');
-    }
-    ?>
-</h1>
-
+<h1><?=($awards != '') ? $this->getTrans('edit') : $this->getTrans('add') ?></h1>
 <form class="form-horizontal" method="POST" action="<?=$this->getUrl(['action' => $this->getRequest()->getActionName(), 'id' => $this->getRequest()->getParam('id')]) ?>">
     <?=$this->getTokenField() ?>
     <div class="form-group <?=$this->validation()->hasError('date') ? 'has-error' : '' ?>">
@@ -51,58 +43,52 @@ if ($awards != '') {
                    value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getRank()) : $this->originalInput('rank') ?>" />
         </div>
     </div>
-    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
-        <label for="user" class="col-lg-1 control-label">
-            <?=$this->getTrans('user') ?>:
+    <div class="form-group <?=$this->validation()->hasError('image') ? 'has-error' : '' ?>">
+        <label for="selectedImage" class="col-lg-2 control-label">
+            <?=$this->getTrans('image') ?>:
         </label>
-        <div class="col-lg-1 userTeam">
-            <input type="radio"
-                   id="typ_user"
-                   name="typ"
-                   value="1"
-                   onchange="toggleStatus()"
-                   <?=($this->get('awards') != '' AND $this->get('awards')->getTyp() == 1 OR $this->originalInput('typ') == 1) ? 'checked="checked"' : '' ?>>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <input type="text"
+                       class="form-control"
+                       id="selectedImage"
+                       name="image"
+                       value="<?=($this->get('awards') != '') ? $this->escape($this->get('awards')->getImage()) : $this->originalInput('image') ?>" />
+                <span class="input-group-addon"><a id="media" href="javascript:media()"><i class="fa fa-picture-o"></i></a></span>
+            </div>
         </div>
+    </div>
+    <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
+        <label for="user" class="col-lg-2 control-label">
+            <?=$this->getTrans('userTeam') ?>:
+        </label>
         <div class="col-lg-2">
-            <select class="form-control" id="user" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 2) { echo 'disabled';} ?>>
-                <?php foreach ($this->get('users') as $user) {
-                        $selected = '';
-                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $user->getId() OR $this->originalInput('utId') == $user->getId()) {
-                            $selected = 'selected="selected"';
+            <select class="form-control" id="user" name="utId">
+                <optgroup label="<?=$this->getTrans('user') ?>">
+                    <?php foreach ($this->get('users') as $user) {
+                            $selected = '';
+                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == '1_'.$user->getId() OR $this->originalInput('utId') == '1_'.$user->getId()) {
+                                $selected = 'selected="selected"';
+                            }
+                            echo '<option '.$selected.' value="1_'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
                         }
-                        echo '<option '.$selected.' value="'.$user->getId().'">'.$this->escape($user->getName()).'</option>';
-                    }
-                ?>
+                    ?>
+                </optgroup>
+                <?php if ($awardsMapper->existsTable('teams') == true AND $this->get('teams') != ''): ?>
+                    <optgroup label="<?=$this->getTrans('team') ?>">
+                        <?php foreach ($this->get('teams') as $team) {
+                            $selected = '';
+                            if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == '2_'.$team->getId() OR $this->originalInput('utId') == '2_'.$team->getId()) {
+                                $selected = 'selected="selected"';
+                            }
+                            echo '<option '.$selected.' value="2_'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
+                        }
+                        ?>
+                    </optgroup>
+                <?php endif; ?>
             </select>
         </div>
     </div>
-    <?php if ($awardsMapper->existsTable('teams') == true): ?>
-        <div class="form-group <?=($this->validation()->hasError('typ') or $this->validation()->hasError('utId')) ? 'has-error' : '' ?>">
-            <label for="team" class="col-lg-1 control-label">
-                <?=$this->getTrans('team') ?>:
-            </label>
-            <div class="col-lg-1 userTeam">
-                <input type="radio"
-                       id="typ_team"
-                       name="typ"
-                       value="2"
-                       onchange="toggleStatus()"
-                       <?=($this->get('awards') != '' AND $this->get('awards')->getTyp() == 2 OR $this->originalInput('typ') == 2) ? 'checked="checked"' : '' ?>>
-            </div>
-            <div class="col-lg-2">
-                <select class="form-control" id="team" name="utId" <?php if ($this->get('awards') == '' OR $this->get('awards')->getTyp() == 1) { echo 'disabled';} ?>>
-                    <?php foreach ($this->get('teams') as $team) {
-                        $selected = '';
-                        if ($this->get('awards') != '' AND $this->get('awards')->getUTId() == $team->getId() OR $this->originalInput('utId') == $team->getId()) {
-                            $selected = 'selected="selected"';
-                        }
-                        echo '<option '.$selected.' value="'.$team->getId().'">'.$this->escape($team->getName()).'</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-        </div>
-    <?php endif; ?>
     <div class="form-group <?=($this->validation()->hasError('event')) ? 'has-error' : '' ?>">
         <label for="event" class="col-lg-2 control-label">
             <?=$this->getTrans('event') ?>:
@@ -135,6 +121,7 @@ if ($awards != '') {
     <?php endif; ?>
 </form>
 
+<?=$this->getDialog('mediaModal', $this->getTrans('media'), '<iframe frameborder="0"></iframe>'); ?>
 <script src="<?=$this->getStaticUrl('js/datetimepicker/js/bootstrap-datetimepicker.min.js') ?>" charset="UTF-8"></script>
 <?php if (substr($this->getTranslator()->getLocale(), 0, 2) != 'en'): ?>
     <script src="<?=$this->getStaticUrl('js/datetimepicker/js/locales/bootstrap-datetimepicker.'.substr($this->getTranslator()->getLocale(), 0, 2).'.js') ?>" charset="UTF-8"></script>
@@ -150,16 +137,8 @@ $(document).ready(function() {
     });
 });
 
-function toggleStatus() {
-    if ($('#typ_user').is(':checked')) {
-        $('#user').removeAttr('disabled');
-        $('#team').attr('disabled', true);
-    } else if ($('#typ_team').is(':checked')) {
-        $('#user').attr('disabled', true);
-        $('#team').removeAttr('disabled');
-    } else {
-        $('#user').attr('disabled', true);
-        $('#team').attr('disabled', true);
-    }
-}
+<?=$this->getMedia()
+    ->addMediaButton($this->getUrl('admin/media/iframe/index/type/single/'))
+    ->addUploadController($this->getUrl('admin/media/index/upload'))
+?>
 </script>
