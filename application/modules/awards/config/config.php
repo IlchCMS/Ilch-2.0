@@ -6,8 +6,6 @@
 
 namespace Modules\Awards\Config;
 
-use Modules\Awards\Mappers\Awards as AwardsMapper;
-
 class Config extends \Ilch\Config\Install
 {
     public $config = [
