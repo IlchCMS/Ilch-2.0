@@ -14,7 +14,7 @@ if ($user->getId()) {
     <input type="hidden"
            name="user[id]"
            value="<?=$user->getId() ?>" />
-    <div class="form-group">
+    <div class="form-group" <?=$this->validation()->hasError('userName') ? 'has-error' : '' ?>">
         <label for="userName" class="col-lg-3 control-label">
             <?=$this->getTrans('userName') ?>
         </label>
@@ -27,7 +27,7 @@ if ($user->getId()) {
                    value="<?=$this->escape($user->getName()) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" <?=$this->validation()->hasError('userEmail') ? 'has-error' : '' ?>">
         <label for="userEmail" class="col-lg-3 control-label">
             <?=$this->getTrans('userEmail') ?>
         </label>
@@ -40,13 +40,13 @@ if ($user->getId()) {
                    value="<?=$this->escape($user->getEmail()) ?>" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" <?=$this->validation()->hasError('userPassword') ? 'has-error' : '' ?>">
         <label for="userPassword" class="col-lg-3 control-label">
             <?=$this->getTrans('userPassword') ?>
         </label>
         <div class="col-lg-9">
             <input type="password"
-                   class="form-control"
+                   class="form-control required"
                    id="userPassword"
                    name="user[password]"
                    placeholder="<?=$this->getTrans('userPassword') ?>"

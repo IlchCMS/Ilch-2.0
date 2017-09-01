@@ -16,6 +16,7 @@ use Modules\User\Models\Group as GroupModel;
 use Modules\User\Service\Password as PasswordService;
 use Modules\Admin\Mappers\Emails as EmailsMapper;
 use \Ilch\Registry as Registry;
+use Ilch\Validation;
 
 /**
  * Handles action for the main admin configuration page.
@@ -186,36 +187,68 @@ class Index extends \Ilch\Controller\Admin
             ->add($this->getTranslator()->trans('editUser'), ['action' => 'treat']);
 
         if ($this->getRequest()->isPost()) {
-            $userData = $this->getRequest()->getPost('user');
-            
-            if (!empty($userData['password'])) {
-                $userData['password'] = (new PasswordService())->hash($userData['password']);
+            $rules = [
+                'email' => 'required|email|unique:users,email',
+                'name' => 'required|unique:users,name',
+                'password' => 'required'
+                ];
+
+            if ($this->getRequest()->getParam('id')) {
+                $rules = [
+                    'email' => 'required|email|unique:users,email,'.$this->getRequest()->getParam('id'),
+                    'name' => 'required|unique:users,name',
+                    'password' => 'required'
+                    ];
             }
 
-            $user = $userMapper->loadFromArray($userData);
+            Validation::setCustomFieldAliases([
+                'email' => 'userEmail',
+                'name' => 'userName',
+                'password' => 'userPassword'
+            ]);
 
-            if (empty($userData['groups'])) {
-                $userData['groups'][0] = 2;
-            }
-            foreach ($userData['groups'] as $groupId) {
-                $group = new GroupModel();
-                $group->setId($groupId);
-                $user->addGroup($group);
+            $validation = Validation::create($this->getRequest()->getPost('user'), $rules);
+
+            if ($validation->isValid()) {
+                $userData = $this->getRequest()->getPost('user');
+
+                if (!empty($userData['password'])) {
+                    $userData['password'] = (new PasswordService())->hash($userData['password']);
+                }
+
+                $user = $userMapper->loadFromArray($userData);
+
+                if (empty($userData['groups'])) {
+                    $userData['groups'][0] = 2;
+                }
+                foreach ($userData['groups'] as $groupId) {
+                    $group = new GroupModel();
+                    $group->setId($groupId);
+                    $user->addGroup($group);
+                }
+
+                if (empty($userData['id'])) {
+                    $date = new \Ilch\Date();
+                    $user->setDateCreated($date);
+                    $user->setLocale($this->getTranslator()->getLocale());
+                }
+
+                $userId = $userMapper->save($user);
+
+                if (!empty($userId) && empty($userData['id'])) {
+                    $this->addMessage('newUserMsg');
+                } else {
+                    $this->addMessage('success');
+                }
+                $this->redirect()
+                    ->to(['action' => 'treat']);
             }
 
-            if (empty($userData['id'])) {
-                $date = new \Ilch\Date();
-                $user->setDateCreated($date);
-                $user->setLocale($this->getTranslator()->getLocale());
-            }
-
-            $userId = $userMapper->save($user);
-
-            if (!empty($userId) && empty($userData['id'])) {
-                $this->addMessage('newUserMsg');
-            } else {
-                $this->addMessage('success');
-            }
+            $this->addMessage($validation->getErrorBag()->getErrorMessages(), 'danger', true);
+            $this->redirect()
+                ->withInput()
+                ->withErrors($validation->getErrorBag())
+                ->to(['action' => 'treat']);
         }
 
         if (empty($userId)) {
