@@ -202,7 +202,7 @@
     line-height: 16px;
     display: inline-block;
     width: auto;
-    background: #2ecc71;
+    color: #000;
 }
 .chat .chat-wrapper .message-list-wrapper .message-list li.left .body .message:before {
     content: '';
@@ -212,7 +212,7 @@
     height: 0;
     border-style: solid;
     border-width: 9px 9px 9px 0;
-    border-color: transparent #2ecc71 transparent transparent;
+    border-color: transparent #e3e3e3 transparent transparent;
     left: 0;
     top: 10px;
     margin-left: -8px;
