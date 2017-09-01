@@ -77,7 +77,7 @@ class Config extends \Ilch\Config\Install
                 `create_access` VARCHAR(255) NOT NULL,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_topics` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` INT(11) NOT NULL,
@@ -91,7 +91,7 @@ class Config extends \Ilch\Config\Install
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-            
+
             CREATE TABLE IF NOT EXISTS `[prefix]_forum_posts` (
                 `id` INT(11) NOT NULL AUTO_INCREMENT,
                 `topic_id` VARCHAR(150) NOT NULL,
@@ -103,14 +103,14 @@ class Config extends \Ilch\Config\Install
                 `read` VARCHAR(225) NOT NULL DEFAULT \'\',
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
-            
+
             INSERT INTO `[prefix]_forum_items` (`id`, `forum_id`, `sort`, `parent_id`, `type`, `title`, `description`, `read_access`, `replay_access`, `create_access`) VALUES
                 (1, 1, 0, 0, 0, "Meine Kategorie", "Meine erste Kategorie", "", "", ""),
                 (2, 1, 10, 1, 1, "Mein Forum", "Mein erstes Forum", "2,3", 2, 2);
-            
+
             INSERT INTO `[prefix]_forum_topics` (`id`, `topic_id`, `topic_title`, `creator_id`, `date_created`, `forum_id`) VALUES
                 (1, 2, "Willkommen bei Ilch!", 0, NOW(), 2);
-            
+
             INSERT INTO `[prefix]_forum_posts` (`id`, `topic_id`, `text`, `user_id`, `date_created`, `forum_id`) VALUES
                 (1, 1, "Willkommen im Ilch 2.0 Forum!\n\nBei Fragen oder Probleme im [url=http://www.ilch.de/forum.html]Ilch Forum[/url] melden.\n\nViel Erfolg\nIlch", 0, NOW(), 2);';
     }

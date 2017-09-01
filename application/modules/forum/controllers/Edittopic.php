@@ -52,40 +52,42 @@ class Edittopic extends \Ilch\Controller\Frontend
             ->add($forum->getTitle(), ['controller' => 'showtopics', 'action' => 'index', 'forumid' => $forumId])
             ->add($this->getTranslator()->trans('topicMove'), ['action' => 'index', 'forumid' => $forumId]);
 
-        $this->getView()->set('groupIdsArray', $groupIdsArray);
-        $this->getView()->set('forumItems', $forumItems);
-        $this->getView()->set('editTopicItems', $this->getRequest()->getPost('check_topics'));
-    }
-
-    public function edittopicAction()
-    {
         if ($this->getUser()) {
             $access = new Accesses($this->getRequest());
+
             if ($access->hasAccess('forum') || $this->getUser()->isAdmin()) {
-                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('edittopic') == 'edittopic') {
-                    $topics = $this->getRequest()->getPost('topicids');
+                if ($this->getRequest()->isSecure() && $this->getRequest()->getPost('edittopic')) {
                     $topicMapper = new TopicMapper();
                     $topicModel = new TopicModel();
                     $postMapper = new PostMapper();
                     $postModel = new PostModel();
+
+                    $topics = $this->getRequest()->getPost('topicids');
                     foreach ($topics as $topic) {
-                        $topicModel->setId($topic);
-                        $topicModel->setTopicId($this->getRequest()->getPost('edit'));
-                        $topicModel->setForumId($this->getRequest()->getPost('edit'));
+                        $topicModel->setId($topic)
+                            ->setTopicId($this->getRequest()->getPost('edit'))
+                            ->setForumId($this->getRequest()->getPost('edit'));
                         $topicMapper->save($topicModel);
 
                         $posts = $postMapper->getPostByTopicId($topic);
                         foreach ($posts as $post) {
-                            $postModel->setId($post->getId());
-                            $postModel->setTopicId($this->getRequest()->getPost('edit'));
-                            $postModel->setForumId($this->getRequest()->getPost('edit'));
+                            $postModel->setId($post->getId())
+                                ->setTopicId($this->getRequest()->getPost('edit'))
+                                ->setForumId($this->getRequest()->getPost('edit'));
                             $postMapper->saveForEdit($postModel);
                         }
                     }
-                    $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getPost('edit')]);
+
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getPost('edit')]);
                 }
             }
         }
+
+        $this->getView()->set('groupIdsArray', $groupIdsArray)
+            ->set('forumItems', $forumItems)
+            ->set('editTopicItems', $this->getRequest()->getPost('check_topics'));
     }
 
     public function statusAction()
@@ -100,8 +102,9 @@ class Edittopic extends \Ilch\Controller\Frontend
                         $topicMapper->updateStatus($topicId);
                     }
 
-                    $this->addMessage('saveSuccess');
-                    $this->redirect(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]);
+                    $this->redirect()
+                        ->withMessage('saveSuccess')
+                        ->to(['controller' => 'showtopics', 'action' => 'index', 'forumid' => $this->getRequest()->getParam('forumid')]);
                 }
             }
         }

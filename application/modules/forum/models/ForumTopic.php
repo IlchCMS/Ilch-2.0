@@ -284,10 +284,13 @@ class ForumTopic extends \Ilch\Model
      * Sets the id of the topic.
      *
      * @param integer $id
+     * @return $this
      */
     public function setId($id)
     {
         $this->id = (int)$id;
+
+        return $this;
     }
 
     /**
