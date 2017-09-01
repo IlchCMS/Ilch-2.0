@@ -52,7 +52,7 @@ if ($this->getUser()) {
                         <dd class="posts"><?=$this->getTrans('replies') ?> / <?=$this->getTrans('views') ?></dd>
                         <dd class="lastpost"><span><?=$this->getTrans('lastPost') ?></span></dd>
                         <?php if ($forumEdit): ?>
-                            <dd class="forumEdit"><?=$this->getCheckAllCheckbox('check_topics') ?></dd>
+                            <dd class="forumEdit"><input type="checkbox" class="check_all" id="allTopics" data-childs="check_topics" onclick="validate()" /></dd>
                         <?php endif; ?>
                     </dl>
                 </li>
@@ -142,7 +142,7 @@ if ($this->getUser()) {
                                     </div>
                                 </dd>
                                 <?php if ($forumEdit): ?>
-                                    <dd class="forumEdit"><?=$this->getDeleteCheckbox('check_topics', $topic->getId()) ?></dd>
+                                    <dd class="forumEdit"><input type="checkbox" name="check_topics[]" value="<?=$topic->getId() ?>" onclick="validate(<?=$topic->getId() ?>)" /></dd>
                                 <?php endif; ?>
                             </dl>
                         </li>
@@ -177,9 +177,9 @@ if ($this->getUser()) {
                         <button class="btn btn-default" name="forumEdit" value="forumEdit"><?=$this->getTrans('forumEdit') ?></button>
                     </form>
                 <?php else: ?>
-                    <button class="btn btn-primary" name="topicDelete" value="topicDelete" OnClick="SetAction1()"><?=$this->getTrans('topicDelete') ?></button>
-                    <button class="btn btn-primary" name="topicMove" value="topicMove" OnClick="SetAction2()"><?=$this->getTrans('topicMove') ?></button>
-                    <button class="btn btn-primary" name="topicChangeStatus" value="topicChangeStatus" OnClick="SetAction3()"><?=$this->getTrans('topicChangeStatus') ?></button>
+                    <button class="btn btn-primary" name="topicDelete" value="topicDelete" id="topicDelete" OnClick="SetAction1()" disabled><?=$this->getTrans('topicDelete') ?></button>
+                    <button class="btn btn-primary" name="topicMove" value="topicMove" id="topicMove" OnClick="SetAction2()" disabled><?=$this->getTrans('topicMove') ?></button>
+                    <button class="btn btn-primary" name="topicChangeStatus" value="topicChangeStatus" id="topicChangeStatus" OnClick="SetAction3()" disabled><?=$this->getTrans('topicChangeStatus') ?></button>
 
                     <script>
                         function SetAction1() {
@@ -210,4 +210,31 @@ if ($this->getUser()) {
 
 <script>
 $('.row.tack').last().addClass('last');
+
+function validate() {
+    var checked = false,
+        checkboxes = document.getElementsByName('check_topics[]'),
+        allCheckbox = document.getElementById('allTopics'),
+        i = 0;
+
+    if (allCheckbox.checked) {
+        checked = true;
+    }
+
+    for (i; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            checked = true;
+        }
+    }
+
+    if (!checked) {
+        $('#topicDelete').attr('disabled', 'disabled');
+        $('#topicMove').attr('disabled', 'disabled');
+        $('#topicChangeStatus').attr('disabled', 'disabled');
+    } else {
+        $('#topicDelete').removeAttr('disabled');
+        $('#topicMove').removeAttr('disabled');
+        $('#topicChangeStatus').removeAttr('disabled');
+    }
+}
 </script>
