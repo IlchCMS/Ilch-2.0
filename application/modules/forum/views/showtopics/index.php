@@ -82,7 +82,7 @@ if ($this->getUser()) {
                                     topic-read
                                 <?php endif; ?>
                             ">
-                                <dt title="<?=$firstPost[0]->getText() ?>">
+                                <dt title="<?=$this->escape($firstPost[0]->getText()) ?>">
                                     <?php
                                     if ($forumPrefix->getPrefix() != '' AND $topic->getTopicPrefix() > 0) {
                                         $prefix = explode(',', $forumPrefix->getPrefix());
@@ -96,7 +96,7 @@ if ($this->getUser()) {
                                     }
                                     ?>
                                     <a href="<?=$this->getUrl(['controller' => 'showposts', 'action' => 'index','topicid' => $topic->getId()]) ?>" class="topictitle">
-                                        <?=$topic->getTopicTitle() ?>
+                                        <?=$this->escape($topic->getTopicTitle()) ?>
                                     </a>
                                     <?php if ($topic->getType() == '1'): ?>
                                         <i class="fa fa-thumb-tack"></i>
