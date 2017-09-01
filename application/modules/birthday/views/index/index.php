@@ -38,7 +38,7 @@ $date = new \Ilch\Date();
 <?php $monthsUserCount = 0; ?>
 <?php for ($x = 1; $x < 13; $x++): ?>
     <?php foreach ($this->get('birthdayList') as $birthdaylist): ?>
-        <?php if ($birthdaylist->getBirthday() != '0000-00-00' AND $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
+        <?php if ($birthdaylist->getBirthday() != '' AND $this->escape(date('n', strtotime($birthdaylist->getBirthday()))) == $x): ?>
              <?php $monthsUserCount++; ?>
         <?php endif; ?>
     <?php endforeach; ?>

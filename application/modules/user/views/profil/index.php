@@ -1,7 +1,10 @@
 <?php 
-$userMapper = $this->get('userMapper'); 
-$profil = $this->get('profil'); 
-$birthday = new \Ilch\Date($profil->getBirthday());
+$userMapper = $this->get('userMapper');
+$profil = $this->get('profil');
+$birthday = '';
+if ($profil->getBirthday()) {
+    $birthday = new \Ilch\Date($profil->getBirthday());
+}
 $profileFields = $this->get('profileFields');
 $profileFieldsContent = $this->get('profileFieldsContent');
 $profileFieldsTranslation = $this->get('profileFieldsTranslation');
@@ -105,7 +108,7 @@ foreach ($profil->getGroups() as $group) {
                 <?=$this->getTrans('profileBirthday') ?>
             </div>
             <div class="col-lg-10 detail">
-                <?php if ($profil->getBirthday() != '0000-00-00') { echo $birthday->format('d-m-Y', true); } ?>
+                <?php if ($profil->getBirthday() != '') { echo $birthday->format('d-m-Y', true); } ?>
             </div>
         </div>
 
