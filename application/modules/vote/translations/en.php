@@ -12,4 +12,6 @@ return [
     'noVote' => 'no Votes available',
     'voteButton' => 'Vote',
     'groupAll' => 'All',
+    'visibleFor' => 'Visible for',
+    'selectAssignedGroups' => 'Selected groups',
 ];

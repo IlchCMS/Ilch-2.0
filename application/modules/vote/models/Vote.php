@@ -37,6 +37,13 @@ class Vote extends \Ilch\Model
     protected $group;
 
     /**
+     * The read access of the Vote.
+     *
+     * @var string
+     */
+    protected $readAccess;
+
+    /**
      * The status of the Vote.
      *
      * @var int
@@ -135,6 +142,30 @@ class Vote extends \Ilch\Model
     public function setGroup($group)
     {
         $this->group = (int)$group;
+
+        return $this;
+    }
+
+    /**
+     * Gets the read access of the event.
+     *
+     * @return int
+     */
+    public function getReadAccess()
+    {
+        return $this->readAccess;
+    }
+
+    /**
+     * Sets the read access of the event.
+     *
+     * @param string $readAccess
+     *
+     * @return $this
+     */
+    public function setReadAccess($readAccess)
+    {
+        $this->readAccess = (string)$readAccess;
 
         return $this;
     }

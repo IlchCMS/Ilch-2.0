@@ -34,7 +34,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     }
     ?>
     <?php foreach ($vote as $groupVote): ?>
-        <?php if(in_array($groupVote->getGroup(), $groupIds) || $admin == TRUE): ?>
+        <?php if (is_in_array($this->get('readAccess'), explode(',', $groupVote->getReadAccess())) || $admin == TRUE): ?>
             <div class="row">
                 <div class="col-lg-12">
                     <form action="<?=$this->getUrl(['module' => 'vote']) ?>" class="form-horizontal" method="POST">
@@ -45,7 +45,7 @@ if (!isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                             </div>
                             <?php $voteRes = $resultMapper->getVoteRes($groupVote->getId()); ?>
                             <?php $ip = $ipMapper->getIP($groupVote->getId(), $clientIP); ?>
-                            <?php if ($ip != '' OR $groupVote->getStatus() != 0): ?>
+                            <?php if ($ip != '' OR $groupVote->getStatus() != 0 OR !in_array($groupVote->getGroup(), $groupIds)): ?>
                                 <div class="vote-body">
                                     <div class="list-group">
                                         <?php foreach ($voteRes as $voteRes): ?>

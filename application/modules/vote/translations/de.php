@@ -12,4 +12,7 @@ return [
     'noVote' => 'keine Umfragen vorhanden',
     'voteButton' => 'Abstimmen',
     'groupAll' => 'Alle',
+    'visibleFor' => 'Sichtbar für',
+    'selectAssignedGroups' => 'Ausgewählte Gruppen',
+
 ];

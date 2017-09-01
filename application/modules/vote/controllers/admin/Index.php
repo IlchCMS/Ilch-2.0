@@ -93,9 +93,15 @@ class Index extends \Ilch\Controller\Admin
                     $voteModel->setId($this->getRequest()->getParam('id'));
                 }
 
+                $groups = '';
+                if (!empty($this->getRequest()->getPost('groups'))) {
+                    $groups = implode(',', $this->getRequest()->getPost('groups'));
+                }
+
                 $voteModel->setQuestion($this->getRequest()->getPost('question'))
                     ->setKey('vote/index/index')
-                    ->setGroup($this->getRequest()->getPost('group'));
+                    ->setGroup($this->getRequest()->getPost('group'))
+                    ->setReadAccess($groups);
                 $voteMapper->save($voteModel);
 
                 if ($this->getRequest()->getParam('id')) {
@@ -127,7 +133,14 @@ class Index extends \Ilch\Controller\Admin
                 ->to(['action' => 'treat', 'id' => $this->getRequest()->getParam('id')]);
         }
 
-        $this->getView()->set('groups', $groupMapper->getGroupList());
+        if ($this->getRequest()->getParam('id')) {
+            $groups = explode(',', $voteMapper->getVoteById($this->getRequest()->getParam('id'))->getReadAccess());
+        } else {
+            $groups = [2,3];
+        }
+
+        $this->getView()->set('userGroupList', $groupMapper->getGroupList())
+            ->set('groups', $groups);
     }
 
     public function lockAction()

@@ -107,7 +107,7 @@ class Events extends \Ilch\Model
     protected $show;
 
     /**
-     * The tead access of the event.
+     * The read access of the event.
      *
      * @var string
      */

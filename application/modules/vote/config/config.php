@@ -10,7 +10,7 @@ class Config extends \Ilch\Config\Install
 {
     public $config = [
         'key' => 'vote',
-        'version' => '1.0',
+        'version' => '1.1',
         'icon_small' => 'fa-tasks',
         'author' => 'Veldscholten, Kevin',
         'link' => 'http://ilch.de',
@@ -56,6 +56,7 @@ class Config extends \Ilch\Config\Install
                 `question` VARCHAR(255) NOT NULL,
                 `key` VARCHAR(255) NOT NULL,
                 `group` INT(11) NOT NULL DEFAULT 0,
+                `read_access` VARCHAR(255) NOT NULL DEFAULT '2,3',
                 `status` TINYINT(1) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
@@ -74,6 +75,9 @@ class Config extends \Ilch\Config\Install
 
     public function getUpdate($installedVersion)
     {
-
+        switch ($installedVersion) {
+            case "1.0":
+                $this->db()->query('ALTER TABLE `[prefix]_poll` ADD `read_access` VARCHAR(255) NOT NULL DEFAULT \'2,3\' AFTER `group`;');
+        }
     }
 }

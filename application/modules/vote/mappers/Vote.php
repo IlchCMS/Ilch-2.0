@@ -36,6 +36,7 @@ class Vote extends \Ilch\Mapper
                 ->setQuestion($entries['question'])
                 ->setKey($entries['key'])
                 ->setGroup($entries['group'])
+                ->setReadAccess($entries['read_access'])
                 ->setStatus($entries['status']);
             $vote[] = $entryModel;
         }
@@ -63,8 +64,9 @@ class Vote extends \Ilch\Mapper
 
         $voteModel = new VoteModel();
         $voteModel->setId($voteRow['id'])
-            ->setQuestion($voteRow['question']);
-        $voteModel->setGroup($voteRow['group']);
+            ->setQuestion($voteRow['question'])
+            ->setGroup($voteRow['group'])
+            ->setReadAccess($voteRow['read_access']);
 
         return $voteModel;
     }
@@ -116,6 +118,7 @@ class Vote extends \Ilch\Mapper
             'question' => $vote->getQuestion(),
             'key' => $vote->getKey(),
             'group' => $vote->getGroup(),
+            'read_access' => $vote->getReadAccess()
         ];
 
         if ($vote->getId()) {
