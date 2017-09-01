@@ -60,6 +60,7 @@ class Config extends \Ilch\Config\Install
                 `leader` VARCHAR(255) NOT NULL,
                 `coLeader` VARCHAR(255) NULL DEFAULT NULL,
                 `groupId` INT(11) NOT NULL,
+                `optShow` TINYINT(1) NOT NULL,
                 `optIn` TINYINT(1) NOT NULL,
                 `position` INT(11) NOT NULL DEFAULT 0,
                 PRIMARY KEY (`id`)
@@ -139,6 +140,8 @@ class Config extends \Ilch\Config\Install
 
                 $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `position` INT NOT NULL DEFAULT 0;');
                 $this->db()->query('ALTER TABLE `[prefix]_teams` MODIFY `optIn` TINYINT NOT NULL;');
+            case "1.3":
+                $this->db()->query('ALTER TABLE `[prefix]_teams` ADD COLUMN `optShow` TINYINT(1) NOT NULL AFTER `groupId`;');
         }
     }
 }

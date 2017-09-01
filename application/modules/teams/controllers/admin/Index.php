@@ -187,8 +187,9 @@ class Index extends \Ilch\Controller\Admin
                 $model->setName($this->getRequest()->getPost('name'))
                     ->setLeader($leader)
                     ->setCoLeader($coLeader)
-                    ->setGroupId($this->getRequest()->getPost('groupId'));
-                $model->setOptIn($this->getRequest()->getPost('optIn'));
+                    ->setGroupId($this->getRequest()->getPost('groupId'))
+                    ->setOptShow($this->getRequest()->getPost('optShow'))
+                    ->setOptIn($this->getRequest()->getPost('optIn'));;
                 $teamsMapper->save($model);
 
                 $this->redirect()

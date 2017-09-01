@@ -33,14 +33,15 @@ class Teams extends \Ilch\Mapper
 
         foreach ($entryArray as $entries) {
             $entryModel = new TeamsModel();
-            $entryModel->setId($entries['id']);
-            $entryModel->setPosition($entries['position']);
-            $entryModel->setName($entries['name']);
-            $entryModel->setImg($entries['img']);
-            $entryModel->setLeader($entries['leader']);
-            $entryModel->setCoLeader($entries['coLeader']);
-            $entryModel->setGroupId($entries['groupId']);
-            $entryModel->setOptIn($entries['optIn']);
+            $entryModel->setId($entries['id'])
+                ->setPosition($entries['position'])
+                ->setName($entries['name'])
+                ->setImg($entries['img'])
+                ->setLeader($entries['leader'])
+                ->setCoLeader($entries['coLeader'])
+                ->setGroupId($entries['groupId'])
+                ->setOptShow($entries['optShow'])
+                ->setOptIn($entries['optIn']);
             $teams[] = $entryModel;
         }
 
@@ -137,6 +138,7 @@ class Teams extends \Ilch\Mapper
             'leader' => $team->getLeader(),
             'coLeader' => $team->getCoLeader(),
             'groupId' => $team->getGroupId(),
+            'optShow' => $team->getOptShow(),
             'optIn' => $team->getOptIn()
         ];
 

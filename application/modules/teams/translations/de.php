@@ -33,6 +33,7 @@ return [
     'menuApplications' => 'Bewerbungen',
     'menuApplicationsHistory' => 'Verlauf',
     'menuEMails' => 'E-Mails',
+    'optShow' => 'Team anzeigen?',
     'optIn' => 'Beitreten möglich?',
     'team' => 'Team',
     'teams' => 'Teams',

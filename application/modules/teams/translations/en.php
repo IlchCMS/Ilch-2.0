@@ -33,6 +33,7 @@ return [
     'menuApplications' => 'Applications',
     'menuApplicationsHistory' => 'History',
     'menuEMails' => 'E-Mails',
+    'optShow' => 'Show team?',
     'optIn' => 'Join possible?',
     'team' => 'Team',
     'teams' => 'Teams',

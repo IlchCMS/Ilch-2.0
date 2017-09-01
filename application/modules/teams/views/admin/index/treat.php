@@ -132,6 +132,20 @@
             </select>
         </div>
     </div>
+    <div class="form-group <?=$this->validation()->hasError('optShow') ? 'has-error' : '' ?>">
+        <label for="optShow" class="col-lg-2 control-label">
+            <?=$this->getTrans('optShow') ?>:
+        </label>
+        <div class="col-lg-4">
+            <div class="flipswitch">
+                <input type="radio" class="flipswitch-input" id="optShow-on" name="optShow" value="1" <?=($this->get('team') != '' AND $this->get('team')->getOptShow() == '1') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optShow') == 1) ? 'checked="checked"' : '' ?> />
+                <label for="optShow-on" class="flipswitch-label flipswitch-label-on"><?=$this->getTrans('yes') ?></label>
+                <input type="radio" class="flipswitch-input" id="optShow-off" name="optShow" value="0" <?=($this->get('team') != '' AND $this->get('team')->getOptShow() == '0') ? 'checked="checked"' : ($this->get('team') == '' AND $this->originalInput('optShow') == 0) ? 'checked="checked"' : '' ?> />
+                <label for="optShow-off" class="flipswitch-label flipswitch-label-off"><?=$this->getTrans('no') ?></label>
+                <span class="flipswitch-selection"></span>
+            </div>
+        </div>
+    </div>
     <div class="form-group <?=$this->validation()->hasError('optIn') ? 'has-error' : '' ?>">
         <label for="optIn" class="col-lg-2 control-label">
             <?=$this->getTrans('optIn') ?>:

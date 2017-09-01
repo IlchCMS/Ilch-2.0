@@ -58,17 +58,24 @@ class Teams extends \Ilch\Model
     protected $groupId;
 
     /**
-     * The Opt In of the Team.
+     * The Opt Show of the Team.
      *
      * @var int
      */
     protected $optIn;
 
     /**
+     * The Opt Show of the Team.
+     *
+     * @var int
+     */
+    protected $optShow;
+
+    /**
      * Sets the Id of the Team.
      *
      * @param int $id
-     * @return this
+     * @return $this
      */
     public function setId($id)
     {
@@ -91,7 +98,7 @@ class Teams extends \Ilch\Model
      * Sets the position of the team.
      *
      * @param int $position
-     * @return this
+     * @return $this
      */
     public function setPosition($position)
     {
@@ -114,7 +121,7 @@ class Teams extends \Ilch\Model
      * Sets the Name of the Team.
      *
      * @param string $name
-     * @return this
+     * @return $this
      */
     public function setName($name)
     {
@@ -137,7 +144,7 @@ class Teams extends \Ilch\Model
      * Sets the Image of the Team.
      *
      * @param string $img
-     * @return this
+     * @return $this
      */
     public function setImg($img)
     {
@@ -160,7 +167,7 @@ class Teams extends \Ilch\Model
      * Sets the Leader of the Team.
      *
      * @param string $leader
-     * @return this
+     * @return $this
      */
     public function setLeader($leader)
     {
@@ -183,7 +190,7 @@ class Teams extends \Ilch\Model
      * Sets the CoLeader of the Team.
      *
      * @param string $coLeader
-     * @return this
+     * @return $this
      */
     public function setCoLeader($coLeader)
     {
@@ -206,10 +213,36 @@ class Teams extends \Ilch\Model
      * Sets the Group Id of the Team.
      *
      * @param int $groupId
+     * @return $this
      */
     public function setGroupId($groupId)
     {
         $this->groupId = (int)$groupId;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Opt Show of the Team.
+     *
+     * @return int
+     */
+    public function getOptShow()
+    {
+        return $this->optShow;
+    }
+
+    /**
+     * Sets the Opt Show of the Team.
+     *
+     * @param int $optShow
+     * @return $this
+     */
+    public function setOptShow($optShow)
+    {
+        $this->optShow = (int)$optShow;
+
+        return $this;
     }
 
     /**
@@ -226,9 +259,12 @@ class Teams extends \Ilch\Model
      * Sets the Opt In of the Team.
      *
      * @param int $optIn
+     * @return $this
      */
     public function setOptIn($optIn)
     {
         $this->optIn = (int)$optIn;
+
+        return $this;
     }
 }
