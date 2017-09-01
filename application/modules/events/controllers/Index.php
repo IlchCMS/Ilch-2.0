@@ -219,7 +219,7 @@ class Index extends \Ilch\Controller\Frontend
         if ($this->getRequest()->getParam('id')) {
             $groups = explode(',', $eventMapper->getEventById($this->getRequest()->getParam('id'))->getReadAccess());
         } else {
-            $groups = [1,2,3];
+            $groups = [2,3];
         }
 
         $this->getView()->set('settingMapper', $settingMapper)
